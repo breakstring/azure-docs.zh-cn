@@ -1,18 +1,18 @@
 ---
 title: 使用 Azure Site Recovery 在政府和公用区域之间移动 Azure VM
 description: 使用 Azure Site Recovery 在政府和公用区域之间移动 Azure VM。
-author: rajani-janaki-ram
+author: sideeksh
 ms.service: site-recovery
 ms.topic: tutorial
 ms.date: 04/16/2019
-ms.author: rajanaki
+ms.author: sideeksh
 ms.custom: MVC
-ms.openlocfilehash: 5ca6e7fa6e02ff6c5e49185c2fb02f9bc5a16d9c
-ms.sourcegitcommit: 4f1c7df04a03856a756856a75e033d90757bb635
+ms.openlocfilehash: a76ebf95b92b6e1251a04daa9ffb48a9abe15b50
+ms.sourcegitcommit: 829d951d5c90442a38012daaf77e86046018e5b9
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/07/2020
-ms.locfileid: "87927294"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "89425341"
 ---
 # <a name="move-azure-vms-between-azure-government-and-public-regions"></a>在“Azure 政府”区域和“公用”区域之间移动 Azure VM 
 

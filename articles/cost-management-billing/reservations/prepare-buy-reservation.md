@@ -4,15 +4,16 @@ description: 了解帮助购买 Azure 预留项的要点。
 author: bandersmsft
 ms.reviewer: yashar
 ms.service: cost-management-billing
+ms.subservice: reservations
 ms.topic: how-to
 ms.date: 07/24/2020
 ms.author: banders
-ms.openlocfilehash: 68bcf725a6043b8ab19717845fa8005de2f88e35
-ms.sourcegitcommit: dccb85aed33d9251048024faf7ef23c94d695145
+ms.openlocfilehash: a70d434b06fd19071f3576f9333579e0bd2b85e7
+ms.sourcegitcommit: 1f1d29378424057338b246af1975643c2875e64d
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/28/2020
-ms.locfileid: "87287636"
+ms.lasthandoff: 02/05/2021
+ms.locfileid: "99574968"
 ---
 # <a name="buy-a-reservation"></a>购买预留项
 
@@ -20,9 +21,9 @@ Azure 预留项可帮助你节省资金，因为它可以承诺许多 Azure 资�
 
 ## <a name="who-can-buy-a-reservation"></a>谁可以购买预留项
 
-若要购买计划，必须在企业订阅（MS-AZR-0017P 或 MS-AZR-0148P）或即用即付订阅（MS-AZR-0003P 或 MS-AZR-0023P）或 Microsoft 客户协议订阅中具有订阅所有者角色。 云解决方案提供商可使用 Azure 门户或 [合作伙伴中心](/partner-center/azure-reservations)购买 Azure 预留项。
+若要购买预留，必须在 Azure 企业订阅（MS-AZR-0017P 或 MS-AZR-0148P）或即用即付订阅（MS-AZR-0003P 或 MS-AZR-0023P）或 Microsoft 客户协议订阅中具有所有者角色或预留购买者角色。 云解决方案提供商可使用 Azure 门户或 [合作伙伴中心](/partner-center/azure-reservations)购买 Azure 预留项。
 
-企业协议 (EA) 客户可以通过在 EA 门户中禁用“添加预留实例”选项，将购买权限制为 EA 管理员。 EA 管理员必须是至少一个 EA 订阅的订阅所有者才能购买预留项。 对于希望通过一个核心团队为不同的成本中心购买预留项的企业而言，该选项非常有用。 购买后，核心团队可将成本中心所有者添加到预留项。 然后，所有者可将预留范围限定为其订阅。 购买预留项时，核心团队无需拥有订阅所有者访问权限。
+企业协议 (EA) 客户可以通过在 EA 门户中禁用“添加预留实例”选项，将购买权限制为 EA 管理员。 EA 管理员必须在至少一个 EA 订阅上具有所有者访问权限或预留购买者访问权限才能购买预留。 对于希望通过一个核心团队购买预留项的企业而言，该选项非常有用。
 
 预留折扣仅适用于与通过企业、云解决方案提供商 (CSP)、采用即用即付费率的 Microsoft 客户协议和单个计划购买的订阅关联的资源。
 
@@ -66,12 +67,12 @@ Azure 预留项可帮助你节省资金，因为它可以承诺许多 Azure 资�
 
 可以通过 Azure 门户、API、PowerShell、CLI 购买预留项。 准备好购买预留项时，请阅读以下适用于自己的文章：
 
-- [应用服务](prepay-app-service-isolated-stamp.md)
+- [应用服务](prepay-app-service.md)
 - [用于 Redis 的 Azure 缓存](../../azure-cache-for-redis/cache-reserved-pricing.md)
 - [Cosmos DB](../../cosmos-db/cosmos-db-reserved-capacity.md)
 - [Databricks](prepay-databricks-reserved-capacity.md)
 - [数据资源管理器](/azure/data-explorer/pricing-reserved-capacity)
-- [磁盘存储](../../virtual-machines/linux/disks-reserved-capacity.md)
+- [磁盘存储](../../virtual-machines/disks-reserved-capacity.md)
 - [专用主机](../../virtual-machines/prepay-dedicated-hosts-reserved-instances.md)
 - [软件计划](../../virtual-machines/linux/prepay-suse-software-charges.md)
 - [存储](../../storage/blobs/storage-blob-reserved-capacity.md)
@@ -80,7 +81,7 @@ Azure 预留项可帮助你节省资金，因为它可以承诺许多 Azure 资�
 - [Azure Database for MySQL](../../mysql/concept-reserved-pricing.md)
 - [Azure Database for MariaDB](../../mariadb/concept-reserved-pricing.md)
 - [Azure Synapse Analytics](prepay-sql-data-warehouse-charges.md)
-- [虚拟机](../../virtual-machines/windows/prepay-reserved-vm-instances.md)
+- [虚拟机](../../virtual-machines/prepay-reserved-vm-instances.md)
 
 ## <a name="buy-reservations-with-monthly-payments"></a>按月付款的方式购买预留项
 
@@ -122,7 +123,7 @@ Azure 预留项可帮助你节省资金，因为它可以承诺许多 Azure 资�
 对于使用 EA 订阅的客户：
 
 - 通知只会发送到 EA 通知联系人。
-- 使用 RBAC (IAM) 权限添加到预留项的用户不会收到任何电子邮件通知。
+- 使用 Azure RBAC (IAM) 权限添加到预留项的用户不会收到任何电子邮件通知。
 
 对于使用单个订阅的客户：
 

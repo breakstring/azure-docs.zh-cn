@@ -6,16 +6,16 @@ ms.topic: tutorial
 ms.date: 04/30/2020
 ms.reviewer: yutlin
 ms.custom: seodec18
-ms.openlocfilehash: fb62d4d2ca22b6043e63645006c2d60cf0b7859b
-ms.sourcegitcommit: 2ffa5bae1545c660d6f3b62f31c4efa69c1e957f
+ms.openlocfilehash: f7301809b3befc41110a32062d6e478c412fa56e
+ms.sourcegitcommit: 829d951d5c90442a38012daaf77e86046018e5b9
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/11/2020
-ms.locfileid: "88078625"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "90981115"
 ---
 # <a name="secure-a-custom-dns-name-with-a-tlsssl-binding-in-azure-app-service"></a>在 Azure 应用服务中使用 TLS/SSL 绑定保护自定义 DNS 名称
 
-本文介绍如何通过创建证书绑定来确保[应用服务应用](https://docs.microsoft.com/azure/app-service/)或[函数应用](https://docs.microsoft.com/azure/azure-functions/)中[自定义域](app-service-web-tutorial-custom-domain.md)的安全。 完成后，可访问自定义 DNS 名称（例如，`https://www.contoso.com`）的 `https://` 终结点处的应用服务应用。 
+本文介绍如何通过创建证书绑定来确保[应用服务应用](./index.yml)或[函数应用](../azure-functions/index.yml)中[自定义域](app-service-web-tutorial-custom-domain.md)的安全。 完成后，可访问自定义 DNS 名称（例如，`https://www.contoso.com`）的 `https://` 终结点处的应用服务应用。 
 
 ![带有自定义 TLS/SSL 证书的 Web 应用](./media/configure-ssl-bindings/app-with-custom-ssl.png)
 
@@ -37,7 +37,7 @@ ms.locfileid: "88078625"
 
 按照本操作方法指南操作：
 
-- [创建应用服务应用](/azure/app-service/)
+- [创建应用服务应用](./index.yml)
 - [将域名映射到应用](app-service-web-tutorial-custom-domain.md)或[在 Azure 中购买并配置](manage-custom-dns-buy-domain.md)
 - [将专用证书添加到应用](configure-ssl-certificate.md)
 
@@ -108,7 +108,7 @@ ms.locfileid: "88078625"
 
 在不同的浏览器中，导航到 `https://<your.custom.domain>` 以核实其是否适合应用。
 
-![在门户中导航到 Azure 应用](./media/configure-ssl-bindings/app-with-custom-ssl.png)
+:::image type="content" source="./media/configure-ssl-bindings/app-with-custom-ssl.png" alt-text="屏幕截图显示浏览到自定义域的示例，其中突出显示了 contoso.com URL。":::
 
 应用程序代码可以通过“x-appservice-proto”标头检查协议。 该标头的值将为 `http` 或 `https`。 
 
@@ -168,4 +168,4 @@ ms.locfileid: "88078625"
 ## <a name="more-resources"></a>更多资源
 
 * [在 Azure 应用服务中通过代码使用 TLS/SSL 证书](configure-ssl-certificate-in-code.md)
-* [常见问题解答：应用服务证书](https://docs.microsoft.com/azure/app-service/faq-configuration-and-management/)
+* [常见问题解答：应用服务证书](./faq-configuration-and-management.md)

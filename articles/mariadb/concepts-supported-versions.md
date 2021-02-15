@@ -1,17 +1,17 @@
 ---
 title: 支持的版本 - Azure Database for MariaDB
 description: 了解 Azure Database for MariaDB 服务支持哪些版本的 MariaDB 服务器。
-author: ajlam
-ms.author: andrela
-ms.service: mariadb
+author: savjani
+ms.author: pariks
+ms.service: jroth
 ms.topic: conceptual
 ms.date: 7/20/2020
-ms.openlocfilehash: 0b495bf21b1f78e5e6a9285f67e1769d2d2a0db1
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.openlocfilehash: 61add327852471932d75c746127c64b47bb4f3b2
+ms.sourcegitcommit: 52e3d220565c4059176742fcacc17e857c9cdd02
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87065703"
+ms.lasthandoff: 01/21/2021
+ms.locfileid: "98662434"
 ---
 # <a name="supported-azure-database-for-mariadb-server-versions"></a>支持的 Azure Database for MariaDB 服务器版本
 

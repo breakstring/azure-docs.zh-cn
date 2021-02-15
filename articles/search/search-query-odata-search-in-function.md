@@ -19,12 +19,12 @@ translation.priority.mt:
 - ru-ru
 - zh-cn
 - zh-tw
-ms.openlocfilehash: 1748a334c024401d845145947ecd55519f61e5e3
-ms.sourcegitcommit: 3541c9cae8a12bdf457f1383e3557eb85a9b3187
+ms.openlocfilehash: 9ad6f89392846564631b70f0acfb5658a050be80
+ms.sourcegitcommit: 829d951d5c90442a38012daaf77e86046018e5b9
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/09/2020
-ms.locfileid: "86206927"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "88922814"
 ---
 # <a name="odata-searchin-function-in-azure-cognitive-search"></a>Azure 认知搜索中的 OData `search.in` 函数
 
@@ -48,7 +48,7 @@ ms.locfileid: "86206927"
 
 ## <a name="syntax"></a>语法
 
-以下 EBNF ([扩展的巴科斯-诺尔范式窗体](https://en.wikipedia.org/wiki/Extended_Backus–Naur_form)) 定义函数的语法 `search.in` ：
+以下 EBNF ([扩展 Backus-Naur 窗体](https://en.wikipedia.org/wiki/Extended_Backus–Naur_form)) 定义函数的语法 `search.in` ：
 
 <!-- Upload this EBNF using https://bottlecaps.de/rr/ui to create a downloadable railroad diagram. -->
 
@@ -123,4 +123,4 @@ search_in_call ::=
 - [Azure 认知搜索中的筛选器](search-filters.md)
 - [Azure 认知搜索的 OData 表达式语言概述](query-odata-filter-orderby-syntax.md)
 - [Azure 认知搜索的 OData 表达式语法参考](search-query-odata-syntax-reference.md)
-- [搜索文档（Azure 认知搜索 REST API）](https://docs.microsoft.com/rest/api/searchservice/Search-Documents)
+- [搜索文档（Azure 认知搜索 REST API）](/rest/api/searchservice/Search-Documents)

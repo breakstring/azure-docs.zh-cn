@@ -4,17 +4,16 @@ description: 本文逐步讲解如何使用 Azure 资源管理器下载采用 Az
 titleSuffix: Azure VPN Gateway
 services: vpn-gateway
 author: yushwang
-manager: rossort
 ms.service: vpn-gateway
 ms.topic: how-to
-ms.date: 01/09/2019
+ms.date: 09/02/2020
 ms.author: yushwang
-ms.openlocfilehash: e17d17484ea9caf735fd717b1e58b85e798df87b
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: d2593c656e17310c5afb4a897b94cc8c12a618f0
+ms.sourcegitcommit: aaa65bd769eb2e234e42cfb07d7d459a2cc273ab
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "84983200"
+ms.lasthandoff: 01/27/2021
+ms.locfileid: "98879488"
 ---
 # <a name="download-vpn-device-configuration-scripts-for-s2s-vpn-connections"></a>下载用于 S2S VPN 连接的 VPN 设备配置脚本
 
@@ -35,7 +34,7 @@ ms.locfileid: "84983200"
 3. 在 Azure VPN 网关与本地网络网关之间创建并配置 Azure VPN 连接
 4. 配置本地网络网关代表的本地 VPN 设备，以便与 Azure VPN 网关建立实际 S2S VPN 隧道
 
-可以使用 Azure [门户](vpn-gateway-howto-site-to-site-resource-manager-portal.md)、[PowerShell](vpn-gateway-create-site-to-site-rm-powershell.md) 或 [CLI](vpn-gateway-howto-site-to-site-resource-manager-cli.md) 完成步骤 1 到 3。 最后一个步骤涉及到在 Azure 外部配置本地 VPN 设备。 使用此功能可下载 VPN 设备的配置脚本，其中已填写 Azure VPN 网关、虚拟网络、本地网络地址前缀和 VPN 连接属性等的相应值。 可以使用此脚本作为起点，或者通过配置控制台将它直接应用到本地 VPN 设备。
+可以使用 Azure [门户](./tutorial-site-to-site-portal.md)、[PowerShell](vpn-gateway-create-site-to-site-rm-powershell.md) 或 [CLI](vpn-gateway-howto-site-to-site-resource-manager-cli.md) 完成步骤 1 到 3。 最后一个步骤涉及到在 Azure 外部配置本地 VPN 设备。 使用此功能可下载 VPN 设备的配置脚本，其中已填写 Azure VPN 网关、虚拟网络、本地网络地址前缀和 VPN 连接属性等的相应值。 可以使用此脚本作为起点，或者通过配置控制台将它直接应用到本地 VPN 设备。
 
 > [!IMPORTANT]
 > * 每个 VPN 设备配置脚本的语法各不相同，在很大程度上取决于型号和固件版本。 请特别注意设备型号和版本信息是否与可用的模板相符。
@@ -50,7 +49,7 @@ ms.locfileid: "84983200"
 
 创建 Azure VPN 网关、本地网络网关，以及连接两者的连接资源。 以下页面将引导你完成每个步骤：
 
-* [在 Azure 门户中创建站点到站点连接](vpn-gateway-howto-site-to-site-resource-manager-portal.md)
+* [在 Azure 门户中创建站点到站点连接](./tutorial-site-to-site-portal.md)
 
 创建连接资源后，遵照以下说明下载 VPN 设备配置脚本：
 
@@ -100,4 +99,4 @@ Get-AzVirtualNetworkGatewayConnectionVpnDeviceConfigScript -Name $Connection -Re
 
 ## <a name="next-steps"></a>后续步骤
 
-继续配置[站点到站点连接](vpn-gateway-howto-site-to-site-resource-manager-portal.md)。
+继续配置[站点到站点连接](./tutorial-site-to-site-portal.md)。

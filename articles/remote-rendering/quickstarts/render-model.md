@@ -5,12 +5,12 @@ author: florianborn71
 ms.author: flborn
 ms.date: 01/23/2020
 ms.topic: quickstart
-ms.openlocfilehash: b5865f2fd76c1159f7f72633362a96335af8a059
-ms.sourcegitcommit: 54d8052c09e847a6565ec978f352769e8955aead
+ms.openlocfilehash: 525872ca3ad2558c327b7b856254319d3db2dc7f
+ms.sourcegitcommit: f377ba5ebd431e8c3579445ff588da664b00b36b
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/18/2020
-ms.locfileid: "88509359"
+ms.lasthandoff: 02/05/2021
+ms.locfileid: "99593987"
 ---
 # <a name="quickstart-render-a-model-with-unity"></a>快速入门：使用 Unity 渲染模型
 
@@ -33,7 +33,7 @@ ms.locfileid: "88509359"
 
 * Windows SDK 10.0.18362.0[（下载）](https://developer.microsoft.com/windows/downloads/windows-10-sdk)
 * Visual Studio 2019 最新版本[（下载）](https://visualstudio.microsoft.com/vs/older-downloads/)
-* [适用于混合现实的 Visual Studio Tools](https://docs.microsoft.com/windows/mixed-reality/install-the-tools)。 具体来说，必须安装以下工作负载：
+* [适用于混合现实的 Visual Studio Tools](/windows/mixed-reality/install-the-tools)。 具体来说，必须安装以下工作负载：
   * **使用 C++ 的桌面开发**
   * **通用 Windows 平台 (UWP) 开发**
 * GIT[（下载）](https://git-scm.com/downloads)。
@@ -74,8 +74,8 @@ git clone https://github.com/Azure/azure-remote-rendering
 ![ARR 帐户信息](./media/arr-sample-account-info.png)
 
 > [!IMPORTANT]
-> Azure 门户只会将你的帐户的域显示为 mixedreality.azure.com。 这不足以成功建立连接。
-> 请将 AccountDomain 设置为 `<region>.mixedreality.azure.com`，其中，`<region>` 是[你附近的可用区域之一](../reference/regions.md)。
+> 请将 RemoteRenderingDomain 设置为 `<region>.mixedreality.azure.com`，其中，`<region>` 是[你附近的可用区域之一](../reference/regions.md)。
+> 将 AccountDomain 设置为在 Azure 门户中显示的[帐户域](../how-tos/create-an-account.md#retrieve-the-account-information)。
 
 稍后我们需要将此项目部署到 HoloLens，并从该设备连接到远程渲染服务。 由于没有便捷的方法在设备上输入凭据，因此快速入门示例会将凭据保存在 Unity 场景中。
 
@@ -92,9 +92,7 @@ git clone https://github.com/Azure/azure-remote-rendering
 
 ## <a name="inspecting-the-scene"></a>检查场景
 
-远程渲染连接开始运行后，“检查器”面板将会更新并显示其他状态信息：
-
-![Unity 示例播放](./media/arr-sample-configure-session-running.png)
+远程渲染连接开始运行后，“检查器”面板将会更新并显示其他状态信息：![Unity 示例播放](./media/arr-sample-configure-session-running.png)
 
 现在，可以通过选择新节点并单击“检查器”中的“显示子级”来浏览场景图。
 

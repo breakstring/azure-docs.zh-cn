@@ -15,17 +15,19 @@ ms.topic: conceptual
 ms.date: 03/18/2019
 ms.author: juliako
 ms.custom: devx-track-java
-ms.openlocfilehash: 73dfa45361f2c111934ee7b938c44824112c6c8d
-ms.sourcegitcommit: a76ff927bd57d2fcc122fa36f7cb21eb22154cfa
+ms.openlocfilehash: f05b78c777fdfa633e07bc03266c862f9e85ee0c
+ms.sourcegitcommit: 77afc94755db65a3ec107640069067172f55da67
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/28/2020
-ms.locfileid: "87322680"
+ms.lasthandoff: 01/22/2021
+ms.locfileid: "98695715"
 ---
-# <a name="get-started-with-the-java-client-sdk-for-azure-media-services"></a>用于 Azure 媒体服务的 Java 客户端 SDK 入门  
+# <a name="get-started-with-the-java-client-sdk-for-azure-media-services"></a>用于 Azure 媒体服务的 Java 客户端 SDK 入门
+
+[!INCLUDE [media services api v2 logo](./includes/v2-hr.md)]
 
 > [!NOTE]
-> 不会向媒体服务 v2 添加任何新特性或新功能。 <br/>查看最新版本：[媒体服务 v3](../latest/index.yml)。 另请参阅[从 v2 到 v3 的迁移指南](../latest/migrate-from-v2-to-v3.md)
+> 不会向媒体服务 v2 添加任何新特性或新功能。 <br/>查看最新版本：[媒体服务 v3](../latest/index.yml)。 另请参阅[从 v2 到 v3 的迁移指南](../latest/migrate-v-2-v-3-migration-introduction.md)
 
 本教程介绍了通过 Java 客户端 SDK 在 Azure 媒体服务中实施基本的视频内容传送服务的步骤。
 
@@ -54,7 +56,7 @@ ms.locfileid: "87322680"
 ## <a name="how-to-use-azure-media-services-with-java"></a>如何：将 Azure 媒体服务与 Java 配合使用
 
 >[!NOTE]
->创建媒体服务帐户后，会将一个处于“已停止”状态的**默认**流式处理终结点添加到帐户。   若要开始对内容进行流式处理并利用动态打包和动态加密功能，必须确保要从其流式获取内容的流式处理终结点处于“正在运行”状态。
+>创建媒体服务帐户后，会将一个处于“已停止”状态的 **默认** 流式处理终结点添加到帐户。   若要开始对内容进行流式处理并利用动态打包和动态加密功能，必须确保要从其流式获取内容的流式处理终结点处于“正在运行”状态。
 
 以下代码演示了如何创建资产、如何将媒体文件上传到该资产、如何使用任务运行作业以转换资产，以及如何创建定位符来流式传输视频。
 
@@ -312,7 +314,7 @@ ms.locfileid: "87322680"
 [!INCLUDE [media-services-user-voice-include](../../../includes/media-services-user-voice-include.md)]
 
 ## <a name="additional-resources"></a>其他资源
-有关如何在 Azure 中开发 Java 应用的详细信息，请参阅 [Java 开发中心][Azure Java Developer Center]和[面向 Java 开发人员的 Azure][Azure for Java developers]。
+有关如何在 Azure 中开发 Java 应用的详细信息，请参阅 [Java 开发人员中心][Azure Java Developer Center]和[面向 Java 开发人员的 Azure][Azure for Java developers]。
 
 
 有关媒体服务 Javadoc 文档，请参阅[适用于 Java 的 Azure 库文档][适用于 Java 的 Azure 库文档]。

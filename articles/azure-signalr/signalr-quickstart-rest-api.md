@@ -6,12 +6,12 @@ ms.service: signalr
 ms.topic: quickstart
 ms.date: 11/13/2019
 ms.author: zhshang
-ms.openlocfilehash: 707547cb39487111e2e9353de7e82c2409638324
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.openlocfilehash: 2613f91e8c7f1ad3a05792a9a165f4560c09a637
+ms.sourcegitcommit: 642988f1ac17cfd7a72ad38ce38ed7a5c2926b6c
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87045011"
+ms.lasthandoff: 11/18/2020
+ms.locfileid: "94874519"
 ---
 # <a name="quickstart-broadcast-real-time-messages-from-console-app"></a>快速入门：从控制台应用广播实时消息
 
@@ -28,11 +28,17 @@ Azure SignalR 服务提供了 [REST API](https://github.com/Azure/azure-signalr/
 
 [!INCLUDE [quickstarts-free-trial-note](../../includes/quickstarts-free-trial-note.md)]
 
+遇到问题？ 尝试使用[故障排除指南](signalr-howto-troubleshoot-guide.md)或[通知我们](https://aka.ms/asrs/qsapi)。
+
 ## <a name="sign-in-to-azure"></a>登录 Azure
 
 使用 Azure 帐户登录到 <https://portal.azure.com/> 的 Azure 门户。
 
+遇到问题？ 尝试使用[故障排除指南](signalr-howto-troubleshoot-guide.md)或[通知我们](https://aka.ms/asrs/qsapi)。
+
 [!INCLUDE [Create instance](includes/signalr-quickstart-create-instance.md)]
+
+遇到问题？ 尝试使用[故障排除指南](signalr-howto-troubleshoot-guide.md)或[通知我们](https://aka.ms/asrs/qsapi)。
 
 ## <a name="clone-the-sample-application"></a>克隆示例应用程序
 
@@ -40,11 +46,12 @@ Azure SignalR 服务提供了 [REST API](https://github.com/Azure/azure-signalr/
 
 1. 打开 git 终端窗口。 切换到要克隆示例项目的文件夹。
 
-1. 运行下列命令以克隆示例存储库。 此命令在计算机上创建示例应用程序的副本。
+1. 运行下列命令，克隆示例存储库。 此命令在计算机上创建示例应用程序的副本。
 
     ```bash
     git clone https://github.com/aspnet/AzureSignalR-samples.git
     ```
+遇到问题？ 尝试使用[故障排除指南](signalr-howto-troubleshoot-guide.md)或[通知我们](https://aka.ms/asrs/qsapi)。
 
 ## <a name="build-and-run-the-sample"></a>生成并运行示例
 
@@ -57,7 +64,7 @@ Azure SignalR 服务提供了 [REST API](https://github.com/Azure/azure-signalr/
 
 ### <a name="build-the-executable-file"></a>生成可执行文件
 
-我们使用 macOS osx.10.13-x64 作为示例。 你可以找到有关如何在其他平台上进行生成的[参考资料](https://docs.microsoft.com/dotnet/core/rid-catalog)。
+我们使用 macOS osx.10.13-x64 作为示例。 你可以找到有关如何在其他平台上进行生成的[参考资料](/dotnet/core/rid-catalog)。
 
 ```bash
 cd AzureSignalR-samples/samples/Serverless/
@@ -81,6 +88,8 @@ cd bin/Release/netcoreapp2.1/osx.10.13-x64/
 Serverless server -c "<ConnectionString>" -h <HubName>
 ```
 
+遇到问题？ 尝试使用[故障排除指南](signalr-howto-troubleshoot-guide.md)或[通知我们](https://aka.ms/asrs/qsapi)。
+
 ## <a name="run-the-sample-without-publishing"></a>运行示例而不发布
 
 你还可以运行以下命令来启动服务器或客户端
@@ -97,6 +106,8 @@ dotnet run -- client <ClientName> -c "<ConnectionString>" -h <HubName>
 
 你可以运行示例的根目录中的 `dotnet user-secrets set Azure:SignalR:ConnectionString "<ConnectionString>"`。 之后，将不再需要选项 `-c "<ConnectionString>"`。
 
+遇到问题？ 尝试使用[故障排除指南](signalr-howto-troubleshoot-guide.md)或[通知我们](https://aka.ms/asrs/qsapi)。
+
 ## <a name="usage"></a>使用情况
 
 在服务器启动后，使用以下命令发送消息：
@@ -110,6 +121,8 @@ broadcast
 ```
 
 可以启动具有不同客户端名称的多个客户端。
+
+遇到问题？ 尝试使用[故障排除指南](signalr-howto-troubleshoot-guide.md)或[通知我们](https://aka.ms/asrs/qsapi)。
 
 ## <a name="integration-with-third-party-services"></a><a name="usage"> </a> 与第三方服务集成
 
@@ -244,7 +257,11 @@ API 版本 | API HTTP 方法 | 请求 URL
 `200` | 服务良好
 `5xx` | 服务错误
 
+遇到问题？ 尝试使用[故障排除指南](signalr-howto-troubleshoot-guide.md)或[通知我们](https://aka.ms/asrs/qsapi)。
+
 [!INCLUDE [Cleanup](includes/signalr-quickstart-cleanup.md)]
+
+遇到问题？ 尝试使用[故障排除指南](signalr-howto-troubleshoot-guide.md)或[通知我们](https://aka.ms/asrs/qsapi)。
 
 ## <a name="next-steps"></a>后续步骤
 

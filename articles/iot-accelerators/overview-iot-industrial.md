@@ -8,14 +8,17 @@ ms.topic: overview
 ms.service: industrial-iot
 services: iot-industrialiot
 manager: philmea
-ms.openlocfilehash: 3c474b57533cb6165ce7fe77defccd4cb7042b06
-ms.sourcegitcommit: 58faa9fcbd62f3ac37ff0a65ab9357a01051a64f
+ms.openlocfilehash: 3df10c9d7630e9db76994e8e508f30adb986e0d5
+ms.sourcegitcommit: eb6bef1274b9e6390c7a77ff69bf6a3b94e827fc
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/29/2020
-ms.locfileid: "82189916"
+ms.lasthandoff: 10/05/2020
+ms.locfileid: "91281807"
 ---
 # <a name="what-is-industrial-iot-iiot"></a>什么是工业 IoT (IIoT)
+
+> [!IMPORTANT]
+> 当我们更新本文时，请参阅 [Azure 工业 IoT](https://azure.github.io/Industrial-IoT/) 来了解最新内容。
 
 IIoT 是指“工业物联网”。 IIoT 通过在制造业中应用 IoT 来增强工业效率。 
 
@@ -41,7 +44,7 @@ IIoT 是指“工业物联网”。 IIoT 通过在制造业中应用 IoT 来增�
 
 OPC 孪生是可以自动发现和注册设备的 IIoT 组件，并通过 REST API 提供工业设备的远程控制。 OPC 孪生使用 Azure IoT Edge 和 IoT 中心来连接云与工厂网络。 OPC 孪生使 IIoT 开发人员能够专注于生成 IIoT 应用程序，而无需担心如何安全访问本地机器。
 
-## <a name="security"></a>安全性
+## <a name="security"></a>安全
 
 OPC 保管库是 OPC UA 全局发现服务器 (GDS) 的一个实现，它可以配置、注册和管理云中 OPC UA 服务器和客户端应用程序的证书生命周期。 OPC 保管库简化了工业领域中安全资产连接的实现和维护。 通过自动化证书管理，OPC 保管库使工厂操作员无需执行与连接和证书管理相关的复杂手动流程。
 
@@ -49,5 +52,4 @@ OPC 保管库是 OPC UA 全局发现服务器 (GDS) 的一个实现，它可以�
 
 大致了解工业 IoT 及其组件后，建议接下来学习以下主题：
 
-> [!div class="nextstepaction"]
-> [什么是 OPC 孪生](overview-opc-twin.md)
+[什么是 OPC 孪生](overview-opc-twin.md)

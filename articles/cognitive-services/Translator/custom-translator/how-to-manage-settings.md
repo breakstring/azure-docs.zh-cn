@@ -2,19 +2,19 @@
 title: 如何管理设置？ - 自定义翻译
 titleSuffix: Azure Cognitive Services
 description: 了解如何在自定义翻译中管理设置、创建工作区、共享工作区和管理订阅密钥。
-author: swmachan
+author: laujan
 manager: nitinme
 ms.service: cognitive-services
 ms.subservice: translator-text
 ms.date: 08/17/2020
-ms.author: swmachan
+ms.author: lajanuar
 ms.topic: conceptual
-ms.openlocfilehash: 488ca52abdd5f8d6cfd1f92a5f91861a17a77d19
-ms.sourcegitcommit: 54d8052c09e847a6565ec978f352769e8955aead
+ms.openlocfilehash: 49801eddd748a88109bb7f6d075def03cd798754
+ms.sourcegitcommit: 100390fefd8f1c48173c51b71650c8ca1b26f711
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/18/2020
-ms.locfileid: "88510442"
+ms.lasthandoff: 01/27/2021
+ms.locfileid: "98895775"
 ---
 # <a name="how-to-manage-settings"></a>如何管理设置
 
@@ -33,7 +33,7 @@ ms.locfileid: "88510442"
 
 如果没有订阅，请执行以下步骤：
 
-1. 订阅以创建转换器资源。 请按照 [如何注册转换器](https://docs.microsoft.com/azure/cognitive-services/translator/translator-how-to-signup) 以订阅和获取 translator 密钥进行注册。
+1. 订阅以创建转换器资源。 请按照 [如何注册转换器](../translator-how-to-signup.md) 以订阅和获取 translator 密钥进行注册。
 2. 记下你的翻译人员订阅的密钥。 密钥 1 或密钥 2 均可接受。
 3. 导航回到自定义翻译门户。
 
@@ -51,6 +51,8 @@ ms.locfileid: "88510442"
 
     ![“创建新工作区”对话框](media/how-to/create-new-workspace-dialog.png)
 
+>[!Note]
+>自定义转换器不支持为文本翻译 API 资源 (也称为创建工作区 已在 [已启用 VNET](../../../api-management/api-management-using-with-vnet.md)内创建 Azure 订阅密钥) 。
 
 ### <a name="modify-existing-key"></a>修改现有密钥
 
@@ -61,7 +63,7 @@ ms.locfileid: "88510442"
 
 3. 在对话框中，输入转换器订阅的密钥，然后单击 "保存" 按钮。
 
-    ![如何添加订阅密钥](media/how-to/how-to-add-subscription-key-dialog.png)
+    !["如何添加订阅密钥" 对话框](media/how-to/how-to-add-subscription-key-dialog.png)
 
 ## <a name="manage-your-workspace"></a>管理工作区
 

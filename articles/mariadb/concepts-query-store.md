@@ -1,27 +1,27 @@
 ---
 title: 查询存储-Azure Database for MariaDB
 description: 了解 Azure Database for MariaDB 中的查询存储功能，可以帮助你跟踪一段时间内的性能。
-author: ajlam
-ms.author: andrela
-ms.service: mariadb
+author: savjani
+ms.author: pariks
+ms.service: jroth
 ms.topic: conceptual
-ms.date: 3/18/2020
-ms.openlocfilehash: a502638744009fc34a7f0a27f8034b89d2c8fa26
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.date: 01/15/2021
+ms.openlocfilehash: 0841a38ab6e4fe3b4d0faf755209d85cfea1ac17
+ms.sourcegitcommit: 52e3d220565c4059176742fcacc17e857c9cdd02
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "79527803"
+ms.lasthandoff: 01/21/2021
+ms.locfileid: "98664191"
 ---
 # <a name="monitor-azure-database-for-mariadb-performance-with-query-store"></a>使用查询存储监视 Azure Database for MariaDB 的性能
 
-**适用于：** Azure Database for MariaDB 10。2
+**适用于：** Azure Database for MariaDB 10.2
 
 使用 Azure Database for Mariadb 中的查询存储功能可以跟踪一段时间内的查询性能。 通过帮助快速查找运行时间最长且资源最密集的查询，查询存储可简化性能故障排除。 查询存储自动捕获查询和运行时统计信息的历史记录，并保留它们以供查看。 它按时间范围分隔数据，以便可以查看数据库使用模式。 所有用户、数据库和查询的数据都存储在 Azure Database for MariaDB 实例的 **mysql** 架构数据库中。
 
 ## <a name="common-scenarios-for-using-query-store"></a>使用查询存储的常见场景
 
-可以在许多场景中使用查询存储，包括：
+可以在许多情况下使用 Query store，其中包括：
 
 - 检测回归查询
 - 确定在给定时间范围内执行查询的次数
@@ -34,14 +34,14 @@ ms.locfileid: "79527803"
 ### <a name="enable-query-store-using-the-azure-portal"></a>使用 Azure 门户启用查询存储
 
 1. 登录到 Azure 门户，选择你的 Azure Database for MariaDB 服务器。
-1. 在菜单的“设置”部分中选择“服务器参数” 。
-1. 搜索 query_store_capture_mode 参数。
-1. 将值设置为 ALL，然后**保存**。
+2. 在菜单的“设置”部分中选择“服务器参数” 。
+3. 搜索 query_store_capture_mode 参数。
+4. 将值设置为 ALL，然后 **保存**。
 
 若要在查询存储中启用等待统计信息，请执行以下操作：
 
 1. 搜索 query_store_wait_sampling_capture_mode 参数。
-1. 将值设置为 ALL，然后**保存**。
+2. 将值设置为 ALL，然后 **保存**。
 
 留出最多 20 分钟以便第一批数据保存到 mysql 数据库中。
 
@@ -75,7 +75,7 @@ SELECT * FROM mysql.query_store_wait_stats;
 
 以下是一些示例，说明如何使用查询存储中的等待统计信息获得有关工作负载的更多见解：
 
-| **观测** | **Action** |
+| **观测** | **操作** |
 |---|---|
 |高锁定等待 | 检查受影响查询的查询文本，并确定目标实体。 在查询存储中查找修改同一实体的其他查询，这些查询经常执行和/或持续很长时间。 确定这些查询后，请考虑更改应用程序逻辑以提高并发性，或使用限制较少的隔离级别。 |
 |高缓冲 IO 等待 | 在查询存储中查找具有大量物理读取的查询。 如果它们匹配具有高 IO 等待的查询，考虑在基础实体上引入索引，以便进行搜索而不是扫描。 这将最小化查询的 IO 开销。 检查门户中服务器的“性能建议”，以查看是否存在可优化查询的此服务器的索引建议。 |
@@ -108,9 +108,9 @@ SELECT * FROM mysql.query_store_wait_stats;
 
 ## <a name="views-and-functions"></a>视图和函数
 
-使用以下视图和函数查看并管理查询存储。 具有[选择权限公共角色](howto-create-users.md#create-additional-admin-users)的任何人都可使用这些视图来查看查询存储中的数据。 这些视图仅在 **mysql** 数据库中提供。
+使用以下视图和函数查看并管理查询存储。 具有[选择权限公共角色](howto-create-users.md#create-more-admin-users)的任何人都可使用这些视图来查看查询存储中的数据。 这些视图仅在 **mysql** 数据库中提供。
 
-删除文本和常数后，通过查看查询的结构来规范化查询。 如果除文本值之外两个查询相同，则它们将具有相同的哈希值。
+删除文本和常数后，通过查看查询的结构来规范化查询。 如果两个查询（文本值除外）相同，则它们具有相同的哈希。
 
 ### <a name="mysqlquery_store"></a>mysql.query_store
 
@@ -138,8 +138,8 @@ SELECT * FROM mysql.query_store_wait_stats;
 | `sum_select_full_join` | bigint(20)| 是| 完整联接的数目|
 | `sum_select_scan` | bigint(20)| 是| select 扫描数 |
 | `sum_sort_rows` | bigint(20)| 是| 排序的行数|
-| `sum_no_index_used` | bigint(20)| 是| 查询未使用任何索引的次数|
-| `sum_no_good_index_used` | bigint(20)| 是| 查询执行引擎未使用任何适当索引的次数|
+| `sum_no_index_used` | bigint(20)| 是| 查询不使用任何索引的次数|
+| `sum_no_good_index_used` | bigint(20)| 是| 查询执行引擎未使用任何良好索引的次数|
 | `sum_created_tmp_tables` | bigint(20)| 是| 创建的临时表总数|
 | `sum_created_tmp_disk_tables` | bigint(20)| 是| 在磁盘中创建的临时表总数（生成 I/O）|
 | `first_seen` | timestamp| 是| 在聚合时段发生第一次查询的时间 (UTC)|
@@ -147,7 +147,7 @@ SELECT * FROM mysql.query_store_wait_stats;
 
 ### <a name="mysqlquery_store_wait_stats"></a>mysql.query_store_wait_stats
 
-此视图返回查询存储中的等待事件数据。 每个不同的数据库 ID、用户 ID、查询 ID 和事件都有一行。
+此视图返回查询存储中的等待事件数据。 每个不同的数据库 ID、用户 ID、查询 ID 和事件都有对应的一行。
 
 | **名称**| **数据类型** | **IS_NULLABLE** | **说明** |
 |---|---|---|---|
@@ -171,7 +171,7 @@ SELECT * FROM mysql.query_store_wait_stats;
 
 ## <a name="limitations-and-known-issues"></a>限制和已知问题
 
-- 如果 MariaDB 服务器启用了参数 `default_transaction_read_only`，查询存储将无法捕获数据。
+- 如果 MariaDB 服务器上有参数 `default_transaction_read_only` ，查询存储无法捕获数据。
 - 如果遇到较长的 Unicode 查询（\>= 6000 个字节），查询存储功能可能会中断。
 - 等待统计信息的保留期为 24 小时。
 - 等待统计信息使用样本来捕获一部分事件。 可以使用参数 `query_store_wait_sampling_frequency` 来修改频率。

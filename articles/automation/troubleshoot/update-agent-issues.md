@@ -2,19 +2,15 @@
 title: 使用 Azure 自动化排查 Windows 更新代理问题
 description: 本文介绍如何排查和解决在进行更新管理期间出现的 Windows 更新代理问题。
 services: automation
-author: mgoedtel
-ms.author: magoedte
-ms.date: 01/16/2020
-ms.topic: conceptual
-ms.service: automation
+ms.date: 01/25/2020
+ms.topic: troubleshooting
 ms.subservice: update-management
-manager: carmonm
-ms.openlocfilehash: 92020313fccf1b8be0add58a7bafab62b5daa4d5
-ms.sourcegitcommit: ec682dcc0a67eabe4bfe242fce4a7019f0a8c405
+ms.openlocfilehash: d4fbc566cb82eb3b728b37aa1f1cc20ff92f4fca
+ms.sourcegitcommit: 100390fefd8f1c48173c51b71650c8ca1b26f711
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/09/2020
-ms.locfileid: "86187126"
+ms.lasthandoff: 01/27/2021
+ms.locfileid: "98896234"
 ---
 # <a name="troubleshoot-windows-update-agent-issues"></a>排查 Windows 更新代理问题
 
@@ -27,10 +23,10 @@ ms.locfileid: "86187126"
 > [!NOTE]
 > Azure 门户显示的内容和计算机的当前状态之间可能会有些微延迟。
 
-本文介绍如何从 Azure 门户为 Azure 计算机运行故障排除，以及如何为[离线场景](#troubleshoot-offline)下的非 Azure 计算机运行故障排除。 
+本文介绍如何从 Azure 门户为 Azure 计算机运行故障排除，以及如何为[离线场景](#troubleshoot-offline)下的非 Azure 计算机运行故障排除。
 
 > [!NOTE]
-> 故障排除脚本现在包含对 Windows Server Update Services (WSUS) 以及对自动下载和安装密钥的检查。 
+> 故障排除脚本现在包含对 Windows Server Update Services (WSUS) 以及对自动下载和安装密钥的检查。
 
 ## <a name="start-the-troubleshooter"></a>启动“故障排除”
 
@@ -110,7 +106,7 @@ Crypto 文件夹访问检查将确定本地系统帐户是否有权访问 C:\Pro
 
 ## <a name="troubleshoot-offline"></a><a name="troubleshoot-offline"></a>脱机进行故障排除
 
-可以通过在本地运行脚本，在混合 Runbook 辅助角色上脱机使用故障排除。 从 PowerShell 库获取以下脚本：[Troubleshoot-WindowsUpdateAgentRegistration](https://www.powershellgallery.com/packages/Troubleshoot-WindowsUpdateAgentRegistration)。 若要运行该脚本，必须安装 WMF 4.0 或更高版本。 若要下载最新版本的 PowerShell，请参阅[安装各种版本的 PowerShell](/powershell/scripting/install/installing-powershell)。
+可以通过在本地运行脚本，在混合 Runbook 辅助角色上脱机使用故障排除。 从 GitHub 获取以下脚本： [UM_Windows_Troubleshooter_Offline.ps1](https://github.com/Azure/updatemanagement/blob/main/UM_Windows_Troubleshooter_Offline.ps1)。 若要运行该脚本，必须安装 WMF 4.0 或更高版本。 若要下载最新版本的 PowerShell，请参阅[安装各种版本的 PowerShell](/powershell/scripting/install/installing-powershell)。
 
 此脚本的输出如以下示例所示：
 

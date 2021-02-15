@@ -1,19 +1,16 @@
 ---
 title: 在 HDInsight 中的 Hadoop 上将 C# 与 MapReduce 配合使用 - Azure
 description: 了解如何在 Azure HDInsight 中通过 Apache Hadoop 使用 C# 创建 MapReduce 解决方案。
-author: hrasheed-msft
-ms.author: hrasheed
-ms.reviewer: jasonh
 ms.service: hdinsight
 ms.topic: how-to
-ms.custom: hdinsightactive,seoapr2020
+ms.custom: hdinsightactive, seoapr2020, devx-track-csharp
 ms.date: 04/28/2020
-ms.openlocfilehash: 0a20a120f72c70cb50cae37cece54d5efad31f47
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.openlocfilehash: 6948491091f558aa7f317d519b0f92c63cac4788
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87074806"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98946634"
 ---
 # <a name="use-c-with-mapreduce-streaming-on-apache-hadoop-in-hdinsight"></a>在 HDInsight 中的 Apache Hadoop 上将 C# 与 MapReduce 流式处理配合使用
 
@@ -31,9 +28,9 @@ HDInsight 群集使用 [Mono (https://mono-project.com)](https://mono-project.co
 
 在本文档中用于流式处理的基本流程如下所示：
 
-1. Hadoop 在 STDIN 上将数据传递到映射器（在本示例中为*mapper.exe* ）。
+1. Hadoop 将数据传递到映射器 (此示例中的 *mapper.exe*) STDIN。
 2. 映射器处理数据，并向 STDOUT 发出制表符分隔的键/值对。
-3. 输出由 Hadoop 读取，然后传递到 STDIN 上的化简器（在此示例中为*reducer.exe* ）。
+3. 输出由 Hadoop 读取，然后传递到化简器 (*reducer.exe* 在此示例中) STDIN。
 4. 化简器将读取制表符分隔的键/值对、处理数据，并将结果作为制表符分隔的键/值对在 STDOUT 上发出。
 5. 该输出由 Hadoop 读取，并写入输出目录。
 
@@ -47,7 +44,7 @@ HDInsight 群集使用 [Mono (https://mono-project.com)](https://mono-project.co
 
 * 将 .exe 文件上传到群集的方法。 本文档中的各个步骤都使用针对 Visual Studio 的 Data Lake 工具将文件上传到群集的主要存储。
 
-* 如果使用 PowerShell，需要安装 [Az 模块](https://docs.microsoft.com/powershell/azure/)。
+* 如果使用 PowerShell，需要安装 [Az 模块](/powershell/azure/)。
 
 * HDInsight 中的 Apache Hadoop 群集。 请参阅 [Linux 上的 HDInsight 入门](../hadoop/apache-hadoop-linux-tutorial-get-started.md)。
 
@@ -149,13 +146,13 @@ namespace reducer
 
 1. 在 Visual Studio 中，选择“视图” > “服务器资源管理器”。 
 
-1. 右键单击 " **Azure**"，选择 "**连接到 Microsoft Azure 订阅 ...**"，然后完成登录过程。
+1. 右键单击“Azure”并选择“连接到 Microsoft Azure 订阅...”，然后完成登录过程。  
 
 1. 展开要将此应用程序部署到的 HDInsight 群集。 列出带有文本“（默认存储帐户）”的条目。
 
    ![存储帐户，HDInsight 群集，服务器资源管理器，Visual Studio](./media/apache-hadoop-dotnet-csharp-mapreduce-streaming/hdinsight-storage-account.png)
 
-   * 如果可以展开“(默认存储帐户)”项，则表示你正在使用 **Azure 存储帐户**作为群集的默认存储。 若要查看群集的默认存储中的文件，请展开该项，然后双击“(默认容器)”。
+   * 如果可以展开“(默认存储帐户)”项，则表示你正在使用 **Azure 存储帐户** 作为群集的默认存储。 若要查看群集的默认存储中的文件，请展开该项，然后双击“(默认容器)”。
 
    * 如果无法展开“(默认存储帐户)”项，则表示你正在使用 **Azure Data Lake Storage** 作为群集的默认存储。 若要查看该群集的默认存储上的文件，请双击“（默认存储帐户）”条目。
 
@@ -194,7 +191,7 @@ namespace reducer
             -output /example/wordcountout
         ```
 
-    * 如果默认存储为**Data Lake Storage Gen1**：
+    * 如果默认存储为 **Data Lake Storage Gen1**：
 
         ```bash
         yarn jar /usr/hdp/current/hadoop-mapreduce-client/hadoop-streaming.jar \
@@ -253,7 +250,7 @@ namespace reducer
 
 [!code-powershell[main](../../../powershell_scripts/hdinsight/use-csharp-mapreduce/use-csharp-mapreduce.ps1?range=5-87)]
 
-此脚本会提示用户提供群集登录的帐户名和密码，以及 HDInsight 群集名称。 作业完成后，输出将下载到名为*output.txt*的文件。 以下文本是 `output.txt` 文件中数据的示例：
+此脚本会提示用户提供群集登录的帐户名和密码，以及 HDInsight 群集名称。 作业完成后，输出将下载到名为 *output.txt* 的文件。 以下文本是 `output.txt` 文件中数据的示例：
 
 ```output
 you     1128

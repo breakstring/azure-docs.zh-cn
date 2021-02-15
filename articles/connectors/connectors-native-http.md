@@ -5,28 +5,32 @@ services: logic-apps
 ms.suite: integration
 ms.reviewer: jonfan, logicappspm
 ms.topic: conceptual
-ms.date: 06/09/2020
+ms.date: 09/14/2020
 tags: connectors
-ms.openlocfilehash: 8c7a0ddb80ba28548fc1821cc2063e500af0fa66
-ms.sourcegitcommit: dccb85aed33d9251048024faf7ef23c94d695145
+ms.openlocfilehash: f2835bda8ac7242b7a3ea4ea63401f26b9c8e426
+ms.sourcegitcommit: 1a98b3f91663484920a747d75500f6d70a6cb2ba
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/28/2020
-ms.locfileid: "87286625"
+ms.lasthandoff: 01/29/2021
+ms.locfileid: "99062989"
 ---
 # <a name="call-service-endpoints-over-http-or-https-from-azure-logic-apps"></a>从 Azure 逻辑应用通过 HTTP 或 HTTPS 调用服务终结点
 
-使用 [Azure 逻辑应用](../logic-apps/logic-apps-overview.md)和内置 HTTP 触发器或操作，可以创建自动化任务和工作流，通过 HTTP 或 HTTPS 向服务终结点发送请求。 例如，可按特定的计划检查网站的服务终结点，从而对该终结点进行监视。 当该终结点上发生特定的事件（例如网站关闭）时，该事件会触发逻辑应用的工作流并运行该工作流中的操作。 如果要改为接收和响应入站 HTTPS 调用，请使用内置[请求触发器或响应操作](../connectors/connectors-native-reqres.md)。
+使用 [Azure 逻辑应用](../logic-apps/logic-apps-overview.md)和内置 HTTP 触发器或操作，可以创建自动化任务和工作流，可通过 HTTP 或 HTTPS 向其他服务和系统上的终结点发送出站请求。 若要改为接收和响应入站 HTTPS 调用，请使用内置[请求触发器和响应操作](../connectors/connectors-native-reqres.md)。
+
+例如，可按特定的计划检查网站的服务终结点，从而对该终结点进行监视。 当该终结点上发生特定的事件（例如网站关闭）时，该事件会触发逻辑应用的工作流并运行该工作流中的操作。
 
 * 若要按定期计划检查或轮询某个终结点，可[添加 HTTP 触发器](#http-trigger)作为工作流中的第一个步骤。 每次触发器检查终结点时，触发器都会调用该终结点或向该终结点发送请求。 该终结点的响应确定了逻辑应用的工作流是否运行。 触发器将终结点响应中的任何内容传递到逻辑应用中的操作。
 
 * 若要从工作流中的任何其他位置调用终结点，请[添加 HTTP 操作](#http-action)。 该终结点的响应确定了工作流剩余操作的运行方式。
 
-本文演示如何将 HTTP 触发器或操作添加到逻辑应用的工作流。
+本文介绍如何使用 HTTP 触发器和 HTTP 操作，以便逻辑应用可以将出站调用发送到其他服务和系统。
+
+有关逻辑应用的出站调用的加密、安全和授权（例如 [传输层安全性 (TLS) ](https://en.wikipedia.org/wiki/Transport_Layer_Security)，以前称为安全套接字层 (SSL) 、自签名证书或 [Azure Active Directory 开放式身份验证 (Azure AD OAuth) ](../active-directory/develop/index.yml)），请参阅对 [其他服务和系统的出站调用的安全访问和数据访问](../logic-apps/logic-apps-securing-a-logic-app.md#secure-outbound-requests)。
 
 ## <a name="prerequisites"></a>先决条件
 
-* Azure 订阅。 如果没有 Azure 订阅，请[注册一个免费 Azure 帐户](https://azure.microsoft.com/free/)。
+* Azure 帐户和订阅。 如果没有 Azure 订阅，请[注册一个免费 Azure 帐户](https://azure.microsoft.com/free/)。
 
 * 要调用的目标终结点的 URL
 
@@ -96,21 +100,27 @@ ms.locfileid: "87286625"
 
 1. 完成后，请记得保存逻辑应用。 在设计器工具栏上选择“保存”。
 
-<a name="tls-support"></a>
+## <a name="trigger-and-action-outputs"></a>触发器和操作输出
 
-## <a name="transport-layer-security-tls"></a>传输层安全 (TLS) (Transport Layer Security) (TLS)
+下面是有关 HTTP 触发器或操作的输出的详细信息，输出中将返回以下信息：
 
-出站调用支持传输层安全性 (TLS)（以前称为安全套接字层 (SSL)）版本 1.0、1.1 和 1.2，具体取决于目标终结点的功能。 逻辑应用通过使用可能支持的最高版本与终结点协商。
+| 属性 | 类型 | 说明 |
+|----------|------|-------------|
+| `headers` | JSON 对象 | 请求中的标头 |
+| `body` | JSON 对象 | 包含请求中正文内容的对象 |
+| `status code` | Integer | 请求中的状态代码 |
+|||
 
-例如，如果终结点支持 1.2 版，则 HTTP 连接器首先使用 1.2 版。 否则，连接器将使用下一个受支持的最高版本。
-
-<a name="self-signed"></a>
-
-## <a name="self-signed-certificates"></a>自签名证书
-
-* 对于全局多租户 Azure 环境中的逻辑应用，HTTP 连接器不允许自签名的 TLS/SSL 证书。 如果你的逻辑应用向服务器发出 HTTP 调用并提供了 TLS/SSL 自签名证书，则 HTTP 调用将失败并出现 `TrustFailure` 错误。
-
-* 对于[integration service 环境（ISE）](../logic-apps/connect-virtual-network-vnet-isolated-environment-overview.md)中的逻辑应用，HTTP 连接器允许 TLS/SSL 握手的自签名证书。 但是，必须首先使用逻辑应用 REST API 为现有 ISE 或新 ISE[启用自签名证书支持](../logic-apps/create-integration-service-environment-rest-api.md#request-body)，并在该位置安装公共证书 `TrustedRoot` 。
+| 状态代码 | 说明 |
+|-------------|-------------|
+| 200 | 确定 |
+| 202 | 已接受 |
+| 400 | 错误的请求 |
+| 401 | 未授权 |
+| 403 | 禁止 |
+| 404 | 未找到 |
+| 500 | 内部服务器错误。 发生未知错误。 |
+|||
 
 ## <a name="content-with-multipartform-data-type"></a>具有多部分/表单数据类型的内容
 
@@ -158,13 +168,21 @@ ms.locfileid: "87286625"
 }
 ```
 
+## <a name="content-with-applicationx-www-form-urlencoded-type"></a>具有 application/x-www-form-urlencoded 类型的内容
+
+若要在 HTTP 请求的正文中提供 form-urlencoded 数据，必须指定数据具有 `application/x-www-form-urlencoded` 内容类型。 在 HTTP 触发器或操作中，添加 `content-type` 标头。 将标头值设置为 `application/x-www-form-urlencoded`。
+
+例如，假设你有一个逻辑应用，它向支持 `application/x-www-form-urlencoded` 类型的网站发送 HTTP POST 请求。 下面是此操作的可能外观：
+
+![显示“content-type”标头设置为“application/x-www-form-urlencoded”的 HTTP 请求的屏幕截图](./media/connectors-native-http/http-action-urlencoded.png)
+
 <a name="asynchronous-pattern"></a>
 
 ## <a name="asynchronous-request-response-behavior"></a>异步请求-响应行为
 
 默认情况下，Azure 逻辑应用中所有基于 HTTP 的操作都遵循标准[异步操作模式](/azure/architecture/patterns/async-request-reply)。 该模式指定在 HTTP 操作调用某个终结点、服务、系统或 API 或向其发送请求后，接收方立即返回[“202 已接受”](https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.3)响应。 此代码确认接收方已接受请求，但尚未完成处理。 响应可以包括一个指定了 URL 和刷新 ID 的 `location` 标头，调用方可以使用该标头来轮询或检查异步请求的状态，直到接收方停止处理并返回[“200 正常”](https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1)成功响应或其他非 202 响应。 但是，调用方不必等待请求完成处理即可继续运行下一操作。 有关详细信息，请参阅[异步微服务集成强制实施微服务自治](/azure/architecture/microservices/design/interservice-communication#synchronous-versus-asynchronous-messaging)。
 
-* 在逻辑应用设计器中，HTTP 操作（而不是触发器）有一个默认启用的**异步模式**设置。 此设置指定调用方不等待处理完成即可继续执行下一操作，但需继续检查状态直到处理停止。 如果禁用，则此设置指定调用方需等待处理完成才能继续执行下一操作。
+* 在逻辑应用设计器中，HTTP 操作（而不是触发器）有一个默认启用的 **异步模式** 设置。 此设置指定调用方不等待处理完成即可继续执行下一操作，但需继续检查状态直到处理停止。 如果禁用，则此设置指定调用方需等待处理完成才能继续执行下一操作。
 
   若要查找此设置，请执行以下步骤：
 
@@ -229,9 +247,9 @@ HTTP 请求有一个[超时限制](../logic-apps/logic-apps-limits-and-config.md
 
 如果 HTTP 触发器或操作包含这些标头，则逻辑应用会从生成的请求消息中删除这些标头，且不显示任何警告或错误：
 
-* `Accept-*`
+* `Accept-*` 标头（`Accept-version` 除外）
 * `Allow`
-* `Content-*` 中含以下例外：`Content-Disposition`、`Content-Encoding` 和 `Content-Type`
+* `Content-*``Content-Disposition` `Content-Encoding` `Content-Type` 当你使用 POST 和 PUT 操作，但不包括在获取操作中时，、和以外的标头
 * `Cookie`
 * `Expires`
 * `Host`
@@ -249,29 +267,7 @@ HTTP 请求有一个[超时限制](../logic-apps/logic-apps-limits-and-config.md
 * [HTTP 触发器参数](../logic-apps/logic-apps-workflow-actions-triggers.md#http-trigger)
 * [HTTP 操作参数](../logic-apps/logic-apps-workflow-actions-triggers.md#http-action)
 
-### <a name="output-details"></a>输出详细信息
-
-下面是有关 HTTP 触发器或操作的输出的详细信息，输出中将返回以下信息：
-
-| 属性 | 类型 | 说明 |
-|----------|------|-------------|
-| `headers` | JSON 对象 | 请求中的标头 |
-| `body` | JSON 对象 | 包含请求中正文内容的对象 |
-| `status code` | Integer | 请求中的状态代码 |
-|||
-
-| 状态代码 | 说明 |
-|-------------|-------------|
-| 200 | 确定 |
-| 202 | 已接受 |
-| 400 | 错误的请求 |
-| 401 | 未授权 |
-| 403 | 禁止 |
-| 404 | 未找到 |
-| 500 | 内部服务器错误。 发生未知错误。 |
-|||
-
 ## <a name="next-steps"></a>后续步骤
 
-* 了解其他[逻辑应用连接器](../connectors/apis-list.md)
-
+* [保护访问和数据 - 对其他服务和系统的出站调用的访问](../logic-apps/logic-apps-securing-a-logic-app.md#secure-outbound-requests)
+* [适用于逻辑应用的连接器](../connectors/apis-list.md)

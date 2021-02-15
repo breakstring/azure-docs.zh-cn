@@ -9,14 +9,14 @@ ms.service: cognitive-services
 ms.subservice: immersive-reader
 ms.topic: tutorial
 ms.date: 01/14/2020
-ms.author: metan
-ms.custom: devx-track-javascript
-ms.openlocfilehash: a8cd8bacc749ef44ee23e98709f04f75757f5919
-ms.sourcegitcommit: 023d10b4127f50f301995d44f2b4499cbcffb8fc
+ms.author: metang
+ms.custom: devx-track-js
+ms.openlocfilehash: ac7bca305b0c23cceb00f97f426b3f68fbea91b3
+ms.sourcegitcommit: fb3c846de147cc2e3515cd8219d8c84790e3a442
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/18/2020
-ms.locfileid: "88516327"
+ms.lasthandoff: 10/27/2020
+ms.locfileid: "92636436"
 ---
 # <a name="tutorial-launch-the-immersive-reader-nodejs"></a>教程：启动沉浸式阅读器 (Node.js)
 
@@ -129,7 +129,7 @@ module.exports = router;
 
 ```
 
-**getimmersivereaderlaunchparams** API 终结点应该以某种形式的身份验证（例如，[OAuth](https://oauth.net/2/)）进行保护，以防止未经授权的用户获取令牌以用于你的沉浸式阅读器服务和计费；该内容超出了本教程的范围。
+**getimmersivereaderlaunchparams** API 终结点应该以某种形式的身份验证（例如， [OAuth](https://oauth.net/2/)）进行保护，以防止未经授权的用户获取令牌以用于你的沉浸式阅读器服务和计费；该内容超出了本教程的范围。
 
 ## <a name="launch-the-immersive-reader-with-sample-content"></a>启动沉浸式阅读器以显示示例内容
 

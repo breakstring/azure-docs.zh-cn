@@ -5,12 +5,13 @@ author: motanv
 ms.topic: conceptual
 ms.date: 06/07/2017
 ms.author: motanv
-ms.openlocfilehash: 14b2b5bd2577a10ad77a715fb5d20e10da84cf1d
-ms.sourcegitcommit: 3543d3b4f6c6f496d22ea5f97d8cd2700ac9a481
+ms.custom: devx-track-csharp
+ms.openlocfilehash: 8b1d4ae42fa033c03bd82ae5cee5794d98c23c65
+ms.sourcegitcommit: 829d951d5c90442a38012daaf77e86046018e5b9
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/20/2020
-ms.locfileid: "86518973"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "89022167"
 ---
 # <a name="testability-actions"></a>可测试性操作
 为了模拟不可靠的基础结构，Azure Service Fabric 向开发者提供了众多选项，用于模拟各种现实世界故障和状态转换。 这些方式被称为可测试操作。 这些操作属于低级别 API，导致具体的故障注入、状态转换或验证。 结合使用这些操作，可以为服务编写全面的测试方案。
@@ -79,7 +80,7 @@ Restart-ServiceFabricNode -NodeName $nodeName -CompletionMode DoNotVerify
 
 以下屏幕快照显示操作中的 **Restart-ServiceFabricNode** 可测试性命令。
 
-![在 PowerShell 中运行 Get-servicefabricnode 命令的屏幕截图。](media/service-fabric-testability-actions/Restart-ServiceFabricNode.png)
+![在 PowerShell 中运行 Restart-ServiceFabricNode 命令的屏幕截图。](media/service-fabric-testability-actions/Restart-ServiceFabricNode.png)
 
 第一个 **Get-ServiceFabricNode**（来自 Service Fabric PowerShell 模块的一个 cmdlet）的输出显示本地群集有五个节点：Node.1 至 Node.5。 在名为 Node.4 的节点上执行可测试性操作 (cmdlet) **Restart-ServiceFabricNode** 之后，我们看到节点的正常运行时间已被重置。
 

@@ -1,18 +1,15 @@
 ---
 title: 教程 - Apache Kafka 和企业安全性 - Azure HDInsight
 description: 教程 - 了解如何使用企业安全性套餐为 Azure HDInsight 中的 Kafka 配置 Apache Ranger 策略。
-author: hrasheed-msft
-ms.author: hrasheed
-ms.reviewer: jasonh
 ms.service: hdinsight
 ms.topic: tutorial
 ms.date: 05/19/2020
-ms.openlocfilehash: d2780b3456a802904800b894f6849544cfee4e61
-ms.sourcegitcommit: e04a66514b21019f117a4ddb23f22c7c016da126
+ms.openlocfilehash: 552998de23bebd98f56ba28eb6ad581689e52e41
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 06/19/2020
-ms.locfileid: "85105937"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98933692"
 ---
 # <a name="tutorial-configure-apache-kafka-policies-in-hdinsight-with-enterprise-security-package-preview"></a>教程：使用企业安全性套餐（预览版）在 HDInsight 中配置 Apache Kafka 策略
 
@@ -112,7 +109,7 @@ ms.locfileid: "85105937"
 
 1. 下载 [Apache Kafka 域加入生成者使用者示例](https://github.com/Azure-Samples/hdinsight-kafka-java-get-started/tree/master/DomainJoined-Producer-Consumer)。
 
-1. 按照以下文章的**生成并部署示例**下的步骤 2 和步骤 3 进行操作：[教程：使用 Apache Kafka 生成者和使用者 API](../kafka/apache-kafka-producer-consumer-api.md#build-and-deploy-the-example)
+1. 按照以下文章的 **生成并部署示例** 下的步骤 2 和步骤 3 进行操作：[教程：使用 Apache Kafka 生成者和使用者 API](../kafka/apache-kafka-producer-consumer-api.md#build-and-deploy-the-example)
 
 1. 运行以下命令：
 
@@ -139,7 +136,7 @@ ms.locfileid: "85105937"
 
    示例： `export KAFKABROKERS=wn0-khdicl.contoso.com:9092,wn1-khdicl.contoso.com:9092`
 
-3. 按照以下文章的**生成并部署示例**下的步骤 3 进行操作：[教程：使用 Apache Kafka 生成者和使用者 API](../kafka/apache-kafka-producer-consumer-api.md#build-and-deploy-the-example) 来确保 `kafka-producer-consumer.jar` 也可供 **sales_user** 使用。
+3. 按照以下文章的 **生成并部署示例** 下的步骤 3 进行操作：[教程：使用 Apache Kafka 生成者和使用者 API](../kafka/apache-kafka-producer-consumer-api.md#build-and-deploy-the-example) 来确保 `kafka-producer-consumer.jar` 也可供 **sales_user** 使用。
 
    > [!NOTE]  
    > 对于本教程，请使用“DomainJoined-Producer-Consumer”项目下的 kafka-producer-consumer.jar（而不是 Producer-Consumer 项目下的那个文件，它适用于非加入域方案）。

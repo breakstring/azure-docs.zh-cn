@@ -1,19 +1,19 @@
 ---
 title: Azure ExpressRoute：配置 ExpressRoute Global Reach： CLI
-description: 本文介绍了如何将 ExpressRoute 线路链接到一起，以在本地网络之间建立专用网络并启用 Global Reach。
+description: 了解如何将 ExpressRoute 线路链接在一起以在本地网络之间建立专用网络，以及如何使用 Azure CLI 启用 Global Reach。
 services: expressroute
-author: jaredr80
+author: duongau
 ms.service: expressroute
 ms.topic: how-to
-ms.date: 12/12/2018
-ms.author: jaredro
+ms.date: 01/07/2021
+ms.author: duau
 ms.custom: devx-track-azurecli
-ms.openlocfilehash: 2e4f7b53ffd3642869e6246e546e3feeda3cf529
-ms.sourcegitcommit: 11e2521679415f05d3d2c4c49858940677c57900
+ms.openlocfilehash: 55f1e4c030dc0e7c8d0011dcff0cc1c9f8fec06e
+ms.sourcegitcommit: d49bd223e44ade094264b4c58f7192a57729bada
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/31/2020
-ms.locfileid: "87495890"
+ms.lasthandoff: 02/02/2021
+ms.locfileid: "99260225"
 ---
 # <a name="configure-expressroute-global-reach-by-using-the-azure-cli"></a>使用 Azure CLI 配置 ExpressRoute Global Reach
 
@@ -48,7 +48,7 @@ az account set --subscription <your subscription ID>
 
 ### <a name="identify-your-expressroute-circuits-for-configuration"></a>确定用于配置的 ExpressRoute 线路
 
-可以在任意两个 ExpressRoute 线路之间启用 ExpressRoute Global Reach，只要它们位于受支持的国家/地区并且是在不同的对等位置创建的。 如果你的订阅同时拥有这两条线路，则可以选择其中任一条线路运行配置，如本文稍后所述。 如果两条线路位于不同的 Azure 订阅中，则必须拥有来自一个 Azure 订阅的授权，并且在另一个 Azure 订阅中运行配置命令时必须传入授权密钥。
+可以在任意两个 ExpressRoute 线路之间启用 ExpressRoute Global Reach。 线路必须位于受支持的国家/地区，并且是在不同的对等位置创建的。 如果订阅拥有这两个线路，则可以选择任一线路来运行配置。 但是，如果两个线路位于不同的 Azure 订阅中，则必须从某个线路创建一个授权密钥。 使用从第一条线路生成的授权密钥，可以在第二个线路上启用 Global Reach。
 
 ## <a name="enable-connectivity-between-your-on-premises-networks"></a>启用本地网络之间的连接
 
@@ -56,9 +56,9 @@ az account set --subscription <your subscription ID>
 
 * *peer-circuit* 应当是完整的资源 ID。 例如：
 
-  > /subscriptions/{your_subscription_id}/resourceGroups/{your_resource_group}/providers/Microsoft.Network/expressRouteCircuits/{your_circuit_name}
+  > /subscriptions/{vm your_subscription_id}/resourceGroups/{your_resource_group}/providers/Microsoft.Network/expressRouteCircuits/{your_circuit_name}/peerings/AzurePrivatePeering
 
-* *地址-前缀*必须是 IPv4 子网（例如，"10.0.0.0/29"）。 我们使用此子网中的 IP 地址在两条 ExpressRoute 线路之间建立连接。 不得在 Azure 虚拟网络或本地网络中使用此子网中的地址。
+* *地址前缀* 必须是 IPv4 子网 (例如，"10.0.0.0/29" ) 。 我们使用此子网中的 IP 地址在两条 ExpressRoute 线路之间建立连接。 不能在 Azure 虚拟网络或本地网络中使用此子网中的地址。
 
 运行以下 CLI 命令来连接两条 ExpressRoute 线路：
 
@@ -94,7 +94,7 @@ CLI 输出如下所示：
 
 ## <a name="enable-connectivity-between-expressroute-circuits-in-different-azure-subscriptions"></a>在不同 Azure 订阅中启用 ExpressRoute 线路之间的连接
 
-如果两条线路不在同一 Azure 订阅中，则需要获得授权。 在下面的配置中，将在线路 2 的订阅中生成授权并将授权密钥传递给线路 1。
+如果两条线路不在同一 Azure 订阅中，则需要获得授权。 在下面的配置中，你将在2个订阅中生成授权。 然后，将授权密钥传递到线路1。
 
 1. 生成授权密钥：
 

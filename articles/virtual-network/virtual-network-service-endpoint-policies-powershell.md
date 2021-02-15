@@ -17,16 +17,14 @@ ms.workload: infrastructure-services
 ms.date: 02/03/2020
 ms.author: rdhillon
 ms.custom: ''
-ms.openlocfilehash: 1d4fcc280ba2e34d2fa81584846441ad6fe81431
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: d8e300c9be8f3e59dc9443bf1f1806e4228992ad
+ms.sourcegitcommit: a055089dd6195fde2555b27a84ae052b668a18c7
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "84708189"
+ms.lasthandoff: 01/26/2021
+ms.locfileid: "98790348"
 ---
 # <a name="manage-data-exfiltration-to-azure-storage-accounts-with-virtual-network-service-endpoint-policies-using-azure-powershell"></a>使用 Azure PowerShell 的虚拟网络服务终结点策略管理数据渗透到 Azure 存储帐户
-
-[!INCLUDE [updated-for-az](../../includes/updated-for-az.md)]
 
 利用虚拟网络服务终结点策略，你可以通过服务终结点在虚拟网络中应用对 Azure 存储帐户的访问控制。 这是保护工作负荷的关键，管理允许的存储帐户和允许数据渗透的位置。
 在本文中，学习如何：
@@ -35,9 +33,11 @@ ms.locfileid: "84708189"
 * 添加子网并启用 Azure 存储的服务终结点。
 * 创建两个 Azure 存储帐户，并在上面创建的子网中允许对其进行网络访问。
 * 创建服务终结点策略，只允许访问其中一个存储帐户。
-* 将虚拟机（VM）部署到子网。
+* 将 (VM) 的虚拟机部署到子网。
 * 从子网确认对允许的存储帐户的访问权限。
 * 确认拒绝从子网到不允许的存储帐户的访问。
+
+[!INCLUDE [updated-for-az](../../includes/updated-for-az.md)]
 
 如果没有 Azure 订阅，请在开始之前创建一个[免费帐户](https://azure.microsoft.com/free/?WT.mc_id=A261C142F)。
 
@@ -238,7 +238,7 @@ $privateSubnet = Get-AzVirtualNetwork `
   | Get-AzVirtualNetworkSubnetConfig -Name Private
 ```
 
-使用 [Add-AzStorageAccountNetworkRule](/powershell/module/az.network/add-aznetworksecurityruleconfig) 允许从 Private** 子网对存储帐户进行网络访问。
+使用 [Add-AzStorageAccountNetworkRule](/powershell/module/az.network/add-aznetworksecurityruleconfig) 允许从 Private 子网对存储帐户进行网络访问。
 
 ```azurepowershell-interactive
 Add-AzStorageAccountNetworkRule `
@@ -260,7 +260,7 @@ Add-AzStorageAccountNetworkRule `
 
 本部分使用允许访问服务终结点的资源列表创建策略定义
 
-检索第一个（允许的）存储帐户的资源 ID 
+检索) 存储帐户允许的第一个 (的资源 ID 
 
 ```azurepowershell-interactive
 $resourceId = (Get-AzStorageAccount -ResourceGroupName myresourcegroup -Name $storageAcctName1).id
@@ -303,7 +303,7 @@ $virtualNetwork | Set-AzVirtualNetwork
 
 若要测试对存储帐户的网络访问，请在子网中部署 VM。
 
-使用[new-azvm](/powershell/module/az.compute/new-azvm)在*专用*子网中创建虚拟机。 运行以下命令时，会提示输入凭据。 输入的值将配置为用于 VM 的用户名和密码。 `-AsJob` 选项会在后台创建 VM，因此可继续执行下一步。
+使用 [new-azvm](/powershell/module/az.compute/new-azvm)在 *专用* 子网中创建虚拟机。 运行以下命令时，会提示输入凭据。 输入的值将配置为用于 VM 的用户名和密码。 `-AsJob` 选项会在后台创建 VM，因此可继续执行下一步。
 
 ```azurepowershell-interactive
 New-AzVm -ResourceGroupName myresourcegroup `
@@ -321,7 +321,7 @@ Id     Name            PSJobTypeName   State         HasMoreData     Location   
 1      Long Running... AzureLongRun... Running       True            localhost            New-AzVM
 ```
 
-### <a name="confirm-access-to-the-allowed-storage-account"></a>确认对*允许*的存储帐户的访问权限
+### <a name="confirm-access-to-the-allowed-storage-account"></a>确认对 *允许* 的存储帐户的访问权限
 
 使用 [Get-AzPublicIpAddress](/powershell/module/az.network/get-azpublicipaddress) 返回 VM 的公共 IP 地址。 以下示例返回 *myVmPrivate* VM 的公共 IP 地址：
 
@@ -338,9 +338,9 @@ Get-AzPublicIpAddress `
 mstsc /v:<publicIpAddress>
 ```
 
-此时会创建远程桌面协议 (.rdp) 文件，并下载到计算机。 打开下载的 rdp 文件。 出现提示时，选择“连接”。 输入在创建 VM 时指定的用户名和密码。 可能需要选择“更多选择”****，然后选择“使用其他帐户”****，以指定在创建 VM 时输入的凭据。 选择“确定”。 你可能会在登录过程中收到证书警告。 如果收到警告，请选择“是”或“继续”以继续连接。********
+此时会创建远程桌面协议 (.rdp) 文件，并下载到计算机。 打开下载的 rdp 文件。 出现提示时，选择“连接”。 输入在创建 VM 时指定的用户名和密码。 可能需要选择“更多选择”  ，然后选择“使用其他帐户”  ，以指定在创建 VM 时输入的凭据。 选择“确定” 。 你可能会在登录过程中收到证书警告。 如果收到警告，请选择“是”或“继续”以继续连接。 
 
-在*myVmPrivate* VM 上，使用 PowerShell 将 Azure 文件共享从允许的存储帐户映射到驱动器 Z。 
+在 *myVmPrivate* VM 上，使用 PowerShell 将 Azure 文件共享从允许的存储帐户映射到驱动器 Z。 
 
 ```powershell
 $acctKey = ConvertTo-SecureString -String $storageAcctKey1 -AsPlainText -Force
@@ -360,9 +360,9 @@ Azure 文件共享已成功映射到驱动器 Z。
 
 关闭与 *myVmPrivate* VM 建立的远程桌面会话。
 
-### <a name="confirm-access-is-denied-to-non-allowed-storage-account"></a>确认拒绝对*不允许*的存储帐户的访问
+### <a name="confirm-access-is-denied-to-non-allowed-storage-account"></a>确认拒绝对 *不允许* 的存储帐户的访问
 
-在相同的*myVmPrivate* VM 上，尝试将 Azure 文件共享映射到驱动器 X。 
+在相同的 *myVmPrivate* VM 上，尝试将 Azure 文件共享映射到驱动器 X。 
 
 ```powershell
 $acctKey = ConvertTo-SecureString -String $storageAcctKey1 -AsPlainText -Force
@@ -370,7 +370,7 @@ $credential = New-Object System.Management.Automation.PSCredential -ArgumentList
 New-PSDrive -Name X -PSProvider FileSystem -Root "\\notallowedaccount.file.core.windows.net\my-file-share" -Credential $credential
 ```
 
-对该共享的访问被拒绝，并且将收到 `New-PSDrive : Access is denied` 错误。 访问被拒绝，因为存储帐户*notallowedaccount*不在服务终结点策略的 "允许的资源" 列表中。 
+对该共享的访问被拒绝，并且将收到 `New-PSDrive : Access is denied` 错误。 访问被拒绝，因为存储帐户 *notallowedaccount* 不在服务终结点策略的 "允许的资源" 列表中。 
 
 关闭与 *myVmPublic* VM 建立的远程桌面会话。
 
@@ -384,4 +384,4 @@ Remove-AzResourceGroup -Name myResourceGroup -Force
 
 ## <a name="next-steps"></a>后续步骤
 
-本文介绍如何通过 Azure 虚拟网络服务终结点将服务终结点策略应用于 Azure 存储。 已创建 Azure 存储帐户，并且只能从虚拟网络子网访问特定存储帐户（并因此被拒绝其他存储帐户）。 若要详细了解服务终结点策略，请参阅[服务终结点策略概述](virtual-network-service-endpoint-policies-overview.md)。
+本文介绍如何通过 Azure 虚拟网络服务终结点将服务终结点策略应用于 Azure 存储。 已创建 Azure 存储帐户，并且仅限 (特定存储帐户的网络访问权限，因此从虚拟网络子网中拒绝其他) 。 若要详细了解服务终结点策略，请参阅 [服务终结点策略概述](virtual-network-service-endpoint-policies-overview.md)。

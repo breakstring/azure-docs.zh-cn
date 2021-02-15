@@ -6,13 +6,13 @@ ms.suite: integration
 ms.reviewer: logicappspm
 ms.topic: quickstart
 ms.custom: mvc
-ms.date: 08/07/2020
-ms.openlocfilehash: cc38210690c88fec826dc727775d01884dedd997
-ms.sourcegitcommit: 98854e3bd1ab04ce42816cae1892ed0caeedf461
+ms.date: 10/27/2020
+ms.openlocfilehash: 8181097425045e5b1ed838c5fcc08b0069185908
+ms.sourcegitcommit: d1e56036f3ecb79bfbdb2d6a84e6932ee6a0830e
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/07/2020
-ms.locfileid: "88008876"
+ms.lasthandoff: 01/29/2021
+ms.locfileid: "99051951"
 ---
 # <a name="quickstart-create-automated-tasks-processes-and-workflows-with-azure-logic-apps---visual-studio"></a>快速入门：使用 Azure 逻辑应用创建自动化任务、流程和工作流 - Visual Studio
 
@@ -20,9 +20,9 @@ ms.locfileid: "88008876"
 
 如果不熟悉 Azure 逻辑应用，只希望了解基本概念，则可尝试[关于在 Azure 门户中创建逻辑应用的快速入门](../logic-apps/quickstart-create-first-logic-app-workflow.md)。 逻辑应用设计器在 Azure 门户和 Visual Studio 中的工作方式类似。
 
-在本快速入门中，你将使用 Visual Studio 创建与 Azure 门户快速入门相同的逻辑应用。 此逻辑应用监视网站的 RSS 源，并针对该源中的每个新项发送电子邮件。 完成后的逻辑应用看起来与以下概略性的工作流类似：
+在本快速入门中，你将使用 Visual Studio 创建与 Azure 门户快速入门相同的逻辑应用。 你还可以了解如何[在 Visual Studio Code 中创建示例应用](quickstart-create-logic-apps-visual-studio-code.md)以及如何[通过 Azure 命令行接口 (Azure CLI) 创建和管理逻辑应用](quickstart-logic-apps-azure-cli.md)。此逻辑应用监视网站的 RSS 源，并为该源中的每个新项发送电子邮件。 完成后的逻辑应用看起来与以下概略性的工作流类似：
 
-![完成的逻辑应用](./media/quickstart-create-logic-apps-with-visual-studio/high-level-workflow-overview.png)
+![屏幕截图，显示已完成逻辑应用的概略性工作流。](./media/quickstart-create-logic-apps-with-visual-studio/high-level-workflow-overview.png)
 
 <a name="prerequisites"></a>
 
@@ -37,7 +37,7 @@ ms.locfileid: "88008876"
     > [!IMPORTANT]
     > 安装 Visual Studio 2019 或 2017 时，请务必选择“Azure 开发”工作负荷。
 
-  * [用于 .NET 的 Microsoft Azure SDK（2.9.1 或更高版本）](https://azure.microsoft.com/downloads/)。 详细了解[用于 .NET 的 Azure SDK](/dotnet/azure/dotnet-tools?view=azure-dotnet)。
+  * [用于 .NET 的 Microsoft Azure SDK（2.9.1 或更高版本）](https://azure.microsoft.com/downloads/)。 详细了解[用于 .NET 的 Azure SDK](/dotnet/azure/intro)。
 
   * [Azure PowerShell](https://github.com/Azure/azure-powershell#installation)
 
@@ -55,10 +55,12 @@ ms.locfileid: "88008876"
 
   设计器需要通过 Internet 连接在 Azure 中创建资源，以及从逻辑应用中的连接器读取属性和数据。
 
-* 逻辑应用支持的（例如 Office 365 Outlook、Outlook.com 或 Gmail）电子邮件帐户。 至于其他提供商，请查看[此处的连接器列表](/connectors/)。 本示例使用 Office 365 Outlook。 如果使用其他提供商，整个步骤仍然是相同的，但 UI 可能稍有不同。
+* 逻辑应用支持的电子邮件帐户（如 Outlook for Microsoft 365、Outlook.com 或 Gmail）。 至于其他提供商，请查看[此处的连接器列表](/connectors/)。 本示例使用 Office 365 Outlook。 如果使用其他提供商，整个步骤仍然是相同的，但 UI 可能稍有不同。
 
   > [!IMPORTANT]
   > 如果要使用 Gmail 连接器，则只有 G-Suite 商业帐户可以在逻辑应用中不受限制地使用此连接器。 如果有 Gmail 用户帐户，则只能将此连接器与 Google 批准的特定服务一起使用，也可以[创建用于通过 Gmail 连接器进行身份验证的 Google 客户端应用](/connectors/gmail/#authentication-and-bring-your-own-application)。 有关详细信息，请参阅 [Azure 逻辑应用中 Google 连接器的数据安全和隐私策略](../connectors/connectors-google-data-security-privacy-policy.md)。
+
+* 如果逻辑应用需要通过仅限流量流经特定 IP 地址的防火墙进行通信，则该防火墙需要允许访问该逻辑应用所在的 Azure 区域中的逻辑应用服务或运行时使用的[入站](logic-apps-limits-and-config.md#inbound)和[出站](logic-apps-limits-and-config.md#outbound) IP 地址。 如果逻辑应用还使用[托管连接器](../connectors/apis-list.md#managed-api-connectors)（例如 Office 365 Outlook 连接器或 SQL 连接器），或者还使用[自定义连接器](/connectors/custom-connectors/)，则防火墙还需要允许访问该逻辑应用所在的 Azure 区域中的所有[托管连接器出站 IP 地址](logic-apps-limits-and-config.md#outbound)。
 
 <a name="azure-government"></a>
 
@@ -125,7 +127,7 @@ ms.locfileid: "88008876"
 
 ## <a name="create-blank-logic-app"></a>创建空白逻辑应用
 
-在创建 Azure 资源组项目后，使用**空白逻辑应用**模板创建你的逻辑应用。
+在创建 Azure 资源组项目后，使用 **空白逻辑应用** 模板创建你的逻辑应用。
 
 1. 在解决方案资源管理器中，打开 **LogicApp.json** 文件的快捷菜单。 选择“使用逻辑应用设计器打开”。 （键盘：Ctrl + L）
 
@@ -145,7 +147,7 @@ ms.locfileid: "88008876"
    | 用户帐户 | Fabrikam <br> sophia-owen@fabrikam.com | 登录 Visual Studio 时使用的帐户 |
    | **订阅** | 即用即付 <br> (sophia-owen@fabrikam.com) | Azure 订阅的名称以及关联的帐户 |
    | **资源组** | MyLogicApp-RG <br> （美国西部） | 用于存储和部署逻辑应用资源的 Azure 资源组和位置 |
-   | **位置** | **与资源组相同** | 用于部署逻辑应用的位置类型和特定位置。 位置类型可以是 Azure 区域，也可以是现有的[集成服务环境 (ISE)](connect-virtual-network-vnet-isolated-environment.md)。 <p>对于本快速入门，请将“位置类型”设置为“区域”，并将“**位置**”设置为“**与资源组相同**”。 <p>**注意**：创建资源组项目后，可以[更改位置类型和位置](manage-logic-apps-with-visual-studio.md#change-location)，但不同的位置类型会以不同的方式影响逻辑应用。 |
+   | **位置** | **与资源组相同** | 用于部署逻辑应用的位置类型和特定位置。 位置类型可以是 Azure 区域，也可以是现有的[集成服务环境 (ISE)](connect-virtual-network-vnet-isolated-environment.md)。 <p>对于本快速入门，请将“位置类型”设置为“区域”，并将“**位置**”设置为“**与资源组相同**”。 <p>**注意**：创建资源组项目后，可以 [更改位置类型和位置](manage-logic-apps-with-visual-studio.md#change-location)，但不同的位置类型会以不同的方式影响逻辑应用。 |
    ||||
 
 1. 逻辑应用设计器会打开一个页面，其中显示了介绍视频和常用的触发器。 向下滚动，越过视频和触发器，找到“模板”，然后选择“空白逻辑应用”。

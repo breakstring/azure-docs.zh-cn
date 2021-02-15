@@ -1,20 +1,17 @@
 ---
-title: PySpark 交互环境与 Azure HDInsight 工具
+title: 使用 Azure HDInsight 工具的 PySpark 交互式环境
 description: 了解如何使用用于 Visual Studio Code 的 Azure HDInsight 工具来创建、提交查询和脚本。
 keywords: VScode,Azure HDInsight Tools,Hive,Python,PySpark,Spark,HDInsight,Hadoop,LLAP,交互式 Hive,交互式查询
-author: hrasheed-msft
-ms.author: hrasheed
-ms.reviewer: jasonh
 ms.service: hdinsight
 ms.topic: how-to
 ms.custom: seoapr2020, devx-track-python
 ms.date: 04/23/2020
-ms.openlocfilehash: 14f0c7177953e43b0c58b4f5432d0c08c5f03f45
-ms.sourcegitcommit: dea88d5e28bd4bbd55f5303d7d58785fad5a341d
+ms.openlocfilehash: 337a9f3f2ea25e5a4d4fa4204a0f3fa4dcc9369b
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/06/2020
-ms.locfileid: "87876608"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98940645"
 ---
 # <a name="set-up-the-pyspark-interactive-environment-for-visual-studio-code"></a>为 Visual Studio Code 设置 PySpark 交互式环境
 
@@ -26,9 +23,7 @@ ms.locfileid: "87876608"
 
    * 从 [https://www.python.org/downloads/](https://www.python.org/downloads/) 安装 Python。 
    * 从 [https://pip.pypa.io/en/stable/installing](https://pip.pypa.io/en/stable/installing/) 安装 pip（如果未从“Python 安装”进行安装）。
-   * 使用以下命令验证 Python 和 pip 是否成功安装。 (可选)
-
-        ![检查 Python pip 版本命令](./media/set-up-pyspark-interactive-environment/check-python-pip-version.png)
+   * （可选）使用 `python --version` 和 `pip --version` 命令来验证是否成功安装了 Python 和 pip。 
 
      > [!NOTE]
      > 建议手动安装 Python，而不是使用 macOS 默认版本。

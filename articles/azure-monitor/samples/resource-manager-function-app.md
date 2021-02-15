@@ -3,15 +3,15 @@ title: Azure 函数应用 + Application Insights 资源的资源管理器模板�
 description: 用于部署 Azure 函数应用和 Application Insights 资源的 Azure 资源管理器示例模板。
 ms.subservice: application-insights
 ms.topic: sample
-author: mrbullwinkle
-ms.author: mbullwin
+author: lgayhardt
+ms.author: lagayhar
 ms.date: 08/06/2020
-ms.openlocfilehash: 6b869f485285758336c3d58b7e298e6e002797dd
-ms.sourcegitcommit: 4f1c7df04a03856a756856a75e033d90757bb635
+ms.openlocfilehash: 77b25b2ff4a89e00ecdd72b2df9784b1242bb977
+ms.sourcegitcommit: f5b8410738bee1381407786fcb9d3d3ab838d813
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/07/2020
-ms.locfileid: "87927483"
+ms.lasthandoff: 01/14/2021
+ms.locfileid: "98209740"
 ---
 # <a name="resource-manager-template-sample-for-creating-azure-function-apps-with-application-insights-monitoring"></a>用于创建具有 Application Insights 监视的 Azure 函数应用的资源管理器模板示例
 

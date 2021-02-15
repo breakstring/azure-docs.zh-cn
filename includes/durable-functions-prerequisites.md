@@ -4,12 +4,12 @@ ms.service: azure-functions
 ms.topic: include
 ms.date: 11/27/2018
 ms.author: glenga
-ms.openlocfilehash: 85fbd7a65fe19e785488714411d671c8ee29ab40
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 2808e26f92899bbaced65571ebc484e6f6295a76
+ms.sourcegitcommit: e46f9981626751f129926a2dae327a729228216e
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "77562050"
+ms.lasthandoff: 01/08/2021
+ms.locfileid: "98027633"
 ---
 ## <a name="prerequisites"></a>必备条件
 
@@ -22,5 +22,10 @@ ms.locfileid: "77562050"
 
 * [完成快速入门文章](../articles/azure-functions/durable/quickstart-js-vscode.md)
 * [从 GitHub 克隆或下载示例项目](https://github.com/Azure/azure-functions-durable-extension/tree/master/samples/javascript)
+
+# <a name="python"></a>[Python](#tab/python)
+
+* [完成快速入门文章](../articles/azure-functions/durable/quickstart-python-vscode.md)
+* [从 GitHub 克隆或下载示例项目](https://github.com/Azure/azure-functions-durable-python/tree/master/samples/)
 
 ---

@@ -1,19 +1,19 @@
 ---
 title: 常见问题
 description: 有关 Azure 空间定位点服务的常见问题解答。
-author: ramonarguelles
-manager: vriveras
+author: msftradford
+manager: MehranAzimi-msft
 services: azure-spatial-anchors
-ms.author: rgarcia
-ms.date: 05/18/2020
+ms.author: parkerra
+ms.date: 11/20/2020
 ms.topic: overview
 ms.service: azure-spatial-anchors
-ms.openlocfilehash: 9f6f428a930f03259986373ca70a95d5df1f7dc3
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.openlocfilehash: 01eb0ce83efa54366e027d35d9c3c3bbf86eff7b
+ms.sourcegitcommit: b8eba4e733ace4eb6d33cc2c59456f550218b234
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87091481"
+ms.lasthandoff: 11/23/2020
+ms.locfileid: "95487361"
 ---
 # <a name="frequently-asked-questions-about-azure-spatial-anchors"></a>有关 Azure 空间定位点的常见问题解答
 
@@ -51,7 +51,7 @@ Azure 空间定位点是一个托管云服务和开发人员平台，可跨 Holo
 
 **问：Azure 空间定位点如何存储数据？**
 
-**答:** 所有数据都使用 Microsoft 管理的数据加密密钥进行加密存储。
+**答:** 所有数据均使用 Microsoft 托管数据加密密钥进行加密，且对于每个资源，所有数据均按区域存储。
 
 **问：使用 Azure 空间定位点时，会在服务中传输和存储有关环境的哪些信息？是否会传输和存储环境的图片？**
 
@@ -90,7 +90,7 @@ Azure 空间定位点遵守 [Azure 服务协议条款](https://go.microsoft.com/
 
 **问：** 是否对 Azure 空间定位点收费？
 
-**答:** 可以在我们的[定价页面](https://azure.microsoft.com/pricing/details/spatial-anchors/)上找到有关定价的详细信息。
+**答:** 可以在我们的 [定价页面](https://azure.microsoft.com/pricing/details/spatial-anchors/)上找到有关定价的详细信息。
 
 ## <a name="technical-faqs"></a>技术常见问题解答
 
@@ -128,4 +128,4 @@ Azure 空间定位点将 6DoF 跟踪器作为构造块，使你可以将真实�
 
 **问：Azure 空间定位点使用哪些端口和协议？**
 
-**答:** Azure 空间定位点使用加密协议通过 TCP 端口 443 进行通信。 对于身份验证，它使用 [Azure Active Directory](https://docs.microsoft.com/azure/active-directory/)，后者使用 HTTPS 通过端口 443 进行通信。
+**答:** Azure 空间定位点使用加密协议通过 TCP 端口 443 进行通信。 对于身份验证，它使用 [Azure Active Directory](../active-directory/index.yml)，后者使用 HTTPS 通过端口 443 进行通信。

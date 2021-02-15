@@ -1,20 +1,21 @@
 ---
 title: 管理对 Azure 计费的访问
-description: 了解如何向团队成员提供对 Azure 帐单信息的访问权限。
+description: 了解如何向团队成员授予访问 Azure 计费信息的权限。
 author: vikramdesai01
 ms.reviewer: amberb
 tags: billing
 ms.service: cost-management-billing
+ms.subservice: billing
 ms.topic: how-to
-ms.date: 07/24/2020
+ms.date: 01/26/2021
 ms.author: banders
 ms.custom: seodec18
-ms.openlocfilehash: 74c00678ca901d163d951e02167c89896c43e7b3
-ms.sourcegitcommit: dccb85aed33d9251048024faf7ef23c94d695145
+ms.openlocfilehash: 23e3adad12a726b03f6efe309dde0ec4a93bcd5b
+ms.sourcegitcommit: 100390fefd8f1c48173c51b71650c8ca1b26f711
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/28/2020
-ms.locfileid: "87281763"
+ms.lasthandoff: 01/27/2021
+ms.locfileid: "98897419"
 ---
 # <a name="manage-access-to-billing-information-for-azure"></a>管理对 Azure 账单信息的访问权限
 
@@ -37,9 +38,9 @@ ms.locfileid: "87281763"
 - 读者
 - 计费读者
 
-这些角色可以在 [Azure 门户](https://portal.azure.com/)中访问账单信息。 分配了这些角色的人员也可以使用[计费 API](usage-rate-card-overview.md) 以编程方式获取发票和使用详细信息。
+这些角色可以在 [Azure 门户](https://portal.azure.com/)中访问账单信息。 分配了这些角色的人员也可以使用[计费 API](consumption-api-overview.md#usage-details-api) 以编程方式获取发票和使用详细信息。
 
-若要分配角色，请参阅[使用 RBAC 和 Azure 门户管理访问权限](../../role-based-access-control/role-assignments-portal.md)。
+若要分配角色，请参阅[使用 Azure 门户添加或删除 Azure 角色分配](../../role-based-access-control/role-assignments-portal.md)。
 
 ** 如果你是 EA 客户，帐户所有者可以将上述角色分配给其团队的其他用户。 但是，要让这些用户查看账单信息，企业管理员必须在 Enterprise Portal 中启用 AO 查看费用。
 
@@ -52,7 +53,7 @@ ms.locfileid: "87281763"
 
 1. 在“成本管理 + 计费”中进行搜索。
 
-    ![显示了 Azure 门户搜索的屏幕截图](./media/manage-billing-access/billing-search-cost-management-billing.png)
+    ![突出显示“服务”部分下的“成本管理 + 计费”的屏幕截图。](./media/manage-billing-access/billing-search-cost-management-billing.png)
 
 1. 在左侧窗格中选择“订阅”。 根据你的访问权限，可能需要选择计费范围，然后选择“订阅”。
 
@@ -93,7 +94,7 @@ ms.locfileid: "87281763"
 1. 在“选择”文本框中，键入要添加的用户的名称或电子邮件。
 1. 选择用户。
 1. 选择“保存”。
-    ![显示单击“添加角色分配”的屏幕截图](./media/manage-billing-access/billing-save-role-assignment.png)
+    ![突出显示“保存”按钮的屏幕截图。](./media/manage-billing-access/billing-save-role-assignment.png)
 
 1. 片刻之后，为用户分配了订阅的“账单读取者”角色。
 
@@ -104,7 +105,7 @@ ms.locfileid: "87281763"
 
 ## <a name="next-steps"></a>后续步骤
 
-- 其他角色的用户（如所有者或参与者）不仅可访问计费信息，还可访问 Azure 服务。 若要管理这些角色，请参阅[使用 RBAC 和 Azure 门户管理访问权限](../../role-based-access-control/role-assignments-portal.md)。
+- 其他角色的用户（如所有者或参与者）不仅可访问计费信息，还可访问 Azure 服务。 若要管理这些角色，请参阅[使用 Azure 门户添加或删除 Azure 角色分配](../../role-based-access-control/role-assignments-portal.md)。
 - 有关角色的详细信息，请参阅 [Azure 内置角色](../../role-based-access-control/built-in-roles.md)。
 
 ## <a name="need-help-contact-us"></a>需要帮助？ 请联系我们。

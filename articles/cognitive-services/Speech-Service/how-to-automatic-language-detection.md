@@ -11,13 +11,13 @@ ms.topic: conceptual
 ms.date: 05/19/2020
 ms.author: trbye
 zone_pivot_groups: programming-languages-speech-services-nomore-variant
-ms.custom: devx-track-javascript
-ms.openlocfilehash: c1d2613661421ae95c34edef3caafe4c6fb3d4a9
-ms.sourcegitcommit: 4e5560887b8f10539d7564eedaff4316adb27e2c
+ms.custom: devx-track-js, devx-track-csharp
+ms.openlocfilehash: e62333f241cf24620773314fb7aa4846af651eaf
+ms.sourcegitcommit: 0aec60c088f1dcb0f89eaad5faf5f2c815e53bf8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/06/2020
-ms.locfileid: "87905068"
+ms.lasthandoff: 01/14/2021
+ms.locfileid: "98185863"
 ---
 # <a name="automatic-language-detection-for-speech-to-text"></a>语音转文本的自动语言检测
 
@@ -26,7 +26,7 @@ ms.locfileid: "87905068"
 本文介绍如何使用 `AutoDetectSourceLanguageConfig` 来构造 `SpeechRecognizer` 对象并检索检测到的语言。
 
 > [!IMPORTANT]
-> 此功能仅适用于使用 c #、c + +、Java、Python、JavaScript 和目标-C 的语音 SDK。
+> 此功能仅适用于具有 C#、C++、Java、Python、JavaScript 和 Objective-C 的语音 SDK。
 
 ## <a name="automatic-language-detection-with-the-speech-sdk"></a>使用语言 SDK 进行自动语言检测
 
@@ -67,7 +67,8 @@ auto autoDetectSourceLanguageConfig =
 auto recognizer = SpeechRecognizer::FromConfig(
     speechConfig,
     autoDetectSourceLanguageConfig,
-    audioConfig);
+    audioConfig
+    );
 
 speechRecognitionResult = recognizer->RecognizeOnceAsync().get();
 auto autoDetectSourceLanguageResult =
@@ -140,7 +141,7 @@ NSString *detectedLanguage = [languageDetectionResult language];
 
 ```Javascript
 var autoDetectConfig = SpeechSDK.AutoDetectSourceLanguageConfig.fromLanguages(["en-US", "de-DE"]);
-var speechRecognizer = SpeechSDK.SpeechRecognizer.FromConfig(speechConfig, audioConfig, autoDetectConfig);
+var speechRecognizer = SpeechSDK.SpeechRecognizer.FromConfig(speechConfig, autoDetectConfig, audioConfig);
 speechRecognizer.recognizeOnceAsync((result: SpeechSDK.SpeechRecognitionResult) => {
         var languageDetectionResult = SpeechSDK.AutoDetectSourceLanguageResult.fromResult(result);
         var detectedLanguage = languageDetectionResult.language;
@@ -241,23 +242,23 @@ var autoDetectConfig = SpeechSDK.AutoDetectSourceLanguageConfig.fromSourceLangua
 ## <a name="next-steps"></a>后续步骤
 
 ::: zone pivot="programming-language-csharp"
-* 请参阅 GitHub 上的[示例代码](https://github.com/Azure-Samples/cognitive-services-speech-sdk/blob/master/samples/csharp/sharedcontent/console/speech_recognition_samples.cs#L741)以进行自动语言检测
+* 有关自动语言检测，请参阅 GitHub 上的[示例代码](https://github.com/Azure-Samples/cognitive-services-speech-sdk/blob/master/samples/csharp/sharedcontent/console/speech_recognition_samples.cs#L741)
 ::: zone-end
 
 ::: zone pivot="programming-language-cpp"
-* 请参阅 GitHub 上的[示例代码](https://github.com/Azure-Samples/cognitive-services-speech-sdk/blob/master/samples/cpp/windows/console/samples/speech_recognition_samples.cpp#L507)以进行自动语言检测
+* 有关自动语言检测，请参阅 GitHub 上的[示例代码](https://github.com/Azure-Samples/cognitive-services-speech-sdk/blob/master/samples/cpp/windows/console/samples/speech_recognition_samples.cpp#L507)
 ::: zone-end
 
 ::: zone pivot="programming-language-java"
-* 请参阅 GitHub 上的[示例代码](https://github.com/Azure-Samples/cognitive-services-speech-sdk/blob/master/samples/java/jre/console/src/com/microsoft/cognitiveservices/speech/samples/console/SpeechRecognitionSamples.java#L521)以进行自动语言检测
+* 有关自动语言检测，请参阅 GitHub 上的[示例代码](https://github.com/Azure-Samples/cognitive-services-speech-sdk/blob/master/samples/java/jre/console/src/com/microsoft/cognitiveservices/speech/samples/console/SpeechRecognitionSamples.java#L521)
 ::: zone-end
 
 ::: zone pivot="programming-language-python"
-* 请参阅 GitHub 上的[示例代码](https://github.com/Azure-Samples/cognitive-services-speech-sdk/blob/master/samples/python/console/speech_synthesis_sample.py#L434)以进行自动语言检测
+* 有关自动语言检测，请参阅 GitHub 上的[示例代码](https://github.com/Azure-Samples/cognitive-services-speech-sdk/blob/master/samples/python/console/speech_sample.py#L458)
 ::: zone-end
 
 ::: zone pivot="programming-language-objectivec"
-* 请参阅 GitHub 上的[示例代码](https://github.com/Azure-Samples/cognitive-services-speech-sdk/blob/master/samples/objective-c/ios/speech-samples/speech-samples/ViewController.m#L494)以进行自动语言检测
+* 有关自动语言检测，请参阅 GitHub 上的[示例代码](https://github.com/Azure-Samples/cognitive-services-speech-sdk/blob/master/samples/objective-c/ios/speech-samples/speech-samples/ViewController.m#L525)
 ::: zone-end
 
 * [语音 SDK 参考文档](speech-sdk.md)

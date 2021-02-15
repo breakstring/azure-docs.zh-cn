@@ -1,105 +1,172 @@
 ---
-title: 确定发布选项 - Microsoft 商业市场
-description: 本文介绍了向 Microsoft AppSource 和 Azure 市场发布产品/服务的资格标准和要求。
+title: 列表选项简介-Microsoft 商用 marketplace
+description: 本文介绍适用于 Microsoft AppSource 和 Azure Marketplace 发布的产品/服务的列表选项。
 ms.service: marketplace
 ms.subservice: partnercenter-marketplace-publisher
 ms.topic: conceptual
-author: keferna
-ms.author: keferna
-ms.date: 07/30/2020
-ms.openlocfilehash: 4a27ace4e45d00a2fbb35b9e0e3e9b7c03383681
-ms.sourcegitcommit: e0785ea4f2926f944ff4d65a96cee05b6dcdb792
+author: trkeya
+ms.author: trkeya
+ms.date: 01/14/2021
+ms.openlocfilehash: 2433e62fd1dbf35748483b40958fc3367532102a
+ms.sourcegitcommit: 24f30b1e8bb797e1609b1c8300871d2391a59ac2
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/21/2020
-ms.locfileid: "88705871"
+ms.lasthandoff: 02/10/2021
+ms.locfileid: "100099228"
 ---
-# <a name="determine-your-publishing-option"></a>确定发布选项
+# <a name="introduction-to-listing-options"></a>列表选项简介
 
-为产品/服务选择的发布选项直接关系到资格要求和商业市场 GTM 权益。 更重要的是，选择的发布选项和产品/服务类型定义了用户如何与商业市场产品/服务进行交互。
+当你创建产品/服务类型时，你可以选择一个或多个列表选项。 这些选项确定客户在在线商店中的产品/服务列表页上看到的按钮。 列表选项包括 _免费试用版、试用版_、_与我联系_ 并 _立即获取_。 
 
-若要配置你的产品/服务，你将需要了解以下主要的商业市场概念：发布选项、产品/服务类型和配置，以及将控制产品/服务在商业市场在线商店中的显示方式和位置的调用操作。
+此表显示了可用于每种产品/服务类型的列表选项。
 
-在本文中，将学习以下内容：
+| 产品/服务类型 | 免费试用版 | 体验版 | 与我联系 | 立即获取 `*` |
+| ------------ | ------------- | ------------- | ------------- | ------------- |
+|  (托管应用的 Azure 应用程序)  |   | &#10004; |   | &#10004; |
+|  (解决方案模板 Azure 应用程序)  |  |  |  | &#10004; |
+| 咨询服务 |  |  | &#10004; |  |
+| Azure 容器 |  |  |  | &#10004; |
+| Dynamics 365 business central | &#10004; | &#10004; | &#10004; | &#10004; |
+| Dynamics 365 Customer Engagement & PowerApps | &#10004; | &#10004; | &#10004; | &#10004; |
+| 用于操作的 Dynamics 365 | &#10004; | &#10004; | &#10004; | &#10004; |
+| IoT Edge 模块 |  |  |  | &#10004; |
+| 托管服务 |  |  |  | &#10004; |
+| Power BI 应用 |  |  |  | &#10004; |
+| Azure 虚拟机 | &#10004; | &#10004; |  | &#10004; |
+| 软件即服务 | &#10004; | &#10004; | &#10004; | &#10004; |
+||||||
 
-- 如何确定适用于你的解决方案的在线商店。
-- 每个在线商店中提供了哪些发布选项和操作调用。
-- 每个发布选项都提供了哪些提供类型。
+&#42; 立即获取列表 "选项包括" 立即获取 " (免费) ，自带许可证 (BYOL) 、订阅和基于使用情况的定价。 有关详细信息，请参阅 [立即获取](#get-it-now)。
 
-## <a name="commercial-marketplace-publishing-options"></a>商业市场发布选项
+## <a name="changing-offer-type"></a>更改产品/服务类型
 
-下表显示了 Microsoft AppSource 和 Azure 市场中的不同产品/服务类型的发布选项。
+[!INCLUDE [change-offer-type](./includes/change-offer-type.md)]
 
-|   | **商品（联系）**  | **商品（试用）**  | **免费** | **BYOL** | **事务处理**|
-| :--------- | :----------- | :------------ | :----------- | :---------- |:---------- |
-| **虚拟机** |  |  |  | Azure 市场 |  Azure 市场 |
-| **Azure 应用（多 VM）** |  |  | Azure 市场 | Azure 市场 | Azure 市场  |
-| **容器映像** |  |  | Azure 市场 | Azure 市场 |   |
-| **IoT Edge 模块** |  |  | Azure 市场 | Azure 市场 |   |
-| **托管服务** |  |  |  | Azure 市场 |   |
-| **咨询服务** | 这两个在线商店 |  |  |  |   |
-| **SaaS 应用** | 这两个在线商店 | 这两个在线商店 | 这两个在线商店 |  | 这两个在线商店 * |
-| **Microsoft 365 应用** | AppSource | AppSource |  |  | AppSource**  |
-| **Dynamics 365 加载项** |  AppSource | AppSource |  |  |   |
-| **PowerApps** | AppSource |AppSource  |  |  |   |
+## <a name="free-trial"></a>免费试用版
 
-&#42; Microsoft AppSource 中的 SaaS 应用程序事务处理产品/服务目前仅支持信用卡。
+使用商业市场增强解决方案的试用体验的可发现性和自动预配。 这样，潜在客户就可以使用您的软件即服务 (SaaS) 、IaaS 或 Microsoft 应用内体验，免费时间为30天至六个月，具体取决于产品/服务类型。
 
-&#42;&#42; Microsoft 365 产品/服务可免费安装，并可通过 SaaS 产品/服务作为授权服务实现盈利。 有关详细信息，请参阅[通过 Microsoft 商业市场利用 Office 365 加载项实现盈利](/office/dev/store/monetize-addins-through-microsoft-commercial-marketplace)。
+客户可使用产品/服务的列表页上的 " _免费试用_ " 按钮来试用产品/服务。 如果在同一产品/服务的多个计划中提供免费试用版，客户可以切换到其他计划的免费试用版，但试用期不会重新启动。
 
-## <a name="choose-a-listing-option"></a>选择列表选项
+对于虚拟机产品/服务，客户需要支付 Azure 基础结构成本，以便在试用期期间使用产品/服务。 试用期到期后，将根据标准费率自动向客户收取最近一次的计划，除非在试用期结束之前取消。
 
-可用的列表选项提供了不同的客户参与，同时为你提供访问潜在客户和 [商业 marketplace 权益](https://docs.microsoft.com/azure/marketplace/gtm-your-marketplace-benefits)的权限。 请注意与发布选项对应的列表选项：
+## <a name="test-drive"></a>体验版
 
-| **发布选项**    | **说明**  |
-| :------------------- | :-------------------|
-| **列表** | 直接列出应用程序或服务，这样商业市场用户就可以通过“与我联系”广告语请求你与客户联系。 |
-| **试用** | 通过商业市场增加曝光率，自动预配解决方案的试用体验，让潜在用户在有限的时间内免费使用你的 SaaS、IaaS 或 Microsoft 应用内体验，然后再决定是否购买。 用于试用发布选项的广告语是：“免费试用版”或“体验版” 。 |
-| **BYOL** | 使用商业市场来增加曝光率、自动预配解决方案，并独立完成财务交易。 BYOL 产品/服务类型非常适合本地到云的迁移。 广告语是“立即获取”。
-| **事务处理** | 事务处理产品/服务通过商业市场销售。 Microsoft 负责计费和收费。 广告语是“立即获取”。|
+客户使用产品/服务的列表页上的 " _测试驱动器_ " 按钮，以在固定的小时数内访问预配置环境。 若要了解有关测试驱动器的详细信息，请参阅 [什么是测试驱动器？](what-is-test-drive.md)
 
-> [!Note]
-> 使用“事务处理”发布选项时，在选择套餐类型和创建套餐之前，了解定价、计费、发票和付款注意事项非常重要。 若要了解详细信息，请参阅[商业市场事务处理功能](./marketplace-commercial-transaction-capabilities-and-considerations.md)。
+> [!TIP]
+> 测试驱动器与免费试用版不同。 你可以提供一个测试驱动器和/或免费试用版。 它们都为你的客户提供了一个固定时间段的解决方案。 但在实际实施方案中，一个测试驱动器还包括一项针对您的产品关键功能的动手自学教程。
 
-## <a name="selecting-an-online-store"></a>选择在线商店
+## <a name="contact-me"></a>与我联系
 
-每个在线商店都提供独特的客户需求，并面向特定的受众。 你的产品/服务类型、功能和类别将确定你的产品/服务的发布位置。 类别和子类别基于目标受众映射到每个在线商店：
+应用程序或服务的简单列表。 客户使用产品/服务的列表页上的 " _联系我_ " 按钮，请求你与产品/服务联系。
 
-**Microsoft AppSource** 面向寻找业务线或行业解决方案的业务用户，以及针对 Dynamics 365、Microsoft 365 和能源平台的咨询服务。
+## <a name="get-it-now"></a>立即获取
 
-**Azure Marketplace** 面向 IT 专业人员和开发人员，寻找在 azure 上或在 azure 上构建的解决方案以及可加快使用 azure 的咨询服务。
+此列表选项包括事务产品/服务 (订阅和基于用户的定价) ，自带许可证产品/服务，并立即 (免费) 。 事务产品/服务通过商业市场进行销售。 Microsoft 负责计费和收费。 客户使用 " _立即获取" 按钮_ 获取该产品/服务。
 
-选择与目标受众最相符的类别和子类别。 例如，web 应用程序防火墙应发布到安全类别下的 Azure Marketplace，因为目标受众是 IT 专业人员。 合同管理应用应改为发布到 "销售" 类别下的 AppSource，因为目标受众是业务用户。 如果选择不正确的类别或子类别，可能会导致产品/服务发布到错误的在线商店。
+"立即获取" 列表选项可以包括以下定价选项，具体取决于产品/服务类型：
 
-### <a name="publishing-to-both-online-stores-saas-offers-only"></a>发布到两个在线商店 (SaaS 仅提供) 
+- 立即获取 (免费) 
+- 自带许可证 (BYOL)
+- 订阅
+- 基于使用情况的定价
 
-SaaS 产品/服务可发布到 Azure Marketplace 或 AppSource。 如果你的 SaaS 产品 */* 服务适用于 (Azure Marketplace) 的技术受众和业务受众 (AppSource) ，请选择适用于每个在线商店的类别和/或子类别。 发布到这两个在线商店的产品/服务的价值主张应为 IT 专业人员 *和* 业务用户。
+此表显示哪些产品/服务类型支持 "立即获取列表" 选项附带的其他定价选项。
 
-> [!IMPORTANT]
-> 通过 Azure Marketplace 和 Azure 门户提供按流量计费的 SaaS 产品/服务。 只有专用计划的 SaaS 产品可通过 Azure 门户提供。
+| 产品/服务类型 | 立即获取 (免费)  | BYOL | 订阅 | 基于使用情况的定价 |
+| ------------ | ------------- | ------------- | ------------- | ------------- |
+|  (托管应用的 Azure 应用程序)  |   |   | &#10004; | &#10004; |
+|  (解决方案模板 Azure 应用程序)  | &#10004; |   |   |   |
+| 咨询服务 |   |   |   |   |
+| Azure 容器 | &#10004;<sup>1</sup> | &#10004;<sup>1</sup> |   |   |
+| Dynamics 365 business central | &#10004; |   |   |   |
+| Dynamics 365 Customer Engagement & PowerApps | &#10004; |   |   |   |
+| 用于操作的 Dynamics 365 | &#10004; |   |   |   |
+| IoT Edge 模块 | &#10004;<sup>1</sup> | &#10004;<sup>1</sup> |   |   |
+| 托管服务 |   | &#10004; |   |   |
+| Power BI 应用 | &#10004; |   |   |   |
+| Azure 虚拟机 |   | &#10004; |   | &#10004;<sup>2</sup> |
+| 软件即服务 | &#10004; |   | &#10004; | &#10004; |
+||||||
 
-| 计费计费 | 公共计划 | 私有计划 | 可用项： |
-|---|---|---|---|
-| 是             | 是         | 否           | Azure Marketplace 和 Azure 门户 |
-| 是             | 是         | 是          | Azure Marketplace 和 Azure 门户 * |
-| 是             | 否          | 是          | 仅 Azure 门户 |
-| 否              | 否          | 是          | 仅 Azure 门户 |
+**图例**
 
-&#42; 产品/服务的私有计划将仅通过 Azure 门户提供
+<sup>1</sup> "**计划概述**" 选项卡的 "**定价模型**" 列显示 "_免费_" 或 " _BYOL_ "，但不可选择。
 
-例如，仅 (没有公共计划) 的产品/服务将由 Azure 门户中的客户购买，具有按流量计费的计费和私有计划。 详细了解 [Microsoft 商业 marketplace 中的专用产品/服务](private-offers.md)。
+每小时定价<sup>2</sup>个，每月按月计费。
 
-### <a name="categories"></a>类别
+### <a name="get-it-now-free"></a>立即获取 (免费) 
 
-类别和子类别基于目标受众映射到每个在线商店。 选择与产品/服务和目标受众最相符的类别和子类别。 可以选择：
+使用此列表选项免费提供您的应用程序。 客户使用 " _立即获取_ " 按钮获取免费产品/服务。
 
-- 至少一个和多达两个类别。 您可以选择主要和次要类别。
-- 每个主节点和/或辅助类别最多包含两个子类别。 如果未选择任何子类别，则在所选类别下，你的产品/服务将仍然可发现。
+> [!NOTE]
+> 立即获取 (免费) 产品/服务不符合事务产品/服务的 Marketplace 奖励权益。 由于没有通过店面的交易，因此它们归类为 "试用"。 请参阅下面的 [Marketplace 奖励](#marketplace-rewards) 。
 
-[!INCLUDE [categories and subcategories](./includes/categories.md)]
+### <a name="bring-your-own-license-byol"></a>自带许可 (BYOL)
+
+使用此列表选项可让客户使用在商业市场外购买的许可证来部署你的产品/服务。 此选项非常适合用于本地到云的迁移。 客户使用 " _立即获取_ " 按钮来购买你的产品/服务，并使用预先购买的许可证。
+
+> [!NOTE]
+> BYOL 产品/服务不适用于事务产品/服务的 Marketplace 奖励权益。 由于这些要求客户需要获得合作伙伴提供的许可证，并且没有通过商业 marketplace 店面的交易，因此它们归类为 "列表"。 请参阅下面的 [Marketplace 奖励](#marketplace-rewards) 。
+
+### <a name="subscription"></a>订阅
+
+你可以对这些产品/服务类型收取固定费用：
+
+- Azure 应用程序 (托管应用) 提供每月订阅支持。
+- SaaS 支持每月和每年订阅。
+
+### <a name="usage-based-pricing"></a>基于使用情况的定价
+
+以下产品/服务类型支持基于使用情况的定价：
+
+- Azure 应用程序 (托管应用) 提供支持按流量计费。 有关更多详细信息，请参阅 [托管应用程序](partner-center-portal/azure-app-metered-billing.md)计费。
+- SaaS 产品/服务支持按) 定价 (按座位计费和按用户。 有关计费计费的详细信息，请参阅 [使用商业 marketplace 计量服务的 SaaS 计费计费](partner-center-portal/saas-metered-billing.md)。
+- Azure 虚拟机提供每个核心、每个核心大小以及每个市场和核心规模定价的支持。 这些定价选项按小时定价并按月计费。
+
+在创建事务产品/服务时，在选择产品/服务类型和创建产品/服务之前，请务必了解定价、计费、开票和付出的费用。 若要了解详细信息，请参阅 [商业市场在线商店](overview.md#commercial-marketplace-online-stores)。
+
+## <a name="sample-offer"></a>示例产品
+
+发布产品/服务后，你选择的列表选项 () 你选择的内容将显示为联机应用商店)  ("列表" 页面左上角的按钮。 例如，以下屏幕在 Microsoft AppSource 在线商店中显示 "产品/服务列表" 页，其中包含 " **立即获取** " 和 " **测试驱动器** " 按钮：
+
+:::image type="content" source="media/listing-options.png" alt-text="说明具有 &quot;联系我&quot; 和 &quot;测试驱动器&quot; 按钮的产品/服务的列表页。":::
+
+## <a name="listing-and-pricing-options-by-online-store"></a>在线商店列出和定价选项
+
+根据各种条件，我们确定你的产品/服务是否在 Azure Marketplace、Microsoft AppSource 或这两个在线商店上列出。 有关这两个在线商店之间的差异的详细信息，请参阅 [商业市场在线商店](overview.md#commercial-marketplace-online-stores)。
+
+下表显示了可用于不同产品/服务类型和外接程序的选项，以及可以在其上列出产品/服务的在线商店。
+
+| 提供类型和外接程序 | 与我联系 | 免费试用版 | 立即获取 (免费)  | BYOL | 立即获取 ()  |
+| ------------ | ------------- | ------------- | ------------- | ------------- | ------------- |
+| Azure 虚拟机 |   |   |   | Azure 市场 | Azure 市场 |
+| Azure 应用程序 |   |   | Azure 市场 | Azure 市场 | Azure 市场 |
+| Azure 容器  |   |   | Azure 市场 | Azure 市场 |   |
+| IoT Edge 模块 |   |   | Azure 市场 | Azure 市场 |   |
+| 托管服务 |   |   |   | Azure 市场 |   |
+| 咨询服务 | 这两个在线商店 |   |   |   |   |
+| SaaS  | 这两个在线商店 | 这两个在线商店 | 这两个在线商店 |   | 在线商店 &#42; |
+| Microsoft 365 应用 | AppSource | AppSource |   |   | AppSource &#42;&#42; |
+| Dynamics 365 business central | AppSource | AppSource |   |   |   |
+| Dynamics 365 for Customer & PowerApps | AppSource | AppSource |   |   |   |
+| 用于操作的 Dynamics 365 | AppSource | AppSource |   |   |   |
+| Power BI 应用 |   |   | AppSource |   |   |
+|||||||
+
+AppSource 中 &#42; SaaS 事务提供的产品/服务当前仅为信用卡。
+
+&#42;&#42; Microsoft 365 外接程序可以免费安装，并且可以使用 SaaS 产品获取收益。 有关详细信息，请参阅[通过 Microsoft 商业市场利用 Office 365 加载项实现盈利](/office/dev/store/monetize-addins-through-microsoft-commercial-marketplace)。
+
+## <a name="marketplace-rewards"></a>Marketplace Rewards
+
+根据所选的列表选项来区分 Marketplace 奖励。 若要了解详细信息，请参阅 [你的商业 marketplace 权益](gtm-your-marketplace-benefits.md)。
+
+如果你的产品/服务已事务，则在增加计费的销售时，你将获得权益。
+
+根据是否附加了免费试用版，非事务提供了收益。
 
 ## <a name="next-steps"></a>后续步骤
 
-- 确定发布选项以后，即可选择用于呈现产品/服务的[产品/服务类型](./publisher-guide-by-offer-type.md)。
-- 查看发布选项中按套餐类型划分的资格要求，以便最终确定套餐的选择和配置。
-- 有关解决方案如何映射到产品/服务类型和配置的示例，请参阅按在线商店发布模式。
+- 若要选择要创建的产品/服务类型，请参阅 [按产品/服务类型发布指南](publisher-guide-by-offer-type.md)。

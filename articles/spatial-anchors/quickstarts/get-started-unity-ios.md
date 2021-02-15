@@ -1,19 +1,19 @@
 ---
 title: 快速入门：创建 Unity iOS 应用
 description: 在此快速入门中，将了解如何通过空间定位点使用 Unity 生成 iOS 应用。
-author: craigktreasure
-manager: vriveras
+author: msftradford
+manager: MehranAzimi-msft
 services: azure-spatial-anchors
-ms.author: crtreasu
-ms.date: 07/31/2020
+ms.author: parkerra
+ms.date: 11/20/2020
 ms.topic: quickstart
 ms.service: azure-spatial-anchors
-ms.openlocfilehash: 1fbd7138c393809b279d780004ff476cea4735fe
-ms.sourcegitcommit: 85eb6e79599a78573db2082fe6f3beee497ad316
+ms.openlocfilehash: b278ac6c824b1583e90cfc9152264f61357dd228
+ms.sourcegitcommit: b8eba4e733ace4eb6d33cc2c59456f550218b234
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/05/2020
-ms.locfileid: "87810320"
+ms.lasthandoff: 11/23/2020
+ms.locfileid: "95971485"
 ---
 # <a name="quickstart-create-a-unity-ios-app-with-azure-spatial-anchors"></a>快速入门：使用 Azure 空间定位点创建 Unity iOS 应用
 
@@ -34,7 +34,7 @@ ms.locfileid: "87810320"
 
 若要完成本快速入门，请确保具备以下项：
 
-- 已安装 <a href="https://unity3d.com/get-unity/download" target="_blank">Unity 2019.4 (LTS)</a>、最新版 <a href="https://geo.itunes.apple.com/us/app/xcode/id497799835?mt=12" target="_blank">Xcode</a> 和 <a href="https://cocoapods.org" target="_blank">CocoaPods</a> 的 macOS 计算机。
+- 已安装 <a href="https://unity3d.com/get-unity/download" target="_blank">Unity 2019.4 (LTS)</a>、最新版 <a href="https://geo.itunes.apple.com/us/app/xcode/id497799835?mt=12" target="_blank">Xcode</a> 的 macOS 计算机。
 - 通过 HomeBrew 安装的 Git。 在终端的一行中输入以下命令：`/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"`。 然后，运行 `brew install git` 和 `brew install git-lfs`。
 - 支持开发人员的 <a href="https://developer.apple.com/documentation/arkit/verifying_device_support_and_user_permission" target="_blank">ARKit 兼容</a> iOS 设备。
 
@@ -56,7 +56,11 @@ ms.locfileid: "87810320"
 
 [!INCLUDE [Configure Xcode](../../../includes/spatial-anchors-unity-ios-xcode.md)]
 
-按照应用中的说明，放置并重新调用定位点。
+在应用中，使用箭头选择“BasicDemo”，然后按“开始!” 按钮以运行演示。 按说明放置并重新调用定位点。
+
+![屏幕截图 1](./media/get-started-unity-ios/screenshot-1.jpg)
+![屏幕截图 2](./media/get-started-unity-ios/screenshot-2.jpg)
+![屏幕截图 3](./media/get-started-unity-ios/screenshot-3.jpg)
 
 完成后，通过在 Xcode 中按“停止”来停止应用。
 
@@ -65,16 +69,6 @@ ms.locfileid: "87810320"
 ### <a name="rendering-issues"></a>呈现问题
 
 运行应用时，如果没看到作为背景的照相机（例如，你看到的是空白、蓝色或其他纹理），则可能需要重新导入 Unity 中的资产。 停止应用。 在 Unity 中的顶部菜单中，选择“资产”->“重新导入全部”。 然后再次运行应用。
-
-### <a name="cocoapods-issues-on-macos-catalina-1015"></a>macOS Catalina (10.15) 上的 CocoaPods 问题
-
-如果最近更新到 macOS Catalina (10.15) 并事先安装了 CocoaPods，则 CocoaPods 可能处于损坏状态，无法正确配置 pod 和 `.xcworkspace` 项目文件。 若要解决此问题，需要通过运行以下命令重新安装 CocoaPods：
-
-```shell
-brew update
-brew install cocoapods --build-from-source
-brew link --overwrite cocoapods
-```
 
 [!INCLUDE [Clean-up section](../../../includes/clean-up-section-portal.md)]
 

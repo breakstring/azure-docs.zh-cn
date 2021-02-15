@@ -9,13 +9,13 @@ ms.topic: tutorial
 author: luisquintanilla
 ms.author: luquinta
 ms.date: 07/09/2020
-ms.custom: contperfq4
-ms.openlocfilehash: 7d209b3434eae20b4c9a7b328f5c15032315b178
-ms.sourcegitcommit: 3541c9cae8a12bdf457f1383e3557eb85a9b3187
+ms.custom: contperf-fy20q4
+ms.openlocfilehash: 937b5ebb13bfbf27ff04b6944f2de7e32e7e656c
+ms.sourcegitcommit: 0aec60c088f1dcb0f89eaad5faf5f2c815e53bf8
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/09/2020
-ms.locfileid: "86203548"
+ms.lasthandoff: 01/14/2021
+ms.locfileid: "98185846"
 ---
 # <a name="train-and-deploy-an-image-classification-tensorflow-model-using-the-azure-machine-learning-visual-studio-code-extension-preview"></a>使用 Azure 机器学习 Visual Studio Code 扩展（预览版）训练和部署图像分类 TensorFlow 模型
 
@@ -61,7 +61,7 @@ ms.locfileid: "86203548"
 1. 选择“新建资源组”。 
 1. 将资源组命名为“TeamWorkspace-rg”，然后按 **Enter**。 
 1. 为工作区选择一个位置。 建议你在选择位置时，确保该位置最靠近你计划部署模型的位置。 例如，“美国西部 2”。
-1. 当系统提示选择工作区的类型时，请选择“基本”，创建一个基本工作区。 有关不同工作区产品/服务的详细信息，请参阅 [Azure 机器学习概述](./overview-what-is-azure-ml.md#sku)。
+1. 当系统提示选择工作区类型时，选择“基本”。
 
 此时，系统会向 Azure 发出请求，以便在你的帐户中创建新的工作区。 几分钟后，新工作区会显示在订阅节点中。 
 
@@ -78,7 +78,7 @@ ms.locfileid: "86203548"
     > [!div class="mx-imgBorder"]
     > ![创建试验](./media/tutorial-train-deploy-image-classification-model-vscode/create-experiment.png)
 
-1. 将试验命名为“MNIST”，然后按 **Enter** 以创建新试验。 
+1. 将试验命名为“Tutorial-VSCode-MNIST”，然后按 Enter 以创建新试验。 
 
 与工作区一样，请求将发送到 Azure，以使用提供的配置创建试验。 几分钟后，新试验会出现在工作区的“试验”节点中。 
 
@@ -97,7 +97,7 @@ ms.locfileid: "86203548"
     > ![创建计算目标](./media/tutorial-train-deploy-image-classification-model-vscode/create-compute.png)
 
 1. 选择“Azure 机器学习计算(AmlCompute)”。 Azure 机器学习计算是一个托管的计算基础结构，可让用户轻松创建能够与工作区中的其他用户一起使用的单节点或多节点计算。
-1. 选择 VM 大小。 从选项列表中选择“Standard_F2s_v2”。 VM 的大小会影响训练模型所需的时间。 有关 VM 大小的详细信息，请参阅 [Azure 中的 Linux 虚拟机大小](https://docs.microsoft.com/azure/virtual-machines/linux/sizes)。
+1. 选择 VM 大小。 从选项列表中选择“Standard_F2s_v2”。 VM 的大小会影响训练模型所需的时间。 有关 VM 大小的详细信息，请参阅 [Azure 中的 Linux 虚拟机大小](../virtual-machines/sizes.md)。
 1. 将计算命名为“TeamWkspc-com”，然后按 **Enter** 来创建计算。
 
     此时会在 VS Code 中显示一个文件，其中包含如下所示的内容：
@@ -414,4 +414,3 @@ ms.locfileid: "86203548"
 
 * 若要详细了解如何在 Visual Studio Code 外部使用 Azure 机器学习进行训练，请参阅[教程：使用 Azure 机器学习训练模型](tutorial-train-models-with-aml.md)。
 * 若要详细了解如何在本地编辑、运行和调试代码，请参阅 [Python hello-world 教程](https://code.visualstudio.com/docs/Python/Python-tutorial)。
-

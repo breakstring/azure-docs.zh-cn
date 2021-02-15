@@ -3,21 +3,22 @@ title: 撤回 Azure 预留成本
 description: 了解如何查看 Azure 预留费用以进行退款。
 author: yashesvi
 ms.service: cost-management-billing
+ms.subservice: reservations
 ms.topic: how-to
 ms.date: 07/24/2020
 ms.author: banders
-ms.openlocfilehash: 04e4e8dfce8549494eb9d2984d6307c18b88dc73
-ms.sourcegitcommit: dccb85aed33d9251048024faf7ef23c94d695145
+ms.openlocfilehash: aba6ea467788c51d179ef9377243efb6035b6f98
+ms.sourcegitcommit: dbe434f45f9d0f9d298076bf8c08672ceca416c6
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/28/2020
-ms.locfileid: "87287321"
+ms.lasthandoff: 10/17/2020
+ms.locfileid: "92148356"
 ---
 # <a name="charge-back-azure-reservation-costs"></a>撤回 Azure 预留成本
 
 企业协议和 Microsoft 客户协议计费用户可以查看预留的摊销成本数据。 他们可以使用成本数据向其合作伙伴收回订阅、资源组、资源或标记的费用。 在摊销数据中，有效价格为按比例计算的每小时预留成本。 成本是指资源在当天使用的预留总费用。
 
-具有单独订阅的用户可以从其使用情况文件获取摊销成本数据。 当资源获取预留折扣时，使用情况文件中的 AdditionalInfo 部分会包含预留详细信息。 有关详细信息，请参阅[从 Azure 门户下载使用情况](https://docs.microsoft.com/azure/cost-management-billing/understand/download-azure-daily-usage#download-usage-from-the-azure-portal-csv)。
+具有单独订阅的用户可以从其使用情况文件获取摊销成本数据。 当资源获取预留折扣时，使用情况文件中的 AdditionalInfo 部分会包含预留详细信息。 有关详细信息，请参阅[从 Azure 门户下载使用情况](../understand/download-azure-daily-usage.md#download-usage-from-the-azure-portal-csv)。
 
 ## <a name="get-reservation-charge-back-data-for-chargeback"></a>获取预留退款数据以进行退款
 

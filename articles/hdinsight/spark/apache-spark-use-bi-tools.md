@@ -1,19 +1,16 @@
 ---
 title: 教程：使用 Power BI 分析 Azure HDInsight Apache Spark 数据
 description: 教程 - 使用 Microsoft Power BI 直观显示存储在 HDInsight 群集中的 Apache Spark 数据
-author: hrasheed-msft
-ms.author: hrasheed
-ms.reviewer: jasonh
 ms.service: hdinsight
 ms.topic: tutorial
 ms.custom: hdinsightactive,mvc,seoapr2020
 ms.date: 04/21/2020
-ms.openlocfilehash: 4eb10298ac683c991835f86582d82fb952b314b2
-ms.sourcegitcommit: c5021f2095e25750eb34fd0b866adf5d81d56c3a
+ms.openlocfilehash: 285c6c05a1a216303ee9d8019093c963cad60aa0
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/25/2020
-ms.locfileid: "82195105"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98946472"
 ---
 # <a name="tutorial-analyze-apache-spark-data-using-power-bi-in-hdinsight"></a>教程：使用 Power BI 在 HDInsight 中分析 Apache Spark 数据
 
@@ -37,7 +34,7 @@ ms.locfileid: "82195105"
 
 [上一教程](apache-spark-load-data-run-query.md)中创建的 [Jupyter Notebook](https://jupyter.org/) 包含用于创建 `hvac` 表的代码。 此表基于在所有 HDInsight Spark 群集上均可用的 CSV 文件（位于 `\HdiSamples\HdiSamples\SensorSampleData\hvac\hvac.csv`）。 使用以下过程验证数据。
 
-1. 从 Jupyter 笔记本中，粘贴以下代码，然后按 Shift+Enter。 该代码验证表是否存在。
+1. 从 Jupyter Notebook 中，粘贴以下代码，然后按 SHIFT + ENTER。 该代码验证表是否存在。
 
     ```PySpark
     %%sql

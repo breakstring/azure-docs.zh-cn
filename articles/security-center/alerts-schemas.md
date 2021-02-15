@@ -2,7 +2,6 @@
 title: Azure 安全中心警报的架构
 description: 本文介绍了 Azure 安全中心用于安全警报的不同架构。
 services: security-center
-documentationcenter: na
 author: memildin
 manager: rkarlin
 ms.service: security-center
@@ -12,22 +11,22 @@ ms.tgt_pltfrm: na
 ms.workload: na
 ms.date: 03/19/2020
 ms.author: memildin
-ms.openlocfilehash: 9b8d7f241f79b087f318c9c416dcadf92838b084
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: f9b3be69ab57c0abf7523169303def899f325229
+ms.sourcegitcommit: 400f473e8aa6301539179d4b320ffbe7dfae42fe
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "85126206"
+ms.lasthandoff: 10/28/2020
+ms.locfileid: "92789210"
 ---
 # <a name="security-alerts-schemas"></a>安全警报架构
 
-当安全中心检测到其资源的威胁时，Azure 安全中心的标准层用户将收到安全警报。
+如果你的订阅已启用 Azure Defender，则当安全中心检测到其资源的威胁时，你将收到安全警报。
 
-可以在 Azure 安全中心的**威胁防护**页中查看这些安全警报，也可以通过以下外部工具查看：
+可以在 Azure 安全中心的 **威胁防护** 页中查看这些安全警报，也可以通过以下外部工具查看：
 
-- [Azure Sentinel](https://docs.microsoft.com/azure/sentinel/) -Microsoft 的云本地 SIEM。 Sentinel 连接器从 Azure 安全中心获取警报，并将其发送到 Azure Sentinel 的[Log Analytics 工作区](https://docs.microsoft.com/azure/azure-monitor/learn/quick-create-workspace)。
-- 第三方 Siem-使用安全中心的[连续导出](continuous-export.md)工具将数据发送到[Azure 事件中心](https://docs.microsoft.com/azure/event-hubs/)。 然后，将事件中心数据与第三方 SIEM 进行集成。
-- [REST API](https://docs.microsoft.com/rest/api/securitycenter/) -如果你使用 REST API 访问警报，请参阅[联机警报 API 文档](https://docs.microsoft.com/rest/api/securitycenter/alerts)。
+- [Azure Sentinel](../sentinel/index.yml) -Microsoft 的云本地 SIEM。 Sentinel 连接器从 Azure 安全中心获取警报，并将其发送到 Azure Sentinel 的 [Log Analytics 工作区](../azure-monitor/learn/quick-create-workspace.md) 。
+- 第三方 Siem-将数据发送到 [Azure 事件中心](../event-hubs/index.yml)。 然后，将事件中心数据与第三方 SIEM 进行集成。 有关详细信息 [，请参阅将警报流式传输到 SIEM、之忠诚度或 IT 服务管理解决方案](export-to-siem.md)。
+- [REST API](/rest/api/securitycenter/) -如果你使用 REST API 访问警报，请参阅 [联机警报 API 文档](/rest/api/securitycenter/alerts)。
 
 如果使用任何编程方法来使用警报，将需要正确的架构来查找与您相关的字段。 此外，如果您要导出到事件中心或尝试使用泛型 HTTP 连接器来触发工作流自动化，请使用这些架构来正确分析 JSON 对象。
 
@@ -47,8 +46,9 @@ ms.locfileid: "85126206"
 - 在安全中心的工作流自动化中配置的 Azure 逻辑应用实例
 - 使用安全中心的连续导出功能的 Azure 事件中心
 
-有关工作流自动化功能的详细信息，请参阅[自动响应警报和建议](workflow-automation.md)。
-有关连续导出的详细信息，请参阅[导出警报和建议](continuous-export.md)。
+有关工作流自动化功能的详细信息，请参阅 [自动响应安全中心触发器](workflow-automation.md)。
+
+有关连续导出的详细信息，请参阅 [持续导出安全中心数据](continuous-export.md)。
 
 [!INCLUDE [Workflow schema](../../includes/security-center-alerts-schema-workflow-automation.md)]
 
@@ -61,7 +61,7 @@ Sentinel 连接器从 Azure 安全中心获取警报，并将其发送到 Azure 
 
 若要使用安全中心警报创建 Sentinel 事例或事件，你将需要如下所示的警报的架构。 
 
-有关 Azure Sentinel 的详细信息，请参阅[文档](https://docs.microsoft.com/azure/sentinel/)。
+有关 Azure Sentinel 的详细信息，请参阅 [文档](../sentinel/index.yml)。
 
 [!INCLUDE [Sentinel and workspace schema](../../includes/security-center-alerts-schema-log-analytics-workspace.md)]
 
@@ -140,11 +140,11 @@ Azure 安全中心审核在 Azure 活动日志中生成作为事件的安全警�
 
 ### <a name="the-data-model-of-the-schema"></a>架构的数据模型
 
-|字段|描述|
+|字段|说明|
 |----|----|
-|**通道**|常量、"Operation"|
+|**channels**|常量、"Operation"|
 |**correlationId**|Azure 安全中心警报 ID|
-|**2008**|警报的描述|
+|description|警报的描述|
 |**eventDataId**|请参阅 correlationId|
 |**名**|值和 localizedValue 子字段包含警报显示名称|
 |**category**|值和 localizedValue 子字段是常量-"Security"|
@@ -152,13 +152,13 @@ Azure 安全中心审核在 Azure 活动日志中生成作为事件的安全警�
 |**id**|完全限定的警报 ID|
 |**level**|常量、"信息性"|
 |**operationId**|请参阅 correlationId|
-|**operationName**|值字段是常量-"Microsoft. Security/位置/警报/激活/操作"，本地化值将是 "激活警报" （可能已本地化为与用户区域设置相同）|
+|**operationName**|值字段是常量-"Microsoft. Security/位置/警报/激活/操作"，本地化值将是 "激活警报" (可能会将其本地化为与用户区域设置) |
 |**resourceGroupName**|将包括资源组名称|
 |**resourceProviderName**|值和 localizedValue 子字段是常量-"Microsoft. Security"|
 |**resourceType**|值和 localizedValue 子字段是常量-"Microsoft. Security/位置/警报"|
 |**resourceId**|完全限定的 Azure 资源 ID|
 |**status**|值和 localizedValue 子字段固定为 "活动"|
-|**种子**|值和 localizedValue 子字段为空|
+|**subStatus**|值和 localizedValue 子字段为空|
 |**submissionTimestamp**|事件提交到活动日志的 UTC 时间戳|
 |**subscriptionId**|已泄露资源的订阅 ID|
 |**properties**|与警报相关的其他属性的 JSON 包。 它们可能会从一条警报更改为另一种，但会在所有警报中显示以下字段：<br>-严重性：攻击的严重性<br>-compromisedEntity：已泄露资源的名称<br>-remediationSteps：要采取的补救步骤数组<br>-意向：警报的终止链意向。 可能的意向记录在[意向表](alerts-reference.md#intentions)中|
@@ -173,7 +173,7 @@ Azure 安全中心审核在 Azure 活动日志中生成作为事件的安全警�
 
 Microsoft Graph 是 Microsoft 365 中的数据和智能的网关。 它提供了一个统一的可编程性模型，可用于访问 Microsoft 365、Windows 10 和企业移动性 + 安全性中的大量数据。 在 Microsoft Graph 中使用丰富的数据来构建与数百万用户交互的组织和使用者的应用程序。
 
-[Microsoft Graph 文档](https://docs.microsoft.com/graph/api/resources/alert?view=graph-rest-1.0)中提供了发送到 MS Graph 的安全警报的架构和 JSON 表示形式。
+[Microsoft Graph 文档](/graph/api/resources/alert?preserve-view=true&view=graph-rest-1.0)中提供了发送到 MS Graph 的安全警报的架构和 JSON 表示形式。
 
 ---
 
@@ -184,7 +184,7 @@ Microsoft Graph 是 Microsoft 365 中的数据和智能的网关。 它提供了
 
 有关从外部安全中心访问安全警报的方法的详细信息，请参阅以下页面：
 
-- [Azure Sentinel](https://docs.microsoft.com/azure/sentinel/) -Microsoft 的云-本机 SIEM
-- [Azure 事件中心](https://docs.microsoft.com/azure/event-hubs/)-Microsoft 的完全托管的实时数据引入服务
-- 安全中心的[连续导出功能](continuous-export.md)
-- [Log Analytics 工作区](https://docs.microsoft.com/azure/azure-monitor/learn/quick-create-workspace)-Azure Monitor 将日志数据存储在 Log Analytics 工作区中，包含数据和配置信息的容器
+- [Azure Sentinel](../sentinel/index.yml) -Microsoft 的云-本机 SIEM
+- [Azure 事件中心](../event-hubs/index.yml) -Microsoft 的完全托管的实时数据引入服务
+- [持续导出安全中心数据](continuous-export.md)
+- [Log Analytics 工作区](../azure-monitor/learn/quick-create-workspace.md) -Azure Monitor 将日志数据存储在 Log Analytics 工作区中，包含数据和配置信息的容器

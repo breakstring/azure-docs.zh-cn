@@ -3,18 +3,20 @@ title: 使用 Azure Cosmos DB 和 Active Directory 进行基于证书的身份�
 description: 了解如何为基于证书的身份验证配置 Azure AD 标识，以便从 Azure Cosmos DB 访问密钥。
 author: voellm
 ms.service: cosmos-db
+ms.subservice: cosmosdb-sql
 ms.topic: how-to
 ms.date: 06/11/2019
 ms.author: tvoellm
 ms.reviewer: sngun
-ms.openlocfilehash: ea8d4180a6e820e72f5ca0ce7e7acaf13348ae67
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: e0913351d40cd75da17d16cca119b4ad5ce20de0
+ms.sourcegitcommit: fa90cd55e341c8201e3789df4cd8bd6fe7c809a3
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "85262491"
+ms.lasthandoff: 11/04/2020
+ms.locfileid: "93334695"
 ---
 # <a name="certificate-based-authentication-for-an-azure-ad-identity-to-access-keys-from-an-azure-cosmos-db-account"></a>为基于证书的身份验证配置 Azure AD 标识以从 Azure Cosmos DB 帐户访问密钥
+[!INCLUDE[appliesto-sql-api](includes/appliesto-sql-api.md)]
 
 基于证书的身份验证让你可以使用 Azure Active Directory (Azure AD) 和客户端证书对客户端应用程序进行身份验证。 你可以在需要身份的计算机（例如本地计算机或 Azure 中的虚拟机）上执行基于证书的身份验证。 然后，无需在应用程序中直接提供密钥，应用程序就能读取 Azure Cosmos DB 密钥。 本文介绍如何创建一个示例 Azure AD 应用程序，将其配置为使用基于证书的身份验证，使用新应用程序标识登录到 Azure，然后从 Azure Cosmos 帐户检索密钥。 本文使用 Azure PowerShell 设置标识，并提供一个可以执行身份验证并从 Azure Cosmos 帐户访问密钥的 C# 示例应用。  
 
@@ -22,7 +24,7 @@ ms.locfileid: "85262491"
 
 * 安装[最新版本](/powershell/azure/install-az-ps)的 Azure PowerShell。
 
-* 如果还没有 [Azure 订阅](https://docs.microsoft.com/azure/guides/developer/azure-developer-guide#understanding-accounts-subscriptions-and-billing)，可以在开始前创建一个[免费帐户](https://azure.microsoft.com/free/?ref=microsoft.com&utm_source=microsoft.com&utm_medium=docs&utm_campaign=visualstudio)。
+* 如果还没有 [Azure 订阅](../guides/developer/azure-developer-guide.md#understanding-accounts-subscriptions-and-billing)，可以在开始前创建一个[免费帐户](https://azure.microsoft.com/free/?ref=microsoft.com&utm_source=microsoft.com&utm_medium=docs&utm_campaign=visualstudio)。
 
 ## <a name="register-an-app-in-azure-ad"></a>在 Azure AD 中注册应用
 
@@ -36,8 +38,8 @@ ms.locfileid: "85262491"
 
 1. 在“注册应用程序”表单中填写以下详细信息：   
 
-   * **名称**-提供应用程序的名称，可以是任意名称，如 "sampleapp.exe"。
-   * **受支持的帐户类型**–选择 **"仅此组织目录中的帐户" （默认目录）** ，以允许当前目录中的资源访问此应用程序。 
+   * **名称** -提供应用程序的名称，可以是任意名称，如 "sampleapp.exe"。
+   * **支持的帐户类型** –选择 **"仅 (默认目录中的帐户")** ，以允许当前目录中的资源访问此应用程序。 
    * **重定向 URL** -选择类型为 " **Web** " 的应用程序并提供托管应用程序的 url，可以是任何 url。 在此示例中，可以提供类似于 `https://sampleApp.com` 的测试 URL，即使该应用不存在，也没有关系。
 
    :::image type="content" source="./media/certificate-based-authentication/register-sample-web-app.png" alt-text="注册示例 Web 应用程序":::
@@ -63,7 +65,7 @@ ms.locfileid: "85262491"
    Set-AzContext $context 
    ```
 
-1. 安装并导入 [AzureAD](/powershell/module/azuread/?view=azureadps-2.0) 模块
+1. 安装并导入 [AzureAD](/powershell/module/azuread/?view=azureadps-2.0&preserve-view=true) 模块
 
    ```powershell
    Install-Module AzureAD
@@ -148,7 +150,7 @@ New-AzureADApplicationKeyCredential -ObjectId $application.ObjectId -CustomKeyId
       -Type "Keys"
    ```
 
-以上命令将显示 Azure Cosmos 帐户的主要和辅助主密钥。 可以查看 Azure Cosmos 帐户的活动日志，以验证获取密钥的请求是否成功，以及“sampleApp”应用程序是否发起了该事件。
+上面的命令将显示 Azure Cosmos 帐户的主要和辅助主密钥。 可以查看 Azure Cosmos 帐户的活动日志，以验证获取密钥的请求是否成功，以及“sampleApp”应用程序是否发起了该事件。
 
 :::image type="content" source="./media/certificate-based-authentication/activity-log-validate-results.png" alt-text="验证 Azure AD 中的获取密钥调用":::
 
@@ -236,7 +238,7 @@ namespace TodoListDaemonWithCert
 }
 ```
 
-此脚本将输出以下屏幕截图所示的主要和辅助主密钥：
+此脚本输出主主密钥和辅助主密钥，如以下屏幕截图所示：
 
 :::image type="content" source="./media/certificate-based-authentication/csharp-application-output.png" alt-text="C# 应用程序输出":::
 

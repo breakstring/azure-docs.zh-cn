@@ -6,12 +6,13 @@ ms.service: data-lake-store
 ms.topic: how-to
 ms.date: 05/29/2018
 ms.author: twooley
-ms.openlocfilehash: 12f6e0fd34de96677693b7f0d159c7cf9032ca1b
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.custom: devx-track-csharp
+ms.openlocfilehash: 67ba4f12aec9e987d79109b7197d03301bf40650
+ms.sourcegitcommit: 829d951d5c90442a38012daaf77e86046018e5b9
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "85511288"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "89004776"
 ---
 # <a name="end-user-authentication-with-azure-data-lake-storage-gen1-using-net-sdk"></a>使用 .NET SDK 进行 Azure Data Lake Storage Gen1 最终用户身份验证
 > [!div class="op_single_selector"]
@@ -24,7 +25,7 @@ ms.locfileid: "85511288"
 
 本文介绍了如何使用 .NET SDK 进行 Azure Data Lake Storage Gen1 最终用户身份验证。 有关使用 .NET SDK 的 Data Lake Storage Gen1 服务到服务身份验证，请参阅[使用 .NET SDK 进行 Data Lake Storage Gen1 服务到服务身份验证](data-lake-store-service-to-service-authenticate-net-sdk.md)。
 
-## <a name="prerequisites"></a>先决条件
+## <a name="prerequisites"></a>必备条件
 * **Visual Studio 2013 或更高**版本。 以下说明使用 Visual Studio 2019。
 
 * **Azure 订阅**。 请参阅[获取 Azure 免费试用版](https://azure.microsoft.com/pricing/free-trial/)。
@@ -32,23 +33,23 @@ ms.locfileid: "85511288"
 * **创建 Azure Active Directory“本机”应用程序**。 必须已完成[使用 Azure Active Directory 进行 Data Lake Storage Gen1 最终用户身份验证](data-lake-store-end-user-authenticate-using-active-directory.md)中的步骤。
 
 ## <a name="create-a-net-application"></a>创建 .NET 应用程序
-1. 在 Visual Studio 中，选择 "**文件**" 菜单，选择 "**新建**"，然后选择 "**项目**"。
-2. 选择 "**控制台应用（.NET Framework）**"，然后选择 "**下一步**"。
+1. 在 Visual Studio 中，选择 " **文件** " 菜单，选择 " **新建**"，然后选择 " **项目**"。
+2. 选择 " **控制台应用 (" .NET Framework ") **，然后选择" **下一步**"。
 3. 在“项目名称”**** 中，输入 `CreateADLApplication`，然后选择“创建”****。
 
 4. 将 NuGet 包添加到项目。
 
    1. 在解决方案资源管理器中右键单击项目名称，单击“管理 NuGet 包” ****。
-   2. 在 " **NuGet 包管理器**" 选项卡中，确保 "**包源**" 设置为**Nuget.org** ，并选中 "**包括预发行**版" 复选框。
+   2. 在 " **NuGet 包管理器** " 选项卡中，确保 " **包源** " 设置为 **Nuget.org** ，并选中 " **包括预发行** 版" 复选框。
    3. 搜索并安装以下 NuGet 包：
 
       * `Microsoft.Azure.Management.DataLake.Store` - 本教程使用 v2.1.3-预览版。
       * `Microsoft.Rest.ClientRuntime.Azure.Authentication` - 本教程使用 v2.2.12。
 
         ![添加 NuGet 源](./media/data-lake-store-get-started-net-sdk/data-lake-store-install-nuget-package.png "创建新的 Azure Data Lake 帐户")
-   4. 关闭**NuGet 包管理器**。
+   4. 关闭 **NuGet 包管理器**。
 
-5. 打开**Program.cs**
+5. 打开 **Program.cs**
 6. 将 using 语句替换为以下行：
 
     ```csharp

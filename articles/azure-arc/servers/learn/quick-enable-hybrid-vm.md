@@ -1,24 +1,24 @@
 ---
-title: 使用启用了 Azure Arc 的服务器（预览版）连接混合计算机
-description: 了解如何使用启用了 Azure Arc 的服务器（预览版）连接和注册混合计算机。
+title: 使用启用了 Azure Arc 的服务器连接混合计算机
+description: 了解如何使用启用了 Azure Arc 的服务器连接和注册混合计算机。
 ms.topic: quickstart
-ms.date: 08/12/2020
-ms.openlocfilehash: eacf75871b1f7cc7fc3b703d8859338578e43456
-ms.sourcegitcommit: 4913da04fd0f3cf7710ec08d0c1867b62c2effe7
+ms.date: 12/15/2020
+ms.openlocfilehash: 68869854cbfcf6d7297137e6239b2229a20c04a1
+ms.sourcegitcommit: 66479d7e55449b78ee587df14babb6321f7d1757
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/14/2020
-ms.locfileid: "88213601"
+ms.lasthandoff: 12/15/2020
+ms.locfileid: "97516784"
 ---
-# <a name="quickstart-connect-hybrid-machine-with-azure-arc-enabled-servers-preview"></a>快速入门：使用启用了 Azure Arc 的服务器（预览版）连接混合计算机
+# <a name="quickstart-connect-hybrid-machine-with-azure-arc-enabled-servers"></a>快速入门：使用启用了 Azure Arc 的服务器连接混合计算机
 
-通过[启用了 Azure Arc 的服务器](../overview.md)（预览版），可管理和控制跨本地、边缘和多云环境托管的 Windows 和 Linux 计算机。 在本快速入门中，你将在 Azure 外托管的 Windows 或 Linux 计算机上部署和配置“已连接的计算机”代理，以便通过启用了 Azure Arc 的服务器（预览版）进行管理。
+通过[启用了 Azure Arc 的服务器](../overview.md)，可管理和控制跨本地、边缘和多云环境托管的 Windows 和 Linux 计算机。 在本快速入门中，你将在 Azure 外托管的 Windows 或 Linux 计算机上部署和配置 Connected Machine 代理，以便通过启用了 Arc 的服务器进行管理。
 
 ## <a name="prerequisites"></a>先决条件
 
 * 如果没有 Azure 订阅，请在开始之前创建一个[免费帐户](https://azure.microsoft.com/free/?WT.mc_id=A261C142F)。
 
-* 部署启用了 Arc 的服务器（预览版）“混合连接的计算机”代理要求你在计算机上具有管理员权限，才能安装和配置代理。 在 Linux 上，需使用根帐户；在 Windows 上，需使用作为“本地管理员”组的成员的帐户。
+* 部署启用了 Arc 的服务器 Hybrid Connected Machine 代理要求你在计算机上具有管理员权限，才能安装和配置代理。 在 Linux 上，需使用根帐户；在 Windows 上，需使用作为“本地管理员”组的成员的帐户。
 
 * 开始之前，请务必查看代理[先决条件](../agent-overview.md#prerequisites)，并验证以下内容：
 
@@ -28,13 +28,16 @@ ms.locfileid: "88213601"
 
     * 如果计算机通过防火墙或代理服务器连接以通过 Internet 进行通信，请确保未阻止[列出的](../agent-overview.md#networking-configuration) URL。
 
-    * 启用了 Azure Arc 的服务器（预览版）仅支持[此处](../overview.md#supported-regions)指定的区域。
+    * 启用了 Azure Arc 的服务器仅支持[此处](../overview.md#supported-regions)指定的区域。
+
+> [!WARNING]
+> Linux 主机名或 Windows 计算机名不能使用名称中的保留字或商标之一，否则尝试使用 Azure 注册连接的计算机将失败。 若要获取保留字的列表，请参阅[解决保留的资源名称错误](../../../azure-resource-manager/templates/error-reserved-resource-name.md)。
 
 [!INCLUDE [cloud-shell-try-it.md](../../../../includes/cloud-shell-try-it.md)]
 
 ## <a name="register-azure-resource-providers"></a>注册 Azure 资源提供程序
 
-启用了 Azure Arc 的服务器（预览版）依赖于通过订阅中的以下 Azure 资源提供程序来使用此服务：
+启用了 Azure Arc 的服务器依赖于通过订阅中的以下 Azure 资源提供程序来使用此服务：
 
 * Microsoft.HybridCompute
 * Microsoft.GuestConfiguration
@@ -42,34 +45,40 @@ ms.locfileid: "88213601"
 使用以下命令来注册它们：
 
 ```azurecli-interactive
-az account set --subscription "{Your Subscription Name}"
-az provider register --namespace 'Microsoft.HybridCompute'
-az provider register --namespace 'Microsoft.GuestConfiguration'
+az account set --subscription "{Your Subscription Name}"
+az provider register --namespace 'Microsoft.HybridCompute'
+az provider register --namespace 'Microsoft.GuestConfiguration'
 ```
 
 ## <a name="generate-installation-script"></a>生成安装脚本
 
 Azure 门户中提供了用于自动执行下载、安装以及与 Azure Arc 建立连接的脚本。 若要完成该过程，请执行以下操作：
 
-1. 在 Azure 门户中单击“所有服务”，然后搜索并选择“计算机 - Azure Arc”，以启动 Azure Arc 服务 。
+1. 在 Azure 门户中单击“所有服务”，然后搜索并选择“服务器 - Azure Arc”，以启动 Azure Arc 服务 。
 
     :::image type="content" source="./media/quick-enable-hybrid-vm/search-machines.png" alt-text="在“所有服务”中搜索启用了 Azure Arc 的服务器" border="false":::
 
-1. 在“计算机 - Azure Arc”页上，选择左上角的“添加”，或者选择中间窗格底部的“创建计算机 - Azure Arc”选项。  
+1. 在“服务器 - Azure Arc”页上，选择左上角的“添加” 。
 
-1. 在“选择方法”页上选择“使用交互式脚本添加计算机”磁贴，然后选择“生成脚本”。  
+1. 在“选择方法”页上，选择“使用交互式脚本添加服务器”磁贴，然后选择“生成脚本”  。
 
-1. 在“生成脚本”页上，选择你要在 Azure 中管理的计算机所在的订阅和资源组。 选择要将计算机元数据存储到的 Azure 位置。
+1. 在“生成脚本”页上，选择你要在 Azure 中管理的计算机所在的订阅和资源组。 选择要将计算机元数据存储到的 Azure 位置。 此位置可以与资源组的位置相同或不同。
 
-1. 在“生成脚本”页上的“操作系统”下拉列表中，选择运行脚本的操作系统。 
+1. 在“先决条件”页上查看信息，然后选择“下一页: 资源详细信息”。
 
-1. 如果计算机通过代理服务器连接到 Internet 进行通信，请选择“下一步:代理服务器”。
+1. 在“资源详细信息”页上，提供以下内容：
 
-1. 在“代理服务器”选项卡上，指定计算机用来与代理服务器通信的代理服务器 IP 地址或名称以及端口号。 按格式 `http://<proxyURL>:<proxyport>` 输入值。
+    1. 在“资源组”下拉列表中，选择要从中管理计算机的资源组。
+    1. 在“区域”下拉列表中，选择用于存储服务器元数据的 Azure 区域。
+    1. 在“操作系统”下拉列表中，选择要在其上运行脚本的操作系统。
+    1. 如果计算机是通过代理服务器连接到 Internet 进行通信的，请指定计算机用来与代理服务器通信的代理服务器 IP 地址或名称以及端口号。 按格式 `http://<proxyURL>:<proxyport>` 输入值。
+    1. 在完成时选择“下一步:  标记”。
 
-1. 选择“查看 + 生成”。
+1. 在“标记”页上，查看建议的默认“物理位置标记”并输入值，或指定一个或多个“自定义标记”以支持你的标准  。
 
-1. 在“查看 + 生成”选项卡上查看摘要信息，然后选择“下载”。  如果仍需进行更改，请选择“上一页”。
+1. 在完成时选择“下一步:下载并运行脚本。
+
+1. 在“下载并运行脚本”页上查看摘要信息，然后选择“下载” 。 如果仍需进行更改，请选择“上一页”。
 
 ## <a name="install-the-agent-using-the-script"></a>使用脚本安装代理
 
@@ -97,7 +106,7 @@ Azure 门户中提供了用于自动执行下载、安装以及与 Azure Arc 建
 
 ## <a name="verify-the-connection-with-azure-arc"></a>验证是否与 Azure Arc 连接
 
-安装代理并将其配置为连接到启用了 Azure Arc 的服务器（预览版）后，请转到 Azure 门户，以验证是否已成功连接服务器。 在 [Azure 门户](https://aka.ms/hybridmachineportal)中查看你的计算机。
+安装代理并将其配置为连接到启用了 Azure Arc 的服务器后，请转到 Azure 门户，验证是否已成功连接服务器。 在 [Azure 门户](https://aka.ms/hybridmachineportal)中查看你的计算机。
 
 :::image type="content" source="./media/quick-enable-hybrid-vm/enabled-machine.png" alt-text="成功的计算机连接" border="false":::
 
@@ -105,7 +114,7 @@ Azure 门户中提供了用于自动执行下载、安装以及与 Azure Arc 建
 
 你已经启用了 Linux 或 Windows 混合计算机并成功连接到了该服务，现在可以启用 Azure Policy 以了解 Azure 中的合规性。
 
-若要了解如何识别未安装 Log Analytics 代理且已启用“启用了 Azure Arc 的服务器（预览版）”的计算机，请继续学习教程：
+若要了解如何识别未安装 Log Analytics 代理且已启用“启用了 Azure Arc 的服务器”的计算机，请继续学习教程：
 
 > [!div class="nextstepaction"]
 > [创建策略分配以识别不合规资源](tutorial-assign-policy-portal.md)

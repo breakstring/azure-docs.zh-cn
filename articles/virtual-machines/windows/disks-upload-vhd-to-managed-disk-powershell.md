@@ -8,12 +8,12 @@ ms.topic: how-to
 ms.service: virtual-machines
 ms.tgt_pltfrm: linux
 ms.subservice: disks
-ms.openlocfilehash: ec765e2eb635449140d60ee98762e35aea12fe44
-ms.sourcegitcommit: 56cbd6d97cb52e61ceb6d3894abe1977713354d9
+ms.openlocfilehash: c766c78705a1c1e40a9385360d35ac06a3db3a5d
+ms.sourcegitcommit: d49bd223e44ade094264b4c58f7192a57729bada
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/20/2020
-ms.locfileid: "88689603"
+ms.lasthandoff: 02/02/2021
+ms.locfileid: "99252230"
 ---
 # <a name="upload-a-vhd-to-azure-or-copy-a-managed-disk-to-another-region---azure-powershell"></a>将 VHD 上传到 Azure，或将托管磁盘复制到其他区域 - Azure PowerShell
 
@@ -44,19 +44,19 @@ ms.locfileid: "88689603"
 
 在创建要上传的空标准 HDD 之前，需要获取要上传的 VHD 的文件大小（以字节为单位）。 可以使用示例代码来这样做，但若要自己操作，可以使用 `$vhdSizeBytes = (Get-Item "<fullFilePathHere>").length`。 指定 **-UploadSizeInBytes** 参数时将使用此值。
 
-现在，请在本地 shell 上创建一个要上传的空的标准 HDD，方法是：在 **-CreateOption** 参数中指定 **Upload** 设置，并在 [New-AzDiskConfig](/powershell/module/az.compute/new-azdiskconfig?view=azps-1.8.0) cmdlet 中指定 **-UploadSizeInBytes** 参数。 然后调用 [New-AzDisk](/powershell/module/az.compute/new-azdisk?view=azps-1.8.0) 来创建磁盘。
+现在，请在本地 shell 上创建一个要上传的空的标准 HDD，方法是：在 **-CreateOption** 参数中指定 **Upload** 设置，并在 [New-AzDiskConfig](/powershell/module/az.compute/new-azdiskconfig) cmdlet 中指定 **-UploadSizeInBytes** 参数。 然后调用 [New-AzDisk](/powershell/module/az.compute/new-azdisk) 来创建磁盘。
 
 替换 `<yourdiskname>`、`<yourresourcegroupname>` 和 `<yourregion>`，然后运行以下命令：
 
 > [!TIP]
-> 如果要创建 OS 磁盘，请将 -HyperVGeneration <yourGeneration> 添加到 `New-AzDiskConfig`。
+> 如果要创建 OS 磁盘，请将添加 `-HyperVGeneration '<yourGeneration>'` 到 `New-AzDiskConfig` 。
 
 ```powershell
 $vhdSizeBytes = (Get-Item "<fullFilePathHere>").length
 
 $diskconfig = New-AzDiskConfig -SkuName 'Standard_LRS' -OsType 'Windows' -UploadSizeInBytes $vhdSizeBytes -Location '<yourregion>' -CreateOption 'Upload'
 
-New-AzDisk -ResourceGroupName '<yourresourcegroupname' -DiskName '<yourdiskname>' -Disk $diskconfig
+New-AzDisk -ResourceGroupName '<yourresourcegroupname>' -DiskName '<yourdiskname>' -Disk $diskconfig
 ```
 
 若要上传高级 SSD 或标准 SSD，请将 **Standard_LRS** 替换为 **Premium_LRS** 或 **StandardSSD_LRS**。 目前尚不支持 Ultra 磁盘。
@@ -77,7 +77,7 @@ $disk = Get-AzDisk -ResourceGroupName '<yourresourcegroupname>' -DiskName '<your
 
 使用 AzCopy v10 并指定生成的 SAS URI，将本地 VHD 文件上传到托管磁盘。
 
-此上传过程的吞吐量与相应[标准 HDD](disks-types.md#standard-hdd) 的吞吐量相同。 例如，如果大小相当于 S4，则最高吞吐量为 60 MiB/秒。 但是，如果大小相当于 S70，则最高吞吐量为 500 MiB/秒。
+此上传过程的吞吐量与相应[标准 HDD](../disks-types.md#standard-hdd) 的吞吐量相同。 例如，如果大小相当于 S4，则最高吞吐量为 60 MiB/秒。 但是，如果大小相当于 S70，则最高吞吐量为 500 MiB/秒。
 
 ```
 AzCopy.exe copy "c:\somewhere\mydisk.vhd" $diskSas.AccessSAS --blob-type PageBlob

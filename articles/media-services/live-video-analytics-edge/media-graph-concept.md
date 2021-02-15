@@ -3,12 +3,12 @@ title: 媒体图概念 - Azure
 description: 通过使用媒体图，你可以定义应从何处捕获媒体、应如何处理媒体以及应将结果交付到何处。 本文提供了媒体图概念的详细说明。
 ms.topic: conceptual
 ms.date: 05/01/2020
-ms.openlocfilehash: 8c6775da6804b5079c89cae73d4621dd8067e90a
-ms.sourcegitcommit: c5021f2095e25750eb34fd0b866adf5d81d56c3a
+ms.openlocfilehash: 6f23e7db8cecb46106a63fdecdb6ba04dbd99682
+ms.sourcegitcommit: cc13f3fc9b8d309986409276b48ffb77953f4458
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/25/2020
-ms.locfileid: "88798833"
+ms.lasthandoff: 12/14/2020
+ms.locfileid: "97401094"
 ---
 # <a name="media-graph"></a>媒体图
 
@@ -21,13 +21,14 @@ ms.locfileid: "88798833"
 
 通过使用媒体图，你可以定义应从何处捕获媒体、应如何处理媒体以及应将结果交付到何处。 可以采用所需方式连接组件或节点来进行定义。 下图提供了媒体图的图形表示形式。  
 
-![媒体图的图形表示形式](./media/media-graph/overview.png)
+> [!div class="mx-imgBorder"]
+> :::image type="content" source="./media/media-graph/media-graph.svg" alt-text="媒体图":::
 
 IoT Edge 上的实时视频分析支持不同类型的源、处理器和接收器。
 
-* **源节点**支持将媒体捕获到媒体图中。 从概念上讲，此上下文中的媒体可能是音频流、视频流、数据流或将音频、视频和/或数据组合在单个流中的流。
-* **处理器节点**支持处理媒体图中的媒体。
-* **接收器节点**支持将处理结果交付到媒体图之外的服务和应用。
+* **源节点** 支持将媒体捕获到媒体图中。 从概念上讲，此上下文中的媒体可能是音频流、视频流、数据流或将音频、视频和/或数据组合在单个流中的流。
+* **处理器节点** 支持处理媒体图中的媒体。
+* **接收器节点** 支持将处理结果交付到媒体图之外的服务和应用。
 
 ## <a name="media-graph-topologies-and-instances"></a>媒体图拓扑和实例 
 
@@ -37,19 +38,29 @@ IoT Edge 上的实时视频分析支持不同类型的源、处理器和接收�
 
 ## <a name="media-graph-states"></a>媒体图状态  
 
-媒体图可能会处于以下任一状态：
+以下状态图显示了图形拓扑和图形实例的生命周期。
 
-* 非活动 - 表示媒体图已配置但未处于活动状态的状态。
-* 正在激活 - 媒体图正在实例化的状态（即非活动和活动状态之间的转换状态）。
-* 活动 - 媒体图处于活动状态时的状态。 
+> [!div class="mx-imgBorder"]
+> :::image type="content" source="./media/media-graph/graph-topology-lifecycle.svg" alt-text="图形拓扑和图形实例生命周期":::
 
-    > [!NOTE]
-    >  媒体图可以在没有数据流通过它时处于活动状态（例如，输入视频源离线）。
-* 正在停用 - 这是媒体图形正从活动状态转换为非活动状态时的状态。
+首先[创建图形拓扑](direct-methods.md#graphtopologyset)。 然后对每个要使用此拓扑处理的实时视频源，[创建图形实例](direct-methods.md#graphinstanceset)。 
 
-下图展示了媒体图状态机。
+图形实例将处于 `Inactive`（空闲）状态。
 
-![媒体图状态机](./media/media-graph/media-graph-state-machine.png)
+准备好将实时视频源发送到图形实例时，[激活](direct-methods.md#graphinstanceactivate)该实例。 图形实例将短暂为过渡的 `Activating` 状态，如果成功，则进入 `Active` 状态。 在 `Active` 状态下，将会处理媒体（如果图形实例接收了输入数据）。
+
+> [!NOTE]
+>  图形实例可以在没有数据流通过它时处于活动状态（例如相机离线）。
+> 当图形实例处于活动状态时，将对你的 Azure 订阅进行计费。
+
+如果有其他实时视频源要处理，则可以重复为同一拓扑创建和激活其他图形实例。
+
+处理完实时视频源后，可以[停用](direct-methods.md#graphinstancedeactivate)该图形实例。 图形实例将短暂为过渡的 `Deactivating` 状态，刷新其包含的所有数据，然后返回到 `Inactive` 状态。
+
+仅当图形实例处于 `Inactive` 状态时，才能将其[删除](direct-methods.md#graphinstancedelete)。
+
+删除引用特定图形拓扑的所有图形实例后，可以[删除图形拓扑](direct-methods.md#graphtopologydelete)。
+
 
 ## <a name="sources-processors-and-sinks"></a>源、处理器和接收器  
 
@@ -59,7 +70,7 @@ IoT Edge 上的实时视频分析支持媒体图中以下类型的节点：
 
 #### <a name="rtsp-source"></a>RTSP 源 
 
-通过 RTSP 源节点，你可以从 [RTSP](https://tools.ietf.org/html/rfc2326 服务器引入媒体。 监控和基于 IP 的照相机使用名为 RTSP（实时流式处理协议）的协议传输它们的数据，这不同于其他类型的设备（例如手机和摄像机）。 此协议用于建立和控制服务器（照相机）和客户端之间的媒体会话。 媒体图中的 RTSP 源节点充当客户端，可以与 RTSP 服务器建立会话。 许多设备（例如大多数 [IP 照相机](https://en.wikipedia.org/wiki/IP_camera)）有内置的 RTSP 服务器。 [ONVIF](https://www.onvif.org/) 强制要求在 [Profile G、S 和 T](https://www.onvif.org/wp-content/uploads/2019/12/ONVIF_Profile_Feature_overview_v2-3.pdf) 兼容设备的定义中支持 RTSP。 RTSP 源节点要求你指定 RTSP URL 以及凭据才能启用经过身份验证的连接。
+使用 RTSP 源节点可以从 [RTSP](https://tools.ietf.org/html/rfc2326) 服务器中引入媒体。 监控和基于 IP 的照相机使用名为 RTSP（实时流式处理协议）的协议传输它们的数据，这不同于其他类型的设备（例如手机和摄像机）。 此协议用于建立和控制服务器（照相机）和客户端之间的媒体会话。 媒体图中的 RTSP 源节点充当客户端，可以与 RTSP 服务器建立会话。 许多设备（例如大多数 [IP 照相机](https://en.wikipedia.org/wiki/IP_camera)）有内置的 RTSP 服务器。 [ONVIF](https://www.onvif.org/) 强制要求在 [Profile G、S 和 T](https://www.onvif.org/wp-content/uploads/2019/12/ONVIF_Profile_Feature_overview_v2-3.pdf) 兼容设备的定义中支持 RTSP。 RTSP 源节点要求你指定 RTSP URL 以及凭据才能启用经过身份验证的连接。
 
 #### <a name="iot-hub-message-source"></a>IoT 中心消息源 
 
@@ -76,14 +87,16 @@ IoT Edge 上的实时视频分析支持媒体图中以下类型的节点：
 #### <a name="frame-rate-filter-processor"></a>帧速率筛选器处理器  
 
 通过帧速率筛选器处理器节点，你可以采用指定的速率从传入的视频流中采样帧。 这使你能够减少发送到下游组件（例如 HTTP 扩展处理器节点）以进行进一步处理的帧数。
+>[!WARNING]
+> IoT Edge 模块上的最新版本的实时视频分析中 **弃用** 了此处理器。 图形扩展处理器本身现在支持帧速率管理。
 
 #### <a name="http-extension-processor"></a>HTTP 扩展处理器
 
-通过 HTTP 扩展处理器节点，你可以将自己的 IoT Edge 模块连接到媒体图。 此节点以解码的视频帧作为输入，并将此类帧中继到模块公开的 HTTP REST 终结点。 如果需要，此节点能够使用 REST 终结点进行身份验证。 此外，此节点具有内置的图像格式化程序，用于在视频帧中继到 REST 终结点之前对它们进行缩放和编码。 缩放程序可以对图像纵横比进行保留、填充或拉伸。 图像编码器支持 JPEG、PNG 或 BMP 格式。
+通过 HTTP 扩展处理器节点，你可以将自己的 IoT Edge 模块连接到媒体图。 此节点以解码的视频帧作为输入，并将此类帧中继到模块公开的 HTTP REST 终结点。 如果需要，此节点能够使用 REST 终结点进行身份验证。 此外，此节点具有内置的图像格式化程序，用于在视频帧中继到 REST 终结点之前对它们进行缩放和编码。 缩放程序可以对图像纵横比进行保留、填充或拉伸。 图像编码器支持 JPEG、PNG 或 BMP 格式。 请在[此处](media-graph-extension-concept.md#http-extension-processor)详细了解处理器。
 
 #### <a name="grpc-extension-processor"></a>gRPC 扩展处理器
 
-GRPC extension processor 节点会将解码的视频帧作为输入，并将此类帧中继到模块公开的 [gRPC](terminology.md#grpc) 终结点。 此外，在将视频帧中继到 gRPC 终结点之前，该节点还提供了用于缩放和编码的内置映像格式化程序。 缩放程序可以对图像纵横比进行保留、填充或拉伸。 图像编码器支持 jpeg、png 或 bmp 格式。
+此 gRPC 扩展处理器节点以解码的视频帧作为输入，并将此类帧中继到模块公开的 [gRPC](terminology.md#grpc) 终结点。 节点支持使用[共享内存](https://en.wikipedia.org/wiki/Shared_memory)传输数据，或将内容直接嵌入 gRPC 消息的正文中。 此外，此节点具有内置的图像格式化程序，用于在视频帧中继到 gRPC 终结点之前对它们进行缩放和编码。 缩放程序可以对图像纵横比进行保留、填充或拉伸。 图像编码器支持 jpeg、png 或 bmp 格式。 请在[此处](media-graph-extension-concept.md#grpc-extension-processor)详细了解处理器。
 
 #### <a name="signal-gate-processor"></a>信号门处理器  
 
@@ -97,15 +110,16 @@ GRPC extension processor 节点会将解码的视频帧作为输入，并将此�
 
 #### <a name="file-sink"></a>文件接收器  
 
-通过文件接收器节点，你可以将媒体（视频和/或音频）数据写入 IoT Edge 设备本地文件系统上的位置。 媒体图中只能有一个文件接收器节点，并且它必须是信号门处理器节点的下游。 这会将输出文件的持续时间限制为信号门处理器节点属性中指定的值。
-
+通过文件接收器节点，你可以将媒体（视频和/或音频）数据写入 IoT Edge 设备本地文件系统上的位置。 媒体图中只能有一个文件接收器节点，并且它必须是信号门处理器节点的下游。 这会将输出文件的持续时间限制为信号门处理器节点属性中指定的值。 若要确保边缘设备不会用尽磁盘空间，还可以设置 IoT Edge 模块上的实时视频分析可用于存储数据的最大大小。  
+> [!NOTE]
+如果文件接收器已满，则 IoT Edge 模块上的实时视频分析将开始删除最旧的数据，并将其替换为新数据。
 #### <a name="iot-hub-message-sink"></a>IoT 中心消息接收器  
 
 通过 IoT 中心消息接收器节点，你可以将事件发布到 IoT Edge 中心。 IoT Edge 中心随后可以将数据路由到其他模块或边缘设备上的应用，或路由到云中的 IoT 中心（根据部署清单中指定的路由）。 IoT 中心消息接收器节点可以接受来自上游处理器（例如运动检测处理器节点）的事件，或通过 HTTP 扩展处理器节点接受来自外部推理服务的事件。
 
 ## <a name="rules-on-the-use-of-nodes"></a>使用节点的规则
 
-有关如何在媒体图中使用不同节点的其他规则，请参阅 [关系图拓扑的限制](quotas-limitations.md#limitations-on-graph-topologies-at-preview) 。
+有关如何在媒体图中使用不同节点的其他规则，请参阅[图形拓扑的限制](quotas-limitations.md#limitations-on-graph-topologies-at-preview)。
 
 ## <a name="scenarios"></a>方案
 

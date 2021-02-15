@@ -13,12 +13,13 @@ ms.devlang: powershell
 ms.topic: conceptual
 ms.date: 07/09/2020
 ms.author: sawinark
-ms.openlocfilehash: e7729318e6121b0072546b8e111a8b782e95906d
-ms.sourcegitcommit: ec682dcc0a67eabe4bfe242fce4a7019f0a8c405
+ms.custom: devx-track-azurepowershell
+ms.openlocfilehash: 6cb3bf53db14c6c01290abea7a5c48c332a07632
+ms.sourcegitcommit: fb3c846de147cc2e3515cd8219d8c84790e3a442
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/09/2020
-ms.locfileid: "86183386"
+ms.lasthandoff: 10/27/2020
+ms.locfileid: "92634872"
 ---
 # <a name="run-an-ssis-package-with-the-stored-procedure-activity-in-azure-data-factory"></a>在 Azure 数据工厂中使用存储过程活动运行 SSIS 包
 
@@ -32,7 +33,7 @@ ms.locfileid: "86183386"
 本文中的演练使用 Azure SQL 数据库来托管 SSIS 目录。 还可使用 Azure SQL 托管实例。
 
 ## <a name="create-an-azure-ssis-integration-runtime"></a>创建 Azure-SSIS 集成运行时
-如果还没有 Azure-SSIS 集成运行时，请按照[教程：部署 SSIS 包](tutorial-create-azure-ssis-runtime-portal.md)。
+如果还没有 Azure-SSIS 集成运行时，请按照[教程：部署 SSIS 包](./tutorial-deploy-ssis-packages-azure.md)。
 
 ## <a name="data-factory-ui-azure-portal"></a>数据工厂 UI（Azure 门户）
 在此部分中，将使用数据工厂 UI 创建数据工厂管道，管道中包含可调用 SSIS 包的存储过程活动。
@@ -42,27 +43,27 @@ ms.locfileid: "86183386"
 
 1. 启动 **Microsoft Edge** 或 **Google Chrome** Web 浏览器。 目前，仅 Microsoft Edge 和 Google Chrome Web 浏览器支持数据工厂 UI。
 2. 导航到 [Azure 门户](https://portal.azure.com)。 
-3. 在左侧菜单中单击“新建”，并依次单击“数据 + 分析”、“数据工厂”。   
+3. 在左侧菜单中单击“新建”，并依次单击“数据 + 分析”、“数据工厂”。 
    
    ![新建 -> DataFactory](./media/how-to-invoke-ssis-package-stored-procedure-activity/new-azure-data-factory-menu.png)
-2. 在“新建数据工厂”页中，输入 **ADFTutorialDataFactory** 作为**名称**。 
+2. 在“新建数据工厂”页中，输入 **ADFTutorialDataFactory** 作为 **名称** 。 
       
      ![“新建数据工厂”页](./media/how-to-invoke-ssis-package-stored-procedure-activity/new-azure-data-factory.png)
  
-   Azure 数据工厂的名称必须 **全局唯一**。 如果看到名称字段的以下错误，请更改数据工厂的名称（例如，改为 yournameADFTutorialDataFactory）。 有关数据工厂项目命名规则，请参阅[数据工厂 - 命名规则](naming-rules.md)一文。
+   Azure 数据工厂的名称必须 **全局唯一** 。 如果看到名称字段的以下错误，请更改数据工厂的名称（例如，改为 yournameADFTutorialDataFactory）。 有关数据工厂项目命名规则，请参阅[数据工厂 - 命名规则](naming-rules.md)一文。
   
      ![名称不可用 - 错误](./media/how-to-invoke-ssis-package-stored-procedure-activity/name-not-available-error.png)
-3. 选择要在其中创建数据工厂的 Azure **订阅**。 
-4. 对于**资源组**，请执行以下步骤之一：
+3. 选择要在其中创建数据工厂的 Azure **订阅** 。 
+4. 对于 **资源组** ，请执行以下步骤之一：
      
    - 选择“使用现有资源组”，并从下拉列表选择现有的资源组。 
    - 选择“新建”，并输入资源组的名称。   
          
      若要了解有关资源组的详细信息，请参阅 [使用资源组管理 Azure 资源](../azure-resource-manager/management/overview.md)。  
 4. 选择“V2”作为“版本”。
-5. 选择数据工厂的**位置**。 下拉列表中仅显示数据工厂支持的位置。 数据工厂使用的数据存储（Azure 存储、Azure SQL 数据库等）和计算资源（HDInsight 等）可以位于其他位置。
+5. 选择数据工厂的 **位置** 。 下拉列表中仅显示数据工厂支持的位置。 数据工厂使用的数据存储（Azure 存储、Azure SQL 数据库等）和计算资源（HDInsight 等）可以位于其他位置。
 6. 选择“固定到仪表板”。     
-7. 单击**创建**。
+7. 单击 **创建** 。
 8. 在仪表板上，你会看状态如下的以下磁贴：“正在部署数据工厂”。 
 
      ![“正在部署数据工厂”磁贴](media//how-to-invoke-ssis-package-stored-procedure-activity/deploying-data-factory.png)
@@ -77,10 +78,10 @@ ms.locfileid: "86183386"
 1. 在“入门”页中，单击“创建管道”： 
 
     ![“入门”页](./media/how-to-invoke-ssis-package-stored-procedure-activity/get-started-page.png)
-2. 在“活动”工具箱中展开“常规”，将**存储过程**活动拖放到管道设计器图面。 
+2. 在“活动”工具箱中展开“常规”，将 **存储过程** 活动拖放到管道设计器图面。 
 
     ![拖放存储过程活动](./media/how-to-invoke-ssis-package-stored-procedure-activity/drag-drop-sproc-activity.png)
-3. 在存储过程活动的属性窗口中切换到“SQL 帐户”选项卡，然后单击“+ 新建”。 在 Azure SQL 数据库中创建一个与数据库的连接，该数据库承载 (SSIDB 数据库) 的 SSIS 目录。 
+3. 在存储过程活动的属性窗口中切换到“SQL 帐户”选项卡，然后单击“+ 新建”。 与托管 SSIS 目录（SSIDB 数据库）的 Azure SQL 数据库中的数据库建立连接。 
    
     ![“新建链接服务”按钮](./media/how-to-invoke-ssis-package-stored-procedure-activity/new-linked-service-button.png)
 4. 在“新建链接服务”窗口中执行以下步骤： 
@@ -94,17 +95,17 @@ ms.locfileid: "86183386"
     7. 单击“测试连接”按钮，测试与数据库之间的连接。
     8. 单击“保存”按钮保存链接服务。 
 
-        ![Azure SQL 数据库链接服务](./media/how-to-invoke-ssis-package-stored-procedure-activity/azure-sql-database-linked-service-settings.png)
+        ![显示用于添加新的链接服务的过程的屏幕截图。](./media/how-to-invoke-ssis-package-stored-procedure-activity/azure-sql-database-linked-service-settings.png)
 5. 在属性窗口中，从“SQL 帐户”选项卡切换到“存储过程”选项卡，然后执行以下步骤： 
 
     1. 选择“编辑”。 
     2. 对于“存储过程名称”字段，输入 `sp_executesql`。 
     3. 在“存储过程参数”部分中单击“+ 新建”。 
     4. 对于参数的“名称”，输入“stmt”。 
-    5. 输入“字符串”作为参数**类型**。 
-    6. 输入以下 SQL 查询作为参数的**值**：
+    5. 输入“字符串”作为参数 **类型** 。 
+    6. 输入以下 SQL 查询作为参数的 **值** ：
 
-        在 SQL 查询中，指定 **folder_name**、**project_name** 和 **package_name** 参数的右侧值。 
+        在 SQL 查询中，指定 **folder_name** 、 **project_name** 和 **package_name** 参数的右侧值。 
 
         ```sql
         DECLARE @return_value INT, @exe_id BIGINT, @err_msg NVARCHAR(150)    EXEC @return_value=[SSISDB].[catalog].[create_execution] @folder_name=N'<FOLDER name in SSIS Catalog>', @project_name=N'<PROJECT name in SSIS Catalog>', @package_name=N'<PACKAGE name>.dtsx', @use32bitruntime=0, @runinscaleout=1, @useanyworker=1, @execution_id=@exe_id OUTPUT    EXEC [SSISDB].[catalog].[set_execution_parameter_value] @exe_id, @object_type=50, @parameter_name=N'SYNCHRONIZED', @parameter_value=1    EXEC [SSISDB].[catalog].[start_execution] @execution_id=@exe_id, @retry_count=0    IF(SELECT [status] FROM [SSISDB].[catalog].[executions] WHERE execution_id=@exe_id)<>7 BEGIN SET @err_msg=N'Your package execution did not succeed for execution ID: ' + CAST(@exe_id AS NVARCHAR(20)) RAISERROR(@err_msg,15,1) END
@@ -125,7 +126,7 @@ ms.locfileid: "86183386"
 
     ![立即触发](media/how-to-invoke-ssis-package-stored-procedure-activity/trigger-now.png)
 
-2. 在“管道运行”窗口中选择“完成”。  
+2. 在“管道运行”窗口中选择“完成”。 
 3. 在左侧切换到“监视”选项卡。 随即显示管道运行及其状态以及其他信息（比如运行开始时间）。 若要刷新视图，请单击“刷新”。
 
     ![管道运行](./media/how-to-invoke-ssis-package-stored-procedure-activity/pipeline-runs.png)
@@ -192,11 +193,11 @@ ms.locfileid: "86183386"
     ```
     The specified Data Factory name 'ADFv2QuickStartDataFactory' is already in use. Data Factory names must be globally unique.
     ```
-* 若要创建数据工厂实例，用于登录到 Azure 的用户帐户必须属于**参与者**或**所有者**角色，或者是 Azure 订阅的**管理员**。
+* 若要创建数据工厂实例，用于登录到 Azure 的用户帐户必须属于 **参与者** 或 **所有者** 角色，或者是 Azure 订阅的 **管理员** 。
 * 若要查看目前提供数据工厂的 Azure 区域的列表，请在以下页面上选择感兴趣的区域，然后展开“分析”以找到“数据工厂”：[可用产品(按区域)](https://azure.microsoft.com/global-infrastructure/services/)。 数据工厂使用的数据存储（Azure 存储、Azure SQL 数据库，等等）和计算资源（HDInsight 等）可以位于其他区域中。
 
 ### <a name="create-an-azure-sql-database-linked-service"></a>创建 Azure SQL 数据库链接服务
-创建链接服务以将承载 SSIS 目录的数据库链接到数据工厂。 数据工厂使用此链接服务中的信息连接到 SSISDB 数据库，并执行存储过程来运行 SSIS 包。 
+创建一个链接服务，将托管 SSIS 目录的数据库链接到数据工厂。 数据工厂使用此链接服务中的信息连接到 SSISDB 数据库，并执行存储过程来运行 SSIS 包。 
 
 1. 在 C:\ADF\RunSSISPackage 文件夹中创建一个名为 AzureSqlDatabaseLinkedService.json 的 JSON 文件，并在其中包含以下内容 ： 
 
@@ -217,7 +218,7 @@ ms.locfileid: "86183386"
 
 2. 在 Azure PowerShell 中，切换到 C:\ADF\RunSSISPackage 文件夹 。
 
-3. 运行 **Set-AzDataFactoryV2LinkedService** cmdlet 来创建链接服务：**AzureSqlDatabaseLinkedService**。 
+3. 运行 **Set-AzDataFactoryV2LinkedService** cmdlet 来创建链接服务： **AzureSqlDatabaseLinkedService** 。 
 
     ```powershell
     Set-AzDataFactoryV2LinkedService -DataFactoryName $DataFactory.DataFactoryName -ResourceGroupName $ResGrp.ResourceGroupName -Name "AzureSqlDatabaseLinkedService" -File ".\AzureSqlDatabaseLinkedService.json"
@@ -258,7 +259,7 @@ ms.locfileid: "86183386"
     }
     ```
 
-2. 若要创建管道 **RunSSISPackagePipeline**，请运行 **Set-AzDataFactoryV2Pipeline** cmdlet。
+2. 若要创建管道 **RunSSISPackagePipeline** ，请运行 **Set-AzDataFactoryV2Pipeline** cmdlet。
 
     ```powershell
     $DFPipeLine = Set-AzDataFactoryV2Pipeline -DataFactoryName $DataFactory.DataFactoryName -ResourceGroupName $ResGrp.ResourceGroupName -Name "RunSSISPackagePipeline" -DefinitionFile ".\RunSSISPackagePipeline.json"

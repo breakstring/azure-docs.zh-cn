@@ -1,24 +1,25 @@
 ---
-title: 使用 Azure 媒体服务编码时对视频进行子剪辑
+title: 使用媒体服务进行编码时子剪辑视频
 description: 本主题说明如何在使用 .NET SDK 通过 Azure 媒体服务进行编码时对视频进行子剪辑
 services: media-services
 documentationcenter: ''
-author: Juliako
+author: IngridAtMicrosoft
 manager: femila
 editor: ''
 ms.service: media-services
 ms.workload: media
 ms.tgt_pltfrm: na
 ms.devlang: ne
-ms.topic: article
+ms.topic: how-to
 ms.date: 06/09/2019
-ms.author: juliako
-ms.openlocfilehash: 31fa7fe6b16b7ba97b8ce5e6697f1aaaf88aa294
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.author: inhenkel
+ms.custom: devx-track-csharp
+ms.openlocfilehash: a9408adfe33fc71707532f3bf5646f3727fd7dda
+ms.sourcegitcommit: 4e70fd4028ff44a676f698229cb6a3d555439014
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87091889"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98955048"
 ---
 # <a name="subclip-a-video-when-encoding-with-media-services---net"></a>使用媒体服务编码时对视频进行子剪辑 - .NET
 

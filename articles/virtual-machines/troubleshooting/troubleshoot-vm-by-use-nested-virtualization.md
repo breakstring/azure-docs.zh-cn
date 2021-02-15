@@ -13,16 +13,16 @@ ms.tgt_pltfrm: vm-windows
 ms.topic: article
 ms.date: 11/19/2019
 ms.author: genli
-ms.openlocfilehash: e1acfc3216ccfaeac035f1ff31e82c7b67c17daf
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: f950cb63b5083a85ab5420434abdd9a720115b1a
+ms.sourcegitcommit: c2dd51aeaec24cd18f2e4e77d268de5bcc89e4a7
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "76119612"
+ms.lasthandoff: 11/18/2020
+ms.locfileid: "94734542"
 ---
 # <a name="troubleshoot-a-faulty-azure-vm-by-using-nested-virtualization-in-azure"></a>使用 Azure 中的嵌套虚拟化排查故障 Azure VM
 
-本文介绍如何在 Microsoft Azure 中创建嵌套虚拟化环境，以便可以将故障 VM 的磁盘装载到 Hyper-v 主机（修复 VM）上，以便进行故障排除。
+本文介绍如何在 Microsoft Azure 中创建嵌套虚拟化环境，以便可以在 Hyper-v 主机上装载错误 VM 的磁盘， (修复 VM) 进行故障排除。
 
 ## <a name="prerequisites"></a>先决条件
 
@@ -111,7 +111,7 @@ ms.locfileid: "76119612"
 
 1.  重新在线获得 VM 后，关闭 Hyper-V 管理器中的 VM。
 
-2.  [卸载并分离已修复的 OS 磁盘](troubleshoot-recovery-disks-portal-windows.md#unmount-and-detach-original-virtual-hard-disk
+2.  [卸载并分离已修复的 OS 磁盘](troubleshoot-recovery-disks-portal-windows.md#unmount-and-detach-the-original-virtual-hard-disk
 )。
 3.  [将 VM 使用的 OS 磁盘替换为修复的 OS 磁盘](troubleshoot-recovery-disks-portal-windows.md#swap-the-os-disk-for-the-vm
 )。

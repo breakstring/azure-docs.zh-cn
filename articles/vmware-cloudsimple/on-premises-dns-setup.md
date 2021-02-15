@@ -1,19 +1,19 @@
 ---
 title: Azure VMware 解决方案（按 CloudSimple）-为 CloudSimple 私有云配置 DNS
 description: 描述如何设置 DNS 名称解析，以便从本地工作站访问 CloudSimple 私有云上的 vCenter 服务器
-author: sharaths-cs
-ms.author: b-shsury
+author: Ajayan1008
+ms.author: v-hborys
 ms.date: 08/14/2019
 ms.topic: article
 ms.service: azure-vmware-cloudsimple
 ms.reviewer: cynthn
 manager: dikamath
-ms.openlocfilehash: c2d69d21eb46d502a45c9df1dfaaa947d26ef7c4
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 63822050512421895b0cfed08fb141f77da20b03
+ms.sourcegitcommit: d7d5f0da1dda786bda0260cf43bd4716e5bda08b
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "79246105"
+ms.lasthandoff: 01/05/2021
+ms.locfileid: "97899246"
 ---
 # <a name="configure-dns-for-name-resolution-for-private-cloud-vcenter-access-from-on-premises-workstations"></a>为本地工作站的私有云 vCenter 访问配置 DNS 进行名称解析
 
@@ -21,11 +21,11 @@ ms.locfileid: "79246105"
 
 ## <a name="obtain-the-ip-address-of-the-dns-server-for-your-private-cloud"></a>获取私有云的 DNS 服务器的 IP 地址
 
-1. 登录到[CloudSimple 门户](access-cloudsimple-portal.md)。
+1. 登录到 [CloudSimple 门户](access-cloudsimple-portal.md)。
 
 2. 导航到 "**资源**  >  " "**私有云**"，然后选择要连接到的私有云。
 
-3. 在私有云的 "**摘要**" 页的 "**基本信息**" 下，复制私有云 DNS 服务器 IP 地址。
+3. 在私有云的 " **摘要** " 页的 " **基本信息**" 下，复制私有云 DNS 服务器 IP 地址。
 
     ![私有云 DNS 服务器](media/private-cloud-dns-server.png)
 
@@ -45,6 +45,9 @@ ms.locfileid: "79246105"
 
 例如，对于默认的 BIND 服务器配置，请在 DNS 服务器上编辑/etc/named.conf 文件并添加以下区域信息。
 
+> [!NOTE]
+>本文包含对术语“从属”的引用，这是 Microsoft 不再使用的术语。 在从软件中删除该术语后，我们会将其从本文中删除。
+
 ```
 zone "az.cloudsimple.io"
 {
@@ -56,25 +59,25 @@ zone "az.cloudsimple.io"
 
 ### <a name="create-a-zone-on-a-microsoft-windows-dns-server"></a>在 Microsoft Windows DNS 服务器上创建区域
 
-1. 右键单击 DNS 服务器，然后选择 "**新建区域**"。 
+1. 右键单击 DNS 服务器，然后选择 " **新建区域**"。 
   
-    ![新建区域](media/DNS01.png)
-2. 选择 "**存根区域**"，然后单击 "**下一步**"。
+    ![突出显示 "新建区域" 菜单选项的屏幕截图。](media/DNS01.png)
+2. 选择 " **存根区域** "，然后单击 " **下一步**"。
 
-    ![新建区域](media/DNS02.png)
-3. 根据您的环境选择合适的选项，然后单击 "**下一步**"。
+    ![突出显示存根区域选项的屏幕截图。](media/DNS02.png)
+3. 根据您的环境选择合适的选项，然后单击 " **下一步**"。
 
-    ![新建区域](media/DNS03.png)
-4. 选择 "**向前查找区域**"，然后单击 "**下一步**"。
+    ![显示区域数据复制选项的屏幕截图。](media/DNS03.png)
+4. 选择 " **向前查找区域** "，然后单击 " **下一步**"。
 
-    ![新建区域](media/DNS01.png)
-5. 输入区域名称，并单击 "**下一步**"。
+    ![突出显示 "正向查找区域" 选项的屏幕截图。](media/DNS01.png)
+5. 输入区域名称，并单击 " **下一步**"。
 
-    ![新建区域](media/DNS05.png)
+    ![显示在何处输入区域名称的屏幕截图。](media/DNS05.png)
 6. 输入你的私有云的 DNS 服务器的 IP 地址，该服务器是从 CloudSimple 门户获取的。
 
     ![新建区域](media/DNS06.png)
-7. 根据需要单击 "**下一步**" 以完成向导设置。
+7. 根据需要单击 " **下一步** " 以完成向导设置。
 
 ## <a name="create-a-conditional-forwarder"></a>创建条件转发器
 
@@ -96,7 +99,7 @@ zone "az.cloudsimple.io" {
 ### <a name="create-a-conditional-forwarder-on-a-microsoft-windows-dns-server"></a>在 Microsoft Windows DNS 服务器上创建条件转发器
 
 1. 在 DNS 服务器上打开 DNS 管理器。
-2. 右键单击 "**条件转发器**"，然后选择用于添加新条件转发器的选项。
+2. 右键单击 " **条件转发器** "，然后选择用于添加新条件转发器的选项。
 
     ![条件转发器 1 Windows DNS](media/DNS08.png)
 3. 在私有云中输入 dns 域和 DNS 服务器的 IP 地址，然后单击 **"确定"**。

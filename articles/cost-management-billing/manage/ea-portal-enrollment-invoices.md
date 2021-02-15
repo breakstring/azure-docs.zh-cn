@@ -3,20 +3,98 @@ title: Azure Enterprise 注册发票
 description: 本文介绍如何管理和处理 Azure 企业发票。
 author: bandersmsft
 ms.author: banders
-ms.date: 08/14/2020
+ms.date: 01/19/2021
 ms.topic: conceptual
 ms.service: cost-management-billing
+ms.subservice: enterprise
 ms.reviewer: boalcsva
-ms.openlocfilehash: 89b344a4fc97ccc65a123a2892eac998eaf18b28
-ms.sourcegitcommit: c293217e2d829b752771dab52b96529a5442a190
+ms.custom: contperf-fy21q1
+ms.openlocfilehash: 90ae9bdcee5f5f4c4281f2c3f931389b2ebf9486
+ms.sourcegitcommit: fc401c220eaa40f6b3c8344db84b801aa9ff7185
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/15/2020
-ms.locfileid: "88244102"
+ms.lasthandoff: 01/20/2021
+ms.locfileid: "98598081"
 ---
 # <a name="azure-enterprise-enrollment-invoices"></a>Azure Enterprise 注册发票
 
 本文介绍如何管理和处理 Azure 企业协议 (Azure EA) 发票。 发票代表帐单。 请检查发票以确保其准确。 你还应该熟悉管理发票时可能需要执行的其他任务。
+
+## <a name="view-usage-summary-and-download-reports"></a>查看使用情况摘要和下载报告
+
+企业管理员可以查看对其使用情况数据、使用的 Azure 预付款以及与 Azure Enterprise 门户中其他使用量相关的费用的摘要。 费用以摘要形式显示，适用于所有帐户和订阅。
+
+若要查看特定帐户的详细使用情况，请下载使用情况详细信息报表：
+
+1. 登录到 Azure Enterprise 门户。
+1. 选择“报告”。
+1. 选择“下载使用情况”选项卡。
+1. 在报表列表中，选择要获取的月份报表对应的“下载”。
+
+   > [!NOTE]
+   > 使用情况详细信息报表不包含任何适用的税费。
+   >
+   > 从使用服务开始算起，最长可能需要在延迟八小时之后，其费用才会反映在报表中。
+
+查看使用情况摘要报表和关系图：
+
+1. 登录到 Azure Enterprise 门户。
+1. 选择预付款期限。
+   若要更改“使用情况摘要”的日期范围，可以在页面右上角从“M”（每月）切换为“C”（自定义），然后输入自定义的开始日期和结束日期。    
+   ![在自定义视图中创建和查看使用情况摘要并下载报表](./media/ea-portal-enrollment-invoices/create-ea-view-usage-summary-and-download-reports-custom-view.png)
+1. 若要查看更多详细信息，可以在图表上选择某个时段或月份。
+   - 该图表显示了每月的使用情况，其中细分了使用量、服务额外费用、单独计收的费用和 Azure 市场费用。
+   - 对于选定的月份，可以使用图表下面的字段按部门、帐户和订阅进行筛选。
+   - 可以在“按服务列出的费用”与“按层次结构列出的费用”之间切换。 
+   - 展开相关的部分可以查看“Azure 服务”、“单独计收的费用”和“Azure 市场”中的详细信息。  
+
+观看以下视频来了解如何查看使用情况：
+
+> [!VIDEO https://www.youtube.com/embed/Cv2IZ9QCn9E]
+
+### <a name="download-csv-reports"></a>下载 CSV 报告
+
+企业管理员可以使用“月份报表下载”页以 CSV 文件形式下载以下报表：
+
+- 余额和费用
+- 使用情况详细信息
+- Azure 市场费用
+- 价目表
+
+若要下载报告：
+
+1. 在 Azure Enterprise 门户中选择“报表”。
+2. 选择页面顶部的“下载使用情况”。
+3. 选择月份报告旁边的“下载”。
+
+   > [!NOTE]
+   > 从使用日期开始算起，最长可能需要延迟 72 小时，其费用才会显示在报告中。
+   >
+   > 用户在使用 Safari 将 CSV 文件下载到 Excel 时可能会遇到格式错误。 为避免错误，请使用文本编辑器打开文件。
+
+![显示“下载使用情况”页的示例](./media/ea-portal-enrollment-invoices/create-ea-download-csv-reports.png)
+
+观看以下视频来了解如何下载使用情况信息：
+
+> [!VIDEO https://www.youtube.com/embed/eY797htT1qg]
+
+### <a name="advanced-report-download"></a>高级报表下载
+
+可以使用高级报表下载来获取涵盖特定日期范围或帐户的报表。 输出文件采用 CSV 格式，以容纳较大的记录集。
+
+1. 在 Azure Enterprise 门户中选择“高级报表下载”。
+1. 选择适当的日期范围和帐户。
+1. 选择“请求使用情况数据”。
+1. 选择“刷新”按钮，直到报表状态更新为“下载”。 
+1. 下载报表。
+
+### <a name="download-usage-reports-and-billing-information-for-a-prior-enrollment"></a>下载先前注册的使用情况报表和计费信息
+
+发生注册转移后，可以下载先前某个注册的使用情况报表和计费信息。 Azure Enterprise 门户和成本管理中都会提供历史报表。
+
+Azure Enterprise 门户会从视图中筛选出非活动的注册。 需要取消选中“活动”框才能查看非活动的已转移注册。  
+
+![取消选中“活动”框可让用户查看非活动的注册](./media/ea-portal-enrollment-invoices/unchecked-active-box.png)
 
 ## <a name="change-a-po-number-for-an-upcoming-overage-invoice"></a>更改即将推出的超额发票的 PO 编号
 
@@ -109,9 +187,9 @@ Microsoft 每年在注册生效日期对 Microsoft Azure 服务的任何预付�
 
 客户的计费频率为每年、每季或每月。 计费周期是客户签署协议时确定的。 每月计费是最短的计费间隔。
 
-- 将直接注册的计费周期从每年更改为每季需要经过企业管理员的**批准**。 对于间接注册，需要合作伙伴管理员的批准。 更改将在当前计费季度结束时生效。
-- 若要将计费周期从每年或每季更改为每月，需要对协议进行**修正**。  对现有注册计费周期进行任何更改都需要经过企业管理员的批准，或者经过“接收帐单的联系人”的批准。
-- 将审批内容**提交**给 [Azure Enterprise 门户支持人员](https://support.microsoft.com/supportrequestform/cf791efa-485b-95a3-6fad-3daf9cd4027c)。 选择问题类别：“计费和开票”。
+- 将直接注册的计费周期从每年更改为每季需要经过企业管理员的 **批准**。 对于间接注册，需要合作伙伴管理员的批准。 更改将在当前计费季度结束时生效。
+- 若要将计费周期从每年或每季更改为每月，需要对协议进行 **修正**。  对现有注册计费周期进行任何更改都需要经过企业管理员的批准，或者经过“接收帐单的联系人”的批准。
+- 将审批内容 **提交** 给 [Azure Enterprise 门户支持人员](https://support.microsoft.com/supportrequestform/cf791efa-485b-95a3-6fad-3daf9cd4027c)。 选择问题类别：“计费和开票”。
 
 更改将在当前计费季度结束时生效。
 
@@ -160,21 +238,7 @@ Microsoft 每年在注册生效日期对 Microsoft Azure 服务的任何预付�
 
 ### <a name="enterprise-agreement-units-of-measure"></a>企业协议度量单位
 
-企业协议的度量单位通常不同于其他计划，例如 Microsoft Online Services 协议计划 (MOSA)。 这种区分意味着，对于许多服务而言，合计度量单位是为了提供规范化的定价。 Azure Enterprise 门户的“使用情况摘要”视图中显示的度量单位始终为 Enterprise 度量。 [友好服务名称](https://azurepricing.blob.core.windows.net/supplemental/Friendly_Service_Names.xlsx) Excel 文件中提供了每项服务的当前度量单位和换算的完整列表。
-
-### <a name="rounding-rules"></a>舍入规则
-
-在 Azure Enterprise 门户遵循 IEEE 标准银行家舍入法或高斯舍入法逻辑。 遇到数字 5 时，此逻辑将其舍入为最接近的偶数。 而更典型的四舍五入逻辑始终将数字 5 向上舍入为下一个最大的数字。 与标准的 Excel 逻辑相比，此 Azure Enterprise 门户方法实际提供的一组数字的总和更准确。
-
-演示：如果要去除的第一个数字是 5 且它后面没有其他数字或者它后面的数字为 0，则将这组数字舍入为最接近的偶数。 例如，2.315 和 2.325 在舍入为最接近的百分位数时，均为 2.32。
-
-下表显示了为 Azure Enterprise 门户中的舍入和转换规则建模时可使用的 Excel 公式供你参考：
-
-| 场景 | 银行从业者逻辑公式 |
-| --- | --- |
-| 舍入用法 | =MROUND({_source_}, 0.0002) |
-| 舍入定价（2 位小数） | =MROUND({_source_}, 0.02) |
-| 舍入定价（0 位小数） | =MROUND({_source_}, 2) |
+企业协议的度量单位通常不同于其他计划，例如 Microsoft Online Services 协议计划 (MOSA)。 这种区分意味着，对于许多服务而言，合计度量单位是为了提供规范化的定价。 Azure Enterprise 门户的“使用情况摘要”视图中显示的度量单位始终为 Enterprise 度量。 通过提交[支持请求](https://portal.azure.com/?#blade/Microsoft_Azure_Support/HelpAndSupportBlade)，可提供每项服务的当前度量单位和换算的完整列表。
 
 ### <a name="conversion-between-usage-detail-report-and-the-usage-summary-page"></a>使用情况详细信息报表与使用情况摘要页之间的转换
 
@@ -260,13 +324,6 @@ Azure 预付款是提前为 Azure 服务支付的金额。 使用服务时会消
 发票将在计费周期结束后的一个月发出。 如果按月计费，则会在 10 月为两个合作伙伴发出 9 月份的发票。 如果计费周期为一季或一年，则客户应收到一份针对上一个关联合作伙伴的使用情况的发票，以及其余针对新合作伙伴使用情况的发票，收到发票的时间取决于计费频率。
 
 ## <a name="next-steps"></a>后续步骤
-
-- 以下 Excel 文件提供了有关 Azure 服务的详细信息，并会在每个月的 6 日和 20 日更新：
-
-   | 标题 | 说明 | 文件名 |
-   | --- | --- | --- |
-   | [友好服务名称](https://azurepricing.blob.core.windows.net/supplemental/Friendly_Service_Names.xlsx) | 列出所有有效服务，包括： <br>  <ul><li>服务类别</li>   <li>友好服务名称</li>   <li>预付款名称和构成部分编号</li> <li>消耗计划名称和构成部分编号</li>   <li>度量单位</li>   <li>报告的用量与显示的 Enterprise 门户用量之间的转换系数</li></ul> | Friendly\_Service\_Names.xlsx |
-   | [服务下载字段](https://azurepricing.blob.core.windows.net/supplemental/Service_Download_Fields.xlsx) | 此电子表格提供使用情况下载报表中服务相关字段的所有可能的组合的一览。 | Service\_Download\_Fields.xlsx |
 
 - 有关发票和费用的信息，请参阅[了解 Azure 企业协议帐单](../understand/review-enterprise-agreement-bill.md)。
 - 若要开始使用 Azure Enterprise 门户，请参阅 [Azure EA 门户入门](ea-portal-get-started.md)。

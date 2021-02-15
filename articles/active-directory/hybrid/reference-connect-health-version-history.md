@@ -16,12 +16,12 @@ ms.topic: reference
 ms.date: 08/10/2020
 ms.author: billmath
 ms.collection: M365-identity-device-management
-ms.openlocfilehash: 2cb5902e3bc8bbed63d7a6e074ece824e16c5609
-ms.sourcegitcommit: c28fc1ec7d90f7e8b2e8775f5a250dd14a1622a6
+ms.openlocfilehash: e7653f850edc910fc78b14a628b87dcb22aeb903
+ms.sourcegitcommit: 829d951d5c90442a38012daaf77e86046018e5b9
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/13/2020
-ms.locfileid: "88165152"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "89279408"
 ---
 # <a name="azure-ad-connect-health-version-release-history"></a>Azure AD Connect Health：版本发布历史记录
 Azure Active Directory 团队会定期更新 Azure AD Connect Health 的新特性和功能。 本文列出已发布的版本和功能。  
@@ -30,7 +30,7 @@ Azure Active Directory 团队会定期更新 Azure AD Connect Health 的新特�
 > 新版本发布时，会自动更新连接运行状况代理。 请确保从 Azure 门户启用自动升级设置。
 >
 
-适用于同步的 Azure AD Connect Health 与 Azure AD Connect 安装相集成。 详细了解 [Azure AD Connect 版本历史记录](https://docs.microsoft.com/azure/active-directory/connect/active-directory-aadconnect-version-history)有关功能反馈，请在 [Connect Health User Voice 频道](https://feedback.azure.com/forums/169401-azure-active-directory/filters/new?category_id=165591)进行投票
+适用于同步的 Azure AD Connect Health 与 Azure AD Connect 安装相集成。 详细了解 [Azure AD Connect 版本历史记录](./reference-connect-version-history.md)有关功能反馈，请在 [Connect Health User Voice 频道](https://feedback.azure.com/forums/169401-azure-active-directory/filters/new?category_id=165591)进行投票
 
 ## <a name="april-2020"></a>2020 年 4 月
 **代理更新**
@@ -225,7 +225,7 @@ Azure Active Directory 团队会定期更新 Azure AD Connect Health 的新特�
 ## <a name="november-2015"></a>2015 年 11 月
 **新功能：**
 
-* 支持 azure [RBAC) 的基于角色的访问控制 (](how-to-connect-health-operations.md#manage-access-with-role-based-access-control)
+* 支持 azure [RBAC) 的基于角色的访问控制 (](how-to-connect-health-operations.md#manage-access-with-azure-rbac)
 
 **新的预览功能：**
 
@@ -260,4 +260,4 @@ Azure Active Directory 团队会定期更新 Azure AD Connect Health 的新特�
 * 使用 Azure AD 全局管理员凭据简化代理部署。  
 
 ## <a name="next-steps"></a>后续步骤
-有关详细信息，请参阅[在云中监视本地标识基础结构和同步服务](whatis-hybrid-identity-health.md)。
+有关详细信息，请参阅[在云中监视本地标识基础结构和同步服务](./whatis-azure-ad-connect.md)。

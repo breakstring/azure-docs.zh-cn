@@ -3,39 +3,32 @@ title: 将 Azure 服务总线与 Azure 专用链接服务集成
 description: 了解如何将 Azure 服务总线与 Azure 专用链接服务集成
 author: spelluru
 ms.author: spelluru
-ms.date: 06/23/2020
+ms.date: 10/07/2020
 ms.topic: article
-ms.openlocfilehash: 4f3b67794d1a7f3935c79c70f18b8bd4a1e0d7ef
-ms.sourcegitcommit: 6fc156ceedd0fbbb2eec1e9f5e3c6d0915f65b8e
+ms.openlocfilehash: 66de9a4ff65c73264257cb6f7f215fc15820c95f
+ms.sourcegitcommit: 0dcafc8436a0fe3ba12cb82384d6b69c9a6b9536
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/21/2020
-ms.locfileid: "88716616"
+ms.lasthandoff: 11/10/2020
+ms.locfileid: "94427141"
 ---
 # <a name="allow-access-to-azure-service-bus-namespaces-via-private-endpoints"></a>允许通过专用终结点访问 Azure 服务总线命名空间
-
 使用 Azure 专用链接服务，可以通过虚拟网络中的专用终结点访问 Azure 服务（例如 Azure 服务总线、Azure 存储和 Azure Cosmos DB）以及 Azure 托管的客户服务/合作伙伴服务。
+
+> [!IMPORTANT]
+> 通过 Azure 服务总线高级层支持此功能。 有关高级层的详细信息，请参阅[服务总线高级和标准消息传送层](service-bus-premium-messaging.md)。
 
 专用终结点是一个网络接口，可以通过专用且安全的方式将你连接到 Azure 专用链接支持的服务。 专用终结点使用 VNet 中的专用 IP 地址将服务有效接入 VNet 中。 发往服务的所有流量都可以通过专用终结点路由，因此不需要网关、NAT 设备、ExpressRoute 或 VPN 连接或公共 IP 地址。 虚拟网络与服务之间的流量将通过 Microsoft 主干网络，因此不会从公共 Internet 泄露。 可以连接到 Azure 资源的实例，从而获得最高级别的访问控制粒度。
 
 有关详细信息，请参阅[什么是 Azure 专用链接？](../private-link/private-link-overview.md)
 
 >[!WARNING]
-> 实施专用终结点可以阻止其他 Azure 服务与服务总线进行交互。
->
-> 使用虚拟网络时，不支持受信任的 Microsoft 服务。
->
-> 不适用于虚拟网络常见 Azure 方案（请注意，该列表内容并不详尽）-
-> - 与 Azure 事件网格的集成
-> - Azure IoT 中心路由
-> - Azure IoT Device Explorer
+> 实施专用终结点可以阻止其他 Azure 服务与服务总线进行交互。 例外情况是，即使在启用了专用终结点的情况下，也可以允许从某些受信任的服务访问服务总线资源。 有关受信任服务的列表，请参阅 [受信任服务](#trusted-microsoft-services)。
 >
 > 以下 Microsoft 服务必须在虚拟网络中
 > - Azure 应用服务
 > - Azure Functions
 
-> [!IMPORTANT]
-> 通过 Azure 服务总线高级层支持此功能。 有关高级层的详细信息，请参阅[服务总线高级和标准消息传送层](service-bus-premium-messaging.md)。
 
 
 ## <a name="add-a-private-endpoint-using-azure-portal"></a>使用 Azure 门户添加专用终结点
@@ -46,7 +39,7 @@ ms.locfileid: "88716616"
 
 - 服务总线命名空间。
 - 一个 Azure 虚拟网络。
-- 虚拟网络中的子网。 可以使用 **默认** 子网。 
+- 虚拟网络中的子网。 可以使用默认子网。 
 - 对服务总线命名空间和虚拟网络拥有所有者或参与者权限。
 
 专用终结点和虚拟网络必须位于同一区域。 使用门户选择专用终结点的区域时，只会自动筛选该区域中的虚拟网络。 服务总线命名空间可以位于不同的区域中。 并且，专用终结点使用虚拟网络中的专用 IP 地址。
@@ -58,19 +51,19 @@ ms.locfileid: "88716616"
 1. 登录 [Azure 门户](https://portal.azure.com)。 
 2. 在搜索栏中键入“服务总线”。
 3. 从列表中选择要将专用终结点添加到的“命名空间”。
-2. 在左侧菜单中，选择 "**设置**" 下的 "**网络**" 选项。 
+2. 在左侧菜单上，选择“设置”下的“网络”选项 。 
 
     > [!NOTE]
-    > 只有**高级**命名空间才会显示 "**网络**" 选项卡。  
+    > 只会为“高级”命名空间显示“网络”选项卡 。  
     
-    默认情况下，选择 " **所选网络** " 选项。 如果未在此页上至少添加一个 IP 防火墙规则或一个虚拟网络，则可以使用访问密钥) 通过公共 internet (访问该命名空间。
+    默认情况下，“选定网络”选项处于选中状态。 如果未在此页上添加至少一个 IP 防火墙规则或虚拟网络，则可以通过公共 Internet（使用访问密钥）访问该命名空间。
 
-    :::image type="content" source="./media/service-bus-ip-filtering/default-networking-page.png" alt-text="网络页-默认" lightbox="./media/service-bus-ip-filtering/default-networking-page.png":::
+    :::image type="content" source="./media/service-bus-ip-filtering/default-networking-page.png" alt-text="网络页面 - 默认" lightbox="./media/service-bus-ip-filtering/default-networking-page.png":::
     
-    如果选择 " **所有网络** " 选项，则服务总线命名空间接受来自任何 IP 地址的连接 (使用访问密钥) 。 此默认设置等效于接受 0.0.0.0/0 IP 地址范围的规则。 
+    如果选择“所有网络”选项，则服务总线命名空间接受来自任何 IP 地址的连接（使用访问密钥）。 此默认设置等效于接受 0.0.0.0/0 IP 地址范围的规则。 
 
     ![防火墙 - 选中了“所有网络”选项](./media/service-bus-ip-filtering/firewall-all-networks-selected.png)
-5. 若要允许通过专用终结点访问命名空间，请选择页面顶部的 " **专用终结点连接** " 选项卡
+5. 若要允许通过专用终结点访问命名空间，请选择页面顶部的“专用终结点连接”选项卡
 6. 在页面顶部选择“+ 专用终结点”按钮。
 
     ![“添加专用终结点”按钮](./media/private-link-service/private-link-service-3.png)
@@ -111,6 +104,8 @@ ms.locfileid: "88716616"
 12. 确认已创建专用终结点。 如果你是资源的所有者，并且已选择“连接到我的目录中的 Azure 资源”选项作为连接方法，则应已“自动批准”终结点连接。   如果它处于“挂起”状态，请参阅[使用 Azure 门户管理专用终结点](#manage-private-endpoints-using-azure-portal)部分。
 
     ![已创建专用终结点](./media/private-link-service/private-endpoint-created.png)
+
+[!INCLUDE [service-bus-trusted-services](../../includes/service-bus-trusted-services.md)]
 
 ## <a name="add-a-private-endpoint-using-powershell"></a>使用 PowerShell 添加专用终结点
 以下示例演示如何使用 Azure PowerShell 创建与服务总线命名空间的专用终结点连接。
@@ -183,8 +178,8 @@ $privateEndpoint = New-AzPrivateEndpoint -ResourceGroupName $rgName  `
 | 服务操作 | 服务使用者专用终结点状态 | 说明 |
 |--|--|--|
 | 无 | 挂起的 | 连接是手动创建的，正等待专用链接资源所有者批准。 |
-| 审批 | 已批准 | 连接已自动或手动批准，可供使用。 |
-| 拒绝 | 已拒绝 | 连接被专用链接资源所有者拒绝。 |
+| 审批 | 已批准 | 连接已自动或手动批准，随时可供使用。 |
+| 拒绝 | 已拒绝 | 连接已被专用链接资源所有者拒绝。 |
 | 删除 | 已断开连接 | 连接已被专用链接资源所有者删除，专用终结点仅供参考，应将其删除以清理资源。 |
  
 ###  <a name="approve-reject-or-remove-a-private-endpoint-connection"></a>批准、拒绝或删除专用终结点连接
@@ -262,9 +257,9 @@ Aliases:  <service-bus-namespace-name>.servicebus.windows.net
 
 ## <a name="limitations-and-design-considerations"></a>限制和设计注意事项
 
-**定价**：有关定价信息，请参阅 [Azure 专用链接定价](https://azure.microsoft.com/pricing/details/private-link/)。
+**定价** ：有关定价信息，请参阅 [Azure 专用链接定价](https://azure.microsoft.com/pricing/details/private-link/)。
 
-**限制**：此功能可在所有 Azure 公共区域中使用。
+**限制** ：此功能可在所有 Azure 公共区域中使用。
 
 每个服务总线命名空间的最大专用终结点数目：120。
 

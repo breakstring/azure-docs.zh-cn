@@ -3,17 +3,17 @@ title: 更改 Azure IoT Central 应用程序设置 | Microsoft Docs
 description: 本文介绍管理员如何通过更改应用程序名称和 URL 来管理 Azure IoT Central 应用程序，以及如何上传映像和删除应用程序
 author: viv-liu
 ms.author: viviali
-ms.date: 11/27/2019
+ms.date: 12/19/2020
 ms.topic: how-to
 ms.service: iot-central
 services: iot-central
 manager: peterpr
-ms.openlocfilehash: 7b77ea9e0e1f322cb5ef0bc63885c3ccce1b76f6
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: fde4f236a48e00b20817a812810fc3ad7d4b227f
+ms.sourcegitcommit: 27d616319a4f57eb8188d1b9d9d793a14baadbc3
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "80158669"
+ms.lasthandoff: 02/15/2021
+ms.locfileid: "100521877"
 ---
 # <a name="change-iot-central-application-settings"></a>更改 IoT Central 应用程序设置
 
@@ -39,19 +39,19 @@ ms.locfileid: "80158669"
 使用“删除”按钮可以永久删除 IoT Central 应用程序。  此操作会永久删除与该应用程序关联的所有数据。
 
 > [!Note]
-> 若要删除某个应用程序，还必须有权删除在创建应用程序时所选的 Azure 订阅中的资源。 有关详细信息，请参阅[使用基于角色的访问控制来管理对 Azure 订阅资源的访问权限](https://docs.microsoft.com/azure/active-directory/role-based-access-control-configure)。
+> 若要删除某个应用程序，还必须有权删除在创建应用程序时所选的 Azure 订阅中的资源。 有关详细信息，请参阅[使用基于角色的访问控制来管理对 Azure 订阅资源的访问权限](../../role-based-access-control/role-assignments-portal.md)。
 
 ## <a name="manage-programmatically"></a>以编程方式管理
 
 IoT Central Azure 资源管理器 SDK 程序包适用于 Node、Python、C#、Ruby、Java 和 Go。 可以使用这些包来创建、列出、更新或删除 IoT Central 应用程序。 这些包包含用于管理身份验证和错误处理的帮助程序。
 
-可以在 [https://github.com/emgarten/iotcentral-arm-sdk-examples](https://github.com/emgarten/iotcentral-arm-sdk-examples) 中找到有关如何使用 Azure 资源管理器 SDK 的示例。
+可以在 [https://github.com/Azure-Samples/azure-iot-central-arm-sdk-samples](https://github.com/Azure-Samples/azure-iot-central-arm-sdk-samples) 中找到有关如何使用 Azure 资源管理器 SDK 的示例。
 
 有关详细信息，请参阅以下 GitHub 存储库和包：
 
 | 语言 | 存储库 | 程序包 |
 | ---------| ---------- | ------- |
-| 节点 | [https://github.com/Azure/azure-sdk-for-node](https://github.com/Azure/azure-sdk-for-node) | [https://www.npmjs.com/package/azure-arm-iotcentral](https://www.npmjs.com/package/azure-arm-iotcentral)
+| 节点 | [https://github.com/Azure/azure-sdk-for-js](https://github.com/Azure/azure-sdk-for-js) | [https://www.npmjs.com/package/@azure/arm-iotcentral](https://www.npmjs.com/package/@azure/arm-iotcentral)
 | Python |[https://github.com/Azure/azure-sdk-for-python](https://github.com/Azure/azure-sdk-for-python) | [https://pypi.org/project/azure-mgmt-iotcentral](https://pypi.org/project/azure-mgmt-iotcentral)
 | C# | [https://github.com/Azure/azure-sdk-for-net](https://github.com/Azure/azure-sdk-for-net) | [https://www.nuget.org/packages/Microsoft.Azure.Management.IotCentral](https://www.nuget.org/packages/Microsoft.Azure.Management.IotCentral)
 | Ruby | [https://github.com/Azure/azure-sdk-for-ruby](https://github.com/Azure/azure-sdk-for-ruby) | [https://rubygems.org/gems/azure_mgmt_iot_central](https://rubygems.org/gems/azure_mgmt_iot_central)

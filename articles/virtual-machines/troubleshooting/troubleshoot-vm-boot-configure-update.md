@@ -13,22 +13,22 @@ ms.tgt_pltfrm: vm-windows
 ms.topic: article
 ms.date: 09/18/2018
 ms.author: delhan
-ms.openlocfilehash: d7e56fe36af3d841cfd888dd6c1bf05502837cdd
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.openlocfilehash: f3e4d51b4d41fa0dc23e9b12ac0251c14215de5c
+ms.sourcegitcommit: 484f510bbb093e9cfca694b56622b5860ca317f7
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87079836"
+ms.lasthandoff: 01/21/2021
+ms.locfileid: "98633004"
 ---
 # <a name="vm-startup-is-stuck-on-getting-windows-ready-dont-turn-off-your-computer-in-azure"></a>VM 启动时停滞，并在 Azure 中显示“正在准备 Windows。 请不要关闭计算机”
 
-本文介绍了在 Microsoft Azure 中启动 Windows 虚拟机（VM）时可能会遇到的 "准备就绪" 和 "获取 Windows 就绪" 屏幕。 本文提供用于收集支持票证数据的步骤。
+本文介绍了在 Microsoft Azure 中启动 Windows 虚拟机 (VM) 时可能会遇到的 "准备就绪" 和 "获取 Windows 就绪" 屏幕。 本文提供用于收集支持票证数据的步骤。
 
  
 
 ## <a name="symptoms"></a>症状
 
-Windows VM 无法启动。 使用**启动诊断**来获取 VM 的屏幕截图时，可能会看到 VM 显示消息“准备就绪”或“准备 Windows 就绪”。
+Windows VM 无法启动。 使用 **启动诊断** 来获取 VM 的屏幕截图时，可能会看到 VM 显示消息“准备就绪”或“准备 Windows 就绪”。
 
 ![Windows Server 2012 R2 的消息示例](./media/troubleshoot-vm-configure-update-boot/message1.png)
 
@@ -39,6 +39,9 @@ Windows VM 无法启动。 使用**启动诊断**来获取 VM 的屏幕截图时
 当服务器在配置发生更改后执行最终重新启动时，通常会发生此问题。 配置更改可能通过 Windows 更新或通过更改服务器的角色/功能进行初始化。 对于 Windows 更新，如果更新的大小较大，则操作系统将需要更多时间来重新配置更改。
 
 ## <a name="collect-an-os-memory-dump"></a>收集 OS 内存转储
+
+> [!TIP]
+> 如果你有 VM 的最新备份，则可以尝试 [从备份还原 vm](../../backup/backup-azure-arm-restore-vms.md) ，以解决启动问题。
 
 如果等待更改处理后问题仍未解决，则需要收集内存转储文件并与支持部门联系。 若要收集转储文件，请执行以下步骤：
 

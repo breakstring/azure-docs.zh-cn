@@ -1,19 +1,16 @@
 ---
 title: 使用外部元数据存储 - Azure HDInsight
 description: 在 Azure HDInsight 群集中使用外部元数据存储。
-author: hrasheed-msft
-ms.author: hrasheed
-ms.reviewer: jasonh
 ms.service: hdinsight
 ms.topic: how-to
 ms.custom: hdinsightactive
 ms.date: 08/06/2020
-ms.openlocfilehash: 78c0526ac750977115a88e96bb5f7d5cb4e9803f
-ms.sourcegitcommit: dea88d5e28bd4bbd55f5303d7d58785fad5a341d
+ms.openlocfilehash: d36c8f1f592bbe714a9e31cad8131523049f29ad
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/06/2020
-ms.locfileid: "87873086"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98931356"
 ---
 # <a name="use-external-metadata-stores-in-azure-hdinsight"></a>使用外部元数据存储 - Azure HDInsight
 
@@ -38,10 +35,10 @@ HDInsight 中的 Apache Hive 元存储是 Apache Hadoop 体系结构的必备部
 
 * 不可与其他群集共享默认元存储。
 
-* 建议仅将默认元存储用于简单工作负荷。 即不需要多个群集且不需要在群集生命周期之外保留的元数据的工作负荷。
+* 建议将默认元存储仅用于简单工作负载。 即不需要多个群集且不需要在群集生命周期之外保留的元数据的工作负荷。
 
 > [!IMPORTANT]
-> 默认的元存储提供具有**基本第5级 DTU 限制**的 Azure SQL 数据库， (无法) 升级！ 适用于基本测试目的。 对于大型或生产工作负荷，我们建议迁移到外部元存储。
+> 默认元存储提供具有基本层 5 DTU 限制（不可升级）的 Azure SQL 数据库！ 适用于基本测试目的。 对于大型工作负载或生产工作负载，建议迁移到外部元存储。
 
 ## <a name="custom-metastore"></a>自定义元存储
 
@@ -49,11 +46,11 @@ HDInsight 还支持自定义元存储，建议对生产群集使用此项：
 
 * 将自己的 Azure SQL 数据库指定为元存储。
 
-* 元存储的生命周期不与群集生命周期相关联，因此你可以在不丢失元数据的情况下创建和删除群集。 即使删除和重新创建 HDInsight 群集之后，系统仍然保留 Hive 架构等元数据。
+* 元存储的生命周期不与群集生命周期相关联，因此可创建和删除群集，而不会丢失元数据。 即使删除和重新创建 HDInsight 群集之后，系统仍然保留 Hive 架构等元数据。
 
 * 通过自定义元存储，可将多个群集和群集类型附加到元存储。 例如，可跨交互式查询、Hive 和 HDInsight 中的群集的 Spark 共享单个元存储。
 
-* 根据所选的性能级别，按元存储 (Azure SQL 数据库) 的成本付费。
+* 根据所选的性能级别支付元存储（Azure SQL 数据库）的费用。
 
 * 可按需增加元存储。
 
@@ -63,11 +60,11 @@ HDInsight 还支持自定义元存储，建议对生产群集使用此项：
 
 ### <a name="create-and-config-azure-sql-database-for-the-custom-metastore"></a>针对自定义元存储创建并配置 Azure SQL 数据库
 
-在为 HDInsight 群集设置自定义 Hive 元存储之前，需创建 Azure SQL 数据库或有一个现有的 Azure SQL 数据库。  有关详细信息，请参阅[快速入门：在 AZURE SQL 数据库中创建单个数据库](https://docs.microsoft.com/azure/sql-database/sql-database-single-database-get-started?tabs=azure-portal)。
+在为 HDInsight 群集设置自定义 Hive 元存储之前，需创建 Azure SQL 数据库或有一个现有的 Azure SQL 数据库。  有关详细信息，请参阅[快速入门：在 Azure SQL 数据库中创建单一数据库](../azure-sql/database/single-database-create-quickstart.md?tabs=azure-portal)。
 
-创建群集时，HDInsight 服务需要连接到外部元存储并验证你的凭据。 配置 Azure SQL 数据库防火墙规则以允许 Azure 服务和资源访问服务器。 通过选择“设置服务器防火墙”**** 来在 Azure 门户中启用此选项。 然后选择**No** "**拒绝公共网络访问**" 下面的 **"是"** ，在 "**允许 azure 服务和资源" 访问此服务器**以获取 azure SQL 数据库。 有关详细信息，请参阅[创建和管理 IP 防火墙规则](https://docs.microsoft.com/azure/sql-database/sql-database-firewall-configure#use-the-azure-portal-to-manage-server-level-ip-firewall-rules)
+创建群集时，HDInsight 服务需要连接到外部元存储并验证你的凭据。 配置 Azure SQL 数据库防火墙规则以允许 Azure 服务和资源访问服务器。 通过选择“设置服务器防火墙”来在 Azure 门户中启用此选项。 然后针对 Azure SQL 数据库在“拒绝公用网络访问”下选择“否”，在“允许 Azure 服务和资源访问此服务器”下选择“是”。 有关详细信息，请参阅[创建和管理 IP 防火墙规则](../azure-sql/database/firewall-configure.md#use-the-azure-portal-to-manage-server-level-ip-firewall-rules)
 
-不支持使用 SQL 存储的专用终结点。
+仅在使用 `outbound` ResourceProviderConnection 创建的群集上支持 SQL 存储的专用终结点。 若要了解详细信息，请参阅此 [documentationa](./hdinsight-private-link.md)。
 
 ![“设置服务器防火墙”按钮](./media/hdinsight-use-external-metadata-stores/configure-azure-sql-database-firewall1.png)
 
@@ -75,14 +72,14 @@ HDInsight 还支持自定义元存储，建议对生产群集使用此项：
 
 ### <a name="select-a-custom-metastore-during-cluster-creation"></a>在群集创建期间选择自定义元存储
 
-可以随时将群集指向之前创建的 Azure SQL 数据库。 若要通过门户创建群集，请从“存储”>“元存储设置”**** 指定该选项。
+可以随时将群集指向之前创建的 Azure SQL 数据库。 若要通过门户创建群集，请从“存储”>“元存储设置”指定该选项。
 
 ![HDInsight Hive 元数据存储 Azure 门户](./media/hdinsight-use-external-metadata-stores/azure-portal-cluster-storage-metastore.png)
 
 ## <a name="hive-metastore-guidelines"></a>Hive 元存储指南
 
 > [!NOTE]
-> 尽可能使用自定义元存储来帮助分离计算资源（正在运行的群集）和元数据（存储在元存储中）。 从 S2 层开始，提供 50 DTU 和 250 GB 的存储。 如果空间不够，可扩大数据库。
+> 尽可能使用自定义元存储来帮助分离计算资源（正在运行的群集）和元数据（存储在元存储中）。 首先使用 S2 层，它提供 50 DTU 和 250 GB 的存储。 如果空间不够，可扩大数据库。
 
 * 如果你希望多个 HDInsight 群集访问单独的数据，请对每个群集上的元存储使用单独的数据库。 如果在多个 HDInsight 群集之间共享元存储，则意味着这些群集将使用相同的元数据和底层用户数据文件。
 

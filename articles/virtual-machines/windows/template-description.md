@@ -7,12 +7,12 @@ ms.workload: infrastructure
 ms.topic: how-to
 ms.date: 01/03/2019
 ms.author: cynthn
-ms.openlocfilehash: e420fe81941352d1002ed2c25c04fc686115c7c2
-ms.sourcegitcommit: 2ff0d073607bc746ffc638a84bb026d1705e543e
+ms.openlocfilehash: 2726ba3b337dc785de58b06fb5e8372058f71879
+ms.sourcegitcommit: 2bd0a039be8126c969a795cea3b60ce8e4ce64fc
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/06/2020
-ms.locfileid: "87827446"
+ms.lasthandoff: 01/14/2021
+ms.locfileid: "98202090"
 ---
 # <a name="virtual-machines-in-an-azure-resource-manager-template"></a>Azure Resource Manager 模板中的虚拟机
 
@@ -275,14 +275,14 @@ ms.locfileid: "87827446"
 定义虚拟机资源时，需要使用几个 profile 元素。 其中一些元素是必需的，还有一些是可选的。 例如，hardwareProfile、osProfile、storageProfile 和 networkProfile 元素是必需的，而 diagnosticsProfile 是可选的。 这些配置文件定义如下所述的设置：
    
 - [大小](../sizes.md)
-- [名称](/azure/architecture/best-practices/resource-naming)和凭据
+- [名称](/azure/architecture/best-practices/resource-naming) 和凭据
 - 磁盘和[操作系统设置](cli-ps-findimage.md)
 - [网络接口](/previous-versions/azure/virtual-network/virtual-network-deploy-multinic-classic-ps) 
 - 启动诊断
 
 ## <a name="disks-and-images"></a>磁盘和映像
    
-在 Azure 中，vhd 文件可以表示[磁盘或映像](managed-disks-overview.md?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json)。 如果 vhd 文件中的操作系统专用于特定 VM，则该文件称为磁盘。 如果 vhd 文件中的操作系统经过通用化，用于创建多个 VM，则该文件称为映像。   
+在 Azure 中，vhd 文件可以表示[磁盘或映像](../managed-disks-overview.md)。 如果 vhd 文件中的操作系统专用于特定 VM，则该文件称为磁盘。 如果 vhd 文件中的操作系统经过通用化，用于创建多个 VM，则该文件称为映像。   
     
 ### <a name="create-new-virtual-machines-and-new-disks-from-a-platform-image"></a>从平台映像创建新虚拟机和新磁盘
 
@@ -308,7 +308,7 @@ ms.locfileid: "87827446"
 },
 ```
 
-操作系统磁盘的配置设置是使用 osDisk 元素分配的。 此示例定义了一个新的托管磁盘，其缓存模式设置为 **ReadWrite**，并且该磁盘是从[平台映像](cli-ps-findimage.md)创建的：
+操作系统磁盘的配置设置是使用 osDisk 元素分配的。 此示例定义了一个新的托管磁盘，其缓存模式设置为 **ReadWrite**，并且该磁盘是从 [平台映像](cli-ps-findimage.md)创建的：
 
 ```json
 "osDisk": { 
@@ -453,5 +453,5 @@ start.ps1 脚本可以完成许多配置任务。 例如，在本示例中已添
 
 - 参考[创作 Azure Resource Manager 模板](../../azure-resource-manager/templates/template-syntax.md)创建自己的模板。
 - 参考[使用 Resource Manager 模板创建 Windows 虚拟机](ps-template.md)部署创建的模板。
-- 请参阅[使用 Azure PowerShell 模块创建并管理 Windows VM](tutorial-manage-vm.md?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json)，了解如何管理创建的 VM。
+- 请参阅[使用 Azure PowerShell 模块创建并管理 Windows VM](tutorial-manage-vm.md)，了解如何管理创建的 VM。
 - 有关模板中资源类型的 JSON 语法和属性，请参阅 [Azure 资源管理器模板参考](/azure/templates/)。

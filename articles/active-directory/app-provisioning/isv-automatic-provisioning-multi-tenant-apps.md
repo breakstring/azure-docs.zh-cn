@@ -3,7 +3,7 @@ title: 为多租户应用程序启用自动用户预配-Azure AD
 description: 用于启用自动预配的独立软件供应商指南
 services: active-directory
 author: kenwith
-manager: celestedg
+manager: daveba
 ms.service: active-directory
 ms.subservice: app-provisioning
 ms.topic: reference
@@ -11,12 +11,12 @@ ms.workload: identity
 ms.date: 07/23/2019
 ms.author: kenwith
 ms.reviewer: zhchia
-ms.openlocfilehash: 7ffdef43aa0fdcaab9e8ceae519cef9dfe5cdf6e
-ms.sourcegitcommit: 3bf69c5a5be48c2c7a979373895b4fae3f746757
+ms.openlocfilehash: 7bd0fc634109beb6cc674d89f56666e7035d33ef
+ms.sourcegitcommit: d49bd223e44ade094264b4c58f7192a57729bada
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/14/2020
-ms.locfileid: "88235632"
+ms.lasthandoff: 02/02/2021
+ms.locfileid: "99255689"
 ---
 # <a name="enable-automatic-user-provisioning-for-your-multi-tenant-application"></a>为多租户应用程序启用自动用户预配
 
@@ -64,7 +64,7 @@ Azure AD 提供了多个集成路径，以便为应用程序启用自动用户�
 |---|---|---|---|
 | Azure AD 中的用户和组管理| √| √| 仅用户 |
 | 管理从本地 Active Directory 同步的用户和组| √*| √*| 仅用户 * |
-| 在设置访问 O365 数据时访问用户和组之外的数据 (团队、SharePoint、电子邮件、日历、文档等 ) | X+| √| X |
+| 在设置访问权限时访问用户和组之外的数据 (团队、SharePoint、电子邮件、日历、文档等 Microsoft 365 数据 ) | X+| √| X |
 | 基于业务规则创建、读取和更新用户| √| √| √ |
 | 基于业务规则删除用户| √| √| X |
 | 从 Azure 门户管理所有应用程序的自动用户预配| √| X| √ |
@@ -89,9 +89,9 @@ Azure AD 预配服务使用 [SCIM](https://aka.ms/SCIMOverview)，这是许多�
 
 ## <a name="microsoft-graph-for-provisioning"></a>用于预配的 Microsoft Graph
 
-使用用于预配的 Microsoft Graph 时，可以访问图形中提供的所有丰富的用户数据。 除了用户和组的详细信息外，还可以获取其他信息，如用户的角色、经理和直接下属、拥有和注册的设备，以及 [Microsoft Graph](/graph/api/overview?view=graph-rest-1.0)中提供的数百个其他数据片段。 
+使用用于预配的 Microsoft Graph 时，可以访问图形中提供的所有丰富的用户数据。 除了用户和组的详细信息外，还可以获取其他信息，如用户的角色、经理和直接下属、拥有和注册的设备，以及 [Microsoft Graph](/graph/api/overview)中提供的数百个其他数据片段。 
 
-15000000多家组织和90% 的财富500公司使用 Azure AD，同时订阅 Office 365、Microsoft Azure、企业移动性套件或 Microsoft 365 等 Microsoft 云服务。 你可以使用 Microsoft Graph 将你的应用与管理工作流（如员工加入 (和终止) 、配置文件维护等）集成。 
+15000000多家组织和90% 的财富500公司使用 Azure AD，同时订阅 Microsoft 365、Microsoft Azure 或企业移动性套件等 Microsoft 云服务。 你可以使用 Microsoft Graph 将你的应用与管理工作流（如员工加入 (和终止) 、配置文件维护等）集成。 
 
 详细了解如何使用 Microsoft Graph 进行预配：
 
@@ -111,7 +111,7 @@ SAML JIT 使用 SAML 令牌中的声明信息来创建和更新应用程序中�
 
 ## <a name="next-steps"></a>后续步骤
 
-* [为应用程序启用单一登录](../manage-apps/isv-sso-content.md)
+* [为应用程序启用单一登录](../develop/v2-howto-app-gallery-listing.md)
 
 * [提交你的应用程序列表](https://microsoft.sharepoint.com/teams/apponboarding/Apps/SitePages/Default.aspx) 并与 microsoft 合作，以便在 microsoft 网站上创建文档。
 

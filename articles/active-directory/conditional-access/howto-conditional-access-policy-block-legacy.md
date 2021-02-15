@@ -5,18 +5,18 @@ services: active-directory
 ms.service: active-directory
 ms.subservice: conditional-access
 ms.topic: how-to
-ms.date: 08/07/2020
+ms.date: 09/22/2020
 ms.author: joflore
 author: MicrosoftGuyJFlo
 manager: daveba
 ms.reviewer: calebb, rogoya
 ms.collection: M365-identity-device-management
-ms.openlocfilehash: b7a4693dabc62ec03897ccc46398bdff77118fe4
-ms.sourcegitcommit: bfeae16fa5db56c1ec1fe75e0597d8194522b396
+ms.openlocfilehash: 982c33c5c55e32ce48131a4b2f0911e4f23dd408
+ms.sourcegitcommit: aaa65bd769eb2e234e42cfb07d7d459a2cc273ab
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/10/2020
-ms.locfileid: "88032078"
+ms.lasthandoff: 01/27/2021
+ms.locfileid: "98877282"
 ---
 # <a name="conditional-access-block-legacy-authentication"></a>条件访问：阻止传统身份验证
 
@@ -24,7 +24,7 @@ ms.locfileid: "88032078"
 
 ## <a name="create-a-conditional-access-policy"></a>创建条件访问策略
 
-以下步骤将帮助创建条件访问策略以阻止旧身份验证请求。 此策略启动时设为[仅限报告模式](howto-conditional-access-report-only.md)，以便管理员确定他们对现有用户的影响。 当管理员认为策略按预期方式应用时，可以通过添加特定组并排除其他组来切换到“开”或暂存部署。
+以下步骤将帮助创建条件访问策略以阻止旧身份验证请求。 此策略启动时设为[仅限报告模式](howto-conditional-access-insights-reporting.md)，以便管理员确定他们对现有用户的影响。 当管理员认为策略按预期方式应用时，可以通过添加特定组并排除其他组来切换到“开”或暂存部署。
 
 1. 以全局管理员、安全管理员或条件访问管理员的身份登录到 Azure 门户。
 1. 浏览到“Azure Active Directory” > “安全性” > “条件访问”。
@@ -36,8 +36,8 @@ ms.locfileid: "88032078"
    1. 选择“完成”。
 1. 在“云应用或操作”下，选择“所有云应用”。
    1. 选择“完成”。
-1. 在 "**条件**  >  **客户端应用**" 下，将**配置**设置为 **"是"**。
-   1. 仅检查**Exchange ActiveSync 客户端**和**其他客户端**的框。
+1. 在“条件” > “客户端应用”下，将“配置”设置为“是”   。
+   1. 仅勾选“Exchange ActiveSync 客户端”和“其他客户端”框。 
    1. 选择“完成”。
 1. 在“访问控制” > “授予”下，选择“阻止访问”。
    1. 选择“选择”。
@@ -48,8 +48,8 @@ ms.locfileid: "88032078"
 
 [常用条件访问策略](concept-conditional-access-policy-common.md)
 
-[使用条件访问仅限报告模式确定影响](howto-conditional-access-report-only.md)
+[使用条件访问仅限报告模式确定影响](howto-conditional-access-insights-reporting.md)
 
 [使用条件访问 What If 工具模拟登录行为](troubleshoot-conditional-access-what-if.md)
 
-[如何设置多功能设备或应用程序以使用 Office 365 和 Microsoft 365 发送电子邮件](/exchange/mail-flow-best-practices/how-to-set-up-a-multifunction-device-or-application-to-send-email-using-office-3)
+[如何设置多功能设备或应用程序以使用 Microsoft 365 发送电子邮件](/exchange/mail-flow-best-practices/how-to-set-up-a-multifunction-device-or-application-to-send-email-using-microsoft-365-or-office-365)

@@ -1,7 +1,7 @@
 ---
-title: 配置文件模型内存和 CPU 使用率
+title: 分析模型内存和 CPU 使用率
 titleSuffix: Azure Machine Learning
-description: 了解如何分析模型内存和 CPU 使用率
+description: 了解如何在部署前分析模型。 分析确定了模型的内存和 CPU 使用率。
 services: machine-learning
 ms.service: machine-learning
 ms.subservice: core
@@ -10,20 +10,26 @@ author: gvashishtha
 ms.date: 07/31/2020
 ms.topic: conceptual
 zone_pivot_groups: aml-control-methods
-ms.openlocfilehash: 6bbee606c59482e4a06f344d3221e8611f6dcc9d
-ms.sourcegitcommit: 8def3249f2c216d7b9d96b154eb096640221b6b9
+ms.reviewer: larryfr
+ms.custom: deploy
+ms.openlocfilehash: b9ae40b3d2673961f9b84ed702f18b25b79b6d0c
+ms.sourcegitcommit: 96918333d87f4029d4d6af7ac44635c833abb3da
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/03/2020
-ms.locfileid: "87544529"
+ms.lasthandoff: 11/04/2020
+ms.locfileid: "93320393"
 ---
-# <a name="profile-your-model-to-determine-resource-utilization"></a>分析模型以确定资源利用率
+# <a name="profile-your-model-to-determine-resource-utilization"></a>分析模型，确定资源利用率
 
-本文介绍如何分析机器学习模型，以确定在将模型部署为 web 服务时，需要为模型分配多少 CPU 和内存。
+本文介绍如何分析机器学习模型，以确定在将模型部署为 Web 服务时需要为该模型分配多少 CPU 和内存。
 
-## <a name="prerequisites"></a>必备知识
+## <a name="prerequisites"></a>必备条件
 
-本文假设已通过 Azure 机器学习训练和注册了模型。 请参阅[此处的示例教程](how-to-train-scikit-learn.md)，了解使用 Azure 机器学习培训和注册 scikit-learn 模型的示例。
+本文假设你已通过 Azure 机器学习训练并注册了一个模型。 有关使用 Azure 机器学习训练和注册 scikit-learn 模型的示例，请参阅[此处的示例教程](how-to-train-scikit-learn.md)。
+
+## <a name="limitations"></a>限制
+
+* 当工作区的 Azure 容器注册表 (ACR) 位于虚拟网络后面时，分析将不起作用。
 
 ## <a name="run-the-profiler"></a>运行探查器
 
@@ -37,7 +43,10 @@ ms.locfileid: "87544529"
 > [!IMPORTANT]
 > 目前，我们仅支持分析预期其请求数据为字符串的服务，例如：字符串序列化 json、文本、字符串序列化图像等。数据集的每一行的内容（字符串）都会放入 HTTP 请求的正文中，然后会被发送到可以对评分模型进行封装的服务。
 
-下面是一个示例，说明了如何构造用于分析服务的输入数据集，该服务预期其传入请求数据包含序列化 json。 在这种情况下，我们创建了一个基于数据集的同一请求数据内容的100实例。 在实际方案中，建议使用包含各种输入的更大数据集，尤其是在模型资源使用/行为是依赖于输入的情况下。
+> [!IMPORTANT]
+> 我们仅支持对 ChinaEast2 和 USGovArizona 区域中的2个 Cpu 进行分析。
+
+下面是一个示例，说明了如何构造用于分析服务的输入数据集，该服务预期其传入请求数据包含序列化 json。 在此示例中，我们创建了一个数据集，该数据集基于 100 个请求数据内容相同的实例。 在实际方案中，建议使用包含各种输入的更大数据集，尤其是在模型资源使用/行为是依赖于输入的情况下。
 
 ::: zone pivot="py-sdk"
 
@@ -124,10 +133,10 @@ az ml model profile -g <resource-group-name> -w <workspace-name> --inference-con
 
 ## <a name="next-steps"></a>后续步骤
 
-* [排查失败的部署问题](how-to-troubleshoot-deployment.md)
+* [排查部署失败问题](how-to-troubleshoot-deployment.md)
 * [部署到 Azure Kubernetes 服务](how-to-deploy-azure-kubernetes-service.md)
-* [创建使用 web 服务的客户端应用程序](how-to-consume-web-service.md)
-* [更新 web 服务](how-to-deploy-update-web-service.md)
+* [创建客户端应用程序以使用 Web 服务](how-to-consume-web-service.md)
+* [更新 Web 服务](how-to-deploy-update-web-service.md)
 * [如何使用自定义 Docker 映像部署模型](how-to-deploy-custom-docker-image.md)
 * [使用 TLS 通过 Azure 机器学习保护 Web 服务](how-to-secure-web-service.md)
 * [使用 Application Insights 监视 Azure 机器学习模型](how-to-enable-app-insights.md)

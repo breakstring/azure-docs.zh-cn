@@ -1,27 +1,29 @@
 ---
 title: 连接到 Azure 媒体服务 v3 API - Python
-description: 本文演示如何通过 Python 连接到媒体服务 v3 API。
+description: 本文演示如何使用 Python 连接到媒体服务 v3 API。
 services: media-services
 documentationcenter: ''
-author: Juliako
+author: IngridAtMicrosoft
 manager: femila
 editor: ''
 ms.service: media-services
 ms.workload: media
 ms.tgt_pltfrm: na
 ms.devlang: na
-ms.topic: article
-ms.date: 04/15/2019
-ms.author: juliako
+ms.topic: how-to
+ms.date: 11/18/2020
+ms.author: inhenkel
 ms.custom: devx-track-python
-ms.openlocfilehash: 834d87f607ca65a9d9e0ebee12d2772f5baf7949
-ms.sourcegitcommit: 7fe8df79526a0067be4651ce6fa96fa9d4f21355
+ms.openlocfilehash: 76df8baaf170b05762b93478a496eb1e9ed802d5
+ms.sourcegitcommit: f6236e0fa28343cf0e478ab630d43e3fd78b9596
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/06/2020
-ms.locfileid: "87849635"
+ms.lasthandoff: 11/19/2020
+ms.locfileid: "94916740"
 ---
 # <a name="connect-to-media-services-v3-api---python"></a>连接到媒体服务 v3 API - Python
+
+[!INCLUDE [media services api v3 logo](./includes/v3-hr.md)]
 
 本文介绍如何使用服务主体登录方法连接到 Azure 媒体服务 v3 Python SDK。
 
@@ -42,11 +44,13 @@ ms.locfileid: "87849635"
 * `azure-mgmt-resource` 模块，其中包括用于 Active Directory 的 Azure 模块。
 * `azure-mgmt-media` 模块，其中包括媒体服务实体。
 
+    请确保获取 [最新版本的适用于 Python 的媒体服务 SDK](https://pypi.org/project/azure-mgmt-media/)。
+
 打开命令行工具并使用以下命令安装这些模块。
 
 ```
 pip3 install azure-mgmt-resource
-pip3 install azure-mgmt-media==1.1.1
+pip3 install azure-mgmt-media==3.0.0
 ```
 
 ## <a name="connect-to-the-python-client"></a>连接到 Python 客户端
@@ -105,4 +109,4 @@ pip3 install azure-mgmt-media==1.1.1
 ## <a name="next-steps"></a>后续步骤
 
 - 使用 [Python SDK](https://aka.ms/ams-v3-python-sdk)。
-- 查看媒体服务 [Python 参考](https://aka.ms/ams-v3-python-ref)文档。
+- 查看媒体服务 [Python 参考](/python/api/overview/azure/mediaservices/management)文档。

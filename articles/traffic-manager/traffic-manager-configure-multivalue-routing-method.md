@@ -3,20 +3,20 @@ title: 配置多值流量路由 - Azure 流量管理器
 description: 本文介绍如何配置流量管理器以将流量路由到 A/AAAA 终结点。
 services: traffic-manager
 documentationcenter: ''
-author: rohinkoul
+author: duongau
 ms.service: traffic-manager
 ms.devlang: na
 ms.topic: how-to
 ms.tgt_pltfrm: na
 ms.workload: infrastructure-services
 ms.date: 09/10/2018
-ms.author: rohink
-ms.openlocfilehash: 3ac6d20acf32be9678818483e5929dee225501b1
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.author: duau
+ms.openlocfilehash: 85e088dda767a6f6c80ac0a9f6eed84e8802e5ee
+ms.sourcegitcommit: a43a59e44c14d349d597c3d2fd2bc779989c71d7
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "84706811"
+ms.lasthandoff: 11/25/2020
+ms.locfileid: "95994921"
 ---
 # <a name="configure-multivalue-routing-method-in-traffic-manager"></a>在流量管理器中配置多值路由方法
 
@@ -32,12 +32,12 @@ ms.locfileid: "84706811"
 创建流量管理器配置文件的资源组。
 1. 在 Azure 门户的左侧窗格中，选择“资源组”  。
 2. 在“资源组”中，选择页面顶部的“添加”   。
-3. 在“资源组名称”中，键入名称 myResourceGroupTM1   。 在“资源组位置”处，请选择“美国东部”，然后选择“确定”************。
+3. 在“资源组名称”中，键入名称 myResourceGroupTM1   。 在“资源组位置”处，请选择“美国东部”，然后选择“确定”。
 
 ## <a name="create-a-traffic-manager-profile"></a>创建流量管理器配置文件
 创建流量管理器配置文件，以便将用户流量定向到延迟最低的终结点。
 
-1. 在屏幕的左上方，选择 "**创建资源**" "网络" "  >  **Networking**  >  **流量管理器配置文件**" "  >  **创建**"。
+1. 在屏幕左上方，选择“创建资源” > “网络” > “流量管理器配置文件” > “创建”。
 2. 在“创建流量管理器配置文件”中输入或选择以下信息，接受其余设置的默认值，然后选择“创建”   ：
     
     | 设置                 | 值                                              |

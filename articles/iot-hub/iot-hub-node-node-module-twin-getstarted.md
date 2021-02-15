@@ -1,5 +1,5 @@
 ---
-title: Azure IoT 中心模块身份 & 模块（Node.js）入门
+title: '开始 Azure IoT 中心模块标识 & 模块 ( # A1) '
 description: 了解如何使用用于 Node.js 的 IoT SDK 创建模块标识和更新模块孪生。
 author: wesmc7777
 manager: philmea
@@ -9,13 +9,13 @@ services: iot-hub
 ms.devlang: nodejs
 ms.topic: conceptual
 ms.date: 04/26/2018
-ms.custom: amqp, devx-track-javascript
-ms.openlocfilehash: 214c0533e6aefcfa496533359221f7a3061031b8
-ms.sourcegitcommit: e71da24cc108efc2c194007f976f74dd596ab013
+ms.custom: amqp, devx-track-js
+ms.openlocfilehash: 9de3f45a9d62a9d131583c133440ac8a311a468d
+ms.sourcegitcommit: a43a59e44c14d349d597c3d2fd2bc779989c71d7
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/29/2020
-ms.locfileid: "87420730"
+ms.lasthandoff: 11/25/2020
+ms.locfileid: "95993235"
 ---
 # <a name="get-started-with-iot-hub-module-identity-and-module-twin-nodejs"></a>IoT 中心模块标识和模块孪生 (Node.js) 入门
 
@@ -57,7 +57,7 @@ ms.locfileid: "87420730"
 
 2. 在该目录中，首先运行 npm init -y 使用默认值创建一个空的 package.json  。 这是代码的项目文件。
 
-3. 运行**npm 安装 iothub \@ 模块-预览版**，将服务 SDK 安装到**node_modules**子目录中。
+3. 运行 **npm 安装 iothub \@ 模块-预览版** ，将服务 SDK 安装到 **node_modules** 子目录中。
 
     > [!NOTE]
     > 子目录名称 node_modules 使用字模块来表示“节点库”。 此处的术语与 IoT 中心模块无关。
@@ -193,7 +193,7 @@ ms.locfileid: "87420730"
     });
     ```
 
-4. 现在请使用命令 node twin.js 来运行它****。
+4. 现在请使用命令 node twin.js 来运行它。
 
    ```cmd/sh
    F:\temp\module_twin>node twin.js
@@ -217,4 +217,4 @@ ms.locfileid: "87420730"
 
 * [设备管理入门](iot-hub-node-node-device-management-get-started.md)
 
-* [IoT Edge 入门](../iot-edge/tutorial-simulate-device-linux.md)
+* [IoT Edge 入门](../iot-edge/quickstart-linux.md)

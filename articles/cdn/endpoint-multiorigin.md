@@ -1,19 +1,19 @@
 ---
-title: Azure CDN 终结点多源
+title: 'Azure CDN 端点多源 (预览版) '
 description: 开始 Azure CDN 终结点多个源。
 services: cdn
 author: asudbring
 manager: KumudD
 ms.service: azure-cdn
 ms.topic: how-to
-ms.date: 8/20/2020
+ms.date: 9/06/2020
 ms.author: allensu
-ms.openlocfilehash: ed6c60b4f66361e87f67f3c64bb60846b2df757b
-ms.sourcegitcommit: d39f2cd3e0b917b351046112ef1b8dc240a47a4f
+ms.openlocfilehash: 6e433950c04c4494201b090063b17a10e54a4822
+ms.sourcegitcommit: b39cf769ce8e2eb7ea74cfdac6759a17a048b331
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/25/2020
-ms.locfileid: "88817368"
+ms.lasthandoff: 01/22/2021
+ms.locfileid: "98685765"
 ---
 # <a name="azure-cdn-endpoint-multi-origin"></a>Azure CDN 终结点多源
 
@@ -42,10 +42,10 @@ ms.locfileid: "88817368"
 
 5. 在 " **添加源组** 配置" 中，输入或选择以下信息：
 
-   | 设置           | 值                                                                 |
+   | 设置           | Value                                                                 |
    |-------------------|-----------------------------------------------------------------------|
    | 源组名称 | 输入源组的名称。                                   |
-   | 探测状态      | 选择“启用”。 </br> Azure CDN 将从全球不同点运行运行状况探测，以确定源运行状况。 如果当前源组不处于活动状态，请不要启用此组，以免产生额外的费用。
+   | 探测状态      | 选择“启用”。  </br> Azure CDN 将从全球不同点运行运行状况探测，以确定源运行状况。 如果当前源组不处于活动状态，请不要启用此组，以免产生额外的费用。
    | 探测路径        | 用于确定运行状况的源中的路径。 |
    | 探测间隔    | 选择探测间隔为1、2或4分钟。                        |
    | 探测协议    | 选择 **HTTP** 或 **HTTPS**。                                         |
@@ -64,15 +64,16 @@ ms.locfileid: "88817368"
 
 2. 在 " **添加源** 配置：" 中输入或选择以下信息：
 
-   | 设置           | 值                                                                 |
+   | 设置           | Value                                                                 |
    |-------------------|-----------------------------------------------------------------------|
+   | 名称        | 输入源的名称。        |
    | 原点类型 | 选择 " **存储**"、" **云服务**"、" **Web 应用**" 或 " **自定义源**"。                                   |
    | 源服务器主机名        | 选择或输入源主机名。  下拉列表列出了在上一个设置中指定的类型的所有可用来源。 如果选择了 " **自定义源** " 作为源类型，请输入客户源服务器的域。 |
    | 源主机标头    | 输入想要 Azure CDN 每个请求发送的主机头，或保留默认值。                        |
    | HTTP 端口   | 输入 HTTP 端口。                                         |
    | HTTPS 端口     | 输入 HTTPS 端口。                                           |
    | 优先级    | 输入一个介于1和5之间的数字。       |
-   | 重量      | 输入一个介于1和1000之间的数字。   |
+   | 权重      | 输入一个介于1和1000之间的数字。   |
 
     > [!NOTE]
     > 在源组中创建原点时，必须将其 accorded 优先级和权重。 如果源组只有一个原点，则默认优先级和权重设置为1。 如果源正常，则流量将路由到最高优先级来源。 如果源被确定为不正常，则连接将按优先级顺序转移到另一个源。 如果两个源具有相同的优先级，则按为源指定的权重分配流量 
@@ -85,7 +86,7 @@ ms.locfileid: "88817368"
 
     :::image type="content" source="./media/endpoint-multiorigin/endpoint-multiorigin-7.png" alt-text="配置源路径" border="true":::
 
-5. 选择“确定”  。
+5. 选择“确定”。
 
 ## <a name="configure-origins-and-origin-group-settings"></a>配置源和源组设置
 
@@ -114,6 +115,34 @@ ms.locfileid: "88817368"
 2. 若要从原始组中删除源，请选择源旁边的垃圾桶图标，然后选择 " **保存**"：
 
     :::image type="content" source="./media/endpoint-multiorigin/endpoint-multiorigin-11.png" alt-text="更新源组删除源" border="true":::
+
+## <a name="override-origin-group-with-rules-engine"></a>用规则引擎覆盖源组
+
+使用标准规则引擎自定义如何将流量分布到不同的源组。
+
+根据请求 URL 将流量分配到不同的组。
+
+1. 在 CDN 终结点中，选择 "**设置**" 下的 **规则引擎**：
+
+:::image type="content" source="./media/endpoint-multiorigin/endpoint-multiorigin-12.png" alt-text="规则引擎" border="true":::
+
+2. 选择 " **+ 添加规则**"。
+
+3. 在 " **名称**" 中输入规则的名称。
+
+4. 选择 " **+ 条件**"，然后选择 " **URL 路径**"。
+
+5. 在下拉 **运算符** 中，选择 " **包含**"。
+
+6. 在 " **值**" 中，输入 **/images**。
+
+7. 选择 " **+ 添加操作**"，然后选择 " **源组替代**"。
+
+8. 在 " **源组**" 中，在下拉框中选择源组。
+
+:::image type="content" source="./media/endpoint-multiorigin/endpoint-multiorigin-13.png" alt-text="规则引擎条件" border="true":::
+
+对于所有传入请求，如果 URL 路径包含 **/images**，则会将该请求分配给 "操作" 部分中的源组 **(myorigingroup)**。 
 
 ## <a name="next-steps"></a>后续步骤
 在本文中，已启用 Azure CDN endpoint 多源。

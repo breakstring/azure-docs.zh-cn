@@ -49,8 +49,8 @@
           tocHref: /azure/active-directory-domain-services/
           topicHref: /azure/active-directory-domain-services/
         - name: 用户、组和角色
-          tocHref: /azure/active-directory/users-groups-roles/
-          topicHref: /azure/active-directory/users-groups-roles/
+          tocHref: /azure/active-directory/roles/groups-concept
+          topicHref: /azure/active-directory/roles/groups-concept
         - name: 标识监管
           tocHref: /azure/active-directory/governance/
           topicHref: /azure/active-directory/governance/
@@ -102,6 +102,9 @@
         - name: 移动应用
           tocHref: /azure/app-service-mobile/
           topicHref: /azure/app-service-mobile/
+    - name: Azure 自动管理
+      tocHref: 'https://azure.microsoft.com/services/azure-automanage/'
+      topicHref: 'https://azure.microsoft.com/services/azure-automanage/'
     - name: 静态 Web 应用
       tocHref: /azure/static-web-apps/
       topicHref: /azure/static-web-apps/
@@ -114,9 +117,16 @@
     - name: Synapse Analytics
       tocHref: /azure/synapse-analytics/
       topicHref: /azure/synapse-analytics/
-    - name: ASC for IoT
-      tocHref: /azure/asc-for-iot/
-      topicHref: /azure/asc-for-iot/
+    - name: Azure Arc
+      tocHref: /azure/azure-arc/
+      topicHref: /azure/azure-arc/
+      items:
+        - name: 已启用 Arc 的 Kubernetes
+          tocHref: /azure/azure-arc/kubernetes/
+          topicHref: /azure/azure-arc/kubernetes/
+        - name: 已启用 Arc 的服务器
+          tocHref: /azure/azure-arc/servers/
+          topicHref: /azure/azure-arc/servers/
     - name: 自动化
       tocHref: /azure/automation/
       topicHref: /azure/automation/
@@ -205,22 +215,6 @@
         - name: IoT Central
           tocHref: /azure/iot-central/
           topicHref: /azure/iot-central/
-          items:
-            - name: IoT Central
-              tocHref: /azure/iot-central/core/
-              topicHref: /azure/iot-central/core/
-            - name: 能源行业用 IoT Central
-              tocHref: /azure/iot-central/energy/
-              topicHref: /azure/iot-central/energy/
-            - name: 政府用 IoT Central
-              tocHref: /azure/iot-central/government/
-              topicHref: /azure/iot-central/government/
-            - name: 医疗保健业用 IoT Central
-              tocHref: /azure/iot-central/healthcare/
-              topicHref: /azure/iot-central/healthcare/
-            - name: 零售业用 IoT Central
-              tocHref: /azure/iot-central/retail/
-              topicHref: /azure/iot-central/retail/
         - name: IoT Edge
           tocHref: /azure/iot-edge/
           topicHref: /azure/iot-edge/
@@ -258,6 +252,13 @@
         - name: Azure Custom Providers
           tocHref: /azure/azure-resource-manager/custom-providers/
           topicHref: /azure/azure-resource-manager/custom-providers/
+    - name: 合作伙伴解决方案
+      tocHref: /azure/partner-solutions/
+      topicHref: /azure/partner-solutions/
+      items:
+        - name: Apache Kafka for Confluent Cloud
+          tocHref: /azure/partner-solutions/apache-kafka-confluent-cloud/overview
+          topicHref: /azure/partner-solutions/apache-kafka-confluent-cloud/overview
     - name: SignalR 服务
       tocHref: /azure/azure-signalr/
       topicHref: /azure/azure-signalr/
@@ -267,6 +268,9 @@
     - name: Azure Stack 用户
       tocHref: /azure/azure-stack/user/
       topicHref: /azure/azure-stack/user/
+    - name: BareMetal 基础结构
+      tocHref: /azure/baremetal-infrastructure/
+      topicHref: /azure/baremetal-infrastructure/
     - name: 备份
       tocHref: /azure/backup/
       topicHref: /azure/backup/
@@ -376,7 +380,7 @@
           topicHref: /azure/cognitive-services/LUIS/
         - name: 语言分析
           tocHref: /azure/cognitive-services/linguisticanalysisapi/
-          topicHref: /azure/cognitive-services/linguisticanalysisapi/home
+          topicHref: 'https://www.programmableweb.com/api/microsoft-cognitive-services-linguistic-analysis'
         - name: QnA Maker
           tocHref: /azure/cognitive-services/qnamaker/
           topicHref: /azure/cognitive-services/qnamaker/home
@@ -397,7 +401,7 @@
           topicHref: /azure/cognitive-services/video-indexer/video-indexer-overview
         - name: Web 语言模型
           tocHref: /azure/cognitive-services/web-language-model/
-          topicHref: /azure/cognitive-services/web-language-model/home
+          topicHref: 'https://www.programmableweb.com/sdk/microsoft-cognitive-services-web-language-model-c-sdk-microsoft'
         - name: 个性聊天
           tocHref: /azure/cognitive-services/project-personality-chat/
           topicHref: /azure/cognitive-services/qnamaker/overview/overview
@@ -416,6 +420,9 @@
         - name: 沉浸式阅读器
           tocHref: /azure/cognitive-services/immersive-reader/
           topicHref: /azure/cognitive-services/immersive-reader/
+    - name: 通信服务
+      tocHref: /azure/communication-services/
+      topicHref: /azure/communication-services/
     - name: 连接器
       tocHref: /azure/connectors/
       topicHref: /azure/connectors/
@@ -451,6 +458,9 @@
         - name: Data Box 联机传输
           tocHref: /azure/databox-online/
           topicHref: /azure/databox-online/
+        - name: Data Box Gateway
+          tocHref: /azure/databox-gateway/
+          topicHref: /azure/databox-gateway/
     - name: 数据目录
       tocHref: /azure/data-catalog/
       topicHref: /azure/data-catalog/
@@ -535,22 +545,6 @@
     - name: Jenkins
       tocHref: /azure/jenkins/
       topicHref: /azure/jenkins/
-    - name: Key Vault
-      tocHref: /azure/key-vault/
-      topicHref: /azure/key-vault
-      items:
-        - name: 常规
-          tocHref: /azure/key-vault/general/
-          topicHref: /azure/key-vault/general/
-        - name: 证书
-          tocHref: /azure/key-vault/certificates/
-          topicHref: /azure/key-vault/certificates/
-        - name: 键
-          tocHref: /azure/key-vault/keys/
-          topicHref: /azure/key-vault/keys/
-        - name: 机密
-          tocHref: /azure/key-vault/secrets/
-          topicHref: /azure/key-vault/secrets/
     - name: Azure Kinect DK
       tocHref: /azure/kinect-dk/
       topicHref: /azure/kinect-dk/
@@ -576,12 +570,9 @@
         - name: 数据科学虚拟机
           tocHref: /azure/machine-learning/data-science-virtual-machine
           topicHref: /azure/machine-learning/data-science-virtual-machine/
-    - name: 市场消费者
-      tocHref: /azure/marketplace-consumer/
+    - name: 商业市场
+      tocHref: /azure/marketplace
       topicHref: /azure/marketplace/
-    - name: 市场发布
-      tocHref: /azure/marketplace-publishing/
-      topicHref: /azure/marketplace/marketplace-publishers-guide
     - name: 媒体服务
       tocHref: /azure/media-services/
       topicHref: /azure/media-services/
@@ -661,6 +652,9 @@
         - name: 防火墙管理器
           tocHref: /azure/firewall-manager/
           topicHref: /azure/firewall-manager/
+        - name: 标准 DDoS 防护
+          tocHref: /azure/ddos-protection/
+          topicHref: /azure/ddos-protection/
         - name: Front Door 服务
           tocHref: /azure/frontdoor/
           topicHref: /azure/frontdoor/
@@ -752,12 +746,37 @@
         - name: 基准
           tocHref: /azure/security/benchmarks/
           topicHref: /azure/security/benchmarks/
-    - name: 安全中心
-      tocHref: /azure/security-center/
-      topicHref: /azure/security-center/
-    - name: Azure Sentinel
-      tocHref: /azure/sentinel/
-      topicHref: /azure/sentinel/
+        - name: Key Vault
+          tocHref: /azure/key-vault/
+          topicHref: /azure/key-vault
+          items:
+            - name: 常规
+              tocHref: /azure/key-vault/general/
+              topicHref: /azure/key-vault/general/
+            - name: 证书
+              tocHref: /azure/key-vault/certificates/
+              topicHref: /azure/key-vault/certificates/
+            - name: 键
+              tocHref: /azure/key-vault/keys/
+              topicHref: /azure/key-vault/keys/
+            - name: 机密
+              tocHref: /azure/key-vault/secrets/
+              topicHref: /azure/key-vault/secrets/
+            - name: 托管的 HSM
+              tocHref: /azure/key-vault/managed-hsm/
+              topicHref: /azure/key-vault/managed-hsm/
+        - name: 安全中心
+          tocHref: /azure/security-center/
+          topicHref: /azure/security-center/
+        - name: Azure Sentinel
+          tocHref: /azure/sentinel/
+          topicHref: /azure/sentinel/
+        - name: Defender for IoT
+          tocHref: /azure/defender-for-iot/
+          topicHref: /azure/defender-for-iot/
+        - name: 证明
+          tocHref: /azure/attestation/
+          topicHref: /azure/attestation/
     - name: Service Fabric
       tocHref: /azure/service-fabric/
       topicHref: /azure/service-fabric/
@@ -886,3 +905,6 @@
         - name: 预留
           tocHref: /azure/cost-management-billing/reservations/
           topicHref: /azure/cost-management-billing/reservations/
+    - name: Purview
+      tocHref: /azure/purview/
+      topicHref: /azure/purview/

@@ -7,16 +7,16 @@ ms.topic: article
 ms.date: 08/05/2020
 ms.author: ccompy
 ms.custom: seodec18
-ms.openlocfilehash: 88801e3f79884bbf3e7cd15e61572edf7763f83f
-ms.sourcegitcommit: dea88d5e28bd4bbd55f5303d7d58785fad5a341d
+ms.openlocfilehash: 077d200dcaf957f636acecebb441ff99a68eb96f
+ms.sourcegitcommit: f6f928180504444470af713c32e7df667c17ac20
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/06/2020
-ms.locfileid: "87874208"
+ms.lasthandoff: 01/07/2021
+ms.locfileid: "97963581"
 ---
 # <a name="integrate-your-app-with-an-azure-virtual-network"></a>将应用与 Azure 虚拟网络集成
 
-本文介绍 Azure 应用服务 VNet 集成功能，并介绍如何为 [Azure 应用服务](https://go.microsoft.com/fwlink/?LinkId=529714)中的应用设置此功能。 使用 [Azure 虚拟网络][VNETOverview] (VNet) 可将多个 Azure 资源置于无法通过 Internet 路由的网络中。 使用 VNet 集成功能，你的应用可通过 VNet 访问中的资源。 VNet 集成不允许私下访问应用。
+本文介绍 Azure 应用服务 VNet 集成功能，并介绍如何为 [Azure 应用服务](./overview.md)中的应用设置此功能。 使用 [Azure 虚拟网络][VNETOverview] (VNet) 可将多个 Azure 资源置于无法通过 Internet 路由的网络中。 使用 VNet 集成功能，你的应用可通过 VNet 访问中的资源。 VNet 集成不允许私下访问应用。
 
 Azure App Service 在 VNet 集成功能上有两种变化形式：
 
@@ -54,6 +54,10 @@ Azure App Service 在 VNet 集成功能上有两种变化形式：
 
 启用区域 VNet 集成后，应用通过往常所用的通道对 Internet 进行出站调用。 应用属性门户中列出的出站地址是应用仍然在使用的地址。 就应用而言，变化在于：对服务终结点保护服务的调用或者 RFC 1918 地址进入 VNet 中。 如果 WEBSITE_VNET_ROUTE_ALL 设置为 1，所有出站流量都可以被发送到 VNet 中。
 
+> [!NOTE]
+> `WEBSITE_VNET_ROUTE_ALL` Windows 容器当前不支持。
+> 
+
 此功能仅支持每个辅助角色一个虚拟接口。 每个辅助角色一个虚拟接口意味着每个应用服务计划一个区域 VNet 集成。 同一个应用服务计划中的所有应用都可以使用相同的 VNet 集成。 如果需要使用一个应用来连接其他 VNet，你需要另外创建一个应用服务计划。 使用的虚拟接口不是客户可直接访问的资源。
 
 由于此技术的性质，用于 VNet 集成的流量不显示在 Azure 网络观察程序或 NSG 流日志中。
@@ -72,7 +76,8 @@ Azure App Service 在 VNet 集成功能上有两种变化形式：
 需要网关的 VNet 集成不可用于：
 
 * 通过 Azure ExpressRoute 连接的 VNet。
-* 从 Linux 应用
+* 从 Linux 应用程序。
+* 从 [Windows 容器](quickstart-custom-container.md)。
 * 访问服务终结点保护的资源。
 * 既支持 ExpressRoute，也支持点到站点 VPN 或站点到站点 VPN 的共存网关。
 
@@ -80,7 +85,7 @@ Azure App Service 在 VNet 集成功能上有两种变化形式：
 
 若要创建网关，请执行以下操作：
 
-1. 在 VNet 中[创建网关子网][creategatewaysubnet]。  
+1. 在 VNet 中[创建网关子网][creategatewaysubnet]。
 
 1. [创建 VPN 网关][creategateway]。 选择基于路由的 VPN 类型。
 
@@ -102,8 +107,8 @@ Azure App Service 在 VNet 集成功能上有两种变化形式：
 
 > [!NOTE]
 > 需要网关的 VNet 集成功能不将应用与包含 ExpressRoute 网关的 VNet 集成。 即使以[共存模式][VPNERCoex]配置 ExpressRoute 网关，VNet 集成也不会生效。 如果需要通过 ExpressRoute 连接访问资源，请使用区域 VNet 集成功能或在 VNet 中运行的[应用服务环境][ASE]。
-> 
-> 
+>
+>
 
 ### <a name="peering"></a>对等互连
 
@@ -126,6 +131,12 @@ Azure App Service 在 VNet 集成功能上有两种变化形式：
 * **同步网络**：同步网络操作仅用于网关相关的 VNet 集成功能。 执行同步网络操作确保了证书与网络信息是同步的。如果添加或更改 VNet 的 DNS，请执行同步网络操作。 此操作重启使用此 VNet 的任何应用。 如果你使用的是属于不同订阅的应用和 VNet，此操作无效。
 * **添加路由**：添加路由会促使出站流量进入 VNet。
 
+分配给实例的专用 IP 通过环境变量 **WEBSITE_PRIVATE_IP** 公开。 Kudu 控制台 UI 还显示了可用于 Web 应用的环境变量的列表。 此 IP 是从集成子网的地址范围中分配的。 对于区域 VNet 集成，WEBSITE_PRIVATE_IP 的值是来自委派子网的地址范围中的 IP，对于网关必需的 VNet 集成，此值是在虚拟网络网关上配置的点到站点地址池的地址范围中的 IP。 这是 Web 应用通过虚拟网络连接到资源时将使用的 IP。 
+
+> [!NOTE]
+> WEBSITE_PRIVATE_IP 的值绑定到 change。 但是，它将是集成子网的地址范围内的 IP 或点到站点地址范围内的 IP 地址，因此你将需要允许从整个地址范围进行访问。
+>
+
 ### <a name="gateway-required-vnet-integration-routing"></a>需要网关的 VNet 集成路由
 在 VNet 中定义的路由用于将流量从应用导入 VNet。 如果需要将其他出站流量发送到 VNet 中，请在此处添加地址块。 此功能仅适用于需要网关的 VNet 集成。 使用需要网关的 VNet 集成时，路由表不会像使用区域 VNet 集成时那样影响应用流量。
 
@@ -139,11 +150,16 @@ Azure App Service 在 VNet 集成功能上有两种变化形式：
 
 使用需要网关的 VNet 集成功能涉及三项费用：
 
-* **应用服务计划定价层费用**：应用必须属于“标准”、“高级”或“高级 V2”应用服务计划。 有关这些费用的详细信息，请参阅[应用服务定价][ASPricing]。
+* **应用服务计划定价层费用**：应用需要处于标准、高级、PremiumV2 或 PremiumV3 应用服务计划中。 有关这些费用的详细信息，请参阅[应用服务定价][ASPricing]。
 * **数据传输费用**：传出数据会产生费用，即使 VNet 位于同一数据中心也是如此。 [数据传输定价详细信息][DataPricing]中对这些费用进行了说明。
 * **VPN 网关费用**：点到站点 VPN 所需的虚拟网关会产生费用。 有关详细信息，请参阅 [VPN 网关定价][VNETPricing]。
 
 ## <a name="troubleshooting"></a>疑难解答
+
+> [!NOTE]
+> 应用服务中的 Docker Compose 方案不支持 VNET 集成。
+> 如果存在私有终结点，则将忽略 Azure Functions 访问限制。
+>
 
 [!INCLUDE [app-service-web-vnet-troubleshooting](../../includes/app-service-web-vnet-troubleshooting.md)]
 
@@ -173,30 +189,31 @@ Commands:
     list : List the virtual network integrations used in an appservice plan.
 ```
 
-还提供了对区域 VNet 集成的 Powershell 支持，但你必须使用子网 resourceID 的属性数组创建通用资源
+还提供了对区域 VNet 集成的 PowerShell 支持，但你必须使用子网 resourceID 的属性数组创建通用资源
 
 ```azurepowershell
 # Parameters
-$sitename="myWebApp"
-$resourcegroupname="myRG"
-$VNetname="myVNet"
-$location="myRegion"
-$integrationsubnetname = "myIntegrationSubnet"
-$subscriptionID = "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"
+$sitename = 'myWebApp'
+$resourcegroupname = 'myRG'
+$VNetname = 'myVNet'
+$location = 'myRegion'
+$integrationsubnetname = 'myIntegrationSubnet'
+$subscriptionID = 'aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee'
 
 #Property array with the SubnetID
 $properties = @{
-      "subnetResourceId" = "/subscriptions/"+$subscriptionID+"/resourceGroups/"+$resourcegroupname+"/providers/Microsoft.Network/virtualNetworks/"+$VNetname+"/subnets/"+$integrationsubnetname;
-      }
-      
-#Creation of the VNet integration
-$resourceID = $sitename+"/VirtualNetwork"
-New-AzResource -ResourceName $resourceID `
--Location $location  `
--ResourceGroupName $resourcegroupname `
--ResourceType Microsoft.Web/sites/networkConfig `
--PropertyObject $properties 
+  subnetResourceId = "/subscriptions/$subscriptionID/resourceGroups/$resourcegroupname/providers/Microsoft.Network/virtualNetworks/$VNetname/subnets/$integrationsubnetname"
+}
 
+#Creation of the VNet integration
+$vNetParams = @{
+  ResourceName = "$sitename/VirtualNetwork"
+  Location = $location
+  ResourceGroupName = $resourcegroupname
+  ResourceType = 'Microsoft.Web/sites/networkConfig'
+  PropertyObject = $properties
+}
+New-AzResource @vNetParams
 ```
 
 
@@ -212,19 +229,19 @@ New-AzResource -ResourceName $resourceID `
 
 
 <!--Links-->
-[VNETOverview]: https://azure.microsoft.com/documentation/articles/virtual-networks-overview/ 
+[VNETOverview]: ../virtual-network/virtual-networks-overview.md
 [AzurePortal]: https://portal.azure.com/
 [ASPricing]: https://azure.microsoft.com/pricing/details/app-service/
 [VNETPricing]: https://azure.microsoft.com/pricing/details/vpn-gateway/
 [DataPricing]: https://azure.microsoft.com/pricing/details/data-transfers/
-[V2VNETP2S]: https://azure.microsoft.com/documentation/articles/vpn-gateway-howto-point-to-site-rm-ps/
+[V2VNETP2S]: ../vpn-gateway/vpn-gateway-howto-point-to-site-rm-ps.md
 [ILBASE]: environment/create-ilb-ase.md
 [V2VNETPortal]: ../vpn-gateway/vpn-gateway-howto-point-to-site-resource-manager-portal.md
 [VPNERCoex]: ../expressroute/expressroute-howto-coexist-resource-manager.md
 [ASE]: environment/intro.md
 [creategatewaysubnet]: ../vpn-gateway/vpn-gateway-howto-point-to-site-resource-manager-portal.md#creategw
-[creategateway]: https://docs.microsoft.com/azure/vpn-gateway/vpn-gateway-howto-point-to-site-resource-manager-portal#creategw
-[setp2saddresses]: https://docs.microsoft.com/azure/vpn-gateway/vpn-gateway-howto-point-to-site-resource-manager-portal#addresspool
-[VNETRouteTables]: https://docs.microsoft.com/azure/virtual-network/manage-route-table/
-[installCLI]: https://docs.microsoft.com/cli/azure/install-azure-cli?view=azure-cli-latest/
+[creategateway]: ../vpn-gateway/vpn-gateway-howto-point-to-site-resource-manager-portal.md#creategw
+[setp2saddresses]: ../vpn-gateway/vpn-gateway-howto-point-to-site-resource-manager-portal.md#addresspool
+[VNETRouteTables]: ../virtual-network/manage-route-table.md
+[installCLI]: /cli/azure/install-azure-cli?view=azure-cli-latest%2f
 [privateendpoints]: networking/private-endpoint.md

@@ -1,5 +1,6 @@
 ---
-title: 将单页应用移到生产环境 - Microsoft 标识平台 | Azure
+title: 将单页面应用移至生产环境
+titleSuffix: Microsoft identity platform
 description: 了解如何生成单页应用程序（移到生产环境）
 services: active-directory
 author: navyasric
@@ -11,38 +12,34 @@ ms.workload: identity
 ms.date: 05/07/2019
 ms.author: nacanuma
 ms.custom: aaddev
-ms.openlocfilehash: 777f3de8f2872e378fe30cc50ee0a5eb3823a625
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 9656da8be086724482f129efab323e02b73e117e
+ms.sourcegitcommit: 4e70fd4028ff44a676f698229cb6a3d555439014
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "82900312"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98954948"
 ---
 # <a name="single-page-application-move-to-production"></a>单页应用程序：移到生产环境
 
-现在你已了解如何获取用于调用 Web API 的令牌，接下来了解如何移到生产环境。
+现在，你已了解如何获取令牌来调用 web Api，以下是将应用程序移动到生产环境时要考虑的一些事项。
 
-## <a name="improve-your-app"></a>改进应用
+[!INCLUDE [Common steps to move to production](../../../includes/active-directory-develop-scenarios-production.md)]
 
-[启用日志记录](msal-logging.md)使应用生产环境准备就绪。
+## <a name="deploy-your-app"></a>部署你的应用
 
-## <a name="test-your-integration"></a>测试集成
+请查看[部署示例](https://github.com/Azure-Samples/ms-identity-javascript-angular-spa-aspnet-webapi-multitenant/tree/master/Chapter3)，了解如何使用 Azure 存储和 Azure 应用服务分别部署 SPA 和 Web API 项目。 
 
-按照 [Microsoft 标识平台集成清单](identity-platform-integration-checklist.md)测试你的集成。
+## <a name="code-samples"></a>代码示例
+
+这些代码示例演示了单页面应用的几个关键操作。
+- [使用 ASP.NET 后端的 SPA](https://github.com/Azure-Samples/ms-identity-javascript-angular-spa-aspnetcore-webapi)：如何使用 **MSAL.js** 获取自己的后端 web API (ASP.NET Core) 的令牌。
+
+- [Node.js WEB api (Azure AD](https://github.com/Azure-Samples/active-directory-javascript-nodejs-webapi-v2)：如何使用 **passport Azure AD** 验证后端 Web API 的访问令牌 ( # A1) 。
+
+- [SPA 与 Azure AD B2C](https://github.com/Azure-Samples/active-directory-b2c-javascript-msal-singlepageapp)：如何使用 **MSAL.js** 在注册到 **Azure Active Directory B2C** (Azure AD B2C) 的应用中登录用户。
+
+- [Node.js WEB API (Azure AD B2C)](https://github.com/Azure-Samples/active-directory-b2c-javascript-nodejs-webapi)：如何使用 **passport Azure AD** 验证使用 **Azure Active Directory B2C** (Azure AD B2C) 注册的应用的访问令牌。
 
 ## <a name="next-steps"></a>后续步骤
 
-深入了解快速入门示例，该示例说明了如何使用 MSAL.js 登录用户并获取访问令牌以调用 Microsoft Graph API 的代码：
-
-> [!div class="nextstepaction"]
-> [JavaScript SPA 教程](./tutorial-v2-javascript-spa.md)
-
-演示如何使用 MSAL.js 为自己的后端 Web API 获取令牌的示例：
-
-> [!div class="nextstepaction"]
-> [使用 ASP.NET 后端的 SPA](https://github.com/Azure-Samples/ms-identity-javascript-angular-spa-aspnetcore-webapi)
-
-演示如何使用 MSAL.js 在向 Azure Active Directory B2C (Azure AD B2C) 注册的应用中登录用户的示例：
-
-> [!div class="nextstepaction"]
-> [使用 Azure AD B2C 的 SPA](https://github.com/Azure-Samples/active-directory-b2c-javascript-msal-singlepageapp)
+- [JAVASCRIPT SPA 教程](./tutorial-v2-javascript-spa.md)：深入了解如何使用 **MSAL.js** 登录用户并获取访问令牌来调用 **Microsoft Graph API** 。

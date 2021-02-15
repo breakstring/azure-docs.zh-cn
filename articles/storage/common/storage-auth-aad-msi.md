@@ -1,21 +1,22 @@
 ---
 title: 使用托管标识授予对数据的访问权限
 titleSuffix: Azure Storage
-description: 使用 Azure 资源的托管标识对 Azure Vm 中运行的应用程序、函数应用和其他应用程序的 blob 和队列数据访问授权。
+description: 使用 Azure 资源的托管标识在应用程序中授予 Blob 和队列数据的访问权限，此类应用程序在 Azure VM、函数应用等位置中运行。
 services: storage
 author: tamram
 ms.service: storage
 ms.topic: how-to
-ms.date: 12/04/2019
+ms.date: 12/07/2020
 ms.author: tamram
 ms.reviewer: ozgun
 ms.subservice: common
-ms.openlocfilehash: 8273be760b37c12f3db7a393e59ab8ead291ec02
-ms.sourcegitcommit: 2ff0d073607bc746ffc638a84bb026d1705e543e
+ms.custom: devx-track-csharp, devx-track-azurecli
+ms.openlocfilehash: 552d2587f35ed391b470c6d5b1693b79fd57306b
+ms.sourcegitcommit: aaa65bd769eb2e234e42cfb07d7d459a2cc273ab
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/06/2020
-ms.locfileid: "87827990"
+ms.lasthandoff: 01/27/2021
+ms.locfileid: "98879572"
 ---
 # <a name="authorize-access-to-blob-and-queue-data-with-managed-identities-for-azure-resources"></a>使用 Azure 资源托管标识授予对 Blob 和队列数据的访问权限
 
@@ -27,7 +28,7 @@ Azure Blob 和队列存储支持使用 [Azure 资源的托管标识](../../activ
 
 在使用 Azure 资源的托管标识对 VM 中 Blob 和队列的访问权限进行授权之前，必须首先在 VM 上启用针对 Azure 资源的托管标识。 若要了解如何为 Azure 资源启用托管标识，请参阅下述文章之一：
 
-- [Azure 门户](https://docs.microsoft.com/azure/active-directory/managed-service-identity/qs-configure-portal-windows-vm)
+- [Azure 门户](../../active-directory/managed-identities-azure-resources/qs-configure-portal-windows-vm.md)
 - [Azure PowerShell](../../active-directory/managed-identities-azure-resources/qs-configure-powershell-windows-vm.md)
 - [Azure CLI](../../active-directory/managed-identities-azure-resources/qs-configure-cli-windows-vm.md)
 - [Azure Resource Manager 模板](../../active-directory/managed-identities-azure-resources/qs-configure-template-windows-vm.md)
@@ -45,13 +46,18 @@ Azure 标识客户端库的优点在于，它使你可以使用相同的代码�
 
 有关用于 .NET 的 Azure 标识客户端库的详细信息，请参阅[用于 .NET 的 Azure 标识客户端库](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity)。 有关 Azure 标识客户端库的参考文档，请参阅 [Azure.Identity 命名空间](/dotnet/api/azure.identity)。
 
-### <a name="assign-azure-roles-for-access-to-data"></a>分配 Azure 角色以访问数据
+### <a name="assign-azure-roles-for-access-to-data"></a>分配可访问数据的 Azure 角色
 
-当 Azure AD 安全主体尝试访问 Blob 或队列数据时，该安全主体必须有资源访问权限。 无论安全主体是 Azure 中的托管标识还是在开发环境中运行代码的 Azure AD 用户帐户，都必须为安全主体分配 Azure 角色，以授予对 Azure 存储中的 blob 或队列数据的访问权限。 有关通过 RBAC 分配权限的信息，请参阅[使用 Azure Active Directory 授予对 azure blob 和队列的访问](../common/storage-auth-aad.md#assign-azure-roles-for-access-rights)权限中的 "为**访问权限分配 azure 角色**" 一节。
+当 Azure AD 安全主体尝试访问 Blob 或队列数据时，该安全主体必须有资源访问权限。 不管安全主体是 Azure 中的托管标识还是在开发环境中运行代码的 Azure AD 用户帐户，都必须为安全主体分配一个 Azure 角色，由该角色授权访问 Azure 存储中的 Blob 或队列数据。 若要了解如何通过 Azure RBAC 分配权限，请参阅[使用 Azure Active Directory 授予对 Azure Blob 和队列的访问权限](../common/storage-auth-aad.md#assign-azure-roles-for-access-rights)中的“分配 Azure 角色以授予访问权限”部分。
+
+> [!NOTE]
+> 创建 Azure 存储帐户时，系统不会自动向你分配通过 Azure AD 访问数据的权限。 你必须为自己显式分配一个用于 Azure 存储的 Azure 角色。 可以在订阅、资源组、存储帐户、容器或队列级别分配它。
+>
+> 在为自己分配数据访问角色之前，可以通过 Azure 门户访问存储帐户中的数据，因为 Azure 门户还可以使用帐户密钥进行数据访问。 有关详细信息，请参阅[选择如何在 Azure 门户中授予对 blob 数据的访问权限](../blobs/authorize-data-operations-portal.md)。
 
 ### <a name="authenticate-the-user-in-the-development-environment"></a>在开发环境中对用户进行身份验证
 
-代码在开发环境中运行时，可能会自动处理身份验证，也可能需要浏览器登录才能进行身份验证，具体取决于使用哪些工具。 例如，Microsoft Visual Studio 支持单一登录 (SSO) ，使活动 Azure AD 用户帐户自动用于身份验证。 有关 SSO 的详细信息，请参阅[对应用程序的单一登录](../../active-directory/manage-apps/what-is-single-sign-on.md)。
+代码在开发环境中运行时，可能会自动处理身份验证，也可能需要浏览器登录才能进行身份验证，具体取决于使用哪些工具。 例如，Microsoft Visual Studio 支持单一登录 (SSO) ，使活动 Azure AD 用户帐户自动用于身份验证。 有关 SSO 的详细信息，请参阅 [对应用程序的单一登录](../../active-directory/manage-apps/what-is-single-sign-on.md)。
 
 其他开发工具可能会提示你通过 Web 浏览器登录。
 
@@ -61,16 +67,16 @@ Azure 标识客户端库的优点在于，它使你可以使用相同的代码�
 
 #### <a name="create-the-service-principal"></a>创建服务主体
 
-若要创建具有 Azure CLI 的服务主体并分配 Azure 角色，请调用[az ad sp create for rbac](/cli/azure/ad/sp#az-ad-sp-create-for-rbac)命令。 提供要分配给新服务主体的 Azure 存储数据访问角色。 此外，请提供角色分配的范围。 有关为 Azure 存储提供的内置角色的详细信息，请参阅[azure 内置角色](../../role-based-access-control/built-in-roles.md)。
+若要通过 Azure CLI 来创建服务主体并分配 Azure 角色，请调用 [az ad sp create-for-rbac](/cli/azure/ad/sp#az-ad-sp-create-for-rbac) 命令。 提供要分配给新服务主体的 Azure 存储数据访问角色。 此外，请提供角色分配的范围。 若要详细了解为 Azure 存储提供的内置角色，请参阅 [Azure 内置角色](../../role-based-access-control/built-in-roles.md)。
 
 如果没有足够的权限将角色分配给服务主体，可能需要请求帐户所有者或管理员来执行相关角色分配。
 
-下面的示例使用 Azure CLI 创建新服务主体，并将帐户范围内的“存储 Blob 数据读取者”角色分配给它****
+下面的示例使用 Azure CLI 创建新服务主体，并将帐户范围内的“存储 Blob 数据读取者”角色分配给它 
 
 ```azurecli-interactive
 az ad sp create-for-rbac \
     --name <service-principal> \
-    --role "Storage Blob Data Reader" \
+    --role "Storage Blob Data Contributor" \
     --scopes /subscriptions/<subscription>/resourceGroups/<resource-group>/providers/Microsoft.Storage/storageAccounts/<storage-account>
 ```
 
@@ -87,13 +93,13 @@ az ad sp create-for-rbac \
 ```
 
 > [!IMPORTANT]
-> Azure 角色分配可能需要几分钟才能传播。
+> 传播 Azure 角色分配可能需要几分钟的时间。
 
-#### <a name="set-environment-variables"></a>设置环境变量
+#### <a name="set-environment-variables"></a>设置环境变量。
 
 Azure 标识客户端库会在运行时读取三个环境变量中的值，以对服务主体进行身份验证。 下表介绍了为每个环境变量设置的值。
 
-|环境变量|值
+|环境变量|Value
 |-|-
 |`AZURE_CLIENT_ID`|服务主体的应用 ID
 |`AZURE_TENANT_ID`|服务主体的 Azure AD 租户 ID
@@ -162,6 +168,7 @@ async static Task CreateBlockBlobAsync(string accountName, string containerName,
 
 ## <a name="next-steps"></a>后续步骤
 
-- [使用 RBAC 管理对存储数据的访问权限](storage-auth-aad-rbac.md)。
+- [使用 Azure RBAC 管理对存储数据的访问权限](./storage-auth-aad-rbac-portal.md)。
 - [将 Azure AD 与存储应用程序一起使用](storage-auth-aad-app.md)。
-- [使用 Azure AD 凭据运行 Azure CLI 或 PowerShell 命令以访问 Blob 或队列数据](authorize-active-directory-powershell.md)。
+- [使用 Azure AD 凭据运行 PowerShell 命令以访问 blob 数据](../blobs/authorize-data-operations-powershell.md)
+- [教程：使用托管 identies 从应用服务访问存储](../../app-service/scenario-secure-app-access-storage.md)

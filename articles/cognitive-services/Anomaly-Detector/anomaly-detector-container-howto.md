@@ -1,31 +1,38 @@
 ---
-title: 如何使用异常探测器 API 安装和运行容器
+title: 为异常探测器 API 安装并运行 Docker 容器
 titleSuffix: Azure Cognitive Services
-description: 使用异常检测器 API 的高级算法来确定时序数据中的异常。
+description: 使用异常探测器 API 算法，通过 Docker 容器查找本地数据中的异常。
 services: cognitive-services
-author: aahill
+author: mrbullwinkle
 manager: nitinme
 ms.service: cognitive-services
 ms.subservice: anomaly-detector
 ms.topic: conceptual
-ms.date: 05/07/2020
-ms.author: aahi
-ms.openlocfilehash: ee742f09f3fcc1bd283efbc346fea6a040e53f48
-ms.sourcegitcommit: 023d10b4127f50f301995d44f2b4499cbcffb8fc
+ms.date: 09/28/2020
+ms.author: mbullwin
+ms.custom: cog-serv-seo-aug-2020
+keywords: 本地、Docker、容器、流式处理、算法
+ms.openlocfilehash: 70e5950f6577ce2cca2f28be070f3ba372d46a7e
+ms.sourcegitcommit: aeba98c7b85ad435b631d40cbe1f9419727d5884
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/18/2020
-ms.locfileid: "88548525"
+ms.lasthandoff: 01/04/2021
+ms.locfileid: "97862315"
 ---
-# <a name="install-and-run-anomaly-detector-containers-preview"></a> (预览安装并运行异常探测器容器) 
+# <a name="install-and-run-docker-containers-for-the-anomaly-detector-api"></a>为异常探测器 API 安装并运行 Docker 容器 
 
-异常检测器具有以下容器功能：
+[!INCLUDE [container image location note](../containers/includes/image-location-note.md)]
 
-| 函数 | 功能 |
-|--|--|
-| 异常检测器 | <li> 实时检测异常情况。 <li> 在整个数据集中以批处理方式检测异常。 <li> 推断数据的预期正常范围。 <li> 支持异常情况检测敏感度调整，以便更好地适应数据。 |
+容器使你可以使用你自己的环境中的异常探测器 API。 容器非常适合用于满足特定的安全性和数据管理要求。 本文介绍如何下载、安装和运行异常探测器容器。
 
-有关 Api 的详细信息，请参阅：
+异常探测器提供单个 Docker 容器，可用于在本地使用 API。 使用容器可以执行以下操作：
+* 对数据使用异常探测器的算法
+* 监视流式处理数据，并在实时发生异常时对其进行检测。
+* 以批的形式检测整个数据集中的异常。 
+* 以批处理方式检测数据集中的趋势更改点。
+* 调整异常情况检测算法的敏感度，以更好地适应数据。
+
+有关 API 的详细信息，请参阅：
 * [详细了解异常探测器 API 服务](https://go.microsoft.com/fwlink/?linkid=2080698&clcid=0x409)
 
 如果没有 Azure 订阅，请在开始之前创建一个[免费帐户](https://azure.microsoft.com/free/cognitive-services/)。
@@ -36,9 +43,9 @@ ms.locfileid: "88548525"
 
 |必须|目的|
 |--|--|
-|Docker 引擎| 需要在[主计算机](#the-host-computer)上安装 Docker 引擎。 Docker 提供用于在 [macOS](https://docs.docker.com/docker-for-mac/)、[Windows](https://docs.docker.com/docker-for-windows/) 和 [Linux](https://docs.docker.com/engine/installation/#supported-platforms) 上配置 Docker 环境的包。 有关 Docker 和容器的基础知识，请参阅 [Docker 概述](https://docs.docker.com/engine/docker-overview/)。<br><br> 必须将 Docker 配置为允许容器连接 Azure 并向其发送账单数据。 <br><br> **** 在 Windows 上，还必须将 Docker 配置为支持 Linux 容器。<br><br>|
+|Docker 引擎| 需要在[主计算机](#the-host-computer)上安装 Docker 引擎。 Docker 提供用于在 [macOS](https://docs.docker.com/docker-for-mac/)、[Windows](https://docs.docker.com/docker-for-windows/) 和 [Linux](https://docs.docker.com/engine/installation/#supported-platforms) 上配置 Docker 环境的包。 有关 Docker 和容器的基础知识，请参阅 [Docker 概述](https://docs.docker.com/engine/docker-overview/)。<br><br> 必须将 Docker 配置为允许容器连接 Azure 并向其发送账单数据。 <br><br> 在 Windows 上，还必须将 Docker 配置为支持 Linux 容器。<br><br>|
 |熟悉 Docker | 应对 Docker 概念有基本的了解，例如注册表、存储库、容器和容器映像，以及基本的 `docker` 命令的知识。|
-|异常探测器资源 |若要使用这些容器，必须具有：<br><br>用于获取关联的 API 密钥和终结点 URI 的 Azure _异常探测器_ 资源。 这两个值都可用于 Azure 门户的 **异常探测器** "概述" 和 "密钥" 页，并且是启动容器所必需的。<br><br>**{API_KEY}** ：“密钥”页上提供的两个可用资源密钥中的一个****<br><br>**{ENDPOINT_URI}** ：“概述”页上提供的终结点****|
+|异常探测器资源 |若要使用这些容器，必须具有：<br><br>用于获取关联的 API 密钥和终结点 URI 的 Azure _异常探测器_ 资源。 这两个值都可用于 Azure 门户的 **异常探测器** "概述" 和 "密钥" 页，并且是启动容器所必需的。<br><br>**{API_KEY}** ：“密钥”页上提供的两个可用资源密钥中的一个<br><br>**{ENDPOINT_URI}** ：“概述”页上提供的终结点|
 
 [!INCLUDE [Gathering required container parameters](../containers/includes/container-gathering-required-parameters.md)]
 
@@ -46,7 +53,7 @@ ms.locfileid: "88548525"
 
 [!INCLUDE [Host Computer requirements](../../../includes/cognitive-services-containers-host-computer.md)]
 
-<!--* [Azure IoT Edge](https://docs.microsoft.com/azure/iot-edge/). For instructions of deploying Anomaly Detector module in IoT Edge, see [How to deploy Anomaly Detector module in IoT Edge](how-to-deploy-anomaly-detector-module-in-iot-edge.md).-->
+<!--* [Azure IoT Edge](../../iot-edge/index.yml). For instructions of deploying Anomaly Detector module in IoT Edge, see [How to deploy Anomaly Detector module in IoT Edge](how-to-deploy-anomaly-detector-module-in-iot-edge.md).-->
 
 ### <a name="container-requirements-and-recommendations"></a>容器要求和建议
 
@@ -67,7 +74,7 @@ ms.locfileid: "88548525"
 
 | 容器 | 存储库 |
 |-----------|------------|
-| 认知-服务-异常探测器 | `mcr.microsoft.com/azure-cognitive-services/anomaly-detector:latest` |
+| 认知-服务-异常探测器 | `mcr.microsoft.com/azure-cognitive-services/decision/anomaly-detector:latest` |
 
 <!--
 For a full description of available tags, such as `latest` used in the preceding command, see [anomaly-detector](https://go.microsoft.com/fwlink/?linkid=2083827&clcid=0x409) on Docker Hub.
@@ -95,7 +102,7 @@ docker pull mcr.microsoft.com/azure-cognitive-services/anomaly-detector:latest
 
 ```bash
 docker run --rm -it -p 5000:5000 --memory 4g --cpus 1 \
-mcr.microsoft.com/azure-cognitive-services/anomaly-detector:latest \
+mcr.microsoft.com/azure-cognitive-services/decision/anomaly-detector:latest \
 Eula=accept \
 Billing={ENDPOINT_URI} \
 ApiKey={API_KEY}
@@ -168,16 +175,12 @@ ApiKey={API_KEY}
 
 有关这些选项的详细信息，请参阅[配置容器](anomaly-detector-container-configuration.md)。
 
-<!--blogs/samples/video coures -->
-
-[!INCLUDE [Discoverability of more container information](../../../includes/cognitive-services-containers-discoverability.md)]
-
 ## <a name="summary"></a>摘要
 
 本文介绍了用于下载、安装和运行异常探测器容器的概念和工作流。 综上所述：
 
 * 异常探测器提供了一个适用于 Docker 的 Linux 容器，可通过批处理与流式处理、预期的范围推理和敏感度优化来封装异常检测。
-* 容器映像从专用于容器预览版的专用 Azure 容器注册表下载。
+* 从专用于容器的专用 Azure 容器注册表下载容器映像。
 * 容器映像在 Docker 中运行。
 * 您可以使用 REST API 或 SDK 通过指定容器的主机 URI 来调用异常探测器容器中的操作。
 * 必须在实例化容器时指定账单信息。

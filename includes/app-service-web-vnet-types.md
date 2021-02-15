@@ -2,14 +2,14 @@
 author: ccompy
 ms.service: app-service-web
 ms.topic: include
-ms.date: 04/15/2020
+ms.date: 10/01/2020
 ms.author: ccompy
-ms.openlocfilehash: c31a5aaa9866a4ce97cd3cd59a8e363834f70587
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 0b93111357cf0d6e57eeb5495d50bd18a15dca77
+ms.sourcegitcommit: 31d242b611a2887e0af1fc501a7d808c933a6bf6
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "81312839"
+ms.lasthandoff: 12/29/2020
+ms.locfileid: "97812799"
 ---
 * 支持除独立定价计划以外的全部定价计划的多租户系统。
 * 部署到 VNet 中且支持独立定价计划应用的应用服务环境。
@@ -23,7 +23,7 @@ VNet 集成允许应用访问 VNet 中的资源，但不允许通过 VNet 对应
 
 VNet 集成功能：
 
-* 需要“标准”、“高级”、“高级 V2”或“弹性高级”定价计划。
+* 需要标准、高级、PremiumV2、PremiumV3 或弹性高级定价计划。
 * 支持 TCP 和 UDP。
 * 适用于 Azure 应用服务应用和函数应用。
 
@@ -33,10 +33,10 @@ VNet 集成不支持某些功能，例如：
 * Active Directory 集成。
 * NetBIOS。
 
-需要网关的 VNet 集成只允许访问目标 VNet 中的资源，或者访问通过对等互连或 VPN 连接到目标 VNet 的网络中的资源。 需要网关的 VNet 集成不支持访问可通过 Azure ExpressRoute 连接使用的资源，也不适用于服务终结点。
+需要网关的 VNet 集成只允许访问目标 VNet 中的资源，或者访问通过对等互连或 VPN 连接到目标 VNet 的网络中的资源。 网关-必需的 VNet 集成不允许访问通过 Azure ExpressRoute 连接提供的资源或使用服务终结点。
 
 无论使用哪个版本，VNet 集成都允许应用访问 VNet 中的资源，但不允许通过 VNet 对应用进行入站专用访问。 专用站点访问指的是仅可从专用网络（例如 Azure VNet）对应用进行访问。 VNet 集成只是为了从应用对 VNet 进行出站调用。
 
 <!--Links-->
-[ASEintro]: https://docs.microsoft.com/azure/app-service/environment/intro
-[Networkingfeatures]: https://docs.microsoft.com/azure/app-service/networking-features
+[ASEintro]: ../articles/app-service/environment/intro.md
+[Networkingfeatures]: ../articles/app-service/networking-features.md

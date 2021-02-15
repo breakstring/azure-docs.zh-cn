@@ -1,22 +1,24 @@
 ---
 title: 使用门户为角色启用远程桌面
-titleSuffix: Azure Cloud Services
 description: 如何配置 Azure 云服务应用程序以允许远程桌面连接
-services: cloud-services
-documentationcenter: ''
-author: mmccrory
-ms.service: cloud-services
 ms.topic: article
-ms.date: 11/28/2016
-ms.author: memccror
-ms.openlocfilehash: d65f4b55be317234c10a0e90cfe413d9e38a6a90
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.service: cloud-services
+ms.date: 10/14/2020
+ms.author: tagore
+author: tanmaygore
+ms.reviewer: mimckitt
+ms.custom: ''
+ms.openlocfilehash: 8fa0d3c0e29c53e6fe9cb32ddf02168686be1efe
+ms.sourcegitcommit: 6272bc01d8bdb833d43c56375bab1841a9c380a5
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "84696773"
+ms.lasthandoff: 01/23/2021
+ms.locfileid: "98743247"
 ---
-# <a name="enable-remote-desktop-connection-for-a-role-in-azure-cloud-services"></a>为 Azure 云服务中的角色设置远程桌面连接
+# <a name="enable-remote-desktop-connection-for-a-role-in-azure-cloud-services-classic"></a>为 Azure 云服务中的角色启用远程桌面连接 (经典) 
+
+> [!IMPORTANT]
+> [Azure 云服务 (扩展支持) ](../cloud-services-extended-support/overview.md) 是适用于 Azure 云服务产品的新的基于 azure 资源管理器的部署模型。进行此更改后，基于 Azure Service Manager 的部署模型运行的 Azure 云服务已重命名为云服务 (经典) ，所有新部署应使用 [云服务 (扩展支持) ](../cloud-services-extended-support/overview.md)。
 
 > [!div class="op_single_selector"]
 > * [Azure 门户](cloud-services-role-enable-remote-desktop-new-portal.md)
@@ -33,7 +35,7 @@ Azure 门户使用远程桌面扩展方法，即使在部署应用程序之后�
 
 1. 单击“云服务”，再选择云服务的名称，然后选择“远程桌面”   。
 
-    ![云服务远程桌面](./media/cloud-services-role-enable-remote-desktop-new-portal/CloudServices_Remote_Desktop.png)
+    ![图像显示云服务远程桌面](./media/cloud-services-role-enable-remote-desktop-new-portal/CloudServices_Remote_Desktop.png)
 
 2. 选择想要为单个角色还是所有角色启用远程桌面，然后将切换器的值更改为“已启用”  。
 
@@ -56,12 +58,12 @@ Azure 门户使用远程桌面扩展方法，即使在部署应用程序之后�
 2. 选择一个配置了远程桌面的角色实例。
 3. 单击“连接”  ，下载角色实例的 RDP 文件。
 
-    ![云服务远程桌面](./media/cloud-services-role-enable-remote-desktop-new-portal/CloudServices_Remote_Desktop_Connect.png)
+    ![云服务远程桌面映像](./media/cloud-services-role-enable-remote-desktop-new-portal/CloudServices_Remote_Desktop_Connect.png)
 
 4. 依次单击“**打开**”和“**连接**”，以启动远程桌面连接。
 
 >[!NOTE]
-> 如果云服务位于 NSG 后，可能需要创建允许端口**3389** 和 **20000** 上的流量的规则。  远程桌面使用端口 **3389**。  云服务实例经过负载均衡，因此无法直接控制要连接到哪个实例。  RemoteForwarder  和 RemoteAccess  代理管理 RDP 流量，允许客户端发送 RDP cookie 和指定要连接到的单个实例。  RemoteForwarder 和 RemoteAccess 代理要求打开端口 20000*（如果具有 NSG，此端口可能已被阻止）    。
+> 如果云服务位于 NSG 后，可能需要创建允许端口 **3389** 和 **20000** 上的流量的规则。  远程桌面使用端口 **3389**。  云服务实例经过负载均衡，因此无法直接控制要连接到哪个实例。  RemoteForwarder  和 RemoteAccess  代理管理 RDP 流量，允许客户端发送 RDP cookie 和指定要连接到的单个实例。  RemoteForwarder 和 RemoteAccess 代理要求打开端口 20000*（如果具有 NSG，此端口可能已被阻止）    。
 
 ## <a name="additional-resources"></a>其他资源
 

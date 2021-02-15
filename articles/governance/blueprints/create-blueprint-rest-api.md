@@ -1,14 +1,14 @@
 ---
 title: 快速入门：使用 REST API 创建蓝图
 description: 在本快速入门中，通过 REST API 使用 Azure 蓝图创建、定义和部署项目。
-ms.date: 06/29/2020
+ms.date: 01/27/2021
 ms.topic: quickstart
-ms.openlocfilehash: e3cdf28cfe523e52aceefe20294042d28b98e1e2
-ms.sourcegitcommit: f684589322633f1a0fafb627a03498b148b0d521
+ms.openlocfilehash: eaf6dbb2ff14106ba8d2798d86a8f093855de85e
+ms.sourcegitcommit: 436518116963bd7e81e0217e246c80a9808dc88c
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/06/2020
-ms.locfileid: "85971192"
+ms.lasthandoff: 01/27/2021
+ms.locfileid: "98915618"
 ---
 # <a name="quickstart-define-and-assign-an-azure-blueprint-with-rest-api"></a>快速入门：使用 REST API 定义和分配 Azure 蓝图
 
@@ -403,7 +403,7 @@ $response = Invoke-RestMethod -Uri $restUri -Method Get -Headers $authHeader
      },
      ```
 
-     **用户分配的托管标识**可以位于任何订阅和资源组中，只要分配蓝图的用户有权访问它即可。
+     **用户分配的托管标识** 可以位于任何订阅和资源组中，只要分配蓝图的用户有权访问它即可。
 
      > [!IMPORTANT]
      > Azure 蓝图不管理用户分配的托管标识。 用户负责分配足够的角色和权限，否则蓝图分配会失败。

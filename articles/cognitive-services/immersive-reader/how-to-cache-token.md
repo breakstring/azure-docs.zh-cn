@@ -8,14 +8,14 @@ ms.service: cognitive-services
 ms.subservice: immersive-reader
 ms.topic: conceptual
 ms.date: 01/14/2020
-ms.author: metan
-ms.custom: devx-track-javascript
-ms.openlocfilehash: 70173e1904ce9d7a159532c8962932765060e4d9
-ms.sourcegitcommit: 42107c62f721da8550621a4651b3ef6c68704cd3
+ms.author: metang
+ms.custom: devx-track-js, devx-track-csharp
+ms.openlocfilehash: fd92de3bc5f306cd5ebbcd80b9f1d92af3a9e45d
+ms.sourcegitcommit: fb3c846de147cc2e3515cd8219d8c84790e3a442
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/29/2020
-ms.locfileid: "87406939"
+ms.lasthandoff: 10/27/2020
+ms.locfileid: "92633309"
 ---
 # <a name="how-to-cache-the-authentication-token"></a>如何缓存身份验证令牌
 
@@ -23,7 +23,7 @@ ms.locfileid: "87406939"
 
 ## <a name="using-aspnet"></a>使用 ASP.NET
 
-导入**System.identitymodel** NuGet 包，该软件包用于获取令牌。 接下来，使用以下代码获取，并 `AuthenticationResult` 使用在[创建沉浸式读者资源](./how-to-create-immersive-reader.md)时获取的身份验证值。
+导入 **System.identitymodel** NuGet 包，该软件包用于获取令牌。 接下来，使用以下代码获取，并 `AuthenticationResult` 使用在 [创建沉浸式读者资源](./how-to-create-immersive-reader.md)时获取的身份验证值。
 
 ```csharp
 private async Task<AuthenticationResult> GetTokenAsync()
@@ -39,7 +39,7 @@ private async Task<AuthenticationResult> GetTokenAsync()
 
 ## <a name="using-nodejs"></a>使用 Node.JS
 
-将[**请求**](https://www.npmjs.com/package/request)npm 包添加到项目。 使用以下代码获取令牌，并使用在[创建沉浸式读者资源](./how-to-create-immersive-reader.md)时获取的身份验证值。
+将 [**请求**](https://www.npmjs.com/package/request) npm 包添加到项目。 使用以下代码获取令牌，并使用在 [创建沉浸式读者资源](./how-to-create-immersive-reader.md)时获取的身份验证值。
 
 ```javascript
 router.get('/token', function(req, res) {

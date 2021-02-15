@@ -1,6 +1,6 @@
 ---
-title: 使用 Azure PowerShell 从一般化映像创建规模集
-description: 使用共享映像库中的通用化映像创建规模集。
+title: 使用 Azure PowerShell 根据通用化映像创建规模集
+description: 借助 PowerShell 使用共享映像库中的通用化映像创建规模集。
 author: cynthn
 ms.service: virtual-machine-scale-sets
 ms.subservice: imaging
@@ -9,16 +9,16 @@ ms.topic: how-to
 ms.date: 05/04/2020
 ms.author: cynthn
 ms.reviewer: akjosh
-ms.openlocfilehash: 3b8c9d46a5bc5dde3e39bfa5673247ca752d2a89
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.openlocfilehash: 9edade1aa54d6f4f8160a107f84e6da2e6cf316e
+ms.sourcegitcommit: aaa65bd769eb2e234e42cfb07d7d459a2cc273ab
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87077572"
+ms.lasthandoff: 01/27/2021
+ms.locfileid: "98878013"
 ---
-# <a name="create-a-scale-set-from-a-generalized-image"></a>从通用化映像创建规模集
+# <a name="create-a-scale-set-from-a-generalized-image-using-powershell"></a>使用 PowerShell 根据通用化映像创建规模集 
 
-从[共享映像库](shared-image-galleries.md)中存储的通用化映像版本创建 VM。 若要使用专用化映像创建规模集，请参阅[从专用化映像创建规模集实例](instance-specialized-image-version-powershell.md)。
+从[共享映像库](../virtual-machines/shared-image-galleries.md)中存储的通用化映像版本创建 VM。 若要使用专用化映像创建规模集，请参阅[从专用化映像创建规模集实例](instance-specialized-image-version-powershell.md)。
 
 有通用化映像后，可以使用 [New-AzVmss](/powershell/module/az.compute/new-azvmss) cmdlet 来创建虚拟机规模集。 
 
@@ -27,7 +27,7 @@ ms.locfileid: "87077572"
 请注意，使用特定映像版本意味着：如果该特定映像版本由于已删除或已从区域中删除而无法使用，则自动化可能会失败。 建议使用映像定义 ID 来创建新的 VM（除非需要特定的映像版本）。
 
 
-以下示例在*default-machinelearning-southcentralus*位置的*myVMSSRG*资源组中创建名为*myScaleSet*的规模集。 将基于“myGalleryRG”资源组的“myGallery”映像库中的“myImageDefinition”映像创建该规模集。 出现提示时，请为该规模集中的 VM 实例设置自己的管理凭据。
+以下示例在 *default-machinelearning-southcentralus* 位置的 *myVMSSRG* 资源组中创建名为 *myScaleSet* 的规模集。 将基于“myGalleryRG”资源组的“myGallery”映像库中的“myImageDefinition”映像创建该规模集。 出现提示时，请为该规模集中的 VM 实例设置自己的管理凭据。
 
 
 ## <a name="simplified-parameter-set"></a>简化参数集
@@ -173,7 +173,7 @@ New-AzVmss `
 创建和配置所有的规模集资源和 VM 需要几分钟时间。
 
 ## <a name="next-steps"></a>后续步骤
-[Azure 映像生成器（预览版）](../virtual-machines/linux/image-builder-overview.md)可帮助自动创建映像版本，甚至还可以使用它来更新[现有映像版本并创建新的映像版本](../virtual-machines/linux/image-builder-gallery-update-image-version.md)。 
+[Azure 映像生成器 (预览版) ](../virtual-machines/image-builder-overview.md) 可帮助自动创建映像版本，甚至还可以使用它来更新 [现有映像版本并创建新的映像版本](../virtual-machines/linux/image-builder-gallery-update-image-version.md)。 
 
 此外可以使用模板创建共享映像库资源。 提供多个 Azure 快速入门模板： 
 
@@ -181,4 +181,4 @@ New-AzVmss `
 - [在共享的映像库中创建映像定义](https://azure.microsoft.com/resources/templates/101-sig-image-definition-create/)
 - [在共享映像库中创建映像版本](https://azure.microsoft.com/resources/templates/101-sig-image-version-create/)
 
-有关共享映像库的详细信息，请参阅[概述](shared-image-galleries.md)。 如果遇到问题，请参阅[排查共享映像库问题](troubleshooting-shared-images.md)。
+有关共享映像库的详细信息，请参阅[概述](../virtual-machines/shared-image-galleries.md)。 如果遇到问题，请参阅[排查共享映像库问题](../virtual-machines/troubleshooting-shared-images.md)。

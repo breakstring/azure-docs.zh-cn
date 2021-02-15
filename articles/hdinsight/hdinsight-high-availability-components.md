@@ -1,29 +1,22 @@
 ---
 title: Azure HDInsight 中的高可用性组件
 description: HDInsight 群集使用的各种高可用性组件的概述。
-author: hrasheed-msft
-ms.author: hrasheed
-ms.reviewer: jasonh
 ms.service: hdinsight
 ms.topic: conceptual
-ms.date: 11/11/2019
-ms.openlocfilehash: e1da26d9067427734d407451bdb53e51ba1e6243
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.date: 10/07/2020
+ms.openlocfilehash: 336fe91174a8fc6d73d6e45c5fd1e2bf244eda52
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "84609159"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98945313"
 ---
 # <a name="high-availability-services-supported-by-azure-hdinsight"></a>Azure HDInsight 支持的高可用性服务
 
- 为了给分析组件提供最佳的可用性级别，我们使用独特的体系结构开发了 HDInsight，以确保关键服务的高可用性 (HA)。 此体系结构的某些组件由 Microsoft 开发，旨在提供自动故障转移。 其他组件是为了支持特定的服务而部署的标准 Apache 组件。 本文介绍 HDInsight 中 HA 服务模型的体系结构，HDInsight 如何支持 HA 服务的故障转移，以及在其他服务发生中断后如何进行恢复。
- 
-> [!NOTE]
-> 无偏差通信
->
-> Microsoft 支持多样化的包容性环境。 本文包含对单词 slave 的引用。 Microsoft 的[无偏差通信风格指南](https://github.com/MicrosoftDocs/microsoft-style-guide/blob/master/styleguide/bias-free-communication.md)将其视为排他性单词。 本文使用该单词旨在保持一致性，因为目前软件中使用的是该单词。 如果软件更新后删除了该单词，则本文也将更新以保持一致。
->
+为了给分析组件提供最佳的可用性级别，我们使用独特的体系结构开发了 HDInsight，以确保关键服务的高可用性 (HA)。 此体系结构的某些组件由 Microsoft 开发，旨在提供自动故障转移。 其他组件是为了支持特定的服务而部署的标准 Apache 组件。 本文介绍 HDInsight 中 HA 服务模型的体系结构，HDInsight 如何支持 HA 服务的故障转移，以及在其他服务发生中断后如何进行恢复。
 
+> [!NOTE]
+> 本文包含对字词 *从属* 的引用，这是 Microsoft 不再使用的术语。 在从软件中删除该术语后，我们会将其从本文中删除。
 
 ## <a name="high-availability-infrastructure"></a>高可用性基础结构
 
@@ -43,7 +36,7 @@ HDInsight 提供自定义的基础结构，以确保四个主要服务具有高�
 
 ![高可用性基础结构](./media/hdinsight-high-availability-components/high-availability-architecture.png)
 
-此外，还有开源 Apache 可靠性组件支持的其他一些高可用性服务。 HDInsight 群集中还包含以下组件：
+此外，还有开源 Apache 可靠性组件支持的其他高可用性服务。 HDInsight 群集中还包含以下组件：
 
 - Hadoop 文件系统 (HDFS) NameNode
 - YARN ResourceManager
@@ -63,7 +56,7 @@ Microsoft 为下表中所述的 HDInsight 群集中的四个 Apache 服务提供
 | Apache Livy | 活动头节点 | Spark | 用于通过 REST 接口轻松与 Spark 群集交互 |
 
 >[!Note]
-> HDInsight 企业安全性套餐（ESP）群集目前仅提供 Ambari 服务器高可用性。
+> HDInsight 企业安全性套餐 (ESP) 群集目前仅提供 Ambari 服务器高可用性。 应用程序时间线服务器、作业历史记录服务器和 Livy 都仅在 headnode0 上运行，当 Ambari 故障转移时不会故障转移到 headnode1。 应用程序时间线数据库也位于 headnode0 上，不位于 Ambari SQL 服务器上。
 
 ### <a name="architecture"></a>体系结构
 
@@ -140,5 +133,5 @@ HDInsight HBase 群集支持 HBase Master 高可用性。 与头节点上运行�
 
 ## <a name="next-steps"></a>后续步骤
 
-- [HDInsight 中的 Apache Hadoop 群集的可用性和可靠性](hdinsight-high-availability-linux.md)
+- [HDInsight 中的 Apache Hadoop 群集的可用性和可靠性](./hdinsight-business-continuity.md)
 - [Azure HDInsight 虚拟网络体系结构](hdinsight-virtual-network-architecture.md)

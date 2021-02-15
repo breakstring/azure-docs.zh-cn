@@ -1,6 +1,6 @@
 ---
 title: 使用 Azure 门户将逻辑应用导入为 API | Microsoft Docs
-description: 本教程介绍如何使用 API 管理 (APIM) 将逻辑应用导入为 API。
+description: 本文演示如何使用 API 管理 (APIM) 将逻辑应用导入为 API。
 services: api-management
 documentationcenter: ''
 author: vladvino
@@ -9,15 +9,15 @@ editor: ''
 ms.service: api-management
 ms.workload: mobile
 ms.tgt_pltfrm: na
-ms.topic: tutorial
+ms.topic: article
 ms.date: 04/22/2020
 ms.author: apimpm
-ms.openlocfilehash: b6cb0fa3611da44726dabd879c37fec357fc3031
-ms.sourcegitcommit: 58faa9fcbd62f3ac37ff0a65ab9357a01051a64f
+ms.openlocfilehash: 0dd460bce01b86c72d0b8fd70351fdcc85c69bd4
+ms.sourcegitcommit: 4b76c284eb3d2b81b103430371a10abb912a83f4
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/29/2020
-ms.locfileid: "82202768"
+ms.lasthandoff: 11/01/2020
+ms.locfileid: "93146954"
 ---
 # <a name="import-a-logic-app-as-an-api"></a>将逻辑应用导入为 API
 
@@ -57,7 +57,7 @@ ms.locfileid: "82202768"
     - **入门**
     - **不受限制**
 
-7. 输入其他 API 设置。 可以在创建过程中设置这些值，也可以稍后转到“设置”  选项卡来配置这些值。在[导入和发布第一个 API](import-and-publish.md#-import-and-publish-a-backend-api) 教程中对这些设置进行了说明。
+7. 输入其他 API 设置。 可以在创建过程中设置这些值，也可以稍后转到“设置”  选项卡来配置这些值。在[导入和发布第一个 API](import-and-publish.md#import-and-publish-a-backend-api) 教程中对这些设置进行了说明。
 8. 选择“创建”  。
 
 ## <a name="test-the-api-in-the-azure-portal"></a>在 Azure 门户中测试 API

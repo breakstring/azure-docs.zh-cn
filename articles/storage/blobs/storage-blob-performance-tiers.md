@@ -8,12 +8,12 @@ ms.service: storage
 ms.subservice: blobs
 ms.topic: conceptual
 ms.reviewer: clausjor
-ms.openlocfilehash: ff82986b27d038c536872b07e1308b0d48fadaef
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: cf0b5d29e0dc375a07fe024ef0763c8200275055
+ms.sourcegitcommit: aaa65bd769eb2e234e42cfb07d7d459a2cc273ab
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "74270228"
+ms.lasthandoff: 01/27/2021
+ms.locfileid: "98880702"
 ---
 # <a name="performance-tiers-for-block-blob-storage"></a>块 Blob 存储的性能层
 
@@ -31,9 +31,9 @@ Azure 块 Blob 存储提供两个不同的性能层：
 |上市区域     |   所有区域      | [特定区域](https://azure.microsoft.com/global-infrastructure/services/?products=storage)       |
 |支持的[存储帐户类型](../common/storage-account-overview.md#types-of-storage-accounts)     |     常规用途 v2、Blob 存储、常规用途 v1    |    BlockBlobStorage     |
 |支持[高吞吐量块 Blob](https://azure.microsoft.com/blog/high-throughput-with-azure-blob-storage/)     |    是，在大于 4 MiB PutBlock 或 PutBlob 大小时     |    是，在大于 256 KiB PutBlock 或 PutBlob 大小时    |
-|冗余     |     请参阅[存储帐户的类型](../common/storage-account-overview.md#types-of-storage-accounts)   |  目前仅支持本地冗余存储 (LRS) 和区域冗余存储 (ZRS)<div role="complementary" aria-labelledby="zone-redundant-storage"><sup>1</sup></div>     |
+|冗余     |     请参阅[存储帐户的类型](../common/storage-account-overview.md#types-of-storage-accounts)   |  目前仅支持本地冗余存储 (LRS) 和区域 redudant 存储 (ZRS) <div role="complementary" aria-labelledby="zone-redundant-storage"><sup>1</sup></div>     |
 
-<div id="zone-redundant-storage"><sup>1</sup>可对特定区域中的高级性能层块 Blob 存储帐户使用区域冗余存储 (ZRS)。</div>
+<div id="zone-redundant-storage"><sup>1</sup>区域冗余存储 (ZRS) 可用于高级性能块 blob 存储帐户的选择区域。</div>
 
 在成本方面，高级性能层为具有高事务率的应用程序提供优化的定价，以帮助[降低这些工作负荷的总存储成本](https://azure.microsoft.com/blog/reducing-overall-storage-costs-with-azure-premium-blob-storage/)。
 
@@ -65,7 +65,7 @@ Azure 块 Blob 存储提供两个不同的性能层：
 
 无法将现有的标准性能存储帐户转换为使用高级性能层的块 Blob 存储帐户。 若要迁移到高级性能存储帐户，必须创建一个块 Blob 存储帐户，并将数据迁移到新帐户。 有关详细信息，请参阅[创建块 Blob 存储帐户](storage-blob-create-account-block-blob.md)。
 
-若要在存储帐户之间复制 Blob，可以使用最新版本的 [AzCopy](../common/storage-use-azcopy-blobs.md) 命令行工具。 Azure 数据工厂等其他工具也可用于数据移动和转换。
+若要在存储帐户之间复制 Blob，可以使用最新版本的 [AzCopy](../common/storage-use-azcopy-v10.md#transfer-data) 命令行工具。 Azure 数据工厂等其他工具也可用于数据移动和转换。
 
 ## <a name="blob-lifecycle-management"></a>Blob 生命周期管理
 
@@ -76,13 +76,13 @@ Blob 存储生命周期管理提供了丰富的基于规则的策略：
 
 若要了解详细信息，请参阅[管理 Azure Blob 存储生命周期](storage-lifecycle-management-concepts.md)。
 
-无法在热、冷和存档层之间移动存储在高级块 Blob 存储帐户中的数据。 但是，可将块 Blob 存储帐户中的 Blob 复制到不同帐户中的热访问层。  若要将数据复制到另一帐户，请使用[从 URL 放置块](/rest/api/storageservices/put-block-from-url) API 或 [AzCopy v10](../common/storage-use-azcopy-v10.md)。 “从 URL 放置块”API 以同步方式复制服务器上的数据。  仅在已将所有数据从原始服务器位置移到目标位置后，调用才会完成。
+无法在热、冷和存档层之间移动存储在高级块 Blob 存储帐户中的数据。 但是，可将块 Blob 存储帐户中的 Blob 复制到不同帐户中的热访问层。 若要将数据复制到另一帐户，请使用[从 URL 放置块](/rest/api/storageservices/put-block-from-url) API 或 [AzCopy v10](../common/storage-use-azcopy-v10.md)。 “从 URL 放置块”API 以同步方式复制服务器上的数据。 仅在已将所有数据从原始服务器位置移到目标位置后，调用才会完成。
 
 ## <a name="next-steps"></a>后续步骤
 
 评估 GPv2 和 Blob 存储帐户中的热、冷和存档层。
 
 - [了解如何从存档层解冻 Blob 数据](storage-blob-rehydration.md)
-- [通过启用 Azure 存储度量值来评估当前存储帐户的使用情况](../common/storage-enable-and-view-metrics.md)
+- [通过启用 Azure 存储度量值来评估当前存储帐户的使用情况](./monitor-blob-storage.md)
 - [按区域查看 Blob 存储帐户和 GPv2 帐户中的热层、冷层和存档层定价](https://azure.microsoft.com/pricing/details/storage/)
 - [检查数据传输定价](https://azure.microsoft.com/pricing/details/data-transfers/)

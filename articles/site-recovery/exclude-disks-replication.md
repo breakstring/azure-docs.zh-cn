@@ -3,12 +3,12 @@ title: 使用 Azure Site Recovery 将磁盘排除在复制之外
 description: 如何使用 Azure Site Recovery 免于将磁盘复制到 Azure。
 ms.topic: conceptual
 ms.date: 12/17/2019
-ms.openlocfilehash: 778bb030d9768c5fbe1cb8aeba0becfc68c00629
-ms.sourcegitcommit: dabd9eb9925308d3c2404c3957e5c921408089da
+ms.openlocfilehash: 15989fbfd65f758eb777c5170c217aba8707e0be
+ms.sourcegitcommit: a43a59e44c14d349d597c3d2fd2bc779989c71d7
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/11/2020
-ms.locfileid: "86245392"
+ms.lasthandoff: 11/25/2020
+ms.locfileid: "96008253"
 ---
 # <a name="exclude-disks-from-disaster-recovery"></a>将磁盘排除在灾难恢复之外
 
@@ -56,13 +56,13 @@ ms.locfileid: "86245392"
 
 ## <a name="example-1-exclude-the-sql-server-tempdb-disk"></a>示例 1：排除 SQL Server tempdb 磁盘
 
-我们来看看如何处理源 SQL Server Windows VM (**SalesDB***) 的磁盘排除和故障转移操作，其中我们要排除 tempdb。 
+让我们看看如何处理 SQL Server Windows VM- **SalesDB** _ 的源的磁盘排除、故障转移和故障转移，我们想要排除 tempdb。 
 
 ### <a name="exclude-disks-from-replication"></a>将磁盘排除在复制之外
 
 源 Windows VM SalesDB 上有以下磁盘。
 
-**磁盘名称** | **来宾 OS 磁盘** | **驱动器号** | **磁盘数据类型**
+_ *磁盘名称** | **来宾 OS 磁盘** | **驱动器号** | **磁盘数据类型**
 --- | --- | --- | ---
 DB-Disk0-OS | Disk0 | C:\ | 操作系统磁盘。
 DB-Disk1| Disk1 | D:\ | SQL 系统数据库和用户数据库 1。
@@ -207,7 +207,7 @@ DB-Disk3 | Disk3 | F:\ | 用户数据 2
 
 源 VM 上的页面文件设置如下所示：
 
-![源虚拟机上的页面文件设置](./media/exclude-disks-replication/pagefile-d-drive-source-vm.png)
+!["虚拟内存" 对话框的屏幕截图，其中显示了 "D：驱动器 [页面文件卷]" 行，其中突出显示了页面文件大小 (MB) 为3000-7000。](./media/exclude-disks-replication/pagefile-d-drive-source-vm.png)
 
 1. 为 VM 启用复制。
 2. 将 DB-Disk1 排除在复制之外。
@@ -260,7 +260,7 @@ DB-Disk3 | Disk3 | F:\ | 用户数据 2
 
 Azure VM 上的页面文件设置如下所示：
 
-![Azure 虚拟机上的页面文件设置](./media/exclude-disks-replication/pagefile-azure-vm-after-failover-2.png)
+![显示了 "系统管理" 的页面文件大小设置的 "虚拟内存" 对话框的屏幕截图。](./media/exclude-disks-replication/pagefile-azure-vm-after-failover-2.png)
 
 
 ## <a name="next-steps"></a>后续步骤

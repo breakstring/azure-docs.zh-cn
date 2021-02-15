@@ -3,23 +3,22 @@ title: 有关在 .NET Core 应用中使用功能标志的教程 | Microsoft Docs
 description: 本教程介绍如何在 .NET Core 应用中实施功能标志。
 services: azure-app-configuration
 documentationcenter: ''
-author: lisaguthrie
-manager: maiye
+author: AlexandraKemperMS
 editor: ''
 ms.assetid: ''
 ms.service: azure-app-configuration
 ms.workload: tbd
 ms.devlang: csharp
 ms.topic: tutorial
-ms.date: 08/12/2020
-ms.author: lcozzens
+ms.date: 09/17/2020
+ms.author: alkemper
 ms.custom: devx-track-csharp, mvc
-ms.openlocfilehash: 3f8a43a1ff28206a4bcc5fd059f69492c83eb34d
-ms.sourcegitcommit: 152c522bb5ad64e5c020b466b239cdac040b9377
+ms.openlocfilehash: 2f141b896ef11fecdf156d062a78252ce6f7ffb3
+ms.sourcegitcommit: 78ecfbc831405e8d0f932c9aafcdf59589f81978
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/14/2020
-ms.locfileid: "88224707"
+ms.lasthandoff: 01/23/2021
+ms.locfileid: "98734977"
 ---
 # <a name="tutorial-use-feature-flags-in-an-aspnet-core-app"></a>教程：在 ASP.NET Core 应用中使用功能标志
 
@@ -27,7 +26,7 @@ ms.locfileid: "88224707"
 
 功能管理库还会在幕后管理功能标志生命周期。 例如，这些库可刷新和缓存标志状态，或者保证标志状态在请求调用期间保持不变。 此外，ASP.NET Core 库提供现成的集成，包括 MVC 控制器操作、视图、路由和中间件。
 
-[将功能标志添加到 ASP.NET Core 应用快速入门](./quickstart-feature-flag-aspnet-core.md)介绍了在 ASP.NET Core 应用程序中添加功能标志的多种方法。 本教程将更详细地介绍这些方法。 有关完整参考信息，请参阅 [ASP.NET Core 功能管理文档](https://go.microsoft.com/fwlink/?linkid=2091410)。
+[将功能标志添加到 ASP.NET Core 应用快速入门](./quickstart-feature-flag-aspnet-core.md)介绍了在 ASP.NET Core 应用程序中添加功能标志的多种方法。 本教程将更详细地介绍这些方法。 有关完整参考信息，请参阅 [ASP.NET Core 功能管理文档](/dotnet/api/microsoft.featuremanagement)。
 
 在本教程中，您将学习如何执行以下操作：
 
@@ -38,7 +37,6 @@ ms.locfileid: "88224707"
 ## <a name="set-up-feature-management"></a>设置功能管理
 
 添加对 `Microsoft.FeatureManagement.AspNetCore` 和 `Microsoft.FeatureManagement` NuGet 包的引用以利用 .NET Core 功能管理器。
-    
 .NET Core 功能管理器 `IFeatureManager` 从框架的本机配置系统获取功能标志。 因此，可以使用 .NET Core 支持的任何配置源（包括本地 *appsettings.json* 文件或环境变量）来定义应用程序的功能标志。 `IFeatureManager` 依赖于 .NET Core 依赖项注入。 可以使用标准约定来注册功能管理服务。
 
 ```csharp
@@ -107,16 +105,23 @@ public class Startup
               .UseStartup<Startup>();
    ```
 
-2. 打开 *Startup.cs*，并更新 `Configure` 方法以添加中间件，从而允许在 ASP.NET Core Web 应用继续接收请求的同时，功能标志值以重复的时间间隔进行刷新。
+2. 打开“Startup.cs”并更新 `Configure` 和 `ConfigureServices` 方法，添加名为 `UseAzureAppConfiguration` 的内置中间件。 此中间件允许在 ASP.NET Core Web 应用继续接收请求的同时定期刷新功能标志值。
 
    ```csharp
-   public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+   public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
    {
        app.UseAzureAppConfiguration();
        app.UseMvc();
    }
    ```
 
+   ```csharp
+   public void ConfigureServices(IServiceCollection services)
+   {
+       services.AddAzureAppConfiguration();
+   }
+   ```
+   
 功能标志值预期会不断变化。 默认情况下，功能标志值缓存 30 秒，因此，在中间件收到请求时触发的刷新操作不会更新该值，直到缓存值过期为止。 以下代码演示如何在 `options.UseFeatureFlags()` 调用中将缓存过期时间或轮询间隔更改为 5 分钟。
 
 ```csharp
@@ -190,6 +195,8 @@ if (await featureManager.IsEnabledAsync(nameof(MyFeatureFlags.FeatureA)))
 在 ASP.NET Core MVC 中，可以通过依赖项注入访问功能管理器 `IFeatureManager`。
 
 ```csharp
+using Microsoft.FeatureManagement;
+
 public class HomeController : Controller
 {
     private readonly IFeatureManager _featureManager;
@@ -230,6 +237,12 @@ public IActionResult Index()
 当由于控制功能标志状态为“关闭”而阻止了 MVC 控制器或操作时，将调用已注册的 `IDisabledFeaturesHandler`接口。  默认的 `IDisabledFeaturesHandler` 接口向客户端返回 404 状态代码，但不返回响应正文。
 
 ## <a name="mvc-views"></a>MVC 视图
+
+打开 Views 目录中的 _ViewImports.cshtml  ，并添加功能管理器标记帮助器  ：
+
+```html
+@addTagHelper *, Microsoft.FeatureManagement.AspNetCore
+```
 
 在 MVC 视图中，可以使用 `<feature>` 标记根据是否启用了某个功能标志来呈现内容：
 
@@ -295,6 +308,6 @@ app.UseForFeature(featureName, appBuilder => {
 
 本教程已介绍如何使用 `Microsoft.FeatureManagement` 库在 ASP.NET Core 应用程序中实施功能标志。 有关 ASP.NET Core 和应用程序配置中的功能管理支持的详细信息，请参阅以下资源：
 
-* [ASP.NET Core 功能标志示例代码](/azure/azure-app-configuration/quickstart-feature-flag-aspnet-core)
-* [Microsoft.FeatureManagement 文档](https://docs.microsoft.com/dotnet/api/microsoft.featuremanagement)
+* [ASP.NET Core 功能标志示例代码](./quickstart-feature-flag-aspnet-core.md)
+* [Microsoft.FeatureManagement 文档](/dotnet/api/microsoft.featuremanagement)
 * [管理功能标志](./manage-feature-flags.md)

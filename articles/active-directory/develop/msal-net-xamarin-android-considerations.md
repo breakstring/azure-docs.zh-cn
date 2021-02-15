@@ -1,7 +1,7 @@
 ---
-title: Xamarin Android 注意事项 (MSAL.NET) | Azure
+title: Xamarin Android 代码配置和故障排除 (MSAL.NET) | Azure
 titleSuffix: Microsoft identity platform
-description: 了解将 Xamarin Android 与适用于 .NET 的 Microsoft 身份验证库 (MSAL.NET) 配合使用时的注意事项。
+description: 了解将 Xamarin Android 与适用于 .NET 的 Microsoft 身份验证库 (MSAL.NET) 配合使用的注意事项。
 services: active-directory
 author: jmprieur
 manager: CelesteDG
@@ -9,23 +9,24 @@ ms.service: active-directory
 ms.subservice: develop
 ms.topic: conceptual
 ms.workload: identity
-ms.date: 04/24/2019
+ms.date: 08/28/2020
 ms.author: marsma
 ms.reviewer: saeeda
 ms.custom: devx-track-csharp, aaddev
-ms.openlocfilehash: 601a501114d754dc82991a3c19b977c0c63c5bc0
-ms.sourcegitcommit: c28fc1ec7d90f7e8b2e8775f5a250dd14a1622a6
+ms.openlocfilehash: 34f2b146dda6e739f977c4894b5ec333c79d74d4
+ms.sourcegitcommit: 2488894b8ece49d493399d2ed7c98d29b53a5599
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/13/2020
-ms.locfileid: "88165730"
+ms.lasthandoff: 01/11/2021
+ms.locfileid: "98063427"
 ---
-# <a name="considerations-for-using-xamarin-android-with-msalnet"></a>将 Xamarin Android 与 MSAL.NET 配合使用时的注意事项
-本文介绍将 Xamarin Android 与适用于 .NET 的 Microsoft 身份验证库 (MSAL.NET) 配合使用时的注意事项。
+# <a name="configuration-requirements-and-troubleshooting-tips-for-xamarin-android-with-msalnet"></a>Xamarin Android 与 MSAL.NET 配合使用时的配置要求和故障排除提示
+
+使用适用于 .NET 的 Microsoft 身份验证库 (MSAL.NET) 时，需要在代码中进行几项配置更改。 以下部分介绍了所要求的修改，之后的[故障排除](#troubleshooting)部分用于帮助避免一些最常见的问题。
 
 ## <a name="set-the-parent-activity"></a>设置父活动
 
-在 Xamarin Android 上设置父活动，使令牌在交互后返回。 下面是代码示例：
+在 Xamarin Android 上，设置父活动，使令牌在交互后返回：
 
 ```csharp
 var authResult = AcquireTokenInteractive(scopes)
@@ -33,7 +34,7 @@ var authResult = AcquireTokenInteractive(scopes)
  .ExecuteAsync();
 ```
 
-在 MSAL 4.2 和更高版本中，还可以在 `PublicClientApplication` 级别设置此功能。 为此，请使用一个回调：
+在 MSAL.NET 4.2 和更高版本中，也可以在 [PublicClientApplication][PublicClientApplication] 级别设置此功能。 为此，请使用一个回调：
 
 ```csharp
 // Requires MSAL.NET 4.2 or later
@@ -43,7 +44,7 @@ var pca = PublicClientApplicationBuilder
   .Build();
 ```
 
-如果使用 [CurrentActivityPlugin](https://github.com/jamesmontemagno/CurrentActivityPlugin)，则 `PublicClientApplication` 生成器代码将类似于以下示例。
+如果使用 [CurrentActivityPlugin](https://github.com/jamesmontemagno/CurrentActivityPlugin)，则 [`PublicClientApplication`][PublicClientApplication] 生成器代码应类似于以下代码片段：
 
 ```csharp
 // Requires MSAL.NET 4.2 or later
@@ -53,32 +54,34 @@ var pca = PublicClientApplicationBuilder
   .Build();
 ```
 
-## <a name="ensure-that-control-returns-to-msal"></a>确保控制权返回到 MSAL 
-在身份验证流的交互部分结束后，请确保该控制权返回到 MSAL。 在 Android 上重写 `Activity` 的 `OnActivityResult` 方法。 然后调用 `AuthenticationContinuationHelper` MSAL 类的 `SetAuthenticationContinuationEventArgs` 方法。 
+## <a name="ensure-that-control-returns-to-msal"></a>确保控制权返回到 MSAL
 
-下面是一个示例：
+在身份验证流的交互部分结束时，请将控制权返回到 MSAL，具体方式是重写 [`Activity`][Activity].[`OnActivityResult()`][OnActivityResult] 方法。
+
+在重写的代码中，请调用 MSAL.NET 的 `AuthenticationContinuationHelper`.`SetAuthenticationContinuationEventArgs()` 方法，以在身份验证流的交互部分结束时使控制权返回到 MSAL。
 
 ```csharp
-protected override void OnActivityResult(int requestCode, 
-                                         Result resultCode, Intent data)
+protected override void OnActivityResult(int requestCode,
+                                         Result resultCode,
+                                         Intent data)
 {
- base.OnActivityResult(requestCode, resultCode, data);
- AuthenticationContinuationHelper.SetAuthenticationContinuationEventArgs(requestCode,
-                                                                         resultCode,
-                                                                         data);
+    base.OnActivityResult(requestCode, resultCode, data);
+
+    // Return control to MSAL
+    AuthenticationContinuationHelper.SetAuthenticationContinuationEventArgs(requestCode,
+                                                                            resultCode,
+                                                                            data);
 }
-
 ```
-
-此行确保在身份验证流的交互部分结束后控制权会返回到 MSAL。
 
 ## <a name="update-the-android-manifest"></a>更新 Android 清单
+
 *AndroidManifest.xml* 文件应包含以下值：
 
-<!--Intent filter to capture System Browser or Authenticator calling back to our app after sign-in-->
-```
+```XML
+  <!--Intent filter to capture System Browser or Authenticator calling back to our app after sign-in-->
   <activity
-        android:name="com.microsoft.identity.client.BrowserTabActivity">
+        android:name="microsoft.identity.client.BrowserTabActivity">
      <intent-filter>
             <action android:name="android.intent.action.VIEW" />
             <category android:name="android.intent.category.DEFAULT" />
@@ -87,12 +90,12 @@ protected override void OnActivityResult(int requestCode,
                 android:host="Enter_the_Package_Name"
                 android:path="/Enter_the_Signature_Hash" />
      </intent-filter>
- </activity>
+  </activity>
 ```
 
 将 `android:host=` 值替换为在 Azure 门户中注册的包名称。 将 `android:path=` 值替换为在 Azure 门户中注册的密钥哈希。 不应该对签名哈希进行 URL 编码。  确保前导正斜杠 (`/`) 出现在签名哈希的开头。
 
-或者，[在代码中创建活动](/xamarin/android/platform/android-manifest#the-basics)，而不要手动编辑 *AndroidManifest.xml*。 若要在代码中创建活动，请先创建一个包含 `Activity` 属性和 `IntentFilter` 属性的类。 
+或者，[在代码中创建活动](/xamarin/android/platform/android-manifest#the-basics)，而不要手动编辑 *AndroidManifest.xml*。 若要在代码中创建活动，请先创建一个包含 `Activity` 属性和 `IntentFilter` 属性的类。
 
 下面是表示 XML 文件值的类的示例：
 
@@ -107,13 +110,13 @@ protected override void OnActivityResult(int requestCode,
   }
 ```
 
-### <a name="xamarinforms-43x-manifest"></a>Xamarin.Forms 4.3.X 清单
+### <a name="xamarinforms-43x-manifest"></a>Xamarin.Forms 4.3.x 清单
 
 Xamarin.Forms 4.3.x 会生成可在 *AndroidManifest.xml* 中将 `package` 属性设置为 `com.companyname.{appName}` 的代码。 如果使用 `DataScheme` 作为 `msal{client_id}`，则可能需要更改该值，使之与 `MainActivity.cs` 命名空间的值匹配。
 
 ## <a name="use-the-embedded-web-view-optional"></a>使用嵌入式 Web 视图（可选）
 
-默认情况下，MSAL.NET 使用系统 Web 浏览器。 在此浏览器中，可以使用 Web 应用程序和其他应用来实现单一登录 (SSO)。 在罕见的情况下，你可能希望系统使用嵌入式 Web 视图。 
+默认情况下，MSAL.NET 使用系统 Web 浏览器。 在此浏览器中，可以使用 Web 应用程序和其他应用来实现单一登录 (SSO)。 在罕见的情况下，你可能希望系统使用嵌入式 Web 视图。
 
 此代码示例演示如何设置嵌入式 Web 视图：
 
@@ -128,24 +131,21 @@ var authResult = AcquireTokenInteractive(scopes)
 
 有关详细信息，请参阅[使用适用于 MSAL.NET 的 Web 浏览器](msal-net-web-browsers.md)和 [Xamarin Android 系统浏览器注意事项](msal-net-system-browser-android-considerations.md)。
 
+## <a name="troubleshooting"></a>疑难解答
 
-## <a name="troubleshoot"></a>故障排除
-可以创建新的 Xamarin.Forms 应用程序，并添加对 MSAL.NET NuGet 包的引用。
-但是，如果将现有的 Xamarin.Forms 应用程序升级到 MSAL.NET 预览版 1.1.2 或更高版本，则可能会遇到生成问题。
+### <a name="general-tips"></a>一般技巧
 
-若要排查生成问题：
-
-- 将现有的 MSAL.NET NuGet 包更新到 MSAL.NET 预览版 1.1.2 或更高版本。
-- 检查 Xamarin.Forms 是否已自动更新到版本 2.5.0.122203。 如果需要，请将 Xamarin.Forms 更新到此版本。
-- 检查 Xamarin.Android.Support.v4 是否已自动更新到版本 25.4.0.2。 如果需要，请更新到版本 25.4.0.2。
-- 确保所有 Xamarin.Android.Support 包以版本 25.4.0.2 为目标。
+- 将现有的 MSAL.NET NuGet 包更新到 [MSAL.NET 的最新版](https://www.nuget.org/packages/Microsoft.Identity.Client/)。
+- 验证 Xamarin.Forms 是否为最新版本。
+- 验证 Xamarin.Android.Support.v4 是否为最新版本。
+- 确保所有 Xamarin.Android.Support 包都面向最新版本。
 - 清理或重新生成应用程序。
 - 在 Visual Studio 中，尝试将最大并行项目生成数设置为 1。 为此，请选择“选项” > “项目和解决方案” > “生成和运行” > “最大并行项目生成数”。    
 - 如果通过命令行生成并且命令使用 `/m`，请尝试从命令中删除此元素。
 
 ### <a name="error-the-name-authenticationcontinuationhelper-doesnt-exist-in-the-current-context"></a>错误：名称 AuthenticationContinuationHelper 不存在于当前上下文中
 
-如果有错误指出 `AuthenticationContinuationHelper` 不存在于当前上下文中，原因可能是 Visual Studio 错误地更新了 Android.csproj* 文件。 有时， *\<HintPath>* 文件路径不正确地包含*netstandard13* ，而不是*monoandroid90*。
+如果有错误指明当前上下文中不存在 `AuthenticationContinuationHelper`，则说明 Visual Studio 可能错误地更新了 Android.csproj\* 文件。 `<HintPath>` 元素中的文件路径有时会错误地包含 `netstandard13` 而不是 `monoandroid90`。
 
 此示例包含正确的文件路径：
 
@@ -162,4 +162,9 @@ var authResult = AcquireTokenInteractive(scopes)
 
 | 示例 | 平台 | 说明 |
 | ------ | -------- | ----------- |
-|[https://github.com/Azure-Samples/active-directory-xamarin-native-v2](https://github.com/azure-samples/active-directory-xamarin-native-v2) | Xamarin.iOS、Android、UWP | 一个简单的 Xamarin 应用程序，演示如何使用 MSAL 通过 Azure AD 2.0 端点对 Microsoft 个人帐户和 Azure AD 进行身份验证。 该应用还展示了如何访问 Microsoft Graph 并显示了生成的令牌。 <br>![拓扑](media/msal-net-xamarin-android-considerations/topology.png) |
+|[https://github.com/Azure-Samples/active-directory-xamarin-native-v2](https://github.com/azure-samples/active-directory-xamarin-native-v2) | Xamarin.iOS、Android、UWP | 一个简单的 Xamarin 应用程序，演示如何使用 MSAL 通过 Azure AD 2.0 端点对 Microsoft 个人帐户和 Azure AD 进行身份验证。 该应用还展示了如何访问 Microsoft Graph 并显示了生成的令牌。 <br>![身份验证流示意图](media/msal-net-xamarin-android-considerations/topology.png) |
+
+<!-- REF LINKS -->
+[PublicClientApplication]: /dotnet/api/microsoft.identity.client.publicclientapplication
+[OnActivityResult]: /dotnet/api/android.app.activity.onactivityresult
+[Activity]: /dotnet/api/android.app.activity

@@ -3,18 +3,21 @@ title: 如何使用系统分配的托管标识访问 Azure Cosmos DB 数据
 description: 了解如何配置 Azure Active Directory (Azure AD) 系统分配的托管标识（托管服务标识），以访问 Azure Cosmos DB 中的密钥。
 author: j-patrick
 ms.service: cosmos-db
+ms.subservice: cosmosdb-sql
 ms.topic: how-to
 ms.date: 03/20/2020
 ms.author: justipat
 ms.reviewer: sngun
-ms.openlocfilehash: acb74d806f1ad361d3772438eec7fb788a843b02
-ms.sourcegitcommit: c293217e2d829b752771dab52b96529a5442a190
+ms.custom: devx-track-csharp
+ms.openlocfilehash: 4d9845fad8c9013bd20499c45a8d1714e30e9dbf
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/15/2020
-ms.locfileid: "88243711"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98927406"
 ---
 # <a name="use-system-assigned-managed-identities-to-access-azure-cosmos-db-data"></a>使用系统分配的托管标识访问 Azure Cosmos DB 数据
+[!INCLUDE[appliesto-sql-api](includes/appliesto-sql-api.md)]
 
 在本文中，你将设置一个无论是否轮换密钥都能可靠运行的解决方案，以使用[托管标识](../active-directory/managed-identities-azure-resources/services-support-managed-identities.md)访问 Azure Cosmos DB 密钥  。 本文中的示例使用 Azure Functions，但你可以使用任何支持托管标识的服务。 
 
@@ -49,7 +52,7 @@ ms.locfileid: "88243711"
 > Azure Cosmos DB 中对基于角色的访问控制的支持仅适用于控制平面操作。 将通过主密钥或资源令牌保护数据平面操作。 有关详细信息，请参阅[保护对数据的访问](secure-access-to-data.md)一文。
 
 > [!TIP] 
-> 分配角色时，请仅分配所需的访问权限。 如果服务只需读取数据，请向托管标识分配“Cosmos DB 帐户读取者”角色  。 有关最低权限访问权限的重要性的详细信息，请参阅 [特权帐户的低公开部分](../security/fundamentals/identity-management-best-practices.md#lower-exposure-of-privileged-accounts) 。
+> 分配角色时，请仅分配所需的访问权限。 如果服务只需读取数据，请向托管标识分配“Cosmos DB 帐户读取者”角色  。 若要详细了解最小特权访问权限的重要性，请参阅[降低特权帐户的泄露风险](../security/fundamentals/identity-management-best-practices.md#lower-exposure-of-privileged-accounts)一文。
 
 在此方案中，函数应用将读取水族箱的温度，然后将此数据写回到 Azure Cosmos DB 中的容器。 由于函数应用必须写入数据，因此你需要分配“DocumentDB 帐户参与者”角色  。 
 
@@ -90,10 +93,10 @@ az role assignment create --assignee $principalId --role "DocumentDB Account Con
 
 现在，我们已有一个函数应用，它具有系统分配的托管标识，该标识具有“DocumentDB 帐户参与者”角色和 Azure Cosmos DB 权限  。 以下函数应用代码将获取 Azure Cosmos DB 密钥，创建 CosmosClient 对象，获取水族箱温度，然后将此数据保存到 Azure Cosmos DB。
 
-此示例使用[“列出密钥”API](/rest/api/cosmos-db-resource-provider/DatabaseAccounts/ListKeys) 来访问 Azure Cosmos DB 帐户密钥。
+此示例使用[“列出密钥”API](/rest/api/cosmos-db-resource-provider/2020-04-01/databaseaccounts/listkeys) 来访问 Azure Cosmos DB 帐户密钥。
 
 > [!IMPORTANT] 
-> 若要[分配 Cosmos DB 帐户读取者](#grant-access-to-your-azure-cosmos-account)角色，需要使用[列出只读密钥 API](/rest/api/cosmos-db-resource-provider/DatabaseAccounts/ListReadOnlyKeys)。 这只会填充只读密钥。
+> 若要[分配 Cosmos DB 帐户读取者](#grant-access-to-your-azure-cosmos-account)角色，需要使用[列出只读密钥 API](/rest/api/cosmos-db-resource-provider/2020-04-01/databaseaccounts/listreadonlykeys)。 这只会填充只读密钥。
 
 “列出密钥”API 将返回 `DatabaseAccountListKeysResult` 对象。 C# 库中未定义此类型。 以下代码显示了此类的实现：  
 
@@ -127,7 +130,7 @@ namespace Monitor
 }
 ```
 
-你将使用 [Microsoft.Azure.Services.AppAuthentication](https://www.nuget.org/packages/Microsoft.Azure.Services.AppAuthentication) 库来获取系统分配的托管标识令牌。 若要了解获取令牌的其他方法以及有关 `Microsoft.Azure.Service.AppAuthentication` 库的详细信息，请参阅[服务到服务身份验证](../key-vault/general/service-to-service-authentication.md)一文。
+你将使用 [Microsoft.Azure.Services.AppAuthentication](https://www.nuget.org/packages/Microsoft.Azure.Services.AppAuthentication) 库来获取系统分配的托管标识令牌。 若要了解获取令牌的其他方法以及有关 `Microsoft.Azure.Service.AppAuthentication` 库的详细信息，请参阅[服务到服务身份验证](/dotnet/api/overview/azure/service-to-service-authentication)一文。
 
 
 ```csharp
@@ -211,7 +214,7 @@ namespace Monitor
 }
 ```
 
-现在，你已准备好[部署函数应用](../azure-functions/functions-create-first-function-vs-code.md)。
+现在，你已准备好[部署函数应用](../azure-functions/create-first-function-vs-code-csharp.md)。
 
 ## <a name="next-steps"></a>后续步骤
 

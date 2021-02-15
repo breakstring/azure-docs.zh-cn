@@ -1,19 +1,16 @@
 ---
 title: 将 Azure Kubernetes 服务与 Kafka on HDInsight 配合使用
 description: 了解如何使用 Azure Kubernetes 服务 (AKS) 托管的容器映像中的 Kafka on HDInsight。
-author: hrasheed-msft
-ms.author: hrasheed
-ms.reviewer: jasonh
 ms.service: hdinsight
 ms.topic: how-to
 ms.custom: hdinsightactive
 ms.date: 12/04/2019
-ms.openlocfilehash: baf350e23025342cc74b4d063d9a1604e8ad2ffd
-ms.sourcegitcommit: 124f7f699b6a43314e63af0101cd788db995d1cb
+ms.openlocfilehash: d807b591229644984f6658cdacd0bf447759f292
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/08/2020
-ms.locfileid: "86087416"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98933025"
 ---
 # <a name="use-azure-kubernetes-service-with-apache-kafka-on-hdinsight"></a>将 Azure Kubernetes 服务与 Apache Kafka on HDInsight 配合使用
 
@@ -26,7 +23,7 @@ ms.locfileid: "86087416"
 
 ## <a name="prerequisites"></a>先决条件
 
-* [Azure CLI](https://docs.microsoft.com/cli/azure/install-azure-cli?view=azure-cli-latest)
+* [Azure CLI](/cli/azure/install-azure-cli)
 * Azure 订阅
 
 本文档假设读者熟悉如何创建和使用以下 Azure 服务：
@@ -80,7 +77,7 @@ HDInsight 和 AKS 使用 Azure 虚拟网络作为计算资源的容器。 若要
     |properties | 值 |
     |---|---|
     |地址空间|使用的地址空间不得与 AKS 群集网络使用的地址空间重叠。|
-    |位置|使用 AKS 群集所用的相同虚拟网络__位置__。|
+    |位置|使用 AKS 群集所用的相同虚拟网络 __位置__。|
 
 1. 等到创建完虚拟网络，然后转到下一步。
 
@@ -94,7 +91,7 @@ HDInsight 和 AKS 使用 Azure 虚拟网络作为计算资源的容器。 若要
     |---|---|
     |从 \<this VN> 到远程虚拟网络的对等互连的名称|输入此对等互连配置的唯一名称。|
     |虚拟网络|选择 AKS 群集的虚拟网络。|
-    |从到的对等互连的名称 \<AKS VN>\<this VN>|输入唯一名称。|
+    |从 \<AKS VN> 到 \<this VN> 的对等互连的名称|输入唯一名称。|
 
     将其他所有字段保留默认值，然后选择“确定”以配置对等互连。
 

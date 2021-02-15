@@ -1,17 +1,17 @@
 ---
 title: 管理防火墙规则-Azure 门户-Azure Database for MariaDB
 description: 使用 Azure 门户创建和管理 Azure Database for MariaDB 防火墙规则
-author: ajlam
-ms.author: andrela
-ms.service: mariadb
+author: savjani
+ms.author: pariks
+ms.service: jroth
 ms.topic: how-to
 ms.date: 3/18/2020
-ms.openlocfilehash: 464b13fe4aa727a4d3ca3ff074b8bb94544576a7
-ms.sourcegitcommit: d7008edadc9993df960817ad4c5521efa69ffa9f
+ms.openlocfilehash: a708326db1a782cf3ded5f9108e1b87c6d53fe20
+ms.sourcegitcommit: 52e3d220565c4059176742fcacc17e857c9cdd02
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/08/2020
-ms.locfileid: "86101216"
+ms.lasthandoff: 01/21/2021
+ms.locfileid: "98665049"
 ---
 # <a name="create-and-manage-azure-database-for-mariadb-firewall-rules-by-using-the-azure-portal"></a>使用 Azure 门户创建和管理 Azure Database for MariaDB 防火墙规则
 可以使用服务器级防火墙规则，管理从指定的 IP 地址或某个范围的 IP 地址对 Azure Database for MariaDB 服务器的访问。

@@ -8,12 +8,12 @@ ms.topic: tutorial
 ms.author: nandab
 author: KishorIoT
 ms.date: 07/31/2020
-ms.openlocfilehash: 30e123b24a5d2c9e45df6ee6dc6debfb88b920f3
-ms.sourcegitcommit: bfeae16fa5db56c1ec1fe75e0597d8194522b396
+ms.openlocfilehash: fbfef094cd062e437f2a28369162de96631ef41b
+ms.sourcegitcommit: d1b0cf715a34dd9d89d3b72bb71815d5202d5b3a
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/10/2020
-ms.locfileid: "88037861"
+ms.lasthandoff: 02/08/2021
+ms.locfileid: "99832600"
 ---
 # <a name="tutorial-monitor-and-manage-a-video-analytics---object-and-motion-detection-application"></a>教程：监视和管理视频分析 - 对象和运动检测应用程序
 
@@ -26,8 +26,8 @@ ms.locfileid: "88037861"
 
 在开始之前，应完成：
 
-* [在 Azure IoT Central 中创建实时视频分析应用程序](./tutorial-video-analytics-create-app.md)教程。
-* 之前的[创建用于视频分析的 IoT Edge 实例 (Linux VM)](tutorial-video-analytics-iot-edge-vm.md) 或当前的[创建用于视频分析的 IoT Edge 实例 (Linux VM)](tutorial-video-analytics-iot-edge-nuc.md) 教程。
+* 之前的[在 Azure IoT Central 中创建实时视频分析应用程序](./tutorial-video-analytics-create-app-yolo-v3.md)或[在 Azure IoT Central 中创建视频分析 (OpenVINO&trade;)](tutorial-video-analytics-create-app-openvino.md) 教程之一。
+* 之前的[创建用于实时视频分析的 IoT Edge 实例 (Linux VM)](tutorial-video-analytics-iot-edge-vm.md) 或[创建用于实时视频分析的 IoT Edge 实例 (Intel NUC)](tutorial-video-analytics-iot-edge-nuc.md) 教程之一。
 
 你应在本地计算机上安装 [Docker](https://www.docker.com/products/docker-desktop) 以运行视频查看器应用程序。
 
@@ -155,22 +155,22 @@ docker run -it --rm -e amsAadClientId="<FROM_AZURE_PORTAL>" -e amsAadSecret="<FR
 |amsResourceGroup| ResourceGroup |
 |amsAccountName| AccountName|
 
-在应用程序中，导航到“监视器”面板。 然后，在“推理事件视频”磁贴上单击其中一个捕获对象检测超链接。 本地视频播放器显示的页面上会出现视频：
+导航到 camera-003 设备，然后选择“仪表板”选项卡 。然后，在“推理事件视频”磁贴上单击其中一个捕获对象检测超链接。 本地视频播放器显示的页面上会出现视频：
 
 :::image type="content" source="media/tutorial-video-analytics-manage/video-snippet.png" alt-text="视频片段":::
 
-## <a name="change-the-simulated-devices-in-application-dashboard"></a>在应用程序面板中更改模拟设备
+## <a name="change-the-simulated-devices-in-application-dashboards"></a>在应用程序仪表板中更改模拟设备
 
 应用程序面板最初填充的是 IoT Central 模拟设备生成的遥测数据和属性。 若要将磁贴配置为真实相机或 Live555 模拟器的遥测数据，请按以下步骤操作：
 
-1. 导航到“真实相机显示器”面板。
+1. 导航到“(示例)真实相机显示器”应用程序仪表板。
 1. 选择“编辑”  。
+1. 选择“备注”磁贴，然后将其删除。
+1. 将仪表板标题更改为“真实相机显示器”。
 1. 在“推理计数”磁贴中，选择“配置”图标。
 1. 在“配置图表”部分中，选择“LVA Edge 对象探测器”设备组中的一个或多个真实相机 。
 1. 选择 `AI Inference Interface/Inference Count` 遥测数据字段。
 1. 选择“更新”。
-
-   
 
 1. 对以下磁贴重复上述步骤：
     1. “检测”饼图使用 `AI Inference Interface/Inference/entity/tag/value` 遥测数据类型。
@@ -195,7 +195,7 @@ docker run -it --rm -e amsAadClientId="<FROM_AZURE_PORTAL>" -e amsAadSecret="<FR
     * 单击“流式处理终结点”资源。
     * 在“流式处理终结点详细信息”页上，选择“停止” 。
 
-## <a name="tidy-up"></a>整理
+## <a name="clean-up-resources"></a>清理资源
 
 如果应用程序使用完毕，可以删除创建的所有资源，如下所示：
 

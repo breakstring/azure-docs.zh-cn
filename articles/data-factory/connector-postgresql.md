@@ -1,22 +1,17 @@
 ---
 title: 使用 Azure 数据工厂从 PostgreSQL 复制数据
 description: 了解如何通过在 Azure 数据工厂管道中使用复制活动，将数据从 PostgreSQL 复制到支持的接收器数据存储。
-services: data-factory
-documentationcenter: ''
 author: linda33wj
-manager: shwang
-ms.reviewer: douglasl
 ms.service: data-factory
-ms.workload: data-services
 ms.topic: conceptual
 ms.date: 02/19/2020
 ms.author: jingwang
-ms.openlocfilehash: 6d10e7b9b24817eb738172bd0f2d2c3e7f8f2cbf
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: c0d8783c4b07c8c87e57ccd9a5d65983825347c9
+ms.sourcegitcommit: d4734bc680ea221ea80fdea67859d6d32241aefc
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "81416749"
+ms.lasthandoff: 02/14/2021
+ms.locfileid: "100384089"
 ---
 # <a name="copy-data-from-postgresql-by-using-azure-data-factory"></a>使用 Azure 数据工厂从 PostgreSQL 复制数据
 > [!div class="op_single_selector" title1="选择所使用的数据工厂服务版本："]
@@ -36,7 +31,7 @@ ms.locfileid: "81416749"
 
 可以将数据从 PostgreSQL 数据库复制到任何支持的接收器数据存储。 有关复制活动支持作为源/接收器的数据存储列表，请参阅[支持的数据存储](copy-activity-overview.md#supported-data-stores-and-formats)表。
 
-具体而言，此 PostgreSQL 连接器支持 PostgreSQL 7.4 及更高版本****。
+具体而言，此 PostgreSQL 连接器支持 PostgreSQL 7.4 及更高版本。
 
 ## <a name="prerequisites"></a>先决条件
 
@@ -54,7 +49,7 @@ ms.locfileid: "81416749"
 
 PostgreSQL 链接的服务支持以下属性：
 
-| properties | 说明 | 必需 |
+| properties | 说明 | 必须 |
 |:--- |:--- |:--- |
 | type | type 属性必须设置为：**PostgreSql** | 是 |
 | connectionString | 用于连接到 Azure Database for PostgreSQL 的 ODBC 连接字符串。 <br/>还可以将密码放在 Azure 密钥保管库中，并从连接字符串中拉取 `password` 配置。 有关更多详细信息，请参阅以下示例和[在 Azure 密钥保管库中存储凭据](store-credentials-in-key-vault.md)一文。 | 是 |
@@ -94,13 +89,13 @@ PostgreSQL 链接的服务支持以下属性：
         "type": "PostgreSql",
         "typeProperties": {
             "connectionString": "Server=<server>;Database=<database>;Port=<port>;UID=<username>;",
-            "password": { 
-                "type": "AzureKeyVaultSecret", 
-                "store": { 
-                    "referenceName": "<Azure Key Vault linked service name>", 
-                    "type": "LinkedServiceReference" 
-                }, 
-                "secretName": "<secretName>" 
+            "password": { 
+                "type": "AzureKeyVaultSecret", 
+                "store": { 
+                    "referenceName": "<Azure Key Vault linked service name>", 
+                    "type": "LinkedServiceReference" 
+                }, 
+                "secretName": "<secretName>" 
             }
         },
         "connectVia": {
@@ -143,7 +138,7 @@ PostgreSQL 链接的服务支持以下属性：
 
 从 PostgreSQL 复制数据时，支持以下属性：
 
-| properties | 说明 | 必需 |
+| properties | 说明 | 必须 |
 |:--- |:--- |:--- |
 | type | 数据集的 type 属性必须设置为： **PostgreSqlTable** | 是 |
 | 架构 | 架构的名称。 |否（如果指定了活动源中的“query”）  |
@@ -178,10 +173,10 @@ PostgreSQL 链接的服务支持以下属性：
 
 从 PostgreSQL 复制数据时，复制活动的 **source** 节支持以下属性：
 
-| properties | 说明 | 必需 |
+| properties | 说明 | 必须 |
 |:--- |:--- |:--- |
 | type | 复制活动源的 type 属性必须设置为： **PostgreSqlSource** | 是 |
-| 查询 | 使用自定义 SQL 查询读取数据。 例如：`"query": "SELECT * FROM \"MySchema\".\"MyTable\""`。 | 否（如果指定了数据集中的“tableName”） |
+| query | 使用自定义 SQL 查询读取数据。 例如：`"query": "SELECT * FROM \"MySchema\".\"MyTable\""`。 | 否（如果指定了数据集中的“tableName”） |
 
 > [!NOTE]
 > 架构和表名称区分大小写。 在查询中将名称括在 `""`（双引号）中。
@@ -220,7 +215,7 @@ PostgreSQL 链接的服务支持以下属性：
 
 如果使用 `RelationalSource` 类型源，该源仍按原样受支持，但我们建议今后使用新源。
 
-## <a name="lookup-activity-properties"></a>Lookup 活动属性
+## <a name="lookup-activity-properties"></a>查找活动属性
 
 若要了解有关属性的详细信息，请查看 [Lookup 活动](control-flow-lookup-activity.md)。
 

@@ -1,6 +1,6 @@
 ---
 title: 排查由于文件系统错误而导致的 Linux VM 启动问题 |Microsoft Docs
-description: 解释 Linux VM 为何无法启动，以及如何解决此问题。
+description: 了解如何排查由于文件系统错误导致的 Linux VM 启动问题
 services: virtual-machines-linux
 documentationcenter: ''
 author: v-miegge
@@ -14,12 +14,12 @@ ms.tgt_pltfrm: vm-linux
 ms.devlang: azurecli
 ms.date: 10/09/2019
 ms.author: v-six
-ms.openlocfilehash: e26d4070bc9fabeb3467e7bdc805faad4e6646c3
-ms.sourcegitcommit: 3543d3b4f6c6f496d22ea5f97d8cd2700ac9a481
+ms.openlocfilehash: 8f12b88a0ddbc6ae31f40ab31b0126e4fd66b1a5
+ms.sourcegitcommit: 829d951d5c90442a38012daaf77e86046018e5b9
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/20/2020
-ms.locfileid: "86526497"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "91325940"
 ---
 # <a name="troubleshoot-linux-vm-starting-issues-due-to-file-system-errors"></a>排查文件系统错误导致的 Linux VM 启动问题
 
@@ -75,7 +75,7 @@ Linux 提供了多个文件系统检查程序。 Azure 中最常见的发行版�
 
 ## <a name="resolution"></a>解决方法
 
-若要解决此问题，请使用[串行控制台](./serial-console-linux.md)将 VM 启动到紧急模式，并使用该工具修复文件系统。 如果未在 VM 上启用串行控制台或不工作，请参阅本文的[修复 VM 脱机](#repair-the-vm-offline)部分。
+若要解决此问题，请使用 [串行控制台](./serial-console-linux.md) 将 VM 启动到紧急模式，并使用该工具修复文件系统。 如果未在 VM 上启用串行控制台或不工作，请参阅本文的 [修复 VM 脱机](#repair-the-vm-offline) 部分。
 
 ## <a name="use-the-serial-console"></a>使用串行控制台
 
@@ -83,12 +83,12 @@ Linux 提供了多个文件系统检查程序。 Azure 中最常见的发行版�
 
    > [!Note]
    > 有关使用适用于 Linux 的串行控制台的详细信息，请参阅：
-   > * [使用串行控制台访问 GRUB 和单用户模式](../linux/serial-console-grub-single-user-mode.md)
+   > * [使用串行控制台访问 GRUB 和单用户模式](serial-console-grub-single-user-mode.md)
    > * [使用串行控制台进行 SysRq 和 NMI 调用](./serial-console-nmi-sysrq.md)
 
-2. 选择电源图标按钮，然后选择 "重新启动 VM"。 （如果串行控制台未启用或未成功连接，你将看不到此按钮。）
+2. 选择电源图标按钮，然后选择 "重新启动 VM"。  (如果串行控制台未启用或未成功连接，则不会看到按钮。 ) 
 
-   ![IMAGE](./media/linux-recovery-cannot-ssh-to-linux-vm-due-to-file-system-errors-fsck/restart-vm.png)
+   ![图像](./media/linux-recovery-cannot-ssh-to-linux-vm-due-to-file-system-errors-fsck/restart-vm.png)
 
 3. 在紧急模式下启动 VM。
 

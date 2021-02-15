@@ -1,6 +1,6 @@
 ---
-title: 使用 VSTS 进行连接
-description: 使用 Visual Studio 查询 Azure Synapse Analytics。
+title: 通过 VSTS 连接到 (以前的 SQL DW) 的专用 SQL 池
+description: 通过 Visual Studio 在 Azure Synapse Analytics 中查询专用 SQL 池 (以前的 SQL DW) 。
 services: synapse-analytics
 author: kevinvngo
 manager: craigg
@@ -11,38 +11,39 @@ ms.date: 08/15/2019
 ms.author: kevin
 ms.reviewer: igorstan
 ms.custom: seo-lt-2019
-ms.openlocfilehash: a3e8ea3b0ed2840e5eee7a046fa3a145f82884dc
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 2b81ddedbcb254a840e85d41cf9d69c78b149bbd
+ms.sourcegitcommit: aacbf77e4e40266e497b6073679642d97d110cda
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "85200692"
+ms.lasthandoff: 01/12/2021
+ms.locfileid: "98121390"
 ---
-# <a name="connect-to-azure-synapse-analytics-with-visual-studio-and-ssdt"></a>使用 Visual Studio 和 SSDT 连接到 Azure Synapse Analytics
+# <a name="connect-to-dedicated-sql-pool-formerly-sql-dw-in-azure-synapse-analytics-with-visual-studio-and-ssdt"></a>通过 Visual Studio 和 SSDT 连接到 Azure Synapse Analytics (以前的 SQL DW) 
+
 > [!div class="op_single_selector"]
 > * [Azure Data Studio](../sql/get-started-azure-data-studio.md)
-> * [Power BI](sql-data-warehouse-get-started-visualize-with-power-bi.md)
+> * [Power BI](/power-bi/connect-data/service-azure-sql-data-warehouse-with-direct-connect)
 > * [Visual Studio](sql-data-warehouse-query-visual-studio.md)
 > * [sqlcmd](../sql/get-started-connect-sqlcmd.md) 
 > * [SSMS](sql-data-warehouse-query-ssms.md)
 > 
 > 
 
-使用 Visual Studio 只需几分钟便可查询 Azure Synapse 中的 SQL 池。 此方法使用 Visual Studio 2019 中的 SQL Server Data Tools (SSDT) 扩展。 
+仅需几分钟，即可在 Azure Synapse 中使用 Visual Studio 查询专用 SQL 池 (以前的 SQL DW) 。 此方法使用 Visual Studio 2019 中的 SQL Server Data Tools (SSDT) 扩展。 
 
 ## <a name="prerequisites"></a>先决条件
 要使用本教程，需要：
 
-* 现有的 SQL 池。 若要创建一个，请参阅[创建 SQL 池](create-data-warehouse-portal.md)。
+* 现有专用 SQL 池 (以前的 SQL DW) 。 若要创建一个，请参阅 [创建专用 sql 池 (以前的 SQL DW) ](create-data-warehouse-portal.md)。
 * 适用于 Visual Studio 的 SSDT。 如果安装了 Visual Studio，则可能已有 SSDT for Visual Studio。 有关安装指说明和选项，请参阅 [安装 Visual Studio 和 SSDT](sql-data-warehouse-install-visual-studio.md)。
-* 完全限定的 SQL Server 名称。 若要查找此信息，请参阅[连接到 SQL 池](../sql/connect-overview.md)。
+* 完全限定的 SQL Server 名称。 若要查找此信息，请参阅 [连接到专用 sql 池 (以前的 SQL DW) ](sql-data-warehouse-connect-overview.md)。
 
-## <a name="1-connect-to-your-sql-pool"></a>1.连接到 SQL 池
+## <a name="1-connect-to-your-dedicated-sql-pool-formerly-sql-dw"></a>1. 连接到专用 SQL 池 (以前的 SQL DW) 
 1. 打开 Visual Studio 2019。
 2. 通过选择“视图”   > “SQL Server 对象资源管理器”  打开 SQL Server 对象资源管理器。
    
     ![SQL Server 对象资源管理器](./media/sql-data-warehouse-query-visual-studio/open-ssdt.png)
-3. 单击“添加 SQL Server”图标。
+3. 单击“添加 SQL Server”  图标。
    
     ![添加 SQL 服务器](./media/sql-data-warehouse-query-visual-studio/add-server.png)
 4. 填写“连接到服务器”窗口中的字段。
@@ -61,7 +62,7 @@ ms.locfileid: "85200692"
 现在，已建立了与数据库的连接，接下来让我们编写查询。
 
 1. 在 SQL Server 对象资源管理器中右键单击数据库。
-2. 选择“新建查询”。 “新建查询”窗口随即打开。
+2. 选择“新建查询”。 此时将打开一个新的查询窗口。
    
     ![新建查询](./media/sql-data-warehouse-query-visual-studio/new-query2.png)
 3. 将以下 T-SQL 查询复制到查询窗口中：
@@ -69,7 +70,7 @@ ms.locfileid: "85200692"
     ```sql
     SELECT COUNT(*) FROM dbo.FactInternetSales;
     ```
-4. 若要运行查询，请单击绿色箭头，或使用以下快捷键：`CTRL`+`SHIFT`+`E`。
+4. 通过单击绿色箭头或使用以下快捷方式运行查询：`CTRL`+`SHIFT`+`E`。
    
     ![运行查询](./media/sql-data-warehouse-query-visual-studio/run-query.png)
 5. 查看查询结果。 在此示例中，FactInternetSales 表包含 60398 行。
@@ -77,6 +78,6 @@ ms.locfileid: "85200692"
     ![查询结果](./media/sql-data-warehouse-query-visual-studio/query-results.png)
 
 ## <a name="next-steps"></a>后续步骤
-可以进行连接和查询后，接下来请尝试[使用 Power BI 可视化数据](sql-data-warehouse-get-started-visualize-with-power-bi.md)。
+可以进行连接和查询后，接下来请尝试[使用 Power BI 可视化数据](/power-bi/connect-data/service-azure-sql-data-warehouse-with-direct-connect)。
 
-若要配置适用于 Azure Active Directory 身份验证的环境，请参阅[向 SQL 池进行身份验证](sql-data-warehouse-authentication.md)。
+若要为 Azure Active Directory 身份验证配置环境，请参阅 [ (以前的 SQL DW) 验证专用 sql 池 ](sql-data-warehouse-authentication.md)。

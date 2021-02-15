@@ -1,6 +1,6 @@
 ---
-title: 使用 Azure 资源管理器模板为 Azure IoT 中心配置消息路由
-description: 使用 Azure 资源管理器模板为 Azure IoT 中心配置消息路由
+title: 教程 - 使用 Azure 资源管理器模板为 Azure IoT 中心配置消息路由
+description: 教程 - 使用 Azure 资源管理器模板为 Azure IoT 中心配置消息路由
 author: robinsh
 manager: philmeagit st
 ms.service: iot-hub
@@ -9,12 +9,12 @@ ms.topic: tutorial
 ms.date: 03/25/2019
 ms.author: robinsh
 ms.custom: mvc
-ms.openlocfilehash: 8f245653a8b84944e1e8a3f48a49992f0065be58
-ms.sourcegitcommit: 58faa9fcbd62f3ac37ff0a65ab9357a01051a64f
+ms.openlocfilehash: 53217340b0d91f3de77e5e0d8c0a82e30599d6ed
+ms.sourcegitcommit: a0c1d0d0906585f5fdb2aaabe6f202acf2e22cfc
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/29/2020
-ms.locfileid: "74084390"
+ms.lasthandoff: 01/21/2021
+ms.locfileid: "98621422"
 ---
 # <a name="tutorial-use-an-azure-resource-manager-template-to-configure-iot-hub-message-routing"></a>教程：使用 Azure 资源管理器模板配置 IoT 中心消息路由
 
@@ -358,13 +358,13 @@ ms.locfileid: "74084390"
 
 若要上传文件，请在菜单栏中选择“上传/下载文件”图标，然后选择“上传”。 
 
-![Cloud Shell 菜单栏，其中已突出显示“上传/下载文件”](media/tutorial-routing-config-message-routing-RM-template/CloudShell_upload_files.png)
+![突出显示“上传/下载文件”图标的屏幕截图。](media/tutorial-routing-config-message-routing-RM-template/CloudShell_upload_files.png)
 
 使用弹出的文件资源管理器找到本地磁盘上的文件并将其选中，然后选择“打开”。 
 
 上传文件后，结果对话框将显示下图所示的内容。
 
-![Cloud Shell 菜单栏，其中已突出显示“上传/下载文件”](media/tutorial-routing-config-message-routing-RM-template/CloudShell_upload_results.png)
+![Cloud Shell 菜单栏，其中已突出显示“上传/下载结果”](media/tutorial-routing-config-message-routing-RM-template/CloudShell_upload_results.png)
 
 文件将上传到 Cloud Shell 实例使用的共享。 
 

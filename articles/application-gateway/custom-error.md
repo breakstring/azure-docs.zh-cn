@@ -7,12 +7,12 @@ ms.service: application-gateway
 ms.topic: how-to
 ms.date: 11/16/2019
 ms.author: victorh
-ms.openlocfilehash: d78f7aa2a02f14dc9b875895e3057bd4dee29b74
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 355caeb54f09797ae719f21401ceebb7d53d745a
+ms.sourcegitcommit: f377ba5ebd431e8c3579445ff588da664b00b36b
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "84808086"
+ms.lasthandoff: 02/05/2021
+ms.locfileid: "99592714"
 ---
 # <a name="create-application-gateway-custom-error-pages"></a>创建应用程序网关自定义错误页
 
@@ -48,8 +48,8 @@ ms.locfileid: "84808086"
 
 1. 在门户中导航到“应用程序网关”，并选择一个应用程序网关。
 
-    ![ag-overview](media/custom-error/ag-overview.png)
-2. 单击“侦听器”**** 并导航到你要在其中指定错误页的特定侦听器。
+    ![显示应用程序网关的“概述”页的屏幕截图。](media/custom-error/ag-overview.png)
+2. 单击“侦听器”并导航到你要在其中指定错误页的特定侦听器。
 
     ![应用程序网关侦听器](media/custom-error/ag-listener.png)
 3. 在侦听器级别为 403 WAF 错误或 502 维护页配置一个自定义错误页。
@@ -57,7 +57,7 @@ ms.locfileid: "84808086"
     > [!NOTE]
     > 目前不支持从 Azure 门户中创建全局级别的自定义错误页。
 
-4. 为给定的错误状态代码指定一个可公开访问的 blob URL，然后单击“保存”。**** 现在，应用程序网关已经配置了自定义错误页。
+4. 为给定的错误状态代码指定一个可公开访问的 blob URL，然后单击“保存”。 现在，应用程序网关已经配置了自定义错误页。
 
    ![应用程序网关错误代码](media/custom-error/ag-error-codes.png)
 
@@ -65,13 +65,23 @@ ms.locfileid: "84808086"
 
 可使用 Azure PowerShell 来配置自定义缩放页。 例如，全局自定义错误页：
 
-`$updatedgateway = Add-AzApplicationGatewayCustomError -ApplicationGateway $appgw -StatusCode HttpStatus502 -CustomErrorPageUrl $customError502Url`
+```powershell
+$appgw   = Get-AzApplicationGateway -Name <app-gateway-name> -ResourceGroupName <resource-group-name>
+
+$updatedgateway = Add-AzApplicationGatewayCustomError -ApplicationGateway $appgw -StatusCode HttpStatus502 -CustomErrorPageUrl "http://<website-url>"
+```
 
 或侦听器级别错误页：
 
-`$updatedlistener = Add-AzApplicationGatewayHttpListenerCustomError -HttpListener $listener01 -StatusCode HttpStatus502 -CustomErrorPageUrl $customError502Url`
+```powershell
+$appgw   = Get-AzApplicationGateway -Name <app-gateway-name> -ResourceGroupName <resource-group-name>
 
-有关详细信息，请参阅 [Add-AzApplicationGatewayCustomError](https://docs.microsoft.com/powershell/module/az.network/add-azapplicationgatewaycustomerror?view=azps-1.2.0) 和 [Add-AzApplicationGatewayHttpListenerCustomError](https://docs.microsoft.com/powershell/module/az.network/add-azapplicationgatewayhttplistenercustomerror?view=azps-1.3.0)。
+$listener01 = Get-AzApplicationGatewayHttpListener -Name <listener-name> -ApplicationGateway $appgw
+
+$updatedlistener = Add-AzApplicationGatewayHttpListenerCustomError -HttpListener $listener01 -StatusCode HttpStatus502 -CustomErrorPageUrl "http://<website-url>"
+```
+
+有关详细信息，请参阅 [Add-AzApplicationGatewayCustomError](/powershell/module/az.network/add-azapplicationgatewaycustomerror) 和 [Add-AzApplicationGatewayHttpListenerCustomError](/powershell/module/az.network/add-azapplicationgatewayhttplistenercustomerror)。
 
 ## <a name="next-steps"></a>后续步骤
 

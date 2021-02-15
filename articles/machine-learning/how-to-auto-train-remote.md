@@ -10,18 +10,18 @@ ms.service: machine-learning
 ms.subservice: core
 ms.workload: data-services
 ms.topic: conceptual
-ms.custom: how-to
+ms.custom: how-to, automl
 ms.date: 03/09/2020
-ms.openlocfilehash: 0dcb8f1f484f9c24a6376aef8836b6dc50d5278a
-ms.sourcegitcommit: a76ff927bd57d2fcc122fa36f7cb21eb22154cfa
+ms.openlocfilehash: d6d21acc685ba840b585ada43e59230fdd73787f
+ms.sourcegitcommit: ab829133ee7f024f9364cd731e9b14edbe96b496
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/28/2020
-ms.locfileid: "87321548"
+ms.lasthandoff: 12/28/2020
+ms.locfileid: "97796374"
 ---
 # <a name="train-models-with-automated-machine-learning-in-the-cloud"></a>在云中使用自动化机器学习对模型进行训练
 
-[!INCLUDE [aml-applies-to-basic-enterprise-sku](../../includes/aml-applies-to-basic-enterprise-sku.md)]
+
 
 在 Azure 机器学习中，我们在所管理的不同类型的计算资源上训练模型。 计算目标可以是本地计算机，也可以是云中的资源。
 
@@ -43,7 +43,7 @@ ws = Workspace.from_config()
 
 ## <a name="create-resource"></a>创建资源
 
-在工作区 (`ws`) 中创建 [`AmlCompute`](https://docs.microsoft.com/python/api/azureml-core/azureml.core.compute.amlcompute%28class%29?view=azure-ml-py) 目标（如果它尚不存在）。
+在工作区 (`ws`) 中创建 [`AmlCompute`](/python/api/azureml-core/azureml.core.compute.amlcompute%28class%29?preserve-view=true&view=azure-ml-py) 目标（如果它尚不存在）。
 
 **时间估计**：创建 AmlCompute 目标需要大约 5 分钟。
 
@@ -90,7 +90,7 @@ else:
 
 ## <a name="access-data-using-tabulardataset-function"></a>使用 TabularDataset 函数访问数据
 
-将 training_data 定义为 [`TabularDataset`](https://docs.microsoft.com/python/api/azureml-core/azureml.data.tabulardataset?view=azure-ml-py) 和标签，并将其传递给 [`AutoMLConfig`](https://docs.microsoft.com/python/api/azureml-train-automl-client/azureml.train.automl.automlconfig.automlconfig?view=azure-ml-py) 中的自动 ML。 默认情况下，`TabularDataset` 方法 `from_delimited_files` 将 `infer_column_types` 设置为 true，这将自动推断列类型。 
+将 training_data 定义为 [`TabularDataset`](/python/api/azureml-core/azureml.data.tabulardataset?preserve-view=true&view=azure-ml-py) 和标签，并将其传递给 [`AutoMLConfig`](/python/api/azureml-train-automl-client/azureml.train.automl.automlconfig.automlconfig?preserve-view=true&view=azure-ml-py) 中的自动 ML。 默认情况下，`TabularDataset` 方法 `from_delimited_files` 将 `infer_column_types` 设置为 true，这将自动推断列类型。 
 
 如果确实希望手动设置列类型，可以设置 `set_column_types` 参数来手动设置每个列的类型。 在下面的代码示例中，数据来自 sklearn 包。
 
@@ -159,7 +159,7 @@ automl_config = AutoMLConfig(task='classification',
 
 ```python
 from azureml.core.experiment import Experiment
-experiment = Experiment(ws, 'automl_remote')
+experiment = Experiment(ws, 'Tutorial-automl-remote')
 remote_run = experiment.submit(automl_config, show_output=True)
 ```
 
@@ -200,7 +200,7 @@ BEST: The best observed score thus far.
 
 ## <a name="explore-results"></a>浏览结果
 
-可以使用与[培训教程](tutorial-auto-train-models.md#explore-the-results)中显示的内容相同的 [Jupyter 小组件](https://docs.microsoft.com/python/api/azureml-widgets/azureml.widgets?view=azure-ml-py)来查看图表和结果表格。
+可以使用与[培训教程](tutorial-auto-train-models.md#explore-the-results)中显示的内容相同的 [Jupyter 小组件](/python/api/azureml-widgets/azureml.widgets?preserve-view=true&view=azure-ml-py)来查看图表和结果表格。
 
 ```python
 from azureml.widgets import RunDetails
@@ -220,7 +220,7 @@ RunDetails(remote_run).show()
 remote_run.get_portal_url()
 ```
 
-工作区中提供了相同的信息。  若要了解有关这些结果的详细信息，请参阅[了解自动化机器学习结果](how-to-understand-automated-ml.md)。
+工作区中提供了相同的信息。  要详细了解这些结果，请参阅[自动化机器学习结果](how-to-understand-automated-ml.md)。
 
 ## <a name="example"></a>示例
 

@@ -1,21 +1,25 @@
 ---
-title: 云服务和管理证书 | Microsoft Docs
-description: 了解如何创建和部署云服务的证书，以及如何在 Azure 中通过管理 API 进行身份验证。
-services: cloud-services
-documentationcenter: .net
-author: tgore03
-ms.service: cloud-services
+title: 云服务 (经典) 和管理证书 |Microsoft Docs
+description: 了解如何创建和部署证书以用于云服务以及在 Azure 中对管理 API 进行身份验证。
 ms.topic: article
-ms.date: 04/19/2017
+ms.service: cloud-services
+ms.date: 10/14/2020
 ms.author: tagore
-ms.openlocfilehash: 08ce69856dd36b6029297109fcb8610b856c8b98
-ms.sourcegitcommit: a2a7746c858eec0f7e93b50a1758a6278504977e
+author: tanmaygore
+ms.reviewer: mimckitt
+ms.custom: ''
+ms.openlocfilehash: c73f9812f344eecf4e51f43405b48693ddfa191b
+ms.sourcegitcommit: 6272bc01d8bdb833d43c56375bab1841a9c380a5
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/12/2020
-ms.locfileid: "88142360"
+ms.lasthandoff: 01/23/2021
+ms.locfileid: "98739728"
 ---
-# <a name="certificates-overview-for-azure-cloud-services"></a>Azure 云服务证书概述
+# <a name="certificates-overview-for-azure-cloud-services-classic"></a> (经典) 的 Azure 云服务的证书概述
+
+> [!IMPORTANT]
+> [Azure 云服务 (扩展支持) ](../cloud-services-extended-support/overview.md) 是适用于 Azure 云服务产品的新的基于 azure 资源管理器的部署模型。进行此更改后，基于 Azure Service Manager 的部署模型运行的 Azure 云服务已重命名为云服务 (经典) ，所有新部署应使用 [云服务 (扩展支持) ](../cloud-services-extended-support/overview.md)。
+
 证书在 Azure 中用于云服务（[服务证书](#what-are-service-certificates)）以及用于通过管理 API 进行身份验证（[管理证书](#what-are-management-certificates)）。 本主题同时提供了有关这两种证书类型的一般概述，并说明了如何[创建](#create)并将其部署到 Azure。
 
 Azure 中使用的证书是 x.509 v3 证书，可自签名或由另一个受信任的证书签名。 自签名证书由其创建者签名，因此，默认情况下不受信任。 大多数浏览器可以忽略此问题。 自签名证书应仅在开发和测试云服务时使用。 
@@ -76,7 +80,7 @@ Export-PfxCertificate -Cert $cert -FilePath ".\my-cert-file.pfx" -Password $pass
 > 如果要将证书用于 IP 地址而不是域，请在 -DnsName 参数中使用 IP 地址。
 
 
-如果要将此[证书用于管理门户](../azure-api-management-certs.md)，请将其导出到 .cer 文件：
+如果要将此[证书用于管理门户](/previous-versions/azure/azure-api-management-certs)，请将其导出到 .cer 文件：
 
 ```powershell
 Export-Certificate -Type CERT -Cert $cert -FilePath .\my-cert-file.cer
@@ -91,8 +95,4 @@ Internet 上有许多关于如何使用 IIS 实现此操作的信息。 [此页�
 ## <a name="next-steps"></a>后续步骤
 [将服务证书上传到 Azure 门户](cloud-services-configure-ssl-certificate-portal.md)。
 
-将[管理 API 证书](../azure-api-management-certs.md)上传到 Azure 门户。
-
-
-
-
+将[管理 API 证书](/previous-versions/azure/azure-api-management-certs)上传到 Azure 门户。

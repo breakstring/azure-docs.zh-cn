@@ -1,20 +1,22 @@
 ---
-title: 快速入门：使用 REST API 获取意向 - LUIS
-description: 此 REST API 快速入门使用可用的公共 LUIS 应用从对话文本中确定用户的意向。
-ms.topic: quickstart
-ms.date: 05/18/2020
-ms.custom: devx-track-python, devx-track-javascript
+title: 如何使用 REST API 获取意图
+description: 在本文中，你将使用可用的公共 LUIS 应用从会话文本中确定用户的意向。
+ms.service: cognitive-services
+ms.subservice: language-understanding
+ms.topic: conceptual
+ms.date: 11/30/2020
+ms.custom: devx-track-python, devx-track-js, devx-track-csharp
 zone_pivot_groups: programming-languages-set-one
-ms.openlocfilehash: 2fd52011ed0d139e98740c8de077987edfae2c32
-ms.sourcegitcommit: dea88d5e28bd4bbd55f5303d7d58785fad5a341d
+ms.openlocfilehash: b49d90ffe2a262895727fdd4ef5f8a7950104102
+ms.sourcegitcommit: 5e5a0abe60803704cf8afd407784a1c9469e545f
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/06/2020
-ms.locfileid: "87873154"
+ms.lasthandoff: 12/01/2020
+ms.locfileid: "96437008"
 ---
-# <a name="quickstart-get-intent-with-rest-apis"></a>快速入门：使用 REST API 获取意向
+# <a name="how-to-get-an-intent-using-the-rest-apis"></a>如何使用 REST API 获取意图
 
-在本快速入门中，你将使用 LUIS 应用从会话文本中确定用户的意向。 将用户的意向作为文本发送到 Pizza 应用的 HTTP 预测终结点。 在终结点处，LUIS 应用 Pizza 应用的模型来分析自然语言文本的含义，确定总体意向并提取与应用的主题域相关的数据。
+在本文中，你将使用 LUIS 应用从会话文本中确定用户的意向。 将用户的意向作为文本发送到 Pizza 应用的 HTTP 预测终结点。 在终结点处，LUIS 应用 Pizza 应用的模型来分析自然语言文本的含义，确定总体意向并提取与应用的主题域相关的数据。
 
 对于本文，需要一个免费的 [LUIS](https://www.luis.ai) 帐户。
 

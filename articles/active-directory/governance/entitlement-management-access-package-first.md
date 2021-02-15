@@ -3,7 +3,7 @@ title: 教程 - 创建访问包 - Azure AD 权利管理
 description: 有关如何在 Azure Active Directory 权利管理中创建第一个访问包的分步教程。
 services: active-directory
 documentationCenter: ''
-author: barclayn
+author: ajburnle
 manager: daveba
 editor: markwahl-msft
 ms.service: active-directory
@@ -12,24 +12,24 @@ ms.tgt_pltfrm: na
 ms.devlang: na
 ms.topic: tutorial
 ms.subservice: compliance
-ms.date: 07/22/2020
-ms.author: barclayn
+ms.date: 09/30/2020
+ms.author: ajburnle
 ms.reviewer: markwahl-msft
 ms.collection: M365-identity-device-management
-ms.openlocfilehash: b79a631ba82d0b4a420ef27684e5a62571ddf85a
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.openlocfilehash: 2625b1e0ccc4c3129f412eff144f47d9dc97b961
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87034570"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98937892"
 ---
 # <a name="tutorial-create-your-first-access-package-in-azure-ad-entitlement-management"></a>教程：在 Azure AD 权利管理中创建第一个访问包
 
 对于组织而言，管理对员工所需的所有资源（例如组、应用程序和站点）的访问是一项非常重要的功能。 应该为员工授予适当的访问权限级别以使其保持工作效率，同时，在不再需要这种权限级别时将其删除。
 
-本教程假设你在 Woodgrove Bank 担任 IT 管理员。 该组织要求你为某个市场营销活动创建资源包，内部用户通过自助服务请求该包。 请求不需要经过审批，用户的访问权限将在 30 天后过期。 对于本教程，市场营销活动资源只是单个组中的成员身份，但也可以是组、应用程序或 SharePoint Online 站点的集合。
+本教程假设你在 Woodgrove Bank 担任 IT 管理员。 该组织要求你为某项市场营销活动创建一个内部用户可用于自助服务请求的资源包。 请求不需要经过审批，用户的访问权限将在 30 天后过期。 对于本教程，市场营销活动资源只是单个组中的成员身份，但也可以是组、应用程序或 SharePoint Online 站点的集合。
 
-![方案概述](./media/entitlement-management-access-package-first/elm-scenario-overview.png)
+![显示方案概述的示意图。](./media/entitlement-management-access-package-first/elm-scenario-overview.png)
 
 在本教程中，你将了解如何执行以下操作：
 
@@ -41,6 +41,8 @@ ms.locfileid: "87034570"
 有关部署 Azure Active Directory 权利管理过程（包括创建第一个访问包）的分步演示，请观看以下视频：
 
 >[!VIDEO https://www.youtube.com/embed/zaaKvaaYwI4]
+
+还可以使用 Microsoft Graph 以编程方式创建访问包。 有关如何以编程方式创建访问包的教程，请参阅[权利管理 API](/graph/tutorial-access-package-api?view=graph-rest-beta)。
 
 ## <a name="prerequisites"></a>先决条件
 
@@ -106,9 +108,9 @@ ms.locfileid: "87034570"
 
 9. 在“选择组”窗格中，找到并选择之前创建的“市场营销资源”组  。
 
-    默认情况下，会看到“常规”目录内部和外部的组。  选择“常规”目录外部的组时，该组将添加到“常规”目录。  
+     默认情况下，会看到“常规”目录内部的组。 选择“常规”目录外部的组（选中“查看全部”复选框即可显示）时，该组将添加到“常规”目录。
 
-    ![新建访问包 -“资源角色”选项卡](./media/entitlement-management-access-package-first/resource-roles-select-groups.png)
+    ![此屏幕截图显示了“新建访问包 - 资源角色”选项卡和“选择组”窗口。](./media/entitlement-management-access-package-first/resource-roles-select-groups.png)
 
 10. 单击“选择”将该组添加到列表中。 
 
@@ -116,9 +118,14 @@ ms.locfileid: "87034570"
 
     ![新建访问包 -“资源角色”选项卡](./media/entitlement-management-access-package-first/resource-roles.png)
 
+    >[!IMPORTANT]
+    >添加到访问包的可分配角色的组将使用“可分配给角色”子类型来指出。 要更详细地了解可分配给 Azure AD 角色的组，请参阅[创建可分配角色的组](../roles/groups-create-eligible.md)。 请记住，对于可以在权利管理中进行管理的管理用户（包括全局管理员、用户管理员和目录的目录所有者），只要访问包目录中存在可分配角色的组，他们就可以控制目录中的访问包，进而可以选择添加到这些组的人员。 如果看不到想要添加的可分配角色的组，或者无法添加它，请确保你具有所需的 Azure AD 角色和权利管理角色来执行此操作。 你可能需要请具有必需角色的用户将该资源添加到你的目录中。 有关详细信息，请参阅[将资源添加到目录所需的角色](entitlement-management-delegate.md#required-roles-to-add-resources-to-a-catalog)。
+
     >[!NOTE]
-    > 使用[动态组](../users-groups-roles/groups-create-rule.md)时，不会看到除所有者外的任何其他可用角色。 这是设计的结果。
+    > 使用[动态组](../enterprise-users/groups-create-rule.md)时，不会看到除所有者外的任何其他可用角色。 这是设计的结果。
     > ![方案概述](./media/entitlement-management-access-package-first/dynamic-group-warning.png)
+    
+
 
 12. 单击“下一步”，打开“请求”选项卡   。
 
@@ -168,7 +175,7 @@ ms.locfileid: "87034570"
 
 ## <a name="step-3-request-access"></a>步骤 3：请求访问权限
 
-在此步骤中，你将**内部请求者**的身份执行步骤，并请求对访问包进行访问。 请求者使用名为“我的访问权限门户”的站点来提交其请求。 在“我的访问权限门户”中，请求者可以提交访问包的请求、查看他们已有权访问的访问包，以及查看其请求历史记录。
+在此步骤中，你将 **内部请求者** 的身份执行步骤，并请求对访问包进行访问。 请求者使用名为“我的访问权限门户”的站点来提交其请求。 在“我的访问权限门户”中，请求者可以提交访问包的请求、查看他们已有权访问的访问包，以及查看其请求历史记录。
 
 **必备角色：** 内部请求者
 

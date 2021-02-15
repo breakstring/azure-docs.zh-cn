@@ -4,23 +4,23 @@ description: 在对象 (Blob) 存储中创建存储帐户和容器。 随后，�
 author: mhopkins-msft
 ms.custom: devx-track-java
 ms.author: mhopkins
-ms.date: 07/24/2020
+ms.date: 01/19/2021
 ms.service: storage
 ms.subservice: blobs
-ms.topic: conceptual
-ms.openlocfilehash: 9ab45495283f8751912d93e9799958a8effc887a
-ms.sourcegitcommit: a76ff927bd57d2fcc122fa36f7cb21eb22154cfa
-ms.translationtype: MT
+ms.topic: quickstart
+ms.openlocfilehash: b3bb8736eb7a8e24f47812fc4feecbf96628dfb6
+ms.sourcegitcommit: fc401c220eaa40f6b3c8344db84b801aa9ff7185
+ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/28/2020
-ms.locfileid: "87323734"
+ms.lasthandoff: 01/20/2021
+ms.locfileid: "98599806"
 ---
 # <a name="quickstart-manage-blobs-with-java-v8-sdk"></a>快速入门：使用 Java v8 SDK 管理 blob
 
 本快速入门介绍如何使用 Java 管理 blob。 Blob 是可以保存大量文本或二进制数据（包括图像、文档、流媒体和存档数据）的对象。 你将上传、下载并列出 blob。 你还将创建容器、设置容器权限并删除容器。
 
 > [!NOTE]
-> 此快速启动使用 Azure Blob 存储客户端库的旧版本。 若要开始学习最新版本，请参阅[快速入门：通过 Java V12 SDK 管理 blob](storage-quickstart-blobs-java.md)。
+> 此快速启动使用 Azure Blob 存储客户端库的旧版本。 若要开始使用最新版本，请参阅[快速入门：使用 Java v12 SDK 管理 blob](storage-quickstart-blobs-java.md)。
 
 ## <a name="prerequisites"></a>先决条件
 
@@ -104,7 +104,7 @@ Deleting the source, and downloaded files
     有了 CloudBlobContainer 后，就可以创建 [CloudBlockBlob](/java/api/com.microsoft.azure.storage.blob.cloudblockblob) 对象（该对象指向你感兴趣的特定 Blob）的实例，然后执行上传、下载、复制等操作。
 
 > [!IMPORTANT]
-> 容器名称必须为小写。 有关容器的详细信息，请参阅[命名和引用容器、Blob 和元数据](https://docs.microsoft.com/rest/api/storageservices/naming-and-referencing-containers--blobs--and-metadata)。
+> 容器名称必须为小写。 有关容器的详细信息，请参阅[命名和引用容器、Blob 和元数据](/rest/api/storageservices/naming-and-referencing-containers--blobs--and-metadata)。
 
 ### <a name="create-a-container"></a>创建容器
 
@@ -125,7 +125,7 @@ container.createIfNotExists(BlobContainerPublicAccessType.CONTAINER, new BlobReq
 
 ### <a name="upload-blobs-to-the-container"></a>将 blob 上传到容器
 
-若要将文件上传到块 Blob，请获取对目标容器中的 Blob 的引用。 有了 blob 引用后，可以通过使用 [CloudBlockBlob.Upload](https://docs.microsoft.com/java/api/com.microsoft.azure.storage.blob.cloudblockblob.upload) 将数据上传到其中。 此操作会创建 Blob（如果尚未存在），或者覆盖 Blob（若已存在）。
+若要将文件上传到块 Blob，请获取对目标容器中的 Blob 的引用。 有了 blob 引用后，可以通过使用 [CloudBlockBlob.Upload](/java/api/com.microsoft.azure.storage.blob.cloudblockblob.upload) 将数据上传到其中。 此操作会创建 Blob（如果尚未存在），或者覆盖 Blob（若已存在）。
 
 示例代码创建一个用于上传和下载的本地文件，存储作为“源”上传的文件和 blob 中的 blob 名称。 以下示例将文件上传到名为“quickstartcontainer”的容器。
 
@@ -151,7 +151,7 @@ blob.uploadFromFile(sourceFile.getAbsolutePath());
 
 ### <a name="list-the-blobs-in-a-container"></a>列出容器中的 Blob
 
-可以使用 [CloudBlobContainer.ListBlobs](https://docs.microsoft.com/java/api/com.microsoft.azure.storage.blob.cloudblobcontainer.listblobs) 获取容器中的文件列表。 下面的代码检索 blob 列表，然后循环访问它们，显示找到的 blob 的 URI。 可以从命令窗口中复制 URI，然后将其粘贴到浏览器以查看文件。
+可以使用 [CloudBlobContainer.ListBlobs](/java/api/com.microsoft.azure.storage.blob.cloudblobcontainer.listblobs) 获取容器中的文件列表。 下面的代码检索 blob 列表，然后循环访问它们，显示找到的 blob 的 URI。 可以从命令窗口中复制 URI，然后将其粘贴到浏览器以查看文件。
 
 ```java
 //Listing contents of container
@@ -162,7 +162,7 @@ for (ListBlobItem blobItem : container.listBlobs()) {
 
 ### <a name="download-blobs"></a>下载 Blob
 
-使用 [CloudBlob.DownloadToFile](https://docs.microsoft.com/java/api/com.microsoft.azure.storage.blob.cloudblob.downloadtofile) 将 blob 下载到本地磁盘。
+使用 [CloudBlob.DownloadToFile](/java/api/com.microsoft.azure.storage.blob.cloudblob.downloadtofile) 将 blob 下载到本地磁盘。
 
 以下代码下载上一部分上传的 blob，对 blob 名称添加“_DOWNLOADED”后缀，以便可以在本地磁盘上看到两个文件。
 
@@ -177,7 +177,7 @@ blob.downloadToFile(downloadedFile.getAbsolutePath());
 
 ### <a name="clean-up-resources"></a>清理资源
 
-如果不再需要上传的 Blob，可使用 [CloudBlobContainer.DeleteIfExists](https://docs.microsoft.com/java/api/com.microsoft.azure.storage.blob.cloudblobcontainer.deleteifexists) 删除整个容器。 此方法也会删除容器中的文件。
+如果不再需要上传的 Blob，可使用 [CloudBlobContainer.DeleteIfExists](/java/api/com.microsoft.azure.storage.blob.cloudblobcontainer.deleteifexists) 删除整个容器。 此方法也会删除容器中的文件。
 
 ```java
 try {
@@ -201,5 +201,5 @@ sourceFile.deleteOnExit();
 本文介绍如何使用 Java 在本地磁盘和 Azure Blob 存储之间传输文件。 若要详细了解 Java 的用法，请转到 GitHub 源代码存储库。
 
 > [!div class="nextstepaction"]
-> [Java API 参考](https://docs.microsoft.com/java/api/overview/azure/storage?view=azure-java-legacy)
+> [Java API 参考](/java/api/overview/azure/storage?view=azure-java-legacy&preserve-view=true)
 > [适用于 Java 的代码示例](../common/storage-samples-java.md)

@@ -1,27 +1,29 @@
 ---
-title: 使用语音服务进行语音翻译
+title: 语音翻译概述 - 语音服务
 titleSuffix: Azure Cognitive Services
-description: 使用语音服务，可以将端到端实时多语言语音翻译添加到应用程序、工具和设备。 相同 API 可以用于语音到语音和语音到文本的转换。
+description: 使用语音翻译，可以将语音的端到端实时多语言翻译添加到应用程序、工具和设备。 相同 API 可以用于语音到语音和语音到文本的转换。 本文概述了语音翻译服务的优势和功能。
 services: cognitive-services
 author: erhopf
 manager: nitinme
 ms.service: cognitive-services
 ms.subservice: speech-service
 ms.topic: conceptual
-ms.date: 03/11/2020
+ms.date: 09/01/2020
 ms.author: erhopf
-ms.openlocfilehash: f51288da6af3580ba7592950cde4f17d7adad529
-ms.sourcegitcommit: 58faa9fcbd62f3ac37ff0a65ab9357a01051a64f
+ms.custom: devx-track-csharp, cog-serv-seo-aug-2020
+keywords: 语音翻译
+ms.openlocfilehash: 36c2943d7cd5ce2c5c7c4a8501dc0033aa8c9cbc
+ms.sourcegitcommit: 10d00006fec1f4b69289ce18fdd0452c3458eca5
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/29/2020
-ms.locfileid: "80052625"
+ms.lasthandoff: 11/21/2020
+ms.locfileid: "95015199"
 ---
 # <a name="what-is-speech-translation"></a>什么是语音翻译？
 
 [!INCLUDE [TLS 1.2 enforcement](../../../includes/cognitive-services-tls-announcement.md)]
 
-使用语音服务提供的语音翻译，可以对音频流进行实时多语言语音转语音和语音转文本翻译。 使用语音 SDK，应用程序、工具和设备可以访问所提供的音频的源听录和翻译输出。 检测到语音时，会返回过渡性的听录和翻译结果，最终结果可以转换为合成语音。
+本概述介绍语音翻译服务的优势和功能，它可以对音频流进行实时多语言语音转语音和语音转文本翻译。 使用语音 SDK，应用程序、工具和设备可以访问所提供的音频的源听录和翻译输出。 检测到语音时，会返回过渡性的听录和翻译结果，最终结果可以转换为合成语音。
 
 Microsoft 翻译引擎有两种不同的支持方法：统计机器翻译 (SMT) 和神经机器翻译 (NMT)。 SMT 可以在给定上下文（数个单词）的情况下，使用高级统计分析来估计可能的最佳翻译。 使用 NMT 时，可以通过神经网络借助完整的语句上下文来翻译单词，这样可以提供更准确且听起来很自然的翻译。
 
@@ -29,25 +31,14 @@ Microsoft 翻译引擎有两种不同的支持方法：统计机器翻译 (SMT) 
 
 ## <a name="core-features"></a>核心功能
 
-下面是可以通过语音 SDK 和 REST API 获得的功能：
+* 包含识别结果的语音转文本翻译。
+* 语音转语音翻译。
+* 支持翻译为多种目标语言。
+* 过渡性识别和翻译结果。
 
-| 使用案例 | SDK | REST |
-|----------|-----|------|
-| 包含识别结果的语音转文本翻译。 | 是 | 否 |
-| 语音转语音翻译。 | 是 | 否 |
-| 过渡性识别和翻译结果。 | 是 | 否 |
+## <a name="get-started"></a>入门 
 
-## <a name="get-started-with-speech-translation"></a>语音翻译入门
-
-我们专门提供了快速入门来帮助你在 10 分钟内运行代码。 下表按语言列出了语音翻译快速入门。
-
-| 快速入门 | 平台 | API 参考 |
-|------------|----------|---------------|
-| [C#、.NET Core](~/articles/cognitive-services/Speech-Service/quickstarts/translate-speech-to-text.md?pivots=programming-language-csharp&tabs=dotnetcore) | Windows | [“浏览”](https://aka.ms/csspeech/csharpref) |
-| [C#、.NET Framework](~/articles/cognitive-services/Speech-Service/quickstarts/translate-speech-to-text.md?pivots=programming-language-csharp&tabs=dotnet) | Windows | [“浏览”](https://aka.ms/csspeech/csharpref) |
-| [C#、UWP](~/articles/cognitive-services/Speech-Service/quickstarts/translate-speech-to-text.md?pivots=programming-language-csharp&tabs=uwp) | Windows | [“浏览”](https://aka.ms/csspeech/csharpref) |
-| [C++](~/articles/cognitive-services/Speech-Service/quickstarts/translate-speech-to-text.md?pivots=programming-language-cpp&tabs=windows) | Windows | [“浏览”](https://aka.ms/csspeech/cppref)|
-| [Java](~/articles/cognitive-services/Speech-Service/quickstarts/translate-speech-to-text.md?pivots=programming-language-java&tabs=jre) | Windows、Linux、macOS | [“浏览”](https://aka.ms/csspeech/javaref) |
+请参阅[快速入门](get-started-speech-translation.md)以开始使用语音翻译。 语音翻译服务通过[语音 SDK](speech-sdk.md) 和[语音 CLI](spx-overview.md) 提供。
 
 ## <a name="sample-code"></a>代码示例
 
@@ -57,19 +48,20 @@ GitHub 上提供了语音 SDK 的示例代码。 这些示例涵盖了常见方�
 
 ## <a name="migration-guides"></a>迁移指南
 
-如果你的应用程序、工具或产品正在使用[语音翻译 API](https://docs.microsoft.com/azure/cognitive-services/translator-speech/overview)，我们已创建了可帮助你迁移到语音服务的指南。
+如果你的应用程序、工具或产品正在使用 [语音翻译 API](./how-to-migrate-from-translator-speech-api.md)，我们已创建了可帮助你迁移到语音服务的指南。
 
 * [从语音翻译 API 迁移到语音服务](how-to-migrate-from-translator-speech-api.md)
 
 ## <a name="reference-docs"></a>参考文档
 
-* [语音 SDK](speech-sdk-reference.md)
+* [语音 SDK](./speech-sdk.md)
 * [语音设备 SDK](speech-devices-sdk.md)
 * [REST API：语音转文本](rest-speech-to-text.md)
 * [REST API：文本转语音](rest-text-to-speech.md)
-* [REST API：批量听录和自定义](https://westus.cris.ai/swagger/ui/index)
+* [REST API：批量听录和自定义](https://westus.dev.cognitive.microsoft.com/docs/services/speech-to-text-api-v3-0)
 
 ## <a name="next-steps"></a>后续步骤
 
-* [免费获取语音服务订阅密钥](get-started.md)
+* 完成语音翻译[快速入门](get-started-speech-translation.md)
+* [免费获取语音服务订阅密钥](overview.md#try-the-speech-service-for-free)
 * [获取语音 SDK](speech-sdk.md)

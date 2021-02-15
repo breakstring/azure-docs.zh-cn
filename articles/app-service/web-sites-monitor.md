@@ -7,15 +7,15 @@ ms.topic: article
 ms.date: 04/23/2020
 ms.author: byvinyal
 ms.custom: seodec18
-ms.openlocfilehash: 5507e6f97211f209eb559ff7491f22bdf1a00e54
-ms.sourcegitcommit: 2ffa5bae1545c660d6f3b62f31c4efa69c1e957f
+ms.openlocfilehash: 587ad53fa3a4875f7019a8c094db1b9a5f096519
+ms.sourcegitcommit: b85ce02785edc13d7fb8eba29ea8027e614c52a2
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/11/2020
-ms.locfileid: "88079665"
+ms.lasthandoff: 02/03/2021
+ms.locfileid: "99509547"
 ---
 # <a name="monitor-apps-in-azure-app-service"></a>监视 Azure 应用服务中的应用
-[Azure 应用服务](https://go.microsoft.com/fwlink/?LinkId=529714)针对 [Azure 门户](https://portal.azure.com)中的 Web 应用、移动和 API 应用提供内置监视功能。
+[Azure 应用服务](./overview.md)针对 [Azure 门户](https://portal.azure.com)中的 Web 应用、移动和 API 应用提供内置监视功能。
 
 在 Azure 门户中，可以查看应用和应用服务计划的配额和指标，并设置警报和基于规则的自动缩放指标。   
 
@@ -58,14 +58,14 @@ ms.locfileid: "88079665"
 ## <a name="understand-metrics"></a>了解指标
 
 > [!NOTE]
-> **文件系统使用**情况是指全局推出的新度量值，除非已被授予访问个人预览版的权限，否则不会有任何数据。
+> “文件系统使用情况”是一个要在全球范围内推出的新指标，除非你的应用托管在应用服务环境中，否则你不会获得数据。
 > 
 
 > [!IMPORTANT]
 > “平均响应时间”将弃用，以避免与指标聚合混淆。 使用“响应时间”作为替代。
 
 > [!NOTE]
-> 应用的指标包括对应用的 SCM 站点的请求 (Kudu) 。  这包括使用 Kudu 查看站点 logstream 的请求。  Logstream 请求可能跨越几分钟，这将影响请求时间指标。  在将这些指标与自动缩放逻辑结合使用时，用户应注意这一关系。
+> 应用的指标包括对应用的 SCM 站点的请求 (Kudu)。  这包括使用 Kudu 查看站点的 logstream 的请求。  Logstream 请求可能需要几分钟的时间，这会影响请求时间指标。  在将这些指标与自动缩放逻辑结合使用时，用户应注意这一关系。
 > 
 
 指标提供有关应用或应用服务计划行为的信息。
@@ -82,11 +82,12 @@ ms.locfileid: "88079665"
 | **当前程序集** | 此应用程序中的所有 AppDomain 中加载的程序集的当前数量。 |
 | **数据输入** | 应用消耗的传入带宽量，以 MiB 为单位。 |
 | **数据输出** | 应用消耗的传出带宽量，以 MiB 为单位。 |
-| **文件系统使用情况** | 应用消耗的文件系统配额的百分比。 |
+| **文件系统使用情况** | 存储共享的用量量（以字节为单位）。 |
 | **第 0 代垃圾回收** | 自应用进程启动以来对第 0 代对象进行垃圾回收的次数。 较高代系的垃圾回收包括所有较低代系的垃圾回收。|
 | **第 1 代垃圾回收** | 自应用进程启动以来对第 1 代对象进行垃圾回收的次数。 较高代系的垃圾回收包括所有较低代系的垃圾回收。|
 | **第 2 代垃圾回收** | 自应用进程启动以来对第 2 代对象进行垃圾回收的次数。|
 | **句柄计数** | 应用进程当前打开的句柄总数。|
+| **运行状况检查状态** | 应用服务计划中应用程序实例的平均运行状况状态。|
 | **Http 2xx** | 导致 HTTP 状态代码的请求计数大于等于 200，但小于 300。 |
 | **Http 3xx** | 导致 HTTP 状态代码的请求计数大于等于 300，但小于 400。 |
 | **Http 401** | 导致 HTTP 401 状态代码的请求计数。 |
@@ -152,14 +153,14 @@ ms.locfileid: "88079665"
 
 单击其中任何图表会转到指标视图，可以在该视图中创建自定义图表、查询不同的指标，等等。 
 
-若要详细了解指标，请参阅[监视服务指标](../monitoring-and-diagnostics/insights-how-to-customize-monitoring.md)。
+若要详细了解指标，请参阅[监视服务指标](../azure-monitor/platform/data-platform.md)。
 
 ## <a name="alerts-and-autoscale"></a>警报和自动缩放
-可将应用或应用服务计划的指标挂接到警报。 有关详细信息，请参阅[接收警报通知](../monitoring-and-diagnostics/insights-alerts-portal.md)。
+可将应用或应用服务计划的指标挂接到警报。 有关详细信息，请参阅[接收警报通知](../azure-monitor/platform/alerts-classic-portal.md)。
 
 托管在“基本”或更高级别应用服务计划中的应用服务应用支持自动缩放。 使用自动缩放可以配置用于监视应用服务计划指标的规则。 规则可以增加或减少实例计数，并根据需要提供更多的资源。 规则还有助于避免过度预配应用，从而节省资金。
 
-有关自动缩放的详细信息，请参阅[如何缩放](../monitoring-and-diagnostics/insights-how-to-scale.md)以及[有关 Azure Monitor 自动缩放的最佳做法](../azure-monitor/platform/autoscale-best-practices.md)。
+有关自动缩放的详细信息，请参阅[如何缩放](../azure-monitor/platform/autoscale-get-started.md)以及[有关 Azure Monitor 自动缩放的最佳做法](../azure-monitor/platform/autoscale-best-practices.md)。
 
 [fzilla]:https://go.microsoft.com/fwlink/?LinkId=247914
 [vmsizes]:https://go.microsoft.com/fwlink/?LinkID=309169

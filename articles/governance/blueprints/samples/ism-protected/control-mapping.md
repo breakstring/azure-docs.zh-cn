@@ -1,14 +1,14 @@
 ---
-title: 澳大利亚政府 ISM PROTECTED 蓝图示例概述
-description: 澳大利亚政府 ISM PROTECTED 蓝图示例的概述。 此蓝图示例帮助客户评估特定的 ISM PROTECTED 控制措施。
-ms.date: 08/03/2020
+title: 澳大利亚政府 ISM PROTECTED 蓝图示例控制措施
+description: 澳大利亚政府 ISM PROTECTED 蓝图示例的控制映射。 每个控制措施都映射到一个或多个协助评估的 Azure Policy 定义。
+ms.date: 01/21/2021
 ms.topic: sample
-ms.openlocfilehash: 750cc5551f0bbf05e0da6ad41d46729231243f72
-ms.sourcegitcommit: 5a37753456bc2e152c3cb765b90dc7815c27a0a8
+ms.openlocfilehash: df143a871db3d871fe6354eab23b7ca6dc012b78
+ms.sourcegitcommit: b39cf769ce8e2eb7ea74cfdac6759a17a048b331
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/04/2020
-ms.locfileid: "87760424"
+ms.lasthandoff: 01/22/2021
+ms.locfileid: "98679991"
 ---
 # <a name="control-mapping-of-the-australian-government-ism-protected-blueprint-sample"></a>澳大利亚政府 ISM PROTECTED 蓝图示例的控制映射
 
@@ -17,8 +17,7 @@ ms.locfileid: "87760424"
 下面是到 ISM PROTECTED 控制措施的映射。 使用右侧的导航栏可直接跳转到特定的控制映射。 许多的映射控制措施都是使用 [Azure Policy](../../../policy/overview.md) 计划实施的。 若要查看完整计划，请在 Azure 门户中打开“策略”，并选择“定义”页。 然后，找到并选择“ **\[预览\]：** 审核澳大利亚政府 ISM PROTECTED 控制措施，并部署特定 VM 扩展来支持审核要求”内置策略计划。
 
 > [!IMPORTANT]
-> 下面的每个控件都与一个或多个 [Azure Policy](../../../policy/overview.md) 定义关联。 这些策略可以帮助你[评估控件的符合性](../../../policy/how-to/get-compliance-data.md)；但是，控件与一个或多个策略之间通常不是 1:1 或完全匹配。 因此，Azure Policy 中的符合性仅引用策略本身；这不确保你完全符合控件的所有要求。 此外，符合性标准包含目前未由任何 Azure Policy 定义处理的控件。 因此，Azure Policy 中的符合性只是整体符合性状态的部分视图。 此符合性蓝图示例的控件和 Azure Policy 定义之间的关联可能会随着时间的推移而发生变化。
-> 若要查看更改历史记录，请参阅 [GitHub 提交历史记录](https://github.com/MicrosoftDocs/azure-docs/commits/master/articles/governance/blueprints/samples/ism-protected/control-mapping.md)。
+> 下面的每个控件都与一个或多个 [Azure Policy](../../../policy/overview.md) 定义关联。 这些策略有助于[评估控制的合规性](../../../policy/how-to/get-compliance-data.md)；但是，控制与一个或多个策略之间通常不是一对一或完全匹配。 因此，Azure Policy 中的符合性仅引用策略本身；这不确保你完全符合控件的所有要求。 此外，符合性标准包含目前未由任何 Azure Policy 定义处理的控件。 因此，Azure Policy 中的符合性只是整体符合性状态的部分视图。 此符合性蓝图示例的控件和 Azure Policy 定义之间的关联可能会随着时间的推移而发生变化。 若要查看更改历史记录，请参阅 [GitHub 提交历史记录](https://github.com/MicrosoftDocs/azure-docs/commits/master/articles/governance/blueprints/samples/ism-protected/control-mapping.md)。
 
 
 ## <a name="location-constraints"></a>位置约束
@@ -350,6 +349,10 @@ ms.locfileid: "87760424"
 ## <a name="next-steps"></a>后续步骤
 
 有关蓝图及其使用方式的更多文章：
+
+> [!div class="nextstepaction"]
+> [ISM PROTECTED 蓝图 - 概述](./index.md)
+> [ISM PROTECTED 蓝图 - 部署步骤](./deploy.md)
 
 - 了解[蓝图生命周期](../../concepts/lifecycle.md)。
 - 了解如何使用[静态和动态参数](../../concepts/parameters.md)。

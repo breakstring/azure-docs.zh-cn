@@ -1,35 +1,36 @@
 ---
 title: 使用动态打包器筛选清单
-titleSuffix: Azure Media Services
 description: 了解如何使用动态打包器创建筛选器，以筛选并有选择性地流式传输清单。
 services: media-services
 documentationcenter: ''
-author: Juliako
+author: IngridAtMicrosoft
 manager: femila
 editor: ''
 ms.service: media-services
 ms.workload: media
 ms.tgt_pltfrm: na
 ms.devlang: ne
-ms.topic: article
-ms.date: 07/11/2019
-ms.author: juliako
-ms.openlocfilehash: cb7a399258dcab679468d2b8f699487b1ec5406b
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.topic: conceptual
+ms.date: 08/31/2020
+ms.author: inhenkel
+ms.openlocfilehash: 3ffdb41752630e0e5e22303ff58ecd798595a890
+ms.sourcegitcommit: 100390fefd8f1c48173c51b71650c8ca1b26f711
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "84705196"
+ms.lasthandoff: 01/27/2021
+ms.locfileid: "98897656"
 ---
 # <a name="filter-your-manifests-using-dynamic-packager"></a>使用动态打包器筛选清单
 
+[!INCLUDE [media services api v3 logo](./includes/v3-hr.md)]
+
 将自适应比特率流内容传送到设备时，有时需要发布多个版本的清单来适应特定的设备功能或可用网络带宽。 使用[动态打包器](dynamic-packaging-overview.md)可以指定筛选器，用于即时筛选出特定的编解码器、分辨率、比特率和音频轨迹组合。 这种筛选消除了创建多个副本的需要。 只需使用一组根据目标设备（iOS、Android、SmartTV 或浏览器）和网络功能（高带宽、移动或低带宽方案）配置的一组特定筛选器发布新的 URL。 在这种情况下，客户端可以通过查询字符串处理内容流（通过指定可用的[资产筛选器或帐户筛选器](filters-concept.md)），并使用筛选器来流式传输流的特定部分。
 
-某些传送方案要求确保客户无法访问特定的轨迹。 例如，你可能不想要将包含 HD 轨迹的清单发布到特定的订户层。 或者，你可能想要删除特定的自适应比特率 (ABR) 轨迹，以降低传送到不会受益于更多轨迹的特定设备的成本。 在这种情况下，可以在创建时将预先创建的筛选器列表关联到[流定位符](streaming-locators-concept.md)。 于是，客户端将无法处理内容的流式传输方式，因为传输方式由**流定位符**定义。
+某些传送方案要求确保客户无法访问特定的轨迹。 例如，你可能不想要将包含 HD 轨迹的清单发布到特定的订户层。 或者，你可能想要删除特定的自适应比特率 (ABR) 轨迹，以降低传送到不会受益于更多轨迹的特定设备的成本。 在这种情况下，可以在创建时将预先创建的筛选器列表关联到[流定位符](streaming-locators-concept.md)。 于是，客户端将无法处理内容的流式传输方式，因为传输方式由 **流定位符** 定义。
 
 可以通过指定[针对流定位符的筛选器](filters-concept.md#associating-filters-with-streaming-locator)，以及客户端在 URL 中指定的其他设备特定筛选器，来组合筛选。 这种组合可以有效地限制其他轨迹，例如元数据或事件流、音频语言，或描述性的音频轨迹。
 
-针对流指定不同筛选器的功能提供了一种强大的**动态清单**处理解决方案用于定位目标设备的多用例方案。 本主题介绍与**动态清单**相关的概念，并提供可以使用此功能的示例方案。
+针对流指定不同筛选器的功能提供了一种强大的 **动态清单** 处理解决方案用于定位目标设备的多用例方案。 本主题介绍与 **动态清单** 相关的概念，并提供可以使用此功能的示例方案。
 
 > [!NOTE]
 > 动态清单不会更改资产和该资产的默认清单。
@@ -95,7 +96,7 @@ Azure 媒体服务支持 HLS、MPEG DASH 和平滑流式处理协议。 作为[�
 
 许多直播活动长期运行，直播存档可能包含多个活动。 直播活动结束后，广播者可能需要将实时存档分解成符合逻辑的节目启动和停止序列。
 
-您可以单独发布这些虚拟程序，而无需处理实时存档，也不会创建单独的资产（这不会获得 Cdn 中现有缓存片段的优势）。 此类虚拟节目的示例包括橄榄球或篮球比赛中的节、棒球比赛中的局，或者任何体育节目中的单项赛事。
+您可以单独发布这些虚拟程序，而无需处理实时存档，也不会创建单独的资产 (这不会获得 Cdn) 中现有缓存片段的优势。 此类虚拟节目的示例包括橄榄球或篮球比赛中的节、棒球比赛中的局，或者任何体育节目中的单项赛事。
 
 借助动态清单，可以使用开始/结束时间创建筛选器，并基于实时存档创建虚拟视图。
 
@@ -142,7 +143,7 @@ Azure 媒体服务支持 HLS、MPEG DASH 和平滑流式处理协议。 作为[�
 - 不应设置 VOD 筛选器的 **forceEndTimestamp**、**presentationWindowDuration** 和 **liveBackoffDuration** 值。 它们仅用于动态筛选方案。
 - 动态清单在 GOP 边界（关键帧）内运行，因此修剪后具有精确的 GOP。
 - 可对帐户和资产筛选器使用相同的筛选器名称。 资产筛选器的优先级更高，会替代帐户筛选器。
-- 如果更新筛选器，则流式处理终结点需要最多 2 分钟来刷新规则。 如果你使用了筛选器来处理内容（并在代理和 CDN 缓存中缓存了内容），则更新这些筛选器会导致播放器失败。 我们建议在更新筛选器之后清除缓存。 如果无法做到这一点，请考虑使用其他筛选器。
+- 如果更新筛选器，则流式处理终结点需要最多 2 分钟来刷新规则。 如果你使用筛选器来提供内容 (并将内容缓存在代理和 CDN 缓存) 中，则更新这些筛选器可能会导致播放机失败。 我们建议在更新筛选器之后清除缓存。 如果无法做到这一点，请考虑使用其他筛选器。
 - 客户需要手动下载清单，并分析确切的开始时间戳和时间刻度。
 
     - 若要确定资产中轨迹的属性，请[获取并检查清单文件](#get-and-examine-manifest-files)。

@@ -4,17 +4,17 @@
   items:
     - name: 什么是虚拟 WAN？
       href: virtual-wan-about.md
-    - name: 体系结构
+- name: 快速入门
+  expanded: true
+  items:
+    - name: ARM 模板
+      expanded: true
       items:
-        - name: 迁移到虚拟 WAN
-          href: migrate-from-hub-spoke-topology.md
-        - name: 全球传输网络体系结构
-          href: virtual-wan-global-transit-network-architecture.md
-        - name: SD-WAN 连接体系结构
-          href: sd-wan-connectivity-architecture.md
-        - name: 与中国互联
-          href: interconnect-china.md
+        - name: 任意位置到任意位置的路由
+          displayName: Resource Manager Any-to-any routing
+          href: quickstart-any-to-any-template.md
 - name: 教程
+  expanded: true
   items:
     - name: 创建站点到站点连接
       href: virtual-wan-site-to-site-portal.md
@@ -36,26 +36,38 @@
           href: virtual-wan-locations-partners.md
         - name: 面向合作伙伴的自动化指南
           href: virtual-wan-configure-automation-providers.md
+    - name: 体系结构
+      items:
+        - name: 迁移到虚拟 WAN
+          href: migrate-from-hub-spoke-topology.md
+        - name: 全球传输网络体系结构
+          href: virtual-wan-global-transit-network-architecture.md
+        - name: SD-WAN 连接体系结构
+          href: sd-wan-connectivity-architecture.md
+        - name: 与中国互联
+          href: interconnect-china.md
     - name: 路由
       items:
         - name: 关于虚拟中心路由
           href: about-virtual-hub-routing.md
-        - name: 方案
-          items:
-            - name: 任意位置到任意位置
-              href: scenario-any-to-any.md
-            - name: 隔离 VNet
-              href: scenario-isolate-vnets.md
-            - name: 隔离 VNet - 自定义
-              href: scenario-isolate-vnets-custom.md
-            - name: 共享服务 VNet
-              href: scenario-shared-services-vnet.md
-            - name: 通过 NVA 路由
-              href: scenario-route-through-nva.md
-            - name: 通过 NVA 路由 - 自定义
-              href: scenario-route-through-nvas-custom.md
-            - name: Azure 防火墙 - 自定义
-              href: scenario-route-between-vnets-firewall.md
+    - name: 路由方案
+      items:
+        - name: 任意位置到任意位置
+          href: scenario-any-to-any.md
+        - name: 隔离 VNet
+          href: scenario-isolate-vnets.md
+        - name: 隔离 VNet - 自定义
+          href: scenario-isolate-vnets-custom.md
+        - name: 隔离虚拟网络和分支
+          href: scenario-isolate-virtual-networks-branches.md
+        - name: 共享服务 VNet
+          href: scenario-shared-services-vnet.md
+        - name: 通过 NVA 路由
+          href: scenario-route-through-nva.md
+        - name: 通过 NVA 路由 - 自定义
+          href: scenario-route-through-nvas-custom.md
+        - name: Azure 防火墙 - 自定义
+          href: scenario-route-between-vnets-firewall.md
     - name: 监视
       items:
         - name: 关于虚拟 WAN 的 Azure Monitor 见解
@@ -66,6 +78,10 @@
           href: virtual-wan-ipsec.md
         - name: 多个 ISP 链接 - Azure 路径选择
           href: path-selection-multiple-links.md
+    - name: 安全性
+      items:
+        - name: 安全基线
+          href: security-baseline.md
     - name: 定价概念
       href: pricing-concepts.md
     - name: 关于虚拟中心中的 NVA
@@ -76,6 +92,8 @@
       href: upgrade-virtual-wan.md
     - name: 在虚拟中心创建 NVA
       href: How-to-nva-hub.md
+    - name: 创建跨租户 VNet 连接
+      href: cross-tenant-vnet.md
     - name: ExpressRoute
       items:
         - name: 创建 ExpressRoute 连接
@@ -99,23 +117,33 @@
         - name: 配置 Azure AD 租户
           href: openvpn-azure-ad-tenant.md
         - name: 客户端配置文件
-          href: about-vpn-profile-download.md
-        - name: 全局和基于中心的配置文件
-          href: global-hub-profile.md
-        - name: 配置 OpenVPN 客户端
-          href: howto-openvpn-clients.md?
-        - name: 配置 Always On VPN 用户隧道
-          href: howto-always-on-user-tunnel.md
-        - name: 配置 Always On VPN 设备隧道
-          href: howto-always-on-device-tunnel.md
-        - name: 启用多重身份验证 (MFA)
-          href: openvpn-azure-ad-mfa.md
-        - name: 配置 Azure AD 身份验证
-          href: virtual-wan-point-to-site-azure-ad.md
-        - name: 配置适用于 Windows 10 的 Azure VPN 客户端
-          href: openvpn-azure-ad-client.md
-        - name: 配置多应用程序 Azure AD 身份验证
-          href: openvpn-azure-ad-tenant-multi-app.md
+          items:
+            - name: 下载全局配置文件和基于中心的配置文件
+              href: global-hub-profile.md
+            - name: 提取和查看配置文件信息
+              href: about-vpn-profile-download.md
+            - name: 使用 Intune 部署配置文件
+              href: vpn-profile-intune.md
+        - name: VPN 客户端
+          items:
+            - name: Windows 10
+              href: openvpn-azure-ad-client.md
+            - name: OpenVPN
+              href: howto-openvpn-clients.md?
+        - name: 配置 Always-On 隧道
+          items:
+            - name: 用户隧道
+              href: howto-always-on-user-tunnel.md
+            - name: 设备隧道
+              href: howto-always-on-device-tunnel.md
+        - name: 身份验证
+          items:
+            - name: 多重身份验证 (MFA)
+              href: openvpn-azure-ad-mfa.md
+            - name: Azure AD 身份验证
+              href: virtual-wan-point-to-site-azure-ad.md
+            - name: 多应用程序 Azure AD 身份验证
+              href: openvpn-azure-ad-tenant-multi-app.md
     - name: 路由
       items:
         - name: 如何配置虚拟中心路由
@@ -132,14 +160,14 @@
       items:
         - name: 在中心安装 Azure 防火墙
           href: howto-firewall.md
+        - name: 配置专用链接连接
+          href: howto-private-link.md
+        - name: 管理对资源的访问 - Spoke VNet P2S
+          href: manage-secure-access-resources-spoke-p2s.md
     - name: 监视
       items:
         - name: 日志和指标
           href: logs-metrics.md
-    - name: 专用链接
-      items:
-        - name: 配置专用链接连接
-          href: howto-private-link.md
 - name: 参考
   items:
     - name: Azure PowerShell
@@ -154,8 +182,6 @@
   items:
     - name: 常见问题解答
       href: virtual-wan-faq.md
-    - name: 更新公告
-      href: 'https://azure.microsoft.com/updates/?category=networking&query=VIRTUAL%20WAN'
     - name: 定价
       href: 'https://azure.microsoft.com/pricing/details/virtual-wan'
     - name: 订阅和服务限制

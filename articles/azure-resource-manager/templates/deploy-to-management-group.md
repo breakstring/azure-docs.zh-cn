@@ -2,28 +2,28 @@
 title: 将资源部署到管理组
 description: 介绍如何通过 Azure 资源管理器模板在管理组范围部署资源。
 ms.topic: conceptual
-ms.date: 07/27/2020
-ms.openlocfilehash: 992882859ed1c67cf66c31f69f21e151081cf087
-ms.sourcegitcommit: 98854e3bd1ab04ce42816cae1892ed0caeedf461
+ms.date: 01/13/2021
+ms.openlocfilehash: a203dd2c52bdc889452a6755fb025c7ed5721a59
+ms.sourcegitcommit: 740698a63c485390ebdd5e58bc41929ec0e4ed2d
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/07/2020
-ms.locfileid: "88002897"
+ms.lasthandoff: 02/03/2021
+ms.locfileid: "99491629"
 ---
-# <a name="create-resources-at-the-management-group-level"></a>在管理组级别创建资源
+# <a name="management-group-deployments-with-arm-templates"></a>使用 ARM 模板进行管理组部署
 
-随着组织的成熟，你可以将 Azure 资源管理器模板部署 (ARM 模板) ，在管理组级别创建资源。 例如，你可能需要为管理组定义并分配[策略](../../governance/policy/overview.md)或[azure 基于角色的访问控制 (azure RBAC) ](../../role-based-access-control/overview.md) 。 使用管理组级别模板，可以通过声明方式应用策略并在管理组级别分配角色。
+随着组织的不断发展，可以部署 Azure 资源管理器模板（ARM 模板）来创建管理组级别的资源。 例如，你可能需要为管理组定义和分配[策略](../../governance/policy/overview.md)或 [Azure 基于角色的访问控制 (Azure RBAC)](../../role-based-access-control/overview.md)。 使用管理组级别的模板，可以声明方式在管理组级别应用策略和分配角色。
 
 ## <a name="supported-resources"></a>支持的资源
 
-并非所有资源类型都可以部署到管理组级别。 此部分列出了支持的资源类型。
+并非所有资源类型都可以部署到管理组级别。 本部分列出了支持的资源类型。
 
-对于 Azure 蓝图，使用：
+对于 Azure 蓝图，请使用：
 
 * [项目](/azure/templates/microsoft.blueprint/blueprints/artifacts)
 * [蓝图](/azure/templates/microsoft.blueprint/blueprints)
 * [blueprintAssignments](/azure/templates/microsoft.blueprint/blueprintassignments)
-* [早期](/azure/templates/microsoft.blueprint/blueprints/versions)
+* [versions](/azure/templates/microsoft.blueprint/blueprints/versions)
 
 对于 Azure 策略，请使用：
 
@@ -32,7 +32,7 @@ ms.locfileid: "88002897"
 * [policySetDefinitions](/azure/templates/microsoft.authorization/policysetdefinitions)
 * [remediations](/azure/templates/microsoft.policyinsights/remediations)
 
-对于基于角色的访问控制，请使用：
+对于 Azure 基于角色的访问控制 (Azure RBAC)，请使用：
 
 * [roleAssignments](/azure/templates/microsoft.authorization/roleassignments)
 * [roleDefinitions](/azure/templates/microsoft.authorization/roledefinitions)
@@ -45,27 +45,37 @@ ms.locfileid: "88002897"
 
 * [标记](/azure/templates/microsoft.resources/tags)
 
-### <a name="schema"></a>架构
+管理组是租户级别资源。 但是，你可以通过将新管理组的作用域设置为租户，在管理组部署中创建管理组。 请参阅 [管理组](#management-group)。
+
+## <a name="schema"></a>架构
 
 用于管理组部署的架构不同于资源组部署的架构。
 
 对于模板，请使用：
 
 ```json
-https://schema.management.azure.com/schemas/2019-08-01/managementGroupDeploymentTemplate.json#
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-08-01/managementGroupDeploymentTemplate.json#",
+    ...
+}
 ```
 
 对于所有部署范围，参数文件的架构都相同。 对于参数文件，请使用：
 
 ```json
-https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    ...
+}
 ```
 
 ## <a name="deployment-commands"></a>部署命令
 
-管理组部署的命令不同于用于资源组部署的命令。
+若要部署到管理组，请使用管理组部署命令。
 
-对于 Azure CLI，请使用[az deployment mg create](/cli/azure/deployment/mg?view=azure-cli-latest#az-deployment-mg-create)：
+# <a name="azure-cli"></a>[Azure CLI](#tab/azure-cli)
+
+对于 Azure CLI，请使用 [az deployment mg create](/cli/azure/deployment/mg#az-deployment-mg-create)：
 
 ```azurecli-interactive
 az deployment mg create \
@@ -75,7 +85,9 @@ az deployment mg create \
   --template-uri "https://raw.githubusercontent.com/Azure/azure-docs-json-samples/master/management-level-deployment/azuredeploy.json"
 ```
 
-对于 Azure PowerShell，请使用[AzManagementGroupDeployment](/powershell/module/az.resources/new-azmanagementgroupdeployment)。
+# <a name="powershell"></a>[PowerShell](#tab/azure-powershell)
+
+对于 Azure PowerShell，请使用 [New-AzManagementGroupDeployment](/powershell/module/az.resources/new-azmanagementgroupdeployment)。
 
 ```azurepowershell-interactive
 New-AzManagementGroupDeployment `
@@ -85,34 +97,90 @@ New-AzManagementGroupDeployment `
   -TemplateUri "https://raw.githubusercontent.com/Azure/azure-docs-json-samples/master/management-level-deployment/azuredeploy.json"
 ```
 
-对于 REST API，请使用[部署 - 在管理组范围内创建](/rest/api/resources/deployments/createorupdateatmanagementgroupscope)。
+---
+
+有关部署命令和部署 ARM 模板的选项的更多详细信息，请参阅：
+
+* [使用 ARM 模板和 Azure 门户部署资源](deploy-portal.md)
+* [使用 ARM 模板和 Azure CLI 部署资源](deploy-cli.md)
+* [使用 ARM 模板和 Azure PowerShell 部署资源](deploy-powershell.md)
+* [使用 ARM 模板和 Azure 资源管理器 REST API 部署资源](deploy-rest.md)
+* [使用部署按钮从 GitHub 存储库部署模板](deploy-to-azure-button.md)
+* [从 Cloud Shell 部署 ARM 模板](deploy-cloud-shell.md)
 
 ## <a name="deployment-location-and-name"></a>部署位置和名称
 
-对于管理组级别部署，必须为部署提供位置。 部署位置独立于部署的资源的位置。 部署位置指定何处存储部署数据。
+对于管理组级别部署，必须为部署提供位置。 部署位置独立于部署的资源的位置。 部署位置指定何处存储部署数据。 [订阅](deploy-to-subscription.md)和[租户](deploy-to-tenant.md)部署也需要位置。 对于[资源组](deploy-to-resource-group.md)部署，资源组的位置用于存储部署数据。
 
-可以为部署提供一个名称，也可以使用默认部署名称。 默认名称是模板文件的名称。 例如，部署一个名为 **azuredeploy.json** 的模板将创建默认部署名称 **azuredeploy**。
+可以为部署提供一个名称，也可以使用默认部署名称。 默认名称是模板文件的名称。 例如，部署一个名为 _azuredeploy.json_ 的模板将创建默认部署名称 **azuredeploy**。
 
-每个部署名称的位置不可变。 当某个位置中已有某个部署时，无法在另一位置创建同名的部署。 如果出现错误代码 `InvalidDeploymentLocation`，请使用其他名称或使用与该名称的以前部署相同的位置。
+每个部署名称的位置不可变。 当某个位置中已有某个部署时，无法在另一位置创建同名的部署。 例如，如果在 **centralus** 中创建名为 **deployment1** 的管理组部署，则以后无法使用 deployment1 的位置创建另一个名为的 **部署。** 如果出现错误代码 `InvalidDeploymentLocation`，请使用其他名称或使用与该名称的以前部署相同的位置。
 
 ## <a name="deployment-scopes"></a>部署范围
 
-部署到管理组时，你可以将部署命令或租户中的其他管理组中指定的管理组作为目标。 你还可以针对管理组中的订阅或资源组。 部署模板的用户必须具有对指定作用域的访问权限。
+部署到管理组时，可以将资源部署到：
 
-在模板的 resources 节中定义的资源将从部署命令应用到管理组。
+* 操作的目标管理组
+* 租户中的另一个管理组
+* 管理组中的订阅
+* 管理组中的资源组
+* 资源组的租户
 
-```json
-{
-    "$schema": "https://schema.management.azure.com/schemas/2019-08-01/managementGroupDeploymentTemplate.json#",
-    "contentVersion": "1.0.0.0",
-    "resources": [
-        management-group-level-resources
-    ],
-    "outputs": {}
-}
-```
+[扩展资源](scope-extension-resources.md)的作用域可以是与部署目标不同的目标。
 
-若要以其他管理组为目标，请添加嵌套部署并指定 `scope` 属性。
+部署模板的用户必须有权访问指定的作用域。
+
+本部分演示如何指定不同范围。 可以在单个模板中组合这些不同范围。
+
+### <a name="scope-to-target-management-group"></a>将范围设定为目标管理组
+
+将通过部署命令对管理组应用模板的资源部分中定义的资源。
+
+:::code language="json" source="~/resourcemanager-templates/azure-resource-manager/scope/default-mg.json" highlight="5":::
+
+### <a name="scope-to-another-management-group"></a>将范围设定为另一个管理组
+
+若要以另一个管理组为目标，请添加嵌套部署并指定 `scope` 属性。 将 `scope` 属性设置为 `Microsoft.Management/managementGroups/<mg-name>` 格式的值。
+
+:::code language="json" source="~/resourcemanager-templates/azure-resource-manager/scope/scope-mg.json" highlight="10,17,18,22":::
+
+### <a name="scope-to-subscription"></a>订阅的范围
+
+还可以将管理组中的订阅作为目标。 部署模板的用户必须有权访问指定的作用域。
+
+若要以管理组中的订阅为目标，请使用嵌套部署和 `subscriptionId` 属性。
+
+:::code language="json" source="~/resourcemanager-templates/azure-resource-manager/scope/mg-to-subscription.json" highlight="9,10,18":::
+
+### <a name="scope-to-resource-group"></a>将范围限定于资源组
+
+还可以将管理组中的资源组作为目标。 部署模板的用户必须有权访问指定的作用域。
+
+若要以管理组中的资源组为目标，请使用嵌套部署。 设置 `subscriptionId` 和 `resourceGroup` 属性。 不要为嵌套部署设置位置，因为它部署在资源组的位置。
+
+:::code language="json" source="~/resourcemanager-templates/azure-resource-manager/scope/mg-to-resource-group.json" highlight="9,10,18":::
+
+若要使用管理组部署在订阅中创建资源组并将存储帐户部署到该资源组，请参阅[部署到订阅和资源组](#deploy-to-subscription-and-resource-group)。
+
+### <a name="scope-to-tenant"></a>将范围设定为租户
+
+若要在租户中创建资源，请将设置 `scope` 为 `/` 。 部署模板的用户必须具有[在租户中进行部署所需的访问权限](deploy-to-tenant.md#required-access)。
+
+若要使用嵌套部署，请设置 `scope` 和 `location` 。
+
+:::code language="json" source="~/resourcemanager-templates/azure-resource-manager/scope/management-group-to-tenant.json" highlight="9,10,14":::
+
+或者，可将某些资源类型（如管理组）的范围设置为 `/`。 下一节将介绍如何创建新的管理组。
+
+## <a name="management-group"></a>管理组
+
+若要在管理组部署中创建管理组，则必须将管理组的作用域设置为 `/` 。
+
+下面的示例在根管理组中创建一个新管理组。
+
+:::code language="json" source="~/resourcemanager-templates/azure-resource-manager/scope/management-group-create-mg.json" highlight="12,15":::
+
+下一个示例在指定为父级的管理组中创建一个新管理组。 请注意，范围设置为 `/` 。
 
 ```json
 {
@@ -120,243 +188,194 @@ New-AzManagementGroupDeployment `
     "contentVersion": "1.0.0.0",
     "parameters": {
         "mgName": {
+            "type": "string",
+            "defaultValue": "[concat('mg-', uniqueString(newGuid()))]"
+        },
+        "parentMG": {
             "type": "string"
         }
     },
-    "variables": {
-        "mgId": "[concat('Microsoft.Management/managementGroups/', parameters('mgName'))]"
-    },
     "resources": [
         {
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2019-10-01",
-            "name": "nestedDeployment",
-            "scope": "[variables('mgId')]",
+            "name": "[parameters('mgName')]",
+            "type": "Microsoft.Management/managementGroups",
+            "apiVersion": "2020-05-01",
+            "scope": "/",
             "location": "eastus",
             "properties": {
-                "mode": "Incremental",
-                "template": {
-                    nested-template
+                "details": {
+                    "parent": {
+                        "id": "[tenantResourceId('Microsoft.Management/managementGroups', parameters('parentMG'))]"
+                    }
                 }
             }
         }
     ],
-    "outputs": {}
-}
-```
-
-若要以管理组中的订阅为目标，请使用嵌套部署和 `subscriptionId` 属性。 若要以该订阅中的资源组为目标，请添加另一个嵌套部署和 `resourceGroup` 属性。
-
-```json
-{
-  "$schema": "https://schema.management.azure.com/schemas/2019-08-01/managementGroupDeploymentTemplate.json#",
-  "contentVersion": "1.0.0.0",
-  "resources": [
-    {
-      "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2020-06-01",
-      "name": "nestedSub",
-      "location": "westus2",
-      "subscriptionId": "00000000-0000-0000-0000-000000000000",
-      "properties": {
-        "mode": "Incremental",
-        "template": {
-          "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
-          "contentVersion": "1.0.0.0",
-          "resources": [
-            {
-              "type": "Microsoft.Resources/deployments",
-              "apiVersion": "2020-06-01",
-              "name": "nestedRG",
-              "resourceGroup": "rg2",
-              "properties": {
-                "mode": "Incremental",
-                "template": {
-                  nested-template
-                }
-              }
-            }
-          ]
+    "outputs": {
+        "output": {
+            "type": "string",
+            "value": "[parameters('mgName')]"
         }
-      }
     }
-  ]
 }
 ```
-
-## <a name="use-template-functions"></a>使用模板函数
-
-对于管理组部署，在使用模板函数时有一些重要注意事项：
-
-* 不支持 [resourceGroup()](template-functions-resource.md#resourcegroup) 函数。
-* 不支持 [subscription()](template-functions-resource.md#subscription) 函数。
-* 支持 [reference()](template-functions-resource.md#reference) 和 [list()](template-functions-resource.md#list) 函数。
-* 支持 [resourceId()](template-functions-resource.md#resourceid) 函数。 可以使用它获取在管理组级别部署中使用的资源的资源 ID。 不要为资源组参数提供值。
-
-  例如，若要获取策略定义的资源 ID，请使用：
-  
-  ```json
-  resourceId('Microsoft.Authorization/policyDefinitions/', parameters('policyDefinition'))
-  ```
-  
-  返回的资源 ID 具有以下格式：
-  
-  ```json
-  /providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
-  ```
 
 ## <a name="azure-policy"></a>Azure Policy
 
-### <a name="define-policy"></a>定义策略
+部署到管理组的自定义策略定义是管理组的扩展。 若要获取自定义策略定义的 ID，请使用 [extensionResourceId()](template-functions-resource.md#extensionresourceid) 函数。 内置策略定义是租户级别资源。 若要获取内置策略定义的 ID，请使用 [tenantResourceId ( # B1 ](template-functions-resource.md#tenantresourceid) 函数。
 
-以下示例展示如何在管理组级别[定义](../../governance/policy/concepts/definition-structure.md)策略。
+下面的示例演示如何[定义](../../governance/policy/concepts/definition-structure.md)管理组级别策略，并对其进行分配。
 
 ```json
 {
-  "$schema": "https://schema.management.azure.com/schemas/2019-08-01/managementGroupDeploymentTemplate.json#",
-  "contentVersion": "1.0.0.0",
-  "parameters": {},
-  "variables": {},
-  "resources": [
-    {
-      "type": "Microsoft.Authorization/policyDefinitions",
-      "apiVersion": "2018-05-01",
-      "name": "locationpolicy",
-      "properties": {
-        "policyType": "Custom",
-        "parameters": {},
-        "policyRule": {
-          "if": {
-            "field": "location",
-            "equals": "northeurope"
-          },
-          "then": {
-            "effect": "deny"
-          }
+    "$schema": "https://schema.management.azure.com/schemas/2019-08-01/managementGroupDeploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "targetMG": {
+            "type": "string",
+            "metadata": {
+                "description": "Target Management Group"
+            }
+        },
+        "allowedLocations": {
+            "type": "array",
+            "defaultValue": [
+                "australiaeast",
+                "australiasoutheast",
+                "australiacentral"
+            ],
+            "metadata": {
+                "description": "An array of the allowed locations, all other locations will be denied by the created policy."
+            }
         }
-      }
-    }
-  ]
-}
-```
-
-### <a name="assign-policy"></a>分配策略
-
-以下示例将现有的策略定义分配到管理组。 如果策略使用参数，请将参数作为对象提供。 如果策略不使用参数，请使用默认的空对象。
-
-```json
-{
-  "$schema": "https://schema.management.azure.com/schemas/2019-08-01/managementGroupDeploymentTemplate.json#",
-  "contentVersion": "1.0.0.0",
-  "parameters": {
-    "policyDefinitionID": {
-      "type": "string"
     },
-    "policyName": {
-      "type": "string"
+    "variables": {
+        "mgScope": "[tenantResourceId('Microsoft.Management/managementGroups', parameters('targetMG'))]",
+        "policyDefinition": "LocationRestriction"
     },
-    "policyParameters": {
-      "type": "object",
-      "defaultValue": {}
-    }
-  },
-  "variables": {},
-  "resources": [
-    {
-      "type": "Microsoft.Authorization/policyAssignments",
-      "apiVersion": "2018-03-01",
-      "name": "[parameters('policyName')]",
-      "properties": {
-        "policyDefinitionId": "[parameters('policyDefinitionID')]",
-        "parameters": "[parameters('policyParameters')]"
-      }
-    }
-  ]
+    "resources": [
+        {
+            "type": "Microsoft.Authorization/policyDefinitions",
+            "name": "[variables('policyDefinition')]",
+            "apiVersion": "2019-09-01",
+            "properties": {
+                "policyType": "Custom",
+                "mode": "All",
+                "parameters": {
+                },
+                "policyRule": {
+                    "if": {
+                        "not": {
+                            "field": "location",
+                            "in": "[parameters('allowedLocations')]"
+                        }
+                    },
+                    "then": {
+                        "effect": "deny"
+                    }
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Authorization/policyAssignments",
+            "name": "location-lock",
+            "apiVersion": "2019-09-01",
+            "dependsOn": [
+                "[variables('policyDefinition')]"
+            ],
+            "properties": {
+                "scope": "[variables('mgScope')]",
+                "policyDefinitionId": "[extensionResourceId(variables('mgScope'), 'Microsoft.Authorization/policyDefinitions', variables('policyDefinition'))]"
+            }
+        }
+    ]
 }
 ```
 
 ## <a name="deploy-to-subscription-and-resource-group"></a>部署到订阅和资源组
 
-从管理组级别部署中，你可以将订阅定向到管理组中。 以下示例在订阅中创建一个资源组，并将一个存储帐户部署到该资源组。
+在管理组级别的部署中，可以以管理组中的订阅为目标。 以下示例在一个订阅中创建资源组，并向该资源组部署存储帐户。
 
 ```json
 {
-  "$schema": "https://schema.management.azure.com/schemas/2019-08-01/managementGroupDeploymentTemplate.json#",
-  "contentVersion": "1.0.0.0",
-  "parameters": {
-    "nestedsubId": {
-      "type": "string"
+    "$schema": "https://schema.management.azure.com/schemas/2019-08-01/managementGroupDeploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "nestedsubId": {
+            "type": "string"
+        },
+        "nestedRG": {
+            "type": "string"
+        },
+        "storageAccountName": {
+            "type": "string"
+        },
+        "nestedLocation": {
+            "type": "string"
+        }
     },
-    "nestedRG": {
-      "type": "string"
-    },
-    "storageAccountName": {
-      "type": "string"
-    },
-    "nestedLocation": {
-      "type": "string"
-    }
-  },
-  "resources": [
-    {
-      "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2020-06-01",
-      "name": "nestedSub",
-      "location": "[parameters('nestedLocation')]",
-      "subscriptionId": "[parameters('nestedSubId')]",
-      "properties": {
-        "mode": "Incremental",
-        "template": {
-          "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
-          "contentVersion": "1.0.0.0",
-          "parameters": {
-          },
-          "variables": {
-          },
-          "resources": [
-            {
-              "type": "Microsoft.Resources/resourceGroups",
-              "apiVersion": "2020-06-01",
-              "name": "[parameters('nestedRG')]",
-              "location": "[parameters('nestedLocation')]",
-            },
-            {
-              "type": "Microsoft.Resources/deployments",
-              "apiVersion": "2020-06-01",
-              "name": "nestedSubRG",
-              "resourceGroup": "[parameters('nestedRG')]",
-              "dependsOn": [
-                "[parameters('nestedRG')]"
-              ],
-              "properties": {
+    "resources": [
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2020-06-01",
+            "name": "nestedSub",
+            "location": "[parameters('nestedLocation')]",
+            "subscriptionId": "[parameters('nestedSubId')]",
+            "properties": {
                 "mode": "Incremental",
                 "template": {
-                  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
-                  "contentVersion": "1.0.0.0",
-                  "resources": [
-                    {
-                      "type": "Microsoft.Storage/storageAccounts",
-                      "apiVersion": "2019-04-01",
-                      "name": "[parameters('storageAccountName')]",
-                      "location": "[parameters('nestedLocation')]",
-                      "sku": {
-                        "name": "Standard_LRS"
-                      }
-                    }
-                  ]
+                    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {
+                    },
+                    "variables": {
+                    },
+                    "resources": [
+                        {
+                            "type": "Microsoft.Resources/resourceGroups",
+                            "apiVersion": "2020-06-01",
+                            "name": "[parameters('nestedRG')]",
+                            "location": "[parameters('nestedLocation')]"
+                        }
+                    ]
                 }
-              }
             }
-          ]
+        },
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2020-06-01",
+            "name": "nestedRG",
+            "subscriptionId": "[parameters('nestedSubId')]",
+            "resourceGroup": "[parameters('nestedRG')]",
+            "dependsOn": [
+                "nestedSub"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "template": {
+                    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",
+                    "resources": [
+                        {
+                            "type": "Microsoft.Storage/storageAccounts",
+                            "apiVersion": "2019-04-01",
+                            "name": "[parameters('storageAccountName')]",
+                            "location": "[parameters('nestedLocation')]",
+                            "kind": "StorageV2",
+                            "sku": {
+                                "name": "Standard_LRS"
+                            }
+                        }
+                    ]
+                }
+            }
         }
-      }
-    }
-  ]
+    ]
 }
 ```
 
 ## <a name="next-steps"></a>后续步骤
 
-* 若要了解如何分配角色，请参阅[使用 azure 资源管理器模板添加 azure 角色分配](../../role-based-access-control/role-assignments-template.md)。
+* 若要了解如何分配角色，请参阅[使用 Azure 资源管理器模板添加 Azure 角色分配](../../role-based-access-control/role-assignments-template.md)。
 * 若要通过示例来了解如何为 Azure 安全中心部署工作区设置，请参阅 [deployASCwithWorkspaceSettings.json](https://github.com/krnese/AzureDeploy/blob/master/ARM/deployments/deployASCwithWorkspaceSettings.json)。
-* 你还可以在[订阅级别](deploy-to-subscription.md)和[租户级别](deploy-to-tenant.md)部署模板。
+* 还可以在[订阅级别](deploy-to-subscription.md)和[租户级别](deploy-to-tenant.md)部署模板。

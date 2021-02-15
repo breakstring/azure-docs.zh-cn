@@ -6,12 +6,12 @@ ms.suite: integration
 ms.reviewer: arthii, logicappspm
 ms.topic: article
 ms.date: 05/15/2020
-ms.openlocfilehash: 9e50cdb16ee6acbdb903681984dcfbd7bfe170fa
-ms.sourcegitcommit: 5b8fb60a5ded05c5b7281094d18cf8ae15cb1d55
+ms.openlocfilehash: 799e879b4d9fd54367d54c17b3d275acfc5f34c1
+ms.sourcegitcommit: d1e56036f3ecb79bfbdb2d6a84e6932ee6a0830e
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/29/2020
-ms.locfileid: "87386123"
+ms.lasthandoff: 01/29/2021
+ms.locfileid: "99054765"
 ---
 # <a name="install-on-premises-data-gateway-for-azure-logic-apps"></a>为 Azure 逻辑应用安装本地数据网关
 
@@ -33,11 +33,11 @@ ms.locfileid: "87386123"
   * 你的 Azure 帐户必须是工作帐户或学校帐户，如所示 `username@contoso.com` 。 不能使用 Azure B2B（来宾）帐户或个人 Microsoft 帐户，如 @hotmail.com 或 @outlook.com。
 
     > [!NOTE]
-    > 如果你已注册 Office 365 产品/服务但未提供工作电子邮件地址，则你的地址可能类似于 `username@domain.onmicrosoft.com`。 你的帐户存储在 Azure AD 租户中。 在大多数情况下，你的 Azure 帐户的用户主体名称（UPN）与你的电子邮件地址相同。
+    > 如果你注册了 Microsoft 365 产品/服务，但未提供工作电子邮件地址，则你的地址可能类似于 `username@domain.onmicrosoft.com` 。 你的帐户存储在 Azure AD 租户中。 在大多数情况下，你的 Azure 帐户的用户主体名称 (UPN) 与你的电子邮件地址相同。
 
-    若要使用与 Microsoft 帐户关联的[Visual Studio Standard 订阅](https://visualstudio.microsoft.com/vs/pricing/)，请首先[创建 Azure AD 租户](../active-directory/develop/quickstart-create-new-tenant.md)或使用默认目录。 将具有密码的用户添加到该目录，然后向该用户提供对 Azure 订阅的访问权限。 然后在网关安装期间可以使用此用户名和密码登录。
+    若要使用与 Microsoft 帐户关联的 [Visual Studio Standard 订阅](https://visualstudio.microsoft.com/vs/pricing/) ，请首先 [创建 Azure AD 租户](../active-directory/develop/quickstart-create-new-tenant.md) 或使用默认目录。 将具有密码的用户添加到该目录，然后向该用户提供对 Azure 订阅的访问权限。 然后在网关安装期间可以使用此用户名和密码登录。
 
-  * 你的 Azure 帐户必须仅属于单个[Azure Active Directory （Azure AD）租户或目录](../active-directory/fundamentals/active-directory-whatis.md#terminology)。 需要使用同一 Azure 帐户在本地计算机上安装和管理网关。
+  * 你的 Azure 帐户必须仅属于单个 [Azure Active Directory (Azure AD) 租户或目录](../active-directory/fundamentals/active-directory-whatis.md#terminology)。 需要使用同一 Azure 帐户在本地计算机上安装和管理网关。
 
   * 当你安装网关时，你可以通过 Azure 帐户登录，这会将网关安装链接到你的 Azure 帐户，并且仅将该帐户链接到该帐户。 不能将相同的网关安装链接到多个 Azure 帐户或 Azure AD 租户。
 
@@ -114,7 +114,7 @@ ms.locfileid: "87386123"
 
    请注意选项“添加到现有网关群集”。在为[高可用性方案](#high-availability)安装其他网关时，需选择此选项。
 
-1. 检查网关安装使用的网关云服务和 [Azure 服务总线](https://azure.microsoft.com/services/service-bus/)的区域。 默认情况下，此区域与 Azure 帐户的 Azure AD 租户位于同一位置。
+1. 检查网关云服务和网关安装使用的 [Azure 服务总线消息传送实例](../service-bus-messaging/service-bus-messaging-overview.md) 的区域。 默认情况下，此区域与 Azure 帐户的 Azure AD 租户位于同一位置。
 
    ![确认网关服务和服务总线的区域](./media/logic-apps-gateway-install/confirm-gateway-region.png)
 
@@ -122,7 +122,7 @@ ms.locfileid: "87386123"
 
    *为何要更改网关安装的区域？*
 
-   例如，为了降低延迟，可将网关的区域更改为逻辑应用所在的同一区域。 或者，可以选择最靠近本地数据源的区域。 *Azure 中的网关资源*和逻辑应用可以有不同的位置。
+   例如，为了降低延迟，可将网关的区域更改为逻辑应用所在的同一区域。 或者，可以选择最靠近本地数据源的区域。 *Azure 中的网关资源* 和逻辑应用可以有不同的位置。
 
    1. 在当前区域的旁边，选择“更改区域”。
 
@@ -138,12 +138,18 @@ ms.locfileid: "87386123"
 
 1. 现在[为网关安装创建 Azure 资源](../logic-apps/logic-apps-gateway-connection.md)。
 
+<a name="communication-settings"></a>
+
 ## <a name="check-or-adjust-communication-settings"></a>检查或调整通信设置
 
-本地数据网关依赖使用 [Azure 服务总线](../service-bus-messaging/service-bus-messaging-overview.md)来建立云连接，以及与网关关联的 Azure 区域建立相应的出站连接。 如果工作环境要求流量通过代理或防火墙来访问 Internet，此限制可能会阻止本地数据网关连接到网关云服务和 Azure 服务总线。 网关有多个可以调整的通信设置。 有关详细信息，请参阅以下主题：
+本地数据网关依赖于 [Azure 服务总线消息传送](../service-bus-messaging/service-bus-messaging-overview.md) 进行云连接，并建立与网关关联的 azure 区域的相应出站连接。 如果你的工作环境要求流量通过代理或防火墙来访问 internet，则此限制可能会阻止本地数据网关连接到网关云服务和 Azure 服务总线消息传送。 网关有多个可以调整的通信设置。
+
+例如，你可以使用 Azure 中的本地数据网关资源来访问本地资源的自定义连接器。 如果还拥有将流量限制为特定 IP 地址的防火墙，则需要设置网关安装，以允许访问相应的 *托管连接器 [出站 IP 地址](logic-apps-limits-and-config.md#outbound)*。 同一区域中的所有逻辑应用都使用相同的 IP 地址范围。
+
+有关详细信息，请参阅以下主题：
 
 * [调整本地数据网关的通信设置](/data-integration/gateway/service-gateway-communication)
-* [配置本地数据网关的代理设置](/data-integration/gateway/service-gateway-proxy)
+* [为本地数据网关配置代理设置](/data-integration/gateway/service-gateway-proxy)
 
 <a name="high-availability"></a>
 
@@ -206,7 +212,7 @@ ms.locfileid: "87386123"
 
 网关有助于促进更快速、更安全的后台通信。 此通信在云中的用户、网关云服务和本地数据源之间流动。 网关云服务可加密和存储数据源凭据与网关详细信息。 该服务还会在用户、网关与本地数据源之间路由查询及其结果。
 
-网关可与防火墙配合使用，只使用出站连接。 所有流量最初都是网关代理的安全出站流量。 网关通过 [Azure 服务总线](../service-bus-messaging/service-bus-messaging-overview.md)中继来自加密频道上的本地源的数据。 此服务总线在网关与调用方服务之间创建通道，但不存储任何数据。 通过网关的所有数据经过加密。
+网关可与防火墙配合使用，只使用出站连接。 所有流量最初都是网关代理的安全出站流量。 网关通过 [Azure 服务总线消息传送](../service-bus-messaging/service-bus-messaging-overview.md)在加密通道上从本地源发送数据。 此服务总线在网关与调用方服务之间创建通道，但不存储任何数据。 通过网关的所有数据经过加密。
 
 ![本地数据网关的体系结构](./media/logic-apps-gateway-install/how-on-premises-data-gateway-works-flow-diagram.png)
 
@@ -217,9 +223,9 @@ ms.locfileid: "87386123"
 
 1. 云服务将创建查询，并为数据源创建加密的凭据。 然后，该服务将查询和凭据发送到网关队列进行处理。
 
-1. 网关云服务分析该查询，并将请求推送到 Azure 服务总线。
+1. 网关云服务将分析该查询，并将请求推送到 Azure 服务总线消息传送。
 
-1. Azure 服务总线将等待中的请求发送到网关。
+1. Azure 服务总线消息传送会将挂起的请求发送到网关。
 
 1. 网关获取查询，对凭据进行解密，并使用这些凭据连接到一个或多个数据源。
 

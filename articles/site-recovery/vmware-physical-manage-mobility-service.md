@@ -7,26 +7,26 @@ ms.service: site-recovery
 ms.topic: conceptual
 ms.date: 03/25/2019
 ms.author: ramamill
-ms.openlocfilehash: e65fecb70b7e3adf009396c0daa00fc50b81b519
-ms.sourcegitcommit: d661149f8db075800242bef070ea30f82448981e
+ms.openlocfilehash: d921bddf90c415cb244e2cc9ad98354392a537ee
+ms.sourcegitcommit: 829d951d5c90442a38012daaf77e86046018e5b9
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/19/2020
-ms.locfileid: "88604533"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "90530142"
 ---
 # <a name="manage-the-mobility-agent"></a>管理移动代理 
 
 使用 Azure Site Recovery 进行从 VMware VM 和物理服务器到 Azure 的灾难恢复时，请在服务器上设置移动代理。 移动代理协调受保护计算机、配置服务器/横向扩展进程服务器之间的通信，并管理数据复制。 本文概述了在部署移动代理后对其进行管理时要执行的常见任务。
 
 >[!TIP]
->若要下载特定 OS/Linux 发行版的安装程序，请参阅 [此处](vmware-physical-mobility-service-overview.md#locate-installer-files)的指南。 若要从门户自动更新，无需下载安装程序。 [ASR 自动从配置服务器中提取安装程序并更新代理](#update-mobility-service-from-azure-portal)。
+>若要下载特定 OS/Linux 发行版的安装程序，请参阅[此处](vmware-physical-mobility-service-overview.md#locate-installer-files)的指南。 若要从门户自动更新，则无需下载安装程序。 [ASR 会从配置服务器自动提取安装程序，并更新代理](#update-mobility-service-from-azure-portal)。
 
 [!INCLUDE [updated-for-az](../../includes/updated-for-az.md)]
 
 ## <a name="update-mobility-service-from-azure-portal"></a>从 Azure 门户更新移动服务
 
 1. 开始在受保护的计算机上更新移动服务之前，请确保部署中的配置服务器、横向扩展进程服务器及所有主目标服务器均已更新。
-    1. 从 [9.36 版本](https://support.microsoft.com/help/4578241/) 开始，对于 SUSE LINUX ENTERPRISE SERVER 11 SP4，请确保 [配置服务器和横向扩展进程服务器上有](vmware-physical-mobility-service-overview.md#download-latest-mobility-agent-installer-for-suse-11-sp3-server)最新的安装程序。
+    1. 从9.36 版开始，对于 SUSE Linux Enterprise Server 11 SP3，RHEL 5，CentOS 5，Debian 7 确保 [配置服务器和横向扩展进程服务器上提供](vmware-physical-mobility-service-overview.md#download-latest-mobility-agent-installer-for-suse-11-sp3-rhel-5-debian-7-server)最新的安装程序。
 1. 在门户中打开保管库 >“复制的项”。 
 1. 如果配置服务器是最新版本，则会看到一条通知，指出“新的 Site Recovery 复制代理更新已可用。 单击可安装。”
 
@@ -36,7 +36,7 @@ ms.locfileid: "88604533"
 
      ![“复制的项”VM 列表](./media/vmware-azure-install-mobility-service/update-okpng.png)
 
-5. 将为所选的每台计算机启动“更新移动服务”作业。 移动代理已更新为配置服务器的版本。 例如，如果配置服务器版本为9.33，则受保护 VM 上的移动代理也更新为9.33 版本。
+5. 将为所选的每台计算机启动“更新移动服务”作业。 移动代理已更新到配置服务器的版本。 例如，如果配置服务器为版本 9.33，则受保护的 VM 上的移动代理也会更新为 9.33 版本。
 
 ## <a name="update-mobility-service-through-powershell-script-on-windows-server"></a>在 Windows 服务器上通过 powershell 脚本更新移动服务
 

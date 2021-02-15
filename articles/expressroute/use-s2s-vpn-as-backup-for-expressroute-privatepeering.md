@@ -2,21 +2,21 @@
 title: 将 S2S VPN 用作 Azure ExpressRoute 专用对等互连的备用解决方案 | Microsoft Docs
 description: 本页提供了有关将 S2S VPN 用作 Azure ExpressRoute 专用对等互连的备用解决方案的体系结构建议。
 services: networking
-author: rambk
+author: duongau
 ms.service: expressroute
 ms.topic: how-to
 ms.date: 02/05/2020
-ms.author: rambala
-ms.openlocfilehash: 68596b881ef1b62187bdb7194b364c9477b4e04d
-ms.sourcegitcommit: c293217e2d829b752771dab52b96529a5442a190
+ms.author: duau
+ms.openlocfilehash: 752edea8078cf55fc3965bdc7aa9e1b4269dee34
+ms.sourcegitcommit: 957c916118f87ea3d67a60e1d72a30f48bad0db6
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/15/2020
-ms.locfileid: "88244765"
+ms.lasthandoff: 10/19/2020
+ms.locfileid: "92207914"
 ---
 # <a name="using-s2s-vpn-as-a-backup-for-expressroute-private-peering"></a>将 S2S VPN 用作 Azure ExpressRoute 专用对等互连的备用解决方案
 
-在标题为[使用 ExpressRoute 专用对等互连进行灾难恢复设计][DR-PP]的文章中，我们讨论了 ExpressRoute 专用对等互连对备用连接解决方案的需求，以及如何使用异地冗余的 ExpressRoute 线路来实现此目的。 本文介绍如何利用和维护站点到站点 (S2S) VPN 作为 ExpressRoute 专用对等互连的备份。 
+在标题为[使用 ExpressRoute 专用对等互连进行灾难恢复设计][DR-PP]的文章中，我们讨论了 ExpressRoute 专用对等互连对备用连接解决方案的需求，以及如何使用异地冗余的 ExpressRoute 线路来实现此目的。 本文将探讨如何利用并维护站点到站点 (S2S) VPN，以将其用作 ExpressRoute 专用对等互连的备份。 
 
 与异地冗余的 ExpressRoute 线路不同，只能在主动-被动模式下使用 ExpressRoute-VPN 灾难恢复组合。 在被动模式下使用任何备用网络连接的一个主要难点在于，被动连接经常连同主要连接一起发生故障。 被动连接故障的常见原因是缺乏主动的维护。 因此，本文将重点介绍如何验证和主动维护充当 ExpressRoute 专用对等互连备用解决方案的 S2S VPN 连接。
 
@@ -116,7 +116,7 @@ Cust11.inet.0: 14 destinations, 21 routes (14 active, 0 holddown, 0 hidden)
 
 ### <a name="configuring-for-symmetric-traffic-flow"></a>配置对称流量流
 
-我们注意到，在通过 ExpressRoute 和 S2S VPN 播发给定的本地路由时，Azure 会优先采用 ExpressRoute 路径。 若要强制 Azure 优先采用 S2S VPN 路径而不是采用共存的 ExpressRoute，需要通过 VPN 连接播发更具体的路由（子网掩码更大的更长前缀）。 这里的目标是将 VPN 连接仅用作备份。 因此，Azure 的默认路径选择行为与我们的目标相符。 
+我们注意到，在通过 ExpressRoute 和 S2S VPN 播发给定的本地路由时，Azure 会优先采用 ExpressRoute 路径。 若要强制 Azure 优先采用 S2S VPN 路径而不是采用共存的 ExpressRoute，需要通过 VPN 连接播发更具体的路由（子网掩码更大的更长前缀）。 此处，我们的目标是仅将 VPN 连接用作备份。 因此，Azure 的默认路径选择行为与我们的目标相符。 
 
 我们需要负责确保从本地发往 Azure 的流量也优先采用 ExpressRoute 路径而不是 S2S VPN。 本地设置中的 CE 路由器和防火墙的默认本地首选项为 100。 因此，如果将通过 ExpressRoute 专用对等互连接收的路由的本地首选项配置为大于 100（例如 150），可使发往 Azure 的流量优先采用处于稳定状态的 ExpressRoute 线路。
 
@@ -315,13 +315,10 @@ ExpressRoute 设计用于实现高可用性，且不会在 Microsoft 网络中�
 [2]: ./media/use-s2s-vpn-as-backup-for-expressroute-privatepeering/vpn-gw-config.png "VPN 网关配置"
 
 <!--Link References-->
-[DR-PP]: https://docs.microsoft.com/azure/expressroute/designing-for-disaster-recovery-with-expressroute-privatepeering
-[Conf-CoExist]: https://docs.microsoft.com/azure/expressroute/expressroute-howto-coexist-resource-manager
-[HA]: https://docs.microsoft.com/azure/expressroute/designing-for-high-availability-with-expressroute
-[VPN Troubleshoot]: https://docs.microsoft.com/azure/vpn-gateway/vpn-gateway-troubleshoot-site-to-site-cannot-connect
-[VPN-alerts]: https://docs.microsoft.com/azure/vpn-gateway/vpn-gateway-howto-setup-alerts-virtual-network-gateway-metric
-[BFD]: https://docs.microsoft.com/azure/expressroute/expressroute-bfd
-[RST]: https://docs.microsoft.com/azure/expressroute/expressroute-howto-reset-peering
-
-
-
+[DR-PP]: ./designing-for-disaster-recovery-with-expressroute-privatepeering.md
+[Conf-CoExist]: ./expressroute-howto-coexist-resource-manager.md
+[HA]: ./designing-for-high-availability-with-expressroute.md
+[VPN Troubleshoot]: ../vpn-gateway/vpn-gateway-troubleshoot-site-to-site-cannot-connect.md
+[VPN-alerts]: ../vpn-gateway/vpn-gateway-howto-setup-alerts-virtual-network-gateway-metric.md
+[BFD]: ./expressroute-bfd.md
+[RST]: ./expressroute-howto-reset-peering.md

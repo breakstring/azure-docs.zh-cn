@@ -4,15 +4,15 @@ description: 了解 Azure 防火墙管理器策略
 author: vhorne
 ms.service: firewall-manager
 services: firewall-manager
-ms.topic: overview
-ms.date: 06/30/2020
+ms.topic: conceptual
+ms.date: 11/24/2020
 ms.author: victorh
-ms.openlocfilehash: 6e532634fb40eee100e73a333ac6aa7e0a79cf3c
-ms.sourcegitcommit: 3543d3b4f6c6f496d22ea5f97d8cd2700ac9a481
+ms.openlocfilehash: 73a07af0fa98adf66d6104f1ab545d31a0cfd6d7
+ms.sourcegitcommit: 6a770fc07237f02bea8cc463f3d8cc5c246d7c65
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/20/2020
-ms.locfileid: "86521643"
+ms.lasthandoff: 11/24/2020
+ms.locfileid: "95802029"
 ---
 # <a name="azure-firewall-manager-policy-overview"></a>Azure 防火墙管理器策略概述
 

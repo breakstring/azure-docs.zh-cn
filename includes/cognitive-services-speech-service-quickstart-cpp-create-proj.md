@@ -2,14 +2,14 @@
 author: erhopf
 ms.service: cognitive-services
 ms.topic: include
-ms.date: 02/10/2020
+ms.date: 10/15/2020
 ms.author: erhopf
-ms.openlocfilehash: 517b092f933bedae0f254461d9bfee4d4640db8b
-ms.sourcegitcommit: f353fe5acd9698aa31631f38dd32790d889b4dbb
+ms.openlocfilehash: 2960a4f55997c0db60c22e7841b4ba82708dd4e1
+ms.sourcegitcommit: d1e56036f3ecb79bfbdb2d6a84e6932ee6a0830e
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/29/2020
-ms.locfileid: "87375035"
+ms.lasthandoff: 01/29/2021
+ms.locfileid: "99214518"
 ---
 若要创建 Visual Studio 项目以用于 C++ 桌面开发，需要设置 Visual Studio 开发选项，创建项目，选择目标体系结构，然后安装语音 SDK。
 
@@ -19,13 +19,13 @@ ms.locfileid: "87375035"
 
 1. 打开 Visual Studio 2019 以显示“开始”  窗口。
 
-   ![启动窗口 - Visual Studio](../articles/cognitive-services/Speech-Service/media/sdk/vs-start-window.png)
+   ![屏幕截图显示 Visual Studio 2019“开始”窗口。](../articles/cognitive-services/Speech-Service/media/sdk/vs-start-window.png)
 
 1. 选择“继续但无需代码”  ，转到 Visual Studio IDE。
 
 1. 在 Visual Studio 菜单栏中，选择“工具”   > “获取工具和功能”  以打开 Visual Studio 安装程序并查看“修改”  对话框。
 
-   ![“工作负载”选项卡，“修改”对话框，Visual Studio 安装程序](../articles/cognitive-services/Speech-Service/media/sdk/vs-enable-cpp-workload.png)
+   ![屏幕截图显示“Visual Studio 安装程序”的“修改”对话框的“工作负荷”选项卡。](../articles/cognitive-services/Speech-Service/media/sdk/vs-enable-cpp-workload.png)
 
 1. 在“工作负载”  选项卡的“Windows”  下，找到“使用 C++ 的桌面开发”工作负载  。 如果尚未选择该工作负载旁边的复选框，请选中。
 
@@ -77,4 +77,4 @@ ms.locfileid: "87375035"
 
 1. 在“预览更改”  对话框中，选择“确定”  。
 
-1. 在“接受许可证”  对话框中，查看许可证，然后选择“我接受”  。 包安装开始，安装完成后，“输出”  窗格将显示类似于以下文本的消息：`Successfully installed 'Microsoft.CognitiveServices.Speech 1.13.0' to helloworld`。
+1. 在“接受许可证”  对话框中，查看许可证，然后选择“我接受”  。 包安装开始，安装完成后，“输出”  窗格将显示类似于以下文本的消息：`Successfully installed 'Microsoft.CognitiveServices.Speech 1.15.0' to helloworld`。

@@ -5,12 +5,13 @@ author: florianborn71
 ms.author: flborn
 ms.date: 02/03/2020
 ms.topic: conceptual
-ms.openlocfilehash: 385086bd46145be717ee5a14a10f889ec811e17e
-ms.sourcegitcommit: 54d8052c09e847a6565ec978f352769e8955aead
+ms.custom: devx-track-csharp
+ms.openlocfilehash: 2cf1872bcdd7b1bda74046198f5fc32be1069913
+ms.sourcegitcommit: f377ba5ebd431e8c3579445ff588da664b00b36b
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/18/2020
-ms.locfileid: "88505645"
+ms.lasthandoff: 02/05/2021
+ms.locfileid: "99594495"
 ---
 # <a name="rendering-modes"></a>渲染模式
 
@@ -30,7 +31,7 @@ ms.locfileid: "88505645"
 
 ![TileBasedComposition 中的 MSAA](./media/service-render-mode-quality.png)
 
-此外，在此模式下，每个部分都可以切换到透明材料，或通过[HierarchicalStateOverrideComponent](../overview/features/override-hierarchical-state.md)切换到**查看**模式。
+此外，在此模式下，每个部分都可以切换到透明材料，或通过 [HierarchicalStateOverrideComponent](../overview/features/override-hierarchical-state.md)切换到 **查看** 模式。
 
 ### <a name="depthbasedcomposition-mode"></a>\ "DepthBasedComposition" 模式
 
@@ -42,7 +43,7 @@ ms.locfileid: "88505645"
 
 消除锯齿在 sculpture 和窗帘之间正常工作，因为这两个部分都呈现在同一 GPU 上。 另一方面，窗帘和墙壁之间的边缘会显示一些别名，因为这两个部分是由不同 Gpu 组成的。
 
-此模式的最大限制是，几何图形部分不能动态切换为透明材料，也不能对[HierarchicalStateOverrideComponent](../overview/features/override-hierarchical-state.md)使用 "**查看**" 模式。 不过，其他状态覆盖功能 (轮廓、颜色色调 ) 确实有效。 此外，在转换时标记为透明的材料在此模式下可以正常工作。
+此模式的最大限制是，几何图形部分不能动态切换为透明材料，也不能对 [HierarchicalStateOverrideComponent](../overview/features/override-hierarchical-state.md)使用 "**查看**" 模式。 不过，其他状态覆盖功能 (轮廓、颜色色调 ) 确实有效。 此外，在转换时标记为透明的材料在此模式下可以正常工作。
 
 ### <a name="performance"></a>性能
 
@@ -50,26 +51,33 @@ ms.locfileid: "88505645"
 
 ## <a name="setting-the-render-mode"></a>设置呈现模式
 
-远程呈现服务器上使用的呈现模式是通过在期间指定的 `AzureSession.ConnectToRuntime` `ConnectToRuntimeParams` 。
+远程呈现服务器上使用的呈现模式是通过在期间指定的 `RenderingSession.ConnectAsync` `RendererInitOptions` 。
 
 ```cs
-async void ExampleConnect(AzureSession session)
+async void ExampleConnect(RenderingSession session)
 {
-    ConnectToRuntimeParams parameters = new ConnectToRuntimeParams();
+    RendererInitOptions parameters = new RendererInitOptions();
 
     // Connect with one rendering mode
-    parameters.mode = ServiceRenderMode.TileBasedComposition;
-    await session.ConnectToRuntime(parameters).AsTask();
+    parameters.RenderMode = ServiceRenderMode.TileBasedComposition;
+    await session.ConnectAsync(parameters);
 
-    session.DisconnectFromRuntime();
+    session.Disconnect();
 
     // Wait until session.IsConnected == false
 
     // Reconnect with a different rendering mode
-    parameters.mode = ServiceRenderMode.DepthBasedComposition;
-    await session.ConnectToRuntime(parameters).AsTask();
+    parameters.RenderMode = ServiceRenderMode.DepthBasedComposition;
+    await session.ConnectAsync(parameters);
 }
 ```
+
+## <a name="api-documentation"></a>API 文档
+
+* [C # RenderingSession ConnectAsync ( # B1 ](/dotnet/api/microsoft.azure.remoterendering.renderingsession.connectasync)
+* [C # RendererInitOptions 结构](/dotnet/api/microsoft.azure.remoterendering.rendererinitoptions)
+* [C + + RenderingSession：： ConnectToConnectAsyncRuntime ( # B1 ](/cpp/api/remote-rendering/renderingsession#connectasync)
+* [C + + RendererInitOptions 结构](/cpp/api/remote-rendering/rendererinitoptions)
 
 ## <a name="next-steps"></a>后续步骤
 

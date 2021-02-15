@@ -2,19 +2,16 @@
 title: 解决 Azure HDInsight 中的 Hive 内存不足错误
 description: 解决 HDInsight 中的 Hive 内存不足错误。 客户方案为跨多个大型表运行查询。
 keywords: 内存不足错误, OOM, Hive 设置
-author: hrasheed-msft
-ms.author: hrasheed
-ms.reviewer: jasonh
 ms.service: hdinsight
 ms.topic: troubleshooting
 ms.custom: hdinsightactive
 ms.date: 11/28/2019
-ms.openlocfilehash: 71f9bc75bc2b84708af54ba89918cd874099a2d4
-ms.sourcegitcommit: 845a55e6c391c79d2c1585ac1625ea7dc953ea89
+ms.openlocfilehash: c0810d33f3ac939b9382bf321448ed72b6d87474
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/05/2020
-ms.locfileid: "85961891"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98945721"
 ---
 # <a name="fix-an-apache-hive-out-of-memory-error-in-azure-hdinsight"></a>解决 Azure HDInsight 中的 Apache Hive 内存不足错误
 
@@ -105,7 +102,7 @@ hive-site.xml 文件中的 **Hive.auto.convert.join.noconditionaltask** 已设�
 </property>
 ```
 
-映射联接很可能是 Java 堆空间内存不足错误的原因。 如博客文章 [HDInsight 中的 Hadoop Yarn 内存设置](https://docs.microsoft.com/archive/blogs/shanyu/hadoop-yarn-memory-settings-in-hdinsight)所述，使用 Tez 执行引擎时，所用的堆空间事实上属于 Tez 容器。 请参阅下图，其中描述了 Tez 容器内存。
+映射联接很可能是 Java 堆空间内存不足错误的原因。 如博客文章 [HDInsight 中的 Hadoop Yarn 内存设置](/archive/blogs/shanyu/hadoop-yarn-memory-settings-in-hdinsight)所述，使用 Tez 执行引擎时，所用的堆空间事实上属于 Tez 容器。 请参阅下图，其中描述了 Tez 容器内存。
 
 ![Tez 容器内存示意图：Hive 内存不足错误](./media/hdinsight-hadoop-hive-out-of-memory-error-oom/hive-out-of-memory-error-oom-tez-container-memory.png)
 
@@ -114,7 +111,7 @@ hive-site.xml 文件中的 **Hive.auto.convert.join.noconditionaltask** 已设�
 > [!NOTE]  
 > **hive.tez.java.opts** 设置必须始终小于 **hive.tez.container.size**。
 
-由于 D12 计算机具有 28 GB 内存，因此我们决定使用 10 GB （10240 MB）的容器大小，并将80% 分配给 java。
+由于 D12 计算机具有 28 GB 内存，因此我们决定使用 10 GB 的容器大小 (10240 MB) 并将80% 分配给 java。
 
 ```console
 SET hive.tez.container.size=10240

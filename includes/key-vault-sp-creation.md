@@ -4,21 +4,21 @@ ms.service: key-vault
 ms.topic: include
 ms.date: 07/20/2020
 ms.author: msmbaldwin
-ms.openlocfilehash: d669874040b04af089b4d57333869fe34066720e
-ms.sourcegitcommit: 2ff0d073607bc746ffc638a84bb026d1705e543e
+ms.openlocfilehash: deb2eb877743d533c5daeee8b6636edd62418fe0
+ms.sourcegitcommit: eb6bef1274b9e6390c7a77ff69bf6a3b94e827fc
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/06/2020
-ms.locfileid: "87841955"
+ms.lasthandoff: 10/05/2020
+ms.locfileid: "89494290"
 ---
-对基于云的应用程序进行身份验证的最简单方法是使用托管标识；有关详细信息，请参阅[使用应用服务托管标识访问 Azure Key Vault](/azure/key-vault/general/managed-identity)。 
+对基于云的应用程序进行身份验证的最简单方法是使用托管标识；有关详细信息，请参阅[对 Key Vault 进行身份验证](/azure/key-vault/general/authentication)。
 
 不过，为了简单起见，本快速入门创建了一个需要使用服务主体和访问控制策略的桌面应用程序。 服务主体要求使用格式为“http://&lt;my-unique-service-principal-name&gt;”的唯一名称。
 
 使用 Azure CLI [az ad sp create-for-rbac](/cli/azure/ad/sp?view=azure-cli-latest#az-ad-sp-create-for-rbac) 命令创建服务主体：
 
 ```azurecli
-az ad sp create-for-rbac -n "http://<my-unique-service-principal-name>" --sdk-auth
+az ad sp create-for-rbac --skip-assignment -n "http://<my-unique-service-principal-name>" --sdk-auth
 ```
 
 此操作将返回一系列键/值对。

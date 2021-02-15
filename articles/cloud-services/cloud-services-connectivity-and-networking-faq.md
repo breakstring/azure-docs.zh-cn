@@ -1,35 +1,31 @@
 ---
 title: 连接和网络问题
-titleSuffix: Azure Cloud Services
 description: 本文列出了一些关于 Microsoft Azure 云服务连接性和网络的常见问题解答。
-services: cloud-services
-documentationcenter: ''
-author: genlin
-manager: dcscontentpm
-editor: ''
-tags: top-support-issue
-ms.assetid: 84985660-2cfd-483a-8378-50eef6a0151d
-ms.service: cloud-services
-ms.workload: na
-ms.tgt_pltfrm: na
 ms.topic: article
-ms.date: 08/23/2018
-ms.author: genli
-ms.openlocfilehash: 7caeba0e88f63106eae80f7142b5d65463f8d7a7
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.service: cloud-services
+ms.date: 10/14/2020
+ms.author: tagore
+author: tanmaygore
+ms.reviewer: mimckitt
+ms.custom: ''
+ms.openlocfilehash: c7b83c615e4ac19e10b5c4f6cc1a102206b1a39a
+ms.sourcegitcommit: 6272bc01d8bdb833d43c56375bab1841a9c380a5
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "77019394"
+ms.lasthandoff: 01/23/2021
+ms.locfileid: "98742414"
 ---
-# <a name="connectivity-and-networking-issues-for-azure-cloud-services-frequently-asked-questions-faqs"></a>Azure 云服务连接性和网络问题：常见问题解答 (FAQ)
+# <a name="connectivity-and-networking-issues-for-azure-cloud-services-classic-frequently-asked-questions-faqs"></a> (经典) 的 Azure 云服务的连接和网络问题：常见问题解答 (常见问题) 
+
+> [!IMPORTANT]
+> [Azure 云服务 (扩展支持) ](../cloud-services-extended-support/overview.md) 是适用于 Azure 云服务产品的新的基于 azure 资源管理器的部署模型。进行此更改后，基于 Azure Service Manager 的部署模型运行的 Azure 云服务已重命名为云服务 (经典) ，所有新部署应使用 [云服务 (扩展支持) ](../cloud-services-extended-support/overview.md)。
 
 本文包括一些关于 [Azure 云服务](https://azure.microsoft.com/services/cloud-services)连接性和网络问题的常见问题解答。 有关大小信息，请参阅[云服务 VM 大小页](cloud-services-sizes-specs.md)。
 
 [!INCLUDE [support-disclaimer](../../includes/support-disclaimer.md)]
 
 ## <a name="i-cant-reserve-an-ip-in-a-multi-vip-cloud-service"></a>无法在多 VIP 云服务中保留 IP
-首先，请确保已打开想要为其保留 IP 的虚拟机实例。 其次，请确保为过渡和生产部署使用保留的 IP。 *请勿*在部署升级过程中更改设置。
+首先，请确保已打开想要为其保留 IP 的虚拟机实例。 其次，请确保为过渡和生产部署使用保留的 IP。 *请勿* 在部署升级过程中更改设置。
 
 ## <a name="how-do-i-use-remote-desktop-when-i-have-an-nsg"></a>设置了 NSG 时，如何使用远程桌面？
 将规则添加到 NSG，允许端口 **3389** 和 **20000** 上的流量。 远程桌面使用端口 **3389**。 云服务实例经过负载均衡，因此无法直接控制要连接到哪个实例。 *RemoteForwarder* 和 *RemoteAccess* 代理管理远程桌面协议 (RDP) 流量，允许客户端发送 RDP cookie 和指定要连接到的单个实例。 *RemoteForwarder* 和 *RemoteAccess* 代理要求打开端口 **20000**（如果你具有 NSG，此端口可能已被阻止）。
@@ -40,7 +36,7 @@ ms.locfileid: "77019394"
 
 若要测试连接性，我们建议执行端口 ping 操作。 当 Ping.exe 使用 ICMP 时，其他工具（如 PSPing、Nmap 和 telnet）允许你测试到特定 TCP 端口的连接性。
 
-有关详细信息，请参阅[使用端口 ping 而不是 ICMP 来测试 Azure VM 连接性](https://blogs.msdn.microsoft.com/mast/2014/06/22/use-port-pings-instead-of-icmp-to-test-azure-vm-connectivity/)。
+有关详细信息，请参阅[使用端口 ping 而不是 ICMP 来测试 Azure VM 连接性](/archive/blogs/mast/use-port-pings-instead-of-icmp-to-test-azure-vm-connectivity)。
 
 ## <a name="how-do-i-prevent-receiving-thousands-of-hits-from-unknown-ip-addresses-that-might-indicate-a-malicious-attack-to-the-cloud-service"></a>如何防止接收来自未知 IP 地址的数千次点击，这些 IP 地址是否会对云服务造成某种形式的恶意攻击？
 Azure 实现多层网络安全性，以保护其平台服务免受分布式拒绝服务 (DDoS) 攻击。 Azure DDoS 防御系统是 Azure 持续监视过程的一部分，通过渗透测试不断改进。 该 DDoS 防御系统的设计不仅可以抵御外部的攻击，还可以承受其他 Azure 租户的攻击。 有关详细信息，请参阅 [Azure 网络安全](https://download.microsoft.com/download/C/A/3/CA3FC5C0-ECE0-4F87-BF4B-D74064A00846/AzureNetworkSecurity_v3_Feb2015.pdf)。
@@ -67,7 +63,7 @@ Azure 实现多层网络安全性，以保护其平台服务免受分布式拒�
 
 可以使用 IIS 的 URL 重写模块将传入到云服务的默认 URL（例如 \*.cloudapp.net）的流量重定向到某个自定义 DNS 名称/URL。 由于默认情况下，URL 重写模块在 Web 角色上已启用，并且其规则是在应用程序的 web.config 中配置的，因此无论重新启动/重置映像，URL 重写模块都始终在 VM 上可用。有关详细信息，请参阅：
 
-- [为 URL 重写模块创建重写规则](https://docs.microsoft.com/iis/extensions/url-rewrite-module/creating-rewrite-rules-for-the-url-rewrite-module)
+- [为 URL 重写模块创建重写规则](/iis/extensions/url-rewrite-module/creating-rewrite-rules-for-the-url-rewrite-module)
 - [删除默认链接](https://stackoverflow.com/questions/32286487/azure-website-how-to-remove-default-link?answertab=votes#tab-top)
 
 ## <a name="how-can-i-blockdisable-incoming-traffic-to-the-default-url-of-my-cloud-service"></a>如何阻止/禁用发往云服务的默认 URL 的传入流量？
@@ -99,7 +95,7 @@ Azure 实现多层网络安全性，以保护其平台服务免受分布式拒�
 
 ## <a name="how-can-i-make-sure-the-public-facing-ip-address-of-a-cloud-service-never-changes"></a>如何确保云服务面向公众的 IP 地址永不改变？
 
-为了将云服务的 IP 地址列入允许列表，建议将一个保留 IP 与服务进行关联，否则，如果删除了部署，则会从订阅解除分配由 Azure 提供的虚拟 IP（也称 VIP）。 否则，如果删除了部署，则会从订阅解除分配由 Azure 提供的虚拟 IP。 为使 VIP 交换操作成功，需要为生产槽和暂存槽设置单独的保留 IP。 如果缺少这些 IP，交换操作会失败。 请根据以下文章来保留 IP 地址并将其与云服务进行关联：
+若要确保云服务面向公众的 IP 地址（也称 VIP）永不改变，以便它通常可由少数特定的客户端批准，我们建议你设置一个与之关联的保留 IP。 否则，如果删除了部署，则会从订阅解除分配由 Azure 提供的虚拟 IP。 为使 VIP 交换操作成功，需要为生产槽和暂存槽设置单独的保留 IP。 如果缺少这些 IP，交换操作会失败。 请根据以下文章来保留 IP 地址并将其与云服务进行关联：
 
 - [保留现有云服务的 IP 地址](/previous-versions/azure/virtual-network/virtual-networks-reserved-public-ip#reserve-the-ip-address-of-an-existing-cloud-service)
 - [使用服务配置文件将保留 IP 关联到云服务](/previous-versions/azure/virtual-network/virtual-networks-reserved-public-ip#associate-a-reserved-ip-to-a-cloud-service-by-using-a-service-configuration-file)

@@ -5,12 +5,12 @@ author: florianborn71
 ms.author: flborn
 ms.date: 06/08/2020
 ms.topic: quickstart
-ms.openlocfilehash: 6b3909281cf475a003ffaaef6f6f48441337728e
-ms.sourcegitcommit: ad66392df535c370ba22d36a71e1bbc8b0eedbe3
+ms.openlocfilehash: b469f0cae1e356c47bfe60af99c4fa2e73eab78d
+ms.sourcegitcommit: f377ba5ebd431e8c3579445ff588da664b00b36b
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 06/16/2020
-ms.locfileid: "84810220"
+ms.lasthandoff: 02/05/2021
+ms.locfileid: "99594021"
 ---
 # <a name="quickstart-deploy-native-c-sample-to-hololens"></a>快速入门：将原生 C++ 示例部署到 HoloLens
 
@@ -32,14 +32,14 @@ ms.locfileid: "84810220"
 
 * Windows SDK 10.0.18362.0[（下载）](https://developer.microsoft.com/windows/downloads/windows-10-sdk)
 * Visual Studio 2019 最新版本[（下载）](https://visualstudio.microsoft.com/vs/older-downloads/)
-* [适用于混合现实的 Visual Studio Tools](https://docs.microsoft.com/windows/mixed-reality/install-the-tools)。 具体来说，必须安装以下工作负载：
+* [适用于混合现实的 Visual Studio Tools](/windows/mixed-reality/install-the-tools)。 具体来说，必须安装以下工作负载：
   * **使用 C++ 的桌面开发**
   * **通用 Windows 平台 (UWP) 开发**
 * GIT[（下载）](https://git-scm.com/downloads)。
 
 ## <a name="clone-the-arr-samples-repository"></a>克隆 ARR 示例存储库
 
-第一步，克隆 Git 存储库，其中包含公共的 Azure 远程渲染示例。 打开命令提示符（在 Windows 开始菜单中键入 `cmd`），并切换到要在其中存储 ARR 示例项目的目录。
+第一步是克隆 Git 存储库，其中包含全局 Azure 远程渲染示例。 打开命令提示符（在 Windows 开始菜单中键入 `cmd`），并切换到要在其中存储 ARR 示例项目的目录。
 
 运行以下命令：
 
@@ -61,27 +61,27 @@ C++ HoloLens 教程位于子目录 NativeCpp/HoloLens 中。
 
 ![Visual Studio 配置](media/vs-config-native-cpp-tutorial.png)
 
-由于帐户凭据在教程的源代码中进行了硬编码，因此请将其更改为有效凭据。 为此，请在 Visual Studio 中打开文件 `HolographicAppMain.cpp` 并更改类 `HolographicAppMain` 的构造函数中创建前端的部分：
-
+由于帐户凭据在教程的源代码中进行了硬编码，因此请将其更改为有效凭据。 为此，请在 Visual Studio 中打开文件 `HolographicAppMain.cpp` 并更改类 `HolographicAppMain` 的构造函数中创建客户端的部分：
 
 ```cpp
-// 2. Create front end
+// 2. Create Client
 {
     // Users need to fill out the following with their account data and model
-    RR::AzureFrontendAccountInfo init;
+    RR::SessionConfiguration init;
     init.AccountId = "00000000-0000-0000-0000-000000000000";
     init.AccountKey = "<account key>";
-    init.AccountDomain = "westus2.mixedreality.azure.com"; // <change to your region>
+    init.RemoteRenderingDomain = "westus2.mixedreality.azure.com"; // <change to the region that the rendering session should be created in>
+    init.AccountDomain = "westus2.mixedreality.azure.com"; // <change to the region the account was created in>
     m_modelURI = "builtin://Engine";
     m_sessionOverride = ""; // If there is a valid session ID to re-use, put it here. Otherwise a new one is created
-    m_frontEnd = RR::ApiHandle(RR::AzureFrontend(init));
+    m_client = RR::ApiHandle(RR::RemoteRenderingClient(init));
 }
 ```
 
 具体而言，请更改以下值：
-* 更改 `init.AccountId` 和 `init.AccountKey` 以使用帐户数据。 请参阅有关如何[检索帐户信息](../../../how-tos/create-an-account.md#retrieve-the-account-information)的段落。
-* 将 `init.AccountDomain` 字符串中的区域部分更改为 `westus2` 以外的其他区域，例如 `"westeurope.mixedreality.azure.com"`
-* 此外，可以将 `m_sessionOverride` 更改为现有会话 ID。 可在此示例外部创建会话。例如，可使用 [powershell 脚本](../../../samples/powershell-example-scripts.md#script-renderingsessionps1)或直接使用[会话 REST API](../../../how-tos/session-rest-api.md#create-a-session) 执行此操作。
+* 更改 `init.AccountId``init.AccountKey` 和 `init.AccountDomain` 以使用帐户数据。 请参阅有关如何[检索帐户信息](../../../how-tos/create-an-account.md#retrieve-the-account-information)的段落。
+* 对于 `westus2` 以外的其他区域（例如 `"westeurope.mixedreality.azure.com"`），修改 `init.RemoteRenderingDomain` 字符串的区域部分来指定在何处创建远程渲染会话。
+* 此外，可以将 `m_sessionOverride` 更改为现有会话 ID。 可在此示例外部创建会话，例如通过使用 [PowerShell 脚本](../../../samples/powershell-example-scripts.md#script-renderingsessionps1)或直接使用[会话 REST API](../../../how-tos/session-rest-api.md#create-a-session)。
 当示例应多次运行时，建议在示例外部创建会话。 如果未传入任何会话，则该示例将在每次启动时创建一个新会话，这可能需花费几分钟的时间。
 
 现在可以编译该应用程序了。

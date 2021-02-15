@@ -1,18 +1,18 @@
 ---
 title: Azure 蓝图函数
 description: 介绍可用于 Azure 蓝图定义和分配中的蓝图项目的函数。
-ms.date: 05/22/2020
+ms.date: 01/27/2021
 ms.topic: reference
-ms.openlocfilehash: 7a52901060466692e7094cf74fa5acfcded5f1da
-ms.sourcegitcommit: e71da24cc108efc2c194007f976f74dd596ab013
+ms.openlocfilehash: 92cb906e87179073b7a69aa0bd4eab22c77087f9
+ms.sourcegitcommit: 436518116963bd7e81e0217e246c80a9808dc88c
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/29/2020
-ms.locfileid: "87422838"
+ms.lasthandoff: 01/27/2021
+ms.locfileid: "98919268"
 ---
 # <a name="functions-for-use-with-azure-blueprints"></a>与 Azure 蓝图一起使用的函数
 
-Azure 蓝图提供了使蓝图定义更加动态的函数。 这些函数用于蓝图定义和蓝图项目。 除了通过蓝图参数获取动态值外，Azure 资源管理器模板（ARM 模板）项目还支持资源管理器函数的全部使用。
+Azure 蓝图提供了使蓝图定义更加动态的函数。 这些函数用于蓝图定义和蓝图项目。 除了通过蓝图参数获取动态值外，Azure 资源管理器模板 (ARM 模板) 项目支持完整使用资源管理器函数。
 
 支持以下函数：
 
@@ -62,7 +62,7 @@ Azure 蓝图提供了使蓝图定义更加动态的函数。 这些函数用于�
 
 #### <a name="arm-template-artifact"></a>ARM 模板项目
 
-返回对象的**输出**属性是在 ARM 模板内定义的，由部署返回。
+返回对象的 **输出** 属性是在 ARM 模板内定义的，由部署返回。
 
 #### <a name="role-assignment-artifact"></a>角色分配项目
 
@@ -78,7 +78,7 @@ Azure 蓝图提供了使蓝图定义更加动态的函数。 这些函数用于�
 
 ### <a name="example"></a>示例
 
-带有 ID _myTemplateArtifact_的 ARM 模板项目，其中包含以下示例输出属性：
+带有 ID _myTemplateArtifact_ 的 ARM 模板项目，其中包含以下示例输出属性：
 
 ```json
 {

@@ -1,20 +1,20 @@
 ---
 title: 将 Azure Monitor 工作簿与 Azure AD 域服务结合使用 | Microsoft Docs
 description: 了解如何使用 Azure Monitor 工作簿在 Azure Active Directory 域服务托管域中查看安全审核并了解问题。
-author: iainfoulds
+author: justinha
 manager: daveba
 ms.service: active-directory
 ms.subservice: domain-services
 ms.workload: identity
 ms.topic: how-to
 ms.date: 07/09/2020
-ms.author: iainfou
-ms.openlocfilehash: 926f4dd94ba5b1f864a002c282004b3a9f438dca
-ms.sourcegitcommit: 5b6acff3d1d0603904929cc529ecbcfcde90d88b
+ms.author: justinha
+ms.openlocfilehash: 3067388265fb69b916fe0e179cb896401b7c2dc4
+ms.sourcegitcommit: 8192034867ee1fd3925c4a48d890f140ca3918ce
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/21/2020
-ms.locfileid: "88722732"
+ms.lasthandoff: 12/05/2020
+ms.locfileid: "96618155"
 ---
 # <a name="review-security-audit-events-in-azure-active-directory-domain-services-using-azure-monitor-workbooks"></a>使用 Azure Monitor 工作簿查看 Azure Active Directory 域服务中的安全审核事件
 
@@ -58,7 +58,7 @@ Azure AD DS 包含以下两个工作簿模板：
 1. 选择你的托管域，例如 aaddscontoso.com
 1. 从左侧的菜单中选项“监视”>“工作簿”
 
-    ![在 Azure 门户中选择“工作簿”菜单选项](./media/use-azure-monitor-workbooks/select-workbooks-in-azure-portal.png)
+    ![突出显示选择“安全概览”报告和“帐户活动”报告位置的屏幕截图。](./media/use-azure-monitor-workbooks/select-workbooks-in-azure-portal.png)
 
 1. 选择“安全概述报表”。
 1. 从工作簿顶部的下拉菜单中，选择 Azure 订阅，然后选择一个 Azure Monitor 工作区。
@@ -122,5 +122,5 @@ Azure Monitor 工作簿中的所有图表和表都是使用 Kusto 查询生成�
 [password-policy]: password-policy.md
 [troubleshoot-sign-in]: troubleshoot-sign-in.md
 [troubleshoot-account-lockout]: troubleshoot-account-lockout.md
-[azure-monitor-queries]: ../azure-monitor/log-query/query-language.md
+[azure-monitor-queries]: /azure/data-explorer/kusto/query/
 [kusto-queries]: /azure/kusto/query/tutorial?pivots=azuredataexplorer

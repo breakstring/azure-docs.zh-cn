@@ -2,22 +2,22 @@
 title: 在 Azure 实验室服务中配置实验室的 Vm 自动关闭
 description: 了解如何启用或禁用在断开远程桌面连接时自动关闭 VM。
 ms.topic: article
-ms.date: 08/17/2020
-ms.openlocfilehash: 0df3fdcaea99c00461caac37a3b655d152a0e527
-ms.sourcegitcommit: c5021f2095e25750eb34fd0b866adf5d81d56c3a
+ms.date: 10/01/2020
+ms.openlocfilehash: 8f9080f3b7b762d3b9fa448a903a4167cd2cec4a
+ms.sourcegitcommit: 5e5a0abe60803704cf8afd407784a1c9469e545f
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/25/2020
-ms.locfileid: "88798476"
+ms.lasthandoff: 12/01/2020
+ms.locfileid: "96433946"
 ---
 # <a name="configure-automatic-shutdown-of-vms-for-a-lab"></a>配置实验室的 Vm 自动关闭
 
 本文介绍如何配置实验室的 Vm 自动关闭。
 
 可以启用多个自动关闭成本控制功能，以便在不使用虚拟机的情况主动阻止额外成本。 以下三种自动关闭和断开连接功能的组合将捕获用户意外离开其虚拟机运行的大多数情况：
- 
-* 自动断开用户与 OS 认为空闲 (仅限 Windows) 的虚拟机的连接。
-* 当用户断开 (Windows & Linux) 时，自动关闭虚拟机。
+ 
+* 自动断开用户与 OS 认为空闲的虚拟机的连接。
+* 用户断开连接时，自动关闭虚拟机。
 * 自动关闭已启动但用户不连接的虚拟机。
 
 若要详细了解自动关闭功能，请参阅 [自动关闭设置的最大化成本控制](cost-management-guide.md#automatic-shutdown-settings-for-cost-control) 部分。
@@ -37,8 +37,7 @@ ms.locfileid: "88798476"
 请确保在 " [利用自动关闭设置最大化成本控制](cost-management-guide.md#automatic-shutdown-settings-for-cost-control) " 部分中查看有关自动关闭的详细信息。
 
 > [!WARNING]
-> 如果你在断开与 VM 的 RDP 会话连接之前，在 VM 上关闭 Windows 操作系统 (OS)，自动关闭功能将无法正常工作。  
-
+> 如果在将 RDP 会话与 VM 断开连接之前，在 VM 上关闭 Linux 或 Windows 操作系统 (操作系统) ，自动关闭功能将无法正常工作。  
 ## <a name="next-steps"></a>后续步骤
 
-[用于课堂实验室的仪表板](use-dashboard.md)
+[实验室的仪表板](use-dashboard.md)

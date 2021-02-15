@@ -3,8 +3,10 @@
 - name: 概述
   href: media-services-overview.md
   items:
-    - name: 方案和可用性
+    - name: 常见方案
       href: scenarios-and-availability.md
+    - name: 区域可用性
+      href: availability-regions-v-2.md
     - name: 概念
       href: media-services-concepts.md
 - name: 入门
@@ -47,7 +49,7 @@
           href: media-services-portal-live-passthrough-get-started.md
         - name: .NET
           href: media-services-dotnet-live-encode-with-onpremises-encoders.md
-- name: 如何
+- name: 操作方式
   items:
     - name: 旧组件
       displayName: 'deprecated, deprecation, retired, retirement, legacy'
@@ -115,8 +117,6 @@
     - name: 对内容进行编码
       href: media-services-encode-asset.md
       items:
-        - name: 比较编码器
-          href: media-services-compare-encoders.md
         - name: 管理编码的速度和并发
           href: media-services-manage-encoding-speed.md
         - name: Media Encoder Standard (MES)
@@ -205,20 +205,6 @@
                   href: media-services-mes-preset-H264-Single-Bitrate-High-Quality-SD-for-Android.md
                 - name: 适用于 Android 的 H264 单比特率低品质 SD
                   href: media-services-mes-preset-H264-Single-Bitrate-Low-Quality-SD-for-Android.md
-        - name: 媒体编码器高级工作流
-          items:
-            - name: 媒体编码器高级工作流格式和编解码器
-              href: media-services-premium-workflow-encoder-formats.md
-            - name: 使用媒体编码器高级工作流进行编码
-              items:
-                - name: 媒体编码器高级工作流
-                  href: media-services-encode-with-premium-workflow.md
-                - name: 媒体编码器高级工作流教程
-                  href: media-services-media-encoder-premium-workflow-tutorials.md
-                - name: 使用工作流设计器创建高级编码工作流
-                  href: media-services-workflow-designer.md
-                - name: 使用多个输入的高级工作流
-                  href: media-services-media-encoder-premium-workflow-multiplefilesinput.md
         - name: 创建生成 fMP4 区块的任务
           href: media-services-generate-fmp4-chunks.md
         - name: 媒体处理器
@@ -318,33 +304,16 @@
               href: hybrid-design-drm-sybsystem.md
             - name: 引用多 DRM 设计
               href: media-services-cenc-with-multidrm-access-control.md
-    - name: 分析
-      href: media-services-analytics-overview.md
+    - name: 分析内容
       items:
-        - name: 使用 Azure 门户分析媒体
-          href: media-services-portal-analyze.md
-        - name: 使用 Indexer 2 进行处理
-          href: media-services-process-content-with-indexer2.md
         - name: 使用 Indexer 进行处理
           href: media-services-index-content.md
-          items:
-            - name: 任务预设
-              href: indexer-task-preset.md
-        - name: 使用 Face Detector 进行处理
-          href: media-services-face-and-emotion-detection.md
-        - name: 使用 Motion Detector 进行处理
-          href: media-services-motion-detection.md
+        - name: 任务预设
+          href: indexer-task-preset.md
         - name: 使用 Face Redactor 进行处理
           href: media-services-face-redaction.md
-          items:
-            - name: Face Redactor 演练
-              href: media-services-redactor-walkthrough.md
-        - name: 使用视频缩略图进行处理
-          href: media-services-video-summarization.md
-        - name: 使用 OCR 进行处理
-          href: media-services-video-optical-character-recognition.md
-        - name: 使用内容审查器进行处理
-          href: media-services-content-moderation.md
+        - name: Face Redactor 演练
+          href: media-services-redactor-walkthrough.md
     - name: 配置遥测
       href: media-services-telemetry-overview.md
       items:

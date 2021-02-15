@@ -1,6 +1,6 @@
 ---
 title: 创建具有加速网络的 Windows VM - Azure PowerShell
-description: 创建具有加速网络的 Windows 虚拟机（VM），以大幅提高其网络性能。
+description: 创建具有加速网络的 Windows 虚拟机 (VM)，以大幅提高其网络性能。
 services: virtual-network
 documentationcenter: ''
 author: gsilva5
@@ -14,12 +14,12 @@ ms.tgt_pltfrm: vm-windows
 ms.workload: infrastructure
 ms.date: 04/15/2020
 ms.author: gsilva
-ms.openlocfilehash: fd50af98fe0d7f20273c45e2b86c18215a3626f0
-ms.sourcegitcommit: dccb85aed33d9251048024faf7ef23c94d695145
+ms.openlocfilehash: b0ebb75530858a589c3166e21261e2f737fff50d
+ms.sourcegitcommit: 436518116963bd7e81e0217e246c80a9808dc88c
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/28/2020
-ms.locfileid: "87289629"
+ms.lasthandoff: 01/27/2021
+ms.locfileid: "98919963"
 ---
 # <a name="create-a-windows-vm-with-accelerated-networking-using-azure-powershell"></a>使用 Azure PowerShell 创建具有加速网络的 Windows VM
 
@@ -61,11 +61,9 @@ ms.locfileid: "87289629"
 
 ### <a name="supported-vm-instances"></a>支持的 VM 实例
 
-大多数常规用途实例以及具有两个或更多虚拟 CPU (vCPU) 的计算优化实例都支持加速网络。  这些受支持的系列包括：Dv2/DSv2 和 F/Fs。
+大多数常规用途实例以及具有 2 个或更多 vCPU 的计算优化实例都支持加速网络。 在支持超线程的实例上，具有 4 个或更多 vCPU 的 VM 实例支持加速网络。 
 
-在支持超线程的实例上，具有四个或更多个 vCPU 的 VM 实例支持加速网络。 支持的系列包括： D/Dsv3、D/Dsv4、Da/Dasv4、E/Esv3、Ea/Easv4、Fsv2、Lsv2、Ms/Mms 和 Ms/Mmsv2。
-
-有关 VM 实例的详细信息，请参阅 [Azure 中的 Windows 虚拟机大小](../virtual-machines/windows/sizes.md?toc=%2fazure%2fvirtual-network%2ftoc.json)。
+在单个 [虚拟机大小](../virtual-machines/sizes.md) 文档中可以找到对加速网络的支持。 
 
 ### <a name="custom-images"></a>自定义映像
 
@@ -102,7 +100,7 @@ ms.locfileid: "87289629"
 
 ## <a name="vm-creation-using-powershell"></a>使用 PowerShell 创建 VM
 
-请先安装 [Azure PowerShell](/powershell/azure/install-az-ps) 1.0.0 版或更高版本。 要查找当前安装的版本，请运行 `Get-Module -ListAvailable Az`。 如果需要进行安装或升级，请从 [PowerShell 库](https://www.powershellgallery.com/packages/Az)安装最新版本的 Az 模块。 在 PowerShell 会话中，使用[AzAccount](/powershell/module/az.accounts/connect-azaccount)登录到 Azure 帐户。
+请先安装 [Azure PowerShell](/powershell/azure/install-az-ps) 1.0.0 版或更高版本。 要查找当前安装的版本，请运行 `Get-Module -ListAvailable Az`。 如果需要进行安装或升级，请从 [PowerShell 库](https://www.powershellgallery.com/packages/Az)安装最新版本的 Az 模块。 在 PowerShell 会话中，使用 [AzAccount](/powershell/module/az.accounts/connect-azaccount)登录到 Azure 帐户。
 
 在以下示例中，请将示例参数名称替换成自己的值。 参数名称示例包括 myResourceGroup、myNic 和 myVM。  
 
@@ -208,7 +206,7 @@ ms.locfileid: "87289629"
     $vmConfig = New-AzVMConfig -VMName "myVm" -VMSize "Standard_DS4_v2"
     ```
 
-    若要获取所有 VM 大小和特性列表，请参阅 [Windows VM 大小](../virtual-machines/windows/sizes.md?toc=%2fazure%2fvirtual-network%2ftoc.json)。
+    若要获取所有 VM 大小和特性列表，请参阅 [Windows VM 大小](../virtual-machines/sizes.md?toc=%2fazure%2fvirtual-network%2ftoc.json)。
 
 3. 通过 [Set-AzVMOperatingSystem](/powershell/module/az.compute/set-azvmoperatingsystem) 和 [Set-AzVMSourceImage](/powershell/module/az.compute/set-azvmsourceimage) 创建 VM 配置的其余部分。 以下命令将创建 Windows Server 2016 VM：
 

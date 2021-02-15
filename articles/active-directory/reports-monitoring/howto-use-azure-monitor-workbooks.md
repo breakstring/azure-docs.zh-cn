@@ -14,12 +14,12 @@ ms.subservice: report-monitor
 ms.date: 10/30/2019
 ms.author: markvi
 ms.reviewer: dhanyahk
-ms.openlocfilehash: ec492466e107eb6f4821f0e6d2caed9daa141a35
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 76dc7693b1773038d610f9ed42eddad2c81e3eaf
+ms.sourcegitcommit: 857859267e0820d0c555f5438dc415fc861d9a6b
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "85608944"
+ms.lasthandoff: 10/30/2020
+ms.locfileid: "93126628"
 ---
 # <a name="how-to-use-azure-monitor-workbooks-for-azure-active-directory-reports"></a>如何将 Azure Monitor 工作簿用于 Azure Active Directory 报表
 
@@ -42,13 +42,13 @@ ms.locfileid: "85608944"
 
 - 深入了解登录日志查询、显示获得或未获得访问权限用户数的工作簿报表，以及访问资源时绕过条件访问策略的用户数。
 
-- 为帮助解决这些问题，Azure Active Directory 提供了用于监视的工作簿。 [Azure Monitor 工作簿](https://docs.microsoft.com/azure/azure-monitor/platform/workbooks-overview)可将文本、分析查询、指标和参数合并到丰富的交互式报表中。
+- 为帮助解决这些问题，Azure Active Directory 提供了用于监视的工作簿。 [Azure Monitor 工作簿](../../azure-monitor/platform/workbooks-overview.md)可将文本、分析查询、指标和参数合并到丰富的交互式报表中。
 
 
 
 本文：
 
-- 假设你熟悉如何[使用 Monitor 工作簿创建交互式报表](https://docs.microsoft.com/azure/azure-monitor/platform/workbooks-overview)。
+- 假设你熟悉如何[使用 Monitor 工作簿创建交互式报表](../../azure-monitor/platform/workbooks-overview.md)。
 
 - 介绍如何使用 Monitor 工作簿了解条件访问策略的效果，以排查登录失败并识别旧式身份验证。
  
@@ -58,11 +58,11 @@ ms.locfileid: "85608944"
 
 要使用 Monitor 工作簿，需要：
 
-- 拥有高级 (P1 或 P2) 许可证的 Azure Active Directory 租户。 了解如何[获得高级许可证](https://docs.microsoft.com/azure/active-directory/fundamentals/active-directory-get-started-premium)。
+- 拥有高级 (P1 或 P2) 许可证的 Azure Active Directory 租户。 了解如何[获得高级许可证](../fundamentals/active-directory-get-started-premium.md)。
 
-- [Log Analytics 工作区](https://docs.microsoft.com/azure/azure-monitor/learn/quick-create-workspace)。
+- [Log Analytics 工作区](../../azure-monitor/learn/quick-create-workspace.md)。
 
-- 对 Log Analytics 工作区的[访问权限](https://docs.microsoft.com/azure/azure-monitor/platform/manage-access#manage-access-using-workspace-permissions)
+- 对 Log Analytics 工作区的[访问权限](../../azure-monitor/platform/manage-access.md#manage-access-using-workspace-permissions)
 - Azure Active Directory 中的以下角色（如果要通过 Azure Active Directory 门户访问 Log Analytics）
     - 安全管理员
     - 安全读取者
@@ -70,7 +70,7 @@ ms.locfileid: "85608944"
     - 全局管理员
 
 ## <a name="roles"></a>角色
-必须是以下角色之一，并且可以[访问基础 Log Analytics](https://docs.microsoft.com/azure/azure-monitor/platform/manage-access#manage-access-using-azure-permissions) 工作区以管理工作簿：
+必须是以下角色之一，并且可以[访问基础 Log Analytics](../../azure-monitor/platform/manage-access.md#manage-access-using-azure-permissions) 工作区以管理工作簿：
 -   全局管理员
 -   安全管理员
 -   安全读取者
@@ -174,7 +174,7 @@ ms.locfileid: "85608944"
 
 对于已禁用登录，可以按条件访问状态进行细分。
 
-![条件访问状态](./media/howto-use-azure-monitor-workbooks/conditional-access-status.png)
+![屏幕截图显示条件访问状态和最近的登录。](./media/howto-use-azure-monitor-workbooks/conditional-access-status.png)
 
 
 ## <a name="conditional-access-insights"></a>条件访问见解
@@ -194,12 +194,12 @@ ms.locfileid: "85608944"
 
 - **数据视图**
 
-![条件访问状态](./media/howto-use-azure-monitor-workbooks/access-insights.png)
+![屏幕截图显示条件访问窗格，可在其中选择条件性访问策略。](./media/howto-use-azure-monitor-workbooks/access-insights.png)
 
 
 影响摘要显示所选策略对其产生特定结果的用户或登录数。 总计显示在选定时间范围内针对选定策略计算的用户或登录数。 单击磁贴可以按该结果类型筛选工作簿中的数据。 
 
-![条件访问状态](./media/howto-use-azure-monitor-workbooks/impact-summary.png)
+![屏幕截图显示用于筛选结果的磁贴，如合计、成功和失败。](./media/howto-use-azure-monitor-workbooks/impact-summary.png)
 
 该工作簿还按以下六项条件细分显示所选策略造成的影响： 
 - **设备状态**
@@ -209,15 +209,11 @@ ms.locfileid: "85608944"
 - **位置**
 - **应用程序**
 
-![条件访问状态](./media/howto-use-azure-monitor-workbooks/device-platform.png)
+![屏幕截图显示了 "登录总数" 筛选器的详细信息。](./media/howto-use-azure-monitor-workbooks/device-platform.png)
 
 你还可以调查按工作簿中所选参数进行筛选的单个登录。 搜索按登录频率排序的单个用户，并查看其相应的登录事件。 
 
-![条件访问状态](./media/howto-use-azure-monitor-workbooks/filtered.png)
-
-
-
-
+![屏幕截图显示你可以查看的单个登录。](./media/howto-use-azure-monitor-workbooks/filtered.png)
 
 ## <a name="sign-ins-by-grant-controls"></a>登录情况（按授权控制）
 
@@ -302,4 +298,4 @@ ms.locfileid: "85608944"
 
 ## <a name="next-steps"></a>后续步骤
 
-[使用 Monitor 工作簿创建交互式报表](https://docs.microsoft.com/azure/azure-monitor/platform/workbooks-overview)。
+[使用 Monitor 工作簿创建交互式报表](../../azure-monitor/platform/workbooks-overview.md)。

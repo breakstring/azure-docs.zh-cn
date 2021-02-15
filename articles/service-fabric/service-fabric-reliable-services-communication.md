@@ -1,16 +1,15 @@
 ---
 title: Reliable Services 通信概述
 description: 概述 Reliable Services 通信模型，包括在服务上打开侦听器、解析终结点，以及在服务之间进行通信。
-author: vturecek
 ms.topic: conceptual
 ms.date: 11/01/2017
-ms.author: vturecek
-ms.openlocfilehash: 0899e33e875fea4a1708e593876b7ef771004677
-ms.sourcegitcommit: dabd9eb9925308d3c2404c3957e5c921408089da
+ms.custom: devx-track-csharp
+ms.openlocfilehash: 3436d29446e963faea9bda47f5a5247b7de7d859
+ms.sourcegitcommit: 67b44a02af0c8d615b35ec5e57a29d21419d7668
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/11/2020
-ms.locfileid: "86253178"
+ms.lasthandoff: 01/06/2021
+ms.locfileid: "97912608"
 ---
 # <a name="how-to-use-the-reliable-services-communication-apis"></a>如何使用 Reliable Services 通信 API
 “Azure Service Fabric 即平台”完全不受服务间通信的影响。 所有协议和堆栈（从 UDP 到 HTTP）都可接受。 至于服务应以哪种方式通信，完全由服务开发人员选择。 Reliable Services 应用程序框架提供了内置通信堆栈和 API，可用于生成自定义通信组件。
@@ -112,7 +111,7 @@ protected override IEnumerable<ServiceReplicaListener> CreateServiceReplicaListe
 ```
 
 > [!NOTE]
-> 为一个服务创建多个侦听器时，**必须**为每个侦听器指定一个唯一名称。
+> 为一个服务创建多个侦听器时，**必须** 为每个侦听器指定一个唯一名称。
 >
 >
 
@@ -147,7 +146,7 @@ int port = codePackageActivationContext.getEndpoint("ServiceEndpoint").getPort()
 >
 
 ### <a name="service-address-registration"></a>服务地址注册
-名为*命名服务*的系统服务在 Service Fabric 群集上运行。 命名服务是服务及其地址（服务的每个实例或副本正在其上侦听）的注册机构。 当 `ICommunicationListener(C#) / CommunicationListener(Java)` 的 `OpenAsync(C#) / openAsync(Java)` 方法完成时，它的返回值会在命名服务中注册。 这个在命名服务中发布的返回值是一个字符串，其值完全可以是任何内容。 此字符串值是客户端向命名服务请求服务的地址时看到的内容。
+名为 *命名服务* 的系统服务在 Service Fabric 群集上运行。 命名服务是服务及其地址（服务的每个实例或副本正在其上侦听）的注册机构。 当 `ICommunicationListener(C#) / CommunicationListener(Java)` 的 `OpenAsync(C#) / openAsync(Java)` 方法完成时，它的返回值会在命名服务中注册。 这个在命名服务中发布的返回值是一个字符串，其值完全可以是任何内容。 此字符串值是客户端向命名服务请求服务的地址时看到的内容。
 
 ```csharp
 public Task<string> OpenAsync(CancellationToken cancellationToken)
@@ -196,7 +195,7 @@ Service Fabric 提供许多 API，使客户端和其他服务随后可以通过�
 Reliable Services API 提供以下库来编写与服务通信的客户端。
 
 ### <a name="service-endpoint-resolution"></a>服务终结点解析
-与服务通信的第一步是，解析要与之通信的服务分区或实例的终结点地址。 `ServicePartitionResolver(C#) / FabricServicePartitionResolver(Java)` 实用工具类是一个基本基元，可帮助客户端在运行时确定服务的终结点。 确定服务终结点的过程在 Service Fabric 术语中称为*服务终结点解析*。
+与服务通信的第一步是，解析要与之通信的服务分区或实例的终结点地址。 `ServicePartitionResolver(C#) / FabricServicePartitionResolver(Java)` 实用工具类是一个基本基元，可帮助客户端在运行时确定服务的终结点。 确定服务终结点的过程在 Service Fabric 术语中称为 *服务终结点解析*。
 
 若要连接到群集内的服务，可使用默认设置创建 ServicePartitionResolver。 这是针对大多数情况的建议用法：
 
@@ -289,7 +288,7 @@ public class MyCommunicationClient implements CommunicationClient {
 }
 ```
 
-客户端工厂主要负责创建通信客户端。 对于不会维持持续连接的客户端（例如 HTTP 客户端），工厂只需创建并返回客户端。 其他会维持持续连接的协议（例如某些二进制协议）也应该由工厂验证，以确定是否需要重新创建连接。  
+客户端工厂主要负责创建通信客户端。 对于不会维持持续连接的客户端（例如 HTTP 客户端），工厂只需创建并返回客户端。 其他维护持久性连接的协议（例如某些二进制协议）也应该 `ValidateClient(string endpoint, MyCommunicationClient client)` 由工厂)  (验证，以确定是否需要重新创建连接。  
 
 ```csharp
 public class MyCommunicationClientFactory : CommunicationClientFactoryBase<MyCommunicationClient>
@@ -332,14 +331,14 @@ public class MyCommunicationClientFactory extends CommunicationClientFactoryBase
 }
 ```
 
-最后，异常处理程序负责确定发生异常时要采取的操作。 异常分为**可重试**和**不可重试**两种类型。
+最后，异常处理程序负责确定发生异常时要采取的操作。 异常分为 **可重试** 和 **不可重试** 两种类型。
 
-* **不可重试**的异常只会重新引发回调用方。
-* **可重试**的异常进一步分为**暂时性**和**非暂时性**两种类型。
-  * **暂时性**异常是只会重试而不会重新解析服务终结点地址的异常。 这类异常包括暂时性网络问题或服务错误响应，但不包括指出服务终结点地址不存在的异常。
-  * **非暂时性**异常是需要重新解析服务终结点地址的异常。 这类异常包括指出无法访问服务终结点（表示服务已移至其他节点）的异常。
+* **不可重试** 的异常只会重新引发回调用方。
+* **可重试** 的异常进一步分为 **暂时性** 和 **非暂时性** 两种类型。
+  * **暂时性** 异常是只会重试而不会重新解析服务终结点地址的异常。 这类异常包括暂时性网络问题或服务错误响应，但不包括指出服务终结点地址不存在的异常。
+  * **非暂时性** 异常是需要重新解析服务终结点地址的异常。 这类异常包括指出无法访问服务终结点（表示服务已移至其他节点）的异常。
 
-`TryHandleException` 针对给定异常做出决定。 如果它**不知道**要对异常做出哪些决定，则应返回 **false**。 如果它**知道**如何做决定，则应相应地设置结果并返回 **true**。
+`TryHandleException` 针对给定异常做出决定。 如果它 **不知道** 要对异常做出哪些决定，则应返回 **false**。 如果它 **知道** 如何做决定，则应相应地设置结果并返回 **true**。
 
 ```csharp
 class MyExceptionHandler : IExceptionHandler

@@ -8,20 +8,20 @@ ms.date: 08/24/2020
 ms.author: rogarana
 ms.subservice: disks
 ms.custom: references_regions
-ms.openlocfilehash: 4498e78b408f64ab5bc00b9f8730559b90c95d57
-ms.sourcegitcommit: d39f2cd3e0b917b351046112ef1b8dc240a47a4f
+ms.openlocfilehash: ba7d6d8deb2034f8b2a853cf74635687561c41ea
+ms.sourcegitcommit: 1f1d29378424057338b246af1975643c2875e64d
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/25/2020
-ms.locfileid: "88817387"
+ms.lasthandoff: 02/05/2021
+ms.locfileid: "99573596"
 ---
 # <a name="use-the-azure-portal-to-enable-end-to-end-encryption-using-encryption-at-host"></a>使用 Azure 门户在主机上使用加密启用端到端加密
 
 启用主机加密时，存储在 VM 主机上的数据将静态加密，且已加密的数据将流向存储服务。 有关主机加密以及其他托管磁盘加密类型的概念信息，请参阅：
 
-* Linux： [VM 数据的主机端对端加密](./linux/disk-encryption.md#encryption-at-host---end-to-end-encryption-for-your-vm-data)。
+* Linux： [VM 数据的主机端对端加密](./disk-encryption.md#encryption-at-host---end-to-end-encryption-for-your-vm-data)。
 
-* Windows： [VM 数据的主机端对端加密](./windows/disk-encryption.md#encryption-at-host---end-to-end-encryption-for-your-vm-data)。
+* Windows： [VM 数据的主机端对端加密](./disk-encryption.md#encryption-at-host---end-to-end-encryption-for-your-vm-data)。
 
 ## <a name="restrictions"></a>限制
 
@@ -37,7 +37,7 @@ ms.locfileid: "88817387"
 
 ## <a name="prerequisites"></a>先决条件
 
-为了能够为 VM 或虚拟机规模集使用主机加密，必须在订阅上启用该功能。 向 encryptionAtHost@microsoft 发送电子邮件。 带有订阅 Id 的 com 用于为你的订阅启用该功能。
+为了能够为 VM 或虚拟机规模集使用主机加密，必须在订阅上启用该功能。 使用你的订阅 Id 向发送电子邮件 encryptionAtHost@microsoft.com ，以便为你的订阅启用该功能。
 
 使用 [提供的链接](https://aka.ms/diskencryptionupdates)登录到 Azure 门户。
 
@@ -58,12 +58,12 @@ ms.locfileid: "88817387"
 1. 创建新的虚拟机，选择适当的区域和受支持的 VM 大小。
 1. 根据需要在 " **基本** " 边栏选项卡中填写其他值，然后转到 " **磁盘** " 边栏选项卡。
 
-    :::image type="content" source="media/virtual-machines-disks-encryption-at-host-portal/disks-encryption-at-host-basic-blade.png" alt-text="将突出显示 "虚拟机创建基本信息" 边栏选项卡、"区域" 和 "V" 大小的屏幕截图。":::
+    :::image type="content" source="media/virtual-machines-disks-encryption-at-host-portal/disks-encryption-at-host-basic-blade.png" alt-text="将突出显示 &quot;虚拟机创建基本信息&quot; 边栏选项卡、&quot;区域&quot; 和 &quot;V&quot; 大小的屏幕截图。":::
 
 1. 在 " **磁盘** " 边栏选项卡上，选择 **"是"** 以 **在主机上加密**。
 1. 根据需要进行剩余选择。
 
-    :::image type="content" source="media/virtual-machines-disks-encryption-at-host-portal/disks-encryption-at-host-disk-blade.png" alt-text="虚拟机 "创建磁盘" 边栏选项卡的屏幕截图会突出显示 "在主机上加密"。":::
+    :::image type="content" source="media/virtual-machines-disks-encryption-at-host-portal/disks-encryption-at-host-disk-blade.png" alt-text="虚拟机 &quot;创建磁盘&quot; 边栏选项卡的屏幕截图会突出显示 &quot;在主机上加密&quot;。":::
 
 1. 完成 VM 部署过程，选择适合你的环境的选项。
 

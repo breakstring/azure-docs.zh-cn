@@ -10,12 +10,13 @@ ms.subservice: content-moderator
 ms.topic: conceptual
 ms.date: 10/24/2019
 ms.author: pafarley
-ms.openlocfilehash: 6a020163347babfc68ac9aab0514352a35f5831c
-ms.sourcegitcommit: 023d10b4127f50f301995d44f2b4499cbcffb8fc
+ms.custom: devx-track-csharp
+ms.openlocfilehash: bec31f830adddfc7251ce36e13ef0bfaa0af7638
+ms.sourcegitcommit: 829d951d5c90442a38012daaf77e86046018e5b9
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/18/2020
-ms.locfileid: "88542932"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "88931703"
 ---
 # <a name="moderate-with-custom-image-lists-in-c"></a>在 C# 中通过自定义图像列表进行审查
 

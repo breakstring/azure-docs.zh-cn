@@ -1,29 +1,29 @@
 ---
 title: 概述 - Azure Database for MariaDB
 description: 了解 Azure Database for MariaDB 服务，这是 Microsoft 云中基于 MySQL 社区版的关系数据库服务。
-author: ajlam
-ms.author: andrela
-ms.service: mariadb
+author: savjani
+ms.author: pariks
+ms.service: jroth
 ms.topic: overview
 ms.custom: mvc
 ms.date: 3/18/2020
-ms.openlocfilehash: 84fd24890495e7278c69c2f83c7182fd65f86791
-ms.sourcegitcommit: 58faa9fcbd62f3ac37ff0a65ab9357a01051a64f
+ms.openlocfilehash: 7c365dee2b3ac32a62b38d0b3273f2f13e402936
+ms.sourcegitcommit: 52e3d220565c4059176742fcacc17e857c9cdd02
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/29/2020
-ms.locfileid: "79535555"
+ms.lasthandoff: 01/21/2021
+ms.locfileid: "98662011"
 ---
 # <a name="what-is-azure-database-for-mariadb"></a>什么是 Azure Database for MariaDB？
 
 在 Microsoft 云中，Azure Database for MariaDB 是关系数据库服务。 Azure Database for MariaDB 基于 [MariaDB 社区版](https://mariadb.org/download/)（可在 GPLv2 许可证下使用）数据库引擎，版本为 10.2 和 10.3。
 
-Azure Database for MariaDB 的优点包括：
+Azure Database for MariaDB 服务器提供：
 
 - 没有额外费用的内置高可用性。
 - 使用非独占即用即付定价，实现可预测性能。
-- 根据需要在数秒内缩放。
-- 保护静态和动态敏感数据的安全。
+- 根据需要在数秒内缩放的能力。
+- 对静态和动态敏感数据的安全保护。
 - 长达 35 天的自动备份和时间点还原。
 - 企业级安全性和符合性。
 
@@ -41,7 +41,7 @@ For a set of Azure CLI samples, see:
 
 ## <a name="adjust-performance-and-scale-within-seconds"></a>几秒钟内调整性能和规模
 
-Azure Database for MariaDB 服务提供多个服务层级：“基本”、“常规用途”和“内存优化”。 每个层提供不同的性能和功能，以支持从轻型到重型的数据库工作负荷。 可以在一个月内花费很少的费用基于小型数据库构建第一个应用，然后根据解决方案的需求调整缩放。 动态可伸缩性有助于数据库以透明方式对不断变化的资源需求做出响应。 只需在需要资源时为所需的资源付费。 有关详细信息，请参阅 [定价层](concepts-pricing-tiers.md)。
+Azure Database for MariaDB 服务提供多个服务层级：“基本”、“常规用途”和“内存优化”。 每个层提供不同的性能和功能，以支持从轻型到重型的数据库工作负荷。 可以在一个月内花费很少的费用基于小型数据库构建第一个应用，然后根据解决方案的需求调整缩放。 动态可伸缩性有助于数据库以透明方式对不断变化的资源需求做出响应。 只需在需要资源时为所需的资源付费。 有关详细信息，请参阅[定价层](concepts-pricing-tiers.md)。
 
 ## <a name="monitoring-and-alerting"></a>监视和警报
 

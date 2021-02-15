@@ -3,34 +3,33 @@ title: 索引器中的字段映射
 titleSuffix: Azure Cognitive Search
 description: 针对字段名称和数据表示的差异配置帐户索引器中的字段映射。
 manager: nitinme
-author: mattmsft
-ms.author: magottei
-ms.devlang: rest-api
+author: HeidiSteen
+ms.author: heidist
 ms.service: cognitive-search
 ms.topic: conceptual
-ms.date: 06/11/2020
-ms.openlocfilehash: 47a8d58d6ca0a8a04823fe09fb52490f13cfead7
-ms.sourcegitcommit: 4913da04fd0f3cf7710ec08d0c1867b62c2effe7
+ms.date: 01/28/2021
+ms.openlocfilehash: fb3a77291d8b24d5774094533f8c214f1527d771
+ms.sourcegitcommit: eb546f78c31dfa65937b3a1be134fb5f153447d6
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/14/2020
-ms.locfileid: "88208731"
+ms.lasthandoff: 02/02/2021
+ms.locfileid: "99430439"
 ---
 # <a name="field-mappings-and-transformations-using-azure-cognitive-search-indexers"></a>使用 Azure 认知搜索索引器进行字段映射和转换
 
 ![索引器阶段](./media/search-indexer-field-mappings/indexer-stages-field-mappings.png "索引器阶段")
 
-使用 Azure 认知搜索索引器时，你有时会发现，输入数据与目标索引的架构不完全匹配。 在这种情况下，可以在索引编制过程中使用**字段映射**来调整数据的形状。
+使用 Azure 认知搜索索引器时，你有时会发现，输入数据与目标索引的架构不完全匹配。 在这种情况下，可以在索引编制过程中使用 **字段映射** 来调整数据的形状。
 
 在某些情况下，字段映射会很有用：
 
 * 数据源具有名为 `_id` 的字段，但 Azure 认知搜索不允许字段名称以下划线开头。 使用字段映射可以有效地为字段重命名。
 * 你希望使用同一数据源数据填充索引中的多个字段。 例如，你可能想要将不同的分析器应用到这些字段。
 * 你希望使用多个数据源中的数据填充索引字段，而每个数据源使用不同的字段名称。
-* 需要对数据进行 Base64 编码或解码。 字段映射支持多个**映射函数**，包括用于 Base64 编码和解码的函数。
+* 需要对数据进行 Base64 编码或解码。 字段映射支持多个 **映射函数**，包括用于 Base64 编码和解码的函数。
 
 > [!NOTE]
-> 索引器中的字段映射是将数据字段映射到索引字段的一种简单方法，可实现轻量级数据转换。 较复杂的数据可能需要经过预处理，才能将形状调整为有利于编制索引的形式。 可以考虑使用 [Azure 数据工厂](https://docs.microsoft.com/azure/data-factory/)。
+> 索引器中的字段映射是将数据字段映射到索引字段的一种简单方法，可实现轻量级数据转换。 较复杂的数据可能需要经过预处理，才能将形状调整为有利于编制索引的形式。 可以考虑使用 [Azure 数据工厂](../data-factory/index.yml)。
 
 ## <a name="set-up-field-mappings"></a>设置字段映射
 
@@ -43,16 +42,15 @@ ms.locfileid: "88208731"
 字段映射将添加到索引器定义的 `fieldMappings` 数组中。
 
 > [!NOTE]
-> 如果未添加任何字段映射，则索引器将假定数据源字段映射到具有相同名称的索引字段。 添加字段映射将删除源和目标字段的这些默认字段映射。 一些索引器（如 [Blob 存储索引器](search-howto-indexing-azure-blob-storage.md)）为索引键字段添加默认字段映射。
+> 如果未添加任何字段映射，则索引器将假定数据源字段映射到具有相同名称的索引字段。 添加字段映射将删除源和目标字段的这些默认字段映射。 某些索引器（例如 [blob 存储索引器](search-howto-indexing-azure-blob-storage.md)）为索引键字段添加默认字段映射。
 
-## <a name="map-fields-using-the-rest-api"></a>使用 REST API 映射字段
+## <a name="map-fields-using-rest"></a>使用 REST 映射字段
 
-使用[创建索引器](https://docs.microsoft.com/rest/api/searchservice/create-Indexer) API 请求创建新的索引器时，可以添加字段映射。 可以使用[更新索引器](https://docs.microsoft.com/rest/api/searchservice/update-indexer) API 请求来管理现有索引器的字段映射。
+使用[创建索引器](/rest/api/searchservice/create-Indexer) API 请求创建新的索引器时，可以添加字段映射。 可以使用[更新索引器](/rest/api/searchservice/update-indexer) API 请求来管理现有索引器的字段映射。
 
 例如，下面演示了如何将一个源字段映射到具有不同名称的目标字段：
 
 ```JSON
-
 PUT https://[service name].search.windows.net/indexers/myindexer?api-version=[api-version]
 Content-Type: application/json
 api-key: [admin key]
@@ -76,11 +74,10 @@ api-key: [admin key]
 > [!NOTE]
 > Azure 认知搜索使用不区分大小写的比较，来解析字段映射中的字段和函数名称。 此操作很方便（大小写无需全都正确），但这表示数据源或索引无法具有仅大小写不同的字段。  
 >
->
 
-## <a name="map-fields-using-the-net-sdk"></a>使用 .NET SDK 映射字段
+## <a name="map-fields-using-net"></a>使用 .NET 映射字段
 
-在 .NET SDK 中，使用 [FieldMapping](https://docs.microsoft.com/dotnet/api/microsoft.azure.search.models.fieldmapping) 类定义字段映射，该类包含属性 `SourceFieldName` 和 `TargetFieldName`，以及可选的 `MappingFunction` 引用。
+在 .NET SDK 中，使用 [FieldMapping](/dotnet/api/azure.search.documents.indexes.models.fieldmapping) 类定义字段映射，该类包含属性 `SourceFieldName` 和 `TargetFieldName`，以及可选的 `MappingFunction` 引用。
 
 可以在构造索引器时指定字段映射，以后也可以通过直接设置 `Indexer.FieldMappings` 属性来指定字段映射。
 
@@ -125,7 +122,7 @@ api-key: [admin key]
 
 #### <a name="example---document-key-lookup"></a>示例 - 文档键查找
 
-Azure 认知搜索文档键中只能使用 URL 安全字符（因为客户必须能够使用[查找 API](https://docs.microsoft.com/rest/api/searchservice/lookup-document) 来寻址文档）。 如果键的源字段包含 URL 不安全的字符，在编制索引时，你可以使用 `base64Encode` 函数来转换该字段。 但是，文档键（转换前后）的长度不能超过 1,024 个字符。
+Azure 认知搜索文档键中只能使用 URL 安全字符（因为客户必须能够使用[查找 API](/rest/api/searchservice/lookup-document) 来寻址文档）。 如果键的源字段包含 URL 不安全的字符，在编制索引时，你可以使用 `base64Encode` 函数来转换该字段。 但是，文档键（转换前后）的长度不能超过 1,024 个字符。
 
 在搜索时检索编码的键时，可以使用 `base64Decode` 函数获取原始键值，然后使用该值来检索源文档。
 
@@ -200,10 +197,10 @@ Azure 认知搜索支持两种不同的 Base64 编码。 在编码和解码同�
 
 Azure 认知搜索支持 URL 安全的 base64 编码和正常的 base64 编码。 在索引编制期间经过 base64 编码的字符串在以后应使用相同的编码选项进行解码，否则结果将与原始字符串不匹配。
 
-如果将用于编码或解码的 `useHttpServerUtilityUrlTokenEncode` 或 `useHttpServerUtilityUrlTokenDecode` 参数分别设置为 `true`，则 `base64Encode` 的行为与 [HttpServerUtility.UrlTokenEncode](https://msdn.microsoft.com/library/system.web.httpserverutility.urltokenencode.aspx) 类似，`base64Decode` 的行为与 [HttpServerUtility.UrlTokenDecode](https://msdn.microsoft.com/library/system.web.httpserverutility.urltokendecode.aspx) 类似。
+如果将用于编码或解码的 `useHttpServerUtilityUrlTokenEncode` 或 `useHttpServerUtilityUrlTokenDecode` 参数分别设置为 `true`，则 `base64Encode` 的行为与 [HttpServerUtility.UrlTokenEncode](/dotnet/api/system.web.httpserverutility.urltokenencode) 类似，`base64Decode` 的行为与 [HttpServerUtility.UrlTokenDecode](/dotnet/api/system.web.httpserverutility.urltokendecode) 类似。
 
 > [!WARNING]
-> 如果使用 `base64Encode` 来生成密钥值，则必须将 `useHttpServerUtilityUrlTokenEncode` 设置为 true。 只能将 URL 安全的 base64 编码用于密钥值。 请参阅[命名规则（Azure 认知搜索）](https://docs.microsoft.com/rest/api/searchservice/naming-rules)，了解对密钥值中字符的整套限制。
+> 如果使用 `base64Encode` 来生成密钥值，则必须将 `useHttpServerUtilityUrlTokenEncode` 设置为 true。 只能将 URL 安全的 base64 编码用于密钥值。 请参阅[命名规则（Azure 认知搜索）](/rest/api/searchservice/naming-rules)，了解对密钥值中字符的整套限制。
 
 Azure 认知搜索中的 .NET 库采用完整的 .NET 框架来提供内置编码。 `useHttpServerUtilityUrlTokenEncode` 和 `useHttpServerUtilityUrlTokenDecode` 选项利用了此内置功能。 如果使用 .NET Core 或其他框架，建议将这些选项设置为 `false` 并直接调用框架的编码和解码函数。
 

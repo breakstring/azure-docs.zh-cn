@@ -3,23 +3,26 @@ title: 将 Azure 文件卷装载到容器组
 description: 了解如何装载 Azure 文件卷以保持 Azure 容器实例的状态
 ms.topic: article
 ms.date: 07/02/2020
-ms.custom: mvc
-ms.openlocfilehash: eaf5e0704ba2ea4f0e0a30d61e4ae1d2ad1bf58d
-ms.sourcegitcommit: dabd9eb9925308d3c2404c3957e5c921408089da
+ms.custom: mvc, devx-track-azurecli
+ms.openlocfilehash: d52ad8ad02735c98b29a83d8ca69cdea8c6af7d8
+ms.sourcegitcommit: 19ffdad48bc4caca8f93c3b067d1cf29234fef47
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/11/2020
-ms.locfileid: "86259469"
+ms.lasthandoff: 01/06/2021
+ms.locfileid: "97954968"
 ---
 # <a name="mount-an-azure-file-share-in-azure-container-instances"></a>在 Azure 容器实例中装载 Azure 文件共享
 
-默认情况下，Azure 容器实例是无状态的。 如果容器崩溃或停止，其所有状态都会丢失。 若要将状态保持至超过容器寿命，必须从外部存储装载卷。 如本文中所示，Azure 容器实例可以装载使用 [Azure 文件](../storage/files/storage-files-introduction.md)创建的 Azure 文件共享。 Azure 文件提供了承载在 Azure 存储中的完全托管的文件共享，这些共享项可通过行业标准的服务器消息块 (SMB) 协议进行访问。 将 Azure 文件共享与 Azure 容器实例配合使用可以提供文件共享功能，类似于将 Azure 文件共享与 Azure 虚拟机配合使用。
+默认情况下，Azure 容器实例是无状态的。 如果重启、崩溃或停止容器，则其所有状态都将丢失。 若要将状态保持至超过容器寿命，必须从外部存储装载卷。 如本文中所示，Azure 容器实例可以装载使用 [Azure 文件](../storage/files/storage-files-introduction.md)创建的 Azure 文件共享。 Azure 文件提供了承载在 Azure 存储中的完全托管的文件共享，这些共享项可通过行业标准的服务器消息块 (SMB) 协议进行访问。 将 Azure 文件共享与 Azure 容器实例配合使用可以提供文件共享功能，类似于将 Azure 文件共享与 Azure 虚拟机配合使用。
 
 > [!NOTE]
 > 当前只有 Linux 容器能装载 Azure 文件共享。 可以在[概述](container-instances-overview.md#linux-and-windows-containers)中找到当前的平台差异。
 >
 > 将 Azure 文件共享装载到容器实例类似于 Docker [绑定装载](https://docs.docker.com/storage/bind-mounts/)。 请注意，如果将共享装载到其中存在文件或目录的容器目录中，则这些文件或目录会被装载遮盖，在容器运行时将无法访问。
 >
+
+> [!IMPORTANT]
+> 如果要将容器组部署到 Azure 虚拟网络，则必须将 [服务终结点](../virtual-network/virtual-network-service-endpoints-overview.md) 添加到 Azure 存储帐户。
 
 ## <a name="create-an-azure-file-share"></a>创建 Azure 文件共享
 
@@ -45,7 +48,7 @@ az storage share create \
   --account-name $ACI_PERS_STORAGE_ACCOUNT_NAME
 ```
 
-## <a name="get-storage-credentials"></a>获取存储凭据
+## <a name="get-storage-credentials"></a>获取存储凭证
 
 若要在 Azure 容器实例中将 Azure 文件共享装载为卷，需要 3 个值：存储帐户名、共享名和存储访问密钥。
 
@@ -81,7 +84,7 @@ az container create \
     --azure-file-volume-mount-path /aci/logs/
 ```
 
-`--dns-name-label` 值在创建容器实例的 Azure 区域中必须是唯一的。 如果在执行命令时收到 DNS 名称标签错误消息，请更新前一命令中的值  。
+`--dns-name-label` 值在创建容器实例的 Azure 区域中必须是唯一的。 如果在执行命令时收到 DNS 名称标签错误消息，请更新前一命令中的值。
 
 ## <a name="manage-files-in-mounted-volume"></a>管理已装载卷中的文件
 
@@ -146,7 +149,7 @@ az container create --resource-group myResourceGroup --file deploy-aci.yaml
 ```
 ## <a name="deploy-container-and-mount-volume---resource-manager"></a>部署容器并装载卷 - 资源管理器
 
-除了 CLI 和 YAML 部署，还可以使用 Azure[资源管理器模板](/azure/templates/microsoft.containerinstance/containergroups)部署容器组并在容器中装载卷。
+除了 CLI 和 YAML 部署，还可以使用 Azure [资源管理器模板](/azure/templates/microsoft.containerinstance/containergroups)部署容器组并在容器中装载卷。
 
 首先，在模板的容器组 `properties` 节中填充 `volumes` 数组。 
 
@@ -233,7 +236,7 @@ az deployment group create --resource-group myResourceGroup --template-file depl
 
 ## <a name="mount-multiple-volumes"></a>装载多个卷
 
-若要在容器实例中装载多个卷，必须使用[Azure 资源管理器模板](/azure/templates/microsoft.containerinstance/containergroups)、YAML 文件或其他编程方法进行部署。 若要使用模板或 YAML 文件，请提供共享详细信息，并通过在文件的 `properties` 部分填充 `volumes` 数组来定义卷。 
+若要在容器实例中装载多个卷，必须使用 [Azure 资源管理器模板](/azure/templates/microsoft.containerinstance/containergroups)、YAML 文件或其他编程方法进行部署。 若要使用模板或 YAML 文件，请提供共享详细信息，并通过在文件的 `properties` 部分填充 `volumes` 数组来定义卷。 
 
 例如，如果已在存储帐户 *myStorageAccount* 中创建两个 Azure 文件存储（名为 *share1* 和 *share2*），资源管理器模板中的 `volumes` 数组将类似于以下内容：
 
@@ -256,7 +259,7 @@ az deployment group create --resource-group myResourceGroup --template-file depl
 }]
 ```
 
-接下来，针对容器组中希望装载卷的每个容器，在容器定义的 `properties` 部分填充 `volumeMounts` 数组。 例如，填充以下内容将装载之前定义的两个卷：myvolume1 和 myvolume2：  
+接下来，针对容器组中希望装载卷的每个容器，在容器定义的 `properties` 部分填充 `volumeMounts` 数组。 例如，填充以下内容将装载之前定义的两个卷：myvolume1 和 myvolume2：
 
 ```JSON
 "volumeMounts": [{

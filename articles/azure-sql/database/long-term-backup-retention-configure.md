@@ -1,22 +1,22 @@
 ---
 title: Azure SQL 数据库：管理长期备份保留
-description: 了解如何使用 Azure 门户和 PowerShell 在 Azure 存储中存储和恢复 Azure SQL 数据库的自动备份（最多10年）
+description: 了解如何使用 Azure 门户和 PowerShell 在 Azure 存储中存储和还原 Azure SQL 数据库的自动备份（最长可达 10 年）
 services: sql-database
 ms.service: sql-db-mi
 ms.subservice: backup-restore
 ms.custom: ''
 ms.devlang: ''
-ms.topic: conceptual
+ms.topic: how-to
 author: anosov1960
 ms.author: sashan
-ms.reviewer: mathoma, carlrab
-ms.date: 04/14/2020
-ms.openlocfilehash: 4da2572e453339baa3f5e2663a7965fff2035e40
-ms.sourcegitcommit: 3d56d25d9cf9d3d42600db3e9364a5730e80fa4a
+ms.reviewer: mathoma, sstein
+ms.date: 12/16/2020
+ms.openlocfilehash: a0653f24eeb0a96c28714d00f1d943dfc7d336db
+ms.sourcegitcommit: 706e7d3eaa27f242312d3d8e3ff072d2ae685956
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/03/2020
-ms.locfileid: "87531296"
+ms.lasthandoff: 02/09/2021
+ms.locfileid: "99979685"
 ---
 # <a name="manage-azure-sql-database-long-term-backup-retention"></a>管理 Azure SQL 数据库长期备份保留
 [!INCLUDE[appliesto-sqldb-sqlmi](../includes/appliesto-sqldb-sqlmi.md)]
@@ -76,7 +76,7 @@ ms.locfileid: "87531296"
 [!INCLUDE [updated-for-az](../../../includes/updated-for-az.md)]
 
 > [!IMPORTANT]
-> PowerShell Azure 资源管理器模块仍受 Azure SQL 数据库的支持，但所有未来的开发都是针对 Az.Sql 模块的。 若要了解这些 cmdlet，请参阅 [AzureRM.Sql](https://docs.microsoft.com/powershell/module/AzureRM.Sql/)。 Az 模块和 AzureRm 模块中的命令参数大体上是相同的。
+> PowerShell Azure 资源管理器模块仍受 Azure SQL 数据库的支持，但所有未来的开发都是针对 Az.Sql 模块的。 若要了解这些 cmdlet，请参阅 [AzureRM.Sql](/powershell/module/AzureRM.Sql/)。 Az 模块和 AzureRm 模块中的命令参数大体上是相同的。
 
 以下各部分展示了如何使用 PowerShell 配置长期备份保留、查看 Azure 存储中的备份，以及从 Azure 存储中的备份进行还原。
 
@@ -100,7 +100,7 @@ ms.locfileid: "87531296"
 > [!NOTE]
 > “SQL Server 参与者”角色没有删除 LTR 备份的权限。
 
-可以在订阅或资源组范围内授予 RBAC 权限。 但是，若要访问属于已删除服务器的 LTR 备份，必须在该服务器的“订阅”范围内授予此权限。
+可以在“订阅”或“资源组”范围内授予 Azure RBAC 权限。 但是，若要访问属于已删除服务器的 LTR 备份，必须在该服务器的“订阅”范围内授予此权限。
 
 - Microsoft.Sql/locations/longTermRetentionServers/longTermRetentionDatabases/longTermRetentionBackups/delete
 
@@ -183,11 +183,11 @@ Remove-AzSqlDatabaseLongTermRetentionBackup -ResourceId $ltrBackup.ResourceId
 ```
 
 > [!IMPORTANT]
-> 删除 LTR 备份操作是不可逆的。 若要在删除服务器后删除 LTR 备份，必须具有“订阅”范围权限。 可以通过筛选“删除长期保留备份”操作，在 Azure Monitor 中设置有关每次删除的通知。 活动日志包含有关发出请求的人员和时间的信息。 有关详细说明，请参阅[创建活动日志警报](../../azure-monitor/platform/alerts-activity-log.md)。
+> 删除 LTR 备份操作是不可逆的。 若要在删除服务器或资源组后删除 LTR 备份，则必须具有订阅范围权限。 可以通过筛选“删除长期保留备份”操作，在 Azure Monitor 中设置有关每次删除的通知。 活动日志包含有关发出请求的人员和时间的信息。 有关详细说明，请参阅[创建活动日志警报](../../azure-monitor/platform/alerts-activity-log.md)。
 
 ### <a name="restore-from-ltr-backups"></a>从 LTR 备份进行还原
 
-此示例展示了如何从 LTR 备份进行还原。 请注意，此接口未发生更改，但资源 ID 参数现在需要 LTR 备份资源 ID。
+此示例展示了如何从 LTR 备份进行还原。 请注意，此接口没有更改，但是资源 ID 参数现在要求提供 LTR 备份资源 ID。
 
 ```powershell
 # restore a specific LTR backup as an P1 database on the server $serverName of the resource group $resourceGroup
@@ -196,10 +196,14 @@ Restore-AzSqlDatabase -FromLongTermRetentionBackup -ResourceId $ltrBackup.Resour
 ```
 
 > [!IMPORTANT]
-> 若要在删除服务器后从 LTR 备份进行还原，必须具有服务器订阅范围内的权限，并且该订阅必须处于活动状态。 还必须省略可选的 -ResourceGroupName 参数。
+> 若要在删除服务器或资源组后从 LTR 备份进行还原，您必须拥有对服务器订阅的权限，并且该订阅必须处于活动状态。 还必须省略可选的 -ResourceGroupName 参数。
 
 > [!NOTE]
 > 从此处，可使用 SQL Server Management Studio 连接到已还原的数据库，执行所需任务，例如从恢复的数据库中提取一部分数据，复制到现有数据库或删除现有数据库，并将已还原的数据库重命名为现有数据库名。 请参阅[时间点还原](recovery-using-backups.md#point-in-time-restore)。
+
+## <a name="limitations"></a>限制
+- 从 LTR 备份进行还原时，“读取扩展”属性处于禁用状态。 若要在还原的数据库上启用读取扩展，请在数据库创建完后对其进行更新。
+- 从 LTR 备份（在数据库位于弹性池时创建）进行还原时，需要指定目标服务级别目标。 
 
 ## <a name="next-steps"></a>后续步骤
 

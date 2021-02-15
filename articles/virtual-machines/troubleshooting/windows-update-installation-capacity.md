@@ -14,12 +14,12 @@ ms.tgt_pltfrm: vm-windows
 ms.topic: troubleshooting
 ms.date: 05/11/2020
 ms.author: v-miegge
-ms.openlocfilehash: 596303223554589ef26938486ccfd2281ccd46f5
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.openlocfilehash: 0c0ec45eee86031e1533b97ccf352de0ecf70e38
+ms.sourcegitcommit: 484f510bbb093e9cfca694b56622b5860ca317f7
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "86999099"
+ms.lasthandoff: 01/21/2021
+ms.locfileid: "98633148"
 ---
 # <a name="troubleshoot-os-start-up--windows-update-installation-capacity"></a>操作系统启动疑难解答 - Windows 更新安装容量
 
@@ -39,6 +39,9 @@ ms.locfileid: "86999099"
 
 ### <a name="process-overview"></a>流程概述：
 
+> [!TIP]
+> 如果你有 VM 的最新备份，则可以尝试 [从备份还原 vm](../../backup/backup-azure-arm-restore-vms.md) ，以解决启动问题。
+
 1. 创建和访问修复 VM。
 1. 释放磁盘上的空间。
 1. 启用串行控制台和内存转储集合。
@@ -49,7 +52,7 @@ ms.locfileid: "86999099"
 
 ### <a name="create-and-access-a-repair-vm"></a>创建和访问修复 VM
 
-1. 使用 [VM 修复命令](./repair-windows-vm-using-azure-virtual-machine-repair-commands.md) 的步骤 1-3 准备一个修复 VM。
+1. 使用 [VM 修复命令](./repair-windows-vm-using-azure-virtual-machine-repair-commands.md)的步骤 1-3 来准备一个修复 VM。
 1. 使用远程桌面连接来连接到修复 VM。
 
 ### <a name="free-up-space-on-the-disk"></a>释放磁盘上的空间
@@ -62,8 +65,6 @@ ms.locfileid: "86999099"
 
 1. 检查磁盘是否已满。 如果磁盘大小小于 1 TB，请[使用 PowerShell](../windows/expand-os-disk.md) 将其扩展到最大 1 TB。
 1. 如果磁盘已是 1 TB，则需要执行磁盘清理。
-   1. [从已损坏的 VM 中](../windows/detach-disk.md)分离数据磁盘。
-   1. 将数据磁盘附加[到正常运行的 VM](../windows/attach-disk-ps.md#attach-an-existing-data-disk-to-a-vm)。
    1. 使用[磁盘清理工具](https://support.microsoft.com/help/4026616/windows-10-disk-cleanup)来释放空间。
 1. 完成大小调整和清理后，使用以下命令对驱动器进行碎片整理：
 

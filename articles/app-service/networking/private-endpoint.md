@@ -4,24 +4,22 @@ description: 使用 Azure 专用终结点以私密方式连接到 Web 应用
 author: ericgre
 ms.assetid: 2dceac28-1ba6-4904-a15d-9e91d5ee162c
 ms.topic: article
-ms.date: 08/12/2020
+ms.date: 10/09/2020
 ms.author: ericg
 ms.service: app-service
 ms.workload: web
 ms.custom: fasttrack-edit, references_regions
-ms.openlocfilehash: 773e63cb5eb2a9825975402f65439acd6ad192ae
-ms.sourcegitcommit: 1aef4235aec3fd326ded18df7fdb750883809ae8
+ms.openlocfilehash: 4534a315429a120af45dfd495df4a8c29b233de7
+ms.sourcegitcommit: 3c3ec8cd21f2b0671bcd2230fc22e4b4adb11ce7
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/12/2020
-ms.locfileid: "88135379"
+ms.lasthandoff: 01/25/2021
+ms.locfileid: "98763027"
 ---
-# <a name="using-private-endpoints-for-azure-web-app-preview"></a>为 Azure Web 应用使用专用终结点（预览版）
+# <a name="using-private-endpoints-for-azure-web-app"></a>为 Azure Web 应用使用专用终结点
 
-> [!Note]
-> 通过预览刷新，我们发布了数据泄露保护功能。
->
-> 预览版适用于 PremiumV2 Windows 和 Linux Web 应用和弹性高级功能的所有公共区域。 
+> [!IMPORTANT]
+> 专用终结点可用于在这些应用服务计划中托管的 Windows 和 Linux Web 应用： **独立主机**、 **PremiumV2**、 **PremiumV3**、 **函数 Premium** (有时称为弹性高级计划) 。 
 
 可以为 Azure Web 应用使用专用终结点，以允许位于专用网络中的客户端通过专用链接安全地访问应用。 专用终结点使用你的 Azure VNet 地址空间中的 IP 地址。 专用网络上客户端与 Web 应用之间的网络流量将通过 VNet 以及 Microsoft 主干网络上的专用链接，因此不会从公共 Internet 公开。
 
@@ -93,13 +91,13 @@ ms.locfileid: "88135379"
 
 |名称 |类型 |值 |备注 |
 |-----|-----|------|-------|
-|mywebapp.azurewebsites.net|CNAME|mywebapp.privatelink.azurewebsites.net|
+|mywebapp.azurewebsites.net|CNAME|mywebapp.privatelink.azurewebsites.net|<-Azure 会在 Azure 公共 DNS 中创建此项，将应用服务指向 privatelink，这由我们管理|
 |mywebapp.privatelink.azurewebsites.net|A|10.10.10.8|<--在 DNS 系统中管理此项以指向专用终结点 IP 地址|
 
-在此 DNS 配置之后，可以通过默认名称 mywebappname.azurewebsites.net 访问 Web 应用。
+在此 DNS 配置之后，可以通过默认名称 mywebappname.azurewebsites.net 访问 Web 应用。 必须使用此名称，因为为 *. azurewebsites.net 颁发了默认证书。
 
 
-如果你需要使用自定义 DNS 名称，则必须在 Web 应用中添加自定义名称。 在预览版期间，与任何自定义名称一样，必须使用公共 DNS 解析来验证该自定义名称。 有关详细信息，请参阅[自定义 DNS 验证][dnsvalidation]。
+如果你需要使用自定义 DNS 名称，则必须在 Web 应用中添加自定义名称。 自定义名称必须使用公共 DNS 解析方式验证为任意自定义名称。 有关详细信息，请参阅[自定义 DNS 验证][dnsvalidation]。
 
 对于 Kudu 控制台或 Kudu REST API 部署与 Azure DevOps 自托管代理 (例如) ，必须在 Azure DNS 专用区域或自定义 DNS 服务器中创建两个记录。 
 
@@ -118,33 +116,37 @@ ms.locfileid: "88135379"
 
 将弹性高级计划中的 Azure 函数与专用终结点配合使用时，若要在 Azure Web 门户中运行或执行函数，你必须具有直接网络访问权限，否则会收到 HTTP 403 错误。 换句话说，浏览器必须能够访问专用终结点，以便从 Azure Web 门户执行该功能。 
 
-在预览版期间，只会在专用终结点后面公开生产槽，其他槽则必须通过公共终结点访问。
+最多可以将100专用终结点连接到特定的 Web 应用。
+
+槽不能使用专用终结点。
+
+为 Web 应用启用专用终结点时，远程调试功能不可用。 建议将代码部署到槽并对其进行远程调试。
 
 我们会定期改进专用链接功能和专用终结点。若要了解有关限制的最新信息，请查看[此文][pllimitations]。
 
 ## <a name="next-steps"></a>后续步骤
 
-- 若要通过门户部署 Web 应用的专用终结点，请参阅[如何使用门户将专用连接到 Web 应用][howtoguide1]
-- 若要使用 Azure CLI 为 Web 应用部署专用终结点，请参阅[如何使用 Azure CLI 私下连接到 Web 应用][howtoguide2]
-- 若要使用 PowerShell 为你的 Web 应用部署专用终结点，请参阅[如何使用 powershell 通过专用连接到 Web 应用][howtoguide3]
-- 若要使用 Azure 模板为你的 Web 应用部署专用终结点，请参阅[如何使用 azure 模板私下连接到 Web 应用][howtoguide4]
-- 端到端示例，如何使用 VNet 注入和专用终结点将前端 web 应用连接到受保护的后端 web 应用，请参阅此[快速入门][howtoguide5]
-- 端到端示例，如何使用 terraform 将前端 web 应用连接到具有 VNet 注入和专用终结点的安全后端 web 应用，请参阅此[示例][howtoguide6]
+- 若要通过门户部署 Web 应用的专用终结点，请参阅 [如何使用门户将专用连接到 Web 应用][howtoguide1]
+- 若要使用 Azure CLI 为 Web 应用部署专用终结点，请参阅 [如何使用 Azure CLI 私下连接到 Web 应用][howtoguide2]
+- 若要使用 PowerShell 为你的 Web 应用部署专用终结点，请参阅 [如何使用 powershell 通过专用连接到 Web 应用][howtoguide3]
+- 若要使用 Azure 模板为你的 Web 应用部署专用终结点，请参阅 [如何使用 azure 模板私下连接到 Web 应用][howtoguide4]
+- 端到端示例，如何使用 VNet 注入和专用终结点将前端 web 应用连接到受保护的后端 web 应用，请参阅此 [快速入门][howtoguide5]
+- 端到端示例，如何使用 terraform 将前端 web 应用连接到具有 VNet 注入和专用终结点的安全后端 web 应用，请参阅此 [示例][howtoguide6]
 
 
 <!--Links-->
-[serviceendpoint]: https://docs.microsoft.com/azure/virtual-network/virtual-network-service-endpoints-overview
-[privatelink]: https://docs.microsoft.com/azure/private-link/private-link-overview
-[vnetintegrationfeature]: https://docs.microsoft.com/azure/app-service/web-sites-integrate-with-vnet
-[disablesecuritype]: https://docs.microsoft.com/azure/private-link/disable-private-endpoint-network-policy
-[accessrestrictions]: https://docs.microsoft.com/azure/app-service/app-service-ip-restrictions
+[serviceendpoint]: ../../virtual-network/virtual-network-service-endpoints-overview.md
+[privatelink]: ../../private-link/private-link-overview.md
+[vnetintegrationfeature]: ../web-sites-integrate-with-vnet.md
+[disablesecuritype]: ../../private-link/disable-private-endpoint-network-policy.md
+[accessrestrictions]: ../app-service-ip-restrictions.md
 [tcpproxy]: ../../private-link/private-link-service-overview.md#getting-connection-information-using-tcp-proxy-v2
-[dnsvalidation]: https://docs.microsoft.com/azure/app-service/app-service-web-tutorial-custom-domain
-[pllimitations]: https://docs.microsoft.com/azure/private-link/private-endpoint-overview#limitations
+[dnsvalidation]: ../app-service-web-tutorial-custom-domain.md
+[pllimitations]: ../../private-link/private-endpoint-overview.md#limitations
 [pricing]: https://azure.microsoft.com/pricing/details/private-link/
-[howtoguide1]: https://docs.microsoft.com/azure/private-link/create-private-endpoint-webapp-portal
-[howtoguide2]: https://docs.microsoft.com/azure/app-service/scripts/cli-deploy-privateendpoint
-[howtoguide3]: https://docs.microsoft.com/azure/app-service/scripts/powershell-deploy-private-endpoint
-[howtoguide4]: https://docs.microsoft.com/azure/app-service/scripts/template-deploy-private-endpoint
+[howtoguide1]: ../../private-link/tutorial-private-endpoint-webapp-portal.md
+[howtoguide2]: ../scripts/cli-deploy-privateendpoint.md
+[howtoguide3]: ../scripts/powershell-deploy-private-endpoint.md
+[howtoguide4]: ../scripts/template-deploy-private-endpoint.md
 [howtoguide5]: https://github.com/Azure/azure-quickstart-templates/tree/master/101-webapp-privateendpoint-vnet-injection
-[howtoguide6]: https://docs.microsoft.com/azure/app-service/scripts/terraform-secure-backend-frontend
+[howtoguide6]: ../scripts/terraform-secure-backend-frontend.md

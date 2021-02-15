@@ -1,23 +1,18 @@
 ---
 title: 使用数据工厂从 Salesforce 移动数据
 description: 了解如何使用 Azure 数据工厂从 Salesforce 移动数据。
-services: data-factory
-documentationcenter: ''
 author: linda33wj
-manager: shwang
-ms.assetid: dbe3bfd6-fa6a-491a-9638-3a9a10d396d1
 ms.service: data-factory
-ms.workload: data-services
 ms.topic: conceptual
 ms.date: 07/18/2018
 ms.author: jingwang
 robots: noindex
-ms.openlocfilehash: 8b94f6388d77cca2ef74c802aec7648091172775
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: ccc20f415d13356de755af5d1d3afc5b29de72f2
+ms.sourcegitcommit: d4734bc680ea221ea80fdea67859d6d32241aefc
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "79281127"
+ms.lasthandoff: 02/14/2021
+ms.locfileid: "100387047"
 ---
 # <a name="move-data-from-salesforce-by-using-azure-data-factory"></a>使用 Azure 数据工厂从 Salesforce 移动数据
 > [!div class="op_single_selector" title1="选择所使用的数据工厂服务版本："]
@@ -27,7 +22,7 @@ ms.locfileid: "79281127"
 > [!NOTE]
 > 本文适用于数据工厂版本 1。 如果使用当前版本数据工厂服务，请参阅 [V2 中的 Salesforce 连接器](../connector-salesforce.md)。
 
-本文概括介绍了如何使用 Azure 数据工厂中的复制活动将数据从本地 Salesforce 移动到[支持的源和接收器](data-factory-data-movement-activities.md#supported-data-stores-and-formats)表中的接收器列下所列出的任何数据存储。 本文基于[数据移动活动](data-factory-data-movement-activities.md)一文，其中概括介绍了如何使用复制活动和支持的数据存储组合进行数据移动。
+本文概括介绍了如何使用 Azure 数据工厂中的复制活动将数据从本地 Salesforce 移动到[支持的源和接收器](data-factory-data-movement-activities.md#supported-data-stores-and-formats)表中的接收器列下所列出的任何数据存储。 本文基于 [数据移动活动](data-factory-data-movement-activities.md) 一文，其中概括介绍了如何使用复制活动和支持的数据存储组合进行数据移动。
 
 Azure 数据工厂当前仅支持将数据从 Salesforce 移动到[支持的接收器数据存储](data-factory-data-movement-activities.md#supported-data-stores-and-formats)，不支持将数据从其他数据存储移动到 Salesforce。
 
@@ -44,20 +39,20 @@ Salesforce 对 API 请求总数和并发 API 请求均有限制。 请注意以�
 - 如果并发请求数超过限制，则将进行限制并且会看到随机失败。
 - 如果请求总数超过限制，将阻止 Salesforce 帐户 24 小时。
 
-在这两种情况下，还可能会收到“REQUEST_LIMIT_EXCEEDED”错误。 有关详细信息，请参阅 [Salesforce Developer Limits](https://resources.docs.salesforce.com/200/20/en-us/sfdc/pdf/salesforce_app_limits_cheatsheet.pdf)（Salesforce 开发人员限制）文章中的"API 请求限制"一节。
+在这两种情况下，你可能还会收到 "REQUEST_LIMIT_EXCEEDED" 错误。 有关详细信息，请参阅 [Salesforce Developer Limits](https://resources.docs.salesforce.com/200/20/en-us/sfdc/pdf/salesforce_app_limits_cheatsheet.pdf)（Salesforce 开发人员限制）文章中的"API 请求限制"一节。
 
 ## <a name="getting-started"></a>入门
 可以使用不同的工具/API 创建包含复制活动的管道，以从 Salesforce 移动数据。
 
-创建管道的最简单方法是使用**** 复制向导。 请参阅[教程：使用复制向导创建管道](data-factory-copy-data-wizard-tutorial.md)，以快速了解如何使用复制数据向导创建管道。
+创建管道的最简单方法是使用复制向导。 请参阅[教程：使用复制向导创建管道](data-factory-copy-data-wizard-tutorial.md)，以快速了解如何使用复制数据向导创建管道。
 
-你还可以使用以下工具创建管道： **Visual Studio**、 **Azure PowerShell**、 **AZURE 资源管理器模板**、 **.net API**和**REST API**。 有关创建包含复制活动的管道的分步说明，请参阅[复制活动教程](data-factory-copy-data-from-azure-blob-storage-to-sql-database.md)。
+你还可以使用以下工具创建管道： **Visual Studio**、 **Azure PowerShell**、 **AZURE 资源管理器模板**、 **.net API** 和 **REST API**。 有关创建包含复制活动的管道的分步说明，请参阅[复制活动教程](data-factory-copy-data-from-azure-blob-storage-to-sql-database.md)。
 
 无论使用工具还是 API，执行以下步骤都可创建管道，以便将数据从源数据存储移到接收器数据存储：
 
-1. 创建**链接服务**以将输入和输出数据存储链接到数据工厂。
-2. 创建用于表示复制操作的输入和输出数据的**数据集**。
-3. 创建包含复制活动的**管道**，该活动将数据集作为输入，并将数据集作为输出。
+1. 创建 **链接服务** 以将输入和输出数据存储链接到数据工厂。
+2. 创建用于表示复制操作的输入和输出数据的 **数据集** 。
+3. 创建包含复制活动的 **管道** ，该活动将数据集作为输入，并将数据集作为输出。
 
 使用向导时，会自动创建这些数据工厂实体（链接服务、数据集和管道）的 JSON 定义。 使用工具/API（.NET API 除外）时，使用 JSON 格式定义这些数据工厂实体。 有关用于从 Salesforce 复制数据的数据工厂实体的 JSON 定义示例，请参阅本文的 [JSON 示例：将数据从 Salesforce 复制到 Azure Blob](#json-example-copy-data-from-salesforce-to-azure-blob) 部分。
 
@@ -66,7 +61,7 @@ Salesforce 对 API 请求总数和并发 API 请求均有限制。 请注意以�
 ## <a name="linked-service-properties"></a>链接服务属性
 下表提供了针对 Salesforce 链接服务的 JSON 元素说明。
 
-| Property | 描述 | 必需 |
+| properties | 说明 | 必须 |
 | --- | --- | --- |
 | type |Type 属性必须设置为： **Salesforce**。 |是 |
 | environmentUrl | 指定 Salesforce 实例的 URL。 <br><br> -默认值为 "https： \/ /login.salesforce.com"。 <br> - 要从沙盒复制数据，请指定“https://test.salesforce.com”。 <br> - 若要从自定义域复制数据，请指定（例如）“https://[domain].my.salesforce.com”。 |否 |
@@ -77,16 +72,16 @@ Salesforce 对 API 请求总数和并发 API 请求均有限制。 请注意以�
 ## <a name="dataset-properties"></a>数据集属性
 有关可用于定义数据集的各节和属性的完整列表，请参阅[创建数据集](data-factory-create-datasets.md)一文。 对于所有数据集类型（Azure SQL、Azure blob、Azure 表等），数据集 JSON 的结构、可用性和策略这些部分类似。
 
-每种数据集的 typeProperties 部分有所不同，该部分提供有关数据在数据存储区中的位置信息****。 **RelationalTable** 类型的数据集的 typeProperties 部分具有以下属性：
+每种数据集的 typeProperties 部分有所不同，该部分提供有关数据在数据存储区中的位置信息。 **RelationalTable** 类型的数据集的 typeProperties 部分具有以下属性：
 
-| Property | 描述 | 必需 |
+| properties | 说明 | 必须 |
 | --- | --- | --- |
-| tableName |在 Salesforce 中表的名称。 |否（如果指定了 **RelationalSource** 的**query**） |
+| tableName |在 Salesforce 中表的名称。 |否（如果指定了 **RelationalSource** 的 **query**） |
 
 > [!IMPORTANT]
 > 任何自定义对象均需要 API 名称的“__c”部分。
 
-![数据工厂 - Salesforce 连接 - API 名称](media/data-factory-salesforce-connector/data-factory-salesforce-api-name.png)
+![屏幕截图显示自定义对象定义详细信息，您可以在其中查看自定义对象的 P I 名称。](media/data-factory-salesforce-connector/data-factory-salesforce-api-name.png)
 
 ## <a name="copy-activity-properties"></a>复制活动属性
 有关可用于定义活动的各节和属性的完整列表，请参阅[创建管道](data-factory-create-pipelines.md)一文。 名称、说明、输入和输出表等属性和各种策略可用于所有类型的活动。
@@ -95,14 +90,14 @@ Salesforce 对 API 请求总数和并发 API 请求均有限制。 请注意以�
 
 在复制活动中，当源属于 **RelationalSource** 类型（包括 Salesforce）时，以下属性在 typeProperties 部分中可用：
 
-| Property | 说明 | 允许的值 | 必选 |
+| properties | 说明 | 允许的值 | 必须 |
 | --- | --- | --- | --- |
-| 查询 |使用自定义查询读取数据。 |SQL 92 查询或 [Salesforce 对象查询语言 (SOQL)](https://developer.salesforce.com/docs/atlas.en-us.soql_sosl.meta/soql_sosl/sforce_api_calls_soql.htm) 查询。 例如：`select * from MyTable__c`。 |否（如果指定了**数据集**的 **tableName**） |
+| 查询 |使用自定义查询读取数据。 |SQL 92 查询或 [Salesforce 对象查询语言 (SOQL)](https://developer.salesforce.com/docs/atlas.en-us.soql_sosl.meta/soql_sosl/sforce_api_calls_soql.htm) 查询。 例如：`select * from MyTable__c`。 |否（如果指定了 **数据集** 的 **tableName**） |
 
 > [!IMPORTANT]
 > 任何自定义对象均需要 API 名称的“__c”部分。
 
-![数据工厂 - Salesforce 连接 - API 名称](media/data-factory-salesforce-connector/data-factory-salesforce-api-name-2.png)
+![屏幕截图显示 & 关系的自定义字段，您可以在其中查看自定义对象的 P I 名称。](media/data-factory-salesforce-connector/data-factory-salesforce-api-name-2.png)
 
 ## <a name="query-tips"></a>查询提示
 ### <a name="retrieving-data-using-where-clause-on-datetime-column"></a>使用 DateTime 列上的 where 子句检索数据
@@ -123,7 +118,7 @@ Salesforce 对 API 请求总数和并发 API 请求均有限制。 请注意以�
 * 若要查询包括现有和已删除的所有记录，请指定 "select * from MyTable__c **Where IsDeleted = 0 Or IsDeleted = 1**"
 
 ## <a name="json-example-copy-data-from-salesforce-to-azure-blob"></a>JSON 示例：将数据从 Salesforce 复制到 Azure Blob
-下面的示例提供示例 JSON 定义，可用于通过使用[Visual Studio](data-factory-copy-activity-tutorial-using-visual-studio.md)或[Azure PowerShell](data-factory-copy-activity-tutorial-using-powershell.md)创建管道。 它们演示了如何将数据从 Salesforce 复制到 Azure Blob 存储。 但是，可使用 Azure 数据工厂中的复制活动将数据复制到[此处](data-factory-data-movement-activities.md#supported-data-stores-and-formats)所述的任何接收器。
+下面的示例提供示例 JSON 定义，可用于通过使用 [Visual Studio](data-factory-copy-activity-tutorial-using-visual-studio.md) 或 [Azure PowerShell](data-factory-copy-activity-tutorial-using-powershell.md)创建管道。 它们演示了如何将数据从 Salesforce 复制到 Azure Blob 存储。 但是，可使用 Azure 数据工厂中的复制活动将数据复制到[此处](data-factory-data-movement-activities.md#supported-data-stores-and-formats)所述的任何接收器。
 
 以下是要实现方案需要创建的数据工厂项目。 列表后面的部分介绍了有关这些步骤的详细信息。
 
@@ -197,7 +192,7 @@ Salesforce 对 API 请求总数和并发 API 请求均有限制。 请注意以�
 > [!IMPORTANT]
 > 任何自定义对象均需要 API 名称的“__c”部分。
 
-![数据工厂 - Salesforce 连接 - API 名称](media/data-factory-salesforce-connector/data-factory-salesforce-api-name.png)
+![屏幕截图显示自定义对象定义详细信息，您可以在其中查看单数标签、复数标签、对象名称和 P I 名称。](media/data-factory-salesforce-connector/data-factory-salesforce-api-name.png)
 
 **Azure Blob 输出数据集**
 
@@ -278,7 +273,7 @@ Salesforce 对 API 请求总数和并发 API 请求均有限制。 请注意以�
 > [!IMPORTANT]
 > 任何自定义对象均需要 API 名称的“__c”部分。
 
-![数据工厂 - Salesforce 连接 - API 名称](media/data-factory-salesforce-connector/data-factory-salesforce-api-name-2.png)
+![屏幕截图显示 & 关系的自定义字段，其中包含一个名为的 P I 名称。](media/data-factory-salesforce-connector/data-factory-salesforce-api-name-2.png)
 
 
 ### <a name="type-mapping-for-salesforce"></a>Salesforce 的类型映射

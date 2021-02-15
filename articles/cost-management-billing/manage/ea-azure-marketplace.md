@@ -4,15 +4,16 @@ description: 介绍 EA 客户可如何使用 Azure Marketplace
 author: bandersmsft
 ms.reviewer: baolcsva
 ms.service: cost-management-billing
+ms.subservice: enterprise
 ms.topic: conceptual
-ms.date: 08/14/2020
+ms.date: 09/03/2020
 ms.author: banders
-ms.openlocfilehash: 83f88ffbd456e64a33d8ca6d8f0ab06098e8b861
-ms.sourcegitcommit: c293217e2d829b752771dab52b96529a5442a190
+ms.openlocfilehash: 0f2d3c830f27eec9f521e6f79ac8dce3bce818e9
+ms.sourcegitcommit: bf1340bb706cf31bb002128e272b8322f37d53dd
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/15/2020
-ms.locfileid: "88245819"
+ms.lasthandoff: 09/03/2020
+ms.locfileid: "89442558"
 ---
 # <a name="azure-marketplace"></a>Azure 市场
 

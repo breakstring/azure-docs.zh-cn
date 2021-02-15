@@ -1,6 +1,6 @@
 ---
 title: 适用于大数据的认知服务 Scala 示例
-description: 尝试使用 Python for Azure Databricks 中的认知服务示例来运行针对大数据的 MMLSpark 管道。
+description: 使用适用于 Azure Databricks 的认知服务来运行针对大数据的 MMLSpark 管道。
 services: cognitive-services
 author: mhamilton723
 manager: nitinme
@@ -8,12 +8,12 @@ ms.service: cognitive-services
 ms.topic: sample
 ms.date: 07/06/2020
 ms.author: marhamil
-ms.openlocfilehash: 098b59b8de0d0d7e5c3929ce084276350c04810a
-ms.sourcegitcommit: ec682dcc0a67eabe4bfe242fce4a7019f0a8c405
+ms.openlocfilehash: c47aa803774343b39efeabe3452f1b256cc64c0d
+ms.sourcegitcommit: 22da82c32accf97a82919bf50b9901668dc55c97
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/09/2020
-ms.locfileid: "86189297"
+ms.lasthandoff: 11/08/2020
+ms.locfileid: "94363266"
 ---
 # <a name="quick-examples"></a>快速示例
 
@@ -49,7 +49,7 @@ val location = "eastus"
 
 ## <a name="text-analytics"></a>文本分析
 
-[文本分析](https://docs.microsoft.com/azure/cognitive-services/text-analytics/)服务提供了几种从文本中提取智能见解的算法。 例如，我们可以找到给定输入文本的情绪。 该服务将返回介于 `0.0` 和 `1.0` 之间的分数，其中低分数指示负面情绪，高分数指示正面情绪。  下面的示例使用三个简单的句子，并返回每个句子的情绪分数。
+[文本分析](../text-analytics/index.yml)服务提供了几种从文本中提取智能见解的算法。 例如，我们可以找到给定输入文本的情绪。 该服务将返回介于 `0.0` 和 `1.0` 之间的分数，其中低分数指示负面情绪，高分数指示正面情绪。  下面的示例使用三个简单的句子，并返回每个句子的情绪分数。
 
 ```scala
 import org.apache.spark.sql.functions.col
@@ -81,7 +81,7 @@ display(sentiment.transform(df).select(col("text"), col("sentiment")(0).getItem(
 
 ## <a name="computer-vision"></a>计算机视觉
 
-[计算机视觉](https://docs.microsoft.com/azure/cognitive-services/computer-vision/)会分析图像以识别结构，例如人脸、对象和自然语言说明。
+[计算机视觉](../computer-vision/index.yml)会分析图像以识别结构，例如人脸、对象和自然语言说明。
 在此示例中，我们标记一系列图像。 标记是对图像中可识别的对象、人物、风景和动作等事物的单个词说明。
 
 ```scala
@@ -118,7 +118,7 @@ display(analysis.transform(df).select(col("image"), col("results").getItem("tags
 
 ## <a name="bing-image-search"></a>必应图像搜索
 
-[必应图像搜索](https://docs.microsoft.com/azure/cognitive-services/bing-image-search/overview)在 Web 中搜索以检索与用户自然语言查询相关的图像。 在此示例中，我们将使用一个文本查询来查找带引号的图像。 它返回包含与我们的查询相关的照片的图像 URL 列表。
+[必应图像搜索](../bing-image-search/overview.md)在 Web 中搜索以检索与用户自然语言查询相关的图像。 在此示例中，我们将使用一个文本查询来查找带引号的图像。 它返回包含与我们的查询相关的照片的图像 URL 列表。
 
 
 ```scala
@@ -163,7 +163,7 @@ display(pipeline.fit(df).transform(df))
 
 ## <a name="speech-to-text"></a>语音转文本
 
-[语音转文本](https://docs.microsoft.com/azure/cognitive-services/speech-service/index-speech-to-text)服务将语音音频的流或文件转换为文本。 在此示例中，我们转录了两个音频文件。 第一个文件易于理解，第二个文件更具挑战性。
+[语音转文本](../speech-service/index-speech-to-text.yml)服务将语音音频的流或文件转换为文本。 在此示例中，我们转录了两个音频文件。 第一个文件易于理解，第二个文件更具挑战性。
 
 ```scala
 import org.apache.spark.sql.functions.col
@@ -196,7 +196,7 @@ display(speechToText.transform(df).select(col("url"), col("text").getItem("Displ
 
 ## <a name="anomaly-detector"></a>异常检测器
 
-[异常检测器](https://docs.microsoft.com/azure/cognitive-services/anomaly-detector/)对于检测时间序列数据中的不规则性非常有用。 在此示例中，我们使用该服务来查找整个时间序列中的异常情况。
+[异常检测器](../anomaly-detector/index.yml)对于检测时间序列数据中的不规则性非常有用。 在此示例中，我们使用该服务来查找整个时间序列中的异常情况。
 
 ```scala
 import org.apache.spark.sql.functions.{col, lit}

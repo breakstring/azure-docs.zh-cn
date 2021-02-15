@@ -5,15 +5,16 @@ author: bandersmsft
 ms.reviewer: amberb
 tags: billing
 ms.service: cost-management-billing
+ms.subservice: billing
 ms.topic: how-to
-ms.date: 07/24/2019
+ms.date: 08/20/2019
 ms.author: banders
-ms.openlocfilehash: 5d6e0e72335b1f792ca6201d5c810c7660ea06f6
-ms.sourcegitcommit: dccb85aed33d9251048024faf7ef23c94d695145
+ms.openlocfilehash: cf5772e9cf08eaa7f34acd59a9c96da6f20cd03d
+ms.sourcegitcommit: 33368ca1684106cb0e215e3280b828b54f7e73e8
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/28/2020
-ms.locfileid: "87281746"
+ms.lasthandoff: 10/16/2020
+ms.locfileid: "92131405"
 ---
 # <a name="track-microsoft-customer-agreement-azure-credit-balance"></a>跟踪 Microsoft 客户协议的 Azure 额度余额
 
@@ -34,11 +35,11 @@ ms.locfileid: "87281746"
 
 2. 搜索“成本管理 + 计费”。
 
-    ![显示在门户中搜索“成本管理 + 计费”的屏幕截图](./media/mca-check-azure-credits-balance/billing-search-cost-management-billing.png)
+    ![显示在门户中搜索“成本管理 + 计费”的屏幕截图。](./media/mca-check-azure-credits-balance/billing-search-cost-management-billing.png)
 
 3. 在计费范围页中，选择要跟踪其额度余额的计费帐户。 计费帐户的类型应为 **Microsoft 客户协议**。
 
-    ![显示在门户中搜索“成本管理 + 计费”的屏幕截图](./media/mca-check-azure-credits-balance/list-of-scopes.png)
+    ![显示计费范围的屏幕截图。](./media/mca-check-azure-credits-balance/list-of-scopes.png)
 
     > [!NOTE]
     >
@@ -46,7 +47,7 @@ ms.locfileid: "87281746"
 
 3. 在左侧选择“付款方式”，然后选择“Azure 额度”。 
 
-   ![计费对象信息的额度余额的屏幕截图](./media/mca-check-azure-credits-balance/mca-payment-methods.png)
+   ![显示预估余额和当前余额的屏幕截图。](./media/mca-check-azure-credits-balance/mca-payment-methods.png)
 
 4. “Azure 额度”页包含以下部分：
 
@@ -101,7 +102,7 @@ ms.locfileid: "87281746"
 
 ### <a name="rest-api"></a>[REST API](#tab/rest)
 
-可以使用 [Azure 计费](https://docs.microsoft.com/rest/api/billing/)和[消耗](https://docs.microsoft.com/rest/api/consumption/) API 以编程方式获取计费帐户的额度余额。
+可以使用 [Azure 计费](/rest/api/billing/)和[消耗](/rest/api/consumption/) API 以编程方式获取计费帐户的额度余额。
 
 下面显示的示例使用 REST API。 目前，PowerShell 和 Azure CLI 不受支持。
 

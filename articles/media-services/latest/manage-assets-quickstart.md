@@ -1,19 +1,21 @@
 ---
-title: 使用门户上传、编码和流式传输内容 - Azure
+title: 使用门户上传、编码和流式处理内容
 description: 本快速入门介绍如何使用门户通过 Azure 媒体服务上传、编码和流式传输内容。
 ms.topic: quickstart
-ms.date: 06/08/2020
+ms.date: 08/31/2020
 author: IngridAtMicrosoft
 ms.author: inhenkel
 manager: femila
-ms.openlocfilehash: 7aebc6e52ec7fac97c6f1e8fb9b30cc63b74e860
-ms.sourcegitcommit: d661149f8db075800242bef070ea30f82448981e
+ms.openlocfilehash: 3831892b6cd241643b3e5753689f768d59e27704
+ms.sourcegitcommit: 4e70fd4028ff44a676f698229cb6a3d555439014
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/19/2020
-ms.locfileid: "88605672"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98955964"
 ---
 # <a name="quickstart-upload-encode-and-stream-content-with-portal"></a>快速入门：使用门户上传、编码和流式传输内容
+
+[!INCLUDE [media services api v3 logo](./includes/v3-hr.md)]
 
 本快速入门介绍如何使用 Azure 门户 通过 Azure 媒体服务上传、编码和流式传输内容。
 
@@ -30,7 +32,7 @@ ms.locfileid: "88605672"
     查看以下内容： 
 
   * [云上传和存储](storage-account-concept.md)
-  * [资产概念](assets-concept.md)
+  * [资产的概念](assets-concept.md)
 * 将高质量的数字媒体文件上传到一个资产（输入资产）后，可对其进行处理（编码或分析）。 处理的内容将进入另一个资产（输出资产）。 
     * 将上传的文件[编码](encoding-concept.md)为可在各种浏览器和设备上播放的格式。
     * [分析](analyzing-video-audio-files-concept.md)上传的文件。 
@@ -52,9 +54,9 @@ ms.locfileid: "88605672"
 
 [!INCLUDE [quickstarts-free-trial-note](../../../includes/quickstarts-free-trial-note.md)]
 
-[创建媒体服务帐户](create-account-howto.md#use-the-azure-portal)
+[创建媒体服务帐户](create-account-howto.md)
 
-## <a name="upload"></a>上载
+## <a name="upload"></a>上传
 
 1. 登录到 [Azure 门户](https://portal.azure.com/)。
 1. 找到并单击你的媒体服务帐户。
@@ -64,7 +66,7 @@ ms.locfileid: "88605672"
 
 如果导航到资产窗口，可看到一个新资产已添加到列表中：
 
-![上载](./media/manage-assets-quickstart/upload.png)
+![Azure 门户的屏幕截图，显示了通过选择“资产(新)”打开的“资产”窗口和通过选择“上传”按钮添加的新资产。](./media/manage-assets-quickstart/upload.png)
 
 ## <a name="encode"></a>编码
 
@@ -76,7 +78,7 @@ ms.locfileid: "88605672"
 
 如果导航到资产窗口，可看到该输出资产已添加到列表中：
 
-![编码](./media/manage-assets-quickstart/encode.png)
+![Azure 门户中“资产”窗口的屏幕截图，显示进行了媒体编码器标准编码的资产 ignite.mp4（已添加到资产列表）。](./media/manage-assets-quickstart/encode.png)
 
 ## <a name="monitor-the-job-progress"></a>监视作业进度
 

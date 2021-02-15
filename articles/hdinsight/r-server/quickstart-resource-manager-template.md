@@ -1,19 +1,16 @@
 ---
 title: 快速入门：使用模板创建 ML Services 群集 - Azure HDInsight
 description: 本快速入门介绍如何使用 Azure 资源管理器模板在 Azure HDInsight 中创建一个 ML Services 群集。
-author: hrasheed-msft
-ms.author: hrasheed
-ms.reviewer: jasonh
 ms.service: hdinsight
 ms.topic: quickstart
 ms.custom: subject-armqs
 ms.date: 03/13/2020
-ms.openlocfilehash: fd3e541624c2375ed71fb9768bb0c42ec101f47b
-ms.sourcegitcommit: 124f7f699b6a43314e63af0101cd788db995d1cb
+ms.openlocfilehash: c15e06d959510d74078a738db2606778d313ad65
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/08/2020
-ms.locfileid: "86087701"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98943988"
 ---
 # <a name="quickstart-create-ml-services-cluster-in-azure-hdinsight-using-arm-template"></a>快速入门：使用 ARM 模板在 Azure HDInsight 中创建 ML Services 群集
 
@@ -33,7 +30,7 @@ ms.locfileid: "86087701"
 
 本快速入门中使用的模板来自 [Azure 快速启动模板](https://azure.microsoft.com/resources/templates/101-hdinsight-rserver/)。
 
-:::code language="json" source="~/quickstart-templates/101-hdinsight-rserver/azuredeploy.json" range="1-171" highlight="49-85":::
+:::code language="json" source="~/quickstart-templates/101-hdinsight-rserver/azuredeploy.json":::
 
 该模板中定义了两个 Azure 资源：
 
@@ -59,13 +56,13 @@ ms.locfileid: "86087701"
     |SSH 用户名|提供用户名，默认值为 sshuser|
     |SSH 密码|提供密码。|
 
-    ![资源管理器模板 HBase](./media/quickstart-resource-manager-template/resource-manager-template-rserver.png)
+    ![部署资源管理器模板 HBase](./media/quickstart-resource-manager-template/resource-manager-template-rserver.png)
 
 1. 查看“条款和条件”。 接着选择“我同意上述条款和条件”，然后选择“购买” 。 你会收到一则通知，说明正在进行部署。 创建群集大约需要 20 分钟时间。
 
 ## <a name="review-deployed-resources"></a>查看已部署的资源
 
-创建群集后，你会收到“部署成功”通知，通知中附有“转到资源”链接 。 “资源组”页会列出新的 HDInsight 群集以及与该群集关联的默认存储。 每个群集都有一个 [Azure 存储帐户](../hdinsight-hadoop-use-blob-storage.md)或 [Azure Data Lake Storage 帐户](../hdinsight-hadoop-use-data-lake-store.md)依赖项。 该帐户称为默认存储帐户。 HDInsight 群集及其默认存储帐户必须共存于同一个 Azure 区域中。 删除群集不会删除存储帐户。
+创建群集后，你会收到“部署成功”通知，通知中附有“转到资源”链接 。 “资源组”页会列出新的 HDInsight 群集以及与该群集关联的默认存储。 每个群集都有一个 [Azure Blob 存储](../hdinsight-hadoop-use-blob-storage.md)帐户、[Azure Data Lake Storage Gen1](../hdinsight-hadoop-use-data-lake-storage-gen1.md) 或 [`Azure Data Lake Storage Gen2`](../hdinsight-hadoop-use-data-lake-storage-gen2.md) 依赖项。 该帐户称为默认存储帐户。 HDInsight 群集及其默认存储帐户必须共存于同一个 Azure 区域中。 删除群集不会删除存储帐户。
 
 ## <a name="clean-up-resources"></a>清理资源
 
@@ -73,7 +70,7 @@ ms.locfileid: "86087701"
 
 从 Azure 门户导航到群集，然后选择“删除”。
 
-![资源管理器模板 HBase](./media/quickstart-resource-manager-template/azure-portal-delete-rserver.png)
+[删除资源管理器模板 HBase](./media/quickstart-resource-manager-template/azure-portal-delete-rserver.png)
 
 还可以选择资源组名称来打开“资源组”页，然后选择“删除资源组”。 通过删除资源组，可以删除 HDInsight 群集和默认存储帐户。
 

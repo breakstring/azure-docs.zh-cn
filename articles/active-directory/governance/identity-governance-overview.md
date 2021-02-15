@@ -16,12 +16,12 @@ ms.date: 06/18/2020
 ms.author: ajburnle
 ms.reviewer: markwahl-msft
 ms.collection: M365-identity-device-management
-ms.openlocfilehash: dcb7ab566d861e0c4256acda8f8facd1e94d4ad6
-ms.sourcegitcommit: fbb66a827e67440b9d05049decfb434257e56d2d
+ms.openlocfilehash: e02df83d4b7874a1d158aae45f1619eb543e0aec
+ms.sourcegitcommit: 28c5fdc3828316f45f7c20fc4de4b2c05a1c5548
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/05/2020
-ms.locfileid: "87796771"
+ms.lasthandoff: 10/22/2020
+ms.locfileid: "92362444"
 ---
 # <a name="what-is-azure-ad-identity-governance"></a>什么是 Azure AD Identity Governance？
 
@@ -46,7 +46,7 @@ Identity Governance 可帮助组织在以下需求之间实现平衡：工作效
 
 ![标识生命周期](./media/identity-governance-overview/identity-lifecycle.png)
 
-对于许多组织而言，员工的标识生命周期与该用户在 HCM（人力资本管理）系统中的表示形式密切相关。  Azure AD Premium 在 Active Directory 和 Azure Active Directory 中自动维护 Workday 中表示的人员的用户标识，请参阅 [Workday 入站预配教程](../saas-apps/workday-inbound-tutorial.md)。  Azure AD Premium 还包含可从 SAP、Oracle eBusiness 和 Oracle PeopleSoft 等本地 HCM 系统导入记录的 [Microsoft Identity Manager](/microsoft-identity-manager/)。
+对于许多组织而言，员工的标识生命周期与该用户在 HCM（人力资本管理）系统中的表示形式密切相关。  Azure AD Premium 会在 Active Directory 和 Azure Active Directory 中自动维护 Workday 和 SuccessFactors 中表示的人员的用户标识，请参阅[云 HR 应用程序与 Azure Active Directory 用户预配的集成规划指南](../app-provisioning/plan-cloud-hr-provision.md)。  Azure AD Premium 还包含可从 SAP HCM、Oracle eBusiness 和 Oracle PeopleSoft 等本地 HCM 系统导入记录的 [Microsoft Identity Manager](/microsoft-identity-manager/)。
 
 越来越多的方案需要与组织外部的人员协作。 使用 [Azure AD B2B](/azure/active-directory/b2b/) 协作可以安全地将组织的应用程序和服务与来自任何组织的来宾用户和外部合作伙伴共享，同时保持对自己公司数据的控制。  使用 [Azure AD 权利管理](entitlement-management-overview.md)可以选择允许哪些组织的用户请求访问权限，并将其作为 B2B 来宾添加到组织的目录中，同时确保在他们不再需要访问时删除这些来宾。
 
@@ -58,9 +58,9 @@ Identity Governance 可帮助组织在以下需求之间实现平衡：工作效
 
 通常，IT 部门会将访问权限审批决策委托给业务决策人。  此外，IT 部门可能涉及到用户本身的事务。  例如，访问公司位于欧洲的市场营销应用程序中的机密客户数据的用户需要知道该公司的策略。 来宾用户可能不知道他们受邀访问的组织的数据处理要求。
 
-组织可以通过[动态组](../users-groups-roles/groups-dynamic-membership.md)等技术，并结合 [SaaS 应用](../saas-apps/tutorial-list.md)的用户预配或者[与 SCIM集成的应用](../app-provisioning/use-scim-to-provision-users-and-groups.md)，将访问生命周期过程自动化。  组织还可以控制哪些[来宾用户有权访问本地应用程序](../b2b/hybrid-cloud-to-on-premises.md)。  然后，可以使用 [Azure AD 访问评审](access-reviews-overview.md)定期评审这些访问权限。   使用 [Azure AD 权利管理](entitlement-management-overview.md)还可以定义不同组、团队成员身份、应用程序角色以及 SharePoint Online 角色的用户如何请求访问权限。
+组织可以通过[动态组](../enterprise-users/groups-dynamic-membership.md)等技术，并结合 [SaaS 应用](../saas-apps/tutorial-list.md)的用户预配或者[与 SCIM集成的应用](../app-provisioning/use-scim-to-provision-users-and-groups.md)，将访问生命周期过程自动化。  组织还可以控制哪些[来宾用户有权访问本地应用程序](../external-identities/hybrid-cloud-to-on-premises.md)。  然后，可以使用 [Azure AD 访问评审](access-reviews-overview.md)定期评审这些访问权限。   使用 [Azure AD 权利管理](entitlement-management-overview.md)还可以定义不同组、团队成员身份、应用程序角色以及 SharePoint Online 角色的用户如何请求访问权限。
 
-当用户尝试访问应用程序时，Azure AD 会实施[条件访问](/azure/active-directory/conditional-access/)策略。 例如，条件访问策略可以显示[使用条款](../conditional-access/terms-of-use.md)，并确保用户在访问应用程序之前[同意这些条款](../conditional-access/require-tou.md)。
+当用户尝试访问应用程序时，Azure AD 会实施[条件访问](../conditional-access/index.yml)策略。 例如，条件访问策略可以显示[使用条款](../conditional-access/terms-of-use.md)，并确保用户在访问应用程序之前[同意这些条款](../conditional-access/require-tou.md)。
 
 ## <a name="privileged-access-lifecycle"></a>特权访问权限生命周期
 
@@ -68,7 +68,25 @@ Identity Governance 可帮助组织在以下需求之间实现平衡：工作效
 
 ![特权访问权限生命周期](./media/identity-governance-overview/privileged-access-lifecycle.png)
 
-[Azure AD Privileged Identity Management (PIM)](../privileged-identity-management/pim-configure.md) 提供用于保护 Azure AD、Azure 和其他 Microsoft Online Services 中的资源访问权限的其他定制控制措施。  Azure AD PIM 提供的实时访问和角色更改警报功能，以及多重身份验证和条件访问，共同提供了一套综合性的监管控制措施，可帮助保护公司的资源（目录、Office 365 和 Azure 资源角色）。 与处理其他形式的访问权限一样，组织可以使用访问评审来针对充当管理员角色的所有用户配置定期的访问权限重新认证。
+[Azure AD Privileged Identity Management (PIM)](../privileged-identity-management/pim-configure.md) 提供用于保护 Azure AD、Azure 和其他 Microsoft Online Services 中的资源访问权限的其他定制控制措施。  Azure AD PIM 提供的实时访问和角色更改警报功能，以及多重身份验证和条件访问，共同提供了一套综合性的监管控制措施，可帮助保护公司的资源（目录、Microsoft 365 和 Azure 资源角色）。 与处理其他形式的访问权限一样，组织可以使用访问评审来针对充当管理员角色的所有用户配置定期的访问权限重新认证。
+
+## <a name="governance-capabilities-in-other-azure-ad-features"></a>其他 Azure AD 功能中的 Governance 功能
+
+除了上面列出的功能外，经常用于提供 Identity Governance 方案的其他 Azure AD 功能包括：
+
+| 功能 | 方案 |功能
+| ------- | --------------------- |-----|
+|标识生命周期（员工）|管理员可以通过 Workday 或 SuccessFactors 云 HR 或者通过本地 HR 启用用户帐户预配。|[云 HR 与 Azure AD 用户预配的集成](../app-provisioning/plan-cloud-hr-provision.md)|
+|标识生命周期（来宾）|管理员可以通过另一个 Azure AD 租户、直接联合身份验证、一次性密码 (OTP) 或 Google 帐户启用自助来宾用户加入。  系统会根据生命周期策略自动预配和取消预配来宾用户。|使用 [B2B](../external-identities/what-is-b2b.md) 的[权利管理](entitlement-management-overview.md)|
+|权利管理|资源所有者可以创建包含应用、Teams、Azure AD 和 Microsoft 365 组以及 SharePoint Online 网站的访问包。|[权利管理](entitlement-management-overview.md)|
+|访问请求|最终用户可以请求组成员身份或应用程序访问权限。 最终用户（包括来自其他组织的来宾）可以请求访问访问包。|[权利管理](entitlement-management-overview.md)|
+|工作流|资源所有者可以定义访问请求的审批者和升级审批者，以及角色激活请求的审批者。  |[权利管理](entitlement-management-overview.md)和 [PIM](../privileged-identity-management/pim-configure.md)|
+|策略和角色管理|管理员可以为应用程序的运行时访问定义条件访问策略。  资源所有者可以为用户通过访问包进行的访问定义策略。|[条件访问](../conditional-access/overview.md)和[权利管理](entitlement-management-overview.md)策略|
+|访问证书|管理员可以为以下对象启用定期访问重新认证：SaaS 应用或云组成员身份、Azure AD 或 Azure 资源角色分配。 自动删除资源访问权限、阻止来宾访问并删除来宾帐户。|[访问评审](access-reviews-overview.md)，也出现在 [PIM](../privileged-identity-management/pim-how-to-start-security-review.md) 中|
+|履行和预配|自动预配和取消预配到 Azure AD 连接的应用（包括通过 SCIM）和 SharePoint Online 网站。 |[用户预配](../app-provisioning/user-provisioning.md)|
+|报告和分析|管理员可以检索最近的用户预配和登录活动的审核日志。 通过访问包与 Azure Monitor 和“有权访问的用户”集成。|[Azure AD 报表](../reports-monitoring/overview-reports.md)和[监视](../reports-monitoring/overview-monitoring.md)|
+|特权访问|面向 Azure AD 角色（包括自定义角色）和 Azure 资源角色的实时和计划访问、警报以及审批工作流。|[Azure AD PIM](../privileged-identity-management/pim-configure.md)|
+|审核|管理员可以收到有关创建管理员帐户的警报。|[Azure AD PIM 警报](../privileged-identity-management/pim-how-to-configure-security-alerts.md)|
 
 ## <a name="getting-started"></a>入门
 
@@ -82,7 +100,7 @@ Identity Governance 可帮助组织在以下需求之间实现平衡：工作效
 尽管我们不能为每个客户提供完美的解决方案或建议，但以下配置指南提供了 Microsoft 推荐的基准策略，遵循这些策略，可提高安全性和员工工作效率。
 
 - [标识和设备访问权限配置](/microsoft-365/enterprise/microsoft-365-policies-configurations)
-- [保护特权访问](../users-groups-roles/directory-admin-roles-secure.md)
+- [保护特权访问](../roles/security-planning.md)
 
 ## <a name="appendix---least-privileged-roles-for-managing-in-identity-governance-features"></a>附录 - 在 Identity Governance 功能中进行管理所需的最低特权角色
 
@@ -100,6 +118,4 @@ Identity Governance 可帮助组织在以下需求之间实现平衡：工作效
 - [Azure AD 权利管理是什么？](entitlement-management-overview.md)
 - [Azure AD 访问评审是什么？](access-reviews-overview.md)
 - [什么是 Azure AD Privileged Identity Management？](../privileged-identity-management/pim-configure.md)
-- [“使用条款”可以用来做什么？](active-directory-tou.md)
-
-
+- [“使用条款”可以用来做什么？](../conditional-access/terms-of-use.md)

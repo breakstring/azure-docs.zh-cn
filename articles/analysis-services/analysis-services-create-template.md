@@ -6,14 +6,14 @@ ms.author: owend
 tags: azure-resource-manager
 ms.service: azure-analysis-services
 ms.topic: quickstart
-ms.date: 04/14/2020
+ms.date: 08/31/2020
 ms.custom: subject-armqs, references_regions
-ms.openlocfilehash: 249c678fb6d55f01a9f06e4e1db5f41fa85a700f
-ms.sourcegitcommit: 1b2d1755b2bf85f97b27e8fbec2ffc2fcd345120
+ms.openlocfilehash: 3e776bf41420d38a1b208ce11a6a34e97fa92a15
+ms.sourcegitcommit: eb6bef1274b9e6390c7a77ff69bf6a3b94e827fc
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/04/2020
-ms.locfileid: "87553064"
+ms.lasthandoff: 10/05/2020
+ms.locfileid: "89230766"
 ---
 # <a name="quickstart-create-a-server---arm-template"></a>快速入门：创建服务器 - ARM 模板
 
@@ -34,7 +34,7 @@ ms.locfileid: "87553064"
 
 本快速入门中使用的模板来自 [Azure 快速启动模板](https://azure.microsoft.com/resources/templates/101-analysis-services-create/)。
 
-:::code language="json" source="~/quickstart-templates/101-analysis-services-create/azuredeploy.json" range="1-79" highlight="63-78":::
+:::code language="json" source="~/quickstart-templates/101-analysis-services-create/azuredeploy.json":::
 
 该模板中定义了包含防火墙规则的单个 [Microsoft.AnalysisServices/servers](/azure/templates/microsoft.analysisservices/servers) 资源。
 
@@ -105,6 +105,5 @@ Write-Host "Press [ENTER] to continue..."
 
 在本快速入门中，你已使用 ARM 模板创建了新的资源组和 Azure Analysis Services 服务器资源。 在使用模板创建服务器资源后，请考虑执行以下操作：
 
-- [快速入门：创建服务器 - PowerShell](analysis-services-create-powershell.md)
-- [从门户中添加示例模型](analysis-services-create-sample-model.md)
-- [配置服务器管理员和用户角色](tutorials/analysis-services-tutorial-roles.md)
+> [!div class="nextstepaction"]
+> [快速入门：配置服务器防火墙 - 门户](analysis-services-qs-firewall.md)   

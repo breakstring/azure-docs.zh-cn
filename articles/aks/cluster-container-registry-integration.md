@@ -4,13 +4,13 @@ description: 了解如何将 Azure Kubernetes 服务 (AKS) 与 Azure 容器注�
 services: container-service
 manager: gwallace
 ms.topic: article
-ms.date: 02/25/2020
-ms.openlocfilehash: 4338f4ce1fe60a3a9002be93feab134dd2601720
-ms.sourcegitcommit: 42107c62f721da8550621a4651b3ef6c68704cd3
+ms.date: 01/08/2021
+ms.openlocfilehash: 0d61cccb6b70091194d407eda056060d1fa3623c
+ms.sourcegitcommit: d1e56036f3ecb79bfbdb2d6a84e6932ee6a0830e
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/29/2020
-ms.locfileid: "87406497"
+ms.lasthandoff: 01/29/2021
+ms.locfileid: "99053884"
 ---
 # <a name="authenticate-with-azure-container-registry-from-azure-kubernetes-service"></a>使用 Azure 容器注册表从 Azure Kubernetes 服务进行身份验证
 
@@ -18,11 +18,14 @@ ms.locfileid: "87406497"
 
 可以使用 Azure CLI 通过几个简单的命令设置 AKS 与 ACR 的集成。 此集成会将 AcrPull 角色分配给关联到 AKS 群集的服务主体。
 
+> [!NOTE]
+> 本文介绍了 AKS 和 ACR 之间的自动身份验证。 如果需要从专用外部注册表拉取映像，请使用 [映像请求机密][Image Pull Secret]。
+
 ## <a name="before-you-begin"></a>准备阶段
 
 这些示例需要：
 
-* **Azure 订阅**上的**所有者**或 **Azure 帐户管理员**角色
+* **Azure 订阅** 上的 **所有者** 或 **Azure 帐户管理员** 角色
 * Azure CLI 2.7.0 版或更高版本
 
 为了避免需要“所有者”或“Azure 帐户管理员”角色，可以手动配置服务主体或使用现有服务主体从 AKS 进行 ACR 身份验证。 有关详细信息，请参阅[使用服务主体进行 ACR 身份验证](../container-registry/container-registry-auth-service-principal.md)或[使用请求密码从 Kubernetes 进行身份验证](../container-registry/container-registry-auth-kubernetes.md)。
@@ -47,7 +50,7 @@ az aks create -n myAKSCluster -g myResourceGroup --generate-ssh-keys --attach-ac
 `/subscriptions/\<subscription-id\>/resourceGroups/\<resource-group-name\>/providers/Microsoft.ContainerRegistry/registries/\<name\>`
 
 > [!NOTE]
-> 如果你使用的是来自 AKS 群集的不同订阅中的 ACR，请在附加或分离 AKS 群集时使用 ACR 资源 ID。
+> 如果所用 ACR 与 AKS 群集位于不同的订阅中，则在从 AKS 群集进行附加或分离时，请使用 ACR 资源 ID。
 
 ```azurecli
 az aks create -n myAKSCluster -g myResourceGroup --generate-ssh-keys --attach-acr /subscriptions/<subscription-id>/resourceGroups/myContainerRegistryResourceGroup/providers/Microsoft.ContainerRegistry/registries/myContainerRegistry
@@ -100,7 +103,7 @@ az acr import  -n <acr-name> --source docker.io/library/nginx:latest --image ngi
 az aks get-credentials -g myResourceGroup -n myAKSCluster
 ```
 
-创建一个名为**nginx. yaml**的文件，其中包含以下。 替换为**acr 名称**的注册表资源名称。 例如： *myContainerRegistry*。
+创建名为 acr-nginx.yaml 的文件，其中包含以下内容。 请将 acr-name 替换为注册表的资源名称。 示例：myContainerRegistry。
 
 ```yaml
 apiVersion: apps/v1
@@ -147,8 +150,10 @@ nginx0-deployment-669dfc4d4b-xdpd6   1/1     Running   0          20s
 ```
 
 ### <a name="troubleshooting"></a>故障排除
+* 运行 [az aks check-acr](/cli/azure/aks#az_aks_check_acr) 命令，以验证是否可以从 aks 群集访问注册表。
 * 详细了解 [ACR 诊断](../container-registry/container-registry-diagnostics-audit-logs.md)
 * 详细了解 [ACR 运行状况](../container-registry/container-registry-check-health.md)
 
 <!-- LINKS - external -->
 [AKS AKS CLI]: /cli/azure/aks?view=azure-cli-latest#az-aks-create
+[Image Pull secret]: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/

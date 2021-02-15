@@ -5,13 +5,13 @@ services: logic-apps
 ms.suite: integration
 ms.reviewer: logicappspm
 ms.topic: article
-ms.date: 08/17/2020
-ms.openlocfilehash: 391692d708adbd542b2cf358f0ac597dc1db3fa0
-ms.sourcegitcommit: 37afde27ac137ab2e675b2b0492559287822fded
+ms.date: 11/06/2020
+ms.openlocfilehash: 2e1536d4f2ea7d71691c611e9127109c154f3266
+ms.sourcegitcommit: 8245325f9170371e08bbc66da7a6c292bbbd94cc
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/18/2020
-ms.locfileid: "88565547"
+ms.lasthandoff: 02/07/2021
+ms.locfileid: "99807337"
 ---
 # <a name="overview-automate-deployment-for-azure-logic-apps-by-using-azure-resource-manager-templates"></a>概述：使用 Azure 资源管理器模板将 Azure 逻辑应用部署自动化
 
@@ -34,12 +34,14 @@ ms.locfileid: "88565547"
 * [Azure 资源管理器模板最佳做法](../azure-resource-manager/templates/template-best-practices.md)
 * [开发用于实现云一致性的 Azure 资源管理器模板](../azure-resource-manager/templates/templates-cloud-consistency.md)
 
+有关特定于逻辑应用、集成帐户、集成帐户项目和 integration services 环境的模板资源信息，请参阅 [Microsoft. 逻辑资源类型](/azure/templates/microsoft.logic/allversions)。
+
 有关示例逻辑应用模板，请参阅以下示例：
 
 * 本主题的示例使用的[完整模板](#full-example-template)
 * GitHub 中的[示例快速入门逻辑应用模板](https://github.com/Azure/azure-quickstart-templates/blob/master/101-logic-app-create)
 
-有关特定于逻辑应用、集成帐户和集成帐户项目的模板资源信息，请参阅 [Microsoft.Logic 资源类型](/azure/templates/microsoft.logic/allversions)。
+REST API 中的逻辑应用，请从 [Azure 逻辑应用 REST API 概述](/rest/api/logic)开始。
 
 <a name="template-structure"></a>
 
@@ -84,7 +86,7 @@ ms.locfileid: "88565547"
 * 逻辑用来通过[托管连接器](../connectors/apis-list.md)访问其他服务和系统的连接
 * 逻辑应用需要对部署使用的其他资源
 
-  例如，如果逻辑应用针对企业对企业 (B2B) 方案使用[集成帐户](../logic-apps/logic-apps-enterprise-integration-create-integration-account.md)，则模板的顶级 `parameters` 对象会声明接受该集成帐户的资源 ID 的参数。
+  例如，如果逻辑应用使用企业到企业 (B2B) 方案的 [集成帐户](../logic-apps/logic-apps-enterprise-integration-create-integration-account.md) ，则模板的顶级 `parameters` 对象将声明接受该集成帐户的资源 ID 的参数。
 
 下面是参数定义的一般结构和语法，[参数 - 资源管理器模板的结构和语法](../azure-resource-manager/templates/template-syntax.md#parameters)中对此做了全面介绍：
 
@@ -269,17 +271,7 @@ ms.locfileid: "88565547"
 
 ### <a name="view-resource-definitions"></a>查看资源定义
 
-若要查看 Azure 资源组中所有资源的资源定义，请将 [逻辑应用从 azure 下载到 Visual Studio](../logic-apps/manage-logic-apps-with-visual-studio.md)中，这是创建最适用于部署的有效参数化逻辑应用模板的最简单方法，或者按照 Azure 门户中的以下步骤进行操作：
-
-1. 使用 Azure 帐户凭据登录到 [Azure 门户](https://portal.azure.com)。
-
-1. 查找包含逻辑应用、连接和其他资源的 Azure 资源组。
-
-1. 在资源组工具栏上，选择 " **概述**"，然后选择资源组中的所有资源。
-
-1. 在资源组工具栏上的 " **设置**" 下，选择 " **导出模板**"。
-
-   门户会显示所选资源的定义。 有关详细信息，请参阅 [Azure 门户中的单个和多个资源导出到模板](../azure-resource-manager/templates/export-template-portal.md)。
+若要查看 Azure 资源组中所有资源的资源定义，请将 [逻辑应用从 azure 下载到 Visual Studio](../logic-apps/manage-logic-apps-with-visual-studio.md)中，这是创建最适用于部署的有效参数化逻辑应用模板的最简单方法。
 
 有关模板资源及其属性的一般信息，请参阅以下主题：
 
@@ -290,13 +282,13 @@ ms.locfileid: "88565547"
 
 ### <a name="logic-app-resource-definition"></a>逻辑应用资源定义
 
-逻辑应用的资源定义从 `properties` 对象开始，该对象包含以下信息：
+模板中逻辑应用的 [工作流资源定义](/azure/templates/microsoft.logic/workflows) 从 `properties` 对象开始，其中包含以下信息：
 
 * 逻辑应用在部署时的状态
 * 逻辑应用使用的任何集成帐户的 ID
 * 逻辑应用的工作流定义
 * 用于设置要在运行时使用的值的 `parameters` 对象
-* 有关逻辑应用的其他资源信息，例如名称、类型、位置等
+* 有关逻辑应用的其他资源信息，如名称、类型、位置、任何运行时配置设置等
 
 ```json
 {
@@ -315,7 +307,8 @@ ms.locfileid: "88565547"
             },
             "definition": {<workflow-definition>},
             "parameters": {<workflow-definition-parameter-values>},
-            "accessControl": {}
+            "accessControl": {},
+            "runtimeConfiguration": {}
          },
          "name": "[parameters('LogicAppName')]", // Template parameter reference
          "type": "Microsoft.Logic/workflows",
@@ -342,9 +335,34 @@ ms.locfileid: "88565547"
 | `definition` | 是 | Object | 逻辑应用的基础工作流定义，它是代码视图中显示的相同对象，[工作流定义语言的架构参考](../logic-apps/logic-apps-workflow-definition-language.md)主题中对此做了全面介绍。 在此工作流定义中，`parameters` 对象声明要在逻辑应用运行时使用的值的参数。 有关详细信息，请参阅[工作流定义和参数](#workflow-definition-parameters)。 <p><p>若要查看逻辑应用工作流定义中的属性，请在 Azure 门户或 Visual Studio 中或使用 [Azure 资源浏览器](https://resources.azure.com)之类的工具，从“设计视图”切换到“代码视图”。 |
 | `parameters` | 否 | Object | 要在逻辑应用运行时使用的[工作流定义参数值](#workflow-definition-parameters)。 这些值的参数定义显示在[工作流定义的 parameters 对象中](#workflow-definition-parameters)。 此外，如果逻辑应用使用[托管连接器](../connectors/apis-list.md)来访问其他服务和系统，则此对象将包含一个用于设置要在运行时使用的连接值的 `$connections` 对象。 |
 | `accessControl` | 否 | Object | 用于指定逻辑应用的安全属性，例如限制对请求触发器或运行历史记录输入和输出的 IP 访问。 有关详细信息，请参阅[保护对逻辑应用的访问](../logic-apps/logic-apps-securing-a-logic-app.md)。 |
-||||
+| `runtimeConfiguration` | 否 | Object | 用于指定任何 `operationOptions` 属性，这些属性控制逻辑应用在运行时的行为方式。 例如，可以在 [高吞吐量模式下](../logic-apps/logic-apps-limits-and-config.md#run-high-throughput-mode)运行逻辑应用。 |
+|||||
 
-有关特定于逻辑应用、集成帐户和集成帐户项目的模板资源信息，请参阅 [Microsoft.Logic 资源类型](/azure/templates/microsoft.logic/allversions)。
+有关这些逻辑应用对象的资源定义的详细信息，请参阅 [Microsoft. 逻辑资源类型](/azure/templates/microsoft.logic/allversions)：
+
+* [工作流资源定义](/azure/templates/microsoft.logic/workflows)
+* [Integration service 环境资源定义](/azure/templates/microsoft.logic/integrationserviceenvironments)
+* [Integration service 环境托管 API 资源定义](/azure/templates/microsoft.logic/integrationserviceenvironments/managedapis)
+
+* [集成帐户资源定义](/azure/templates/microsoft.logic/integrationaccounts)
+
+* 集成帐户项目：
+
+  * [协议资源定义](/azure/templates/microsoft.logic/integrationaccounts/agreements)
+
+  * [程序集资源定义](/azure/templates/microsoft.logic/integrationaccounts/assemblies)
+
+  * [批处理配置资源定义](/azure/templates/microsoft.logic/integrationaccounts/batchconfigurations)
+
+  * [证书资源定义](/azure/templates/microsoft.logic/integrationaccounts/certificates)
+
+  * [映射资源定义](/azure/templates/microsoft.logic/integrationaccounts/maps)
+
+  * [伙伴资源定义](/azure/templates/microsoft.logic/integrationaccounts/partners)
+
+  * [架构资源定义](/azure/templates/microsoft.logic/integrationaccounts/schemas)
+
+  * [会话资源定义](/azure/templates/microsoft.logic/integrationaccounts/sessions)
 
 <a name="workflow-definition-parameters"></a>
 
@@ -421,7 +439,7 @@ ms.locfileid: "88565547"
 }
 ```
 
-<a name="secure-workflow-definition-parmameters"></a>
+<a name="secure-workflow-definition-parameters"></a>
 
 ### <a name="secure-workflow-definition-parameters"></a>安全工作流定义参数
 
@@ -584,7 +602,7 @@ ms.locfileid: "88565547"
 
 ## <a name="connection-resource-definitions"></a>连接资源定义
 
-当逻辑应用通过[托管连接器](../connectors/apis-list.md)来创建并使用与其他服务和系统的连接时，模板的 `resources` 对象将包含这些连接的资源定义。
+当逻辑应用通过[托管连接器](../connectors/apis-list.md)来创建并使用与其他服务和系统的连接时，模板的 `resources` 对象将包含这些连接的资源定义。 尽管从逻辑应用中创建连接，但连接是具有自己的资源定义的单独 Azure 资源。 若要查看这些连接资源定义，请[将逻辑应用从 Azure 下载到 Visual Studio 中](../logic-apps/manage-logic-apps-with-visual-studio.md)，这是创建最适用部署的有效参数化逻辑应用模板的最简单方法。
 
 ```json
 {
@@ -609,7 +627,7 @@ ms.locfileid: "88565547"
 }
 ```
 
-连接资源定义引用模板的顶级参数作为其值，这意味着，在部署时可以使用参数文件提供这些值。 确保连接使用与逻辑应用相同的 Azure 资源组和位置。
+连接资源定义引用模板的顶级参数作为其值，以便可以在部署时使用参数文件来提供这些值。 确保连接使用与逻辑应用相同的 Azure 资源组和位置。
 
 下面是 Office 365 Outlook 连接的示例资源定义以及相应的模板参数：
 
@@ -728,12 +746,12 @@ ms.locfileid: "88565547"
                      }
                   }
                }
-            },
-            <other-logic-app-resource-information>,
-            "dependsOn": [
-               "[resourceId('Microsoft.Web/connections', parameters('office365_1_Connection_Name'))]"
-            ]
-         }
+            }
+         },
+         <other-logic-app-resource-information>,
+         "dependsOn": [
+            "[resourceId('Microsoft.Web/connections', parameters('office365_1_Connection_Name'))]"
+         ]
          // End logic app resource definition
       },
       // Office 365 Outlook API connection resource definition

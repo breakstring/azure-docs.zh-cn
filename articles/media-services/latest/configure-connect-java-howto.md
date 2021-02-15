@@ -1,27 +1,29 @@
 ---
 title: 连接到 Azure 媒体服务 v3 API - Java
-description: 本文介绍如何通过 Java 连接到 Azure 媒体服务 v3 API。
+description: 本文介绍如何使用 Java 连接到 Azure 媒体服务 v3 API。
 services: media-services
 documentationcenter: ''
-author: Juliako
+author: IngridAtMicrosoft
 manager: femila
 editor: ''
 ms.service: media-services
 ms.workload: media
 ms.tgt_pltfrm: na
 ms.devlang: na
-ms.topic: article
-ms.date: 09/18/2019
+ms.topic: quickstart
+ms.date: 11/17/2020
 ms.custom: devx-track-java
-ms.author: juliako
-ms.openlocfilehash: 098e1db7470124dc7c15b3ee65d6ab9cb3fadabd
-ms.sourcegitcommit: a76ff927bd57d2fcc122fa36f7cb21eb22154cfa
-ms.translationtype: MT
+ms.author: inhenkel
+ms.openlocfilehash: 769b4bc431040ee4d872fa60270196db96978ed2
+ms.sourcegitcommit: c2dd51aeaec24cd18f2e4e77d268de5bcc89e4a7
+ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/28/2020
-ms.locfileid: "87319824"
+ms.lasthandoff: 11/18/2020
+ms.locfileid: "94748159"
 ---
 # <a name="connect-to-media-services-v3-api---java"></a>连接到媒体服务 v3 API - Java
+
+[!INCLUDE [media services api v3 logo](./includes/v3-hr.md)]
 
 本文介绍如何使用服务主体登录方法连接到 Azure 媒体服务 v3 Java SDK。
 
@@ -60,25 +62,9 @@ mvn archetype:generate -DgroupId=com.azure.ams -DartifactId=testAzureApp -Darche
 
 1. 在 Visual Studio Code 中，打开项目所在的文件夹
 1. 找到并打开 `pom.xml`
-1. 添加所需的依赖项
+1. 添加所需的依赖项。
 
-    ```xml
-   <dependency>
-     <groupId>com.microsoft.azure.mediaservices.v2018_07_01</groupId>
-     <artifactId>azure-mgmt-media</artifactId>
-     <version>1.0.0-beta-3</version>
-   </dependency>
-   <dependency>
-     <groupId>com.microsoft.rest</groupId>
-     <artifactId>client-runtime</artifactId>
-     <version>1.6.6</version>
-   </dependency>
-   <dependency>
-     <groupId>com.microsoft.azure</groupId>
-     <artifactId>azure-client-authentication</artifactId>
-     <version>1.6.6</version>
-   </dependency>
-    ```
+   请参阅[视频编码](https://github.com/Azure-Samples/media-services-v3-java/blob/master/VideoEncoding/EncodingWithMESCustomPreset/pom.xml)示例中的 `pom.xml`。
 
 ## <a name="connect-to-the-java-client"></a>连接到 Java 客户端
 
@@ -124,7 +110,7 @@ mvn archetype:generate -DgroupId=com.azure.ams -DartifactId=testAzureApp -Darche
 
 - [媒体服务概念](concepts-overview.md)
 - [Java SDK](https://aka.ms/ams-v3-java-sdk)
-- [Java 参考](https://aka.ms/ams-v3-java-ref)
+- [Java 参考](/java/api/overview/azure/mediaservices/management)
 - [com.microsoft.azure.mediaservices.v2018_07_01:azure-mgmt-media](https://search.maven.org/artifact/com.microsoft.azure.mediaservices.v2018_07_01/azure-mgmt-media/1.0.0-beta/jar)
 
 ## <a name="next-steps"></a>后续步骤

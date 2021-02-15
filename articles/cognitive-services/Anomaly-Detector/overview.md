@@ -1,27 +1,29 @@
 ---
 title: 什么是异常检测器 API？
 titleSuffix: Azure Cognitive Services
-description: 使用异常检测器 API 的高级算法来确定时序数据中的异常。
+description: 使用异常检测器 API 算法对时序数据应用异常情况检测。
 services: cognitive-services
-author: aahill
+author: mrbullwinkle
 manager: nitinme
 ms.service: cognitive-services
 ms.subservice: anomaly-detector
 ms.topic: overview
-ms.date: 12/18/2019
-ms.author: aahi
-ms.openlocfilehash: 9237e670dd8d43c4036f996c477948944718e3aa
-ms.sourcegitcommit: 34a6fa5fc66b1cfdfbf8178ef5cdb151c97c721c
+ms.date: 01/05/2021
+ms.author: mbullwin
+keywords: 异常检测, 机器学习, 算法
+ms.custom: cog-serv-seo-aug-2020
+ms.openlocfilehash: 425c6cab4a4a5e1329e2d38f49c5058ec8ffc5b9
+ms.sourcegitcommit: 5e762a9d26e179d14eb19a28872fb673bf306fa7
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/28/2020
-ms.locfileid: "80053701"
+ms.lasthandoff: 01/05/2021
+ms.locfileid: "97901362"
 ---
 # <a name="what-is-the-anomaly-detector-api"></a>什么是异常检测器 API？
 
 [!INCLUDE [TLS 1.2 enforcement](../../../includes/cognitive-services-tls-announcement.md)]
 
-可以使用异常检测器 API 来监视并检测与机器学习配合使用的时序数据中的异常。 异常检测器 API 可以自动标识最佳适配模型并将其应用到数据，不限行业、场景或数据量，通过这种方式进行适应。 使用时序数据，此 API 可以确定异常检测的边界、预期的值，以及哪些数据点异常。
+使用异常检测器 API，无需了解机器学习方面的知识，就能监视和检测时序数据中的异常。 异常检测器 API 算法通过自动标识最佳适配模型并将其应用到数据来进行自适应，并且不限行业、场景或数据量。 使用时序数据，此 API 可以确定异常检测的边界、预期的值，以及哪些数据点异常。
 
 ![检测服务请求中的模式更改](./media/anomaly_detection2.png)
 
@@ -33,8 +35,9 @@ ms.locfileid: "80053701"
 
 |Feature  |说明  |
 |---------|---------|
-|检测实时出现的异常。 | 检测流式传输数据中的异常，方法是：使用以前见过的数据点来确定最近的数据点是否异常。 此操作使用发送的数据点生成一个模型，然后确定目标点是否异常。 每生成一个新数据点就调用该 API，这样就可以在创建数据时监视数据。 |
+|实时检测异常。 | 检测流式传输数据中的异常，方法是：使用以前见过的数据点来确定最近的数据点是否异常。 此操作使用发送的数据点生成一个模型，然后确定目标点是否异常。 每生成一个新数据点就调用该 API，这样就可以在创建数据时监视数据。 |
 |以批的形式检测整个数据集中的异常。 | 使用时序来检测数据中可能存在的任何异常。 此操作使用整个时序数据生成一个模型，每个点使用同一模型进行分析。         |
+|以批的形式检测整个数据集中的更改点。 | 使用时序来检测数据中存在的趋势更改点。 此操作使用整个时序数据生成一个模型，每个点使用同一模型进行分析。    |
 | 获取数据的其他信息。 | 获取数据的有用详细信息以及任何观察到的异常，包括预期的值、异常边界和位置。 |
 | 调整异常检测边界。 | 异常检测器 API 自动创建异常检测的边界。 调整这些边界，以便提高或降低 API 对数据异常的敏感度，并更好地拟合数据。 |
 
@@ -45,7 +48,7 @@ ms.locfileid: "80053701"
 
 ## <a name="notebook"></a>笔记本
 
-若要了解如何调用异常检测器API，请试用此 [Azure Notebook](https://aka.ms/adNotebook)。 这个 Web 托管的 Jupyter Notebook 演示如何发送 API 请求和直观显示结果。
+若要了解如何调用异常检测器API，请试用此 [Notebook](https://aka.ms/adNotebook)。 此 Jupyter Notebook 演示如何发送 API 请求和直观显示结果。
 
 若要运行此 Notebook，请完成以下步骤：
 
@@ -80,8 +83,21 @@ ms.locfileid: "80053701"
 
 可以阅读论文 [Microsoft 的时序异常检测服务](https://arxiv.org/abs/1906.03821)（KDD 2019 接受），详细了解 Microsoft 开发的 SR-CNN 算法。
 
-
 > [!VIDEO https://www.youtube.com/embed/ERTaAnwCarM]
+
+## <a name="service-availability-and-redundancy"></a>服务可用性和冗余性
+
+### <a name="is-the-anomaly-detector-service-zone-resilient"></a>异常检测器服务是否可在区域内复原？
+
+是。 默认情况下，异常探测器服务可在区域内复原。
+
+### <a name="how-do-i-configure-the-anomaly-detector-service-to-be-zone-resilient"></a>如何将异常探测器服务配置为可在区域内复原？
+
+客户无需配置即可启用区域复原能力。 异常探测器资源默认提供区域内复原能力，由服务自身进行管理。
+
+## <a name="deploy-on-premises-using-docker-containers"></a>使用 Docker 容器进行本地部署
+
+[使用异常检测器容器](anomaly-detector-container-howto.md)在本地部署 API 功能。 借助 Docker 容器，你可使服务更靠近数据，以满足合规性、安全性或其他操作目的。
 
 ## <a name="join-the-anomaly-detector-community"></a>加入“异常检测器”社区
 
@@ -90,6 +106,6 @@ ms.locfileid: "80053701"
 
 ## <a name="next-steps"></a>后续步骤
 
-* [快速入门：使用异常检测器 REST API 检测时序数据的异常](quickstarts/detect-data-anomalies-csharp.md)
+* [快速入门：使用异常检测器检测时序数据中的异常](quickstarts/client-libraries.md)
 * 异常检测器 API [在线演示](https://notebooks.azure.com/AzureAnomalyDetection/projects/anomalydetector)
-* 异常检测器 [REST API 参考](https://westus2.dev.cognitive.microsoft.com/docs/services/AnomalyDetector/operations/post-timeseries-entire-detect)
+* 异常检测器 [REST API 参考](https://aka.ms/anomaly-detector-rest-api-ref)

@@ -4,19 +4,19 @@ description: 使用 Azure 资源管理器模板在 Azure SQL 数据库中创建�
 services: sql-database
 ms.service: sql-database
 ms.subservice: single-database
-ms.custom: subject-armqs sqldbrb=1, devx-track-azurecli
+ms.custom: subject-armqs sqldbrb=1
 ms.devlang: ''
 ms.topic: quickstart
 author: mumian
 ms.author: jgao
-ms.reviewer: carlrab
+ms.reviewer: sstein
 ms.date: 06/24/2020
-ms.openlocfilehash: 4175792875b3bb60572ef9aa520b1fb09e00bbba
-ms.sourcegitcommit: 11e2521679415f05d3d2c4c49858940677c57900
+ms.openlocfilehash: b7883144509760c9670decd50062d2595b8dc495
+ms.sourcegitcommit: d22a86a1329be8fd1913ce4d1bfbd2a125b2bcae
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/31/2020
-ms.locfileid: "87503015"
+ms.lasthandoff: 11/26/2020
+ms.locfileid: "96187079"
 ---
 # <a name="quickstart-create-a-single-database-in-azure-sql-database-using-an-arm-template"></a>快速入门：使用 ARM 模板在 Azure SQL 数据库中创建单一数据库
 
@@ -38,7 +38,7 @@ ms.locfileid: "87503015"
 
 本快速入门中使用的模板来自 [Azure 快速启动模板](https://azure.microsoft.com/resources/templates/101-sql-database/)。
 
-:::code language="json" source="~/quickstart-templates/101-sql-database/azuredeploy.json" range="1-67" highlight="41-65":::
+:::code language="json" source="~/quickstart-templates/101-sql-database/azuredeploy.json":::
 
 该模板中定义了以下资源：
 
@@ -85,7 +85,7 @@ Remove-AzResourceGroup -Name $resourceGroupName
 - 创建服务器级防火墙规则，以便通过本地或远程工具连接到单一数据库。 有关详细信息，请参阅[创建服务器级防火墙规则](firewall-create-server-level-portal-quickstart.md)。
 - 创建服务器级防火墙规则后，使用多种不同的工具和语言[连接和查询](connect-query-content-reference-guide.md)数据库。
   - [使用 SQL Server Management Studio 连接和查询](connect-query-ssms.md)
-  - [使用 Azure Data Studio 连接和查询](https://docs.microsoft.com/sql/azure-data-studio/quickstart-sql-database?toc=/azure/sql-database/toc.json)
+  - [使用 Azure Data Studio 连接和查询](/sql/azure-data-studio/quickstart-sql-database?toc=%2fazure%2fsql-database%2ftoc.json)
 - 若要使用 Azure CLI 创建单一数据库，请参阅 [Azure CLI 示例](az-cli-script-samples-content-guide.md)。
 - 若要使用 Azure PowerShell 创建单一数据库，请参阅 [Azure PowerShell 示例](powershell-script-content-guide.md)。
 - 若要了解如何创建 ARM 模板，请参阅[创建第一个模板](../../azure-resource-manager/templates/template-tutorial-create-first-template.md)。

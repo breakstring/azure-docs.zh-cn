@@ -1,7 +1,7 @@
 ---
 title: 将必应自动推荐 API v5 升级到 v7
 titleSuffix: Azure Cognitive Services
-description: 发现需要更新为使用版本 7 的应用部分。
+description: 标识你需要更新以使用版本7的必应自动建议应用程序部分。
 services: cognitive-services
 author: swhite-msft
 manager: nitinme
@@ -10,14 +10,19 @@ ms.subservice: bing-autosuggest
 ms.topic: conceptual
 ms.date: 02/20/2019
 ms.author: scottwhi
-ms.openlocfilehash: 5249a3a1f51eea2ecd0999d71c6b08fdacf37a34
-ms.sourcegitcommit: 58faa9fcbd62f3ac37ff0a65ab9357a01051a64f
+ms.openlocfilehash: 531da145e699eecb76366cd73a151b7170a6ed2f
+ms.sourcegitcommit: 9eda79ea41c60d58a4ceab63d424d6866b38b82d
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/29/2020
-ms.locfileid: "68405415"
+ms.lasthandoff: 11/30/2020
+ms.locfileid: "96353419"
 ---
 # <a name="autosuggest-api-upgrade-guide"></a>自动推荐 API 升级指南
+
+> [!WARNING]
+> 必应搜索 API 将从认知服务迁移到必应搜索服务。 从 2020 年 10 月 30 日开始，必应搜索的任何新实例都需按照[此处](/bing/search-apis/bing-web-search/create-bing-search-service-resource)所述的过程进行预配。
+> 使用认知服务进行预配的必应搜索 API 将在未来三年或在企业协议结束前（以先发生者为准）得到支持。
+> 有关迁移说明，请参阅[必应搜索服务](/bing/search-apis/bing-web-search/create-bing-search-service-resource)。
 
 此升级指南介绍了必应自动推荐 API 的版本 5 与版本 7 之间的更改。 使用本指南可帮助将应用程序更新为使用版本7。
 
@@ -25,7 +30,7 @@ ms.locfileid: "68405415"
 
 ### <a name="endpoints"></a>终结点
 
-- 终结点的版本号已从 v5 更改为 v7。 例如，https：\//api.cognitive.microsoft.com/bing/\*\*7.0 * */Suggestions。
+- 终结点的版本号已从 v5 更改为 v7。 例如，https： \/ /api.cognitive.microsoft.com/bing/ \* \* 7.0 * */Suggestions。
 
 ### <a name="error-response-objects-and-error-codes"></a>错误响应对象和错误代码
 
@@ -37,7 +42,7 @@ ms.locfileid: "68405415"
 
 - 已将 v5 错误代码替换为以下可取的 `code` 和 `subCode` 值。
 
-|代码|SubCode|说明
+|代码|SubCode|描述
 |-|-|-
 |ServerError|UnexpectedError<br/>ResourceError<br/>NotImplemented|只要出现任何子代码条件，必应就会返回 ServerError。 如果 HTTP 状态代码为 500，响应就会包含这些错误。
 |InvalidRequest|ParameterMissing<br/>ParameterInvalidValue<br/>HttpNotAllowed<br/>已阻止|只要请求的任何部分无效，必应就会返回 InvalidRequest。 例如，缺少必需参数或参数值无效。<br/><br/>如果错误是 ParameterMissing 或 ParameterInvalidValue，HTTP 状态代码为 400。<br/><br/>如果错误为 HttpNotAllowed，则 HTTP 状态代码为410。
@@ -54,7 +59,7 @@ RequestParameterInvalidValue|InvalidRequest.ParameterInvalidValue
 ResourceAccessDenied|InsufficientAuthorization
 ExceededVolume|RateLimitExceeded
 ExceededQpsLimit|RateLimitExceeded
-禁用|InsufficientAuthorization.AuthorizationDisabled
+已禁用|InsufficientAuthorization.AuthorizationDisabled
 UnexpectedError|ServerError.UnexpectedError
 DataSourceErrors|ServerError.ResourceError
 AuthorizationMissing|InvalidAuthorization.AuthorizationMissing
@@ -71,4 +76,4 @@ InsufficientScope|InsufficientAuthorization
 ## <a name="next-steps"></a>后续步骤
 
 > [!div class="nextstepaction"]
-> [使用和显示要求](./UseAndDisplayRequirements.md)
+> [使用和显示要求](../bing-web-search/use-display-requirements.md)

@@ -3,13 +3,13 @@ title: Azure 资源日志支持的服务和架构
 description: 了解 Azure 资源日志支持的服务和事件架构。
 ms.subservice: logs
 ms.topic: reference
-ms.date: 06/15/2020
-ms.openlocfilehash: fd2dc4030816ab0b31befe46ac60d5e96fdae917
-ms.sourcegitcommit: 9c3cfbe2bee467d0e6966c2bfdeddbe039cad029
+ms.date: 09/01/2020
+ms.openlocfilehash: 56de1f4f275eba46d5f8b146829e444a75eabb88
+ms.sourcegitcommit: 19ffdad48bc4caca8f93c3b067d1cf29234fef47
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/24/2020
-ms.locfileid: "88782118"
+ms.lasthandoff: 01/06/2021
+ms.locfileid: "97955308"
 ---
 # <a name="common-and-service-specific-schema-for-azure-resource-logs"></a>Azure 资源日志的通用架构和特定于服务的架构
 
@@ -28,7 +28,7 @@ ms.locfileid: "88782118"
 | time | 必须 | 事件时间戳 (UTC)。 |
 | ResourceId | 必须 | 发出事件的资源的资源 ID。 对于租户服务，其形式为 /tenants/tenant-id/providers/provider-name。 |
 | tenantId | 对于租户日志而言是必需的 | 此事件关联到的 Active Directory 租户的租户 ID。 此属性仅用于租户级日志，它不会出现在资源级日志中。 |
-| operationName | 必须 | 此事件表示的操作的名称。 如果事件表示 RBAC 操作，则这是 RBAC 操作名称（例如，Microsoft.Storage/storageAccounts/blobServices/blobs/Read）。 通常以资源管理器操作的形式建模，即使它们不是实际记录的资源管理器操作 (`Microsoft.<providerName>/<resourceType>/<subtype>/<Write/Read/Delete/Action>`) |
+| operationName | 必须 | 此事件表示的操作的名称。 如果事件表示 Azure RBAC 操作，则这是 Azure RBAC 操作名称（例如，Microsoft.Storage/storageAccounts/blobServices/blobs/Read）。 通常以资源管理器操作的形式建模，即使它们不是实际记录的资源管理器操作 (`Microsoft.<providerName>/<resourceType>/<subtype>/<Write/Read/Delete/Action>`) |
 | operationVersion | 可选 | 如果 operationName 是使用 API（例如 `http://myservice.windowsazure.net/object?api-version=2016-06-01`）执行的，则为与该操作关联的 api-version。 如果没有与此操作相对应的 API，则该版本表示该操作的版本，以防与操作相关联的属性在将来发生更改。 |
 | category | 必须 | 事件的日志类别。 类别是可以在特定资源上启用或禁用日志的粒度。 在事件的属性 blob 内显示的属性在特定日志类别和资源类型中相同。 典型的日志类别是“Audit”、“Operational”、“Execution”和“Request”。 |
 | resultType | 可选 | 事件的状态。 典型值包括“Started”、“In Progress”、“Succeeded”、“Failed”、“Active”和“Resolved”。 |
@@ -48,15 +48,13 @@ ms.locfileid: "88782118"
 
 | 服务 | 架构和文档 |
 | --- | --- |
-| Azure Active Directory | [概述](../../active-directory/reports-monitoring/concept-activity-logs-azure-monitor.md)、 [审核日志架构](../../active-directory/reports-monitoring/reference-azure-monitor-audit-log-schema.md) 和 [登录架构](../../active-directory/reports-monitoring/reference-azure-monitor-sign-ins-log-schema.md) |
-| Analysis Services | https://docs.microsoft.com/azure/analysis-services/analysis-services-logging |
+| Azure Active Directory | [概述](../../active-directory/reports-monitoring/concept-activity-logs-azure-monitor.md)、[审核日志架构](../../active-directory/reports-monitoring/reference-azure-monitor-audit-log-schema.md)和[登录架构](../../active-directory/reports-monitoring/reference-azure-monitor-sign-ins-log-schema.md) |
+| Analysis Services | [Azure Analysis Services - 设置诊断日志记录](../../analysis-services/analysis-services-logging.md) |
 | API 管理 | [API 管理资源日志](../../api-management/api-management-howto-use-azure-monitor.md#resource-logs) |
+| 应用服务 | [应用服务日志](../../app-service/troubleshoot-diagnostic-logs.md)
 | 应用程序网关 |[应用程序网关的日志记录](../../application-gateway/application-gateway-diagnostics.md) |
 | Azure 自动化 |[适用于 Azure 自动化的 Log Analytics](../../automation/automation-manage-send-joblogs-log-analytics.md) |
 | Azure Batch |[Azure Batch 日志记录](../../batch/batch-diagnostics.md) |
-| Azure Database for MySQL | [Azure Database for MySQL 诊断日志](../../mysql/concepts-server-logs.md#diagnostic-logs) |
-| Azure Database for PostgreSQL | [Azure Database for PostgreSQL 日志](../../postgresql/concepts-server-logs.md#resource-logs) |
-| Azure 数据资源管理器 | [Azure 数据资源管理器日志](/azure/data-explorer/using-diagnostic-logs) |
 | 认知服务 | [Azure 认知服务的日志记录](../../cognitive-services/diagnostic-logging.md) |
 | 容器注册表 | [Azure 容器注册表的日志记录](../../container-registry/container-registry-diagnostics-audit-logs.md) |
 | 内容分发网络 | [用于 CDN 的 Azure 日志](../../cdn/cdn-azure-diagnostic-logs.md) |
@@ -64,17 +62,22 @@ ms.locfileid: "88782118"
 | Data Factory | [使用 Azure Monitor 监视数据工厂](../../data-factory/monitor-using-azure-monitor.md) |
 | Data Lake Analytics |[访问 Azure Data Lake Analytics 的日志](../../data-lake-analytics/data-lake-analytics-diagnostic-logs.md) |
 | Data Lake Store |[访问 Azure Data Lake Store 的日志](../../data-lake-store/data-lake-store-diagnostic-logs.md) |
-| Azure Databricks | [Azure Databricks 中的诊断日志记录](https://github.com/MicrosoftDocs/databricks-pr/blob/live/databricks/administration-guide/account-settings/azure-diagnostic-logs.md) |
+| Azure 数据资源管理器 | [Azure 数据资源管理器日志](/azure/data-explorer/using-diagnostic-logs) |
+| Azure Database for MySQL | [Azure Database for MySQL 诊断日志](../../mysql/concepts-server-logs.md#diagnostic-logs) |
+| Azure Database for PostgreSQL | [Azure Database for PostgreSQL 日志](../../postgresql/concepts-server-logs.md#resource-logs) |
+| Azure Databricks | [Azure Databricks 中的诊断日志记录](/azure/databricks/administration-guide/account-settings/azure-diagnostic-logs) |
+| Azure 数字孪生 | [设置 Azure 数字孪生诊断](../../digital-twins/troubleshoot-diagnostics.md#log-schemas)
 | 事件中心 |[Azure 事件中心日志](../../event-hubs/event-hubs-diagnostic-logs.md) |
 | Express Route | 架构不可用。 |
 | Azure 防火墙 | 架构不可用。 |
-| IoT 中心 | [IoT 中心操作](../../iot-hub/iot-hub-monitor-resource-health.md#use-azure-monitor) |
+| Front Door | [前门日志记录](../../frontdoor/front-door-diagnostics.md) |
+| IoT 中心 | [IoT 中心操作](../../iot-hub/monitor-iot-hub-reference.md#resource-logs) |
 | 密钥保管库 |[Azure 密钥保管库日志记录](../../key-vault/general/logging.md) |
 | Kubernetes 服务 |[Azure Kubernetes 日志记录](../../aks/view-master-logs.md#log-event-schema) |
 | 负载均衡器 |[Azure 负载均衡器的 Log Analytics](../../load-balancer/load-balancer-monitor-log.md) |
 | 逻辑应用 |[逻辑应用 B2B 自定义跟踪架构](../../logic-apps/logic-apps-track-integration-account-custom-tracking-schema.md) |
 | 网络安全组 |[网络安全组 (NSG) 的 Log Analytics](../../virtual-network/virtual-network-nsg-manage-log.md) |
-| DDOS 保护 | [管理 Azure DDoS 防护标准](../../virtual-network/manage-ddos-protection.md) |
+| DDoS 保护 | [Azure DDoS 保护标准日志记录](../../ddos-protection/diagnostic-logging.md#log-schemas) |
 | Power BI 专用 | [Azure 中 Power BI Embedded 的日志记录](/power-bi/developer/azure-pbie-diag-logs) |
 | 恢复服务 | [Azure 备份的数据模型](../../backup/backup-azure-reports-data-model.md)|
 | 搜索 |[允许并使用搜索流量分析](../../search/search-traffic-analytics.md) |
@@ -86,11 +89,11 @@ ms.locfileid: "88782118"
 | 虚拟网络网关 | 架构不可用。 |
 
 
+
 ## <a name="next-steps"></a>后续步骤
 
 * [查看可以收集的资源日志类别](resource-logs-categories.md)
 * [详细了解资源日志](./platform-logs-overview.md)
-* [将资源日志流式传输到**事件中心**](./resource-logs.md#send-to-azure-event-hubs)
+* [将资源日志流式传输到 **事件中心**](./resource-logs.md#send-to-azure-event-hubs)
 * [使用 Azure Monitor REST API 更改资源日志诊断设置](/rest/api/monitor/diagnosticsettings)
 * [使用 Log Analytics 分析 Azure 存储中的日志](./resource-logs.md#send-to-log-analytics-workspace)
-

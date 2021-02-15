@@ -1,22 +1,18 @@
 ---
 title: 将数据从 Amazon S3 迁移到 Azure 存储
 description: 使用 Azure 数据工厂将数据从 Amazon S3 迁移到 Azure 存储。
-services: data-factory
 ms.author: yexu
 author: dearandyxu
-ms.reviewer: ''
-manager: shwang
 ms.service: data-factory
-ms.workload: data-services
 ms.topic: conceptual
 ms.custom: seo-lt-2019
 ms.date: 8/04/2019
-ms.openlocfilehash: 3f40ad7346219b48a38ade38b2a75ddf71940875
-ms.sourcegitcommit: 849bb1729b89d075eed579aa36395bf4d29f3bd9
+ms.openlocfilehash: 2be8a9c7476bda6952ed1eaa15d29fe9c01b59a5
+ms.sourcegitcommit: d4734bc680ea221ea80fdea67859d6d32241aefc
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/28/2020
-ms.locfileid: "81416416"
+ms.lasthandoff: 02/14/2021
+ms.locfileid: "100371305"
 ---
 # <a name="use-azure-data-factory-to-migrate-data-from-amazon-s3-to-azure-storage"></a>使用 Azure 数据工厂将数据从 Amazon S3 迁移到 Azure 存储 
 
@@ -37,13 +33,13 @@ ADF 提供一个可在不同级别实现并行度的无服务器体系结构，�
 
 客户已成功将由数亿个文件组成的 PB 级数据从 Amazon S3 迁移到 Azure Blob 存储，同时保持 2 GBps 或更高的吞吐量。 
 
-![性能](media/data-migration-guidance-s3-to-azure-storage/performance.png)
+![图中显示了 AWS S3 存储中的多个文件分区，还有到 Azure Blob 存储/ADLS Gen2 的关联复制操作。](media/data-migration-guidance-s3-to-azure-storage/performance.png)
 
 上图演示了如何通过不同的并行度实现极佳的数据移动速度：
  
-- 单个复制活动可以利用可缩放的计算资源：使用 Azure Integration Runtime 时，能够以无服务器方式为每个复制活动指定[最多 256 个 DIU](https://docs.microsoft.com/azure/data-factory/copy-activity-performance#data-integration-units)；使用自承载集成运行时时，可以手动纵向扩展计算机或横向扩展为多个计算机（[最多 4 个节点](https://docs.microsoft.com/azure/data-factory/create-self-hosted-integration-runtime#high-availability-and-scalability)），单个复制活动会在所有节点之间将其文件集分区。 
+- 单个复制活动可以利用可缩放的计算资源：使用 Azure Integration Runtime 时，能够以无服务器方式为每个复制活动指定[最多 256 个 DIU](./copy-activity-performance.md#data-integration-units)；使用自承载集成运行时时，可以手动纵向扩展计算机或横向扩展为多个计算机（[最多 4 个节点](./create-self-hosted-integration-runtime.md#high-availability-and-scalability)），单个复制活动会在所有节点之间将其文件集分区。 
 - 单个复制活动使用多个线程读取和写入数据存储。 
-- ADF 控制流可以并行启动多个复制活动（例如，使用 [For Each 循环](https://docs.microsoft.com/azure/data-factory/control-flow-for-each-activity)）。 
+- ADF 控制流可以并行启动多个复制活动（例如，使用 [For Each 循环](./control-flow-for-each-activity.md)）。 
 
 ## <a name="resilience"></a>复原能力
 
@@ -61,7 +57,7 @@ ADF 默认通过 HTTPS 协议使用加密的连接将数据从 Amazon S3 传输�
 
 通过公共 Internet 迁移数据：
 
-![solution-architecture-public-network](media/data-migration-guidance-s3-to-azure-storage/solution-architecture-public-network.png)
+![图中显示了通过 Internet (HTTP) 从 AWS S3 存储经 ADF Azure 中的 Azure 集成运行时迁移到 Azure 存储的过程。 该运行时对数据工厂有一个控制通道。](media/data-migration-guidance-s3-to-azure-storage/solution-architecture-public-network.png)
 
 - 在此体系结构中，将通过公共 Internet 使用 HTTPS 安全传输数据。 
 - 源 Amazon S3 和目标 Azure Blob 存储或 Azure Data Lake Storage Gen2 配置为允许来自所有网络 IP 地址的流量。  请参阅下面的第二种体系结构来了解如何将网络访问限制在特定的 IP 范围内。 
@@ -70,21 +66,21 @@ ADF 默认通过 HTTPS 协议使用加密的连接将数据从 Amazon S3 传输�
 
 通过专用链路迁移数据： 
 
-![solution-architecture-private-network](media/data-migration-guidance-s3-to-azure-storage/solution-architecture-private-network.png)
+![图中显示了通过专用对等互连连接从 AWS S3 存储经 Azure 虚拟机上的自承载集成运行时迁移到 VNet 服务终结点，再到 Azure 存储的过程。 该运行时对数据工厂有一个控制通道。](media/data-migration-guidance-s3-to-azure-storage/solution-architecture-private-network.png)
 
 - 在此体系结构中，数据迁移是通过 AWS Direct Connect 与 Azure Express Route 之间的专用对等互连链路完成的，因此，数据永远不会遍历公共 Internet。  它需要使用 AWS VPC 和 Azure 虚拟网络。 
 - 需要在 Azure 虚拟网络中的 Windows VM 上安装 ADF 自承载集成运行时才能实现此体系结构。  可以手动纵向扩展自承载 IR VM 或横向扩展为多个 VM（最多 4 个节点），以充分利用网络和存储 IOPS/带宽。 
-- 如果可以接受通过 HTTPS 传输数据，但你希望将对源 S3 的网络访问锁定在特定的 IP 范围内，则可以采用此体系结构的一种变体：删除 AWS VPC 并使用 HTTPS 替换专用链路。  你需要在 Azure VM 上保留 Azure Virtual 和自承载 IR，以便使用可公开路由的静态 IP 进行允许列表操作。 
+- 如果可以接受通过 HTTPS 传输数据，但你希望将对源 S3 的网络访问锁定在特定的 IP 范围内，则可以采用此体系结构的一种变体：删除 AWS VPC 并使用 HTTPS 替换专用链路。  你需要在 Azure VM 上保留 Azure Virtual 和自承载 IR，以便使用可公开路由的静态 IP 进行筛选。 
 - 可以使用此体系结构实现初始快照数据迁移和增量数据迁移。 
 
 ## <a name="implementation-best-practices"></a>有关实现的最佳做法 
 
 ### <a name="authentication-and-credential-management"></a>身份验证和凭据管理 
 
-- 若要对 Amazon S3 帐户进行身份验证，必须使用 [IAM 帐户的访问密钥](https://docs.microsoft.com/azure/data-factory/connector-amazon-simple-storage-service#linked-service-properties)。 
-- 支持使用多种身份验证类型连接到 Azure Blob 存储。  强烈建议使用 [Azure 资源托管标识](https://docs.microsoft.com/azure/data-factory/connector-azure-blob-storage#managed-identity)：托管标识构建在 Azure AD 中自动管理的 ADF 标识基础之上，使你无需在链接服务定义中提供凭据，即可配置管道。  或者，可以使用[服务主体](https://docs.microsoft.com/azure/data-factory/connector-azure-blob-storage#service-principal-authentication)、[共享访问签名](https://docs.microsoft.com/azure/data-factory/connector-azure-blob-storage#shared-access-signature-authentication)或[存储帐户密钥](https://docs.microsoft.com/azure/data-factory/connector-azure-blob-storage#account-key-authentication)对 Azure Blob 存储进行身份验证。 
-- 也支持使用多种身份验证类型连接到 Azure Data Lake Storage Gen2。  强烈建议使用 [Azure 资源托管标识](https://docs.microsoft.com/azure/data-factory/connector-azure-data-lake-storage#managed-identity)，不过，也可以使用[服务主体](https://docs.microsoft.com/azure/data-factory/connector-azure-data-lake-storage#service-principal-authentication)或[存储帐户密钥](https://docs.microsoft.com/azure/data-factory/connector-azure-data-lake-storage#account-key-authentication)。 
-- 如果不使用 Azure 资源托管标识，我们强烈建议[在 Azure 密钥保管库中存储凭据](https://docs.microsoft.com/azure/data-factory/store-credentials-in-key-vault)，以便更轻松地集中管理和轮换密钥，而无需修改 ADF 链接服务。  这也是 [CI/CD 的最佳做法](https://docs.microsoft.com/azure/data-factory/continuous-integration-deployment#best-practices-for-cicd)之一。 
+- 若要对 Amazon S3 帐户进行身份验证，必须使用 [IAM 帐户的访问密钥](./connector-amazon-simple-storage-service.md#linked-service-properties)。 
+- 支持使用多种身份验证类型连接到 Azure Blob 存储。  强烈建议使用 [Azure 资源托管标识](./connector-azure-blob-storage.md#managed-identity)：托管标识构建在 Azure AD 中自动管理的 ADF 标识基础之上，使你无需在链接服务定义中提供凭据，即可配置管道。  或者，可以使用[服务主体](./connector-azure-blob-storage.md#service-principal-authentication)、[共享访问签名](./connector-azure-blob-storage.md#shared-access-signature-authentication)或[存储帐户密钥](./connector-azure-blob-storage.md#account-key-authentication)对 Azure Blob 存储进行身份验证。 
+- 也支持使用多种身份验证类型连接到 Azure Data Lake Storage Gen2。  强烈建议使用 [Azure 资源托管标识](./connector-azure-data-lake-storage.md#managed-identity)，不过，也可以使用[服务主体](./connector-azure-data-lake-storage.md#service-principal-authentication)或[存储帐户密钥](./connector-azure-data-lake-storage.md#account-key-authentication)。 
+- 如果不使用 Azure 资源托管标识，我们强烈建议[在 Azure 密钥保管库中存储凭据](./store-credentials-in-key-vault.md)，以便更轻松地集中管理和轮换密钥，而无需修改 ADF 链接服务。  这也是 [CI/CD 的最佳做法](./continuous-integration-deployment.md#best-practices-for-cicd)之一。 
 
 ### <a name="initial-snapshot-data-migration"></a>初始快照数据迁移 
 
@@ -122,7 +118,7 @@ ADF 默认通过 HTTPS 协议使用加密的连接将数据从 Amazon S3 传输�
 
 假设构造了以下管道用于将数据从 S3 迁移到 Azure Blob 存储： 
 
-![pricing-pipeline](media/data-migration-guidance-s3-to-azure-storage/pricing-pipeline.png)
+![图中显示了一个用于迁移数据的管道，其中手动触发器流向 Lookup，再流向 ForEach，然后流向每个分区的子管道；每个分区都包含流向存储过程的 Copy。 在管道，存储过程流向 Azure SQL DB 和 AWS S3；其中，Azure SQL DB 流向 Lookup，AWS S3 流向 Copy，然后流向 Blob 存储。](media/data-migration-guidance-s3-to-azure-storage/pricing-pipeline.png)
 
 假设条件如下： 
 
@@ -135,19 +131,19 @@ ADF 默认通过 HTTPS 协议使用加密的连接将数据从 Amazon S3 传输�
 
 下面是根据上述假设估算出的价格： 
 
-![pricing-table](media/data-migration-guidance-s3-to-azure-storage/pricing-table.png)
+![显示预估价格的表的屏幕截图。](media/data-migration-guidance-s3-to-azure-storage/pricing-table.png)
 
 ### <a name="additional-references"></a>其他参考 
-- [Amazon 简单存储服务连接器](https://docs.microsoft.com/azure/data-factory/connector-amazon-simple-storage-service)
-- [Azure Blob 存储连接器](https://docs.microsoft.com/azure/data-factory/connector-azure-blob-storage)
-- [Azure Data Lake Storage Gen2 连接器](https://docs.microsoft.com/azure/data-factory/connector-azure-data-lake-storage)
-- [复制活动性能优化指南](https://docs.microsoft.com/azure/data-factory/copy-activity-performance)
-- [创建和配置自承载集成运行时](https://docs.microsoft.com/azure/data-factory/create-self-hosted-integration-runtime)
-- [自承载集成运行时的高可用性和可伸缩性](https://docs.microsoft.com/azure/data-factory/create-self-hosted-integration-runtime#high-availability-and-scalability)
-- [数据移动安全注意事项](https://docs.microsoft.com/azure/data-factory/data-movement-security-considerations)
-- [在 Azure 密钥保管库中存储凭据](https://docs.microsoft.com/azure/data-factory/store-credentials-in-key-vault)
-- [基于时间分区文件名增量复制文件](https://docs.microsoft.com/azure/data-factory/tutorial-incremental-copy-partitioned-file-name-copy-data-tool)
-- [基于 LastModifiedDate 复制新文件和更改的文件](https://docs.microsoft.com/azure/data-factory/tutorial-incremental-copy-lastmodified-copy-data-tool)
+- [Amazon 简单存储服务连接器](./connector-amazon-simple-storage-service.md)
+- [Azure Blob 存储连接器](./connector-azure-blob-storage.md)
+- [Azure Data Lake Storage Gen2 连接器](./connector-azure-data-lake-storage.md)
+- [复制活动性能优化指南](./copy-activity-performance.md)
+- [创建和配置自承载集成运行时](./create-self-hosted-integration-runtime.md)
+- [自承载集成运行时的高可用性和可伸缩性](./create-self-hosted-integration-runtime.md#high-availability-and-scalability)
+- [数据移动安全注意事项](./data-movement-security-considerations.md)
+- [在 Azure 密钥保管库中存储凭据](./store-credentials-in-key-vault.md)
+- [基于时间分区文件名增量复制文件](./tutorial-incremental-copy-partitioned-file-name-copy-data-tool.md)
+- [基于 LastModifiedDate 复制新文件和更改的文件](./tutorial-incremental-copy-lastmodified-copy-data-tool.md)
 - [ADF 定价页](https://azure.microsoft.com/pricing/details/data-factory/data-pipeline/)
 
 ## <a name="template"></a>模板

@@ -13,19 +13,22 @@ ms.devlang: dotnet
 ms.topic: article
 ms.date: 10/01/2019
 ms.author: juliako
-ms.openlocfilehash: 5348b4cfb1961bdada7c32f3c437cdb2819ef6d0
-ms.sourcegitcommit: 2ff0d073607bc746ffc638a84bb026d1705e543e
+ms.custom: devx-track-csharp
+ms.openlocfilehash: e1700489b4f3ee37d95b87b1bf026d47c9f1de4d
+ms.sourcegitcommit: 77afc94755db65a3ec107640069067172f55da67
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/06/2020
-ms.locfileid: "87833022"
+ms.lasthandoff: 01/22/2021
+ms.locfileid: "98694876"
 ---
 # <a name="azure-media-services-release-notes"></a>Azure 媒体服务发行说明
+
+[!INCLUDE [media services api v2 logo](./includes/v2-hr.md)]
 
 这些 Azure 媒体服务发行说明汇总了与以前版本相比的变更之处和已知的问题。
 
 > [!NOTE]
-> 媒体服务 v2 中未添加新功能。 <br/>查看最新版本：[媒体服务 v3](../latest/index.yml)。 另请参阅[从 v2 到 v3 的迁移指南](../latest/migrate-from-v2-to-v3.md)
+> 媒体服务 v2 中未添加新功能。 <br/>查看最新版本：[媒体服务 v3](../latest/index.yml)。 另请参阅[从 v2 到 v3 的迁移指南](../latest/migrate-v-2-v-3-migration-introduction.md)
 
 我们希望能够倾听客户的心声，以便努力解决对客户造成影响的问题。 要报告问题或提出问题，请将在 [Azure 媒体服务 MSDN 论坛] 中提交问题。 
 
@@ -46,6 +49,18 @@ ms.locfileid: "87833022"
 ## <a name="rest-api-version-history"></a><a name="rest_version_history"></a>REST API 版本历史记录
 有关媒体服务 REST API 版本历史记录的信息，请参阅 [Azure 媒体服务 REST API 参考]。
 
+## <a name="september-2020"></a>2020 年 9 月
+
+以下 v2 属性将不再用历史作业进度数据填充：
+
+* [HistoricalEvents](/dotnet/api/microsoft.windowsazure.mediaservices.client.itask.historicalevents)
+* [PerfMessage](/dotnet/api/microsoft.windowsazure.mediaservices.client.itask.perfmessage)
+
+若要获取任务历史记录，应通过 Webhook 使用 v2 作业通知或通过通知终结点使用队列消息。 有关详情，请参阅：
+
+* [使用 Azure 队列存储监视媒体服务作业通知](media-services-dotnet-check-job-progress-with-queues.md)
+* [使用 Azure Webhook 监视媒体服务作业通知](media-services-dotnet-check-job-progress-with-webhooks.md)
+
 ## <a name="february-2020"></a>2020 年 2 月
 
 一些分析媒体处理器将停用。 有关停用日期，请参阅[旧版组件](legacy-components.md)主题。
@@ -56,7 +71,7 @@ ms.locfileid: "87833022"
 
 我们宣布停用 Azure Media Indexer 和 Azure Media Indexer 2 预览版 。 [Azure 媒体服务视频索引器](../video-indexer/index.yml)取代了这些旧版媒体处理器。
 
-有关停用日期，请参阅此[旧版组件](legacy-components.md)主题。
+有关停用日期，请参阅此[旧组件](legacy-components.md)主题。
 
 另请参阅[从 Azure Media Indexer 和 Azure Media Indexer 2 迁移到 Azure 媒体服务视频索引器](migrate-indexer-v1-v2.md)。
 
@@ -66,7 +81,7 @@ ms.locfileid: "87833022"
 
 我们宣布停用 Windows Azure 媒体编码器 (WAME) 和 Azure 媒体编码器 (AME) 媒体处理器 。 有关停用日期，请参阅此[旧组件](legacy-components.md)主题。
 
-有关详细信息，请参阅[将 WAME 迁移到 Media Encoder Standard](https://go.microsoft.com/fwlink/?LinkId=2101334) 和[将 AME 迁移到 Media Encoder Standard](https://go.microsoft.com/fwlink/?LinkId=2101335)。
+有关详细信息，请参阅[将 WAME 迁移到 Media Encoder Standard](./migrate-windows-azure-media-encoder.md) 和[将 AME 迁移到 Media Encoder Standard](./migrate-azure-media-encoder.md)。
 
 ## <a name="march-2019"></a>2019 年 3 月
 
@@ -183,7 +198,7 @@ Azure 媒体编修器正式发布：此媒体处理器通过模糊选定个体�
 
 ## <a name="april-2016-release"></a><a id="apr_changes16"></a>2016 年 4 月版本
 ### <a name="media-analytics"></a>媒体分析
- 媒体服务引入了媒体分析，以实现功能强大的视频智能。 有关详细信息，请参阅[媒体服务分析概述](media-services-analytics-overview.md)。
+ 媒体服务引入了媒体分析，以实现功能强大的视频智能。 有关详细信息，请参阅[媒体服务分析概述](./legacy-components.md)。
 
 ### <a name="apple-fairplay-preview"></a>Apple FairPlay（预览版）
 现可使用 Azure 媒体服务，通过 Apple FairPlay 动态加密 HTTP Live Streaming (HLS) 内容。 还可使用媒体服务许可证传送服务，将 FairPlay 许可证传送到客户端。 有关详细信息，请参阅“使用 Azure 媒体服务流式传输受 Apple FairPlay 保护的 HLS 内容”。
@@ -260,7 +275,7 @@ Azure SDK 团队已发布新版 [Azure SDK for PHP](https://github.com/Azure/azu
 ## <a name="july-2015-release"></a><a id="july_changes_15"></a>2015 年 7 月版本
 * 宣布了 Media Encoder Standard 公开上市。 有关详细信息，请参阅[此博客文章](https://azure.microsoft.com/blog/2015/07/16/announcing-the-general-availability-of-media-encoder-standard/)。
   
-    Media Encoder Standard 使用[本节](https://go.microsoft.com/fwlink/?LinkId=618336)所述的预设值。 使用 4k 编码预设时，请获取高级预留单位类型。 有关详细信息，请参阅[缩放编码](media-services-scale-media-processing-overview.md)。
+    Media Encoder Standard 使用[本节](./media-services-mes-presets-overview.md)所述的预设值。 使用 4k 编码预设时，请获取高级预留单位类型。 有关详细信息，请参阅[缩放编码](media-services-scale-media-processing-overview.md)。
 * 媒体服务和 Media Player 中采用了直播实时字幕。 有关详细信息，请参阅[此博客文章](https://azure.microsoft.com/blog/2015/07/08/live-real-time-captions-with-azure-media-services-and-player/)。
 
 ### <a name="media-services-net-sdk-updates"></a>媒体服务 .NET SDK 更新

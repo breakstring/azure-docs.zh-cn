@@ -4,7 +4,7 @@ description: 介绍使用 Azure AD 应用程序代理时的安全注意事项
 services: active-directory
 documentationcenter: ''
 author: kenwith
-manager: celestedg
+manager: daveba
 ms.service: active-directory
 ms.subservice: app-mgmt
 ms.workload: identity
@@ -16,12 +16,12 @@ ms.author: kenwith
 ms.reviewer: japere
 ms.custom: it-pro
 ms.collection: M365-identity-device-management
-ms.openlocfilehash: 13b020f633adc2e2286cc14b01c6d248fc2c1e3e
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 3c98bce0be2b456220815a359aae1ee697f3ca2c
+ms.sourcegitcommit: d49bd223e44ade094264b4c58f7192a57729bada
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "84759880"
+ms.lasthandoff: 02/02/2021
+ms.locfileid: "99254959"
 ---
 # <a name="security-considerations-for-accessing-apps-remotely-with-azure-ad-application-proxy"></a>使用 Azure AD 应用程序代理远程访问应用时的安全注意事项
 
@@ -49,7 +49,7 @@ Azure AD 应用程序代理依赖于使用 Azure AD 安全令牌服务 (STS) 执
 
 使用[条件访问](../conditional-access/concept-conditional-access-cloud-apps.md)可以定义对允许用户访问应用程序的方式的限制。 可以基于位置、身份验证强度和用户风险配置文件，创建限制登录的策略。
 
-还可以使用条件访问配置多重身份验证策略，为用户身份验证再添一层安全保障。 此外，还可以通过 Azure AD 条件访问将应用程序路由到 Microsoft Cloud App Security，以便通过[访问](https://docs.microsoft.com/cloud-app-security/access-policy-aad)和[会话](https://docs.microsoft.com/cloud-app-security/session-policy-aad)策略提供实时监视和控制
+还可以使用条件访问配置多重身份验证策略，为用户身份验证再添一层安全保障。 此外，还可以通过 Azure AD 条件访问将应用程序路由到 Microsoft Cloud App Security，以便通过[访问](/cloud-app-security/access-policy-aad)和[会话](/cloud-app-security/session-policy-aad)策略提供实时监视和控制
 
 ### <a name="traffic-termination"></a>流量终止
 
@@ -61,7 +61,7 @@ Azure AD 应用程序代理是一个反向代理，因此，发往后端应用�
 
 无需向企业网络打开入站连接。
 
-应用程序代理连接器仅与 Azure AD 应用程序代理服务建立出站连接，这意味着无需为传入连接打开防火墙端口。 传统代理要求部署外围网络（也称为 *DMZ*、*外围安全区域*或*屏蔽子网*），并在网络边缘允许未经身份验证的连接进行访问。 此方案需要投资开发 Web 应用程序防火墙产品，用于分析流量并保护环境。 使用应用程序代理，不需要部署外围网络，因为所有连接都是出站的，并且是通过安全通道建立的。
+应用程序代理连接器仅与 Azure AD 应用程序代理服务建立出站连接，这意味着无需为传入连接打开防火墙端口。 传统代理要求部署外围网络（也称为 *DMZ*、*外围安全区域* 或 *屏蔽子网*），并在网络边缘允许未经身份验证的连接进行访问。 此方案需要投资开发 Web 应用程序防火墙产品，用于分析流量并保护环境。 使用应用程序代理，不需要部署外围网络，因为所有连接都是出站的，并且是通过安全通道建立的。
 
 有关连接器的信息，请参阅[了解 Azure AD 应用程序代理连接器](application-proxy-connectors.md)。
 
@@ -69,7 +69,7 @@ Azure AD 应用程序代理是一个反向代理，因此，发往后端应用�
 
 获得一流的安全保护。
 
-由于属于 Azure Active Directory，因此应用程序代理可以利用 [Azure AD 标识保护](../active-directory-identityprotection.md)（数据由 Microsoft 安全响应中心和反数字犯罪部门提供）。 我们会共同主动发现遭到入侵的帐户，并提供保护，以免出现高风险登录威胁。我们会考虑许多因素，以确定哪些登录尝试有高风险。 这些因素包括标记为受感染设备、对网络进行匿名化处理，以及非典型或不太可能的位置。
+由于属于 Azure Active Directory，因此应用程序代理可以利用 [Azure AD 标识保护](../identity-protection/overview-identity-protection.md)（数据由 Microsoft 安全响应中心和反数字犯罪部门提供）。 我们会共同主动发现遭到入侵的帐户，并提供保护，以免出现高风险登录威胁。我们会考虑许多因素，以确定哪些登录尝试有高风险。 这些因素包括标记为受感染设备、对网络进行匿名化处理，以及非典型或不太可能的位置。
 
 其中的许多报告与事件已通过某个 API 提供，便于与安全信息与事件管理 (SIEM) 系统集成。
 
@@ -83,7 +83,7 @@ Azure AD 应用程序代理是一个反向代理，因此，发往后端应用�
 
 #### <a name="azure-ddos-protection-service"></a>Azure DDoS 防护服务
 
-通过应用程序代理发布的应用程序受到保护，以免遭分布式拒绝服务 (DDoS) 攻击。 Azure DDoS 防护是一种随 Azure 平台一起提供的服务，用于保护 Azure 资源免受拒绝服务攻击。 基本服务层级会自动启用，可提供始终可用的流量监视以及对常见网络级别攻击的实时缓解功能。 此外，还提供了标准层级，可提供专门针对 Azure 虚拟网络资源进行了优化的其他风险缓解功能。 有关详细信息，请参阅 [Azure DDoS 防护标准概述](https://docs.microsoft.com/azure/virtual-network/ddos-protection-overview)。
+通过应用程序代理发布的应用程序受到保护，以免遭分布式拒绝服务 (DDoS) 攻击。 此保护由 Microsoft 管理，并在我们的所有数据中心中自动启用。 Azure DDoS 保护服务提供 always on 流量监视和常见网络级别攻击的实时缓解措施。 
 
 ## <a name="under-the-hood"></a>揭秘
 
@@ -107,8 +107,8 @@ Azure AD 应用程序代理由两个部分组成：
 
 首次设置连接器时会发生以下流量事件：
 
-1. 在安装连接器的过程中，将连接器注册到服务。 系统会提示用户输入其 Azure AD 管理员凭据。 从此身份验证获取令牌，并将其提供给 Azure AD 应用程序代理服务。
-2. 应用程序代理服务评估该令牌。 它检查用户是否为租户中的公司管理员。 如果用户不是管理员，则终止此过程。
+1. 在安装连接器的过程中，将连接器注册到服务。 系统会提示用户输入其 Azure AD 管理员凭据。  从此身份验证获取令牌，并将其提供给 Azure AD 应用程序代理服务。
+2. 应用程序代理服务评估该令牌。 它检查用户是否为租户中的全局管理员。  如果用户不是管理员，则终止此过程。
 3. 连接器生成客户端证书请求，并将此请求连同令牌一起传递给应用程序代理服务。 该服务转而验证令牌并为客户端证书请求签名。
 4. 以后，连接器将使用此客户端证书来与应用程序代理服务通信。
 5. 连接器使用其客户端证书从服务执行初始的系统配置数据提取，并准备好接收请求。
@@ -173,7 +173,7 @@ Azure AD 应用程序代理由两个部分组成：
 
 收到响应后，连接器将与应用程序代理服务建立出站连接，以返回标头详细信息并开始流式传输返回的数据。
 
-#### <a name="5-the-service-streams-data-to-the-user"></a>5.服务将数据流式传输给用户。 
+#### <a name="5-the-service-streams-data-to-the-user"></a>5.服务将数据流式传输给用户。 
 
 此时可能会发生某些应用程序处理活动。 如果已将应用程序代理配置为转换应用程序中的标头或 URL，则会在此步骤中根据需要进行该项处理。
 

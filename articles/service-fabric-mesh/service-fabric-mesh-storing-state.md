@@ -1,18 +1,23 @@
 ---
 title: Azure Service Fabric 网格上的状态存储选项
 description: 了解 Azure Service Fabric 网格上运行的 Service Fabric 网格应用程序的可靠存储状态。
-author: dkkapur
-ms.author: dekapur
+author: georgewallace
+ms.author: gwallace
 ms.date: 11/27/2018
 ms.topic: conceptual
-ms.openlocfilehash: d56ce811155f7b7f60fa870dbdae2550afab2eac
-ms.sourcegitcommit: dabd9eb9925308d3c2404c3957e5c921408089da
+ms.openlocfilehash: 651329b1b061f2cf5a06dbdc9d60f73cec64e7d3
+ms.sourcegitcommit: 59cfed657839f41c36ccdf7dc2bee4535c920dd4
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/11/2020
-ms.locfileid: "86246820"
+ms.lasthandoff: 02/06/2021
+ms.locfileid: "99625543"
 ---
 # <a name="state-management-with-service-fabric"></a>Service Fabric 的状态管理
+
+> [!IMPORTANT]
+> Azure Service Fabric 网格的预览已停用。 不允许再通过 Service Fabric 的网格 API 来进行新的部署。 对现有部署的支持将持续到2021年4月28日。
+> 
+> 有关详细信息，请参阅 [Azure Service Fabric 网格预览停](https://azure.microsoft.com/updates/azure-service-fabric-mesh-preview-retirement/)用。
 
 Service Fabric 支持用于状态存储的许多不同选项。 有关状态管理模式和 Service Fabric 的概念性概述，请参阅 [Service Fabric 概念：状态](../service-fabric/service-fabric-concepts-state.md)。 无论服务是在 Service Fabric 网格内部还是外部运行，相同的概念均适用。 
 
@@ -22,11 +27,11 @@ Service Fabric 支持用于状态存储的许多不同选项。 有关状态管�
 
 容器通常使用临时磁盘。 但是，临时磁盘是暂时的，你会获得一个新的临时磁盘并在容器崩溃时丢失信息。 此外，也很难在临时磁盘上与其他容器共享信息。 卷是装载在可用于保留状态的容器实例内的目录。 卷提供常规用途文件存储，并允许使用正常磁盘 I/O 文件 API 读取/写入文件。 卷资源介绍如何装载目录，以及要使用的后备存储。 可以选择 Azure 文件存储或 Service Fabric 卷磁盘来存储数据。
 
-![卷][image3]
+![关系图显示了用于流到卷的服务，该服务将流动到复制的本地磁盘和网络存储上的 Azure 文件卷上 Service Fabric 可靠卷。][image3]
 
 ### <a name="service-fabric-reliable-volume"></a>Service Fabric Reliable Volume
 
-Service Fabric Reliable Volume 是用于将本地卷装载到容器的 Docker 卷驱动程序。 读取和写入是本地操作，非常快速。 数据将复制到辅助节点，使其高度可用。 故障转移也非常快速。 当容器崩溃时，将故障转移到已具有数据的副本的节点。 有关示例，请参阅[如何使用 Service Fabric 可靠卷部署应用](service-fabric-mesh-howto-deploy-app-sfreliable-disk-volume.md)。
+Service Fabric Reliable Volume 是用于将本地卷装载到容器的 Docker 卷驱动程序。 读取和写入是本地操作，非常快速。 数据将复制到辅助节点，使其高度可用。 故障转移也非常快速。 当容器崩溃时，将故障转移到已具有数据的副本的节点。 有关示例，请参阅 [如何使用 Service Fabric 可靠卷部署应用](service-fabric-mesh-howto-deploy-app-sfreliable-disk-volume.md)。
 
 ### <a name="azure-files-volume"></a>Azure 文件卷
 

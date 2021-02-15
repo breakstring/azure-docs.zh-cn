@@ -1,20 +1,19 @@
 ---
 title: Azure 上的 Red Hat 工作负荷概述 | Microsoft Docs
 description: 了解 Azure 上提供的 Red Hat 产品。
-services: virtual-machines-linux
 author: asinn826
-manager: borisb2015
 ms.service: virtual-machines-linux
-ms.workload: infrastructure-services
+ms.subservice: workloads
 ms.topic: overview
 ms.date: 02/10/2020
 ms.author: alsin
-ms.openlocfilehash: 7394cb50010bddddf8f8eff4b4f04eaf4d3231b6
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.reviewer: cynthn
+ms.openlocfilehash: 09612ff3d86c669801f9e824d367a2b9a5bb10ac
+ms.sourcegitcommit: beacda0b2b4b3a415b16ac2f58ddfb03dd1a04cf
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87052118"
+ms.lasthandoff: 12/31/2020
+ms.locfileid: "97830643"
 ---
 # <a name="red-hat-workloads-on-azure"></a>Azure 上的 Red Hat 工作负荷
 
@@ -37,7 +36,7 @@ Azure 提供了各种 RHEL 即用即付映像。 这些映像适用于 RHEL，�
 ### <a name="red-hat-gold-images"></a>Red Hat 黄金映像
 
 Azure 还提供 Red Hat 黄金映像 (`rhel-byos`)。 对于有现有的 Red Hat 订阅并想要在 Azure 中使用这些订阅的客户，这些映像可能会很有用。 必须先为现有 Red Hat 订阅启用 Red Hat 云访问，然后才能在 Azure 中使用它们。 当 Red Hat 订阅启用了云访问并且满足资格要求时，将自动授予对这些映像的访问权限。 使用这些映像，客户可以避免由于使用即用即付映像而导致的双重计费。
-* 了解如何[使用 Azure 为 Red Hat 订阅启用云访问](https://access.redhat.com/documentation/en-us/red_hat_subscription_management/1/html/red_hat_cloud_access_reference_guide/con-enable-subs)。
+* 了解如何[使用 Azure 为 Red Hat 订阅启用云访问](https://access.redhat.com/documentation/en-us/red_hat_subscription_management/1/html/red_hat_cloud_access_reference_guide/enabling-and-maintaining-subs_cloud-access)。
 * 了解如何[在 Azure 门户、Azure CLI 或 PowerShell cmdlet 中查找 Red Hat 黄金映像](./byos.md)。
 
 > [!NOTE]
@@ -45,7 +44,7 @@ Azure 还提供 Red Hat 黄金映像 (`rhel-byos`)。 对于有现有的 Red Hat
 
 ### <a name="generation-2-images"></a>第 2 代映像
 
-与第 1 代虚拟机 (VM) 相比，第 2 代 VM 提供了许多较新的功能。 有关详细信息，请参阅[第 2 代文档](../../linux/generation-2.md)。 从 RHEL 映像角度来看，主要区别在于第 2 代 VM 使用 UEFI 而非 BIOS 固件接口。 在启动时，它们还使用 GUID 分区表 (GPT) 而非主启动记录 (MBR)。 使用 GPT 将允许 OS 磁盘大小超过 2 TB，并允许更多事项。 此外，[Mv2 系列 VM](../../mv2-series.md) 仅在第 2 代映像上运行。
+与第 1 代虚拟机 (VM) 相比，第 2 代 VM 提供了许多较新的功能。 有关详细信息，请参阅[第 2 代文档](../../generation-2.md)。 从 RHEL 映像角度来看，主要区别在于第 2 代 VM 使用 UEFI 而非 BIOS 固件接口。 在启动时，它们还使用 GUID 分区表 (GPT) 而非主启动记录 (MBR)。 使用 GPT 将允许 OS 磁盘大小超过 2 TB，并允许更多事项。 此外，[Mv2 系列 VM](../../mv2-series.md) 仅在第 2 代映像上运行。
 
 Azure 市场中提供了 RHEL 第 2 代映像。 在使用 Azure CLI 时显示的所有映像的列表中，在映像 SKU 中查找“gen2”。 在 VM 部署过程中，可以转到“高级”选项卡来部署第 2 代 VM。
 

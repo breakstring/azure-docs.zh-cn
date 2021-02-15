@@ -1,25 +1,22 @@
 ---
 title: 使用 PowerShell 批量复制数据
 description: 此 PowerShell 脚本演示如何使用 Azure 数据工厂将源数据存储中的数据批量复制到目标数据存储。
-services: data-factory
 ms.author: jingwang
 author: linda33wj
-manager: shwang
 ms.service: data-factory
-ms.workload: data-services
 ms.topic: article
 ms.custom: seo-lt-2019
 ms.date: 10/31/2017
-ms.openlocfilehash: e0fedd2a304c73347b7ec72818b5289c1df2e561
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 16cb08d49efcd46e2746c5031793af8b747a2b31
+ms.sourcegitcommit: d4734bc680ea221ea80fdea67859d6d32241aefc
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "85248592"
+ms.lasthandoff: 02/14/2021
+ms.locfileid: "100373566"
 ---
 # <a name="powershell-script---copy-multiple-tables-in-bulk-by-using-azure-data-factory"></a>PowerShell 脚本 - 使用 Azure 数据工厂批量复制多个表
 
-此示例 PowerShell 脚本将数据从 Azure SQL 数据库中的多个表复制到 Azure SQL 数据仓库。
+此 PowerShell 示例脚本将数据从 Azure SQL 数据库中的多个表复制到 Azure Synapse Analytics。
 
 [!INCLUDE [updated-for-az](../../../includes/updated-for-az.md)]
 
@@ -32,7 +29,7 @@ ms.locfileid: "85248592"
 > [!IMPORTANT]
 > 此脚本在硬盘驱动器上的 c:\ 文件夹中创建 JSON 文件，用于定义数据工厂实体（链接服务、数据集和管道）。
 
-[!code-powershell[main](../../../powershell_scripts/data-factory/bulk-copy-from-sql-databse-to-sql-data-warehouse/bulk-copy-from-sql-database-to-sql-data-warehouse.ps1 "Bulk copy from Azure SQL Database => Azure SQL Data Warehouse")]
+[!code-powershell[main](../../../powershell_scripts/data-factory/bulk-copy-from-sql-databse-to-sql-data-warehouse/bulk-copy-from-sql-database-to-sql-data-warehouse.ps1 "Bulk copy from Azure SQL Database => Azure Synapse Analytics")]
 
 ## <a name="clean-up-deployment"></a>清理部署
 
@@ -65,6 +62,6 @@ Remove-AzDataFactoryV2 -Name $dataFactoryName -ResourceGroupName $resourceGroupN
 
 ## <a name="next-steps"></a>后续步骤
 
-有关 Azure PowerShell 的详细信息，请参阅 [Azure PowerShell 文档](https://docs.microsoft.com/powershell/)。
+有关 Azure PowerShell 的详细信息，请参阅 [Azure PowerShell 文档](/powershell/)。
 
 可以在 [Azure 数据工厂 PowerShell 脚本](../samples-powershell.md)中找到其他 Azure 数据工厂 PowerShell 脚本示例。

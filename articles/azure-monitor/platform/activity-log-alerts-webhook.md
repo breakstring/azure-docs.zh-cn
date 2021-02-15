@@ -4,12 +4,12 @@ description: 了解有关活动日志警报激活时发布到 webhook URL 的 JS
 ms.topic: conceptual
 ms.date: 03/31/2017
 ms.subservice: alerts
-ms.openlocfilehash: 018bf7ac9c24669df798e9ba05c667dcb72d94a6
-ms.sourcegitcommit: a76ff927bd57d2fcc122fa36f7cb21eb22154cfa
+ms.openlocfilehash: b48f094b460a2871b502c72b39b849ed68b9c085
+ms.sourcegitcommit: 67b44a02af0c8d615b35ec5e57a29d21419d7668
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/28/2020
-ms.locfileid: "87321830"
+ms.lasthandoff: 01/06/2021
+ms.locfileid: "97916621"
 ---
 # <a name="webhooks-for-azure-activity-log-alerts"></a>Azure 活动日志警报的 Webhook
 作为操作组定义的一部分，可以配置 webhook 终结点以接收活动日志警报通知。 通过 webhook 可以将这些通知路由到其他系统，以便进行后续处理或自定义操作。 本文介绍针对 webhook 发出的 HTTP POST 的有效负载的大致形式。
@@ -19,7 +19,7 @@ ms.locfileid: "87321830"
 有关操作组的信息，请参阅如何[创建操作组](./action-groups.md)。
 
 > [!NOTE]
-> 还可以使用[常见警报架构](https://aka.ms/commonAlertSchemaDocs)，它的优点是可以跨 Azure Monitor 中的所有警报服务提供单个可扩展且统一的警报有效负载，用于 Webhook 集成。 [了解常见的警报架构定义。](https://aka.ms/commonAlertSchemaDefinitions)
+> 还可以使用[常见警报架构](./alerts-common-schema.md)，它的优点是可以跨 Azure Monitor 中的所有警报服务提供单个可扩展且统一的警报有效负载，用于 Webhook 集成。 [了解常见的警报架构定义。](./alerts-common-schema-definitions.md)
 
 
 ## <a name="authenticate-the-webhook"></a>对 webhook 进行身份验证
@@ -27,6 +27,20 @@ Webhook 可以选择使用基于令牌的授权进行身份验证。 保存的 w
 
 ## <a name="payload-schema"></a>负载架构
 根据有效负载的 data.context.activityLog.eventSource 字段，POST 操作中包含的 JSON 有效负载会有所不同。
+
+> [!NOTE]
+> 目前，作为活动日志事件一部分的描述将被复制到激发的 **"警报描述"** 属性。
+>
+> 为了使活动日志有效负载与其他警报类型（从2021年4月1日开始）对齐，激发的警报属性 **"描述"** 将包含警报规则说明。
+>
+> 为准备此更改，我们为活动日志触发的警报创建了一个新属性 **"活动日志事件描述"** 。 此新属性将使用已可供使用的 **"说明"** 属性进行填充。 这意味着新字段 **"活动日志事件描述"** 将包含属于活动日志事件的描述。
+>
+> 请查看你的警报规则、操作规则、webhook、逻辑应用或任何其他配置，其中你可能会在触发的警报中使用 **"说明"** 属性，并将其替换为 **"活动日志事件描述"** 属性。
+>
+> 如果 (操作规则、webhook、逻辑应用或其他任何配置) 当前基于活动日志警报的 **"说明"** 属性，则可能需要将其改为基于 **"活动日志事件描述"** 属性。
+>
+> 为了填充新的 **"说明"** 属性，您可以在警报规则定义中添加描述。
+> ![触发的活动日志警报](media/activity-log-alerts-webhook/activity-log-alert-fired.png)
 
 ### <a name="common"></a>通用
 
@@ -269,7 +283,7 @@ Webhook 可以选择使用基于令牌的授权进行身份验证。 保存的 w
 | resourceGroupName |受影响资源的资源组的名称。 |
 | properties |一组包含事件详细信息的 `<Key, Value>` 对（即 `Dictionary<String, String>`）。 |
 | event |包含有关事件的元数据的元素。 |
-| authorization |事件的基于角色的访问控制属性。 这些属性通常包括“action”、“role”和“scope”。 |
+| authorization |事件的 Azure 基于角色的访问控制属性。 这些属性通常包括“action”、“role”和“scope”。 |
 | category |事件的类别。 支持的值包括“Administrative”、“Alert”、“Security”、“ServiceHealth”和“Recommendation”。 |
 | caller |执行操作的用户的电子邮件地址（基于可用性的 UPN 声明或 SPN 声明）。 对于某些系统调用可以为 null。 |
 | correlationId |通常是字符串格式的 GUID。 具有属于同一较大操作的 correlationId 的事件，通常共享 correlationId。 |
@@ -292,4 +306,3 @@ Webhook 可以选择使用基于令牌的授权进行身份验证。 保存的 w
 * [使用逻辑应用通过 Twilio 从 Azure 警报发送短信](https://github.com/Azure/azure-quickstart-templates/tree/master/201-alert-to-text-message-with-logic-app)。 本示例适用于度量值警报，但经过修改后可用于活动日志警报。
 * [使用逻辑应用从 Azure 警报发送 Slack 消息](https://github.com/Azure/azure-quickstart-templates/tree/master/201-alert-to-slack-with-logic-app)。 本示例适用于度量值警报，但经过修改后可用于活动日志警报。
 * [使用逻辑应用从 Azure 警报将消息发送到 Azure 队列](https://github.com/Azure/azure-quickstart-templates/tree/master/201-alert-to-queue-with-logic-app)。 本示例适用于度量值警报，但经过修改后可用于活动日志警报。
-

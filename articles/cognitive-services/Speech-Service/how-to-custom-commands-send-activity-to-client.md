@@ -10,12 +10,12 @@ ms.subservice: speech-service
 ms.topic: conceptual
 ms.date: 06/18/2020
 ms.author: xiaojul
-ms.openlocfilehash: 520b38f4c733e7bf28a2a06429ad14d016c5bd28
-ms.sourcegitcommit: 0100d26b1cac3e55016724c30d59408ee052a9ab
+ms.openlocfilehash: 52a4dbc4ff01515af8cd7d2503877184a09f7e64
+ms.sourcegitcommit: 04fb3a2b272d4bbc43de5b4dbceda9d4c9701310
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/07/2020
-ms.locfileid: "86027607"
+ms.lasthandoff: 11/12/2020
+ms.locfileid: "94566089"
 ---
 # <a name="send-custom-commands-activity-to-client-application"></a>将自定义命令活动发送到客户端应用程序
 
@@ -28,34 +28,36 @@ ms.locfileid: "86027607"
 
 ## <a name="prerequisites"></a>先决条件
 > [!div class = "checklist"]
-> * [Visual Studio 2019](https://visualstudio.microsoft.com/downloads/)或更高版本。 本指南使用 Visual Studio 2019
-> * 用于语音服务的 Azure 订阅密钥：[免费获取一个](get-started.md)，或在[Azure 门户](https://portal.azure.com)上创建它
-> * 以前[创建的自定义命令应用](quickstart-custom-commands-application.md)
-> * 支持语音 SDK 的客户端应用：[如何：使用语音 sdk 与客户端应用程序集成](./how-to-custom-commands-setup-speech-sdk.md)
+> * [Visual Studio 2019](https://visualstudio.microsoft.com/downloads/) 或更高版本。 本指南使用 Visual Studio 2019
+> * 语音服务的 Azure 订阅密钥：[免费获取一个](overview.md#try-the-speech-service-for-free)或在 [Azure 门户](https://portal.azure.com)上创建它
+> * 之前[创建的自定义命令应用](quickstart-custom-commands-application.md)
+> * 支持语音 SDK 的客户端应用： [如何：使用语音 sdk 与客户端应用程序集成](./how-to-custom-commands-setup-speech-sdk.md)
 
 ## <a name="setup-send-activity-to-client"></a>将活动设置发送到客户端 
 1. 打开之前创建的自定义命令应用程序
-1. 选择**TurnOnOff**命令，在 "完成规则" 下选择 " **ConfirmationResponse** "，然后选择 "**添加操作**"
-1. 在 "**新建操作-类型**" 下，选择 "**向客户端发送活动**"
-1. 将下面的 JSON 复制到**活动内容**
+1. 选择 **TurnOnOff** 命令，在 "完成规则" 下选择 " **ConfirmationResponse** "，然后选择 " **添加操作** "
+1. 在 " **新建操作-类型** " 下，选择 " **向客户端发送活动** "
+1. 将下面的 JSON 复制到 **活动内容**
    ```json
    {
-     "type": "event",
-     "name": "UpdateDeviceState",
-     "state": "{OnOff}",
-     "device": "{SubjectDevice}"
-   }
+      "type": "event",
+      "name": "UpdateDeviceState",
+      "value": {
+        "state": "{OnOff}",
+        "device": "{SubjectDevice}"
+      }
+    }
    ```
-1. 单击 "**保存**" 以使用 "发送活动" 操作创建新规则，**定型**并**发布**更改
+1. 单击 " **保存** " 以使用 "发送活动" 操作创建新规则， **定型** 并 **发布** 更改
 
    > [!div class="mx-imgBorder"]
    > ![发送活动完成规则](media/custom-commands/send-activity-to-client-completion-rules.png)
 
 ## <a name="integrate-with-client-application"></a>与客户端应用程序集成
 
-在[操作方法：使用 SPEECH sdk （预览版）设置客户端应用程序](./how-to-custom-commands-setup-speech-sdk.md)中，你创建了一个使用 speech SDK 的 UWP 客户端应用程序，该应用程序已处理诸如、之类的命令 `turn on the tv` `turn off the fan` 。 添加一些视觉对象后，可以看到这些命令的结果。
+在[使用语音 sdk 的 "操作方法：设置客户端应用程序" (预览 ") ](./how-to-custom-commands-setup-speech-sdk.md)中，你创建了一个包含 speech SDK 的 UWP 客户端应用程序，该应用程序使用了处理的命令 `turn on the tv` `turn off the fan` 添加一些视觉对象后，可以看到这些命令的结果。
 
-若要添加带有指示**on**或**off**的带标签的框，请将 system.windows.controls.stackpanel> 的以下 XML 块添加到 `MainPage.xaml` 。
+若要添加带有指示 **on** 或 **off** 的带标签的框，请将 system.windows.controls.stackpanel> 的以下 XML 块添加到 `MainPage.xaml` 。
 
 ```xml
 <StackPanel Orientation="Vertical" H......>
@@ -80,16 +82,16 @@ ms.locfileid: "86027607"
 
 ### <a name="add-reference-libraries"></a>添加引用库
 
-由于已创建 JSON 有效负载，因此需要添加对[JSON.NET](https://www.newtonsoft.com/json)库的引用来处理反序列化。
+由于已创建 JSON 有效负载，因此需要添加对 [JSON.NET](https://www.newtonsoft.com/json) 库的引用来处理反序列化。
 
 1. 向右客户端解决方案。
-1. 选择 "**管理解决方案的 NuGet 包**"，选择 "**浏览**" 
-1. 如果已**在上安装Newtonsoft.js**，请确保其版本至少为12.0.3。 如果没有，请参阅**管理解决方案更新的 NuGet 包**，搜索更新**Newtonsoft.js** 。 本指南使用版本12.0.3。
+1. 选择 " **管理解决方案的 NuGet 包** "，选择 " **浏览** " 
+1. 如果已 **在上安装Newtonsoft.js** ，请确保其版本至少为12.0.3。 如果没有，请参阅 **管理解决方案更新的 NuGet 包** ，搜索更新 **Newtonsoft.js** 。 本指南使用版本12.0.3。
 
     > [!div class="mx-imgBorder"]
     > ![发送活动有效负载](media/custom-commands/send-activity-to-client-json-nuget.png)
 
-1. 此外，请确保 NuGet 包**NETCore**至少为6.2.10。 本指南使用版本6.2.10。
+1. 此外，请确保 NuGet 包 **NETCore** 至少为6.2.10。 本指南使用版本6.2.10。
 
 在 "MainPage" 中，添加
 
@@ -114,8 +116,8 @@ connector.ActivityReceived += async (sender, activityReceivedEventArgs) =>
     if (name.Equals("UpdateDeviceState"))
     {
         Debug.WriteLine("Here");
-        var state = activity?.device != null ? activity.state.ToString() : string.Empty;
-        var device = activity?.device != null ? activity.device.ToString() : string.Empty;
+        var state = activity?.value?.state != null ? activity.value.state.ToString() : string.Empty;
+        var device = activity?.value?.device != null ? activity.value.device.ToString() : string.Empty;
 
         if (state.Equals("on") || state.Equals("off"))
         {
@@ -146,17 +148,17 @@ connector.ActivityReceived += async (sender, activityReceivedEventArgs) =>
 };
 ```
 
-## <a name="try-it-out"></a>试用
+## <a name="try-it-out"></a>试试看
 
 1. 启动应用程序
-1. 选择启用麦克风
-1. 选择 "对话" 按钮
-1. 轻松`turn on the tv`
+1. 选择“启用麦克风”
+1. 选择“对话”按钮
+1. 说出 `turn on the tv`
 1. 电视的视觉状态应更改为 "开启"
    > [!div class="mx-imgBorder"]
-   > ![发送活动有效负载](media/custom-commands/send-activity-to-client-turn-on-tv.png)
+   > ![显示 T V 可视状态现在为 on 的屏幕截图。](media/custom-commands/send-activity-to-client-turn-on-tv.png)
 
 ## <a name="next-steps"></a>后续步骤
 
 > [!div class="nextstepaction"]
-> [如何：设置 web 终结点（预览）](./how-to-custom-commands-setup-web-endpoints.md)
+> [如何： (预览版设置 web 终结点) ](./how-to-custom-commands-setup-web-endpoints.md)

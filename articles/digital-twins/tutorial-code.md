@@ -1,22 +1,29 @@
 ---
-title: 为客户端应用编写代码
+title: 教程： 为客户端应用编写代码
 titleSuffix: Azure Digital Twins
 description: 使用 .NET (C#) SDK 为客户端应用编写基础代码的教程。
 author: baanders
 ms.author: baanders
-ms.date: 05/05/2020
+ms.date: 11/02/2020
 ms.topic: tutorial
 ms.service: digital-twins
-ms.openlocfilehash: 52a22dd215769208b60f180b576ae5763d67eade
-ms.sourcegitcommit: 5b6acff3d1d0603904929cc529ecbcfcde90d88b
+ms.openlocfilehash: 4851d06ffedaacb441d28cae24d7d32bfe1c611c
+ms.sourcegitcommit: 1f1d29378424057338b246af1975643c2875e64d
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/21/2020
-ms.locfileid: "88723463"
+ms.lasthandoff: 02/05/2021
+ms.locfileid: "99576255"
 ---
-# <a name="coding-with-the-azure-digital-twins-apis"></a>使用 Azure 数字孪生 API 编写代码
+# <a name="tutorial-coding-with-the-azure-digital-twins-apis"></a>教程：使用 Azure 数字孪生 API 编写代码
 
-开发人员使用 Azure 数字孪生编写客户端应用程序，以与其 Azure 数字孪生服务实例交互，这是很常见的情况。 这篇面向开发人员的教程介绍如何使用[适用于 .NET 的 Azure IoT 数字孪生客户端库 (C#)](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core) 对 Azure 数字孪生服务进行编程。 本教程会逐步引导你从头开始编写 C# 控制台客户端应用。
+开发人员使用 Azure 数字孪生编写客户端应用程序，以与其 Azure 数字孪生服务实例交互，这是很常见的情况。 这篇面向开发人员的教程介绍如何使用[适用于 .NET 的 Azure 数字孪生 SDK (C#)](/dotnet/api/overview/azure/digitaltwins/client?view=azure-dotnet&preserve-view=true) 对 Azure 数字孪生服务进行编程。 本教程会逐步引导你从头开始编写 C# 控制台客户端应用。
+
+> [!div class="checklist"]
+> * 设置项目
+> * 开始使用项目代码   
+> * 完整的代码示例
+> * 清理资源
+> * 后续步骤
 
 ## <a name="prerequisites"></a>先决条件
 
@@ -26,7 +33,11 @@ ms.locfileid: "88723463"
 * 任何代码编辑器
 * 开发电脑上安装有 .NET Core 3.1。 你可以从[下载 .NET Core 3.1](https://dotnet.microsoft.com/download/dotnet-core/3.1) 下载适用于多个平台的此版 .NET Core SDK。
 
-[!INCLUDE [Azure Digital Twins tutorials: instance prereq](../../includes/digital-twins-tutorial-prereq-instance.md)]
+### <a name="prepare-an-azure-digital-twins-instance"></a>准备 Azure 数字孪生实例
+
+[!INCLUDE [Azure Digital Twins: instance prereq](../../includes/digital-twins-prereq-instance.md)]
+
+[!INCLUDE [Azure Digital Twins: local credentials prereq (outer)](../../includes/digital-twins-local-credentials-outer.md)]
 
 ## <a name="set-up-project"></a>设置项目
 
@@ -36,7 +47,7 @@ ms.locfileid: "88723463"
 
 导航到新目录。
 
-进入项目目录后，创建一个空的 .NET 控制台应用项目。 在命令窗口中运行以下命令，为控制台创建基础 C# 项目：
+进入项目目录后，创建一个空的 .NET 控制台应用项目。 在命令窗口中运行以下命令，可以为控制台创建基础 C# 项目：
 
 ```cmd/sh
 dotnet new console
@@ -44,16 +55,14 @@ dotnet new console
 
 这会在你的目录中创建多个文件，其中包括一个名为 Program.cs 的文件，你将在其中编写大部分代码。
 
-接下来，添加两个使用 Azure 数字孪生所必须的依赖项：
+让命令窗口保持打开状态，因为整个教程都要继续使用该窗口。
+
+接下来，将两个依赖项添加到你的项目，这是与 Azure 数字孪生结合使用所必需的。 第一个是[适用于 .NET 的 Azure 数字孪生 SDK](/dotnet/api/overview/azure/digitaltwins/client?view=azure-dotnet&preserve-view=true) 的包，第二个提供工具来帮助向 Azure 进行身份验证。
 
 ```cmd/sh
-dotnet add package Azure.DigitalTwins.Core --version 1.0.0-preview.3
-dotnet add package Azure.identity --version 1.1.1
+dotnet add package Azure.DigitalTwins.Core
+dotnet add package Azure.Identity
 ```
-
-第一个依赖项是[适用于 .NET 的 Azure IoT 数字孪生客户端库](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core)。 第二个依赖项会提供可帮助进行 Azure 身份验证的工具。
-
-让命令窗口保持打开状态，因为整个教程都要继续使用该窗口。
 
 ## <a name="get-started-with-project-code"></a>开始使用项目代码
 
@@ -69,27 +78,17 @@ dotnet add package Azure.identity --version 1.1.1
 
 开始前，请在任何代码编辑器中打开 Program.cs 文件。 你将看到如下所示的基础代码模板：
 
-```csharp
-using System;
-
-namespace DigitalTwinsCodeTutorial
-{
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            Console.WriteLine("Hello World!");
-        }
-    }
-}
-```
+:::row:::
+    :::column:::
+        :::image type="content" source="media/tutorial-code/starter-template.png" alt-text="示例代码片段。其中有一个“using System;”语句、一个名为 DigitalTwinsCodeTutorial 的命名空间，该命名空间中有一个名为 Program 的类，该类中有一个 Main 方法，该方法具有标准签名“static void Main(string[] args)”。该 main 方法包含 Hello World print 语句。" lightbox="media/tutorial-code/starter-template.png":::
+    :::column-end:::
+    :::column:::
+    :::column-end:::
+:::row-end:::
 
 首先，在代码的顶部添加一些 `using` 行，以拉取必需的依赖项。
 
-```csharp
-using Azure.DigitalTwins.Core;
-using Azure.Identity;
-```
+:::code language="csharp" source="~/digital-twins-docs-samples/sdks/csharp/fullClientApp.cs" id="Azure_Digital_Twins_dependencies":::
 
 接下来，需要向此文件添加代码以扩充某些功能。 
 
@@ -97,40 +96,13 @@ using Azure.Identity;
 
 应用必须执行的第一项操作是对 Azure 数字孪生服务进行身份验证。 接着，你可以创建服务客户端类来访问 SDK 函数。
 
-为进行身份验证，需要以下三条信息：
-* 订阅的目录（租户）ID
-* 在之前设置 Azure 数字孪生实例时创建的应用程序（客户端）ID
-* Azure 数字孪生实例的 hostName
+为了进行身份验证，需要 Azure 数字孪生实例的 hostName。
 
->[!TIP]
-> 如果不知道自己的目录（租户）ID，可以在 [Azure Cloud Shell](https://shell.azure.com) 中运行以下命令来获取该 ID：
-> 
-> ```azurecli-interactive
-> az account show --query tenantId
-> ```
+在 Program.cs 中，将以下代码粘贴到 `Main` 方法中的“Hello, World!”输出行下方。 将 `adtInstanceUrl` 的值设置为 Azure 数字孪生实例 hostName。
 
-在 Program.cs 中，将以下代码粘贴到 `Main` 方法中的“Hello, World!”输出行下方。 将 `adtInstanceUrl` 的值设置为 Azure 数字孪生实例的主机名，将 `clientId` 设置为应用程序 ID，并将 `tenantId` 设置为目录 ID  。
-
-```csharp
-string clientId = "<your-application-ID>";
-string tenantId = "<your-directory-ID>";
-string adtInstanceUrl = "https://<your-Azure-Digital-Twins-instance-hostName>";
-var credentials = new InteractiveBrowserCredential(tenantId, clientId);
-DigitalTwinsClient client = new DigitalTwinsClient(new Uri(adtInstanceUrl), credentials);
-Console.WriteLine($"Service client created – ready to go");
-```
+:::code language="csharp" source="~/digital-twins-docs-samples/sdks/csharp/fullClientApp.cs" id="Authentication_code":::
 
 保存文件。 
-
-请注意，此示例使用交互式浏览器凭据：
-```csharp
-var credentials = new InteractiveBrowserCredential(tenantId, clientId);
-```
-
-这种类型的凭据将导致浏览器窗口打开，并要求你提供 Azure 凭据。 
-
->[!NOTE]
-> 要了解其他类型的凭据，请参阅 [Microsoft 标识平台身份验证库](../active-directory/develop/reference-v2-libraries.md)文档。
 
 在命令窗口中，使用以下命令运行代码： 
 
@@ -140,7 +112,7 @@ dotnet run
 
 首次运行时，这会还原依赖项，然后执行程序。 
 * 如果未发生错误，程序将输出“Service client created - ready to go”（服务客户端已创建 - 准备就绪）。
-* 由于此项目中没有任何错误处理机制，因此如果出现问题，你将看到代码引发的异常。
+* 由于此项目中尚没有任何错误处理机制，因此如果出现任何问题，你将看到代码引发的异常。
 
 ### <a name="upload-a-model"></a>上传模型
 
@@ -150,48 +122,23 @@ Azure 数字孪生没有内部域词汇。 环境中可在 Azure 数字孪生中
 
 在创建项目的目录中，创建名为 SampleModel.json 的新 .json 文件 。 粘贴以下文件主体： 
 
-```json
-{
-  "@id": "dtmi:com:contoso:SampleModel;1",
-  "@type": "Interface",
-  "displayName": "SampleModel",
-  "contents": [
-    {
-      "@type": "Relationship",
-      "name": "contains"
-    },
-    {
-      "@type": "Property",
-      "name": "data",
-      "schema": "string"
-    }
-  ],
-  "@context": "dtmi:dtdl:context;2"
-}
-```
+:::code language="json" source="~/digital-twins-docs-samples/models/SampleModel.json":::
 
 > [!TIP]
 > 如果在本教程中使用 Visual Studio，建议你选择新创建的 JSON 文件，并将属性检查器中的“复制到输出目录”属性设置为“有更新时才复制”或“始终复制”  。 当你在本教程的其余部分使用 F5 执行程序时，这可让 Visual Studio 找到具有默认路径的 JSON 文件。
 
 > [!TIP] 
-> 有一种与语言无关的 [DTDL 验证程序示例](https://docs.microsoft.com/samples/azure-samples/dtdl-validator/dtdl-validator)，可用来检查模型文件，以确保 DTDL 有效。 它是在 DTDL 分析程序库的基础上构建的，详情请参阅[*操作方法：分析和验证模型*](how-to-parse-models.md)。
+> 有一种与语言无关的 [DTDL 验证程序示例](/samples/azure-samples/dtdl-validator/dtdl-validator)，可用来检查模型文件，以确保 DTDL 有效。 它是在 DTDL 分析程序库的基础上构建的，详情请参阅 [*操作方法：分析和验证模型*](how-to-parse-models.md)。
 
 接下来，向 Program.cs 添加更多代码，将刚才创建的模型上传到 Azure 数字孪生实例。
 
 首先，在文件顶部添加几个 `using` 语句：
 
-```csharp
-using System.Threading.Tasks;
-using System.IO;
-using System.Collections.Generic;
-using Azure;
-```
+:::code language="csharp" source="~/digital-twins-docs-samples/sdks/csharp/fullClientApp.cs" id="Model_dependencies":::
 
 接下来，将 `Main` 方法签名更改为允许异步执行，准备使用 C# 服务 SDK 中的异步方法。 
 
-```csharp
-static async Task Main(string[] args)
-```
+:::code language="csharp" source="~/digital-twins-docs-samples/sdks/csharp/fullClientApp.cs" id="Async_signature":::
 
 > [!NOTE]
 > 因为 SDK 也提供所有调用的同步版本，所以不一定非使用 `async` 不可。 本教程的练习使用 `async`。
@@ -200,37 +147,22 @@ static async Task Main(string[] args)
 
 将以下代码粘贴到前面添加的授权代码下。
 
-```csharp
-Console.WriteLine();
-Console.WriteLine($"Upload a model");
-var typeList = new List<string>();
-string dtdl = File.ReadAllText("SampleModel.json");
-typeList.Add(dtdl);
-// Upload the model to the service
-await client.CreateModelsAsync(typeList);
-```
+:::code language="csharp" source="~/digital-twins-docs-samples/sdks/csharp/fullClientApp_excerpt_model.cs":::
 
 在命令窗口中，使用以下命令运行程序： 
 
 ```cmd/sh
 dotnet run
 ```
-输出中将打印“上传模型”短语，但尚无输出指出模型是否已成功上传。
+输出中将打印“Upload a model”，表示已达到此代码，但尚无输出内容指出是否已成功上传。
 
-若要添加一个指示模型是否确实已成功上传的 print 语句，请在上一段代码后面添加以下代码：
+若要添加一个显示所有模型已成功上传到实例的 print 语句，请在上一段代码后面添加以下代码：
 
-```csharp
-// Read a list of models back from the service
-AsyncPageable<ModelData> modelDataList = client.GetModelsAsync();
-await foreach (ModelData md in modelDataList)
-{
-    Console.WriteLine($"Type name: {md.DisplayName}: {md.Id}");
-}
-```
+:::code language="csharp" source="~/digital-twins-docs-samples/sdks/csharp/fullClientApp.cs" id="Print_model":::
 
-再次运行程序以测试这段新代码之前，请记得，在上次运行该程序时，已上传了模型。 Azure 数字孪生不允许将相同的模型上传两次，因此，在重新运行此程序时，应该会看到异常。
+再次运行程序以测试这段新代码之前，请记得，在上次运行该程序时，已上传了模型。 Azure 数字孪生不允许两次上传相同的模型，因此，如果尝试再次上传相同的模型，则程序会引发异常。
 
-现在，在命令窗口中，再次使用以下命令运行程序：
+考虑到这一点，请在命令窗口中，再次使用以下命令运行程序：
 
 ```cmd/sh
 dotnet run
@@ -242,37 +174,13 @@ dotnet run
 
 ### <a name="catch-errors"></a>捕获错误
 
-为了防止程序崩溃，可以在模型上传代码周围添加异常代码。 在 try/catch 处理程序中包装现有的客户端调用 `client.CreateModelsAsync`，如下所示：
+为了防止程序崩溃，可以在模型上传代码周围添加异常代码。 在 try/catch 处理程序中包装现有的客户端调用 `await client.CreateModelsAsync(typeList)`，如下所示：
 
-```csharp
-try {
-    await client.CreateModelsAsync(typeList);
-} catch (RequestFailedException rex) {
-    Console.WriteLine($"Load model: {rex.Status}:{rex.Message}");
-}
-```
+:::code language="csharp" source="~/digital-twins-docs-samples/sdks/csharp/fullClientApp.cs" id="Model_try_catch":::
 
-如果在命令窗口中使用 `dotnet run` 运行程序，则会看到返回的错误代码。 输出结果如下所示：
+现在，如果在命令窗口中使用 `dotnet run` 运行程序，则会看到返回的错误代码。 模型创建代码的输出显示此错误：
 
-```cmd/sh
-Hello World!
-Service client created - ready to go
-
-Upload a model
-Load model: 409:Service request failed.
-Status: 409 (Conflict)
-
-Content:
-{"error":{"code":"DocumentAlreadyExists","message":"A document with same identifier already exists.","details":[]}}
-
-Headers:
-api-supported-versions: REDACTED
-Date: Tue, 05 May 2020 01:57:51 GMT
-Content-Length: 115
-Content-Type: application/json; charset=utf-8
-
-Type name: : dtmi:com:contoso:SampleModel;1
-```
+:::image type="content" source= "media/tutorial-code/model-error.png" alt-text="程序输出，其中显示一条消息，指出“409: 服务请求失败。状态：409 (冲突)。”，后跟一个指示 dtmi:example:SampleModel;1 已存在的错误输出":::
 
 从此时起，本教程会将所有对服务方法的调用包装在 try/catch 处理程序中。
 
@@ -280,78 +188,31 @@ Type name: : dtmi:com:contoso:SampleModel;1
 
 将模型上传到 Azure 数字孪生后，可以使用此模型定义创建数字孪生。 [数字孪生](concepts-twins-graph.md)是模型的实例，表示业务环境中的实体，例如农场中的传感器、大楼中的房间或汽车上的灯。 本部分将在你之前上传的模型的基础上创建几个数字孪生。
 
-在顶部添加新的 `using` 语句，因为在 `System.Text.Json` 中需要内置的 .NET Json 序列化程序：
+将以下代码添加到 `Main` 方法的末尾，以根据此模型创建和初始化三个数字孪生体。
 
-```csharp
-using System.Text.Json;
-using Azure.DigitalTwins.Core.Serialization;
-```
+:::code language="csharp" source="~/digital-twins-docs-samples/sdks/csharp/fullClientApp.cs" id="Initialize_twins":::
 
-然后，将以下代码添加到 `Main` 方法的末尾，以根据此模型创建和初始化三个数字孪生。
+在命令窗口中，使用 `dotnet run` 运行程序。 在输出中，查找指示已创建 sampleTwin-0、sampleTwin-1 和 sampleTwin-2 的打印消息  。 
 
-```csharp
-// Initialize twin data
-BasicDigitalTwin twinData = new BasicDigitalTwin();
-twinData.Metadata.ModelId = "dtmi:com:contoso:SampleModel;1";
-twinData.CustomProperties.Add("data", $"Hello World!");
+然后，再次运行程序。 
 
-string prefix="sampleTwin-";
-for(int i=0; i<3; i++) {
-    try {
-        twinData.Id = $"{prefix}{i}";
-        await client.CreateDigitalTwinAsync($"{prefix}{i}", JsonSerializer.Serialize(twinData));
-        Console.WriteLine($"Created twin: {prefix}{i}");
-    } catch(RequestFailedException rex) {
-        Console.WriteLine($"Create twin error: {rex.Status}:{rex.Message}");  
-    }
-}
-```
-
-在命令窗口中，使用 `dotnet run` 运行程序。 然后，再次运行该程序。 
-
-请注意，第二次创建孪生时，即使孪生在第一次运行后已经存在，也不会引发任何错误。 与创建模型不同，在 REST 级别上，创建孪生是 PUT 调用加上 upsert 语义 。 这意味着，如果已存在一个孪生，尝试再次创建将会替换该孪生。 不需要有任何错误。
+请注意，第二次创建孪生时，即使孪生在第一次运行后已经存在，也不会引发任何错误。 与创建模型不同，在 REST 级别上，创建孪生是 PUT 调用加上 upsert 语义 。 这意味着，如果已存在一个孪生体，则再次尝试创建相同的孪生体只会取代原来的孪生体。 不会引发错误。
 
 ### <a name="create-relationships"></a>创建关系
 
 接下来，你可以在已创建的孪生之间创建关系，将它们连接到孪生图 。 [孪生图](concepts-twins-graph.md)用于表示整个环境。
 
-为了能够创建关系，请在 SDK 中为关系基类型添加 `using` 语句（如果已添加，请跳过此步骤）。
-```csharp
-using Azure.DigitalTwins.Core.Serialization;
-```
+将新的静态方法添加到 `Main` 方法下的 `Program` 类（代码现在具有两种方法）：
 
-接下来，将新的静态方法添加到 `Main` 方法下的 `Program` 类：
-```csharp
-public async static Task CreateRelationship(DigitalTwinsClient client, string srcId, string targetId)
-{
-    var relationship = new BasicRelationship
-    {
-        TargetId = targetId,
-        Name = "contains"
-    };
+:::code language="csharp" source="~/digital-twins-docs-samples/sdks/csharp/fullClientApp.cs" id="Create_relationship":::
 
-    try
-    {
-        string relId = $"{srcId}-contains->{targetId}";
-        await client.CreateRelationshipAsync(srcId, relId, JsonSerializer.Serialize(relationship));
-        Console.WriteLine("Created relationship successfully");
-    }
-    catch (RequestFailedException rex) {
-        Console.WriteLine($"Create relationship error: {rex.Status}:{rex.Message}");
-    }
-}
-```
+接下来，将以下代码添加到 `Main` 方法的末尾，以调用 `CreateRelationship` 方法并使用刚刚编写的代码：
 
-然后，将以下代码添加到 `Main` 方法的末尾，以调用 `CreateRelationship` 代码：
-```csharp
-// Connect the twins with relationships
-await CreateRelationship(client, "sampleTwin-0", "sampleTwin-1");
-await CreateRelationship(client, "sampleTwin-0", "sampleTwin-2");
-```
+:::code language="csharp" source="~/digital-twins-docs-samples/sdks/csharp/fullClientApp.cs" id="Use_create_relationship":::
 
-在命令窗口中，使用 `dotnet run` 运行程序。
+在命令窗口中，使用 `dotnet run` 运行程序。 在输出中，查找指出这两种关系已成功创建的 print 语句。
 
-请注意，如果已存在 ID 相同的关系，Azure 数字孪生将不会让你创建关系；因此，如果多次运行程序，你将会看到有关创建关系的异常。 此代码会捕获异常并将其忽略。 
+请注意，如果已存在另一个 ID 相同的关系，Azure 数字孪生将不会让你创建关系；因此，如果多次运行程序，你将会看到有关创建关系的异常信息。 此代码会捕获异常并将其忽略。 
 
 ### <a name="list-relationships"></a>列出关系
 
@@ -359,31 +220,15 @@ await CreateRelationship(client, "sampleTwin-0", "sampleTwin-2");
 
 将以下新方法添加到 `Program` 类：
 
-```csharp
-public async static Task ListRelationships(DigitalTwinsClient client, string srcId)
-{
-    try {
-        AsyncPageable<string> results = client.GetRelationshipsAsync(srcId);
-        Console.WriteLine($"Twin {srcId} is connected to:");
-        await foreach (string rel in results)
-        {
-            var brel = JsonSerializer.Deserialize<BasicRelationship>(rel);
-            Console.WriteLine($" -{brel.Name}->{brel.TargetId}");
-        }
-    } catch (RequestFailedException rex) {
-        Console.WriteLine($"Relationship retrieval error: {rex.Status}:{rex.Message}");   
-    }
-}
-```
+:::code language="csharp" source="~/digital-twins-docs-samples/sdks/csharp/fullClientApp.cs" id="List_relationships":::
 
 然后，将以下代码添加到 `Main` 方法的末尾，以调用 `ListRelationships` 代码：
 
-```csharp
-//List the relationships
-await ListRelationships(client, "sampleTwin-0");
-```
+:::code language="csharp" source="~/digital-twins-docs-samples/sdks/csharp/fullClientApp.cs" id="Use_list_relationships":::
 
-在命令窗口中，使用 `dotnet run` 运行程序。 你应该会看到已创建的所有关系列表。
+在命令窗口中，使用 `dotnet run` 运行程序。 应该会在 output 语句中看到已创建的所有关系的列表，如下所示：
+
+:::image type="content" source= "media/tutorial-code/list-relationships.png" alt-text="程序输出，其中显示一条消息，指出“孪生体 sampleTwin-0 已连接到: contains->sampleTwin-1、-contains->sampleTwin-2”" lightbox="media/tutorial-code/list-relationships.png":::
 
 ### <a name="query-digital-twins"></a>查询数字孪生
 
@@ -391,19 +236,13 @@ Azure 数字孪生的主要功能是能够轻松有效地[查询](concepts-query
 
 要在本教程中添加的最后一段代码会对对 Azure 数字孪生实例运行查询。 本示例中使用的查询会返回此实例中的所有数字孪生。
 
-在 `Main` 方法的末尾添加以下代码：
+添加此 `using` 语句，以允许使用 `JsonSerializer` 类来帮助显示数字孪生体信息：
 
-```csharp
-// Run a query    
-AsyncPageable<string> result = client.QueryAsync("Select * From DigitalTwins");
-await foreach (string twin in result)
-{
-    object jsonObj = JsonSerializer.Deserialize<object>(twin);
-    string prettyTwin = JsonSerializer.Serialize(jsonObj, new JsonSerializerOptions { WriteIndented = true });
-    Console.WriteLine(prettyTwin);
-    Console.WriteLine("---------------");
-}
-```
+:::code language="csharp" source="~/digital-twins-docs-samples/sdks/csharp/fullClientApp.cs" id="Query_dependencies":::
+
+然后，在 `Main` 方法的末尾添加以下代码：
+
+:::code language="csharp" source="~/digital-twins-docs-samples/sdks/csharp/fullClientApp.cs" id="Query_twins":::
 
 在命令窗口中，使用 `dotnet run` 运行程序。 你应该会在输出中看到此实例中的所有数字孪生。
 
@@ -411,147 +250,19 @@ await foreach (string twin in result)
 
 到本教程的此阶段，你已有一个完整的客户端应用，能够对 Azure 数字孪生执行基本操作。 下面列出了 Program.cs 中的程序的完整代码供你参考：
 
-```csharp
-using System;
-using Azure.DigitalTwins.Core;
-using Azure.Identity;
-using System.Threading.Tasks;
-using System.IO;
-using System.Collections.Generic;
-using Azure;
-using Azure.DigitalTwins.Core.Models;
-using Azure.DigitalTwins.Core.Serialization;
-using System.Text.Json;
+:::code language="csharp" source="~/digital-twins-docs-samples/sdks/csharp/fullClientApp.cs":::
 
-namespace minimal
-{
-    class Program
-    {
-        static async Task Main(string[] args)
-        {
-            Console.WriteLine("Hello World!");
-            
-            string clientId = "<your-application-ID>";
-            string tenantId = "<your-directory-ID>";
-            string adtInstanceUrl = "https://<your-Azure-Digital-Twins-instance-hostName>";
-            var credentials = new InteractiveBrowserCredential(tenantId, clientId);
-            DigitalTwinsClient client = new DigitalTwinsClient(new Uri(adtInstanceUrl), credentials);
-            Console.WriteLine($"Service client created – ready to go");
-
-            Console.WriteLine();
-            Console.WriteLine($"Upload a model");
-            var typeList = new List<string>();
-            string dtdl = File.ReadAllText("SampleModel.json");
-            typeList.Add(dtdl);
-
-            // Upload the model to the service
-            try {
-                await client.CreateModelsAsync(typeList);
-            } catch (RequestFailedException rex) {
-                Console.WriteLine($"Load model: {rex.Status}:{rex.Message}");
-            }
-            // Read a list of models back from the service
-            AsyncPageable<ModelData> modelDataList = client.GetModelsAsync();
-            await foreach (ModelData md in modelDataList)
-            {
-                Console.WriteLine($"Type name: {md.DisplayName}: {md.Id}");
-            }
-
-            // Initialize twin data
-            BasicDigitalTwin twinData = new BasicDigitalTwin();
-            twinData.Metadata.ModelId = "dtmi:com:contoso:SampleModel;1";
-            twinData.CustomProperties.Add("data", $"Hello World!");
-    
-            string prefix="sampleTwin-";
-            for(int i=0; i<3; i++) {
-                try {
-                    twinData.Id = $"{prefix}{i}";
-                    await client.CreateDigitalTwinAsync($"{prefix}{i}", JsonSerializer.Serialize(twinData));
-                    Console.WriteLine($"Created twin: {prefix}{i}");
-                } catch(RequestFailedException rex) {
-                    Console.WriteLine($"Create twin error: {rex.Status}:{rex.Message}");  
-                }
-            }
-
-            // Connect the twins with relationships
-            await CreateRelationship(client, "sampleTwin-0", "sampleTwin-1");
-            await CreateRelationship(client, "sampleTwin-0", "sampleTwin-2");
-
-            //List the relationships
-            await ListRelationships(client, "sampleTwin-0");
-
-            // Run a query    
-            AsyncPageable<string> result = client.QueryAsync("Select * From DigitalTwins");
-            await foreach (string twin in result)
-            {
-                object jsonObj = JsonSerializer.Deserialize<object>(twin);
-                string prettyTwin = JsonSerializer.Serialize(jsonObj, new JsonSerializerOptions { WriteIndented = true });
-                Console.WriteLine(prettyTwin);
-                Console.WriteLine("---------------");
-            }
-        }
-
-        public async static Task CreateRelationship(DigitalTwinsClient client, string srcId, string targetId)
-        {
-            var relationship = new BasicRelationship
-            {
-                TargetId = targetId,
-                Name = "contains"
-            };
-        
-            try
-            {
-                string relId = $"{srcId}-contains->{targetId}";
-                await client.CreateRelationshipAsync(srcId, relId, JsonSerializer.Serialize(relationship));
-                Console.WriteLine("Created relationship successfully");
-            }
-            catch (RequestFailedException rex) {
-                Console.WriteLine($"Create relationship error: {rex.Status}:{rex.Message}");
-            }
-        }
-        
-        public async static Task ListRelationships(DigitalTwinsClient client, string srcId)
-        {
-            try {
-                AsyncPageable<string> results = client.GetRelationshipsAsync(srcId);
-                Console.WriteLine($"Twin {srcId} is connected to:");
-                await foreach (string rel in results)
-                {
-                    var brel = JsonSerializer.Deserialize<BasicRelationship>(rel);
-                    Console.WriteLine($" -{brel.Name}->{brel.TargetId}");
-                }
-            } catch (RequestFailedException rex) {
-                Console.WriteLine($"Relationship retrieval error: {rex.Status}:{rex.Message}");   
-            }
-        }
-
-    }
-}
-```
 ## <a name="clean-up-resources"></a>清理资源
+
+完成本教程后，可选择想要删除的资源，这具体取决于你接下来要执行哪些操作。
+
+* 如果打算继续学习下一个教程，可在下一教程中重复使用本教程中的实例。 你可保留在此处设置的 Azure 数字孪生资源，并跳过本部分的其余部分。
+
+[!INCLUDE [digital-twins-cleanup-clear-instance.md](../../includes/digital-twins-cleanup-clear-instance.md)]
  
-本教程中使用的实例可重复用于下一教程[*教程：使用示例客户端应用了解基础知识*](tutorial-command-line-app.md)。 如果打算继续学习下一个教程，可以保留在此处设置的 Azure 数字孪生实例。
- 
-如果不再需要本教程中创建的资源，请按照以下步骤将其删除。
+[!INCLUDE [digital-twins-cleanup-basic.md](../../includes/digital-twins-cleanup-basic.md)]
 
-利用 [Azure Cloud Shell](https://shell.azure.com)，你可以使用 [az group delete](https://docs.microsoft.com/cli/azure/group?view=azure-cli-latest#az-group-delete) 命令删除资源组中的所有 Azure 资源。 这将删除资源组和 Azure 数字孪生实例。
-
-> [!IMPORTANT]
-> 删除资源组的操作不可逆。 资源组以及包含在其中的所有资源将被永久删除。 请确保不会意外删除错误的资源组或资源。 
-
-打开 Azure Cloud Shell 并运行以下命令，以删除资源组及其包含的所有内容。
-
-```azurecli-interactive
-az group delete --name <your-resource-group>
-```
-
-接下来，使用以下命令删除为客户端应用创建的 Azure Active Directory 应用注册：
-
-```azurecli
-az ad app delete --id <your-application-ID>
-```
-
-最后，删除在本地计算机上创建的项目文件夹。
+你可能还需要从本地计算机中删除项目文件夹。
 
 ## <a name="next-steps"></a>后续步骤
 
@@ -561,7 +272,3 @@ az ad app delete --id <your-application-ID>
 
 > [!div class="nextstepaction"]
 > [*教程：使用示例客户端应用了解基础知识*](tutorial-command-line-app.md)
-
-你也可以在操作说明文章中了解更多管理操作，以增加在本教程中编写的代码，或开始查看概念文档，详细了解教程中使用的元素。
-* [*操作说明：管理自定义模型*](how-to-manage-model.md)
-* [*概念：自定义模型*](concepts-models.md)

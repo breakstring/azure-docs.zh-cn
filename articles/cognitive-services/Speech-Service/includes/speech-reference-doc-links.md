@@ -9,12 +9,12 @@ ms.subservice: speech-service
 ms.topic: include
 ms.date: 12/06/2019
 ms.author: trbye
-ms.openlocfilehash: 1b837797bf0baf025d350cec1918cf4a5b639416
-ms.sourcegitcommit: fdec8e8bdbddcce5b7a0c4ffc6842154220c8b90
+ms.openlocfilehash: 9074b10b9bf7f8147f70d77bcfbe02749e39154b
+ms.sourcegitcommit: 829d951d5c90442a38012daaf77e86046018e5b9
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 05/19/2020
-ms.locfileid: "83650616"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "91643962"
 ---
 ## <a name="reference-docs"></a>参考文档
 
@@ -45,4 +45,4 @@ ms.locfileid: "83650616"
 - [REST API：语音转文本](../rest-speech-to-text.md)
 - [REST API：发音评估](../rest-speech-to-text.md#pronunciation-assessment-parameters)
 - [REST API：文本转语音](../rest-text-to-speech.md)
-- <a href="https://cris.ai/swagger/ui/index" target="_blank" rel="noopener">REST API：批处理脚本和自定义<span class="docon docon-navigate-external x-hidden-focus"></span></a>
+- <a href="https://westus.dev.cognitive.microsoft.com/docs/services/speech-to-text-api-v3-0" target="_blank" rel="noopener">REST API：批量听录和自定义 <span class="docon docon-navigate-external x-hidden-focus"></span></a>

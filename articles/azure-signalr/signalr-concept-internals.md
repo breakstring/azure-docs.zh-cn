@@ -4,14 +4,15 @@ description: 了解 Azure SignalR 服务内部机制、体系结构、连接以�
 author: sffamily
 ms.service: signalr
 ms.topic: conceptual
+ms.custom: devx-track-dotnet
 ms.date: 11/13/2019
 ms.author: zhshang
-ms.openlocfilehash: f06b8f9a2d41fc5400aa0fa610a2be3f31e21f1c
-ms.sourcegitcommit: 1e6c13dc1917f85983772812a3c62c265150d1e7
+ms.openlocfilehash: afb63b76666f47217f9c19376d81aa4ed73991bf
+ms.sourcegitcommit: 65cef6e5d7c2827cf1194451c8f26a3458bc310a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/09/2020
-ms.locfileid: "86169793"
+ms.lasthandoff: 01/19/2021
+ms.locfileid: "98572555"
 ---
 # <a name="azure-signalr-service-internals"></a>Azure SignalR 服务内部
 
@@ -41,7 +42,7 @@ Azure SignalR 服务构建于 ASP.NET Core SignalR 框架的基础之上。 它�
 - 对于 ASP.NET Core SignalR，Azure SignalR 服务 SDK 将为 SignalR 服务开放每个中心的 5 个 WebSocket 连接。 
 - 对于 ASP.NET SignalR，Azure SignalR 服务 SDK 将为 SignalR 服务开放每个中心的 5 个 WebSocket 连接，并为每个应用程序开放一个 WebSocket 连接。
 
-5 个 WebSocket 连接是默认值，可在[配置](https://github.com/Azure/azure-signalr/blob/dev/docs/use-signalr-service.md#connectioncount)中更改。
+5 个 WebSocket 连接是默认值，可在[配置](https://github.com/Azure/azure-signalr/blob/dev/docs/run-asp-net-core.md#connectioncount)中更改。
 
 发往和发自客户端的消息将在这些连接中多路复用。
 
@@ -84,9 +85,9 @@ Azure SignalR 服务构建于 ASP.NET Core SignalR 框架的基础之上。 它�
 
 此时，应用程序服务器会收到一个事件，其中包含来自新客户端的信息。 在应用程序服务器中与客户端建立逻辑连接。 通过 SignalR 服务建立从客户端到应用程序服务器的数据通道。
 
-SignalR 服务将数据从客户端传输到配对应用程序服务器。 应用程序服务器中的数据将发送到映射的客户端。
+SignalR 服务将客户端中的数据传输到配对的应用程序服务器。 应用程序服务器中的数据将发送到映射的客户端。
 
-SignalR 服务不会保存或存储客户数据，接收的所有客户数据会实时传输到目标服务器或客户端。
+SignalR 服务不保存或存储客户数据，接收的所有客户数据将实时传输到目标服务器或客户端。
 
 可以看出，Azure SignalR 服务本质上是应用程序服务器与客户端之间的逻辑传输层。 所有持久性连接将卸载到 SignalR 服务。
 应用程序服务器只需处理中心类中的业务逻辑，而无需担心客户端连接。

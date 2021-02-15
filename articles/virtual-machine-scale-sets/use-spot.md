@@ -1,20 +1,20 @@
 ---
 title: 创建使用 Azure Spot VM 的规模集
 description: 了解如何创建使用 Spot VM 的 Azure 虚拟机规模集以节省成本。
-author: cynthn
-ms.author: cynthn
+author: JagVeerappan
+ms.author: jagaveer
 ms.topic: how-to
 ms.service: virtual-machine-scale-sets
 ms.subservice: spot
 ms.date: 03/25/2020
-ms.reviewer: jagaveer
-ms.custom: jagaveer, devx-track-azurecli
-ms.openlocfilehash: de8cfa66d6d52fe16cc40c5df0f41a39fff134fd
-ms.sourcegitcommit: 2ff0d073607bc746ffc638a84bb026d1705e543e
+ms.reviewer: cynthn
+ms.custom: jagaveer, devx-track-azurecli, devx-track-azurepowershell
+ms.openlocfilehash: 03bf5e0ef7e6268e68139b6d73685f67d88f6231
+ms.sourcegitcommit: d4734bc680ea221ea80fdea67859d6d32241aefc
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/06/2020
-ms.locfileid: "87832631"
+ms.lasthandoff: 02/14/2021
+ms.locfileid: "100385925"
 ---
 # <a name="azure-spot-vms-for-virtual-machine-scale-sets"></a>适用于虚拟机规模集的 Azure Spot VM 
 
@@ -30,6 +30,24 @@ Spot 实例的定价是可变的，基于区域和 SKU。 有关详细信息，�
 
 使用可变定价，你可以设置最高价格，以美元 (USD) 为单位，最多可使用 5 个小数位。 例如，值 `0.98765` 表示最高价格为 0.98765 美元/小时。 如果将最高价格设置为 `-1`，则不会根据价格逐出实例。 实例的价格将是 Spot 的当前价格或是标准实例的价格（两者中的较低者，前提是有可用的容量和配额）。
 
+
+## <a name="limitations"></a>限制
+
+Azure 位置不支持以下大小：
+ - B 系列
+ - 任意大小 (促销版本，如 Dv2、NV、NC、H 促销大小) 
+
+Azure 点可以部署到除 Microsoft Azure 中国世纪互联之外的任何区域。
+
+<a name="channel"></a>
+
+目前支持以下 [产品/服务类型](https://azure.microsoft.com/support/legal/offer-details/) ：
+
+-   企业协议
+-   即用即付产品/服务代码003P
+-   赞助
+- 对于云服务提供商 (CSP) ，请联系你的合作伙伴
+
 ## <a name="eviction-policy"></a>逐出策略
 
 创建 Spot 规模集时，可将逐出策略设置为“解除分配”（默认值）或“删除” 。 
@@ -41,10 +59,10 @@ Spot 实例的定价是可变的，基于区域和 SKU。 有关详细信息，�
 用户可以选择通过 [Azure Scheduled Events](../virtual-machines/linux/scheduled-events.md) 来接收 VM 内通知。 这样，系统就会在你的 VM 被逐出时向你发送通知。在逐出之前，你将有 30 秒的时间来完成任何作业并执行关闭任务。 
 
 ## <a name="placement-groups"></a>放置组
-放置组是类似于 Azure 可用性集的构造，具有其自己的容错域和升级域。 默认情况下，一个规模集包含一个放置组，最大大小为 100 台 VM。 如果将被调用的规模集属性 `singlePlacementGroup` 设置为*false*，则规模集可以由多个放置组组成，其范围为 0-1000 个 vm。 
+放置组是类似于 Azure 可用性集的构造，具有其自己的容错域和升级域。 默认情况下，一个规模集包含一个放置组，最大大小为 100 台 VM。 如果将被调用的规模集属性 `singlePlacementGroup` 设置为 *false*，则规模集可以由多个放置组组成，其范围为 0-1000 个 vm。 
 
 > [!IMPORTANT]
-> 除非使用的是与 HPC 一起使用的，否则强烈建议将 "规模集" 属性设置 `singlePlacementGroup` 为*false* ，以启用多个放置组，以便更好地在区域或区域中进行缩放。 
+> 除非使用的是与 HPC 一起使用的，否则强烈建议将 "规模集" 属性设置 `singlePlacementGroup` 为 *false* ，以启用多个放置组，以便更好地在区域或区域中进行缩放。 
 
 ## <a name="deploying-spot-vms-in-scale-sets"></a>在规模集中部署 Spot VM
 
@@ -138,7 +156,7 @@ $vmssConfig = New-AzVmssConfig `
 
 **问：** 是否可以为 Spot 申请额外的配额？
 
-**答:** 是的，你可以通过[标准配额申请流程](../azure-portal/supportability/per-vm-quota-requests.md)提交申请，请求提高 Spot VM 的配额。
+**答:** 是的，你可以通过 [标准配额申请流程](../azure-portal/supportability/per-vm-quota-requests.md)提交申请，请求提高 Spot VM 的配额。
 
 
 **问：** 是否可以将现有的规模集转换为 Spot 规模集？
@@ -163,28 +181,12 @@ $vmssConfig = New-AzVmssConfig `
 
 **问：** 自动缩放是否可用于这两种收回策略（解除分配和删除）？
 
-**答:** 建议使用自动缩放时将收回策略设置为删除。 这是因为解除分配的实例将计入规模集的容量计数。 如果使用自动缩放，由于实例已解除分配且已收回，实例很可能会快速达到目标数。 
-
-
-**问：** 哪些渠道支持 Spot VM？
-
-**答:** 若要了解 Spot VM 的可用性，请参阅下表。
-
-<a name="channel"></a>
-
-| Azure 渠道               | Azure Spot VM 的可用性       |
-|------------------------------|-----------------------------------|
-| 企业协议         | 是                               |
-| 即用即付                | 是                               |
-| 云服务提供商 (CSP) | [联系你的合作伙伴](/partner-center/azure-plan-get-started) |
-| 优点                     | 不可用                     |
-| 赞助                    | 是                               |
-| 免费试用版                   | 不可用                     |
+**答：** 是的，但建议在使用自动缩放时将逐出策略设置为删除。 这是因为解除分配的实例将计入规模集的容量计数。 如果使用自动缩放，由于实例已解除分配且已收回，实例很可能会快速达到目标数。 此外，你的缩放操作可能会受到点逐出的影响。 例如，在缩放操作期间，由于存在多个点逐出，虚拟机规模集实例可能低于设置的最小计数。 
 
 
 **问：** 我可以在何处发布问题？
 
-**答:** 你可以在[问答](/answers/topics/azure-spot.html)中发布问题并使用 `azure-spot` 来标记问题。 
+**答:** 你可以在 [问答](/answers/topics/azure-spot.html)中发布问题并使用 `azure-spot` 来标记问题。 
 
 ## <a name="next-steps"></a>后续步骤
 

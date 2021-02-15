@@ -13,12 +13,13 @@ metadata:
   ms.topic: landing-page
   ms.date: 10/14/2019
   ms.author: erhopf
-  ms.openlocfilehash: 26fc174ef0993339487a2edcc32cbb4fd864f96e
-  ms.sourcegitcommit: bb0afd0df5563cc53f76a642fd8fc709e366568b
+  ms.custom: contperf-fy21q2
+  ms.openlocfilehash: f0f2e009220292d298848cf93c479639b2318062
+  ms.sourcegitcommit: d2d1c90ec5218b93abb80b8f3ed49dcf4327f7f4
   ms.translationtype: HT
   ms.contentlocale: zh-CN
-  ms.lasthandoff: 05/19/2020
-  ms.locfileid: "83592740"
+  ms.lasthandoff: 12/16/2020
+  ms.locfileid: "97588482"
 landingContent:
 - title: 转换器
   linkLists:
@@ -33,25 +34,15 @@ landingContent:
     - text: 合规性
       url: https://azure.microsoft.com/support/legal/cognitive-services-compliance-and-privacy/
     - text: 创建订阅
-      url: translator-text-how-to-signup.md
+      url: ./translator-how-to-signup.md
     - text: 常见问题解答
       url: https://www.microsoft.com/translator/faq.aspx
 - title: 入门
   linkLists:
   - linkListType: quickstart
     links:
-    - text: 翻译文本
-      url: quickstart-translate.md
-    - text: 直译文本
-      url: quickstart-transliterate.md
-    - text: 语言检测
-      url: quickstart-detect.md
-    - text: 字典查找
-      url: quickstart-dictionary.md
-    - text: 确定句子长度
-      url: quickstart-sentences.md
-    - text: 列出支持的语言
-      url: quickstart-languages.md
+    - text: 快速入门
+      url: quickstart-translator.md
   - linkListType: tutorial
     links:
     - text: 创建 WPF 翻译应用 - C#
@@ -106,3 +97,9 @@ landingContent:
       url: https://aka.ms/TranslatorGitHub
     - text: Stack Overflow
       url: https://stackoverflow.com/questions/tagged/microsoft-translator
+- title: 帮助和反馈
+  linkLists:
+  - linkListType: reference
+    links:
+    - text: 支持和帮助选项
+      url: ../cognitive-services-support-options.md?context=/azure/cognitive-services/translator/context/context

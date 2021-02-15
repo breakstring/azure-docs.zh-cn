@@ -13,12 +13,12 @@ ms.custom:
 - amqp
 - mqtt
 - devx-track-java
-ms.openlocfilehash: 38816b616179ec16e06e987f82b498085c34ba3f
-ms.sourcegitcommit: a76ff927bd57d2fcc122fa36f7cb21eb22154cfa
+ms.openlocfilehash: 2a02dc94c0dc0939e6c1eef624fc6fe65fb98ac6
+ms.sourcegitcommit: dbe434f45f9d0f9d298076bf8c08672ceca416c6
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/28/2020
-ms.locfileid: "87327576"
+ms.lasthandoff: 10/17/2020
+ms.locfileid: "92147010"
 ---
 # <a name="upload-files-from-your-device-to-the-cloud-with-iot-hub-java"></a>通过 IoT 中心将设备中的文件上传到云 (Java)
 
@@ -48,9 +48,11 @@ ms.locfileid: "87327576"
 > [!NOTE]
 > IoT 中心通过 Azure IoT 设备 SDK 来支持许多设备平台和语言（包括 C、.NET 和 Javascript）。 有关如何将设备连接到 Azure IoT 中心的分步说明，请参阅 [Azure IoT 开发人员中心](https://azure.microsoft.com/develop/iot)。
 
+[!INCLUDE [iot-hub-include-x509-ca-signed-file-upload-support-note](../../includes/iot-hub-include-x509-ca-signed-file-upload-support-note.md)]
+
 ## <a name="prerequisites"></a>先决条件
 
-* [Java SE 开发工具包 8](https://docs.microsoft.com/java/azure/jdk/?view=azure-java-stable)。 请确保在“长期支持”下选择“Java 8”以获取 JDK 8 的下载。
+* [Java SE 开发工具包 8](/java/azure/jdk/?view=azure-java-stable)。 请确保在“长期支持”下选择“Java 8”以获取 JDK 8 的下载。
 
 * [Maven 3](https://maven.apache.org/download.cgi)
 
@@ -282,4 +284,4 @@ mvn exec:java -Dexec.mainClass="com.mycompany.app.App"
 
 若要进一步探索 IoT 中心的功能，请参阅：
 
-* [使用 IoT Edge 模拟设备](../iot-edge/tutorial-simulate-device-linux.md)
+* [使用 IoT Edge 模拟设备](../iot-edge/quickstart-linux.md)

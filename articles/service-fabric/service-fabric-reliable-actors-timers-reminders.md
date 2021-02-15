@@ -3,12 +3,13 @@ title: Reliable Actors 计时器和提醒
 description: 介绍 Service Fabric Reliable Actors 的计时器和提醒，包括有关何时使用每项的指导。
 ms.topic: conceptual
 ms.date: 11/02/2017
-ms.openlocfilehash: a464fda3f8b0f293efd36cf0a064156bd7795d44
-ms.sourcegitcommit: dabd9eb9925308d3c2404c3957e5c921408089da
+ms.custom: devx-track-csharp
+ms.openlocfilehash: f77eb29c9146fe66d5d2b6073c33e30fbab649c2
+ms.sourcegitcommit: a055089dd6195fde2555b27a84ae052b668a18c7
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/11/2020
-ms.locfileid: "86245941"
+ms.lasthandoff: 01/26/2021
+ms.locfileid: "98791788"
 ---
 # <a name="actor-timers-and-reminders"></a>执行组件计时器和提醒
 执行组件可通过注册计时器或提醒来计划自身的定期工作。 本文演示如何使用计时器和提醒，并说明它们之间的差异。
@@ -130,7 +131,7 @@ public class VisualObjectActorImpl extends FabricActor implements VisualObjectAc
 > [!NOTE]
 > 提醒的可靠性与由执行组件状态提供程序提供的状态可靠性保证相关。 这意味着，对于状态持久性设置为 None 的执行组件，故障转移后将不会触发提醒。
 
-为了注册提醒，执行组件会调用基类上提供的 [`RegisterReminderAsync`](/dotnet/api/microsoft.servicefabric.actors.runtime.actorbase.registerreminderasync?view=azure-dotnet#remarks) 方法，如以下示例中所示：
+为了注册提醒，执行组件会调用基类上提供的 [`RegisterReminderAsync`](/dotnet/api/microsoft.servicefabric.actors.runtime.actorbase.registerreminderasync#remarks) 方法，如以下示例中所示：
 
 ```csharp
 protected override async Task OnActivateAsync()

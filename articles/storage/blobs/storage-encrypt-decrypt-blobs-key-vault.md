@@ -10,12 +10,13 @@ ms.date: 12/04/2019
 ms.author: tamram
 ms.reviewer: ozgun
 ms.subservice: blobs
-ms.openlocfilehash: 82131ab4e1f990af25c669131e20c789a0f74dcf
-ms.sourcegitcommit: 3543d3b4f6c6f496d22ea5f97d8cd2700ac9a481
+ms.custom: devx-track-csharp
+ms.openlocfilehash: ddc9dbf77c04ea95e5b873c45de4c0df109514c7
+ms.sourcegitcommit: c95e2d89a5a3cf5e2983ffcc206f056a7992df7d
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/20/2020
-ms.locfileid: "86518651"
+ms.lasthandoff: 11/24/2020
+ms.locfileid: "95544439"
 ---
 # <a name="tutorial---encrypt-and-decrypt-blobs-using-azure-key-vault"></a>教程 - 使用 Azure 密钥保管库加密和解密 blob
 
@@ -235,8 +236,8 @@ SymmetricKey sec = (SymmetricKey) cloudResolver.ResolveKeyAsync(
 
 ## <a name="next-steps"></a>后续步骤
 
-要深入了解如何将 Microsoft Azure 存储与 C# 配合使用，请参阅[用于 .NET 的 Microsoft Azure 存储客户端库](https://msdn.microsoft.com/library/azure/dn261237.aspx)。
+要深入了解如何将 Microsoft Azure 存储与 C# 配合使用，请参阅[用于 .NET 的 Microsoft Azure 存储客户端库](/previous-versions/azure/dn261237(v=azure.100))。
 
-有关 Blob REST API 的详细信息，请参阅 [Blob 服务 REST API](https://msdn.microsoft.com/library/azure/dd135733.aspx)。
+有关 Blob REST API 的详细信息，请参阅 [Blob 服务 REST API](/rest/api/storageservices/Blob-Service-REST-API)。
 
-有关 Microsoft Azure 存储的最新信息，请转到 [Microsoft Azure 存储团队博客](https://blogs.msdn.com/b/windowsazurestorage/)。
+有关 Microsoft Azure 存储的最新信息，请转到 [Microsoft Azure 存储团队博客](/archive/blogs/windowsazurestorage/)。

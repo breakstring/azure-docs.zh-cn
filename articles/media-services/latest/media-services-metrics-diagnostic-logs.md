@@ -1,27 +1,28 @@
 ---
-title: 使用 Azure Monitor 监视媒体服务指标和诊断日志
-titleSuffix: Azure Media Services
+title: Azure Monitor 的指标和诊断日志
 description: 了解如何通过 Azure Monitor 监视 Azure 媒体服务指标和诊断日志。
 services: media-services
 documentationcenter: ''
-author: Juliako
+author: IngridAtMicrosoft
 manager: femila
 editor: ''
 ms.service: media-services
 ms.workload: media
 ms.tgt_pltfrm: na
 ms.devlang: na
-ms.topic: article
-ms.date: 07/08/2019
-ms.author: juliako
-ms.openlocfilehash: 7058160819c9b6ccc3f63511f86e930fcbfc413b
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.topic: conceptual
+ms.date: 11/02/2020
+ms.author: inhenkel
+ms.openlocfilehash: 35b0d9c2937024341be6183ac1438b7c4500d6ef
+ms.sourcegitcommit: 4e70fd4028ff44a676f698229cb6a3d555439014
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87011645"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98954980"
 ---
-# <a name="monitor-media-services-metrics-and-diagnostic-logs-via-azure-monitor"></a>通过 Azure Monitor 监视媒体服务指标和诊断日志
+# <a name="monitor-media-services-metrics-and-diagnostic-logs-with-azure-monitor"></a>使用 Azure Monitor 监视媒体服务指标和诊断日志
+
+[!INCLUDE [media services api v3 logo](./includes/v3-hr.md)]
 
 使用 [Azure Monitor](../../azure-monitor/overview.md) 可以监视指标和诊断日志，以帮助了解应用的执行情况。 Azure Monitor 收集的所有数据属于以下两种基本类型之一：指标和日志。 可以监视媒体服务诊断日志，并针对收集的指标和日志创建警报与通知。 可以使用[指标资源管理器](../../azure-monitor/platform/metrics-getting-started.md)来可视化和分析指标数据。 可将日志发送到 [Azure 存储](https://azure.microsoft.com/services/storage/)、将其流式传输到 [Azure 事件中心](https://azure.microsoft.com/services/event-hubs/)、并将其导出到 [Log Analytics](https://azure.microsoft.com/services/log-analytics/)，或使用第三方服务。
 
@@ -65,8 +66,10 @@ ms.locfileid: "87011645"
 |请求|请求|提供由流式处理终结点提供服务的 HTTP 请求总数。|
 |流出量|流出量|每个流式处理终结点每分钟流出的字节总数。|
 |SuccessE2ELatency|成功端到端延迟|从流式处理终结点收到请求，到发送最后一个响应字节的持续时间。|
+|CPU 使用率| | 高级流式处理终结点的 CPU 使用率。 此数据不可用于标准流式处理终结点。 |
+|出口带宽 | | 出口带宽（位/秒）。|
 
-### <a name="why-would-i-want-to-use-metrics"></a>为何使用指标？
+### <a name="metrics-are-useful"></a>指标很有用
 
 以下示例说明监视媒体服务指标如何能够帮助你了解应用的执行情况。 使用媒体服务指标可以解决的部分问题包括：
 
@@ -77,6 +80,8 @@ ms.locfileid: "87011645"
 * 如何查看失败请求的细节以及失败的原因？
 * 如何查看正在从打包程序中提取多少个 HLS 或 DASH 请求？
 * 如何设置警报来了解何时达到了失败请求数的阈值？
+
+对于在单个帐户中使用的流式处理终结点数，随着时间的推移，并发性成为一个问题。 你需要牢记并发流数与复杂的发布参数（如针对多个协议的动态打包、多个 DRM 加密等）之间的关系。每个额外的已发布实时流都会添加到流式处理终结点上的 CPU 和输出带宽中。 考虑到这一点，你应该使用 Azure Monitor 密切监视流式处理终结点的利用率（CPU 和出口容量），以确保适当地对其进行缩放（或者，在并发性非常高的情况下，可以在多个流式处理终结点之间拆分流量）。
 
 ### <a name="example"></a>示例
 

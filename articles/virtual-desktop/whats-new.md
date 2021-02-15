@@ -3,16 +3,17 @@ title: Windows 虚拟桌面中有哪些新增功能？ - Azure
 description: Windows 虚拟桌面的新增功能和产品更新。
 author: Heidilohr
 ms.topic: overview
-ms.date: 08/07/2020
+ms.date: 01/29/2021
 ms.author: helohr
 ms.reviewer: thhickli; darank
 manager: lizross
-ms.openlocfilehash: 8663fc3f016fadcd4f4c99acd800cd0ccf8844f8
-ms.sourcegitcommit: 98854e3bd1ab04ce42816cae1892ed0caeedf461
+ms.custom: references_regions
+ms.openlocfilehash: 1deec49cfeca65628485ed105e0919f2c2b18b17
+ms.sourcegitcommit: 1f1d29378424057338b246af1975643c2875e64d
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/07/2020
-ms.locfileid: "88003528"
+ms.lasthandoff: 02/05/2021
+ms.locfileid: "99575307"
 ---
 # <a name="whats-new-in-windows-virtual-desktop"></a>Windows 虚拟桌面中有哪些新增功能？
 
@@ -24,6 +25,214 @@ Windows 虚拟桌面会定期更新。 本文介绍了以下内容：
 - Bug 修复
 
 本文每月更新一次。 请务必时常查看本文，以及时了解最新更新。
+
+## <a name="client-updates"></a>客户端更新
+
+要了解 Windows 虚拟桌面和远程桌面服务的客户端更新，请参阅以下文章：
+
+- [Windows](/windows-server/remote/remote-desktop-services/clients/windowsdesktop-whatsnew)
+- [macOS](/windows-server/remote/remote-desktop-services/clients/mac-whatsnew)
+- [iOS](/windows-server/remote/remote-desktop-services/clients/ios-whatsnew)
+- [Android](/windows-server/remote/remote-desktop-services/clients/android-whatsnew)
+- [Web](/windows-server/remote/remote-desktop-services/clients/web-client-whatsnew)
+
+## <a name="fslogix-updates"></a>FSLogix 更新
+
+想知道 FSLogix 的最新更新吗？ 请查看 [FSLogix 的新增功能](/fslogix/whats-new)。
+
+## <a name="january-2021"></a>2021 年 1 月
+
+以下是 2021 年 1 月的更改内容：
+
+### <a name="new-windows-virtual-desktop-offer"></a>Windows 虚拟桌面新优惠
+
+如果使用原生 Microsoft 解决方案，则对于 D 系列和 B 系列虚拟机，新客户可节省 30% 的 Windows 虚拟桌面计算成本（此优惠只提供 90 天）。 你可于 2021 年 3 月 31 日之前在 Azure 门户中兑换此优惠。 有关详细信息，请参阅 [Windows 虚拟桌面优惠页面](https://azure.microsoft.com/services/virtual-desktop/offer/)。
+
+### <a name="networksecuritygrouprules-value-change"></a>networkSecurityGroupRules 值更改 
+
+在 Azure 资源管理器嵌套模板中，我们将 networkSecurityGroupRules 的默认值从对象更改为了数组。 这将避免在未指定 networkSecurityGroupRules 的值的情况下使用 managedDisks-customimagevm.json 时出现任何错误。 这不是一项中断性变更，而且向后兼容。
+
+### <a name="fslogix-hotfix-update"></a>FSLogix 修补程序更新
+
+我们发布了版本 2009 HF_01 (2.9.7654.46150) 的 FSLogix，用于解决上一版本 (2.9.7621.30127) 中的问题。 建议你尽快停止使用上一版本并更新 FSLogix。
+
+有关详细信息，请查看 [FSLogix 中的新增功能](/fslogix/whats-new#fslogix-apps-2009-hf_01-29765446150)中的发行说明。
+
+### <a name="azure-portal-experience-improvements"></a>Azure 门户体验改进
+
+我们对 Azure 门户体验进行了以下改进：
+
+- 现在，你可直接添加本地虚拟机 (VM) 管理员凭据，无需添加使用 Active Directory 域加入帐户凭据创建的本地帐户。
+- 现在，用户可在单独的选项卡中为单个用户和组列出个人和组分配情况。
+- 现在，可在主机池的虚拟机概述中查看 Windows 虚拟桌面代理的版本号。
+- 对主机池和应用程序组添加了批量删除功能。
+- 现在，你可为主机池中的多个会话主机启用或禁用排出模式。
+- 从 VM 详细信息页面中删除了公共 IP 字段。
+
+### <a name="windows-virtual-desktop-agent-troubleshooting"></a>Windows 虚拟桌面代理故障排除
+
+我们近来设定了 [Windows 虚拟桌面代理故障排除指南](troubleshoot-agent.md)，来帮助遇到常见问题的客户。
+
+### <a name="microsoft-defender-for-endpoint-integration"></a>Microsoft Defender for Endpoint 集成
+
+Microsoft Defender for Endpoint 集成现已正式发布。 此功能为 Windows 虚拟桌面 VM 提供了与本地 Windows 10 计算机相同的调查体验。 如果你使用 Windows 10 企业版多会话，Microsoft Defender for Endpoint 将支持多达 50 个并发用户连接，从而为你节省 Windows 10 企业版多会话成本并增强你使用 Microsoft Defender for Endpoint 的信心。 有关详细信息，请查看我们的[博客文章](https://techcommunity.microsoft.com/t5/microsoft-defender-for-endpoint/windows-virtual-desktop-support-is-now-generally-available/ba-p/2103712)。
+
+### <a name="azure-security-baseline-for-windows-virtual-desktop"></a>Windows 虚拟桌面的 Azure 安全基线
+
+我们最近发布了[一篇有关 Windows 虚拟桌面的 Azure 安全基线的文章](security-baseline.md)，请注意查看。 可在这些指南中了解如何将 2.0 版的 Azure 安全基准应用于 Windows 虚拟桌面。 Azure 安全基准介绍了我们建议的用于保护 Azure 上的云解决方案的设置和做法。
+
+## <a name="december-2020"></a>2020 年 12 月
+
+以下是 2020 年 12 月的更改内容： 
+
+### <a name="azure-monitor-for-windows-virtual-desktop"></a>适用于 Windows 虚拟桌面的 Azure Monitor
+
+适用于 Windows 虚拟桌面的 Azure Monitor 现在提供公共预览版。 这项新功能包括一个在 Azure Monitor 工作簿基础上构建的强大仪表板，可帮助 IT 专业人员了解其 Windows 虚拟桌面环境。 有关详细信息，请查看[博客上的公告](https://techcommunity.microsoft.com/t5/windows-virtual-desktop/azure-monitor-for-windows-virtual-desktop-public-preview/m-p/1946587)。 
+
+### <a name="azure-resource-manager-template-change"></a>Azure 资源管理器模板更改 
+
+在最新更新中，我们已从 Azure 资源管理器模板中删除了用于创建和预配主机池的所有公共 IP 地址参数。 强烈建议避免对 Windows 虚拟桌面使用公共 IP，以确保部署安全。 如果你的部署依赖于公共 IP，则需要将其重新配置为使用专用 IP，否则部署将无法正常工作。
+
+### <a name="msix-app-attach-public-preview"></a>MSIX 应用附加公共预览版 
+
+MSIX 应用附加是另一项服务，其公共预览版已在本月推出。 .MSIX 应用附加是一项服务，它可在 Windows 虚拟桌面会话主机 VM 中动态显示 MSIX 应用程序。 有关详细信息，请查看[博客上的公告](https://techcommunity.microsoft.com/t5/windows-virtual-desktop/msix-app-attach-azure-portal-integration-public-preview/m-p/1986231)。 
+
+### <a name="screen-capture-protection"></a>屏幕捕获保护 
+
+本月还标志着屏幕捕获保护公共预览版的开始。 可使用此功能防止在客户端终结点上捕获敏感信息。 转到[此页面](https://aka.ms/WVDScreenCaptureProtection)来试用屏幕捕获保护。  
+
+### <a name="built-in-roles"></a>内置角色
+
+我们为 Windows 虚拟桌面添加了新的内置角色来实现管理权限。 有关详细信息，请参阅 [Windows 虚拟桌面的内置角色](rbac.md)。 
+
+### <a name="application-group-limit-increase"></a>应用程序组限额已提高
+
+我们已将每个 Azure Active Directory 租户的默认应用程序组限额增加到 200 个组。
+
+### <a name="client-updates-for-december-2020"></a>2020 年 12 月的客户端更新
+
+我们已发布以下客户端的新版本： 
+
+- Android
+- macOS
+- Windows
+
+有关客户端更新的详细信息，请参阅[客户端更新](whats-new.md#client-updates)。
+
+## <a name="november-2020"></a>2020 年 11 月
+
+### <a name="azure-portal-experience"></a>Azure 门户体验
+
+我们已经修复了 Azure 门户用户体验中的两个 bug：
+
+- 桌面应用程序易记名称不会再在“添加 VM”工作流中被覆盖。
+- 如果会话主机是规模集的一部分，现在将加载会话主机选项卡。
+
+### <a name="fslogix-client-version-2009"></a>FSLogix 客户端，版本 2009 
+
+我们发布了 FSLogix 客户端的新版本，其中包括许多修补程序和改进。 有关详细信息，请参阅[我们的博客文章](https://social.msdn.microsoft.com/Forums/en-US/defe5828-fba4-4715-a68c-0e4d83eefa6b/release-notes-for-fslogix-apps-release-2009-29762130127?forum=FSLogix)。
+
+### <a name="rdp-shortpath-public-preview"></a>RDP Shortpath 公共预览版
+
+RDP Shortpath 使用点到站点和站点到站点 VPN 和 ExpressRoute 引入与 Windows 虚拟桌面会话主机的直接连接。 它还引入了 URCP 传输协议。 RDP Shortpath 旨在减少延迟和网络跃点，以改善用户体验。 有关详细信息，请参阅 [Windows 虚拟桌面 RDP Shortpath](shortpath.md)。
+
+### <a name="azdesktopvirtualization-version-201"></a>Az.DesktopVirtualization，版本 2.0.1
+
+我们发布了 Windows 虚拟桌面 cmdlet 版本 2.0.1。 此更新包括支持管理 MSIX 应用附加的 cmdlet。 可以在 [PowerShell 库](https://www.powershellgallery.com/packages/Az.DesktopVirtualization/2.0.1)中下载新版本。
+
+### <a name="azure-advisor-updates"></a>Azure 顾问更新
+
+现在，Azure 顾问对 Windows 虚拟桌面中的邻近性指导有新的建议，而对于深度优先负载均衡主机池中的性能优化也有新的建议。 有关详细信息，请访问 [Azure 网站](https://azure.microsoft.com/updates/new-recommendations-from-azure-advisor/)。
+
+## <a name="october-2020"></a>2020 年 10 月
+
+以下是 2020 年 10 月的更改内容：
+
+### <a name="improved-performance"></a>提高了性能
+
+- 我们通过减少以下 Azure 地域的连接延迟优化了性能：
+    - 瑞士
+    - 加拿大
+
+现在可以使用[体验评估器](https://azure.microsoft.com/services/virtual-desktop/assessment/)来评估这些区域的用户体验质量。
+
+### <a name="azure-government-cloud-availability"></a>Azure 政府云可用性
+
+Azure 政府云现已正式发布。 有关详细信息，请参阅[我们的博客文章](https://azure.microsoft.com/updates/windows-virtual-desktop-is-now-generally-available-in-the-azure-government-cloud/)。
+
+### <a name="windows-virtual-desktop-azure-portal-updates"></a>Windows 虚拟桌面 Azure 门户更新
+
+我们已对 Windows 虚拟桌面 Azure 门户做了一些更新：
+
+- 已修复阻止用户打开“会话”选项卡的 resourceID 错误。
+- 已简化“会话主机”选项卡上的 UI。
+- 已修复 RDP 属性下的“默认值”、“可用性”和“还原默认值”设置。
+- 已使“移除”和“删除”功能在所有选项卡上保持一致。
+- 门户现在可验证“添加应用”工作流中的应用名称。
+- 已修复会话主机导出数据在列中没有对齐的问题。
+- 已修复门户无法检索用户会话的问题。
+- 已修复在其他资源组中创建虚拟机时发生的会话主机检索问题。
+- 已更新“会话主机”选项卡以列出活动会话和断开连接的会话。
+- “应用程序”选项卡现在包含页面。
+- 已修复“需要命令行”文本在“应用程序列表”选项卡中无法正确显示的问题。
+- 已修复门户在使用德语版共享映像库时无法部署主机池或虚拟机的问题。
+
+### <a name="client-updates-for-october-2020"></a>2020 年 10 月的客户端更新
+
+我们已发布新版本的客户端。 请查看以下文章了解详细信息：
+
+- [Windows](/windows-server/remote/remote-desktop-services/clients/windowsdesktop-whatsnew)
+- [iOS](/windows-server/remote/remote-desktop-services/clients/ios-whatsnew)
+
+有关其他客户端的详细信息，请参阅[客户端更新](#client-updates)。
+
+## <a name="september-2020"></a>2020 年 9 月
+
+以下是 2020 年 9 月的更改：
+
+- 我们通过减少以下 Azure 地域的连接延迟优化了性能：
+    - 德国
+    - 南非（仅限验证环境）
+
+现在可以使用[体验评估器](https://azure.microsoft.com/services/virtual-desktop/assessment/)来评估这些区域的用户体验质量。
+
+- 我们为 Windows 虚拟桌面发布了 Windows 桌面客户端版本 1.2.1364。 在此更新中，我们进行了以下更改：
+    - 修复了 Windows 7 上单一登录 (SSO) 失效的问题。
+    - 修复了在以下情况下导致客户端断开连接的问题：为 Teams 启用了媒体优化的用户在另一个应用以独占模式打开音频流时，尝试呼叫或加入 Teams 会议。
+    - 修复了为 Teams 启用媒体优化后，Teams 不枚举音频或视频设备的问题。
+    - 向桌面设置页面添加了一个 “需要设置方面的帮助吗？”链接。
+    - 解决了在使用高对比度深色主题时“订阅”按钮发生的问题。
+    
+- 感谢用户的大力帮助，我们修复了 Microsoft Store 远程桌面客户端的两个关键问题。 随着全球越来越多用户使用该客户端的分阶段发行版，我们将继续审查反馈并解决问题。
+    
+- 我们添加了一项新功能，可用于更改 VM 位置、映像、资源组、前缀名称和网络配置，作为在 Azure 门户中向部署添加 VM 的工作流的一部分。
+
+- IT 专业人员现在可以使用 Microsoft Endpoint Manager 管理已加入混合 Azure Active Directory 的 Windows 10 企业版 VM。 要了解详细信息，请参阅[我们的博客文章](https://techcommunity.microsoft.com/t5/microsoft-endpoint-manager-blog/microsoft-endpoint-manager-announces-support-for-windows-virtual/ba-p/1681048)。
+
+## <a name="august-2020"></a>2020 年 8 月
+
+以下是 2020 年 8 月的更改：
+
+- 我们对性能进行了改进，缩短了以下 Azure 区域中的连接延迟： 
+
+    - 英国
+    - 法国
+    - 挪威
+    - 韩国
+
+   你可以使用[体验评估器](https://azure.microsoft.com/services/virtual-desktop/assessment/)来大致了解这些更改将如何影响你的用户。
+
+- Microsoft Store 远程桌面客户端 (v10.2.1522+) 现已正式发布！ 此版本的 Microsoft Store 远程桌面客户端与 Windows 虚拟桌面兼容。 为了改进用户体验，我们还引入了更新的 UI 流。 此更新包括流畅的设计、浅色和深色模式，以及许多其他激动人心的更改。 我们还重新将客户端编写为使用与 iOS、macOS 和 Android 客户端相同的基础远程桌面协议 (RDP) 引擎。 这样一来，我们就能以更快的速度跨所有平台提供新功能。 [下载客户端](https://www.microsoft.com/p/microsoft-remote-desktop/9wzdncrfj3ps?rtc=1&activetab=pivot:overviewtab)，试一试！
+
+- 我们修复了 Teams 桌面客户端（版本 1.3.00.21759）中的问题，即客户端在聊天、频道和日历中仅显示 UTC 时区。 更新后的客户端现将显示远程会话的时区。
+
+- Windows 虚拟桌面现包含 Azure 顾问。 通过 Azure 门户访问 Windows 虚拟桌面时，你可以查看关于优化 Windows 虚拟桌面环境的建议。 有关详细信息，请参阅 [Azure 顾问](azure-advisor.md)。
+
+- Azure CLI 现支持 Windows 虚拟桌面 (`az desktopvirtualization`)，可帮助你自动执行 Windows 虚拟桌面部署。 如需查看扩展命令的列表，请查看 [desktopvirtualization](/cli/azure/ext/desktopvirtualization/?view=azure-cli-latest&preserve-view=true)。
+
+- 我们更新了部署模板，更新后的模板与 Windows 虚拟桌面 Azure 资源管理器接口完全兼容。 你可在 [GitHub](https://github.com/Azure/RDS-Templates/tree/master/ARM-wvd-templates) 上找到这些模板。
+
+- Windows 虚拟桌面 US Gov 门户现提供公共预览版。 若要了解详细信息，请参阅[公告](https://azure.microsoft.com/updates/windows-virtual-desktop-is-now-available-in-the-azure-government-cloud-in-preview/)。
 
 ## <a name="july-2020"></a>2020 年 7 月  
 
@@ -78,12 +287,11 @@ Windows 虚拟桌面现已集成到 Azure 资源管理器中。 在最新更新�
 
 - 在此更新中，不再需要重复运行 Azure 市场或 GitHub 模板来扩展主机池。 要扩展主机池，只需在 Azure 门户中转到该主机池，然后选择“+ 添加”以部署其他会话主机即可。
 
-- 主机池部署现已与 [Azure 共享映像库](../virtual-machines/windows/shared-image-galleries.md)完全集成。 共享映像库是一项单独的 Azure 服务，用于存储虚拟机 (VM) 映像定义，包括映像版本控制。 还可以使用全球复制将映像复制并发送到其他 Azure 区域，以进行本地部署。
+- 主机池部署现已与 [Azure 共享映像库](../virtual-machines/shared-image-galleries.md)完全集成。 共享映像库是一项单独的 Azure 服务，用于存储虚拟机 (VM) 映像定义，包括映像版本控制。 还可以使用全球复制将映像复制并发送到其他 Azure 区域，以进行本地部署。
 
 - 过去通过 PowerShell 或诊断服务 Web 应用完成的监视功能现已移至 Azure 门户中的 Log Analytics。 现在还可以通过两个选项可视化报表。 可以运行 Kusto 查询并使用工作簿创建视觉对象报表。
 
 - 不再需要完成 Azure Active Directory (Azure AD) 同意即可使用 Windows 虚拟桌面。 在此更新中，Azure 订阅上的 Azure AD 租户会对用户进行身份验证，并为管理员提供 Azure RBAC 控制权限。
-
 
 ### <a name="powershell-support"></a>PowerShell 支持
 
@@ -91,7 +299,7 @@ Windows 虚拟桌面现已集成到 Azure 资源管理器中。 在最新更新�
 
 要安装该模块，请按照[为 Windows 虚拟桌面设置 PowerShell 模块](powershell-module.md)中的说明操作。
 
-还可以在 [AzWvd PowerShell 参考](/powershell/module/az.desktopvirtualization/?view=azps-4.2.0#desktopvirtualization)处查看可用命令的列表。
+还可以在 [AzWvd PowerShell 参考](/powershell/module/az.desktopvirtualization/?view=azps-4.2.0#desktopvirtualization&preserve-view=true)处查看可用命令的列表。
 
 有关新增功能的详细信息，请参阅[我们的博客文章](https://techcommunity.microsoft.com/t5/itops-talk-blog/windows-virtual-desktop-spring-update-enters-public-preview/ba-p/1340245)。
 
@@ -108,11 +316,3 @@ Windows 虚拟桌面现已集成到 Azure 资源管理器中。 在最新更新�
 ## <a name="next-steps"></a>后续步骤
 
 请在 [Microsoft 365 Windows 虚拟桌面路线图](https://www.microsoft.com/microsoft-365/roadmap?filters=Windows%20Virtual%20Desktop)了解未来的计划。
-
-要了解 Windows 虚拟桌面和远程桌面服务的客户端更新，请参阅以下文章：
-
-- [Windows](/windows-server/remote/remote-desktop-services/clients/windowsdesktop-whatsnew)
-- [macOS](/windows-server/remote/remote-desktop-services/clients/mac-whatsnew)
-- [iOS](/windows-server/remote/remote-desktop-services/clients/ios-whatsnew)
-- [Android](/windows-server/remote/remote-desktop-services/clients/android-whatsnew)
-- [Web](/windows-server/remote/remote-desktop-services/clients/web-client-whatsnew)

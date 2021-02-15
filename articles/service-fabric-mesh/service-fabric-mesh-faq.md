@@ -4,14 +4,19 @@ description: 了解 Azure Service Fabric 网格的常见问题和解答。
 ms.author: pepogors
 ms.date: 4/23/2019
 ms.topic: troubleshooting
-ms.openlocfilehash: 64eeb43d743d71d5acd456409445a4fadfe91aeb
-ms.sourcegitcommit: dabd9eb9925308d3c2404c3957e5c921408089da
+ms.openlocfilehash: 8e53ab0ae4cc463bea8a6a8cb6d339f94fdcac6d
+ms.sourcegitcommit: 59cfed657839f41c36ccdf7dc2bee4535c920dd4
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/11/2020
-ms.locfileid: "86260119"
+ms.lasthandoff: 02/06/2021
+ms.locfileid: "99626030"
 ---
 # <a name="commonly-asked-service-fabric-mesh-questions"></a>有关 Service Fabric 网格的常见问题
+
+> [!IMPORTANT]
+> Azure Service Fabric 网格的预览已停用。 不允许再通过 Service Fabric 的网格 API 来进行新的部署。 对现有部署的支持将持续到2021年4月28日。
+> 
+> 有关详细信息，请参阅 [Azure Service Fabric 网格预览停](https://azure.microsoft.com/updates/azure-service-fabric-mesh-preview-retirement/)用。
 
 Azure Service Fabric 网格是一个完全托管的服务，由此开发者可部署微服务应用程序，而无需管理虚拟机、存储或网络。 本文提供常见问题的解答。
 
@@ -121,7 +126,7 @@ EXPOSE 80
 
 Azure 网格目前不支持跨应用程序进行 DNS 解析。
 
-有关在 Windows 10 上运行 Service Fabric 开发群集的其他已知 DNS 问题，请参阅：[调试 windows 容器](../service-fabric/service-fabric-how-to-debug-windows-containers.md)和[已知 DNS 问题](../service-fabric/service-fabric-dnsservice.md#known-issues)。
+有关在 Windows 10 上运行 Service Fabric 开发群集的其他已知 DNS 问题，请参阅： [调试 windows 容器](../service-fabric/service-fabric-how-to-debug-windows-containers.md) 和 [已知 DNS 问题](../service-fabric/service-fabric-dnsservice.md#known-issues)。
 
 ### <a name="networking"></a>网络
 

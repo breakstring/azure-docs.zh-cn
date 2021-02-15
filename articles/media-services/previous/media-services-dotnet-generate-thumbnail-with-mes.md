@@ -14,14 +14,17 @@ ms.devlang: na
 ms.topic: article
 ms.date: 03/18/2019
 ms.author: juliako
-ms.openlocfilehash: 2f7ba4c1e4fdfad33a74fcb159fbb9efca3b5271
-ms.sourcegitcommit: 2ff0d073607bc746ffc638a84bb026d1705e543e
+ms.custom: devx-track-csharp
+ms.openlocfilehash: c4b17fb5547c1522ec81369f2e362868a3f216a1
+ms.sourcegitcommit: ad677fdb81f1a2a83ce72fa4f8a3a871f712599f
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/06/2020
-ms.locfileid: "87836439"
+ms.lasthandoff: 12/17/2020
+ms.locfileid: "97652981"
 ---
-# <a name="how-to-generate-thumbnails-using-media-encoder-standard-with-net"></a>如何使 Media Encoder Standard 通过 .NET 来生成缩略图 
+# <a name="how-to-generate-thumbnails-using-media-encoder-standard-with-net"></a>如何使 Media Encoder Standard 通过 .NET 来生成缩略图
+
+[!INCLUDE [media services api v2 logo](./includes/v2-hr.md)]
 
 可以使用 Media Encoder Standard 以 [JPEG](https://en.wikipedia.org/wiki/JPEG)、[PNG](https://en.wikipedia.org/wiki/Portable_Network_Graphics) 或 [BMP](https://en.wikipedia.org/wiki/BMP_file_format) 图像文件格式从输入视频生成一个或多个缩略图。 可以提交仅生成图像的任务，或者合并缩略图的生成与编码功能。 本文针对此类方案提供一些示例 XML 和 JSON 缩略图预设。 本文末尾提供了一段[示例代码](#code_sample)，演示如何使用媒体服务 .NET SDK 来完成编码任务。
 
@@ -349,7 +352,7 @@ ms.locfileid: "87836439"
 ### <a name="xml-preset"></a><a id="xml"></a>XML 预设
 有关架构的信息，请参阅[此](./media-services-mes-schema.md)文。
 
-```csharp
+```xml
     <?xml version="1.0" encoding="utf-16"?>
     <Preset xmlns:xsd="https://www.w3.org/2001/XMLSchema" xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance" Version="1.0" xmlns="https://www.windowsazure.com/media/encoding/Preset/2014/03">
       <Encoding>

@@ -7,12 +7,12 @@ ms.date: 05/16/2018
 ms.topic: conceptual
 ms.service: iot-hub
 services: iot-hub
-ms.openlocfilehash: 0bb7b91cd31761b801ad469b8ce556b29e09fd3a
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.openlocfilehash: df1d4f3a12c6e15e2954bb0e02454ef58b22cb73
+ms.sourcegitcommit: d767156543e16e816fc8a0c3777f033d649ffd3c
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87074711"
+ms.lasthandoff: 10/26/2020
+ms.locfileid: "92535784"
 ---
 # <a name="customer-data-request-features-for-azure-iot-hub-devices"></a>Azure IoT 中心设备的客户数据请求功能
 
@@ -30,23 +30,23 @@ Azure IoT 中心是一项基于 REST API 的云服务，其目标是企业客户
 
 如果使用 Azure IoT 中心服务的 Azure 事件网格集成功能，则必须由这些事件的每个订阅服务器的租户管理员执行数据请求操作。 有关详细信息，请参阅[使用事件网格响应 IoT 中心事件](iot-hub-event-grid.md)。
 
-如果使用 Azure IoT 中心服务的 Azure Monitor 集成功能来创建诊断日志，则必须由租户管理员针对存储的日志执行数据请求操作。 有关详细信息，请参阅[监视 Azure IoT 中心的运行状况](iot-hub-monitor-resource-health.md)。
+如果使用 Azure IoT 中心服务的 Azure Monitor 集成功能来创建资源日志，则租户管理员必须针对存储的日志执行数据请求。 有关详细信息，请参阅 [监视 IoT 中心](monitor-iot-hub.md)。
 
 ## <a name="deleting-customer-data"></a>删除客户数据
 
 租户管理员可以在 Azure 门户中使用 Azure IoT 中心扩展的 IoT 设备边栏选项卡来删除设备，而删除设备同时也会删除与该设备关联的数据。
 
-也可使用 REST API 对设备执行删除操作。 有关详细信息，请参阅[服务 - 删除设备](/rest/api/iothub/service/registrymanager/deletedevice)。
+也可使用 REST API 对设备执行删除操作。 有关详细信息，请参阅[服务 - 删除设备](/azure/iot-hub/iot-c-sdk-ref/iothub-registrymanager-h/iothubregistrymanager-deletedevice)。
 
 ## <a name="exporting-customer-data"></a>导出客户数据
 
 在 Azure 门户中，租户管理员可以利用 Azure IoT 中心扩展的 IoT 设备窗格中的复制和粘贴功能来导出与设备关联的数据。
 
-也可使用 REST API 对设备执行导出操作。 有关详细信息，请参阅[服务 - 获取设备](/rest/api/iothub/service/registrymanager/getdevice)。
+也可使用 REST API 对设备执行导出操作。 有关详细信息，请参阅[服务 - 获取设备](/azure/iot-hub/iot-c-sdk-ref/iothub-registrymanager-h/iothubregistrymanager-getdevice)。
 
 > [!NOTE]
 > 当你使用 Microsoft 的企业服务时，Microsoft 会生成一些信息，称为系统生成的日志。 租户管理员无法访问或导出 Azure IoT 中心系统生成的某些日志。 这些日志包含在服务中执行的实际操作以及与个人设备相关的诊断数据。
 
 ## <a name="links-to-additional-documentation"></a>其他文档的链接
 
-Azure IoT 中心服务 API 的完整文档位于 [IoT 中心服务 API](https://docs.microsoft.com/rest/api/iothub/service/configuration)。
+Azure IoT 中心服务 API 的完整文档位于 [IoT 中心服务 API](/rest/api/iothub/service/configuration)。

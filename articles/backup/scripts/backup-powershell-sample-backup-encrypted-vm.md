@@ -3,17 +3,17 @@ title: PowerShell 脚本示例 - 备份 Azure VM
 description: 本文介绍如何使用 Azure PowerShell 脚本示例备份 Azure 虚拟机。
 ms.topic: sample
 ms.date: 03/05/2019
-ms.custom: mvc
-ms.openlocfilehash: a60320c165499ed1fb02fa544deec0e304d447df
-ms.sourcegitcommit: 3543d3b4f6c6f496d22ea5f97d8cd2700ac9a481
+ms.custom: mvc, devx-track-azurepowershell
+ms.openlocfilehash: 73dc119e8db34aed04ce8926bfa85f557027c8e2
+ms.sourcegitcommit: 9514d24118135b6f753d8fc312f4b702a2957780
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/20/2020
-ms.locfileid: "86513636"
+ms.lasthandoff: 01/07/2021
+ms.locfileid: "97967304"
 ---
 # <a name="back-up-an-encrypted-azure-virtual-machine-with-powershell"></a>使用 PowerShell 备份已加密 Azure 虚拟机
 
-此脚本为已加密 Azure 虚拟机创建包含异地冗余存储 (GRS) 的恢复服务保管库。 默认保护策略已应用到此保管库。 此策略为虚拟机生成每日备份，并将每个备份保留 30 天。 该脚本还将触发虚拟机的初始恢复点，并将该恢复点保留 365 天。
+此脚本为已加密 Azure 虚拟机创建包含异地冗余存储 (GRS) 的恢复服务保管库。 默认保护策略已应用到此保管库。 此策略为虚拟机生成每日备份，并将每个备份保留 365 天。 该脚本还将触发虚拟机的初始恢复点，并将该恢复点保留 30 天。
 
 [!INCLUDE [sample-powershell-install](../../../includes/sample-powershell-install-no-ssh.md)]
 

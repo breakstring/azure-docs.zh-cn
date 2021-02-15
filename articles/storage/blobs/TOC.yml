@@ -1,5 +1,5 @@
 - name: Azure Blob 存储文档
-  href: /azure/storage/blobs/
+  href: ./index.yml
 - name: 概述
   items:
     - name: 什么是 Azure Blob 存储？
@@ -43,7 +43,7 @@
                   href: storage-quickstart-blobs-python.md
                 - name: Python (v2.1 SDK)
                   href: storage-quickstart-blobs-python-legacy.md
-            - name: JavaScript
+            - name: Javascript
               items:
                 - name: JavaScript（适用于 Node.js 的 v12 SDK）
                   href: storage-quickstart-blobs-nodejs.md
@@ -53,6 +53,8 @@
                   href: quickstart-blobs-javascript-browser.md
                 - name: JavaScript（适用于浏览器的 v10 SDK）
                   href: storage-quickstart-blobs-javascript-client-libraries-legacy.md
+            - name: C++ (v12 SDK)
+              href: quickstart-blobs-c-plus-plus.md
             - name: Go
               href: storage-quickstart-blobs-go.md
             - name: PHP
@@ -103,17 +105,16 @@
           href: ../common/storage-samples-java.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
         - name: Python
           href: ../common/storage-samples-python.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
-        - name: JavaScript
+        - name: Javascript
           href: ../common/storage-samples-javascript.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
+        - name: C++
+          href: ../common/storage-samples-c-plus-plus.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
         - name: 其他语言
           href: ../common/storage-samples.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
         - name: Azure PowerShell
           href: storage-samples-blobs-powershell.md
         - name: Azure CLI
           href: storage-samples-blobs-cli.md
-        - name: Azure Policy 内置策略定义
-          displayName: 'samples, policies, definitions'
-          href: ../common/policy-samples.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
     - name: 概念
       items:
         - name: 存储帐户
@@ -140,22 +141,16 @@
             - name: Azure 存储静态加密
               href: ../common/storage-service-encryption.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
               items:
-                - name: 客户管理的密钥和 Azure Key Vault
-                  href: ../common/encryption-customer-managed-keys.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
-                - name: 请求中客户提供的密钥
-                  href: ../common/encryption-customer-provided-keys.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
-            - name: 不可变 blob
-              href: storage-blob-immutable-storage.md
-            - name: 高级威胁防护
-              href: ../common/storage-advanced-threat-protection.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
-            - name: 内置安全控件
-              href: ../common/storage-security-controls.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
+                - name: 使用客户管理的密钥进行加密
+                  href: ../common/customer-managed-keys-overview.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
+                - name: 使用客户提供的密钥在请求中进行加密
+                  href: encryption-customer-provided-keys.md
+                - name: 加密范围
+                  href: encryption-scope-overview.md
             - name: 使用 Azure 专用终结点
               href: ../common/storage-private-endpoints.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
             - name: 配置网络路由首选项
               href: ../common/network-routing-preference.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
-        - name: 数据冗余
-          href: ../common/storage-redundancy.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
         - name: 数据保护
           items:
             - name: 版本控制
@@ -170,6 +165,14 @@
               href: storage-blob-change-feed.md
             - name: 时点还原
               href: point-in-time-restore-overview.md
+            - name: 不可变 blob
+              href: storage-blob-immutable-storage.md
+        - name: 冗余和灾难恢复
+          items:
+            - name: 数据冗余
+              href: ../common/storage-redundancy.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
+            - name: 用于灾难恢复的客户管理的故障转移
+              href: ../common/storage-disaster-recovery-guidance.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
         - name: 对象复制
           href: object-replication-overview.md
         - name: 访问层和性能层
@@ -180,10 +183,8 @@
               href: storage-blob-rehydration.md
             - name: 性能层
               href: storage-blob-performance-tiers.md
-            - name: 管理 Azure Blob 存储生命周期
+            - name: 自动执行访问层生命周期
               href: storage-lifecycle-management-concepts.md
-        - name: 灾难恢复和故障转移
-          href: ../common/storage-disaster-recovery-guidance.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
         - name: 性能、缩放和成本优化
           items:
             - name: 性能和可伸缩性清单
@@ -206,16 +207,16 @@
                   href: scalability-targets-premium-page-blobs.md
                 - name: 存储资源提供程序
                   href: ../common/scalability-targets-resource-provider.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
-        - name: 并发
-          href: ../common/storage-concurrency.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
         - name: 查找、搜索和了解 Blob 数据
           items:
-            - name: 使用 Blob 索引管理和查找 Blob 数据
+            - name: 使用 Blob 索引标记来管理和查找 Blob 数据
               href: storage-manage-find-blobs.md
             - name: 使用 AI 了解 Blob 数据
               href: ../../search/search-blob-ai-integration.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
             - name: 用于 Blob 数据的全文搜索
               href: ../../search/search-blob-storage-integration.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
+            - name: 使用 blob 库存来管理 blob 数据
+              href: blob-inventory.md
         - name: 数据迁移
           items:
             - name: 比较数据传输解决方案
@@ -229,43 +230,10 @@
                   href: ../common/storage-solution-small-dataset-low-moderate-network.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
                 - name: 周期性数据传输
                   href: ../common/storage-solution-periodic-data-transfer.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
-            - name: 导入/导出数据
-              href: ../common/storage-import-export-service.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
-              items:
-                - name: 审查要求
-                  href: ../common/storage-import-export-requirements.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
-                - name: 将数据导入 Blob
-                  href: ../common/storage-import-export-data-to-blobs.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
-                - name: 将数据导入文件
-                  href: ../common/storage-import-export-data-to-files.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
-                - name: 从 Blob 导出数据
-                  href: ../common/storage-import-export-data-from-blobs.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
-                - name: 操作说明
-                  items:
-                    - name: 使用客户管理的密钥
-                      href: ../common/storage-import-export-encryption-key-portal.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
-                    - name: 查看驱动器状态
-                      href: ../common/storage-import-export-view-drive-status.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
-                    - name: 查看作业状态
-                      href: ../common/storage-import-export-tool-reviewing-job-status-v1.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
-                    - name: 修复导入作业
-                      href: ../common/storage-import-export-tool-repairing-an-import-job-v1.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
-                    - name: 修复导出作业
-                      href: ../common/storage-import-export-tool-repairing-an-export-job-v1.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
-                - name: 常见问题解答
-                  href: ../common/storage-import-export-service-faq.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
-                - name: REST API
-                  href: /rest/api/storageimportexport/jobs
-                - name: 联系支持人员
-                  href: ../common/storage-import-export-contact-microsoft-support.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
-                - name: 存档
-                  items:
-                    - name: 准备用于导入的驱动器 (v1)
-                    - name: 准备用于导入的驱动器 (v2)
         - name: 监视
           items:
-            - name: 监视存储帐户
-              href: ../common/monitor-storage.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
+            - name: 监视 Blob 存储
+              href: monitor-blob-storage.md
             - name: 从经典指标转换
               href: ../common/storage-metrics-migration.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
             - name: 监视（经典）
@@ -297,8 +265,12 @@
               href: storage-blob-create-account-block-blob.md
             - name: 升级存储帐户
               href: ../common/storage-account-upgrade.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
+            - name: 恢复删除的存储帐户
+              href: ../common/storage-account-recover.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
             - name: 获取帐户类型和 SKU 名称 (.NET)
               href: ../common/storage-account-get-info.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
+            - name: 管理存储帐户的默认访问层
+              href: ../common/manage-account-default-access-tier.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
         - name: 创建和管理容器
           items:
             - name: 创建或删除容器 (.NET)
@@ -313,19 +285,23 @@
               href: storage-blobs-list.md
             - name: 管理 Blob 属性和元数据 (.NET)
               href: storage-blob-properties-metadata.md
-            - name: 复制 Blob (.NET)
+            - name: 管理 blob 的访问层
+              href: manage-access-tier.md
+            - name: 复制 Blob (SDK)
               href: storage-blob-copy.md
+            - name: 使用 Blob 索引标记
+              href: storage-blob-index-how-to.md
         - name: 授予对 Blob 数据的访问权限
           items:
             - name: 用户的授权选项
               items:
                 - name: 门户
-                  href: ../common/storage-access-blobs-queues-portal.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
+                  href: authorize-data-operations-portal.md
                 - name: PowerShell
-                  href: ../common/authorize-active-directory-powershell.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
+                  href: authorize-data-operations-powershell.md
                 - name: Azure CLI
-                  href: ../common/authorize-data-operations-cli.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
-            - name: 使用 RBAC 管理访问权限
+                  href: authorize-data-operations-cli.md
+            - name: 通过 Azure RBAC 管理服务权限
               items:
                 - name: 门户
                   href: ../common/storage-auth-aad-rbac-portal.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
@@ -347,6 +323,8 @@
                   href: ../common/storage-configure-connection-string.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
                 - name: 使用 Azure 存储 REST API
                   href: ../common/storage-rest-api-auth.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
+                - name: 阻止通过共享密钥进行授权
+                  href: ../common/shared-key-authorization-prevent.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
             - name: 使用共享访问签名 (SAS) 委托访问
               items:
                 - name: 创建用户委托 SAS
@@ -357,8 +335,8 @@
                       href: storage-blob-user-delegation-sas-create-cli.md
                     - name: .NET
                       href: storage-blob-user-delegation-sas-create-dotnet.md
-                - name: 创建服务 SAS (.NET)
-                  href: storage-blob-service-sas-create-dotnet.md
+                - name: 创建服务 SAS
+                  href: sas-service-create.md
                 - name: 创建帐户 SAS (.NET)
                   href: ../common/storage-account-sas-create-dotnet.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
                 - name: 定义存储访问策略
@@ -381,19 +359,17 @@
                   items:
                     - name: 检查帐户的加密密钥模型
                       href: ../common/storage-encryption-key-model-get.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
-                    - name: 配置客户管理的加密密钥
+                    - name: 配置使用客户管理的密钥进行加密
                       items:
-                        - name: 门户
-                          href: ../common/storage-encryption-keys-portal.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
-                        - name: PowerShell
-                          href: ../common/storage-encryption-keys-powershell.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
-                        - name: Azure CLI
-                          href: ../common/storage-encryption-keys-cli.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
+                        - name: 在密钥保管库中存储客户管理的密钥
+                          href: ../common/customer-managed-keys-configure-key-vault.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
+                        - name: 在托管的 HSM 中存储客户管理的密钥
+                          href: ../common/customer-managed-keys-configure-key-vault-hsm.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
                 - name: 在请求中提供加密密钥
                   href: storage-blob-customer-provided-key.md
                 - name: 管理加密范围
                   href: encryption-scope-manage.md
-                - name: 为存储帐户启用基础结构加密
+                - name: 为帐户启用基础结构加密
                   href: ../common/infrastructure-encryption-enable.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
             - name: 配置客户端加密
               items:
@@ -415,15 +391,9 @@
                       href: ../common/transport-layer-security-configure-minimum-version.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
                     - name: 为客户端应用程序配置 TLS 版本
                       href: ../common/transport-layer-security-configure-client-version.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
-            - name: 设置和管理不可变性策略
-              href: storage-blob-immutability-policies-manage.md
-        - name: 管理数据冗余
-          items:
-            - name: 更改冗余配置
-              href: ../common/redundancy-migration.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
-            - name: 设计具有高可用性的应用程序
-              href: ../common/geo-redundant-design.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
-        - name: 保护数据
+            - name: 配置 Azure Defender 以实现威胁防护
+              href: ../common/azure-defender-storage-configure.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
+        - name: 保护 blob 数据
           items:
             - name: 启用 Blob 版本控制
               href: versioning-enable.md
@@ -437,14 +407,22 @@
               href: storage-blob-change-feed-how-to.md
             - name: 启用时间点还原
               href: point-in-time-restore-manage.md
-        - name: 配置对象复制
-          href: object-replication-configure.md
-        - name: 管理灾难恢复
+            - name: 设置和管理不可变性策略
+              href: storage-blob-immutability-policies-manage.md
+        - name: 管理冗余和故障转移
           items:
+            - name: 更改冗余配置
+              href: ../common/redundancy-migration.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
+            - name: 设计具有高可用性的应用程序
+              href: ../common/geo-redundant-design.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
             - name: 检查“上次同步时间”属性
               href: ../common/last-sync-time-get.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
             - name: 启动帐户故障转移
               href: ../common/storage-initiate-account-failover.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
+        - name: 配置对象复制
+          href: object-replication-configure.md
+        - name: 管理并发
+          href: concurrency-manage.md
         - name: 使用存储模拟器
           items:
             - name: 使用 Azurite 开放源代码模拟器
@@ -457,21 +435,29 @@
               href: storage-blob-static-website-how-to.md
             - name: 与 Azure CDN 集成
               href: static-website-content-delivery-network.md
+            - name: 使用 GitHub Actions 将静态站点部署到 Azure 存储
+              href: storage-blobs-static-site-github-actions.md
         - name: 使用自定义域
           href: storage-custom-domain-name.md
         - name: 将事件路由到自定义终结点
           href: storage-blob-event-quickstart.md
-        - name: 利用 Blob 索引
-          href: storage-blob-index-how-to.md
         - name: 传输数据
           items:
             - name: AzCopy
               items:
                 - name: 入门
                   href: ../common/storage-use-azcopy-v10.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
-                - name: 与 Blob 配合使用
-                  href: ../common/storage-use-azcopy-blobs.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
-                - name: 与 Amazon S3 存储桶配合使用
+                - name: 通过 Azure AD 授权
+                  href: ../common/storage-use-azcopy-authorize-azure-active-directory.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
+                - name: 示例：上载
+                  href: ../common/storage-use-azcopy-blobs-upload.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
+                - name: 示例：下载
+                  href: ../common/storage-use-azcopy-blobs-download.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
+                - name: 示例：同步
+                  href: ../common/storage-use-azcopy-blobs-synchronize.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
+                - name: 示例：在帐户之间复制
+                  href: ../common/storage-use-azcopy-blobs-copy.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
+                - name: 示例：Amazon S3 存储桶
                   href: ../common/storage-use-azcopy-s3.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
                 - name: 配置、优化、故障排除
                   href: ../common/storage-use-azcopy-configure.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
@@ -497,8 +483,10 @@
           href: ../common/storage-account-move.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
         - name: 监视（经典）
           items:
-            - name: 在 Azure 门户中进行监视（经典）
-              href: ../common/storage-monitor-storage-account.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
+            - name: 启用和管理指标（经典）
+              href: ../common/manage-storage-analytics-metrics.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
+            - name: 启用和管理日志（经典）
+              href: ../common/manage-storage-analytics-logs.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
         - name: 疑难解答
           items:
             - name: 延迟问题
@@ -551,7 +539,10 @@
           displayName: ARM
           href: /azure/templates/microsoft.storage/allversions
         - name: 监视数据
-          href: ../common/monitor-storage-reference.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
+          href: monitor-blob-storage-reference.md
+        - name: Azure Policy 内置策略定义
+          displayName: 'samples, policies, definitions'
+          href: ../common/policy-reference.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
     - name: 资源
       items:
         - name: Azure 更新
@@ -568,16 +559,20 @@
               href: ../common/storage-explorer-troubleshooting.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
             - name: 存储资源管理器安全性
               href: ../common/storage-explorer-security.md
+            - name: 存储资源管理器 blob 版本控制
+              href: ../common/storage-explorer-blob-versioning.md
             - name: 存储资源管理器支持策略和生命周期
               href: ../common/storage-explorer-support-policy-lifecycle.md
             - name: 存储资源管理器可访问性
               href: ../../vs-azure-tools-storage-explorer-accessibility.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
-        - name: Azure 存储论坛
-          href: 'https://docs.microsoft.com/answers/topics/azure-blob-storage.html'
-        - name: Stack Overflow 上的 Azure 存储
-          href: 'https://stackoverflow.com/questions/tagged/windows-azure-storage'
-        - name: Blob 存储的定价
+        - name: Microsoft Q&A 上的 Blob 存储
+          href: /answers/topics/azure-blob-storage.html
+        - name: Stack Overflow 上的 Blob 存储
+          href: 'https://stackoverflow.com/questions/tagged/azure-blob-storage'
+        - name: 块 blob 的定价
           href: 'https://azure.microsoft.com/pricing/details/storage/blobs/'
+        - name: 页 blob 的定价
+          href: 'https://azure.microsoft.com/pricing/details/storage/page-blobs/'
         - name: Azure 定价计算器
           href: 'https://azure.microsoft.com/pricing/calculator/'
         - name: 视频
@@ -635,7 +630,7 @@
 - name: Data Lake Storage Gen2
   items:
     - name: 切换到 Data Lake Storage Gen1 文档
-      href: /azure/data-lake-store/
+      href: ../../data-lake-store/index.yml
     - name: 概述
       items:
         - name: Data Lake Storage 简介
@@ -647,7 +642,7 @@
     - name: 教程
       items:
         - name: 使用 Azure Databricks 提取、转换和加载数据
-          href: ../../azure-databricks/databricks-extract-load-sql-data-warehouse.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
+          href: /azure/databricks/scenarios/databricks-extract-load-sql-data-warehouse?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
         - name: 使用 Spark 通过 Databricks 访问 Data Lake Storage 数据
           href: data-lake-storage-use-databricks-spark.md
         - name: 在 Azure HDInsight 上使用 Apache Hive 提取、转换和加载数据
@@ -662,6 +657,8 @@
           href: data-lake-storage-best-practices.md
         - name: 查询加速
           href: data-lake-storage-query-acceleration.md
+        - name: Data Lake Storage 的高级层
+          href: premium-tier-for-data-lake-storage.md
         - name: 体系结构
           items:
             - name: 适用于 Hadoop 的 Azure Blob 文件系统驱动程序
@@ -674,11 +671,10 @@
           items:
             - name: 安全建议
               href: security-recommendations.md
-            - name: 访问控制（目录和文件）
+            - name: 访问控制模型
+              href: data-lake-storage-access-control-model.md
+            - name: 访问控制列表
               href: data-lake-storage-access-control.md
-            - name: Azure Policy 的安全控件
-              displayName: 'regulatory, compliance, standards, domains'
-              href: ./security-controls-policy.md
         - name: 兼容性
           items:
             - name: 多协议访问
@@ -691,8 +687,8 @@
               href: data-lake-storage-supported-open-source-platforms.md
         - name: 监视
           items:
-            - name: 监视存储帐户
-              href: ../common/monitor-storage.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
+            - name: 监视 Blob 存储
+              href: ./monitor-blob-storage.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
             - name: 从经典指标转换
               href: ../common/storage-metrics-migration.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
             - name: 监视（经典）
@@ -707,18 +703,16 @@
                   href: ../common/storage-monitoring-diagnosing-troubleshooting.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
     - name: 如何
       items:
-        - name: 创建
-          items:
-            - name: 创建存储帐户（常规用途 v2）
-              href: ../common/storage-account-create.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
-            - name: 创建存储帐户（块 Blob）
-              href: storage-blob-create-account-block-blob.md
+        - name: 创建存储帐户
+          href: create-data-lake-storage-account.md
         - name: 迁移
           items:
             - name: 从 Data Lake Storage Gen1 迁移
               href: data-lake-storage-migrate-gen1-to-gen2.md
-            - name: 迁移本地 HDFS 存储
+            - name: 脱机迁移 HDFS 存储
               href: data-lake-storage-migrate-on-premises-HDFS-cluster.md
+            - name: 联机迁移 HDFS 存储
+              href: migrate-gen2-wandisco-live-data-platform.md
         - name: 管理
           items:
             - name: .NET
@@ -727,7 +721,7 @@
               href: data-lake-storage-directory-file-acl-java.md
             - name: Python
               href: data-lake-storage-directory-file-acl-python.md
-            - name: JavaScript
+            - name: Javascript
               href: data-lake-storage-directory-file-acl-javascript.md
             - name: PowerShell
               href: data-lake-storage-directory-file-acl-powershell.md
@@ -737,6 +731,8 @@
               href: data-lake-storage-explorer.md
             - name: Hadoop 文件系统 CLI
               href: data-lake-storage-use-hdfs-data-lake-storage.md
+            - name: 以递归方式设置 ACL
+              href: recursive-access-control-lists.md
         - name: 查询
           items:
             - name: 使用“查询加速”筛选数据
@@ -747,9 +743,17 @@
               items:
                 - name: 入门
                   href: ../common/storage-use-azcopy-v10.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
-                - name: 与 Data Lake Storage 配合使用
-                  href: ../common/storage-use-azcopy-blobs.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
-                - name: 配置、优化、故障排除
+                - name: 示例：上载
+                  href: ../common/storage-use-azcopy-blobs-upload.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
+                - name: 示例：下载
+                  href: ../common/storage-use-azcopy-blobs-download.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
+                - name: 示例：同步
+                  href: ../common/storage-use-azcopy-blobs-synchronize.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
+                - name: 示例：在帐户之间复制
+                  href: ../common/storage-use-azcopy-blobs-copy.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
+                - name: 示例：Amazon S3 存储桶
+                  href: ../common/storage-use-azcopy-s3.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
+                - name: 配置、优化和故障排除
                   href: ../common/storage-use-azcopy-configure.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
             - name: Azure 数据工厂
               href: ../../data-factory/connector-azure-data-lake-storage.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
@@ -777,7 +781,7 @@
           href: 'https://azuresdkdocs.blob.core.windows.net/$web/java/azure-storage-file-datalake/12.0.0-preview.6/index.html'
         - name: Python
           href: 'https://azuresdkdocs.blob.core.windows.net/$web/python/azure-storage-file-datalake/12.0.0b5/index.html'
-        - name: JavaScript
+        - name: Javascript
           href: 'https://www.npmjs.com/package/@azure/storage-file-datalake/v/12.0.0-preview.6'
         - name: REST
           href: /rest/api/storageservices/data-lake-storage-gen2
@@ -822,6 +826,9 @@
         - name: 资源管理器模板
           displayName: ARM
           href: /azure/templates/microsoft.storage/allversions
+        - name: Azure Policy 内置策略定义
+          displayName: 'samples, policies, definitions'
+          href: ../common/policy-reference.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
     - name: 资源
       items:
         - name: 已知问题
@@ -844,12 +851,14 @@
               href: ../common/storage-explorer-troubleshooting.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
             - name: 存储资源管理器安全性
               href: ../common/storage-explorer-security.md
+            - name: 存储资源管理器 blob 版本控制
+              href: ../common/storage-explorer-blob-versioning.md
             - name: 存储资源管理器支持策略和生命周期
               href: ../common/storage-explorer-support-policy-lifecycle.md
             - name: 存储资源管理器可访问性
               href: ../../vs-azure-tools-storage-explorer-accessibility.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
         - name: Microsoft Q&A 问题页面
-          href: 'https://docs.microsoft.com/answers/topics/azure-blob-storage.html'
+          href: /answers/topics/azure-blob-storage.html
         - name: Stack Overflow 上的 Azure 存储
           href: 'https://stackoverflow.com/questions/tagged/windows-azure-storage'
         - name: 定价

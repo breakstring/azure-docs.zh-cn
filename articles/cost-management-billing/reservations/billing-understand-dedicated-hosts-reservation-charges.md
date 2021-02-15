@@ -3,15 +3,16 @@ title: 了解 Azure 专用主机预留实例折扣
 description: 了解如何将 Azure 虚拟机预留实例折扣应用于 Azure 专用主机。
 author: yashesvi
 ms.service: cost-management-billing
+ms.subservice: reservations
 ms.topic: conceptual
 ms.date: 02/28/2020
 ms.author: banders
-ms.openlocfilehash: a39cd7aa2c15fedeaf69408d8c8ae8c6b0848fed
-ms.sourcegitcommit: 642a297b1c279454df792ca21fdaa9513b5c2f8b
+ms.openlocfilehash: 8d273aae3588a006f7b0a55d2798b7a43c040c9b
+ms.sourcegitcommit: dbe434f45f9d0f9d298076bf8c08672ceca416c6
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/06/2020
-ms.locfileid: "80677387"
+ms.lasthandoff: 10/17/2020
+ms.locfileid: "92148377"
 ---
 # <a name="how-the-azure-reservation-discount-is-applied-to-azure-dedicated-hosts"></a>如何将 Azure 预留折扣应用于 Azure 专用主机
 
@@ -35,17 +36,16 @@ Azure 专用主机预留实例为专用主机使用的计算基础结构提供�
 
 若要了解有关 Azure 预订的详细信息，请参阅以下文章：
 
-- [什么是 Azure 预留？](https://docs.microsoft.com/azure/billing/billing-save-compute-costs-reservations)
+- [什么是 Azure 预留？](./save-compute-costs-reservations.md)
 
-- [使用 Azure 专用主机](https://docs.microsoft.com/azure/virtual-machines/windows/dedicated-hosts)
+- [使用 Azure 专用主机](../../virtual-machines/dedicated-hosts.md)
 
 - [专用主机定价](https://azure.microsoft.com/pricing/details/virtual-machines/dedicated-host/)
 
-- [管理 Azure 预留](https://docs.microsoft.com/azure/billing/billing-manage-reserved-vm-instance)
+- [管理 Azure 预留](./manage-reserved-vm-instance.md)
 
-- [了解即用即付订阅的预留使用情况](https://docs.microsoft.com/azure/billing/billing-understand-reserved-instance-usage)
+- [了解即用即付订阅的预留使用情况](./understand-reserved-instance-usage.md)
 
-- [了解企业合约的预留使用情况](https://docs.microsoft.com/azure/billing/billing-understand-reserved-instance-usage-ea)
+- [了解企业合约的预留使用情况](./understand-reserved-instance-usage-ea.md)
 
-- [了解 CSP 订阅的预留使用情况](https://docs.microsoft.com/partner-center/azure-reservations)
-
+- [了解 CSP 订阅的预留使用情况](/partner-center/azure-reservations)

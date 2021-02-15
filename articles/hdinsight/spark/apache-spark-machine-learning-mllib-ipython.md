@@ -1,19 +1,16 @@
 ---
 title: HDInsight 上 Spark MLlib 的机器学习示例 - Azure
 description: 了解如何使用 Spark MLlib 创建机器学习应用，用于通过逻辑回归使用分类分析数据集。
-author: hrasheed-msft
-ms.author: hrasheed
-ms.reviewer: jasonh
 ms.service: hdinsight
 ms.topic: how-to
 ms.custom: hdinsightactive,hdiseo17may2017,seoapr2020, devx-track-python
 ms.date: 04/27/2020
-ms.openlocfilehash: 2ab996c3f3310656e7b85dded8e57a129b901660
-ms.sourcegitcommit: dea88d5e28bd4bbd55f5303d7d58785fad5a341d
+ms.openlocfilehash: d2054058bb00b0801aa1c3694c73b6a2edb46c80
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/06/2020
-ms.locfileid: "87873800"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98930041"
 ---
 # <a name="use-apache-spark-mllib-to-build-a-machine-learning-application-and-analyze-a-dataset"></a>使用 Apache Spark MLlib 生成机器学习应用程序并分析数据集
 
@@ -38,13 +35,13 @@ MLlib 是一个核心 Spark 库，它为以下机器学习任务提供了许多�
 
 ## <a name="predictive-analysis-example-on-food-inspection-data"></a>对食品检测数据进行预测分析的示例
 
-在此示例中，我们使用 Spark 对食品检测数据 (Food_Inspections1.csv) 进行一些预测分析。 通过[芝加哥数据门户的城市获取的](https://data.cityofchicago.org/)数据。 此数据集包含有关在芝加哥进行的食品建立检查的信息。 包括有关每个建立的信息、发现的违规 (如果任何) ，以及检查结果。 CSV 数据文件在与群集（位于 **/HdiSamples/HdiSamples/FoodInspectionData/Food_Inspections1.csv**）关联的存储帐户中可用。
+在此示例中，我们使用 Spark 对食品检测数据 (Food_Inspections1.csv) 进行一些预测分析。 通过 [芝加哥数据门户的城市获取的](https://data.cityofchicago.org/)数据。 此数据集包含有关在芝加哥进行的食品建立检查的信息。 包括有关每个建立的信息、发现的违规 (如果任何) ，以及检查结果。 CSV 数据文件在与群集（位于 **/HdiSamples/HdiSamples/FoodInspectionData/Food_Inspections1.csv**）关联的存储帐户中可用。
 
 在下面的步骤中，将开发一个模型来了解决定食品检验通过或不通过的因素。
 
 ## <a name="create-an-apache-spark-mllib-machine-learning-app"></a>创建 Apache Spark MLlib 机器学习应用
 
-1. 使用 PySpark 内核创建 Jupyter Notebook。 有关说明，请参阅[创建 Jupyter Notebook](./apache-spark-jupyter-spark-sql.md#create-a-jupyter-notebook)。
+1. 使用 PySpark 内核创建 Jupyter Notebook。 有关说明，请参阅[创建 Jupyter Notebook 文件](./apache-spark-jupyter-spark-sql.md#create-a-jupyter-notebook-file)。
 
 2. 导入此应用程序所需的类型。 将以下代码复制并粘贴到空白单元格中，然后按 **SHIFT + ENTER**。
 
@@ -121,7 +118,7 @@ MLlib 是一个核心 Spark 库，它为以下机器学习任务提供了许多�
     df.registerTempTable('CountResults')
     ```
 
-    数据帧中的四个相关列是**ID**、**名称**、**结果**和**冲突**。
+    数据帧中的四个相关列是 **ID**、 **名称**、 **结果** 和 **冲突**。
 
 4. 运行以下代码获取数据小样本：
 
@@ -174,7 +171,7 @@ MLlib 是一个核心 Spark 库，它为以下机器学习任务提供了许多�
     SELECT COUNT(results) AS cnt, results FROM CountResults GROUP BY results
     ```
 
-    后接 `-o countResultsdf` 的 `%%sql` magic 可确保查询输出本地保存在 Jupyter 服务器上（通常在群集的头节点）。 输出将保存为具有指定名称 [countResultsdf](https://pandas.pydata.org/) 的 **Pandas**数据帧。 有关 `%%sql` magic 以及可在 PySpark 内核中使用的其他 magic 的详细信息，请参阅[包含 Apache Spark HDInsight 群集的 Jupyter Notebook 上可用的内核](apache-spark-jupyter-notebook-kernels.md#parameters-supported-with-the-sql-magic)。
+    后接 `-o countResultsdf` 的 `%%sql` magic 可确保查询输出本地保存在 Jupyter 服务器上（通常在群集的头节点）。 输出将保存为具有指定名称 [countResultsdf](https://pandas.pydata.org/) 的 **Pandas** 数据帧。 有关神奇的详细信息 `%%sql` 以及 PySpark 内核提供的其他 magic 的详细信息，请参阅 [具有 Apache Spark HDInsight 群集的 Jupyter 笔记本上可用的内核](apache-spark-jupyter-notebook-kernels.md#parameters-supported-with-the-sql-magic)。
 
     输出为：
 
@@ -335,7 +332,7 @@ model = pipeline.fit(labeledData)
     SELECT count(*) AS cnt FROM Predictions WHERE prediction = 1 AND (results = 'Pass' OR results = 'Pass w/ Conditions')
     ```
 
-1. 最后，使用以下代码段通过 **Matplotlib**生成绘图。
+1. 最后，使用以下代码段通过 **Matplotlib** 生成绘图。
 
     ```PySpark
     %%local

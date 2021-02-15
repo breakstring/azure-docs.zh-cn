@@ -10,12 +10,12 @@ ms.workload: infrastructure
 ms.date: 09/27/2018
 ms.author: magoedte
 ms.custom: mvc
-ms.openlocfilehash: 154e4c9421d1c0a54b3d9b5f53424e7640fe62d8
-ms.sourcegitcommit: a76ff927bd57d2fcc122fa36f7cb21eb22154cfa
+ms.openlocfilehash: 89b33a697e818539ab6666be33fc1542c5bdcc51
+ms.sourcegitcommit: 78ecfbc831405e8d0f932c9aafcdf59589f81978
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/28/2020
-ms.locfileid: "87323564"
+ms.lasthandoff: 01/23/2021
+ms.locfileid: "98736587"
 ---
 # <a name="tutorial-monitor-a-windows-virtual-machine-in-azure"></a>教程：监视 Azure 中的 Windows 虚拟机
 
@@ -35,11 +35,11 @@ Azure 监视使用代理从 Azure VM 收集启动和性能数据，将此数据�
 
 Azure Cloud Shell 是免费的交互式 shell，可以使用它运行本文中的步骤。 它预安装有常用 Azure 工具并将其配置与帐户一起使用。 
 
-若要打开 Cloud Shell，只需要从代码块的右上角选择“试一试”。 也可以通过转到 [https://shell.azure.com/powershell](https://shell.azure.com/powershell) 在单独的浏览器标签页中启动 Cloud Shell。 选择“复制”以复制代码块，将其粘贴到 Cloud Shell 中，然后按 Enter 来运行它。
+若要打开 Cloud Shell，只需要从代码块的右上角选择“试一试”。  也可以通过转到 [https://shell.azure.com/powershell](https://shell.azure.com/powershell) 在单独的浏览器标签页中启动 Cloud Shell。 选择“复制”以复制代码块，将其粘贴到 Cloud Shell 中，然后按 Enter 来运行它。
 
 ## <a name="create-virtual-machine"></a>创建虚拟机
 
-若要在本教程中配置 Azure 监视和更新管理，需要 Azure 中的 Windows VM。 首先，使用 [Get-Credential](/powershell/module/microsoft.powershell.security/get-credential?view=powershell-5.1) 设置 VM 的管理员用户名和密码：
+若要在本教程中配置 Azure 监视和更新管理，需要 Azure 中的 Windows VM。 首先，使用 [Get-Credential](/powershell/module/microsoft.powershell.security/get-credential) 设置 VM 的管理员用户名和密码：
 
 ```azurepowershell-interactive
 $cred = Get-Credential
@@ -121,7 +121,7 @@ Windows VM 在 Azure 中有一个与它交互的专用主机 VM。 系统会自�
 
 2. 在 VM 边栏选项卡上单击“警报规则”，然后单击警报边栏选项卡顶部的“添加指标警报”。
 
-3. 为警报提供**名称**，例如 *myAlertRule*
+3. 为警报提供 **名称**，例如 *myAlertRule*
 
 4. 若要在 CPU 百分比持续 5 分钟超过 1.0 时触发警报，请选中其他所有默认值。
 

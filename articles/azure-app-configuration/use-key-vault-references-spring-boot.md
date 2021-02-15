@@ -3,23 +3,22 @@ title: 教程：在 Java Spring Boot 应用中使用 Azure 应用程序配置 Ke
 description: 本教程介绍如何在 Java Spring Boot 应用中使用 Azure 应用程序配置的 Key Vault 引用
 services: azure-app-configuration
 documentationcenter: ''
-author: lisaguthrie
-manager: maiye
+author: AlexandraKemperMS
 editor: ''
 ms.assetid: ''
 ms.service: azure-app-configuration
 ms.workload: tbd
 ms.devlang: csharp
 ms.topic: tutorial
-ms.date: 12/16/2019
-ms.author: lcozzens
-ms.custom: mvc, devx-track-java
-ms.openlocfilehash: 5977aced8354694a631cce05bf6d6b913ea79118
-ms.sourcegitcommit: b8702065338fc1ed81bfed082650b5b58234a702
+ms.date: 08/11/2020
+ms.author: alkemper
+ms.custom: mvc, devx-track-java, devx-track-azurecli
+ms.openlocfilehash: 04d9c7a343570349851a206fd69fdda822f790a4
+ms.sourcegitcommit: 706e7d3eaa27f242312d3d8e3ff072d2ae685956
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/11/2020
-ms.locfileid: "88121589"
+ms.lasthandoff: 02/09/2021
+ms.locfileid: "99981470"
 ---
 # <a name="tutorial-use-key-vault-references-in-a-java-spring-app"></a>教程：在 Java Spring 应用中使用 Key Vault 引用
 
@@ -44,14 +43,14 @@ ms.locfileid: "88121589"
 ## <a name="prerequisites"></a>先决条件
 
 * Azure 订阅 - [创建免费帐户](https://azure.microsoft.com/free/)
-* 受支持的 [Java 开发工具包 (JDK)](https://docs.microsoft.com/java/azure/jdk)，版本为 8。
+* 受支持的 [Java 开发工具包 (JDK)](/java/azure/jdk)，版本为 8。
 * [Apache Maven](https://maven.apache.org/download.cgi) 版本 3.0 或更高版本。
 
 ## <a name="create-a-vault"></a>创建保管库
 
 1. 选择 Azure 门户左上角的“创建资源”选项： 
 
-    ![Key Vault 创建完成后的输出](./media/quickstarts/search-services.png)
+    ![屏幕截图显示 Azure 门户中的“创建资源”选项。](./media/quickstarts/search-services.png)
 1. 在搜索框中输入 **Key Vault**。
 1. 在结果列表中，选择左侧的“Key Vault”  。
 1. 在“Key Vault”中选择“添加”。  
@@ -65,7 +64,7 @@ ms.locfileid: "88121589"
 
 目前，只有你的 Azure 帐户有权访问这个新保管库。
 
-![Key Vault 创建完成后的输出](./media/quickstarts/vault-properties.png)
+![屏幕截图显示密钥保管库。](./media/quickstarts/vault-properties.png)
 
 ## <a name="add-a-secret-to-key-vault"></a>向 Key Vault 添加机密
 
@@ -94,7 +93,7 @@ ms.locfileid: "88121589"
 
 ## <a name="connect-to-key-vault"></a>连接到 Key Vault
 
-1. 在本教程中，我们将使用一个服务主体向 Key Vault 进行身份验证。 若要创建该服务主体，请使用 Azure CLI [az ad sp create-for-rbac](/cli/azure/ad/sp?view=azure-cli-latest#az-ad-sp-create-for-rbac) 命令：
+1. 在本教程中，我们将使用一个服务主体向 Key Vault 进行身份验证。 若要创建该服务主体，请使用 Azure CLI [az ad sp create-for-rbac](/cli/azure/ad/sp#az-ad-sp-create-for-rbac) 命令：
 
     ```azurecli
     az ad sp create-for-rbac -n "http://mySP" --sdk-auth

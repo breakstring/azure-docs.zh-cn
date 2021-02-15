@@ -4,7 +4,7 @@
   expanded: true
   items:
     - name: 什么是自定义视觉？
-      href: home.md
+      href: overview.md
     - name: 新增功能
       href: whats-new.md
 - name: 快速入门
@@ -13,7 +13,7 @@
       items:
         - name: 使用 Web 门户
           href: getting-started-build-a-classifier.md
-        - name: 使用自定义视觉 SDK
+        - name: 使用自定义视觉 SDK 或 REST API
           href: quickstarts/image-classification.md
     - name: 生成对象检测器
       items:
@@ -31,7 +31,7 @@
   items:
     - name: 测试模型
       href: test-your-model.md
-    - name: 改进分类器
+    - name: 改进模型
       href: getting-started-improving-your-classifier.md
     - name: 选择域
       href: select-domain.md
@@ -39,6 +39,8 @@
       href: use-prediction-api.md
     - name: 使用智能标记工具
       href: suggested-tags.md
+    - name: Azure 基于角色的访问控制
+      href: role-based-access-control.md
     - name: 导出模型
       items:
         - name: 将模型导出到移动设备
@@ -47,36 +49,40 @@
           href: custom-vision-onnx-windows-ml.md
         - name: 运行以 Python 编写的 TensorFlow 模型
           href: export-model-python.md
-    - name: 导出或删除帐户数据
+    - name: 集成存储通知
+      href: storage-integration.md
+    - name: 复制和移动项目
+      href: copy-move-projects.md
+    - name: 查看或删除帐户数据
       href: ./export-delete-data.md
     - name: 经应用更新到 3.0 API
       href: ./update-application-to-3.0-sdk.md
 - name: 参考
   items:
-    - name: 自定义视觉训练 API
-      href: 'https://go.microsoft.com/fwlink/?linkid=865446'
-    - name: 自定义视觉预测 API
-      href: 'https://go.microsoft.com/fwlink/?linkid=865445'
+    - name: REST API
+      href: 'https://docs.microsoft.com/rest/api/custom-vision/'
     - name: SDK
       items:
         - name: .NET
-          href: 'https://docs.microsoft.com/dotnet/api/overview/azure/cognitiveservices/client/customvision?view=azure-dotnet'
+          href: /dotnet/api/overview/azure/cognitiveservices/client/customvision?view=azure-dotnet
         - name: Java
-          href: 'https://docs.microsoft.com/java/api/overview/azure/cognitiveservices/client/customvision?view=azure-java-stable'
+          href: /java/api/overview/azure/cognitiveservices/client/customvision?view=azure-java-stable
         - name: Node.js - 训练
-          href: 'https://docs.microsoft.com/javascript/api/@azure/cognitiveservices-customvision-training/?view=azure-node-latest'
+          href: /javascript/api/@azure/cognitiveservices-customvision-training/?view=azure-node-latest
         - name: Node.js - 预测
-          href: 'https://docs.microsoft.com/javascript/api/@azure/cognitiveservices-customvision-prediction/?view=azure-node-latest'
+          href: /javascript/api/@azure/cognitiveservices-customvision-prediction/?view=azure-node-latest
         - name: Python
-          href: 'https://docs.microsoft.com/python/api/overview/azure/cognitiveservices/customvision?view=azure-python'
+          href: /python/api/overview/azure/cognitiveservices/customvision?view=azure-python
         - name: Go - 训练
           href: 'https://godoc.org/github.com/Azure/azure-sdk-for-go/services/cognitiveservices/v2.1/customvision/training'
         - name: Go - 预测
           href: 'https://godoc.org/github.com/Azure/azure-sdk-for-go/services/cognitiveservices/v1.1/customvision/prediction'
 - name: 资源
   items:
+    - name: 支持和帮助选项
+      href: ../cognitive-services-support-options.md?context=/azure/cognitive-services/custom-vision-service/context/context
     - name: 示例
-      href: 'https://docs.microsoft.com/samples/browse/?products=azure&term=vision'
+      href: /samples/browse/?products=azure&term=vision
     - name: 限制和配额
       href: limits-and-quotas.md
     - name: UserVoice

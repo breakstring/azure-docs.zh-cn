@@ -13,22 +13,22 @@ ms.date: 05/07/2019
 ms.author: jmprieur
 ms.reviewer: brandwe
 ms.custom: aaddev
-ms.openlocfilehash: dfccc274ef920c59d39c160055ab27a6900c839c
-ms.sourcegitcommit: a2a7746c858eec0f7e93b50a1758a6278504977e
+ms.openlocfilehash: 6e6eda3d711710ea7450165ab02d7a260067bfcb
+ms.sourcegitcommit: 2817d7e0ab8d9354338d860de878dd6024e93c66
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/12/2020
-ms.locfileid: "88141272"
+ms.lasthandoff: 02/05/2021
+ms.locfileid: "99582547"
 ---
 # <a name="get-a-token-for-a-mobile-app-that-calls-web-apis"></a>获取调用 Web API 的移动应用的令牌
 
-应用需要先获得访问令牌才能调用受保护的 Web API。 本文详述使用 Microsoft 身份验证库 (MSAL) 获取令牌的过程。
+应用需要先获得访问令牌才能调用受保护的 Web API。 本文指导你完成使用 Microsoft 身份验证库 (MSAL) 获取令牌的过程。
 
 ## <a name="define-a-scope"></a>定义范围
 
-请求令牌时，需定义作用域。 作用域决定了应用能够访问哪些数据。
+请求令牌时，请定义一个作用域。 作用域决定了应用能够访问哪些数据。
 
-定义范围的最简单方法是将所需 Web API 的 `App ID URI` 与范围 `.default` 组合在一起。 此定义告知 Microsoft 标识平台，应用需要在门户中设置的所有范围。
+定义范围的最简单方法是将所需 Web API 的 `App ID URI` 与范围 `.default` 组合在一起。 此定义告知 Microsoft 标识平台，你的应用程序需要门户中设置的所有作用域。
 
 ### <a name="android"></a>Android
 ```Java
@@ -221,7 +221,7 @@ catch(MsalUiRequiredException)
 
 `WithPrompt()` 参数通过指定提示来控制与用户的交互。
 
-![显示提示结构中的字段的图像。 这些常量值通过定义 WithPrompt ( # A1 参数显示的提示类型来控制与用户的交互。](https://user-images.githubusercontent.com/13203188/53438042-3fb85700-39ff-11e9-9a9e-1ff9874197b3.png)
+![显示“提示”结构中的字段的图像。 这些常量值通过定义由 WithPrompt() 参数显示的提示的类型来控制与用户的交互。](https://user-images.githubusercontent.com/13203188/53438042-3fb85700-39ff-11e9-9a9e-1ff9874197b3.png)
 
 该类定义以下常量：
 
@@ -236,14 +236,14 @@ catch(MsalUiRequiredException)
     如果令牌获取失败，而你想要让用户重新登录，则此选项会很有用。 在这种情况下，MSAL 会将 `prompt=login` 发送到标识提供者。 你可能希望在注重安全的应用程序中使用此选项。在此类应用程序中，组织监管政策要求用户在每次访问该应用程序的特定部分时都要登录。
 - `Never` 仅适用于 .NET 4.5 和 Windows 运行时 (WinRT)。 此常量不会提示用户，而是尝试使用隐藏的嵌入式 Web 视图中存储的 Cookie。 有关详细信息，请参阅[在 MSAL.NET 中使用 Web 浏览器](./msal-net-web-browsers.md)。
 
-    如果此选项失败，则 `AcquireTokenInteractive` 会引发异常，告知需要进行 UI 交互。 然后，需要使用另一个 `Prompt` 参数。
+    如果此选项失败，则 `AcquireTokenInteractive` 会引发异常，告知需要进行 UI 交互。 然后使用另一个 `Prompt` 参数。
 - `NoPrompt` 不会向标识提供者发送提示。
 
     此选项仅适用于 Azure Active Directory B2C 中的编辑配置文件策略。 有关详细信息，请参阅 [B2C 细节](https://aka.ms/msal-net-b2c-specificities)。
 
 ##### <a name="withextrascopetoconsent"></a>WithExtraScopeToConsent
 
-在你希望用户提前许可多个资源的高级方案中使用 `WithExtraScopeToConsent` 修饰符。 如果你不想要使用增量许可（这种许可通常与 MSAL.NET 或 Microsoft 标识平台 2.0 配合使用），可以使用此修饰符。 有关详细信息，请参阅[让用户提前许可多个资源](scenario-desktop-production.md#have-the-user-consent-upfront-for-several-resources)。
+在你希望用户提前许可多个资源的高级方案中使用 `WithExtraScopeToConsent` 修饰符。 如果你不希望使用通常与 MSAL.NET 或 Microsoft 标识平台一起使用的增量许可，则可以使用此修饰符。 有关详细信息，请参阅[让用户提前许可多个资源](scenario-desktop-production.md#have-the-user-consent-upfront-for-several-resources)。
 
 下面是代码示例：
 
@@ -255,7 +255,7 @@ var result = await app.AcquireTokenInteractive(scopesForCustomerApi)
 
 ##### <a name="other-optional-parameters"></a>其他可选参数
 
-若要了解 `AcquireTokenInteractive` 的其他可选参数，请参阅 [AcquireTokenInteractiveParameterBuilder 的参考文档](/dotnet/api/microsoft.identity.client.acquiretokeninteractiveparameterbuilder?view=azure-dotnet-preview#methods)。
+若要了解 `AcquireTokenInteractive` 的其他可选参数，请参阅 [AcquireTokenInteractiveParameterBuilder 的参考文档](/dotnet/api/microsoft.identity.client.acquiretokeninteractiveparameterbuilder#methods)。
 
 ### <a name="acquire-tokens-via-the-protocol"></a>通过协议获取令牌
 
@@ -294,5 +294,4 @@ client_id=<CLIENT_ID>
 
 ## <a name="next-steps"></a>后续步骤
 
-> [!div class="nextstepaction"]
-> [调用 Web API](scenario-mobile-call-api.md)
+转到此方案中的下一篇文章：[调用 Web API](scenario-mobile-call-api.md)。

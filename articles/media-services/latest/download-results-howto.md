@@ -8,17 +8,20 @@ manager: femila
 editor: ''
 ms.service: media-services
 ms.workload: ''
-ms.topic: article
-ms.date: 03/04/2020
+ms.topic: how-to
+ms.date: 08/31/2020
 ms.author: inhenkel
-ms.openlocfilehash: 0a2e4d1ac5cf0945ab75e58bb42d23d10d6c89aa
-ms.sourcegitcommit: d661149f8db075800242bef070ea30f82448981e
+ms.custom: devx-track-csharp
+ms.openlocfilehash: b3decdd4a2855382b27cb426d7fb030b46a2458c
+ms.sourcegitcommit: 829d951d5c90442a38012daaf77e86046018e5b9
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/19/2020
-ms.locfileid: "88607242"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "89298022"
 ---
 # <a name="download-the-results-of-a-job"></a>下载作业结果
+
+[!INCLUDE [media services api v3 logo](./includes/v3-hr.md)]
 
 在 Azure 媒体服务中，处理视频时 (例如，编码或分析) 需要创建输出 [资产](assets-concept.md) 来存储 [作业](transforms-jobs-concept.md)的结果。 然后，可以使用媒体服务和存储 API 将这些结果下载到本地文件夹。 
 

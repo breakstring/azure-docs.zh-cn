@@ -7,19 +7,20 @@ author: HeidiSteen
 ms.author: heidist
 ms.service: cognitive-search
 ms.topic: tutorial
-ms.date: 06/23/2020
-ms.openlocfilehash: a3a7657aa83a675982adc304de01ba0fcc26d193
-ms.sourcegitcommit: e132633b9c3a53b3ead101ea2711570e60d67b83
+ms.date: 01/23/2021
+ms.custom: devx-track-csharp
+ms.openlocfilehash: e2ca5f42120661b887d07e697596f41cb7a7fce4
+ms.sourcegitcommit: 4d48a54d0a3f772c01171719a9b80ee9c41c0c5d
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/07/2020
-ms.locfileid: "86045444"
+ms.lasthandoff: 01/24/2021
+ms.locfileid: "98745761"
 ---
 # <a name="tutorial-index-azure-sql-data-using-the-net-sdk"></a>教程：使用 .NET SDK 为 Azure SQL 数据编制索引
 
 配置一个[索引器](search-indexer-overview.md)，用于从 Azure SQL 数据库提取可搜索的数据，从而将其发送到 Azure 认知搜索中的搜索索引。 
 
-本教程使用 C# 和 [.NET SDK](https://docs.microsoft.com/dotnet/api/overview/azure/search) 执行以下任务：
+本教程使用 C# 和 [.NET SDK](/dotnet/api/overview/azure/search) 执行以下任务：
 
 > [!div class="checklist"]
 > * 创建连接到 Azure SQL 数据库的数据源
@@ -56,7 +57,7 @@ ms.locfileid: "86045444"
 
 1. 找到或创建一个 **SQL 数据库**。 可以使用默认设置和最低级别的定价层。 创建服务器的一大优势是可以指定管理员用户名和密码，这是在后面的步骤中创建和加载表所必需的。
 
-   ![“新建数据库”页](./media/search-indexer-tutorial/indexer-new-sqldb.png "“新建数据库”页")
+   :::image type="content" source="media/search-indexer-tutorial/indexer-new-sqldb.png" alt-text="“新建数据库”页" border="false":::
 
 1. 单击“查看 + 创建”以部署新的服务器和数据库。 等待服务器和数据库部署。
 
@@ -68,7 +69,7 @@ ms.locfileid: "86045444"
 
 1. 选择该文件，然后单击“打开”。 此脚本应与以下屏幕截图类似：
 
-   ![SQL 脚本](./media/search-indexer-tutorial/sql-script.png "SQL 脚本")
+   :::image type="content" source="media/search-indexer-tutorial/sql-script.png" alt-text="SQL 脚本" border="false":::
 
 1. 单击“运行”以执行查询。 在“结果”窗格中，应看到一条 3 行内容的消息，指示查询成功。
 
@@ -78,7 +79,7 @@ ms.locfileid: "86045444"
     SELECT * FROM Hotels
     ```
 
-1. 复制数据库的 ADO.NET 连接字符串 在“设置” > “连接字符串”下，复制类似于以下示例的 ADO.NET 连接字符串。 
+1. 复制数据库的 ADO.NET 连接字符串 在“设置” > “连接字符串”下，复制类似于以下示例的 ADO.NET 连接字符串。
 
     ```sql
     Server=tcp:{your_dbname}.database.windows.net,1433;Initial Catalog=hotels-db;Persist Security Info=False;User ID={your_username};Password={your_password};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;
@@ -98,7 +99,7 @@ API 调用需要服务 URL 和访问密钥。 搜索服务是使用这二者创�
 
 1. 在“设置” > “密钥”中，获取有关该服务的完全权限的管理员密钥 。 有两个可交换的管理员密钥，为保证业务连续性而提供，以防需要滚动一个密钥。 可以在请求中使用主要或辅助密钥来添加、修改和删除对象。
 
-   ![获取 HTTP 终结点和访问密钥](media/search-get-started-postman/get-url-key.png "获取 HTTP 终结点和访问密钥")
+   :::image type="content" source="media/search-get-started-rest/get-url-key.png" alt-text="获取 HTTP 终结点和访问密钥" border="false":::
 
 ## <a name="2---set-up-your-environment"></a>2 - 设置环境
 
@@ -106,14 +107,14 @@ API 调用需要服务 URL 和访问密钥。 搜索服务是使用这二者创�
 
 1. 在解决方案资源管理器中，打开“appsettings.json”以提供连接信息。
 
-1. 对于 `searchServiceName`，如果完整 URL 为“https://my-demo-service.search.windows.net”，则要提供的服务名称为“my-demo-service”。
+1. 对于 `SearchServiceEndPoint`，如果服务概述页面上的完整 URL 为“https://my-demo-service.search.windows.net”，则提供的值为该 URL。
 
 1. 对于 `AzureSqlConnectionString`，字符串格式如下所示：`"Server=tcp:{your_dbname}.database.windows.net,1433;Initial Catalog=hotels-db;Persist Security Info=False;User ID={your_username};Password={your_password};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"`
 
     ```json
     {
-      "SearchServiceName": "<placeholder-Azure-Search-service-name>",
-      "SearchServiceAdminApiKey": "<placeholder-admin-key-for-Azure-Search>",
+      "SearchServiceEndPoint": "<placeholder-search-url>",
+      "SearchServiceAdminApiKey": "<placeholder-admin-key-for-search-service>",
       "AzureSqlConnectionString": "<placeholder-ADO.NET-connection-string",
     }
     ```
@@ -129,11 +130,12 @@ API 调用需要服务 URL 和访问密钥。 搜索服务是使用这二者创�
 
 ### <a name="in-hotelcs"></a>在 hotel.cs 中
 
-索引架构定义字段集合，包含的属性用于指定允许的操作，例如字段是否可以进行全文搜索、筛选或排序，如以下针对 HotelName 的字段定义所示。 
+索引架构定义字段集合，包含的属性用于指定允许的操作，例如字段是否可以进行全文搜索、筛选或排序，如以下针对 HotelName 的字段定义所示。 [SearchableField](/dotnet/api/azure.search.documents.indexes.models.searchablefield) 按定义进行全文搜索。 其他属性是显式分配的。
 
 ```csharp
 . . . 
-[IsSearchable, IsFilterable, IsSortable]
+[SearchableField(IsFilterable = true, IsSortable = true)]
+[JsonPropertyName("hotelName")]
 public string HotelName { get; set; }
 . . .
 ```
@@ -142,71 +144,85 @@ public string HotelName { get; set; }
 
 ### <a name="in-programcs"></a>在 Program.cs 中
 
-主程序包含用于创建客户端、索引、数据源和索引器的逻辑。 此代码检查是否存在同一名称的资源，如果存在则会将其删除，所依据的假设是此程序可能多次运行。
+主程序包含用于创建[索引器客户端](/dotnet/api/azure.search.documents.indexes.models.searchindexer)、索引、数据源和索引器的逻辑。 此代码检查是否存在同一名称的资源，如果存在则会将其删除，所依据的假设是此程序可能多次运行。
 
-数据源对象是使用特定于 Azure SQL 数据库资源的设置配置的，包括[部分或增量索引](search-howto-connecting-azure-sql-database-to-azure-search-using-indexers.md#capture-new-changed-and-deleted-rows)，用于利用 Azure SQL 的内置[更改检测功能](https://docs.microsoft.com/sql/relational-databases/track-changes/about-change-tracking-sql-server)。 Azure SQL 中的 hotels 演示数据库包含一个名为 **IsDeleted** 的“软删除”列。 如果在数据库中将此列设置为 true，则索引器会从 Azure 认知搜索索引中删除相应的文档。
+数据源对象是使用特定于 Azure SQL 数据库资源的设置配置的，包括[部分或增量索引](search-howto-connecting-azure-sql-database-to-azure-search-using-indexers.md#capture-new-changed-and-deleted-rows)，用于利用 Azure SQL 的内置[更改检测功能](/sql/relational-databases/track-changes/about-change-tracking-sql-server)。 Azure SQL 中的 hotels 源演示数据库包含一个名为 IsDeleted 的“软删除”列。 如果在数据库中将此列设置为 true，则索引器会从 Azure 认知搜索索引中删除相应的文档。
 
-  ```csharp
-  Console.WriteLine("Creating data source...");
+```csharp
+Console.WriteLine("Creating data source...");
 
-  DataSource dataSource = DataSource.AzureSql(
-      name: "azure-sql",
-      sqlConnectionString: configuration["AzureSQLConnectionString"],
-      tableOrViewName: "hotels",
-      deletionDetectionPolicy: new SoftDeleteColumnDeletionDetectionPolicy(
-          softDeleteColumnName: "IsDeleted",
-          softDeleteMarkerValue: "true"));
-  dataSource.DataChangeDetectionPolicy = new SqlIntegratedChangeTrackingPolicy();
+var dataSource =
+      new SearchIndexerDataSourceConnection(
+         "hotels-sql-ds",
+         SearchIndexerDataSourceType.AzureSql,
+         configuration["AzureSQLConnectionString"],
+         new SearchIndexerDataContainer("hotels"));
 
-  searchService.DataSources.CreateOrUpdateAsync(dataSource).Wait();
-  ```
+indexerClient.CreateOrUpdateDataSourceConnection(dataSource);
+```
 
-索引器对象与平台无关，无论源是什么，配置、计划和调用都是相同的。 此示例索引器包含一个计划和一个用于清除索引器历史记录的重置选项，并调用一个方法来创建和立即运行索引器。
+索引器对象与平台无关，无论源是什么，配置、计划和调用都是相同的。 此示例索引器包含一个计划和一个用于清除索引器历史记录的重置选项，并调用一个方法来创建和立即运行索引器。 若要创建或更新索引器，请使用 [CreateOrUpdateIndexerAsync](/dotnet/api/azure.search.documents.indexes.searchindexerclient.createorupdateindexerasync)。
 
-  ```csharp
-  Console.WriteLine("Creating Azure SQL indexer...");
-  Indexer indexer = new Indexer(
-      name: "azure-sql-indexer",
-      dataSourceName: dataSource.Name,
-      targetIndexName: index.Name,
-      schedule: new IndexingSchedule(TimeSpan.FromDays(1)));
-  // Indexers contain metadata about how much they have already indexed
-  // If we already ran the sample, the indexer will remember that it already
-  // indexed the sample data and not run again
-  // To avoid this, reset the indexer if it exists
-  exists = await searchService.Indexers.ExistsAsync(indexer.Name);
-  if (exists)
-  {
-      await searchService.Indexers.ResetAsync(indexer.Name);
-  }
+```csharp
+Console.WriteLine("Creating Azure SQL indexer...");
 
-  await searchService.Indexers.CreateOrUpdateAsync(indexer);
+var schedule = new IndexingSchedule(TimeSpan.FromDays(1))
+{
+      StartTime = DateTimeOffset.Now
+};
 
-  // We created the indexer with a schedule, but we also
-  // want to run it immediately
-  Console.WriteLine("Running Azure SQL indexer...");
+var parameters = new IndexingParameters()
+{
+      BatchSize = 100,
+      MaxFailedItems = 0,
+      MaxFailedItemsPerBatch = 0
+};
 
-  try
-  {
-      await searchService.Indexers.RunAsync(indexer.Name);
-  }
-  catch (CloudException e) when (e.Response.StatusCode == (HttpStatusCode)429)
-  {
+// Indexer declarations require a data source and search index.
+// Common optional properties include a schedule, parameters, and field mappings
+// The field mappings below are redundant due to how the Hotel class is defined, but 
+// we included them anyway to show the syntax 
+var indexer = new SearchIndexer("hotels-sql-idxr", dataSource.Name, searchIndex.Name)
+{
+      Description = "Data indexer",
+      Schedule = schedule,
+      Parameters = parameters,
+      FieldMappings =
+      {
+         new FieldMapping("_id") {TargetFieldName = "HotelId"},
+         new FieldMapping("Amenities") {TargetFieldName = "Tags"}
+      }
+};
+
+await indexerClient.CreateOrUpdateIndexerAsync(indexer);
+```
+
+索引器运行通常是有计划的，但在开发期间，你可能想要立即使用 [RunIndexerAsync](/dotnet/api/azure.search.documents.indexes.searchindexerclient.runindexerasync) 运行索引器。
+
+```csharp
+Console.WriteLine("Running Azure SQL indexer...");
+
+try
+{
+      await indexerClient.RunIndexerAsync(indexer.Name);
+}
+catch (CloudException e) when (e.Response.StatusCode == (HttpStatusCode)429)
+{
       Console.WriteLine("Failed to run indexer: {0}", e.Response.Content);
-  }
-  ```
+}
+```
 
 ## <a name="4---build-the-solution"></a>4 - 生成解决方案
 
 按 F5 生成并运行解决方案。 程序在调试模式下执行。 控制台窗口报告每项操作的状态。
 
-   ![控制台输出](./media/search-indexer-tutorial/console-output.png "控制台输出")
+   :::image type="content" source="media/search-indexer-tutorial/console-output.png" alt-text="控制台输出" border="false":::
 
 代码将在 Visual Studio 本地运行，连接到 Azure 中的搜索服务，后者又会连接到 Azure SQL 数据库并检索数据集。 由于此处会发生多项操作，因此可能会造成多个故障点。 如果遇到错误，请先检查以下条件：
 
-+ 在本教程中，提供的搜索服务连接信息只能使用服务名称。 如果输入了完整 URL，则操作会停在索引创建阶段，出现“无法连接”错误。
++ 你提供的搜索服务连接信息是完整的 URL。 如果只输入了服务名，则操作会停在索引创建阶段，出现“无法连接”错误。
 
-+ **appsettings.json** 中的数据库连接信息。 它应该是从门户获得的 ADO.NET 连接字符串，经修改后包括了适用于数据库的用户名和密码。 用户帐户必须有权检索数据。 必须允许本地客户端 IP 地址进行访问。
++ **appsettings.json** 中的数据库连接信息。 它应该是从门户获得的 ADO.NET 连接字符串，经修改后包括了适用于数据库的用户名和密码。 用户帐户必须有权检索数据。 你的本地客户端 IP 地址必须能够通过防火墙进行入站访问。
 
 + 资源限制。 回想一下，免费层仅限 3 个索引、索引器和数据源。 达到最大限制的服务不能创建新的对象。
 
@@ -214,9 +230,9 @@ public string HotelName { get; set; }
 
 使用 Azure 门户验证对象的创建，然后使用“搜索资源管理器”查询索引。
 
-1. [登录到 Azure 门户](https://portal.azure.com/)，在搜索服务的“概述”页中轮流打开每个列表，以验证是否已创建该对象。 “索引”、“索引器”和“数据源”分别包含“hotels”、“azure-sql-indexer”和“azure-sql”。  
+1. [登录到 Azure 门户](https://portal.azure.com/)，在搜索服务的“概述”页中轮流打开每个列表，以验证是否已创建该对象。 “索引”、“索引器”和“数据源”分别包含“hotels”、“azure-sql-indexer”和“azure-sql”。
 
-   ![索引器和数据源磁贴](./media/search-indexer-tutorial/tiles-portal.png)
+   :::image type="content" source="media/search-indexer-tutorial/tiles-portal.png" alt-text="索引器和数据源磁贴" border="false":::
 
 1. 选择 hotels 索引。 在 hotels 页上，“搜索资源管理器”是第一个选项卡。 
 
@@ -224,7 +240,7 @@ public string HotelName { get; set; }
 
    索引中的三个条目以 JSON 文档的形式返回。 搜索浏览器返回 JSON 格式的文档，方便你查看整个结构。
 
-   ![查询索引](./media/search-indexer-tutorial/portal-search.png "查询索引")
+   :::image type="content" source="media/search-indexer-tutorial/portal-search.png" alt-text="查询索引" border="false":::
    
 1. 接下来，输入搜索字符串：`search=river&$count=true`。 
 

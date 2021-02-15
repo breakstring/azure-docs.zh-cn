@@ -1,6 +1,6 @@
 ---
-title: 使用 SQL 数据同步从 Azure SQL Edge（预览）同步数据
-description: 了解如何使用 Azure SQL 数据同步从 Azure SQL Edge（预览）同步数据
+title: 使用 SQL 数据同步从 Azure SQL Edge 同步数据
+description: 了解如何使用 Azure SQL 数据同步从 Azure SQL Edge 同步数据
 keywords: SQL Edge,从 SQL Edge 同步数据,SQL Edge 数据同步
 services: sql-edge
 ms.service: sql-edge
@@ -9,12 +9,12 @@ author: SQLSourabh
 ms.author: sourabha
 ms.reviewer: sstein
 ms.date: 05/19/2020
-ms.openlocfilehash: 6c0518e12a2c654b8f971db3a6733b0e64f80a1f
-ms.sourcegitcommit: bf99428d2562a70f42b5a04021dde6ef26c3ec3a
+ms.openlocfilehash: 5659ce5fa6f99463f58a33662563d768248fd8cb
+ms.sourcegitcommit: 0ce1ccdb34ad60321a647c691b0cff3b9d7a39c8
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 06/23/2020
-ms.locfileid: "85254044"
+ms.lasthandoff: 11/05/2020
+ms.locfileid: "93394894"
 ---
 # <a name="tutorial-sync-data-from-sql-edge-to-azure-sql-database-by-using-sql-data-sync"></a>教程：使用 SQL 数据同步将数据从 SQL Edge 同步到 Azure SQL 数据库
 
@@ -55,7 +55,7 @@ ms.locfileid: "85254044"
 
 * [最佳做法](../azure-sql/database/sql-data-sync-best-practices.md)和[如何解决 Azure SQL 数据同步问题](../azure-sql/database/sql-data-sync-troubleshoot.md)
 
-* [使用 Azure Monitor 日志监视 SQL 数据同步](../azure-sql/database/sql-data-sync-monitor-sync.md)
+* [使用 Azure Monitor 日志监视 SQL 数据同步](../azure-sql/database/monitor-tune-overview.md)
 
 * [使用 Transact-SQL 更新同步架构](../azure-sql/database/sql-data-sync-update-sync-schema.md) 或使用 [PowerShell](../azure-sql/database/scripts/update-sync-schema-in-sync-group.md) 更新同步架构
 

@@ -3,25 +3,27 @@ title: 标准编码器格式和编解码器 - Azure
 description: 本文包含可与 StandardEncoderPreset 配合使用的最常见的导入和导出文件格式列表。
 services: media-services
 documentationcenter: ''
-author: juliako
+author: IngridAtMicrosoft
 manager: femila
 editor: ''
 ms.service: media-services
 ms.workload: media
 ms.tgt_pltfrm: na
 ms.devlang: na
-ms.topic: article
-ms.date: 02/10/2019
-ms.author: juliako
+ms.topic: conceptual
+ms.date: 08/31/2020
+ms.author: inhenkel
 ms.reviewer: anilmur
-ms.openlocfilehash: dd8c38f9f08bbcaccc39d2f0d1843af720c12932
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.openlocfilehash: f6e9c0a3d9100bc447314f5874107363c6bf5d8a
+ms.sourcegitcommit: 829d951d5c90442a38012daaf77e86046018e5b9
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87053232"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "89289437"
 ---
 # <a name="standard-encoder-formats-and-codecs"></a>标准编码器格式和编解码器
+
+[!INCLUDE [media services api v3 logo](./includes/v3-hr.md)]
 
 本文包含可与 [StandardEncoderPreset](/rest/api/media/transforms/createorupdate#standardencoderpreset) 配合使用的最常见的导入和导出文件格式列表。 有关如何使用 **StandardEncoderPreset** 创建自定义预设的信息，请参阅[使用自定义预设创建转换](customize-encoder-presets-how-to.md)。
 

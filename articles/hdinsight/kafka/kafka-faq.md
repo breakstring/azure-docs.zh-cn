@@ -1,18 +1,15 @@
 ---
 title: 有关 Azure HDInsight 中的 Apache Kafka 的常见问题解答
 description: 获取有关 Azure HDInsight 上的 Apache Kafka（一个托管式 Hadoop 云服务）的常见问题的解答。
-author: hrasheed-msft
-ms.author: hrasheed
-ms.reviewer: jasonh
 ms.service: hdinsight
 ms.topic: conceptual
 ms.date: 08/14/2019
-ms.openlocfilehash: d27c648980338b3a9e12bd618eb4620fe9988fd7
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 851d7ceb44d2466ed31e26c1442fde9acea9fd22
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "80436892"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98939100"
 ---
 # <a name="frequently-asked-questions-about-apache-kafka-in-azure-hdinsight"></a>有关 Azure HDInsight 中的 Apache Kafka 的常见问题解答
 
@@ -42,11 +39,11 @@ HDInsight Kafka 群集包含以下资源：
 
 ## <a name="can-i-change-cluster-configurations"></a>是否可以更改群集配置？
 
-是的，可通过 Ambari 门户更改。 门户中的每个组件都附带一个“配置”部分，可在该部分更改组件配置。**** 某些更改可能需要重启代理。
+是的，可通过 Ambari 门户更改。 门户中的每个组件都附带一个“配置”部分，可在该部分更改组件配置。 某些更改可能需要重启代理。
 
-## <a name="what-type-of-authentication-does-hdinsight-support-for-apache-kafka"></a>HDInsight 支持 Apache Kafka 哪种类型的身份验证？
+## <a name="what-type-of-authentication-does-hdinsight-support-for-apache-kafka"></a>对于 Apache Kafka，HDInsight 支持哪种类型的身份验证？
 
-使用[企业安全性套餐（ESP）](../domain-joined/apache-domain-joined-architecture.md)，可以获取 Kafka 群集的主题级安全性。 有关详细信息，请参阅[教程：在 HDInsight 中配置 Apache Kafka 的策略企业安全性套餐（预览）](../domain-joined/apache-domain-joined-run-kafka.md)。
+使用[企业安全性套餐 (ESP)](../domain-joined/apache-domain-joined-architecture.md)，可以获得 Kafka 群集的主题级别安全性。 有关详细信息，请参阅[教程：在带有企业安全性套餐（预览）的 HDInsight 中配置 Apache Kafka 策略](../domain-joined/apache-domain-joined-run-kafka.md)。
 
 ## <a name="is-my-data-encrypted-can-i-use-my-own-keys"></a>我的数据是否已加密？ 是否可以使用我自己的密钥？
 
@@ -68,7 +65,7 @@ HDInsight Kafka 群集包含以下资源：
 
 ## <a name="can-a-kafka-cluster-work-with-databricks"></a>Kafka 群集是否可与 Databricks 配合使用？ 
 
-是的，Kafka 群集可以与 Databricks 配合使用，但前提是它们位于同一 VNet 中。 若要将 Kafka 群集与 Databricks 配合使用，请创建一个包含 HDInsight Kafka 群集的 VNet，然后在创建 Databricks 工作区并使用 VNet 注入时指定该 VNet。 有关详细信息，请参阅[在 Azure 虚拟网络（VNet 注入）中部署 Azure Databricks](https://docs.microsoft.com/azure/databricks/administration-guide/cloud-configurations/azure/vnet-inject)。 创建 Databricks 工作区时，需要提供 Kafka 群集的启动代理名称。 若要了解如何检索 Kafka 代理名称，请参阅[获取 Apache Zookeeper 主机和代理主机信息](https://docs.microsoft.com/azure/hdinsight/kafka/apache-kafka-get-started#getkafkainfo)。
+是的，Kafka 群集可以与 Databricks 配合使用，但前提是它们位于同一 VNet 中。 若要将 Kafka 群集与 Databricks 配合使用，请创建一个包含 HDInsight Kafka 群集的 VNet，然后在创建 Databricks 工作区并使用 VNet 注入时指定该 VNet。 有关详细信息，请参阅[在 Azure 虚拟网络（VNet 注入）中部署 Azure Databricks](/azure/databricks/administration-guide/cloud-configurations/azure/vnet-inject)。 创建 Databricks 工作区时，需要提供 Kafka 群集的启动代理名称。 若要了解如何检索 Kafka 代理名称，请参阅[获取 Apache Zookeeper 主机和代理主机信息](./apache-kafka-get-started.md#getkafkainfo)。
 
 ## <a name="how-can-i-have-maximum-data-durability"></a>如何获得最大的数据持久性？
 

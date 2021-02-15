@@ -1,23 +1,24 @@
 ---
-title: Python 和 Azure 云服务入门 | Microsoft 文档
+title: " (经典) 的 Python 和 Azure 云服务入门 |Microsoft Docs"
 description: 有关使用 Python Tools for Visual Studio 来创建包括 Web 角色和辅助角色的 Azure 云服务的概述。
-services: cloud-services
-documentationcenter: python
-author: tgore03
+ms.topic: article
 ms.service: cloud-services
-ms.devlang: python
-ms.topic: conceptual
-ms.date: 07/18/2017
+ms.date: 10/14/2020
 ms.author: tagore
-ms.custom: devx-track-python
-ms.openlocfilehash: 7025d042fa021c6ee5311566d66bfd090dbd06cd
-ms.sourcegitcommit: 7fe8df79526a0067be4651ce6fa96fa9d4f21355
+author: tanmaygore
+ms.reviewer: mimckitt
+ms.custom: ''
+ms.openlocfilehash: 16aa6918c0f4b0df5ebf23f28268f8cbe5223fce
+ms.sourcegitcommit: 6272bc01d8bdb833d43c56375bab1841a9c380a5
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/06/2020
-ms.locfileid: "87851573"
+ms.lasthandoff: 01/23/2021
+ms.locfileid: "98743281"
 ---
 # <a name="python-web-and-worker-roles-with-python-tools-for-visual-studio"></a>用于 Visual Studio 的 Python 工具中的 Python Web 角色和辅助角色
+
+> [!IMPORTANT]
+> [Azure 云服务 (扩展支持) ](../cloud-services-extended-support/overview.md) 是适用于 Azure 云服务产品的新的基于 azure 资源管理器的部署模型。进行此更改后，基于 Azure Service Manager 的部署模型运行的 Azure 云服务已重命名为云服务 (经典) ，所有新部署应使用 [云服务 (扩展支持) ](../cloud-services-extended-support/overview.md)。
 
 本文概述了如何在 [Python Tools for Visual Studio][Python Tools for Visual Studio]中使用 Python Web 角色和辅助角色。 介绍如何使用 Visual Studio 来创建和部署使用 Python 的基本云服务。
 
@@ -242,7 +243,7 @@ if (-not $is_emulated){
 
 #### <a name="modify-launchworkerps1"></a>修改 LaunchWorker.ps1
 > [!NOTE]
-> 对于**辅助角色**项目，需要 **LauncherWorker.ps1** 文件才能执行启动文件。 在“Web 角色”  项目中，会在项目属性中定义该启动文件。
+> 对于 **辅助角色** 项目，需要 **LauncherWorker.ps1** 文件才能执行启动文件。 在“Web 角色”  项目中，会在项目属性中定义该启动文件。
 > 
 > 
 
@@ -288,7 +289,7 @@ else
 #### <a name="pscmd"></a>ps.cmd
 Visual Studio 模板应在 **./bin** 文件夹中创建了一个 **ps.cmd** 文件。 此 shell 脚本调用上述 PowerShell 包装脚本，并根据所调用 PowerShell 包装的名称提供日志记录。 如果未创建此文件，请注意，下面是该文件应该包含的内容。 
 
-```bat
+```cmd
 @echo off
 
 cd /D %~dp0
@@ -357,13 +358,10 @@ if not exist "%DiagnosticStore%\LogFiles" mkdir "%DiagnosticStore%\LogFiles"
 <!--External Link references-->
 
 [Python Tools for Visual Studio]: https://aka.ms/ptvs
-[Python Tools for Visual Studio Documentation]: https://aka.ms/ptvsdocs
-[Cloud Service Projects]: https://docs.microsoft.com/visualstudio/python/python-azure-cloud-service-project-template
+[Python Tools for Visual Studio Documentation]: /visualstudio/python/
+[Cloud Service Projects]: /visualstudio/python/python-azure-cloud-service-project-template
 [Azure SDK Tools for VS 2013]: https://go.microsoft.com/fwlink/?LinkId=746482
 [Azure SDK Tools for VS 2015]: https://go.microsoft.com/fwlink/?LinkId=746481
 [Azure SDK Tools for VS 2017]: https://go.microsoft.com/fwlink/?LinkId=746483
 [Python 2.7 32-bit]: https://www.python.org/downloads/
 [Python 3.5 32-bit]: https://www.python.org/downloads/
-
-
-

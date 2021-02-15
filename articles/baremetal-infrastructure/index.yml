@@ -1,0 +1,37 @@
+### YamlMime:Landing
+title: BareMetal 基础结构文档
+summary: 了解如何使用 BareMetal 基础结构在 Microsoft Azure 中创建、部署和管理虚拟机。
+metadata:
+  title: BareMetal 基础结构文档
+  description: 了解如何使用 BareMetal 基础结构在 Microsoft Azure 中创建、部署和管理虚拟机。
+  services: virtual-machines
+  ms.service: baremetal-infrastructure
+  ms.topic: landing-page
+  author: shortpatti
+  ms.author: v-patsho
+  ms.date: 12/31/2020
+  ms.openlocfilehash: 285421d12b656290ef5ddbe21136345b718e0ca1
+  ms.sourcegitcommit: 78ecfbc831405e8d0f932c9aafcdf59589f81978
+  ms.translationtype: HT
+  ms.contentlocale: zh-CN
+  ms.lasthandoff: 01/23/2021
+  ms.locfileid: "98730266"
+landingContent:
+- title: 关于 BareMetal 基础结构
+  linkLists:
+  - linkListType: overview
+    links:
+    - text: 什么是 Azure 中的 BareMetal 基础结构？
+      url: workloads/sap/baremetal-overview-architecture.md
+    - text: 了解术语
+      url: know-baremetal-terms.md
+  - linkListType: reference
+    links:
+    - text: BareMetal 工作负载类型
+      url: ../virtual-machines/workloads/sap/get-started.md?context=%2fazure%2fbaremetal-infrastructure%2fworkloads%2fsap%2fcontext%2fcontext
+- title: BareMetal 实例单元
+  linkLists:
+  - linkListType: how-to-guide
+    links:
+    - text: 管理 Azure 中的 BareMetal 实例单元
+      url: workloads/sap/baremetal-infrastructure-portal.md

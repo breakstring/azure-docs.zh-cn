@@ -1,43 +1,37 @@
 ---
 title: 配置包含现有 Azure 负载均衡器的虚拟机规模集 - Azure CLI
-description: 了解如何配置包含现有 Azure 负载均衡器的虚拟机规模集。
+description: 了解如何使用 Azure CLI 通过现有的 Azure 负载均衡器来配置虚拟机规模集。
 author: asudbring
 ms.author: allensu
 ms.service: load-balancer
 ms.topic: how-to
 ms.date: 03/25/2020
-ms.openlocfilehash: 2d734e5242ff2a250d332de78cfa3b7f017a3fff
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: a60a6889217ce6ca8dccd5ebf5ee74b8f67a7757
+ms.sourcegitcommit: 5831eebdecaa68c3e006069b3a00f724bea0875a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "84809466"
+ms.lasthandoff: 11/11/2020
+ms.locfileid: "94518203"
 ---
 # <a name="configure-a-virtual-machine-scale-set-with-an-existing-azure-load-balancer-using-the-azure-cli"></a>使用 Azure CLI 配置包含现有 Azure 负载均衡器的虚拟机规模集
 
-本文介绍如何配置包含现有 Azure 负载均衡器的虚拟机规模集。 
+本文介绍如何配置包含现有 Azure 负载均衡器的虚拟机规模集。
 
-## <a name="prerequisites"></a>必备条件
+[!INCLUDE [quickstarts-free-trial-note](../../includes/quickstarts-free-trial-note.md)]
 
-- Azure 订阅。
-- 要将虚拟机规模集部署到的订阅中的现有标准 SKU 负载均衡器。
-- 虚拟机规模集的 Azure 虚拟网络。
+## <a name="prerequisites"></a>必备条件 
 
-[!INCLUDE [cloud-shell-try-it.md](../../includes/cloud-shell-try-it.md)] 
+- 需要在要部署虚拟机规模集的订阅中使用现有的标准 sku 负载均衡器。
 
-如果选择在本地使用 CLI，则本文要求安装 Azure CLI 版本的2.0.28 或更高版本。 要查找版本，请运行 `az --version`。 如果需要进行安装或升级，请参阅[安装 Azure CLI 2.0]( /cli/azure/install-azure-cli)。
+- 需要为虚拟机规模集使用 Azure 虚拟网络。
+ 
+[!INCLUDE [azure-cli-prepare-your-environment-no-header.md](../../includes/azure-cli-prepare-your-environment-no-header.md)]
 
-## <a name="sign-in-to-azure-cli"></a>登录 Azure CLI
+- 本文要求 Azure CLI 版本2.0.28 或更高版本。 如果使用 Azure Cloud Shell，则最新版本已安装。
 
-登录到 Azure。
+## <a name="deploy-a-virtual-machine-scale-set-with-existing-load-balancer"></a>使用现有的负载均衡器部署虚拟机规模集
 
-```azurecli-interactive
-az login
-```
-
-## <a name="deploy-a-virtual-machine-scale-set-with-existing-load-balancer"></a>部署包含现有负载均衡器的虚拟机规模集
-
-请将括号中的值替换为配置中的资源名称。
+将括号中的值替换为配置中资源的名称。
 
 ```azurecli-interactive
 az vmss create \
@@ -54,14 +48,14 @@ az vmss create \
     --backend-pool-name <backend-pool-name>
 ```
 
-以下示例部署一个虚拟机规模集：
+下面的示例使用部署虚拟机规模集：
 
-- 该虚拟机规模集名为 myVMSS 
-- 其中包含名为 myLoadBalancer 的 Azure 负载均衡器 
-- 其中包含名为 myBackendPool 的负载均衡器后端池 
-- 其中包含名为 myVnet 的 Azure 虚拟网络 
-- 其中包含名为 mySubnet 的子网 
-- 其中包含名为 myResourceGroup 的资源组 
+- 名为 **myVMSS** 的虚拟机规模集
+- 名为 **myLoadBalancer** 的 Azure 负载均衡器
+- 名为 **myBackendPool** 的负载均衡器后端池
+- 名为 **myVnet** 的 Azure 虚拟网络
+- 名为 **mySubnet** 的子网
+- 名为 **myResourceGroup** 的资源组
 - 虚拟机规模集的 Ubuntu 服务器映像
 
 ```azurecli-interactive

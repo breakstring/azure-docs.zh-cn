@@ -16,15 +16,18 @@ ms.date: 04/08/2019
 ms.subservice: hybrid
 ms.author: billmath
 ms.collection: M365-identity-device-management
-ms.openlocfilehash: 7a14249f28da15f04a214c2a1cb4bd415fb59ce9
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 36b7fce2e2ccb6f331e42e8052ef4fb75d35e831
+ms.sourcegitcommit: 78ecfbc831405e8d0f932c9aafcdf59589f81978
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "85356621"
+ms.lasthandoff: 01/23/2021
+ms.locfileid: "98729984"
 ---
 # <a name="azure-ad-connect-upgrade-from-a-previous-version-to-the-latest"></a>Azure AD Connect：从以前版本升级到最新版本
-本主题介绍可将 Azure Active Directory (Azure AD) Connect 安装升级到最新版本的不同方法。 建议使用最新版本的 Azure AD Connect。 进行重大配置更改时，也可以使用[交叉迁移](#swing-migration)部分所述的步骤。
+本主题介绍可将 Azure Active Directory (Azure AD) Connect 安装升级到最新版本的不同方法。  进行重大配置更改时，也可以使用[交叉迁移](#swing-migration)部分所述的步骤。
+
+>[!NOTE]
+> 让服务器与最新版本的 Azure AD Connect 保持同步非常重要。 我们会不断地对 AADConnect 升级，这些升级包括对安全问题和 bug 的修复，以及对可维护性、性能和可伸缩性的改进。 若要查看最新版本是什么，并了解版本之间发生了哪些更改，请参阅 [发布版本历史记录](./reference-connect-version-history.md)
 
 >[!NOTE]
 > 当前支持从任何版本的 Azure AD Connect 升级到当前版本。 不支持 DirSync 或 ADSync 的就地升级，必须进行交叉迁移。  如果要从 DirSync 升级，请参阅[从 Azure AD 同步工具 (DirSync) 升级](how-to-dirsync-upgrade-get-started.md)或[交叉迁移](#swing-migration)部分。  </br>实际上，极旧版本的客户可能会遇到不是与 Azure AD Connect 直接相关的问题。 已经投入生产多年的服务器通常都应用了几个修补程序，并非所有这些都能解释清楚。  通常情况下，在 12-18 个月内未升级过的客户应考虑交叉升级，因为这是最保守且风险最低的选项。
@@ -54,7 +57,7 @@ ms.locfileid: "85356621"
 
 在就地升级过程中，可能会引入更改，要求在升级完成后执行特定同步活动（包括完全导入步骤和完全同步步骤）。 若要推迟这些活动，请参考[如何在升级后推迟完全同步](#how-to-defer-full-synchronization-after-upgrade)部分。
 
-如果正在将 Azure AD Connect 与非标准连接器（例如泛型 LDAP 连接器和泛型 SQL 连接器）配合使用，则必须在就地升级后，刷新 [Synchronization Service Manager](https://docs.microsoft.com/azure/active-directory/connect/active-directory-aadconnectsync-service-manager-ui-connectors) 中的相应连接器配置。 有关如何刷新连接器配置的详细信息，请参阅文章[连接器版本发行历史记录 - 故障排除](https://docs.microsoft.com/azure/active-directory/connect/active-directory-aadconnectsync-connector-version-history#troubleshooting)。 如果不刷新配置，针对连接器的导入和导出运行步骤将无法正常工作。 将在应用程序事件日志中接收到如下错误，内容为“AAD 连接器配置 ("X.X.XXX.X") 中的程序集版本低于 "C:\Program Files\Microsoft Azure AD Sync\Extensions\Microsoft.IAM.Connector.GenericLdap.dll" 的实际版本 ("X.X.XXX.X")**。
+如果正在将 Azure AD Connect 与非标准连接器（例如泛型 LDAP 连接器和泛型 SQL 连接器）配合使用，则必须在就地升级后，刷新 [Synchronization Service Manager](./how-to-connect-sync-service-manager-ui-connectors.md) 中的相应连接器配置。 有关如何刷新连接器配置的详细信息，请参阅文章[连接器版本发行历史记录 - 故障排除](/microsoft-identity-manager/reference/microsoft-identity-manager-2016-connector-version-history#troubleshooting)。 如果不刷新配置，针对连接器的导入和导出运行步骤将无法正常工作。 将在应用程序事件日志中接收到如下错误，内容为“AAD 连接器配置 ("X.X.XXX.X") 中的程序集版本低于 "C:\Program Files\Microsoft Azure AD Sync\Extensions\Microsoft.IAM.Connector.GenericLdap.dll" 的实际版本 ("X.X.XXX.X")。
 
 ## <a name="swing-migration"></a>交叉迁移
 如果部署复杂或者有多个对象，在活动的系统上进行就地升级可能不切合实际。 对于某些客户来说，此过程可能要花费几天时间，在此期间无法处理任何增量更改。 如果打算对配置进行重大更改，并且希望在将这些更改推送到云之前对其进行测试，则也可以使用此方法。
@@ -106,7 +109,7 @@ ms.locfileid: "85356621"
 
 1. 在升级过程中，取消选中“在配置完成后启动同步流程”选项   。 这将禁用同步计划程序，并防止在替代移除之前自动进入同步周期。
 
-   ![DisableFullSyncAfterUpgrade](./media/how-to-upgrade-previous-version/disablefullsync01.png)
+   ![此屏幕截图突出显示了需要清除的“配置完成时启动同步过程”选项。](./media/how-to-upgrade-previous-version/disablefullsync01.png)
 
 2. 升级完成后，运行以下 cmdlet，找出添加的替代：`Get-ADSyncSchedulerConnectorOverride | fl`
 

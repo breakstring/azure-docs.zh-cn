@@ -1,18 +1,18 @@
 ---
 title: 教程：设计 Azure Database for MariaDB - Azure 门户
 description: 本教程介绍如何使用 Azure 门户创建和管理 Azure Database for MariaDB 服务器和数据库。
-author: ajlam
-ms.author: andrela
-ms.service: mariadb
+author: savjani
+ms.author: pariks
+ms.service: jroth
 ms.topic: tutorial
 ms.date: 3/18/2020
 ms.custom: mvc
-ms.openlocfilehash: 974b6a1e980119582d4fedb5f8b4e73685290de3
-ms.sourcegitcommit: 58faa9fcbd62f3ac37ff0a65ab9357a01051a64f
+ms.openlocfilehash: 9df151be99ba81af28f6b7b0cc012eae7db3ea1b
+ms.sourcegitcommit: 52e3d220565c4059176742fcacc17e857c9cdd02
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/29/2020
-ms.locfileid: "80063786"
+ms.lasthandoff: 01/21/2021
+ms.locfileid: "98664463"
 ---
 # <a name="tutorial-design-an-azure-database-for-mariadb-database-by-using-the-azure-portal"></a>教程：使用 Azure 门户设计 Azure Database for MariaDB 数据库
 
@@ -37,7 +37,7 @@ Azure Database for MariaDB 是一种托管服务，可用于在云中运行、�
 
 ## <a name="create-an-azure-database-for-mariadb-server"></a>创建 Azure Database for MariaDB 服务器
 
-创建 Azure Database for MariaDB 服务器时，请使用定义好的一组[计算和存储资源](concepts-pricing-tiers.md)。 将在 [Azure 资源组](https://docs.microsoft.com/azure/azure-resource-manager/resource-group-overview)中创建服务器。
+创建 Azure Database for MariaDB 服务器时，请使用定义好的一组[计算和存储资源](concepts-pricing-tiers.md)。 将在 [Azure 资源组](../azure-resource-manager/management/overview.md)中创建服务器。
 
 1. 选择门户左上角的“创建资源”按钮 (+)  。
 
@@ -89,7 +89,7 @@ Azure Database for MariaDB 受防火墙保护。 默认情况下，将拒绝与�
 
 1. 在 [Azure 门户](https://portal.azure.com/)的左侧菜单中，选择“所有资源”。  输入服务器名称，搜索 Azure Database for MariaDB 服务器。 选择服务器名称以查看服务器详细信息。
 
-2. 在“概览”页中记下“服务器名称”和“服务器管理员登录名”的值。    也可选择每个字段旁边的**复制**按钮，将值复制到剪贴板。
+2. 在“概览”页中记下“服务器名称”和“服务器管理员登录名”的值。    也可选择每个字段旁边的 **复制** 按钮，将值复制到剪贴板。
 
    ![服务器属性](./media/tutorial-design-database-using-portal/2-server-properties.png)
 
@@ -194,4 +194,4 @@ SELECT * FROM inventory;
 > * 还原数据
 
 > [!div class="nextstepaction"]
-> [如何将应用程序连接到 Azure Database for MariaDB](./howto-connection-string.md)
+> [如何将应用程序连接到 Azure Database for MariaDB](howto-connection-string.md)

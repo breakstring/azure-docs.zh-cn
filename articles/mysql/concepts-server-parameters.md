@@ -1,17 +1,17 @@
 ---
 title: 服务器参数 - Azure Database for MySQL
 description: 本主题提供了在 Azure Database for MySQL 中配置服务器参数的准则。
-author: ajlam
-ms.author: andrela
+author: Bashar-MSFT
+ms.author: bahusse
 ms.service: mysql
 ms.topic: conceptual
-ms.date: 6/25/2020
-ms.openlocfilehash: e7ca86d0146f05d5171d5eae18aac81d75122bcc
-ms.sourcegitcommit: ef055468d1cb0de4433e1403d6617fede7f5d00e
+ms.date: 1/26/2021
+ms.openlocfilehash: 1b0bcf528a16e2f75bf21235980424b5375f8824
+ms.sourcegitcommit: 44188608edfdff861cc7e8f611694dec79b9ac7d
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/16/2020
-ms.locfileid: "88258547"
+ms.lasthandoff: 02/04/2021
+ms.locfileid: "99539478"
 ---
 # <a name="server-parameters-in-azure-database-for-mysql"></a>Azure Database for MySQL 中的服务器参数
 
@@ -55,6 +55,12 @@ MySQL 通常会为每个客户端连接分配一个线程。 随着并发用户�
 > [!IMPORTANT]
 > 请在生产环境中启用线程池之前对其进行测试。 
 
+### <a name="log_bin_trust_function_creators"></a>log_bin_trust_function_creators
+
+在 Azure Database for MySQL 中，始终启用二进制日志（即，将 `log_bin` 设置为“ON”）。 如果你想使用触发器，则会收到如下错误：“你没有 SUPER 权限且二进制日志记录已启用(你可能需要使用安全性更低的 `log_bin_trust_function_creators` 变量)”。 
+
+二进制日志记录格式始终是“行”，所有与服务器的连接始终使用基于行的二进制日志记录。 使用基于行的二进制日志记录时，不存在安全问题并且二进制日志记录无法中断，因此可以安全地将 [`log_bin_trust_function_creators`](https://dev.mysql.com/doc/refman/5.7/en/replication-options-binary-log.html#sysvar_log_bin_trust_function_creators) 设置为 TRUE。
+
 ### <a name="innodb_buffer_pool_size"></a>innodb_buffer_pool_size
 
 查看 [MySQL 文档](https://dev.mysql.com/doc/refman/5.7/en/innodb-parameters.html#sysvar_innodb_buffer_pool_size)详细了解此参数。
@@ -77,7 +83,7 @@ MySQL 通常会为每个客户端连接分配一个线程。 随着并发用户�
 |内存优化|16|65498251264|134217728|65498251264|
 |内存优化|32|132070244352|134217728|132070244352|
 
-#### <a name="servers-support-up-to-16-tb-storage"></a>服务器最多支持 16 TB 的存储
+#### <a name="servers-support-up-to-16-tb-storage"></a>服务器最多支持 16 TB 存储
 
 |**定价层**|**vCore(s)**|**默认值（字节）**|**最小值（字节）**|**最大值（字节）**|
 |---|---|---|---|---|
@@ -102,7 +108,7 @@ MySQL 通常会为每个客户端连接分配一个线程。 随着并发用户�
 
 MySQL 根据你在表创建期间提供的配置，将 InnoDB 表存储在不同的表空间中。 [系统表空间](https://dev.mysql.com/doc/refman/5.7/en/innodb-system-tablespace.html)是 InnoDB 数据字典的存储区域。 [file-per-table 表空间](https://dev.mysql.com/doc/refman/5.7/en/innodb-file-per-table-tablespaces.html)包含单个 InnoDB 表的数据和索引，并存储在文件系统内它自己的数据文件中。 此行为由 `innodb_file_per_table` 服务器参数控制。 将 `innodb_file_per_table` 设置为 `OFF` 会导致 InnoDB 在系统表空间中创建表。 否则，InnoDB 在 file-per-table 表空间中创建表。
 
-在单个数据文件中，Azure Database for MySQL 支持最大 1TB。 如果数据库大小超过 1TB，应在 [innodb_file_per_table](https://dev.mysql.com/doc/refman/5.7/en/innodb-parameters.html#sysvar_innodb_file_per_table) 表空间中创建表。 如果单个表的大小超过 1 TB，应使用分区表。
+在单个数据文件中，Azure Database for MySQL 支持的最大大小为 4 TB。 如果数据库大小超过 4 TB，应在 [innodb_file_per_table](https://dev.mysql.com/doc/refman/5.7/en/innodb-parameters.html#sysvar_innodb_file_per_table) 表空间中创建表。 如果单个表的大小超过 4 TB，应使用分区表。
 
 ### <a name="join_buffer_size"></a>join_buffer_size
 
@@ -110,8 +116,8 @@ MySQL 根据你在表创建期间提供的配置，将 InnoDB 表存储在不同
 
 |**定价层**|**vCore(s)**|**默认值（字节）**|**最小值（字节）**|**最大值（字节）**|
 |---|---|---|---|---|
-|基本|1|在基本层中不可配置|空值|空值|
-|基本|2|在基本层中不可配置|空值|空值|
+|基本|1|在基本层中不可配置|不适用|不适用|
+|基本|2|在基本层中不可配置|不适用|不适用|
 |常规用途|2|262144|128|268435455|
 |常规用途|4|262144|128|536870912|
 |常规用途|8|262144|128|1073741824|
@@ -159,8 +165,8 @@ MySQL 根据你在表创建期间提供的配置，将 InnoDB 表存储在不同
 
 |**定价层**|**vCore(s)**|**默认值（字节）**|**最小值（字节）**|**最大值（字节）**|
 |---|---|---|---|---|
-|基本|1|在基本层中不可配置|空值|空值|
-|基本|2|在基本层中不可配置|空值|空值|
+|基本|1|在基本层中不可配置|不适用|不适用|
+|基本|2|在基本层中不可配置|不适用|不适用|
 |常规用途|2|16777216|16384|268435455|
 |常规用途|4|16777216|16384|536870912|
 |常规用途|8|16777216|16384|1073741824|
@@ -184,8 +190,8 @@ MySQL 根据你在表创建期间提供的配置，将 InnoDB 表存储在不同
 
 |**定价层**|**vCore(s)**|**默认值（字节）**|**最小值（字节）**|**最大值 **|
 |---|---|---|---|---|
-|基本|1|在基本层中不可配置|空值|空值|
-|基本|2|在基本层中不可配置|空值|空值|
+|基本|1|在基本层中不可配置|不适用|不适用|
+|基本|2|在基本层中不可配置|不适用|不适用|
 |常规用途|2|0|0|16777216|
 |常规用途|4|0|0|33554432|
 |常规用途|8|0|0|67108864|
@@ -200,21 +206,21 @@ MySQL 根据你在表创建期间提供的配置，将 InnoDB 表存储在不同
 
 ### <a name="lower_case_table_names"></a>lower_case_table_names
 
-默认情况下，lower_case_table_name 设置为1，你可以在 MySQL 5.6 和 MySQL 5.7 中更新此参数
+lower_case_table_name 默认设置为 1，你可以在 MySQL 5.6 和 MySQL 5.7 中更新此参数
 
 查看 [MySQL 文档](https://dev.mysql.com/doc/refman/5.7/en/server-system-variables.html#sysvar_lower_case_table_names)详细了解此参数。
 
 > [!NOTE]
-> 在 MySQL 8.0 中，默认情况下，lower_case_table_name 设置为1，您无法更改它。
+> 在 MySQL 8.0 中，lower_case_table_name 默认设置为 1 且无法更改。
 
 ### <a name="innodb_strict_mode"></a>innodb_strict_mode
 
-如果收到类似于 "行大小太大 ( # A0 8126) " 的错误，则可能需要关闭参数 **innodb_strict_mode**。 不允许在服务器级别全局修改服务器参数 **innodb_strict_mode** ，因为如果行数据大小大于8k，则数据将被截断，且不会导致数据丢失。 建议修改架构以适应页面大小限制。 
+如果收到类似于“行大小太大(> 8126)”的错误，则可能需要关闭 innodb_strict_mode 参数。 不允许在服务器级别全局修改服务器参数 innodb_strict_mode，因为如果行数据大小大于 8k，该数据将会被截断，且不显示错误，这样就会导致有可能丢失数据。 建议修改架构以适应页面大小限制。 
 
-可以使用在会话级别设置此参数 `init_connect` 。 若要在会话级别设置 **innodb_strict_mode** ，请参阅 [未列出的设置参数](https://docs.microsoft.com/azure/mysql/howto-server-parameters#setting-parameters-not-listed)。
+可以使用 `init_connect` 在会话级别设置此参数。 若要在会话级别设置 innodb_strict_mode，请参阅[设置未列出的参数](./howto-server-parameters.md#setting-parameters-not-listed)。
 
 > [!NOTE]
-> 如果有读取副本服务器，在主服务器上的会话级别将 **innodb_strict_mode** 设置为 OFF 会断开复制。 如果已读取副本，我们建议将参数设置为 OFF。
+> 如果有只读副本服务器，在源服务器上的会话级别将 innodb_strict_mode 设置为 OFF 会中断复制。 如果有只读副本，建议将该参数始终设置为 OFF。
 
 ### <a name="sort_buffer_size"></a>sort_buffer_size
 
@@ -222,8 +228,8 @@ MySQL 根据你在表创建期间提供的配置，将 InnoDB 表存储在不同
 
 |**定价层**|**vCore(s)**|**默认值（字节）**|**最小值（字节）**|**最大值（字节）**|
 |---|---|---|---|---|
-|基本|1|在基本层中不可配置|空值|空值|
-|基本|2|在基本层中不可配置|空值|空值|
+|基本|1|在基本层中不可配置|不适用|不适用|
+|基本|2|在基本层中不可配置|不适用|不适用|
 |常规用途|2|524288|32768|4194304|
 |常规用途|4|524288|32768|8388608|
 |常规用途|8|524288|32768|16777216|
@@ -242,8 +248,8 @@ MySQL 根据你在表创建期间提供的配置，将 InnoDB 表存储在不同
 
 |**定价层**|**vCore(s)**|**默认值（字节）**|**最小值（字节）**|**最大值（字节）**|
 |---|---|---|---|---|
-|基本|1|在基本层中不可配置|空值|空值|
-|基本|2|在基本层中不可配置|空值|空值|
+|基本|1|在基本层中不可配置|不适用|不适用|
+|基本|2|在基本层中不可配置|不适用|不适用|
 |常规用途|2|16777216|1024|67108864|
 |常规用途|4|16777216|1024|134217728|
 |常规用途|8|16777216|1024|268435456|
@@ -255,6 +261,18 @@ MySQL 根据你在表创建期间提供的配置，将 InnoDB 表存储在不同
 |内存优化|8|16777216|1024|536870912|
 |内存优化|16|16777216|1024|1073741824|
 |内存优化|32|16777216|1024|1073741824|
+
+### <a name="innodb-buffer-pool-warmup"></a>InnoDB 缓冲池预热
+重新启动 Azure Database for MySQL server 后，将在查询表时加载驻留在磁盘中的数据页。 这会导致第一次执行查询时的延迟时间和性能降低。 对于延迟敏感的工作负荷，这可能是不可接受的。 利用 InnoDB 缓冲池预热，可以在重新启动之前通过重新加载缓冲池中的磁盘页来缩短预热期，而不是等待 DML 或 SELECT 操作访问相应的行。
+
+可以通过配置 [InnoDB 缓冲池服务器参数](https://dev.mysql.com/doc/refman/8.0/en/innodb-preload-buffer-pool.html)来重新启动 Azure Database for MySQL 服务器，这表示性能优势。 InnoDB 在服务器关闭时保存每个缓冲池最近使用过的页面的百分比，并在服务器启动时还原这些页面。
+
+另外，请务必注意，在服务器的启动时间较长的情况下，性能得到改进。 启用此参数时，服务器的启动时间和重新启动时间应根据服务器上设置的 IOPS 而增加。 建议测试并监视重新启动时间，以确保在该时间段内服务器不可用时可以接受启动/重新启动性能。 如果预配的 IOPS 小于 1000 (IOPS，则不建议使用此参数，在335GB 预配时，不建议使用此参数。
+
+若要在服务器关闭时将缓冲池的状态设置为，请将服务器参数设置 `innodb_buffer_pool_dump_at_shutdown` 为 `ON` 。 同样，将 "服务器参数" 设置 `innodb_buffer_pool_load_at_startup` 为， `ON` 以在服务器启动时还原缓冲池状态。 可以通过降低和微调服务器参数的值来控制启动/重新启动的影响 `innodb_buffer_pool_dump_pct` ，默认情况下，此参数设置为 `25` 。
+
+> [!Note]
+> InnoDB 缓冲池预热参数仅在具有高达 16 TB 存储的常规用途存储服务器中受支持。 [在此处了解 Azure Database for MySQL 存储选项](https://docs.microsoft.com/azure/mysql/concepts-pricing-tiers#storage)的详细信息。
 
 ### <a name="time_zone"></a>time_zone
 

@@ -1,19 +1,19 @@
 ---
 title: Azure VMware 解决方案（按 CloudSimple）-创建 CloudSimple 服务
 description: 了解如何在 Azure 门户中创建 CloudSimple 服务。 在开始之前，请查看所需的配置。
-author: sharaths-cs
-ms.author: b-shsury
+author: Ajayan1008
+ms.author: v-hborys
 ms.date: 08/19/2019
 ms.topic: article
 ms.service: azure-vmware-cloudsimple
 ms.reviewer: cynthn
 manager: dikamath
-ms.openlocfilehash: 2a196e717dd6e02570e4bdf830a24ce342b47ece
-ms.sourcegitcommit: a2a7746c858eec0f7e93b50a1758a6278504977e
+ms.openlocfilehash: 53f2d0fc9f73985bd70792c8c3b7607eb4c560fa
+ms.sourcegitcommit: d7d5f0da1dda786bda0260cf43bd4716e5bda08b
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/12/2020
-ms.locfileid: "88140541"
+ms.lasthandoff: 01/05/2021
+ms.locfileid: "97896288"
 ---
 # <a name="create-the-azure-vmware-solution-by-cloudsimple-service"></a>通过 CloudSimple 服务创建 Azure VMware 解决方案
 
@@ -25,18 +25,18 @@ ms.locfileid: "88140541"
 
 ## <a name="sign-in-to-azure"></a>登录 Azure
 
-登录到 [Azure 门户](https://portal.azure.com)。
+登录 [Azure 门户](https://portal.azure.com)。
 
 ## <a name="create-the-service"></a>创建服务
 
-1. 选择“所有服务”。
+1. 选择“所有服务”  。
 2. 搜索 " **CloudSimple Services**"。
     ![搜索 CloudSimple 服务](media/create-cloudsimple-service-search.png)
-3. 选择**CloudSimple Services**。
-4. 单击 "**添加**" 创建新服务。
+3. 选择 **CloudSimple Services**。
+4. 单击 " **添加** " 创建新服务。
     ![添加 CloudSimple 服务](media/create-cloudsimple-service-add.png)
 5. 选择要在其中创建 CloudSimple 服务的订阅。
-6. 选择服务的资源组。 若要添加新的资源组，请单击 "**新建**"。
+6. 选择服务的资源组。 若要添加新的资源组，请单击 " **新建**"。
 7. 输入名称以标识该服务。
 8. 输入服务网关的 CIDR。 指定不与任何本地子网、Azure 子网或计划 CloudSimple 子网重叠的 a/28 子网。 创建服务后无法更改 CIDR。
 
@@ -47,6 +47,6 @@ ms.locfileid: "88140541"
 
 ## <a name="next-steps"></a>后续步骤
 
-* 了解如何[预配节点](create-nodes.md)
-* 了解如何[创建私有云](create-private-cloud.md)
-* 了解如何[配置私有云环境](quickstart-create-private-cloud.md)
+* 了解如何 [预配节点](create-nodes.md)
+* 了解如何 [创建私有云](create-private-cloud.md)
+* 了解如何 [配置私有云环境](quickstart-create-private-cloud.md)

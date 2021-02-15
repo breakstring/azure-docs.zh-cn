@@ -3,12 +3,12 @@ title: Azure Functions 中的 IP 地址
 description: 了解如何查找函数应用的入站和出站 IP 地址，以及这些地址发生更改的原因。
 ms.topic: conceptual
 ms.date: 12/03/2018
-ms.openlocfilehash: 4b99855d8cc28a41d9eb91bdcf691747910ed4a1
-ms.sourcegitcommit: dea88d5e28bd4bbd55f5303d7d58785fad5a341d
+ms.openlocfilehash: fcc92e61e180d25bc67d5ca3f9e2bff4af01fd3f
+ms.sourcegitcommit: 78ecfbc831405e8d0f932c9aafcdf59589f81978
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/06/2020
-ms.locfileid: "87874072"
+ms.lasthandoff: 01/23/2021
+ms.locfileid: "98726725"
 ---
 # <a name="ip-addresses-in-azure-functions"></a>Azure Functions 中的 IP 地址
 
@@ -27,8 +27,7 @@ IP 地址与函数应用而不是单个函数相关联。 传入的 HTTP 请求�
 
 1. 登录到 [Azure 门户](https://portal.azure.com)。
 2. 导航到函数应用。
-3. 选择“平台功能”。****
-4. 选择“属性”，然后选择“虚拟 IP 地址”下面显示的入站 IP 地址。**** ****
+3. 在“设置”下，选择“属性”   。 入站 IP 地址显示在 " **虚拟 IP 地址**" 下。
 
 ## <a name="function-app-outbound-ip-addresses"></a><a name="find-outbound-ip-addresses"></a>函数应用的出站 IP 地址
 
@@ -37,7 +36,7 @@ IP 地址与函数应用而不是单个函数相关联。 传入的 HTTP 请求�
 查找函数应用可用的出站 IP 地址：
 
 1. 登录到 [Azure 资源浏览器](https://resources.azure.com)。
-2. 选择“订阅”> {你的订阅} >“提供程序”>“Microsoft.Web”>“站点”。****
+2. 选择“订阅”> {你的订阅} >“提供程序”>“Microsoft.Web”>“站点”。
 3. 在 JSON 面板中，找到其 `id` 属性以函数应用名称结尾的站点。
 4. 请参见 `outboundIpAddresses` 和 `possibleOutboundIpAddresses`。 
 
@@ -51,11 +50,11 @@ az webapp show --resource-group <group_name> --name <app_name> --query possibleO
 ```
 
 > [!NOTE]
-> 缩放按[消耗计划](functions-scale.md#consumption-plan)运行的函数应用时，可以分配新范围的出站 IP 地址。 在消耗计划中运行时，您可能需要将整个数据中心添加到允许列表中。
+> 对按[消耗计划](consumption-plan.md)或[高级计划](functions-premium-plan.md)运行的函数应用进行缩放时，可能会分配新范围的出站 IP 地址。 按上述任一计划运行时，可能需要将整个数据中心添加到允许列表。
 
 ## <a name="data-center-outbound-ip-addresses"></a>数据中心出站 IP 地址
 
-如果需要将函数应用使用的出站 IP 地址添加到允许列表，另一个选项是将函数应用的数据中心 (Azure 区域) 添加到允许列表。 可以[下载列出所有 Azure 数据中心 IP 地址的 JSON 文件](https://www.microsoft.com/en-us/download/details.aspx?id=56519)。 然后，找到应用于运行函数应用的区域的 JSON 片段。
+如果需要将函数应用使用的出站 IP 地址添加到允许列表，另一种做法是将函数应用的数据中心（Azure 区域）添加到允许列表。 可以[下载列出所有 Azure 数据中心 IP 地址的 JSON 文件](https://www.microsoft.com/en-us/download/details.aspx?id=56519)。 然后，找到应用于运行函数应用的区域的 JSON 片段。
 
 例如，应用于西欧区域的 JSON 片段可能如下所示：
 
@@ -79,17 +78,17 @@ az webapp show --resource-group <group_name> --name <app_name> --query possibleO
 }
 ```
 
- 有关此文件何时更新以及 IP 地址何时更改的信息，请展开[下载中心页](https://www.microsoft.com/en-us/download/details.aspx?id=56519)的“详细信息”部分。****
+ 有关此文件何时更新以及 IP 地址何时更改的信息，请展开[下载中心页](https://www.microsoft.com/en-us/download/details.aspx?id=56519)的“详细信息”部分。
 
 ## <a name="inbound-ip-address-changes"></a><a name="inbound-ip-address-changes"></a>入站 IP 地址更改
 
-如果执行以下操作，入站 IP 地址**可能**会更改：
+如果执行以下操作，入站 IP 地址 **可能** 会更改：
 
 - 删除函数应用，然后在不同的资源组中重新创建它。
 - 删除资源组和区域组合中的最后一个函数应用，然后重新创建它。
 - 删除 TLS 绑定（例如，在[证书续订](../app-service/configure-ssl-certificate.md#renew-certificate)期间）。
 
-当函数应用在[消耗计划](functions-scale.md#consumption-plan)中运行时，即使你未执行任何操作（如[上面列出](#inbound-ip-address-changes)的操作），入站 IP 地址也可能会更改。
+当函数应用在[消耗计划](consumption-plan.md)或[高级计划](functions-premium-plan.md)中运行时，即使你未执行任何操作（如[上面列出](#inbound-ip-address-changes)的操作），入站 IP 地址也可能会更改。
 
 ## <a name="outbound-ip-address-changes"></a>出站 IP 地址更改
 
@@ -98,7 +97,7 @@ az webapp show --resource-group <group_name> --name <app_name> --query possibleO
 * 执行可能更改入站 IP 地址的任何操作。
 * 更改应用服务计划的定价层。 应用可在所有定价层中使用的所有可能出站 IP 地址列表在 `possibleOutboundIPAddresses` 属性中指定。 请参阅[查找出站 IP](#find-outbound-ip-addresses)。
 
-当函数应用在[消耗计划](functions-scale.md#consumption-plan)中运行时，即使你未执行任何操作（如[上面列出](#inbound-ip-address-changes)的操作），入站 IP 地址也可能会更改。
+当函数应用在[消耗计划](consumption-plan.md)或[高级计划](functions-premium-plan.md)中运行时，即使你未执行任何操作（如[上面列出](#inbound-ip-address-changes)的操作），出站 IP 地址也可能会更改。
 
 有意强制出站 IP 地址更改：
 
@@ -118,8 +117,8 @@ az webapp show --resource-group <group_name> --name <app_name> --query possibleO
 
 1. 登录到 [Azure 门户](https://portal.azure.com)。
 2. 导航到函数应用。
-3. 选择“概述”选项卡。****
-4. 应用服务计划层显示在“应用服务计划/定价层”下面。**** 应用服务环境定价层为“隔离”。****
+3. 选择“概述”选项卡。
+4. 应用服务计划层显示在“应用服务计划/定价层”下面。 应用服务环境定价层为“隔离”。
  
 或者，可以使用 [Cloud Shell](../cloud-shell/quickstart.md)：
 

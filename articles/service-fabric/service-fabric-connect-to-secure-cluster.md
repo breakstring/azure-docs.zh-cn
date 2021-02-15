@@ -3,12 +3,13 @@ title: 安全地连接到 Azure Service Fabric 群集
 description: 介绍如何对访问 Service Fabric 群集的客户端进行身份验证，以及如何保护客户端与群集之间的通信。
 ms.topic: conceptual
 ms.date: 01/29/2019
-ms.openlocfilehash: 89d3598b283a91645f0db648be81c73dffde8b46
-ms.sourcegitcommit: dabd9eb9925308d3c2404c3957e5c921408089da
+ms.custom: devx-track-csharp
+ms.openlocfilehash: 3a669f7400eb2daf2d71f6caed41560020699c58
+ms.sourcegitcommit: a055089dd6195fde2555b27a84ae052b668a18c7
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/11/2020
-ms.locfileid: "86259245"
+ms.lasthandoff: 01/26/2021
+ms.locfileid: "98791115"
 ---
 # <a name="connect-to-a-secure-cluster"></a>连接到安全群集
 
@@ -155,7 +156,7 @@ Service Fabric SDK 提供用于群集管理的 [FabricClient](/dotnet/api/system
 FabricClient fabricClient = new FabricClient("clustername.westus.cloudapp.azure.com:19000");
 ```
 
-对于从群集内部运行的代码（例如在可靠服务中运行的代码），可在*不* 指定群集地址的情况下创建 FabricClient。 FabricClient 可连接到当前正在运行代码的节点上的本地管理网关，避免额外的网络跃点。
+对于从群集内部运行的代码（例如在可靠服务中运行的代码），可在 *不* 指定群集地址的情况下创建 FabricClient。 FabricClient 可连接到当前正在运行代码的节点上的本地管理网关，避免额外的网络跃点。
 
 ```csharp
 FabricClient fabricClient = new FabricClient();
@@ -231,7 +232,7 @@ catch (Exception e)
 
 以下示例依赖于 Microsoft.IdentityModel.Clients.ActiveDirectory，版本：2.19.208020213。
 
-有关 AAD 令牌获取过程的详细信息，请参阅 [Microsoft.IdentityModel.Clients.ActiveDirectory](/dotnet/api/microsoft.identitymodel.clients.activedirectory?view=azure-dotnet)。
+有关 AAD 令牌获取过程的详细信息，请参阅 [Microsoft.IdentityModel.Clients.ActiveDirectory](/dotnet/api/microsoft.identitymodel.clients.activedirectory)。
 
 ```csharp
 string tenantId = "C15CFCEA-02C1-40DC-8466-FBD0EE0B05D2";

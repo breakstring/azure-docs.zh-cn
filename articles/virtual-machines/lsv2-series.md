@@ -7,12 +7,12 @@ ms.subservice: sizes
 ms.topic: conceptual
 ms.date: 02/03/2020
 ms.author: jushiman
-ms.openlocfilehash: 78d707c0b5afd745ae805c9513243f3791d47c60
-ms.sourcegitcommit: 271601d3eeeb9422e36353d32d57bd6e331f4d7b
+ms.openlocfilehash: 2416c0b4002f560e272393c95a86c543cb5f1009
+ms.sourcegitcommit: b4e6b2627842a1183fce78bce6c6c7e088d6157b
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/20/2020
-ms.locfileid: "88654746"
+ms.lasthandoff: 01/30/2021
+ms.locfileid: "99097836"
 ---
 # <a name="lsv2-series"></a>Lsv2 系列
 
@@ -25,19 +25,18 @@ Lsv2 系列具有高吞吐量、低延迟、在 [AMD EPYC<sup>TM</sup>7551 处�
 >
 > 若要了解详细信息，请参阅：针对 [Windows](../virtual-machines/windows/storage-performance.md) 或 [Linux](../virtual-machines/linux/storage-performance.md) 优化 Lsv2 系列虚拟机上的性能。  
 
-ACU：150-175
+[ACU](acu.md)：150-175<br>
+[高级存储](premium-storage-performance.md)：支持<br>
+[高级存储缓存](premium-storage-performance.md)：不支持<br>
+[实时迁移](maintenance-and-updates.md)：不支持<br>
+[内存保留更新](maintenance-and-updates.md)：不支持<br>
+[VM 代系支持](generation-2.md)：第 1 代和第 2 代<br>
+突发：支持<br>
+[加速网络](../virtual-network/create-vm-accelerated-networking-cli.md)：支持<br>
+[临时 OS 磁盘](ephemeral-os-disks.md)：不支持 <br>
+<br>
 
-突发：支持
-
-高级存储：支持
-
-高级存储缓存：不支持
-
-实时迁移：不支持
-
-内存保留更新：不支持
-
-| 大小 | vCPU | 内存 (GiB) | 临时磁盘<sup>1</sup> (GiB) | NVMe 磁盘<sup>2</sup> | NVMe 磁盘吞吐量<sup>3</sup>（读取 IOPS/MBps） | 非缓存数据磁盘吞吐量 (IOPS/MBps)<sup>4</sup> | 最大突发非缓存数据磁盘吞吐量 (IOPS/MBps)<sup>5</sup>| 最大数据磁盘 | 最大 NIC 数 | 预期网络带宽 (Mbps)  |
+| 大小 | vCPU | 内存 (GiB) | 临时磁盘<sup>1</sup> (GiB) | NVMe 磁盘<sup>2</sup> | NVMe 磁盘吞吐量<sup>3</sup>（读取 IOPS/MBps） | 非缓存数据磁盘吞吐量 (IOPS/MBps)<sup>4</sup> | 最大突发非缓存数据磁盘吞吐量 (IOPS/MBps)<sup>5</sup>| 最大数据磁盘 | 最大 NIC 数 | 预期的网络带宽 (Mbps) |
 |---|---|---|---|---|---|---|---|---|---|---|
 | Standard_L8s_v2   |  8 |  64 |  80 |  1x1.92 TB  | 400000/2000  | 8000/160   | 8000/1280 | 16 | 2 | 3200   |
 | Standard_L16s_v2  | 16 | 128 | 160 |  2x1.92 TB  | 800000/4000  | 16000/320  | 16000/1280 | 32 | 4 | 6400   |
@@ -54,7 +53,7 @@ ACU：150-175
 
 <sup>4</sup> Lsv2 系列 VM 不为数据磁盘提供主机缓存，因为这不会让 Lsv2 工作负荷受益。
 
-<sup>5</sup> Lsv2 系列 VM 可以通过[突发](linux/disk-bursting.md)方式提高其磁盘性能，一次长达 30 分钟。 
+<sup>5</sup> Lsv2 系列 VM 可以通过[突发](./disk-bursting.md)方式提高其磁盘性能，一次长达 30 分钟。 
 
 <sup>6</sup> 具有 64 个以上 vCPU 的 VM 需要以下受支持的来宾操作系统之一：
 
@@ -73,7 +72,7 @@ ACU：150-175
 - 存储容量的单位为 GiB 或 1024^3 字节。 比较以 GB（1000^3 字节）为单位的磁盘和以 GiB（1024^3 字节）为单位的磁盘时，请记住以 GiB 为单位的容量数显得更小。 例如，1023 GiB = 1098.4 GB
 - 磁盘吞吐量的单位为每秒输入/输出操作数 (IOPS) 和 Mbps，其中 Mbps = 10^6 字节/秒。
 - 若要获得 VM 的最佳性能，应将数据磁盘数限制为每 vCPU 2 个磁盘。
-- **预期的网络带宽**是指跨所有 NIC [为每个 VM 类型分配的最大聚合带宽](../virtual-network/virtual-machine-network-throughput.md)，适用于所有目标。 不保证能够达到上述预期上限，但目的是提供相关指导，以便为目标应用程序选择适当的 VM 类型。 实际的网络性能将取决于许多因素，包括网络拥塞、应用程序负载和网络设置。 有关如何优化网络吞吐量的信息，请参阅[为 Windows 和 Linux 优化网络吞吐量](../virtual-network/virtual-network-optimize-network-bandwidth.md)。 若要在 Linux 或 Windows 中达到预期的网络性能，可能需要选择特定版本，或者需要优化 VM。 有关详细信息，请参阅[如何针对虚拟机吞吐量进行可靠的测试](../virtual-network/virtual-network-bandwidth-testing.md)。
+- **预期的网络带宽** 是指跨所有 NIC [为每个 VM 类型分配的最大聚合带宽](../virtual-network/virtual-machine-network-throughput.md)，适用于所有目标。 不保证能够达到上述预期上限，但目的是提供相关指导，以便为目标应用程序选择适当的 VM 类型。 实际的网络性能将取决于许多因素，包括网络拥塞、应用程序负载和网络设置。 有关如何优化网络吞吐量的信息，请参阅[为 Windows 和 Linux 优化网络吞吐量](../virtual-network/virtual-network-optimize-network-bandwidth.md)。 若要在 Linux 或 Windows 中达到预期的网络性能，可能需要选择特定版本，或者需要优化 VM。 有关详细信息，请参阅[如何针对虚拟机吞吐量进行可靠的测试](../virtual-network/virtual-network-bandwidth-testing.md)。
 
 
 ## <a name="other-sizes-and-information"></a>其他大小和信息
@@ -85,9 +84,9 @@ ACU：150-175
 - [高性能计算](sizes-hpc.md)
 - [前几代](sizes-previous-gen.md)
 
-定价计算器： [定价计算器](https://azure.microsoft.com/pricing/calculator/)
+定价计算器：[定价计算器](https://azure.microsoft.com/pricing/calculator/)
 
-有关磁盘类型的详细信息： [磁盘类型](./disks-types.md#ultra-disk)
+有关磁盘类型的详细信息：[磁盘类型](./disks-types.md#ultra-disk)
 
 
 ## <a name="next-steps"></a>后续步骤

@@ -8,13 +8,13 @@ ms.topic: conceptual
 ms.service: azure-maps
 services: azure-maps
 manager: philmea
-ms.custom: devx-track-javascript
-ms.openlocfilehash: b094f63c075bdb8af225ff366343c60bc6818224
-ms.sourcegitcommit: d39f2cd3e0b917b351046112ef1b8dc240a47a4f
+ms.custom: devx-track-js
+ms.openlocfilehash: 133674e6764e12742f5b238946e943d9b5011cd2
+ms.sourcegitcommit: 4064234b1b4be79c411ef677569f29ae73e78731
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/25/2020
-ms.locfileid: "88816756"
+ms.lasthandoff: 10/28/2020
+ms.locfileid: "92891323"
 ---
 # <a name="read-and-write-spatial-data"></a>读取和写入空间数据
 
@@ -29,7 +29,7 @@ ms.locfileid: "88816756"
 | KML               | ✓  |  ✓  |
 | KMZ               | ✓  |  ✓  |
 | 空间 CSV       | ✓  |  ✓  |
-| 熟知文本   | ✓  |  ✓  |
+| Well-Known 文本   | ✓  |  ✓  |
 
 以下各节概述了使用空间 IO 模块读取和写入空间数据的所有不同工具。
 
@@ -123,26 +123,26 @@ atlas.io.read(data, {
 );
 ```
 
-## <a name="read-and-write-well-known-text-wkt"></a>读取并写入众所周知的文本 (WKT) 
+## <a name="read-and-write-well-known-text-wkt"></a>读取和写入 Well-Known 文本 (WKT) 
 
 熟知[文本](https://en.wikipedia.org/wiki/Well-known_text_representation_of_geometry) (WKT) 是开放地理空间信息联盟 (OGC) 标准，用于将空间几何作为文本表示。 许多地理空间系统使用 PostGIS 插件支持 WKT，例如 Azure SQL 和 Azure PostgreSQL。 与大多数 OGC 标准一样，坐标的格式设置为 "经度纬度"，以与 "x y" 约定保持一致。 例如，可以使用 WKT 格式编写介于110和纬度45的点 `POINT(-110 45)` 。
 
 可以使用函数读取已知文本 `atlas.io.ogc.WKT.read` ，并使用函数编写该文本 `atlas.io.ogc.WKT.write` 。
 
-## <a name="examples-of-reading-and-writing-well-known-text-wkt"></a>读取和写入常见文本 (WKT 的示例) 
+## <a name="examples-of-reading-and-writing-well-known-text-wkt"></a>读取和写入 Well-Known 文本 (WKT) 的示例
 
 下面的代码演示如何读取众所周知的文本字符串 `POINT(-122.34009 47.60995)` ，并使用气泡图层在地图上呈现该字符串。
 
 <br/>
 
-<iframe height='500' scrolling='no' title='读取已知文本' src='//codepen.io/azuremaps/embed/XWbabLd/?height=500&theme-id=0&default-tab=result&embed-version=2&editable=true' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>请参阅 CodePen 上的 () ，查看笔<a href='https://codepen.io/azuremaps/pen/XWbabLd/'>读取已知 Azure Maps 文本</a> <a href='https://codepen.io/azuremaps'>@azuremaps</a> 。 <a href='https://codepen.io'>CodePen</a>
+<iframe height='500' scrolling='no' title='读取 Well-Known 文本' src='//codepen.io/azuremaps/embed/XWbabLd/?height=500&theme-id=0&default-tab=result&embed-version=2&editable=true' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>请参阅在 CodePen 上通过 Azure Maps () <a href='https://codepen.io/azuremaps/pen/XWbabLd/'>读取 Well-Known 文本</a> <a href='https://codepen.io/azuremaps'>@azuremaps</a> <a href='https://codepen.io'>CodePen</a>。
 </iframe>
 
 下面的代码演示如何读取和写入已知文本。
 
 <br/>
 
-<iframe height='700' scrolling='no' title='读取和写入已知文本' src='//codepen.io/azuremaps/embed/JjdyYav/?height=700&theme-id=0&default-tab=result&embed-version=2&editable=true' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>请参阅 CodePen 上的 () Azure Maps<a href='https://codepen.io/azuremaps/pen/JjdyYav/'>读取和写入已知文本</a> <a href='https://codepen.io/azuremaps'>@azuremaps</a> 。 <a href='https://codepen.io'>CodePen</a>
+<iframe height='700' scrolling='no' title='读取和写入 Well-Known 文本' src='//codepen.io/azuremaps/embed/JjdyYav/?height=700&theme-id=0&default-tab=result&embed-version=2&editable=true' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>请参阅 CodePen 上的 "<a href='https://codepen.io/azuremaps/pen/JjdyYav/'>读取和写入 Well-Known 文本</a>" Azure Maps (<a href='https://codepen.io/azuremaps'>@azuremaps</a> ") "。 <a href='https://codepen.io'>CodePen</a>
 </iframe>
 
 ## <a name="read-and-write-gml"></a>读取和写入 GML
@@ -160,38 +160,31 @@ GML 是一个空间 XML 文件规范，通常用作其他 XML 规范的扩展。
 - EPSG：4269、EPSG：4283、EPSG：4258、EPSG：4308、EPSG：4230、EPSG：4272、EPSG：4271、EPSG：4267、EPSG：4608、EPSG：4674可能出现错误的小边距。
 - EPSG：3857、EPSG：102100、EPSG：3785、EPSG：900913、EPSG：102113、EPSG：41001、EPSG：54004
 
-## <a name="next-steps"></a>后续步骤
+## <a name="more-resources"></a>更多资源
 
 详细了解本文中使用的类和方法：
 
-> [!div class="nextstepaction"]
-> [atlas.io 静态函数](https://docs.microsoft.com/javascript/api/azure-maps-spatial-io/atlas.io)
+[atlas.io 静态函数](/javascript/api/azure-maps-spatial-io/atlas.io)
 
-> [!div class="nextstepaction"]
-> [SpatialDataSet](https://docs.microsoft.com/javascript/api/azure-maps-spatial-io/atlas.spatialdataset)
+[SpatialDataSet](/javascript/api/azure-maps-spatial-io/atlas.spatialdataset)
 
-> [!div class="nextstepaction"]
-> [SpatialDataSetStats](https://docs.microsoft.com/javascript/api/azure-maps-spatial-io/atlas.spatialdatasetstats)
+[SpatialDataSetStats](/javascript/api/azure-maps-spatial-io/atlas.spatialdatasetstats)
 
-> [!div class="nextstepaction"]
-> [GmlReader](https://docs.microsoft.com/javascript/api/azure-maps-spatial-io/atlas.io.core.gmlreader?view=azure-maps-typescript-latest)
+[GmlReader](/javascript/api/azure-maps-spatial-io/atlas.io.core.gmlreader)
 
-> [!div class="nextstepaction"]
-> [GmlWriter](https://docs.microsoft.com/javascript/api/azure-maps-spatial-io/atlas.io.core.gmlwriter?view=azure-maps-typescript-latest)
+[GmlWriter](/javascript/api/azure-maps-spatial-io/atlas.io.core.gmlwriter)
 
-> [!div class="nextstepaction"]
-> [ogc. WKT 函数](https://docs.microsoft.com/javascript/api/azure-maps-spatial-io/atlas.io.ogc.wkt)
+[ogc. WKT 函数](/javascript/api/azure-maps-spatial-io/atlas.io.ogc.wkt)
+
+[连接到 WFS 服务](spatial-io-connect-wfs-service.md)
+
+[利用核心操作](spatial-io-core-operations.md)
+
+[支持的数据格式详细信息](spatial-io-supported-data-format-details.md)
+
+
+## <a name="next-steps"></a>后续步骤
 
 有关可向地图添加的更多代码示例，请参阅以下文章：
 
-> [!div class="nextstepaction"]
-> [添加 OGC 地图层](spatial-io-add-ogc-map-layer.md)
-
-> [!div class="nextstepaction"]
-> [连接到 WFS 服务](spatial-io-connect-wfs-service.md)
-
-> [!div class="nextstepaction"]
-> [利用核心操作](spatial-io-core-operations.md)
-
-> [!div class="nextstepaction"]
-> [支持的数据格式详细信息](spatial-io-supported-data-format-details.md)
+[添加 OGC 地图层](spatial-io-add-ogc-map-layer.md)

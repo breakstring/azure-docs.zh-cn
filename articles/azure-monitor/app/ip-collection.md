@@ -2,33 +2,35 @@
 title: Azure Application Insights IP 地址收集 | Microsoft Docs
 description: 了解如何使用 Azure Application Insights 处理 IP 地址和地理位置
 ms.topic: conceptual
-ms.date: 09/11/2019
-ms.custom: devx-track-javascript
-ms.openlocfilehash: 28a7fa50a06dc8b80c7d8dd284cd88ebe4645da6
-ms.sourcegitcommit: f353fe5acd9698aa31631f38dd32790d889b4dbb
+ms.date: 09/23/2020
+ms.custom: devx-track-js
+ms.openlocfilehash: 3a8969d5d0df2fdacf78815c6f47c7c6bfa73a37
+ms.sourcegitcommit: 27d616319a4f57eb8188d1b9d9d793a14baadbc3
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/29/2020
-ms.locfileid: "87371645"
+ms.lasthandoff: 02/15/2021
+ms.locfileid: "100521911"
 ---
 # <a name="geolocation-and-ip-address-handling"></a>地理位置和 IP 地址处理
 
-本文介绍 Application Insights 中的地理位置查找和 IP 地址处理，以及如何修改默认行为。
+本文介绍 Application Insights 中的地理位置查找和 IP 地址处理工作的方式，以及如何修改默认行为。
 
 ## <a name="default-behavior"></a>默认行为
 
 默认情况下，IP 地址是暂时收集的，不会存储在 Application Insights 中。 基本过程如下：
 
-IP 地址作为遥测数据的一部分发送到 Application Insights。 IP 地址抵达 Azure 中的引入终结点后，将用于通过 [MaxMind 中的 GeoLite2](https://dev.maxmind.com/geoip/geoip2/geolite2/) 执行地理位置查找。 此查找的结果用于填充 `client_City`、`client_StateOrProvince` 和 `client_CountryOrRegion` 字段。 此时，将丢弃 IP 地址，并将 `0.0.0.0` 写入 `client_IP` 字段。
+将遥测发送到 Azure 后，将使用 IP 地址通过[来自 MaxMind 的 GeoLite2](https://dev.maxmind.com/geoip/geoip2/geolite2/) 进行地理位置查找。 此查找结果用于填充字段 `client_City`、`client_StateOrProvince` 和 `client_CountryOrRegion`。 然后放弃该地址，并将 `0.0.0.0` 写入 `client_IP` 字段。
 
 * 浏览器遥测：我们会暂时收集发送方的 IP 地址。 IP 地址由引入终结点计算。
-* 服务器遥测：Application Insights 模块暂时收集客户端 IP 地址。 如果设置了 `X-Forwarded-For`，则不会进行收集。
+* 服务器遥测：Application Insights 遥测模块暂时收集客户端 IP 地址。 设置 `X-Forwarded-For` 标头时，不会在本地收集 IP 地址。
 
 此行为是有意设计的，目的是帮助避免不必要地收集个人数据。 我们建议尽量避免收集个人数据。 
 
 ## <a name="overriding-default-behavior"></a>重写默认行为
 
-尽管默认行为是尽量避免收集个人数据，但我们仍然可以让用户灵活收集和存储 IP 地址数据。 在存储任何个人数据（例如 IP 地址）之前，我们强烈建议确认此行为不会违反任何需要遵守的合规要求或当地法规。 若要详细了解 Application Insights 中的个人数据处理，请参阅[个人数据指南](../platform/personal-data-mgmt.md)。
+而默认设置是不收集 IP 地址。 我们仍提供灵活选择来替代此行为。 但是，建议验证集合是否违反任何合规性要求或当地法规。 
+
+若要详细了解 Application Insights 中的个人数据处理，请参阅[个人数据指南](../platform/personal-data-mgmt.md)。
 
 ## <a name="storing-ip-address-data"></a>存储 IP 地址数据
 
@@ -58,21 +60,19 @@ IP 地址作为遥测数据的一部分发送到 Application Insights。 IP 地�
 
 ### <a name="portal"></a>门户 
 
-如果只需修改单个 Application Insights 资源的行为，最简单的方法是使用 Azure 门户。  
+如果只需修改单个 Application Insights 资源的行为，请使用 Azure 门户。 
 
-1. 转到你的 Application Insights 资源并选择“设置” > “导出模板”  
-
-    ![导出模板](media/ip-collection/export-template.png)
+1. 转到你的 Application Insights 资源并选择“自动化” > “导出模板”  
 
 2. 选择“部署”
 
-    ![以红色突出显示的“部署”按钮](media/ip-collection/deploy.png)
+    ![用红色标注的带有“部署”字样的按钮](media/ip-collection/deploy.png)
 
-3. 选择“编辑模板”。 （如果你的模板包含未显示在此示例模板中的其他属性或资源，请小心地继续操作，确保所有资源接受模板部署作为增量更改/更新。）
+3. 选择“编辑模板”。
 
-    ![编辑模板](media/ip-collection/edit-template.png)
+    ![用红色标注的带有“编辑”字样的按钮](media/ip-collection/edit-template.png)
 
-4. 对资源的 json 进行以下更改，然后单击“保存”：
+4. 对资源的 json 进行以下更改，然后选择“保存”：
 
     ![在屏幕截图中，“IbizaAIExtension”的后面添加了一个逗号，并在下面添加了包含 "DisableIpMasking": true 的新行](media/ip-collection/save.png)
 
@@ -81,15 +81,16 @@ IP 地址作为遥测数据的一部分发送到 Application Insights。 IP 地�
 
 5. 选择“我同意” > “购买”。  
 
-    ![编辑模板](media/ip-collection/purchase.png)
+    ![在按钮（用红色标注，带有“购买”字样）上方用红色标注的带有“我同意上述条款和条件”字样的复选框。](media/ip-collection/purchase.png)
 
-    在本例中，我们无需购买任何新的服务，只是更新现有 Application Insights 资源的配置。
+    在这种情况下，实际上没有购买任何新东西。 我们仅更新现有 Application Insights 资源的配置。
 
 6. 部署完成后，将会记录新的遥测数据。
 
-    如果再次选择并编辑模板，只会看到默认模板，而看不到新添加的属性及其关联值。 如果未看到 IP 地址数据并希望确认是否已设置 `"DisableIpMasking": true`， 请运行以下 PowerShell：（请将 `Fabrikam-dev` 替换为相应的资源和资源组名称。）
+    如果再次选择并编辑模板，则仅显示默认模板，而不会显示新添加的属性。 如果未看到 IP 地址数据并希望确认是否已设置 `"DisableIpMasking": true`，请运行以下 PowerShell： 
     
     ```powershell
+    # Replace `Fabrikam-dev` with the appropriate resource and resource group name.
     # If you aren't using the cloud shell you will need to connect to your Azure account
     # Connect-AzAccount 
     $AppInsights = Get-AzResource -Name 'Fabrikam-dev' -ResourceType 'microsoft.insights/components' -ResourceGroupName 'Fabrikam-dev'
@@ -121,7 +122,9 @@ Content-Length: 54
 
 ## <a name="telemetry-initializer"></a>遥测初始化程序
 
-如果需要通过比 `DisableIpMasking` 更灵活的方式来记录所有或一部分 IP 地址，可以使用[遥测初始化表达式](./api-filtering-sampling.md#addmodify-properties-itelemetryinitializer)将所有或一部分 IP 复制到自定义字段。 
+如果需要比 `DisableIpMasking` 更灵活的替代方法，则可以使用[遥测初始化表达式](./api-filtering-sampling.md#addmodify-properties-itelemetryinitializer)将全部或部分 IP 地址复制到自定义字段。 
+
+# <a name="net"></a>[.NET](#tab/net)
 
 ### <a name="aspnet--aspnet-core"></a>ASP.NET / ASP.NET Core
 
@@ -183,6 +186,7 @@ namespace MyWebApp
     services.AddSingleton<ITelemetryInitializer, CloneIPAddress>();
 }
 ```
+# <a name="nodejs"></a>[Node.js](#tab/nodejs)
 
 ### <a name="nodejs"></a>Node.js
 
@@ -197,14 +201,15 @@ appInsights.defaultClient.addTelemetryProcessor((envelope) => {
     }
 });
 ```
+# <a name="client-side-javascript"></a>[客户端 JavaScript](#tab/javascript)
 
 ### <a name="client-side-javascript"></a>客户端 JavaScript
 
-与服务器端 SDK 不同，客户端 Javascript SDK 不会计算 IP 地址。 默认情况下，客户端遥测的 IP 地址计算是在遥测数据抵达时，在 Azure 中的引入终结点上执行的。 这意味着，如果将客户端数据发送到代理，然后将其转发到引入终结点，则 IP 地址计算可能会显示代理而不是客户端的 IP 地址。 如果不使用代理，则没有关系。
+与服务器端 SDK 不同，客户端 JavaScript SDK 不会计算 IP 地址。 默认情况下，客户端遥测的 IP 地址计算在 Azure 中的引入终结点处执行。 
 
-如果你希望直接在客户端上计算 IP 地址，则需要添加自己的自定义逻辑来执行此计算，并使用结果来设置 `ai.location.ip` 标记。 设置 `ai.location.ip` 后，IP 地址计算不会由引入终结点执行，同时会遵循提供的 IP 地址并使用它来执行地理查找。 在这种情况下，IP 地址默认仍会归零。 
+如果要直接在客户端上计算 IP 地址，则需要添加自己的自定义逻辑，并使用结果设置 `ai.location.ip` 标记。 设置 `ai.location.ip` 时，引入终结点不执行 IP 地址计算，而提供的 IP 地址用于地理位置查找。 在这种情况下，IP 地址默认仍会归零。 
 
-若要保留自定义逻辑计算的整个 IP 地址，可以使用遥测初始化表达式将 `ai.location.ip` 中提供的 IP 地址数据复制到单独的自定义字段。 但同样，与服务器端 SDK 不同，如果不依赖第三方库或你自己的自定义客户端 IP 收集逻辑，客户端 SDK 不会计算 IP。    
+若要保留自定义逻辑计算的整个 IP 地址，可以使用遥测初始化表达式将 `ai.location.ip` 中提供的 IP 地址数据复制到单独的自定义字段。 但同样，与服务器端 SDK 不同，如果不依赖第三方库或你自己的自定义集合逻辑，客户端 SDK 将不会计算地址。    
 
 
 ```javascript
@@ -220,9 +225,13 @@ appInsights.addTelemetryInitializer((item) => {
 
 ```  
 
+如果客户端数据在转发到引入终结点之前遍历代理，则 IP 地址计算可能会显示代理（而不是客户端）的 IP 地址。 
+
+---
+
 ### <a name="view-the-results-of-your-telemetry-initializer"></a>查看遥测初始化表达式的结果
 
-如果随后针对站点触发新流量并等待大约 2-5 分钟来确保有时间引入该流量，则可以运行 Kusto 查询来查看 IP 地址收集是否正常工作：
+如果将新流量发送到站点，请等待几分钟。 然后，可以运行查询，确认集合正常工作：
 
 ```kusto
 requests
@@ -230,10 +239,12 @@ requests
 | project appName, operation_Name, url, resultCode, client_IP, customDimensions.["client-ip"]
 ```
 
-新收集的 IP 地址应显示在 `customDimensions_client-ip` 列中。 默认的 `client-ip` 列仍包含所有 4 个八进制数，这些数字已归零，或者仅显示前 3 个八进制数，具体取决于在组件级别配置 IP 地址收集的方式。 如果在实现遥测初始化表达式后在本地进行测试，并且 `customDimensions_client-ip` 的值为 `::1`，则这是预期的行为。 `::1` 表示 IPv6 中的环回地址。 它等效于 IPv4 中的 `127.0.01`，是从 localhost 测试时看到的结果。
+新收集的 IP 地址将显示在 `customDimensions_client-ip` 列中。 默认的 `client-ip` 列仍将四个八进制数全部归零。 
+
+如果从 localhost 进行测试，并且 `customDimensions_client-ip` 的值为 `::1`，则此值为预期行为。 `::1` 表示 IPv6 中的环回地址。 它等效于 IPv4 中的 `127.0.0.1`。
 
 ## <a name="next-steps"></a>后续步骤
 
 * 详细了解 Application Insights 中的[个人数据收集](../platform/personal-data-mgmt.md)。
 
-* 详细了解 Application Insights 中 [IP 地址收集](https://apmtips.com/posts/2016-07-05-client-ip-address/)的工作原理。 （这是我们的某位工程师在较早前撰写的一篇外部博客文章。 其中所述的机制不同当前的默认行为，现在，IP 地址将记录为 `0.0.0.0`，不过此文更深入地描述了内置 `ClientIpHeaderTelemetryInitializer` 的机制。）
+* 详细了解 Application Insights 中 [IP 地址收集](https://apmtips.com/posts/2016-07-05-client-ip-address/)的工作原理。 （本文是由我们的某位工程师早前撰写的一篇外部博客文章。 其中所述的机制不同当前的默认行为，现在，IP 地址将记录为 `0.0.0.0`，不过此文更深入地描述了内置 `ClientIpHeaderTelemetryInitializer` 的机制。）

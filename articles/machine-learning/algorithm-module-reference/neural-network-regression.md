@@ -9,12 +9,12 @@ ms.topic: reference
 author: likebupt
 ms.author: keli19
 ms.date: 04/22/2020
-ms.openlocfilehash: c260643d7d553e407d0758f286aac76c91ae08d8
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 403576454615effeb53651b51679681422b08e9e
+ms.sourcegitcommit: 829d951d5c90442a38012daaf77e86046018e5b9
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "82137682"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "90890352"
 ---
 # <a name="neural-network-regression-module"></a>神经网络回归模块
 
@@ -24,7 +24,7 @@ ms.locfileid: "82137682"
   
 ## <a name="module-overview"></a>模块概述  
 
-本文介绍 Azure 机器学习设计器（预览版）中的一个模块。
+本文介绍 Azure 机器学习设计器中的模块。
 
 使用此模块可以通过可自定义的神经网络算法创建回归模型。
   

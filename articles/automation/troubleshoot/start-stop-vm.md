@@ -2,19 +2,15 @@
 title: 排查 Azure 自动化在空闲时间启动/停止 VM 的问题
 description: 本文介绍如何排查并解决在使用“在空闲时间启动/停止 VM”功能时产生的问题。
 services: automation
-ms.service: automation
 ms.subservice: process-automation
-author: mgoedtel
-ms.author: magoedte
 ms.date: 04/04/2019
-ms.topic: conceptual
-manager: carmonm
-ms.openlocfilehash: bb8fa53fa07d666693ae545c193faaf3d6d0a30c
-ms.sourcegitcommit: ec682dcc0a67eabe4bfe242fce4a7019f0a8c405
+ms.topic: troubleshooting
+ms.openlocfilehash: ff2ef8970afa21c0218da20a5b79ea2fb782dd5c
+ms.sourcegitcommit: d1e56036f3ecb79bfbdb2d6a84e6932ee6a0830e
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/09/2020
-ms.locfileid: "86187143"
+ms.lasthandoff: 01/29/2021
+ms.locfileid: "99053578"
 ---
 # <a name="troubleshoot-startstop-vms-during-off-hours-issues"></a>排查在空闲时间启动/停止 VM 的问题
 
@@ -113,7 +109,7 @@ Start-AzureRmVm : Run Login-AzureRmAccount to login
   * ScheduledStartStop_Parent
   * SequencedStartStop_Parent
 
-* 验证[运行方式帐户](../manage-runas-account.md)对要尝试启动或停止的 VM 是否拥有适当的权限。 若要了解如何检查对资源的权限，请参阅[快速入门：使用 Azure 门户查看分配给用户的角色](../../role-based-access-control/check-access.md)。 需要提供运行方式帐户所使用的服务主体的应用程序 ID。 可以通过转到 Azure 门户中的自动化帐户来检索该值。 在“帐户设置”下选择“运行方式帐户”，然后选择适当的运行方式帐户。
+* 验证[运行方式帐户](../automation-security-overview.md#run-as-accounts)对要尝试启动或停止的 VM 是否拥有适当的权限。 若要了解如何检查对资源的权限，请参阅[快速入门：使用 Azure 门户查看分配给用户的角色](../../role-based-access-control/check-access.md)。 需要提供运行方式帐户所使用的服务主体的应用程序 ID。 可以通过转到 Azure 门户中的自动化帐户来检索该值。 在“帐户设置”下选择“运行方式帐户”，然后选择适当的运行方式帐户。
 
 * 如果已显式排除 VM，则这些 VM可能不会启动或停止。 排除的 VM 在该功能部署到的自动化帐户的 `External_ExcludeVMNames` 变量中设置。 下例显示了如何使用 PowerShell 查询该值。
 
@@ -205,7 +201,7 @@ Start-AzureRmVm : Run Login-AzureRmAccount to login
 
 若要验证是否已正确配置运行方式帐户，请转到 Azure 门户中的自动化帐户，然后在“帐户设置”下选择“运行方式帐户”。 如果运行方式帐户配置不正确或已过期，状态将显示相应的条件。
 
-如果运行方式帐户未正确配置，应删除并重新创建运行方式帐户。 有关详细信息，请参阅[管理 Azure 自动化运行方式帐户](../manage-runas-account.md)。
+如果运行方式帐户未正确配置，应删除并重新创建运行方式帐户。 有关详细信息，请参阅 [Azure 自动化运行方式帐户](../automation-security-overview.md#run-as-accounts)。
 
 如果运行方式帐户的证书已过期，请按照[自签名证书续订](../manage-runas-account.md#cert-renewal)中列出的步骤操作，以续订证书。
 

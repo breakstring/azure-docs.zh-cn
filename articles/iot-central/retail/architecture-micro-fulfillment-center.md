@@ -4,17 +4,17 @@ description: 了解如何使用 IoT Central 中的微履行中心应用程序模
 author: avneet723
 ms.author: avneets
 ms.date: 10/13/2019
-ms.topic: overview
+ms.topic: conceptual
 ms.service: iot-central
 ms.subservice: iot-central-retail
 services: iot-central
 manager: eliotgra
-ms.openlocfilehash: b0d030240ebe22886826b7a25bd5ca7b8f54e358
-ms.sourcegitcommit: 25490467e43cbc3139a0df60125687e2b1c73c09
+ms.openlocfilehash: 23e1880a3abac6ebda71eaa36276d2bf5815048e
+ms.sourcegitcommit: d1b0cf715a34dd9d89d3b72bb71815d5202d5b3a
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/09/2020
-ms.locfileid: "81001106"
+ms.lasthandoff: 02/08/2021
+ms.locfileid: "99833773"
 ---
 # <a name="micro-fulfillment-center-architecture"></a>微履行中心体系结构
 
@@ -22,11 +22,11 @@ ms.locfileid: "81001106"
 
 ![Azure IoT Central 商店分析](./media/architecture/micro-fulfillment-center-architecture-frame.png)
 
-- 一组将遥测数据发送到网关设备的 IoT 传感器
-- 将遥测和聚合见解发送到 IoT Central 的网关设备
-- 连续数据导出到所需的 Azure 服务以进行操作
-- 可按所需格式对数据进行结构化并将其发送到存储服务
-- 业务应用程序可以查询数据并生成可助力零售运营的见解
+1. 一组将遥测数据发送到网关设备的 IoT 传感器
+2. 将遥测和聚合见解发送到 IoT Central 的网关设备
+3. 连续数据导出到所需的 Azure 服务以进行操作
+4. 可按所需格式对数据进行结构化并将其发送到存储服务
+5. 业务应用程序可以查询数据并生成可助力零售运营的见解
  
 让我们来了解一些通常在微履行中心解决方案中起作用的关键组件。
 

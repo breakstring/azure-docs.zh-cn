@@ -8,12 +8,12 @@ ms.date: 01/04/2019
 ms.topic: conceptual
 ms.service: iot-edge
 services: iot-edge
-ms.openlocfilehash: 96078be20e8048e481a994fefc169e48ab1d8459
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 4064acd6d2857ebc00a38ea7f6ff5d5e30bbd699
+ms.sourcegitcommit: 4f4a2b16ff3a76e5d39e3fcf295bca19cff43540
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "76511087"
+ms.lasthandoff: 10/30/2020
+ms.locfileid: "93041382"
 ---
 # <a name="prepare-your-development-and-test-environment-for-iot-edge"></a>为 IoT Edge 准备开发和测试环境
 
@@ -58,7 +58,7 @@ Visual Studio 和 Visual Studio Code 都具有附加扩展，可帮助开发 IoT
 | Azure Functions | [.NET Core 2.1 SDK](https://www.microsoft.com/net/download) |
 | C | [Git](https://git-scm.com/) |
 | C# | [.NET Core 2.1 SDK](https://www.microsoft.com/net/download) |
-| Java | <ul><li>[Java SE 开发工具包 10](https://aka.ms/azure-jdks) <li> [设置 JAVA_HOME 环境变量](https://docs.oracle.com/cd/E19182-01/820-7851/inst_cli_jdk_javahome_t/) <li> [Maven](https://maven.apache.org/)</ul> |
+| Java | <ul><li>[Java SE 开发工具包 10](/azure/developer/java/fundamentals/java-jdk-long-term-support) <li> [设置 JAVA_HOME 环境变量](https://docs.oracle.com/cd/E19182-01/820-7851/inst_cli_jdk_javahome_t/) <li> [Maven](https://maven.apache.org/)</ul> |
 | Node.js | <ul><li>[Node.js](https://nodejs.org/) <li> [Yeoman](https://www.npmjs.com/package/yo) <li> [Azure IoT Edge Node.js 模块生成器](https://www.npmjs.com/package/generator-azure-iot-edge-module)</ul> |
 | Python |<ul><li> [Python](https://www.python.org/downloads/) <li> [Pip](https://pip.pypa.io/en/stable/installing/#installation) <li> [Git](https://git-scm.com/) </ul> |
 
@@ -82,10 +82,10 @@ Azure IoT Edge 开发工具使用命令行功能简化了 IoT Edge 开发。 此
 
 | 工具 | 也称为 | 受支持的平台 | 最适用于 |
 | ---- | ------------- | ------------------- | --------- |
-| IoT EdgeHub 开发工具  | iotedgehubdev | Windows, Linux, MacOS | 模拟设备来调试模块。 |
-| IoT Edge 开发容器 | microsoft/iotedgedev | Windows, Linux, MacOS | 开发而无需安装依赖项。 |
-| 容器中的 IoT Edge 运行时 | iotedgec | Windows, Linux, MacOS, ARM | 在可能不支持运行时的设备上进行测试。 |
-| IoT Edge 设备容器 | toolboc/azure-iot-edge-device-container | Windows, Linux, MacOS, ARM | 使用多个 IoT Edge 设备大规模测试方案。 |
+| IoT EdgeHub 开发工具  | iotedgehubdev | Windows、Linux、macOS | 模拟设备来调试模块。 |
+| IoT Edge 开发容器 | iotedgedev | Windows、Linux、macOS | 开发而无需安装依赖项。 |
+| 容器中的 IoT Edge 运行时 | iotedgec | Windows、Linux、macOS、ARM | 在可能不支持运行时的设备上进行测试。 |
+| IoT Edge 设备容器 | toolboc/azure-iot-edge-device-container | Windows、Linux、macOS、ARM | 使用多个 IoT Edge 设备大规模测试方案。 |
 
 ### <a name="iot-edgehub-dev-tool"></a>IoT EdgeHub 开发工具
 
@@ -99,11 +99,11 @@ IoT EdgeHub 开发工具旨在与 Visual Studio 和 Visual Studio Code 扩展以
 
 Azure IoT Edge 开发容器是一个 Docker 容器，具有 IoT Edge 开发所需的所有依赖项。 使用此容器可使用想要开发的任何语言（包括 C#、Python、Node.js 和 Java）轻松入门。 只需安装一个容器引擎，如 Docker 或 Moby，就可以将容器拉取到开发计算机上。
 
-有关详细信息，请参阅 [Azure IoT Edge 开发容器](https://hub.docker.com/r/microsoft/iotedgedev/)。
+有关详细信息，请参阅 [Azure IoT Edge 开发容器](https://github.com/Azure/iotedgedev/wiki/quickstart-with-iot-edge-dev-container)。
 
 ### <a name="iot-edge-runtime-in-a-container"></a>容器中的 IoT Edge 运行时
 
-容器中的 IoT Edge 运行时提供了一个完整的运行时，该运行时将设备连接字符串作为环境变量。 通过此容器，可在可能不支持本机运行时的系统（如 MacOS）上测试 IoT Edge 模块和方案。 部署的任何模块都将在运行时容器之外启动。 如果希望运行时和任何已部署的模块存在于同一容器中，请考虑使用 IoT Edge 设备容器。
+容器中的 IoT Edge 运行时提供了一个完整的运行时，该运行时将设备连接字符串作为环境变量。 通过此容器，可在可能不支持本机运行时的系统（如 macOS）上测试 IoT Edge 模块和方案。 部署的任何模块都将在运行时容器之外启动。 如果希望运行时和任何已部署的模块存在于同一容器中，请考虑使用 IoT Edge 设备容器。
 
 有关详细信息，请参阅[在容器中运行 Azure IoT Edge](https://github.com/Azure/iotedgedev/tree/master/docker/runtime)。
 
@@ -119,7 +119,7 @@ IoT Edge 设备容器是一个完整的 IoT Edge 设备，可以在任何带有�
 
 有关详细信息、指南和示例，请参阅以下页面：
 
-* [向 Azure IoT Edge 进行持续集成和持续部署](how-to-ci-cd.md)
-* [使用 Azure DevOps Projects 为 IoT Edge 创建 CI/CD 管道](how-to-devops-project.md)
+* [向 Azure IoT Edge 进行持续集成和持续部署](how-to-continuous-integration-continuous-deployment.md)
+* [使用 Azure DevOps Starter 为 IoT Edge 创建 CI/CD 管道](how-to-devops-starter.md)
 * [Azure IoT Edge Jenkins 插件](https://plugins.jenkins.io/azure-iot-edge)
 * [IoT Edge DevOps GitHub 存储库](https://github.com/toolboc/IoTEdge-DevOps)

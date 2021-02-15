@@ -1,6 +1,6 @@
 ---
-title: 适用于 iOS 的脱机 FairPlay 流式处理与 Azure 媒体服务 v3
-description: 本主题概括介绍并演示了如何使用 Azure 媒体服务以脱机模式通过 Apple FairPlay 动态加密 HTTP Live Streaming (HLS) 内容。
+title: 适用于 iOS 的媒体服务 v3 脱机 FairPlay 流式处理
+description: 本主题提供了概述，并说明了如何使用 Azure 媒体服务 v3 在脱机模式下使用 Apple FairPlay 动态加密 HTTP Live Streaming (HLS) 内容。
 services: media-services
 keywords: HLS, DRM, FairPlay Streaming (FPS), 脱机, iOS 10
 documentationcenter: ''
@@ -12,17 +12,20 @@ ms.service: media-services
 ms.workload: media
 ms.tgt_pltfrm: na
 ms.devlang: na
-ms.topic: article
-ms.date: 01/08/2019
+ms.topic: how-to
+ms.date: 08/31/2020
 ms.author: willzhan
-ms.openlocfilehash: 0e65bf39db00f1277635d600da87346f19a881a6
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.custom: devx-track-csharp
+ms.openlocfilehash: 399f9b0184217db8180fcec38e4f78917d5c9bc8
+ms.sourcegitcommit: 4e70fd4028ff44a676f698229cb6a3d555439014
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "83197166"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98955221"
 ---
 # <a name="offline-fairplay-streaming-for-ios-with-media-services-v3"></a>适用于 iOS 的脱机 FairPlay 流式处理与媒体服务 v3
+
+[!INCLUDE [media services api v3 logo](./includes/v3-hr.md)]
 
  Azure 媒体服务提供一套设计良好的[内容保护服务](https://azure.microsoft.com/services/media-services/content-protection/)，包括：
 

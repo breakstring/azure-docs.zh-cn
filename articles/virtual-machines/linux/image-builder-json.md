@@ -4,16 +4,16 @@ description: 了解如何创建与 Azure 映像生成器配合使用的模板。
 author: danielsollondon
 ms.author: danis
 ms.date: 08/13/2020
-ms.topic: conceptual
-ms.service: virtual-machines-linux
+ms.topic: reference
+ms.service: virtual-machines
 ms.subservice: imaging
 ms.reviewer: cynthn
-ms.openlocfilehash: 095aa4ddbdc9ceb04c65d8c896642a0f1a91e547
-ms.sourcegitcommit: 4913da04fd0f3cf7710ec08d0c1867b62c2effe7
+ms.openlocfilehash: 9ae477dd04237e285915157615dcb6a6b841ca99
+ms.sourcegitcommit: b39cf769ce8e2eb7ea74cfdac6759a17a048b331
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/14/2020
-ms.locfileid: "88205548"
+ms.lasthandoff: 01/22/2021
+ms.locfileid: "98678249"
 ---
 # <a name="preview-create-an-azure-image-builder-template"></a>预览版：创建 Azure 映像生成器模板 
 
@@ -96,7 +96,7 @@ Azure 映像生成器使用一个 .json 文件将信息传入映像生成器服�
 ```
 
 ## <a name="vnetconfig"></a>vnetConfig
-如果未指定任何 VNET 属性，则映像生成器将创建自身的 VNET、公共 IP 和 NSG。 服务使用公共 IP 与生成 VM 通信。但是，如果不想要使用公共 IP，或者不希望映像生成器能够访问现有的 VNET 资源（例如 DSC、Chef、Puppet 和 Ansible 配置服务器，或者文件共享等），则可以指定 VNET。 有关详细信息，请查看[网络文档](https://github.com/danielsollondon/azvmimagebuilder/blob/master/aibNetworking.md#networking-with-azure-vm-image-builder)。此节是可选的。
+如果未指定任何 VNET 属性，则映像生成器将创建自身的 VNET、公共 IP 和 NSG。 服务使用公共 IP 与生成 VM 通信。但是，如果不想要使用公共 IP，或者不希望映像生成器能够访问现有的 VNET 资源（例如 DSC、Chef、Puppet 和 Ansible 配置服务器，或者文件共享等），则可以指定 VNET。 有关详细信息，请查看[网络文档](image-builder-networking.md)。此节是可选的。
 
 ```json
     "vnetConfig": {
@@ -120,7 +120,7 @@ Azure 映像生成器使用一个 .json 文件将信息传入映像生成器服�
 
 ## <a name="identity"></a>标识
 
-必需-若要使映像生成器有权读取/写入映像，请从 Azure 存储中读取脚本，你必须创建一个拥有单个资源权限的 Azure 用户分配的标识。 有关映像生成器权限如何工作的详细信息以及相关步骤，请查看 [文档](https://github.com/danielsollondon/azvmimagebuilder/blob/master/aibPermissions.md#azure-vm-image-builder-permissions-explained-and-requirements)。
+必需-若要使映像生成器具有读取/写入映像的权限，请从 Azure 存储中读取脚本，你必须创建一个具有单个资源权限的 Azure User-Assigned 标识。 有关映像生成器权限如何工作的详细信息以及相关步骤，请查看 [文档](image-builder-user-assigned-identity.md)。
 
 
 ```json
@@ -133,7 +133,7 @@ Azure 映像生成器使用一个 .json 文件将信息传入映像生成器服�
 ```
 
 
-图像生成器支持用户分配的标识：
+图像生成器支持 User-Assigned 标识：
 * 仅支持单个标识
 * 不支持自定义域名
 
@@ -142,7 +142,7 @@ Azure 映像生成器使用一个 .json 文件将信息传入映像生成器服�
 
 ## <a name="properties-source"></a>属性：source
 
-映像生成器目前仅支持 HyperV 第1代映像和 Vm， `source` 部分包含有关映像生成器将使用的源映像的信息。
+`source` 节包含有关映像生成器要使用的源映像的信息。 映像生成器目前仅支持创建 (Gen1) 1 映像的 Hyper-v 生成， (SIG) 或托管映像。 如果要创建 Gen2 映像，则需使用源 Gen2 映像，并将其分发到 VHD。 之后，你将需要从 VHD 创建托管映像，并将其作为 Gen2 映像插入到 SIG 中。
 
 API 需要通过一个“SourceType”来定义用于生成映像的源，目前有三种类型：
 - PlatformImage - 表示源映像是市场映像。
@@ -154,7 +154,7 @@ API 需要通过一个“SourceType”来定义用于生成映像的源，目前
 > 使用现有的 Windows 自定义映像时，可在单个 Windows 映像上运行 Sysprep 命令最多8次，有关详细信息，请参阅 [Sysprep](/windows-hardware/manufacture/desktop/sysprep--generalize--a-windows-installation#limits-on-how-many-times-you-can-run-sysprep) 文档。
 
 ### <a name="platformimage-source"></a>PlatformImage 源 
-Azure 映像生成器支持 Windows Server 和客户端以及 Linux Azure 市场映像。有关完整列表，请参阅[此文](../windows/image-builder-overview.md#os-support)。 
+Azure 映像生成器支持 Windows Server 和客户端以及 Linux Azure 市场映像。有关完整列表，请参阅[此文](../image-builder-overview.md#os-support)。 
 
 ```json
         "source": {
@@ -233,7 +233,7 @@ az vm image list -l westus -f UbuntuServer -p Canonical --output table –-all
 [ERROR] complete: 'context deadline exceeded'
 ```
 
-如果未指定 buildTimeoutInMinutes 值，或将其设置为 0，则会使用默认值。 可以增大或减小该值，最大值为 960 分钟（16 小时）。 对于 Windows，我们不建议将此属性设置为 60 分钟以下。 如果发生超时，请查看[日志](https://github.com/danielsollondon/azvmimagebuilder/blob/master/troubleshootingaib.md#collecting-and-reviewing-aib-image-build-logs)，以确定自定义步骤是否正在等待提供信息（例如用户输入）。 
+如果未指定 buildTimeoutInMinutes 值，或将其设置为 0，则会使用默认值。 可以增大或减小该值，最大值为 960 分钟（16 小时）。 对于 Windows，我们不建议将此属性设置为 60 分钟以下。 如果发生超时，请查看[日志](image-builder-troubleshoot.md#customization-log)，以确定自定义步骤是否正在等待提供信息（例如用户输入）。 
 
 如果你觉得需要更长时间才能让自定义完成，请将此属性设置为只会略微增大开销的所需值。 但是，不要将它设置得太高，否则可能需要等到它超时才会看到错误。 
 
@@ -481,7 +481,7 @@ Write-Output '>>> Sysprep complete ...'
 * Windows：C:\DeprovisioningScript.ps1
 * Linux：/tmp/DeprovisioningScript.sh
 
-映像生成器会读取这些命令，并将其写出到 AIB 日志“customization.log”中。 请参阅[故障排除](https://github.com/danielsollondon/azvmimagebuilder/blob/master/troubleshootingaib.md#collecting-and-reviewing-aib-logs)，了解如何收集日志。
+映像生成器会读取这些命令，并将其写出到 AIB 日志“customization.log”中。 请参阅[故障排除](image-builder-troubleshoot.md#customization-log)，了解如何收集日志。
  
 ## <a name="properties-distribute"></a>属性：distribute
 
@@ -534,17 +534,16 @@ az resource show \
 映像输出将是一个托管映像资源。
 
 ```json
-"distribute": [
-        {
-"type":"managedImage",
+{
+       "type":"managedImage",
        "imageId": "<resource ID>",
        "location": "<region>",
        "runOutputName": "<name>",
        "artifactTags": {
             "<name": "<value>",
-             "<name>": "<value>"
-               }
-         }]
+            "<name>": "<value>"
+        }
+}
 ```
  
 Distribute 属性：
@@ -572,7 +571,7 @@ Azure 共享映像库是一个新的映像管理服务，可用于管理映像�
 
 ```json
 {
-    "type": "sharedImage",
+    "type": "SharedImage",
     "galleryImageId": "<resource ID>",
     "runOutputName": "<name>",
     "artifactTags": {
@@ -659,7 +658,7 @@ az resource invoke-action \
 ### <a name="cancelling-an-image-build"></a>取消映像生成
 如果你运行的是你认为不正确的映像生成，等待用户输入，或者你认为永远不会成功完成，则可以取消生成。
 
-可随时取消生成。 如果分发阶段已开始，你仍可以取消，但你将需要清除可能未完成的任何映像。 "取消" 命令不等待 "取消" 完成，请 `lastrunstatus.runstate` 使用这些状态 [命令](https://github.com/danielsollondon/azvmimagebuilder/blob/master/troubleshootingaib.md#get-statuserror-of-the-template-submission-or-template-build-status)监视取消进度。
+可随时取消生成。 如果分发阶段已开始，你仍可以取消，但你将需要清除可能未完成的任何映像。 "取消" 命令不等待 "取消" 完成，请 `lastrunstatus.runstate` 使用这些状态 [命令](image-builder-troubleshoot.md#customization-log)监视取消进度。
 
 
 命令示例 `cancel` ：

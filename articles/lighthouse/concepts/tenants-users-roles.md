@@ -1,37 +1,27 @@
 ---
-title: Azure Lighthouse 方案中的租户、角色和用户
+title: Azure Lighthouse 方案中的租户、用户和角色
 description: 了解 Azure Active Directory 租户、用户和角色的概念，以及如何在 Azure Lighthouse 方案中使用它们。
-ms.date: 07/03/2020
+ms.date: 01/14/2021
 ms.topic: conceptual
-ms.openlocfilehash: 855f6a39abc99f07e5847a01896ef864473358c4
-ms.sourcegitcommit: c28fc1ec7d90f7e8b2e8775f5a250dd14a1622a6
+ms.openlocfilehash: d78828cc739030f8e456c64885d77ddf59dd13fb
+ms.sourcegitcommit: c7153bb48ce003a158e83a1174e1ee7e4b1a5461
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/13/2020
-ms.locfileid: "88163299"
+ms.lasthandoff: 01/15/2021
+ms.locfileid: "98233910"
 ---
-# <a name="tenants-roles-and-users-in-azure-lighthouse-scenarios"></a>Azure Lighthouse 方案中的租户、角色和用户
+# <a name="tenants-users-and-roles-in-azure-lighthouse-scenarios"></a>Azure Lighthouse 方案中的租户、用户和角色
 
 在为 [Azure Lighthouse](../overview.md)加入客户之前，请务必了解 Azure Active Directory (Azure AD) 租户、用户和角色如何工作，以及如何在 Azure Lighthouse 方案中使用它们。
 
-租户是 Azure AD 的专用受信任的实例**。 通常，每个租户表示一个组织。 [Azure 委托的资源管理](azure-delegated-resource-management.md) 可将资源从一个租户逻辑投影到另一个租户。 这样一来，管理租户中的用户（例如属于服务提供商的用户）可以访问客户租户中的委派资源，或者让[具有多个租户的企业集中其管理操作](enterprise.md)。
+租户是 Azure AD 的专用受信任的实例。 通常，每个租户表示一个组织。 [Azure 委托的资源管理](azure-delegated-resource-management.md) 可将资源从一个租户逻辑投影到另一个租户。 这样一来，管理租户中的用户（例如属于服务提供商的用户）可以访问客户租户中的委派资源，或者让[具有多个租户的企业集中其管理操作](enterprise.md)。
 
 若要实现此逻辑投影，客户租户中的订阅)  (或一个或多个资源组必须 *载入* Azure Lighthouse。 可以[通过 Azure 资源管理器模板](../how-to/onboard-customer.md)或[将公共或私有产品/服务发布到 Azure 市场](../how-to/publish-managed-services-offers.md)来完成此加入过程。
 
-无论选择哪种加入方法，都需要定义授权**。 每个授权在管理租户中指定可以访问委派资源的用户帐户，还指定用于设置其中每个用户对这些资源的权限的内置角色。
-
-## <a name="role-support-for-azure-lighthouse"></a>Azure Lighthouse 的角色支持
-
-定义授权时，必须为每个用户帐户分配其中某个[基于角色的访问控制 (RBAC) 内置角色](../../role-based-access-control/built-in-roles.md)。 不支持自定义角色和[经典订阅管理员角色](../../role-based-access-control/classic-administrators.md)。
-
-Azure Lighthouse 当前支持所有 [内置角色](../../role-based-access-control/built-in-roles.md) ，但有以下例外：
-
-- 不支持[所有者](../../role-based-access-control/built-in-roles.md#owner)角色。
-- 不支持具有 [DataActions](../../role-based-access-control/role-definitions.md#dataactions) 权限的任何内置角色。
-- 支持[用户访问管理员](../../role-based-access-control/built-in-roles.md#user-access-administrator)内置角色，但仅限用于[向客户租户中的托管标识分配角色](../how-to/deploy-policy-remediation.md#create-a-user-who-can-assign-roles-to-a-managed-identity-in-the-customer-tenant)。 此角色通常会授予的其他权限不适用。 如果定义具有此角色的用户，则还必须指定该用户可以分配给托管标识的内置角色。
+无论选择哪种加入方法，都需要定义授权。 每个授权都指定一个 **principalId** ，该用户将有权访问委派的资源，以及一个内置角色，用于设置这些用户对这些资源的权限。 此 **principalId** 在管理租户中定义 Azure AD 的用户、组或服务主体。
 
 > [!NOTE]
-> 向 Azure 添加新的适用内置角色后，可以在 [使用 azure 资源管理器模板加入客户](../how-to/onboard-customer.md)时分配该角色。 在 [发布托管服务产品/服务](../how-to/publish-managed-services-offers.md)时，新添加的角色在合作伙伴中心可用之前可能会有延迟。
+> 除非显式指定，否则 Azure Lighthouse 文档中的 "用户" 引用将应用于授权中 Azure AD 的用户、组或服务主体。
 
 ## <a name="best-practices-for-defining-users-and-roles"></a>定义用户和角色的最佳做法
 
@@ -43,7 +33,20 @@ Azure Lighthouse 当前支持所有 [内置角色](../../role-based-access-contr
 - 确保需要[查看 Azure门户中的“我的客户”页](../how-to/view-manage-customers.md)的所有用户都具有[读者](../../role-based-access-control/built-in-roles.md#reader)角色（或包含读者访问权限的其他内置角色）。
 
 > [!IMPORTANT]
-> 若要为 Azure AD 组添加权限，“组类型”必须是“安全性”而不是“Office 365”  。 此选项是在创建组时选择的。 有关详细信息，请参阅[使用 Azure Active Directory 创建基本组并添加成员](../../active-directory/fundamentals/active-directory-groups-create-azure-portal.md)。
+> 若要为 Azure AD 组添加权限，则必须将 " **组类型** " 设置为 " **安全**"。 此选项是在创建组时选择的。 有关详细信息，请参阅[使用 Azure Active Directory 创建基本组并添加成员](../../active-directory/fundamentals/active-directory-groups-create-azure-portal.md)。
+
+## <a name="role-support-for-azure-lighthouse"></a>Azure Lighthouse 的角色支持
+
+定义授权时，必须为每个用户帐户分配一个 [Azure 内置角色](../../role-based-access-control/built-in-roles.md)。 不支持自定义角色和[经典订阅管理员角色](../../role-based-access-control/classic-administrators.md)。
+
+Azure Lighthouse 当前支持所有 [内置角色](../../role-based-access-control/built-in-roles.md) ，但有以下例外：
+
+- 不支持[所有者](../../role-based-access-control/built-in-roles.md#owner)角色。
+- 不支持具有 [DataActions](../../role-based-access-control/role-definitions.md#dataactions) 权限的任何内置角色。
+- 支持[用户访问管理员](../../role-based-access-control/built-in-roles.md#user-access-administrator)内置角色，但仅限用于[向客户租户中的托管标识分配角色](../how-to/deploy-policy-remediation.md#create-a-user-who-can-assign-roles-to-a-managed-identity-in-the-customer-tenant)。 此角色通常会授予的其他权限不适用。 如果定义具有此角色的用户，则还必须指定该用户可以分配给托管标识的内置角色。
+
+> [!NOTE]
+> 向 Azure 添加新的适用内置角色后，可以在 [使用 azure 资源管理器模板加入客户](../how-to/onboard-customer.md)时分配该角色。 在 [发布托管服务产品/服务](../how-to/publish-managed-services-offers.md)时，新添加的角色在合作伙伴中心可用之前可能会有延迟。
 
 ## <a name="next-steps"></a>后续步骤
 

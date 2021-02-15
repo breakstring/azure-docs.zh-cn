@@ -3,12 +3,12 @@ title: Azure Monitor 中的指标 - Azure 事件中心 | Microsoft Docs
 description: 本文介绍如何使用 Azure 监视功能来监视 Azure 事件中心
 ms.topic: article
 ms.date: 06/23/2020
-ms.openlocfilehash: c7841007fa1736c88c30108099f86b99d3dad0fb
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.openlocfilehash: 74830775a4f31e6f8e486b4d6cc434335b4ee723
+ms.sourcegitcommit: 16887168729120399e6ffb6f53a92fde17889451
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87074859"
+ms.lasthandoff: 01/13/2021
+ms.locfileid: "98165886"
 ---
 # <a name="azure-event-hubs-metrics-in-azure-monitor"></a>Azure Monitor 中的 Azure 事件中心指标
 
@@ -20,7 +20,7 @@ Azure Monitor 提供了统一的用户界面，可用于监视各种 Azure 服�
 
 Azure Monitor 提供多种访问指标的方法。 可通过 [Azure 门户](https://portal.azure.com)、Azure Monitor API（REST 和 .Net）与分析解决方案（例如 Log Analytics 和事件中心）访问指标。 有关详细信息，请参阅 [Azure Monitor 收集的监视数据](../azure-monitor/platform/data-platform.md)。
 
-默认情况下，已启用指标，并且可访问最近 30 天的数据。 如需将数据保留更长一段时间，可将指标数据存档到 Azure 存储帐户。 可在 Azure Monitor 的 [诊断设置](../azure-monitor/platform/diagnostic-settings.md) 中完成这种配置。
+默认情况下，已启用指标，并且可访问最近 30 天的数据。 如需将数据保留更长一段时间，可将指标数据存档到 Azure 存储帐户。 此设置可在 Azure Monitor 的 [诊断设置](../azure-monitor/platform/diagnostic-settings.md) 中进行配置。
 
 
 ## <a name="access-metrics-in-the-portal"></a>在门户中访问指标
@@ -29,7 +29,7 @@ Azure Monitor 提供多种访问指标的方法。 可通过 [Azure 门户](http
 
 ![查看成功的指标][1]
 
-也可以直接通过命名空间来访问指标。 为此，请选择命名空间，然后单击“指标”  。 若要显示筛选到事件中心范围的指标，请选择事件中心，然后单击“指标”  。
+也可以直接通过命名空间来访问指标。 为此，请选择命名空间，然后选择“指标”。 若要显示筛选到事件中心范围的指标，请选择事件中心，然后选择 " **指标**"。
 
 对于支持维度的指标，必须使用所需的维度值进行筛选，如以下示例所示：
 
@@ -37,7 +37,7 @@ Azure Monitor 提供多种访问指标的方法。 可通过 [Azure 门户](http
 
 ## <a name="billing"></a>计费
 
-目前，在 Azure Monitor 中可以免费使用指标。 但是，如果使用引入指标数据的其他解决方案，可能就需要收费。 例如，如果将指标数据存档到 Azure 存储帐户，则 Azure 存储会收费。 如果将指标数据流式传输到 Azure Monitor 日志进行高级分析，则 Azure 也会向你收费。
+目前，在 Azure Monitor 中可以免费使用指标。 但是，如果使用引入指标数据的其他解决方案，则可以使用这些解决方案来计费。 例如，如果将指标数据存档到 Azure 存储帐户，则 Azure 存储会收费。 如果将指标数据流式传输到 Azure Monitor 日志进行高级分析，Azure 也会向你收费。
 
 以下指标可提供服务运行状况的概述。 
 
@@ -46,61 +46,14 @@ Azure Monitor 提供多种访问指标的方法。 可通过 [Azure 门户](http
 
 所有指标值每隔一分钟发送到 Azure Monitor。 时间粒度定义了提供指标值的时间间隔。 所有事件中心指标所支持的时间间隔为一分钟。
 
-## <a name="request-metrics"></a>请求指标
+## <a name="azure-event-hubs-metrics"></a>Azure 事件中心指标
+有关服务支持的指标列表，请参阅 [Azure 事件中心](../azure-monitor/platform/metrics-supported.md#microsofteventhubnamespaces)
 
-计算数据量和管理操作请求数。
-
-| 指标名称 | 说明 |
-| ------------------- | ----------------- |
-| 传入请求数  | 在指定期间内向 Azure 事件中心服务发送的请求数。 <br/><br/> 单元：计数 <br/> 聚合类型：总计 <br/> 维度：EntityName |
-| 成功的请求数    | 在指定期间内向 Azure 事件中心服务发送成功的请求数。 <br/><br/> 单元：计数 <br/> 聚合类型：总计 <br/> 维度：EntityName |
-| 服务器错误数  | 由于 Azure 事件中心服务发生错误，在指定期间内未处理的请求数。 <br/><br/>单元：计数 <br/> 聚合类型：总计 <br/> 维度：EntityName |
-|用户错误数 |由于存在用户错误，在指定期间内未处理的请求数。<br/><br/> 单元：计数 <br/> 聚合类型：总计 <br/> 维度：EntityName|
-|超过配额错误 |超出可用配额的请求数。 有关事件中心配额的详细信息，请参阅[本文](event-hubs-quotas.md)。<br/><br/> 单元：计数 <br/> 聚合类型：总计 <br/> 维度：EntityName|
-
-## <a name="throughput-metrics"></a>吞吐量指标
-
-| 指标名称 | 说明 |
-| ------------------- | ----------------- |
-|限制的请求数 |由于超出吞吐量单位用量而被限制的请求数。<br/><br/> 单元：计数 <br/> 聚合类型：总计 <br/> 维度：EntityName|
-
-## <a name="message-metrics"></a>消息指标
-
-| 标准名称 | 说明 |
-| ------------------- | ----------------- |
-|传入消息数 |在指定期间内发送到事件中心的事件或邮件数。<br/><br/> 单元：计数 <br/> 聚合类型：总计 <br/> 维度：EntityName|
-|传出消息数 |在指定期间内从事件中心检索的事件或邮件数。<br/><br/> 单元：计数 <br/> 聚合类型：总计 <br/> 维度：EntityName|
-|传入字节数 |在指定期间内向 Azure 事件中心服务发送的字节数。<br/><br/> 单位：字节 <br/> 聚合类型：总计 <br/> 维度：EntityName|
-|传出字节数 |在指定期间内从 Azure 事件中心服务检索的字节数。<br/><br/> 单位：字节 <br/> 聚合类型：总计 <br/> 维度：EntityName|
-
-## <a name="connection-metrics"></a>连接指标
-
-| 指标名称 | 说明 |
-| ------------------- | ----------------- |
-|ActiveConnections |命名空间以及实体上的活动连接数。<br/><br/> 单元：计数 <br/> 聚合类型：总计 <br/> 维度：EntityName|
-|打开的连接数 |打开的连接数。<br/><br/> 单元：计数 <br/> 聚合类型：总计 <br/> 维度：EntityName|
-|关闭的连接数 |关闭的连接数。<br/><br/> 单元：计数 <br/> 聚合类型：总计 <br/> 维度：EntityName|
-
-## <a name="event-hubs-capture-metrics"></a>事件中心捕获指标
-
-当为事件中心启用捕获功能时，即可监视事件中心捕获指标。 以下指标描述了在启用捕获的情况下可监视的内容。
-
-| 指标名称 | 说明 |
-| ------------------- | ----------------- |
-|捕获积压工作 (backlog) |尚未捕获到所选目标的字节数。<br/><br/> 单位：字节 <br/> 聚合类型：总计 <br/> 维度：EntityName|
-|捕获的消息数 |在指定期间内捕获到所选目标的邮件或事件数。<br/><br/> 单元：计数 <br/> 聚合类型：总计 <br/> 维度：EntityName|
-|捕获的字节数 |在指定期间内捕获到所选目标的字节数。<br/><br/> 单位：字节 <br/> 聚合类型：总计 <br/> 维度：EntityName|
-
-## <a name="metrics-dimensions"></a>指标维度
-
-Azure 事件中心支持对 Azure Monitor 中的指标使用以下维度。 为指标添加维度是可选的。 如果不添加维度，则指标是在命名空间级别指定的。 
-
-| 指标名称 | 说明 |
-| ------------------- | ----------------- |
-|EntityName| 事件中心支持命名空间下的事件中心实体。|
+> [!NOTE]
+> 发生用户错误时，Azure 事件中心将更新 **用户错误** 度量，但不记录任何其他诊断信息。 因此，你需要在应用程序中捕获有关用户错误的详细信息。 或者，还可以转换在将消息发送或接收到 application insights 时生成的遥测数据。 有关示例，请参阅 [使用 Application Insights 进行跟踪](../service-bus-messaging/service-bus-end-to-end-tracing.md#tracking-with-azure-application-insights)。
 
 ## <a name="azure-monitor-integration-with-siem-tools"></a>Azure Monitor 与 SIEM 工具集成
-使用 Azure Monitor 将监视数据（活动日志、诊断日志等）路由到事件中心，可以轻松地与安全信息和事件管理 (SIEM) 工具集成。 有关详细信息，请参阅以下文章/博客文章：
+将监视数据路由 (活动日志、诊断日志等。通过 Azure Monitor ) 到事件中心，你可以轻松地将安全信息和事件管理与安全信息和事件管理集成 (SIEM) 工具。 有关详细信息，请参阅以下文章/博客文章：
 
 - [将 Azure 监视数据流式传输到事件中心以便外部工具使用](../azure-monitor/platform/stream-monitoring-data-event-hubs.md)
 - [Azure 日志集成简介](/previous-versions/azure/security/fundamentals/azure-log-integration-overview)
@@ -108,8 +61,8 @@ Azure 事件中心支持对 Azure Monitor 中的指标使用以下维度。 为�
 
 在 SIEM 工具使用事件中心的日志数据的情况下，如果在指标图中看不到传入消息，或者看到传入消息但看不到传出消息，请按照下列步骤操作：
 
-- 如果**没有传入消息**，则表示 Azure Monitor 服务没有将审核/诊断日志移到事件中心。 在此方案中，通过 Azure Monitor 团队建立支持票证。 
-- 如果有传入消息，但**没有传出消息**，则意味着 SIEM 应用程序未读取消息。 请与 SIEM 提供者联系，以确定这些应用程序的事件中心配置是否正确。
+- 如果没有 **传入消息**，则意味着 Azure Monitor 服务不会将审核/诊断日志移动到事件中心。 在此方案中，通过 Azure Monitor 团队建立支持票证。 
+- 如果有传入消息但 **没有传出消息**，则表示 SIEM 应用程序没有读取消息。 请与 SIEM 提供者联系，以确定这些应用程序的事件中心配置是否正确。
 
 
 ## <a name="next-steps"></a>后续步骤
@@ -119,11 +72,11 @@ Azure 事件中心支持对 Azure Monitor 中的指标使用以下维度。 为�
 
 有关事件中心的详细信息，请访问以下链接：
 
-- 使用事件中心教程入门。
-    - [.NET Core](get-started-dotnet-standard-send-v2.md)
-    - [Java](get-started-java-send-v2.md)
-    - [Python](get-started-python-send-v2.md)
-    - [JavaScript](get-started-java-send-v2.md)
+- 事件中心入门教程
+    - [.NET Core](event-hubs-dotnet-standard-getstarted-send.md)
+    - [Java](event-hubs-java-get-started-send.md)
+    - [Python](event-hubs-python-get-started-send.md)
+    - [JavaScript](event-hubs-java-get-started-send.md)
 * [事件中心常见问题解答](event-hubs-faq.md)
 * [使用事件中心的示例应用程序](https://github.com/Azure/azure-event-hubs/tree/master/samples)
 

@@ -6,12 +6,12 @@ ms.topic: troubleshooting
 ms.date: 08/11/2020
 ms.author: helohr
 manager: lizross
-ms.openlocfilehash: d1862e2e0dd9b1e566c6ee5d01a09213a0be4f8e
-ms.sourcegitcommit: 1aef4235aec3fd326ded18df7fdb750883809ae8
+ms.openlocfilehash: 097c97d16cf62793d03ac42662267e0553383bc1
+ms.sourcegitcommit: fc23b4c625f0b26d14a5a6433e8b7b6fb42d868b
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/12/2020
-ms.locfileid: "88134473"
+ms.lasthandoff: 01/17/2021
+ms.locfileid: "98539618"
 ---
 # <a name="troubleshoot-the-remote-desktop-client"></a>远程桌面客户端疑难解答
 
@@ -33,7 +33,7 @@ msrdcw.exe /reset [/f]
 
 首先，通过在浏览器中打开另一个网站来测试 internet 连接;例如， [www.bing.com](https://www.bing.com)。
 
-使用**nslookup**确认 DNS 可以解析 FQDN：
+使用 **nslookup** 确认 DNS 可以解析 FQDN：
 
 ```cmd
 nslookup rdweb.wvd.microsoft.com
@@ -54,15 +54,15 @@ nslookup rdweb.wvd.microsoft.com
 如果浏览器在你使用 web 客户端时开始运行或停止工作，请按照以下说明进行操作：
 
 1. 重新启动浏览器。
-2. 清除浏览器 cookie。 请参阅[如何在 Internet Explorer 中删除 cookie 文件](https://support.microsoft.com/help/278835/how-to-delete-cookie-files-in-internet-explorer)。
-3. 清除浏览器缓存。 请参阅[清除浏览器缓存](https://binged.it/2RKyfdU)。
+2. 清除浏览器 cookie。 请参阅 [如何在 Internet Explorer 中删除 cookie 文件](https://support.microsoft.com/help/278835/how-to-delete-cookie-files-in-internet-explorer)。
+3. 清除浏览器缓存。 请参阅 [清除浏览器缓存](https://binged.it/2RKyfdU)。
 4. 以专用模式打开浏览器。
 
 ## <a name="client-doesnt-show-my-resources"></a>客户端不显示我的资源
 
 首先，请检查正在使用的 Azure Active Directory 帐户。 如果已使用与要用于 Windows 虚拟桌面的帐户不同的 Azure Active Directory 帐户登录，则应注销或使用专用浏览器窗口。
 
-如果使用的是 Windows 虚拟桌面 (经典) ，请使用[本文](./virtual-desktop-fall-2019/connect-web-2019.md)中的 web 客户端链接连接到资源。
+如果使用的是 Windows 虚拟桌面 (经典) ，请使用 [本文](./virtual-desktop-fall-2019/connect-web-2019.md) 中的 web 客户端链接连接到资源。
 
 如果这不起作用，请确保应用组与工作区关联。
 
@@ -80,14 +80,29 @@ nslookup rdweb.wvd.microsoft.com
 
 1. 确认 web 客户端 URL 是正确的。
 2. 确认你使用的凭据适用于绑定到该 URL 的 Windows 虚拟桌面环境。
-3. 清除浏览器 cookie。 有关详细信息，请参阅[如何在 Internet Explorer 中删除 cookie 文件](https://support.microsoft.com/help/278835/how-to-delete-cookie-files-in-internet-explorer)。
-4. 清除浏览器缓存。 有关详细信息，请参阅为[浏览器清除浏览器缓存](https://binged.it/2RKyfdU)。
+3. 清除浏览器 cookie。 有关详细信息，请参阅 [如何在 Internet Explorer 中删除 cookie 文件](https://support.microsoft.com/help/278835/how-to-delete-cookie-files-in-internet-explorer)。
+4. 清除浏览器缓存。 有关详细信息，请参阅为 [浏览器清除浏览器缓存](https://binged.it/2RKyfdU)。
 5. 以专用模式打开浏览器。
+
+## <a name="windows-client-blocks-windows-virtual-desktop-classic-feed"></a>Windows 客户端阻止 Windows 虚拟桌面 (经典) 源
+
+如果 Windows 客户端源不会显示 Windows 虚拟桌面 (经典) 应用，请按照以下说明进行操作：
+
+1. 检查条件性访问策略是否包括与 Windows 虚拟桌面 (经典) 相关联的应用程序 Id。
+2. 检查条件访问策略是否阻止除 Windows 虚拟桌面 (经典) 应用 Id 之外的所有访问。 如果是这样，则需要将应用 ID **9cdead84-a844-4324-93f2-b2e6bb768d07** 添加到策略，以允许客户端发现源。
+
+如果在列表中找不到应用 ID 9cdead84-a844-4324-93f2-b2e6bb768d07，则需要注册 Windows 虚拟桌面资源提供程序。 若要注册资源提供程序：
+
+1. 登录到 Azure 门户。
+2. 中转到 " **订阅**"，然后选择订阅。
+3. 在页面左侧的菜单中，选择 " **资源提供程序**"。
+4. 找到并选择 **DesktopVirtualization**，然后选择 " **重新注册**"。
 
 ## <a name="next-steps"></a>后续步骤
 
 - 如需简要了解如何排查 Windows 虚拟桌面问题和跟踪升级，请参阅[故障排除概述、反馈和支持](troubleshoot-set-up-overview.md)。
 - 若要排查在 Windows 虚拟桌面环境中创建 Windows 虚拟桌面环境和主机池时遇到的问题，请参阅[环境和主机池创建](troubleshoot-set-up-issues.md)。
 - 若要排查在 Windows 虚拟桌面中配置虚拟机 (VM) 时遇到的问题，请参阅[会话主机虚拟机配置](troubleshoot-vm-configuration.md)。
+- 若要解决与 Windows 虚拟桌面代理或会话连接有关的问题，请参阅 [排查常见的 Windows 虚拟桌面代理问题](troubleshoot-agent.md)。
 - 若要排查将 PowerShell 与 Windows 虚拟桌面结合使用时遇到的问题，请参阅 [Windows 虚拟桌面 PowerShell](troubleshoot-powershell.md)。
 - 若要完成故障排除教程，请参阅[教程：排查资源管理器模板部署问题](../azure-resource-manager/templates/template-tutorial-troubleshoot.md)。

@@ -5,18 +5,18 @@ services: vpn-gateway
 author: cherylmc
 ms.service: vpn-gateway
 ms.topic: how-to
-ms.date: 02/15/2019
+ms.date: 09/02/2020
 ms.author: cherylmc
-ms.openlocfilehash: 318656a779aa5ba2279f075fcc44589fe2039682
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.openlocfilehash: 7de83302dd91d7d679b9c35718d184a9767ba436
+ms.sourcegitcommit: 8e7316bd4c4991de62ea485adca30065e5b86c67
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87009486"
+ms.lasthandoff: 11/17/2020
+ms.locfileid: "94655351"
 ---
 # <a name="configure-a-vnet-to-vnet-vpn-gateway-connection-using-powershell"></a>使用 PowerShell 配置 VNet 到 VNet VPN 网关连接
 
-本文介绍如何使用 VNet 到 VNet 连接类型来连接虚拟网络。 虚拟网络可以位于相同或不同的区域，也可以来自相同或不同的订阅。 从不同的订阅连接 VNet 时，订阅不需要与相同的 Active Directory 租户相关联。
+本文介绍如何使用 VNet 到 VNet 连接类型来连接虚拟网络。 虚拟网络可位于相同或不同的区域，来自相同或不同的订阅。 从不同的订阅连接 VNet 时，订阅不需要与相同的 Active Directory 租户相关联。
 
 本文中的步骤适用于 Resource Manager 部署模型并使用 PowerShell。 也可使用不同的部署工具或部署模型来创建此配置，方法是从以下列表中选择另一选项：
 
@@ -67,7 +67,7 @@ ms.locfileid: "87009486"
 
 * [驻留在同一订阅中的 VNet](#samesub)：此配置的步骤使用 TestVNet1 和 TestVNet4。
 
-  ![v2v 示意图](./media/vpn-gateway-vnet-vnet-rm-ps/v2vrmps.png)
+  ![此图显示了位于同一订阅中的 V 网络的 V Net 到 V Net 步骤。](./media/vpn-gateway-vnet-vnet-rm-ps/v2vrmps.png)
 
 * [驻留在不同订阅中的 VNet](#difsub)：此配置的步骤使用 TestVNet1 和 TestVNet5。
 
@@ -203,7 +203,7 @@ ms.locfileid: "87009486"
    -VpnType RouteBased -GatewaySku VpnGw1
    ```
 
-完成命令后，创建此网关将需要多达 45 分钟的时间。 如果使用的是 Azure Cloud Shell，可以单击 Cloud Shell 终端的右上角重启 CloudShell 会话，然后配置 TestVNet4。 无需等到 TestVNet1 网关创建完成。
+完成命令后，创建此网关将需要多达 45 分钟的时间。 如果使用 Azure Cloud Shell，则可以通过单击 Cloud Shell 终端的左上角来重新启动 Cloud Shell 会话，并配置 TestVNet4。 无需等到 TestVNet1 网关创建完成。
 
 ### <a name="step-3---create-and-configure-testvnet4"></a>步骤 3 - 创建并配置 TestVNet4
 
@@ -475,7 +475,7 @@ ms.locfileid: "87009486"
 
 [!INCLUDE [vpn-gateway-no-nsg-include](../../includes/vpn-gateway-no-nsg-include.md)]
 
-[!INCLUDE [verify connections powershell](../../includes/vpn-gateway-verify-connection-ps-rm-include.md)]
+[!INCLUDE [verify connections PowerShell](../../includes/vpn-gateway-verify-connection-ps-rm-include.md)]
 
 ## <a name="vnet-to-vnet-faq"></a><a name="faq"></a>VNet 到 VNet 常见问题解答
 
@@ -483,5 +483,5 @@ ms.locfileid: "87009486"
 
 ## <a name="next-steps"></a>后续步骤
 
-* 连接完成后，即可将虚拟机添加到虚拟网络。 有关详细信息，请参阅[虚拟机文档](https://docs.microsoft.com/azure/)。
+* 连接完成后，即可将虚拟机添加到虚拟网络。 有关详细信息，请参阅[虚拟机文档](../index.yml)。
 * 有关 BGP 的信息，请参阅 [BGP 概述](vpn-gateway-bgp-overview.md)和[如何配置 BGP](vpn-gateway-bgp-resource-manager-ps.md)。

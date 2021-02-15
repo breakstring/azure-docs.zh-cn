@@ -9,12 +9,12 @@ ms.topic: conceptual
 ms.tgt_pltfrm: arduino
 ms.date: 02/02/2018
 ms.author: liydu
-ms.openlocfilehash: d75e7e7b4870f46c978fd70039441c8851844082
-ms.sourcegitcommit: 46f8457ccb224eb000799ec81ed5b3ea93a6f06f
+ms.openlocfilehash: 6912124ce8d1741731d625dccfea445417b2488d
+ms.sourcegitcommit: a055089dd6195fde2555b27a84ae052b668a18c7
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/28/2020
-ms.locfileid: "87337953"
+ms.lasthandoff: 01/26/2021
+ms.locfileid: "98785010"
 ---
 # <a name="connect-mxchip-iot-devkit-to-azure-iot-remote-monitoring-solution-accelerator"></a>将 MXChip IoT DevKit 连接到 Azure IoT 远程监视解决方案加速器
 
@@ -24,7 +24,7 @@ ms.locfileid: "87337953"
 
 ## <a name="what-you-need"></a>所需条件
 
-完成[入门指南](https://docs.microsoft.com/azure/iot-hub/iot-hub-arduino-iot-devkit-az3166-get-started)来实现以下目的：
+完成[入门指南](./iot-hub-arduino-iot-devkit-az3166-get-started.md)来实现以下目的：
 
 * 将 DevKit 连接到 Wi-Fi
 * 准备开发环境
@@ -120,7 +120,7 @@ DevKit 将重新启动并开始运行代码。
 
 ## <a name="change-device-id"></a>更改设备 ID
 
-如果希望在代码中将硬编码的 **AZ3166** 更改为自定义的设备 ID，请修改[远程监视示例](../iot-accelerators/iot-accelerators-arduino-iot-devkit-az3166-devkit-remote-monitoring-v2.md)中显示的代码行。
+如果希望在代码中将硬编码的 **AZ3166** 更改为自定义的设备 ID，请修改 [远程监视示例](/previous-versions/azure/iot-accelerators/iot-accelerators-arduino-iot-devkit-az3166-devkit-remote-monitoring-v2)中显示的代码行。
 
 ## <a name="problems-and-feedback"></a>问题和反馈
 
@@ -133,6 +133,6 @@ DevKit 将重新启动并开始运行代码。
 
 了解如何将 DevKit 设备连接到 Azure IoT 远程监视解决方案加速器并将传感器数据可视化以后，建议接下来学习以下教程：
 
-* [Azure IoT 解决方案加速器概述](https://docs.microsoft.com/azure/iot-suite/)
+* [Azure IoT 解决方案加速器概述](/azure/iot-suite/)
 
-* [IoT 开发人员工具包](https://microsoft.github.io/azure-iot-developer-kit/) 
+* [IoT 开发人员工具包](https://microsoft.github.io/azure-iot-developer-kit/)

@@ -7,12 +7,12 @@ ms.service: site-recovery
 ms.topic: conceptual
 ms.date: 11/15/2019
 ms.author: raynew
-ms.openlocfilehash: 766d0a763f7d69ec58851116e18510235f39b364
-ms.sourcegitcommit: 11e2521679415f05d3d2c4c49858940677c57900
+ms.openlocfilehash: e3d3ce8218030bc8ba6c59b26b7360bf2299e02a
+ms.sourcegitcommit: d60976768dec91724d94430fb6fc9498fdc1db37
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/31/2020
-ms.locfileid: "87495057"
+ms.lasthandoff: 12/02/2020
+ms.locfileid: "96499809"
 ---
 # <a name="monitor-site-recovery-with-azure-monitor-logs"></a>使用 Azure Monitor 日志监视 Site Recovery
 
@@ -36,7 +36,7 @@ Azure Monitor 日志提供一个日志数据平台用于收集活动和资源日
 
 - 至少一台在恢复服务保管库中受保护的计算机。
 - 用于存储 Site Recovery 日志的 Log Analytics 工作区。 [了解](../azure-monitor/learn/quick-create-workspace.md)如何设置工作区。
-- 基本了解如何在 Log Analytics 中编写、运行和分析日志查询。 [了解详细信息](../azure-monitor/log-query/get-started-portal.md)。
+- 基本了解如何在 Log Analytics 中编写、运行和分析日志查询。 [了解详细信息](../azure-monitor/log-query/log-analytics-tutorial.md)。
 
 在开始之前，我们建议查看[常见监视问题](monitoring-common-questions.md)。
 
@@ -44,14 +44,14 @@ Azure Monitor 日志提供一个日志数据平台用于收集活动和资源日
 
 1. 在保管库中，单击“诊断设置” > “添加诊断设置”。 
 
-    ![显示 "添加诊断设置" 选项的屏幕截图。](./media/monitoring-log-analytics/add-diagnostic.png)
+    ![显示“添加诊断设置”选项的屏幕截图。](./media/monitoring-log-analytics/add-diagnostic.png)
 
 2. 在“诊断设置”中，指定一个名称，并选中“发送到 Log Analytics”复选框 。
 3. 选择 Azure Monitor 日志订阅和 Log Analytics 工作区。
 4. 在切换选项中选择“Azure 诊断”。
 5. 在日志列表中，选择带有 **AzureSiteRecovery** 前缀的所有日志。 。
 
-    ![诊断设置屏幕的屏幕截图。](./media/monitoring-log-analytics/select-workspace.png)
+    ![“诊断设置屏幕”的屏幕截图。](./media/monitoring-log-analytics/select-workspace.png)
 
 Site Recovery 日志将开始馈送到选定工作区中的某个表 (**AzureDiagnostics**) 内。
 
@@ -62,9 +62,9 @@ Site Recovery 日志将开始馈送到选定工作区中的某个表 (**AzureDia
 1. 转到 Log Analytics 工作区并单击“高级设置”。
 2. 单击“连接的源”页面，然后选择“Windows Server” 。
 3. 在进程服务器上下载 Windows 代理（64 位）。 
-4. [获取工作区 ID 和密钥](../azure-monitor/platform/agent-windows.md#obtain-workspace-id-and-key)
+4. [获取工作区 ID 和密钥](../azure-monitor/platform/log-analytics-agent.md#workspace-id-and-key)
 5. [将代理配置为使用 TLS 1.2](../azure-monitor/platform/agent-windows.md#configure-agent-to-use-tls-12)
-6. 通过提供获取的工作区 ID 和密钥[完成代理安装](../azure-monitor/platform/agent-windows.md#install-the-agent-using-setup-wizard)。
+6. 通过提供获取的工作区 ID 和密钥[完成代理安装](../azure-monitor/platform/agent-windows.md#install-agent-using-setup-wizard)。
 7. 安装完成后，转到 Log Analytics 工作区并单击“高级设置”。 转到“数据”页并单击“Windows 性能计数器” 。 
 8. 单击“+”添加以下两个计数器，采样间隔为 300 秒：
 
@@ -125,7 +125,7 @@ rpoInSeconds_d <= 1800, "15-30Min", ">30Min") 
 | render barchart 
 ```
 
-![显示随 Site Recovery 复制的 Azure Vm 条形图的屏幕截图。](./media/monitoring-log-analytics/example1.png)
+![此屏幕截图显示了使用 Site Recovery 复制 Azure VM 的条形图。](./media/monitoring-log-analytics/example1.png)
 
 ### <a name="query-site-recovery-jobs"></a>查询 Site Recovery 作业
 
@@ -190,7 +190,7 @@ AzureDiagnostics  
 | project TimeGenerated, name_s , RPO_in_seconds = rpoInSeconds_d   
 | render timechart 
 ```
-![跟踪特定 Azure VM RPO 的趋势图屏幕截图。](./media/monitoring-log-analytics/example2.png)
+![此屏幕截图显示了跟踪特定 Azure VM 的 RPO 的趋势图。](./media/monitoring-log-analytics/example2.png)
 
 ### <a name="query-data-change-rate-churn-and-upload-rate-for-an-azure-vm"></a>查询 Azure VM 的数据更改（变动）速率和上传速率
 
@@ -207,7 +207,7 @@ Category contains "Upload", "UploadRate", "none") 
 | project TimeGenerated , InstanceWithType , Churn_MBps = todouble(Value_s)/1048576   
 | render timechart  
 ```
-![特定 Azure VM 的趋势图的屏幕截图。](./media/monitoring-log-analytics/example3.png)
+![此屏幕截图显示了特定 Azure VM 的趋势图。](./media/monitoring-log-analytics/example3.png)
 
 ### <a name="query-data-change-rate-churn-and-upload-rate-for-a-vmware-or-physical-machine"></a>查询 VMware 或物理计算机的数据更改（变动）速率和上传速率
 

@@ -10,17 +10,18 @@ tags: azure-resource-manager
 keywords: ''
 ms.assetid: 1c4f1951-3613-4a5a-a0af-36b85750c84e
 ms.service: virtual-machines-linux
+ms.subservice: workloads
 ms.topic: article
 ms.tgt_pltfrm: vm-linux
 ms.workload: infrastructure-services
 ms.date: 07/16/2020
 ms.author: sedusch
-ms.openlocfilehash: 6b66db639e0b22a7e0c45486465a1fa395aba33d
-ms.sourcegitcommit: 271601d3eeeb9422e36353d32d57bd6e331f4d7b
+ms.openlocfilehash: c70de186468eb3efacc82c1d5c8802612475fd4d
+ms.sourcegitcommit: c7153bb48ce003a158e83a1174e1ee7e4b1a5461
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/20/2020
-ms.locfileid: "88653505"
+ms.lasthandoff: 01/15/2021
+ms.locfileid: "98232788"
 ---
 # <a name="azure-virtual-machines-deployment-for-sap-netweaver"></a>适用于 SAP NetWeaver 的 Azure 虚拟机部署
 
@@ -72,7 +73,7 @@ ms.locfileid: "88653505"
 [2367194]:https://launchpad.support.sap.com/#/notes/2367194
 
 [azure-cli]:../../../cli-install-nodejs.md
-[azure-cli-2]:https://docs.microsoft.com/cli/azure/install-azure-cli?view=azure-cli-latest
+[azure-cli-2]:https://docs.microsoft.com/cli/azure/install-azure-cli
 [azure-portal]:https://portal.azure.com
 [azure-ps]:/powershell/azure/
 [azure-quickstart-templates-github]:https://github.com/Azure/azure-quickstart-templates
@@ -448,7 +449,7 @@ ms.locfileid: "88653505"
    * **Network**
      * 虚拟网络和子网： 要将虚拟机与内部网络相集成，请选择连接到本地网络的虚拟网络。
      * **公共 IP 地址**：选择想要使用的公共 IP 地址，或输入参数来创建新的公共 IP 地址。 可以使用公共 IP 地址通过 Internet 访问虚拟机。 请确保同时创建网络安全组来帮助保护对虚拟机的访问。
-     * **网络安全组**：有关详细信息，请参阅[使用网络安全组控制网络流量流][virtual-networks-nsg]。
+     * **网络安全组**：有关详细信息，请参阅 [使用网络安全组控制网络流量流][virtual-networks-nsg]。
    * **扩展**：可以通过将虚拟机扩展添加到部署来安装这些扩展。 不需要在此步骤中添加扩展。 稍后会安装 SAP 支持所需的扩展。 请参阅本指南中的[配置适用于 SAP 的 Azure 扩展][deployment-guide-4.5]一章。
    * **高可用性**：选择一个可用性集，或输入参数来创建新的可用性集。 有关详细信息，请参阅 [Azure 可用性集][planning-guide-3.2.3]。
    * **Monitoring**
@@ -543,11 +544,11 @@ ms.locfileid: "88653505"
 为 Linux 创建专用映像时使用的步骤不同于为 Windows 创建专用映像时使用的步骤。
 
 ---
-> ![Windows][Logo_Windows] Windows
+> ![Windows 徽标。][Logo_Windows] Windows
 >
 > 若要准备可用来部署多台虚拟机的 Windows 映像，必须在本地 VM 上抽象化或通用化 Windows 设置（例如 Windows SID 和主机名）。 可以使用 [sysprep](/previous-versions/windows/it-pro/windows-8.1-and-8/hh825084(v=win.10)) 来执行此操作。
 >
-> ![Linux][Logo_Linux] Linux
+> ![Linux 徽标。][Logo_Linux] Linux
 >
 > 若要准备可用来部署多台虚拟机的 Linux 映像，必须在本地 VM 上抽象化或通用化某些 Linux 设置。 可以使用 `waagent -deprovision` 来执行此操作。 有关详细信息，请参阅[捕获在 Azure 上运行的 Linux 虚拟机][virtual-machines-linux-capture-image]和 [Azure Linux 代理用户指南][virtual-machines-linux-agent-user-guide-command-line-options]。
 >
@@ -587,7 +588,7 @@ ms.locfileid: "88653505"
    * **Network**
      * 虚拟网络和子网： 要将虚拟机与内部网络相集成，请选择连接到本地网络的虚拟网络。
      * **公共 IP 地址**：选择想要使用的公共 IP 地址，或输入参数来创建新的公共 IP 地址。 可以使用公共 IP 地址通过 Internet 访问虚拟机。 请确保同时创建网络安全组来帮助保护对虚拟机的访问。
-     * **网络安全组**：有关详细信息，请参阅[使用网络安全组控制网络流量流][virtual-networks-nsg]。
+     * **网络安全组**：有关详细信息，请参阅 [使用网络安全组控制网络流量流][virtual-networks-nsg]。
    * **扩展**：可以通过将虚拟机扩展添加到部署来安装这些扩展。 不需要在此步骤中添加扩展。 稍后会安装 SAP 支持所需的扩展。 请参阅本指南中的[配置适用于 SAP 的 Azure 扩展][deployment-guide-4.5]一章。
    * **高可用性**：选择一个可用性集，或输入参数来创建新的可用性集。 有关详细信息，请参阅 [Azure 可用性集][planning-guide-3.2.3]。
    * **Monitoring**
@@ -678,16 +679,16 @@ ms.locfileid: "88653505"
 
 在此方案中，打算将特定的 SAP 系统从本地环境移动到 Azure。 可以通过将包含 OS、SAP 二进制文件并最终包含 DBMS 二进制文件的 VHD，以及包含 DBMS 数据和日志文件的 VHD 上传到 Azure 来实现此目的。 与[方案 2：使用自定义映像为 SAP 部署 VM][deployment-guide-3.3] 中所述的方案不同，在本例中，需要在 Azure VM 中保留主机名、SAP SID 和 SAP 用户帐户，因为它们已在本地环境中进行了配置。 不需要对 OS 进行通用化。 此方案通常应用于跨界情况，在这种情况下，SAP 布局有一部分在本地运行，另一部分在 Azure 上运行。
 
-在此方案中，在部署期间**不会**自动安装 VM 代理。 由于在 Azure 上运行 SAP NetWeaver 需要 VM 代理和适用于 SAP 的 Azure 扩展，因此，在创建虚拟机后，需要手动下载、安装并启用这两个组件。
+在此方案中，在部署期间 **不会** 自动安装 VM 代理。 由于在 Azure 上运行 SAP NetWeaver 需要 VM 代理和适用于 SAP 的 Azure 扩展，因此，在创建虚拟机后，需要手动下载、安装并启用这两个组件。
 
 有关 Azure VM 代理的详细信息，请参阅以下资源。
 
 ---
-> ![Windows][Logo_Windows] Windows
+> ![Windows 徽标。][Logo_Windows] Windows
 >
 > [Azure 虚拟机代理概述][virtual-machines-windows-agent-user-guide]
 >
-> ![Linux][Logo_Linux] Linux
+> ![Linux 徽标。][Logo_Linux] Linux
 >
 > [Azure Linux 代理用户指南][virtual-machines-linux-agent-user-guide]
 >
@@ -856,7 +857,7 @@ az --version
 
 1. 转到“开始”，输入 **gpedit.msc**，并选择 **Enter**。
 1. 选择“计算机配置” > “管理模板” > “Windows 组件” > “Internet Explorer”。    确保“按计算机进行代理设置(而不是按用户)”设置已禁用或者未配置。
-1. 在**控制面板**中，转到“网络和共享中心” > “Internet 选项”。 
+1. 在 **控制面板** 中，转到“网络和共享中心” > “Internet 选项”。 
 1. 在“连接”选项卡上，选择“局域网设置”按钮。 
 1. 清除“自动检测设置”复选框。
 1. 选中“为 LAN 使用代理服务器”复选框，并输入代理地址和端口。
@@ -911,8 +912,8 @@ az --version
 ### <a name="configure-the-azure-extension-for-sap"></a><a name="d98edcd3-f2a1-49f7-b26a-07448ceb60ca"></a>配置适用于 SAP 的 Azure 扩展
 
 > [!NOTE]
-> 常规支持声明：若要支持适用于 SAP 的 Azure 扩展，请始终使用适用于 Windows 的 BC-OP-NT-AZR for Windows 或业务连续性-组件 BC-OP-LNX-AZR 创建-BC-OP-NT-AZR 在 SAP 上打开一个事件。
-> SAP 支持系统中有专门的 Microsoft 支持工程师，可帮助我们的共同客户。
+> 一般支持声明：  
+> Sap 支持渠道提供了对适用于 SAP 的 Azure 扩展的支持。 如果需要有关适用于 SAP 的 Azure 扩展的帮助，请打开支持案例，并提供 [Sap 支持](https://support.sap.com/)。 
 
 根据 [Azure 上的 SAP 的 VM 部署方案][deployment-guide-3]所述准备好 VM 之后，Azure VM 代理就已安装在虚拟机上了。 下一个步骤是部署 Azure 全球数据中心内的 Azure 扩展存储库中提供的适用于 SAP 的 Azure 扩展。 有关详细信息，请参阅 [SAP NetWeaver 的 Azure 虚拟机规划和实施指南][planning-guide-9.1]。
 
@@ -1057,7 +1058,7 @@ az --version
    az login
    ```
 
-1. 按照使用 Azure CLI 为 azure [vm 上的 azure 资源配置托管标识][qs-configure-cli-windows-vm] 一文中的步骤，为 VM 启用系统分配的托管标识。 适用于 SAP 的 VM 扩展不支持用户分配的托管标识。 但是，可以同时启用系统分配的和用户分配的标识。
+1. 按照使用 Azure CLI 为 azure [vm 上的 azure 资源配置托管标识][qs-configure-cli-windows-vm] 一文中的步骤，为 VM 启用 System-Assigned 托管标识。 适用于 SAP 的 VM 扩展不支持 User-Assigned 托管标识。 但是，可以同时启用系统分配的和用户分配的标识。
 
    示例：
    ```azurecli
@@ -1069,8 +1070,14 @@ az --version
     示例：
 
     ```azurecli
+    # Azure CLI on Linux
     spID=$(az resource show -g <resource-group-name> -n <vm name> --query identity.principalId --out tsv --resource-type Microsoft.Compute/virtualMachines)
     rgId=$(az group show -g <resource-group-name> --query id --out tsv)
+    az role assignment create --assignee $spID --role 'Reader' --scope $rgId
+
+    # Azure CLI on Windows/PowerShell
+    $spID=az resource show -g <resource-group-name> -n <vm name> --query identity.principalId --out tsv --resource-type Microsoft.Compute/virtualMachines
+    $rgId=az group show -g <resource-group-name> --query id --out tsv
     az role assignment create --assignee $spID --role 'Reader' --scope $rgId
     ```
 
@@ -1078,11 +1085,19 @@ az --version
     目前仅支持 AzureCloud 中的扩展。 目前尚不支持 azure 中国世纪互联、Azure 政府版或任何其他特殊环境。
 
     ```azurecli
-    # For Linux machines
+    # Azure CLI on Linux
+    ## For Linux machines
     az vm extension set --publisher Microsoft.AzureCAT.AzureEnhancedMonitoring --name MonitorX64Linux --version 1.0 -g <resource-group-name> --vm-name <vm name> --settings '{"system":"SAP"}'
 
-    #For Windows machines
+    ## For Windows machines
     az vm extension set --publisher Microsoft.AzureCAT.AzureEnhancedMonitoring --name MonitorX64Windows --version 1.0 -g <resource-group-name> --vm-name <vm name> --settings '{"system":"SAP"}'
+
+    # Azure CLI on Windows/PowerShell
+    ## For Linux machines
+    az vm extension set --publisher Microsoft.AzureCAT.AzureEnhancedMonitoring --name MonitorX64Linux --version 1.0 -g <resource-group-name> --vm-name <vm name> --settings '{\"system\":\"SAP\"}'
+
+    ## For Windows machines
+    az vm extension set --publisher Microsoft.AzureCAT.AzureEnhancedMonitoring --name MonitorX64Windows --version 1.0 -g <resource-group-name> --vm-name <vm name> --settings '{\"system\":\"SAP\"}'
     ```
 
 ## <a name="checks-and-troubleshooting"></a><a name="564adb4f-5c95-4041-9616-6635e83a810b"></a>检查和故障排除
@@ -1309,7 +1324,7 @@ Azperflib.exe 输出会显示针对 SAP 的所有已填充的 Azure 性能计数
 > [!NOTE]
 > VM 扩展有两个版本。 本章介绍了默认的 VM 扩展。 如果已安装新的 VM 扩展，请参阅 [排查 Azure 的新 Azure 扩展问题][deployment-guide-5.3-new]一章。
 
-#### <a name="windowslogo_windows-azure-performance-counters-do-not-show-up-at-all"></a>![Windows][Logo_Windows] Azure 性能计数器根本未显示
+#### <a name="windows-logologo_windows-azure-performance-counters-do-not-show-up-at-all"></a>![Windows 徽标。][Logo_Windows] Azure 性能计数器根本未显示
 
 AzureEnhancedMonitoring Windows 服务在 Azure 中收集性能度量值。 如果该服务未正确安装或者未在 VM 中运行，则无法收集任何性能度量值。
 
@@ -1350,13 +1365,13 @@ Windows 服务 AzureEnhancedMonitoring 存在并已启用，但无法启动。 �
 
 配置不正确。 根据[配置适用于 SAP 的 Azure 扩展][deployment-guide-4.5]中所述，重启 VM 中的适用于 SAP 的 Azure 扩展。
 
-#### <a name="windowslogo_windows-some-azure-performance-counters-are-missing"></a>![Windows][Logo_Windows] 缺少某些 Azure 性能计数器
+#### <a name="windows-logologo_windows-some-azure-performance-counters-are-missing"></a>![Windows 徽标。][Logo_Windows] 缺少某些 Azure 性能计数器
 
 AzureEnhancedMonitoring Windows 服务在 Azure 中收集性能度量值。 该服务从多个来源获取数据。 某些配置数据是从本地收集的，某些性能度量值是从 Azure 诊断读取的。 存储计数器通过日志记录在存储订阅级别使用。
 
 如果使用 SAP 说明 [1999351] 进行故障排除没有解决问题，请重新运行 `Set-AzVMAEMExtension` 配置脚本。 可能必须要等待一小时，因为在启用存储分析或诊断计数器后可能不会立即创建这些计数器。 如果问题依然存在，请为 Windows 虚拟机组件 BC-OP-NT-AZR 或 Linux 虚拟机组件 BC-OP-LNX-AZR 创建一条 SAP 客户支持消息。
 
-#### <a name="linuxlogo_linux-azure-performance-counters-do-not-show-up-at-all"></a>![Linux][Logo_Linux] Azure 性能计数器根本未显示
+#### <a name="linux-logologo_linux-azure-performance-counters-do-not-show-up-at-all"></a>![Linux 徽标。][Logo_Linux] Azure 性能计数器根本未显示
 
 Azure 中的性能度量值是由某个守护程序收集的。 如果该守护程序未运行，则无法收集任何性能度量值。
 
@@ -1389,7 +1404,7 @@ WARNING: [WARN] Standard Managed Disks are not supported. Extension will be inst
 之所以出现这些消息，是因为标准托管磁盘未提供适用于 SAP 的 SAP 扩展检查标准 Azure 存储帐户的统计信息时需使用的 API。 这不是一个值得关注的问题。 引入标准磁盘存储帐户的收集数据的原因是限制频繁发生的输入和输出。 托管磁盘会通过限制存储帐户中的磁盘数避免这类限流。 因此，没有该类型的数据并不重要。
 
 
-#### <a name="linuxlogo_linux-some-azure-performance-counters-are-missing"></a>![Linux][Logo_Linux] 缺少某些 Azure 性能计数器
+#### <a name="linux-logologo_linux-some-azure-performance-counters-are-missing"></a>![Linux 徽标。][Logo_Linux] 缺少某些 Azure 性能计数器
 
 Azure 中的性能度量值是由某个守护程序收集的，该守护程序从多个来源获取数据。 某些配置数据是从本地收集的，某些性能度量值是从 Azure 诊断读取的。 存储计数器来自存储订阅中的日志。
 
@@ -1402,7 +1417,7 @@ Azure 中的性能度量值是由某个守护程序收集的，该守护程序�
 > [!NOTE]
 > VM 扩展有两个版本。 本章介绍了新的 VM 扩展。 如果已安装默认 VM 扩展，请参阅 [排查适用于 SAP 的 Azure 扩展][deployment-guide-5.3]的章节。
 
-#### <a name="windowslogo_windows-azure-performance-counters-do-not-show-up-at-all"></a>![Windows][Logo_Windows] Azure 性能计数器根本未显示
+#### <a name="windows-logologo_windows-azure-performance-counters-do-not-show-up-at-all"></a>![Windows 徽标。][Logo_Windows] Azure 性能计数器根本未显示
 
 AzureEnhancedMonitoring 进程在 Azure 中收集性能指标。 如果该进程未在 VM 中运行，则无法收集任何性能指标。
 
@@ -1416,13 +1431,13 @@ AzureEnhancedMonitoring 进程在 Azure 中收集性能指标。 如果该进程
 
 未安装该扩展。 确定这是否为代理问题（如前文所述）。 可能需要重新启动计算机或重新安装 VM 扩展。
 
-#### <a name="windowslogo_windows-some-azure-performance-counters-are-missing"></a>![Windows][Logo_Windows] 缺少某些 Azure 性能计数器
+#### <a name="windows-logologo_windows-some-azure-performance-counters-are-missing"></a>![Windows 徽标。][Logo_Windows] 缺少某些 Azure 性能计数器
 
 AzureEnhancedMonitoring Windows 进程在 Azure 中收集性能指标。 此过程从多个源中获取数据。 某些配置数据是在本地收集的，某些性能度量值是从 Azure Monitor 中读取的。
 
 如果使用 SAP 说明 [1999351] 进行故障排除不能解决此问题，请在组件 BC-操作-Bc-op-nt-azr for WINDOWS 或组件 BC-OP-LNX-AZR 创建-Bc-op-nt-azr for Linux 虚拟机上打开 SAP 客户支持消息。 请将日志文件 C： \\ 程序包 \\ 插件 \\ MonitorX64Windows \\ &lt;>logapp.txt 附加 \\ 到事件。
 
-#### <a name="linuxlogo_linux-azure-performance-counters-do-not-show-up-at-all"></a>![Linux][Logo_Linux] Azure 性能计数器根本未显示
+#### <a name="linux-logologo_linux-azure-performance-counters-do-not-show-up-at-all"></a>![Linux 徽标。][Logo_Linux] Azure 性能计数器根本未显示
 
 Azure 中的性能度量值是由某个守护程序收集的。 如果该守护程序未运行，则无法收集任何性能度量值。
 
@@ -1436,7 +1451,7 @@ Azure 中的性能度量值是由某个守护程序收集的。 如果该守护�
 
 未安装该扩展。 确定这是否为代理问题（如前文所述）。 你可能需要重新启动计算机并/或重新安装 VM 扩展。
 
-#### <a name="linuxlogo_linux-some-azure-performance-counters-are-missing"></a>![Linux][Logo_Linux] 缺少某些 Azure 性能计数器
+#### <a name="linux-logologo_linux-some-azure-performance-counters-are-missing"></a>![Linux 徽标。][Logo_Linux] 缺少某些 Azure 性能计数器
 
 Azure 中的性能度量值是由某个守护程序收集的，该守护程序从多个来源获取数据。 某些配置数据是在本地收集的，某些性能度量值是从 Azure Monitor 中读取的。
 

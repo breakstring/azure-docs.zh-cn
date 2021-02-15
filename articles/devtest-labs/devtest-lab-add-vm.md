@@ -3,12 +3,12 @@ title: 向 Azure 开发测试实验室中的实验室添加 VM | Microsoft 文�
 description: 了解如何使用 Azure 门户将虚拟机添加到 Azure 开发测试实验室中的实验室。 您可以选择作为自定义图像或公式的基。
 ms.topic: article
 ms.date: 06/26/2020
-ms.openlocfilehash: c61e6e685a52ac3658cb9b9ca37f64fc51f3ce1e
-ms.sourcegitcommit: 2bab7c1cd1792ec389a488c6190e4d90f8ca503b
+ms.openlocfilehash: 07efcf93b963009494021b90e6c730c4615301ef
+ms.sourcegitcommit: 829d951d5c90442a38012daaf77e86046018e5b9
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/17/2020
-ms.locfileid: "88270710"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "91297617"
 ---
 # <a name="add-a-vm-to-a-lab-in-azure-devtest-labs"></a>向 Azure 开发测试实验室中的实验室添加 VM
 如果已[创建第一个 VM](tutorial-create-custom-lab.md#add-a-vm-to-the-lab)，则很可能从预加载的[市场映像](devtest-lab-configure-marketplace-images.md)执行此操作。 现在，如果要将后续 VM 添加到实验室，还可以选择作为[自定义映像](devtest-lab-create-template.md)或[公式](devtest-lab-manage-formulas.md)的*基本*映像。 本教程会引导完成使用 Azure 门户向开发测试实验室中的实验室添加 VM 的过程。
@@ -30,7 +30,7 @@ ms.locfileid: "88270710"
     2. 输入在虚拟机上被授予了管理员权限的**用户名**。 使用唯一的自动生成名称预先填充计算机的“用户名”****。 该名称对应于电子邮件地址中的用户名。 此功能可节省每次创建新计算机时确定用户名的时间。 同样，如果愿意，可以用自己选择的用户名替代此自动填充的字段。 若要替代用户名的自动填充值，请在“用户名”文本框中输入值****。 此用户在虚拟机上被授予了管理员权限****。
     3. 如果要在实验室中创建第一个 VM，请输入用户的密码****。 若要将此密码保存为与实验室关联的 Azure Key Vault 中的默认密码，请选择“另存为默认密码”****。 默认密码保存在名为“VmPassword”的密钥保管库中****。 尝试在实验室中创建后续 VM 时，会自动选择“VmPassword”作为密码********。 若要替代该值，请清除“使用已保存的机密”复选框，然后输入密码****。
 
-        ![选择一个库](./media/tutorial-create-custom-lab/new-virtual-machine.png)
+        ![显示 "创建实验室资源" 页的屏幕截图，其中选择了 "基本设置"，并输入了 "用户设置" 值。](./media/tutorial-create-custom-lab/new-virtual-machine.png)
 
         还可以先在密钥保管库中保存机密，然后在实验室中创建 VM 时使用它。 有关详细信息，请参阅[在密钥保管库中存储机密](devtest-lab-store-secrets-in-key-vault.md)。 若要使用在密钥保管库中存储的密码，请选择“使用已保存的机密”，并指定与机密（密码）对应的密钥值****。
     4. 在“更多选项”**** 部分中，选择“更改大小”****。 选择指定了要创建的 VM 的处理器内核、RAM 大小和硬盘驱动器大小的预定义项之一。

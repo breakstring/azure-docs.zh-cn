@@ -3,17 +3,19 @@ title: 为设备配置网络代理 - Azure IoT Edge | Microsoft Docs
 description: 如何将 Azure IoT Edge 运行时和所有面向 Internet 的 IoT Edge 模块配置为通过代理服务器进行通信。
 author: kgremban
 ms.author: kgremban
-ms.date: 3/10/2020
-ms.topic: conceptual
+ms.date: 09/03/2020
+ms.topic: how-to
 ms.service: iot-edge
 services: iot-edge
-ms.custom: amqp
-ms.openlocfilehash: 270e6a0173ed0088ff5d37c989947f5272634200
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.custom:
+- amqp
+- contperf-fy21q1
+ms.openlocfilehash: 7fc57b46055281c64b39767047f6b7cb5b748ad2
+ms.sourcegitcommit: d4734bc680ea221ea80fdea67859d6d32241aefc
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "81687201"
+ms.lasthandoff: 02/14/2021
+ms.locfileid: "100373821"
 ---
 # <a name="configure-an-iot-edge-device-to-communicate-through-a-proxy-server"></a>将 IoT Edge 设备配置为通过代理服务器进行通信
 
@@ -21,27 +23,27 @@ IoT Edge 设备将发送 HTTPS 请求以与 IoT 中心进行通信。 如果设�
 
 本文将引导你完成以下四个步骤，来配置并管理代理服务器后面的 IoT Edge 设备：
 
-1. **在设备上安装 IoT Edge 运行时。**
+1. [**在设备上安装 IoT Edge 运行时**](#install-the-runtime-through-a-proxy)
 
-   IoT Edge 安装脚本从 Internet 提取包和文件，因此，设备需要通过代理服务器通信，以发出这些请求。 有关详细步骤，请参阅本文的[通过代理安装运行时](#install-the-runtime-through-a-proxy)部分。 对于 Windows 设备，安装脚本还会提供[脱机安装](how-to-install-iot-edge-windows.md#offline-or-specific-version-installation)选项。
+   IoT Edge 安装脚本从 Internet 提取包和文件，因此，设备需要通过代理服务器通信，以发出这些请求。 对于 Windows 设备，安装脚本还会提供脱机安装选项。
 
-   此步骤是首次设置 IoT Edge 设备时，在其上执行的一次性过程。 更新 IoT Edge 运行时时，也需要使用相同的连接。
+   此步骤是首次设置 IoT Edge 设备时对其进行配置的一次性过程。 更新 IoT Edge 运行时时，也需要使用相同的连接。
 
-2. **在设备上配置 Docker 守护程序和 IoT Edge 守护程序。**
+2. [**在设备上配置 Docker 守护程序和 IoT Edge 守护程序**](#configure-the-daemons)
 
-   IoT Edge 使用设备上的两个守护程序，这些守护程序需要通过代理服务器发出 Web 请求。 IoT Edge 守护程序负责与 IoT 中心通信。 Moby 守护程序负责容器管理，因此将与容器注册表通信。 有关详细步骤，请参阅本文的[配置守护程序](#configure-the-daemons)部分。
+   IoT Edge 使用设备上的两个守护程序，这些守护程序需要通过代理服务器发出 Web 请求。 IoT Edge 守护程序负责与 IoT 中心通信。 Moby 守护程序负责容器管理，因此将与容器注册表通信。
 
-   此步骤是首次设置 IoT Edge 设备时，在其上执行的一次性过程。
+   此步骤是首次设置 IoT Edge 设备时对其进行配置的一次性过程。
 
-3. **在设备上的 config.yaml 文件中配置 IoT Edge 代理属性。**
+3. [**在设备上的 config.yaml 文件中配置 IoT Edge 代理属性**](#configure-the-iot-edge-agent)
 
-   IoT Edge 守护程序最初会启动 edgeAgent 模块，然后，edgeAgent 模块将负责从 IoT 中心检索部署清单，并启动所有其他模块。 要使 IoT Edge 代理能够与 IoT 中心建立初始连接，请在设备本身上手动配置 edgeAgent 模块环境变量。 建立初始连接后，可以远程配置 edgeAgent 模块。 有关详细步骤，请参阅本文的[配置 IoT Edge 代理](#configure-the-iot-edge-agent)部分。
+   IoT Edge 守护程序最初会启动 edgeAgent 模块。 然后，edgeAgent 模块从 IoT 中心检索部署清单，并启动其他所有模块。 要使 IoT Edge 代理能够与 IoT 中心建立初始连接，请在设备本身上手动配置 edgeAgent 模块环境变量。 建立初始连接后，可以远程配置 edgeAgent 模块。
 
-   此步骤是首次设置 IoT Edge 设备时，在其上执行的一次性过程。
+   此步骤是首次设置 IoT Edge 设备时对其进行配置的一次性过程。
 
-4. **针对将来的所有模块部署设置环境变量，使任何模块可以通过代理进行通信。**
+4. [**针对将来的所有模块部署设置环境变量，使任何模块都可以通过代理进行通信**](#configure-deployment-manifests)
 
-   设置 IoT Edge 设备并通过代理服务器将其连接到 IoT 中心后，需要在将来的所有模块部署中保持该连接。 有关详细步骤，请参阅本文的[配置部署清单](#configure-deployment-manifests)部分。
+   设置 IoT Edge 设备并通过代理服务器将其连接到 IoT 中心后，需要在将来的所有模块部署中保持该连接。
 
    此步骤是远程执行的持续过程，目的是在每次更换新模块或更新部署后，设备仍可通过代理服务器通信。
 
@@ -63,7 +65,7 @@ IoT Edge 设备将发送 HTTPS 请求以与 IoT 中心进行通信。 如果设�
 
 ### <a name="linux-devices"></a>Linux 设备
 
-若要在 Linux 设备上安装 IoT Edge 运行时，请将包管理器配置为通过代理服务器访问安装包。 例如，[设置 apt-get 以使用 http-proxy](https://help.ubuntu.com/community/AptGet/Howto/#Setting_up_apt-get_to_use_a_http-proxy)。 配置包管理器后，请按照[在 Linux 上安装 Azure IoT Edge 运行时](how-to-install-iot-edge-linux.md)中的说明照常进行操作。
+若要在 Linux 设备上安装 IoT Edge 运行时，请将包管理器配置为通过代理服务器访问安装包。 例如，[设置 apt-get 以使用 http-proxy](https://help.ubuntu.com/community/AptGet/Howto/#Setting_up_apt-get_to_use_a_http-proxy)。 配置包管理器后，请按照[安装 Azure IoT Edge 运行时](how-to-install-iot-edge.md)中的说明照常进行操作。
 
 ### <a name="windows-devices"></a>Windows 设备
 
@@ -91,7 +93,7 @@ $proxyCredential = (Get-Credential).GetNetworkCredential()
 Deploy-IoTEdge -InvokeWebRequestParameters @{ '-Proxy' = '<proxy URL>'; '-ProxyCredential' = $proxyCredential }
 ```
 
-有关代理参数的详细信息，请参阅 [Invoke-WebRequest](https://docs.microsoft.com/powershell/module/microsoft.powershell.utility/invoke-webrequest)。 有关 Windows 安装选项（包括脱机安装）的详细信息，请参阅[在 Windows 上安装 Azure IoT Edge 运行时](how-to-install-iot-edge-windows.md)。
+有关代理参数的详细信息，请参阅 [Invoke-WebRequest](/powershell/module/microsoft.powershell.utility/invoke-webrequest)。 有关 Windows 安装参数的详细信息，请参阅 [Windows 上 IoT Edge 的 PowerShell 脚本](reference-windows-scripts.md)。
 
 ## <a name="configure-the-daemons"></a>配置守护程序
 
@@ -106,7 +108,7 @@ Moby 和 IoT Edge 守护程序都需要配置为使用代理服务器持续获�
 选择适用于 IoT Edge 设备操作系统的文章：
 
 * [在 Linux 上配置 Docker 守护程序](https://docs.docker.com/config/daemon/systemd/#httphttps-proxy) Linux 设备上的 Moby 守护程序保留“Docker”这一名称。
-* [在 Windows 上配置 Docker 守护程序](https://docs.microsoft.com/virtualization/windowscontainers/manage-docker/configure-docker-daemon#proxy-configuration) Windows 设备上的 Moby 守护程序名为 iotedge-moby。 之所以让这些名称保持不同，是因为可能会在 Windows 设备上并行运行 Docker Desktop 和 Moby。
+* [在 Windows 上配置 Docker 守护程序](/virtualization/windowscontainers/manage-docker/configure-docker-daemon#proxy-configuration) Windows 设备上的 Moby 守护程序名为 iotedge-moby。 之所以让这些名称保持不同，是因为可能会在 Windows 设备上并行运行 Docker Desktop 和 Moby。
 
 ### <a name="iot-edge-daemon"></a>IoT Edge 守护程序
 
@@ -205,13 +207,13 @@ IoT Edge 代理是在任意 IoT Edge 设备上启动的第一个模块。 该代
 
 始终配置两个运行时模块（edgeAgent 和 edgeHub），以通过代理服务器进行通信，从而维持与 IoT 中心的连接。 如果从 edgeAgent 模块中删除了代理信息，则重新建立连接的唯一方法是根据前一部分中所述，编辑设备上的 config.yaml 文件。
 
-除了 edgeAgent 和 edgeHub 模块外，其他模块也可能需要代理配置。 这些模块需要访问 IoT 中心以外的 Azure 资源（例如 blob 存储），并且必须在部署清单文件中为该模块指定 HTTPS_PROXY 变量。
+除了 edgeAgent 和 edgeHub 模块外，其他模块也可能需要代理配置。 需要访问 IoT 中心以外的 Azure 资源（例如 blob 存储）的模块必须已在部署清单文件中指定 HTTPS_PROXY 变量。
 
 以下过程在 IoT Edge 设备的整个生命周期中适用。
 
 ### <a name="azure-portal"></a>Azure 门户
 
-使用“设置模块”向导为 IoT Edge 设备创建部署时，每个模块都有可用于配置代理服务器连接的“环境变量”部分。
+使用“设置模块”向导为 IoT Edge 设备创建部署时，每个模块都有一个可在其中配置代理服务器连接的“环境变量”部分。
 
 若要配置 IoT Edge 代理和 IoT Edge 中心模块，请在向导的第一步中选择“运行时设置”。
 
@@ -221,7 +223,7 @@ IoT Edge 代理是在任意 IoT Edge 设备上启动的第一个模块。 该代
 
 ![设置 https_proxy 环境变量](./media/how-to-configure-proxy-support/edgehub-environmentvar.png)
 
-添加到部署清单的所有其他模块都遵循相同的模式。 在设置模块名称和映像的页面中，具有环境变量部分。
+添加到部署清单的所有其他模块都遵循相同的模式。
 
 ### <a name="json-deployment-manifest-files"></a>JSON 部署清单文件
 
@@ -243,7 +245,7 @@ IoT Edge 代理是在任意 IoT Edge 设备上启动的第一个模块。 该代
 "edgeHub": {
     "type": "docker",
     "settings": {
-        "image": "mcr.microsoft.com/azureiotedge-hub:1.0",
+        "image": "mcr.microsoft.com/azureiotedge-hub:1.1",
         "createOptions": ""
     },
     "env": {
@@ -268,6 +270,12 @@ IoT Edge 代理是在任意 IoT Edge 设备上启动的第一个模块。 该代
     }
 }
 ```
+
+## <a name="working-with-traffic-inspecting-proxies"></a>使用流量检查代理
+
+如果你尝试使用的代理对受 TLS 保护的连接执行流量检查，请务必注意，使用 X.509 证书的身份验证无效。 IoT Edge 建立了一个 TLS 通道，该通道使用提供的证书和密钥进行了端到端加密。 如果断开该通道以进行流量检查，则代理无法使用正确的凭据重新建立该通道，并且 IoT 中心和 IoT 中心设备预配服务会返回“`Unauthorized`”错误。
+
+若要使用执行流量检查的代理，必须使用共享访问签名身份验证，或者将 IoT 中心和 IoT 中心设备预配服务添加到允许列表以避免检查。
 
 ## <a name="next-steps"></a>后续步骤
 

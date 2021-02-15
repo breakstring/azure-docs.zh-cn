@@ -1,17 +1,15 @@
 ---
 title: 将 Java 应用部署到 Azure 中的 Service Fabric 群集
 description: 本教程介绍如何将 Java Service Fabric 应用程序部署到 Azure Service Fabric 群集。
-author: suhuruli
 ms.topic: tutorial
 ms.date: 02/26/2018
-ms.author: suhuruli
-ms.custom: mvc, devx-track-java
-ms.openlocfilehash: 50ae4d34cd7b238403ee95bd36a97ac82392f3ba
-ms.sourcegitcommit: a76ff927bd57d2fcc122fa36f7cb21eb22154cfa
+ms.custom: mvc, devx-track-java, devx-track-azurecli
+ms.openlocfilehash: 48cb7df49fb918ebd30883edc573cc63b6e35e4a
+ms.sourcegitcommit: a055089dd6195fde2555b27a84ae052b668a18c7
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/28/2020
-ms.locfileid: "87320725"
+ms.lasthandoff: 01/26/2021
+ms.locfileid: "98789391"
 ---
 # <a name="tutorial-deploy-a-java-application-to-a-service-fabric-cluster-in-azure"></a>教程：将 Java 应用程序部署到 Azure 中的 Service Fabric 群集
 
@@ -37,7 +35,7 @@ ms.locfileid: "87320725"
 在开始学习本教程之前：
 
 * 如果没有 Azure 订阅，请创建一个[免费帐户](https://azure.microsoft.com/free/?WT.mc_id=A261C142F)
-* [安装 Azure CLI](/cli/azure/install-azure-cli?view=azure-cli-latest)
+* [安装 Azure CLI](/cli/azure/install-azure-cli)
 * 安装用于 [Mac](service-fabric-get-started-mac.md) 或 [Linux](service-fabric-get-started-linux.md) 的 Service Fabric SDK
 * [安装 Python 3](https://wiki.python.org/moin/BeginnersGuide/Download)
 
@@ -116,10 +114,10 @@ ms.locfileid: "87320725"
 10. 使用以下命令创建事件中心资源。 按提示输入 namespaceName、eventHubName、consumerGroupName、sendAuthorizationRule 和 receiveAuthorizationRule 的详细信息。
 
     ```azurecli
-    az group deployment create -g [RESOURCE-GROUP-NAME] --template-file eventhubsdeploy.json
+    az deployment group create -g [RESOURCE-GROUP-NAME] --template-file eventhubsdeploy.json
 
     Example:
-    az group deployment create -g testeventhubsrg --template-file eventhubsdeploy.json
+    az deployment group create -g testeventhubsrg --template-file eventhubsdeploy.json
     Please provide string value for 'namespaceName' (? for help): testeventhubnamespace
     Please provide string value for 'eventHubName' (? for help): testeventhub
     Please provide string value for 'consumerGroupName' (? for help): testeventhubconsumergroup
@@ -150,7 +148,7 @@ ms.locfileid: "87320725"
     }
     ```
 
-11. 运行 *eventhubssastoken.py* 脚本，为创建的 EventHubs 资源生成 SAS URL。 此 SAS URL 由 Service Fabric 群集用来将日志发送到事件中心。 因此，**发送方**策略用于生成此 URL。 此脚本返回事件中心资源的 SAS URL，该资源用在以下步骤中：
+11. 运行 *eventhubssastoken.py* 脚本，为创建的 EventHubs 资源生成 SAS URL。 此 SAS URL 由 Service Fabric 群集用来将日志发送到事件中心。 因此，**发送方** 策略用于生成此 URL。 此脚本返回事件中心资源的 SAS URL，该资源用在以下步骤中：
 
     ```python
     python3 eventhubssastoken.py 'testeventhubs' 'testeventhubs' 'sender' '[PRIMARY-KEY]'

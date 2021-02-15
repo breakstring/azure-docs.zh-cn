@@ -1,5 +1,6 @@
 ---
-title: 单页应用登录和注销 - Microsoft 标识平台 | Azure
+title: 单页应用登录 & 注销
+titleSuffix: Microsoft identity platform
 description: 了解如何生成单页应用程序（登录）
 services: active-directory
 author: navyasric
@@ -11,12 +12,12 @@ ms.workload: identity
 ms.date: 02/11/2020
 ms.author: nacanuma
 ms.custom: aaddev
-ms.openlocfilehash: 53a84bd970d564411ec9a56b54159e5a96717a6e
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: bdfffbf8d2e416c87dd5abb8f6383c58ad270231
+ms.sourcegitcommit: 2817d7e0ab8d9354338d860de878dd6024e93c66
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "84558767"
+ms.lasthandoff: 02/05/2021
+ms.locfileid: "99584357"
 ---
 # <a name="single-page-application-sign-in-and-sign-out"></a>单页应用程序：登录和注销
 
@@ -42,7 +43,8 @@ ms.locfileid: "84558767"
 
 ## <a name="sign-in-with-a-pop-up-window"></a>通过弹出窗口登录
 
-# <a name="javascript"></a>[JavaScript](#tab/javascript)
+
+# <a name="javascript-msaljs-2x"></a>[JavaScript (MSAL.js 2.x)](#tab/javascript2)
 
 ```javascript
 
@@ -58,12 +60,52 @@ const loginRequest = {
     scopes: ["User.ReadWrite"]
 }
 
-const myMsal = new userAgentApplication(config);
+let username = "";
+
+const myMsal = new PublicClientApplication(config);
 
 myMsal.loginPopup(loginRequest)
     .then(function (loginResponse) {
         //login success
-        let idToken = loginResponse.idToken;
+
+        // In case multiple accounts exist, you can select
+        const currentAccounts = myMsal.getAllAccounts();
+    
+        if (currentAccounts === null) {
+            // no accounts detected
+        } else if (currentAccounts.length > 1) {
+            // Add choose account code here
+        } else if (currentAccounts.length === 1) {
+            username = currentAccounts[0].username;
+        }
+    
+    }).catch(function (error) {
+        //login failure
+        console.log(error);
+    });
+```
+
+# <a name="javascript-msaljs-1x"></a>[JavaScript (MSAL.js 1.x)](#tab/javascript1)
+
+```javascript
+
+const config = {
+    auth: {
+        clientId: 'your_app_id',
+        redirectUri: "your_app_redirect_uri", //defaults to application start page
+        postLogoutRedirectUri: "your_app_logout_redirect_uri"
+    }
+}
+
+const loginRequest = {
+    scopes: ["User.ReadWrite"]
+}
+
+const myMsal = new UserAgentApplication(config);
+
+myMsal.loginPopup(loginRequest)
+    .then(function (loginResponse) {
+        //login success
     }).catch(function (error) {
         //login failure
         console.log(error);
@@ -124,9 +166,7 @@ export class AppRoutingModule { }
 
 ## <a name="sign-in-with-redirect"></a>使用重定向登录
 
-# <a name="javascript"></a>[JavaScript](#tab/javascript)
-
-重定向方法不会返回承诺，因为已从主应用离开。 若要处理并访问返回的令牌，需要在调用重定向方法之前注册成功和错误回叫。
+# <a name="javascript-msaljs-2x"></a>[JavaScript (MSAL.js 2.x)](#tab/javascript2)
 
 ```javascript
 
@@ -142,7 +182,49 @@ const loginRequest = {
     scopes: ["User.ReadWrite"]
 }
 
-const myMsal = new userAgentApplication(config);
+let username = "";
+
+const myMsal = new PublicClientApplication(config);
+
+function handleResponse(response) {
+    //handle redirect response
+
+    // In case multiple accounts exist, you can select
+    const currentAccounts = myMsal.getAllAccounts();
+
+    if (currentAccounts === null) {
+        // no accounts detected
+    } else if (currentAccounts.length > 1) {
+        // Add choose account code here
+    } else if (currentAccounts.length === 1) {
+        username = currentAccounts[0].username;
+    }
+}
+
+myMsal.handleRedirectPromise(handleResponse);
+
+myMsal.loginRedirect(loginRequest);
+```
+
+# <a name="javascript-msaljs-1x"></a>[JavaScript (MSAL.js 1.x)](#tab/javascript1)
+
+重定向方法不会返回承诺，因为已从主应用离开。 若要处理并访问返回的令牌，请在调用重定向方法之前注册成功和错误回调。
+
+```javascript
+
+const config = {
+    auth: {
+        clientId: 'your_app_id',
+        redirectUri: "your_app_redirect_uri", //defaults to application start page
+        postLogoutRedirectUri: "your_app_logout_redirect_uri"
+    }
+}
+
+const loginRequest = {
+    scopes: ["User.ReadWrite"]
+}
+
+const myMsal = new UserAgentApplication(config);
 
 function authCallback(error, response) {
     //handle redirect response
@@ -157,9 +239,6 @@ myMsal.loginRedirect(loginRequest);
 
 此处的代码与本部分之前所述关于使用弹出窗口登录的代码相同。 默认流为重定向。
 
-> [!NOTE]
-> ID 令牌不包含许可的作用域，仅代表经身份验证的用户。 许可的作用域在访问令牌中返回，该令牌会在下一步获取。
-
 ---
 
 ## <a name="sign-out"></a>注销
@@ -168,7 +247,28 @@ MSAL 库提供 `logout` 方法，该方法会清除浏览器存储中的缓存�
 
 可以通过设置 `postLogoutRedirectUri` 来配置此 URI（在注销后应该重定向到此 URI）。 还应该在应用程序注册中将此 URI 注册为“注销 URI”。
 
-# <a name="javascript"></a>[JavaScript](#tab/javascript)
+# <a name="javascript-msaljs-2x"></a>[JavaScript (MSAL.js 2.x)](#tab/javascript2)
+
+```javascript
+const config = {
+    auth: {
+        clientId: 'your_app_id',
+        redirectUri: "your_app_redirect_uri", //defaults to application start page
+        postLogoutRedirectUri: "your_app_logout_redirect_uri"
+    }
+}
+
+const myMsal = new PublicClientApplication(config);
+
+// you can select which account application should sign out
+const logoutRequest = {
+    account: myMsal.getAccountByUsername(username)
+}
+
+myMsal.logout(logoutRequest);
+```
+
+# <a name="javascript-msaljs-1x"></a>[JavaScript (MSAL.js 1.x)](#tab/javascript1)
 
 ```javascript
 const config = {
@@ -207,5 +307,4 @@ this.authService.logout();
 
 ## <a name="next-steps"></a>后续步骤
 
-> [!div class="nextstepaction"]
-> [获取应用的令牌](scenario-spa-acquire-token.md)
+转到此方案中的下一篇文章：[获取应用的令牌](scenario-spa-acquire-token.md)。

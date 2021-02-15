@@ -1,30 +1,27 @@
 ---
 title: 从 SAP 表复制数据
 description: 了解如何通过在 Azure 数据工厂管道中使用复制活动，将数据从 SAP 表复制到支持的接收器数据存储。
-services: data-factory
 ms.author: jingwang
 author: linda33wj
-manager: shwang
-ms.reviewer: douglasl
 ms.service: data-factory
-ms.workload: data-services
 ms.topic: conceptual
 ms.custom: seo-lt-2019
-ms.date: 08/03/2020
-ms.openlocfilehash: a6eaa5519607d5d5e9a49851e1c55f9b60b554ea
-ms.sourcegitcommit: 3d56d25d9cf9d3d42600db3e9364a5730e80fa4a
+ms.date: 02/01/2021
+ms.openlocfilehash: e4f756631b51ce9c5fba32939d1c6651e7b328d0
+ms.sourcegitcommit: d4734bc680ea221ea80fdea67859d6d32241aefc
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/03/2020
-ms.locfileid: "87529715"
+ms.lasthandoff: 02/14/2021
+ms.locfileid: "100378513"
 ---
 # <a name="copy-data-from-an-sap-table-by-using-azure-data-factory"></a>使用 Azure 数据工厂从 SAP 表复制数据
+
 [!INCLUDE[appliesto-adf-asa-md](includes/appliesto-adf-asa-md.md)]
 
 本文概述如何使用 Azure 数据工厂中的复制活动从 SAP 表复制数据。 有关详细信息，请参阅[复制活动概述](copy-activity-overview.md)。
 
 >[!TIP]
->若要了解 ADF 全面支持 SAP 数据集成方案，请参阅[使用 Azure 数据工厂的 SAP 数据集成白皮书](https://github.com/Azure/Azure-DataFactory/blob/master/whitepaper/SAP%20Data%20Integration%20using%20Azure%20Data%20Factory.pdf)，并详细介绍每个 SAP 连接器的 comparsion 和指南。
+>若要了解 ADF 对 SAP 数据集成方案的总体支持，请参阅[使用 Azure 数据工厂进行 SAP 数据集成](https://github.com/Azure/Azure-DataFactory/blob/master/whitepaper/SAP%20Data%20Integration%20using%20Azure%20Data%20Factory.pdf)白皮书，其中包含各 SAP 连接器的详细介绍、比较和指导。
 
 ## <a name="supported-capabilities"></a>支持的功能
 
@@ -48,6 +45,13 @@ ms.locfileid: "87529715"
 - 使用基本身份验证或安全网络通信 (SNC)（如果已配置 SNC）复制数据。
 - 连接到 SAP 应用程序服务器或 SAP 消息服务器。
 - 通过默认或自定义 RFC 检索数据。
+
+版本 7.01 或更高版本指 SAP NetWeaver 版本，而不是 SAP ECC 版本。 例如，SAP ECC 6.0 EHP 7 的 NetWeaver 版本一般 >=7.4。 如果你不确定自己的环境，请在 SAP 系统中执行以下步骤来确认版本：
+
+1. 使用 SAP GUI 连接到 SAP 系统。 
+2. 转到“系统” -> “状态” 。 
+3. 检查 SAP_BASIS 的版本，确保它等于或大于 701。  
+      ![检查 SAP_BASIS](./media/connector-sap-table/sap-basis.png)
 
 ## <a name="prerequisites"></a>先决条件
 
@@ -74,7 +78,7 @@ ms.locfileid: "87529715"
 
 SAP BW Open Hub 链接服务支持以下属性：
 
-| 属性 | 说明 | 必须 |
+| 属性 | 说明 | 必选 |
 |:--- |:--- |:--- |
 | `type` | `type` 属性必须设置为 `SapTable`。 | 是 |
 | `server` | SAP 实例所在的服务器的名称。<br/>用于连接到 SAP 应用程序服务器。 | 否 |
@@ -94,7 +98,7 @@ SAP BW Open Hub 链接服务支持以下属性：
 | `sncQop` | 要应用的保护级别的 SNC 质量。<br/>当 `sncMode` 打开时适用。 <br/>允许的值为 `1`（身份验证）、`2`（完整性）、`3`（隐私）、`8`（默认值）和 `9`（最大值）。 | 否 |
 | `connectVia` | 用于连接到数据存储的[集成运行时](concepts-integration-runtime.md)。 如前面的[先决条件](#prerequisites)中所述，需要安装自承载集成运行时。 |是 |
 
-**示例 1：连接到 SAP 应用程序服务器**
+### <a name="example-1-connect-to-an-sap-application-server"></a>示例 1：连接到 SAP 应用程序服务器
 
 ```json
 {
@@ -182,7 +186,7 @@ SAP BW Open Hub 链接服务支持以下属性：
 
 支持使用以下属性从/向 SAP BW Open Hub 链接服务复制数据。
 
-| 属性 | 说明 | 必须 |
+| 属性 | 说明 | 必选 |
 |:--- |:--- |:--- |
 | `type` | `type` 属性必须设置为 `SapTableResource`。 | 是 |
 | `tableName` | 要从中复制数据的 SAP 表的名称。 | 是 |
@@ -214,19 +218,19 @@ SAP BW Open Hub 链接服务支持以下属性：
 
 支持使用以下属性从 SAP 表复制数据：
 
-| 属性                         | 说明                                                  | 必须 |
+| 属性                         | 说明                                                  | 必选 |
 | :------------------------------- | :----------------------------------------------------------- | :------- |
 | `type`                             | `type` 属性必须设置为 `SapTableSource`。         | 是      |
 | `rowCount`                         | 要检索的行数。                              | 否       |
 | `rfcTableFields`                 | 要从 SAP 表复制的字段（列）。 例如，`column0, column1`。 | 否       |
 | `rfcTableOptions`                | 用于筛选 SAP 表中的行的选项。 例如，`COLUMN0 EQ 'SOMEVALUE'`。 另请参阅本文稍后提供的 SAP 查询运算符表。 | 否       |
 | `customRfcReadTableFunctionModule` | 可用于从 SAP 表读取数据的自定义 RFC 函数模块。<br>可以使用自定义 RFC 函数模块来定义如何从 SAP 系统检索数据并将其返回到数据工厂。 必须为自定义函数模块实现一个接口（导入、导出、表），类似于数据工厂使用的默认接口 `/SAPDS/RFC_READ_TABLE2`。<br>数据工厂 | 否       |
-| `partitionOption`                  | 要从 SAP 表中读取的分区机制。 支持的选项包括： <ul><li>`None`</li><li>`PartitionOnInt`（在左侧用零填充正常整数或整数值，例如 `0000012345`）</li><li>`PartitionOnCalendarYear`（采用“YYYY”格式的 4 位数）</li><li>`PartitionOnCalendarMonth`（采用“YYYYMM”格式的 6 位数）</li><li>`PartitionOnCalendarDate`（采用“YYYYMMDD”格式的 8 位数）</li></ul> | 否       |
+| `partitionOption`                  | 要从 SAP 表中读取的分区机制。 支持的选项包括： <ul><li>`None`</li><li>`PartitionOnInt`（在左侧用零填充正常整数或整数值，例如 `0000012345`）</li><li>`PartitionOnCalendarYear`（采用“YYYY”格式的 4 位数）</li><li>`PartitionOnCalendarMonth`（采用“YYYYMM”格式的 6 位数）</li><li>`PartitionOnCalendarDate`（采用“YYYYMMDD”格式的 8 位数）</li><li>`PartitionOntime`（采用“HHMMSS”格式的 6 位数，例如 `235959`）</li></ul> | 否       |
 | `partitionColumnName`              | 用于将数据分区的列的名称。                | 否       |
 | `partitionUpperBound`              | `partitionColumnName` 中指定的用于继续分区的列的最大值。 | 否       |
 | `partitionLowerBound`              | `partitionColumnName` 中指定的用于继续分区的列的最小值。 （注意：当分区选项为 `PartitionOnInt` 时，`partitionLowerBound` 不能为“0”） | 否       |
 | `maxPartitionsNumber`              | 要将数据拆分成的最大分区数。     | 否       |
-| `sapDataColumnDelimiter` | 用作分隔符传递到 SAP RFC 以拆分输出数据的单个字符。 | 否 |
+| `sapDataColumnDelimiter` | 单个字符，将用作传递给 SAP RFC 的分隔符，以用于拆分输出数据。 | 否 |
 
 >[!TIP]
 >如果 SAP 表包含大量数据（例如几十亿行），请使用 `partitionOption` 和 `partitionSetting` 将数据拆分成小分区。 在这种情况下，将按分区读取数据，并通过单个 RFC 调用从 SAP 服务器检索每个数据分区。<br/>
@@ -286,6 +290,60 @@ SAP BW Open Hub 链接服务支持以下属性：
     }
 ]
 ```
+
+## <a name="join-sap-tables"></a>联接 SAP 表
+
+当前，SAP 表连接器仅支持一个具有默认函数模块的表。 若要获取多个表的联接数据，可以按照以下步骤利用 SAP 表连接器中的 [customRfcReadTableFunctionModule](#copy-activity-properties) 属性：
+
+- [编写自定义函数模块](#create-custom-function-module)，该模块可以将查询作为选项，并应用自己的逻辑来检索数据。
+- 对于 "自定义函数模块"，请输入自定义函数模块的名称。
+- 对于 "RFC 表选项"，请指定要作为选项送进函数模块的表联接语句，如 " `<TABLE1>` `<TABLE2>` COLUMN0 上的内部联接"。
+
+下面是一个示例：
+
+![Sap 表联接](./media/connector-sap-table/sap-table-join.png) 
+
+>[!TIP]
+>你还可以考虑将联接的数据聚合在视图中，这受 SAP 表连接器支持。
+>你还可以尝试提取相关表以加入 Azure (例如，Azure 存储空间、Azure SQL 数据库) ，然后使用数据流继续进一步的联接或筛选器。
+
+## <a name="create-custom-function-module"></a>创建自定义函数模块
+
+对于 SAP 表，当前我们支持复制源中的 [customRfcReadTableFunctionModule](#copy-activity-properties) 属性，这允许你利用自己的逻辑并处理数据。
+
+作为快速指导，以下是 "自定义函数模块" 入门的一些要求：
+
+- 定义：
+
+    ![定义](./media/connector-sap-table/custom-function-module-definition.png) 
+
+- 将数据导出到以下表之一：
+
+    ![导出表1](./media/connector-sap-table/export-table-1.png) 
+
+    ![导出表2](./media/connector-sap-table/export-table-2.png)
+ 
+下面是有关 SAP 表连接器如何与自定义函数模块一起使用的说明：
+
+1. 通过 SAP NCO 建立与 SAP 服务器的连接。
+
+1. 调用 "自定义函数模块"，并将参数设置如下：
+
+    - QUERY_TABLE：在 ADF SAP 表数据集中设置的表名称; 
+    - 分隔符：在 ADF SAP 表源中设置的分隔符; 
+    - ROWCOUNT/Option/Fields：在 ADF 表源中设置的行计数/聚合选项/字段。
+
+1. 获取结果并按以下方式分析数据：
+
+    1. 分析 "字段" 表中的值以获取架构。
+
+        ![分析字段中的值](./media/connector-sap-table/parse-values.png)
+
+    1. 获取输出表的值，以查看包含这些值的表。
+
+        ![在输出表中获取值](./media/connector-sap-table/get-values.png)
+
+    1. 获取 OUT_TABLE 中的值，分析数据，然后将其写入接收器。
 
 ## <a name="data-type-mappings-for-an-sap-table"></a>SAP 表的数据类型映射
 

@@ -12,12 +12,12 @@ ms.topic: end-user-help
 ms.date: 02/03/2020
 ms.author: curtand
 ms.custom: user-help
-ms.openlocfilehash: 8507a53959e7d28cbcec2dec6783b2470696d59b
-ms.sourcegitcommit: c5021f2095e25750eb34fd0b866adf5d81d56c3a
+ms.openlocfilehash: cb162231c8cf2bf733c992de0c4aa56bf1fd1be2
+ms.sourcegitcommit: 400f473e8aa6301539179d4b320ffbe7dfae42fe
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/25/2020
-ms.locfileid: "88798102"
+ms.lasthandoff: 10/28/2020
+ms.locfileid: "92791080"
 ---
 # <a name="edit-or-revoke-application-permissions-in-the-my-apps-portal"></a>在“我的应用”门户中编辑或撤销应用程序权限
 
@@ -28,11 +28,11 @@ ms.locfileid: "88798102"
 >[!Important]
 >此内容适用于用户。 如果你是管理员，可以在[应用程序管理文档](../manage-apps/access-panel-collections.md)中查找有关如何设置和管理基于云的应用的详细信息。
 
-## <a name="manage-app-permissions"></a>管理应用权限
+## <a name="manage-app-accounts"></a>管理应用帐户
 
-若要查看你或你的管理员许可的权限，请在“我的应用”门户中将鼠标悬停在应用上时选择“...”，然后选择“管理应用程序”    ：
+若要查看你或你的管理员同意的应用，请 **选择 "** 我的 **应用** " 门户中的应用，然后选择 " **管理应用程序** "：
 
-![在“我的应用”门户中管理应用程序](media/my-applications-portal-permissions-saved-accounts/manage-your-application.png)
+![在“我的应用”门户中管理应用程序](media/my-applications-portal-permissions-saved-accounts/my-apps-home-woodgrove.png)
 
 “权限”窗口的顶部显示个人许可的权限。 应用权限的示例包括能够访问日历、联系人或照相机。
 

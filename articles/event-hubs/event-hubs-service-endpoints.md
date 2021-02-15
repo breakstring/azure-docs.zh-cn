@@ -2,13 +2,13 @@
 title: 虚拟网络服务终结点 - Azure 事件中心 | Microsoft Docs
 description: 本文提供了有关如何将 Microsoft EventHub 服务终结点添加到虚拟网络的信息。
 ms.topic: article
-ms.date: 07/29/2020
-ms.openlocfilehash: cb0d9a9c4d5e2503e68620ec4e6386d8e05d471c
-ms.sourcegitcommit: faeabfc2fffc33be7de6e1e93271ae214099517f
+ms.date: 02/12/2021
+ms.openlocfilehash: f725c4f4d94cbf7d0463ce49c1d2809444ef6f7a
+ms.sourcegitcommit: e972837797dbad9dbaa01df93abd745cb357cde1
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/13/2020
-ms.locfileid: "88185055"
+ms.lasthandoff: 02/14/2021
+ms.locfileid: "100516673"
 ---
 # <a name="allow-access-to-azure-event-hubs-namespaces-from-specific-virtual-networks"></a>允许从特定虚拟网络访问 Azure 事件中心命名空间 
 
@@ -16,22 +16,13 @@ ms.locfileid: "88185055"
 
 一旦配置为至少绑定到一个虚拟网络子网服务终结点，各自的事件中心命名空间就不再接受来自虚拟网络中的任何位置但获得授权的子网的流量。 从虚拟网络的角度来看，通过将事件中心命名空间绑定到服务终结点，可配置从虚拟网络子网到消息传递服务的独立网络隧道。 
 
-然后，绑定到子网的工作负荷与相应的事件中心命名空间之间将存在专用和独立的关系，消息传递服务终结点的可观察网络地址位于公共 IP 范围内对此没有影响。 此行为有一个例外。 默认情况下，启用服务终结点将启用 `denyall` 与虚拟网络关联的[IP 防火墙](event-hubs-ip-filtering.md)中的规则。 可以在 IP 防火墙中添加特定的 IP 地址，以便能够访问事件中心公共终结点。 
+然后，绑定到子网的工作负荷与相应的事件中心命名空间之间将存在专用和独立的关系，消息传递服务终结点的可观察网络地址位于公共 IP 范围内对此没有影响。 此行为有一个例外。 默认情况下，启用服务终结点将启用 `denyall` 与虚拟网络关联的 [IP 防火墙](event-hubs-ip-filtering.md) 中的规则。 可以在 IP 防火墙中添加特定 IP 地址，以便启用对事件中心公共终结点的访问权限。 
 
->[!IMPORTANT]
-> 事件中心的标准**** 和专用**** 层支持虚拟网络。 **基本**层不支持此方法。
->
-> 启用事件中心命名空间的防火墙规则会阻止默认情况下的传入请求，除非请求源自从允许的虚拟网络操作的服务。 被阻止的请求包括来自其他 Azure 服务、来自 Azure 门户、来自日志记录和指标服务等的请求。 
->
-> 下面是一些在启用虚拟网络时无法访问事件中心资源的服务。 请注意，此列表并**不**详尽。
->
-> - Azure 流分析
-> - Azure IoT 中心路由
-> - Azure IoT Device Explorer
-> - Azure 事件网格
-> - Azure Monitor (诊断设置) 
->
-> 例外情况是，即使在启用了虚拟网络的情况下，也可以允许从某些受信任的服务访问事件中心资源。 有关受信任服务的列表，请参阅[受信任服务](#trusted-microsoft-services)。
+>[!WARNING]
+> 默认情况下，为事件中心命名空间启用虚拟网络会阻止传入请求，除非请求源自从允许的虚拟网络进行操作的服务。 被阻止的请求包括来自其他 Azure 服务、来自 Azure 门户、来自日志记录和指标服务等的请求。 例外情况是，即使在启用了虚拟网络的情况下，也可以允许从某些受信任的服务访问事件中心资源。 有关受信任服务的列表，请参阅[受信任服务](#trusted-microsoft-services)。
+
+> [!NOTE]
+> 事件中心的标准和专用层支持虚拟网络。 **基本** 层不支持此方法。
 
 ## <a name="advanced-security-scenarios-enabled-by-vnet-integration"></a>通过 VNet 集成启用的高级安全方案 
 
@@ -43,9 +34,9 @@ ms.locfileid: "88185055"
 
 ## <a name="bind-event-hubs-to-virtual-networks"></a>将事件中心绑定到虚拟网络
 
-虚拟网络规则**** 是一种防火墙安全功能，用于控制是否允许 Azure 事件中心命名空间接受来自特定虚拟网络子网的连接。
+虚拟网络规则是一种防火墙安全功能，用于控制是否允许 Azure 事件中心命名空间接受来自特定虚拟网络子网的连接。
 
-将事件中心命名空间绑定到虚拟网络的过程分为两步。 首先需要在虚拟网络的子网中创建一个**虚拟网络服务终结点**，并按[服务终结点概述][vnet-sep]一文中所述的那样为其启用 **。** 添加服务终结点后，可以使用**虚拟网络规则**将事件中心命名空间绑定到该终结点。
+将事件中心命名空间绑定到虚拟网络的过程分为两步。 首先需要在虚拟网络的子网中创建一个 **虚拟网络服务终结点**，并按 [服务终结点概述][vnet-sep]一文中所述的那样为其启用 **。** 添加服务终结点后，可以使用 **虚拟网络规则** 将事件中心命名空间绑定到该终结点。
 
 虚拟网络规则是事件中心命名空间与虚拟网络子网的关联。 存在此规则时，绑定到子网的所有工作负荷都有权访问事件中心命名空间。 事件中心本身从不建立出站连接，无需获取访问权限，因此永远不会通过启用此规则授予对子网的访问权限。
 
@@ -53,18 +44,18 @@ ms.locfileid: "88185055"
 本部分演示如何使用 Azure 门户添加虚拟网络服务终结点。 若要限制访问，需要集成此事件中心命名空间的虚拟网络服务终结点。
 
 1. 在 [Azure 门户](https://portal.azure.com)中导航到“事件中心命名空间”。
-4. 在左侧菜单的 "**设置**" 下选择 "**网络**"。 只会看到**标准**命名空间或**专用**命名空间的 "**网络**" 选项卡。 
+4. 在左侧“设置”下选择“网络” 。 只会为“标准”或“专用”命名空间显示“网络”选项卡。 
 
-    > [!NOTE]
-    > 默认情况下，将选择所**选网络**选项，如下图所示。 如果未在此页上指定 IP 防火墙规则或添加虚拟网络，则可以使用访问密钥) 通过**公共 internet** (访问该命名空间。 
+    > [!WARNING]
+    > 如果选择 " **所选网络** " 选项，并且在此页上未添加至少一个 IP 防火墙规则或虚拟网络，则可以使用访问密钥) 通过 **公共 internet** (访问该命名空间。 
 
-    :::image type="content" source="./media/event-hubs-firewall/selected-networks.png" alt-text="网络选项卡-所选网络选项" lightbox="./media/event-hubs-firewall/selected-networks.png":::    
+    :::image type="content" source="./media/event-hubs-firewall/selected-networks.png" alt-text="网络选项卡 -“所选网络”选项" lightbox="./media/event-hubs-firewall/selected-networks.png":::    
 
-    如果选择 "**所有网络**" 选项，则事件中心接受来自任何 IP 地址的连接 (使用访问密钥) 。 此设置等效于一个接受 0.0.0.0/0 IP 地址范围的规则。 
+    如果选择“所有网络”选项，则事件中心接受来自任何 IP 地址的连接（使用访问密钥）。 此设置等效于一个接受 0.0.0.0/0 IP 地址范围的规则。 
 
     ![防火墙 - 选中了“所有网络”选项](./media/event-hubs-firewall/firewall-all-networks-selected.png)
-1. 若要限制对特定网络的访问，请在页面顶部选择 "**所选网络**" 选项（如果尚未选择）。
-2. 在页面的 "**虚拟网络**" 部分中，选择 "+ 添加现有虚拟网络"。 如果要创建新的 VNet，请选择 " **+ 创建新虚拟网络**"。 
+1. 若要限制对特定网络的访问，请在页面顶部选择 " **所选网络** " 选项（如果尚未选择）。
+2. 在页面的 " **虚拟网络** " 部分中，选择 " **+ 添加现有虚拟网络** _"。 如果要创建新的 VNet，请选择 "_ *+ 创建新虚拟网络**"。 
 
     ![添加现有虚拟网络](./media/event-hubs-tutorial-vnet-and-firewalls/add-vnet-menu.png)
 3. 从虚拟网络列表中选择虚拟网络，然后选择“子网”。 将虚拟网络添加到列表之前，必须启用服务终结点。 如果未启用服务终结点，门户将提示启用。
@@ -83,33 +74,17 @@ ms.locfileid: "88185055"
     ![保存网络](./media/event-hubs-tutorial-vnet-and-firewalls/save-vnet.png)
 
     > [!NOTE]
-    > 若要限制对特定 IP 地址或范围的访问，请参阅[允许从特定 ip 地址或范围进行访问](event-hubs-ip-filtering.md)。
+    > 若要限制对特定 IP 地址或范围的访问，请参阅 [允许从特定 ip 地址或范围进行访问](event-hubs-ip-filtering.md)。
 
 [!INCLUDE [event-hubs-trusted-services](../../includes/event-hubs-trusted-services.md)]
 
 ## <a name="use-resource-manager-template"></a>使用 Resource Manager 模板
+以下示例资源管理器模板将虚拟网络规则添加到现有事件中心命名空间。 对于网络规则，它指定虚拟网络中子网的 ID。 
 
-以下资源管理器模板可用于向现有的事件中心命名空间添加虚拟网络规则。
+ID 是虚拟网络子网的完全限定的资源管理器路径。 例如， `/subscriptions/{id}/resourceGroups/{rg}/providers/Microsoft.Network/virtualNetworks/{vnet}/subnets/default` 对于虚拟网络的默认子网。
 
-模板参数：
+添加虚拟网络或防火墙规则时，将的值设置 `defaultAction` 为 `Deny` 。
 
-* `namespaceName`：事件中心命名空间。
-* `vnetRuleName`：要创建的虚拟网络规则的名称。
-* `virtualNetworkingSubnetId`：虚拟网络子网的完全限定资源管理器路径;例如， `/subscriptions/{id}/resourceGroups/{rg}/providers/Microsoft.Network/virtualNetworks/{vnet}/subnets/default` 对于虚拟网络的默认子网。
-
-> [!NOTE]
-> 虽然不可能具有拒绝规则，但 Azure 资源管理器模板的默认操作设置为“允许”，不限制连接。
-> 制定虚拟网络或防火墙规则时，必须更改“defaultAction”
-> 
-> from
-> ```json
-> "defaultAction": "Allow"
-> ```
-> to
-> ```json
-> "defaultAction": "Deny"
-> ```
->
 
 ```json
 {
@@ -211,6 +186,9 @@ ms.locfileid: "88185055"
 ```
 
 若要部署模板，请按照 [Azure 资源管理器][lnk-deploy]的说明进行操作。
+
+> [!IMPORTANT]
+> 如果没有 IP 和虚拟网络规则，则所有流量都将流向命名空间，即使你将设置 `defaultAction` 为 `deny` 。  可以使用访问密钥) 通过公共 internet (访问命名空间。 为命名空间指定至少一个 IP 规则或虚拟网络规则，以便仅允许来自虚拟网络的指定 IP 地址或子网的流量。  
 
 ## <a name="next-steps"></a>后续步骤
 

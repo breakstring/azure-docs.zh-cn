@@ -2,16 +2,16 @@
 title: 教程 - 从 Azure 门户导出模板
 description: 了解如何使用导出的模板完成模板开发。
 author: mumian
-ms.date: 03/27/2020
+ms.date: 09/09/2020
 ms.topic: tutorial
 ms.author: jgao
-ms.custom: devx-track-azurecli
-ms.openlocfilehash: 4042ed29b143ab160883ca46ecb1cc17d2e0c761
-ms.sourcegitcommit: 11e2521679415f05d3d2c4c49858940677c57900
+ms.custom: ''
+ms.openlocfilehash: ba1797da5a78eeebd25f5df1b6e37eb92470f584
+ms.sourcegitcommit: 6172a6ae13d7062a0a5e00ff411fd363b5c38597
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/31/2020
-ms.locfileid: "87497148"
+ms.lasthandoff: 12/11/2020
+ms.locfileid: "97106914"
 ---
 # <a name="tutorial-use-exported-template-from-the-azure-portal"></a>教程：从 Azure 门户使用导出的模板
 
@@ -62,18 +62,18 @@ ms.locfileid: "87497148"
 
    导出模板功能将提取资源的当前状态，并生成用于部署该资源的模板。 导出模板可能有助于快速获取部署资源所需的 JSON。
 
-1. 将 **Microsoft.Web/serverfarms** 定义和参数定义复制到模板。
+1. 查看导出的模板中的 `Microsoft.Web/serverfarms` 定义和参数定义。 不需要复制这些部分。 可以使用此导出的模板作为示例，了解如何将此资源添加到模板。
 
     ![资源管理器模板 - 导出模板 - 导出的模板](./media/template-tutorial-export-template/resource-manager-template-exported-template.png)
 
 > [!IMPORTANT]
-> 通常，导出的模板比创建模板时所需的信息更详细。 例如，导出的模板中的 SKU 对象包含五个属性。 此模板是可行的，但你只需使用 **name** 属性。 可以从导出的模板着手，然后根据要求对其进行修改。
+> 通常，导出的模板比创建模板时所需的信息更详细。 例如，导出的模板中的 SKU 对象包含五个属性。 此模板是可行的，但你只需使用 `name` 属性。 可以从导出的模板着手，然后根据要求对其进行修改。
 
 ## <a name="revise-existing-template"></a>修订现有模板
 
 导出的模板提供所需的大部分 JSON，但你需要根据模板自定义这些 JSON。 请特别注意你的模板与导出的模板之间的参数和变量差异。 很明显，导出过程并不知道你已在模板中定义的参数和变量。
 
-以下示例突出显示了在模板中添加的内容。 其中包含导出的代码以及一些更改。 第一，它会更改参数的名称以符合命名约定。 第二，它对应用服务计划的位置使用 location 参数。 第三，它会删除 **properties** 对象中的 **name**，因为在资源级别，此值对于 **name** 属性是多余的。
+以下示例突出显示了在模板中添加的内容。 其中包含导出的代码以及一些更改。 第一，它会更改参数的名称以符合命名约定。 第二，它对应用服务计划的位置使用 location 参数。 第三，它删除默认值正常的所有属性。
 
 复制整个文件，将模板替换为该文件的内容。
 
@@ -83,7 +83,7 @@ ms.locfileid: "87497148"
 
 使用 Azure CLI 或 Azure PowerShell 来部署模板。
 
-如果尚未创建资源组，请参阅[创建资源组](template-tutorial-create-first-template.md#create-resource-group)。 此示例假设已根据[第一篇教程](template-tutorial-create-first-template.md#deploy-template)中所述，将 **templateFile** 变量设置为模板文件的路径。
+如果尚未创建资源组，请参阅[创建资源组](template-tutorial-create-first-template.md#create-resource-group)。 此示例假设已根据[第一篇教程](template-tutorial-create-first-template.md#deploy-template)中所述，将 `templateFile` 变量设置为模板文件的路径。
 
 # <a name="powershell"></a>[PowerShell](#tab/azure-powershell)
 
@@ -111,13 +111,13 @@ az deployment group create \
 ---
 
 > [!NOTE]
-> 如果部署失败，请将 **debug** 开关和部署命令配合使用来显示调试日志。  还可以使用 **verbose** 开关来显示完整的调试日志。
+> 如果部署失败，请使用 `verbose` 开关获取有关正在创建的资源的信息。 使用 `debug` 开关获取调试的详细信息。
 
 ## <a name="verify-deployment"></a>验证部署
 
 可以通过在 Azure 门户中浏览资源组来验证部署。
 
-1. 登录到 [Azure 门户](https://portal.azure.com)。
+1. 登录 [Azure 门户](https://portal.azure.com)。
 1. 在左侧菜单中选择“资源组”。 
 1. 选择已部署到的资源组。
 1. 该资源组包含一个存储帐户和一个应用服务计划。
@@ -129,7 +129,7 @@ az deployment group create \
 如果你不打算继续学习，请删除该资源组以清理部署的资源。
 
 1. 在 Azure 门户上的左侧菜单中选择“资源组”  。
-2. 在“按名称筛选”字段中输入资源组名称。 
+2. 在“按名称筛选”字段中输入资源组名称。
 3. 选择资源组名称。
 4. 在顶部菜单中选择“删除资源组”。 
 

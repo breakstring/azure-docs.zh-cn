@@ -2,24 +2,24 @@
 title: Azure ExpressRoute：针对高可用性进行设计
 description: 本页提供有关使用 Azure ExpressRoute 实现高可用性的体系结构建议。
 services: expressroute
-author: rambk
+author: duongau
 ms.service: expressroute
 ms.topic: article
 ms.date: 06/28/2019
-ms.author: rambala
-ms.openlocfilehash: da90bbbce485616afdac5997576da99ac4d62c6f
-ms.sourcegitcommit: 3543d3b4f6c6f496d22ea5f97d8cd2700ac9a481
+ms.author: duau
+ms.openlocfilehash: 3602c3944e8731263fbb55f024c276783950329f
+ms.sourcegitcommit: 9826fb9575dcc1d49f16dd8c7794c7b471bd3109
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/20/2020
-ms.locfileid: "86521898"
+ms.lasthandoff: 11/14/2020
+ms.locfileid: "92202355"
 ---
 # <a name="designing-for-high-availability-with-expressroute"></a>使用 ExpressRoute 进行高可用性设计
 
 ExpressRoute 旨在实现高可用性，以便与 Microsoft 资源建立运营商级专用网络连接。 换句话说，Microsoft 网络中的 ExpressRoute 路径不存在单一故障点。 为了最大限度地提高可用性，还应该规划好 ExpressRoute 线路的客户与服务提供商细分。 本文先探讨使用 ExpressRoute 构建可靠网络连接时的网络体系结构注意事项，然后探讨如何微调功能，以帮助改善 ExpressRoute 线路的高可用性。
 
 >[!NOTE]
->本文中所述的概念同样适用于在 "虚拟广域网" 或它外部创建 ExpressRoute 线路的情况。
+>本文所述的概念同样适用于在虚拟 WAN 下或其外部创建 ExpressRoute 线路的情况。
 >
 
 ## <a name="architecture-considerations"></a>体系结构注意事项
@@ -93,12 +93,8 @@ ExpressRoute 支持通过专用对等互连执行的 BFD。 BFD 可以通过 Mic
 
 
 <!--Link References-->
-[zone redundant vgw]: https://docs.microsoft.com/azure/vpn-gateway/about-zone-redundant-vnet-gateways
-[conf zone redundant vgw]: https://docs.microsoft.com/azure/vpn-gateway/create-zone-redundant-vnet-gateway
-[Configure Global Reach]: https://docs.microsoft.com/azure/expressroute/expressroute-howto-set-global-reach
-[BFD]: https://docs.microsoft.com/azure/expressroute/expressroute-bfd
-[DR]: https://docs.microsoft.com/azure/expressroute/designing-for-disaster-recovery-with-expressroute-privatepeering
-
-
-
-
+[zone redundant vgw]: ../vpn-gateway/about-zone-redundant-vnet-gateways.md
+[conf zone redundant vgw]: ../vpn-gateway/create-zone-redundant-vnet-gateway.md
+[Configure Global Reach]: ./expressroute-howto-set-global-reach.md
+[BFD]: ./expressroute-bfd.md
+[DR]: ./designing-for-disaster-recovery-with-expressroute-privatepeering.md

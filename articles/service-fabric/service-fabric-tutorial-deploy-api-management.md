@@ -3,13 +3,13 @@ title: 在 Azure 中将 API 管理与 Service Fabric 集成
 description: 了解如何快速开始使用 Azure API 管理以及在 Service Fabric 中将流量路由到后端服务。
 ms.topic: conceptual
 ms.date: 07/10/2019
-ms.custom: mvc
-ms.openlocfilehash: 40f8c53394292a85f6fd032e445d79ed82e2d4e9
-ms.sourcegitcommit: dabd9eb9925308d3c2404c3957e5c921408089da
+ms.custom: mvc, devx-track-azurecli
+ms.openlocfilehash: f1ae658ac4944f8d39dc11769669d32958fd14f4
+ms.sourcegitcommit: 740698a63c485390ebdd5e58bc41929ec0e4ed2d
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/11/2020
-ms.locfileid: "86260261"
+ms.lasthandoff: 02/03/2021
+ms.locfileid: "99491259"
 ---
 # <a name="integrate-api-management-with-service-fabric-in-azure"></a>在 Azure 中将 API 管理与 Service Fabric 集成
 
@@ -23,16 +23,16 @@ ms.locfileid: "86260261"
 ## <a name="availability"></a>可用性
 
 > [!IMPORTANT]
-> 由于所需的虚拟网络支持，此功能在 API 管理的**高级**和**开发人员**层中可用。
+> 由于所需的虚拟网络支持，此功能在 API 管理的 **高级** 和 **开发人员** 层中可用。
 
 ## <a name="prerequisites"></a>必备条件
 
 开始之前：
 
 * 如果没有 Azure 订阅，请创建一个[免费帐户](https://azure.microsoft.com/free/?WT.mc_id=A261C142F)
-* 安装 [Azure Powershell](/powershell/azure/install-az-ps) 或 [Azure CLI](/cli/azure/install-azure-cli)。
+* 安装 [Azure PowerShell](/powershell/azure/install-az-ps) 或 [Azure CLI](/cli/azure/install-azure-cli)。
 * 在网络安全组中创建一个安全的 [Windows 群集](service-fabric-tutorial-create-vnet-and-windows-cluster.md)。
-* 如果部署 Windows 群集，请设置 Windows 开发环境。 安装 [Visual Studio 2019](https://www.visualstudio.com) 和 **Azure 开发**、**ASP.NET 和 Web 开发**以及 **.NET Core 跨平台开发**工作负荷。  然后设置 [.NET 开发环境](service-fabric-get-started.md)。
+* 如果部署 Windows 群集，请设置 Windows 开发环境。 安装 [Visual Studio 2019](https://www.visualstudio.com) 和 **Azure 开发**、**ASP.NET 和 Web 开发** 以及 **.NET Core 跨平台开发** 工作负荷。  然后设置 [.NET 开发环境](service-fabric-get-started.md)。
 
 ## <a name="network-topology"></a>网络拓扑
 
@@ -243,9 +243,9 @@ New-AzResourceGroupDeployment -ResourceGroupName $groupname -TemplateFile "$temp
 
 ```azurecli
 ResourceGroupName="sfclustertutorialgroup"
-az group deployment create --name ApiMgmtNetworkDeployment --resource-group $ResourceGroupName --template-file network-apim.json --parameters @network-apim.parameters.json
+az deployment group create --name ApiMgmtNetworkDeployment --resource-group $ResourceGroupName --template-file network-apim.json --parameters @network-apim.parameters.json
 
-az group deployment create --name ApiMgmtDeployment --resource-group $ResourceGroupName --template-file apim.json --parameters @apim.parameters.json
+az deployment group create --name ApiMgmtDeployment --resource-group $ResourceGroupName --template-file apim.json --parameters @apim.parameters.json
 ```
 
 ## <a name="test-it"></a>测试
@@ -293,6 +293,8 @@ az group delete --name $ResourceGroupName
 
 详细了解如何使用 [API 管理](../api-management/import-and-publish.md)。
 
+你还可以使用 [Azure 门户](../api-management/how-to-configure-service-fabric-backend.md) 来创建和管理用于 API 管理的 Service Fabric 后端。
+
 [azure-powershell]: /powershell/azure/
 
 [apim-arm]:https://github.com/Azure/service-fabric-scripts-and-templates/blob/master/templates/service-integration/apim.json
@@ -303,7 +305,6 @@ az group delete --name $ResourceGroupName
 
 <!-- pics -->
 [sf-apim-topology-overview]: ./media/service-fabric-tutorial-deploy-api-management/sf-apim-topology-overview.png
-副结构脚本和模板/blob/主/模板/服务集成/network-apim.parameters.jsn
 
 <!-- pics -->
 [sf-apim-topology-overview]: ./media/service-fabric-tutorial-deploy-api-management/sf-apim-topology-overview.png

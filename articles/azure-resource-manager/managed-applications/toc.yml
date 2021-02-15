@@ -13,8 +13,6 @@
       href: deploy-service-catalog-quickstart.md
 - name: 教程
   items:
-    - name: 发布市场应用程序
-      href: publish-marketplace-app.md
     - name: 创建包含自定义提供程序的托管应用程序
       href: tutorial-create-managed-app-with-custom-provider.md
 - name: 示例
@@ -25,9 +23,6 @@
       href: powershell-samples.md
     - name: 托管应用程序解决方案
       href: sample-projects.md
-    - name: Azure Policy 内置策略定义
-      displayName: 'samples, policies, definitions'
-      href: ./policy-samples.md
 - name: 概念
   items:
     - name: 视图定义项目
@@ -36,6 +31,10 @@
       href: concepts-built-in-policy.md
     - name: 角色定义项目
       href: concepts-custom-role-definition.md
+    - name: 安全性
+      items:
+        - name: 安全基线
+          href: security-baseline.md
 - name: 操作指南
   items:
     - name: 发布服务器
@@ -44,6 +43,8 @@
           href: create-uidefinition-overview.md
         - name: 测试门户界面
           href: test-createuidefinition.md
+        - name: 创建 Azure 应用程序产品/服务
+          href: ../../marketplace/create-new-azure-apps-offer.md?toc=/azure/azure-resource-manager/managed-applications/toc.json
         - name: 请求实时访问
           href: request-just-in-time-access.md
         - name: 使用现有虚拟网络
@@ -107,6 +108,8 @@
               href: microsoft-common-checkbox.md
             - name: DropDown
               href: microsoft-common-dropdown.md
+            - name: EditableGrid
+              href: microsoft-common-editablegrid.md
             - name: FileUpload
               href: microsoft-common-fileupload.md
             - name: InfoBox
@@ -117,6 +120,8 @@
               href: microsoft-common-passwordbox.md
             - name: 部分
               href: microsoft-common-section.md
+            - name: ServicePrincipalSelector
+              href: microsoft-common-serviceprincipalselector.md
             - name: 滑块
               href: microsoft-common-slider.md
             - name: TagsByResource
@@ -133,6 +138,10 @@
               href: microsoft-compute-sizeselector.md
             - name: UserNameTextBox
               href: microsoft-compute-usernametextbox.md
+        - name: Key Vault
+          items:
+            - name: KeyVaultCertificateSelector
+              href: microsoft-keyvault-keyvaultcertificateselector.md
         - name: 托管标识
           items:
             - name: IdentitySelector
@@ -155,6 +164,11 @@
               href: microsoft-storage-multistorageaccountcombo.md
             - name: StorageAccountSelector
               href: microsoft-storage-storageaccountselector.md
+            - name: StorageBlobSelector
+              href: microsoft-storage-storageblobselector.md
+    - name: Azure Policy 内置策略定义
+      displayName: 'samples, policies, definitions'
+      href: ./policy-reference.md
 - name: 资源
   items:
     - name: Azure 路线图
@@ -165,5 +179,7 @@
       href: 'https://azure.microsoft.com/pricing/calculator/'
     - name: 资源管理器模板最佳做法
       href: 'https://github.com/Azure/azure-quickstart-templates/blob/master/1-CONTRIBUTION-GUIDE/best-practices.md'
+    - name: Microsoft 问答
+      href: /answers/topics/azure-managed-applications.html
     - name: Stack Overflow
-      href: 'http://stackoverflow.com/questions/tagged/azure-managedapps'
+      href: 'https://stackoverflow.com/questions/tagged/azure-managed-app'

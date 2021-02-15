@@ -12,12 +12,12 @@ ms.workload: identity
 ms.date: 07/15/2020
 ms.author: jmprieur
 ms.custom: aaddev
-ms.openlocfilehash: c1fab15cade2ce23e053bc73028e6420692c3d8a
-ms.sourcegitcommit: 3543d3b4f6c6f496d22ea5f97d8cd2700ac9a481
+ms.openlocfilehash: 5d93df0b6d59e013c22e138942ab4651784421ae
+ms.sourcegitcommit: 2817d7e0ab8d9354338d860de878dd6024e93c66
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/20/2020
-ms.locfileid: "86518268"
+ms.lasthandoff: 02/05/2021
+ms.locfileid: "99584374"
 ---
 # <a name="protected-web-api-app-registration"></a>受保护的 Web API：应用注册
 
@@ -27,12 +27,12 @@ ms.locfileid: "86518268"
 
 ## <a name="accepted-token-version"></a>接受的令牌版本
 
-Microsoft 标识平台终结点可以发出 v1.0 令牌和 v2.0 令牌。 有关这些令牌的详细信息，请参阅[访问令牌](access-tokens.md)。
+Microsoft 标识平台可以颁发1.0 版令牌和 v2.0 令牌。 有关这些令牌的详细信息，请参阅[访问令牌](access-tokens.md)。
 
-当你在 Azure 门户中创建 web API 应用程序注册时，API 可能接受的令牌版本取决于所选的**受支持帐户类型**。
+在 Azure 门户中创建 Web API 应用程序注册时，API 可以接受的令牌版本取决于你选择的“支持的帐户类型”。
 
-- 如果**支持的帐户类型**的值是**任何组织目录中的帐户和个人 Microsoft 帐户（例如 Skype、Xbox、Outlook.com）**，则接受的令牌版本必须为 v2.0。
-- 否则，接受的令牌版本可以为1.0 版。
+- 如果 **支持的帐户类型** 的值是 **任何组织目录中的帐户和个人 Microsoft 帐户 (例如 Skype、Xbox、Outlook.com)**，则接受的令牌版本必须为 v2.0。
+- 否则，已接受的令牌版本可以为 v1.0。
 
 创建应用程序后，可以按以下步骤确定或更改接受的令牌版本：
 
@@ -44,7 +44,7 @@ Microsoft 标识平台终结点可以发出 v1.0 令牌和 v2.0 令牌。 有关
 1. 如果更改了令牌版本，请选择“保存”。
 
 > [!NOTE]
-> Web API 会指定它所接受的令牌版本。 当客户端从 Microsoft 标识平台 (v2.0) 终结点请求 Web API 的令牌时，所获取的令牌会指示 Web API 接受哪个令牌版本。
+> Web API 会指定它所接受的令牌版本。 当客户端从 Microsoft 标识平台为 web API 请求令牌时，客户端将获取一个令牌，指示 web API 接受的令牌版本。
 
 ## <a name="no-redirect-uri"></a>无重定向 URI
 
@@ -52,33 +52,33 @@ Web API 不需注册重定向 URI，因为没有任何用户以交互方式登�
 
 ## <a name="exposed-api"></a>公开的 API
 
-Web Api 特定的其他设置为公开的 API 和公开的作用域或应用角色。
+特定于 Web API 的其他设置是公开的 API 和公开的范围或应用角色。
 
 ### <a name="application-id-uri-and-scopes"></a>应用程序 ID URI 和范围
 
 范围通常采用 `resourceURI/scopeName` 格式。 对于 Microsoft Graph，范围具有快捷方式。 例如，`User.Read` 是 `https://graph.microsoft.com/user.read` 的快捷方式。
 
-在应用注册过程中，需定义以下参数：
+在应用注册过程中，定义以下参数：
 
 - 资源 URI
 - 一个或多个范围
 - 一个或多个应用角色
 
-默认情况下，应用程序注册门户建议使用资源 URI `api://{clientId}` 。 此 URI 是唯一的，但用户无法识别它。 如果更改 URI，请确保新值是唯一的。 应用程序注册门户将确保使用[已配置的发布服务器域](howto-configure-publisher-domain.md)
+默认情况下，应用程序注册门户建议使用资源 URI `api://{clientId}` 。 此 URI 是唯一的，但用户无法识别它。 如果更改 URI，请确保新值是唯一的。 应用程序注册门户将确保使用 [已配置的发布服务器域](howto-configure-publisher-domain.md)。
 
 对于客户端应用程序，范围将显示为委托的权限，应用角色将显示为 Web API 的应用程序权限。 
 
-范围还会出现在向应用用户显示的许可窗口中。 因此，需要提供用于描述范围的相应字符串：
+范围还会出现在向应用用户显示的许可窗口中。 因此，请提供描述范围的相应字符串：
 
 - 用户看到的内容。
 - 可授予管理员许可的租户管理员看到的内容。
 
-用户不能同意应用程序角色（因为它们是由代表自己调用 web API 的应用程序使用的）。 租户管理员将需要同意公开应用角色的 web API 的客户端应用程序。 有关详细信息，请参阅[管理员同意](v2-admin-consent.md)
+用户不能同意应用角色（因为它们由代表自己调用 Web API 的应用程序使用）。 租户管理员将需要同意你的 Web API 的客户端应用程序公开应用角色。 有关详细信息，请参阅[管理员同意](v2-admin-consent.md)
 
 ### <a name="exposing-delegated-permissions-scopes"></a>公开委托的权限（范围）
 
 1. 在应用程序注册中选择“公开 API”。
-1. 选择“添加范围”。
+1. 选择“添加范围”。 
 1. 出现提示时，请选择“保存并继续”，接受建议的应用程序 ID URI (`api://{clientId}`)。
 1. 指定以下值：
     - 选择“范围名称”并输入 **access_as_user**。
@@ -99,7 +99,7 @@ Web Api 特定的其他设置为公开的 API 和公开的作用域或应用角�
 
 #### <a name="exposing-application-permissions-app-roles"></a>公开应用程序权限（应用角色）
 
-若要公开应用程序权限，需要编辑清单。
+若要公开应用程序权限，请编辑清单。
 
 1. 在应用程序的应用程序注册中选择“清单”。
 1. 若要编辑清单，请找到 `appRoles` 设置并添加应用程序角色。 以下示例 JSON 块中提供了角色定义。
@@ -153,5 +153,4 @@ Web API 将检查应用角色。 此角色是软件开发人员公开应用程�
 
 ## <a name="next-steps"></a>后续步骤
 
-> [!div class="nextstepaction"]
-> [应用代码配置](scenario-protected-web-api-app-configuration.md)
+转到此方案中的下一篇文章：[应用代码配置](scenario-protected-web-api-app-configuration.md)。

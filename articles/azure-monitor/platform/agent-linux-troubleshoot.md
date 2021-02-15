@@ -6,12 +6,12 @@ ms.topic: conceptual
 author: bwren
 ms.author: bwren
 ms.date: 11/21/2019
-ms.openlocfilehash: 98ef2b416c809789307f946ed90fb3138d9a20c1
-ms.sourcegitcommit: a76ff927bd57d2fcc122fa36f7cb21eb22154cfa
+ms.openlocfilehash: 26fb70592a75910ae21d327e53569eda12dfea97
+ms.sourcegitcommit: 2bd0a039be8126c969a795cea3b60ce8e4ce64fc
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/28/2020
-ms.locfileid: "87325366"
+ms.lasthandoff: 01/14/2021
+ms.locfileid: "98197364"
 ---
 # <a name="how-to-troubleshoot-issues-with-the-log-analytics-agent-for-linux"></a>如何排查 Log Analytics Linux 代理的问题 
 
@@ -23,7 +23,46 @@ ms.locfileid: "87325366"
 * 签订了 Azure 支持协议的客户可以在 [Azure 门户](https://manage.windowsazure.com/?getsupport=true)中提出支持请求。
 * 借助 [OMI 故障排除指南](https://github.com/Microsoft/omi/blob/master/Unix/doc/diagnose-omi-problems.md)诊断 OMI 问题。
 * 提交 [GitHub 问题](https://github.com/Microsoft/OMS-Agent-for-Linux/issues)。
-* 请访问 Log Analytics 反馈页面，查看已提交的想法和 bug [https://aka.ms/opinsightsfeedback](https://aka.ms/opinsightsfeedback)或提交新的想法或 bug。  
+* 请访问 Log Analytics 反馈页面，查看已提交的想法和 bug [https://aka.ms/opinsightsfeedback](https://aka.ms/opinsightsfeedback)或提交新的想法或 bug。 
+
+## <a name="log-analytics-troubleshooting-tool"></a>Log Analytics 故障排除工具
+
+Log Analytics 代理 Linux 故障排除工具是一个脚本，旨在帮助查找和诊断 Log Analytics 代理问题。 安装后，该工具将自动包含在代理中。 应将运行此工具作为诊断问题的第一步。
+
+### <a name="how-to-use"></a>使用方法
+通过将以下命令粘贴到具有 Log Analytics 代理的计算机上的终端窗口中，可以运行故障排除工具：`sudo /opt/microsoft/omsagent/bin/troubleshooter`
+
+### <a name="manual-installation"></a>手动安装
+安装 Log Analytics 代理后，将自动包含故障排除工具。 但如果安装失败，也可以按照以下步骤手动安装该工具。
+
+1. 将疑难解答捆绑包复制到你的计算机上：`wget https://raw.github.com/microsoft/OMS-Agent-for-Linux/master/source/code/troubleshooter/omsagent_tst.tar.gz`
+2. 解开该捆绑包：`tar -xzvf omsagent_tst.tar.gz`
+3. 运行手动安装：`sudo ./install_tst`
+
+### <a name="scenarios-covered"></a>涵盖的方案
+下面是使用故障排除工具检查的方案的列表：
+
+1. 代理运行不正常，检测信号无法正常工作
+2. 代理未启动，无法连接到 Log Analytic 服务
+3. 代理系统日志无效
+4. 代理的 CPU/内存使用率高
+5. 代理存在安装问题
+6. 代理自定义日志无效
+7. 收集代理日志
+
+有关更多详细信息，请参阅 [Github 文档](https://github.com/microsoft/OMS-Agent-for-Linux/blob/master/docs/Troubleshooting-Tool.md)。
+
+ >[!NOTE]
+ >遇到问题时，请运行日志收集器工具。 从一开始便记录日志将极大帮助我们的支持团队更快解决你的问题。
+
+## <a name="purge-and-re-install-the-linux-agent"></a>清除 Linux 代理并重新安装
+
+我们了解到，清理代理并重新安装可以解决大多数问题。 事实上，这可能是支持部门提出的第一个建议，让支持团队使代理处于未损坏的状态。 运行排除故障程序、收集日志、尝试清理并重新安装将有助于更快地解决问题。
+
+1. 下载清除脚本：
+- `$ wget https://raw.githubusercontent.com/microsoft/OMS-Agent-for-Linux/master/tools/purge_omsagent.sh`
+2. 运行清除脚本（使用 sudo 权限）：
+- `$ sudo sh purge_omsagent.sh`
 
 ## <a name="important-log-locations-and-log-collector-tool"></a>重要的日志位置和日志收集器工具
 
@@ -57,8 +96,9 @@ ms.locfileid: "87325366"
 | 5 | 必须以 root 身份执行 shell 捆绑包或在载入期间返回 403 错误。 使用 `sudo` 运行你的命令。 |
 | 6 | 无效的程序包体系结构或者载入期间返回 200 错误；omsagent-*x64.sh 程序包只能安装在 64 位系统上，而 omsagent-* x86.sh 程序包只能安装在 32 位系统上。 从[最新版本](https://github.com/Microsoft/OMS-Agent-for-Linux/releases/latest)为你的体系结构下载正确的程序包。 |
 | 17 | OMS 程序包安装失败。 仔细查看命令输出查找根源故障。 |
+| 18 | 安装 OMSConfig 包失败。 仔细查看命令输出查找根源故障。 |
 | 19 | OMI 程序包安装失败。 仔细查看命令输出查找根源故障。 |
-| 20 个 | SCX 程序包安装失败。 仔细查看命令输出查找根源故障。 |
+| 20 | SCX 程序包安装失败。 仔细查看命令输出查找根源故障。 |
 | 21 | Provider 工具包安装失败。 仔细查看命令输出查找根源故障。 |
 | 22 | 捆绑的程序包安装失败。 仔细查看命令输出查找根源故障 |
 | 23 | SCX 或 OMI 程序包已安装。 使用 `--upgrade` 而不是 `--install` 安装 shell 捆绑包。 |
@@ -150,7 +190,7 @@ Success sending oms.syslog.authpriv.info x 1 in 0.91s
 
 ### <a name="probable-causes"></a>可能的原因
 * 在载入期间指定的代理不正确
-* Azure Monitor 和 Azure 自动化服务终结点不在数据中心的允许列表中 
+* 数据中心的已批准列表中不包括 Azure Monitor 和 Azure 自动化服务终结点 
 
 ### <a name="resolution"></a>解决方法
 1. 使用以下命令（启用了 `-v` 选项）通过 Log Analytics Linux 代理重新载入到 Azure Monitor。 它允许通过代理服务器连接到 Azure Monitor 的代理能够进行详细输出。 
@@ -201,23 +241,6 @@ nss-pem 包 [v1.0.3-5.el7](https://centos.pkgs.org/7/centos-x86_64/nss-pem-1.0.3
 
 3. 重启 OMI： <br/>
 `sudo scxadmin -restart`
-
-## <a name="issue-you-are-not-seeing-any-data-in-the-azure-portal"></a>问题：Azure 门户中未显示任何数据
-
-### <a name="probable-causes"></a>可能的原因
-
-- 加入 Azure Monitor 失败
-- 已阻止连接到 Azure Monitor
-- Log Analytics Linux 代理数据已备份
-
-### <a name="resolution"></a>解决方法
-1. 通过检查是否存在以下文件，来检查是否已成功载入 Azure Monitor：`/etc/opt/microsoft/omsagent/<workspace id>/conf/omsadmin.conf`
-2. 使用 `omsadmin.sh` 命令行指令重新载入
-3. 如果使用代理，请参阅之前提供的代理解决方法步骤。
-4. 在某些情况下，当 Log Analytics Linux 代理无法与此服务通信时，代理上的数据会在整个缓冲区（大小 50 MB）中排队。 该代理应通过运行以下命令重新启动：`/opt/microsoft/omsagent/bin/service_control restart [<workspace id>]`。 
-
-    >[!NOTE]
-    >此问题已在代理版本 1.1.0-28 及更高版本中解决。
 
 
 ## <a name="issue-you-are-not-seeing-forwarded-syslog-messages"></a>问题：看不到转发的 Syslog 消息 
@@ -274,7 +297,7 @@ nss-pem 包 [v1.0.3-5.el7](https://centos.pkgs.org/7/centos-x86_64/nss-pem-1.0.3
 
 ### <a name="resolution"></a>解决方法
 1. 遵循以下这些[说明](https://github.com/Microsoft/OMS-Agent-for-Linux/blob/master/docs/OMS-Agent-for-Linux.md#nagios-alerts)添加 omsagent 用户以从 Nagios 文件读取。
-2. 在 Log Analytics Linux 代理常规配置文件的 `/etc/opt/microsoft/omsagent/<workspace id>/conf/omsagent.conf` 处，确保 Nagios 源和筛选器**均已**被注释掉。
+2. 在 Log Analytics Linux 代理常规配置文件的 `/etc/opt/microsoft/omsagent/<workspace id>/conf/omsagent.conf` 处，确保 Nagios 源和筛选器 **均已** 被注释掉。
 
     ```
     <source>
@@ -296,6 +319,7 @@ nss-pem 包 [v1.0.3-5.el7](https://centos.pkgs.org/7/centos-x86_64/nss-pem-1.0.3
 * 已阻止连接到 Azure Monitor
 * 虚拟机已重新启动
 * 相比 Log Analytics Linux 代理程序包安装的版本，OMI 程序包已手动升级到较新版本
+* OMI 已冻结，正在阻止 OMS 代理
 * DSC 资源在 `omsconfig.log` 日志文件中记录“找不到类”错误
 * Log Analytics 代理数据已备份
 * DSC 记录“当前配置不存在。执行 Start-DscConfiguration 命令及 -Path 参数来指定配置文件并先创建当前的配置。” （在 `omsconfig.log` 日志文件中），但不存在关于 `PerformRequiredConfigurationChecks` 操作的日志消息。
@@ -306,6 +330,7 @@ nss-pem 包 [v1.0.3-5.el7](https://centos.pkgs.org/7/centos-x86_64/nss-pem-1.0.3
 4. 如果使用代理服务器，请检查上述代理服务器故障排除步骤。
 5. 在某些 Azure 分发系统中，omid OMI 服务器后台程序在重新启动虚拟机后未启动。 这将导致看不到 Audit、ChangeTracking 或 UpdateManagement 解决方案相关的数据。 解决方法是通过运行 `sudo /opt/omi/bin/service_control restart` 来手动启动 omi 服务器。
 6. OMI 程序包手动升级到较新版本后，必须手动重新启动，Log Analytics 代理才能继续运行。 对于其中 OMI 服务器在升级之后无法自动启动的分发，此为必需步骤。 运行 `sudo /opt/omi/bin/service_control restart` 重新启动 OMI。
+* 在某些情况下，OMI 可能会被冻结。 OMS 代理可以进入等待 OMI 的阻止状态，阻止所有数据收集。 OMS 代理进程将运行，但不会有任何新的日志行 (，如中) 存在的发送检测信号 `omsagent.log` 。 重新启动 OMI `sudo /opt/omi/bin/service_control restart` 以恢复代理。
 7. 如果在 omsconfig.log 中看到 DSC 资源“找不到类”错误，请运行 `sudo /opt/omi/bin/service_control restart`。
 8. 在某些情况下，当 Log Analytics Linux 代理无法与 Azure Monitor 通信时，代理上的数据会备份到整个缓冲区：大小 50 MB。 该代理应通过运行以下命令重新启动：`/opt/microsoft/omsagent/bin/service_control restart`。
 
@@ -444,4 +469,3 @@ sudo sh ./onboard_agent.sh --purge
     ```
 
 3. 通过执行以下命令升级程序包：`sudo sh ./omsagent-*.universal.x64.sh --upgrade`。
-

@@ -9,14 +9,14 @@ ms.devlang: ''
 ms.topic: conceptual
 author: oslake
 ms.author: moslake
-ms.reviewer: carlrab
-ms.date: 7/31/2020
-ms.openlocfilehash: d8055c89af8adcb88a2055e617e27c030e05d5ae
-ms.sourcegitcommit: 11e2521679415f05d3d2c4c49858940677c57900
+ms.reviewer: sstein
+ms.date: 09/16/2020
+ms.openlocfilehash: 947d842860452425f8b30fbdaf9558c2a94a89a2
+ms.sourcegitcommit: 400f473e8aa6301539179d4b320ffbe7dfae42fe
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/31/2020
-ms.locfileid: "87504375"
+ms.lasthandoff: 10/28/2020
+ms.locfileid: "92781203"
 ---
 # <a name="scale-elastic-pool-resources-in-azure-sql-database"></a>在 Azure SQL 数据库中缩放弹性池资源
 [!INCLUDE[appliesto-sqldb](../includes/appliesto-sqldb.md)]
@@ -25,7 +25,7 @@ ms.locfileid: "87504375"
 
 ## <a name="change-compute-resources-vcores-or-dtus"></a>更改计算资源（vCore 或 DTU）
 
-最初选择 vCore 或 eDTU 数量后，可以使用 [Azure 门户](elastic-pool-manage.md#azure-portal)、[PowerShell](/powershell/module/az.sql/Get-AzSqlElasticPool)、[Azure CLI](/cli/azure/sql/elastic-pool#az-sql-elastic-pool-update) 或 [REST API](https://docs.microsoft.com/rest/api/sql/elasticpools/update)，根据实际体验动态扩展或缩减弹性池。
+最初选择 vCore 或 eDTU 数量后，可以使用 [Azure 门户](elastic-pool-manage.md#azure-portal)、[PowerShell](/powershell/module/az.sql/Get-AzSqlElasticPool)、[Azure CLI](/cli/azure/sql/elastic-pool#az-sql-elastic-pool-update) 或 [REST API](/rest/api/sql/elasticpools/update)，根据实际体验动态扩展或缩减弹性池。
 
 ### <a name="impact-of-changing-service-tier-or-rescaling-compute-size"></a>更改服务层级或重新缩放计算大小的影响
 
@@ -44,20 +44,20 @@ ms.locfileid: "87504375"
 
 ### <a name="latency-of-changing-service-tier-or-rescaling-compute-size"></a>更改服务层级或重新缩放计算大小所造成的延迟
 
-可根据如下所述，将更改服务层级或者重新缩放单一数据库或弹性池的计算大小所造成的估计延迟参数化：
+更改服务层、缩放单个数据库或弹性池的计算大小、将数据库移入/移出弹性池或在弹性池之间移动数据库的预计延迟的参数设置如下：
 
 |服务层|基本单一数据库，</br>标准 (S0-S1)|基本弹性池，</br>标准 (S2-S12)， </br>常规用途单一数据库或弹性池|高级或业务关键型单一数据库或弹性池|超大规模
 |:---|:---|:---|:---|:---|
 |**基本单一数据库，</br>标准 (S0-S1)**|&bull; &nbsp;延迟时间较为恒定，与已用空间无关</br>&bull; &nbsp;通常小于 5 分钟|&bull; &nbsp;由于数据复制，延迟与已用数据库空间成比例</br>&bull; &nbsp;对于每 GB 的已用空间，延迟通常小于 1 分钟|&bull; &nbsp;由于数据复制，延迟与已用数据库空间成比例</br>&bull; &nbsp;对于每 GB 的已用空间，延迟通常小于 1 分钟|&bull; &nbsp;由于数据复制，延迟与已用数据库空间成比例</br>&bull; &nbsp;对于每 GB 的已用空间，延迟通常小于 1 分钟|
-|**基本弹性池，</br>标准 (S2-S12)，</br>常规用途单一数据库或弹性池**|&bull; &nbsp;由于数据复制，延迟与已用数据库空间成比例</br>&bull; &nbsp;对于每 GB 的已用空间，延迟通常小于 1 分钟|&bull; &nbsp;延迟时间较为恒定，与已用空间无关</br>&bull; &nbsp;通常小于 5 分钟|&bull; &nbsp;由于数据复制，延迟与已用数据库空间成比例</br>&bull; &nbsp;对于每 GB 的已用空间，延迟通常小于 1 分钟|&bull; &nbsp;由于数据复制，延迟与已用数据库空间成比例</br>&bull; &nbsp;对于每 GB 的已用空间，延迟通常小于 1 分钟|
+|**基本弹性池，</br>标准 (S2-S12)，</br>常规用途单一数据库或弹性池**|&bull; &nbsp;由于数据复制，延迟与已用数据库空间成比例</br>&bull; &nbsp;对于每 GB 的已用空间，延迟通常小于 1 分钟|&bull; &nbsp;对于单一数据库，延迟时间是恒定的，与已用空间无关</br>&bull; &nbsp;对于单一数据库，通常不超过 5 分钟</br>&bull; &nbsp;对于弹性池，与数据库数量成正比|&bull; &nbsp;由于数据复制，延迟与已用数据库空间成比例</br>&bull; &nbsp;对于每 GB 的已用空间，延迟通常小于 1 分钟|&bull; &nbsp;由于数据复制，延迟与已用数据库空间成比例</br>&bull; &nbsp;对于每 GB 的已用空间，延迟通常小于 1 分钟|
 |**高级或业务关键型单一数据库或弹性池**|&bull; &nbsp;由于数据复制，延迟与已用数据库空间成比例</br>&bull; &nbsp;对于每 GB 的已用空间，延迟通常小于 1 分钟|&bull; &nbsp;由于数据复制，延迟与已用数据库空间成比例</br>&bull; &nbsp;对于每 GB 的已用空间，延迟通常小于 1 分钟|&bull; &nbsp;由于数据复制，延迟与已用数据库空间成比例</br>&bull; &nbsp;对于每 GB 的已用空间，延迟通常小于 1 分钟|&bull; &nbsp;由于数据复制，延迟与已用数据库空间成比例</br>&bull; &nbsp;对于每 GB 的已用空间，延迟通常小于 1 分钟|
-|**超大规模**|不适用|不适用|不适用|&bull; &nbsp;延迟时间较为恒定，与已用空间无关</br>&bull;&nbsp;通常为小于2分钟|
+|**超大规模**|空值|空值|空值|&bull; &nbsp;延迟时间较为恒定，与已用空间无关</br>&bull; &nbsp;通常小于 2 分钟|
 
 > [!NOTE]
 >
 > - 如果更改服务层或者重新缩放弹性池的计算大小，则应使用池中所有数据库的已用空间之和来计算估计值。
 > - 如果向/从弹性池移动数据库，则只有数据库使用的空间会影响延迟，弹性池使用的空间不会影响延迟。
-> - 对于标准和常规用途弹性池，如果弹性池使用高级文件共享（[PFS](https://docs.microsoft.com/azure/storage/files/storage-files-introduction)）存储，则将数据库移入/移出弹性池或在弹性池之间移动数据库的延迟将与数据库大小成正比。 若要确定池是否正在使用 PFS 存储，请在池中的任何数据库的上下文中执行以下查询。 如果 AccountType 列中的值为 `PremiumFileStorage` ，则该池使用的是 PFS 存储。
+> - 对于标准和常规用途弹性池，如果弹性池使用高级文件共享 ([PFS](../../storage/files/storage-files-introduction.md)) 存储，则将数据库移入/移出弹性池或在弹性池之间移动数据库的延迟与数据库大小成正比。 若要确定池是否正在使用 PFS 存储，请在任何池数据库上下文中执行以下查询。 如果 AccountType 列中的值为 `PremiumFileStorage` 或 `PremiumFileStorage-ZRS` ，则该池使用的是 PFS 存储。
 
 ```sql
 SELECT s.file_id,
@@ -69,7 +69,7 @@ WHERE s.type_desc IN ('ROWS', 'LOG');
 ```
 
 > [!TIP]
-> 若要监视正在进行的操作，请参阅：[使用 SQL REST API 管理操作](https://docs.microsoft.com/rest/api/sql/operations/list)、[使用 CLI 管理操作](/cli/azure/sql/db/op)、[使用 T-SQL 监视操作](/sql/relational-databases/system-dynamic-management-views/sys-dm-operation-status-azure-sql-database)及以下两个 PowerShell 命令：[Get-AzSqlDatabaseActivity](/powershell/module/az.sql/get-azsqldatabaseactivity) 和 [Stop-AzSqlDatabaseActivity](/powershell/module/az.sql/stop-azsqldatabaseactivity)。
+> 若要监视正在进行的操作，请参阅：[使用 SQL REST API 管理操作](/rest/api/sql/operations/list)、[使用 CLI 管理操作](/cli/azure/sql/db/op)、[使用 T-SQL 监视操作](/sql/relational-databases/system-dynamic-management-views/sys-dm-operation-status-azure-sql-database)及以下两个 PowerShell 命令：[Get-AzSqlDatabaseActivity](/powershell/module/az.sql/get-azsqldatabaseactivity) 和 [Stop-AzSqlDatabaseActivity](/powershell/module/az.sql/stop-azsqldatabaseactivity)。
 
 ### <a name="additional-considerations-when-changing-service-tier-or-rescaling-compute-size"></a>更改服务层级或重新缩放计算大小时的其他注意事项
 
@@ -100,7 +100,7 @@ WHERE s.type_desc IN ('ROWS', 'LOG');
 ### <a name="dtu-based-purchasing-model"></a>基于 DTU 的购买模型
 
 - 弹性池的 eDTU 价格附送了一定容量的存储，无需额外费用。 超出附送的量后，可花费额外的费用预配额外的存储，但不能超过存储上限，不超过 1 TB 时，以 250 GB 为增量进行预配，超出 1 TB 时，以 256 GB 为增量进行预配。 有关附送存储量和大小上限，请参阅[弹性池：存储大小和计算大小](resource-limits-dtu-elastic-pools.md#elastic-pool-storage-sizes-and-compute-sizes)。
-- 可通过 [Azure 门户](elastic-pool-manage.md#azure-portal)、[PowerShell](/powershell/module/az.sql/Get-AzSqlElasticPool)、[Azure CLI](/cli/azure/sql/elastic-pool#az-sql-elastic-pool-update) 或 [REST API](https://docs.microsoft.com/rest/api/sql/elasticpools/update) 为弹性池增加大小上限，以预配额外存储。
+- 可通过 [Azure 门户](elastic-pool-manage.md#azure-portal)、[PowerShell](/powershell/module/az.sql/Get-AzSqlElasticPool)、[Azure CLI](/cli/azure/sql/elastic-pool#az-sql-elastic-pool-update) 或 [REST API](/rest/api/sql/elasticpools/update) 为弹性池增加大小上限，以预配额外存储。
 - 弹性池的额外存储价格等于额外存储量乘以服务层级的额外存储单价。 有关额外存储价格的详细信息，请参阅 [SQL 数据库定价](https://azure.microsoft.com/pricing/details/sql-database/)。
 
 > [!IMPORTANT]

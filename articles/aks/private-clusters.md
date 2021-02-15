@@ -4,12 +4,12 @@ description: 了解如何创建专用 Azure Kubernetes 服务 (AKS) 群集
 services: container-service
 ms.topic: article
 ms.date: 7/17/2020
-ms.openlocfilehash: 10cbd58807c213418a88b42887cdb76868eac34e
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.openlocfilehash: d3b53c860c150b5b67d38cf5d11db9f070ffb81d
+ms.sourcegitcommit: d4734bc680ea221ea80fdea67859d6d32241aefc
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87015643"
+ms.lasthandoff: 02/14/2021
+ms.locfileid: "100392793"
 ---
 # <a name="create-a-private-azure-kubernetes-service-cluster"></a>创建专用 Azure Kubernetes 服务群集
 
@@ -19,14 +19,16 @@ ms.locfileid: "87015643"
 
 ## <a name="region-availability"></a>上市区域
 
-专用群集在[支持 AKS](https://azure.microsoft.com/global-infrastructure/services/?products=kubernetes-service)的公共区域中提供。
+专用群集在 [支持 AKS](https://azure.microsoft.com/global-infrastructure/services/?products=kubernetes-service)的公共区域、azure 政府和 Azure 中国世纪互联区域提供。
 
-* 当前不支持 Azure 中国世纪互联。
-* 由于缺少私有链接支持，目前不支持 US Gov 德克萨斯州。
+> [!NOTE]
+> 支持 Azure 政府站点，但由于缺少专用链接支持，当前不支持 US Gov 德克萨斯州。
 
 ## <a name="prerequisites"></a>先决条件
 
 * Azure CLI 版本 2.2.0 或更高版本
+* 仅标准 Azure 负载均衡器支持专用链接服务。 不支持基本 Azure 负载均衡器。  
+* 若要使用自定义 DNS 服务器，请在自定义 DNS 服务器中将 Azure DNS IP 168.63.129.16 作为上游 DNS 服务器进行添加。
 
 ## <a name="create-a-private-aks-cluster"></a>创建专用 AKS 群集
 
@@ -43,7 +45,7 @@ az group create -l westus -n MyResourceGroup
 ```azurecli-interactive
 az aks create -n <private-cluster-name> -g <private-cluster-resource-group> --load-balancer-sku standard --enable-private-cluster  
 ```
-其中 --enable-private-cluster 是专用群集的必需标志。 
+其中的 `--enable-private-cluster` 是专用群集的必需标志。 
 
 ### <a name="advanced-networking"></a>高级网络  
 
@@ -59,11 +61,29 @@ az aks create \
     --dns-service-ip 10.2.0.10 \
     --service-cidr 10.2.0.0/24 
 ```
-其中 --enable-private-cluster 是专用群集的必需标志。 
+其中的 `--enable-private-cluster` 是专用群集的必需标志。 
 
 > [!NOTE]
 > 如果 Docker 桥地址 CIDR (172.17.0.1/16) 与子网 CIDR 冲突，请相应地更改 Docker 桥地址。
 
+## <a name="configure-private-dns-zone"></a>配置专用 DNS 区域 
+
+可以利用以下参数来配置专用 DNS 区域。
+
+1. “System”是默认值。 如果省略 --private-dns-zone argument，AKS 将在节点资源组中创建专用 DNS 区域。
+2. “None”意味着 AKS 将不会创建专用 DNS 区域。  此操作要求你自带 DNS 服务器和配置专用 FQDN 的 DNS 解析。  如果未配置 DNS 解析，则 DNS 只能在代理节点内进行解析，并且会导致群集在部署之后出现问题。
+3. “自定义专用 dns 区域名称”应采用此 azure 全球云格式：`privatelink.<region>.azmk8s.io`。 你将需要该专用 DNS 区域的资源 ID。  此外，你将需要一个用户分配的标识或服务主体，其中至少有自定义专用 dns 区域的 `private dns zone contributor` 角色。
+
+### <a name="prerequisites"></a>先决条件
+
+* AKS 预览版 0.4.71 或更高版本
+* API 2020-11-01 或更高版本
+
+### <a name="create-a-private-aks-cluster-with-private-dns-zone-preview"></a>使用专用 DNS 区域 (预览创建专用 AKS 群集) 
+
+```azurecli-interactive
+az aks create -n <private-cluster-name> -g <private-cluster-resource-group> --load-balancer-sku standard --enable-private-cluster --enable-managed-identity --assign-identity <ResourceId> --private-dns-zone [none|system|custom private dns zone ResourceId]
+```
 ## <a name="options-for-connecting-to-the-private-cluster"></a>连接到专用群集的选项
 
 API 服务器终结点没有公共 IP 地址。 若要管理 API 服务器，需要使用有权访问 AKS 群集的 Azure 虚拟网络 (VNet) 的 VM。 有几种选项可用于建立与专用群集的网络连接。
@@ -78,11 +98,11 @@ API 服务器终结点没有公共 IP 地址。 若要管理 API 服务器，需
 
 如前所述，虚拟网络对等互连是一种访问专用群集的方法。 若要使用虚拟网络对等互连，需要在虚拟网络与专用 DNS 区域之间设置链接。
     
-1. 中转到 Azure 门户中的节点资源组。  
+1. 转到 Azure 门户中的节点资源组。  
 2. 选择专用 DNS 区域。   
 3. 在左窗格中，选择“虚拟网络”链接。  
 4. 创建新链接，将 VM 的虚拟网络添加到专用 DNS 区域。 DNS 区域链接需要几分钟时间才能变为可用。  
-5. 在 Azure 门户中，导航到包含群集的虚拟网络的资源组。  
+5. 在 Azure 门户中，导航到包含群集虚拟网络的资源组。  
 6. 在右窗格中，选择“虚拟网络”。 虚拟网络名称的格式为 aks-vnet-\*。  
 7. 在左窗格中，选择“对等互连”。  
 8. 选择“添加”，添加 VM 的虚拟网络，然后创建对等互连。  
@@ -96,27 +116,22 @@ API 服务器终结点没有公共 IP 地址。 若要管理 API 服务器，需
 
 1. 默认情况下，预配专用群集后，会在群集托管资源组中创建专用终结点 (1) 和专用 DNS 区域 (2)。 群集使用专用区域中的 A 记录来解析专用终结点的 IP，以便与 API 服务器通信。
 
-2. 专用 DNS 区域仅链接到群集节点附加到的 VNet (3)。 这意味着专用终结点只能由该链接 VNet 中的主机进行解析。 在 VNet 中未配置自定义 DNS 的情况下（默认），这种方式不会像 DNS 的168.63.129.16 上的主机点一样出现问题，因为该链接可以解析专用 DNS 区域中的记录。
+2. 专用 DNS 区域仅链接到群集节点附加到的 VNet (3)。 这意味着专用终结点只能由该链接 VNet 中的主机进行解析。 在 VNet 上不配置任何自定义 DNS（默认设置）的情况下，这可以正常工作，因为主机指向用于 DNS 的 168.63.129.16，因此可以解析专用 DNS 区域中的记录（由于存在链接）。
 
-3. 在包含群集的 VNet 具有自定义 DNS 设置 (4) 的情况下，除非将专用 DNS 区域链接到包含自定义 DNS 解析程序的 VNet (5)，否则群集部署将失败。 在群集预配期间创建专用区域或通过使用基于事件的部署机制（例如，Azure 事件网格和 Azure Functions）来检测区域创建时，可以手动创建此链接。
+3. 在包含群集的 VNet 具有自定义 DNS 设置 (4) 的情况下，除非将专用 DNS 区域链接到包含自定义 DNS 解析程序的 VNet (5)，否则群集部署将失败。 可以在群集预配期间创建专用区域后手动创建此链接，也可以使用基于事件的部署机制（例如，Azure 事件网格和 Azure Functions）在检测到区域已创建后通过自动化来创建此链接。
 
-## <a name="dependencies"></a>依赖项  
-
-* 仅标准 Azure 负载均衡器支持专用链接服务。 不支持基本 Azure 负载均衡器。  
-* 若要使用自定义 DNS 服务器，请在自定义 DNS 服务器中将 Azure DNS IP 168.63.129.16 作为上游 DNS 服务器进行添加。
+> [!NOTE]
+> 如果你[将自带路由表与 kubenet 配合使用](./configure-kubenet.md#bring-your-own-subnet-and-route-table-with-kubenet)，并且将自带 DNS 与专用群集配合使用，群集创建将会失败。 你需要在创建群集失败之后将节点资源组中的 [RouteTable](./configure-kubenet.md#bring-your-own-subnet-and-route-table-with-kubenet) 关联到子网，以使创建能够成功。
 
 ## <a name="limitations"></a>限制 
-* IP 授权范围不能应用于专用 api 服务器终结点，它们仅适用于公共 API 服务器
-* 某些区域当前支持[可用性区域][availability-zones]。 
+* IP 授权范围不能应用于专用 API 服务器终结点，它们仅适用于公共 API 服务器
 * [Azure 专用链接服务限制][private-link-service]适用于专用群集。
-* 不支持具有专用群集的 Azure DevOps Microsoft 托管的代理。 请考虑使用[自托管代理][devops-agents]。 
+* 不支持具有专用群集的 Azure DevOps Microsoft 托管的代理。 请考虑使用[自托管代理](/azure/devops/pipelines/agents/agents?tabs=browser)。 
 * 对于需要使 Azure 容器注册表能够与专用 AKS 配合使用的客户，容器注册表虚拟网络必须与代理群集虚拟网络对等互连。
-* 当前不支持 Azure Dev Spaces
 * 不支持将现有 AKS 群集转换为专用群集
 * 删除或修改客户子网中的专用终结点将导致群集停止运行。 
-* 当前不支持适用于容器的 Azure Monitor 实时数据。
-* 当前不支持运行时间 SLA。
-
+* 客户在自己的 DNS 服务器上更新 A 记录后，这些 Pod 仍会在迁移后将 apiserver FQDN 解析到较旧的 IP，直到重启这些 Pod。 客户需要在控制平面迁移之后重启 hostNetwork Pod 和 default-DNSPolicy Pod。
+* 如果对控制平面进行维护，[AKS IP](./limit-egress-traffic.md) 可能会更改。 在这种情况下，你必须在自定义 DNS 服务器上更新指向 API 服务器专用 IP 的 A 记录，并重启使用 hostNetwork 的任何自定义 Pod 或部署。
 
 <!-- LINKS - internal -->
 [az-provider-register]: /cli/azure/provider?view=azure-cli-latest#az-provider-register
@@ -125,7 +140,7 @@ API 服务器终结点没有公共 IP 地址。 若要管理 API 服务器，需
 [az-extension-update]: /cli/azure/extension#az-extension-update
 [private-link-service]: ../private-link/private-link-service-overview.md#limitations
 [virtual-network-peering]: ../virtual-network/virtual-network-peering-overview.md
-[azure-bastion]: ../bastion/bastion-create-host-portal.md
+[azure-bastion]: ../bastion/tutorial-create-host-portal.md
 [express-route-or-vpn]: ../expressroute/expressroute-about-virtual-network-gateways.md
 [devops-agents]: /azure/devops/pipelines/agents/agents?view=azure-devops
 [availability-zones]: availability-zones.md

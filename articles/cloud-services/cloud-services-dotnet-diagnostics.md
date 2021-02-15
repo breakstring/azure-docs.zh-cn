@@ -1,23 +1,25 @@
 ---
-title: 如何将 Azure 诊断 (.NET) 与云服务配合使用 | Microsoft Docs
+title: 如何将 Azure 诊断 ( .NET) 与云服务 (经典) |Microsoft Docs
 description: 使用 Azure 诊断从 Azure 云服务收集数据，以用于调试、衡量性能、监视和流量分析等目的。
-services: cloud-services
-documentationcenter: .net
-author: tgore03
-manager: carmonm
-ms.service: cloud-services
-ms.devlang: dotnet
 ms.topic: article
-ms.date: 05/22/2017
+ms.service: cloud-services
+ms.date: 10/14/2020
 ms.author: tagore
-ms.openlocfilehash: 7522df94a0055af398f1fdbf2050e132f5519eb5
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+author: tanmaygore
+ms.reviewer: mimckitt
+ms.custom: ''
+ms.openlocfilehash: 89ba50b91e8ff2e2d7a05d59f2b738a1f87a5fd2
+ms.sourcegitcommit: 6272bc01d8bdb833d43c56375bab1841a9c380a5
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87092688"
+ms.lasthandoff: 01/23/2021
+ms.locfileid: "98742142"
 ---
-# <a name="enabling-azure-diagnostics-in-azure-cloud-services"></a>在 Azure 云服务中启用 Azure 诊断
+# <a name="enabling-azure-diagnostics-in-azure-cloud-services-classic"></a>在 Azure 云服务中启用 Azure 诊断 (经典) 
+
+> [!IMPORTANT]
+> [Azure 云服务 (扩展支持) ](../cloud-services-extended-support/overview.md) 是适用于 Azure 云服务产品的新的基于 azure 资源管理器的部署模型。进行此更改后，基于 Azure Service Manager 的部署模型运行的 Azure 云服务已重命名为云服务 (经典) ，所有新部署应使用 [云服务 (扩展支持) ](../cloud-services-extended-support/overview.md)。
+
 有关 Azure 诊断的背景信息，请参阅 [Azure 诊断概述](../azure-diagnostics.md)。
 
 ## <a name="how-to-enable-diagnostics-in-a-worker-role"></a>如何在辅助角色中启用诊断
@@ -124,7 +126,7 @@ namespace WorkerRole1
 
 1. 通过选择解决方案资源管理器中的 WadExample 项目，然后在“生成”菜单中选择“发布”，在 Visual Studio 中将辅助角色部署到 Azure    。
 2. 选择订阅。
-3. 在“Microsoft Azure 发布设置”对话框中，选择“新建...”********。
+3. 在“Microsoft Azure 发布设置”对话框中，选择“新建...”。
 4. 在“创建云服务和存储帐户”对话框中输入一个“名称”（例如“WadExample”），然后选择区域或地缘组   。
 5. 将“环境”设置为“暂存”   。
 6. 适当地修改任何其他设置，然后单击“发布”   。
@@ -187,20 +189,17 @@ Set-AzureServiceDiagnosticsExtension -StorageContext $storageContext -Diagnostic
 ![CloudServices_diag_tables](./media/cloud-services-dotnet-diagnostics/WadExampleTables.png)
 
 ## <a name="configuration-file-schema"></a>配置文件架构
-诊断配置文件定义启动诊断代理时用于初始化诊断配置设置的值。 有关有效值和示例，请参阅 [最新架构参考](/azure/azure-monitor/platform/diagnostics-extension-schema) 。
+诊断配置文件定义启动诊断代理时用于初始化诊断配置设置的值。 有关有效值和示例，请参阅 [最新架构参考](../azure-monitor/platform/diagnostics-extension-versions.md) 。
 
 ## <a name="troubleshooting"></a>故障排除
-如果遇到问题，请参阅 [Azure 诊断疑难解答](../azure-diagnostics-troubleshooting.md)，获取有关常见问题的帮助。
+如果遇到问题，请参阅 [Azure 诊断疑难解答](../azure-monitor/platform/diagnostics-extension-troubleshooting.md)，获取有关常见问题的帮助。
 
 ## <a name="next-steps"></a>后续步骤
 若要更改你收集的数据、排查问题或者了解有关诊断的一般信息，请参阅[有关 Azure 虚拟机的诊断文章列表](../azure-monitor/platform/diagnostics-extension-overview.md)。
 
-[EventSource Class]: https://msdn.microsoft.com/library/system.diagnostics.tracing.eventsource(v=vs.110).aspx
+[EventSource Class]: /dotnet/api/system.diagnostics.tracing.eventsource
 
 [Debugging an Azure Application]: https://msdn.microsoft.com/library/windowsazure/ee405479.aspx   
-[Collect Logging Data by Using Azure Diagnostics]: https://msdn.microsoft.com/library/windowsazure/gg433048.aspx
+[Collect Logging Data by Using Azure Diagnostics]: /previous-versions/azure/gg433048(v=azure.100)
 [Free Trial]: https://azure.microsoft.com/pricing/free-trial/
 [Install and configure Azure PowerShell version 0.8.7 or later]: /powershell/azure/
-
-
-

@@ -1,19 +1,16 @@
 ---
 title: 分析 Apache Hive & 进程 JSON-Azure HDInsight
 description: 了解如何使用 JSON 文档，以及如何使用 Azure HDInsight 中的 Apache Hive 分析它们。
-author: hrasheed-msft
-ms.author: hrasheed
-ms.reviewer: jasonh
 ms.service: hdinsight
 ms.topic: how-to
 ms.custom: seoapr2020
 ms.date: 04/20/2020
-ms.openlocfilehash: 31fc6fe02559c356f072761c024308f158ae4d9c
-ms.sourcegitcommit: 124f7f699b6a43314e63af0101cd788db995d1cb
+ms.openlocfilehash: 5bc9acea219e5d111700840149a26c127b47514d
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/08/2020
-ms.locfileid: "86085440"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98943072"
 ---
 # <a name="process-and-analyze-json-documents-by-using-apache-hive-in-azure-hdinsight"></a>使用 Azure HDInsight 中的 Apache Hive 分析和处理 JSON 文档
 
@@ -146,7 +143,7 @@ LATERAL VIEW JSON_TUPLE(jt.json_body, 'StudentId', 'Grade') q1
 
 ![Apache Hive json 查询结果](./media/using-json-in-hive/hdinsight-json-tuple.png)
 
-`json_tuple`UDF 使用 Hive 中的[横向视图](https://cwiki.apache.org/confluence/display/Hive/LanguageManual+LateralView)语法， \_ 通过将 UDT 函数应用于原始表的每一行，使 json 元组能够创建虚拟表。 由于重复使用**横向视图**，复杂的 JSON 会变得过于庞大。 而且， **JSON_TUPLE**无法处理嵌套的 json。
+`json_tuple`UDF 使用 Hive 中的[横向视图](https://cwiki.apache.org/confluence/display/Hive/LanguageManual+LateralView)语法， \_ 通过将 UDT 函数应用于原始表的每一行，使 json 元组能够创建虚拟表。 由于重复使用 **横向视图**，复杂的 JSON 会变得过于庞大。 而且， **JSON_TUPLE** 无法处理嵌套的 json。
 
 ### <a name="use-a-custom-serde"></a>使用自定义 SerDe
 
@@ -160,5 +157,5 @@ SerDe 是用于分析嵌套 JSON 文档的最佳选择。 使用它可以定义 
 
 相关文章请参阅：
 
-* [在 HDInsight 中将 Apache Hive 和 HiveQL 与 Apache Hadoop 配合使用来分析示例 Apache log4j 文件](../hdinsight-use-hive.md)
+* [在 HDInsight 中将 Apache Hive 和 HiveQL 与 Apache Hadoop 配合使用来分析示例 Apache log4j 文件](./hdinsight-use-hive.md)
 * [使用 HDInsight 中的交互式查询分析航班延误数据](../interactive-query/interactive-query-tutorial-analyze-flight-data.md)

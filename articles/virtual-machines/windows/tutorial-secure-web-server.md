@@ -9,12 +9,12 @@ ms.workload: infrastructure
 ms.date: 02/09/2018
 ms.author: cynthn
 ms.custom: mvc
-ms.openlocfilehash: 3b65d04b383fdc0a409e23ab6b6649604be502c6
-ms.sourcegitcommit: 3543d3b4f6c6f496d22ea5f97d8cd2700ac9a481
+ms.openlocfilehash: 4e5bbe179c43508033e0747bc2c03089f283b6e2
+ms.sourcegitcommit: aaa65bd769eb2e234e42cfb07d7d459a2cc273ab
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/20/2020
-ms.locfileid: "86525579"
+ms.lasthandoff: 01/27/2021
+ms.locfileid: "98873073"
 ---
 # <a name="tutorial-secure-a-web-server-on-a-windows-virtual-machine-in-azure-with-tlsssl-certificates-stored-in-key-vault"></a>教程：在 Azure 中使用 Key Vault 中存储的 TLS/SSL 证书保护 Windows 虚拟机上的 Web 服务器
 
@@ -34,7 +34,7 @@ ms.locfileid: "86525579"
 
 Azure Cloud Shell 是免费的交互式 shell，可以使用它运行本文中的步骤。 它预安装有常用 Azure 工具并将其配置与帐户一起使用。 
 
-若要打开 Cloud Shell，只需要从代码块的右上角选择“试一试”。 也可以通过转到 [https://shell.azure.com/powershell](https://shell.azure.com/powershell) 在单独的浏览器标签页中启动 Cloud Shell。 选择“复制”以复制代码块，将其粘贴到 Cloud Shell 中，然后按 Enter 来运行它。 
+若要打开 Cloud Shell，只需要从代码块的右上角选择“试一试”。  也可以通过转到 [https://shell.azure.com/powershell](https://shell.azure.com/powershell) 在单独的浏览器标签页中启动 Cloud Shell。 选择“复制”以复制代码块，将其粘贴到 Cloud Shell 中，然后按 Enter 来运行它。 
 
 
 ## <a name="overview"></a>概述
@@ -80,7 +80,7 @@ Add-AzKeyVaultCertificate `
 
 
 ## <a name="create-a-virtual-machine"></a>创建虚拟机
-使用 [Get-Credential](/powershell/module/microsoft.powershell.security/get-credential?view=powershell-5.1) 设置 VM 的管理员用户名和密码：
+使用 [Get-Credential](/powershell/module/microsoft.powershell.security/get-credential) 设置 VM 的管理员用户名和密码：
 
 ```azurepowershell-interactive
 $cred = Get-Credential
@@ -156,7 +156,7 @@ Set-AzVMExtension -ResourceGroupName $resourceGroup `
 Get-AzPublicIPAddress -ResourceGroupName $resourceGroup -Name "myPublicIPAddress" | select "IpAddress"
 ```
 
-现可打开 Web 浏览器，并在地址栏中输入 `https://<myPublicIP>` 。 若要接受有关使用自签名证书的安全警告，请依次选择“详细信息”和“继续转到网页”： 
+现可打开 Web 浏览器，并在地址栏中输入 `https://<myPublicIP>`。 若要接受有关使用自签名证书的安全警告，请依次选择“详细信息”和“继续转到网页”： 
 
 ![接受 Web 浏览器安全警告](./media/tutorial-secure-web-server/browser-warning.png)
 
@@ -177,4 +177,4 @@ Get-AzPublicIPAddress -ResourceGroupName $resourceGroup -Name "myPublicIPAddress
 请访问以下链接，查看预先生成的虚拟机脚本示例。
 
 > [!div class="nextstepaction"]
-> [Windows 虚拟机脚本示例](./powershell-samples.md)
+> [Windows 虚拟机脚本示例](https://github.com/Azure/azure-docs-powershell-samples/tree/master/virtual-machine)

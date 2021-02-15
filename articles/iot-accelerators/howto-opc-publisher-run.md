@@ -11,18 +11,21 @@ manager: philmea
 ms.custom:
 - amqp
 - mqtt
-ms.openlocfilehash: c664d4859a306387b4eafa2f19ab5877ccf6eb1b
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: f7d6581a1892ebd74a1adba5c09c0af9d3cf9d43
+ms.sourcegitcommit: a92fbc09b859941ed64128db6ff72b7a7bcec6ab
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "81686956"
+ms.lasthandoff: 10/15/2020
+ms.locfileid: "92078997"
 ---
 # <a name="run-opc-publisher"></a>运行 OPC 发布服务器
 
+> [!IMPORTANT]
+> 当我们更新本文时，请参阅 [Azure 工业 IoT](https://azure.github.io/Industrial-IoT/) 来了解最新内容。
+
 本文介绍如何运行和调试 OPC 发布服务器。 它还解决了性能和内存方面的问题。
 
-## <a name="command-line-options"></a>命名行选项
+## <a name="command-line-options"></a>命令行选项
 
 使用 `--help` 命令行选项显示应用程序使用情况，如下所示：
 
@@ -367,12 +370,12 @@ docker run mcr.microsoft.com/iotedge/opc-publisher <applicationname> [<IoT Hubco
 
 ## <a name="run-as-an-azure-iot-edge-module"></a>作为 Azure IoT Edge 模块运行
 
-OPC 发布服务器已准备好用作 [Azure IoT Edge](https://docs.microsoft.com/azure/iot-edge) 模块。 如果将 OPC 发布服务器用作 IoT Edge 模块，唯一受支持的传输协议是 Amqp_Tcp_Only 和 Mqtt_Tcp_Only********。
+OPC 发布服务器已准备好用作 [Azure IoT Edge](../iot-edge/index.yml) 模块。 如果将 OPC 发布服务器用作 IoT Edge 模块，唯一受支持的传输协议是 Amqp_Tcp_Only 和 Mqtt_Tcp_Only********。
 
 若要将 OPC 发布服务器作为模块添加到 IoT Edge 部署，请转到 Azure 门户中的 IoT 中心设置并完成以下步骤：
 
 1. 转到 IoT Edge，然后创建或选择你的 IoT Edge 设备****。
-1. 选择“设置模块”。
+1. 选择“设置模块”  。
 1. 选择“部署模块”下的“添加”，然后选择“IoT Edge 模块”************。
 1. 在“名称”字段中，输入“发布服务器”********。
 1. 在“映像 URI”字段中，输入 `mcr.microsoft.com/iotedge/opc-publisher:<tag>`****

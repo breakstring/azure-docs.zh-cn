@@ -4,16 +4,18 @@ description: 了解如何连接到 GitHub 并将笔记本从 GitHub 存储库导
 author: deborahc
 ms.author: dech
 ms.service: cosmos-db
+ms.subservice: cosmosdb-sql
 ms.topic: how-to
 ms.date: 05/19/2020
-ms.openlocfilehash: d85f020152fa3cadb1d437c125d327f5e895e14e
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 8315369d2100036a50aae770267aa04bceb2dfb0
+ms.sourcegitcommit: fa90cd55e341c8201e3789df4cd8bd6fe7c809a3
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "85262882"
+ms.lasthandoff: 11/04/2020
+ms.locfileid: "93339795"
 ---
 # <a name="import-notebooks-from-a-github-repo-into-azure-cosmos-db"></a>将笔记本从 GitHub 存储库导入 Azure Cosmos DB
+[!INCLUDE[appliesto-sql-api](includes/appliesto-sql-api.md)]
 
 为 Azure Cosmos 帐户[启用笔记本支持](enable-notebooks.md)后，可以创建新笔记本、从本地计算机中上传新笔记本或从 GitHub 帐户导入现有笔记本。 本文演示如何将笔记本工作区连接到 GitHub 并将笔记本从 GitHub 存储库导入到 Azure Cosmos 帐户。 导入后，可以运行、更改它们，并将所做的更改保存回 GitHub。
 

@@ -1,21 +1,21 @@
 ---
 title: 教程 - 将变量添加到模板
-description: 将变量添加到 Azure 资源管理器模板以简化语法。
+description: 将变量添加到 Azure 资源管理器模板（ARM 模板）以简化语法。
 author: mumian
 ms.date: 03/27/2020
 ms.topic: tutorial
 ms.author: jgao
-ms.custom: devx-track-azurecli
-ms.openlocfilehash: 9607ddd4a44af6a515080d4fd6f0c475268470b9
-ms.sourcegitcommit: 11e2521679415f05d3d2c4c49858940677c57900
+ms.custom: ''
+ms.openlocfilehash: 46ed1fc55a108bf80089d249abc58bc5d1a6479a
+ms.sourcegitcommit: 6172a6ae13d7062a0a5e00ff411fd363b5c38597
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/31/2020
-ms.locfileid: "87497488"
+ms.lasthandoff: 12/11/2020
+ms.locfileid: "97106948"
 ---
 # <a name="tutorial-add-variables-to-your-arm-template"></a>教程：将变量添加到 ARM 模板
 
-本教程介绍如何将变量添加到 Azure 资源管理器 (ARM) 模版。 变量可以简化模板。有了变量，你只需编写一次表达式，然后即可在模板中重复使用该表达式。 完成本教程需要 **7 分钟**。
+本教程介绍如何将变量添加到 Azure 资源管理器模版（ARM 模板）。 变量可以简化模板。有了变量，你只需编写一次表达式，然后即可在模板中重复使用该表达式。 完成本教程需要 **7 分钟**。
 
 ## <a name="prerequisites"></a>先决条件
 
@@ -37,17 +37,17 @@ ms.locfileid: "87497488"
 
 :::code language="json" source="~/resourcemanager-templates/get-started-with-templates/add-variable/azuredeploy.json" range="1-47" highlight="5-9,29-31,36":::
 
-请注意，它包含一个名为 **uniqueStorageName** 的变量。 此变量使用四个函数来构造一个字符串值。
+请注意，它包含一个名为 `uniqueStorageName` 的变量。 此变量使用四个函数来构造一个字符串值。
 
 你已熟悉 [parameters](template-functions-deployment.md#parameters) 函数，因此我们不详细介绍它。
 
-你也熟悉 [resourceGroup](template-functions-resource.md#resourcegroup) 函数。 在此示例中，你获得 **id** 属性而不是 **location** 属性，如上一教程所示。 **id** 属性返回资源组的完整标识符，包括订阅 ID 和资源组名称。
+你也熟悉 [resourceGroup](template-functions-resource.md#resourcegroup) 函数。 在此示例中，你获得 `id` 属性而不是 `location` 属性，如上一教程所示。 `id` 属性返回资源组的完整标识符，包括订阅 ID 和资源组名称。
 
 [uniqueString](template-functions-string.md#uniquestring) 函数创建一个 13 个字符的哈希值。 返回的值取决于传入的参数。 在本教程中，我们使用资源组 ID 作为哈希值的输入。 这意味着，我们可以将该模板部署到不同的资源组，获取不同的唯一字符串值。 但是，如果部署到同一资源组，则获得同一值。
 
-[concat](template-functions-string.md#concat) 函数采用多个值并对其进行组合。 就此变量来说，它采用参数中的字符串和 uniqueString 函数中的字符串，并将二者组合成一个字符串。
+[concat](template-functions-string.md#concat) 函数采用多个值并对其进行组合。 就此变量来说，它采用参数中的字符串和 `uniqueString` 函数中的字符串，并将二者组合成一个字符串。
 
-可以通过 **storagePrefix** 参数传入一个用于标识存储帐户的前缀。 可以创建你自己的命名约定，以便在从长的资源列表完成部署后，通过该约定轻松地标识存储帐户。
+可以通过 `storagePrefix` 参数传入一个用于标识存储帐户的前缀。 可以创建你自己的命名约定，以便在从长的资源列表完成部署后，通过该约定轻松地标识存储帐户。
 
 最后请注意，存储帐户名称现在设置为变量而非参数。
 
@@ -55,7 +55,7 @@ ms.locfileid: "87497488"
 
 让我们部署该模板。 部署此模板比部署上述模板容易，因为你只提供存储名称的前缀。
 
-如果尚未创建资源组，请参阅[创建资源组](template-tutorial-create-first-template.md#create-resource-group)。 此示例假设已根据[第一篇教程](template-tutorial-create-first-template.md#deploy-template)中所述，将 **templateFile** 变量设置为模板文件的路径。
+如果尚未创建资源组，请参阅[创建资源组](template-tutorial-create-first-template.md#create-resource-group)。 此示例假设已根据[第一篇教程](template-tutorial-create-first-template.md#deploy-template)中所述，将 `templateFile` 变量设置为模板文件的路径。
 
 # <a name="powershell"></a>[PowerShell](#tab/azure-powershell)
 
@@ -83,7 +83,7 @@ az deployment group create \
 ---
 
 > [!NOTE]
-> 如果部署失败，请将 **debug** 开关和部署命令配合使用来显示调试日志。  还可以使用 **verbose** 开关来显示完整的调试日志。
+> 如果部署失败，请使用 `verbose` 开关获取有关正在创建的资源的信息。 使用 `debug` 开关获取调试的详细信息。
 
 ## <a name="verify-deployment"></a>验证部署
 

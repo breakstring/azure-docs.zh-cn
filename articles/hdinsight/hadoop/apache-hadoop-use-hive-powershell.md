@@ -1,19 +1,16 @@
 ---
 title: 在 HDInsight 中将 Apache Hive 与 PowerShell 配合使用 - Azure
 description: 使用 PowerShell 在 Azure HDInsight 的 Apache Hadoop 中运行 Apache Hive 查询
-author: hrasheed-msft
-ms.author: hrasheed
-ms.reviewer: jasonh
 ms.service: hdinsight
 ms.topic: how-to
 ms.custom: hdinsightactive
 ms.date: 12/24/2019
-ms.openlocfilehash: 327a8a0de0d144a5c1d8494a6dd22a8b89a7bd93
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.openlocfilehash: 43cac81717027b39210d6cd9cb9ad0baa596f50d
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87081043"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98943175"
 ---
 # <a name="run-apache-hive-queries-using-powershell"></a>使用 PowerShell 运行 Apache Hive 查询
 
@@ -28,7 +25,7 @@ ms.locfileid: "87081043"
 
 * HDInsight 中的 Apache Hadoop 群集。 请参阅 [Linux 上的 HDInsight 入门](./apache-hadoop-linux-tutorial-get-started.md)。
 
-* 已安装 PowerShell [Az 模块](https://docs.microsoft.com/powershell/azure/)。
+* 已安装 PowerShell [Az 模块](/powershell/azure/)。
 
 ## <a name="run-a-hive-query"></a>运行 Hive 查询
 
@@ -84,7 +81,7 @@ Azure PowerShell 提供 *cmdlet*，可在 HDInsight 上远程运行 Hive 查询�
    >
    > `Invoke-AzHDInsightHiveJob -File "wasbs://<ContainerName>@<StorageAccountName>/<Path>/query.hql"`
    >
-   > 有关 **Here-Strings** 的详细信息，请参阅<a href="https://technet.microsoft.com/library/ee692792.aspx" target="_blank">使用 Windows PowerShell Here-Strings</a>。
+   > 有关 Here-Strings 的详细信息，请参阅 [HERE-STRINGS](/powershell/module/microsoft.powershell.core/about/about_quoting_rules#here-strings)。
 
 ## <a name="troubleshooting"></a>故障排除
 

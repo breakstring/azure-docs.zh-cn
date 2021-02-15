@@ -11,12 +11,12 @@ ms.workload: identity
 ms.topic: tutorial
 ms.date: 01/17/2019
 ms.author: jeedes
-ms.openlocfilehash: e1fdeb5e78d4e3583b995c169a3781de3b129c72
-ms.sourcegitcommit: 023d10b4127f50f301995d44f2b4499cbcffb8fc
+ms.openlocfilehash: 5554ec4521a126a2c2e823b707fe42d9983b5d8e
+ms.sourcegitcommit: d79513b2589a62c52bddd9c7bd0b4d6498805dbe
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/18/2020
-ms.locfileid: "88542966"
+ms.lasthandoff: 12/18/2020
+ms.locfileid: "97671608"
 ---
 # <a name="tutorial-azure-active-directory-integration-with-adoddle-csaas-platform"></a>教程：将 Azure Active Directory 与 Adoddle cSaas Platform 集成
 
@@ -27,7 +27,7 @@ ms.locfileid: "88542966"
 * 可以让用户使用其 Azure AD 帐户自动登录到 Adoddle cSaas Platform（单一登录）。
 * 可在中心位置（即 Azure 门户）管理帐户。
 
-如果要了解有关 SaaS 应用与 Azure AD 集成的更多详细信息，请参阅 [Azure Active Directory 的应用程序访问与单一登录是什么](https://docs.microsoft.com/azure/active-directory/active-directory-appssoaccess-whatis)。
+如果要了解有关 SaaS 应用与 Azure AD 集成的更多详细信息，请参阅 [Azure Active Directory 的应用程序访问与单一登录是什么](../manage-apps/what-is-single-sign-on.md)。
 如果还没有 Azure 订阅，可以在开始前[创建一个免费帐户](https://azure.microsoft.com/free/)。
 
 ## <a name="prerequisites"></a>先决条件
@@ -65,7 +65,7 @@ ms.locfileid: "88542966"
 
 4. 在搜索框中键入“Adoddle cSaas Platform”，在结果面板中选择“Adoddle cSaas Platform”，然后单击“添加”按钮添加该应用程序    。
 
-     ![结果列表中的 Adoddle cSaas Platform](common/search-new-app.png)
+    ![结果列表中的 Adoddle cSaas Platform](common/search-new-app.png)
 
 ## <a name="configure-and-test-azure-ad-single-sign-on"></a>配置和测试 Azure AD 单一登录
 
@@ -91,7 +91,7 @@ ms.locfileid: "88542966"
 
     ![配置单一登录链接](common/select-sso.png)
 
-2. 在**选择单一登录方法**对话框中，选择 **SAML/WS-Fed**模式以启用单一登录。
+2. 在 **选择单一登录方法** 对话框中，选择 **SAML/WS-Fed** 模式以启用单一登录。
 
     ![单一登录选择模式](common/select-saml-option.png)
 
@@ -138,7 +138,7 @@ ms.locfileid: "88542966"
     ![“用户”对话框](common/user-properties.png)
 
     a. 在“名称”  字段中，输入 BrittaSimon  。
-  
+
     b. 在“用户名”字段中，键入 brittasimon\@yourcompanydomain.extension    
     例如： BrittaSimon@contoso.com
 
@@ -174,19 +174,18 @@ ms.locfileid: "88542966"
 
 ### <a name="create-adoddle-csaas-platform-test-user"></a>创建 Adoddle cSaas Platform 测试用户
 
-在本部分，我们会在 Adoddle cSaas Platform 中创建一个名为 Britta Simon 的用户。 Adoddle cSaas Platform 支持在默认情况下启用的**恰时预配**。 此部分不存在任何操作项。 尝试访问 Adoddle cSaas Platform 时，如果 Adoddle cSaas Platform 中尚不存在用户，则系统会创建一个新用户。
+在本部分，我们会在 Adoddle cSaas Platform 中创建一个名为 Britta Simon 的用户。 Adoddle cSaas Platform 支持在默认情况下启用的 **恰时预配**。 此部分不存在任何操作项。 尝试访问 Adoddle cSaas Platform 时，如果 Adoddle cSaas Platform 中尚不存在用户，则系统会创建一个新用户。
 
 ### <a name="test-single-sign-on"></a>测试单一登录 
 
 在本部分中，使用访问面板测试 Azure AD 单一登录配置。
 
-单击访问面板中的 Adoddle cSaas Platform 磁贴时，应会自动登录到为其设置了 SSO 的 Adoddle cSaas Platform。 有关访问面板的详细信息，请参阅 [Introduction to the Access Panel](https://docs.microsoft.com/azure/active-directory/active-directory-saas-access-panel-introduction)（访问面板简介）。
+单击访问面板中的 Adoddle cSaas Platform 磁贴时，应会自动登录到为其设置了 SSO 的 Adoddle cSaas Platform。 有关访问面板的详细信息，请参阅 [Introduction to the Access Panel](../user-help/my-apps-portal-end-user-access.md)（访问面板简介）。
 
 ## <a name="additional-resources"></a>其他资源
 
-- [有关如何将 SaaS 应用与 Azure Active Directory 集成的教程列表](https://docs.microsoft.com/azure/active-directory/active-directory-saas-tutorial-list)
+- [有关如何将 SaaS 应用与 Azure Active Directory 集成的教程列表](./tutorial-list.md)
 
-- [Azure Active Directory 的应用程序访问与单一登录是什么？](https://docs.microsoft.com/azure/active-directory/active-directory-appssoaccess-whatis)
+- [Azure Active Directory 的应用程序访问与单一登录是什么？](../manage-apps/what-is-single-sign-on.md)
 
-- [什么是 Azure Active Directory 中的条件访问？](https://docs.microsoft.com/azure/active-directory/conditional-access/overview)
-
+- [什么是 Azure Active Directory 中的条件访问？](../conditional-access/overview.md)

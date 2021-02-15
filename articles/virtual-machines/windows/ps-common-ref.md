@@ -1,5 +1,5 @@
 ---
-title: 适用于 Azure 虚拟机的常见 PowerShell 命令
+title: 适用于 Azure 虚拟机的常用 PowerShell 命令
 description: 帮助你开始在 Azure 中创建和管理 VM 的常用 PowerShell 命令。
 author: cynthn
 ms.service: virtual-machines
@@ -7,12 +7,12 @@ ms.topic: how-to
 ms.workload: infrastructure-services
 ms.date: 06/01/2018
 ms.author: cynthn
-ms.openlocfilehash: 6f7f2adb5c3e154c3910ee1082e9afad70de9758
-ms.sourcegitcommit: 2ff0d073607bc746ffc638a84bb026d1705e543e
+ms.openlocfilehash: ecc3f5934e4dd37cc27a1715ea39f86619d581ff
+ms.sourcegitcommit: 78ecfbc831405e8d0f932c9aafcdf59589f81978
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/06/2020
-ms.locfileid: "87836167"
+ms.lasthandoff: 01/23/2021
+ms.locfileid: "98730200"
 ---
 # <a name="common-powershell-commands-for-creating-and-managing-azure-virtual-machines"></a>用于创建和管理 Azure 虚拟机的常用 PowerShell 命令
 
@@ -30,7 +30,7 @@ ms.locfileid: "87836167"
 
 | 任务 | 命令 |
 | ---- | ------- |
-| 创建简单的 VM | [New-AzVM](/powershell/module/az.compute/new-azvm) -Name $myVM <BR></BR><BR></BR> New-AzVM 有一组*简化的*参数，其中只有名称是必需的。 -Name 的值将用作创建新 VM 所需的所有资源的名称。 你可以指定更多，但只需要这个。|
+| 创建简单的 VM | [New-AzVM](/powershell/module/az.compute/new-azvm) -Name $myVM <BR></BR><BR></BR> New-AzVM 有一组 *简化的* 参数，其中只有名称是必需的。 -Name 的值将用作创建新 VM 所需的所有资源的名称。 你可以指定更多，但只需要这个。|
 | 从自定义映像创建 VM | New-AzVm -ResourceGroupName $myResourceGroup -Name $myVM ImageName "myImage" -Location $location  <BR></BR><BR></BR>需要已创建自己的[托管映像](capture-image-resource.md)。 可以使用一个映像生成多个相同的 VM。 |
 
 
@@ -39,10 +39,10 @@ ms.locfileid: "87836167"
 
 | 任务 | 命令 |
 | ---- | ------- |
-| 创建 VM 配置 |$vm = [New-AzVMConfig](/powershell/module/az.compute/new-azvmconfig) -VMName $myVM -VMSize "Standard_D1_v1"<BR></BR><BR></BR>VM 配置用于定义或更新 VM 的设置。 使用 VM 的名称及其[大小](../sizes.md?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json)对配置进行初始化。 |
-| 添加配置设置 |$vm = [Set-AzVMOperatingSystem](/powershell/module/az.compute/set-azvmoperatingsystem) -VM $vm -Windows -ComputerName $myVM -Credential $cred -ProvisionVMAgent -EnableAutoUpdate<BR></BR><BR></BR>向以前使用 New-AzVMConfig 创建的配置对象添加包括[凭据](/powershell/module/microsoft.powershell.security/get-credential?view=powershell-5.1)在内的操作系统设置。 |
+| 创建 VM 配置 |$vm = [New-AzVMConfig](/powershell/module/az.compute/new-azvmconfig) -VMName $myVM -VMSize "Standard_D1_v1"<BR></BR><BR></BR>VM 配置用于定义或更新 VM 的设置。 使用 VM 的名称及其[大小](../sizes.md)对配置进行初始化。 |
+| 添加配置设置 |$vm = [Set-AzVMOperatingSystem](/powershell/module/az.compute/set-azvmoperatingsystem) -VM $vm -Windows -ComputerName $myVM -Credential $cred -ProvisionVMAgent -EnableAutoUpdate<BR></BR><BR></BR>向以前使用 New-AzVMConfig 创建的配置对象添加包括[凭据](/powershell/module/microsoft.powershell.security/get-credential)在内的操作系统设置。 |
 | 添加网络接口 |$vm = [Add-AzVMNetworkInterface](/powershell/module/az.compute/add-azvmnetworkinterface) -VM $vm -Id $nic.Id<BR></BR><BR></BR>VM 必须使用[网络接口](./quick-create-powershell.md?toc=/azure/virtual-machines/windows/toc.json)在虚拟网络中通信。 还可使用 [Get-AzNetworkInterface](/powershell/module/az.compute/add-azvmnetworkinterface) 检索现有网络接口对象。 |
-| 指定平台映像 |$vm = [Set-AzVMSourceImage](/powershell/module/az.compute/set-azvmsourceimage) -VM $vm -PublisherName "publisher_name" -Offer "publisher_offer" -Skus "product_sku" -Version "latest"<BR></BR><BR></BR>向以前使用 New-AzVMConfig 创建的配置对象添加[映像信息](cli-ps-findimage.md?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json)。 仅当将操作系统磁盘设置为使用平台映像时，才使用此命令返回的对象。 |
+| 指定平台映像 |$vm = [Set-AzVMSourceImage](/powershell/module/az.compute/set-azvmsourceimage) -VM $vm -PublisherName "publisher_name" -Offer "publisher_offer" -Skus "product_sku" -Version "latest"<BR></BR><BR></BR>向以前使用 New-AzVMConfig 创建的配置对象添加[映像信息](cli-ps-findimage.md)。 仅当将操作系统磁盘设置为使用平台映像时，才使用此命令返回的对象。 |
 | 创建 VM |[New-AzVM](/powershell/module/az.compute/new-azvm) -ResourceGroupName $myResourceGroup -Location $location -VM $vm<BR></BR><BR></BR>所有资源在[资源组](../../azure-resource-manager/management/manage-resource-groups-powershell.md)中创建。 运行此命令之前，请运行 New-AzVMConfig、Set-AzVMOperatingSystem、Set-AzVMSourceImage、Add-AzVMNetworkInterface 和 Set-AzVMOSDisk。 |
 | 更新 VM |[Update-AzVM](/powershell/module/az.compute/update-azvm) -ResourceGroupName $myResourceGroup -VM $vm<BR></BR><BR></BR>使用 Get-AzVM 获取当前 VM 配置，更改 VM 对象上的配置设置，并运行此命令。 |
 

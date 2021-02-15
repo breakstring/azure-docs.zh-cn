@@ -10,11 +10,11 @@ ms.topic: include
 ms.date: 03/20/2020
 ms.author: travisw
 ms.openlocfilehash: bb88ef7f048b2454f05ef33286e59277070c3ea0
-ms.sourcegitcommit: 34a6fa5fc66b1cfdfbf8178ef5cdb151c97c721c
+ms.sourcegitcommit: d22a86a1329be8fd1913ce4d1bfbd2a125b2bcae
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/28/2020
-ms.locfileid: "80241760"
+ms.lasthandoff: 11/26/2020
+ms.locfileid: "96187488"
 ---
 在本快速入门中，你将使用[语音 SDK](~/articles/cognitive-services/speech-service/speech-sdk.md) 创建连接到你已创建并配置的机器人的自定义语音助手应用程序。 如果需要创建机器人，请参阅[相关教程](~/articles/cognitive-services/speech-service/tutorial-voice-enable-your-bot-speech-sdk.md)，了解更全面的指南。
 

@@ -3,15 +3,15 @@ title: Azure Monitor 监视哪些内容
 description: 有关 Azure Monitor 监视的所有服务和其他资源的参考信息。
 ms.subservice: ''
 ms.topic: conceptual
-author: bwren
-ms.author: bwren
-ms.date: 06/15/2020
-ms.openlocfilehash: 48eb8674a7d3f0fbeb8cc012debfc8a08752d5ff
-ms.sourcegitcommit: 2ffa5bae1545c660d6f3b62f31c4efa69c1e957f
+author: rboucher
+ms.author: robb
+ms.date: 08/15/2020
+ms.openlocfilehash: 08d30fb72398c4b43422eb21f132d5fddd5502b7
+ms.sourcegitcommit: 48cb2b7d4022a85175309cf3573e72c4e67288f5
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/11/2020
-ms.locfileid: "88080858"
+ms.lasthandoff: 12/08/2020
+ms.locfileid: "96853131"
 ---
 # <a name="what-is-monitored-by-azure-monitor"></a>Azure Monitor 监视哪些内容？
 本文介绍了由 Azure Monitor 监视的不同应用程序和服务。 
@@ -32,7 +32,7 @@ ms.locfileid: "88080858"
 [用于资源组的 Azure Monitor（预览版）](insights/resource-group-insights.md) |  分类和诊断各资源出现的任何问题，同时提供有关资源组的运行状况和性能的整体上下文。 |
 | [用于存储的 Azure Monitor](insights/storage-insights-overview.md) | 通过提供 Azure 存储服务性能、容量和可用性的统一视图，提供对 Azure 存储帐户的全面监视。 |
 | [用于 VM 的 Azure Monitor](insights/vminsights-overview.md) | 可以大规模监视 Azure 虚拟机 (VM) 和虚拟机规模集。 它分析 Windows 和 Linux VM 的性能和运行状况，并监视它们的进程及其对其他资源和外部进程的依赖关系。 |
-| [Key Vault 的 Azure Monitor（预览版）](./insights/key-vault-insights-overview.md) | 提供对你的密钥保管库的全面监视，方法是提供你的 Key Vault 请求、性能、故障和延迟的统一视图。 |
+| [Key Vault 的 Azure Monitor（预览版）](./insights/key-vault-insights-overview.md) | 提供 Key Vault 请求、性能、失败和延迟的统一视图，在其中可以全面监视密钥保管库。 |
 | [适用于 Azure Cache for Redis 的 Azure Monitor（预览版）](insights/redis-cache-insights-overview.md) |  提供有关整体性能、故障、容量和运行状况的统一交互式视图。 |
 
 
@@ -120,13 +120,12 @@ ms.locfileid: "88080858"
 |IoT 中心 | 是 | 是 | 否 |  |
 |Key Vault | 是 | 是 | [是](./insights/key-vault-insights-overview.md) |  |
 |Kubernetes 服务 (AKS) | 否 | 否 | [是](insights/container-insights-overview.md)  |  |
-|负载均衡器 | 是 | 是 | 否 |  |
+|负载均衡器 | 是 | 否 | 否 |  |
 |逻辑应用 | 是 | 是 | 否 |  |
 |机器学习服务 | 否 | 否 | 否 |  |
 |托管应用程序  | 否 | 否 | 否 |  |
 |地图  | 否 | 否 | 否 |  |
 |媒体服务 | 是 | 是 | 否 |  |
-|Microsoft Flow | 否 | 否 | 否 |  |
 |Microsoft 托管桌面 | 否 | 否 | 否 |  |
 |Microsoft PowerApps | 否 | 否 | 否 |  |
 |Microsoft 社交参与 | 否 | 否 | 否 |  |
@@ -137,6 +136,7 @@ ms.locfileid: "88080858"
 |通知中心 | 是 | 否 | 否 |  |
 |开放数据集 | 否 | 否 | 否 |  |
 |策略 | 否 | 否 | 否 |  |
+|Power Automate | 否 | 否 | 否 |  |
 |Power BI Embedded | 是 | 是 | 否 |  |
 |专用链接 | 否 | 否 | 否 |  |
 |项目假脱机通信平台 | 否 | 否 | 否 |  |
@@ -149,9 +149,9 @@ ms.locfileid: "88080858"
 |服务总线 | 是 | 是 | 否 |  |
 |Service Fabric | 否 | 是 | 否 | 监视来宾操作系统和工作流时所需的代理。  |
 |注册门户 | 否 | 否 | 否 |  |
-|Site Recovery | 否 | “是” | 否 |  |
+|Site Recovery | 否 | 是 | 否 |  |
 |Spring Cloud 服务 | 否 | 否 | 否 |  |
-|SQL 数据仓库 | 是 | 是 | 否 |  |
+|Azure Synapse Analytics | 是 | 是 | 否 |  |
 |SQL 数据库 | 是 | 是 | 否 |  |
 |SQL Server Stretch Database | 是 | 是 | 否 |  |
 |堆栈 | 否 | 否 | 否 |  |
@@ -170,18 +170,31 @@ ms.locfileid: "88080858"
 |VPN 网关 | 是 | 是 | 否 |  |
 |Windows 虚拟桌面 | 否 | 否 | 否 |  |
 
+## <a name="virtual-machine-agents"></a>虚拟机代理
+下表列出了可以从虚拟机的来宾操作系统收集数据并将数据发送到监视器的代理。 每个代理都可以收集不同的数据，并将其发送到 Azure Monitor 中的指标或日志。 
+
+有关每个代理可以收集的数据的详细信息，请参阅 [Azure Monitor 代理概述](platform/agents-overview.md) 。
+
+| Agent |  指标 | 日志 |
+|:---|:---|:---|:---|
+| [Azure Monitor 代理（预览版）](platform/azure-monitor-agent-overview.md) | 是 | 是 |
+| [Log Analytics 代理](platform/log-analytics-agent.md) | 否 | 是|
+| [诊断扩展](platform/diagnostics-extension-overview.md) | 是 | 否 |
+| [Telegraf 代理](platform/collect-custom-metrics-linux-telegraf.md) | 是 | 否 |
+| [依赖关系代理](insights/vminsights-enable-overview.md) | 否 | 是 |
+
 
 ## <a name="product-integrations"></a>产品集成
 下表中的服务和解决方案将其数据存储在 Log Analytics 工作区中，以便可以将这些数据与使用 Azure Monitor 收集的其他日志数据一起进行分析。
 
 | 产品/服务 | 说明 |
 |:---|:---|
-| [Azure 自动化](../automation/index.yml) | 管理操作系统更新并跟踪 Windows 和 Linux 计算机上的更改。 请参阅[更改跟踪](../automation/change-tracking.md)和[更新管理](../automation/update-management/update-mgmt-overview.md)。 |
+| [Azure 自动化](../automation/index.yml) | 管理操作系统更新并跟踪 Windows 和 Linux 计算机上的更改。 请参阅[更改跟踪](../automation/change-tracking/overview.md)和[更新管理](../automation/update-management/overview.md)。 |
 | [Azure 信息保护](/azure/information-protection/) | 对文档和电子邮件进行分类和选择性保护。 请参阅 [Azure 信息保护的中央报告](/azure/information-protection/reports-aip#configure-a-log-analytics-workspace-for-the-reports)。 |
 | [Azure 安全中心](../security-center/index.yml) | 收集和分析安全事件并执行威胁分析。 请参阅 [Azure 安全中心中的数据收集](../security-center/security-center-enable-data-collection.md) |
 | [Azure Sentinel](../sentinel/index.yml) | 连接到不同的源，包括 Office 365 和 Amazon Web Services 云轨迹。 请参阅[连接数据源](../sentinel/connect-data-sources.md)。 |
 | [Microsoft Intune](/intune/) | 创建诊断设置以将日志发送到 Azure Monitor。 请参阅[将日志数据发送到 Intune 中的存储、事件中心或日志分析（预览版）](/intune/fundamentals/review-logs-using-azure-monitor)。  |
-| 网络  | [网络性能监视器](insights/network-performance-monitor.md) - 监视与服务和应用程序终结点的网络连接和其性能。<br>[Azure 应用程序网关](insights/azure-networking-analytics.md#azure-application-gateway-analytics-solution-in-azure-monitor) - 分析来自 Azure 应用程序网关的日志和指标。<br>[流量分析](../network-watcher/traffic-analytics.md) - 可以分析网络观察程序网络安全组 (NSG) 流日志，帮助洞察 Azure 云中的流量流。 |
+| 网络  | [网络性能监视器](insights/network-performance-monitor.md) - 监视与服务和应用程序终结点的网络连接和其性能。<br>[Azure 应用程序网关](insights/azure-networking-analytics.md#azure-application-gateway-analytics) - 分析来自 Azure 应用程序网关的日志和指标。<br>[流量分析](../network-watcher/traffic-analytics.md) - 可以分析网络观察程序网络安全组 (NSG) 流日志，帮助洞察 Azure 云中的流量流。 |
 | [Office 365](insights/solution-office-365.md) | 监视 Office 365 环境。 使用通过 Azure Sentinel 提供改进的载入来更新版本。 |
 | [SQL Analytics](insights/azure-sql.md) | 大规模或跨多个订阅监视 Azure SQL 数据库和 SQL 托管实例的性能。 |
 | [Surface Hub](insights/surface-hubs.md) | 跟踪 Surface Hub 设备的运行状况和使用情况。 |
@@ -220,7 +233,7 @@ Azure Monitor 可以使用下表中列出的方法从 Azure 以外的资源收�
 | 资源 | 方法 |
 |:---|:---|
 | 应用程序 | 使用 Application Insights 监视 Azure 以外的 web 应用程序。 请参阅[什么是 Application Insights？](./app/app-insights-overview.md)。 |
-| 虚拟机 | 使用代理从其他云环境或本地的虚拟机的来宾操作系统中收集数据。 请参阅[Azure Monitor 代理概述](platform/agents-overview.md)。 |
+| 虚拟机 | 使用代理从其他云环境中的或本地的虚拟机的来宾操作系统收集数据。 请参阅 [Azure Monitor 代理概述](platform/agents-overview.md)。 |
 | REST API 客户端 | 可使用单独的 API 将数据从任何 REST API 客户端写入 Azure Monitor 日志和指标。 请参阅[使用 HTTP 数据收集器 API 将日志数据发送到 Azure Monitor](platform/data-collector-api.md)，以及[使用 REST API 将 Azure 资源的自定义指标发送到 Azure Monitor 指标存储](platform/metrics-store-custom-rest-api.md)。 |
 
 
@@ -232,4 +245,3 @@ Azure Monitor 可以使用下表中列出的方法从 Azure 以外的资源收�
 - 完成[编写日志查询以分析 Azure Monitor 日志中的数据的相关教程](learn/tutorial-resource-logs.md)。
 - 完成[创建指标图表以分析 Azure Monitor 指标中的数据的相关教程](learn/tutorial-metrics-explorer.md)。
 
- 

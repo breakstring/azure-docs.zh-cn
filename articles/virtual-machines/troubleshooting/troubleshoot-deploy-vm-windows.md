@@ -14,12 +14,12 @@ ms.tgt_pltfrm: na
 ms.topic: troubleshooting
 ms.date: 11/01/2018
 ms.author: genli
-ms.openlocfilehash: 8ed567ee20835cfe076c9b06234f2cba23f3a8bd
-ms.sourcegitcommit: 3543d3b4f6c6f496d22ea5f97d8cd2700ac9a481
+ms.openlocfilehash: 98a16e0a60ddf149e8f0e1a092051f3e98ea8225
+ms.sourcegitcommit: 59cfed657839f41c36ccdf7dc2bee4535c920dd4
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/20/2020
-ms.locfileid: "86509114"
+ms.lasthandoff: 02/06/2021
+ms.locfileid: "99627056"
 ---
 # <a name="troubleshoot-deploying-windows-virtual-machine-issues-in-azure"></a>排查 Azure 中的 Windows 虚拟机部署问题
 
@@ -94,9 +94,9 @@ productPesIds="1234, 5678"
 
 ## <a name="i-cant-find-a-gpu-instance-within-my-n-series-vm"></a>在我的 N 系列 VM 中找不到 GPU 实例
 
-若要利用 Azure N 系列 VM 的 GPU 功能，部署后必须在每个 VM 上安装图形驱动程序。 驱动程序安装的信息可以在[这里](../sizes-gpu.md#supported-operating-systems-and-drivers)找到。
+若要利用 Azure N 系列 VM 的 GPU 功能，部署后必须在每个 VM 上安装图形驱动程序。 驱动程序安装信息可以在[这里](../sizes-gpu.md#supported-operating-systems-and-drivers)找到。
 
-## <a name="are-n-series-vms-available-in-my-region"></a>我所在的地区是否提供 N 系列 VM？
+## <a name="are-n-series-vms-available-in-my-region"></a>我所在的区域是否提供 N 系列 VM？
 
 可以从[可用产品(按区域)](https://azure.microsoft.com/regions/services) 以及[此处](https://azure.microsoft.com/pricing/details/virtual-machines/series/#n-series)的定价来查看可用性。
 
@@ -104,7 +104,7 @@ productPesIds="1234, 5678"
 
 如果有相应的 Visual Studio（以前为 MSDN）订阅，可以在 Azure 中使用 Windows 7、Windows 8 或 Windows 10 开展开发/测试方案。 
 
-- Azure 库的[符合条件的开发/测试产品/服务](../windows/client-images.md#eligible-offers)中提供了 Windows 10 映像。 
+- Azure 库的[符合条件的开发/测试产品/服务](../windows/client-images.md)中提供了 Windows 10 映像。 
 - 属于任一产品类型的 Visual Studio 订户也可以[适当地准备和创建](../windows/prepare-for-upload-vhd-image.md) 64 位 Windows 7、Windows 8 或 Windows 10 映像，并[上载到 Azure](../windows/upload-generalized-managed.md)。 仅限有效的 Visual Studio 订户用于开发/测试目的。
 
 [本文](../windows/client-images.md)概述在 Azure 中运行 Windows 客户端和使用 Azure 库映像所要满足的条件。

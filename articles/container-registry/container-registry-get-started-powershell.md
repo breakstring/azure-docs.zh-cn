@@ -3,13 +3,13 @@ title: 快速入门 - 创建注册表 - PowerShell
 description: 快速了解如何使用 PowerShell 在 Azure 容器注册表中创建专用 Docker 注册表
 ms.topic: quickstart
 ms.date: 01/22/2019
-ms.custom: seodec18, mvc
-ms.openlocfilehash: ed0790f79ef4a83f42519ce6f89ee36f54558f4b
-ms.sourcegitcommit: 4ac596f284a239a9b3d8ed42f89ed546290f4128
+ms.custom: seodec18, mvc, devx-track-azurepowershell
+ms.openlocfilehash: 91d4209ccf558bf7c8038d8a753ec038428bc484
+ms.sourcegitcommit: a43a59e44c14d349d597c3d2fd2bc779989c71d7
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 06/12/2020
-ms.locfileid: "84752155"
+ms.lasthandoff: 11/25/2020
+ms.locfileid: "96019988"
 ---
 # <a name="quickstart-create-a-private-container-registry-using-azure-powershell"></a>快速入门：使用 Azure PowerShell 创建专用容器注册表
 

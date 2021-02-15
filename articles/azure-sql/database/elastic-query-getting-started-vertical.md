@@ -6,22 +6,22 @@ ms.service: sql-database
 ms.subservice: scale-out
 ms.custom: sqldbrb=1
 ms.devlang: ''
-ms.topic: conceptual
+ms.topic: how-to
 author: stevestein
 ms.author: sstein
 ms.reviewer: ''
 ms.date: 01/25/2019
-ms.openlocfilehash: 2e133228f04cacdc14278abb8b6ee6303b820e7b
-ms.sourcegitcommit: 845a55e6c391c79d2c1585ac1625ea7dc953ea89
+ms.openlocfilehash: 90f89e72193c26b71859076b99c448a6e2d4c4c6
+ms.sourcegitcommit: 31cfd3782a448068c0ff1105abe06035ee7b672a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/05/2020
-ms.locfileid: "85956842"
+ms.lasthandoff: 01/10/2021
+ms.locfileid: "98060078"
 ---
 # <a name="get-started-with-cross-database-queries-vertical-partitioning-preview"></a>跨数据库查询（纵向分区）入门（预览）
 [!INCLUDE[appliesto-sqldb](../includes/appliesto-sqldb.md)]
 
-适用于 Azure SQL 数据库弹性数据库查询（预览版），可让你使用单一连接点运行跨多个数据库的 T-SQL 查询。 本文适用于[垂直分区数据库](elastic-query-vertical-partitioning.md)。  
+Azure SQL 数据库弹性数据库查询（预览版）可让你使用单一连接点运行跨多个数据库的 T-SQL 查询。 本文适用于[垂直分区数据库](elastic-query-vertical-partitioning.md)。  
 
 完成时，会：了解如何配置和使用 Azure SQL 数据库执行跨多个相关数据库的查询。
 
@@ -33,7 +33,7 @@ ms.locfileid: "85956842"
 
 ## <a name="create-the-sample-databases"></a>创建示例数据库
 
-首先，在相同或不同的服务器中创建两个数据库：**客户**和**订单**。
+首先，我们在相同或不同服务器中创建两个数据库：Customers 和 Orders 。
 
 在 **Orders** 数据库中执行以下查询以创建 **OrderInformation** 表并输入示例数据。
 
@@ -77,6 +77,7 @@ INSERT INTO [dbo].[CustomerInformation] ([CustomerID], [CustomerName], [Company]
     SECRET = '<password>';  
     ```
 
+    "Master_key_password" 是你选择用于加密连接凭据的强密码。 
     “username”和“password”应是用于登录到 Customers 数据库的用户名和密码。
     当前不支持使用 Azure Active Directory 通过弹性查询进行身份验证。
 
@@ -129,4 +130,4 @@ ON CustomerInformation.CustomerID = OrderInformation.CustomerID
 * 有关垂直分区数据的语法和示例查询，请参阅[查询垂直分区数据](elastic-query-vertical-partitioning.md)
 * 有关水平分区（分片）的教程，请参阅[弹性查询入门 - 水平分区（分片）](elastic-query-getting-started.md)。
 * 有关水平分区数据的语法和示例查询，请参阅[查询水平分区数据](elastic-query-horizontal-partitioning.md)
-* 请参阅 [sp\_execute \_remote](https://msdn.microsoft.com/library/mt703714)，了解在单个远程 Azure SQL 数据库或在水平分区方案中用作分片的一组数据库中执行 Transact-SQL 语句的存储过程。
+* 请参阅 [sp\_execute \_remote](/sql/relational-databases/system-stored-procedures/sp-execute-remote-azure-sql-database)，了解在单个远程 Azure SQL 数据库或在水平分区方案中用作分片的一组数据库中执行 Transact-SQL 语句的存储过程。

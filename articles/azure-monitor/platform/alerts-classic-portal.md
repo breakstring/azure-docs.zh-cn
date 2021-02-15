@@ -5,17 +5,17 @@ author: yanivlavi
 ms.author: yalavi
 ms.topic: conceptual
 ms.date: 09/18/2018
-ms.openlocfilehash: 613620ddf4889efb7cf3df95150be97f79724a98
-ms.sourcegitcommit: 7fe8df79526a0067be4651ce6fa96fa9d4f21355
+ms.openlocfilehash: 8b4cdd834c0db6869fdf804b43914eaa74b14319
+ms.sourcegitcommit: ea822acf5b7141d26a3776d7ed59630bf7ac9532
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/06/2020
-ms.locfileid: "87852134"
+ms.lasthandoff: 02/03/2021
+ms.locfileid: "99525545"
 ---
 # <a name="create-view-and-manage-classic-metric-alerts-using-azure-monitor"></a>使用 Azure Monitor 创建、查看和管理经典指标警报
 
 > [!WARNING]
-> 本文介绍了如何创建旧式经典指标警报。 Azure Monitor 现在支持[较新的近实时指标警报和新的警报体验](./alerts-overview.md)。 经典警报已[停](./monitoring-classic-retirement.md)用，但对于尚不支持新警报的资源仍有限制。
+> 本文介绍了如何创建旧式经典指标警报。 Azure Monitor 现在支持[较新的近实时指标警报和新的警报体验](./alerts-overview.md)。 对于公有云用户，经典警报会被 [停](./monitoring-classic-retirement.md) 用，但对于尚不支持新警报的资源仍有限制。
 >
 
 Azure Monitor 中的经典指标警报提供了一种在指标超出阈值时获得通知的方法。 经典指标警报是一个较旧的功能，它仅可针对非维度指标发出警报。 有一个称为“指标警报”的较新功能，它具有比经典指标警报改进的功能。 可以在[指标警报概述](./alerts-metric-overview.md)中了解新的指标警报功能的详细信息。 在本文中，我们将介绍如何通过 Azure 门户、Azure CLI 和 Powershell 创建、查看和管理经典指标警报规则。
@@ -32,13 +32,13 @@ Azure Monitor 中的经典指标警报提供了一种在指标超出阈值时获
 
     ![添加警报](media/alerts-classic-portal/AddAlertOnlyParamsPage.png)
 
-4. **命名**警报规则。 然后选择也在通知电子邮件中显示的“说明”。
+4. **命名** 警报规则。 然后选择也在通知电子邮件中显示的“说明”。
 
 5. 选择要监视的指标。 然后为该指标选择“条件”和“阈值”值 。 还选择触发警报前指标规则必须满足的时间段。 例如，如果使用时间段“过去 5 分钟”，且警报针对 CPU 高于 80% 的情况，则 CPU 持续高于 80% 达到 5 分钟时将触发警报。 第一次触发后，CPU 5 分钟内持续低于 80% 时会再次触发警报。 CPU 指标度量每分钟进行一次。
 
 6. 如果希望在触发警报时管理员和共同管理员收到电子邮件通知，则选择“向所有者发送电子邮件...”。
 
-7. 如果希望在触发警报时向其他电子邮件发送通知，请将其添加到“其他管理员电子邮件”字段****。 用分号分隔多个电子邮件，格式如下： *email \@ contoso .com; email2 \@ contoso.com*
+7. 如果希望在触发警报时向其他电子邮件发送通知，请将其添加到“其他管理员电子邮件”字段。 使用分号分隔多个电子邮件，格式如下：email\@contoso.com；email2\@contoso.com
 
 8. 如果希望在触发警报时调用有效的 URI，请将其放入“Webhook”字段中。
 
@@ -52,11 +52,11 @@ Azure Monitor 中的经典指标警报提供了一种在指标超出阈值时获
 
 * 查看显示指标阈值和前一天实际值的关系图。
 * 编辑或删除其。
-* 如果想要暂时停止或恢复接收该警报的通知，可**禁用**或**启用**它。
+* 如果想要暂时停止或恢复接收该警报的通知，可 **禁用** 或 **启用** 它。
 
 ## <a name="with-azure-cli"></a>使用 Azure CLI
 
-前面几个部分介绍了如何使用 Azure 门户创建、查看和管理指标警报规则。 本部分将介绍如何使用跨平台 [Azure CLI](/cli/azure/get-started-with-azure-cli?view=azure-cli-latest) 实现相同的结果。 使用 Azure CLI 的最快捷方式是通过 [Azure Cloud Shell](../../cloud-shell/overview.md?view=azure-cli-latest)。
+前面几个部分介绍了如何使用 Azure 门户创建、查看和管理指标警报规则。 本部分将介绍如何使用跨平台 [Azure CLI](/cli/azure/get-started-with-azure-cli) 实现相同的结果。 使用 Azure CLI 的最快捷方式是通过 [Azure Cloud Shell](../../cloud-shell/overview.md)。
 
 ### <a name="get-all-classic-metric-alert-rules-in-a-resource-group"></a>获取某个资源组中的所有经典指标警报规则
 

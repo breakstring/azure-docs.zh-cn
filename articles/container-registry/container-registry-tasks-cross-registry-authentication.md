@@ -3,12 +3,12 @@ title: 从 ACR 任务中进行跨注册表身份验证
 description: 配置 Azure 容器注册表任务（ACR 任务）以使用 Azure 资源的托管标识访问其他专用 Azure 容器注册表
 ms.topic: article
 ms.date: 07/06/2020
-ms.openlocfilehash: 8b961a2ff6a795f03798cc6f6a7d303391036ef8
-ms.sourcegitcommit: bcb962e74ee5302d0b9242b1ee006f769a94cfb8
+ms.openlocfilehash: 789d2c141f8b7c3f2eb8daa31d99090e3d028a43
+ms.sourcegitcommit: 436518116963bd7e81e0217e246c80a9808dc88c
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/07/2020
-ms.locfileid: "86057343"
+ms.lasthandoff: 01/27/2021
+ms.locfileid: "98915822"
 ---
 # <a name="cross-registry-authentication-in-an-acr-task-using-an-azure-managed-identity"></a>使用 Azure 托管标识在 ACR 任务中进行跨注册表的身份验证 
 
@@ -39,16 +39,12 @@ ms.locfileid: "86057343"
 
 ## <a name="prepare-base-registry"></a>准备基础注册表
 
-首先创建一个工作目录，然后创建包含以下内容的名为 Dockerfile 的文件。 此简单示例通过 Docker 中心的公共映像生成 Node.js 基础映像。
-    
-```bash
-echo FROM node:9-alpine > Dockerfile
-```
+出于演示目的，以一次性操作的方式，运行 [az acr import][az-acr-import]，将公共 Node.js 映像从 Docker Hub 导入到基础注册表。 在实践中，组织中的另一个团队或流程可能会维护基础注册表中的映像。
 
-在当前目录中，运行 [az acr build][az-acr-build] 命令，生成基础映像并将其推送到基础注册表。 在实际中，可能会由组织中的另一个团队或流程来维护基础注册表。
-    
 ```azurecli
-az acr build --image baseimages/node:9-alpine --registry mybaseregistry --file Dockerfile .
+az acr import --name mybaseregistry \
+  --source docker.io/library/node:15-alpine \
+  --image baseimages/node:15-alpine 
 ```
 
 ## <a name="define-task-steps-in-yaml-file"></a>在 YAML 文件中定义任务步骤
@@ -59,21 +55,21 @@ az acr build --image baseimages/node:9-alpine --registry mybaseregistry --file D
 version: v1.1.0
 steps:
 # Replace mybaseregistry with the name of your registry containing the base image
-  - build: -t $Registry/hello-world:$ID  https://github.com/Azure-Samples/acr-build-helloworld-node.git -f Dockerfile-app --build-arg REGISTRY_NAME=mybaseregistry.azurecr.io
+  - build: -t $Registry/hello-world:$ID  https://github.com/Azure-Samples/acr-build-helloworld-node.git#main -f Dockerfile-app --build-arg REGISTRY_NAME=mybaseregistry.azurecr.io
   - push: ["$Registry/hello-world:$ID"]
 ```
 
 生成步骤使用 [Azure-Samples/acr-build-helloworld-node](https://github.com/Azure-Samples/acr-build-helloworld-node.git) 存储库中的 `Dockerfile-app` 文件来构建映像。 `--build-arg` 引用基础注册表来拉取基础映像。 成功生成映像后，会将映像推送到用于运行任务的注册表。
 
-## <a name="option-1-create-task-with-user-assigned-identity"></a>选项 1：创建具有用户分配的标识的任务
+## <a name="option-1-create-task-with-user-assigned-identity"></a>选项 1：创建使用用户分配的标识的任务
 
-本部分中的步骤创建一个任务并启用用户分配的标识。 如果要改为启用系统分配的标识，请参阅[选项 2：创建具有系统分配的标识的任务](#option-2-create-task-with-system-assigned-identity)。 
+本部分中的步骤将创建一个任务并启用用户分配的标识。 若要改为启用系统分配的标识，请参阅[选项 2：创建使用系统分配的标识的任务](#option-2-create-task-with-system-assigned-identity)。 
 
 [!INCLUDE [container-registry-tasks-user-assigned-id](../../includes/container-registry-tasks-user-assigned-id.md)]
 
 ### <a name="create-task"></a>创建任务
 
-通过执行以下 [az acr task create][az-acr-task-create] 命令，创建任务 helloworldtask。 该任务在没有源代码上下文的情况下运行，且该命令引用工作目录中的文件 `helloworldtask.yaml`。 `--assign-identity` 参数传递用户分配的标识的资源 ID。 
+通过执行以下 [az acr task create][az-acr-task-create] 命令，创建任务 helloworldtask。 该任务无需源代码上下文即可运行，该命令将引用工作目录中的 `helloworldtask.yaml` 文件。 `--assign-identity` 参数传递用户分配的标识的资源 ID。 
 
 ```azurecli
 az acr task create \
@@ -105,7 +101,7 @@ az role assignment create \
   --role acrpull
 ```
 
-继续[将目标注册表凭据添加到任务](#add-target-registry-credentials-to-task)。
+执行下一步，[将目标注册表凭据添加到任务](#add-target-registry-credentials-to-task)。
 
 ## <a name="option-2-create-task-with-system-assigned-identity"></a>选项 2：创建具有系统分配的标识的任务
 
@@ -113,7 +109,7 @@ az role assignment create \
 
 ### <a name="create-task"></a>创建任务
 
-通过执行以下 [az acr task create][az-acr-task-create] 命令，创建任务 helloworldtask。 该任务在没有源代码上下文的情况下运行，且该命令引用工作目录中的文件 `helloworldtask.yaml`。 不具有值的 `--assign-identity` 参数在任务上启用系统分配的标识。 
+通过执行以下 [az acr task create][az-acr-task-create] 命令，创建任务 helloworldtask。 该任务无需源代码上下文即可运行，该命令将引用工作目录中的 `helloworldtask.yaml` 文件。 不带任何值的 `--assign-identity` 参数将在任务中启用系统分配的标识。 
 
 ```azurecli
 az acr task create \
@@ -194,8 +190,8 @@ Waiting for an agent...
 2019/06/14 22:47:45 Launching container with name: acb_step_0
 Sending build context to Docker daemon   25.6kB
 Step 1/6 : ARG REGISTRY_NAME
-Step 2/6 : FROM ${REGISTRY_NAME}/baseimages/node:9-alpine
-9-alpine: Pulling from baseimages/node
+Step 2/6 : FROM ${REGISTRY_NAME}/baseimages/node:15-alpine
+15-alpine: Pulling from baseimages/node
 [...]
 Successfully built 41b49a112663
 Successfully tagged myregistry.azurecr.io/hello-world:cf10
@@ -215,7 +211,7 @@ The push refers to repository [myregistry.azurecr.io/hello-world]
   runtime-dependency:
     registry: mybaseregistry.azurecr.io
     repository: baseimages/node
-    tag: 9-alpine
+    tag: 15-alpine
     digest: sha256:e8e92cffd464fce3be9a3eefd1b65dc9cbe2484da31c11e813a4effc6105c00f
   git:
     git-head-revision: 0f988779c97fe0bfc7f2f74b88531617f4421643

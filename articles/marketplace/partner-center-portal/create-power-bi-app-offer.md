@@ -5,18 +5,18 @@ author: navits09
 ms.author: navits
 ms.service: marketplace
 ms.subservice: partnercenter-marketplace-publisher
-ms.topic: conceptual
+ms.topic: how-to
 ms.date: 07/22/2020
-ms.openlocfilehash: ebc3ad6957890423314bb2d8623c7b4708aed10b
-ms.sourcegitcommit: d39f2cd3e0b917b351046112ef1b8dc240a47a4f
+ms.openlocfilehash: bff20468e8185073f5c192c1e115bc405dd089eb
+ms.sourcegitcommit: b6267bc931ef1a4bd33d67ba76895e14b9d0c661
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/25/2020
-ms.locfileid: "88815398"
+ms.lasthandoff: 12/19/2020
+ms.locfileid: "97693614"
 ---
 # <a name="create-a-power-bi-app-offer"></a>创建 Power BI 应用套餐
 
-本文介绍如何创建 Power BI 应用程序产品/服务并发布到 Microsoft [AppSource](https://appsource.microsoft.com/)。
+本文介绍如何创建 Power BI 应用服务并将其发布到 [Microsoft AppSource](https://appsource.microsoft.com/)。
 
 在开始之前，[在合作伙伴中心创建商业市场帐户](create-account.md)（如果尚未这样做）。 确保你的帐户已在商业市场计划中注册。
 
@@ -55,10 +55,10 @@ ms.locfileid: "88815398"
 
 它包含用于根据你所做的选择对此产品/服务执行操作的链接。 例如：
 
-- 如果产品/服务是草稿版的草稿 [提议](update-existing-offer.md#delete-a-draft-offer)) 
-- 如果产品/服务是实时的，则 [停止销售该产品/服务](update-existing-offer.md#stop-selling-an-offer-or-plan)) 
-- 如果[产品/服务为预览版) ](publishing-status.md#publisher-approval)
-- 如果尚未完成发布服务器注销-请 [取消发布](update-existing-offer.md#cancel-publishing)) 
+- 如果产品/服务是草稿 - 删除草稿产品/服务
+- 如果产品/服务已上线 - [停止销售产品/服务](update-existing-offer.md#stop-selling-an-offer-or-plan)
+- 如果产品/服务为预览版 - [投入使用](../review-publish-offer.md#previewing-and-approving-your-offer)
+- 如果还没有完成发布者注销 - [取消发布](../review-publish-offer.md#cancel-publishing)。
 
 ## <a name="offer-setup"></a>产品/服务设置
 
@@ -73,7 +73,7 @@ ms.locfileid: "88815398"
     - [Salesforce](commercial-marketplace-lead-management-instructions-salesforce.md)
 
     > [!NOTE]
-    > 如果前面未列出你的 CRM 系统，请使用 [Azure 表](commercial-marketplace-lead-management-instructions-azure-table.md)或 [Https 终结点](commercial-marketplace-lead-management-instructions-https.md)存储潜在顾客数据。 然后将数据导出到你的 CRM 系统。
+    > 如果 CRM 系统不在此列表中，请使用 [Azure 表](commercial-marketplace-lead-management-instructions-azure-table.md) 或 [HTTPS 终结点](commercial-marketplace-lead-management-instructions-https.md) 来存储客户的潜在客户数据。 然后将数据导出到你的 CRM 系统。
 
 2. 在合作伙伴中心发布时，将产品/服务连接到潜在顾客目标。
 3. 确认正确配置了到潜在顾客目标的连接。 在合作伙伴中心发布后，我们将验证连接，并向你发送一个测试潜在顾客。 如果要在投入使用前预览产品/服务，还可以通过亲自尝试在预览环境中购买产品/服务来测试潜在顾客连接。
@@ -81,10 +81,10 @@ ms.locfileid: "88815398"
 
 下面是一些其他顾客连接管理资源：
 
-- [顾客连接管理概述](commercial-marketplace-get-customer-leads.md)
-- [潜在客户管理常见问题](../lead-management-for-cloud-marketplace.md#frequently-asked-questions)) 
-- [常见的潜在客户配置错误](../lead-management-for-cloud-marketplace.md#publishing-config-errors)) 
-- [顾客连接管理概述](https://assetsprod.microsoft.com/mpn/cloud-marketplace-lead-management.pdf) PDF（确保弹出窗口阻止程序处于关闭状态）
+- [商业市场产品/服务的潜在客户](commercial-marketplace-get-customer-leads.md)
+- [有关潜在客户管理的常见问题](../lead-management-faq.md#common-questions-about-lead-management)
+- [潜在客户配置错误疑难解答](../lead-management-faq.md#publishing-config-errors)
+- [潜在客户管理概述](https://assetsprod.microsoft.com/mpn/cloud-marketplace-lead-management.pdf) PDF（确保弹出窗口阻止程序处于禁用状态）。
 
 选择“保存草稿”，然后继续。
 
@@ -109,9 +109,7 @@ ms.locfileid: "88815398"
 
 #### <a name="terms-and-conditions"></a>条款和条件
 
-若要提供你自己的自定义条款和条件，请在“条款和条件”框中输入最多 10,000 个字符。 如果你的条款和条件需要更长的说明，请输入指向它们所在位置的单个 Web 链接。 它将作为活动链接向客户显示。
-
-客户必须接受这些条款才能试用产品/服务。
+若要提供你自己的自定义条款和条件，请在“条款和条件”框中输入最多 10,000 个字符。 客户必须接受这些条款，才能试用你的产品/服务。
 
 选择“保存草稿”，然后转到下一部分“产品/服务一览”继续操作。
 
@@ -136,7 +134,7 @@ ms.locfileid: "88815398"
 
 1. 徽标
 2. 产品
-3. 类别
+3. Categories
 4. 行业
 5. 支持地址 (链接) 
 6. 使用条款
@@ -202,7 +200,7 @@ ms.locfileid: "88815398"
 
 提供要用于产品/服务的徽标和图像。 所有图像都必须为 PNG 格式。 模糊的图像将被拒绝。
 
-[!INCLUDE [logotips](../includes/graphics-suggestions.md)]
+[!INCLUDE [logo tips](../includes/graphics-suggestions.md)]
 
 >[!NOTE]
 >如果在上传文件时遇到问题，请确保本地网络不会阻止合作伙伴中心使用的 `https://upload.xboxlive.com` 服务。
@@ -218,7 +216,7 @@ ms.locfileid: "88815398"
 
 [!INCLUDE [logos-appsource-only](../includes/logos-appsource-only.md)]
 
-[!INCLUDE [logotips](../includes/graphics-suggestions.md)]
+[!INCLUDE [logo tips](../includes/graphics-suggestions.md)]
 
 #### <a name="screenshots"></a>屏幕截图
 
@@ -234,7 +232,7 @@ ms.locfileid: "88815398"
 
 ## <a name="technical-configuration"></a>技术配置
 
-将 Power BI 服务中的应用提升到生产环境，并提供使客户可以安装应用的 Power BI 应用安装程序链接。 有关详细信息，请参阅[在 Power BI 中发布使用仪表板和报表的应用](https://docs.microsoft.com/power-bi/service-create-distribute-apps)。
+将 Power BI 服务中的应用提升到生产环境，并提供使客户可以安装应用的 Power BI 应用安装程序链接。 有关详细信息，请参阅[在 Power BI 中发布使用仪表板和报表的应用](/power-bi/service-create-distribute-apps)。
 
 ## <a name="supplemental-content"></a>补充内容
 

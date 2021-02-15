@@ -13,12 +13,12 @@ ms.custom:
 - mqtt
 - 'Role: Cloud Development'
 - 'Role: Operations'
-ms.openlocfilehash: bfd4f783c250a7bf0ec28cff903e4c59d8570d89
-ms.sourcegitcommit: a76ff927bd57d2fcc122fa36f7cb21eb22154cfa
+ms.openlocfilehash: bd016fcfe377dc610d5918ad8128fff4f6473fe5
+ms.sourcegitcommit: d767156543e16e816fc8a0c3777f033d649ffd3c
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/28/2020
-ms.locfileid: "87307516"
+ms.lasthandoff: 10/26/2020
+ms.locfileid: "92538453"
 ---
 # <a name="choose-the-right-iot-hub-tier-for-your-solution"></a>选择适用于解决方案的 IoT 中心层
 
@@ -47,12 +47,12 @@ IoT 中心的标准层启用了所有功能，是任何需要使用双向通信�
 | [消息路由](iot-hub-devguide-messages-read-custom.md)、[消息扩充](iot-hub-message-enrichments-overview.md)和[事件网格集成](iot-hub-event-grid.md) | 是 | 是 |
 | [HTTP、AMQP 和 MQTT 协议](iot-hub-devguide-protocols.md) | 是 | 是 |
 | [设备预配服务](../iot-dps/about-iot-dps.md) | 是 | 是 |
-| [监视和诊断](iot-hub-monitor-resource-health.md) | 是 | 是 |
+| [监视和诊断](monitor-iot-hub.md) | 是 | 是 |
 | [云到设备的消息传递](iot-hub-devguide-c2d-guidance.md) |   | 是 |
 | [设备孪生](iot-hub-devguide-device-twins.md)、[模块孪生](iot-hub-devguide-module-twins.md)和[设备管理](iot-hub-device-management-overview.md) |   | 是 |
 | [设备流（预览版）](iot-hub-device-streams-overview.md) |   | 是 |
 | [Azure IoT Edge](../iot-edge/about-iot-edge.md) |   | 是 |
-| [IoT 即插即用预览版](../iot-pnp/overview-iot-plug-and-play.md) |   | 是 |
+| [IoT 即插即用](../iot-pnp/overview-iot-plug-and-play.md) |   | 是 |
 
 IoT 中心还提供一个免费层，用于测试和评估。 它具有标准层的所有功能，但消息传递有限额。 不能从免费层升级到基本层或标准层。
 
@@ -77,37 +77,37 @@ IoT 中心基本层和标准层所支持的功能存在差异，也就是说，�
 
 | API | 基本层 | 免费/标准层 |
 | --- | ---------- | ------------- |
-| [删除设备](https://docs.microsoft.com/rest/api/iothub/service/registrymanager/deletedevice) | 是 | 是 |
-| [获取设备](https://docs.microsoft.com/rest/api/iothub/service/registrymanager/getdevice) | 是 | 是 |
-| [删除模块](https://docs.microsoft.com/rest/api/iothub/service/registrymanager/deletemodule) | 是 | 是 |
-| [获取模块](https://docs.microsoft.com/rest/api/iothub/service/registrymanager/getmodule) | 是 | 是 |
-| [获取注册表统计信息](https://docs.microsoft.com/rest/api/iothub/service/registrymanager/getdevicestatistics) | 是 | 是 |
-| [获取服务统计信息](https://docs.microsoft.com/rest/api/iothub/service/registrymanager/getservicestatistics) | 是 | 是 |
-| [创建或更新设备](https://docs.microsoft.com/rest/api/iothub/service/registrymanager/createorupdatedevice) | 是 | 是 |
-| [创建或更新模块](https://docs.microsoft.com/rest/api/iothub/service/registrymanager/createorupdatemodule) | 是 | 是 |
-| [查询 IoT 中心](https://docs.microsoft.com/rest/api/iothub/service/registrymanager/queryiothub) | 是 | 是 |
-| [创建文件上传 SAS URI](https://docs.microsoft.com/rest/api/iothub/device/createfileuploadsasuri) | 是 | 是 |
-| [接收发往设备的通知](https://docs.microsoft.com/rest/api/iothub/device/receivedeviceboundnotification) | 是 | 是 |
-| [发送设备事件](https://docs.microsoft.com/rest/api/iothub/device/senddeviceevent) | 是 | 是 |
+| [删除设备](/javascript/api/azure-iot-digitaltwins-service/registrymanager?view=azure-node-latest#deletedevice-string--models-registrymanagerdeletedeviceoptionalparams-) | 是 | 是 |
+| [获取设备](/azure/iot-hub/iot-c-sdk-ref/iothub-registrymanager-h/iothubregistrymanager-getdevice) | 是 | 是 |
+| [删除模块](/azure/iot-hub/iot-c-sdk-ref/iothub-registrymanager-h/iothubregistrymanager-deletemodule) | 是 | 是 |
+| [获取模块](/java/api/com.microsoft.azure.sdk.iot.service.registrymanager.getmodule?view=azure-java-stable) | 是 | 是 |
+| [获取注册表统计信息](/javascript/api/azure-iot-digitaltwins-service/registrymanager?view=azure-node-latest#getdevicestatistics-msrest-requestoptionsbase-) | 是 | 是 |
+| [获取服务统计信息](/javascript/api/azure-iot-digitaltwins-service/registrymanager?view=azure-node-latest#getservicestatistics-msrest-requestoptionsbase-) | 是 | 是 |
+| [创建或更新设备](/javascript/api/azure-iot-digitaltwins-service/registrymanager?view=azure-node-latest#createorupdatedevice-string--device--servicecallback-device--) | 是 | 是 |
+| [创建或更新模块](/javascript/api/azure-iot-digitaltwins-service/registrymanager?view=azure-node-latest#createorupdatemodule-string--string--module--models-registrymanagercreateorupdatemoduleoptionalparams-) | 是 | 是 |
+| [查询 IoT 中心](/dotnet/api/microsoft.azure.devices.registrymanager?view=azure-dotnet) | 是 | 是 |
+| [创建文件上传 SAS URI](/rest/api/iothub/device/createfileuploadsasuri) | 是 | 是 |
+| [接收发往设备的通知](/rest/api/iothub/device/receivedeviceboundnotification) | 是 | 是 |
+| [发送设备事件](/rest/api/iothub/device/senddeviceevent) | 是 | 是 |
 | 发送模块事件 | 仅限 AMQP 和 MQTT | 仅限 AMQP 和 MQTT |
-| [更新文件上传状态](https://docs.microsoft.com/rest/api/iothub/device/updatefileuploadstatus) | 是 | 是 |
-| [批量设备操作](https://docs.microsoft.com/rest/api/iothub/service/registrymanager/bulkdevicecrud) | 是的，IoT Edge 功能除外 | 是 |
-| [取消导入/导出作业](https://docs.microsoft.com/rest/api/iothub/service/jobclient/cancelimportexportjob) | 是 | 是 |
-| [创建导入/导出作业](https://docs.microsoft.com/rest/api/iothub/service/jobclient/createimportexportjob) | 是 | 是 |
-| [获取导入/导出作业](https://docs.microsoft.com/rest/api/iothub/service/jobclient/getimportexportjob) | 是 | 是 |
-| [获取导入/导出作业](https://docs.microsoft.com/rest/api/iothub/service/jobclient/getimportexportjobs) | 是 | 是 |
-| [清除命令队列](https://docs.microsoft.com/rest/api/iothub/service/registrymanager/purgecommandqueue) |   | 是 |
-| [获取设备孪生](https://docs.microsoft.com/rest/api/iothub/service/twin/getdevicetwin) |   | 是 |
-| [获取模块孪生](https://docs.microsoft.com/rest/api/iothub/service/twin/getmoduletwin) |   | 是 |
-| [调用设备方法](https://docs.microsoft.com/rest/api/iothub/service/devicemethod/invokedevicemethod) |   | 是 |
-| [更新设备孪生](https://docs.microsoft.com/rest/api/iothub/service/twin/updatedevicetwin) |   | 是 |
-| [更新模块孪生](https://docs.microsoft.com/rest/api/iothub/service/twin/updatemoduletwin) |   | 是 |
-| [放弃发往设备的通知](https://docs.microsoft.com/rest/api/iothub/device/abandondeviceboundnotification) |   | 是 |
-| [完成发往设备的通知](https://docs.microsoft.com/rest/api/iothub/device/completedeviceboundnotification) |   | 是 |
-| [取消作业](https://docs.microsoft.com/rest/api/iothub/service/jobclient/canceljob) |   | 是 |
-| [创建作业](https://docs.microsoft.com/rest/api/iothub/service/jobclient/createjob) |   | 是 |
-| [获取作业](https://docs.microsoft.com/rest/api/iothub/service/jobclient/getjob) |   | 是 |
-| [查询作业](https://docs.microsoft.com/rest/api/iothub/service/jobclient/queryjobs) |   | 是 |
+| [更新文件上传状态](/rest/api/iothub/device/updatefileuploadstatus) | 是 | 是 |
+| [批量设备操作](/javascript/api/azure-iot-digitaltwins-service/registrymanager?view=azure-node-latest#bulkdevicecrud-exportimportdevice----msrest-requestoptionsbase-) | 是的，IoT Edge 功能除外 | 是 |
+| [取消导入/导出作业](/rest/api/iothub/service/jobs/cancelimportexportjob) | 是 | 是 |
+| [创建导入/导出作业](/rest/api/iothub/service/jobs/createimportexportjob) | 是 | 是 |
+| [获取导入/导出作业](/rest/api/iothub/service/jobs/getimportexportjob) | 是 | 是 |
+| [获取导入/导出作业](/rest/api/iothub/service/jobs/getimportexportjobs) | 是 | 是 |
+| [清除命令队列](/javascript/api/azure-iot-digitaltwins-service/registrymanager?view=azure-node-latest#purgecommandqueue-string--msrest-requestoptionsbase-) |   | 是 |
+| [获取设备孪生](/java/api/com.microsoft.azure.sdk.iot.device.deviceclient.getdevicetwin?view=azure-java-stable) |   | 是 |
+| [获取模块孪生](/azure/iot-hub/iot-c-sdk-ref/iothub-devicetwin-h/iothubdevicetwin-getmoduletwin) |   | 是 |
+| [调用设备方法](./iot-hub-devguide-direct-methods.md) |   | 是 |
+| [更新设备孪生](./iot-hub-devguide-device-twins.md) |   | 是 |
+| [更新模块孪生](/azure/iot-hub/iot-c-sdk-ref/iothub-devicetwin-h/iothubdevicetwin-updatemoduletwin) |   | 是 |
+| [放弃发往设备的通知](/rest/api/iothub/device/abandondeviceboundnotification) |   | 是 |
+| [完成发往设备的通知](/rest/api/iothub/device/completedeviceboundnotification) |   | 是 |
+| [取消作业](/rest/api/media/jobs/canceljob) |   | 是 |
+| [创建作业](/rest/api/media/jobs/create) |   | 是 |
+| [获取作业](/java/api/com.microsoft.azure.sdk.iot.service.jobs.jobclient.getjob?view=azure-java-stable) |   | 是 |
+| [查询作业](/javascript/api/azure-iot-digitaltwins-service/jobclient?view=azure-node-latest#queryjobs-jobclientqueryjobsoptionalparams--servicecallback-queryresult--) |   | 是 |
 
 ## <a name="message-throughput"></a>消息吞吐量
 

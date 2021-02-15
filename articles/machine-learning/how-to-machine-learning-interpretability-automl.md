@@ -1,27 +1,27 @@
 ---
-title: 自动 ML 中的 Explainability （预览版）
+title: '自动 ML (预览版中的 Explainability) '
 titleSuffix: Azure Machine Learning
 description: 了解使用 Azure 机器学习 SDK 时如何获取解释，以了解自动化 ML 模型如何确定特征重要性并做出预测。
 services: machine-learning
 ms.service: machine-learning
 ms.subservice: core
 ms.topic: conceptual
-ms.custom: how-to
+ms.custom: how-to, automl, responsible-ml
 ms.author: mithigpe
 author: minthigpen
 ms.date: 07/09/2020
-ms.openlocfilehash: 0ddfb0c9b10d96acd511b7bfaee4c6ef85d04812
-ms.sourcegitcommit: a76ff927bd57d2fcc122fa36f7cb21eb22154cfa
+ms.openlocfilehash: 709c85bed4a028c6c168c79cd9fffd6b7b40cb68
+ms.sourcegitcommit: 49ea056bbb5957b5443f035d28c1d8f84f5a407b
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/28/2020
-ms.locfileid: "87306411"
+ms.lasthandoff: 02/09/2021
+ms.locfileid: "100008037"
 ---
-# <a name="interpretability-model-explanations-in-automated-machine-learning-preview"></a>Interpretability：自动机器学习（预览版）中的模型说明
+# <a name="interpretability-model-explanations-in-automated-machine-learning-preview"></a>可解释性：自动化机器学习（预览版）中的模型说明
 
-[!INCLUDE [applies-to-skus](../../includes/aml-applies-to-basic-enterprise-sku.md)]
 
-本文介绍如何在 Azure 机器学习中获取自动机器学习 (ML) 的说明。 自动化 ML 可帮助你了解工程特征重要性。 
+
+本文介绍如何在 Azure 机器学习中获取自动机器学习 (AutoML) 的解释。 AutoML 有助于你了解生成的模型的特征重要性。 
 
 默认情况下，1.0.85 之后的所有 SDK 版本设置 `model_explainability=True`。 在 SDK 版本 1.0.85 及更早版本中，用户需要在 `AutoMLConfig` 对象中设置 `model_explainability=True`，才能使用模型可解释性。 
 
@@ -33,28 +33,51 @@ ms.locfileid: "87306411"
 
 ## <a name="prerequisites"></a>先决条件
 
-- 可解释性特征。 运行 `pip install azureml-interpret azureml-contrib-interpret` 获取所需的包。
-- 生成自动化 ML 试验的知识。 有关如何使用 Azure 机器学习 SDK 的详细信息，请完成此[回归模型教程](tutorial-auto-train-models.md)，或参阅如何[配置自动化 ML 试验](how-to-configure-auto-train.md)。
+- 可解释性特征。 运行 `pip install azureml-interpret` 以获取所需的包。
+- 构建 AutoML 试验的知识。 要详细了解如何使用 Azure 机器学习 SDK，请完成此[回归模型教程](tutorial-auto-train-models.md)，或参阅如何[配置 AutoML 试验](how-to-configure-auto-train.md)。
 
 ## <a name="interpretability-during-training-for-the-best-model"></a>训练最佳模型过程中的可解释性
 
-从 `best_run` 中检索解释，其中包括工程特征的解释。
+从 `best_run` 中检索解释，其中包括原始特征和工程特征的解释。
 
-### <a name="download-engineered-feature-importance-from-artifact-store"></a>从项目存储下载工程特征重要性
+> [!NOTE]
+> 可解释性（最佳模型解释）不适用于将以下算法推荐为最佳模型的自动化 ML 预测试验： 
+> * TCNForecaster
+> * AutoArima
+> * ExponentialSmoothing
+> * Prophet
+> * 平均值 
+> * Naive
+> * Seasonal Average 
+> * Seasonal Naive
+
+### <a name="download-the-engineered-feature-importances-from-the-best-run"></a>从最佳运行下载工程功能 importances
 
 可以使用 `ExplanationClient` 从 `best_run` 的项目存储下载工程特征解释。 
 
 ```python
-from azureml.explain.model._internal.explanation_client import ExplanationClient
+from azureml.interpret import ExplanationClient
 
 client = ExplanationClient.from_run(best_run)
 engineered_explanations = client.download_model_explanation(raw=False)
 print(engineered_explanations.get_feature_importance_dict())
 ```
 
+### <a name="download-the-raw-feature-importances-from-the-best-run"></a>从最佳运行下载 raw 功能 importances
+
+您可以使用 `ExplanationClient` 从的项目存储区下载原始功能说明 `best_run` 。
+
+```python
+from azureml.interpret import ExplanationClient
+
+client = ExplanationClient.from_run(best_run)
+raw_explanations = client.download_model_explanation(raw=True)
+print(raw_explanations.get_feature_importance_dict())
+```
+
 ## <a name="interpretability-during-training-for-any-model"></a>训练任意模型过程中的可解释性 
 
-计算模型解释并将其可视化时，并不局限于自动化 ML 模型的现有模型解释。 还可以获取使用不同测试数据的模型的解释。 本部分中的步骤说明如何根据测试数据计算工程特征重要性并将其可视化。
+计算模型解释并将其可视化时，并不局限于 AutoML 模型的现有模型解释。 还可以获取使用不同测试数据的模型的解释。 本部分中的步骤说明如何根据测试数据计算工程特征重要性并将其可视化。
 
 ### <a name="retrieve-any-other-automl-model-from-training"></a>从训练中检索任何其他自动化 ML 模型
 
@@ -64,7 +87,7 @@ automl_run, fitted_model = local_run.get_output(metric='accuracy')
 
 ### <a name="set-up-the-model-explanations"></a>设置模型解释
 
-使用 `automl_setup_model_explanations` 获取工程解释。 `fitted_model` 可生成以下项：
+使用 `automl_setup_model_explanations` 获取工程和原始说明。 `fitted_model` 可生成以下项：
 
 - 从已训练的样本或测试样本生成有特征的数据
 - 工程特征名称列表
@@ -86,12 +109,12 @@ automl_explainer_setup_obj = automl_setup_model_explanations(fitted_model, X=X_t
 
 - 解释器设置对象
 - 工作区
-- 用于解释 `fitted_model` 自动化 ML 模型的代理项模型
+- 用于解释 `fitted_model` AutoML 模型的代理项模型
 
 MimicWrapper 还获取 `automl_run` 对象，工程解释将上传到该对象。
 
 ```python
-from azureml.explain.model.mimic_wrapper import MimicWrapper
+from azureml.interpret import MimicWrapper
 
 # Initialize the Mimic Explainer
 explainer = MimicWrapper(ws, automl_explainer_setup_obj.automl_estimator,
@@ -103,18 +126,30 @@ explainer = MimicWrapper(ws, automl_explainer_setup_obj.automl_estimator,
                          explainer_kwargs=automl_explainer_setup_obj.surrogate_model_params)
 ```
 
-### <a name="use-mimicexplainer-for-computing-and-visualizing-engineered-feature-importance"></a>使用 MimicExplainer 来计算并可视化特征重要性
+### <a name="use-mimic-explainer-for-computing-and-visualizing-engineered-feature-importance"></a>使用模拟说明计算和形象设计功能重要性
 
-可以结合转换的测试样本在 MimicWrapper 中调用 `explain()` 方法，以获取生成的工程特征的特征重要性。 还可以使用 `ExplanationDashboard` 通过自动化 ML 特征化器来查看生成的工程特征的特征重要性值仪表板可视化效果。
+可以结合转换的测试样本在 MimicWrapper 中调用 `explain()` 方法，以获取生成的工程特征的特征重要性。 你还可以登录到 [Azure 机器学习 Studio](https://ml.azure.com/) ，通过 AutoML featurizers 查看生成的工程功能的特征重要性值的仪表板可视化。
 
 ```python
 engineered_explanations = explainer.explain(['local', 'global'], eval_dataset=automl_explainer_setup_obj.X_test_transform)
 print(engineered_explanations.get_feature_importance_dict())
 ```
 
-### <a name="interpretability-during-inference"></a>推理过程中的可解释性
+### <a name="use-mimic-explainer-for-computing-and-visualizing-raw-feature-importance"></a>使用模拟解释器来计算并可视化原始特征重要性
 
-本部分介绍如何使用解释器（在上一部分用于计算解释）将自动化 ML 模型操作化。
+可以 `explain()` 在 MimicWrapper 中调用方法与转换后的测试示例，以获取原始功能的重要性。 在 [机器学习 Studio](https://ml.azure.com/)中，可以查看原始功能的功能重要性值的仪表板可视化。
+
+```python
+raw_explanations = explainer.explain(['local', 'global'], get_raw=True,
+                                     raw_feature_names=automl_explainer_setup_obj.raw_feature_names,
+                                     eval_dataset=automl_explainer_setup_obj.X_test_transform,
+                                     raw_eval_dataset=automl_explainer_setup_obj.X_test_raw)
+print(raw_explanations.get_feature_importance_dict())
+```
+
+## <a name="interpretability-during-inference"></a>推理过程中的可解释性
+
+本部分介绍如何使用在上一部分用于计算解释的解释器将 AutoML 模型操作化。
 
 ### <a name="register-the-model-and-the-scoring-explainer"></a>注册模型和评分解释器
 
@@ -163,6 +198,48 @@ with open("myenv.yml","r") as f:
 
 ```
 
+### <a name="create-the-scoring-script"></a>创建评分脚本
+
+编写一个脚本，该脚本加载模型，并基于新的数据批生成预测和说明。
+
+```python
+%%writefile score.py
+import joblib
+import pandas as pd
+from azureml.core.model import Model
+from azureml.train.automl.runtime.automl_explain_utilities import automl_setup_model_explanations
+
+
+def init():
+    global automl_model
+    global scoring_explainer
+
+    # Retrieve the path to the model file using the model name
+    # Assume original model is named automl_model
+    automl_model_path = Model.get_model_path('automl_model')
+    scoring_explainer_path = Model.get_model_path('scoring_explainer')
+
+    automl_model = joblib.load(automl_model_path)
+    scoring_explainer = joblib.load(scoring_explainer_path)
+
+
+def run(raw_data):
+    data = pd.read_json(raw_data, orient='records')
+    # Make prediction
+    predictions = automl_model.predict(data)
+    # Setup for inferencing explanations
+    automl_explainer_setup_obj = automl_setup_model_explanations(automl_model,
+                                                                 X_test=data, task='classification')
+    # Retrieve model explanations for engineered explanations
+    engineered_local_importance_values = scoring_explainer.explain(automl_explainer_setup_obj.X_test_transform)
+    # Retrieve model explanations for raw explanations
+    raw_local_importance_values = scoring_explainer.explain(automl_explainer_setup_obj.X_test_transform, get_raw=True)
+    # You can return any data type as long as it is JSON-serializable
+    return {'predictions': predictions.tolist(),
+            'engineered_local_importance_values': engineered_local_importance_values,
+            'raw_local_importance_values': raw_local_importance_values}
+```
+
 ### <a name="deploy-the-service"></a>部署服务
 
 使用前面步骤中所述的 conda 文件和评分文件来部署服务。
@@ -192,7 +269,7 @@ service.wait_for_deployment(show_output=True)
 
 ### <a name="inference-with-test-data"></a>使用测试数据执行推理
 
-使用一些测试数据执行推理，以查看自动化 ML 模型提供的预测值。 查看预测值的工程特征重要性。
+使用一些测试数据进行推理，查看 AutoML 模型的预测值（当前仅在 Azure 机器学习 SDK 中受支持）。 查看影响预测值的特征重要性。 
 
 ```python
 if service.state == 'Healthy':
@@ -205,13 +282,17 @@ if service.state == 'Healthy':
     print(output['predictions'])
     # Print the engineered feature importances for the predicted value
     print(output['engineered_local_importance_values'])
+    # Print the raw feature importances for the predicted value
+    print('raw_local_importance_values:\n{}\n'.format(output['raw_local_importance_values']))
 ```
 
 ### <a name="visualize-to-discover-patterns-in-data-and-explanations-at-training-time"></a>在训练时进行可视化以发现数据和解释中的模式
 
-可以在 [Azure 机器学习工作室](https://ml.azure.com)中的工作区内可视化特征重要性图表。 自动化 ML 运行完成后，选择“查看模型详细信息”以查看特定的运行。 选择“解释”选项卡以查看解释可视化仪表板。
+可以在 [机器学习 Studio](https://ml.azure.com)中的工作区中可视化功能重要性图表。 AutoML 运行完成后，请选择 " **查看模型详细信息** " 以查看特定运行。 选择“解释”选项卡以查看解释可视化仪表板。
 
-[![机器学习可解释性体系结构](./media/how-to-machine-learning-interpretability-automl/automl-explainability.png)](./media/how-to-machine-learning-interpretability-automl/automl-explainability.png#lightbox)
+[![机器学习可解释性体系结构](./media/how-to-machine-learning-interpretability-automl/automl-explanation.png)](./media/how-to-machine-learning-interpretability-automl/automl-explanation.png#lightbox)
+
+要详细了解解释仪表板可视化效果和特定绘图，请参阅[有关可解释性的操作说明文档](how-to-machine-learning-interpretability-aml.md)。
 
 ## <a name="next-steps"></a>后续步骤
 

@@ -5,32 +5,40 @@ services: active-directory
 ms.service: active-directory
 ms.subservice: authentication
 ms.topic: how-to
-ms.date: 06/24/2020
-ms.author: iainfou
-author: iainfoulds
+ms.date: 10/01/2020
+ms.author: justinha
+author: justinha
 manager: daveba
-ms.reviewer: scottsta
-ms.openlocfilehash: 084c50a67fe332751a3679da4c97f67d414ebb94
-ms.sourcegitcommit: e71da24cc108efc2c194007f976f74dd596ab013
+ms.reviewer: calui
+ms.openlocfilehash: 4e39d7f15e3ca3c6e241c767a5f881d7170c6379
+ms.sourcegitcommit: d49bd223e44ade094264b4c58f7192a57729bada
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/29/2020
-ms.locfileid: "87419523"
+ms.lasthandoff: 02/02/2021
+ms.locfileid: "99255961"
 ---
-# <a name="sign-in-to-azure-active-directory-using-email-as-an-alternate-login-id-preview"></a>使用电子邮件作为备用登录 ID （预览版）登录到 Azure Active Directory
+# <a name="sign-in-to-azure-active-directory-using-email-as-an-alternate-login-id-preview"></a>使用电子邮件作为备用登录 ID (预览版登录到 Azure Active Directory) 
 
-许多组织希望让用户使用与其本地目录环境相同的凭据登录到 Azure Active Directory （Azure AD）。 使用此方法（称为混合身份验证），用户只需记住一组凭据。
+> [!NOTE]
+> 使用电子邮件作为备用登录 ID 登录到 Azure AD 是 Azure Active Directory 的一项公共预览功能。 有关预览版的详细信息，请参阅 [Microsoft Azure 预览版补充使用条款](https://azure.microsoft.com/support/legal/preview-supplemental-terms/)。
+
+许多组织希望让用户使用与其本地目录环境相同的凭据登录到 Azure Active Directory (Azure AD) 。 使用此方法（称为混合身份验证），用户只需记住一组凭据。
 
 一些组织尚未转换为使用混合身份验证，原因如下：
 
-* 默认情况下，Azure AD 用户主体名称（UPN）设置为与本地目录相同的 UPN。
+* 默认情况下，Azure AD 用户主体名称 (UPN) 设置为与本地目录相同的 UPN。
 * 更改 Azure AD UPN 将在本地和 Azure AD 环境之间创建错误匹配，这可能会导致某些应用程序和服务出现问题。
 * 由于业务或合规性原因，组织不希望使用本地 UPN 登录到 Azure AD。
 
 若要帮助移动到混合身份验证，你现在可以将 Azure AD 配置为允许用户使用已验证域中的电子邮件作为备用登录 ID 进行登录。 例如，如果 Contoso 更名为 Fabrikam，现在就可以不再使用旧 `balas@contoso.com` UPN 登录，而是可以使用电子邮件作为备用登录 ID 。 若要访问应用程序或服务，用户可以使用分配的电子邮件（例如）登录到 Azure AD `balas@fabrikam.com` 。
 
+本文介绍如何启用电子邮件并将其用作备用登录 ID。 Azure AD Free 版和更高版本中提供此功能。
+
 > [!NOTE]
-> 使用电子邮件作为备用登录 ID 登录到 Azure AD 是 Azure Active Directory 的一项公共预览功能。 有关预览版的详细信息，请参阅 [Microsoft Azure 预览版补充使用条款](https://azure.microsoft.com/support/legal/preview-supplemental-terms/)。
+> 此功能仅适用于通过云身份验证的 Azure AD 用户。
+
+> [!NOTE]
+> 目前，在通过云身份验证的租户 Azure AD 加入的 Windows 10 设备上不支持此功能。 此功能不适用于混合 Azure AD 联接的设备。
 
 ## <a name="overview-of-azure-ad-sign-in-approaches"></a>Azure AD 登录方法概述
 
@@ -42,19 +50,21 @@ ms.locfileid: "87419523"
 
 此问题的典型解决方法是将 Azure AD UPN 设置为用户希望登录时所用的电子邮件地址。 虽然这种方法有效，但在本地 AD 与 Azure AD 中的 Upn 不同，并且此配置与所有 Microsoft 365 工作负荷都不兼容。
 
-另一种方法是将 Azure AD 和本地 Upn 同步到相同的值，然后将 Azure AD 配置为允许用户使用已验证的电子邮件登录到 Azure AD。 若要提供此功能，请在本地目录中的用户*ProxyAddresses*属性中定义一个或多个电子邮件地址。 然后，将*ProxyAddresses*同步到使用 Azure AD Connect 自动 Azure AD。
+另一种方法是将 Azure AD 和本地 Upn 同步到相同的值，然后将 Azure AD 配置为允许用户使用已验证的电子邮件登录到 Azure AD。 若要提供此功能，请在本地目录中的用户 *ProxyAddresses* 属性中定义一个或多个电子邮件地址。 然后，将 *ProxyAddresses* 同步到使用 Azure AD Connect 自动 Azure AD。
 
 ## <a name="preview-limitations"></a>预览版限制
+
+如果 Azure AD Free 版本和更高版本中提供备用登录 ID，请使用电子邮件登录到 Azure AD。
 
 在当前预览状态下，当用户使用非 UPN 电子邮件作为备用登录 ID 登录时，会出现以下限制：
 
 * 用户可能会看到其 UPN，即使是通过其非 UPN 电子邮件登录的。 可能会出现以下示例行为：
     * 当定向到 Azure AD 登录时，系统将提示用户登录 UPN `login_hint=<non-UPN email>` 。
     * 当用户使用非 UPN 电子邮件登录并输入错误密码时， *"输入密码"* 页将更改以显示 UPN。
-    * 在某些 Microsoft 网站和应用（例如 [https://portal.azure.com](https://portal.azure.com) 和 Microsoft Office）上，通常显示在右上角的 "**帐户管理器**" 控件可能会显示用户的 UPN，而不是用于登录的非 UPN 电子邮件。
+    * 在某些 Microsoft 网站和应用（例如 [https://portal.azure.com](https://portal.azure.com) 和 Microsoft Office）上，通常显示在右上角的 " **帐户管理器** " 控件可能会显示用户的 UPN，而不是用于登录的非 UPN 电子邮件。
 
 * 某些流当前与非 UPN 电子邮件不兼容，如下所示：
-    * 标识保护当前不匹配电子邮件备用登录 Id，其中包含*泄漏的凭据*风险检测。 此风险检测使用 UPN 来匹配已泄漏的凭据。 有关详细信息，请参阅[Azure AD Identity Protection 风险检测和修正][identity-protection]。
+    * 标识保护当前不匹配电子邮件备用登录 Id，其中包含 *泄漏的凭据* 风险检测。 此风险检测使用 UPN 来匹配已泄漏的凭据。 有关详细信息，请参阅 [Azure AD Identity Protection 风险检测和修正][identity-protection]。
     * 不完全支持将 B2B 邀请发送到备用登录 ID 的电子邮件。 接受作为备用登录 ID 发送到电子邮件的邀请后，使用备用电子邮件登录可能对租户终结点上的用户不起作用。
 
 ## <a name="synchronize-sign-in-email-addresses-to-azure-ad"></a>将登录电子邮件地址同步到 Azure AD
@@ -103,7 +113,7 @@ Azure AD Connect 自动同步的用户属性之一是 ProxyAddresses。 如果�
 1. 使用如下所示的 [Get-AzureADPolicy][Get-AzureADPolicy] cmdlet 检查租户中是否已存在 HomeRealmDiscoveryPolicy 策略：
 
     ```powershell
-    Get-AzureADPolicy | where-object {$_.Type -eq "HomeRealmDiscoveryPolicy"} | fl *
+    Get-AzureADPolicy | Where-Object Type -eq "HomeRealmDiscoveryPolicy" | Format-List *
     ```
 
 1. 如果当前未配置任何策略，则该命令将不返回任何内容。 如果返回策略，请跳过此步骤，并转到下一步以更新现有策略。
@@ -111,10 +121,22 @@ Azure AD Connect 自动同步的用户属性之一是 ProxyAddresses。 如果�
     若要将 HomeRealmDiscoveryPolicy 策略添加到租户，请使用 [New-AzureADPolicy][New-AzureADPolicy] cmdlet，并将 AlternateIdLogin 属性设置为“"已启用": true”，如以下示例所示  ：
 
     ```powershell
-    New-AzureADPolicy -Definition @('{"HomeRealmDiscoveryPolicy" :{"AlternateIdLogin":{"Enabled": true}}}') `
-        -DisplayName "BasicAutoAccelerationPolicy" `
-        -IsOrganizationDefault $true `
-        -Type "HomeRealmDiscoveryPolicy"
+    $AzureADPolicyDefinition = @(
+      @{
+         "HomeRealmDiscoveryPolicy" = @{
+            "AlternateIdLogin" = @{
+               "Enabled" = $true
+            }
+         }
+      } | ConvertTo-JSON -Compress
+    )
+    $AzureADPolicyParameters = @{
+      Definition            = $AzureADPolicyDefinition
+      DisplayName           = "BasicAutoAccelerationPolicy"
+      IsOrganizationDefault = $true
+      Type                  = "HomeRealmDiscoveryPolicy"
+    }
+    New-AzureADPolicy @AzureADPolicyParameters
     ```
 
     成功创建策略后，该命令将返回策略 ID，如以下示例输出所示：
@@ -146,17 +168,31 @@ Azure AD Connect 自动同步的用户属性之一是 ProxyAddresses。 如果�
     以下示例添加了 AlternateIdLogin 属性，并保留了可能已设置的 AllowCloudPasswordValidation 属性 **  ** ：
 
     ```powershell
-    Set-AzureADPolicy -id b581c39c-8fe3-4bb5-b53d-ea3de05abb4b `
-        -Definition @('{"HomeRealmDiscoveryPolicy" :{"AllowCloudPasswordValidation":true,"AlternateIdLogin":{"Enabled": true}}}') `
-        -DisplayName "BasicAutoAccelerationPolicy" `
-        -IsOrganizationDefault $true `
-        -Type "HomeRealmDiscoveryPolicy"
+    $AzureADPolicyDefinition = @(
+      @{
+         "HomeRealmDiscoveryPolicy" = @{
+            "AllowCloudPasswordValidation" = $true
+            "AlternateIdLogin" = @{
+               "Enabled" = $true
+            }
+         }
+      } | ConvertTo-JSON -Compress
+    )
+    $AzureADPolicyParameters = @{
+      ID                    = "b581c39c-8fe3-4bb5-b53d-ea3de05abb4b"
+      Definition            = $AzureADPolicyDefinition
+      DisplayName           = "BasicAutoAccelerationPolicy"
+      IsOrganizationDefault = $true
+      Type                  = "HomeRealmDiscoveryPolicy"
+    }
+    
+    Set-AzureADPolicy @AzureADPolicyParameters
     ```
 
     确认更新后的策略显示了所做的更改且现已启用 AlternateIdLogin 属性：
 
     ```powershell
-    Get-AzureADPolicy | where-object {$_.Type -eq "HomeRealmDiscoveryPolicy"} | fl *
+    Get-AzureADPolicy | Where-Object Type -eq "HomeRealmDiscoveryPolicy" | Format-List *
     ```
 
 应用策略后，最长可能需要一小时才能进行传播，使用户能够使用其备用登录 ID 进行登录。
@@ -164,6 +200,77 @@ Azure AD Connect 自动同步的用户属性之一是 ProxyAddresses。 如果�
 ## <a name="test-user-sign-in-with-email"></a>测试用户是否能够通过电子邮件登录
 
 若要测试用户是否能够使用电子邮件登录，请浏览到 [https://myprofile.microsoft.com][my-profile] 并使用基于其电子邮件地址（例如 `balas@fabrikam.com` ）而不是其 UPN（例如 `balas@contoso.com` ）的用户帐户登录。 登录体验应类似于基于 UPN 的登录事件。
+
+## <a name="enable-staged-rollout-to-test-user-sign-in-with-an-email-address"></a>启用分步推出以测试使用电子邮件地址的用户登录  
+
+通过[分步推出][staged-rollout]，租户管理员可以启用特定组的功能。 建议租户管理员使用分阶段推出来测试用户使用电子邮件地址进行登录。 当管理员准备好将此功能部署到其整个租户时，它们应使用主领域发现策略。  
+
+
+需要使用租户管理员权限完成以下步骤：
+
+1. 以管理员身份打开 PowerShell 会话，然后使用 [安装模块][Install-Module]Cmdlet 安装 *AzureADPreview* 模块：
+
+    ```powershell
+    Install-Module AzureADPreview
+    ```
+
+    如果出现提示，选择“Y”以安装 NuGet 或从不受信任的存储库进行安装。
+
+2. 使用 [Connect-AzureAD][Connect-AzureAD] cmdlet 以租户管理员身份登录到 Azure AD 租户：
+
+    ```powershell
+    Connect-AzureAD
+    ```
+
+    该命令将返回有关你的帐户、环境和租户 ID 的信息。
+
+3. 使用以下 cmdlet 列出所有现有的过渡推出策略：
+   
+   ```powershell
+   Get-AzureADMSFeatureRolloutPolicy
+   ``` 
+
+4. 如果没有针对此功能的现有暂存推出策略，请创建新的分步推出策略，并记下策略 ID：
+
+   ```powershell
+   $AzureADMSFeatureRolloutPolicy = @{
+      Feature    = "EmailAsAlternateId"
+      DisplayName = "EmailAsAlternateId Rollout Policy"
+      IsEnabled   = $true
+   }
+   New-AzureADMSFeatureRolloutPolicy @AzureADMSFeatureRolloutPolicy
+   ```
+
+5. 查找要添加到分阶段推出策略的组的 directoryObject ID。 请注意为 *Id* 参数返回的值，因为它将在下一步中使用。
+   
+   ```powershell
+   Get-AzureADMSGroup -SearchString "Name of group to be added to the staged rollout policy"
+   ```
+
+6. 如以下示例中所示，将组添加到分步推出策略中。 将 *-Id* 参数中的值替换为步骤4中为策略 Id 返回的值，并将 *-RefObjectId* 参数中的值替换为步骤5中所述的 *id* 。 可能需要长达1小时的时间，组中的用户才能使用其代理地址登录。
+
+   ```powershell
+   Add-AzureADMSFeatureRolloutPolicyDirectoryObject -Id "ROLLOUT_POLICY_ID" -RefObjectId "GROUP_OBJECT_ID"
+   ```
+   
+对于添加到组中的新成员，可能需要长达24小时才能使用其代理地址登录。
+
+### <a name="removing-groups"></a>删除组
+
+若要从分步推出策略中删除组，请运行以下命令：
+
+```powershell
+Remove-AzureADMSFeatureRolloutPolicyDirectoryObject -Id "ROLLOUT_POLICY_ID" -ObjectId "GROUP_OBJECT_ID" 
+```
+
+### <a name="removing-policies"></a>删除策略
+
+若要删除分步推出策略，请先禁用该策略，然后将其从系统中删除：
+
+```powershell
+Set-AzureADMSFeatureRolloutPolicy -Id "ROLLOUT_POLICY_ID" -IsEnabled $false 
+Remove-AzureADMSFeatureRolloutPolicy -Id "ROLLOUT_POLICY_ID"
+```
 
 ## <a name="troubleshoot"></a>疑难解答
 
@@ -174,7 +281,7 @@ Azure AD Connect 自动同步的用户属性之一是 ProxyAddresses。 如果�
 1. 确认 Azure AD HomeRealmDiscoveryPolicy 策略已将 AlternateIdLogin 属性设置为 "已启用": true  ：
 
     ```powershell
-    Get-AzureADPolicy | where-object {$_.Type -eq "HomeRealmDiscoveryPolicy"} | fl *
+    Get-AzureADPolicy | Where-Object Type -eq "HomeRealmDiscoveryPolicy" | Format-List *
     ```
 
 ## <a name="next-steps"></a>后续步骤
@@ -198,4 +305,5 @@ Azure AD Connect 自动同步的用户属性之一是 ProxyAddresses。 如果�
 [Get-AzureADPolicy]: /powershell/module/azuread/get-azureadpolicy
 [New-AzureADPolicy]: /powershell/module/azuread/new-azureadpolicy
 [Set-AzureADPolicy]: /powershell/module/azuread/set-azureadpolicy
+[staged-rollout]: /powershell/module/azuread/?view=azureadps-2.0-preview&preserve-view=true#staged-rollout
 [my-profile]: https://myprofile.microsoft.com

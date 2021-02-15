@@ -7,6 +7,8 @@
       href: overview.md
     - name: 技术和功能概述
       href: technical-overview.md
+    - name: Docs 中的新增内容
+      href: whats-new-docs.md
 - name: 快速入门
   expanded: true
   items:
@@ -51,6 +53,18 @@
   href: code-samples.md
 - name: 概念
   items:
+    - name: 比较外部标识的解决方案
+      href: ../active-directory/external-identities/compare-with-b2c.md?bc=%2fazure%2factive-directory-b2c%2fbread%2ftoc.json&toc=%2fazure%2factive-directory-b2c%2fTOC.json
+    - name: 了解基础知识
+      items:
+        - name: 身份验证和授权
+          href: ../active-directory/develop/authentication-vs-authorization.md?bc=%2fazure%2factive-directory-b2c%2fbread%2ftoc.json&toc=%2fazure%2factive-directory-b2c%2fTOC.json
+        - name: 令牌
+          href: ../active-directory/develop/security-tokens.md?bc=%2fazure%2factive-directory-b2c%2fbread%2ftoc.json&toc=%2fazure%2factive-directory-b2c%2fTOC.json
+        - name: 协议
+          href: ../active-directory/develop/v2-app-types.md?bc=%2fazure%2factive-directory-b2c%2fbread%2ftoc.json&toc=%2fazure%2factive-directory-b2c%2fTOC.json
+        - name: 身份验证库
+          href: ../active-directory/develop/msal-overview.md?bc=%2fazure%2factive-directory-b2c%2fbread%2ftoc.json&toc=%2fazure%2factive-directory-b2c%2fTOC.json
     - name: Azure AD B2C 最佳做法
       href: best-practices.md
     - name: 应用程序类型
@@ -69,6 +83,8 @@
           href: tokens-overview.md
         - name: 请求访问令牌
           href: access-tokens.md
+    - name: 策略密钥
+      href: policy-keys-overview.md
     - name: 用户流和策略
       items:
         - name: 用户流
@@ -79,14 +95,16 @@
       href: user-overview.md
     - name: 用户配置文件属性
       href: user-profile-attributes.md
-    - name: SSO 会话
-      href: session-overview.md
+    - name: 标识保护和条件访问
+      href: conditional-access-identity-protection-overview.md
 - name: 操作指南
   items:
     - name: 应用集成
       items:
-        - name: 注册应用程序
+        - name: 注册 Web 应用程序
           href: tutorial-register-applications.md
+        - name: 注册单页应用程序 (SPA)
+          href: tutorial-register-spa.md
         - name: 注册 SAML 服务提供程序
           href: connect-with-saml-service-providers.md
           displayName: 'SP, RP, service provider, connect'
@@ -101,147 +119,133 @@
           href: signin-appauth-ios.md
         - name: 使用 App Auth 的 Android
           href: signin-appauth-android.md
-    - name: 用户流
+    - name: 创建流
       items:
-        - name: 创建流
-          items:
-            - name: 注册或登录
-              href: tutorial-create-user-flows.md
-            - name: 资源所有者密码凭据
-              href: configure-ropc.md
-            - name: 设置自助密码重置
-              href: user-flow-self-service-password-reset.md
-        - name: UX 自定义
-          items:
-            - name: 自定义 UI
-              href: customize-ui-overview.md
-            - name: JavaScript 和页面布局
-              href: user-flow-javascript-overview.md
-            - name: 自定义语言
-              href: user-flow-language-customization.md
-            - name: 密码复杂性
-              href: user-flow-password-complexity.md
-            - name: 禁用电子邮件验证
-              href: user-flow-disable-email-verification.md
-            - name: 启用 MFA
-              href: custom-policy-multi-factor-authentication.md
-              displayName: multi-factor auth
-        - name: 外部标识提供者
-          items:
-            - name: Amazon
-              href: identity-provider-amazon.md
-            - name: Azure AD（单租户）
-              href: identity-provider-azure-ad-single-tenant.md
-            - name: Microsoft 帐户
-              href: identity-provider-microsoft-account.md
-            - name: Facebook
-              href: identity-provider-facebook.md
-            - name: GitHub
-              href: identity-provider-github.md
-            - name: Google
-              href: identity-provider-google.md
-            - name: LinkedIn
-              href: identity-provider-linkedin.md
-            - name: QQ
-              href: identity-provider-qq.md
-            - name: Twitter
-              href: identity-provider-twitter.md
-            - name: 微信
-              href: identity-provider-wechat.md
-            - name: 微博
-              href: identity-provider-weibo.md
-            - name: 一般标识提供者
-              href: identity-provider-generic-openid-connect.md
-        - name: 令牌和会话管理
-          items:
-            - name: 配置令牌
-              href: configure-tokens.md
-            - name: 配置会话行为
-              href: session-behavior.md
-        - name: 配置年龄限制
-          href: basic-age-gating.md
-        - name: 定义自定义属性
-          href: user-flow-custom-attributes.md
-        - name: 传递外部 IdP 令牌
+        - name: 注册或登录策略
+          href: add-sign-up-and-sign-in-policy.md
+        - name: 登录策略
+          href: add-sign-in-policy.md
+        - name: 密码重置策略
+          href: add-password-reset-policy.md
+        - name: 密码更改策略
+          href: add-password-change-policy.md
+        - name: 个人资料编辑策略
+          href: add-profile-editing-policy.md
+        - name: 资源所有者密码凭据策略
+          href: add-ropc-policy.md
+          displayName: ROPC
+        - name: 设置自助密码重置策略（已弃用）
+          href: user-flow-self-service-password-reset.md
+        - name: 手机注册和登录
+          href: phone-authentication-user-flows.md
+    - name: 标识提供者
+      items:
+        - name: 本地帐户标识提供者
+          href: identity-provider-local.md
+          displayName: 'Username, Email, Phone authorization, Phone sing-in'
+        - name: 添加标识提供程序
+          href: add-identity-provider.md
+        - name: AD FS
+          href: identity-provider-adfs.md
+          displayName: 'AD-FS, ADFS'
+        - name: Amazon
+          href: identity-provider-amazon.md
+        - name: Azure AD（单租户）
+          href: identity-provider-azure-ad-single-tenant.md
+        - name: Azure AD（多租户）
+          href: identity-provider-azure-ad-multi-tenant.md
+        - name: Azure AD B2C
+          href: identity-provider-azure-ad-b2c.md
+        - name: Facebook
+          href: identity-provider-facebook.md
+        - name: 一般标识提供者
+          href: identity-provider-generic-openid-connect.md
+        - name: GitHub
+          href: identity-provider-github.md
+        - name: Google
+          href: identity-provider-google.md
+        - name: ID.me
+          href: identity-provider-id-me.md
+        - name: LinkedIn
+          href: identity-provider-linkedin.md
+        - name: Microsoft 帐户
+          href: identity-provider-microsoft-account.md
+        - name: QQ
+          href: identity-provider-qq.md
+        - name: Salesforce
+          href: identity-provider-salesforce.md
+        - name: Salesforce (SAML)
+          href: identity-provider-salesforce-saml.md
+        - name: Twitter
+          href: identity-provider-twitter.md
+        - name: 微信
+          href: identity-provider-wechat.md
+        - name: 微博
+          href: identity-provider-weibo.md
+        - name: 传递标识提供者令牌
           href: idp-pass-through-user-flow.md
+    - name: UX 自定义
+      items:
+        - name: 配置用户输入
+          href: configure-user-input.md
+        - name: 自定义 UI
+          displayName: company branding
+          href: customize-ui.md
+        - name: 使用 HTML 模板自定义 UI
+          displayName: content definitions
+          href: customize-ui-with-html.md
+        - name: JavaScript 和页面布局
+          href: javascript-and-page-layout.md
+        - name: 自定义语言
+          href: language-customization.md
+          displayName: localization
+        - name: 密码复杂性
+          href: password-complexity.md
+        - name: 禁用电子邮件验证
+          href: disable-email-verification.md
+        - name: 启用 MFA
+          href: multi-factor-authentication.md
+          displayName: multi-factor auth
+        - name: 设置直接登录
+          href: direct-signin.md
+    - name: 令牌和会话管理
+      items:
+        - name: 配置会话行为
+          href: session-behavior.md
+          displayName: 'SSO, KMSI, Keep me signed in'
+        - name: 配置令牌
+          href: configure-tokens.md
+    - name: 定义自定义属性
+      href: user-flow-custom-attributes.md
+    - name: 标识保护和条件访问
+      items:
+        - name: 设置标识保护和条件访问
+          href: conditional-access-identity-protection-setup.md
+        - name: 添加条件访问
+          href: conditional-access-user-flow.md
+    - name: 配置年龄限制
+      href: basic-age-gating.md
+    - name: API 连接器（预览版）
+      items:
+        - name: 概述
+          href: api-connectors-overview.md
+        - name: 添加 API 连接器
+          href: add-api-connector.md
     - name: 自定义策略
       items:
-        - name: 创建策略
+        - name: 自定义策略概述
+          href: custom-policy-trust-frameworks.md
+        - name: 自定义策略入门
+          href: custom-policy-get-started.md
+        - name: 自定义电子邮件验证
           items:
-            - name: 自定义策略入门
-              href: custom-policy-get-started.md
-            - name: 资源所有者密码凭据
-              href: ropc-custom.md
-              displayName: ropc
-            - name: 启用“使我保持登录状态”
-              href: custom-policy-keep-me-signed-in.md
-              displayName: kmsi
-            - name: 密码更改
-              href: custom-policy-password-change.md
-            - name: 手机注册和登录
-              href: phone-authentication.md
-              displayName: 'otp, passwordless, phone number'
-        - name: UX 自定义
-          items:
-            - name: 配置用户输入
-              href: custom-policy-configure-user-input.md
-              displayName: 'ui, ux'
-            - name: 自定义 UI
-              href: custom-policy-ui-customization.md
-              displayName: 'ux, input, cors, html, css'
-            - name: 自定义语言
-              href: custom-policy-localization.md
-            - name: 自定义电子邮件验证
-              items:
-                - name: Mailjet
-                  href: custom-email-mailjet.md
-                - name: SendGrid
-                  href: custom-email-sendgrid.md
-              displayName: verification
-            - name: 禁用电子邮件验证
-              href: custom-policy-disable-email-verification.md
-            - name: 启用 JavaScript
-              href: javascript-samples.md
-            - name: 密码复杂性
-              href: custom-policy-password-complexity.md
-        - name: 外部标识提供者
-          items:
-            - name: OIDC/OAuth 提供程序
-              items:
-                - name: Amazon
-                  href: identity-provider-amazon-custom.md
-                - name: Azure AD（单租户）
-                  href: identity-provider-azure-ad-single-tenant-custom.md
-                - name: Azure AD（多租户）
-                  href: identity-provider-azure-ad-multi-tenant-custom.md
-                - name: Google
-                  href: identity-provider-google-custom.md
-                - name: LinkedIn
-                  href: identity-provider-linkedin-custom.md
-                - name: Microsoft 帐户
-                  href: identity-provider-microsoft-account-custom.md
-                - name: Twitter
-                  href: identity-provider-twitter-custom.md
-            - name: SAML 提供程序
-              items:
-                - name: ADFS
-                  href: identity-provider-adfs2016-custom.md
-                  displayName: SAML
-                - name: Salesforce
-                  href: identity-provider-salesforce-custom.md
-                  displayName: SAML
-        - name: 令牌和会话管理
-          items:
-            - name: 自定义令牌
-              href: configure-tokens-custom-policy.md
-            - name: 配置会话行为
-              href: session-behavior-custom-policy.md
-        - name: 传递外部 IdP 令牌
-          href: idp-pass-through-custom.md
-        - name: 自适应体验
-          items:
-            - name: 设置直接登录
-              href: direct-signin.md
+            - name: Mailjet
+              href: custom-email-mailjet.md
+              displayName: 'Custom email, Custom verification email, Verification email'
+            - name: SendGrid
+              href: custom-email-sendgrid.md
+              displayName: 'Custom email, Custom verification email, Verification email'
+          displayName: verification
         - name: 添加自己的业务逻辑
           items:
             - name: 集成 REST API
@@ -254,22 +258,16 @@
               displayName: rest claims exchange
             - name: 保护 REST API
               href: secure-rest-api.md
-        - name: 定义自定义属性
-          href: custom-policy-custom-attributes.md
         - name: 疑难解答
           items:
             - name: 使用 Application Insights 收集日志
               href: troubleshoot-with-application-insights.md
-              displayName: troubleshooting
+              displayName: 'troubleshooting, app insights'
             - name: 策略验证
               href: troubleshoot-custom-policies.md
               displayName: troubleshooting
-        - name: 使用情况分析
-          href: analytics-with-application-insights.md
         - name: 参考
           items:
-            - name: 信任框架定义
-              href: custom-policy-trust-frameworks.md
             - name: TrustFrameworkPolicy
               href: trustframeworkpolicy.md
             - name: BuildingBlocks
@@ -315,24 +313,25 @@
             - name: ClaimsProviders
               href: claimsproviders.md
               items:
-                - name: TechnicalProfiles
+                - name: 技术配置文件
                   href: technicalprofiles.md
                   items:
-                    - name: 关于技术配置文件
-                      href: technical-profiles-overview.md
                     - name: 关于验证技术配置文件
                       href: validation-technical-profile.md
-                    - name: Application Insights
-                      href: application-insights-technical-profile.md
                     - name: Azure Active Directory
                       href: active-directory-technical-profile.md
-                    - name: Azure 多重身份验证
+                    - name: Azure AD 多重身份验证
                       href: multi-factor-auth-technical-profile.md
                       displayName: mfa
                     - name: Azure AD SSPR
                       href: aad-sspr-technical-profile.md
                     - name: 声明转换
                       href: claims-transformation-technical-profile.md
+                    - name: 条件性访问
+                      href: conditional-access-technical-profile.md
+                      displayName: ca
+                    - name: ID 令牌提示
+                      href: id-token-hint.md
                     - name: JWT 令牌颁发者
                       href: jwt-issuer-technical-profile.md
                     - name: OAuth1
@@ -359,10 +358,14 @@
                       displayName: single sign-on
             - name: UserJourneys
               href: userjourneys.md
+            - name: SubJourneys
+              href: subjourneys.md
             - name: RelyingParty
               href: relyingparty.md
             - name: 声明解析程序
               href: claim-resolver-overview.md
+    - name: UserInfo 终结点
+      href: userinfo-endpoint.md
     - name: 合作伙伴集成
       items:
         - name: Azure AD B2C 合作伙伴库
@@ -371,20 +374,42 @@
           href: partner-arkose-labs.md
         - name: Experian
           href: partner-experian.md
+        - name: HYPR
+          href: partner-hypr.md
         - name: IDology
           href: partner-idology.md
         - name: itsme
           href: partner-itsme.md
+        - name: Jumio
+          href: partner-jumio.md
+        - name: Keyless
+          href: partner-keyless.md
         - name: LexisNexis
           href: partner-lexisnexis.md
+        - name: Microsoft Dynamics 365 反欺诈
+          href: partner-dynamics-365-fraud-protection.md
+        - name: N8 Identity
+          href: partner-n8identity.md
+        - name: Nevis
+          href: partner-nevis.md
         - name: Onfido
           href: partner-onfido.md
+        - name: Ping 标识
+          href: partner-ping-identity.md
+        - name: Saviynt
+          href: partner-saviynt.md
+        - name: Strata
+          href: partner-strata.md
         - name: Trusona
           href: partner-trusona.md
         - name: Twilio
           href: partner-twilio.md
         - name: TypingDNA
           href: partner-typingdna.md
+        - name: WhoIAM
+          href: partner-whoiam.md
+        - name: Zscaler
+          href: partner-zscaler.md
     - name: 使用 b2clogin.com
       items:
         - name: b2clogin.com 概述
@@ -394,26 +419,35 @@
           displayName: 'migrate, b2clogin, owin'
     - name: 自动化
       items:
-        - name: Azure Monitor
-          href: azure-monitor.md
-          displayName: 'log, logs, logging, usage, events'
-        - name: 管理用户 - Microsoft Graph
-          href: manage-user-accounts-graph-api.md
-          displayName: 'account, accounts'
+        - name: Microsoft Graph API
+          href: microsoft-graph-operations.md
+          displayName: 'account, accounts, msgraph, ms graph, graph'
         - name: 使用 Azure Pipelines 进行部署
           href: deploy-custom-policies-devops.md
           displayName: 'azure devops, ci/cd, cicd, custom policy, policies'
         - name: 使用 PowerShell 管理策略
           href: manage-custom-policies-powershell.md
           displayName: 'scripting, scripts, psh, custom policy'
-    - name: 审核日志
-      href: view-audit-logs.md
     - name: 管理用户 - Azure 门户
       href: manage-users-portal.md
       displayName: 'create users, add users, delete users'
     - name: 安全 API 管理 API
       href: secure-api-management.md
       displayName: 'apim, api management, migrate, b2clogin.com'
+    - name: 基于手机的安全 MFA
+      href: phone-based-mfa.md
+      displayName: 'multi-factor authentication, Azure Monitor, Log Analytics'
+    - name: 日志和监视
+      items:
+        - name: 审核日志
+          href: view-audit-logs.md
+          displayName: 'log, logs, logging, usage, events'
+        - name: Azure Monitor
+          href: azure-monitor.md
+          displayName: 'log, logs, logging, usage, events'
+        - name: 使用情况分析
+          href: analytics-with-application-insights.md
+          displayName: 'application insights, app insights'
     - name: 合规性
       items:
         - name: 用户访问权限
@@ -428,12 +462,14 @@
           href: user-migration.md
 - name: 参考
   items:
+    - name: 服务限制和局限性
+      href: service-limits.md
     - name: 应用注册
       href: app-registrations-training-guide.md
     - name: 计费模式
       href: billing.md
     - name: 代码示例
-      href: 'https://azure.microsoft.com/resources/samples/?service=active-directory-b2c'
+      href: /samples/browse/?terms=b2c
     - name: Cookie 定义
       href: cookie-definitions.md
       displayName: 'cookies, SameSite'
@@ -441,14 +477,24 @@
       href: error-codes.md
     - name: 扩展应用
       href: extensions-app.md
-    - name: IEF 发行说明
+    - name: 自定义策略 (IEF) 发行说明
       href: custom-policy-developer-notes.md
-    - name: Microsoft Graph API 操作
-      href: microsoft-graph-operations.md
     - name: 页面布局版本
       href: page-layout.md
     - name: 上市区域和数据驻留
       href: data-residency.md
+    - name: 针对复原能力构建
+      items:
+        - name: Azure AD B2C 复原能力简介
+          href: ../active-directory/fundamentals/resilience-b2c.md?bc=%2fazure%2factive-directory-b2c%2fbread%2ftoc.json&toc=%2fazure%2factive-directory-b2c%2fTOC.json
+        - name: 最终用户体验
+          href: ../active-directory/fundamentals/resilient-end-user-experience.md?bc=%2fazure%2factive-directory-b2c%2fbread%2ftoc.json&toc=%2fazure%2factive-directory-b2c%2fTOC.json
+        - name: 与外部进程的接口
+          href: ../active-directory/fundamentals/resilient-external-processes.md?bc=%2fazure%2factive-directory-b2c%2fbread%2ftoc.json&toc=%2fazure%2factive-directory-b2c%2fTOC.json
+        - name: Azure AD B2C 开发人员最佳做法
+          href: ../active-directory/fundamentals/resilience-b2c-developer-best-practices.md?bc=%2fazure%2factive-directory-b2c%2fbread%2ftoc.json&toc=%2fazure%2factive-directory-b2c%2fTOC.json
+        - name: 监视和分析
+          href: ../active-directory/fundamentals/resilience-with-monitoring-alerting.md?bc=%2fazure%2factive-directory-b2c%2fbread%2ftoc.json&toc=%2fazure%2factive-directory-b2c%2fTOC.json
     - name: 威胁管理
       href: threat-management.md
       displayName: security
@@ -463,7 +509,7 @@
     - name: 常见问题
       href: faq.md
     - name: 获取帮助
-      href: /azure/active-directory/develop/developer-support-help-options
+      href: ../active-directory/develop/developer-support-help-options.md
     - name: 定价
       href: 'https://azure.microsoft.com/pricing/details/active-directory-b2c/'
     - name: 定价计算器
@@ -475,7 +521,7 @@
     - name: Stack Overflow
       href: 'https://stackoverflow.com/questions/tagged/azure-ad-b2c+identity-experience-framework'
     - name: 支持
-      href: support-options.md
+      href: ../active-directory/fundamentals/active-directory-troubleshooting-support-howto.md?bc=%2fazure%2factive-directory-b2c%2fbread%2ftoc.json&toc=%2fazure%2factive-directory-b2c%2fTOC.json
       displayName: technical
     - name: 视频
       href: 'https://azure.microsoft.com/documentation/videos/index/?services=active-directory-b2c'

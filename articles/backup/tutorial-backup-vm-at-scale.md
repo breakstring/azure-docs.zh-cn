@@ -4,12 +4,12 @@ description: 在本教程中，了解如何创建恢复服务保管库、定义�
 ms.date: 07/26/2020
 ms.topic: tutorial
 ms.custom: mvc
-ms.openlocfilehash: ed91105488b812131d3a908c509998c955cec299
-ms.sourcegitcommit: 64ad2c8effa70506591b88abaa8836d64621e166
+ms.openlocfilehash: a9517ffc1e37d50f7c0e57b9ed53fb8bcf55fd70
+ms.sourcegitcommit: 829d951d5c90442a38012daaf77e86046018e5b9
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/17/2020
-ms.locfileid: "88263412"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "89180569"
 ---
 # <a name="use-azure-portal-to-back-up-multiple-virtual-machines"></a>使用 Azure 门户备份多个虚拟机
 
@@ -53,7 +53,7 @@ ms.locfileid: "88263412"
 
     ![恢复服务保管库值](./media/tutorial-backup-vm-at-scale/review-and-create.png)
 
-    恢复服务保管库必须与受保护的虚拟机处于相同位置。 如果多个区域中有虚拟机，请在每个区域中创建恢复服务保管库。 本教程在西欧创建恢复服务保管库的原因在于，西欧是创建“myVM”（通过快速入门创建的虚拟机）的位置 。
+    恢复服务保管库必须与受保护的虚拟机处于相同位置。 如果多个区域中有虚拟机，请在每个区域中创建恢复服务保管库。 本教程在欧洲西部创建恢复服务保管库的原因在于，欧洲西部是创建 myVM（通过快速入门创建的虚拟机）的位置 。
 
 1. 准备好创建恢复服务保管库后，选择“创建”。
 
@@ -136,7 +136,7 @@ ms.locfileid: "88263412"
 
 1. 在上下文菜单上，选择“立即备份”。
 
-    ![上下文菜单](./media/tutorial-backup-vm-at-scale/context-menu.png)
+    ![上下文菜单 - 选择“立即备份”](./media/tutorial-backup-vm-at-scale/context-menu.png)
 
     “立即备份”菜单随即打开。
 
@@ -166,7 +166,7 @@ ms.locfileid: "88263412"
 
 1. 在“备份项”菜单中，选择省略号以打开上下文菜单。
 
-    ![上下文菜单](./media/tutorial-backup-vm-at-scale/context-menu-to-delete-vm.png)
+    ![在“备份项”菜单中，打开“上下文”菜单](./media/tutorial-backup-vm-at-scale/context-menu-to-delete-vm.png)
 
 1. 在上下文菜单上，选择“停止备份”以打开“停止备份”菜单。
 

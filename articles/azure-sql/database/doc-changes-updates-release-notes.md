@@ -11,12 +11,12 @@ ms.devlang: ''
 ms.topic: conceptual
 ms.date: 06/17/2020
 ms.author: sstein
-ms.openlocfilehash: 0e44280c0a6c0d39c98e3aeecd5e9a3707332e81
-ms.sourcegitcommit: 3bf69c5a5be48c2c7a979373895b4fae3f746757
+ms.openlocfilehash: 607b588d3371b20c2b3fa9854e27a7ccdfe2e551
+ms.sourcegitcommit: 75041f1bce98b1d20cd93945a7b3bd875e6999d0
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/14/2020
-ms.locfileid: "88236567"
+ms.lasthandoff: 01/22/2021
+ms.locfileid: "98703761"
 ---
 # <a name="whats-new-in-azure-sql-database--sql-managed-instance"></a>Azure SQL 数据库和 SQL 托管实例中的新增功能有哪些？
 [!INCLUDE[appliesto-sqldb-sqlmi](../includes/appliesto-sqldb-sqlmi.md)]
@@ -52,11 +52,11 @@ Azure SQL 数据库和 Azure SQL 托管实例的相关文档已拆分为单独�
 | ---| --- |
 | 通过单一数据库和弹性池加速的数据库恢复 | 有关信息，请参阅[加速的数据库恢复](../accelerated-database-recovery.md)。|
 | 数据发现和分类  |有关详细信息，请参阅 [Azure SQL 数据库和 Azure Synapse Analytics 数据发现和分类](data-discovery-and-classification-overview.md)。|
-| 弹性数据库作业 (预览)  | 有关信息，请参阅[创建、配置和管理弹性作业](elastic-jobs-overview.md)。 |
+| 弹性数据库作业（预览版） | 有关信息，请参阅[创建、配置和管理弹性作业](elastic-jobs-overview.md)。 |
 | 弹性查询 | 有关信息，请参阅[弹性查询概述](elastic-query-overview.md)。 |
 | 弹性事务 | [跨云数据库的分布式事务](elastic-transactions-overview.md)。 |
 | Azure 门户中的查询编辑器 |有关信息，请参阅[使用 Azure 门户的 SQL 查询编辑器进行连接并查询数据](connect-query-portal.md)。|
-| 带有单一数据库和弹性池的 R services/机器学习 |有关信息，请参阅 [AZURE SQL 数据库中的机器学习服务](https://docs.microsoft.com/sql/advanced-analytics/what-s-new-in-sql-server-machine-learning-services?view=sql-server-2017#machine-learning-services-in-azure-sql-database)。|
+| 带有单一数据库和弹性池的 R services/机器学习 |有关信息，请参阅 [AZURE SQL 数据库中的机器学习服务](/sql/advanced-analytics/what-s-new-in-sql-server-machine-learning-services?view=sql-server-2017#machine-learning-services-in-azure-sql-database)。|
 |SQL Analytics|有关信息，请参阅 [Azure SQL Analytics](../../azure-monitor/insights/azure-sql.md)。|
 | &nbsp; |
 
@@ -64,43 +64,48 @@ Azure SQL 数据库和 Azure SQL 托管实例的相关文档已拆分为单独�
 
 | 功能 | 详细信息 |
 | ---| --- |
+| <a href="/azure/azure-sql/database/elastic-transactions-overview">分布式事务</a> | 跨托管实例的分布式事务。 |
 | <a href="/azure/sql-database/sql-database-instance-pools">实例池</a> | 将较小的 SQL 实例迁移到云的方便且经济高效的方式。 |
-| <a href="https://aka.ms/managed-instance-aadlogins">实例级 Azure AD 服务器主体（登录名）</a> | 使用 <a href="https://docs.microsoft.com/sql/t-sql/statements/create-login-transact-sql?view=azuresqldb-mi-current">CREATE LOGIN FROM EXTERNAL PROVIDER</a> 语句创建实例级登录名。 |
+| <a href="/en-gb/sql/t-sql/statements/create-login-transact-sql">实例级 Azure AD 服务器主体（登录名）</a> | 使用 <a href="/sql/t-sql/statements/create-login-transact-sql?view=azuresqldb-mi-current">CREATE LOGIN FROM EXTERNAL PROVIDER</a> 语句创建实例级登录名。 |
 | [事务复制](../managed-instance/replication-transactional-overview.md) | 将表中的更改复制到 SQL 托管实例、SQL 数据库或 SQL Server 中的其他数据库。 或当 SQL 托管实例或 SQL Server 的其他实例中某些行发生更改时更新表。 若要了解信息，请参阅[在 Azure SQL 托管实例中配置复制](../managed-instance/replication-between-two-instances-configure-tutorial.md)。 |
 | 威胁检测 |若要了解信息，请参阅[在 Azure SQL 托管实例中配置威胁检测](../managed-instance/threat-detection-configure.md)。|
 | 长期备份保留 | 若要了解信息，请参阅[在 Azure SQL 托管实例中配置长期备份保留](../managed-instance/long-term-backup-retention-configure.md)（当前为功能有限的公共预览版）。 | 
 
 ---
 
-## <a name="sql-managed-instance-new-features-and-known-issues"></a>SQL 托管实例新增功能和已知问题
+## <a name="new-features"></a>新增功能
 
 ### <a name="sql-managed-instance-h2-2019-updates"></a>SQL 托管实例 H2 2019 更新
 
 - [服务辅助子网配置](https://azure.microsoft.com/updates/service-aided-subnet-configuration-for-managed-instance-in-azure-sql-database-available/)是一种用来管理子网配置的安全而方便的方法。使用此方法，你可以控制数据流量，而托管实例可确保管理流量不断流。
-- [自带密钥 (BYOK) 的透明数据加密 (TDE)](https://azure.microsoft.com/updates/general-avilability-transparent-data-encryption-with-customer-managed-keys-for-azure-sql-database-managed-instance/) 为静态数据保护实现了自带密钥 (BYOK) 方案，并使组织能够在密钥管理和数据管理方面实现职责分离。
+- [透明数据加密 (TDE) 与创建自己的密钥 (BYOK) ](https://azure.microsoft.com/updates/general-avilability-transparent-data-encryption-with-customer-managed-keys-for-azure-sql-database-managed-instance/) 为静态数据保护启用了自带密钥 (BYOK) 方案，并使组织能够分隔密钥和数据的管理职责。
 - 使用[自动故障转移组](https://azure.microsoft.com/updates/azure-sql-database-auto-failover-groups-feature-now-available-in-all-regions/)可以将主实例中的所有数据库复制到另一个区域中的辅助实例。
 - 使用[全局跟踪标志](https://azure.microsoft.com/updates/global-trace-flags-are-now-available-in-azure-sql-database-managed-instance/)，可以配置 SQL 托管实例行为。
 
 ### <a name="sql-managed-instance-h1-2019-updates"></a>SQL 托管实例 H1 2019 更新
 
 在 H1 2019 的 SQL 托管实例部署模型中启用了以下功能：
-  - 支持具有 <a href="https://aka.ms/sql-mi-visual-studio-subscribers">Visual Studio 订阅者的 Azure 每月额度</a>和增加的[区域限制](../managed-instance/resource-limits.md#regional-resource-limitations)的订阅。
-  - 支持 <a href="https://docs.microsoft.com/sharepoint/administration/deploy-azure-sql-managed-instance-with-sharepoint-servers-2016-2019"> SharePoint 2016 和 SharePoint 2019 </a> 以及 <a href="https://docs.microsoft.com/business-applications-release-notes/october18/dynamics365-business-central/support-for-azure-sql-database-managed-instance"> Dynamics 365 Business Central。</a>
-  - 使用所选的<a href="https://aka.ms/managed-instance-collation">实例级排序规则</a>和<a href="https://azure.microsoft.com/updates/managed-instance-time-zone-ga/">时区</a>创建托管实例。
+  - 支持具有 <a href="/azure/azure-sql/managed-instance/resource-limits">Visual Studio 订阅者的 Azure 每月额度</a>和增加的[区域限制](../managed-instance/resource-limits.md#regional-resource-limitations)的订阅。
+  - 支持 <a href="/sharepoint/administration/deploy-azure-sql-managed-instance-with-sharepoint-servers-2016-2019"> SharePoint 2016 和 SharePoint 2019 </a> 以及 <a href="/business-applications-release-notes/october18/dynamics365-business-central/support-for-azure-sql-database-managed-instance"> Dynamics 365 Business Central。</a>
+  - 使用所选的<a href="/azure/azure-sql/managed-instance/scripts/create-powershell-azure-resource-manager-template">实例级排序规则</a>和<a href="https://azure.microsoft.com/updates/managed-instance-time-zone-ga/">时区</a>创建托管实例。
   - 托管实例现在使用[内置防火墙](../managed-instance/management-endpoint-verify-built-in-firewall.md)进行保护。
-  - 配置 SQL 托管实例以使用[公共终结点](../managed-instance/public-endpoint-configure.md)、[代理覆盖](connectivity-architecture.md#connection-policy)连接以获得更好的网络性能，<a href="https://aka.ms/four-cores-sql-mi-update">Gen5 硬件代系有 4 个 vCore</a> 或<a href="https://aka.ms/managed-instance-configurable-backup-retention">将备份保留期配置为最多 35 天</a>以便进行时间点还原。 [长期备份保留](long-term-retention-overview.md#sql-managed-instance-support)（最长 10 年）目前处于有限公共预览版状态。  
+  - 配置 SQL 托管实例以使用[公共终结点](../managed-instance/public-endpoint-configure.md)、[代理覆盖](connectivity-architecture.md#connection-policy)连接以获得更好的网络性能，<a href="https://aka.ms/four-cores-sql-mi-update">Gen5 硬件代系有 4 个 vCore</a> 或<a href="/azure/azure-sql/database/automated-backups-overview">将备份保留期配置为最多 35 天</a>以便进行时间点还原。 [长期备份保留](long-term-retention-overview.md#sql-managed-instance-support)（最长 10 年）目前处于有限公共预览版状态。  
   - 利用新功能，可以<a href="https://medium.com/@jocapc/geo-restore-your-databases-on-azure-sql-instances-1451480e90fa">使用 PowerShell 将数据库异地还原到另一个数据中心</a>、[重命名数据库](https://azure.microsoft.com/updates/azure-sql-database-managed-instance-database-rename-is-supported/)、[删除虚拟群集](../managed-instance/virtual-cluster-delete.md)。
-  - 新的内置[实例参与者角色](https://docs.microsoft.com/azure/role-based-access-control/built-in-roles#sql-managed-instance-contributor)使职责分离 (SoD) 遵从安全原则并符合企业标准。
-  - 以下 Azure 政府版中提供了 SQL 托管实例 (US Gov 德克萨斯州、US Gov 亚利桑那州) ，以及中国北部2和中国东部2。 它还在以下公共区域中提供：澳大利亚中部、澳大利亚中部2、巴西南部、法国南部、阿拉伯联合酋长国中部、阿拉伯联合酋长国北部、南非北部、南非西北部。
+  - 新的内置[实例参与者角色](../../role-based-access-control/built-in-roles.md#sql-managed-instance-contributor)使职责分离 (SoD) 遵从安全原则并符合企业标准。
+  - 以下 Azure 政府版中提供了 SQL 托管实例 (US Gov 德克萨斯州，US Gov 亚利桑那州) 和中国北部2和中国东部2。 它还在以下公共区域中提供：澳大利亚中部、澳大利亚中部2、巴西南部、法国南部、阿拉伯联合酋长国中部、阿拉伯联合酋长国北部、南非北部、南非西北部。
 
-### <a name="known-issues"></a>已知问题
+## <a name="known-issues"></a>已知问题
 
 |问题  |发现日期  |状态  |解决日期  |
 |---------|---------|---------|---------|
-|[服务主体无法访问 Azure AD 和 AKV](#service-principal-cannot-access-azure-ad-and-akv)|2020年8月|具有解决方法||
+|[使用参数时，Procedure sp_send_dbmail transiently 可能失败 @query](#procedure-sp_send_dbmail-may-transiently-fail-when--parameter-is-used)|2021 年 1 月|具有解决方法||
+|[从服务器信任组删除托管实例后，可以执行分布式事务](#distributed-transactions-can-be-executed-after-removing-managed-instance-from-server-trust-group)|2020 年 10 月|具有解决方法||
+|[执行托管实例缩放操作后无法执行分布式事务](#distributed-transactions-cannot-be-executed-after-managed-instance-scaling-operation)|2020 年 10 月|具有解决方法||
+|Azure SQL 中的 [BULK INSERT](/sql/t-sql/statements/bulk-insert-transact-sql)/[OPENROWSET](/sql/t-sql/functions/openrowset-transact-sql?view=sql-server-ver15) 和托管实例中的 `BACKUP`/`RESTORE` 语句无法使用 Azure AD 托管标识对 Azure 存储进行身份验证|2020 年 9 月|具有解决方法||
+|[服务主体无法访问 Azure AD 和 AKV](#service-principal-cannot-access-azure-ad-and-akv)|2020 年 8 月|具有解决方法||
 |[没有使用 CHECKSUM 的手动备份可能无法还原](#restoring-manual-backup-without-checksum-might-fail)|2020 年 5 月|已解决|2020 年 6 月|
 |[在修改、禁用或启用现有作业后代理无响应](#agent-becomes-unresponsive-upon-modifying-disabling-or-enabling-existing-jobs)|2020 年 5 月|已解决|2020 年 6 月|
-|[资源组上的权限不应用于 SQL 托管实例](#permissions-on-resource-group-not-applied-to-sql-managed-instance)|2020 年 2 月|具有解决方法||
+|[资源组上的权限不应用于 SQL 托管实例](#permissions-on-resource-group-not-applied-to-sql-managed-instance)|2020 年 2 月|已解决|2020 年 11 月|
 |[通过门户对故障转移组进行手动故障转移的限制](#limitation-of-manual-failover-via-portal-for-failover-groups)|2020 年 1 月|具有解决方法||
 |[SQL 代理角色需要拥有对非 sysadmin 登录名的显式 EXECUTE 权限](#in-memory-oltp-memory-limits-are-not-applied)|2019 年 12 月|具有解决方法||
 |[重启代理进程可能会中断 SQL 代理作业](#sql-agent-jobs-can-be-interrupted-by-agent-process-restart)|2019 年 12 月|已解决|2020 年 3 月|
@@ -111,7 +116,7 @@ Azure SQL 数据库和 Azure SQL 托管实例的相关文档已拆分为单独�
 |[故障转移后，可能需要重新配置“业务关键”服务层级上的 Resource Governor](#resource-governor-on-business-critical-service-tier-might-need-to-be-reconfigured-after-failover)|2019 年 9 月|具有解决方法||
 |[升级服务层级后必须重新初始化跨数据库 Service Broker 对话](#cross-database-service-broker-dialogs-must-be-reinitialized-after-service-tier-upgrade)|2019 年 8 月|具有解决方法||
 |[不支持模拟 Azure AD 登录类型](#impersonation-of-azure-ad-login-types-is-not-supported)|2019 年 7 月|无解决方法||
-|[sp_send_db_mail 中不支持 @query 参数](#-parameter-not-supported-in-sp_send_db_mail)|2019 年 4 月|无解决方法||
+|[sp_send_db_mail 中不支持 @query 参数](#-parameter-not-supported-in-sp_send_db_mail)|2019 年 4 月|已解决|2021 年 1 月|
 |[异地故障转移之后，必须重新配置事务复制](#transactional-replication-must-be-reconfigured-after-geo-failover)|2019 年 3 月|无解决方法||
 |[在还原操作过程中使用临时数据库](#temporary-database-is-used-during-restore-operation)||具有解决方法||
 |[将重新创建 TEMPDB 结构和内容](#tempdb-structure-and-content-is-re-created)||无解决方法||
@@ -125,11 +130,57 @@ Azure SQL 数据库和 Azure SQL 托管实例的相关文档已拆分为单独�
 |使用具有安全连接的外部（非 Azure）邮件服务器时出现数据库邮件功能问题||已解决|2019 年 10 月|
 |SQL 托管实例不支持包含的数据库||已解决|2019 年 8 月|
 
+### <a name="procedure-sp_send_dbmail-may-transiently-fail-when-query-parameter-is-used"></a>使用参数时，Procedure sp_send_dbmail transiently 可能失败 @query
+
+使用参数时，Procedure sp_send_dbmail transiently 可能会失败 `@query` 。 发生此问题时，每次执行过程 sp_send_dbmail 都将失败并出现错误 `Msg 22050, Level 16, State 1` 和消息 `Failed to initialize sqlcmd library with error number -2147467259` 。 若要能够正确地看到此错误，应在参数的默认值为0的情况下调用该过程 `@exclude_query_output` ，否则将不会传播此错误。
+此问题是由与 sp_send_dbmail 使用模拟和连接池的方式相关的已知 bug 引起的。
+若要解决此问题，请将电子邮件发送到依赖于 output 参数的重试逻辑 `@mailitem_id` 。 如果执行失败，则参数值将为 NULL，指示应再次调用 sp_send_dbmail 以成功发送电子邮件。 下面是此重试逻辑的示例。
+```sql
+CREATE PROCEDURE send_dbmail_with_retry AS
+BEGIN
+    DECLARE @miid INT
+    EXEC msdb.dbo.sp_send_dbmail
+        @recipients = 'name@mail.com', @subject = 'Subject', @query = 'select * from dbo.test_table',
+        @profile_name ='AzureManagedInstance_dbmail_profile', @execute_query_database = 'testdb',
+        @mailitem_id = @miid OUTPUT
+
+    -- If sp_send_dbmail returned NULL @mailidem_id then retry sending email.
+    --
+    IF (@miid is NULL)
+    EXEC msdb.dbo.sp_send_dbmail
+        @recipients = 'name@mail.com', @subject = 'Subject', @query = 'select * from dbo.test_table',
+        @profile_name ='AzureManagedInstance_dbmail_profile', @execute_query_database = 'testdb',
+END
+```
+
+### <a name="distributed-transactions-can-be-executed-after-removing-managed-instance-from-server-trust-group"></a>从服务器信任组删除托管实例后，可以执行分布式事务
+
+[服务器信任组](../managed-instance/server-trust-group-overview.md)用于在托管实例之间建立信任，这是执行[分布式事务](./elastic-transactions-overview.md)的先决条件。 从服务器信任组中删除托管实例后或删除该组后，仍可以执行分布式事务。 若要确保禁用分布式事务，可以使用一种解决方法，即[用户发起的手动故障转移](../managed-instance/user-initiated-failover.md)（在托管实例上应用）。
+
+### <a name="distributed-transactions-cannot-be-executed-after-managed-instance-scaling-operation"></a>执行托管实例缩放操作后无法执行分布式事务
+
+包括更改服务层或 vCore 数量在内的托管实例缩放操作会重置后端的服务器信任组设置，并禁止运行[分布式事务](./elastic-transactions-overview.md)。 解决方法是在 Azure 门户上删除并创建新的[服务器信任组](../managed-instance/server-trust-group-overview.md)。
+
+### <a name="bulk-insert-and-backuprestore-statements-cannot-use-managed-identity-to-access-azure-storage"></a>BULK INSERT 和 BACKUP/RESTORE 语句无法使用托管标识访问 Azure 存储
+
+BULK INSERT、BACKUP 和 RESTORE 语句以及 OPENROWSET 函数无法使用 `DATABASE SCOPED CREDENTIAL` 和托管标识来对 Azure 存储进行身份验证。 解决方法是切换到“共享访问签名”身份验证。 以下示例不适用于 Azure SQL（数据库和托管实例）：
+
+```sql
+CREATE DATABASE SCOPED CREDENTIAL msi_cred WITH IDENTITY = 'Managed Identity';
+GO
+CREATE EXTERNAL DATA SOURCE MyAzureBlobStorage
+  WITH ( TYPE = BLOB_STORAGE, LOCATION = 'https://****************.blob.core.windows.net/curriculum', CREDENTIAL= msi_cred );
+GO
+BULK INSERT Sales.Invoices FROM 'inv-2017-12-08.csv' WITH (DATA_SOURCE = 'MyAzureBlobStorage');
+```
+
+**解决方法**：使用 [共享访问签名向存储进行身份验证](/sql/t-sql/statements/bulk-insert-transact-sql?view=sql-server-ver15#f-importing-data-from-a-file-in-azure-blob-storage)。
+
 ### <a name="service-principal-cannot-access-azure-ad-and-akv"></a>服务主体无法访问 Azure AD 和 AKV
 
-在某些情况下，服务主体可能存在一个用于访问 Azure AD 和 Azure Key Vault (AKV) 服务的问题。 因此，此问题会影响 Azure AD 身份验证以及透明数据库加密 (TDE) 与 SQL 托管实例一起使用。 这可能是间歇性连接问题，或者无法运行语句，如从外部提供程序创建登录名/用户或将其作为登录名/用户执行。 在某些情况下，在新的 Azure SQL 托管实例上使用客户管理的密钥设置 TDE 可能也不起作用。
+在某些情况下，用于访问 Azure AD 和 Azure Key Vault (AKV) 服务的服务主体可能存在问题。 此问题最终会对使用 Azure AD 身份验证和 SQL 托管实例的透明数据库加密 (TDE) 产生影响。 这可能是一个间歇性连接问题，或者无法运行诸如 CREATE LOGIN/USER FROM EXTERNAL PROVIDER 或 EXECUTE AS LOGIN/USER 之类的语句。 在某些情况下，在新的 Azure SQL 托管实例上使用客户托管密钥设置 TDE 也可能不起作用。
 
-**解决方法**：若要在执行任何更新命令之前防止此问题出现在 SQL 托管实例上，或在更新命令后遇到此问题，请访问 Azure 门户，访问 SQL 托管实例 [Active Directory 管理边栏选项卡](https://docs.microsoft.com/azure/azure-sql/database/authentication-aad-configure?tabs=azure-powershell#azure-portal)。 验证是否可以看到错误消息 "托管实例需要服务主体才能访问 Azure Active Directory。 单击此处创建服务主体。 如果你遇到此错误消息，请单击它，然后按照提供的分步说明进行操作，直到此错误得以解决。
+**解决方法**：为了防止在执行任何更新命令之前 SQL 托管实例出现此问题，或者你已在更新命令后遇到此问题，请转到 Azure 门户，访问 SQL 托管实例 [“Active Directory 管理员”边栏选项卡](./authentication-aad-configure.md?tabs=azure-powershell#azure-portal)。 验证是否可以看到错误消息“托管实例需要服务主体才能访问 Azure Active Directory。 单击此处创建服务主体”。 如果你遇到此错误消息，请单击它，然后按照提供的分步说明操作，直到此错误得以解决。
 
 ### <a name="restoring-manual-backup-without-checksum-might-fail"></a>没有使用 CHECKSUM 的手动备份可能无法还原
 
@@ -143,7 +194,7 @@ Azure SQL 数据库和 Azure SQL 托管实例的相关文档已拆分为单独�
 
 ### <a name="permissions-on-resource-group-not-applied-to-sql-managed-instance"></a>资源组上的权限不应用于 SQL 托管实例
 
-将 SQL 托管实例参与者 Azure 角色应用于 (RG) 的资源组时，它不会应用于 SQL 托管实例，因此不起作用。
+将 SQL 托管实例参与者 Azure 角色应用于资源组 (RG) 时，该角色不应用于 SQL 托管实例，因此不起作用。
 
 **解决方法**：在订阅级别为用户设置“SQL 托管实例参与者”角色。
 
@@ -155,7 +206,7 @@ Azure SQL 数据库和 Azure SQL 托管实例的相关文档已拆分为单独�
 
 ### <a name="sql-agent-roles-need-explicit-execute-permissions-for-non-sysadmin-logins"></a>SQL 代理角色需要拥有对非 sysadmin 登录名的显式 EXECUTE 权限
 
-如果将非 sysadmin 登录名添加到任何 [SQL 代理固定数据库角色](https://docs.microsoft.com/sql/ssms/agent/sql-server-agent-fixed-database-roles)，则会出现以下问题：需要向主存储过程授予显式 EXECUTE 权限才能使这些登录名正常工作。 如果遇到此问题，将显示错误消息“在对象 <object_name> 中拒绝了 EXECUTE 权限(Microsoft SQL Server，错误:229)”。
+如果将非 sysadmin 登录名添加到任何 [SQL 代理固定数据库角色](/sql/ssms/agent/sql-server-agent-fixed-database-roles)，则会出现以下问题：需要向主存储过程授予显式 EXECUTE 权限才能使这些登录名正常工作。 如果遇到此问题，将显示错误消息“在对象 <object_name> 中拒绝了 EXECUTE 权限(Microsoft SQL Server，错误:229)”。
 
 **解决方法**：将登录名添加到 SQL 代理固定数据库角色（SQLAgentUserRole、SQLAgentReaderRole 或 SQLAgentOperatorRole）后，对于添加到这些角色的每个登录名，请执行以下 T-SQL 脚本，向列出的存储过程显式授予 EXECUTE 权限。
 
@@ -177,7 +228,7 @@ GRANT EXECUTE ON master.dbo.xp_sqlagent_notify TO [login_name]
 
 在某些情况下，业务关键服务无法正确应用[内存优化对象的最大内存限制](../managed-instance/resource-limits.md#in-memory-oltp-available-space)。 SQL 托管实例可以让工作负荷使用更多的内存进行内存中 OLTP 操作，这可能影响实例的可用性和稳定性。 达到限制的内存中 OLTP 查询可能不会立即失败。 此问题即将得到解决。 使用较多内存中 OLTP 内存的查询在达到[限制](../managed-instance/resource-limits.md#in-memory-oltp-available-space)的情况下会更快地失败。
 
-**解决方法**：使用 [SQL Server Management Studio](/sql/relational-databases/in-memory-oltp/monitor-and-troubleshoot-memory-usage#bkmk_Monitoring) [监视内存中 OLTP 存储使用情况](https://docs.microsoft.com/azure/azure-sql/in-memory-oltp-monitor-space)，确保工作负荷不会使用比提供的内存更多的内存。 提高基于 vCore 数的内存限制，或者优化工作负荷，让其使用较少的内存。
+**解决方法**：使用 [SQL Server Management Studio](/sql/relational-databases/in-memory-oltp/monitor-and-troubleshoot-memory-usage#bkmk_Monitoring) [监视内存中 OLTP 存储使用情况](../in-memory-oltp-monitor-space.md)，确保工作负荷不会使用比提供的内存更多的内存。 提高基于 vCore 数的内存限制，或者优化工作负荷，让其使用较少的内存。
  
 ### <a name="wrong-error-returned-while-trying-to-remove-a-file-that-is-not-empty"></a>尝试删除不为空的文件时，返回了错误的错误
 
@@ -189,7 +240,7 @@ SQL Server 和 SQL 托管实例[不允许用户删除不为空的文件](/sql/re
 
 正在运行的 `RESTORE` 语句、数据迁移服务的迁移过程以及内置的时间点还原都会阻止对服务层的更新操作或者对现有实例的重设大小操作以及创建新实例的操作，直至还原过程完成为止。 
 
-还原过程会阻止其运行时所在的子网的托管实例和实例池中的这些操作。 实例池中的实例不受影响。 服务层创建或更改操作不会失败或超时。还原过程完成或取消后，将继续执行这些操作。
+还原过程会阻止其运行时所在的子网的托管实例和实例池中的这些操作。 实例池中的实例不受影响。 创建或更改服务层操作不会失败或超时。还原过程完成或取消后，它们将继续进行。
 
 **解决方法**：请等待还原过程完成，或者，如果创建或更新服务层级的操作的优先级更高，可取消还原过程。
 
@@ -252,7 +303,7 @@ SQL Server Data Tools 不完全支持 Azure AD 登录名和用户。
 
 在此示例中，只要未添加新文件，现有数据库就会继续工作并且可以毫无问题地增长。 由于没有足够的空间用于新磁盘驱动器，因此无法创建或还原新数据库，即使所有数据库的总大小未达到实例大小限制也是如此。 这种情况下返回的错误并不明确。
 
-可以使用系统视图[识别剩余文件的数目](https://medium.com/azure-sqldb-managed-instance/how-many-files-you-can-create-in-general-purpose-azure-sql-managed-instance-e1c7c32886c1)。 如果达到此限制，请尝试[使用 DBCC SHRINKFILE 语句来清空并删除一些较小的文件](/sql/t-sql/database-console-commands/dbcc-shrinkfile-transact-sql#d-emptying-a-file)，或切换到[没有此限制的业务关键层](/azure/sql-database/sql-database-managed-instance-resource-limits#service-tier-characteristics)。
+可以使用系统视图[识别剩余文件的数目](https://medium.com/azure-sqldb-managed-instance/how-many-files-you-can-create-in-general-purpose-azure-sql-managed-instance-e1c7c32886c1)。 如果达到此限制，请尝试[使用 DBCC SHRINKFILE 语句来清空并删除一些较小的文件](/sql/t-sql/database-console-commands/dbcc-shrinkfile-transact-sql#d-emptying-a-file)，或切换到[没有此限制的业务关键层](../managed-instance/resource-limits.md#service-tier-characteristics)。
 
 ### <a name="guid-values-shown-instead-of-database-names"></a>显示 GUID 值而不是数据库名称
 
@@ -297,7 +348,7 @@ using (var scope = new TransactionScope())
 
 ```
 
-**解决方法 (自2020年3月版以后无需) **：使用 [ChangeDatabase (String) ](/dotnet/api/system.data.sqlclient.sqlconnection.changedatabase) 在连接上下文中使用其他数据库，而不是使用两个连接。
+**解决方法（自 2020 年 3 月起不再需要）** ：使用 [SqlConnection.ChangeDatabase(String)](/dotnet/api/system.data.sqlclient.sqlconnection.changedatabase) 在连接上下文中使用其他数据库，而非使用两个连接。
 
 ### <a name="clr-modules-and-linked-servers-sometimes-cant-reference-a-local-ip-address"></a>CLR 模块和链接的服务器有时无法引用本地 IP 地址
 
@@ -313,4 +364,4 @@ using (var scope = new TransactionScope())
 
 ## <a name="contribute-to-content"></a>参与内容制作
 
-若要参与 Azure SQL 文档制作，请参阅[文档参与者指南](https://docs.microsoft.com/contribute/)。
+若要参与 Azure SQL 文档制作，请参阅[文档参与者指南](/contribute/)。

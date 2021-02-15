@@ -8,29 +8,30 @@ ms.author: nibaccam
 ms.service: machine-learning
 ms.subservice: core
 ms.topic: conceptual
-ms.custom: how-to, contperfq1
+ms.custom: how-to, contperf-fy21q1, automl
 ms.date: 08/20/2020
-ms.openlocfilehash: 3a6ecc44791602ea074ebdd1fdf4e11393e10a4b
-ms.sourcegitcommit: b33c9ad17598d7e4d66fe11d511daa78b4b8b330
+ms.openlocfilehash: 6e686c7b22eb834a096cdd7a67beb6d8d291ef20
+ms.sourcegitcommit: d4734bc680ea221ea80fdea67859d6d32241aefc
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/25/2020
-ms.locfileid: "88852163"
+ms.lasthandoff: 02/14/2021
+ms.locfileid: "100392317"
 ---
 # <a name="auto-train-a-time-series-forecast-model"></a>自动训练时序预测模型
-[!INCLUDE [aml-applies-to-basic-enterprise-sku](../../includes/aml-applies-to-basic-enterprise-sku.md)]
 
-本文介绍如何在 [Azure 机器学习 PYTHON SDK](https://docs.microsoft.com/python/api/overview/azure/ml/?view=azure-ml-py)中使用自动机器学习（AutoML）配置和培训时序预测回归模型。 
+
+本文介绍如何在 [Azure 机器学习 Python SDK](/python/api/overview/azure/ml/?preserve-view=true&view=azure-ml-py) 中使用自动化机器学习 AutoML 来配置和训练时序预测回归模型。 
+
+为此，需要： 
+
+> [!div class="checklist"]
+> * 准备用于时序建模的数据。
+> * 在 [`AutoMLConfig`](/python/api/azureml-train-automl-client/azureml.train.automl.automlconfig.automlconfig) 对象中配置特定的时序参数。
+> * 使用时序数据运行预测。
 
 有关低代码体验，请参阅[教程：使用自动化机器学习预测需求](tutorial-automated-ml-forecast.md)，里面有关于在 [Azure 机器学习工作室](https://ml.azure.com/)中使用自动化机器学习的时序预测示例。
 
-与传统时序方法不同，在自动 ML 中，过去的时序值将 "透视" 成为回归量与其他预测值的其他维度。 此方法会在训练过程中，将多个上下文变量及其关系彼此整合。 影响预测的因素有很多，因此该方法将自身与真实的预测场景很好地协调起来。 例如，在预测销售额时，历史趋势、汇率和价格相互作用，共同推动着销售结果。 
-
-下面示例演示了如何：
-
-* 准备用于时序建模的数据
-* 在 [`AutoMLConfig`](/python/api/azureml-train-automl-client/azureml.train.automl.automlconfig.automlconfig) 对象中配置特定的时序参数
-* 使用时序数据运行预测
+与经典的时序方法不同，在自动化 ML 中，将“透视”过去的时序值，使其成为回归器与其他预测器的附加维度。 此方法会在训练过程中，将多个上下文变量及其关系彼此整合。 影响预测的因素有很多，因此该方法将自身与真实的预测场景很好地协调起来。 例如，在预测销售额时，历史趋势、汇率和价格之间的交互都是销售结果。 
 
 ## <a name="prerequisites"></a>先决条件
 
@@ -38,18 +39,18 @@ ms.locfileid: "88852163"
 
 * Azure 机器学习工作区。 若要创建工作区，请参阅[创建 Azure 机器学习工作区](how-to-manage-workspace.md)。
 
-* 本文假设读者基本熟悉如何设置自动化机器学习试验。 遵循[教程](tutorial-auto-train-models.md)或[操作方法](how-to-configure-auto-train.md)，了解基本的自动化机器学习试验设计模式。
+* 本文假设你对设置自动化机器学习试验有一定的了解。 遵循[教程](tutorial-auto-train-models.md)或[操作方法](how-to-configure-auto-train.md)，了解主要的自动化机器学习试验设计模式。
 
 ## <a name="preparing-data"></a>准备数据
 
-AutoML 内预测回归任务类型和回归任务类型之间最重要的区别在于，数据中包含的一项功能是表示有效时序的一项功能。 常规时序具有明确定义的一致频率，并且在连续时间范围内的每个采样点上都有一个值。 
+AutoML 中预测回归任务类型和回归任务类型之间最重要的区别在于，前者包含数据中表示有效时序的一项特征。 常规时序具有明确定义的一致频率，并且在连续时间范围内的每个采样点上都有一个值。 
 
 将以下快照看作 `sample.csv` 文件。
-此数据集是具有两个不同商店（A 和 B）的公司的每日销售数据。 
+此数据集是具有两个不同商店、A 和 B 的公司的每日销售数据。 
 
 此外，还有一些功能适用于
 
- *  `week_of_year`：允许模型检测每周季节性。
+ *  `week_of_year`：允许模型检测每周周期性。
 * `day_datetime`：表示具有每日频率的干净时序。
 * `sales_quantity`：用于运行预测的目标列。 
 
@@ -78,10 +79,10 @@ data["day_datetime"] = pd.to_datetime(data["day_datetime"])
 
 在这种情况下，数据已按时间字段 `day_datetime` 降序排序。 但在设置试验时，请确保所需的时间列按升序进行排序，从而生成有效的时序。 
 
-以下代码： 
-* 假定数据包含1000条记录，并在数据中作出确定性拆分，以创建定型和测试数据集。 
-* 将标签列标识为 `sales_quantity` 。
-* 将标签字段从中分隔 `test_data` 以构成 `test_target` 集。
+以下代码 
+* 假设数据包含 1,000 条记录，并在数据中进行确定性拆分以创建训练和测试数据集。 
+* 将标签列标识为 `sales_quantity`。
+* 从 `test_data` 中分离出标签字段，以形成 `test_target` 集。
 
 ```python
 train_data = data.iloc[:950]
@@ -93,19 +94,19 @@ test_labels = test_data.pop(label).values
 ```
 
 > [!IMPORTANT]
-> 在训练用于预测未来值的模型时，请确保在针对预期范围运行预测时可使用训练中用到的所有特征。 例如，在创建需求预测时，包含当前股票价格的特征可能大幅提升训练准确度。 但是，如果你打算使用较长的时间范围进行预测，则可能没法准确预测与未来的时序点相对应的未来股价值，模型准确性也会受到影响。
+> 在训练用于预测未来值的模型时，请确保在针对预期范围运行预测时可使用训练中用到的所有特征。 <br> <br>例如，在创建需求预测时，包含当前股票价格的特征可能大幅提升训练准确度。 但是，如果你打算使用较长的时间范围进行预测，则可能没法准确预测与未来的时序点相对应的未来股价值，模型准确性也会受到影响。
 
 <a name="config"></a>
 
-## <a name="training-and-validation-data"></a>定型和验证数据
+## <a name="training-and-validation-data"></a>训练和验证数据
 
-您可以直接在对象中指定单独的定型集和验证集 `AutoMLConfig` 。   详细了解 [AutoMLConfig](#configure-experiment)。
+可以直接在 `AutoMLConfig` 对象中指定不同的训练集和验证集。   详细了解 [AutoMLConfig](#configure-experiment)。
 
-对于时序预测，当你同时传递定型和验证数据时，将自动使用 **滚动起源交叉验证 (ROCV) ** ，并使用中的参数设置交叉验证折叠数 `n_cross_validations` `AutoMLConfig` 。 ROCV 使用原始时间点将时序分成训练数据和验证数据。 在时间内滑动原点会生成交叉验证折叠。 此策略保留时序数据完整性，并消除数据泄露的风险
+对于时序预测，默认情况下仅使用滚动原点交叉验证 (ROCV) 进行验证。 将训练数据和验证数据一起传递，并在 `AutoMLConfig` 中使用 `n_cross_validations` 参数设置交叉验证折叠数。 ROCV 使用原始时间点将时序分成训练数据和验证数据。 在时间内滑动原点会生成交叉验证折叠。 此策略保留时序数据完整性并消除了数据泄露风险
 
-![替换文字](./media/how-to-auto-train-forecast/ROCV.svg)
+![滚动起源交叉验证](./media/how-to-auto-train-forecast/ROCV.svg)
 
-有关其他交叉验证和数据拆分选项，请参阅 [在 AutoML 中配置数据拆分和交叉验证](how-to-configure-cross-validation-data-splits.md)。
+你还可以自带验证数据，详情请参阅[在 AutoML 中配置数据拆分和交叉验证](how-to-configure-cross-validation-data-splits.md#provide-validation-data)。
 
 
 ```python
@@ -115,93 +116,65 @@ automl_config = AutoMLConfig(task='forecasting',
                              **time_series_settings)
 ```
 
-详细了解 AutoML 如何应用交叉验证，以 [防止过度调整模型](concept-manage-ml-pitfalls.md#prevent-over-fitting)。
+详细了解 AutoML 如何应用交叉验证来[防止过度拟合模型](concept-manage-ml-pitfalls.md#prevent-over-fitting)。
 
 ## <a name="configure-experiment"></a>配置试验
-[`AutoMLConfig`](https://docs.microsoft.com/python/api/azureml-train-automl-client/azureml.train.automl.automlconfig.automlconfig?view=azure-ml-py) 对象定义自动化机器学习任务所需的设置和数据。 预测模型的配置与标准回归模型的设置相似，但特定于时间序列数据的某些特征化步骤和配置选项是存在的。 
 
-### <a name="featurization-steps"></a>特征化步骤
+[`AutoMLConfig`](/python/api/azureml-train-automl-client/azureml.train.automl.automlconfig.automlconfig?preserve-view=true&view=azure-ml-py) 对象定义自动化机器学习任务所需的设置和数据。 预测模型的配置与标准回归模型的设置相似，但存在专门针对时序数据的某些模型、配置选项和特征化步骤。 
 
-在每一个自动化机器学习试验中，默认情况下都会将自动缩放和规范化技术应用于数据。 这些技术是 **特征化** 的一种类型，用于帮助 *特定* 的算法对不同规模的功能敏感。 详细了解[特征化 In AutoML](how-to-configure-auto-features.md#automatic-featurization)中的默认特征化步骤
+### <a name="supported-models"></a>支持的模型
+在模型创建和优化过程中，自动化机器学习会自动尝试各种模型和算法。 用户不需要指定算法。 对于预测试验，本机时序模型和深度学习模型都是推荐系统的一部分。 下表对此模型子集进行了汇总。 
 
-但是，仅对任务类型执行以下步骤 `forecasting` ：
+>[!Tip]
+> 传统回归模型也作为预测试验的推荐系统的一部分进行了测试。 有关模型的完整列表，请参阅[支持的模型表](how-to-configure-auto-train.md#supported-models)。 
 
-* 检测时序采样频率（例如每小时、每天、每周），并为缺失的时间点创建新记录以使序列连续。
-* 通过向前填充估算目标列中缺少的值，通过列值中位数估算特征列中缺少的值
-* 创建基于时序标识符的特征，以在不同序列中启用固定效果
-* 创建基于时间的特征，以帮助学习季节性模式
-* 将分类变量编码为数值数量
-
-若要获取在这些步骤中创建的功能的摘要，请参阅 [特征化透明度](how-to-configure-auto-features.md#featurization-transparency)
-
-> [!NOTE]
-> 自动化机器学习特征化步骤（特征规范化、处理缺失数据，将文本转换为数字等）成为了基础模型的一部分。 使用模型进行预测时，将自动向输入数据应用在训练期间应用的相同特征化步骤。
-
-#### <a name="customize-featurization"></a>自定义特征化
-
-你还可以选择自定义特征化设置，以确保用于训练 ML 模型的数据和功能导致相关的预测。 
-
-支持的任务自定义项 `forecasting` 包括：
-
-|自定义|定义|
-|--|--|
-|列用途更新|重写指定列的自动检测到的特征类型。|
-|转换器参数更新 |更新指定转换器的参数。 目前支持 Imputer（fill_value 和中值）。|
-|删除列 |指定要从特征化中删除的列。|
-
-若要通过 SDK 自定义 featurizations，请 `"featurization": FeaturizationConfig` 在 `AutoMLConfig` 对象中指定。 了解有关 [自定义 featurizations](how-to-configure-auto-features.md#customize-featurization)的详细信息。
-
-```python
-featurization_config = FeaturizationConfig()
-# `logQuantity` is a leaky feature, so we remove it.
-featurization_config.drop_columns = ['logQuantitity']
-# Force the CPWVOL5 feature to be of numeric type.
-featurization_config.add_column_purpose('CPWVOL5', 'Numeric')
-# Fill missing values in the target column, Quantity, with zeroes.
-featurization_config.add_transformer_params('Imputer', ['Quantity'], {"strategy": "constant", "fill_value": 0})
-# Fill mising values in the `INCOME` column with median value.
-featurization_config.add_transformer_params('Imputer', ['INCOME'], {"strategy": "median"})
-```
-
-如果使用 Azure 机器学习工作室进行试验，请参阅[操作方法文章](how-to-use-automated-ml-for-ml-models.md#customize-featurization)。
+模型| 说明 | 优点
+----|----|---
+Prophet（预览版）|Prophet 最适合用于受季节影响大且包含多个季节历史数据的时序。 若要利用此模型，请使用 `pip install fbprophet` 在本地安装它。 | 准确、快速、可靠地反应时序中的离群值、缺失数据和巨大变化。
+Auto-ARIMA（预览版）|自动回归集成移动平均 (ARIMA) 在数据处于静态时性能最佳。 这意味着其统计属性（例如平均值和方差）在整个集中保持不变。 例如，如果您翻了一硬币，那么您将获得机头的概率为50%，而不考虑您是今天、明天还是下一年。| 适用于单变量系列，这是因为使用过去的值来预测未来的值。
+ForecastTCN（预览版）| ForecastTCN 是一种神经网络模型，旨在处理最苛刻的预测任务，从而捕获数据中的非线性本地和全局趋势以及时序之间的关系。|可利用数据中的复杂趋势并轻松扩展到最大型的数据集。
 
 ### <a name="configuration-settings"></a>配置设置
 
 与回归问题类似，你要定义标准训练参数，例如任务类型、迭代次数、训练数据和交叉验证次数。 对于预测任务，还必须设置对试验有影响的其他参数。 
 
-下表汇总了这些附加参数。 有关语法设计模式，请参阅 [参考文档](https://docs.microsoft.com/python/api/azureml-train-automl-client/azureml.train.automl.automlconfig.automlconfig?view=azure-ml-py) 。
+下表汇总了这些额外的参数。 有关语法设计模式，请参阅 [ForecastingParameter 类参考文档](/python/api/azureml-automl-core/azureml.automl.core.forecasting_parameters.forecastingparameters?preserve-view=true&view=azure-ml-py)。
 
-| 参数&nbsp;名称 | 说明 | 必选 |
+| 参数&nbsp;名称 | 说明 | 必须 |
 |-------|-------|-------|
 |`time_column_name`|用于指定输入数据中用于生成时序的日期时间列并推断其频率。|✓|
 |`forecast_horizon`|定义要预测的未来的时段数。 范围以时序频率为单位。 单位基于预测器应预测出的训练数据的时间间隔，例如每月、每周。|✓|
-|`enable_dnn`|[启用预测 dnn]()。||
+|`enable_dnn`|[启用预测 DNN]()。||
 |`time_series_id_column_names`|列名，用于唯一标识多行数据中具有相同时间戳的时序。 如果未定义时序标识符，则假定该数据集为一个时序。 要详细了解单个时序，请查看 [energy_demand_notebook](https://github.com/Azure/MachineLearningNotebooks/tree/master/how-to-use-azureml/automated-machine-learning/forecasting-energy-demand)。||
+|`freq`| 时序数据集频率。 此参数表示事件预计发生的时间段，例如每日、每周、每年等。频率必须是 [pandas 偏移别名](https://pandas.pydata.org/pandas-docs/stable/user_guide/timeseries.html#dateoffset-objects)。||
 |`target_lags`|要根据数据频率滞后目标值的行数。 此滞后表示为一个列表或整数。 默认情况下，在独立变量和依赖变量之间的关系不匹配或关联时，应使用滞后。 ||
-|`feature_lags`| `target_lags`设置并将设置为时，自动 ML 会自动决定 lag 的功能 `feature_lags` `auto` 。 启用功能滞后有助于提高准确性。 默认情况下，功能滞后处于禁用状态。 ||
-|`target_rolling_window_size`|要用于生成预测值的 *n* 个历史时间段，该值小于或等于训练集大小。 如果省略，则 *n* 为完整训练集大小。 如果训练模型时只想考虑一定量的历史记录，请指定此参数。 了解有关 [目标滚动窗口聚合](#target-rolling-window-aggregation)的详细信息。||
+|`feature_lags`| 当设置了 `target_lags` 并且 `feature_lags` 设置为 `auto` 时，要滞后的功能将由自动化 ML 自动确定。 启用功能滞后有助于提高准确性。 默认情况下会禁用功能滞后。 ||
+|`target_rolling_window_size`|要用于生成预测值的 *n* 个历史时间段，该值小于或等于训练集大小。 如果省略，则 *n* 为完整训练集大小。 如果训练模型时只想考虑一定量的历史记录，请指定此参数。 详细了解[目标滚动窗口聚合](#target-rolling-window-aggregation)。||
+|`short_series_handling_config`| 启用“短时序处理”，以避免在训练期间由于数据不足而失败。 在默认情况下，“短时序处理”设置为 `auto`。 详细了解[短时序处理](#short-series-handling)。|
 
 
-以下代码： 
-* 将创建 `time-series settings` 为字典对象。 
-* 将设置 `time_column_name` 为 `day_datetime` 数据集中的字段。 
-* 将 `time_series_id_column_names` 参数定义为 `"store"` 。 这可以确保为数据创建 **两个单独的时序组** ;一种用于存储 A 和 B。
-* 将设置 `forecast_horizon` 为50以预测整个测试集。 
-* 将预测时段设置为10个周期 `target_rolling_window_size`
-* 指定与参数一起使用两个句点的目标值的单个 lag `target_lags` 。 
-* 设置 `target_lags` 为建议的 "自动" 设置，此设置会自动检测此值。
+以下代码 
+* 利用 [`ForecastingParameters`](/python/api/azureml-automl-core/azureml.automl.core.forecasting_parameters.forecastingparameters?preserve-view=true&view=azure-ml-py) 类来为试验训练定义预测参数
+* 将 `time_column_name` 设置为数据集中的 `day_datetime` 字段。 
+* 将 `time_series_id_column_names` 参数定义为 `"store"`。 这可确保为数据创建 **两个单独的时序组**，一个用于商店 A，一个用于商店 B。
+* 将 `forecast_horizon` 设置为 50 以针对整个测试集进行预测。 
+* 使用 `target_rolling_window_size` 将预测窗口设置为 10 个时段
+* 使用 `target_lags` 参数指定目标值滞后两个时段。 
+* 将 `target_lags` 设置为建议的“auto”设置，这将自动为你检测此值。
 
 ```python
-time_series_settings = {
-    "time_column_name": "day_datetime",
-    "time_series_id_column_names": ["store"],
-    "forecast_horizon": 50,
-    "target_lags": "auto",
-    "target_rolling_window_size": 10,
-}
+from azureml.automl.core.forecasting_parameters import ForecastingParameters
+
+forecasting_parameters = ForecastingParameters(time_column_name='day_datetime', 
+                                               forecast_horizon=50,
+                                               time_series_id_column_names=["store"],
+                                               freq='W',
+                                               target_lags='auto',
+                                               target_rolling_window_size=10)
+                                              
 ```
 
-`time_series_settings`然后，将这些值传递到标准对象中，同时还会传入 `AutoMLConfig` `forecasting` 任务类型、主要指标、出口标准和定型数据。 
+然后，将这些 `forecasting_parameters` 传入到标准 `AutoMLConfig` 对象中，同时还会传入 `forecasting` 任务类型、主要指标、退出标准和训练数据。 
 
 ```python
 from azureml.core.workspace import Workspace
@@ -218,78 +191,158 @@ automl_config = AutoMLConfig(task='forecasting',
                              n_cross_validations=5,
                              enable_ensembling=False,
                              verbosity=logging.INFO,
-                             **time_series_settings)
+                             **forecasting_parameters)
 ```
+
+使用自动 ML 成功训练预测模型所需的数据量受在 `forecast_horizon` `n_cross_validations` `target_lags` `target_rolling_window_size` 配置时指定的、、和值的影响 `AutoMLConfig` 。 
+
+下面的公式计算构建时序功能所需的历史数据量。
+
+所需的最小历史数据： (2 `forecast_horizon`) + # `n_cross_validations` + 最大 (max (`target_lags`) ) `target_rolling_window_size`
+
+对于数据集中任何不满足指定相关设置的所需历史数据量的序列，都将引发错误异常。 
+
+### <a name="featurization-steps"></a>特征化步骤
+
+在每一个自动化机器学习试验中，默认情况下都会将自动缩放和规范化技术应用于数据。 这些技术是特征化的类型，用于帮助对不同规模数据的特征敏感的某些算法。 在 [AutoML 中的特征化](how-to-configure-auto-features.md#automatic-featurization)中详细了解默认特征化步骤
+
+但是，仅对 `forecasting` 任务类型执行以下步骤：
+
+* 检测时序采样频率（例如每小时、每天、每周），并为缺失的时间点创建新记录以使序列连续。
+* 通过向前填充估算目标列中缺少的值，通过列值中位数估算特征列中缺少的值
+* 创建基于时序标识符的特征，以在不同序列中启用固定效果
+* 创建基于时间的特征，以帮助学习季节性模式
+* 将分类变量编码为数值数量
+
+若要获取这些步骤所创建的功能的摘要，请参阅[特征化透明度](how-to-configure-auto-features.md#featurization-transparency)
+
+> [!NOTE]
+> 自动化机器学习特征化步骤（特征规范化、处理缺失数据，将文本转换为数字等）成为了基础模型的一部分。 使用模型进行预测时，将自动向输入数据应用在训练期间应用的相同特征化步骤。
+
+#### <a name="customize-featurization"></a>自定义特征化
+
+你还可以自定义特征化设置，以确保用于训练 ML 模型的数据和特征能够产生相关的预测。 
+
+`forecasting` 任务支持的自定义项包括：
+
+|自定义|定义|
+|--|--|
+|列用途更新|重写指定列的自动检测到的特征类型。|
+|转换器参数更新 |更新指定转换器的参数。 目前支持 Imputer（fill_value 和中值）。|
+|删除列 |指定要从特征化中删除的列。|
+
+若要使用 SDK 来自定义特征化，请在 `AutoMLConfig` 对象中指定 `"featurization": FeaturizationConfig`。 详细了解[自定义特征化](how-to-configure-auto-features.md#customize-featurization)。
+
+>[!NOTE]
+> 从 SDK 版本1.19 开始，“删除列”功能已弃用。 在自动化 ML 试验中使用数据集之前，作为数据清理过程的一部分，请将数据集中的列删除。 
+
+```python
+featurization_config = FeaturizationConfig()
+
+# `logQuantity` is a leaky feature, so we remove it.
+featurization_config.drop_columns = ['logQuantitity']
+
+# Force the CPWVOL5 feature to be of numeric type.
+featurization_config.add_column_purpose('CPWVOL5', 'Numeric')
+
+# Fill missing values in the target column, Quantity, with zeroes.
+featurization_config.add_transformer_params('Imputer', ['Quantity'], {"strategy": "constant", "fill_value": 0})
+
+# Fill mising values in the `INCOME` column with median value.
+featurization_config.add_transformer_params('Imputer', ['INCOME'], {"strategy": "median"})
+```
+
+如果使用 Azure 机器学习工作室进行试验，请参阅[如何在工作室中自定义特征化](how-to-use-automated-ml-for-ml-models.md#customize-featurization)。
 
 ## <a name="optional-configurations"></a>可选配置
 
-其他可选配置可用于预测任务，如启用深度学习和指定目标滚动窗口聚合。 
+有其他可用于预测任务的可选配置，例如，启用深度学习和指定目标滚动窗口聚合。 
 
 ### <a name="enable-deep-learning"></a>启用深度学习
 
 > [!NOTE]
-> 自动机器学习中预测的 DNN 支持为 **预览版** ，不支持本地运行。
+> DNN 对自动机器学习的预测支持目前为 **预览版**，不支持本地运行。
 
-您还可以利用深度学习和深层神经网络（Dnn）来改进模型的分数。 通过自动化 ML 的深度学习，可预测单变量和多变量时序数据。
+你还可以通过深层神经网络 (DNN) 利用深度学习来改进模型的分数。 通过自动化 ML 的深度学习，可预测单变量和多变量时序数据。
 
 深度学习模型具有三个固有功能：
 1. 可以从任意输入到输出映射进行学习
 1. 支持多个输入和输出
-1. 它们可以自动提取跨越较长序列的输入数据中的模式。 
+1. 可以从跨越较长序列的输入数据中自动提取模式。 
 
-若要启用深度学习，请 `enable_dnn=True` 在对象中设置 `AutoMLConfig` 。
+若要启用深度学习，请在 `AutoMLConfig` 对象中设置 `enable_dnn=True`。
 
 ```python
 automl_config = AutoMLConfig(task='forecasting',
                              enable_dnn=True,
                              ...
-                             **time_series_settings)
+                             **forecasting_parameters)
 ```
-若要为 Azure 机器学习 studio 中创建的 AutoML 实验启用 DNN，请参阅 studio 操作指南中的 " [任务类型" 设置](how-to-use-automated-ml-for-ml-models.md#create-and-run-experiment)。
+> [!Warning]
+> 为使用 SDK 创建的试验启用 DNN 时，系统会禁用[最佳模型说明](how-to-machine-learning-interpretability-automl.md)。
 
-自动化 ML 作为推荐系统的一部分向用户提供原生时序和深度学习模型。 
-
-
-模型| 说明 | 优点
-----|----|---
-Prophet（预览版）|Prophet 最适合用于受季节影响大且包含多个季节历史数据的时序。 若要利用此模型，请使用 `pip install fbprophet` 在本地安装它。 | 准确、快速、可靠地反应时序中的离群值、缺失数据和巨大变化。
-Auto-ARIMA（预览版）|当数据为静止时，自动回归集成的移动平均线 (ARIMA) 性能最佳。 这意味着其统计属性（例如平均值和方差）在整个集中保持不变。 例如，如果你掷一枚硬币，那么无论是今天掷、明天掷还是明年掷，正面朝上的可能性都是 50%。| 适用于单变量系列，这是因为使用过去的值来预测未来的值。
-ForecastTCN（预览版）| ForecastTCN 是一种神经网络模型，旨在处理最苛刻的预测任务，从而捕获数据中的非线性本地和全局趋势以及时序之间的关系。|可利用数据中的复杂趋势并轻松扩展到最大型的数据集。
-
+若要为在 Azure 机器学习工作室中创建的 AutoML 试验启用 DNN，请参阅[工作室操作指南中的任务类型设置](how-to-use-automated-ml-for-ml-models.md#create-and-run-experiment)。
 
 查看[饮料制造预测笔记本](https://github.com/Azure/MachineLearningNotebooks/blob/master/how-to-use-azureml/automated-machine-learning/forecasting-beer-remote/auto-ml-forecasting-beer-remote.ipynb)，获取使用 DNN 的详细代码示例。
 
-
 ### <a name="target-rolling-window-aggregation"></a>目标滚动窗口聚合
-通常，目标的最新值是预测程序能具有的最佳信息。  目标滚动窗口聚合允许添加数据值的滚动聚合作为功能。 通过生成和使用这些附加特征作为额外的上下文数据，可帮助提高训练模型的准确性。
+通常，目标的最新值是预测程序能具有的最佳信息。  通过目标滚动窗口聚合，可将数据值的滚动聚合添加为特征。 通过生成和使用这些附加特征作为额外的上下文数据，可帮助提高训练模型的准确性。
 
-例如，假设您想要预测能源需求。 你可能想要添加三天滚动窗口功能，以用于对加热空间进行热量更改。 在此示例中，通过 `target_rolling_window_size= 3` 在构造函数中设置来创建此窗口 `AutoMLConfig` 。 
+例如，假设你想要预测能源需求。 你可能希望添加一项滚动窗口（3 天）特征来解释供暖空间的热变化。 在此示例中，通过在 `AutoMLConfig` 构造函数中设置 `target_rolling_window_size= 3` 来创建此窗口。 
 
-该表显示在应用窗口聚合时产生的特征工程。 **最小值、最大**值和**总和**列基于定义的设置在三个滑动窗口上生成。 每行都有一个新的计算功能（如果时间戳为9月8日，2017 4： 00 (）使用9月 8 2017 日的 **需求值** 计算最大值、最小值和总和值： 00 (-3： 00 (。 3 这个窗口将移位填充其余行的数据。
+下表显示了在应用窗口聚合后发生的特征工程。 根据定义的设置针对滑动窗口 3 生成表示 **最小值、最大值** 和 **总和** 的列。 每一行有计算得出的一个新特征；如果时间戳为 2017 年 9 月 8 日凌晨 4:00，则使用 2017 年 9 月 8 日凌晨 1:00 至 3:00 的 **需求值** 计算最大值、最小值和总和值。 3 这个窗口将移位填充其余行的数据。
 
-![替换文字](./media/how-to-auto-train-forecast/target-roll.svg)
-
+![目标滚动窗口](./media/how-to-auto-train-forecast/target-roll.svg)
 
 请查看使用[目标滚动窗口聚合特征](https://github.com/Azure/MachineLearningNotebooks/blob/master/how-to-use-azureml/automated-machine-learning/forecasting-energy-demand/auto-ml-forecasting-energy-demand.ipynb)的 Python 代码示例。
 
+### <a name="short-series-handling"></a>短时序处理
+
+如果没有足够的数据点来执行模型开发的训练和验证阶段，自动化 ML 就会将一个时序视为短时序。 数据点的数量因各个试验而异，并且依赖于 max_horizon、交叉验证拆分数以及模型回看的长度，该长度是构建时序功能所需的最长历史记录。 有关精确的计算，请参阅 [short_series_handling_configuration 参考文档](/python/api/azureml-automl-core/azureml.automl.core.forecasting_parameters.forecastingparameters?preserve-view=true&view=azure-ml-py#short-series-handling-configuration)。
+
+默认情况下，自动化 ML 通过在 `ForecastingParameters` 对象中使用 `short_series_handling_configuration` 参数来提供“短时序处理”。 
+
+若要启用“短序列处理”，还必须定义 `freq` 参数。 为了定义每小时频率，我们将设置 `freq='H'`。 查看[此处](https://pandas.pydata.org/pandas-docs/stable/user_guide/timeseries.html#dateoffset-objects)的频率字符串选项。 若要更改默认行为 `short_series_handling_configuration = 'auto'`，请更新 `ForecastingParameter` 对象中的 `short_series_handling_configuration` 参数。  
+
+```python
+from azureml.automl.core.forecasting_parameters import ForecastingParameters
+
+forecast_parameters = ForecastingParameters(time_column_name='day_datetime', 
+                                            forecast_horizon=50,
+                                            short_series_handling_configuration='auto',
+                                            freq = 'H',
+                                            target_lags='auto')
+```
+下表总结了可用于 `short_series_handling_config` 的设置。
+ 
+|设置|说明
+|---|---
+|`auto`| 下面是“短时序处理”的默认行为 <li> 如果所有时序都短，则填充数据。 <br> <li> 如果并非所有时序都短，则删除短时序。 
+|`pad`| 如果 `short_series_handling_config = pad`，则自动化 ML 会为找到的每个短时序添加随机值。 下面列出了列类型以及用于填充这些列的内容： <li>对象列，其中包含 NAN <li> 数值列，其中包含 0 <li> 布尔/逻辑列，其中包含 False <li> 目标列填充平均值为零且标准偏差为 1 的随机值。 
+|`drop`| 如果 `short_series_handling_config = drop`，则自动化 ML 会删除短时序，并且该短时序不会用于训练或预测。 对这些时序的预测将会返回 NAN。
+|`None`| 不会填充或删除任何时序
+
+>[!WARNING]
+>填充可能会影响生成的模型的准确性，因为我们引入人工数据只是为了使训练成功而不会发生失败。 <br> <br> 如果许多时序中都是短时序，你可能还会在可说明性结果中看到一些影响
+
 ## <a name="run-the-experiment"></a>运行试验 
 
-`AutoMLConfig`准备好对象后，可以提交试验。 模型完成后，检索最佳的运行迭代。
+准备好 `AutoMLConfig` 对象后，可以提交试验。 模型完成后，检索最佳的运行迭代。
 
 ```python
 ws = Workspace.from_config()
-experiment = Experiment(ws, "forecasting_example")
+experiment = Experiment(ws, "Tutorial-automl-forecasting")
 local_run = experiment.submit(automl_config, show_output=True)
 best_run, fitted_model = local_run.get_output()
 ```
-
+ 
 ## <a name="forecasting-with-best-model"></a>用最佳模型进行预测
 
 使用最佳模型迭代来预测测试数据集的值。
 
-`forecast()`函数允许指定预测的开始时间，这不同于 `predict()` ，后者通常用于分类和回归任务。
+`forecast()` 函数允许指定预测的开始时间，这与通常用于分类和回归任务的 `predict()` 不同。
 
-在下例中，先将 `y_pred` 中的所有值替换为 `NaN`。 在这种情况下，预测源将位于定型数据的结尾。 但是，如果只将 `y_pred` 的后半部分替换为 `NaN`，则函数不会修改前半部分的数值，而会在后半部分预测 `NaN` 值。 函数将返回预测值和对齐的特征。
+在下例中，先将 `y_pred` 中的所有值替换为 `NaN`。 在本例中，预测原点将位于训练数据的末尾。 但是，如果只将 `y_pred` 的后半部分替换为 `NaN`，则函数不会修改前半部分的数值，而会在后半部分预测 `NaN` 值。 函数将返回预测值和对齐的特征。
 
 还可以在 `forecast()` 函数中使用 `forecast_destination` 参数，预测到指定日期为止的值。
 
@@ -300,7 +353,7 @@ label_fcst, data_trans = fitted_pipeline.forecast(
     test_data, label_query, forecast_destination=pd.Timestamp(2019, 1, 8))
 ```
 
-计算 `actual_labels` 在实际值与中预测值之间 (RMSE) 的根本平均平方值 `predict_labels` 。
+计算 `actual_labels` 实际值与 `predict_labels` 中的预测值之间的均方根误差 (RMSE)。
 
 ```python
 from sklearn.metrics import mean_squared_error
@@ -323,7 +376,7 @@ day_datetime,store,week_of_year
 重复执行必要的步骤，将此未来数据加载到数据帧，然后运行 `best_run.predict(test_data)` 以预测未来值。
 
 > [!NOTE]
-> 不能预测大于 `forecast_horizon` 的时间段数的值。 必须使用更大的时间范围对模型进行重新训练，才能预测当前时间范围之外的未来值。
+> 启用了和/或后，不支持预测与自动 ML 的预测 `target_lags` `target_rolling_window_size` 。
 
 
 ## <a name="example-notebooks"></a>示例笔记本
@@ -337,5 +390,7 @@ day_datetime,store,week_of_year
 
 ## <a name="next-steps"></a>后续步骤
 
-* 遵循[教程](tutorial-auto-train-models.md)了解如何通过自动化机器学习创建试验。
-* 查看[适用于 Python 的 Azure 机器学习 SDK](https://docs.microsoft.com/python/api/overview/azure/ml/intro?view=azure-ml-py) 参考文档。
+* 详细了解[如何以及在何处部署模型](how-to-deploy-and-where.md)。
+* 了解[可解释性：自动化机器学习中的模型说明（预览版）](how-to-machine-learning-interpretability-automl.md)。 
+* 了解如何在[多模型解决方案加速器](https://aka.ms/many-models)中使用 AutoML 训练多个模型。
+* 按照[教程](tutorial-auto-train-models.md)获取使用自动化机器学习创建试验的端到端示例。

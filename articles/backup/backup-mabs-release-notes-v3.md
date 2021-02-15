@@ -4,12 +4,12 @@ description: 本文介绍 Microsoft Azure 备份服务器 (MABS) v3 的已知问
 ms.topic: conceptual
 ms.date: 06/03/2020
 ms.asset: 0c4127f2-d936-48ef-b430-a9198e425d81
-ms.openlocfilehash: 26d30a56b3117642678f98ba3e7927c27bfd6a69
-ms.sourcegitcommit: ac7ae29773faaa6b1f7836868565517cd48561b2
+ms.openlocfilehash: 87bc415c125a387d98ac88255d77fb1867564acf
+ms.sourcegitcommit: 829d951d5c90442a38012daaf77e86046018e5b9
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/25/2020
-ms.locfileid: "88826610"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "91254255"
 ---
 # <a name="release-notes-for-microsoft-azure-backup-server"></a>Microsoft Azure 备份服务器发行说明
 
@@ -60,7 +60,7 @@ ms.locfileid: "88826610"
 4. [安装](/sql/ssms/download-sql-server-management-studio-ssms) SQL Server Management Studio (SSMS)。
 5. 如[使用 SQL 2017 时的 SSRS 配置](./backup-azure-microsoft-azure-backup.md#upgrade-mabs)中所述使用参数配置报告功能。
 6. [安装](backup-azure-microsoft-azure-backup.md) MABS V3。
-7. 使用 SSMS [还原](/sql/relational-databases/backup-restore/restore-a-database-backup-using-ssms) SQL 并如[此处](/system-center/dpm/back-up-the-dpm-server?view=sc-dpm-2019#using-dpmsync)所述运行 DPM-Sync 工具。
+7. 使用 SSMS [还原](/sql/relational-databases/backup-restore/restore-a-database-backup-using-ssms) SQL 并如[此处](/system-center/dpm/back-up-the-dpm-server#using-dpmsync)所述运行 DPM-Sync 工具。
 8. 使用以下命令更新 dbo.tbl_DLS_GlobalSetting 表中的“DataBaseVersion”属性：
 
     ```sql
@@ -81,7 +81,7 @@ ms.locfileid: "88826610"
 1. 在 Web 门户 URL 上，DPMReports 文件夹以 `DPMReports_<GUID>` 的格式存在
 
     >[!NOTE]
-    >始终只有一个使用此命名约定的文件夹。 如果 MABS 是从以前的版本升级的，则可能还存在另一个旧文件夹，但无法将其打开。
+    >始终只有一个文件夹具有此命名约定。 如果 MABS 是从以前的版本升级的，则可能还存在另一个旧文件夹，但无法将其打开。
 
     ![DPMReports 文件夹](./media/backup-mabs-release-notes-v3/dpm-reports-folder.png)
 

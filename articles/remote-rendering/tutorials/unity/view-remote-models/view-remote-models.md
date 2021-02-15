@@ -5,12 +5,13 @@ author: florianborn71
 ms.author: flborn
 ms.date: 06/15/2020
 ms.topic: tutorial
-ms.openlocfilehash: e9c29edb28700d0f2d3411925c0985adc0f53e92
-ms.sourcegitcommit: 152c522bb5ad64e5c020b466b239cdac040b9377
+ms.custom: devx-track-csharp
+ms.openlocfilehash: bfcd1e600c722cf3a4951da60097c7c373f9b1a6
+ms.sourcegitcommit: f377ba5ebd431e8c3579445ff588da664b00b36b
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/14/2020
-ms.locfileid: "88225795"
+ms.lasthandoff: 02/05/2021
+ms.locfileid: "99592035"
 ---
 # <a name="tutorial-viewing-a-remotely-rendered-model"></a>教程：查看远程渲染的模型
 
@@ -77,8 +78,8 @@ ms.locfileid: "88225795"
 
 :::image type="content" source="./media/confirm-packages.png" alt-text="确认包导入":::
 
-如果包未加载，检查 Unity 控制台中是否存在错误。 如果没有任何错误，但在 Packages 文件夹下仍然看不到任何包，请检查包可见性切换按钮。
-![Unity 相机属性](./media/unity-package-visibility.png)
+如果包未加载，检查 Unity 控制台中是否存在错误。 如果没有任何错误，但在 Packages 文件夹下仍然看不到任何包，请检查包可见性切换按钮。\
+![屏幕截图，其中箭头指向“包可见性”切换按钮。](./media/unity-package-visibility.png)
 
 ## <a name="ensure-you-have-the-latest-version-of-the-package"></a>确保已安装最新版本的包
 
@@ -86,10 +87,10 @@ ms.locfileid: "88225795"
 
 1. 在 Unity 编辑器的顶部菜单中，打开“窗口”->“包管理器”。
 1. 选择包“Microsoft Azure 远程渲染”。
-1. 在 Microsoft Azure 远程渲染包的包管理器页上，查看更新按钮是否可用 。 如果可用，请单击此按钮以将包更新到最新可用版本：
+1. 在 Microsoft Azure 远程渲染包的包管理器页上，查看更新按钮是否可用 。 如果可用，请单击此按钮以将包更新到最新可用版本：\
 ![包管理器中的 ARR 包](./media/package-manager.png)
 1. 更新包有时可能会导致控制台错误。 如果出错，请尝试关闭再重新打开项目。
-1. 当包为最新版本时，包管理器将显示“最新”而不是“更新”按钮。
+1. 当包为最新版本时，包管理器将显示“最新”而不是“更新”按钮。\
 ![最新包](./media/package-up-to-date.png)
 ## <a name="configure-the-camera"></a>配置相机
 
@@ -118,9 +119,9 @@ ms.locfileid: "88225795"
     ![更改项目质量设置](./media/settings-quality.png)
 
 1. 在左侧列表菜单中，选择“图形”
-1. 将“可编写脚本的渲染管道”设置更改为“HybridRenderingPipeline”。
-    ![更改项目图形设置](./media/settings-graphics-render-pipeline.png)\
-    有时 UI 不会填充包中可用的管道类型列表。 如果发生这种情况，需要将 HybridRenderingPipeline 资产手动拖动到该字段上：
+1. 将“可编写脚本的渲染管道”设置更改为“HybridRenderingPipeline”。\
+    ![屏幕截图，指出了将可编写脚本的渲染管道设置更改为 HybridRenderingPipeline 的位置。](./media/settings-graphics-render-pipeline.png)\
+    有时 UI 不会填充包中可用的管道类型列表。 如果发生这种情况，需要将 HybridRenderingPipeline 资产手动拖动到该字段上：\
     ![更改项目图形设置](./media/hybrid-rendering-pipeline.png)
 
     > [!NOTE]
@@ -149,7 +150,7 @@ ms.locfileid: "88225795"
 1. 打开“文件”->“生成设置”
 1. 选择“通用 Windows 平台”
 1. 配置你的设置以匹配下面的设置
-1. 按“切换平台”按钮。
+1. 按“切换平台”按钮。\
 ![生成设置](./media/build-settings.png)
 1. Unity 更改平台后，请关闭生成面板。
 
@@ -179,7 +180,7 @@ ms.locfileid: "88225795"
 
 1. 在代码编辑器中打开 RemoteRenderingCoordinator 并将其全部内容替换为以下代码：
 
-```csharp
+```cs
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See LICENSE in the project root for license information.
 
@@ -219,7 +220,7 @@ public class RemoteRenderingCoordinator : MonoBehaviour
     public static RemoteRenderingCoordinator instance;
 
     // AccountDomain must be '<region>.mixedreality.azure.com' - if no '<region>' is specified, connections will fail
-    // For most people '<region>' is either 'westus2' or 'westeurope'
+    // The list of regions is available at https://docs.microsoft.com/azure/remote-rendering/reference/regions
     [SerializeField]
     private string accountDomain = "westus2.mixedreality.azure.com";
     public string AccountDomain
@@ -235,6 +236,14 @@ public class RemoteRenderingCoordinator : MonoBehaviour
         get => accountId.Trim();
         set => accountId = value;
     }
+
+    [SerializeField]
+    private string accountAuthenticationDomain = "<enter your account authentication domain here>";
+    public string AccountAuthenticationDomain
+    {
+        get => accountAuthenticationDomain.Trim();
+        set => accountAuthenticationDomain = value;
+    }   
 
     [SerializeField]
     private string accountKey = "<enter your account key here>";
@@ -283,7 +292,7 @@ public class RemoteRenderingCoordinator : MonoBehaviour
         }
     }
 
-    public delegate Task<AzureFrontendAccountInfo> AccountInfoGetter();
+    public delegate Task<SessionConfiguration> AccountInfoGetter();
 
     public static AccountInfoGetter ARRCredentialGetter
     {
@@ -308,7 +317,7 @@ public class RemoteRenderingCoordinator : MonoBehaviour
 
     public static event Action<RemoteRenderingState> CoordinatorStateChange;
 
-    public static AzureSession CurrentSession => instance?.ARRSessionService?.CurrentActiveSession;
+    public static RenderingSession CurrentSession => instance?.ARRSessionService?.CurrentActiveSession;
 
     private ARRServiceUnity arrSessionService;
 
@@ -322,10 +331,10 @@ public class RemoteRenderingCoordinator : MonoBehaviour
         }
     }
 
-    private async Task<AzureFrontendAccountInfo> GetDevelopmentCredentials()
+    private async Task<SessionConfiguration> GetDevelopmentCredentials()
     {
         Debug.LogWarning("Using development credentials! Not recommended for production.");
-        return await Task.FromResult(new AzureFrontendAccountInfo(AccountDomain, AccountId, AccountKey));
+        return await Task.FromResult(new SessionConfiguration(AccountAuthenticationDomain, AccountDomain, AccountId, AccountKey));
     }
 
     /// <summary>
@@ -453,8 +462,8 @@ public class RemoteRenderingCoordinator : MonoBehaviour
 
     private async Task<bool> IsSessionAvailable(string sessionID)
     {
-        var allSessions = await ARRSessionService.Frontend.GetCurrentRenderingSessionsAsync().AsTask();
-        return allSessions.Any(x => x.Id == sessionID && (x.Status == RenderingSessionStatus.Ready || x.Status == RenderingSessionStatus.Starting));
+        var allSessions = await ARRSessionService.Client.GetCurrentRenderingSessionsAsync();
+        return allSessions.SessionProperties.Any(x => x.Id == sessionID && (x.Status == RenderingSessionStatus.Ready || x.Status == RenderingSessionStatus.Starting));
     }
 
     /// <summary>
@@ -472,11 +481,11 @@ public class RemoteRenderingCoordinator : MonoBehaviour
 
     /// <summary>
     /// The session must have its runtime pump updated.
-    /// The Actions.Update() will push messages to the server, receive messages, and update the frame-buffer with the remotely rendered content.
+    /// The Connection.Update() will push messages to the server, receive messages, and update the frame-buffer with the remotely rendered content.
     /// </summary>
     private void LateUpdate()
     {
-        ARRSessionService?.CurrentActiveSession?.Actions?.Update();
+        ARRSessionService?.CurrentActiveSession?.Connection?.Update();
     }
 
     /// <summary>
@@ -486,17 +495,17 @@ public class RemoteRenderingCoordinator : MonoBehaviour
     /// <param name="progress">A call back method that accepts a float progress value [0->1]</param>
     /// <param name="parent">The parent Transform for this remote entity</param>
     /// <returns>An awaitable Remote Rendering Entity</returns>
-    public async Task<Entity> LoadModel(string modelPath, Transform parent = null, ProgressHandler progress = null)
+    public async Task<Entity> LoadModel(string modelPath, Transform parent = null, Action<float> progress = null)
     {
         //Implement me
         return null;
     }
 
-    private async void OnRemoteSessionStatusChanged(ARRServiceUnity caller, AzureSession session)
+    private async void OnRemoteSessionStatusChanged(ARRServiceUnity caller, RenderingSession session)
     {
-        var properties = await session.GetPropertiesAsync().AsTask();
+        var properties = await session.GetPropertiesAsync();
 
-        switch (properties.Status)
+        switch (properties.SessionProperties.Status)
         {
             case RenderingSessionStatus.Error:
             case RenderingSessionStatus.Expired:
@@ -536,10 +545,10 @@ public class RemoteRenderingCoordinator : MonoBehaviour
 远程渲染协调器及其所需的脚本 (ARRServiceUnity) 都是必须附加到场景中的 GameObject 上的 MonoBehaviours。 ARR 提供了 ARRServiceUnity 脚本，用于公开 ARR 的许多功能，这些功能用于连接和管理远程会话。
 
 1. 在场景中创建一个新的 GameObject（Ctrl+Shift+N 或 GameObject -> Create Empty），并将其命名为 RemoteRenderingCoordinator。
-1. 将 RemoteRenderingCoordinator 脚本添加到 RemoteRenderingCoordinator GameObject 中。
+1. 将 RemoteRenderingCoordinator 脚本添加到 RemoteRenderingCoordinator GameObject 中。\
 ![添加 RemoteRenderingCoordinator 组件](./media/add-coordinator-script.png)
 1. 确认 ARRServiceUnity 脚本（在检查器中显示为 Service）已自动添加到 GameObject 中 。 这里解释一下，这是将 `[RequireComponent(typeof(ARRServiceUnity))]` 放在 RemoteRenderingCoordinator 脚本顶部所产生的效果。
-1. 将 Azure 远程渲染凭据和帐户域添加到协调器脚本：
+1. 将 Azure 远程渲染凭据、帐户身份验证域和帐户域添加到协调器脚本：\
 ![添加凭据](./media/configure-coordinator-script.png)
 
 ## <a name="initialize-azure-remote-rendering"></a>初始化 Azure 远程渲染
@@ -557,7 +566,7 @@ public class RemoteRenderingCoordinator : MonoBehaviour
 
 1. 将 InitializeARR 和 InitializeSessionService 的内容替换为以下代码 ：
 
- ```csharp
+ ```cs
 /// <summary>
 /// Initializes ARR, associating the main camera
 /// Note: This must be called on the main Unity thread
@@ -593,10 +602,10 @@ public async void InitializeSessionService()
 1. 选择 RemoteRenderingCoordinator GameObject 并找到在 RemoteRenderingCoordinator 组件的检查器中公开的 OnRequestingAuthorization Unity 事件  。
 
 1. 按右下方的“+”添加新事件。
-1. 将组件拖到其自己的事件上，以引用其自身。
+1. 将组件拖到其自己的事件上，以引用其自身。\
 ![绕过身份验证](./media/bypass-authorization-add-event.png)\
-1. 在下拉列表中，选择“RemoteRenderingCoordinator”->“BypassAuthorization”。
-![绕过身份验证](./media/bypass-authorization-event.png)
+1. 在下拉列表中，选择“RemoteRenderingCoordinator”->“BypassAuthorization”。\
+![屏幕截图，显示所选的“RemoteRenderingCoordinator.BypassAuthorization”选项。](./media/bypass-authorization-event.png)
 
 ## <a name="create-or-join-a-remote-session"></a>创建或加入远程会话
 
@@ -615,7 +624,7 @@ public async void InitializeSessionService()
 
 1. 若要加入新会话，请修改代码，将 JoinRemoteSession( ) 和 StopRemoteSession( ) 方法替换为以下完整示例内容 ：
 
-```csharp
+```cs
 /// <summary>
 /// Attempts to join an existing session or start a new session
 /// </summary>
@@ -631,7 +640,7 @@ public async void JoinRemoteSession()
     else
     {
         CurrentCoordinatorState = RemoteRenderingState.ConnectingToNewRemoteSession;
-        joinResult = await ARRSessionService.StartSession(new RenderingSessionCreationParams(renderingSessionVmSize, maxLeaseHours, maxLeaseMinutes));
+        joinResult = await ARRSessionService.StartSession(new RenderingSessionCreationOptions(renderingSessionVmSize, maxLeaseHours, maxLeaseMinutes));
     }
 
     if (joinResult.Status == RenderingSessionStatus.Ready || joinResult.Status == RenderingSessionStatus.Starting)
@@ -673,7 +682,7 @@ public void StopRemoteSession()
  1. 将 ConnectRuntimeToRemoteSession( ) 和 DisconnectRuntimeFromRemoteSession( ) 方法替换为以下已完成的版本 。
  1. 请务必注意 Unity 方法 LateUpdate，它正在更新当前的活动会话。 这允许当前会话发送/接收消息，并通过远程会话接收的帧更新帧缓冲区。 这对 ARR 的正常运行至关重要。
 
-```csharp
+```cs
 /// <summary>
 /// Connects the local runtime to the current active session, if there's a session available
 /// </summary>
@@ -689,7 +698,7 @@ public void ConnectRuntimeToRemoteSession()
     //This session is set when connecting to a new or existing session
 
     ARRSessionService.CurrentActiveSession.ConnectionStatusChanged += OnLocalRuntimeStatusChanged;
-    ARRSessionService.CurrentActiveSession.ConnectToRuntime(new ConnectToRuntimeParams());
+    ARRSessionService.CurrentActiveSession.ConnectAsync(new RendererInitOptions());
     CurrentCoordinatorState = RemoteRenderingState.ConnectingToRuntime;
 }
 
@@ -701,18 +710,18 @@ public void DisconnectRuntimeFromRemoteSession()
         return;
     }
 
-    ARRSessionService.CurrentActiveSession.DisconnectFromRuntime();
+    ARRSessionService.CurrentActiveSession.Disconnect();
     ARRSessionService.CurrentActiveSession.ConnectionStatusChanged -= OnLocalRuntimeStatusChanged;
     CurrentCoordinatorState = RemoteRenderingState.RemoteSessionReady;
 }
 
 /// <summary>
 /// The session must have its runtime pump updated.
-/// The Actions.Update() will push messages to the server, receive messages, and update the frame-buffer with the remotely rendered content.
+/// The Connection.Update() will push messages to the server, receive messages, and update the frame-buffer with the remotely rendered content.
 /// </summary>
 private void LateUpdate()
 {
-    ARRSessionService?.CurrentActiveSession?.Actions?.Update();
+    ARRSessionService?.CurrentActiveSession?.Connection?.Update();
 }
 ```
 
@@ -723,13 +732,13 @@ private void LateUpdate()
 
 设置好所需的基础结构后，就可以将模型加载到远程会话并开始接收帧了。
 
-![ARR 堆栈 4](./media/remote-render-stack-4.png)
+![显示准备加载和查看模型的流程的图表。](./media/remote-render-stack-4.png)
 
 LoadModel 方法的作用是接受模型路径、进度处理程序和父转换。 这些参数用于将模型加载到远程会话中，向用户更新加载进度，并基于父转换确定远程渲染模型的方向。
 
 1. 将 LoadModel 方法完全替换为以下代码：
 
-    ```csharp
+    ```cs
     /// <summary>
     /// Loads a model into the remote session for rendering
     /// </summary>
@@ -737,10 +746,10 @@ LoadModel 方法的作用是接受模型路径、进度处理程序和父转换�
     /// <param name="parent">The parent Transform for this remote entity</param>
     /// <param name="progress">A call back method that accepts a float progress value [0->1]</param>
     /// <returns>An awaitable Remote Rendering Entity</returns>
-    public async Task<Entity> LoadModel(string modelPath, Transform parent = null, ProgressHandler progress = null)
+    public async Task<Entity> LoadModel(string modelPath, Transform parent = null, Action<float> progress = null)
     {
         //Create a root object to parent a loaded model to
-        var modelEntity = ARRSessionService.CurrentActiveSession.Actions.CreateEntity();
+        var modelEntity = ARRSessionService.CurrentActiveSession.Connection.CreateEntity();
 
         //Get the game object representation of this entity
         var modelGameObject = modelEntity.GetOrCreateGameObject(UnityCreationMode.DoNotCreateUnityComponents);
@@ -769,11 +778,9 @@ LoadModel 方法的作用是接受模型路径、进度处理程序和父转换�
     #endif
 
         //Load a model that will be parented to the entity
-        var loadModelParams = new LoadModelFromSASParams(modelPath, modelEntity);
-        var loadModelAsync = ARRSessionService.CurrentActiveSession.Actions.LoadModelFromSASAsync(loadModelParams);
-        if(progress != null)
-            loadModelAsync.ProgressUpdated += progress;
-        var result = await loadModelAsync.AsTask();
+        var loadModelParams = new LoadModelFromSasParams(modelPath, modelEntity);
+        var loadModelAsync = ARRSessionService.CurrentActiveSession.Connection.LoadModelFromSasAsync(loadModelParams, progress);
+        var result = await loadModelAsync;
         return modelEntity;
     }
     ```
@@ -795,7 +802,7 @@ LoadModel 方法的作用是接受模型路径、进度处理程序和父转换�
 
 1. 将以下代码添加到 RemoteRenderingCoordinator 类，就在 LoadModel 方法的正下方 ：
 
-    ```csharp
+    ```cs
     private bool loadingTestModel = false;
     [ContextMenu("Load Test Model")]
     public async void LoadTestModel()

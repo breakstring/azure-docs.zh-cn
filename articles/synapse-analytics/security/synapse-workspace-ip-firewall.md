@@ -8,26 +8,26 @@ ms.subservice: security
 ms.date: 04/15/2020
 ms.author: ronytho
 ms.reviewer: jrasnick
-ms.openlocfilehash: a7e159c94bf1b9f3e8049fd657abb562f1c85671
-ms.sourcegitcommit: 11e2521679415f05d3d2c4c49858940677c57900
+ms.openlocfilehash: b937dad6c3c8f5a5773ca7779493b41c905307b1
+ms.sourcegitcommit: 2dd0932ba9925b6d8e3be34822cc389cade21b0d
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/31/2020
-ms.locfileid: "87503916"
+ms.lasthandoff: 02/01/2021
+ms.locfileid: "99226499"
 ---
-# <a name="azure-synapse-analytics-ip-firewall-rules-preview"></a>Azure Synapse Analytics IP 防火墙规则（预览版）
+# <a name="azure-synapse-analytics-ip-firewall-rules"></a>Azure Synapse Analytics IP 防火墙规则
 
 本文将介绍 IP 防火墙规则，并介绍如何在 Azure Synapse Analytics 中配置它们。
 
 ## <a name="ip-firewall-rules"></a>IP 防火墙规则
 
-IP 防火墙规则基于每个请求的来源 IP 地址授予或拒绝对 Synapse 工作区的访问权限。 你可以为工作区配置 IP 防火墙规则。 在工作区级别配置的 IP 防火墙规则应用于工作区的所有公共终结点（SQL 池、SQL 按需版本，以及开发）。
+IP 防火墙规则基于每个请求的来源 IP 地址授予或拒绝对 Synapse 工作区的访问权限。 你可以为工作区配置 IP 防火墙规则。 在工作区级别配置的 IP 防火墙规则应用于工作区的所有公共终结点（专用 SQL 池、无服务器 SQL 池以及开发）。
 
 ## <a name="create-and-manage-ip-firewall-rules"></a>创建和管理 IP 防火墙规则
 
 可通过两种方式向 Synapse 工作区添加 IP 防火墙规则。 若要向工作区添加 IP 防火墙，请在创建工作区期间选择“安全 + 网络”，并选中“允许来自所有 IP 地址的连接”。
 
-![Azure 门户 Synapse 工作区 IP 配置。](./media/synpase-workspace-ip-firewall/ip-firewall-1.png)
+![屏幕截图突出显示了“安全 + 网络”按钮。](./media/synpase-workspace-ip-firewall/ip-firewall-1.png)
 
 ![Azure 门户 Synapse 工作区 IP 配置。](./media/synpase-workspace-ip-firewall/ip-firewall-2.png)
 
@@ -37,13 +37,16 @@ IP 防火墙规则基于每个请求的来源 IP 地址授予或拒绝对 Synaps
 
 ## <a name="connect-to-synapse-from-your-own-network"></a>从你自己的网络连接到 Synapse
 
-可以使用 Synapse Studio 连接到 Synapse 工作区。 还可以使用 SQL Server Management Studio (SSMS) 连接到工作区中的 SQL 资源（SQL 池和 SQL 按需版本）。
+可以使用 Synapse Studio 连接到 Synapse 工作区。 还可以使用 SQL Server Management Studio (SSMS) 连接到工作区中的 SQL 资源（专用 SQL 池和无服务器 SQL 池）。
 
 请确保你的网络和本地计算机上的防火墙允许 Synapse Studio 在 TCP 端口 80、443 和 1443 上的传出通信。
 
 此外，还需要允许 Synapse Studio 在 UDP 端口 53 上的传出通信。 若要使用 SSMS 和 Power BI 等工具进行连接，必须允许 TCP 端口 1433 上的传出通信。
 
-如果使用默认的重定向连接策略设置，则可能需要允许其他端口上的传出通信。 可在[此处](https://docs.microsoft.com/azure/sql-database/sql-database-connectivity-architecture#connection-policy)了解有关连接策略的详细信息。
+工作区的 SQL 连接策略设置为“默认”。 可在[此处](../../azure-sql/database/connectivity-architecture.md#connection-policy)详细了解客户端应允许与之进行出站通信的 IP 地址和端口。
+
+
+
 
 ## <a name="next-steps"></a>后续步骤
 

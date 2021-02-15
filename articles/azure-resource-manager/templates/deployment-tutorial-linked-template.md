@@ -1,16 +1,16 @@
 ---
 title: 教程 - 部署链接模板
 description: 了解如何部署链接模板
-ms.date: 03/13/2020
+ms.date: 01/12/2021
 ms.topic: tutorial
 ms.author: jgao
-ms.custom: devx-track-azurecli
-ms.openlocfilehash: 63383f810b6f5643bad9feb86360745cd2f9b000
-ms.sourcegitcommit: 11e2521679415f05d3d2c4c49858940677c57900
+ms.custom: ''
+ms.openlocfilehash: 4ec49fad35e958f010461abf2ee0e3dab8077d55
+ms.sourcegitcommit: 431bf5709b433bb12ab1f2e591f1f61f6d87f66c
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/31/2020
-ms.locfileid: "87501127"
+ms.lasthandoff: 01/12/2021
+ms.locfileid: "98134188"
 ---
 # <a name="tutorial-deploy-a-linked-template"></a>教程：部署链接模板
 
@@ -32,11 +32,11 @@ ms.locfileid: "87501127"
 
 :::code language="json" source="~/resourcemanager-templates/get-started-deployment/linked-template/linkedStorageAccount.json":::
 
-以下模板是主模板。  突出显示的 **Microsoft.Resources/deployments** 对象演示如何调用链接模板。 无法将链接模板存储为本地文件，或存储为只能在本地网络中使用的文件。 只能提供包含 *http* 或 *https* 的 URI 值。 资源管理器必须能够访问该模板。 一种做法是将链接模板放入存储帐户，并对该项使用 URI。 该 URI 将通过参数传递给模板。 请参阅突出显示的参数定义。
+以下模板是主模板。 突出显示的 `Microsoft.Resources/deployments` 对象演示如何调用链接模板。 无法将链接模板存储为本地文件，或存储为只能在本地网络中使用的文件。 只能提供包含 HTTP 或 HTTPS 的 URI 值。 资源管理器必须能够访问该模板。 一种做法是将链接模板放入存储帐户，并对该项使用 URI。 该 URI 将通过参数传递给模板。 请参阅突出显示的参数定义。
 
 :::code language="json" source="~/resourcemanager-templates/get-started-deployment/linked-template/azuredeploy.json" highlight="27-32,40-58":::
 
-将主模板的副本保存到扩展名为 .json 的本地计算机，例如 azuredeploy.json。 无需保存链接模板的副本。  链接模板将从 GitHub 存储库复制到存储帐户。
+将主模板的副本保存到扩展名为 .json 的本地计算机，例如 azuredeploy.json 。 无需保存链接模板的副本。 链接模板将从 GitHub 存储库复制到存储帐户。
 
 ## <a name="store-the-linked-template"></a>存储链接模板
 
@@ -93,7 +93,7 @@ Write-Host "Press [ENTER] to continue ..."
 如果尚未创建资源组，请参阅[创建资源组](./deployment-tutorial-local-template.md#create-resource-group)。
 
 > [!NOTE]
-> 在下面的 Azure CLI 代码中，日期参数 -d 在 macOS 中将会是无效参数。 因此，macOS 用户若要在 macOS 的终端中将当前时间增加 2 小时，则应使用 -v+2H。
+> 在下面的 Azure CLI 代码中，`date` 参数 `-d` 在 macOS 中是无效参数。 因此，macOS 用户若要在 macOS 的终端中将当前时间增加 2 小时，则应使用 `-v+2H`。
 
 # <a name="powershell"></a>[PowerShell](#tab/azure-powershell)
 
@@ -176,7 +176,7 @@ az deployment group create \
 
 ## <a name="next-steps"></a>后续步骤
 
-现在，你已了解如何部署链接模板。 下一篇教程将介绍如何创建用于部署模板的 DevOp 管道。
+现在，你已了解如何部署链接模板。 下一篇教程将介绍如何创建用于部署模板的 DevOps 管道。
 
 > [!div class="nextstepaction"]
 > [创建管道](./deployment-tutorial-pipeline.md)

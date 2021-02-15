@@ -8,14 +8,14 @@ ms.topic: include
 ms.date: 03/01/2020
 ms.author: allensu
 ms.custom: include file
-ms.openlocfilehash: 81db46b52c9b4fe800f2fbfeadad966995d66e12
-ms.sourcegitcommit: c5021f2095e25750eb34fd0b866adf5d81d56c3a
+ms.openlocfilehash: e1d4d29f8edca87ec1cca0ffced7b3e1bca90717
+ms.sourcegitcommit: 8245325f9170371e08bbc66da7a6c292bbbd94cc
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/25/2020
-ms.locfileid: "78244985"
+ms.lasthandoff: 02/07/2021
+ms.locfileid: "99808489"
 ---
-## <a name="create-the-virtual-network"></a>创建虚拟网络
+## <a name="create-the-virtual-network-and-subnet"></a>创建虚拟网络和子网
 
 在本部分，请创建虚拟网络和子网。
 

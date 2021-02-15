@@ -1,11 +1,10 @@
 ---
 title: 渗透测试 |Microsoft Docs
-description: 本文概述了渗透测试过程，以及如何对 Azure 基础结构中运行的应用执行笔测试。
+description: 本文概述了渗透测试过程，以及对运行在 Azure 基础结构中的应用进行渗透测试的方式。
 services: security
 documentationcenter: na
 author: TerryLanfear
-manager: barbkess
-editor: TomSh
+manager: rkarlin
 ms.assetid: 695d918c-a9ac-4eba-8692-af4526734ccc
 ms.service: security
 ms.subservice: security-fundamentals
@@ -13,14 +12,14 @@ ms.devlang: na
 ms.topic: article
 ms.tgt_pltfrm: na
 ms.workload: na
-ms.date: 08/24/2020
+ms.date: 02/03/2021
 ms.author: terrylan
-ms.openlocfilehash: dfacf124f8db0e5323c9abff56c4a78f85f6f014
-ms.sourcegitcommit: d39f2cd3e0b917b351046112ef1b8dc240a47a4f
+ms.openlocfilehash: 9f65133f622c71189f35a1533e278ca09ab02085
+ms.sourcegitcommit: 5b926f173fe52f92fcd882d86707df8315b28667
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/25/2020
-ms.locfileid: "88816127"
+ms.lasthandoff: 02/04/2021
+ms.locfileid: "99550195"
 ---
 # <a name="penetration-testing"></a>渗透测试
 
@@ -28,11 +27,9 @@ ms.locfileid: "88816127"
 
 快速创建环境非常好，但仍需确保执行正常的安全截止。 你可能想要做的事情之一就是对部署在 Azure 中的应用程序进行渗透测试。
 
-用户可能已经知道，Microsoft 将执行[对 Azure 环境的渗透测试](https://gallery.technet.microsoft.com/Cloud-Red-Teaming-b837392e)。 此测试可帮助推动 Azure 的改进。
-
 我们不会对你的应用程序进行渗透测试，但我们知道你需要并且需要在你自己的应用程序上执行测试。 这是好事，因为改进自己的应用程序的安全性可以加强整个 Azure 生态系统的安全性。
 
-从2017年6月15日起，Microsoft 不再需要预先批准即可对 Azure 资源进行渗透测试。 本流程仅与 Microsoft Azure 相关，并不适用于任何其他 Microsoft 云服务。
+自 2017 年 6 月 15 日起，对于针对 Azure 资源进行的渗透测试，Microsoft 不再要求执行预批准流程。 本流程仅与 Microsoft Azure 相关，并不适用于任何其他 Microsoft 云服务。
 
 >[!IMPORTANT]
 >虽然参加渗透测试时无需再通知 Microsoft，客户仍须遵守 [Microsoft 云统一渗透测试参与规则](https://technet.microsoft.com/mt784683)。
@@ -43,11 +40,11 @@ ms.locfileid: "88816127"
 * 终结点的[模糊测试](https://cloudblogs.microsoft.com/microsoftsecure/2007/09/20/fuzz-testing-at-microsoft-and-the-triage-process/)
 * 终结点的[端口扫描](https://en.wikipedia.org/wiki/Port_scanner)
 
-您无法执行的一种笔测试是 [ (DoS) 攻击的拒绝服务 ](https://en.wikipedia.org/wiki/Denial-of-service_attack) 。 此测试包括发起 DoS 攻击，或者执行相关的测试，以便确定、演示或模拟任何类型的 DoS 攻击。
+您无法执行的一种笔测试是 [ (DoS) 攻击的拒绝服务 ](https://en.wikipedia.org/wiki/Denial-of-service_attack) 。 此测试包括：自行发起 DoS 攻击，或者执行相关的测试，以便确定、演示或模拟任何类型的 DoS 攻击。
 
 >[!Note]
->Mircosoft 已与 BreakingPoint Cloud 合作构建接口，用户可在其中针对已启用 DDoS 保护的公共 IP 地址生成用于模拟的流量。 若要了解有关断点云模拟的详细信息，请参阅 [验证 DDoS 检测](../../virtual-network/manage-ddos-protection.md#validate-ddos-detection)。
+>Mircosoft 已与 BreakingPoint Cloud 合作构建接口，用户可在其中针对已启用 DDoS 保护的公共 IP 地址生成用于模拟的流量。 若要了解有关 BreakingPoint 云模拟的详细信息，请参阅 [通过模拟进行测试](../../ddos-protection/test-through-simulations.md)。
 
 ## <a name="next-steps"></a>后续步骤
 
-* 详细了解 Engagement 的 [渗透测试规则](https://www.microsoft.com/msrc/pentest-rules-of-engagement?rtc=2)。
+* 详细了解[渗透测试参与规则](https://www.microsoft.com/msrc/pentest-rules-of-engagement?rtc=2)。

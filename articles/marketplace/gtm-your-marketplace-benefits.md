@@ -4,21 +4,21 @@ description: 本部分介绍发布者可以使用的市场推广服务 - Microso
 ms.service: marketplace
 ms.subservice: partnercenter-marketplace-publisher
 ms.topic: article
-ms.date: 07/06/2020
+ms.date: 01/13/2021
 author: keferna
 ms.author: keferna
-ms.openlocfilehash: 0a98bf7d6a035dbf293bda5d8afe5d0e1130f58f
-ms.sourcegitcommit: e0785ea4f2926f944ff4d65a96cee05b6dcdb792
+ms.openlocfilehash: 07535add495484abae06fc6ac8ac435d84bccc52
+ms.sourcegitcommit: 08458f722d77b273fbb6b24a0a7476a5ac8b22e0
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/21/2020
-ms.locfileid: "88705548"
+ms.lasthandoff: 01/15/2021
+ms.locfileid: "98246241"
 ---
 # <a name="your-commercial-marketplace-benefits"></a>商业市场权益
 
-你已发布到 Microsoft 商业市场，现在你想要了解你的产品/服务是否成功。 我们提供销售、技术和营销等方面的权益，帮助你加快产品/服务的增长。
+你已发布到 Microsoft 商业市场，现在你想要了解你的产品/服务是否成功。 我们为你提供了实现产品/服务增长所需的销售、技术和营销权益。
 
-你的产品/服务在 Microsoft AppSource 或 Azure Marketplace 上生活后，请访问 [合作伙伴中心](https://partner.microsoft.com/dashboard/mpn/membership/benefits/commercialmarketplace) 访问并激活你的合格营销、销售和技术权益。 Marketplace Rewards 权益根据商业市场参与度和销售情况而逐渐增多。 参与得越多，回馈就越多。
+你的产品/服务在 Microsoft AppSource 或 Azure Marketplace 上生活后，请访问 [合作伙伴中心](https://partner.microsoft.com/dashboard/mpn/membership/benefits/commercialmarketplace) 访问并激活你的合格营销、销售和技术权益。 观看 Marketplace 奖励 [演示视频](https://partner.microsoft.com/asset/detail/marketplace-rewards-demo-mp4) ，了解有关如何在 marketplace 收益中注册并激活合作伙伴中心权益的概述。 Marketplace Rewards 权益根据商业市场参与度和销售情况而逐渐增多。 参与得越多，回馈就越多。
 
 ## <a name="marketplace-rewards"></a>Marketplace Rewards
 
@@ -26,7 +26,7 @@ Marketplace Rewards 旨在在特定的发展阶段为你提供支持，从知名
 
 该计划创建了一个积极的反馈循环：每个发展阶段的优势旨在为进入下一阶段提供推动力，使你能够利用商业市场作为平台，从而在 Microsoft 领域通过 Microsoft 渠道将业务拓展到 Microsoft 客户。
 
-权益根据产品/服务属于以下哪种类型来区分：[列出、试用、事务处理](determine-your-listing-type.md#choose-a-listing-option)。
+权益根据产品/服务属于以下哪种类型来区分：[列出、试用、事务处理](determine-your-listing-type.md)。
 
 Rewards 团队成员将在产品/服务上线时联系你，具体取决于你的资格。
 
@@ -44,13 +44,12 @@ Rewards 团队成员将在产品/服务上线时联系你，具体取决于你�
 2. 请参阅合作伙伴中心的 [Marketplace 奖励](https://partner.microsoft.com/dashboard/mpn/program/commercialmarketplace) ，并选择 **注册 marketplace 奖励计划**。
 3. 若要激活销售和市场营销权益，请分配公司营销联系人。 此联系人将收到有关 Marketplace Rewards 的跟进信息。
 4. 若要添加或更新营销联系人信息，请转到“Marketplace Rewards”页顶部的“销售和营销权益”选项卡，然后选择“添加”、“更新”或“更改”。  接下来，请执行以下操作：
-
     1. 从列表中选择用户。 如果要分配的用户不在列表中，则可以在“帐户设置”中添加新用户。
     1. 为用户提供一个电子邮件地址，该电子邮件地址不同于与公司合作伙伴中心帐户关联的电子邮件地址。 我们会将使用 Marketplace Rewards 权益的说明通过电子邮件发送到指定的营销联系人的电子邮件地址。
     1. 请提供此营销联系人的联系电话和首选语言。 输入这些信息后，选择“分配用户”。
     1. 更新营销联系人后，选择“激活”以激活要开始使用的权益。 激活权益后，Rewards 团队的成员将在一周内与你的营销联系人联系。
 
-**技术权益**
+### <a name="technical-benefits"></a>技术权益
 
 1. 你可以使用你的技术优势在你的云和混合解决方案的售前、设计、部署和应用开发阶段请求技术协助。 若要请求帮助，请填写请求表单，然后选择“提交请求”。
 2. 在解锁这些权益时，Azure 赞助权益的使用方式将通过电子邮件与你共享。
@@ -66,7 +65,7 @@ Rewards 团队成员将在产品/服务上线时联系你，具体取决于你�
 
 下表总结了列表、试用和咨询服务的资格要求：
 
-![市场推广权益](./media/marketplace-publishers-guide/gtm-eligibility-requirements.png)
+![市场推广权益](./media/marketplace-publishers-guide/go-to-market-gtm-eligibility-requirements.png)
 
 有关所有这些权益的详细说明，可查看 [Marketplace Rewards 计划系列](https://aka.ms/marketplacerewards)。
 
@@ -79,7 +78,7 @@ Rewards 团队成员将在产品/服务上线时联系你，具体取决于你�
 
 这些权益旨在为你提供营销、销售和技术方面的支持，从而帮助你获得更多的访客、获得更多潜在客户和转变更多业务。
 
-拥有现场产品/服务的所有合作伙伴都可以与专用的订婚经理合作，为你的商用 marketplace 产品组合选择最高价值的活动。 此参与活动对每个产品/服务长期有效，这意味着你可以选择活动和这些活动的时间，以符合公司提出更广泛的营销和销售战略的时机。 
+拥有现场产品/服务的所有合作伙伴都可以与专用的订婚经理合作，为你的商用 marketplace 产品组合选择最高价值的活动。 此参与活动对每个产品/服务长期有效，这意味着你可以选择活动和这些活动的时间，以符合公司提出更广泛的营销和销售战略的时机。
 
 ![营销权益](./media/marketplace-publishers-guide/marketing-benefit.png)
 
@@ -97,24 +96,24 @@ Rewards 团队成员将在产品/服务上线时联系你，具体取决于你�
 
 ### <a name="publisher-agreement"></a>发布者协议
 
-本页所述的所有活动在[市场发布商协议](https://go.microsoft.com/fwlink/?LinkID=699560)中均已涵盖，并符合商业权益计划附录。
+本页面上所述的所有活动都包含在 Microsoft [发布者协议](https://go.microsoft.com/fwlink/?LinkID=699560) 中，并遵循商业权益计划附录。
 
 ### <a name="cancellation-policy"></a>取消策略
 
-[列出和试用](determine-your-listing-type.md)发布者可选择加入或选择退出每个产品/服务发布的活动。 合作伙伴可随时选择退出任何参与活动。 
+[列出和试用](determine-your-listing-type.md)发布者可选择加入或选择退出每个产品/服务发布的活动。 合作伙伴可随时选择退出任何参与活动。
 
-对于发布者的以下行为，Microsoft 保留撤销和终止 Marketplace Rewards 权益的权利： 
+对于发布者的以下行为，Microsoft 保留撤销和终止 Marketplace Rewards 权益的权利：
 
-* 使用其 marketplace 列表参与非法活动。
-* 接收已知或认为是欺诈的购买。
-* 从商业应用商店中取消列出。 
-* 使用其产品/服务可显示违反版权或商标法律的营销或其他内容。
-* 违反 [azure 赞助计划](https://azure.microsoft.com/offers/ms-azr-0036p/)的策略，包括但不限于使用 azure 赞助资金进行其自己的内部操作或 Bitcoin 挖掘。
+- 使用其 marketplace 列表参与非法活动。
+- 接收已知或认为是欺诈的购买。
+- 从商业应用商店中取消列出。
+- 使用其产品/服务可显示违反版权或商标法律的营销或其他内容。
+- 违反 [azure 赞助计划](https://azure.microsoft.com/offers/ms-azr-0036p/)的策略，包括但不限于使用 azure 赞助资金进行其自己的内部操作或 Bitcoin 挖掘。
 
 Microsoft 保留在以下情况中吊销和终止 Marketplace 奖励的权利：
 
-* 进行购买的客户意外，希望取消购买。 
-* 客户在使用合作伙伴的产品之前取消。
+- 进行购买的客户意外，希望取消购买。
+- 客户在使用合作伙伴的产品之前取消。
 
 ### <a name="offer-availability"></a>产品可用性
 
@@ -124,10 +123,7 @@ Microsoft 保留在以下情况中吊销和终止 Marketplace 奖励的权利：
 
 ## <a name="next-steps"></a>后续步骤
 
-登录到 [合作伙伴中心](https://partner.microsoft.com/dashboard/commercial-marketplace/overview) 来创建或配置产品/服务。
-
-激活 [合作伙伴中心](https://partner.microsoft.com/dashboard/commercial-marketplace/overview)的 Marketplace 奖励权益。
-
-查看[可用的自助服务资源](https://partner.microsoft.com/asset/collection/azure-marketplace-and-appsource-publisher-toolkit#/)。
-
-注册 [Microsoft AppSource 和 Azure 市场社区论坛](https://aka.ms/MarketplaceCommunity)，了解相关主题或加入讨论。
+- 登录到 [合作伙伴中心](https://partner.microsoft.com/dashboard/commercial-marketplace/overview) 来创建或配置产品/服务。
+- 激活 [合作伙伴中心](https://partner.microsoft.com/dashboard/commercial-marketplace/overview)的 Marketplace 奖励权益。
+- 查看[可用的自助服务资源](https://partner.microsoft.com/asset/collection/azure-marketplace-and-appsource-publisher-toolkit#/)。
+- 注册 [Microsoft AppSource 和 Azure 市场社区论坛](https://aka.ms/MarketplaceCommunity)，了解相关主题或加入讨论。

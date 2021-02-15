@@ -14,17 +14,19 @@ ms.devlang: na
 ms.topic: conceptual
 ms.date: 03/20/2019
 ms.author: juliako
-ms.openlocfilehash: 5e6a834e98d3b8447a68d149bb40e75d74959f39
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.openlocfilehash: d1d43f11c1a90456b24f02a5ec43982d5fdc3de7
+ms.sourcegitcommit: 77afc94755db65a3ec107640069067172f55da67
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87038461"
+ms.lasthandoff: 01/22/2021
+ms.locfileid: "98694514"
 ---
-# <a name="upload-files-into-an-azure-media-services-account-from-azure-storsimple"></a>将文件从 Azure StorSimple 上传到 Azure 媒体服务帐户中  
+# <a name="upload-files-into-an-azure-media-services-account-from-azure-storsimple"></a>将文件从 Azure StorSimple 上传到 Azure 媒体服务帐户中 
+
+[!INCLUDE [media services api v2 logo](./includes/v2-hr.md)] 
 
 > [!NOTE]
-> 不会向媒体服务 v2 添加任何新特性或新功能。 <br/>查看最新版本：[媒体服务 v3](../latest/index.yml)。 另请参阅[从 v2 到 v3 的迁移指南](../latest/migrate-from-v2-to-v3.md)
+> 不会向媒体服务 v2 添加任何新特性或新功能。 <br/>查看最新版本：[媒体服务 v3](../latest/index.yml)。 另请参阅[从 v2 到 v3 的迁移指南](../latest/migrate-v-2-v-3-migration-introduction.md)
 >
 > 
 > Azure StorSimple 数据管理器目前以个人预览版提供。 
@@ -32,7 +34,7 @@ ms.locfileid: "87038461"
 
 ## <a name="overview"></a>概述
 
-在媒体服务中，可以将数字文件上传到资产中。 资产可以包含视频、音频、图像、缩略图集合、文本轨道和隐藏式字幕文件（以及有关这些文件的元数据）。文件上传完成后，你的内容将安全地存储在云中，以便进行进一步处理和流式处理。
+在媒体服务中，可以将数字文件上传到资产中。 资产可以包含视频、音频、图像、缩略图集合、文本轨道和隐藏式字幕文件 (以及有关这些文件的元数据 ) 。在文件上传后，内容将安全地存储在云中，以便进行进一步处理和流式处理。
 
 [Azure StorSimple](../../storsimple/index.yml) 使用云存储作为本地解决方案的扩展，可跨本地存储和云存储自动将数据分层。 在将数据发送到云之前，StorSimple 设备会删除数据中的重复项并压缩数据，因此能够以极高的效率将大型文件发送到云中。 [StorSimple 数据管理器](../../storsimple/storsimple-data-manager-overview.md)服务提供相应的 API，让你从 StorSimple 提取数据并以 AMS 资产的形式呈现数据。
 
@@ -57,4 +59,4 @@ ms.locfileid: "87038461"
 
 ## <a name="next-steps"></a>后续步骤
 
-现在可以对上传的资产进行编码。 有关详细信息，请参阅 [对资产进行编码](media-services-portal-encode.md)。
+现即可编码已上传的资产。 有关详细信息，请参阅[对资产进行编码](media-services-portal-encode.md)。

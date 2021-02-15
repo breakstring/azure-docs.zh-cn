@@ -1,157 +1,188 @@
 ---
 title: Azure Service Fabric 托管激活和停用生命周期
-description: 说明节点上的应用程序和 ServicePackage 的生命周期
+description: 了解应用程序的生命周期和节点上的 ServicePackage。
 author: tugup
 ms.topic: conceptual
-ms.date: 05/1/2020
+ms.date: 05/01/2020
 ms.author: tugup
-ms.openlocfilehash: a39aecf16d1c3303c0a590b389ba2aa69d4472f2
-ms.sourcegitcommit: 42107c62f721da8550621a4651b3ef6c68704cd3
+ms.openlocfilehash: d8585d0b39e4a4ef9cf77f40ea878ddb47bcb0de
+ms.sourcegitcommit: beacda0b2b4b3a415b16ac2f58ddfb03dd1a04cf
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/29/2020
-ms.locfileid: "87405120"
+ms.lasthandoff: 12/31/2020
+ms.locfileid: "97831816"
 ---
-# <a name="azure-service-fabric-hosting-lifecycle"></a>Azure Service Fabric 托管生命周期
-本文概述了在节点上激活应用程序时所发生的事件，以及用于控制该行为的各种群集配置。
+# <a name="azure-service-fabric-hosting-life-cycle"></a>Azure Service Fabric 托管生命周期
 
-在继续阅读之前，请确保了解[在 Service Fabric 中为应用程序建模][a1]中所述的各种概念及其相互关系。 
+本文概述了在节点上激活应用程序时 Azure Service Fabric 中发生的事件。 它介绍了控制行为的各种群集配置。
+
+继续之前，请确保了解 Service Fabric 中的 [应用程序模型][a1]中所述的概念和关系。 
 
 > [!NOTE]
-> 在本文中，除非明确说明，否则：
+> 本文以特殊方式使用一些术语。 除非另有说明：
 >
-> - *副本*指有状态服务的副本和无状态服务的实例。
-> - *CodePackage*被视为等效于一个*ServiceHost*进程，该进程注册一个*Servicetype*，并承载该*servicetype*的服务副本。
+> - “副本”指有状态服务的副本或无状态服务的实例。
+> - *CodePackage* 被视为与注册 ServiceType 的 ServiceHost 进程等效。 它承载该 ServiceType 的服务副本。
 >
 
-## <a name="activation-of-applicationservicepackage"></a>激活应用程序/ServicePackage
+## <a name="activate-an-applicationpackage-or-servicepackage"></a>激活 ApplicationPackage 或 ServicePackage
 
-用于激活的管道如下所示：
+激活 ApplicationPackage 或 ServicePackage 的步骤：
 
-1. 下载 ApplicationPackage。 例如： ApplicationManifest.xml 等。
-2. 为应用程序（ex：创建用户等）设置环境。
+1. 下载 ApplicationPackage (例如 *ApplicationManifest.xml*) 。
+2. 为应用程序设置环境。 例如，你的步骤包括创建用户。
 3. 开始跟踪应用程序以使其停用。
-4. 下载 ServicePackage。 例如： ServiceManifest.xml、代码、配置、数据包等。
-5. 设置用于服务包的环境 ex：设置防火墙、为终结点分配端口等。
+4. 下载 ServicePackage (例如，) *ServiceManifest.xml*、代码、配置文件和数据包。
+5. 设置 ServicePackage 的环境。 例如，你的步骤包括设置防火墙并为终结点分配端口。
 6. 开始跟踪 ServicePackage 以便停用。
-7. 启动 SetupEntryPoint Codepackage 并等待完成。
-8. 开始 MainEntryPoint Codepackage。
+7. 启动 Codepackage 的 SetupEntryPoint，并等待其完成。
+8. 启动 Codepackage 的 MainEntryPoint。
 
 ### <a name="servicetype-blocklisting"></a>ServiceType 列入阻止列表
-**ServiceTypeDisableFailureThreshold**确定了失败次数（激活、下载、CodePackage 故障），在此之后，会将 ServiceType 计划为列入阻止列表。 因此，第一次激活/下载失败或 CodePackage 崩溃应触发 ServiceType 列入阻止列表计划。 **ServiceTypeDisableGraceInterval** config 确定了在该节点上 ServiceType 最后标记为列入阻止列表的宽限时间间隔。 请注意，对于这种情况，激活/下载/CodePackage 重启应仍在内部重试模式，并通过托管子系统进行跟踪。 重试，例如： CodePackage 将计划在崩溃后再次启动，否则 Service Fabric 将再次尝试下载包。
-列入阻止列表后，应该会看到 "ServiceTypeRegistration： ServiceType" 属性报告错误 "系统托管"。 在节点上禁用了 ServiceType。 "
+`ServiceTypeDisableFailureThreshold` 确定允许的激活、下载和 CodePackage 失败的次数。 达到阈值后，会将 ServiceType 计划用于列入阻止列表。 第一次激活失败、下载失败或 CodePackage 崩溃计划 ServiceType 列入阻止列表。 
 
-将在节点上重新启用 ServiceType 
-- 如果激活操作成功或在失败时达到**activationmaxfailurecount 次**的重试次数。
-- 如果下载操作成功或在失败时达到**DeploymentMaxFailureCount**的重试次数。
-- 如果损坏的 CodePackage 启动，则会重新启动并成功注册 ServiceType。
+此 `ServiceTypeDisableGraceInterval` 配置确定在节点上列入阻止列表时的宽限时间间隔。 在此过程开始时，将并行重试激活、下载和 CodePackage 重启。 例如，重试指的是，CodePackage 将在崩溃或 Service Fabric 以后再次尝试下载包时重新启动。
 
-**Activationmaxfailurecount 次**DeploymentMaxFailureCount 重试后再次启用 ServiceType 的原因 / **DeploymentMaxFailureCount**是，它们是在节点上激活/下载应用程序 Service Fabric 将执行的最大尝试次数。 如果此操作未成功，则不会重试当前操作，因为 Service Fabric 要为服务提供另一个激活机会，这可能会成功，导致问题自动修复，它与激活/下载操作的生命周期相关联。 由于放置副本而触发的新激活/下载操作可能会再次触发 ServiceType 列入阻止列表，也可能会成功。
+在列入阻止列表时，会看到运行状况错误： `'System.Hosting' reported Error for property 'ServiceTypeRegistration:ServiceType'. The ServiceType was disabled on the node.`
+
+如果发生以下任何事件，则会在节点上再次启用 ServiceType：
+- 激活成功。 如果失败，则达到 `ActivationMaxFailureCount` 最大重试次数。
+- 下载成功。 如果失败，则达到 `DeploymentMaxFailureCount` 最大重试次数。
+- 已崩溃的 CodePackage 启动并成功注册 ServiceType。
+
+`ActivationMaxFailureCount` 和 `DeploymentMaxFailureCount` 是 Service Fabric 将在节点上激活或下载应用程序的最大尝试次数。 达到最大值后，Service Fabric 会重新启用 ServiceType 以便再次激活。 
+
+这些阈值为服务提供了另一种激活机会。 如果激活成功，则会自动修复该问题。 
+
+新放置或激活的副本可能触发新的激活或下载操作。 此操作将成功或再次触发 ServiceType 列入阻止列表。
 
 > [!NOTE]
-> 如果 CodePackage 未注册 ServiceType，则不会影响 ServiceType。 只有承载副本崩溃的 CodePackage 才会影响 ServiceType。
+> 不注册 ServiceType 的崩溃 CodePackage 不会影响 ServiceType。 承载副本的崩溃 CodePackage 将影响 ServiceType。
 >
 
 ### <a name="codepackage-crash"></a>CodePackage 崩溃
-当 CodePackage 崩溃时，Service Fabric 将使用回退来重新启动它，而回退与代码包是否已向我们注册了类型无关。
+当 CodePackage 崩溃时，Service Fabric 使用回退来重新启动它。 无论 CodePackage 是否已向 Service Fabric 运行时注册了类型，都将应用回退。
 
-回退值始终为 Min （RetryTime， **ActivationMaxRetryInterval**），该值可以基于**ActivationRetryBackoffExponentiationBase** config 为常量、线性或指数。
+回退值为 `Min(RetryTime, ActivationMaxRetryInterval)` 。 根据配置设置，该值在常量、线性或指数量中递增 `ActivationRetryBackoffExponentiationBase` ：
 
-- 常量： If **ActivationRetryBackoffExponentiationBase** = = 0 then RetryTime = **ActivationRetryBackoffInterval**;
-- 线性：如果**ActivationRetryBackoffExponentiationBase** = = 0，则 RetryTime = ContinuousFailureCount * **ActivationRetryBackoffInterval** ，其中 ContinousFailureCount 是 CodePackage 崩溃或无法激活的次数。
-- 指数： RetryTime = （**ActivationRetryBackoffInterval** ） * （**ActivationRetryBackoffExponentiationBase** ^ ContinuousFailureCount）;
+- **常量**：如果 `ActivationRetryBackoffExponentiationBase == 0` ，则为 `RetryTime = ActivationRetryBackoffInterval` 。
+- **线性**：如果  `ActivationRetryBackoffExponentiationBase == 0` 为，则 `RetryTime = ContinuousFailureCount ActivationRetryBackoffInterval` 为，其中 `ContinuousFailureCount` 是 CodePackage 崩溃或无法激活的次数。
+- **指数**： `RetryTime = (ActivationRetryBackoffInterval in seconds) * (ActivationRetryBackoffExponentiationBase ^ ContinuousFailureCount)` 。
     
-你可以根据需要控制 "快速重启" 的行为。 我们来谈谈线性。 这意味着，如果 CodePackage 崩溃，则启动间隔将在10、20和 30 40 秒之后，直到 CodePackage 被停用。 
+可以通过更改值来控制行为。 例如，如果需要多次快速重新启动尝试，可以通过将设置 `ActivationRetryBackoffExponentiationBase` 为 `0` 并将设置 `ActivationRetryBackoffInterval` 为来使用线性量 `10` 。 因此，如果 CodePackage 发生故障，开始间隔将在10秒后发生。 如果包继续崩溃，则回退将更改为20秒、30秒、40秒，依此类推，直到 CodePackage 激活成功，否则 CodePackage 将被停用。 
     
-在发生故障后 Service Fabric 关闭（等待）的最长时间量由**ActivationMaxRetryInterval**控制
+Service Fabric 关闭 (的最长时间，则在控制故障后将等待) `ActivationMaxRetryInterval` 。
     
-如果 CodePackage 崩溃并重新启动，则需要保持**CodePackageContinuousExitFailureResetInterval**的 Service Fabric 将其视为正常，此时会将运行状况报告覆盖为正常，并重置 ContinousFailureCount。
+如果 CodePackage 崩溃并重新启动，则需要保持指定的时间段 `CodePackageContinuousExitFailureResetInterval` 。 此时间间隔过后，Service Fabric 将 CodePackage 视为正常。 然后 Service Fabric 将之前的错误运行状况报告覆盖为 "正常"，并重置 `ContinuousFailureCount` 。
 
 ### <a name="codepackage-not-registering-servicetype"></a>CodePackage 未注册 ServiceType
-如果 CodePackage 保持活动状态，并且预计会向我们注册一个 ServiceType，但绝不会这样做，则在这种情况下 Service Fabric 将在**ServiceTypeRegistrationTimeout**指示 ServiceType 未在超时内配置时生成警告 HealthReport。
+如果 CodePackage 保持正常运行，并且预计只注册一个 ServiceType，但却不是，Service Fabric 将在之后生成一个警告运行状况报告 `ServiceTypeRegistrationTimeout` 。 该报表指示 ServiceType 尚未在预期的时间内注册。
 
 ### <a name="activation-failure"></a>激活失败
-如果在激活过程中发现错误，Service Fabric 始终使用线性回退（与 CodePackage 崩溃相同）。 这意味着激活操作将放弃（0 + 10 + 20 + 30 + 40） = 100 秒（第一次重试开始）。 不重试此激活后。
+当 Service Fabric 在激活过程中发现错误时，它始终使用线性回退，因为它会在 CodePackage 崩溃的情况下执行。 激活操作在重试后会按下列间隔重试： (0 + 10 + 20 + 30 + 40) = 100 秒。 第一次重试 (立即进行。在此序列后 ) ，不会重试激活。
     
-最大激活回退可以是**ActivationMaxRetryInterval**并重试**activationmaxfailurecount 次**。
+最大激活回退可以是 `ActivationMaxRetryInterval` 。 重试可能是 `ActivationMaxFailureCount` 。
 
 ### <a name="download-failure"></a>下载失败
-如果在下载过程中遇到错误，Service Fabric 始终使用线性回退。 这意味着激活操作将放弃（0 + 10 + 20 + 30 + 40） = 100 秒（第一次重试开始）。 此下载不重试。 用于下载的线性回退等同于 ContinuousFailureCount ***DeploymentRetryBackoffInterval** ，可以最大为**DeploymentMaxRetryInterval**。 与激活一样，下载操作可以重试**activationmaxfailurecount 次**。
+当在下载过程中发现错误时，Service Fabric 始终使用线性回退。 激活操作在重试后会按下列间隔重试： (0 + 10 + 20 + 30 + 40) = 100 秒。 第一次重试 (立即进行。在此序列后 ) ，不会重试下载。 
+
+下载的线性回退与相同 `ContinuousFailureCount`  *  `DeploymentRetryBackoffInterval` 。 最大回退可以是 `DeploymentMaxRetryInterval` 。 与激活一样，下载操作可以重试 `ActivationMaxFailureCount` 限制。
 
 > [!NOTE]
-> 在更改配置之前，需要注意以下几个示例。
-
-* 如果 CodePackage 保持崩溃并退出，则将禁用 ServiceType。 但如果激活配置使它能够快速重新启动，则 CodePackage 可能会出现几次，然后才能看到 ServiceType 的禁用状态。 对于 ex：假定 CodePackage 出现，将 ServiceType 注册到 Service Fabric，然后崩溃。 在这种情况下，一旦宿主收到类型注册， **ServiceTypeDisableGraceInterval**时段就会被取消。 这会重复，直到 CodePackage 的值达到大于**ServiceTypeDisableGraceInterval**的值，然后才会在节点上禁用 ServiceType。 因此，可能需要一段时间，然后才能在节点上禁用 ServiceType。
-
-* 在激活的情况下，当 Service Fabric 系统需要在节点上放置一个副本时，RA （ReconfigurationAgent）会要求承载子系统激活应用程序，并每15秒重试一次激活请求（**RAPMessageRetryInterval**）。 为了使 Service Fabric 系统知道是否已禁用 ServiceType，托管的激活操作需要的时间比重试时间间隔和**ServiceTypeDisableGraceInterval**长。 例如：让群集将配置**activationmaxfailurecount 次**设置为5，将**ActivationRetryBackoffInterval**设置为1秒。这意味着激活操作将放弃（0 + 1 + 2 + 3 + 4） = 10 秒（首次重试），并在该宿主放弃重试之后。 在这种情况下，激活操作将完成，并将在15秒后重试。 发生这种情况是因为 Service Fabric 在15秒内完成了所有重试。 因此，ReconfigurationAgent 中的每次重试都将在托管子系统中创建新的激活操作，该模式将保持重复，并且不会在该节点上禁用 ServiceType。 由于不会在节点上禁用 ServiceType，因此 Sf 系统的组件调频（FailoverManager）不会将副本移到其他节点。
+> 更改这些设置之前，请记住以下示例：
+>
+>* 如果 CodePackage 保持崩溃并关闭，则将禁用 ServiceType。 但如果激活配置有快速重启，则 CodePackage 可能会在 ServiceType 实际列入阻止列表之前出现几次。 
+>
+>    例如，假设 CodePackage 出现，将 ServiceType 注册到 Service Fabric，然后崩溃。 在这种情况下，在宿主收到类型注册后，将 `ServiceTypeDisableGraceInterval` 取消该时间段。 此过程可以重复执行，直到 CodePackage 的值超过该 `ServiceTypeDisableGraceInterval` 时间段。 然后，将在节点上列入阻止列表 ServiceType。 ServiceType 列入阻止列表所需的时间可能比预期的要长。
+>
+>* 在激活的情况下，当 Service Fabric 系统需要在节点上放置一个副本时，重新配置代理会要求宿主子系统激活该应用程序。 它每15秒重试一次激活请求。  (持续时间由 `RAPMessageRetryInterval` 配置设置控制。 ) Service Fabric 无法知道是否已列入阻止列表 ServiceType，除非托管中的激活操作所用的时间比重试间隔和更长 `ServiceTypeDisableGraceInterval` 。 
+>
+>    例如，假设群集的 `ActivationMaxFailureCount` 设置为5，并且 `ActivationRetryBackoffInterval` 设置为1秒。 在这种情况下，激活操作将在 (0 + 1 + 2 + 3 + 4) 等于10秒的时间间隔后得出。 第一次重试 (立即进行。在此序列后 ) ，主机会放弃重试。 激活操作完成后将不会在15秒后重试。 
+>
+>    Service Fabric 已用尽了15秒内允许的所有重试。 因此，重新配置代理中的每次重试都会在宿主子系统中创建新的激活操作，并且模式将保持重复。 因此，ServiceType 永远不会列入阻止列表在节点上。 由于 ServiceType 不会在节点上列入阻止列表，因此不会在不同的节点上移动和尝试副本。
 > 
 
 ## <a name="deactivation"></a>停用
 
-在节点上激活 ServicePackage 时，会对其进行跟踪以使其停用。 Deactivator 是跟踪它的实体。
-Deactivator 的工作方式有两种：
+在节点上激活 ServicePackage 时，会对其进行跟踪以使其停用。 停用有两种方式：
 
-1.  定期：在每个**DeactivationScanInterval**中，它将检查是否存在从未托管副本的 ServicePackages，并将其标记为候选项以便停用。
-2.  ReplicaClose：如果副本已关闭，则 Deactivator 将获取 DecrementUsageCount。 如果计数为0，则表示 ServicePackage 不托管任何副本，因此是取消激活的候选项。
+- **定期停用**：在每个 `DeactivationScanInterval` 系统中，系统都会检查 *从未* 托管过副本的服务包，并将其标记为候选项以便停用。
+- **ReplicaClose 停用**：如果副本关闭，则 deactivator 将获取 `DecrementUsageCount` 。 当 ServicePackage 不托管任何副本时，计数为 0; 因此，ServicePackage 是取消激活的候选项。
 
- 基于激活模式的 "[独占/共享][a2]" 模式，在**DeactivationGraceInterval** for SharedMode/ **ExclusiveModeDeactivationGraceInterval** for ExclusiveMode 后计划用于停用的候选项。 如果在这段时间内有新的副本位置，则取消停用。
+激活模式确定何时计划取消激活。 在 "共享" 模式下，将在之后计划用于停用的候选项 `DeactivationGraceInterval` 。 在独占模式下，它们计划在之后 `ExclusiveModeDeactivationGraceInterval` 。 如果新的副本位置在这段时间内到达，则取消停用。 
 
-### <a name="periodically"></a>定期
-示例1：假设 Deactivator 在时间 T （**DeactivationScanInterval**）进行扫描。 下一次扫描将位于2T。 假设 ServicePackage 激活发生在 T + 1 中。 此 ServicePackage 不承载副本，因此需要将其停用。 为了使 ServicePackage 成为停用的候选项，它需要处于 "无副本" 的状态（至少为 "T"）。 也就是说，它有资格在 2T + 1 上停用。 因此，2T 上的扫描将找不到此 ServicePackage 作为停用的候选项。 下一次停用周期3T 会将此 ServicePackage 计划为停用，因为现在它在没有时间 T 的副本状态。  
+有关详细信息，请参阅 [独占模式和共享模式][a2]。
 
-示例2：假设 ServicePackage 在时间 T-1 激活，Deactivator 将在 T 处扫描。ServicePackage 不承载副本。 然后在下一次扫描2T，此 ServicePackage 将被视为停用的候选项，因此将安排停用。  
+### <a name="periodic-deactivation"></a>定期停用
+下面是一些定期停用的示例：
 
-示例3：假设 ServicePackage 在 T –1处激活，Deactivator 在 T 处进行扫描。ServicePackage 尚未托管副本。 现在，在 T + 1 上放置副本，即 宿主获取 IncrementUsageCount，这意味着将创建副本。 现在，在2T 中，此 ServicePackage 不会计划停用。 现在，停用会转到下面所述的 ReplicaClose 逻辑。
+* **示例 1**：假设 deactivator 开始扫描 (`DeactivationScanInterval`) 。 其下次扫描的时间将是 2T。 假设 ServicePackage 激活发生在 T + 1 中。 此 ServicePackage 不托管副本，因此需要将其停用。 
 
-示例4：假设你的 ServicePackage 很大，如 10 GB，则在节点上下载可能需要一些时间。 激活应用程序后，Deactivator 将跟踪其生命周期。 现在，如果**DeactivationScanInterval**配置较小，则可能会遇到问题，因为在下载时，ServicePackage 不会在节点上激活。 若要解决此问题，可以[在节点上预下载 ServicePackage][p1]。 
+    若要成为停用的候选项，ServicePackage 至少需要为 T 次托管无副本。 它将有资格在 2T + 1 上停用。 因此，2T 上的扫描不会将此 ServicePackage 识别为取消激活的候选项。 
+
+    下一次停用周期3T 会将此 ServicePackage 计划为停用，因为现在包已处于非副本状态的时间 T。  
+
+* **示例 2**：假设 ServicePackage 在时间 t-1 激活，Deactivator 在 t 开始扫描。ServicePackage 不承载副本。 下一次扫描时，2T 会被标识为要停用的候选项，因此会将其计划为停用。  
+
+* **示例 3**：假设 ServicePackage 在 t –1处激活，Deactivator 在 t 开始扫描。ServicePackage 尚未托管副本。 现在，在 T + 1 上放置副本。 也就是说，托管获取 `IncrementUsageCount` ，这意味着将创建副本。 
+
+    在2T 上，不会将此 ServicePackage 计划为停用。 由于包包含副本，因此停用将遵循 ReplicaClose 逻辑，如本文的下一部分所述。
+
+* **示例 4**：假设 ServicePackage 是 10 GB。 由于包很大，因此需要在节点上下载时间。 激活应用程序时，deactivator 会跟踪其生命周期。 如果 `DeactivationScanInterval` 设置为较小的值，则由于下载所需的时间，ServicePackage 可能没有时间在节点上激活。 若要解决此问题，可以 [提前在节点上下载 ServicePackage][p1] 或增加 `DeactivationScanInterval` 。 
 
 > [!NOTE]
-> 因此 ServicePackage 可以在任何位置（**DeactivationScanInterval**到 2 ***DeactivationScanInterval**） + **DeactivationGraceInterval** / **ExclusiveModeDeactivationGraceInterval**之间停用。 
+> ServicePackage 可以在 (`DeactivationScanInterval` 到 2 *) + 之间的任何位置停用 `DeactivationScanInterval` `DeactivationGraceInterval` / `ExclusiveModeDeactivationGraceInterval` 。 
 >
 
-### <a name="replica-close"></a>副本关闭：
-Deactivator 保留 ServicePackage 所持有副本的计数。 如果 ServicePackage 持有副本并且副本关闭/关闭，则托管将获取 DecrementUsageCount。 打开副本时，承载将获取 IncrementUsageCount。 减量意味着 ServicePackage 现在承载一个较小的副本，并且当计数降到0时，ServicePackage 将被计划为停用，并且在该时间之后停用的时间为**DeactivationGraceInterval** / **ExclusiveModeDeactivationGraceInterval**。 
-
-对于 ex：假设发生减量，并计划在 2T + X （**DeactivationGraceInterval** / **ExclusiveModeDeactivationGraceInterval**）停用 ServicePackage。 如果在这段时间内宿主获取一个 IncrementUsage，这意味着创建一个副本，则取消停用。
+### <a name="replicaclose-deactivation"></a>ReplicaClose 停用
 
 > [!NOTE]
->因此，这些配置基本上意味着： **DeactivationGraceInterval** / **ExclusiveModeDeactivationGraceInterval**：指定给 ServicePackage 的时间在托管任何副本后再次托管另一副本。 
-**DeactivationScanInterval**：如果副本从未托管任何副本，则为 ServicePackage 指定的最短时间（即 如果未使用，则为。
+> 本部分引用以下配置设置：
+> - **DeactivationGraceInterval** /**ExclusiveModeDeactivationGraceInterval**：指定给 ServicePackage 的时间，以承载另一个副本（如果它已承载任何副本）。 
+> - **DeactivationScanInterval**：为 ServicePackage 托管副本的最短时间（如果它 *从未* 承载任何副本，即，如果尚未使用）。
 >
 
-### <a name="ctrlc"></a>Ctrl+C
-ServicePackage 传递**DeactivationGraceInterval** / **ExclusiveModeDeactivationGraceInterval**并且仍未承载副本后，停用是非可取消。 CodePackage 是按 Ctrl + C 处理程序发出的，这意味着现在停用管道必须经过处理才能使进程停止运行。 在这段时间内，如果相同 ServicePackage 的新副本正在尝试执行，则会失败，因为我们无法从停用切换到激活。
+系统会保留 ServicePackage 包含的副本计数。 如果 ServicePackage 持有副本并且副本关闭或关闭，则宿主会获得 `DecrementUsageCount` 。 打开副本时，承载将获取 `IncrementUsageCount` 。 
 
-## <a name="cluster-configs"></a>群集配置
+减量表示 ServicePackage 托管的副本的数量已减少一个副本。 当计数降到0时，ServicePackage 计划为停用。 停用之后的时间为 `DeactivationGraceInterval` / `ExclusiveModeDeactivationGraceInterval` 。 
 
-具有默认值的配置会影响激活/decativation。
+例如，假设某个减量发生在 T，并计划在 2T + X () 停用 `DeactivationGraceInterval` / `ExclusiveModeDeactivationGraceInterval` 。 在此期间，如果 `IncrementUsage` 由于创建了副本而导致宿主获得，则取消停用。
+
+### <a name="ctrl--c"></a>Ctrl + C
+如果 ServicePackage 传递了 `DeactivationGraceInterval` / `ExclusiveModeDeactivationGraceInterval` 并且仍未承载副本，则无法取消停用。 Codepackage 接收 Ctrl + C 处理程序。 现在，停用管道必须完成以使进程停止运行。 
+
+在此期间，如果相同 ServicePackage 的新副本正在尝试执行，则该副本将失败，因为进程无法从停用切换到激活。
+
+## <a name="cluster-configurations"></a>群集配置
+
+本节列出了默认情况下会影响激活和停用的配置。
 
 ### <a name="servicetype"></a>ServiceType
-**ServiceTypeDisableFailureThreshold**：默认值为1。 失败计数的阈值，在此之后，会通知 FM （FailoverManager）禁用该节点上的服务类型，并尝试另一个节点进行放置。
-**ServiceTypeDisableGraceInterval**：默认值为30秒。时间间隔过后，可以禁用服务类型。
-**ServiceTypeRegistrationTimeout**：默认值为300秒。ServiceType 注册 Service Fabric 所用的超时时间。
+- **ServiceTypeDisableFailureThreshold**：默认值：1。 失败计数的阈值;达到此阈值后，将通知 FailoverManager 禁用节点上的服务类型，并尝试使用其他节点进行放置。
+- **ServiceTypeDisableGraceInterval**：默认值：30秒。 时间间隔，在此时间间隔后可以禁用服务类型。
+- **ServiceTypeRegistrationTimeout**：默认值：300秒。 ServiceType 注册 Service Fabric 所用的超时时间。
 
 ### <a name="activation"></a>激活
-**ActivationRetryBackoffInterval**：默认为每个激活失败的回退间隔。
-**Activationmaxfailurecount 次**：默认值为20。 系统将在放弃之前重试失败的激活的最大计数。 
-**ActivationRetryBackoffExponentiationBase**：默认1.5。
-**ActivationMaxRetryInterval**：默认值为3600秒。发生故障时，不能再进行激活。
-**CodePackageContinuousExitFailureResetInterval**：默认值为300秒。为 CodePackage 重置连续退出失败计数的超时时间。
+- **ActivationRetryBackoffInterval**：默认值：10秒。 每个激活失败的回退时间间隔。
+- **Activationmaxfailurecount 次**：默认值：20。 系统将在放弃之前重试失败的激活的最大计数。 
+- **ActivationRetryBackoffExponentiationBase**：默认值：1.5。
+- **ActivationMaxRetryInterval**：默认值：3600秒。 故障后激活的最大回退重试间隔。
+- **CodePackageContinuousExitFailureResetInterval**：默认值：300秒。 用于重置 CodePackage 的连续退出失败计数的超时间隔。
 
 ### <a name="download"></a>下载
-**DeploymentRetryBackoffInterval**：默认值为10。 部署失败的回退时间间隔。
-**DeploymentMaxRetryInterval**：默认值为3600秒。失败时部署的最大备份数为默认值。
-**DeploymentMaxFailureCount**：默认值为20。 重试 DeploymentMaxFailureCount 次应用程序部署后，节点上该应用程序的部署才会失败。
+- **DeploymentRetryBackoffInterval**：默认值：10。 部署失败的回退时间间隔。
+- **DeploymentMaxRetryInterval**：默认值：3600秒。 部署失败后的最大回退时间间隔。
+- **DeploymentMaxFailureCount**：默认值：20。 在 `DeploymentMaxFailureCount` 节点上部署应用程序之前，将重试应用程序部署。
 
 ### <a name="deactivation"></a>停用
-**DeactivationScanInterval**：默认值为600秒。如果某个副本从未托管任何副本，则为 ServicePackage 指定的最小时间（即 如果未使用，则为。
-**DeactivationGraceInterval**：默认值为60秒。在**共享**进程模型的情况下，向 ServicePackage 托管其他副本的时间。
-**ExclusiveModeDeactivationGraceInterval**：默认值为1秒。在**独占**进程模型托管任何副本后，给定给 ServicePackage 的时间再次托管另一个副本。
+- **DeactivationScanInterval**：默认值：600秒。 指定给 ServicePackage 宿主副本的最小时间（如果它从未承载过任何副本 (，如果未使用) ）。
+- **DeactivationGraceInterval**：默认值：60秒。 在 *共享* 进程模型中，指定给 ServicePackage 的时间在已托管任何副本后再次托管另一个副本。
+- **ExclusiveModeDeactivationGraceInterval**：默认值：1秒。 在 *独占* 进程模型中，指定给 ServicePackage 的时间会在已承载任何副本后再次托管另一个副本。
 
 ## <a name="next-steps"></a>后续步骤
-[打包应用程序][a3]并准备好进行部署。
 
-[部署和删除应用程序][a4]。 此文介绍如何使用 PowerShell 来管理应用程序实例。
+- [打包应用程序][a3]并准备好进行部署。
+- 在 PowerShell 中[部署和删除应用程序][a4]。
 
 <!--Link references--In actual articles, you only need a single period before the slash-->
 [a1]: service-fabric-application-model.md

@@ -2,15 +2,15 @@
 title: 排查 Azure 自动化功能部署问题
 description: 本文介绍如何排查和解决部署 Azure 自动化功能时出现的问题。
 services: automation
+ms.subservice: ''
 ms.date: 06/30/2020
-ms.topic: conceptual
-ms.service: automation
-ms.openlocfilehash: ca2f866dc882e003469163a22d32d3d72031443a
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.topic: troubleshooting
+ms.openlocfilehash: 41388e46f5204acaa53f376bc05cebf975361dad
+ms.sourcegitcommit: 49ea056bbb5957b5443f035d28c1d8f84f5a407b
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "85801023"
+ms.lasthandoff: 02/09/2021
+ms.locfileid: "100008156"
 ---
 # <a name="troubleshoot-feature-deployment-issues"></a>排查功能部署问题
 
@@ -68,7 +68,7 @@ The solution cannot be enabled on this VM because the permission to read the wor
 
 #### <a name="resolution"></a>解决方法
 
-请确保你有适当的[功能部署权限](../automation-role-based-access-control.md#feature-setup-permissions)，然后尝试再次部署该功能。 如果收到错误消息 `The solution cannot be enabled on this VM because the permission to read the workspace is missing` ，请参阅以下[疑难解答信息](update-management.md#failed-to-enable-error)。
+请确保你有适当的[功能部署权限](../automation-role-based-access-control.md#feature-setup-permissions)，然后尝试再次部署该功能。 如果收到错误消息“`The solution cannot be enabled on this VM because the permission to read the workspace is missing`”，请参阅以下 [故障排除信息](update-management.md#failed-to-enable-error)。
 
 ### <a name="scenario-feature-deployment-fails-with-the-message-failed-to-configure-automation-account-for-diagnostic-logging"></a><a name="diagnostic-logging"></a>场景：功能部署失败，显示“未能配置自动化帐户进行诊断日志记录”
 
@@ -82,7 +82,7 @@ Failed to configure automation account for diagnostic logging
 
 #### <a name="cause"></a>原因
 
-如果定价层与订阅的计费模型不匹配，则可能导致此错误。 有关详细信息，请参阅[在 Azure Monitor 中监视使用情况和预估成本](https://aka.ms/PricingTierWarning)。
+如果定价层与订阅的计费模型不匹配，则可能导致此错误。 有关详细信息，请参阅[在 Azure Monitor 中监视使用情况和预估成本](../../azure-monitor/platform/usage-estimated-costs.md)。
 
 #### <a name="resolution"></a>解决方法
 
@@ -148,7 +148,7 @@ The link cannot be updated or deleted because it is linked to Update Management 
 删除功能资源后，可取消链接工作区。 有必要从工作区和 Azure 自动化帐户中清除来自这些功能的所有现有项目：
 
 * 对于“更新管理”功能，请从自动化帐户中删除“更新部署（计划）”。
-* 对于“在非工作时间启动/停止 VM”功能，请在自动化帐户的“设置” > “锁定”下删除功能组件上的所有锁 。 有关详细信息，请参阅[删除功能](../automation-solution-vm-management.md#remove-the-feature)。
+* 对于“在非工作时间启动/停止 VM”功能，请在自动化帐户的“设置” > “锁定”下删除功能组件上的所有锁 。 有关详细信息，请参阅[删除功能](../automation-solution-vm-management-remove.md)。
 
 ## <a name="log-analytics-for-windows-extension-failures"></a><a name="mma-extension-failures"></a>Windows 扩展的 Log Analytics 故障
 
@@ -242,5 +242,5 @@ Install failed for plugin (name: Microsoft.EnterpriseCloud.Monitoring.MicrosoftM
 如果你的问题未在本文中列出，或者无法解决问题，请尝试通过以下渠道之一获取更多支持：
 
 * 通过 [Azure 论坛](https://azure.microsoft.com/support/forums/)获取 Azure 专家的解答。
-* 联系 [@AzureSupport](https://twitter.com/azuresupport)，这是用于改进客户体验的 Microsoft Azure 官方帐户。 Azure 支持人员会将你连接到 Azure 社区，从中可获得解答、支持和专家建议。
+* 连接到 [@AzureSupport](https://twitter.com/azuresupport)，这是用于改进客户体验的官方 Microsoft Azure 帐户。 Azure 支持人员会将你连接到 Azure 社区，从中可以获得解答、支持和专家建议。
 * 提出 Azure 支持事件。 请转到 [Azure 支持站点](https://azure.microsoft.com/support/options/)并选择“获取支持”。

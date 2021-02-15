@@ -3,7 +3,7 @@ title: 安装 StorSimple Adapter for SharePoint | Microsoft 文档
 description: 介绍如何在 SharePoint 服务器场中安装、配置或删除 StorSimple Adapter for SharePoint。
 services: storsimple
 documentationcenter: NA
-author: twooley
+author: alkohli
 manager: timlt
 editor: ''
 ms.assetid: 36c20b75-f2e5-4184-a6b5-9c5e618f79b2
@@ -13,13 +13,13 @@ ms.topic: article
 ms.tgt_pltfrm: NA
 ms.workload: TBD
 ms.date: 06/06/2017
-ms.author: twooley
-ms.openlocfilehash: a841ce8b664389ccd8fdf55de9965f09412fecf5
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.author: alkohli
+ms.openlocfilehash: 639efab3a9eaef400b3fbe3d0b134d02f458b865
+ms.sourcegitcommit: cd9754373576d6767c06baccfd500ae88ea733e4
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "75930207"
+ms.lasthandoff: 11/20/2020
+ms.locfileid: "94966286"
 ---
 # <a name="install-and-configure-the-storsimple-adapter-for-sharepoint"></a>安装和配置 StorSimple Adapter for SharePoint
 ## <a name="overview"></a>概述
@@ -53,7 +53,7 @@ RBS 的 Microsoft Azure StorSimple 实现具有以下优势：
 将 BLOB 内容转移到文件系统可以进一步节省成本并提供更多益处。 例如，使用 RBS 可以减少对成本昂贵的第 1 层存储的需求，而且由于 RBS 收缩内容数据库，因而减少了 SharePoint 服务器场中需要的数据库数量。 但是，其他因素（例如数据库大小限制和非 RBS 内容数量）也会影响存储要求。 有关使用 RBS 的成本和优势的详细信息，请参阅[规划 RBS (SharePoint Foundation 2010)][4] 和[决定在 SharePoint 2013 中使用 RBS][5]。
 
 ### <a name="capacity-and-performance-limits"></a>容量和性能限制
-考虑在 SharePoint 解决方案中使用 RBS 之前，应了解 SharePoint Server 2010 和 SharePoint Server 2013 的已测试性能和容量限制，以及这些限制与可接受性能之间存在何种关系。 有关详细信息，请参阅 [Software Boundaries and Limits for SharePoint 2013](https://technet.microsoft.com/library/cc262787.aspx)（SharePoint 2013 的软件边界和限制）。
+考虑在 SharePoint 解决方案中使用 RBS 之前，应了解 SharePoint Server 2010 和 SharePoint Server 2013 的已测试性能和容量限制，以及这些限制与可接受性能之间存在何种关系。 有关详细信息，请参阅 [Software Boundaries and Limits for SharePoint 2013](/SharePoint/install/software-boundaries-and-limits-0)（SharePoint 2013 的软件边界和限制）。
 
 在配置 RBS 之前，请检查以下事项：
 
@@ -162,7 +162,7 @@ StorSimple 设备是一个块设备，因此需要一个可以托管数据的文
 安装 StorSimple Adapter for SharePoint 后，请按照以下过程配置 RBS。
 
 > [!TIP]
-> StorSimple Adapter for SharePoint 已插入 SharePoint 管理中心页，因此可以在 SharePoint 场中的每个内容数据库上启用或禁用 RBS。 不过，在内容服务器上启用或禁用 RBS 会导致 IIS 重置，这可能会使 SharePoint Web (WFE) 前端暂时不可用，具体取决于场配置。 （例如，使用前端负载均衡器、当前服务器工作负荷等因素可能会限制或消除这种中断。）为了防止用户中断，我们建议你仅在计划的维护时段内启用或禁用 RBS。
+> StorSimple Adapter for SharePoint 已插入 SharePoint 管理中心页，因此可以在 SharePoint 场中的每个内容数据库上启用或禁用 RBS。 不过，在内容服务器上启用或禁用 RBS 会导致 IIS 重置，这可能会使 SharePoint Web (WFE) 前端暂时不可用，具体取决于场配置。  (因素（如使用前端负载均衡器、当前服务器工作负荷等）可以限制或消除这种中断。 ) 若要防止用户中断，建议仅在计划的维护时段内启用或禁用 RBS。
 
 
 [!INCLUDE [storsimple-sharepoint-adapter-configure-rbs](../../includes/storsimple-sharepoint-adapter-configure-rbs.md)]
@@ -196,7 +196,7 @@ StorSimple 设备是一个块设备，因此需要一个可以托管数据的文
 > * 以前通过 RBS 转到外部存储的任何文件，必须等到重新安装完成并重新启用 RBS 功能之后才能使用。 为了限制用户受影响的程度，请在规划的维护期间执行任何升级或重新安装。
 > * 升级/重新安装所需的时间取决于 SharePoint 服务器场中的 SharePoint 数据库总数。
 > * 升级/重新安装完成后，需要为内容数据库启用 RBS。 有关详细信息，请参阅[配置 RBS](#configure-rbs)。
-> * 如果要为具有大量数据库（大于200）的 SharePoint 场配置 RBS， **Sharepoint 管理中心**页可能会超时。如果出现这种情况，请刷新页面。 这不会影响配置过程。
+> * 如果为 SharePoint 场配置 RBS，而该场的数据库数量非常多 (大于 200) ，则 **Sharepoint 管理中心** 页可能会超时。如果出现这种情况，请刷新页面。 这不会影响配置过程。
 
 
 [!INCLUDE [storsimple-upgrade-sharepoint-adapter](../../includes/storsimple-upgrade-sharepoint-adapter.md)]
@@ -208,7 +208,7 @@ StorSimple 设备是一个块设备，因此需要一个可以托管数据的文
 > 必须先将 BLOB 移回内容数据库，然后才能卸载适配器软件。
 
 
-### <a name="before-you-begin"></a>开始之前
+### <a name="before-you-begin"></a>准备阶段
 在将数据移回 SQL Server 内容数据库并开始适配器删除过程之前，请先收集以下信息：
 
 * 所有已启用 RBS 的数据库的名称
@@ -226,7 +226,7 @@ StorSimple 设备是一个块设备，因此需要一个可以托管数据的文
 4. 在 **“配置 StorSimple 适配器”** 页上，单击每个要从外部 BLOB 存储中移除的内容数据库下面的 **“禁用”** 按钮。 
 5. 从 SharePoint 中删除对象，并将其重新上载。
 
-或者，你可以使用 `RBS Migrate()` SharePoint 随附的 Microsoft PowerShell cmdlet。 有关详细信息，请参阅[将内容移入或移出 RBS](https://technet.microsoft.com/library/ff628255.aspx)。
+或者，你可以使用 `RBS Migrate()` SharePoint 随附的 Microsoft PowerShell cmdlet。 有关详细信息，请参阅[将内容移入或移出 RBS](/previous-versions/office/sharepoint-foundation-2010/ff628255(v=office.14))。
 
 将 BLOB 移回内容数据库后，请转到下一步：[卸载适配器](#uninstall-the-adapter)。
 
@@ -238,7 +238,7 @@ StorSimple 设备是一个块设备，因此需要一个可以托管数据的文
 2. 双击 StorSimple Adapter for SharePoint 安装程序。 此时会启动安装向导。
    
     ![安装向导](./media/storsimple-adapter-for-sharepoint/sasp2.png)
-3. 单击“下一步” 。 将显示以下页。
+3. 单击“下一步”。 将显示以下页。
    
     ![安装向导删除页](./media/storsimple-adapter-for-sharepoint/sasp3.png)
 4. 单击 **“删除”** 选择删除过程。 将显示以下页。
@@ -258,8 +258,8 @@ StorSimple 设备是一个块设备，因此需要一个可以托管数据的文
 
 <!--Reference links-->
 [1]: https://www.microsoft.com/download/details.aspx?id=44073
-[2]: https://technet.microsoft.com/library/ff628583(v=office.15).aspx
-[3]: https://technet.microsoft.com/library/ff628583(v=office.14).aspx
-[4]: https://technet.microsoft.com/library/ff628569(v=office.14).aspx
-[5]: https://technet.microsoft.com/library/ff628583(v=office.15).aspx
-[8]: https://technet.microsoft.com/library/ff943565.aspx
+[2]: /SharePoint/administration/rbs-planning
+[3]: /previous-versions/office/sharepoint-server-2010/ff628583(v=office.14)
+[4]: /previous-versions/office/sharepoint-foundation-2010/ff628569(v=office.14)
+[5]: /SharePoint/administration/rbs-planning
+[8]: /SharePoint/administration/maintain-rbs

@@ -4,15 +4,16 @@ description: 解决在 Azure 门户或帐户中心注册 Azure 时信用卡被�
 author: v-miegge
 ms.reviewer: judupont
 ms.service: cost-management-billing
+ms.subservice: billing
 ms.topic: troubleshooting
-ms.date: 06/05/2020
+ms.date: 08/20/2020
 ms.author: banders
-ms.openlocfilehash: fe90c0e6022fc5fcd32ddf4e7bc66e58c126545d
-ms.sourcegitcommit: d7008edadc9993df960817ad4c5521efa69ffa9f
+ms.openlocfilehash: 5b53d1855abb3114be1ab31e19af3bb3a11d722f
+ms.sourcegitcommit: 33368ca1684106cb0e215e3280b828b54f7e73e8
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/08/2020
-ms.locfileid: "86102576"
+ms.lasthandoff: 10/16/2020
+ms.locfileid: "92132153"
 ---
 # <a name="troubleshoot-a-declined-card-at-azure-sign-up"></a>对 Azure 注册时卡被拒进行故障排除
 
@@ -70,4 +71,4 @@ Azure 计费和订阅的其他疑难解答文章
 
 ## <a name="next-steps"></a>后续步骤
 
-- [Azure 计费文档](../../billing/index.md)
+- [Azure 计费文档](../index.yml)

@@ -1,28 +1,30 @@
 ---
-title: Azure CLI 脚本示例 - 重置帐户凭据 | Microsoft Docs
+title: 重置帐户凭据 - CLI
 description: 使用 Azure CLI 脚本重置帐户凭据和恢复 app.config 设置。
 services: media-services
 documentationcenter: ''
-author: Juliako
+author: IngridAtMicrosoft
 manager: femila
 editor: ''
 ms.assetid: ''
 ms.service: media-services
 ms.devlang: azurecli
-ms.topic: sample
+ms.topic: troubleshooting
 ms.tgt_pltfrm: multiple
 ms.workload: na
-ms.date: 08/20/2019
-ms.author: juliako
+ms.date: 08/31/2020
+ms.author: inhenkel
 ms.custom: devx-track-azurecli
-ms.openlocfilehash: 16eaf5ab9b0af97e18a7253d132516a16003d25b
-ms.sourcegitcommit: 11e2521679415f05d3d2c4c49858940677c57900
+ms.openlocfilehash: 6fe958c9300d6a6feeb6926f84dbecf565dfafc1
+ms.sourcegitcommit: 4e70fd4028ff44a676f698229cb6a3d555439014
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/31/2020
-ms.locfileid: "87489973"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98954338"
 ---
 # <a name="azure-cli-example-reset-the-account-credentials"></a>Azure CLI 示例：重置帐户凭据
+
+[!INCLUDE [media services api v3 logo](./includes/v3-hr.md)]
 
 本文中的 Azure CLI 脚本演示如何重置帐户凭据和恢复 app.config 设置。
 

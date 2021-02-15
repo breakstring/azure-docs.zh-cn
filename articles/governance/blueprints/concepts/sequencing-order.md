@@ -1,18 +1,18 @@
 ---
 title: 了解部署排序顺序
 description: 了解在蓝图分配过程中部署蓝图项目的默认顺序，以及如何自定义部署顺序。
-ms.date: 05/06/2020
+ms.date: 01/27/2021
 ms.topic: conceptual
-ms.openlocfilehash: d4a3b07e158aa7e4514ea9543bf44ad57e379d24
-ms.sourcegitcommit: f684589322633f1a0fafb627a03498b148b0d521
+ms.openlocfilehash: ada7e7771e44e6f43c8546e8307fd5d2b218c009
+ms.sourcegitcommit: 436518116963bd7e81e0217e246c80a9808dc88c
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/06/2020
-ms.locfileid: "85970614"
+ms.lasthandoff: 01/27/2021
+ms.locfileid: "98918222"
 ---
 # <a name="understand-the-deployment-sequence-in-azure-blueprints"></a>了解 Azure 蓝图中的部署排序
 
-在处理蓝图定义的分配时，Azure 蓝图使用**排序顺序**来确定创建资源的顺序。 本文解释了以下概念：
+在处理蓝图定义的分配时，Azure 蓝图使用 **排序顺序** 来确定创建资源的顺序。 本文解释了以下概念：
 
 - 使用的默认序列化顺序
 - 如何自定义顺序
@@ -26,19 +26,19 @@ JSON 示例中的有些变量需要用自己的值替换：
 
 如果蓝图定义为部署项目的顺序不包含指令，或者指令为 null，则使用以下顺序：
 
-- 订阅级别“角色分配”项目按项目名称排序****
-- 订阅级别“策略分配”项目按项目名称排序****
-- 订阅级别**Azure 资源管理器模板**（ARM 模板）项目按项目名称排序
-- “资源组”项目（包括子项目）按占位符名称排序****
+- 订阅级别“角色分配”项目按项目名称排序
+- 订阅级别“策略分配”项目按项目名称排序
+- 订阅级别 **Azure 资源管理器模板** (ARM 模板) 按项目名称排序的项目
+- “资源组”项目（包括子项目）按占位符名称排序
 
-在每个**资源组**项目中，将按照以下顺序排列在该资源组中创建的项目：
+在每个 **资源组** 项目中，将按照以下顺序排列在该资源组中创建的项目：
 
-- 资源组子“角色分配”项目按项目名称排序****
-- 资源组子“策略分配”项目按项目名称排序****
-- 资源组子**Azure 资源管理器模板**（ARM 模板）项目按项目名称排序
+- 资源组子“角色分配”项目按项目名称排序
+- 资源组子“策略分配”项目按项目名称排序
+- 资源组子 **Azure 资源管理器模板** (ARM 模板) 按项目名称排序的项目
 
 > [!NOTE]
-> 使用[伪像（）](../reference/blueprint-functions.md#artifacts)可对所引用的项目创建隐式依赖项。
+> 使用 [ ( # B1 的项目 ](../reference/blueprint-functions.md#artifacts) 将在所引用的项目上创建隐式依赖项。
 
 ## <a name="customizing-the-sequencing-order"></a>自定义排序顺序
 
@@ -47,12 +47,12 @@ JSON 示例中的有些变量需要用自己的值替换：
 排序是通过在 JSON 中定义 `dependsOn` 属性来实现的。 资源组和项目对象的蓝图定义支持此属性。 `dependsOn` 是在创建特定项目之前需要创建的项目名称的字符串数组。
 
 > [!NOTE]
-> 创建蓝图对象时，如果使用[REST API](/rest/api/blueprints/artifacts/createorupdate)，则每个项目资源都将从文件名中获取其名称（如果使用[POWERSHELL](/powershell/module/az.blueprint/new-azblueprintartifact)）或 URL 端点。 项目中的 ResourceGroup 引用必须与蓝图定义中定义的_资源_组引用匹配。
+> 创建蓝图对象时，如果使用[REST API](/rest/api/blueprints/artifacts/createorupdate)，则每个项目资源都将从文件名中获取其名称（如果使用[POWERSHELL](/powershell/module/az.blueprint/new-azblueprintartifact)）或 URL 端点。 项目中的 ResourceGroup 引用必须与蓝图定义中定义的 _资源_ 组引用匹配。
 
 ### <a name="example---ordered-resource-group"></a>示例-有序资源组
 
-此示例蓝图定义具有一个资源组，该资源组通过声明的值以及标准资源组定义了自定义的排序顺序 `dependsOn` 。 在这种情况下，名为“assignPolicyTags”的项目将在“ordered-rg”资源组之前进行处理********。
-standard-rg 将按默认排序顺序进行处理****。
+此示例蓝图定义具有一个资源组，该资源组通过声明的值以及标准资源组定义了自定义的排序顺序 `dependsOn` 。 在这种情况下，名为“assignPolicyTags”的项目将在“ordered-rg”资源组之前进行处理。
+standard-rg 将按默认排序顺序进行处理。
 
 ```json
 {
@@ -112,7 +112,7 @@ standard-rg 将按默认排序顺序进行处理****。
 }
 ```
 
-根据 "**等待我**" 资源组的定义，订阅级别模板项目的定义如下所示：
+根据 " **等待我** " 资源组的定义，订阅级别模板项目的定义如下所示：
 
 ```json
 {
@@ -141,8 +141,8 @@ standard-rg 将按默认排序顺序进行处理****。
 
 ## <a name="next-steps"></a>后续步骤
 
-- 了解[蓝图生命周期](lifecycle.md)。
-- 了解如何使用[静态和动态参数](parameters.md)。
-- 了解如何利用[蓝图资源锁定](resource-locking.md)。
+- 了解[蓝图生命周期](./lifecycle.md)。
+- 了解如何使用[静态和动态参数](./parameters.md)。
+- 了解如何利用[蓝图资源锁定](./resource-locking.md)。
 - 了解如何[更新现有分配](../how-to/update-existing-assignments.md)。
 - 使用[一般故障排除](../troubleshoot/general.md)在蓝图的分配期间解决问题。

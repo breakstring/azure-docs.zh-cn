@@ -1,6 +1,6 @@
 ---
 title: 隔离网络上的 Azure 磁盘加密
-description: 本文提供了有关 Microsoft Azure Linux Vm 的磁盘加密的故障排除提示。
+description: 本文介绍 Linux Vm 上 Microsoft Azure 磁盘加密的故障排除提示。
 author: msmbaldwin
 ms.service: virtual-machines-linux
 ms.subservice: security
@@ -8,12 +8,12 @@ ms.topic: conceptual
 ms.author: mbaldwin
 ms.date: 02/27/2020
 ms.custom: seodec18
-ms.openlocfilehash: f0ca50d137ef7e6378d2bf8d0ab03127d49a9a88
-ms.sourcegitcommit: f353fe5acd9698aa31631f38dd32790d889b4dbb
+ms.openlocfilehash: 1d7e019e7759e22e945bddee477a4cb77f17350b
+ms.sourcegitcommit: d76108b476259fe3f5f20a91ed2c237c1577df14
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/29/2020
-ms.locfileid: "87373583"
+ms.lasthandoff: 10/29/2020
+ms.locfileid: "92913817"
 ---
 # <a name="azure-disk-encryption-on-an-isolated-network"></a>隔离网络上的 Azure 磁盘加密
 
@@ -25,29 +25,29 @@ Azure 磁盘加密取决于多个组件，这些组件通常在启用 ADE 的过
 
 下面是每次发行所需的包。 有关支持的发行版和卷类型的完整列表，请参阅[支持的 VM 和操作系统](disk-encryption-overview.md#supported-vms-and-operating-systems)。
 
-- **Ubuntu 14.04、16.04、18.04**：lsscsi、psmisc、at、cryptsetup-bin、python-parted、python-six、procps
-- **CentOS 7.2 - 7.7**：lsscsi、psmisc、lvm2、uuid、at、patch、cryptsetup、cryptsetup-reencrypt、pyparted、procps-ng、util-linux
-- **CentOS 6.8**：lsscsi、psmisc、lvm2、uuid、at、cryptsetup-reencrypt、pyparted、python-six
-- **RedHat 7.2-7.7**： lsscsi，psmisc，lvm2，uuid，at，patch，cryptsetup，cryptsetup-重新加密，procps-ng，util-linux
-- **RedHat 6.8**： lsscsi，psmisc，lvm2，uuid，at，patch，cryptsetup-重新加密
-- **openSUSE 42.3，SLES 12-SP4，12-SP3**： lsscsi，cryptsetup
+- **Ubuntu 14.04，16.04，18.04** ： lsscsi，psmisc，at，cryptsetup，python-parted，python-6，procps，grub-pc-bin
+- **CentOS 7.2 - 7.7** ：lsscsi、psmisc、lvm2、uuid、at、patch、cryptsetup、cryptsetup-reencrypt、pyparted、procps-ng、util-linux
+- **CentOS 6.8** ：lsscsi、psmisc、lvm2、uuid、at、cryptsetup-reencrypt、pyparted、python-six
+- **RedHat 7.2-7.7** ： lsscsi，psmisc，lvm2，uuid，at，patch，cryptsetup，cryptsetup-重新加密，procps-ng，util-linux
+- **RedHat 6.8** ： lsscsi，psmisc，lvm2，uuid，at，patch，cryptsetup-重新加密
+- **openSUSE 42.3，SLES 12-SP4，12-SP3** ： lsscsi，cryptsetup
 
 在 Red Hat 上，如果需要代理，则必须确保正确设置订阅管理器和 yum。 有关详细信息，请参阅[如何排除有关订阅管理器和 yum 的问题](https://access.redhat.com/solutions/189533)。  
 
 手动安装包时，还必须在发布新版本时手动升级包。
 
 ## <a name="network-security-groups"></a>网络安全组
-应用的任何网络安全组设置仍必须允许终结点满足所述的与磁盘加密相关的网络配置先决条件。  请参阅[Azure 磁盘加密：网络要求](disk-encryption-overview.md#networking-requirements)
+应用的任何网络安全组设置仍必须允许终结点满足所述的与磁盘加密相关的网络配置先决条件。  请参阅 [Azure 磁盘加密：网络要求](disk-encryption-overview.md#networking-requirements)
 
-## <a name="azure-disk-encryption-with-azure-ad-previous-version"></a>Azure 磁盘加密与 Azure AD （以前的版本）
+## <a name="azure-disk-encryption-with-azure-ad-previous-version"></a>Azure 磁盘加密与 Azure AD (早期版本) 
 
-如果[对 Azure AD （以前的版本）使用 Azure 磁盘加密](disk-encryption-overview-aad.md)，则需要为所有发行版手动安装[Azure Active Directory 库](../../active-directory/azuread-dev/active-directory-authentication-libraries.md)（除了[上面列出](#package-management)的适用于发行版的包）。
+如果将 [Azure 磁盘加密与 (早期版本) 的 Azure AD 一起 ](disk-encryption-overview-aad.md)使用，则需要为所有发行版 (手动安装 [Azure Active Directory 库](../../active-directory/azuread-dev/active-directory-authentication-libraries.md) ，如 [上面所列](#package-management)) 所列。
 
-使用 [Azure AD 凭据](disk-encryption-linux-aad.md)启用加密时，目标 VM 必须允许连接到 Azure Active Directory 终结点和密钥保管库终结点。 当前 Azure Active Directory 身份验证终结点在 [Office 365 URL 和 IP 地址范围](/office365/enterprise/urls-and-ip-address-ranges)文档中的第 56 和 59 节中进行维护。 在有关如何[访问防火墙保护下的 Azure 密钥保管库](../../key-vault/general/access-behind-firewall.md)的文档中提供了密钥保管库说明。
+使用 [Azure AD 凭据](disk-encryption-linux-aad.md)启用加密时，目标 VM 必须允许连接到 Azure Active Directory 终结点和密钥保管库终结点。 当前 Azure Active Directory 身份验证终结点保留在 [Microsoft 365 url 和 IP 地址范围](/microsoft-365/enterprise/urls-and-ip-address-ranges) 文档的56和59部分中。 在有关如何[访问防火墙保护下的 Azure 密钥保管库](../../key-vault/general/access-behind-firewall.md)的文档中提供了密钥保管库说明。
 
 ### <a name="azure-instance-metadata-service"></a>Azure 实例元数据服务 
 
-虚拟机必须能够访问[Azure 实例元数据服务](instance-metadata-service.md)终结点，该终结点使用一个已知不可路由的 IP 地址（）， `169.254.169.254` 该地址只能从 VM 内部访问。  不支持将本地 HTTP 流量更改为此地址的代理配置（例如，添加 X-Forwarded-For 标头）。
+虚拟机必须能够访问 [Azure 实例元数据服务](instance-metadata-service.md) 终结点，该终结点使用众所周知的不可路由的 IP 地址 (`169.254.169.254`) ，该地址只能从 VM 内部访问。  不支持将本地 HTTP 流量更改为此地址的代理配置（例如，添加 X-Forwarded-For 标头）。
 
 ## <a name="next-steps"></a>后续步骤
 

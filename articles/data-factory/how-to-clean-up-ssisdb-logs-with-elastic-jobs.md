@@ -1,21 +1,18 @@
 ---
 title: 使用 Azure 弹性数据库作业清理 SSISDB 日志
 description: 本文介绍如何使用 Azure 弹性数据库作业来触发现存的用于此目的的存储过程，以便清理 SSISDB 日志
-services: data-factory
 ms.service: data-factory
-ms.workload: data-services
 ms.topic: conceptual
 ms.date: 07/09/2020
 author: swinarko
 ms.author: sawinark
-manager: mflasko
-ms.reviewer: douglasl
-ms.openlocfilehash: c7a4a1a839282618e9723e5fc916770a789fc32b
-ms.sourcegitcommit: ec682dcc0a67eabe4bfe242fce4a7019f0a8c405
+ms.custom: devx-track-azurepowershell
+ms.openlocfilehash: ecabbf88e14d17ac912065c2ed4aa95316efaf9f
+ms.sourcegitcommit: d4734bc680ea221ea80fdea67859d6d32241aefc
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/09/2020
-ms.locfileid: "86187604"
+ms.lasthandoff: 02/14/2021
+ms.locfileid: "100387639"
 ---
 # <a name="clean-up-ssisdb-logs-with-azure-elastic-database-jobs"></a>使用 Azure 弹性数据库作业清理 SSISDB 日志
 
@@ -159,7 +156,7 @@ $Job | Set-AzureRmSqlElasticJob -IntervalType $IntervalType -IntervalCount $Inte
 
 ## <a name="clean-up-logs-with-transact-sql"></a>使用 Transact-SQL 清理日志
 
-以下示例 Transact-SQL 脚本创建一个新的弹性作业，用于触发适用于 SSISDB 日志清理的存储过程。 有关详细信息，请参阅[使用 Transact-SQL (T-SQL) 创建和管理弹性数据库作业](../sql-database/elastic-jobs-tsql.md)。
+以下示例 Transact-SQL 脚本创建一个新的弹性作业，用于触发适用于 SSISDB 日志清理的存储过程。 有关详细信息，请参阅[使用 Transact-SQL (T-SQL) 创建和管理弹性数据库作业](../azure-sql/database/elastic-jobs-tsql-create-manage.md)。
 
 1. 创建或标识将要成为 SSISDB 清理作业数据库的空的 S0 或更高级别的 Azure SQL 数据库。 然后在 [Azure 门户](https://ms.portal.azure.com/#create/Microsoft.SQLElasticJobAgent)中创建弹性作业代理。
 

@@ -4,16 +4,17 @@ description: 了解如何解决 Azure 门户中可能遇到的有关组织成本
 author: bandersmsft
 ms.reviewer: amberb
 ms.service: cost-management-billing
+ms.subservice: enterprise
 ms.topic: troubleshooting
-ms.date: 06/05/2019
+ms.date: 08/20/2019
 ms.author: banders
 ms.custom: seodec18
-ms.openlocfilehash: d96a2ed9f0aab03a0073519e08cf03d43d7ac2b7
-ms.sourcegitcommit: 11e2521679415f05d3d2c4c49858940677c57900
+ms.openlocfilehash: bd0abadb624bced7f603fcbd112f7c422e88fc0c
+ms.sourcegitcommit: 5dbea4631b46d9dde345f14a9b601d980df84897
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/31/2020
-ms.locfileid: "87503151"
+ms.lasthandoff: 09/25/2020
+ms.locfileid: "91371841"
 ---
 # <a name="troubleshoot-enterprise-cost-views"></a>排查企业成本查看问题
 
@@ -40,7 +41,7 @@ ms.locfileid: "87503151"
 
 ![显示“资产不可用”消息的屏幕截图。](./media/enterprise-mgmt-grp-troubleshoot-cost-view/asset-not-found.png)
 
-让 Azure 订阅或管理组管理员提供访问权限。 有关详细信息，请参阅[使用 RBAC 和 Azure 门户管理访问权限](../../role-based-access-control/role-assignments-portal.md)。
+让 Azure 订阅或管理组管理员提供访问权限。 有关详细信息，请参阅[使用 Azure 门户添加或删除 Azure 角色分配](../../role-based-access-control/role-assignments-portal.md)。
 
 ## <a name="next-steps"></a>后续步骤
 - 如有任何疑问或需要帮助，请[创建支持请求](https://go.microsoft.com/fwlink/?linkid=2083458)。

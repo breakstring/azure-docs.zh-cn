@@ -3,12 +3,13 @@ title: 如何创建适用于 Linux 的来宾配置策略
 description: 了解如何创建适用于 Linux 的 Azure Policy 来宾配置策略。
 ms.date: 08/17/2020
 ms.topic: how-to
-ms.openlocfilehash: 7510cf378bc7e2d999de122be27662a7ccf0ba92
-ms.sourcegitcommit: 6fc156ceedd0fbbb2eec1e9f5e3c6d0915f65b8e
+ms.custom: devx-track-azurepowershell
+ms.openlocfilehash: 352c8b1936c38c9b5f706ac88bd4fd06e008b892
+ms.sourcegitcommit: ea822acf5b7141d26a3776d7ed59630bf7ac9532
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/21/2020
-ms.locfileid: "88717534"
+ms.lasthandoff: 02/03/2021
+ms.locfileid: "99525341"
 ---
 # <a name="how-to-create-guest-configuration-policies-for-linux"></a>如何创建适用于 Linux 的来宾配置策略
 
@@ -23,9 +24,11 @@ ms.locfileid: "88717534"
 请执行以下操作来创建你自己的配置，用于验证 Azure 或非 Azure 计算机的状态。
 
 > [!IMPORTANT]
-> 包含来宾配置的自定义策略是一项预览功能。
+> Azure 政府和 Azure 中国环境中具有来宾配置的自定义策略定义是一项预览功能。
 >
-> 必须有来宾配置扩展，才能在 Azure 虚拟机中执行审核。 若要在所有 Linux 计算机上大规模部署扩展，请分配以下策略定义： `Deploy prerequisites to enable Guest Configuration Policy on Linux VMs`
+> 必须有来宾配置扩展，才能在 Azure 虚拟机中执行审核。 若要在所有 Linux 计算机上大规模部署扩展，请分配以下策略定义：`Deploy prerequisites to enable Guest Configuration Policy on Linux VMs`
+> 
+> 不要在自定义内容包中使用机密或保密信息。
 
 ## <a name="install-the-powershell-module"></a>安装 PowerShell 模块
 
@@ -50,13 +53,15 @@ ms.locfileid: "88717534"
 - Windows
 
 > [!NOTE]
-> Cmdlet "GuestConfigurationPackage" 需要 OpenSSL 版本1.0，因为对 OMI 有依赖关系。 这会导致 OpenSSL 1.1 或更高版本的任何环境出现错误。
+> 由于 cmdlet `Test-GuestConfigurationPackage` 依赖于 OMI，因此它需要 OpenSSL 版本 1.0。 这会导致使用 OpenSSL 1.1 或更高版本的任何环境出现错误。
+>
+> 仅 Windows 上的来宾配置模块版本 2.1.0 支持运行 cmdlet `Test-GuestConfigurationPackage`。
 
 来宾配置资源模块需要以下软件：
 
 - PowerShell 6.2 或更高版本。 若尚未安装，请遵循[这些说明](/powershell/scripting/install/installing-powershell)。
 - Azure PowerShell 1.5.0 或更高版本。 若尚未安装，请遵循[这些说明](/powershell/azure/install-az-ps)。
-  - 仅 Az 模块 "Az. Accounts" 和 "Az" 是必需的。
+  - 只有 Az 模块“Az.Accounts”和“Az.Resources”是必需的。
 
 ### <a name="install-the-module"></a>安装模块
 
@@ -83,7 +88,11 @@ DSC 充当 InSpec 的包装器，用于标准化它的执行方式、参数提�
 
 #### <a name="configuration-requirements"></a>配置要求
 
-自定义配置的名称必须在所有位置都保持一致。 内容包的 .zip 文件名称、MOF 文件中的配置名称，以及 Azure 资源管理器模板（ARM 模板）中的来宾分配名称必须相同。
+自定义配置的名称必须在所有位置都保持一致。 内容包的 .zip 文件名称、MOF 文件中的配置名称，以及 Azure 资源管理器模板 (ARM template) 中的来宾分配名称必须相同。
+
+PowerShell cmdlet 可帮助创建包。
+不需要根级别文件夹或版本文件夹。
+包格式必须为 .zip 文件。 且未压缩时总大小不能超过 100MB。
 
 ### <a name="custom-guest-configuration-configuration-on-linux"></a>Linux 上的自定义来宾配置
 
@@ -117,6 +126,9 @@ end
 最后，创建一个配置，导入 PSDesiredStateConfiguration 资源模块，然后编译配置。
 
 ```powershell
+# import PSDesiredStateConfiguration module
+import-module PSDesiredStateConfiguration
+
 # Define the configuration and import GuestConfiguration
 Configuration AuditFilePathExists
 {
@@ -132,7 +144,6 @@ Configuration AuditFilePathExists
 }
 
 # Compile the configuration to create the MOF files
-import-module PSDesiredStateConfiguration
 AuditFilePathExists -out ./Config
 ```
 
@@ -147,7 +158,7 @@ AuditFilePathExists -out ./Config
     / Config
         AuditFilePathExists.mof
     / linux-path
-        linux-path.yml
+        inspec.yml
         / controls
             linux-path.rb 
 ```
@@ -159,7 +170,7 @@ AuditFilePathExists -out ./Config
 - **Name**：来宾配置包名称。
 - **配置**：已编译的配置文档完整路径。
 - **路径**：输出文件夹路径。 此参数是可选的。 如果未指定，则在当前目录中创建包。
-- ChefProfilePath：InSpec 配置文件的完整路径。 仅当创建内容来审核 Linux 时，才支持此参数。
+- **ChefInspecProfilePath**：InSpec 配置文件的完整路径。 仅当创建内容来审核 Linux 时，才支持此参数。
 
 运行下面的命令，以使用上一步中给出的配置来创建包：
 
@@ -170,7 +181,7 @@ New-GuestConfigurationPackage `
   -ChefInSpecProfilePath './'
 ```
 
-创建配置包后，但在将它发布到 Azure 之前，可以在工作站或 CI/CD 环境中测试包。 GuestConfiguration cmdlet `Test-GuestConfigurationPackage` 在开发环境中包含与 Azure 计算机内使用的相同的代理。 使用此解决方案，可以在发布到计费的云环境之前，在本地执行集成测试。
+创建配置包之后、将其发布到 Azure 之前，可以从工作站或持续集成和持续部署 (CI/CD) 环境测试该包。 GuestConfiguration cmdlet `Test-GuestConfigurationPackage` 在开发环境中包含与 Azure 计算机内使用的相同的代理。 使用此解决方案，可以在发布到计费的云环境之前，在本地执行集成测试。
 
 由于代理实际上是在评估本地环境，因此在大多数情况下，你需要在计划审核的同一 OS 平台上运行 Test- cmdlet。
 
@@ -190,65 +201,25 @@ Test-GuestConfigurationPackage `
 此 cmdlet 还支持来自 PowerShell 管道的输入。 将 `New-GuestConfigurationPackage` cmdlet 的输出通过管道传输到 `Test-GuestConfigurationPackage` cmdlet。
 
 ```azurepowershell-interactive
-New-GuestConfigurationPackage -Name AuditFilePathExists -Configuration ./Config/AuditFilePathExists.mof -ChefProfilePath './' | Test-GuestConfigurationPackage
+New-GuestConfigurationPackage -Name AuditFilePathExists -Configuration ./Config/AuditFilePathExists.mof -ChefInspecProfilePath './' | Test-GuestConfigurationPackage
 ```
 
-下一步是将文件发布到 Blob 存储。 下面的脚本包含可用于自动执行此任务的函数。 `publish` 函数中使用的命令需要 `Az.Storage` 模块。
+下一步是将文件发布到 Azure Blob 存储。 命令 `Publish-GuestConfigurationPackage` 需要 `Az.Storage` 模块。
+
+`Publish-GuestConfigurationPackage` cmdlet 的参数：
+
+- **路径**：要发布的包的位置
+- **ResourceGroupName**：存储帐户所在的资源组的名称
+- **StorageAccountName**：应在其中发布包的存储帐户的名称
+- **StorageContainerName**： (默认值： *guestconfiguration*) 存储帐户中存储容器的名称
+- **强制**：覆盖具有相同名称的存储帐户中的现有包
+
+下面的示例将包发布到存储容器名称 "guestconfiguration"。
 
 ```azurepowershell-interactive
-function publish {
-    param(
-    [Parameter(Mandatory=$true)]
-    $resourceGroup,
-    [Parameter(Mandatory=$true)]
-    $storageAccountName,
-    [Parameter(Mandatory=$true)]
-    $storageContainerName,
-    [Parameter(Mandatory=$true)]
-    $filePath,
-    [Parameter(Mandatory=$true)]
-    $blobName
-    )
-
-    # Get Storage Context
-    $Context = Get-AzStorageAccount -ResourceGroupName $resourceGroup `
-        -Name $storageAccountName | `
-        ForEach-Object { $_.Context }
-
-    # Upload file
-    $Blob = Set-AzStorageBlobContent -Context $Context `
-        -Container $storageContainerName `
-        -File $filePath `
-        -Blob $blobName `
-        -Force
-
-    # Get url with SAS token
-    $StartTime = (Get-Date)
-    $ExpiryTime = $StartTime.AddYears('3')  # THREE YEAR EXPIRATION
-    $SAS = New-AzStorageBlobSASToken -Context $Context `
-        -Container $storageContainerName `
-        -Blob $blobName `
-        -StartTime $StartTime `
-        -ExpiryTime $ExpiryTime `
-        -Permission rl `
-        -FullUri
-
-    # Output
-    return $SAS
-}
-
-# replace the $storageAccountName value below, it must be globally unique
-$resourceGroup        = 'policyfiles'
-$storageAccountName   = 'youraccountname'
-$storageContainerName = 'artifacts'
-
-$uri = publish `
-  -resourceGroup $resourceGroup `
-  -storageAccountName $storageAccountName `
-  -storageContainerName $storageContainerName `
-  -filePath ./AuditFilePathExists.zip `
-  -blobName 'AuditFilePathExists'
+Publish-GuestConfigurationPackage -Path ./AuditFilePathExists/AuditFilePathExists.zip -ResourceGroupName myResourceGroupName -StorageAccountName myStorageAccountName
 ```
+
 在创建并上传来宾配置自定义策略包后，创建来宾配置策略定义。 `New-GuestConfigurationPolicy` cmdlet 需要使用自定义策略包，并创建策略定义。
 
 `New-GuestConfigurationPolicy` cmdlet 的参数：
@@ -279,8 +250,6 @@ New-GuestConfigurationPolicy `
 `New-GuestConfigurationPolicy` 创建以下文件：
 
 - auditIfNotExists.json
-- deployIfNotExists.json
-- Initiative.json
 
 cmdlet 输出中会返回一个对象，其中包含策略文件的计划显示名称和路径。
 
@@ -290,7 +259,7 @@ cmdlet 输出中会返回一个对象，其中包含策略文件的计划显示�
 
 ```azurepowershell-interactive
 Publish-GuestConfigurationPolicy `
-  -Path '.\policyDefinitions'
+  -Path './policies'
 ```
 
  `Publish-GuestConfigurationPolicy` cmdlet 接受来自 PowerShell 管道的路径。 此功能意味着可以创建策略文件，并在一组管道命令中发布它们。
@@ -304,25 +273,7 @@ Publish-GuestConfigurationPolicy `
  | Publish-GuestConfigurationPolicy
  ```
 
-在 Azure 中创建策略后，最后一步是分配计划。 请参阅“如何使用[门户](../assign-policy-portal.md)、[Azure CLI](../assign-policy-azurecli.md) 和 [Azure PowerShell](../assign-policy-powershell.md) 分配计划”。
-
-> [!IMPORTANT]
-> 必须始终使用组合 AuditIfNotExists 和 DeployIfNotExists 策略的计划来分配来宾配置策略。 如果只分配了 AuditIfNotExists 策略，则不会部署必备组件，并且策略始终显示“0”个服务器是符合的。
-
-分配具有 DeployIfNotExists 效果的策略定义需要额外级别的访问权限。 若要授予最小特权，可以创建扩展“资源策略参与者”的自定义角色定义。 下面的示例创建具有额外权限 Microsoft.Authorization/roleAssignments/write 的“资源策略参与者 DINE”角色。
-
-```azurepowershell-interactive
-$subscriptionid = '00000000-0000-0000-0000-000000000000'
-$role = Get-AzRoleDefinition "Resource Policy Contributor"
-$role.Id = $null
-$role.Name = "Resource Policy Contributor DINE"
-$role.Description = "Can assign Policies that require remediation."
-$role.Actions.Clear()
-$role.Actions.Add("Microsoft.Authorization/roleAssignments/write")
-$role.AssignableScopes.Clear()
-$role.AssignableScopes.Add("/subscriptions/$subscriptionid")
-New-AzRoleDefinition -Role $role
-```
+在 Azure 中创建策略后，最后一步是分配定义。 了解如何使用[门户](../assign-policy-portal.md)、[Azure CLI](../assign-policy-azurecli.md) 和 [Azure PowerShell](../assign-policy-powershell.md) 分配定义。
 
 ### <a name="using-parameters-in-custom-guest-configuration-policies"></a>使用自定义来宾配置策略中的参数
 
@@ -340,35 +291,8 @@ describe file(attr_path) do
 end
 ```
 
-cmdlet `New-GuestConfigurationPolicy` 和 `Test-GuestConfigurationPolicyPackage` 包含名为“Parameter”的参数。 此参数需要使用包含每个参数的所有详细信息的哈希表，并自动创建用于创建每个 Azure Policy 定义的文件的所有必需部分。
-
-下面的示例创建一个策略定义用于审核文件路径，其中用户在策略分配时提供路径。
-
-```azurepowershell-interactive
-$PolicyParameterInfo = @(
-    @{
-        Name = 'FilePath'                             # Policy parameter name (mandatory)
-        DisplayName = 'File path.'                    # Policy parameter display name (mandatory)
-        Description = "File path to be audited."      # Policy parameter description (optional)
-        ResourceType = "ChefInSpecResource"           # Configuration resource type (mandatory)
-        ResourceId = 'Audit Linux path exists'        # Configuration resource property name (mandatory)
-        ResourcePropertyName = "AttributesYmlContent" # Configuration resource property name (mandatory)
-        DefaultValue = '/tmp'                         # Policy parameter default value (optional)
-    }
-)
-
-# The hashtable also supports a property named 'AllowedValues' with an array of strings to limit input to a list
-
-New-GuestConfigurationPolicy
-    -ContentUri 'https://storageaccountname.blob.core.windows.net/packages/AuditFilePathExists.zip?st=2019-07-01T00%3A00%3A00Z&se=2024-07-01T00%3A00%3A00Z&sp=rl&sv=2018-03-28&sr=b&sig=JdUf4nOCo8fvuflOoX%2FnGo4sXqVfP5BYXHzTl3%2BovJo%3D' `
-    -DisplayName 'Audit Linux file path.' `
-    -Description 'Audit that a file path exists on a Linux machine.' `
-    -Path './policies' `
-    -Parameter $PolicyParameterInfo `
-    -Version 1.0.0
-```
-
-对于 Linux 策略，请在配置中添加属性 AttributesYmlContent，并根据需要覆盖这些值。 来宾配置代理自动创建 InSpec 用于存储特性的 YAML 文件。 请参阅以下示例。
+在配置中添加属性 **AttributesYmlContent** ，其中包含任何字符串作为值。
+来宾配置代理自动创建 InSpec 用于存储特性的 YAML 文件。 请参阅以下示例。
 
 ```powershell
 Configuration AuditFilePathExists
@@ -380,21 +304,62 @@ Configuration AuditFilePathExists
         ChefInSpecResource 'Audit Linux path exists'
         {
             Name = 'linux-path'
-            AttributesYmlContent = "path: /tmp"
+            AttributesYmlContent = "fromParameter"
         }
     }
 }
 ```
 
+使用本文档中提供的示例重新编译 MOF 文件。
+
+cmdlet `New-GuestConfigurationPolicy` 和 `Test-GuestConfigurationPolicyPackage` 包含名为“Parameter”的参数。 此参数需要使用包含每个参数的所有详细信息的哈希表，并自动创建用于创建每个 Azure Policy 定义的文件的所有必需部分。
+
+以下示例创建一个用于审核文件路径的策略定义，其中，用户将在分配策略时提供路径。
+
+```azurepowershell-interactive
+$PolicyParameterInfo = @(
+    @{
+        Name = 'FilePath'                             # Policy parameter name (mandatory)
+        DisplayName = 'File path.'                    # Policy parameter display name (mandatory)
+        Description = 'File path to be audited.'      # Policy parameter description (optional)
+        ResourceType = 'ChefInSpecResource'           # Configuration resource type (mandatory)
+        ResourceId = 'Audit Linux path exists'        # Configuration resource property name (mandatory)
+        ResourcePropertyName = 'AttributesYmlContent' # Configuration resource property name (mandatory)
+        DefaultValue = '/tmp'                         # Policy parameter default value (optional)
+    }
+)
+
+# The hashtable also supports a property named 'AllowedValues' with an array of strings to limit input to a list
+
+$uri = 'https://storageaccountname.blob.core.windows.net/packages/AuditFilePathExists.zip?st=2019-07-01T00%3A00%3A00Z&se=2024-07-01T00%3A00%3A00Z&sp=rl&sv=2018-03-28&sr=b&sig=JdUf4nOCo8fvuflOoX%2FnGo4sXqVfP5BYXHzTl3%2BovJo%3D'
+
+New-GuestConfigurationPolicy -ContentUri $uri `
+    -DisplayName 'Audit Linux file path.' `
+    -Description 'Audit that a file path exists on a Linux machine.' `
+    -Path './policies' `
+    -Parameter $PolicyParameterInfo `
+    -Platform 'Linux' `
+    -Version 1.0.0
+```
+
+
 ## <a name="policy-lifecycle"></a>策略生命周期
 
-若要发布策略定义的更新，需要注意以下两个字段。
+如果要发布策略更新，请同时更改来宾配置包和 Azure Policy 定义详细信息。
 
-- **版本**：运行 `New-GuestConfigurationPolicy` cmdlet 时，必须指定高于当前发布版本的版本号。 此属性更新来宾配置分配版本，这样代理就能识别更新后的包。
+> [!NOTE]
+> 来宾配置分配的 `version` 属性仅影响 Microsoft 托管的包。 对自定义内容进行版本控制的最佳做法是在文件名中包含版本。
+
+首先，在运行 `New-GuestConfigurationPackage` 时为包指定一个名称，使其与以前的版本不同。 可以在名称中包含版本号，例如 `PackageName_1.0.0`。
+使用本示例中的数字只是为了让包独一无二，而不是指定该包应被视为比其他包更新或更旧。
+
+接下来，按下面的每项说明更新与 `New-GuestConfigurationPolicy` cmdlet 一起使用的参数。
+
+- **版本**：运行 `New-GuestConfigurationPolicy` cmdlet 时，必须指定高于当前发布版本的版本号。
+- **contentUri**：运行 `New-GuestConfigurationPolicy` cmdlet 时，必须为包的位置指定一个 URI。 在文件名中包含包版本将确保此属性的值在每个版本中都会更改。
 - contentHash：此属性由 `New-GuestConfigurationPolicy` cmdlet 自动更新。 它是 `New-GuestConfigurationPackage` 创建的包的哈希值。 对于你发布的 `.zip` 文件，此属性必须是正确的。 如果只更新了 contentUri 属性，扩展就不会接受内容包。
 
 发布更新后的包的最简单方法是，重复本文中描述的过程，并提供更新后的版本号。 此过程保证所有属性都已正确更新。
-
 
 ### <a name="filtering-guest-configuration-policies-using-tags"></a>使用标记筛选来宾配置策略
 
@@ -444,12 +409,6 @@ GuestConfiguration 代理需要在 Linux 计算机上的路径 `/usr/local/share
 Key Vault 访问策略必须允许计算资源提供程序在部署过程中访问证书。 有关详细步骤，请参阅[在 Azure 资源管理器中为虚拟机设置 Key Vault](../../../virtual-machines/windows/key-vault-setup.md#use-templates-to-set-up-key-vault)。
 
 在内容发布后，将名为 `GuestConfigPolicyCertificateValidation` 且值为 `enabled` 的标记追加到所有应需要进行代码签名的虚拟机。 请参阅[标记示例](../samples/built-in-policies.md#tags)，了解如何使用 Azure Policy 大规模传递标记。 在此标记就位后，使用 `New-GuestConfigurationPolicy` cmdlet 生成的策略定义通过来宾配置扩展启用要求。
-
-## <a name="troubleshooting-guest-configuration-policy-assignments-preview"></a>来宾配置策略分配故障排除（预览）
-
-有一项工具处于预览状态，有助于对 Azure Policy 来宾配置分配进行故障排除。 此工具处于预览状态，已作为模块名称[来宾配置故障排除程序](https://www.powershellgallery.com/packages/GuestConfigurationTroubleshooter/)发布到 PowerShell 库中。
-
-若要详细了解此工具中的 cmdlet，请使用 PowerShell 中的 Get-Help 命令来显示内置的指导。 因为此工具经常更新，所以这是获取最新信息的最佳方式。
 
 ## <a name="next-steps"></a>后续步骤
 

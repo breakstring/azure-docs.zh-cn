@@ -1,28 +1,24 @@
 ---
 title: 将数据从数据湖和数据仓库迁移到 Azure
 description: 使用 Azure 数据工厂将数据从 Data Lake 和数据仓库迁移到 Azure。
-services: data-factory
 author: dearandyxu
 ms.author: yexu
-ms.reviewer: ''
-manager: ''
 ms.service: data-factory
-ms.workload: data-services
 ms.topic: conceptual
 ms.custom: seo-lt-2019
 ms.date: 7/30/2019
-ms.openlocfilehash: 4408546c892299e5bbbc22b00a4b334c36eda616
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 4e7421cb8ea4b0c14e4f4b59a688cdb1afe7d462
+ms.sourcegitcommit: d4734bc680ea221ea80fdea67859d6d32241aefc
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "81416428"
+ms.lasthandoff: 02/14/2021
+ms.locfileid: "100367701"
 ---
 # <a name="use-azure-data-factory-to-migrate-data-from-your-data-lake-or-data-warehouse-to-azure"></a>使用 Azure 数据工厂将数据从 Data Lake 或数据仓库迁移到 Azure
 
 [!INCLUDE[appliesto-adf-xxx-md](includes/appliesto-adf-xxx-md.md)]
 
-如果要将 data lake 或企业数据仓库（EDW）迁移到 Microsoft Azure，请考虑使用 Azure 数据工厂。 Azure 数据工厂非常适合以下场景：
+若要将 data lake 或 enterprise 数据仓库 (EDW) 迁移到 Microsoft Azure，请考虑使用 Azure 数据工厂。 Azure 数据工厂非常适合以下场景：
 
 - 将大数据工作负荷从 Amazon 简单存储服务 (Amazon S3) 或本地 Hadoop 分布式文件系统 (HDFS) 迁移到 Azure
 - 将 EDW 从 Oracle Exadata、Netezza、Teradata 或 Amazon Redshift 迁移到 Azure

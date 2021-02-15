@@ -5,12 +5,13 @@ author: BharatNarasimman
 ms.topic: conceptual
 ms.date: 11/03/2017
 ms.author: bharatn
-ms.openlocfilehash: 2d9ebf77862f7b9b019507613e269126501abfd8
-ms.sourcegitcommit: dabd9eb9925308d3c2404c3957e5c921408089da
+ms.custom: devx-track-csharp
+ms.openlocfilehash: 012a49762596adee39988614ed0c1020cd8bc104
+ms.sourcegitcommit: a055089dd6195fde2555b27a84ae052b668a18c7
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/11/2020
-ms.locfileid: "86244916"
+ms.lasthandoff: 01/26/2021
+ms.locfileid: "98791098"
 ---
 # <a name="reverse-proxy-in-azure-service-fabric"></a>Azure Service Fabric 中的反向代理
 借助 Azure Service Fabric 中内置的反向代理，Service Fabric 群集中运行的微服务可以发现包含 http 终结点的其他服务，并与之通信。
@@ -72,13 +73,13 @@ http(s)://<Cluster FQDN | internal IP>:Port/<ServiceInstanceName>/<Suffix path>?
 
     服务实例名称要区分大小写。 若 URL 中的服务实例名称大小写不同，则会导致请求失败，并显示 404（未找到）。
 * **后缀路径：** 要连接到的服务的实际 URL 路径，例如 *myapi/values/add/3*。
-* **PartitionKey：** 对于分区服务，这是针对要访问的分区计算出的分区键。 请注意，这*不*是分区 ID GUID。 对于使用单独分区方案的服务，此参数不是必需的。
+* **PartitionKey：** 对于分区服务，这是针对要访问的分区计算出的分区键。 请注意，这 *不* 是分区 ID GUID。 对于使用单独分区方案的服务，此参数不是必需的。
 * **PartitionKind：** 服务分区方案。 该方案可以是“Int64Range”或“Named”。 对于使用单独分区方案的服务，此参数不是必需的。
 * **ListenerName** 服务中的终结点采用以下形式：{"Endpoints":{"Listener1":"Endpoint1","Listener2":"Endpoint2" ...}}。 当服务公开了多个终结点时，此参数标识应将客户端请求转发到的终结点。 如果服务只有一个侦听器，则可以省略此项。
 * **TargetReplicaSelector** 这指定应当如何选择目标副本或实例。
   * 当目标服务为有状态服务时，TargetReplicaSelector 可以是下列其中一项：“PrimaryReplica”、“RandomSecondaryReplica”或“RandomReplica”。 如果未指定此参数，默认值为“PrimaryReplica”。
   * 当目标服务为无状态服务时，反向代理将选择服务分区的一个随机实例来将实例转发到其中。
-* **Timeout：** 此参数指定反向代理针对服务创建的 HTTP 请求（代表客户端请求）的超时。 默认值为120秒。 这是一个可选参数。
+* **Timeout：** 此参数指定反向代理针对服务创建的 HTTP 请求（代表客户端请求）的超时。 默认值为 120 秒。 这是一个可选参数。
 
 ### <a name="example-usage"></a>用法示例
 以 *fabric:/MyApp/MyService* 服务为例，该服务可针对以下 URL 打开一个 HTTP 侦听器：
@@ -117,7 +118,7 @@ http://10.0.0.5:10592/3f0d39ad-924b-4233-b4a7-02617c6308a6-130834621071472715/
 
 不过，副本或服务实例可能会共享主机进程，在通过基于 http.sys 的 Web 服务器进行托管的情况下还可能会共享端口，这些 Web 服务器包括：
 
-* [System.Net.HttpListener](/dotnet/api/system.net.httplistener?view=netcore-3.1)
+* [System.Net.HttpListener](/dotnet/api/system.net.httplistener)
 * [ASP.NET Core WebListener](https://docs.asp.net/latest/fundamentals/servers.html#weblistener)
 * [Katana](https://www.nuget.org/packages/Microsoft.AspNet.WebApi.OwinSelfHost/)
 

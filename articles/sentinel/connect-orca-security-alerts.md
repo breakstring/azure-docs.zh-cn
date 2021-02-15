@@ -14,20 +14,20 @@ ms.tgt_pltfrm: na
 ms.workload: na
 ms.date: 07/17/2020
 ms.author: yelevin
-ms.openlocfilehash: 735f4b447d7258a9b444f3b75a6537dec20b1307
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.openlocfilehash: 18a50e3d06135f2c17b7e7c5b2969be33f408c62
+ms.sourcegitcommit: 24f30b1e8bb797e1609b1c8300871d2391a59ac2
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87076268"
+ms.lasthandoff: 02/10/2021
+ms.locfileid: "100093074"
 ---
 # <a name="connect-your-orca-security-alerts-to-azure-sentinel"></a>将 Orca 安全警报连接到 Azure Sentinel 
 
 > [!IMPORTANT]
 > Azure Sentinel 中的 Orca 安全警报连接器目前为公共预览版。
-> 此功能在提供时没有服务级别协议，不建议用于生产工作负荷。 某些功能可能不受支持或者受限。 有关详细信息，请参阅 [Microsoft Azure 预览版补充使用条款](https://azure.microsoft.com/support/legal/preview-supplemental-terms/)。
+> 此功能不附带服务级别协议，不建议将其用于生产工作负载。 某些功能可能不受支持或者受限。 有关详细信息，请参阅 [Microsoft Azure 预览版补充使用条款](https://azure.microsoft.com/support/legal/preview-supplemental-terms/)。
 
-Orca 安全警报连接器可让你轻松地将你的[Orca 警报](https://orca.security/)到 Azure Sentinel 中，以便你可以在工作簿中查看它们，并使用它们来创建自定义警报，并将它们结合起来以改进调查。 Orca 安全警报与 Azure Sentinel 之间的集成利用 REST API。
+Orca 安全警报连接器可让你轻松地将你的 [Orca 警报](https://orca.security/) 到 Azure Sentinel 中，以便你可以在工作簿中查看它们，并使用它们来创建自定义警报，并将它们结合起来以改进调查。 Orca 安全警报与 Azure Sentinel 之间的集成利用 REST API。
 
 > [!NOTE]
 > 数据将存储在运行 Azure Sentinel 的工作区的地理位置。
@@ -36,7 +36,7 @@ Orca 安全警报连接器可让你轻松地将你的[Orca 警报](https://orca.
 
 Orca 安全警报可以将日志直接集成到 Azure Sentinel。
 
-1. 在 Azure Sentinel 门户中，单击 "**数据连接器**"，然后选择 " **Orca 安全警报**"，然后单击 "**连接器" 页**。
+1. 在 Azure Sentinel 门户中，单击 " **数据连接器** "，然后选择 " **Orca 安全警报** "，然后单击 " **连接器" 页**。
 
 2. 请参阅 https://orcasecurity.zendesk.com/hc/en-us/articles/360043941992-Azure-Sentinel-integration 以从 Orca 平台完成集成。
 

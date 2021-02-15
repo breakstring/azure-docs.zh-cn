@@ -1,31 +1,43 @@
 ---
-title: 在 Azure 事件中心集成 Apache Kafka 连接 (预览版) with Debezium for Change Data Capture
-description: 本文介绍如何将 Apache Spark 与适用于 Kafka 的 Azure 事件中心配合使用。
+title: 在 Azure 事件中心集成 Apache Kafka 连接，并将 Debezium 用于变更数据捕获
+description: 本文介绍如何将 Debezium 与适用于 Kafka 的 Azure 事件中心配合使用。
 ms.topic: how-to
 author: abhirockzz
 ms.author: abhishgu
-ms.date: 08/11/2020
-ms.openlocfilehash: a11ec882a50d051a34758562ac84dcef5b799f5f
-ms.sourcegitcommit: 1aef4235aec3fd326ded18df7fdb750883809ae8
+ms.date: 01/06/2021
+ms.openlocfilehash: 0ad1df23e71e652f7d380ffbabb542b81954e038
+ms.sourcegitcommit: 2aa52d30e7b733616d6d92633436e499fbe8b069
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/12/2020
-ms.locfileid: "88136749"
+ms.lasthandoff: 01/06/2021
+ms.locfileid: "97935166"
 ---
-# <a name="integrate-apache-kafka-connect-support-on-azure-event-hubs-preview-with-debezium-for-change-data-capture"></a>在 Azure 事件中心集成 Apache Kafka 连接支持 (预览版) with Debezium for Change Data Capture
+# <a name="integrate-apache-kafka-connect-support-on-azure-event-hubs-with-debezium-for-change-data-capture"></a>在 Azure 事件中心集成 Apache Kafka 连接支持，并将 Debezium 用于变更数据捕获
 
-**变更数据捕获 (CDC) **是一项技术，用于在响应创建、更新和删除操作时跟踪数据库表中的行级更改。 [Debezium](https://debezium.io/)是一个分布式平台，它在不同数据库中可用的变更数据捕获功能的基础上构建 (例如， [PostgreSQL) 中的逻辑解码](https://www.postgresql.org/docs/current/static/logicaldecoding-explanation.html)。 它提供一组[Kafka 连接连接器](https://debezium.io/documentation/reference/1.2/connectors/index.html)，这些连接器可用于在数据库表 () 中点击行级更改，然后将它们转换为事件流，然后将其发送到[Apache Kafka](https://kafka.apache.org/)。
+**变更数据捕获 (CDC)** 是一项技术，用来跟踪为响应创建、更新和删除操作而在数据库表中进行的行级更改。 [Debezium](https://debezium.io/) 是一个基于不同数据库中提供的变更数据捕获功能（例如，[PostgreSQL 中的逻辑解码](https://www.postgresql.org/docs/current/static/logicaldecoding-explanation.html)）构建的分布式平台。 它提供了一组 [Kafka Connect 连接器](https://debezium.io/documentation/reference/1.2/connectors/index.html)，这些连接器会深入探索数据库表中的行级更改，然后将它们转换为事件流，这些事件流随后会发送到 [Apache Kafka](https://kafka.apache.org/)。
 
-本教程介绍如何在 azure 中使用[Azure 事件 (中心](https://docs.microsoft.com/azure/event-hubs/event-hubs-about?WT.mc_id=devto-blog-abhishgu)（Kafka) 、 [Azure DB For PostgreSQL](../postgresql/overview.md)和 Debezium）在 azure 上设置变更数据捕获系统。 它将使用[Debezium PostgreSQL 连接器](https://debezium.io/documentation/reference/1.2/connectors/postgresql.html)从 Azure 事件中心中的 PostgreSQL 对 Kafka 主题流式处理数据库修改
+> [!WARNING]
+> 使用 Apache Kafka 连接框架以及 Debezium 平台及其连接器 **不能通过 Microsoft Azure 提供产品支持**。
+>
+> Apache Kafka Connect 假设将其动态配置保存在压缩的主题中，并以其他无限制保留。 Azure 事件中心不 [会将压缩作为 broker 功能实现](event-hubs-federation-overview.md#log-projections) ，并且始终会对保留事件施加基于时间的保留限制，从 Azure 事件中心是实时事件流引擎而不是长期数据或配置存储的原则进行定位。
+>
+> 尽管 Apache Kafka 项目在混合这些角色时可能很熟悉，但 Azure 相信此类信息最好在适当的数据库或配置存储中进行管理。
+>
+> 许多 Apache Kafka 连接方案都可以正常工作，但 Apache Kafka 的和 Azure 事件中心的保留模型之间的这些概念差异可能会导致某些配置无法按预期方式工作。 
+
+本教程介绍了如何使用 [Azure 事件中心](./event-hubs-about.md?WT.mc_id=devto-blog-abhishgu)（适用于 Kafka）、[Azure DB for PostgreSQL](../postgresql/overview.md) 和 Debezium 在 Azure 上设置基于变更数据捕获的系统。 它将使用 [Debezium PostgreSQL 连接器](https://debezium.io/documentation/reference/1.2/connectors/postgresql.html)将数据库修改从 PostgreSQL 流式传输到 Azure 事件中心内的 Kafka 主题。
+
+> [!NOTE]
+> 本文包含对术语“白名单”的引用，Microsoft 不再使用该术语。 在从软件中删除该术语后，我们会将其从本文中删除。
 
 在本教程中，我们将执行以下步骤：
 
 > [!div class="checklist"]
 > * 创建事件中心命名空间
-> * 安装和配置 Azure Database for PostgreSQL
-> * 配置和运行 Kafka Connect with Debezium PostgreSQL 连接器
+> * 设置和配置 Azure Database for PostgreSQL
+> * 使用 Debezium PostgreSQL 连接器配置并运行 Kafka Connect
 > * 测试变更数据捕获
-> *  (可选) 使用连接器的更改数据事件 `FileStreamSink`
+> * （可选）通过 `FileStreamSink` 连接器使用变更数据事件
 
 ## <a name="pre-requisites"></a>先决条件
 若要完成本演练，你将需要：
@@ -38,21 +50,21 @@ ms.locfileid: "88136749"
 ## <a name="create-an-event-hubs-namespace"></a>创建事件中心命名空间
 要从事件中心服务进行发送和接收，需要使用事件中心命名空间。 有关创建命名空间和事件中心的说明，请参阅[创建事件中心](event-hubs-create.md)。 获取事件中心连接字符串和完全限定域名 (FQDN) 供以后使用。 有关说明，请参阅[获取事件中心连接字符串](event-hubs-get-connection-string.md)。 
 
-## <a name="setup-and-configure-azure-database-for-postgresql"></a>安装和配置 Azure Database for PostgreSQL
-[Azure Database for PostgreSQL](../postgresql/overview.md)是基于开源 PostgreSQL 数据库引擎的社区版本的关系数据库服务，提供两个部署选项：单一服务器和超大规模 (Citus) 。 [按照这些说明](../postgresql/quickstart-create-server-database-portal.md)使用 Azure 门户创建 Azure Database for PostgreSQL 服务器。 
+## <a name="setup-and-configure-azure-database-for-postgresql"></a>设置和配置 Azure Database for PostgreSQL
+[Azure Database for PostgreSQL](../postgresql/overview.md) 是一项关系数据库服务，基于开源 PostgreSQL 数据库引擎的社区版本，并且以两种部署选项提供：单一服务器和超大规模 (Citus)。 请[按照这些说明](../postgresql/quickstart-create-server-database-portal.md)使用 Azure 门户创建 Azure Database for PostgreSQL 服务器。 
 
 ## <a name="setup-and-run-kafka-connect"></a>设置并运行 Kafka Connect
-本部分将介绍以下主题：
+本部分包含以下主题：
 
 - Debezium 连接器安装
 - 为事件中心配置 Kafka Connect
-- 启动 Kafka 连接群集与 Debezium 连接器
+- 使用 Debezium 连接器启动 Kafka Connect 群集
 
 ### <a name="download-and-setup-debezium-connector"></a>下载并设置 Debezium 连接器
-请按照[Debezium 文档](https://debezium.io/documentation/reference/1.2/connectors/postgresql.html#postgresql-deploying-a-connector)中的最新说明下载并设置连接器。
+请按照 [Debezium 文档](https://debezium.io/documentation/reference/1.2/connectors/postgresql.html#postgresql-deploying-a-connector)中的最新说明下载并设置连接器。
 
-- 下载连接器的插件存档。 例如，若要下载连接器的版本 `1.2.0` ，请使用此链接-https://repo1.maven.org/maven2/io/debezium/debezium-connector-postgres/1.2.0.Final/debezium-connector-postgres-1.2.0.Final-plugin.tar.gz
-- 提取 JAR 文件并将其复制到[Kafka Connect 插件。路径](https://kafka.apache.org/documentation/#connectconfigs)。
+- 下载连接器的插件存档。 例如，若要下载连接器的 `1.2.0` 版本，请使用此链接 - https://repo1.maven.org/maven2/io/debezium/debezium-connector-postgres/1.2.0.Final/debezium-connector-postgres-1.2.0.Final-plugin.tar.gz
+- 提取 JAR 文件并将其复制到 [Kafka Connect plugin.path](https://kafka.apache.org/documentation/#connectconfigs)。
 
 
 ### <a name="configure-kafka-connect-for-event-hubs"></a>为事件中心配置 Kafka Connect
@@ -99,6 +111,10 @@ consumer.sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModul
 plugin.path={KAFKA.DIRECTORY}/libs # path to the libs directory within the Kafka release
 ```
 
+> [!IMPORTANT]
+> 将 `{YOUR.EVENTHUBS.CONNECTION.STRING}` 替换为事件中心命名空间的连接字符串。 有关获取连接字符串的说明，请参阅[获取事件中心连接字符串](event-hubs-get-connection-string.md)。 下面是一个配置示例：`sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username="$ConnectionString" password="Endpoint=sb://mynamespace.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=XXXXXXXXXXXXXXXX";`
+
+
 ### <a name="run-kafka-connect"></a>运行 Kafka Connect
 此步骤在本地以分布式模式启动了一个 Kafka Connect 辅助角色，使用事件中心来保留群集状态。
 
@@ -109,11 +125,11 @@ plugin.path={KAFKA.DIRECTORY}/libs # path to the libs directory within the Kafka
 > [!NOTE]
 > Kafka Connect 使用 Kafka AdminClient API 自动创建具有建议配置（包括压缩）的主题。 在 Azure 门户中快速查看命名空间就可以发现，Connect 辅助角色的内部主题已自动创建。
 >
-> Kafka Connect 内部主题**必须使用压缩**。  如果未正确配置内部连接主题，事件中心团队不负责修复不正确的配置。
+> Kafka Connect 内部主题 **必须使用压缩**。  如果未正确配置内部连接主题，事件中心团队不负责修复不正确的配置。
 
 ### <a name="configure-and-start-the-debezium-postgresql-source-connector"></a>配置并启动 Debezium PostgreSQL 源连接器
 
-为 PostgreSQL 源连接器创建配置文件 (`pg-source-connector.json`) -根据 Azure PostgreSQL 实例替换这些值。
+为 PostgreSQL 源连接器创建配置文件 (`pg-source-connector.json`) - 根据你的 Azure PostgreSQL 实例替换这些值。
 
 ```json
 {
@@ -133,7 +149,7 @@ plugin.path={KAFKA.DIRECTORY}/libs # path to the libs directory within the Kafka
 ```
 
 > [!TIP]
-> `database.server.name`属性是一个逻辑名称，用于标识并提供所监视的特定 PostgreSQL 数据库服务器/群集的命名空间。 有关详细信息，请参阅[Debezium 文档](https://debezium.io/documentation/reference/1.2/connectors/postgresql.html#postgresql-property-database-server-name)
+> `database.server.name` 属性是一个逻辑名称，用于标识并提供所监视的特定 PostgreSQL 数据库服务器/群集的命名空间。 有关详细信息，请查看 [Debezium 文档](https://debezium.io/documentation/reference/1.2/connectors/postgresql.html#postgresql-property-database-server-name)
 
 若要创建连接器的实例，请使用 Kafka Connect REST API 终结点：
 
@@ -141,16 +157,16 @@ plugin.path={KAFKA.DIRECTORY}/libs # path to the libs directory within the Kafka
 curl -X POST -H "Content-Type: application/json" --data @pg-source-connector.json http://localhost:8083/connectors
 ```
 
-检查连接器的状态：
+若要检查连接器的状态，请执行以下命令：
 
 ```bash
 curl -s http://localhost:8083/connectors/todo-connector/status
 ```
 
 ## <a name="test-change-data-capture"></a>测试变更数据捕获
-若要查看操作中的变更数据捕获，你将需要在 Azure PostgreSQL 数据库中创建/更新/删除记录。
+若要查看操作中的变更数据捕获，你需要在 Azure PostgreSQL 数据库中创建/更新/删除记录。
 
-首先，连接到 Azure PostgreSQL 数据库， (下面的示例使用[psql](https://www.postgresql.org/docs/12/app-psql.html)) 
+首先连接到 Azure PostgreSQL 数据库（以下示例使用 [psql](https://www.postgresql.org/docs/12/app-psql.html)）
 
 ```bash
 psql -h <POSTGRES_INSTANCE_NAME>.postgres.database.azure.com -p 5432 -U <POSTGRES_USER_NAME> -W -d <POSTGRES_DB_NAME> --set=sslmode=require
@@ -160,7 +176,7 @@ e.g.
 psql -h my-postgres.postgres.database.azure.com -p 5432 -U testuser@my-postgres -W -d postgres --set=sslmode=require
 ```
 
-**创建表和插入记录**
+**创建一个表并插入记录**
 
 ```sql
 CREATE TABLE todos (id SERIAL, description VARCHAR(50), todo_status VARCHAR(10), PRIMARY KEY(id));
@@ -171,13 +187,13 @@ INSERT INTO todos (description, todo_status) VALUES ('configure and install conn
 INSERT INTO todos (description, todo_status) VALUES ('start connector', 'pending');
 ```
 
-现在，连接器应为 "操作"，并将 "更改数据事件" 发送到事件中心主题，其中包含以下 na，e `my-server.public.todos` ，假设你已将 `my-server` 作为的值， `database.server.name` 并且 `public.todos` 是要跟踪其更改的表 (按 `table.whitelist` 配置) 
+连接器现在应当发挥作用，并将变更数据事件发送到一个事件中心主题，其中包含以下 na,e `my-server.public.todos`（假设你已将 `my-server` 用作 `database.server.name` 的值，并且 `public.todos` 是要跟踪其变更的表（根据 `table.whitelist` 配置））
 
 **检查事件中心主题**
 
-让我们 introspect 该主题的内容，确保一切按预期运行。 下面的示例使用 [`kafkacat`](https://github.com/Azure/azure-event-hubs-for-kafka/tree/master/quickstart/kafkacat) ，但你也可以[使用此处列出的任何选项创建使用者](apache-kafka-developer-guide.md)
+让我们对该主题的内容自检一下，确保一切符合预期。 下面的示例使用 [`kafkacat`](https://github.com/Azure/azure-event-hubs-for-kafka/tree/master/quickstart/kafkacat)，但你也可以[使用此处列出的任何选项来创建使用者](apache-kafka-developer-guide.md)
 
-`kafkacat.conf`使用以下内容创建名为的文件：
+创建包含以下内容的名为 `kafkacat.conf` 的文件：
 
 ```
 metadata.broker.list=<enter event hubs namespace>.servicebus.windows.net:9093
@@ -188,9 +204,9 @@ sasl.password=<enter event hubs connection string>
 ```
 
 > [!NOTE]
-> 中的更新 `metadata.broker.list` 和属性，按 `sasl.password` `kafkacat.conf` 事件中心信息。 
+> 根据事件中心信息，更新 `kafkacat.conf` 中的 `metadata.broker.list` 和 `sasl.password` 属性。 
 
-在不同的终端中，启动使用者：
+在另一个终端中，启动一个使用者：
 
 ```bash
 export KAFKACAT_CONFIG=kafkacat.conf
@@ -200,7 +216,7 @@ export TOPIC=my-server.public.todos
 kafkacat -b $BROKER -t $TOPIC -o beginning
 ```
 
-应该会看到表示 PostgreSQL 中生成的更改数据事件的 JSON 有效负载，以响应刚添加到表中的行 `todos` 。 下面是有效负载的代码段：
+你应该会看到 JSON 有效负载，它们表示为响应你刚才添加到 `todos` 表中的行而在 PostgreSQL 中生成的变更数据事件。 下面是有效负载的代码片段：
 
 
 ```json
@@ -232,18 +248,18 @@ kafkacat -b $BROKER -t $TOPIC -o beginning
     }
 ```
 
-`payload`对于简洁) ，事件包含和其 `schema` (省略。 在 `payload` 部分中，请注意 create operation (`"op": "c"`) 是如何表示的 `"before": null` ，这意味着它是新的 `INSERT` ed 行， `after` 为该行中的列提供值，并 `source` 提供 PostgreSQL 的实例元数据。
+该事件包含 `payload` 及其 `schema`（为简洁起见，此处进行了省略）。 在 `payload` 部分中，请注意 create 操作 (`"op": "c"`) 是如何表示的 - `"before": null` 表示它是一个新 `INSERT` 的行，`after` 提供了行中各个列的值，`source` 提供了从中选取此事件的 PostgreSQL 实例元数据等信息。
 
-同样，也可以尝试更新或删除操作，并 introspect 更改数据事件。 例如，若要更新 (的任务状态， `configure and install connector` 假设其 `id` 为 `3`) ：
+你可以对 update 或 delete 操作进行同样的尝试，并对变更数据事件进行自检。 例如，若要更新 `configure and install connector` 的任务状态（假设其 `id` 为 `3`），可以执行以下命令：
 
 ```sql
 UPDATE todos SET todo_status = 'complete' WHERE id = 3;
 ```
 
-## <a name="optional-install-filestreamsink-connector"></a> (可选) 安装 FileStreamSink 连接器
-在 `todos` 事件中心主题中捕获所有表更改后，我们将使用 FileStreamSink 连接器 (默认情况下，Kafka Connect) 中提供使用这些事件。
+## <a name="optional-install-filestreamsink-connector"></a>（可选）安装 FileStreamSink 连接器
+现在，我们已在事件中心主题中捕获了所有 `todos` 表变更，因此将通过 FileStreamSink 连接器（在 Kafka Connect 中默认提供）来使用这些事件。
 
-为连接器创建配置文件 (`file-sink-connector.json`) -将 `file` 属性替换为每个文件系统
+为连接器创建配置文件 (`file-sink-connector.json`) - 根据你的文件系统替换 `file` 属性
 
 ```json
 {
@@ -257,7 +273,7 @@ UPDATE todos SET todo_status = 'complete' WHERE id = 3;
 }
 ```
 
-若要创建连接器并检查其状态：
+若要创建连接器并检查其状态，请执行以下命令：
 
 ```bash
 curl -X POST -H "Content-Type: application/json" --data @file-sink-connector.json http://localhost:8083/connectors
@@ -273,7 +289,7 @@ tail -f /Users/foo/todos-cdc.txt
 
 
 ## <a name="cleanup"></a>清理
-Kafka Connect 创建的事件中心主题用于存储配置、偏移量和状态，这些存储的内容在 Connect 群集关闭后也会保留。 除非需要这样进行保存，否则建议将这些主题删除。 你可能还需要删除在 `my-server.public.todos` 本演练过程中创建的事件中心。
+Kafka Connect 创建的事件中心主题用于存储配置、偏移量和状态，这些存储的内容在 Connect 群集关闭后也会保留。 除非需要这样进行保存，否则建议将这些主题删除。 可能还需要删除在本演练过程中创建的 `my-server.public.todos` 事件中心。
 
 ## <a name="next-steps"></a>后续步骤
 

@@ -2,19 +2,16 @@
 title: 快速入门：Apache Hadoop、Apache Hive 和 Azure HDInsight 门户
 description: 在本快速入门中，将使用 Azure 门户创建 HDInsight Hadoop 群集
 keywords: hadoop 入门,hadoop linux,hadoop 快速入门,hive 入门,hive 快速入门
-author: hrasheed-msft
-ms.author: hrasheed
-ms.reviewer: jasonh
 ms.service: hdinsight
 ms.topic: quickstart
 ms.custom: hdinsightactive,hdiseo17may2017,mvc,seodec18
 ms.date: 02/24/2020
-ms.openlocfilehash: 8939d9b342094342d576c00cf02e622286c8fc0f
-ms.sourcegitcommit: 58faa9fcbd62f3ac37ff0a65ab9357a01051a64f
+ms.openlocfilehash: cd3e997bf2fda5f586fdb1ee4dcedff1adbf41f3
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/29/2020
-ms.locfileid: "80130583"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98946596"
 ---
 # <a name="quickstart-create-apache-hadoop-cluster-in-azure-hdinsight-using-azure-portal"></a>快速入门：使用 Azure 门户在 Azure HDInsight 中创建 Apache Hadoop 群集
 
@@ -47,7 +44,7 @@ ms.locfileid: "80130583"
     |群集名称   | 输入任何全局唯一的名称。 该名称最多可以有 59 个字符，包括字母、数字和连字符。 名称的第一个和最后一个字符不能为连字符。 |
     |区域    | 从下拉列表中，选择在其中创建群集的区域。  选择的位置与你越靠近，性能就越好。 |
     |群集类型| 选择“选择群集类型”  。 然后选择 **Hadoop** 作为群集类型。|
-    |版本|从下拉列表中，选择一个**版本**。 如果不知道要选择哪个版本，请使用默认版本。|
+    |版本|从下拉列表中，选择一个 **版本**。 如果不知道要选择哪个版本，请使用默认版本。|
     |群集登录用户名和密码    | 默认登录名为“admin”  。密码长度不得少于 10 个字符，且至少必须包含一个数字、一个大写字母和一个小写字母、一个非字母数字字符（' " ` \)字符除外）。 请确保不提供常见密码，如“Pass@word1”  。|
     |安全外壳 (SSH) 用户名 | 默认用户名为“sshuser”  。  可以提供其他名称作为 SSH 用户名。 |
     |对 SSH 使用群集登录密码| 选中此复选框，让 SSH 用户使用与提供给群集登录用户的密码相同的密码。|
@@ -67,7 +64,7 @@ ms.locfileid: "80130583"
 
     ![HDInsight Linux 入门 - 提供群集存储值](./media/apache-hadoop-linux-create-cluster-get-started-portal/azure-portal-cluster-storage.png "提供用于创建 HDInsight 群集的存储值")
 
-    每个群集都有一个 [Azure 存储帐户](../hdinsight-hadoop-use-blob-storage.md)或 [Azure Data Lake 帐户](../hdinsight-hadoop-use-data-lake-store.md)依赖项。 该帐户称为默认存储帐户。 HDInsight 群集及其默认存储帐户必须共存于同一个 Azure 区域中。 删除群集不会删除存储帐户。
+    每个群集都有一个 [Azure 存储帐户](../hdinsight-hadoop-use-blob-storage.md)、一个 [Azure Data Lake Gen1](../hdinsight-hadoop-use-data-lake-storage-gen1.md) 或一个 [`Azure Data Lake Storage Gen2`](../hdinsight-hadoop-use-data-lake-storage-gen2.md) 依赖项。 该帐户称为默认存储帐户。 HDInsight 群集及其默认存储帐户必须共存于同一个 Azure 区域中。 删除群集不会删除存储帐户。
 
     选择“查看 + 创建”  选项卡。
 

@@ -4,15 +4,16 @@ description: 了解如何将软件计划折扣应用于虚拟机上的软件。
 author: yashesvi
 ms.reviewer: yashar
 ms.service: cost-management-billing
+ms.subservice: reservations
 ms.topic: conceptual
 ms.date: 08/06/2020
 ms.author: banders
-ms.openlocfilehash: b8e4c4188b0a3b862715a2e4eec2f31dd3f55ac9
-ms.sourcegitcommit: 4e5560887b8f10539d7564eedaff4316adb27e2c
+ms.openlocfilehash: 2c17b2f9dc12fa7bff2dae8603bcf95a3a8ddfa0
+ms.sourcegitcommit: 9eda79ea41c60d58a4ceab63d424d6866b38b82d
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/06/2020
-ms.locfileid: "87902059"
+ms.lasthandoff: 11/30/2020
+ms.locfileid: "96350834"
 ---
 # <a name="azure-software-plan-discount"></a>Azure 软件计划折扣
 
@@ -122,7 +123,7 @@ Azure 门户商城名称：
 
 - [什么是 Azure 预订？](save-compute-costs-reservations.md)
 - [通过 Azure 预订为 SUSE 软件计划预付费](../../virtual-machines/linux/prepay-suse-software-charges.md)
-- [通过 Azure 虚拟机预留实例为虚拟机预付费](../../virtual-machines/windows/prepay-reserved-vm-instances.md)
+- [通过 Azure 虚拟机预留实例为虚拟机预付费](../../virtual-machines/prepay-reserved-vm-instances.md)
 - [管理 Azure 预留项](manage-reserved-vm-instance.md)
 - [了解即用即付订阅的预留使用情况](understand-reserved-instance-usage.md)
 - [了解企业合约的预留使用情况](understand-reserved-instance-usage-ea.md)

@@ -2,13 +2,13 @@
 title: Azure 服务总线消息会话 | Microsoft Docs
 description: 本文说明了如何使用会话实现对无限的相关消息序列的连贯有序处理。
 ms.topic: article
-ms.date: 06/23/2020
-ms.openlocfilehash: 05efc550e119186a2925c13d3fcfed11bec17251
-ms.sourcegitcommit: 3543d3b4f6c6f496d22ea5f97d8cd2700ac9a481
+ms.date: 01/20/2021
+ms.openlocfilehash: 6d316571d69d2e1e73ddca4ccca53c116ee8fa5f
+ms.sourcegitcommit: b39cf769ce8e2eb7ea74cfdac6759a17a048b331
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/20/2020
-ms.locfileid: "86511290"
+ms.lasthandoff: 01/22/2021
+ms.locfileid: "98680747"
 ---
 # <a name="message-sessions"></a>消息会话
 使用 Microsoft Azure 服务总线会话，能够以连贯有序的方式处理一系列无限多的相关消息。 可以在“先进先出 (FIFO)”和“请求-响应”模式下使用会话。 本文展示了如何在使用服务总线时使用会话来实现这些模式。 
@@ -31,18 +31,18 @@ ms.locfileid: "86511290"
 
 在门户中，选中下图中展示的复选框设置标志：
 
-!["创建队列" 对话框的屏幕截图，其中选择了 "启用会话" 选项并以红色列出。][2]
+![“创建队列”对话框的屏幕截图，其中的“启用会话”选项处于选中状态并用红色标出。][2]
 
 > [!NOTE]
-> 在队列或订阅上启用会话时，客户端应用程序可以***不再***发送/接收常规消息。 所有消息必须作为会话的一部分发送（通过设置会话 ID），并通过接收会话来接收。
+> 在队列或订阅上启用会话后，客户端应用程序可能不再发送/接收常规消息。 所有消息必须作为会话的一部分发送（通过设置会话 ID），并通过接收会话来接收。
 
-会话 API 存在于队列和订阅客户端上。 可以使用一个命令性模型，控制会话和消息的接收时间；还可以使用一个基于处理程序的模型（类似于 OnMessage），此模型简化了接收循环的管理操作。
+会话 API 存在于队列和订阅客户端上。 可以使用一个命令性模型来控制会话和消息的接收时间；还可以使用一个基于处理程序的模型（类似于 OnMessage）来简化接收循环的管理操作。
 
 ### <a name="session-features"></a>会话功能
 
 会话支持对交错消息流进行并发解多路复用，同时保留和保证有序传递。
 
-![显示会话功能如何保持按序送达的关系图。][1]
+![示意图，显示会话功能如何保持按序送达。][1]
 
 [MessageSession](/dotnet/api/microsoft.servicebus.messaging.messagesession) 接收程序是由接受会话的客户端创建。 客户端调用 C# 编写的 [QueueClient.AcceptMessageSession](/dotnet/api/microsoft.servicebus.messaging.queueclient.acceptmessagesession#Microsoft_ServiceBus_Messaging_QueueClient_AcceptMessageSession) 或 [QueueClient.AcceptMessageSessionAsync](/dotnet/api/microsoft.servicebus.messaging.queueclient.acceptmessagesessionasync#Microsoft_ServiceBus_Messaging_QueueClient_AcceptMessageSessionAsync)。 在反应回调模型中，它会注册会话处理程序。
 
@@ -66,7 +66,7 @@ ms.locfileid: "86511290"
 
 用于管理会话状态的 API [SetState](/dotnet/api/microsoft.servicebus.messaging.messagesession.setstate#Microsoft_ServiceBus_Messaging_MessageSession_SetState_System_IO_Stream_) 和 [GetState](/dotnet/api/microsoft.servicebus.messaging.messagesession.getstate#Microsoft_ServiceBus_Messaging_MessageSession_GetState) 存在于 C# 和 Java API 的 [MessageSession](/dotnet/api/microsoft.servicebus.messaging.messagesession) 对象中。 之前没有设置会话状态的会话将对 GetState 返回空引用。 可以使用 [SetState(null)](/dotnet/api/microsoft.servicebus.messaging.messagesession.setstate#Microsoft_ServiceBus_Messaging_MessageSession_SetState_System_IO_Stream_) 清除之前设置的会话状态。
 
-只要不清除会话状态，会话状态将保留（返回 **null**），即使会话中的所有消息都已使用，也是如此。
+只要不清除会话状态，会话状态将保留（返回 null），即使会话中的所有消息都已使用，也是如此。
 
 可以使用 Java API 中的 SessionBrowser 方法、[QueueClient](/dotnet/api/microsoft.servicebus.messaging.queueclient) 上的 [GetMessageSessions](/dotnet/api/microsoft.servicebus.messaging.queueclient.getmessagesessions#Microsoft_ServiceBus_Messaging_QueueClient_GetMessageSessions) 以及 .NET Framework 客户端中的 [SubscriptionClient](/dotnet/api/microsoft.servicebus.messaging.subscriptionclient)，枚举队列或订阅中的所有现有会话。
 

@@ -9,15 +9,16 @@ ms.devlang: na
 ms.topic: article
 ms.tgt_pltfrm: na
 ms.workload: infrastructure-services
-ms.date: 06/15/2018
+ms.date: 01/04/2021
 ms.author: damendo
 ms.reviewer: vinigam
-ms.openlocfilehash: 8deb3d81895629e817aeb9dbc1eb6520e1fb7aad
-ms.sourcegitcommit: 493b27fbfd7917c3823a1e4c313d07331d1b732f
+ms.custom: references_regions
+ms.openlocfilehash: 6cd1965ab51e7a7bbcc65836383000f0773b9b82
+ms.sourcegitcommit: 3af12dc5b0b3833acb5d591d0d5a398c926919c8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 05/21/2020
-ms.locfileid: "83747533"
+ms.lasthandoff: 01/11/2021
+ms.locfileid: "98070918"
 ---
 # <a name="traffic-analytics"></a>流量分析
 
@@ -43,9 +44,9 @@ Azure 虚拟网络提供 NSG 流日志，其中提供了传入和传出与单个
 
 ## <a name="key-components"></a>关键组件
 
-- **网络安全组 (NSG)** ：包含一系列安全规则，这些规则可以允许或拒绝流向连接到 Azure 虚拟网络的资源的网络流量。 可以将 NSG 关联到子网、单个 VM（经典）或附加到 VM 的单个网络接口 (NIC) (Resource Manager)。 有关详细信息，请参阅[网络安全组概述](../virtual-network/security-overview.md?toc=%2fazure%2fnetwork-watcher%2ftoc.json)。
+- **网络安全组 (NSG)** ：包含一系列安全规则，这些规则可以允许或拒绝流向连接到 Azure 虚拟网络的资源的网络流量。 可以将 NSG 关联到子网、单个 VM（经典）或附加到 VM 的单个网络接口 (NIC) (Resource Manager)。 有关详细信息，请参阅[网络安全组概述](../virtual-network/network-security-groups-overview.md?toc=%2fazure%2fnetwork-watcher%2ftoc.json)。
 - **网络安全组 (NSG) 流日志**：用于查看有关通过网络安全组的传入和传出 IP 流量的信息。 NSG 流日志以 JSON 格式编写，并基于每个规则显示出站和入站流、流所适用的 NIC、有关流的五元组信息（源/目标 IP 地址、源/目标端口和协议），以及是允许还是拒绝流量。 有关 NSG 流日志的详细信息，请参阅 [NSG 流日志](network-watcher-nsg-flow-logging-overview.md)。
-- **Log Analytics**：一个 Azure 服务，可以收集监视数据并将数据存储在中心存储库中。 这些数据可能包括事件、性能数据或通过 Azure API 提供的自定义数据。 收集后，可以分析、导出数据或针对它们发出警报。 网络性能监视器和流量分析等监视应用程序是在 Azure Monitor 日志的基础上构建的。 有关详细信息，请参阅 [Azure Monitor 日志](../log-analytics/log-analytics-overview.md?toc=%2fazure%2fnetwork-watcher%2ftoc.json)。
+- **Log Analytics**：一个 Azure 服务，可以收集监视数据并将数据存储在中心存储库中。 这些数据可能包括事件、性能数据或通过 Azure API 提供的自定义数据。 收集后，可以分析、导出数据或针对它们发出警报。 网络性能监视器和流量分析等监视应用程序是在 Azure Monitor 日志的基础上构建的。 有关详细信息，请参阅 [Azure Monitor 日志](../azure-monitor/log-query/log-query-overview.md?toc=%2fazure%2fnetwork-watcher%2ftoc.json)。
 - **Log Analytics 工作区**：Azure Monitor 日志的一个实例，用于存储与 Azure 帐户相关的数据。 有关 Log Analytics 工作区的详细信息，请参阅[创建 Log Analytics 工作区](../azure-monitor/learn/quick-create-workspace.md?toc=%2fazure%2fnetwork-watcher%2ftoc.json)。
 - **网络观察程序**：一个区域性服务，用于在 Azure 中监视和诊断网络方案级别的状态。 可以使用网络观察程序启用和禁用 NSG 流日志。 有关详细信息，请参阅[网络观察程序](network-watcher-monitoring-overview.md)。
 
@@ -58,72 +59,116 @@ Azure 虚拟网络提供 NSG 流日志，其中提供了传入和传出与单个
 ## <a name="supported-regions-nsg"></a>支持的区域：NSG 
 
 可以在以下任何受支持的区域中对 NSG 使用流量分析：
-
-* 加拿大中部
-* 美国中西部
-* 美国东部
-* 美国东部 2
-* 美国中北部
-* 美国中南部
-* 美国中部
-* 美国西部
-* 美国西部 2
-* 法国中部
-* 西欧
-* 北欧
-* 巴西南部
-* 英国西部
-* 英国南部
-* 澳大利亚东部
-* 澳大利亚东南部
-* 东亚
-* 东南亚
-* 韩国中部
-* 印度中部
-* 印度南部
-* 日本东部 
-* 日本西部
-* US Gov 弗吉尼亚州
-* 中国东部 2
+:::row:::
+   :::column span="":::
+      澳大利亚中部  
+      澳大利亚东部  
+      澳大利亚东南部  
+      巴西南部  
+      加拿大中部  
+      加拿大东部  
+      印度中部  
+      美国中部  
+      中国东部 2  
+      中国北部 2  
+   :::column-end:::
+   :::column span="":::
+      东亚  
+      美国东部  
+      美国东部 2  
+      美国东部 2 EUAP  
+      法国中部  
+      日本东部  
+      日本西部  
+      韩国中部  
+      韩国南部  
+      美国中北部  
+   :::column-end:::
+   :::column span="":::
+      北欧  
+      南非北部  
+      美国中南部  
+      印度南部  
+      东南亚  
+      瑞士北部  
+      瑞士西部  
+      英国南部  
+      英国西部  
+      USGov Arizona  
+   :::column-end:::
+   :::column span="":::
+      USGov Texas  
+      USGov Virginia  
+      USNat 东部  
+      USNat 西部  
+      USSec 东部  
+      USSec 西  
+      美国中西部  
+      西欧  
+      美国西部  
+      美国西部 2  
+   :::column-end:::
+:::row-end:::
 
 ## <a name="supported-regions-log-analytics-workspaces"></a>支持的区域：Log Analytics 工作区
 
 Log Analytics 工作区必须存在于以下区域中：
-* 加拿大中部
-* 美国中西部
-* 美国东部
-* 美国东部 2
-* 美国中北部
-* 美国中南部
-* 美国中部
-* 美国西部
-* 美国西部 2
-* 美国中部
-* 法国中部
-* 西欧
-* 北欧
-* 巴西南部
-* 英国西部
-* 英国南部
-* 澳大利亚东部
-* 澳大利亚东南部
-* 东亚
-* 东南亚
-* 韩国中部
-* 印度中部
-* 日本东部
-* US Gov 弗吉尼亚州
-* 中国东部 2
+:::row:::
+   :::column span="":::
+      澳大利亚中部  
+      澳大利亚东部  
+      澳大利亚东南部  
+      巴西南部  
+      加拿大中部  
+      印度中部  
+      美国中部  
+      中国东部 2  
+      东亚  
+      美国东部  
+   :::column-end:::
+   :::column span="":::
+      美国东部 2  
+      美国东部 2 EUAP  
+      法国中部  
+      德国中西部  
+      日本东部  
+      韩国中部  
+      美国中北部  
+      北欧  
+      南非北部  
+      美国中南部  
+   :::column-end:::
+   :::column span="":::
+      东南亚  
+      瑞士北部  
+      瑞士西部  
+      阿联酋中部  
+      英国南部  
+      英国西部  
+      USGov Arizona  
+      USGov Virginia  
+      USNat 东部  
+      USNat 西部  
+   :::column-end:::
+   :::column span="":::
+      USSec 东部  
+      USSec 西  
+      美国中西部  
+      西欧  
+      美国西部  
+      美国西部 2  
+   :::column-end:::
+:::row-end:::
 
 ## <a name="prerequisites"></a>先决条件
 
 ### <a name="user-access-requirements"></a>用户访问要求
 
-帐户必须是以下 Azure [内置角色](../role-based-access-control/built-in-roles.md?toc=%2fazure%2fnetwork-watcher%2ftoc.json)之一的成员：
+帐户必须是以下 [Azure 内置角色](../role-based-access-control/built-in-roles.md?toc=%2fazure%2fnetwork-watcher%2ftoc.json)成员之一：
 
 |部署模型   | 角色                   |
 |---------          |---------               |
-|资源管理器   | “所有者”                  |
+|Resource Manager   | 所有者                  |
 |                   | 参与者            |
 |                   | 读取器                 |
 |                   | 网络参与者    |
@@ -187,7 +232,7 @@ New-AzStorageAccount `
 4. 将“保留期”设置为存储数据的天数。 若要永久存储数据，请将值设置为 *0*。 存储帐户会产生 Azure 存储费用。 
 5. 为“流量分析状态”选择“打开”。
 6. 选择处理时间间隔。 根据你的选择，流量分析将从存储帐户收集流日志并进行处理。 你可以选择每 1 个小时或每 10 分钟的处理间隔。 
-7. 选择现有的 Log Analytics (OMS) 工作区，或选择“创建新工作区”来创建一个新工作区。 流量分析使用 Log Analytics 工作区来存储聚合数据和索引数据，然后，这些数据用于生成分析。 如果选择现有的工作区，该工作区必须位于某个[受支持区域](#supported-regions-log-analytics-workspaces)，并且已升级为新查询语言。 如果不希望升级现有工作区，或者受支持区域中没有工作区，请创建一个新工作区。 有关查询语言的详细信息，请参阅[将 Azure Log Analytics 升级到新的日志搜索](../log-analytics/log-analytics-log-search-upgrade.md?toc=%2fazure%2fnetwork-watcher%2ftoc.json)。
+7. 选择现有的 Log Analytics (OMS) 工作区，或选择“创建新工作区”来创建一个新工作区。 流量分析使用 Log Analytics 工作区来存储聚合数据和索引数据，然后，这些数据用于生成分析。 如果选择现有的工作区，该工作区必须位于某个[受支持区域](#supported-regions-log-analytics-workspaces)，并且已升级为新查询语言。 如果不希望升级现有工作区，或者受支持区域中没有工作区，请创建一个新工作区。 有关查询语言的详细信息，请参阅[将 Azure Log Analytics 升级到新的日志搜索](../azure-monitor/log-query/log-query-overview.md?toc=%2fazure%2fnetwork-watcher%2ftoc.json)。
 
 > [!NOTE]
 >托管流量分析解决方案和 NSG 的 Log Analytics 工作区不一定要位于同一个区域。 例如，可将流量分析部署在西欧区域的某个工作区中，同时将 NSG 部署在美国东部和美国西部。 可在同一工作区中配置多个 NSG。
@@ -224,7 +269,7 @@ New-AzStorageAccount `
 - 阻止的流量统计信息。
     - 主机为何阻止大量良性流量？ 对于此行为，需要进一步进行调查，并且可能需要对配置进行优化。
 - 允许/阻止的恶意流量统计信息
-  - 主机为何在接收恶意流量以及为何允许来自恶意源的流？ 对于此行为，需要进一步进行调查，并且可能需要对配置进行优化。
+  - 为什么某个主机收到恶意流量，为什么允许来自恶意源的流？ 对于此行为，需要进一步进行调查，并且可能需要对配置进行优化。
 
     在“主机”下选择“查看全部”，如下图所示 ：
 
@@ -339,7 +384,7 @@ New-AzStorageAccount `
  - 了解哪个子网正在与哪个应用程序网关或负载均衡器对话。 如果观察到意外的对话，可以更正配置。
  - 如果未授权网络正在与应用程序网关或负载均衡器对话，可以配置 NSG 规则来阻止未授权网络，从而更正此行为。 
 
-    ![subnet-topology-showcasing-traffic-distribution-to-a-application-gateway-subnet-with-regards-to-flows](./media/traffic-analytics/subnet-topology-showcasing-traffic-distribution-to-a-application-gateway-subnet-with-regards-to-flows.png)
+    ![屏幕截图显示了应用程序网关子网的流相关流量分布的子网拓扑。](./media/traffic-analytics/subnet-topology-showcasing-traffic-distribution-to-a-application-gateway-subnet-with-regards-to-flows.png)
 
 ### <a name="view-ports-and-virtual-machines-receiving-traffic-from-the-internet"></a>查看从 Internet 接收流量的端口和虚拟机
 

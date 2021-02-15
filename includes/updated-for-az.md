@@ -1,17 +1,15 @@
 ---
 ms.topic: include
-ms.date: 04/17/2019
-author: dbradish-microsoft
-ms.author: dbradish
+ms.date: 01/15/2021
+author: mikefrobbins
+ms.author: mirobb
 manager: barbkess
-ms.openlocfilehash: 1b3f9fff835e39c737227d6817c3a1dd901f3c65
-ms.sourcegitcommit: c5021f2095e25750eb34fd0b866adf5d81d56c3a
+ms.openlocfilehash: 03ee1325d0e5d3fcb95e9578d25c14beefc5bdf7
+ms.sourcegitcommit: aaa65bd769eb2e234e42cfb07d7d459a2cc273ab
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/25/2020
-ms.locfileid: "85367558"
+ms.lasthandoff: 01/27/2021
+ms.locfileid: "98900767"
 ---
 > [!NOTE]
-> 本文进行了更新，以便使用新的 Azure PowerShell Az 模块。 你仍然可以使用 AzureRM 模块，至少在 2020 年 12 月之前，它将继续接收 bug 修补程序。
-> 若要详细了解新的 Az 模块和 AzureRM 兼容性，请参阅[新 Azure Powershell Az 模块简介](https://docs.microsoft.com/powershell/azure/new-azureps-module-az?view=azps-3.3.0)。 有关 Az 模块安装说明，请参阅[安装 Azure PowerShell](https://docs.microsoft.com/powershell/azure/install-az-ps?view=azps-3.3.0)。
-
+> 本文已经过更新，以便使用 Azure Az PowerShell 模块。 若要与 Azure 交互，建议使用的 PowerShell 模块是 Az PowerShell 模块。 若要开始使用 Az PowerShell 模块，请参阅[安装 Azure PowerShell](/powershell/azure/install-az-ps)。 若要了解如何迁移到 Az PowerShell 模块，请参阅 [将 Azure PowerShell 从 AzureRM 迁移到 Az](/powershell/azure/migrate-from-azurerm-to-az)。

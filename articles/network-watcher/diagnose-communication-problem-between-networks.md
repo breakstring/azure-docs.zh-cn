@@ -11,15 +11,15 @@ ms.devlang: na
 ms.topic: tutorial
 ms.tgt_pltfrm: na
 ms.workload: infrastructure-services
-ms.date: 04/27/2018
+ms.date: 01/07/2021
 ms.author: damendo
 ms.custom: mvc
-ms.openlocfilehash: 974e45b761fb45e4bc1c451fa6755e16cab49e11
-ms.sourcegitcommit: c5021f2095e25750eb34fd0b866adf5d81d56c3a
+ms.openlocfilehash: 1a556ea66bb54f994349ce9ba4d12fb486827edf
+ms.sourcegitcommit: 42a4d0e8fa84609bec0f6c241abe1c20036b9575
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/25/2020
-ms.locfileid: "76834672"
+ms.lasthandoff: 01/08/2021
+ms.locfileid: "98013288"
 ---
 # <a name="tutorial-diagnose-a-communication-problem-between-networks-using-the-azure-portal"></a>教程：使用 Azure 门户诊断网络之间的通信问题
 
@@ -61,10 +61,10 @@ ms.locfileid: "76834672"
 ## <a name="diagnose-a-gateway"></a>诊断网关
 
 1. 在门户左侧选择“所有服务”。
-2. 首先在“筛选”框中键入“网络观察程序”。 搜索结果中出现“网络观察程序”后，将其选中。
+2. 首先在“筛选”框中键入“网络观察程序”   。 搜索结果中出现“网络观察程序”后，将其选中。
 3. 在“网络诊断工具”下选择“VPN 诊断”。 
 4. 选择“存储帐户”，然后选择要向其写入诊断信息的存储帐户。
-5. 在“存储帐户”列表中，选择要使用的存储帐户。 如果没有现成的存储帐户，则请选择“+ 存储帐户”，输入或选择所需信息，然后选择“创建”，以便创建一个。  如果已使用[先决条件](#prerequisites)中的脚本创建了一个 VPN 网关，则可能需要在该网关所在的资源组 *TestRG1* 中创建存储帐户。
+5. 在“存储帐户”列表中，选择要使用的存储帐户。 如果没有现成的存储帐户，则请选择“+ 存储帐户”，输入或选择所需信息，然后选择“创建”，以便创建一个。  如果已使用 [先决条件](#prerequisites)中的脚本创建了一个 VPN 网关，则可能需要在该网关所在的资源组 *TestRG1* 中创建存储帐户。
 6. 从“容器”列表中选择要使用的容器，然后选择“选择”。 如果没有任何容器，请选择“+ 容器”，输入容器的名称，然后选择“确定”。
 7. 选择一个网关，然后选择“开始故障排除”。 如下图所示，测试是针对名为 **Vnet1GW** 的网关运行的：
 
@@ -73,12 +73,12 @@ ms.locfileid: "76834672"
 8. 当测试正在运行时，“故障排除状态”列中会显示“正在运行”，而在上图中，该列显示“未启动”。   测试可能需要数分钟的运行时间。
 9. 查看已完成测试的状态。 下图显示已完成的诊断测试的状态结果：
 
-    ![状态](./media/diagnose-communication-problem-between-networks/status.png)
+    ![屏幕截图显示在此示例中运行不正常的诊断测试的状态结果，包括摘要和详细信息。](./media/diagnose-communication-problem-between-networks/status.png)
 
     可以看到“故障排除状态”为“不正常”，还可以在“状态”选项卡上看到问题的“摘要”和“详细信息”。    
 10. 选择“操作”选项卡时，VPN 诊断会提供其他信息。 在下图所示的示例中，VPN 诊断指示应检查每个连接的运行状况：
 
-    ![操作](./media/diagnose-communication-problem-between-networks/action.png)
+    ![屏幕截图显示提供了其他信息的“操作”选项卡。](./media/diagnose-communication-problem-between-networks/action.png)
 
 ## <a name="diagnose-a-gateway-connection"></a>诊断网关连接
 
@@ -86,7 +86,7 @@ ms.locfileid: "76834672"
 
 1. 再次完成[诊断网关](#diagnose-a-gateway)的步骤 7，这次选择一个连接。 在以下示例中，对名为 **VNet1toSite1** 的连接进行了测试：
 
-    ![连接](./media/diagnose-communication-problem-between-networks/connection.png)
+    ![屏幕截图显示如何开始对选定连接进行故障排除。](./media/diagnose-communication-problem-between-networks/connection.png)
 
     测试运行时间为数分钟。
 2. 完成对连接的测试以后，收到的结果类似于下图中显示在“状态”和“操作”选项卡上的结果： 

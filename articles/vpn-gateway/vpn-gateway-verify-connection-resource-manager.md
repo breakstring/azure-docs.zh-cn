@@ -5,15 +5,15 @@ services: vpn-gateway
 author: cherylmc
 ms.service: vpn-gateway
 ms.topic: how-to
-ms.date: 05/16/2017
+ms.date: 10/19/2020
 ms.author: cherylmc
 ms.custom: devx-track-azurecli
-ms.openlocfilehash: 01e84ab1d67206d1d0eb54b0813756a29fea4685
-ms.sourcegitcommit: 11e2521679415f05d3d2c4c49858940677c57900
+ms.openlocfilehash: b59294d07ef64875cb6fbd3e3a49dec61d8b8135
+ms.sourcegitcommit: 8e7316bd4c4991de62ea485adca30065e5b86c67
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/31/2020
-ms.locfileid: "87496723"
+ms.lasthandoff: 11/17/2020
+ms.locfileid: "94659397"
 ---
 # <a name="verify-a-vpn-gateway-connection"></a>验证 VPN 网关连接
 
@@ -31,10 +31,9 @@ ms.locfileid: "87496723"
 
 ## <a name="azure-cli"></a>Azure CLI
 
-若要使用 Azure CLI 验证 Resource Manager 部署模型的 VPN 网关连接，请安装最新版本的 [CLI 命令](https://docs.microsoft.com/cli/azure/install-azure-cli)（2.0 或更高版本）。
+若要使用 Azure CLI 验证 Resource Manager 部署模型的 VPN 网关连接，请安装最新版本的 [CLI 命令](/cli/azure/install-azure-cli)（2.0 或更高版本）。
 
 [!INCLUDE [CLI](../../includes/vpn-gateway-verify-connection-cli-rm-include.md)]
-
 
 ## <a name="azure-portal-classic"></a>Azure 门户（经典）
 
@@ -42,7 +41,7 @@ ms.locfileid: "87496723"
 
 ## <a name="powershell-classic"></a>PowerShell（经典）
 
-若要使用 PowerShell 验证经典部署模型的 VPN 网关连接，请安装最新版本的 Azure PowerShell cmdlet。 请务必下载并安装 [Service Management](https://docs.microsoft.com/powershell/azure/servicemanagement/install-azure-ps?view=azuresmps-4.0.0#azure-service-management-cmdlets) 模块。 使用“Add-AzureAccount”登录经典部署模型。
+若要使用 PowerShell 验证经典部署模型的 VPN 网关连接，请安装最新版本的 Azure PowerShell cmdlet。 请务必下载并安装 [Service Management](/powershell/azure/servicemanagement/install-azure-ps?#azure-service-management-cmdlets) 模块。 使用“Add-AzureAccount”登录经典部署模型。
 
 [!INCLUDE [Classic PowerShell](../../includes/vpn-gateway-verify-connection-ps-classic-include.md)]
 

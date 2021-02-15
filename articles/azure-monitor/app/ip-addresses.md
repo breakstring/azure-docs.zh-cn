@@ -1,19 +1,17 @@
 ---
-title: Application Insights 和 Log Analytics 使用的 IP 地址 | Microsoft Docs
+title: Azure Monitor 使用的 IP 地址
 description: Application Insights 所需的服务器防火墙例外
 ms.topic: conceptual
-author: mrbullwinkle
-ms.author: mbullwin
-ms.date: 06/18/2020
-ms.openlocfilehash: 57087548d0a594789f11858c4732ff34c4d79ce4
-ms.sourcegitcommit: 2ff0d073607bc746ffc638a84bb026d1705e543e
+ms.date: 01/27/2020
+ms.openlocfilehash: 0e7028c59b4588ac23424a63f4e3ce240391dfb8
+ms.sourcegitcommit: 54e1d4cdff28c2fd88eca949c2190da1b09dca91
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/06/2020
-ms.locfileid: "87824964"
+ms.lasthandoff: 01/31/2021
+ms.locfileid: "99220796"
 ---
-# <a name="ip-addresses-used-by-application-insights-and-log-analytics"></a>Application Insights 和 Log Analytics 使用的 IP 地址
-[Azure Application Insights](./app-insights-overview.md) 服务使用许多 IP 地址。 如果要监视的应用托管在防火墙后面，可能需要知道这些 IP 地址。
+# <a name="ip-addresses-used-by-azure-monitor"></a>Azure Monitor 使用的 IP 地址
+[Azure Monitor](../overview.md) 使用多个 IP 地址。 Azure Monitor 除了包含 Log Analytics 和 Application Insights，还由核心平台指标和日志组成。 如果所监视的应用或基础结构位于防火墙后面，则你可能需要知道这些地址。
 
 > [!NOTE]
 > 尽管这些地址是静态的，但我们可能随时需要更改它们。 除了需要入站防火墙规则的可用性监视和 Webhook 之外，所有 Application Insights 流量都表示出站流量。
@@ -29,9 +27,8 @@ ms.locfileid: "87824964"
 
 | 目的 | URL | IP | 端口 |
 | --- | --- | --- | --- |
-| 遥测 |dc.applicationinsights.azure.com<br/>dc.applicationinsights.microsoft.com<br/>dc.services.visualstudio.com |40.114.241.141<br/>104.45.136.42<br/>40.84.189.107<br/>168.63.242.221<br/>52.167.221.184<br/>52.169.64.244<br/>40.85.218.175<br/>104.211.92.54<br/>52.175.198.74<br/>51.140.6.23<br/>40.71.12.231<br/>13.69.65.22<br/>13.78.108.165<br/>13.70.72.233<br/>20.44.8.7<br/>13.86.218.248<br/>40.79.138.41<br/>52.231.18.241<br/>13.75.38.7<br/>102.133.155.50<br/>52.162.110.67<br/>191.233.204.248<br/>13.69.66.140<br/>13.77.52.29<br/>51.107.59.180<br/>40.71.12.235<br/>20.44.8.10<br/>40.71.13.169<br/>13.66.141.156<br/>40.71.13.170<br/>13.69.65.23<br/>20.44.17.0<br/>20.36.114.207 <br/>51.116.155.246 <br/>51.107.155.178 <br/>51.140.212.64 <br/>13.86.218.255  | 443 |
-| 实时指标流（美国东部） |use.rt.prod.applicationinsights.trafficmanager.net |23.96.28.38<br/>13.92.40.198<br/>40.112.49.101<br/>40.117.80.207 |443 |
-| 实时指标流（美国中南部） |ussc.rt.prod.applicationinsights.trafficmanager.net |157.55.177.6<br/>104.44.140.84<br/>104.215.81.124<br/>23.100.122.113 |443 |
+| 遥测 |dc.applicationinsights.azure.com<br/>dc.applicationinsights.microsoft.com<br/>dc.services.visualstudio.com |40.114.241.141<br/>104.45.136.42<br/>40.84.189.107<br/>168.63.242.221<br/>52.167.221.184<br/>52.169.64.244<br/>40.85.218.175<br/>104.211.92.54<br/>52.175.198.74<br/>51.140.6.23<br/>40.71.12.231<br/>13.69.65.22<br/>13.78.108.165<br/>13.70.72.233<br/>20.44.8.7<br/>13.86.218.248<br/>40.79.138.41<br/>52.231.18.241<br/>13.75.38.7<br/>102.133.155.50<br/>52.162.110.67<br/>191.233.204.248<br/>13.69.66.140<br/>13.77.52.29<br/>51.107.59.180<br/>40.71.12.235<br/>20.44.8.10<br/>40.71.13.169<br/>13.66.141.156<br/>40.71.13.170<br/>13.69.65.23<br/>20.44.17.0<br/>20.36.114.207 <br/>51.116.155.246 <br/>51.107.155.178 <br/>51.140.212.64 <br/>13.86.218.255 <br/>20.37.74.240 <br/>65.52.250.236 <br/>13.69.229.240 <br/>52.236.186.210<br/>52.167.107.65<br/>40.71.12.237<br/>40.78.229.32<br/>40.78.229.33<br/>51.105.67.161<br/>40.124.64.192<br/>20.44.12.194<br/>20.189.172.0<br/>13.69.106.208<br/>40.78.253.199<br/>40.78.253.198<br/>40.78.243.19 | 443 |
+| 实时指标流 | live.applicationinsights.azure.com<br/>rt.applicationinsights.microsoft.com<br/>rt.services.visualstudio.com|23.96.28.38<br/>13.92.40.198<br/>40.112.49.101<br/>40.117.80.207<br/>157.55.177.6<br/>104.44.140.84<br/>104.215.81.124<br/>23.100.122.113| 443 |
 
 ## <a name="status-monitor"></a>状态监视器
 状态监视器配置 - 仅在进行更改时需要。
@@ -49,6 +46,10 @@ ms.locfileid: "87824964"
 
 ## <a name="availability-tests"></a>可用性测试
 这是用于运行[可用性 Web 测试](./monitor-web-app-availability.md)的地址列表。 如果想要对应用运行 Web 测试，但 Web 服务器局限于为特定的客户端提供服务，则必须允许来自可用性测试服务器的传入流量。
+
+
+> [!NOTE]
+> 对于位于专用虚拟网络中的资源，这些资源无法允许与公共 Azure 中的可用性测试代理进行直接入站通信，唯一的选择是 [创建并托管你自己的自定义可用性测试](availability-azure-functions.md)。
 
 ### <a name="service-tag"></a>服务标记
 
@@ -173,14 +174,33 @@ East US
 20.42.35.112/28
 20.42.35.128/28
 
-Azure US Government (Not needed if you are an Azure Public cloud customer)
-
-20.140.48.160/27
-20.140.56.160/27
-20.140.64.160/27
-20.140.72.160/27
-52.127.49.96/27
 ```  
+
+#### <a name="azure-government"></a>Azure Government
+
+如果你是 Azure 公有云客户，则不需要。
+
+```
+USGov Virginia
+52.227.229.80/31
+
+
+USGov Arizona
+52.244.35.112/31
+
+
+USGov Texas
+52.243.157.80/31
+
+
+USDoD Central
+52.182.23.96/31
+
+
+USDoD East
+52.181.33.96/31
+
+```
 
 ## <a name="application-insights--log-analytics-apis"></a>Application Insights 和日志分析 API
 
@@ -223,15 +243,39 @@ Azure US Government (Not needed if you are an Azure Public cloud customer)
 
 ## <a name="action-group-webhooks"></a>操作组 Webhook
 
-| 目的 | IP | 端口
-| --- | --- | --- |
-| 警报 | 13.72.19.232 <br/>13.106.57.181<br/>13.106.54.3<br/>13.106.54.19<br/>13.106.38.142<br/>13.106.38.148<br/>13.106.57.196<br/>13.106.57.197<br/>52.244.68.117<br/>52.244.65.137<br/>52.183.31.0<br/>52.184.145.166<br/>51.4.138.199<br/>51.5.148.86<br/>51.5.149.19 | 443 |
+可以使用 [AzNetworkServiceTag PowerShell 命令](https://docs.microsoft.com/powershell/module/az.network/Get-AzNetworkServiceTag)查询操作组使用的 IP 地址列表。
+
+### <a name="action-groups-service-tag"></a>操作组服务标记
+管理对源 IP 地址所做的更改可能会非常耗时。 使用 **服务标记** ，无需更新配置。 服务标记代表给定 Azure 服务中的一组 IP 地址前缀。 Microsoft 管理 IP 地址，并在地址更改时自动更新服务标记，无需更新操作组的网络安全规则。
+
+1. 在 "Azure 服务的 Azure 门户" 下搜索 " *网络安全组*"。
+2. 单击“添加”，创建一个网络安全组。
+
+   1. 添加资源组名称，然后输入“实例详细信息”。
+   1. 依次单击“查看 + 创建”、“创建”。
+   
+   :::image type="content" source="../platform/media/action-groups/action-group-create-security-group.png" alt-text="有关如何创建网络安全组的示例。"border="true":::
+
+3. 转到“资源组”，然后单击你创建的网络安全组。
+
+    1. 选择“入站安全规则”。
+    1. 单击“添加”。
+    
+    :::image type="content" source="../platform/media/action-groups/action-group-add-service-tag.png" alt-text="有关如何添加服务标记的示例。"border="true":::
+
+4. 此时将在右侧窗格中打开一个新窗口。
+    1.  选择“源”：**服务标记**
+    1.  源服务标记：**ActionGroup**
+    1.  单击 **添加**。
+    
+    :::image type="content" source="../platform/media/action-groups/action-group-service-tag.png" alt-text="有关如何添加服务标记的示例。"border="true":::
+
 
 ## <a name="profiler"></a>探查器
 
 | 目的 | URI | IP | 端口 |
 | --- | --- | --- | --- |
-| 代理 | agent.azureserviceprofiler.net<br/>*.agent.azureserviceprofiler.net | 20.190.60.38<br/>20.190.60.32<br/>52.173.196.230<br/>52.173.196.209<br/>23.102.44.211<br/>23.102.45.216<br/>13.69.51.218<br/>13.69.51.175<br/>138.91.32.98<br/>138.91.37.93<br/>40.121.61.208<br/>40.121.57.2<br/>51.140.60.235<br/>51.140.180.52<br/>52.138.31.112<br/>52.138.31.127<br/>104.211.90.234<br/>104.211.91.254<br/>13.70.124.27<br/>13.75.195.15<br/>52.185.132.101<br/>52.185.132.170<br/>20.188.36.28<br/>40.89.153.171<br/>52.141.22.239<br/>52.141.22.149<br/>102.133.162.233<br/>102.133.161.73<br/>191.232.214.6<br/>191.232.213.239 | 443
+| Agent | agent.azureserviceprofiler.net<br/>*.agent.azureserviceprofiler.net | 20.190.60.38<br/>20.190.60.32<br/>52.173.196.230<br/>52.173.196.209<br/>23.102.44.211<br/>23.102.45.216<br/>13.69.51.218<br/>13.69.51.175<br/>138.91.32.98<br/>138.91.37.93<br/>40.121.61.208<br/>40.121.57.2<br/>51.140.60.235<br/>51.140.180.52<br/>52.138.31.112<br/>52.138.31.127<br/>104.211.90.234<br/>104.211.91.254<br/>13.70.124.27<br/>13.75.195.15<br/>52.185.132.101<br/>52.185.132.170<br/>20.188.36.28<br/>40.89.153.171<br/>52.141.22.239<br/>52.141.22.149<br/>102.133.162.233<br/>102.133.161.73<br/>191.232.214.6<br/>191.232.213.239 | 443
 | 门户 | gateway.azureserviceprofiler.net | 动态 | 443
 | 存储 | *.core.windows.net | 动态 | 443
 
@@ -242,7 +286,7 @@ Azure US Government (Not needed if you are an Azure Public cloud customer)
 
 | 目的 | URI | IP | 端口 |
 | --- | --- | --- | --- |
-| 代理 | ppe.azureserviceprofiler.net<br/>*.ppe.azureserviceprofiler.net | 20.190.60.38<br/>20.190.60.32<br/>52.173.196.230<br/>52.173.196.209<br/>23.102.44.211<br/>23.102.45.216<br/>13.69.51.218<br/>13.69.51.175<br/>138.91.32.98<br/>138.91.37.93<br/>40.121.61.208<br/>40.121.57.2<br/>51.140.60.235<br/>51.140.180.52<br/>52.138.31.112<br/>52.138.31.127<br/>104.211.90.234<br/>104.211.91.254<br/>13.70.124.27<br/>13.75.195.15<br/>52.185.132.101<br/>52.185.132.170<br/>20.188.36.28<br/>40.89.153.171<br/>52.141.22.239<br/>52.141.22.149<br/>102.133.162.233<br/>102.133.161.73<br/>191.232.214.6<br/>191.232.213.239 | 443
-| 门户 | ppe.gateway.azureserviceprofiler.net | 动态 | 443
+| Agent | agent.azureserviceprofiler.net<br/>*.agent.azureserviceprofiler.net | 20.190.60.38<br/>20.190.60.32<br/>52.173.196.230<br/>52.173.196.209<br/>23.102.44.211<br/>23.102.45.216<br/>13.69.51.218<br/>13.69.51.175<br/>138.91.32.98<br/>138.91.37.93<br/>40.121.61.208<br/>40.121.57.2<br/>51.140.60.235<br/>51.140.180.52<br/>52.138.31.112<br/>52.138.31.127<br/>104.211.90.234<br/>104.211.91.254<br/>13.70.124.27<br/>13.75.195.15<br/>52.185.132.101<br/>52.185.132.170<br/>20.188.36.28<br/>40.89.153.171<br/>52.141.22.239<br/>52.141.22.149<br/>102.133.162.233<br/>102.133.161.73<br/>191.232.214.6<br/>191.232.213.239 | 443
+| 门户 | gateway.azureserviceprofiler.net | 动态 | 443
 | 存储 | *.core.windows.net | 动态 | 443
 

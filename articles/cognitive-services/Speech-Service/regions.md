@@ -10,13 +10,13 @@ ms.subservice: speech-service
 ms.topic: conceptual
 ms.date: 08/20/2020
 ms.author: panosper
-ms.custom: seodec18
-ms.openlocfilehash: b0574c41042e172af78365bb273c81729ce204ab
-ms.sourcegitcommit: 62717591c3ab871365a783b7221851758f4ec9a4
+ms.custom: seodec18,references_regions
+ms.openlocfilehash: 646d29e72b91cd6afcde8e70ad8fd8715442b88e
+ms.sourcegitcommit: a055089dd6195fde2555b27a84ae052b668a18c7
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/22/2020
-ms.locfileid: "88749313"
+ms.lasthandoff: 01/26/2021
+ms.locfileid: "98786785"
 ---
 # <a name="speech-service-supported-regions"></a>语音服务支持的区域
 
@@ -26,8 +26,8 @@ ms.locfileid: "88749313"
 
 考虑区域时，请注意以下几点：
 
-* 如果你的应用程序使用 [语音 SDK](speech-sdk.md)，则在 `westus` 创建语音配置时提供区域标识符，如。
-* 如果应用程序使用某个语音服务的 [REST API](rest-apis.md)，则区域是你在发出请求时使用的终结点 URI 的一部分。
+* 如果应用程序使用[语音 SDK](speech-sdk.md)，请在创建语音配置时提供区域标识符，例如 `westus`。
+* 如果应用程序使用某个语音服务的 [REST API](./overview.md#reference-docs)，则区域是你在发出请求时使用的终结点 URI 的一部分。
 * 为某个区域创建的密钥仅在该区域有效。 尝试在其他区域使用此类密钥会导致身份验证错误。
 
 ## <a name="speech-sdk"></a>语音 SDK
@@ -38,15 +38,17 @@ ms.locfileid: "88749313"
 
 语音自定义门户在此处提供： https://speech.microsoft.com
 
-可以在以下区域使用语音服务，以进行**语音识别**、**文本转语音**和**翻译**：
+可以在以下区域使用语音服务，以进行 **语音识别**、**文本转语音** 和 **翻译**：
 
 [!INCLUDE [](../../../includes/cognitive-services-speech-service-region-identifier.md)]
 
-如果使用[语音 SDK](speech-sdk.md)，则区域由**区域标识符**指定（例如，作为 `SpeechConfig.FromSubscription` 的参数）。 请确保该区域与订阅的区域匹配。
+如果使用 [语音 SDK](speech-sdk.md)，则区域由 **区域标识符** 指定（例如，作为 `SpeechConfig.FromSubscription` 的参数）。 请确保该区域与订阅的区域匹配。
+
+如果打算使用音频数据训练自定义模型，请使用[具有专用硬件的区域](custom-speech-overview.md#set-up-your-azure-account)之一进行更快的训练。 稍后可以使用 [REST API](https://centralus.dev.cognitive.microsoft.com/docs/services/speech-to-text-api-v3-0/operations/CopyModelToSubscription) 将完全训练的模型复制到另一个区域。
 
 ### <a name="intent-recognition"></a>意向识别
 
-通过语音 SDK 实现**意向识别**的可用区域如下：
+通过语音 SDK 实现 **意向识别** 的可用区域如下：
 
 | 全球区域 | 区域           | 区域标识符 |
 | ------------- | ---------------- | -------------------- |
@@ -63,21 +65,25 @@ ms.locfileid: "88749313"
 | 北美 | 美国西部 2        | `westus2`            |
 | 南美洲 | 巴西南部     | `brazilsouth`        |
 
-这是[语言理解服务 (LUIS)](/azure/cognitive-services/luis/luis-reference-regions) 支持的发布区域的子集。
+这是[语言理解服务 (LUIS)](../luis/luis-reference-regions.md) 支持的发布区域的子集。
 
 ### <a name="voice-assistants"></a>语音助手
 
-[语音 SDK](speech-sdk.md)支持以下区域中的**语音助手**功能：
+[语音 SDK](speech-sdk.md)通过以下区域中的 [直接线路语音](./direct-line-speech.md)支持 **语音助手** 功能：
 
-| 区域         | 区域标识符 |
-| -------------- | -------------------- |
-| 美国西部        | `westus`             |
-| 美国西部 2      | `westus2`            |
-| 美国东部        | `eastus`             |
-| 美国东部 2      | `eastus2`            |
-| 西欧    | `westeurope`         |
-| 北欧   | `northeurope`        |
-| 东南亚 | `southeastasia`      |
+| 全球区域 | 区域           | 区域标识符    |
+| ------------- | ---------------- | -------------------- |
+| 北美 | 美国西部          | `westus`             |
+| 北美 | 美国西部 2        | `westus2`            |
+| 北美 | 美国东部          | `eastus`             |
+| 北美 | 美国东部 2        | `eastus2`            |
+| 北美 | 美国中西部  | `westcentralus`      |
+| 北美 | 美国中南部 | `southcentralus`     |
+| 欧洲        | 西欧      | `westeurope`         |
+| 欧洲        | 北欧     | `northeurope`        |
+| 亚洲          | 东亚        | `eastasia`           |
+| 亚洲          | 东南亚   | `southeastasia`      |
+| 印度         | 印度中部    | `centralindia`       |
 
 ### <a name="speaker-recognition"></a>说话人识别
 

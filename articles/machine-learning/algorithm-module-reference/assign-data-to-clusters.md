@@ -9,16 +9,16 @@ ms.topic: reference
 author: likebupt
 ms.author: keli19
 ms.date: 11/19/2019
-ms.openlocfilehash: 207172f10277589af2b22ae2f41b07234a0925b3
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: e618395a2a4a11b4afb311d612cf5d0e27503dc6
+ms.sourcegitcommit: 829d951d5c90442a38012daaf77e86046018e5b9
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "79477708"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "90898865"
 ---
 # <a name="module-assign-data-to-clusters"></a>模块：将数据分配到聚类
 
-本文介绍如何使用 Azure 机器学习设计器（预览版）中的“将数据分配到群集”模块。  该模块通过一个使用“K-means 聚类分析”  算法训练的聚类分析模型来生成预测。
+本文介绍如何使用 Azure 机器学习设计器中的 " *将数据分配给群集* " 模块。 该模块通过一个使用“K-means 聚类分析”  算法训练的聚类分析模型来生成预测。
 
 “将数据分配到群集”模块会返回一个数据集，其中包含每个新数据点的可能分配。 
 

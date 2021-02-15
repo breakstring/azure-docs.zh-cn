@@ -1,5 +1,5 @@
 ---
-title: 使用 Azure 策略限制 VM 扩展安装（Linux）
+title: 使用 Azure Policy 限制 VM 扩展安装 (Linux)
 description: 使用 Azure Policy 限制 VM 扩展部署。
 services: virtual-machines-linux
 documentationcenter: ''
@@ -7,18 +7,19 @@ author: axayjo
 manager: gwallace
 editor: ''
 ms.service: virtual-machines-linux
+ms.subservice: extensions
 ms.topic: article
 ms.tgt_pltfrm: vm-linux
 ms.workload: infrastructure-services
 ms.date: 03/23/2018
 ms.author: akjosh
 ms.reviewer: cynthn
-ms.openlocfilehash: 2129130dab58c9e1fb98878efc3ec668eeb45359
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.openlocfilehash: 41457f26c22e3b8ed529ce77cfaf452618b03655
+ms.sourcegitcommit: 78ecfbc831405e8d0f932c9aafcdf59589f81978
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87069781"
+ms.lasthandoff: 01/23/2021
+ms.locfileid: "98737636"
 ---
 # <a name="use-azure-policy-to-restrict-extensions-installation-on-linux-vms"></a>使用 Azure Policy 限制 Linux VM 上的扩展安装
 
@@ -97,7 +98,7 @@ vim ~/clouddrive/azurepolicy.parameters.json
 
 ## <a name="create-the-policy"></a>创建策略
 
-策略定义是用于存储想要使用的配置的对象。 策略定义使用规则和参数文件定义策略。 使用 [az policy definition create](/cli/azure/role/assignment?view=azure-cli-latest) 创建策略定义。
+策略定义是用于存储想要使用的配置的对象。 策略定义使用规则和参数文件定义策略。 使用 [az policy definition create](/cli/azure/role/assignment) 创建策略定义。
 
 在此示例中，规则和参数是在 cloud shell 中创建并存储为 .json 文件的文件。
 
@@ -116,7 +117,7 @@ az policy definition create \
 
 此示例使用 [az policy assignment create](/cli/azure/policy/assignment) 将策略分配给资源组。 **myResourceGroup** 资源组中创建的任何 VM 将不能安装适用于 Linux 的 Linux VM 访问扩展或自定义脚本扩展。 该资源组必须存在，然后才能分配策略。
 
-使用 [az account list](/cli/azure/account?view=azure-cli-latest) 获取你的订阅 ID 以替换示例中的订阅 ID。
+使用 [az account list](/cli/azure/account) 获取你的订阅 ID 以替换示例中的订阅 ID。
 
 
 ```azurecli-interactive

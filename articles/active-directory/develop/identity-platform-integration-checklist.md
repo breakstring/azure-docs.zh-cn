@@ -1,5 +1,5 @@
 ---
-title: 适用于 Microsoft 标识平台的最佳做法 | Azure
+title: Microsoft 标识平台的最佳实践 |Microsoft
 description: 了解在与 Microsoft 标识平台集成时的最佳做法、建议和最容易疏忽的问题。
 services: active-directory
 author: rwike77
@@ -12,12 +12,12 @@ ms.date: 05/08/2020
 ms.author: ryanwi
 ms.reviewer: lenalepa, sureshja, jesakowi
 ms.custom: aaddev, identityplatformtop40, scenarios:getting-started
-ms.openlocfilehash: 036c40395e5da5ebc09a87e420893d7dbd2ec668
-ms.sourcegitcommit: b8702065338fc1ed81bfed082650b5b58234a702
+ms.openlocfilehash: a6a7bf24571660d8e728c1acba29af2504539a18
+ms.sourcegitcommit: 54e1d4cdff28c2fd88eca949c2190da1b09dca91
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/11/2020
-ms.locfileid: "88116795"
+ms.lasthandoff: 01/31/2021
+ms.locfileid: "99219954"
 ---
 # <a name="microsoft-identity-platform-best-practices-and-recommendations"></a>Microsoft 标识平台最佳做法和建议
 
@@ -28,11 +28,11 @@ ms.locfileid: "88116795"
 使用以下查检表确保应用程序与 [Microsoft 标识平台](./index.yml)有效集成。
 
 > [!TIP]
-> Azure 门户中的集成助手可帮助你应用其中许多最佳做法和建议。 选择 Azure 门户中的任何[应用注册](https://portal.azure.com/#blade/Microsoft_AAD_RegisteredApps/ApplicationsListBlade)，然后选择“集成助手(预览版)”菜单项，开始使用助手。
+> Azure 门户中的集成助手可帮助你应用其中许多最佳做法和建议。 选择 Azure 门户中的任何[应用注册](https://portal.azure.com/#blade/Microsoft_AAD_RegisteredApps/ApplicationsListBlade)，然后选择“集成助手”菜单项，开始使用助手。
 
 ## <a name="basics"></a>基础知识
 
-![复选框](./media/active-directory-integration-checklist/checkbox-two.svg) 阅读并理解 [Microsoft 平台策略](https://go.microsoft.com/fwlink/?linkid=2090497&clcid=0x409)。 确保应用程序符合旨在保护用户和平台的所述条款。
+![复选框](./media/active-directory-integration-checklist/checkbox-two.svg) 阅读并理解 [Microsoft 平台策略](/legal/microsoft-identity-platform/terms-of-use)。 确保应用程序符合旨在保护用户和平台的所述条款。
 
 ## <a name="ownership"></a>所有权
 
@@ -68,9 +68,9 @@ ms.locfileid: "88116795"
 
 ![复选框](./media/active-directory-integration-checklist/checkbox-two.svg) 使用新式身份验证解决方案（OAuth 2.0、[OpenID Connect](v2-protocols-oidc.md)）确保用户安全登录。
 
-![复选框](./media/active-directory-integration-checklist/checkbox-two.svg) 不要直接对 OAuth 2.0 和 Open ID 等协议进行编程。 请改用 [Microsoft 身份验证库 (MSAL)](msal-overview.md)。 MSAL 库在易于使用的库中安全地包装安全协议，并获得对[条件访问](../conditional-access/overview.md)方案、设备范围内[单一登录 (SSO) ](../manage-apps/what-is-single-sign-on.md)和内置令牌缓存支持的内置支持。 有关详细信息，请参阅 Microsoft 支持的[客户端库](reference-v2-libraries.md#microsoft-supported-client-libraries)和[中间件库](reference-v2-libraries.md#microsoft-supported-server-middleware-libraries)列表，以及[兼容的第三方客户端库](reference-v2-libraries.md#compatible-client-libraries)列表。<br/><br/>如果必须为身份验证协议手动编写代码，应遵循 [Microsoft SDL](https://www.microsoft.com/sdl/default.aspx) 等方法。 请认真对待每个协议的标准规范中的安全注意事项。
+![复选框](./media/active-directory-integration-checklist/checkbox-two.svg) 不要直接对 OAuth 2.0 和 Open ID 等协议进行编程。 请改用 [Microsoft 身份验证库 (MSAL)](msal-overview.md)。 MSAL 库在易于使用的库中安全地包装安全协议，并获得对 [条件访问](../conditional-access/overview.md) 方案、设备范围内 [单一登录 (SSO) ](../manage-apps/what-is-single-sign-on.md)和内置令牌缓存支持的内置支持。 有关详细信息，请参阅 Microsoft 支持的 [客户端库](reference-v2-libraries.md)的列表。 如果你必须对身份验证协议进行手动编码，则应遵循 [MICROSOFT SDL](https://www.microsoft.com/sdl/default.aspx) 或类似的开发方法。 请认真对待每个协议的标准规范中的安全注意事项。
 
-![复选框](./media/active-directory-integration-checklist/checkbox-two.svg) 将现有应用从 [Azure Active Directory 身份验证库 (ADAL)](../azuread-dev/active-directory-authentication-libraries.md) 迁移到 [Microsoft 身份验证库](msal-overview.md)。 MSAL 是 Microsoft 的最新标识平台解决方案，比 ADAL 更普及。 它适用于 .NET、JavaScript、Android、iOS 和 macOS，并为 Python 和 Java 推出了公共预览版。 详细了解如何迁移 [ADAL.NET](msal-net-migration.md)、[ADAL.js](msal-compare-msal-js-and-adal-js.md) 以及 [ADAL.NET 和 iOS 中介](msal-net-migration-ios-broker.md)应用。
+![选中 ](./media/active-directory-integration-checklist/checkbox-two.svg) 此复选框可将现有应用从 [Azure Active Directory Authentication LIBRARY (ADAL) ](../azuread-dev/active-directory-authentication-libraries.md) 迁移到 [Microsoft 身份验证库](msal-overview.md)。 MSAL 是 Microsoft 的最新标识平台解决方案，比 ADAL 更普及。 它适用于 .NET、JavaScript、Android、iOS 和 macOS，并为 Python 和 Java 推出了公共预览版。 详细了解如何迁移 [ADAL.NET](msal-net-migration.md)、[ADAL.js](msal-compare-msal-js-and-adal-js.md) 以及 [ADAL.NET 和 iOS 中介](msal-net-migration-ios-broker.md)应用。
 
 ![复选框](./media/active-directory-integration-checklist/checkbox-two.svg) 对于移动应用，请使用应用程序注册体验来配置每个平台。 要使应用程序能够利用 Microsoft Authenticator 或 Microsoft 公司门户进行单一登录，需要为应用配置“中介重定向 URI”。 这样，在身份验证后，Microsoft 就可将控制权递回给应用程序。 配置每个平台时，应用注册体验会引导你完成该过程。 使用快速入门下载工作示例。 在 iOS 上，请尽可能地使用中介和系统 webview。
 
@@ -104,7 +104,7 @@ ms.locfileid: "88116795"
 
 浏览有关 v2.0 的深入信息：
 
-* [Microsoft 标识平台 (v2.0) 概述](v2-overview.md)
+* [Microsoft 标识平台 (概述) ](v2-overview.md)
 * [Microsoft 标识平台协议参考](active-directory-v2-protocols.md)
 * [访问令牌参考](access-tokens.md)
 * [ID 令牌参考](id-tokens.md)

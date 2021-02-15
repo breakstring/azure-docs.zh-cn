@@ -6,17 +6,18 @@ ms.subservice: ''
 ms.topic: conceptual
 author: bwren
 ms.author: bwren
-ms.date: 05/15/2020
-ms.openlocfilehash: a78e1b9cc1d9ca8a815fdb586287983020232fd1
-ms.sourcegitcommit: 9c3cfbe2bee467d0e6966c2bfdeddbe039cad029
+ms.date: 10/08/2020
+ms.openlocfilehash: a8d3ded1d11a350ff53ffda71348b2cc707760b8
+ms.sourcegitcommit: 49ea056bbb5957b5443f035d28c1d8f84f5a407b
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/24/2020
-ms.locfileid: "88782934"
+ms.lasthandoff: 02/09/2021
+ms.locfileid: "100008411"
 ---
 # <a name="azure-monitor-frequently-asked-questions"></a>Azure Monitor 常见问题解答
 
-这份 Microsoft 常见问题解答列出了 Azure Monitor 的常见问题。
+这份 Microsoft 常见问题解答列出了 Azure Monitor 的常见问题。 如果有任何其他问题，请转到[论坛](/answers/questions/topics/single/24223.html)并发布问题。 当某个问题经常被问到时，我们会将该问题添加到本文中，以便可以轻松快捷地找到该问题。
+
 
 ## <a name="general"></a>常规
 
@@ -30,7 +31,7 @@ ms.locfileid: "88782934"
 自动启用的 Azure Monitor 功能（如收集指标和活动日志）免费提供。 存在与其他功能（例如日志查询和警报）相关的费用。 有关详细定价信息，请参阅 [Azure Monitor 定价页](https://azure.microsoft.com/pricing/details/monitor/)。
 
 ### <a name="how-do-i-enable-azure-monitor"></a>如何启用 Azure Monitor？
-在你创建新的 Azure 订阅时就会启用 Azure Monitor，并自动收集[活动日志](./platform/platform-logs-overview.md)和平台[指标](platform/data-platform-metrics.md)。 创建[诊断设置](platform/diagnostic-settings.md)可收集有关 Azure 资源操作的更多详细信息，添加[监视解决方案](insights/solutions.md)和[见解](insights/insights-overview.md)可为特定服务收集的收集数据提供额外的分析。 
+在你创建新的 Azure 订阅时就会启用 Azure Monitor，并自动收集[活动日志](./platform/platform-logs-overview.md)和平台[指标](platform/data-platform-metrics.md)。 创建[诊断设置](platform/diagnostic-settings.md)可收集有关 Azure 资源操作的更多详细信息，添加[监视解决方案](insights/solutions.md)和[见解](./monitor-reference.md)可为特定服务收集的收集数据提供额外的分析。 
 
 ### <a name="how-do-i-access-azure-monitor"></a>如何访问 Azure Monitor？
 可通过 Azure 门户中的“监视”菜单访问各项 Azure Monitor 功能和数据。 通过不同 Azure 服务的菜单的“监视”部分，可访问相同的工具，其中数据经过筛选，指向特定的资源。 也可通过 CLI、PowerShell 和 REST API 针对各种场景来访问 Azure Monitor 数据。
@@ -64,7 +65,7 @@ Azure Monitor 将来自各种来源的数据收集到[日志](platform/data-plat
 ## <a name="solutions-and-insights"></a>解决方案和见解
 
 ### <a name="what-is-an-insight-in-azure-monitor"></a>Azure Monitor 中的见解是指什么？
-见解为特定 Azure 服务提供自定义监视体验。 它们与 Azure Monitor 中的其他功能使用相同的指标和日志，但可能会收集额外的数据，并在 Azure 门户中提供独一无二的体验。 请参阅 [Azure Monitor 中的见解](insights/insights-overview.md)。
+见解为特定 Azure 服务提供自定义监视体验。 它们与 Azure Monitor 中的其他功能使用相同的指标和日志，但可能会收集额外的数据，并在 Azure 门户中提供独一无二的体验。 请参阅 [Azure Monitor 中的见解](./monitor-reference.md)。
 
 要查看 Azure 门户中的见解，请参阅“监视”菜单的“见解”部分或服务菜单的“监视”部分  。
 
@@ -76,14 +77,16 @@ Azure Monitor 将来自各种来源的数据收集到[日志](platform/data-plat
 ## <a name="logs"></a>日志
 
 ### <a name="whats-the-difference-between-azure-monitor-logs-and-azure-data-explorer"></a>Azure Monitor 日志与 Azure 数据资源管理器之间有何区别？
-Azure 数据资源管理器是一项快速且高度可缩放的数据探索服务，适用于日志和遥测数据。 Azure Monitor 日志是基于 Azure 数据资源管理器构建的，使用相同的 Kusto 查询语言 (KQL)，但有一些细微差别。 请参阅 [Azure Monitor 日志查询语言差异](log-query/data-explorer-difference.md)。
+Azure 数据资源管理器是一项快速且高度可缩放的数据探索服务，适用于日志和遥测数据。 Azure Monitor 日志是基于 Azure 数据资源管理器构建的，使用相同的 Kusto 查询语言 (KQL)，但有一些细微差别。 请参阅 [Azure Monitor 日志查询语言差异](/azure/data-explorer/kusto/query/)。
 
 ### <a name="how-do-i-retrieve-log-data"></a>如何检索日志数据？
 可使用以 Kusto 查询语言 (KQL) 编写的日志查询从 Log Analytics 工作区检索所有数据。 你可编写自己的查询，也可使用包含特定应用程序或服务的日志查询的解决方案和见解。 请参阅 [Azure Monitor 中的日志查询概述](log-query/log-query-overview.md)。
 
 ### <a name="can-i-delete-data-from-a-log-analytics-workspace"></a>能否从 Log Analytics 工作区中删除数据？
-根据数据的 [保留期](platform/manage-cost-storage.md#change-the-data-retention-period)，将数据从工作区中删除。 出于隐私或合规性原因，可以删除特定数据。 有关详细信息，请参阅 [如何导出和删除私有数据](platform/personal-data-mgmt.md#how-to-export-and-delete-private-data) 。
+系统会根据数据的[保留期](platform/manage-cost-storage.md#change-the-data-retention-period)从工作区中删除数据。 出于隐私或合规性原因，你可以删除特定数据。 有关详细信息，请参阅[如何导出和删除私人数据](platform/personal-data-mgmt.md#how-to-export-and-delete-private-data)。
 
+### <a name="is-log-analytics-storage-immutable"></a>Log Analytics 存储是否不可变？
+数据库存储中的数据在引入后将无法更改，但可以通过 [*清除* API 路径删除以删除私有数据](platform/personal-data-mgmt.md#delete)。 尽管不能更改数据，但某些证书要求数据是不可变的，并且不能在存储中更改或删除。 可以通过将 [数据导出](platform/logs-data-export.md) 到配置为 [不可变存储](../storage/blobs/storage-blob-immutability-policies-manage.md)的存储帐户来实现数据永久性。
 
 ### <a name="what-is-a-log-analytics-workspace"></a>什么是 Log Analytics 工作区？
 Azure Monitor 收集的所有日志数据都存储在 Log Analytics 工作区中。 工作区实质上是从各种来源收集日志数据的容器。 可为所有监视数据使用一个 Log Analytics 工作区，也可要求使用多个工作区。 请参阅[设计 Azure Monitor 日志部署](platform/design-logs-deployment.md)。
@@ -96,9 +99,9 @@ Azure Monitor 收集的所有日志数据都存储在 Log Analytics 工作区中
 [查询范围](log-query/scope.md)设置为特定资源时，“查询资源管理器”、“保存”和“新建警报规则”按钮不可用  。 若要创建警报并保存或加载查询，Log Analytics 的范围必须设为某个工作区。 若要在工作区上下文中打开 Log Analytics，请选择“Azure Monitor”菜单中的“日志” 。 选择的是上次使用的工作区，但可以选择任何其他的工作区。 请参阅 [Azure Monitor Log Analytics 中的日志查询范围和时间范围](log-query/scope.md)
 
 ### <a name="why-am-i-getting-the-error-register-resource-provider-microsoftinsights-for-this-subscription-to-enable-this-query-when-opening-log-analytics-from-a-vm"></a>从 VM 打开 Log Analytics 时，为什么收到“要使此订阅启用此查询，需注册 Microsoft.Insights”错误？ 
-将自动注册多个资源提供程序，但某些资源提供程序可能需要你手动注册。 注册的范围始终是订阅。 有关详细信息，请参阅[资源提供程序和类型](../azure-resource-manager/management/resource-providers-and-types.md#azure-portal)。
+将自动注册多个资源提供程序，但某些资源提供程序可能需要你手动注册。 注册的作用域始终是订阅。 有关详细信息，请参阅[资源提供程序和类型](../azure-resource-manager/management/resource-providers-and-types.md#azure-portal)。
 
-### <a name="why-am-i-am-getting-no-access-error-message-when-opening-log-analytics-from-a-vm"></a>从 VM 打开 Log Analytics 时，为什么收到“无法访问”错误消息？ 
+### <a name="why-am-i-getting-no-access-error-message-when-opening-log-analytics-from-a-vm"></a>从 VM 打开 Log Analytics 时，为何出现无访问权限错误消息？ 
 若要查看 VM 日志，需获得存储 VM 日志的工作区的读取权限。 在这些示例中，管理员必须在 Azure 中为你授予相关权限。
 
 ## <a name="metrics"></a>指标
@@ -125,7 +128,7 @@ Azure 资源的[平台指标](insights/monitor-azure-resource.md#monitoring-data
 
 
 ### <a name="what-is-an-action-rule"></a>什么是操作规则？
-通过操作规则，可修改匹配特定条件的一组警报的行为。 这允许您执行在维护时段内禁用警报操作等要求。 你还可将操作组应用于一组警报，而不是将其直接应用于警报规则。 请参阅[操作规则](platform/alerts-action-rules.md)。
+通过操作规则，可修改匹配特定条件的一组警报的行为。 这样，你便可以在维护时段履行禁用警报操作之类的要求。 你还可将操作组应用于一组警报，而不是将其直接应用于警报规则。 请参阅[操作规则](platform/alerts-action-rules.md)。
 
 ## <a name="agents"></a>代理
 
@@ -223,7 +226,7 @@ WireData
 * [Node.js 应用](app/nodejs.md)
 * [Azure 上的 Web 应用](app/azure-web-apps.md)
 * [Azure 上的云服务](app/cloudservices.md)
-* [在 Docker 中运行的应用服务器](app/docker.md)
+* [在 Docker 中运行的应用服务器](./azure-monitor-app-hub.yml)
 * [单页 Web 应用](app/javascript.md)
 * [SharePoint](app/sharepoint.md)
 * [Windows 桌面应用](app/windows-desktop.md)
@@ -267,6 +270,10 @@ WireData
 
 ### <a name="how-can-i-change-which-azure-resource-my-project-sends-data-to"></a><a name="update"></a>如何更改项目向哪个 Azure 资源发送数据？
 在解决方案资源管理器中，右键单击 `ApplicationInsights.config` 并选择“更新 Application Insights”。 可在 Azure 中将数据发送到现有或新资源。 更新向导更改 ApplicationInsights.config 中的检测密钥，该密钥确定服务器 SDK 将数据发送到何处。 除非取消选中“更新全部”，否则它还将在网页中出现密钥的位置更改密钥。
+
+### <a name="do-new-azure-regions-require-the-use-of-connection-strings"></a>新的 Azure 区域是否需要使用连接字符串？
+
+新的 Azure 区域要求使用连接字符串而不是检测密钥。 [连接字符串](./app/sdk-connection-string.md)用于标识要与遥测数据关联的资源。 它还允许你修改可供你的资源将其用作遥测目标的终结点。 你需要复制连接字符串，并将其添加到应用程序的代码或环境变量中。
 
 ### <a name="can-i-use-providersmicrosoftinsights-componentsapiversions0-in-my-azure-resource-manager-deployments"></a>能否在 Azure 资源管理器部署中使用 `providers('Microsoft.Insights', 'components').apiVersions[0]`？
 
@@ -319,8 +326,7 @@ WireData
 
 * 浏览器遥测：收集发送方的 IP 地址。
 * 服务器遥测：Application Insights 模块收集客户端 IP 地址。 如果设置了 `X-Forwarded-For`，则不会进行收集。
-* 若要详细了解如何在中收集 IP 地址和地理位置数据 Application Insights 参阅此 [文](./app/ip-collection.md)。
-
+* 若要详细了解如何在 Application Insights 中收集 IP 地址和地理位置数据，请参阅[此文](./app/ip-collection.md)。
 
 可以配置 `ClientIpHeaderTelemetryInitializer`，从不同的标头获取 IP 地址。 例如，在某些系统中，代理、负载均衡器或 CDN 会将其移动到 `X-Originating-IP`。 [了解详细信息](https://apmtips.com/posts/2016-07-05-client-ip-address/)。
 
@@ -339,9 +345,11 @@ WireData
 
 如果代码发送了此类数据，则有可能。 如果堆栈跟踪中的变量包括个人数据，也可能发生这种情况。 开发团队应进行风险评估，确保妥善处理个人数据。 [深入了解数据保留和隐私](app/data-retention-privacy.md)。
 
-**所有**八进制数的客户端 web 地址始终设置为 0，查找异地位置属性。
+**所有** 八进制数的客户端 web 地址始终设置为 0，查找异地位置属性。
 
-### <a name="my-instrumentation-key-is-visible-in-my-web-page-source"></a>可在网页源中查看检测密钥。 
+默认情况下，[Application Insights JavaScript SDK](app/javascript.md) 不会在其自动完成中包含任何个人数据。 但是，应用程序中使用的一些个人数据可能会被 SDK 获取（例如，`window.title` 中的全名或 XHR URL 查询参数中的帐户 ID）。 对于自定义个人数据掩码，请添加[遥测初始化表达式](app/api-filtering-sampling.md#javascript-web-applications)。
+
+### <a name="my-instrumentation-key-is-visible-in-my-web-page-source"></a>可在网页源中查看检测密钥。
 
 * 这是监视解决方案的常见做法。
 * 它不能用于窃取数据。
@@ -375,6 +383,12 @@ WireData
 * 如果一个真实的用户在不同的浏览器中使用站点，或者使用私密/隐身浏览，或使用不同的计算机，则会进行多次计数。
 * 若要识别跨计算机和浏览器登录的用户，请添加对 [setAuthenticatedUserContext()](app/api-custom-events-metrics.md#authenticated-users) 的调用。
 
+### <a name="how-does-application-insights-generate-device-information-browser-os-language-model"></a>Application Insights 如何 (浏览器、操作系统、语言、型号) 生成设备信息？
+
+浏览器传递请求的 HTTP 标头中的用户代理字符串，Application Insights 摄取服务使用 [UA 分析器](https://github.com/ua-parser/uap-core) 生成您在数据表和体验中看到的字段。 因此，Application Insights 用户无法更改这些字段。
+
+如果用户或企业禁止在浏览器设置中发送用户代理，则偶尔可能会丢失或不准确的数据。 此外， [UA 分析器正则表达式](https://github.com/ua-parser/uap-core/blob/master/regexes.yaml) 可能不包括所有设备信息，或者 Application Insights 可能未采用最新更新。
+
 ### <a name="have-i-enabled-everything-in-application-insights"></a><a name="q17"></a> 我是否已在 Application Insights 中启用所有内容？
 | 应看到 | 如何获取 | 为何需要它 |
 | --- | --- | --- |
@@ -397,6 +411,29 @@ WireData
     requests | summarize original_events = sum(itemCount), transmitted_events = count()
 ```
 
+### <a name="how-do-i-move-an-application-insights-resource-to-a-new-region"></a>如何将 Application Insights 资源移动到新区域？
+
+当前不支持将现有 Application Insights 资源从一个区域移动到另一个区域。 你收集的历史数据无法迁移到新区域。 唯一的部分解决方法是：
+
+1. 在新区域中创建全新的 Application Insights 资源（[经典](app/create-new-resource.md)或[基于工作区](./app/create-workspace-resource.md)）。
+2. 重新创建特定于新资源中原始资源的所有唯一自定义项。
+3. 修改应用程序以使用新区域资源的[检测密钥](app/create-new-resource.md#copy-the-instrumentation-key)或[连接字符串](app/sdk-connection-string.md)。  
+4. 测试以确认所有内容是否都按预期处理新的 Application Insights 资源。 
+5. 此时，你可以删除原始资源，这会导致所有历史数据丢失。 你也可以保留原始资源，用于在其数据保留设置期间进行历史报告。
+
+通常需要在新区域中为资源手动重新创建或更新的唯一自定义项包括但不限于：
+
+- 重新创建自定义仪表板和工作簿。 
+- 重新创建或更新任何自定义日志/指标警报的范围。 
+- 重新创建可用性警报。
+- 重新创建用户访问新资源所需的任何 Azure 基于角色的访问控制 (Azure RBAC) 自定义设置。 
+- 复制涉及引入采样、数据保留、每日上限和自定义指标启用的设置。 可通过“使用情况和预估成本”窗格控制这些设置。
+- 依赖 API 密钥（如[版本注释](./app/annotations.md)、[实时指标安全控制通道](app/live-stream.md#secure-the-control-channel)等）的任何集成。你将需要生成新的 API 密钥并更新关联的集成。 
+- 需要重新配置经典资源中的连续导出。
+- 需要重新配置基于工作区资源中的诊断设置。
+
+> [!NOTE]
+> 如果在新区域中创建的资源要用于替换经典资源，我们建议探索[创建基于工作区的新资源](app/create-workspace-resource.md)或[将现有资源迁移至基于工作区的资源](app/convert-classic-resource.md)的好处。 
 
 ### <a name="automation"></a>自动化
 
@@ -429,7 +466,7 @@ Azure 警报仅出现在指标上。 创建一个每当事件发生时都跨越�
 
 ### <a name="can-i-send-telemetry-to-the-application-insights-portal"></a>是否可以将遥测数据发送到 Application Insights 门户？
 
-建议使用我们的 SDK 并使用 [SDK API](app/api-custom-events-metrics.md)。 为各种[平台](app/platforms.md)提供了相应的 SDK 变体。 这些 SDK 可处理缓冲、压缩、限制以及重试等。 但是，[引入架构](https://github.com/microsoft/ApplicationInsights-dotnet/tree/master/BASE/Schema/PublicSchema)和[终结点协议](https://github.com/Microsoft/ApplicationInsights-Home/blob/master/EndpointSpecs/ENDPOINT-PROTOCOL.md)是公共的。
+建议使用我们的 SDK 并使用 [SDK API](app/api-custom-events-metrics.md)。 为各种[平台](app/platforms.md)提供了相应的 SDK 变体。 这些 SDK 可处理缓冲、压缩、限制以及重试等。 但是，[引入架构](https://github.com/microsoft/ApplicationInsights-dotnet/tree/master/BASE/Schema/PublicSchema)和[终结点协议](https://github.com/MohanGsk/ApplicationInsights-Home/blob/master/EndpointSpecs/ENDPOINT-PROTOCOL.md)是公共的。
 
 ### <a name="can-i-monitor-an-intranet-web-server"></a>是否可以监视 Intranet Web 服务器？
 
@@ -513,27 +550,68 @@ Azure 警报仅出现在指标上。 创建一个每当事件发生时都跨越�
 [start]: app/app-insights-overview.md
 [windows]: app/app-insights-windows-get-started.md
 
-### <a name="http-502-and-503-responses-are-not-always-captured-by-application-insights"></a>HTTP 502 和503响应并不总是由 Application Insights 捕获
+### <a name="http-502-and-503-responses-are-not-always-captured-by-application-insights"></a>HTTP 502 和 503 响应并不总是由 Application Insights 捕获
 
-"502 错误的网关" 和 "503 服务不可用" 错误不总是由 Application Insights 捕获。 如果仅客户端 JavaScript 用于监视这种情况，则可能会出现这种情况，因为在包含 HTML 标头的页面之前返回错误响应，并呈现监视 JavaScript 代码段。 
+“502 错误的网关”和“503 服务不可用”错误并不总是由 Application Insights 捕获。 如果仅将客户端 JavaScript 用于监视，则这是预期的行为，因为错误响应会在包含 HTML 标头且会呈现监视性的 JavaScript 代码片段的页面之前返回。 
 
-如果从启用了服务器端监视的服务器发送了502或503响应，则 Application Insights SDK 会收集这些错误。 
+如果从启用了服务器端监视的服务器发送了 502 或 503 响应，则 Application Insights SDK 会收集这些错误。 
 
-但是，在某些情况下，即使在应用程序的 web 服务器上启用了服务器端监视，也不会 Application Insights 捕获502或503错误。 许多新式 web 服务器不允许客户端直接通信，而是使用反向代理等解决方案在客户端和前端 web 服务器之间来回传递信息。 
+但某些情况下，即使在应用程序的 Web 服务器上启用了服务器端监视，也不会由 Application Insights 捕获 502 或 503 错误。 许多新式 Web 服务器不允许客户端直接通信，而是使用反向代理之类的解决方案在客户端和前端 Web 服务器之间来回传递信息。 
 
-在此方案中，由于反向代理层出现问题，可能会将502或503响应返回到客户端，并且 Application Insights 不会将其内置。 若要帮助检测该层中的问题，可能需要将日志从反向代理转发到 Log Analytics，并创建自定义规则来检查502/503 响应。 若要了解有关502和503错误的常见原因的详细信息，请参阅 Azure App Service [疑难解答文章 "502 错误的网关" 和 "503 服务不可用"](../app-service/troubleshoot-http-502-http-503.md)。     
+在这种情况下，由于反向代理层出现问题，可能会将 502 或 503 响应返回到客户端，该响应不会被 Application Insights 直接捕获。 可能需要将日志从反向代理转发到 Log Analytics，并创建自定义规则来检查 502/503 响应，这样有助于检测该层中的问题 若要详细了解 502 和 503 错误的常见原因，请参阅 Azure 应用服务[故障排除文章中的“502 错误的网关”和“503 服务不可用”](../app-service/troubleshoot-http-502-http-503.md)。     
+
+
+## <a name="opentelemetry"></a>OpenTelemetry
+
+### <a name="what-is-opentelemetry"></a>什么是 OpenTelemetry
+
+一种新的可观测性开源标准。 更多信息请访问 [https://opentelemetry.io/](https://opentelemetry.io/)。
+
+### <a name="why-is-microsoft--azure-monitor-investing-in-opentelemetry"></a>Microsoft/Azure Monitor 为什么要对 OpenTelemetry 进行投资？
+
+我们基于以下三个原因认为它可以更好地为客户服务：
+   1. 实现对更多客户方案的支持。
+   2. 工具无需担心供应商锁定。
+   3. 提高客户透明度和参与度。
+
+它还符合 Microsoft 的[拥抱开源](https://opensource.microsoft.com/)策略。
+
+### <a name="what-additional-value-does-opentelemetry-give-me"></a>OpenTelemetry 可以给我带来哪些附加价值？
+
+除上述原因外，OpenTelemetry 在大规模部署方面更为高效，并提供跨语言的一致设计/配置。
+
+### <a name="how-can-i-test-out-opentelemetry"></a>如何测试 OpenTelemetry？
+
+在 [https://aka.ms/AzMonOtel](https://aka.ms/AzMonOtel) 注册，加入我们的 Azure Monitor Application Insights 早期采用者社区。
+
+### <a name="what-does-ga-mean-in-the-context-of-opentelemetry"></a>在 OpenTelemetry 中，GA 意味着什么？
+
+OpenTelemetry 社区在[此处](https://medium.com/opentelemetry/ga-planning-f0f6d7b5302)定义了正式发布 (GA)。 但是，OpenTelemetry 的“GA”并不意味着与现有 Application Insights SDK 具有功能奇偶一致性。 Azure Monitor 将继续向需要[预聚合指标](app/pre-aggregated-metrics-log-metrics.md#pre-aggregated-metrics)、[实时指标](app/live-stream.md)、[自适应采样](app/sampling.md#adaptive-sampling)、[探查器](app/profiler-overview.md)和[快照调试程序](app/snapshot-debugger.md)功能的客户推荐我们当前的 Application Insights SDK，直到 OpenTelemetry SDK 达到功能成熟。
+
+### <a name="can-i-use-preview-builds-in-production-environments"></a>我是否可以在生产环境中使用预览版？
+
+不建议这样做。 有关详细信息，请参阅 [Microsoft Azure 预览版的补充使用条款](https://azure.microsoft.com/support/legal/preview-supplemental-terms/) 。
+
+### <a name="whats-the-difference-between-opentelemetry-sdk-and-auto-instrumentation"></a>OpenTelemetry SDK 和自动检测之间有何区别？
+
+OpenTelemetry 规范定义了 [SDK](https://github.com/open-telemetry/opentelemetry-specification/blob/master/specification/glossary.md#telemetry-sdk)。 简而言之，“SDK”是一种特定于语言的包，可跨应用程序的各个组件收集遥测数据并将数据通过导出程序发送到 Azure Monitor。
+
+自动检测（有时称为字节码注入、无代码或基于代理）的概念指在不更改代码的情况下检测应用程序的功能。 例如，查看 [OpenTelemetry Java 自动检测自述文件](https://github.com/open-telemetry/opentelemetry-java-instrumentation/blob/master/README.md)了解详细信息。
+
+### <a name="whats-the-opentelemetry-collector"></a>什么是 OpenTelemetry Collector？
+
+相应 [GitHub 自述文件](https://github.com/open-telemetry/opentelemetry-collector#opentelemetry-collector)中介绍了 OpenTelemetry Collector。 目前，Microsoft 不使用 OpenTelemetry Collector，而是依赖发送到 Azure Monitor Application Insights 的直接导出程序。
+
+### <a name="whats-the-difference-between-opencensus-and-opentelemetry"></a>OpenCensus 和 OpenTelemetry 之间有何区别？
+
+[OpenCensus](https://opencensus.io/) 是 [OpenTelemetry](https://opentelemetry.io/) 的前身。 Microsoft 帮助整合 [OpenTracing](https://opentracing.io/) 和 OpenCensus 用于创建 OpenTelemetry，OpenTelemetry 是全球唯一的可观测性标准。 Azure Monitor 当前[生产推荐的 Python SDK](app/opencensus-python.md) 基于 OpenCensus，但最终所有 Azure Monitor SDK 都将基于 OpenTelemetry。
+
 
 ## <a name="azure-monitor-for-containers"></a>用于容器的 Azure Monitor
 
-本 Microsoft 常见问题解答列出了用于容器的 Azure Monitor 的常见问题。 如果对该解决方案还有其他任何问题，请访问[论坛](https://feedback.azure.com/forums/34192--general-feedback)并发布问题。 当某个问题经常被问到时，我们会将该问题添加到本文中，以便可以轻松快捷地找到该问题。
-
-### <a name="health-feature-is-in-private-preview"></a>运行状况功能现为个人预览版
-
-我们计划进行一系列的更改，目的是增添功能并处理你的反馈。 运行状况功能将在 2020 年6 月底转为个人预览版；有关其他信息，请查看下列 [Azure 更新公告](https://azure.microsoft.com/updates/ci-health-limited-preview/)。
-
 ### <a name="what-does-other-processes-represent-under-the-node-view"></a>节点视图下的“其他进程”表示什么？
 
-“其他进程”旨在帮助你清楚地了解节点上资源使用率较高的根本原因。 这样，你就能将容器化流程与非容器化流程的使用量区分开。
+“其他进程”旨在帮助你清楚了解节点上资源使用率较高的根本原因。 这样，你就能将容器化流程与非容器化流程的使用量区分开。
 
 这些其他进程是哪些进程？ 
 
@@ -563,7 +641,7 @@ Azure 警报仅出现在指标上。 创建一个每当事件发生时都跨越�
 
 联接其他表，在结果中包含这些属性值。
 
-联接 ContainerID 属性，将查询修改为包含 ```ContainerInventory``` 表中的 Image 和 ImageTag 属性。 通过联接 ContainerID 属性，可包含 KubepodInventory 表的 ContaineName 字段中的 Name 属性（如同之前在 ```ContainerLog``` 表中显示的一样）。建议使用此选项。
+联接 ContainerID 属性，将查询修改为包含 ```ContainerInventory``` 表中的 Image 和 ImageTag 属性。 通过在 ContainerID 属性上进行联接，可以包含 KubepodInventory 表的 ContaineName 字段中的 Name 属性（与以前在 ```ContainerLog``` 表中显示的相同）。 这是建议选项。
 
 下面是一个详细查询示例，说明了如何使用联接来获取这些字段值。
 
@@ -616,13 +694,13 @@ ContainerInventory 表包含已停止和正在运行的容器的信息。 此表
 
 如果收到“缺少 Microsoft.OperationsManagement 的订阅注册”错误，可通过在定义工作区的订阅中注册资源提供程序 Microsoft.OperationsManagement 来解决它 。 可以在[此处](../azure-resource-manager/templates/error-register-resource-provider.md)找到介绍如何执行此操作的文档。
 
-### <a name="is-there-support-for-rbac-enabled-aks-clusters"></a>是否支持已启用 RBAC 的 AKS 群集？
+### <a name="is-there-support-for-kubernetes-rbac-enabled-aks-clusters"></a>是否支持启用了 Kubernetes RBAC 的 AKS 群集？
 
-容器监视解决方案不支持 RBAC，但用于容器的 Azure Monitor 支持 RBAC。 在显示这些群集的数据的边栏选项卡上，解决方案详细信息页可能不会显示正确的信息。
+容器监视解决方案不支持 Kubernetes RBAC，但用于容器的 Azure Monitor 支持 Kubernetes RBAC。 在显示这些群集的数据的边栏选项卡上，解决方案详细信息页可能不会显示正确的信息。
 
 ### <a name="how-do-i-enable-log-collection-for-containers-in-the-kube-system-namespace-through-helm"></a>如何通过 Helm 为 kube-system 命名空间中的容器启用日志收集？
 
-默认情况下，kube-system 命名空间中的容器的日志收集被禁用。 可以通过在 omsagent 上设置一个环境变量来启用日志收集。 有关详细信息，请参阅 GitHub 上的[用于容器的 Azure Monitor](https://github.com/helm/charts/tree/master/incubator/azuremonitor-containers) 页面。 
+默认情况下，kube-system 命名空间中的容器的日志收集被禁用。 可以通过在 omsagent 上设置一个环境变量来启用日志收集。 有关详细信息，请参阅 GitHub 上的[用于容器的 Azure Monitor](https://aka.ms/azuremonitor-containers-helm-chart) 页面。 
 
 ### <a name="how-do-i-update-the-omsagent-to-the-latest-released-version"></a>如何将 omsagent 更新为最新发布的版本？
 
@@ -660,12 +738,12 @@ LogEntry : ({"Hello": "This example has multiple lines:","Docker/Moby": "will no
 
 如果在为 AKS 群集启用用于容器的 Azure Monitor 之后，删除了群集向其发送数据的 Log Analytics 工作区，则在尝试升级群集时会失败。 要解决此情况，必须禁用再重新启用监视功能，使其引用订阅中的其他有效工作区。 在你重新尝试升级群集时，应该就会处理并成功完成。  
 
-### <a name="which-ports-and-domains-do-i-need-to-openwhitelist-for-the-agent"></a>需要为代理打开哪些端口和域或将哪些端口和域加入允许名单？
+### <a name="which-ports-and-domains-do-i-need-to-openallow-for-the-agent"></a>需要为代理打开/允许哪些端口和域？
 
 请参阅[网络防火墙要求](insights/container-insights-onboard.md#network-firewall-requirements)，了解使用Azure、Azure 美国政府和 Azure 中国世纪互联云的容器化代理所需的代理和防火墙配置信息。
 
+
 ## <a name="azure-monitor-for-vms"></a>用于 VM 的 Azure Monitor
-本 Microsoft 常见问题解答列出了用于 VM 的 Azure Monitor 的常见问题。 如果对该解决方案还有其他任何问题，请访问[论坛](https://feedback.azure.com/forums/34192--general-feedback)并发布问题。 当某个问题经常被问到时，我们会将该问题添加到本文中，以便可以轻松快捷地找到该问题。
 
 ### <a name="can-i-onboard-to-an-existing-workspace"></a>是否可以载入到现有工作区？
 如果虚拟机已连接到 Log Analytics 工作区，则在加入用于 VM 的 Azure Monitor 时，你可以继续使用该工作区，前提是该工作区位于某个 [受支持的区域](insights/vminsights-configure-workspace.md#supported-regions)中。
@@ -739,8 +817,8 @@ Azure VM 的概述页基于来宾 VM 中的活动的主机度量值显示图表�
 
 该近似值非常适合基于请求/响应的协议，即在连接上发出单个请求，到达的也是单个响应。 这种情况适用于 HTTP(S)（不带管道），但不适用于其他协议。
 
-### <a name="are-their-limitations-if-i-am-on-the-log-analytics-free-pricing-plan"></a>如果我使用的是 Log Analytics 免费定价计划，它们有何限制？
-如果已经为 Azure Monitor 配置了使用*免费*定价层的 Log Analytics 工作区，则用于 VM 的 Azure Monitor 的映射功能将仅支持已连接到工作区的五台计算机。 如果已有五台 VM 连接到免费工作区，你断开了其中一台 VM 的连接，然后连接到一台新的 VM，则新的 VM 将不受监视并且不会反映在“映射”页上。  
+### <a name="are-there-limitations-if-i-am-on-the-log-analytics-free-pricing-plan"></a>如果我处于 Log Analytics 免费定价计划中，是否有限制？
+如果已经为 Azure Monitor 配置了使用 *免费* 定价层的 Log Analytics 工作区，则用于 VM 的 Azure Monitor 的映射功能将仅支持已连接到工作区的五台计算机。 如果已有五台 VM 连接到免费工作区，你断开了其中一台 VM 的连接，然后连接到一台新的 VM，则新的 VM 将不受监视并且不会反映在“映射”页上。  
 
 此情况下，在你打开 VM 并从左侧窗格中选择“见解”时，甚至在 VM 上安装它后，系统都将通过“立即尝试”选项向你发出提示 。  但是，如果此 VM 未加入到用于 VM 的 Azure Monitor，则不会像通常情况下那样通过选项向你发出提示。 
 

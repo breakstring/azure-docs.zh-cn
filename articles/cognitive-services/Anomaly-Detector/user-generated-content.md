@@ -3,19 +3,19 @@ title: 异常检测器 API 的用户生成特色内容
 titleSuffix: Azure Cognitive Services
 description: 查找特色内容并了解其他人如何看待和使用异常检测器 API。
 services: cognitive-services
-author: aahill
+author: mrbullwinkle
 manager: nitinme
 ms.service: cognitive-services
 ms.subservice: anomaly-detector
 ms.topic: conceptual
-ms.date: 06/17/2019
-ms.author: aahi
-ms.openlocfilehash: 81a2cb7ece775bfaffaf1b1932feb12b2da5f08f
-ms.sourcegitcommit: 58faa9fcbd62f3ac37ff0a65ab9357a01051a64f
+ms.date: 01/22/2021
+ms.author: mbullwin
+ms.openlocfilehash: fcd4f73a9cea75877360b2b537776bf59fb22363
+ms.sourcegitcommit: 75041f1bce98b1d20cd93945a7b3bd875e6999d0
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/29/2020
-ms.locfileid: "74012026"
+ms.lasthandoff: 01/22/2021
+ms.locfileid: "98704450"
 ---
 # <a name="featured-user-generated-content-for-the-anomaly-detector-api"></a>异常检测器 API 的用户生成特色内容
 
@@ -23,11 +23,11 @@ ms.locfileid: "74012026"
 
 ## <a name="technical-blogs"></a>技术博客
 
-* [尝试认知服务：异常检测 API （日语）](https://azure-recipe.kc-cloud.jp/2019/04/cognitive-service-anomaly-detector-api/)
+* [尝试认知服务：) 中的异常探测器 API (](https://azure-recipe.kc-cloud.jp/2019/04/cognitive-service-anomaly-detector-api/)
 
 ## <a name="open-source-projects"></a>开放源代码项目
 
-* [演示异常情况检测和流式传输到 Power BI 的 Jupyter notebook](https://github.com/marvinbuss/MS-AnomalyFinder)
+* [演示异常情况检测和流式传输到 Power BI 的 Jupyter notebook](https://github.com/marvinbuss/MS-AnomalyDetector)
 
 如果想要指定资源，请填写[简短表格](https://forms.office.com/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbRxSkyhztUNZCtaivu8nmhd1UMENTMEJWTkRORkRGQUtGQzlWQ1dSV1JLTS4u)。
 如果希望我们删除内容，请联系 AnomalyDetector@microsoft.com 或在 GitHub 上提出问题。

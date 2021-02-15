@@ -3,12 +3,12 @@ title: 播放多天录制的内容 - Azure
 description: 本教程介绍如何使用 Azure 媒体服务 API 播放多天连续录制的视频内容。
 ms.topic: tutorial
 ms.date: 05/27/2020
-ms.openlocfilehash: 19a42c61ef250fecce4503d3aed70b36d71ee3cf
-ms.sourcegitcommit: 271601d3eeeb9422e36353d32d57bd6e331f4d7b
+ms.openlocfilehash: 81a778b40649c1318b3738a289f0db37fd35376a
+ms.sourcegitcommit: 740698a63c485390ebdd5e58bc41929ec0e4ed2d
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/20/2020
-ms.locfileid: "88649085"
+ms.lasthandoff: 02/03/2021
+ms.locfileid: "99492783"
 ---
 # <a name="tutorial-playback-of-multi-day-recordings"></a>教程：播放多天录制的内容  
 
@@ -57,7 +57,7 @@ ms.locfileid: "88649085"
 }
 ```
 
-接下来，在 Visual Studio 代码中，打开 src/ams-asset-player。 该文件夹包含本教程所需的文件。 打开 appsettings.json 文件，然后将其内容复制到新文件 appsettings.development.json 中。 对后一个文件进行以下编辑：
+接下来，在 Visual Studio 代码中，打开 src/ams-asset-player。 该文件夹包含本教程所需的文件。 打开 appsettings.json 文件，然后将其内容复制到新文件 appsettings.development.json 中。 对新创建的 appsettings.development.json 进行以下编辑：
 
 ```
   "AMS" : {
@@ -70,13 +70,21 @@ ms.locfileid: "88649085"
 } 
 ```
 
-在 Visual Studio Code 中，可以单击左侧的“运行”图标（或按 Ctrl+Shift+D），以打开要运行的可用应用程序：
+1. 在 Visual Studio Code 中，打开“扩展”选项卡（或按 Ctrl+Shift+X），然后搜索“Azure IoT 中心”。
+1. 右键单击并选择“扩展设置”。
 
-![运行](./media/playback-multi-day-recordings-tutorial/run.png)
- 
-从下拉框中选择 AMS 资产播放器应用程序，如下所示，然后按 F5 开始调试。
+    > [!div class="mx-imgBorder"]
+    > :::image type="content" source="./media/run-program/extensions-tab.png" alt-text="扩展设置":::
+1. 搜索并启用“显示详细消息”。
 
-![调试](./media/playback-multi-day-recordings-tutorial/debug.png)
+    > [!div class="mx-imgBorder"]
+    > :::image type="content" source="./media/run-program/show-verbose-message.png" alt-text="显示详细消息":::
+1. <!--In Visual Studio Code, you can click-->单击左侧的“运行”图标（或按 Ctrl+Shift+D），以打开要运行的可用应用程序：
+
+    ![显示在 Visual Studio Code 中选择了运行项的菜单的屏幕截图。](./media/playback-multi-day-recordings-tutorial/run.png)
+1. 从下拉框中选择 AMS 资产播放器应用程序，如下所示，然后按 F5 开始调试。
+
+    ![屏幕截图显示在 Visual Studio Code 中选择了“AMS 资产播放器”的菜单。](./media/playback-multi-day-recordings-tutorial/debug.png)
 
 该示例应用程序将构建并启动默认浏览器应用，然后打开 AMS 资产播放器页面。
 

@@ -8,13 +8,13 @@ ms.service: virtual-machine-scale-sets
 ms.subservice: disks
 ms.date: 03/27/2018
 ms.reviewer: mimckitt
-ms.custom: mimckitt
-ms.openlocfilehash: ad610339d79eb0fd77403957c252a36e8243eb87
-ms.sourcegitcommit: 2ff0d073607bc746ffc638a84bb026d1705e543e
+ms.custom: mimckitt, devx-track-azurepowershell
+ms.openlocfilehash: 9e995e88b80bf14f9c7784f465bcd3d89d0bed65
+ms.sourcegitcommit: 28c5fdc3828316f45f7c20fc4de4b2c05a1c5548
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/06/2020
-ms.locfileid: "87837255"
+ms.lasthandoff: 10/22/2020
+ms.locfileid: "92367935"
 ---
 # <a name="tutorial-create-and-use-disks-with-virtual-machine-scale-set-with-azure-powershell"></a>教程：通过 Azure PowerShell 对虚拟机规模集创建和使用磁盘
 
@@ -27,7 +27,7 @@ ms.locfileid: "87837255"
 > * 磁盘性能
 > * 附加和准备数据磁盘
 
-如果你还没有 Azure 订阅，可以在开始前创建一个[免费帐户](https://azure.microsoft.com/free/?WT.mc_id=A261C142F)。
+如果没有 Azure 订阅，请在开始之前创建一个[免费帐户](https://azure.microsoft.com/free/?WT.mc_id=A261C142F)。
 
 [!INCLUDE [updated-for-az.md](../../includes/updated-for-az.md)]
 
@@ -87,6 +87,8 @@ Azure 提供两种类型的磁盘。
 
 ## <a name="create-and-attach-disks"></a>创建并附加磁盘
 可以在创建规模集时创建和附加磁盘，也可以对现有的规模集创建和附加磁盘。
+
+从 API 版本 `2019-07-01` 开始，可以使用 [storageProfile.osDisk.diskSizeGb](/rest/api/compute/virtualmachinescalesets/createorupdate#virtualmachinescalesetosdisk) 属性设置虚拟机规模集中 OS 磁盘的大小。 预配后，可能需要对磁盘进行扩展或重新分区，以利用整个空间。 在[此处](../virtual-machines/windows/expand-os-disk.md#expand-the-volume-within-the-os)详细了解如何扩展磁盘。
 
 ### <a name="attach-disks-at-scale-set-creation"></a>创建规模集时附加磁盘
 使用 [New-AzVmss](/powershell/module/az.compute/new-azvmss) 创建虚拟机规模集。 出现提示时，请提供 VM 实例的用户名和密码。 若要将流量分配到单独的 VM 实例，则还要创建负载均衡器。 负载均衡器包含的规则可在 TCP 端口 80 上分配流量，并允许 TCP 端口 3389 上的远程桌面流量，以及 TCP 端口 5985 上的 PowerShell 远程流量。

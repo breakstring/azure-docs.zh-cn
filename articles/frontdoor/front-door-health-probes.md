@@ -3,27 +3,27 @@ title: Azure 前门-后端运行状况监视 |Microsoft Docs
 description: 本文可帮助你了解 Azure 前端如何监视后端的运行状况
 services: frontdoor
 documentationcenter: ''
-author: sharad4u
+author: duongau
 ms.service: frontdoor
 ms.devlang: na
 ms.topic: article
 ms.tgt_pltfrm: na
 ms.workload: infrastructure-services
-ms.date: 09/10/2018
-ms.author: sharadag
-ms.openlocfilehash: e2e656c395f1a31c1f5ebbd46d5a18a046f854f7
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.date: 09/28/2020
+ms.author: duau
+ms.openlocfilehash: 4cbeea8ad20d41daff3d4ad086a36df5e988991f
+ms.sourcegitcommit: 829d951d5c90442a38012daaf77e86046018e5b9
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "79471568"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "91449238"
 ---
 # <a name="health-probes"></a>运行状况探测
 
-为了从给定的前门环境确定每个后端的运行状况和邻近性，每个前端环境会定期向每个已配置的后端发送综合 HTTP/HTTPS 请求。 Front Door 然后使用这些探测的响应来确定它应将实际客户端请求路由到的“最佳”后端。 
+为了确定给定前门环境的每个后端的运行状况和邻近性，每个前端环境会定期向每个已配置的后端发送综合 HTTP/HTTPS 请求。 然后，前门使用探测器中的这些响应来确定用于路由客户端请求的 "最佳" 后端资源。 
 
 > [!WARNING]
-> 由于前门具有全局边缘环境，因此后端的运行状况探测请求量可以非常高–每分钟25个请求，每分钟最高可达1200请求，具体取决于配置的运行状况探测频率。 如果默认探测频率为30秒，则后端的探测量应为每分钟约200请求。
+> 由于前端具有全局边缘环境，因此后端的运行状况探测量可以非常高-从25个请求每分钟到最高1200请求，具体取决于配置的运行状况探测频率。 如果默认探测频率为30秒，则后端的探测量应为每分钟约200请求。
 
 ## <a name="supported-protocols"></a>支持的协议
 
@@ -33,7 +33,7 @@ Front Door 支持通过 HTTP 或 HTTPS 协议发送探测。 这些探测通过�
 
 前门支持以下 HTTP 方法用于发送运行状况探测：
 
-1. **GET：** GET 方法表示检索由请求 URI 标识的任何信息（以实体的形式）。
+1. **GET：** GET 方法表示检索由请求 URI 标识的实体) 形式 (的任何信息。
 2. **HEAD：** HEAD 方法与 GET 完全相同，不同之处在于服务器不能在响应中返回消息正文。 对于新的前门配置文件，默认情况下，探测方法设置为 HEAD。
 
 > [!NOTE]
@@ -41,10 +41,10 @@ Front Door 支持通过 HTTP 或 HTTPS 协议发送探测。 这些探测通过�
 
 ## <a name="health-probe-responses"></a>运行状况探测响应
 
-| 响应  | 描述 | 
+| 响应  | 说明 | 
 | ------------- | ------------- |
-| 确定运行状况  |  200 OK 状态代码指示后端运行状况良好。 所有其他状态均视为失败。 如果出于任何原因（包括网络失败），探测未接收到有效的 HTTP 响应，则探测被视为失败。|
-| 测量延迟  | 延迟是指从我们发送探测请求前的一刻到我们收到响应的最后一个字节的一刻所测得的时钟时间。 我们为每个请求都使用新的 TCP 连接，因此，此测量不会偏向使用现有热连接的后端。  |
+| 确定运行状况  |  200 OK 状态代码指示后端运行状况良好。 所有其他状态均视为失败。 如果出于任何原因 (包括网络故障) 没有收到探测的有效 HTTP 响应，则会将探测计为失败。|
+| 测量延迟  | 延迟是指从我们发送探测请求前的一刻到我们收到响应的最后一个字节的一刻所测得的时钟时间。 我们为每个请求使用一个新的 TCP 连接，因此，此度量值并不偏离现有的热连接后端。  |
 
 ## <a name="how-front-door-determines-backend-health"></a>Front Door 如何确定后端运行状况
 
@@ -59,7 +59,7 @@ Azure 前门在所有算法中使用相同的三步骤过程来确定运行状�
 
     * 通过更改负载平衡设置中的 SuccessfulSamplesRequired 属性来配置_x_ 。
 
-3. 从后端池的一组运行状况良好的后端中，Front Door 还将测量和维护每个后端的延迟（往返时间）。
+3. 对于后端池中的正常后端集，前门还会进一步测量并维持每个后端) 的 (延迟时间。
 
 
 ## <a name="complete-health-probe-failure"></a>完成运行状况探测失败

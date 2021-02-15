@@ -5,12 +5,13 @@ author: florianborn71
 ms.author: flborn
 ms.date: 02/11/2020
 ms.topic: article
-ms.openlocfilehash: 4f3889a0ba121cb9a3167c1f6ac95f0bed280539
-ms.sourcegitcommit: 0690ef3bee0b97d4e2d6f237833e6373127707a7
+ms.custom: devx-track-csharp
+ms.openlocfilehash: c04f2312926d3b6d668dff712eedb57d816c8bf3
+ms.sourcegitcommit: f377ba5ebd431e8c3579445ff588da664b00b36b
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 05/21/2020
-ms.locfileid: "83759007"
+ms.lasthandoff: 02/05/2021
+ms.locfileid: "99592001"
 ---
 # <a name="outline-rendering"></a>轮廓渲染
 
@@ -28,16 +29,16 @@ ms.locfileid: "83759007"
 | `PulseRateHz`    | FLOAT   | 轮廓的每秒振荡频率|
 | `PulseIntensity` | FLOAT   | 轮廓脉冲效果的强度。 必须介于 0.0（无脉冲）与 1.0（全脉冲）之间。 强度将轮廓的最小不透明度隐式设置为 `MinOpacity = 1.0 - PulseIntensity`。 |
 
-![轮廓](./media/outlines.png) 将 `color` 参数从黄色（左）更改为洋红色（中间）并将 `pulseIntensity` 从 0 更改为 0.8（右）后的效果。
+![对象使用不同的轮廓参数呈现三次：将 ](./media/outlines.png) `color` 参数从黄色 (左) 改为洋红色 (中心) ， `pulseIntensity` 从0到 0.8 (右) 。
 
 ## <a name="example"></a>示例
 
 以下代码展示了一个通过 API 设置轮廓参数的示例：
 
 ```cs
-void SetOutlineParameters(AzureSession session)
+void SetOutlineParameters(RenderingSession session)
 {
-    OutlineSettings outlineSettings = session.Actions.OutlineSettings;
+    OutlineSettings outlineSettings = session.Connection.OutlineSettings;
     outlineSettings.Color = new Color4Ub(255, 255, 0, 255);
     outlineSettings.PulseRateHz = 2.0f;
     outlineSettings.PulseIntensity = 0.5f;
@@ -45,20 +46,25 @@ void SetOutlineParameters(AzureSession session)
 ```
 
 ```cpp
-void SetOutlineParameters(ApiHandle<AzureSession> session)
+void SetOutlineParameters(ApiHandle<RenderingSession> session)
 {
-    ApiHandle<OutlineSettings> outlineSettings = *session->Actions()->OutlineSettings();
+    ApiHandle<OutlineSettings> outlineSettings = session->Connection()->GetOutlineSettings();
     Color4Ub outlineColor;
     outlineColor.channels = { 255, 255, 0, 255 };
-    outlineSettings->Color(outlineColor);
-    outlineSettings->PulseRateHz(2.0f);
-    outlineSettings->PulseIntensity(0.5f);
+    outlineSettings->SetColor(outlineColor);
+    outlineSettings->SetPulseRateHz(2.0f);
+    outlineSettings->SetPulseIntensity(0.5f);
 }
 ```
 
 ## <a name="performance"></a>性能
 
 轮廓渲染可能会对渲染性能产生重大影响。 这种影响根据给定帧的选定对象与非选定对象之间的屏幕空间关系而异。
+
+## <a name="api-documentation"></a>API 文档
+
+* [C # RenderingConnection OutlineSettings 属性](/dotnet/api/microsoft.azure.remoterendering.renderingconnection.outlinesettings)
+* [C + + RenderingConnection：： OutlineSettings ( # B1 ](/cpp/api/remote-rendering/renderingconnection#outlinesettings)
 
 ## <a name="next-steps"></a>后续步骤
 

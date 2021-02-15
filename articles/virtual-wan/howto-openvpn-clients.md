@@ -5,18 +5,18 @@ services: virtual-wan
 author: cherylmc
 ms.service: virtual-wan
 ms.topic: how-to
-ms.date: 03/18/2020
+ms.date: 09/22/2020
 ms.author: cherylmc
-ms.openlocfilehash: f955b5347bc5a2c0fe1fd8a93e14badab1f354c8
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 05502b344b1224dff5d12f95b96b05baace98970
+ms.sourcegitcommit: b4880683d23f5c91e9901eac22ea31f50a0f116f
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "84753269"
+ms.lasthandoff: 11/11/2020
+ms.locfileid: "94490995"
 ---
 # <a name="configure-an-openvpn-client-for-azure-virtual-wan"></a>为 Azure 虚拟 WAN 配置 OpenVPN 客户端
 
-本文可帮助你配置 OpenVPN &reg; 协议  客户端。
+本文可帮助你配置 OpenVPN &reg; 协议  客户端。 你还可以使用适用于 Windows 10 的 Azure VPN 客户端通过 OpenVPN 协议进行连接。 可在[此处](openvpn-azure-ad-client.md)找到更多说明
 
 ## <a name="before-you-begin"></a>准备阶段
 

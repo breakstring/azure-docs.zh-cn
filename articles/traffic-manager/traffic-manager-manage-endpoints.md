@@ -3,20 +3,20 @@ title: 在 Azure 流量管理器中管理终结点 | Microsoft Docs
 description: 本文将帮助你从 Azure 流量管理器中添加、删除、启用和禁用终结点。
 services: traffic-manager
 documentationcenter: ''
-author: rohinkoul
+author: duongau
 ms.service: traffic-manager
 ms.devlang: na
 ms.topic: how-to
 ms.tgt_pltfrm: na
 ms.workload: infrastructure-services
 ms.date: 05/08/2017
-ms.author: rohink
-ms.openlocfilehash: 9f779910460ec19f0efb02fb1a65f39bb100050c
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.author: duau
+ms.openlocfilehash: 3d5a888bf132725ff64c2a128b77f0257f435585
+ms.sourcegitcommit: 0aec60c088f1dcb0f89eaad5faf5f2c815e53bf8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "84711606"
+ms.lasthandoff: 01/14/2021
+ms.locfileid: "98184248"
 ---
 # <a name="add-disable-enable-or-delete-endpoints"></a>添加、禁用、启用或删除终结点
 
@@ -30,27 +30,27 @@ ms.locfileid: "84711606"
 ## <a name="to-add-a-cloud-service-or-an-app-service-endpoint-to-a-traffic-manager-profile"></a>将云服务或应用服务终结点添加到流量管理器配置文件
 
 1. 在浏览器中，登录 [Azure 门户](https://portal.azure.com)。
-2. 在门户的搜索栏中，搜索要修改的**流量管理器配置文件**名称，然后在显示的结果中单击 "流量管理器" 配置文件。
+2. 在门户的搜索栏中，搜索要修改的 **流量管理器配置文件** 名称，然后在显示的结果中单击 "流量管理器" 配置文件。
 3. 在“流量管理器配置文件”  边栏选项卡的“设置”  部分中，单击“终结点”  。
 4. 在显示的“终结点”  边栏选项卡中，单击“添加”  。
 5. 在“添加终结点”  边栏选项卡中，按如下所示完成输入：
-    1. 对于**类型**，单击“Azure 终结点”  。
-    2. 提供要用于识别此终结点的**名称**。
+    1. 对于 **类型**，单击“Azure 终结点”  。
+    2. 提供要用于识别此终结点的 **名称**。
     3. 从下拉列表中选择适当的资源类型作为“目标资源类型”  。
-    4. 如需**目标资源**，请单击“选择...”选择器，在“资源”边栏选项卡中列出同一订阅下的资源。   在显示的“资源”  边栏选项卡中，选取要添加为第一个终结点的服务。
-    5. 对于**优先级**，选为 **1**。 如果此终结点处于正常状态，这会导致所有流量转到此终结点。
+    4. 如需 **目标资源**，请单击“选择...”选择器，在“资源”边栏选项卡中列出同一订阅下的资源。   在显示的“资源”  边栏选项卡中，选取要添加为第一个终结点的服务。
+    5. 对于 **优先级**，选为 **1**。 如果此终结点处于正常状态，这会导致所有流量转到此终结点。
     6. 使“添加为已禁用”  保持未选中状态。
     7. 单击 **“确定”**
-6.  重复步骤 4 和 5，添加下一个 Azure 终结点。 确保添加该终结点时将其**优先级**值设为 **2**。
+6.  重复步骤 4 和 5，添加下一个 Azure 终结点。 确保添加该终结点时将其 **优先级** 值设为 **2**。
 7.  添加完这两个终结点后，这两个终结点会显示在“流量管理器配置文件”  边栏选项卡中，并且其监视状态为“联机”  。
 
 > [!NOTE]
-> 使用“故障转移”  流量路由方法在配置文件中添加或删除终结点后，故障转移优先级列表可能不会按所需的顺序列出。 可以在“配置”页上调整故障转移优先级列表的顺序。 有关详细信息，请参阅[配置故障转移流量路由](traffic-manager-configure-failover-routing-method.md)。
+> 使用“故障转移”  流量路由方法在配置文件中添加或删除终结点后，故障转移优先级列表可能不会按所需的顺序列出。 可以在“配置”页上调整故障转移优先级列表的顺序。 有关详细信息，请参阅[配置故障转移流量路由](./traffic-manager-configure-priority-routing-method.md)。
 
 ## <a name="to-disable-an-endpoint"></a>禁用终结点
 
 1. 在浏览器中，登录 [Azure 门户](https://portal.azure.com)。
-2. 在门户的搜索栏中，搜索要修改的**流量管理器配置文件**名称，并在显示的结果中单击该流量管理器配置文件。
+2. 在门户的搜索栏中，搜索要修改的 **流量管理器配置文件** 名称，并在显示的结果中单击该流量管理器配置文件。
 3. 在“流量管理器配置文件”  边栏选项卡的“设置”  部分中，单击“终结点”  。 
 4. 单击要禁用的终结点。
 5. 在“终结点”边栏选项卡中，将终结点的状态更改为“已禁用”，然后单击“保存”。   
@@ -59,7 +59,7 @@ ms.locfileid: "84711606"
 ## <a name="to-enable-an-endpoint"></a>启用终结点
 
 1. 在浏览器中，登录 [Azure 门户](https://portal.azure.com)。
-2. 在门户的搜索栏中，搜索要修改的**流量管理器配置文件**名称，并在显示的结果中单击该流量管理器配置文件。
+2. 在门户的搜索栏中，搜索要修改的 **流量管理器配置文件** 名称，并在显示的结果中单击该流量管理器配置文件。
 3. 在“流量管理器配置文件”  边栏选项卡的“设置”  部分中，单击“终结点”  。 
 4. 单击要启用的终结点。
 5. 在“终结点”边栏选项卡中，将终结点的状态更改为“已启用”，然后单击“保存”。   
@@ -68,7 +68,7 @@ ms.locfileid: "84711606"
 ## <a name="to-delete-an-endpoint"></a>删除终结点
 
 1. 在浏览器中，登录 [Azure 门户](https://portal.azure.com)。
-2. 在门户的搜索栏中，搜索要修改的**流量管理器配置文件**名称，并在显示的结果中单击该流量管理器配置文件。
+2. 在门户的搜索栏中，搜索要修改的 **流量管理器配置文件** 名称，并在显示的结果中单击该流量管理器配置文件。
 3. 在“流量管理器配置文件”  边栏选项卡的“设置”  部分中，单击“终结点”  。 
 4. 单击要删除的终结点。
 5. 在“终结点”边栏选项卡中，单击“删除”  
@@ -77,8 +77,7 @@ ms.locfileid: "84711606"
 ## <a name="next-steps"></a>后续步骤
 
 * [管理流量管理器配置文件](traffic-manager-manage-profiles.md)
-* [配置路由方法](traffic-manager-configure-routing-method.md)
+* [配置路由方法](./traffic-manager-configure-priority-routing-method.md)
 * [流量管理器降级状态疑难解答](traffic-manager-troubleshooting-degraded.md)
 * [流量管理器性能注意事项](traffic-manager-performance-considerations.md)
-* [流量管理器上的操作（REST API 参考）](https://go.microsoft.com/fwlink/p/?LinkID=313584)
-
+* [流量管理器上的操作（REST API 参考）](/previous-versions/azure/reference/hh758255(v=azure.100))

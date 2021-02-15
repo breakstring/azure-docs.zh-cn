@@ -3,14 +3,14 @@ title: Azure 上的 Kubernetes 教程 - 升级群集
 description: 此 Azure Kubernetes 服务 (AKS) 教程介绍如何将现有 AKS 群集升级到最新可用的 Kubernetes 版本。
 services: container-service
 ms.topic: tutorial
-ms.date: 02/25/2020
-ms.custom: mvc
-ms.openlocfilehash: a89e8bb42bec4323d2189ca93dfe73171c4a128c
-ms.sourcegitcommit: e3c28affcee2423dc94f3f8daceb7d54f8ac36fd
+ms.date: 01/12/2021
+ms.custom: mvc, devx-track-azurecli
+ms.openlocfilehash: 8efb381562a5c55fa2c29b8379312dc41ef6a046
+ms.sourcegitcommit: 25d1d5eb0329c14367621924e1da19af0a99acf1
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 06/17/2020
-ms.locfileid: "84888005"
+ms.lasthandoff: 01/16/2021
+ms.locfileid: "98251329"
 ---
 # <a name="tutorial-upgrade-kubernetes-in-azure-kubernetes-service-aks"></a>教程：在 Azure Kubernetes 服务 (AKS) 中升级 Kubernetes
 
@@ -37,22 +37,22 @@ ms.locfileid: "84888005"
 az aks get-upgrades --resource-group myResourceGroup --name myAKSCluster
 ```
 
-在以下示例中，当前版本为 1.15.11，可用版本将显示在“升级”下 。
+在以下示例中，当前版本为 1.18.10，可用版本将显示在“升级”下 。
 
 ```json
 {
   "agentPoolProfiles": null,
   "controlPlaneProfile": {
-    "kubernetesVersion": "1.15.11",
+    "kubernetesVersion": "1.18.10",
     ...
     "upgrades": [
       {
         "isPreview": null,
-        "kubernetesVersion": "1.16.8"
+        "kubernetesVersion": "1.19.1"
       },
       {
         "isPreview": null,
-        "kubernetesVersion": "1.16.9"
+        "kubernetesVersion": "1.19.3"
       }
     ]
   },
@@ -82,7 +82,7 @@ az aks upgrade \
 > [!NOTE]
 > 一次只能升级一个次要版本。 例如，可以从 1.14.x 升级到 1.15.x，但不能从 1.14.x 直接升级到 1.16.x   。 若要从 1.14.x 升级到 1.16.x，请先从 1.14.x 升级到 1.15.x，然后再执行一次升级从 1.15.x 升级到 1.16.x     。
 
-以下精简示例输出显示升级到 1.16.8 的结果。 请注意，kubernetesVersion 现报告 1.16.8 ：
+以下精简示例输出显示升级到 1.19.1 的结果。 请注意，kubernetesVersion 现报告 1.19.1 ：
 
 ```json
 {
@@ -100,7 +100,7 @@ az aks upgrade \
   "enableRbac": false,
   "fqdn": "myaksclust-myresourcegroup-19da35-bd54a4be.hcp.eastus.azmk8s.io",
   "id": "/subscriptions/<Subscription ID>/resourcegroups/myResourceGroup/providers/Microsoft.ContainerService/managedClusters/myAKSCluster",
-  "kubernetesVersion": "1.16.8",
+  "kubernetesVersion": "1.19.1",
   "location": "eastus",
   "name": "myAKSCluster",
   "type": "Microsoft.ContainerService/ManagedClusters"
@@ -115,12 +115,12 @@ az aks upgrade \
 az aks show --resource-group myResourceGroup --name myAKSCluster --output table
 ```
 
-以下示例输出显示 AKS 群集运行 KubernetesVersion 1.16.8：
+以下示例输出显示 AKS 群集运行 KubernetesVersion 1.19.1：
 
-```
+```output
 Name          Location    ResourceGroup    KubernetesVersion    ProvisioningState    Fqdn
 ------------  ----------  ---------------  -------------------  -------------------  ----------------------------------------------------------------
-myAKSCluster  eastus      myResourceGroup  1.16.8               Succeeded            myaksclust-myresourcegroup-19da35-bd54a4be.hcp.eastus.azmk8s.io
+myAKSCluster  eastus      myResourceGroup  1.19.1               Succeeded            myaksclust-myresourcegroup-19da35-bd54a4be.hcp.eastus.azmk8s.io
 ```
 
 ## <a name="delete-the-cluster"></a>删除群集
@@ -143,10 +143,7 @@ az group delete --name myResourceGroup --yes --no-wait
 > * 升级 Kubernetes 节点
 > * 验证升级是否成功
 
-请单击以下链接了解有关 AKS 的详细信息。
-
-> [!div class="nextstepaction"]
-> [AKS 概述][aks-intro]
+有关 AKS 的详细信息，请参阅 [AKS 概述][aks-intro]。 有关使用 AKS 创建完整解决方案的指南，请参阅 [AKS 解决方案指南][aks-solution-guidance]。
 
 <!-- LINKS - external -->
 [kubernetes-drain]: https://kubernetes.io/docs/tasks/administer-cluster/safely-drain-node/
@@ -160,3 +157,4 @@ az group delete --name myResourceGroup --yes --no-wait
 [azure-cli-install]: /cli/azure/install-azure-cli
 [az-group-delete]: /cli/azure/group#az-group-delete
 [sp-delete]: kubernetes-service-principal.md#additional-considerations
+[aks-solution-guidance]: /azure/architecture/reference-architectures/containers/aks-start-here?WT.mc_id=AKSDOCSPAGE

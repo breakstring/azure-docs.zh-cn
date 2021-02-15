@@ -11,25 +11,25 @@ author: MicrosoftGuyJFlo
 manager: daveba
 ms.reviewer: sahandle
 ms.collection: M365-identity-device-management
-ms.openlocfilehash: cc10fb4f9894a355c9eed024ae9f87747214999b
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 4d4897b9187caab50be4db75bbc0af03e3d35aa4
+ms.sourcegitcommit: 0a9df8ec14ab332d939b49f7b72dea217c8b3e1e
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "72886995"
+ms.lasthandoff: 11/18/2020
+ms.locfileid: "94835979"
 ---
 # <a name="user-experiences-with-azure-ad-identity-protection"></a>Azure AD Identity Protection 的用户体验
 
 使用 Azure Active Directory 标识保护时，可以：
 
-* 要求用户注册 Azure 多重身份验证（MFA）
+* 要求用户注册 Azure AD 多重身份验证 (MFA) 
 * 自动修正有风险的登录和泄露的用户
 
-所有 Identity Protection 策略都会影响用户的登录体验。 允许用户注册和使用 Azure MFA 和自助密码重置等工具可以减少影响。 这些工具连同适当的策略选项一起提供，用户在需要时可提供自我修正选项。
+所有 Identity Protection 策略都会影响用户的登录体验。 允许用户注册并使用 Azure AD MFA 和自助密码重置等工具可以减轻影响。 这些工具连同适当的策略选项一起提供，用户在需要时可提供自我修正选项。
 
 ## <a name="multi-factor-authentication-registration"></a>多重身份验证注册
 
-若要启用需要多重身份验证注册并面向所有用户的身份保护策略，将确保他们能够在将来使用 Azure MFA 进行自我修正。 配置此策略后，用户可以选择在14天的期限内进行注册，并强制进行注册。 用户体验如下所述。 有关详细信息，请参阅文章中的最终用户文档、[双因素验证概述以及工作或学校帐户](../user-help/user-help-two-step-verification-overview.md)。
+若要启用需要多重身份验证注册并面向所有用户的身份保护策略，将确保他们能够在以后使用 Azure AD MFA 进行自我修正。 配置此策略后，用户可以选择在14天的期限内进行注册，并强制进行注册。 用户体验如下所述。 有关详细信息，请参阅文章中的最终用户文档、 [双因素验证概述以及工作或学校帐户](../user-help/multi-factor-authentication-end-user-first-time.md)。
 
 ### <a name="registration-interrupt"></a>注册中断
 
@@ -37,7 +37,7 @@ ms.locfileid: "72886995"
    
     ![需要更多信息](./media/concept-identity-protection-user-experience/identity-protection-experience-more-info-mfa.png)
 
-1. 完成注册 Azure 多重身份验证的指导步骤并完成登录。
+1. 完成指导步骤注册 Azure AD 多重身份验证并完成登录。
 
 ## <a name="risky-sign-in-remediation"></a>有风险的登录修正
 
@@ -49,7 +49,7 @@ ms.locfileid: "72886995"
    
     ![出现异常提示](./media/concept-identity-protection-user-experience/120.png)
 
-1. 用户需要通过使用以前注册的一种方法完成 Azure MFA 来证明其身份。 
+1. 用户需要通过使用之前注册的一种方法完成 Azure AD MFA 来证明其身份。 
 
 ### <a name="risky-sign-in-administrator-unblock"></a>有风险的登录管理员取消阻止
 
@@ -57,7 +57,7 @@ ms.locfileid: "72886995"
 
 ![已被登录风险策略阻止](./media/concept-identity-protection-user-experience/200.png)
 
-IT 人员可以按照取消[阻止用户](howto-identity-protection-remediate-unblock.md#unblocking-based-on-sign-in-risk)的部分中的说明操作，以允许用户重新登录。
+IT 人员可以按照取消 [阻止用户](howto-identity-protection-remediate-unblock.md#unblocking-based-on-sign-in-risk) 的部分中的说明操作，以允许用户重新登录。
 
 ## <a name="risky-user-remediation"></a>有风险的用户修正
 
@@ -69,7 +69,7 @@ IT 人员可以按照取消[阻止用户](howto-identity-protection-remediate-un
    
     ![补救](./media/concept-identity-protection-user-experience/101.png)
 
-1. 用户需要通过使用以前注册的一种方法完成 Azure MFA 来证明其身份。 
+1. 用户需要通过使用之前注册的一种方法完成 Azure AD MFA 来证明其身份。 
 1. 最后，用户被迫使用自助密码重置更改其密码，因为其他人可能有权访问自己的帐户。
 
 ## <a name="risky-sign-in-administrator-unblock"></a>有风险的登录管理员取消阻止
@@ -78,10 +78,10 @@ IT 人员可以按照取消[阻止用户](howto-identity-protection-remediate-un
 
 ![被用户风险策略阻止](./media/concept-identity-protection-user-experience/104.png)
 
-IT 人员可以按照取消[阻止用户](howto-identity-protection-remediate-unblock.md#unblocking-based-on-user-risk)的部分中的说明操作，以允许用户重新登录。
+IT 人员可以按照取消 [阻止用户](howto-identity-protection-remediate-unblock.md#unblocking-based-on-user-risk) 的部分中的说明操作，以允许用户重新登录。
 
 ## <a name="see-also"></a>另请参阅
 
 - [修正风险和解除阻止用户](howto-identity-protection-remediate-unblock.md)
 
-- [Azure Active Directory 标识保护](../active-directory-identityprotection.md) 
+- [Azure Active Directory 标识保护](./overview-identity-protection.md)

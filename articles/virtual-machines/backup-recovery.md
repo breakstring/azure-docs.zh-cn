@@ -1,19 +1,19 @@
 ---
-title: 概述 Linux Vm 的备份选项
-description: 概述 Linux Azure 虚拟机的备份选项。
+title: 概述 Vm 的备份选项
+description: 概述 Azure 虚拟机的备份选项。
 author: cynthn
 ms.service: virtual-machines
 ms.topic: conceptual
 ms.date: 8/03/2020
 ms.author: cynthn
-ms.openlocfilehash: bb1abb5b94653893e131c09af6de1625b0bc7998
-ms.sourcegitcommit: 1b2d1755b2bf85f97b27e8fbec2ffc2fcd345120
+ms.openlocfilehash: 5a093de0a27c8379cb6eff9c2bc3867dfdc20db5
+ms.sourcegitcommit: a055089dd6195fde2555b27a84ae052b668a18c7
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/04/2020
-ms.locfileid: "87554774"
+ms.lasthandoff: 01/26/2021
+ms.locfileid: "98787801"
 ---
-# <a name="backup-and-restore-options-for-linux-virtual-machines-in-azure"></a>Azure 中 Linux 虚拟机的备份和还原选项
+# <a name="backup-and-restore-options-for-virtual-machines-in-azure"></a>Azure 中虚拟机的备份和还原选项
 
 可以通过定期创建备份来保护数据。 有多个备份选项可用于 VM，具体取决于使用案例。
 
@@ -21,7 +21,7 @@ ms.locfileid: "87554774"
 
 若要备份运行生产工作负荷的 Azure VM，请使用 Azure 备份。 Azure 备份对 Windows 和 Linux VM 均支持应用程序一致性备份。 Azure 备份可创建恢复点，这些恢复点存储在异地冗余的恢复保管库中。 从恢复点还原时，可以还原整个 VM，也可以仅还原特定的文件。 
 
-有关适用于 Azure VM 的 Azure 备份动手实践简介，请参阅适用于 [Linux](./linux/tutorial-backup-vms.md) 或 [Windows](./windows/tutorial-backup-vms.md) 的“备份 Azure 虚拟机”教程。
+有关 azure Vm 的 Azure 备份的简单实践简介，请参阅 [Azure 备份快速入门](../backup/quick-backup-vm-portal.md)。
 
 有关 Azure 备份工作原理的详细信息，请参阅[在 Azure 中计划 VM 备份基础结构](../backup/backup-azure-vms-introduction.md)
 
@@ -32,7 +32,7 @@ ms.locfileid: "87554774"
 
 可以通过按需测试故障转移进行灾难恢复演练，而不影响生产工作负荷或正在进行的复制。 创建恢复计划，为多个 VM 上运行的整个应用程序安排故障转移和故障回复。 恢复计划功能将与 Azure 自动化 Runbook 集成。
 
-可以通过[复制虚拟机](https://aka.ms/a2a-getting-started)来启动。 
+可以通过[复制虚拟机](../site-recovery/azure-to-azure-quickstart.md)来启动。 
 
 ## <a name="managed-snapshots"></a>托管快照 
 
@@ -40,10 +40,10 @@ ms.locfileid: "87554774"
 
 有关创建快照的详细信息，请参阅：
 
-* [在 Windows 中使用快照创建存储为托管磁盘的 VHD 副本](./windows/snapshot-copy-managed-disk.md)
+* [使用 Windows 中的快照创建作为托管磁盘存储的 VHD 的副本](./windows/snapshot-copy-managed-disk.md)
 * [使用 Linux 中的快照创建作为托管磁盘存储的 VHD 的副本](./linux/snapshot-copy-managed-disk.md)
 
 
 
 ## <a name="next-steps"></a>后续步骤
-可以按照适用于 [Linux](./linux/tutorial-backup-vms.md) 或 [Windows](./windows/tutorial-backup-vms.md) 的“备份 Windows 虚拟机教程”试用 Azure 备份。
+可以按照 [Azure 备份快速入门](../backup/quick-backup-vm-portal.md)中的方法尝试 azure 备份。

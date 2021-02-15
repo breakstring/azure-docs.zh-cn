@@ -3,15 +3,15 @@ title: 从 Azure Application Insights 导出到 SQL | Microsoft Docs
 description: 使用流分析将 Application Insights 数据连续导出到 SQL。
 ms.topic: conceptual
 ms.date: 09/11/2017
-ms.openlocfilehash: 9c559a61794b36ea1bc33abc14271151fbea9d4c
-ms.sourcegitcommit: a76ff927bd57d2fcc122fa36f7cb21eb22154cfa
+ms.openlocfilehash: 5fb7093dd9945893b17f1b8f5e596cfe5181c3b6
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/28/2020
-ms.locfileid: "87311222"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98942420"
 ---
 # <a name="walkthrough-export-to-sql-from-application-insights-using-stream-analytics"></a>演练：使用流分析从 Application Insights 导出到 SQL
-本文介绍如何使用[连续导出][export]和[azure 流分析](https://azure.microsoft.com/services/stream-analytics/)，将遥测数据从[AZURE 应用程序 Insights][start]移入 azure SQL 数据库。 
+本文说明如何使用[连续导出][export]和 [Azure 流分析](https://azure.microsoft.com/services/stream-analytics/)，将遥测数据从 [Azure Application Insights][start] 移入 Azure SQL 数据库。 
 
 连续导出以 JSON 格式将遥测数据移入 Azure 存储。 我们将使用 Azure 流分析来分析 JSON 对象，并在数据库表中创建行。
 
@@ -64,25 +64,25 @@ ms.locfileid: "87311222"
 1. 让我们累积一些数据。 请休息一下，让其他人先使用该应用程序一段时间。 应用程序中会逐渐传入遥测数据，[指标资源管理器](../platform/metrics-charts.md)中会显示统计图表，[诊断搜索](./diagnostic-search.md)中会显示各个事件。 
    
     此外，数据将导出到存储。 
-2. 在门户中检查导出的数据 - 选择“浏览”，选择存储帐户，然后选择“容器”；也可以在 Visual Studio 中检查。  在 Visual Studio 中，请选择“查看”>“Cloud Explorer”，并打开“Azure”>“存储”。 （如果没有此菜单选项，则需要安装 Azure SDK：打开“新建项目”对话框，打开 Visual C# /云/获取用于 .NET 的 Microsoft Azure SDK。）
+2. 在门户中检查导出的数据 - 选择“浏览”，选择存储帐户，然后选择“容器”；也可以在 Visual Studio 中检查。 在 Visual Studio 中，请选择“查看”>“Cloud Explorer”，并打开“Azure”>“存储”。 （如果没有此菜单选项，则需要安装 Azure SDK：打开“新建项目”对话框，打开 Visual C# /云/获取用于 .NET 的 Microsoft Azure SDK。）
    
     ![在 Visual Studio 中，依次打开“Server Browser”、“Azure”、“存储”](./media/code-sample-export-sql-stream-analytics/087-explorer.png)
    
     记下派生自应用程序名称和检测密钥的路径名称的共同部分。 
 
-事件以 JSON 格式写入 Blob 文件。 每个文件可能包含一个或多个事件。 因此我们想要读取事件数据，并筛选出所需的字段。 我们可以对数据执行各种操作，但我们目前的计划是使用流分析将数据移动到 SQL 数据库。 这样做可以轻松运行许多微妙的查询。
+事件以 JSON 格式写入 Blob 文件。 每个文件可能包含一个或多个事件。 因此我们想要读取事件数据，并筛选出所需的字段。 可以针对数据执行各种操作，但我们目前的计划是使用流分析将数据移到 SQL 数据库。 这样做可以轻松运行许多微妙的查询。
 
 ## <a name="create-an-azure-sql-database"></a>创建 Azure SQL 数据库
 再次从 [Azure 门户][portal]中的订阅开始，创建要向其写入数据的数据库以及一个新服务器（除非已有一个）。
 
 ![依次选择“新建”、“数据”、“SQL”](./media/code-sample-export-sql-stream-analytics/090-sql.png)
 
-请确保服务器允许访问 Azure 服务：
+确保服务器允许访问 Azure 服务：
 
 ![依次选择“浏览”、“服务器”、服务器、“设置”、“防火墙”、“允许访问 Azure”](./media/code-sample-export-sql-stream-analytics/100-sqlaccess.png)
 
 ## <a name="create-a-table-in-azure-sql-database"></a>在 Azure SQL 数据库中创建表
-使用偏好的管理工具连接到在上一部分中创建的数据库。 本演练将使用 [SQL Server 管理工具](/sql/ssms/sql-server-management-studio-ssms?view=sql-server-ver15) (SSMS)。
+使用偏好的管理工具连接到在上一部分中创建的数据库。 本演练将使用 [SQL Server 管理工具](/sql/ssms/sql-server-management-studio-ssms) (SSMS)。
 
 ![连接到 Azure SQL 数据库](./media/code-sample-export-sql-stream-analytics/31-sql-table.png)
 
@@ -133,21 +133,21 @@ CREATE CLUSTERED INDEX [pvTblIdx] ON [dbo].[PageViewsTable]
 ## <a name="create-an-azure-stream-analytics-instance"></a>创建 Azure 流分析实例
 在 [Azure 门户](https://portal.azure.com/)中，选择 Azure 流分析服务，并创建新的流分析作业：
 
-![流分析设置](./media/code-sample-export-sql-stream-analytics/SA001.png)
+![屏幕截图显示了流分析作业页面，突出显示了“创建”按钮。](./media/code-sample-export-sql-stream-analytics/SA001.png)
 
-![新的流分析作业](./media/code-sample-export-sql-stream-analytics/SA002.png)
+![新建流分析作业](./media/code-sample-export-sql-stream-analytics/SA002.png)
 
 创建新作业后，选择“转到资源”。
 
-![流分析设置](./media/code-sample-export-sql-stream-analytics/SA003.png)
+![屏幕截图显示了“部署成功”消息和“转到资源”按钮。](./media/code-sample-export-sql-stream-analytics/SA003.png)
 
 #### <a name="add-a-new-input"></a>添加新输入
 
-![流分析设置](./media/code-sample-export-sql-stream-analytics/SA004.png)
+![屏幕截图显示了“输入”页面，其中“添加”按钮处于选中状态。](./media/code-sample-export-sql-stream-analytics/SA004.png)
 
 将此位置设置为从连续导出 Blob 接收输入：
 
-![流分析设置](./media/code-sample-export-sql-stream-analytics/SA0005.png)
+![屏幕截图显示了“新建输入”窗口，其中已选择“输入别名”、“源”和“存储帐户”下拉菜单选项。](./media/code-sample-export-sql-stream-analytics/SA0005.png)
 
 现在需要使用存储帐户的主访问密钥（前面已记下此密钥）。 将此密钥设置为存储帐户密钥。
 
@@ -164,7 +164,7 @@ webapplication27_12345678123412341234123456789abcdef0/PageViews/{date}/{time}
 在本示例中：
 
 * `webapplication27` 是 Application Insights 资源的名称，**全部小写**。 
-* `1234...` 是 Application Insights 资源的检测密钥，但**删除了短划线**。 
+* `1234...` 是 Application Insights 资源的检测密钥，但 **删除了短划线**。 
 * `PageViews` 是要分析的数据类型。 可用的类型取决于在连续导出中设置的筛选器。 检查导出的数据以查看其他可用类型，并查看[导出数据模型](./export-data-model.md)。
 * `/{date}/{time}` 是以文本形式写入的模式。
 

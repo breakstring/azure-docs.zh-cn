@@ -11,12 +11,12 @@ ms.date: 03/26/2019
 ms.author: xiaoyul
 ms.reviewer: igorstan
 ms.custom: seoapril2019, azure-synapse
-ms.openlocfilehash: a6550ff9bc3a7cec3d9c50b6c60a02ef1af851f5
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 68bab754142538fc6067cf2593ae6244a03a48d1
+ms.sourcegitcommit: 78ecfbc831405e8d0f932c9aafcdf59589f81978
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "85213476"
+ms.lasthandoff: 01/23/2021
+ms.locfileid: "98734808"
 ---
 # <a name="create-table-as-select-ctas"></a>CREATE TABLE AS SELECT (CTAS)
 
@@ -24,11 +24,11 @@ ms.locfileid: "85213476"
 
 ## <a name="create-table-as-select"></a>CREATE TABLE AS SELECT
 
-[CREATE TABLE AS SELECT](/sql/t-sql/statements/create-table-as-select-azure-sql-data-warehouse?toc=/azure/synapse-analytics/sql-data-warehouse/toc.json&bc=/azure/synapse-analytics/sql-data-warehouse/breadcrumb/toc.json&view=azure-sqldw-latest) (CTAS) 语句是所提供的最重要的 T-SQL 功能之一。 CTAS 是根据 SELECT 语句的输出创建新表的并行化操作。 CTAS 是在表中创建和插入数据的最简单快速方法，只需使用一条命令。
+[CREATE TABLE AS SELECT](/sql/t-sql/statements/create-table-as-select-azure-sql-data-warehouse?toc=/azure/synapse-analytics/sql-data-warehouse/toc.json&bc=/azure/synapse-analytics/sql-data-warehouse/breadcrumb/toc.json&view=azure-sqldw-latest&preserve-view=true) (CTAS) 语句是所提供的最重要的 T-SQL 功能之一。 CTAS 是根据 SELECT 语句的输出创建新表的并行化操作。 CTAS 是在表中创建和插入数据的最简单快速方法，只需使用一条命令。
 
 ## <a name="selectinto-vs-ctas"></a>SELECT..INTO 与CTAS
 
-CTAS 是 [SELECT...INTO](/sql/t-sql/queries/select-into-clause-transact-sql?toc=/azure/synapse-analytics/sql-data-warehouse/toc.json&bc=/azure/synapse-analytics/sql-data-warehouse/breadcrumb/toc.json&view=azure-sqldw-latest) 语句的自定义程度更高的版本。
+CTAS 是 [SELECT...INTO](/sql/t-sql/queries/select-into-clause-transact-sql?toc=/azure/synapse-analytics/sql-data-warehouse/toc.json&bc=/azure/synapse-analytics/sql-data-warehouse/breadcrumb/toc.json&view=azure-sqldw-latest&preserve-view=true) 语句的自定义程度更高的版本。
 
 下面是一个简单的 SELECT..INTO 示例：
 
@@ -206,62 +206,29 @@ AND     CTAS_acs.[CalendarYear]  = AnnualCategorySales.[CalendarYear] ;
 DROP TABLE CTAS_acs;
 ```
 
-## <a name="ansi-join-replacement-for-delete-statements"></a>替换 Delete 语句的 ANSI Join
+## <a name="ansi-join-replacement-for-merge"></a>替换 MERGE 的 ANSI Join 
 
-有时，删除数据的最佳方法是使用 CTAS，特别是对于使用 ANSI Join 语法的 `DELETE` 语句。 这是因为，Synapse SQL 不支持在 `DELETE` 语句的 `FROM` 子句中使用 ANSI Join。 无需删除数据，可以选择要保留的数据。
-
-下面是转换后的 `DELETE` 语句示例：
+在 Azure Synapse Analytics 中，带有 NOT MATCHED BY TARGET 的 [MERGE](/sql/t-sql/statements/merge-transact-sql?view=azure-sqldw-latest&preserve-view=true)（预览版）要求目标是哈希分布式表。  一种解决方法是，用户可以使用带有 [UPDATE](/sql/t-sql/queries/update-transact-sql?view=azure-sqldw-latest&preserve-view=true) 或 [DELETE](/sql/t-sql/statements/delete-transact-sql?view=azure-sqldw-latest&preserve-view=true) 的 ANSI JOIN，以根据与另一个表的联接结果修改目标表数据。  示例如下。
 
 ```sql
-CREATE TABLE dbo.DimProduct_upsert
-WITH
-(   Distribution=HASH(ProductKey)
-,   CLUSTERED INDEX (ProductKey)
-)
-AS -- Select Data you want to keep
-SELECT p.ProductKey
-, p.EnglishProductName
-,  p.Color
-FROM  dbo.DimProduct p
-RIGHT JOIN dbo.stg_DimProduct s
-ON p.ProductKey = s.ProductKey;
+CREATE TABLE dbo.Table1   
+    (ColA INT NOT NULL, ColB DECIMAL(10,3) NOT NULL);  
+GO  
+CREATE TABLE dbo.Table2   
+    (ColA INT NOT NULL, ColB DECIMAL(10,3) NOT NULL);  
+GO  
+INSERT INTO dbo.Table1 VALUES(1, 10.0);  
+INSERT INTO dbo.Table2 VALUES(1, 0.0);  
+GO  
+UPDATE dbo.Table2   
+SET dbo.Table2.ColB = dbo.Table2.ColB + dbo.Table1.ColB  
+FROM dbo.Table2   
+    INNER JOIN dbo.Table1   
+    ON (dbo.Table2.ColA = dbo.Table1.ColA);  
+GO  
+SELECT ColA, ColB   
+FROM dbo.Table2;
 
-RENAME OBJECT dbo.DimProduct TO DimProduct_old;
-RENAME OBJECT dbo.DimProduct_upsert TO DimProduct;
-```
-
-## <a name="replace-merge-statements"></a>替换 Merge 语句
-
-使用 CTAS 至少可以部分替换 merge 语句。 可以将 `INSERT` 和 `UPDATE` 合并成单个语句。 任何已删除的记录将在 `SELECT` 语句中受到限制，以便从结果中省略。
-
-以下示例适用于 `UPSERT`：
-
-```sql
-CREATE TABLE dbo.[DimProduct_upsert]
-WITH
-(   DISTRIBUTION = HASH([ProductKey])
-,   CLUSTERED INDEX ([ProductKey])
-)
-AS
--- New rows and new versions of rows
-SELECT s.[ProductKey]
-, s.[EnglishProductName]
-, s.[Color]
-FROM      dbo.[stg_DimProduct] AS s
-UNION ALL  
--- Keep rows that are not being touched
-SELECT      p.[ProductKey]
-, p.[EnglishProductName]
-, p.[Color]
-FROM      dbo.[DimProduct] AS p
-WHERE NOT EXISTS
-(   SELECT  *
-    FROM    [dbo].[stg_DimProduct] s
-    WHERE   s.[ProductKey] = p.[ProductKey]
-);
-
-RENAME OBJECT dbo.[DimProduct]          TO [DimProduct_old];
-RENAME OBJECT dbo.[DimProduct_upsert]  TO [DimProduct];
 ```
 
 ## <a name="explicitly-state-data-type-and-nullability-of-output"></a>显式声明数据类型和输出是否可为 null
@@ -412,7 +379,7 @@ OPTION (LABEL = 'CTAS : Partition IN table : Create');
 
 可以看出，保持类型一致性并维护 CTAS 上的可为 null 属性是工程最佳做法。 这有助于维护计算的完整性，而且还可确保分区切换能够实现。
 
-CTAS 是 Synapse SQL 中最重要的语句之一。 请确保全面了解该语句。 请参阅 [CTAS 文档](/sql/t-sql/statements/create-table-as-select-azure-sql-data-warehouse?toc=/azure/synapse-analytics/sql-data-warehouse/toc.json&bc=/azure/synapse-analytics/sql-data-warehouse/breadcrumb/toc.json&view=azure-sqldw-latest)。
+CTAS 是 Synapse SQL 中最重要的语句之一。 请确保全面了解该语句。 请参阅 [CTAS 文档](/sql/t-sql/statements/create-table-as-select-azure-sql-data-warehouse?toc=/azure/synapse-analytics/sql-data-warehouse/toc.json&bc=/azure/synapse-analytics/sql-data-warehouse/breadcrumb/toc.json&view=azure-sqldw-latest&preserve-view=true)。
 
 ## <a name="next-steps"></a>后续步骤
 

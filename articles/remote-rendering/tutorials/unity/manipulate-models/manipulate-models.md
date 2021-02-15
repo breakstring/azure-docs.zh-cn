@@ -5,12 +5,13 @@ author: florianborn71
 ms.author: flborn
 ms.date: 06/15/2020
 ms.topic: tutorial
-ms.openlocfilehash: ea951943c3f48443e4348d633c16ed61303f7aa8
-ms.sourcegitcommit: cee72954f4467096b01ba287d30074751bcb7ff4
+ms.custom: devx-track-csharp
+ms.openlocfilehash: cec97134173cfc7879baf1d914d8f224a0736430
+ms.sourcegitcommit: f377ba5ebd431e8c3579445ff588da664b00b36b
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/30/2020
-ms.locfileid: "87449049"
+ms.lasthandoff: 02/05/2021
+ms.locfileid: "99593038"
 ---
 # <a name="tutorial-manipulating-models"></a>教程：操作模型
 
@@ -36,7 +37,7 @@ ms.locfileid: "87449049"
 1. 在与 RemoteRenderedModel 相同的目录中创建新的脚本，并将其命名为 RemoteBounds 。
 1. 将脚本的内容替换为以下代码：
 
-    ```csharp
+    ```cs
     // Copyright (c) Microsoft Corporation. All rights reserved.
     // Licensed under the MIT License. See LICENSE in the project root for license information.
 
@@ -50,8 +51,6 @@ ms.locfileid: "87449049"
     {
         //Remote bounds works with a specific remotely rendered model
         private BaseRemoteRenderedModel targetModel = null;
-
-        private BoundsQueryAsync remoteBoundsQuery = null;
 
         private RemoteBoundsState currentBoundsState = RemoteBoundsState.NotReady;
 
@@ -93,14 +92,8 @@ ms.locfileid: "87449049"
             }
         }
 
-        // Create a query using the model entity
-        private void QueryBounds()
-        {
-            //Implement me
-        }
-
-        // Check the result and apply it to the local Unity bounding box if it was successful
-        private void ProcessQueryResult(BoundsQueryAsync remoteBounds)
+        // Create an async query using the model entity
+        async private void QueryBounds()
         {
             //Implement me
         }
@@ -112,31 +105,21 @@ ms.locfileid: "87449049"
 
     应将此脚本添加到与实现 BaseRemoteRenderedModel 的脚本相同的 GameObject 中。 在这种情况下，即为 RemoteRenderedModel。 与之前的脚本类似，此初始代码将处理与远程边界相关的所有状态更改、事件和数据。
 
-    有两种实现方法：QueryBounds 和 ProcessQueryResult 。 QueryBounds 提取边界，ProcessQueryResult 获取查询结果，并将其应用到本地 BoxCollider  。
+    只剩一个方法有待实现：QueryBounds。 QueryBounds 以异步方式提取边界，获取查询结果，并将其应用到本地 BoxCollider 。
 
-    QueryBounds 方法非常简单：向远程渲染会话发送查询并侦听 `Completed` 事件。
+    QueryBounds 方法非常直截了当：向远程渲染会话发送查询并等待结果。
 
 1. 将 QueryBounds 方法替换为以下已完成的方法：
 
-    ```csharp
+    ```cs
     // Create a query using the model entity
-    private void QueryBounds()
+    async private void QueryBounds()
     {
         remoteBoundsQuery = targetModel.ModelEntity.QueryLocalBoundsAsync();
         CurrentBoundsState = RemoteBoundsState.Updating;
-        remoteBoundsQuery.Completed += ProcessQueryResult;
-    }
-    ```
+        await remoteBounds;
 
-    ProcessQueryResult 也非常简单。 检查结果，看看是否成功。 如果成功，将返回的边界转换为 BoxCollider 可以接受的格式并应用边界。    
-
-1. 将 ProcessQueryResult 方法替换为以下已完成的方法：
-
-    ```csharp
-    // Check the result and apply it to the local Unity bounding box if it was successful
-    private void ProcessQueryResult(BoundsQueryAsync remoteBounds)
-    {
-        if (remoteBounds.IsRanToCompletion)
+        if (remoteBounds.IsCompleted)
         {
             var newBounds = remoteBounds.Result.toUnity();
             BoundsBoxCollider.center = newBounds.center;
@@ -151,6 +134,8 @@ ms.locfileid: "87449049"
     }
     ```
 
+    我们将检查结果，看看是否成功。 如果成功，将返回的边界转换为 BoxCollider 可以接受的格式并应用边界。
+
 现在，将 RemoteBounds 脚本添加到与 RemoteRenderedModel 相同的游戏对象时，则会在需要时添加 BoxCollider，当模型达到其 `Loaded` 状态时，会自动查询边界，并将其应用到 BoxCollider   。
 
 1. 使用之前创建的 TestModel GameObject，添加 RemoteBounds 组件 。
@@ -160,7 +145,7 @@ ms.locfileid: "87449049"
 
 1. 再次运行应用程序。 模型加载后不久，你会看到远程对象的边界。 你会看到类似以下值的内容：
 
-     ![边界已更新](./media/updated-bounds.png)
+     ![显示远程对象边界示例的屏幕截图。](./media/updated-bounds.png)
 
 现在，我们在 Unity 对象上有了一个配置了准确边界的本地 BoxCollider。 这些边界允许使用与本地渲染对象相同的策略进行可视化和交互。 例如，应用可更改“转换”、物理数据等的脚本。
 
@@ -175,7 +160,7 @@ ms.locfileid: "87449049"
 1. 按下 Unity 的播放按钮以播放场景，并打开 AppMenu 中的“模型工具”菜单 。
 ![视图控制器](./media/model-with-view-controller.png)
 
-AppMenu 具有一个子菜单“模型工具”，可实现用于与模型绑定的视图控制器 。 当 GameObject 包含 RemoteBounds 组件时，视图控制器将添加 [BoundingBox](https://microsoft.github.io/MixedRealityToolkit-Unity/Documentation/README_BoundingBox.html) 组件，该组件是一个 MRTK 组件，使用 BoxCollider 渲染围绕对象的边界框  。 [ObjectManipulator](https://microsoft.github.io/MixedRealityToolkit-Unity/version/releases/2.3.0/api/Microsoft.MixedReality.Toolkit.Experimental.UI.ObjectManipulator.html?q=ObjectManipulator)，负责手势交互。 通过组合运用这些脚本，我们可以移动、旋转和缩放远程渲染的模型。
+AppMenu 具有一个子菜单“模型工具”，可实现用于与模型绑定的视图控制器 。 当 GameObject 包含 RemoteBounds 组件时，视图控制器将添加 [BoundingBox](https://microsoft.github.io/MixedRealityToolkit-Unity/Documentation/README_BoundingBox.html) 组件，该组件是一个 MRTK 组件，使用 BoxCollider 渲染围绕对象的边界框  。 [ObjectManipulator](https://microsoft.github.io/MixedRealityToolkit-Unity/version/releases/2.5.1/api/Microsoft.MixedReality.Toolkit.UI.ObjectManipulator.html)，负责手势交互。 通过组合运用这些脚本，我们可以移动、旋转和缩放远程渲染的模型。
 
 1. 将鼠标移到游戏面板，然后单击游戏面板内部使其拥有焦点。
 1. 使用 [MRTK 的手势模拟](https://microsoft.github.io/MixedRealityToolkit-Unity/Documentation/InputSimulation/InputSimulationService.html#hand-simulation)，按住左 Shift 键。
@@ -197,7 +182,7 @@ AppMenu 具有一个子菜单“模型工具”，可实现用于与模型绑定
 
 1. 创建名为 RemoteRayCaster 的新脚本，并将其内容替换为以下代码：
 
-    ```csharp
+    ```cs
     // Copyright (c) Microsoft Corporation. All rights reserved.
     // Licensed under the MIT License. See LICENSE in the project root for license information.
 
@@ -219,7 +204,8 @@ AppMenu 具有一个子菜单“模型工具”，可实现用于与模型绑定
             if(RemoteRenderingCoordinator.instance.CurrentCoordinatorState == RemoteRenderingCoordinator.RemoteRenderingState.RuntimeConnected)
             {
                 var rayCast = new RayCast(origin.toRemotePos(), dir.toRemoteDir(), maxDistance, hitPolicy);
-                return await RemoteRenderingCoordinator.CurrentSession.Actions.RayCastQueryAsync(rayCast).AsTask();
+                var result = await RemoteRenderingCoordinator.CurrentSession.Connection.RayCastQueryAsync(rayCast);
+                return result.Hits;
             }
             else
             {
@@ -236,13 +222,13 @@ AppMenu 具有一个子菜单“模型工具”，可实现用于与模型绑定
     ```
 
     > [!NOTE]
-    > Unity 有一个名为 [RaycastHit](https://docs.unity3d.com/ScriptReference/RaycastHit.html) 的类，Azure 远程渲染有一个名为 [RayCastHit](https://docs.microsoft.com/dotnet/api/microsoft.azure.remoterendering.raycasthit) 的类 。 大写 C 是用于避免编译错误的一个重要区分信息。
+    > Unity 有一个名为 [RaycastHit](https://docs.unity3d.com/ScriptReference/RaycastHit.html) 的类，Azure 远程渲染有一个名为 [RayCastHit](/dotnet/api/microsoft.azure.remoterendering.raycasthit) 的类 。 大写 C 是用于避免编译错误的一个重要区分信息。
 
     RemoteRayCaster 提供了用于将远程光线投射到当前会话的通用访问点。 具体而言，我们接下来将实现 MRTK 指针处理程序。 该脚本将实现 `IMixedRealityPointerHandler` 接口，该接口会告诉 MRTK 我们想要该脚本侦听[混合现实指针](https://microsoft.github.io/MixedRealityToolkit-Unity/Documentation/Input/Pointers.html)事件。
 
 1. 创建名为 RemoteRayCastPointerHandler 的新脚本，并将该代码替换为以下代码：
 
-    ```csharp
+    ```cs
     // Copyright (c) Microsoft Corporation. All rights reserved.
     // Licensed under the MIT License. See LICENSE in the project root for license information.
 
@@ -307,13 +293,13 @@ AppMenu 具有一个子菜单“模型工具”，可实现用于与模型绑定
 
 在单击时发送光线投射请求是查询远程对象的有效策略。 但是，这不是理想的用户体验，因为是光标与框碰撞体发生碰撞，而不是模型本身。
 
-还可以创建一个新的 MRTK 指针，该指针在远程会话中更频繁地投射光线。 虽然这是一种更复杂的方法，但用户体验会更好。 此策略超出了本教程的范围，但可以在“展示”应用中查看此方法的示例，可通过 [ARR 示例存储库](https://github.com/Azure/azure-remote-rendering/tree/master/Unity/AzureRemoteRenderingShowcase)获取。
+还可以创建一个新的 MRTK 指针，该指针在远程会话中更频繁地投射光线。 虽然这是一种更复杂的方法，但用户体验会更好。 此策略超出了本教程的范围，但可以在“展示”应用中查看此方法的示例，可通过 [ARR 示例存储库](https://github.com/Azure/azure-remote-rendering/tree/master/Unity/Showcase)获取。
 
 如果在 RemoteRayCastPointerHandler 中成功完成光线投射，则会从 `OnRemoteEntityClicked` Unity 事件发出命中的 `Entity`。 为了响应该事件，我们将创建一个帮助程序脚本，用于接受 `Entity` 并对其执行操作。 首先让脚本将 `Entity` 的名称打印到调试日志。
 
 1. 创建一个名为 RemoteEntityHelper 的新脚本，并将其内容替换为以下内容：
 
-    ```csharp
+    ```cs
     // Copyright (c) Microsoft Corporation. All rights reserved.
     // Licensed under the MIT License. See LICENSE in the project root for license information.
     
@@ -358,7 +344,7 @@ AppMenu 具有一个子菜单“模型工具”，可实现用于与模型绑定
 
 1. 修改 RemoteEntityHelper 脚本以同时包含以下方法：
 
-    ```csharp
+    ```cs
     public void MakeSyncedGameObject(Entity entity)
     {
         var entityGameObject = entity.GetOrCreateGameObject(UnityCreationMode.DoNotCreateUnityComponents);

@@ -5,12 +5,12 @@ author: craigshoemaker
 ms.topic: conceptual
 ms.date: 02/18/2019
 ms.author: cshoe
-ms.openlocfilehash: ddcf6758c8c648678c69070fa5b65ae6c4947018
-ms.sourcegitcommit: dabd9eb9925308d3c2404c3957e5c921408089da
+ms.openlocfilehash: 4cafe9af1eb5a765ab86bafb63cc9ab7d0889dc8
+ms.sourcegitcommit: 59cfed657839f41c36ccdf7dc2bee4535c920dd4
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/11/2020
-ms.locfileid: "86252685"
+ms.lasthandoff: 02/06/2021
+ms.locfileid: "99627593"
 ---
 # <a name="azure-functions-triggers-and-bindings-concepts"></a>Azure Functions 触发器和绑定概念
 
@@ -39,16 +39,19 @@ ms.locfileid: "86252685"
 
 ###  <a name="trigger-and-binding-definitions"></a>触发器和绑定的定义
 
-触发器和绑定的定义根据开发方法的不同而异。
+触发器和绑定的定义不同，具体取决于开发语言。
 
-| 平台 | 触发器和绑定的配置方式... |
+| 语言 | 触发器和绑定的配置方式... |
 |-------------|--------------------------------------------|
 | C# 类库 | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;使用 C# 特性修饰方法和参数 |
-| 其他所有（包括 Azure 门户） | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;更新 [function.json](./functions-reference.md)（[架构](http://json.schemastore.org/function)） |
+| Java | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;用 Java 批注修饰方法和参数  | 
+| JavaScript/PowerShell/Python/TypeScript | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;更新 [function.json](./functions-reference.md)（[架构](http://json.schemastore.org/function)） |
 
-门户为此配置提供了一个 UI，但你可以通过函数的“集成”选项卡打开“高级编辑器”，来直接编辑文件。  
+对于依赖 function.js的语言，该门户提供了一个用于在 " **集成** " 选项卡中添加绑定的 UI。你还可以在函数的 " **代码 + 测试** " 选项卡中直接在门户中编辑该文件。 Visual Studio Code 使你可以通过使用一组方便的提示来轻松地 [将绑定添加到文件的 function.js](functions-develop-vs-code.md?tabs=nodejs#add-a-function-to-your-project) 。 
 
-在 .NET 中，参数类型定义了输入数据的数据类型。 例如，使用 `string` 绑定到队列触发器的文本、一个要读取为二进制内容的字节数组，以及一个要反序列化为对象的自定义类型。
+在 .NET 和 Java 中，参数类型定义输入数据的数据类型。 例如，使用 `string` 绑定到队列触发器的文本、要读取为二进制文件的字节数组以及要反序列化到对象的自定义类型。 由于 .NET 类库函数和 Java 函数不依赖于对绑定定义的 *function.js* ，因此不能在门户中创建和编辑这些函数。 C # 门户编辑基于 c # 脚本，该脚本使用 *function.json* 而不是特性。
+
+若要了解有关如何将绑定添加到现有函数的详细信息，请参阅 [使用绑定将函数连接到 Azure 服务](add-bindings-existing-function.md)。
 
 对于动态键入的语言（如 JavaScript），请在 function.json 文件中使用 `dataType` 属性。 例如，若要以二进制格式读取 HTTP 请求的内容，将 `dataType` 设置为 `binary`：
 
@@ -73,11 +76,25 @@ ms.locfileid: "86252685"
 
 使用[类库中的特性](functions-dotnet-class-library.md)来配置触发器和绑定时，方向在特性构造函数中提供或推断自参数类型。
 
+## <a name="add-bindings-to-a-function"></a>向函数添加绑定
+
+可以使用输入或输出绑定将函数连接到其他服务。 通过向函数添加绑定的具体定义来添加绑定。 若要了解如何操作，请参阅[向 Azure Functions 中的现有函数添加绑定](add-bindings-existing-function.md)。  
+
 ## <a name="supported-bindings"></a>支持的绑定
 
 [!INCLUDE [Full bindings table](../../includes/functions-bindings.md)]
 
 有关哪些绑定处于预览状态或已批准在生产环境中使用的信息，请参阅[支持的语言](supported-languages.md)。
+
+## <a name="bindings-code-examples"></a>绑定代码示例
+
+使用下表查找特定绑定类型的示例，这些示例演示如何在函数中使用绑定。 首先，选择与你的项目相对应的语言选项卡。 
+
+[!INCLUDE [functions-bindings-code-example-chooser](../../includes/functions-bindings-code-example-chooser.md)]
+
+## <a name="custom-bindings"></a>自定义绑定
+
+可以创建自定义输入和输出绑定。 绑定必须以 .NET 编写，但可以在任何支持的语言中使用。 有关创建自定义绑定的详细信息，请参阅[创建自定义输入和输出绑定](https://github.com/Azure/azure-webjobs-sdk/wiki/Creating-custom-input-and-output-bindings)。
 
 ## <a name="resources"></a>资源
 - [绑定表达式和模式](./functions-bindings-expressions-patterns.md)

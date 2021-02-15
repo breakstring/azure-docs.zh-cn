@@ -1,21 +1,23 @@
 ---
 title: Azure Cosmos DB 中的索引
-description: 了解索引在 Azure Cosmos DB 中的工作原理，学习受支持的不同类型的索引，例如范围索引、空间索引和组合索引。
+description: 了解 Azure Cosmos DB 中索引的工作原理、不同类型的索引（例如，支持的范围、空间、组合索引）。
 author: timsander1
 ms.service: cosmos-db
+ms.subservice: cosmosdb-sql
 ms.topic: conceptual
 ms.date: 05/21/2020
 ms.author: tisande
-ms.openlocfilehash: 7417515d6f3c293368868e380ac53f0c524b872d
-ms.sourcegitcommit: 5a37753456bc2e152c3cb765b90dc7815c27a0a8
+ms.openlocfilehash: b7349a08b93810dcc3befd6058302d6c4573ab8d
+ms.sourcegitcommit: 42a4d0e8fa84609bec0f6c241abe1c20036b9575
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/04/2020
-ms.locfileid: "87760866"
+ms.lasthandoff: 01/08/2021
+ms.locfileid: "98019204"
 ---
 # <a name="indexing-in-azure-cosmos-db---overview"></a>Azure Cosmos DB 中的索引 - 概述
+[!INCLUDE[appliesto-sql-api](includes/appliesto-sql-api.md)]
 
-Azure Cosmos DB 是一种架构不可知的数据库，你可用它来迭代应用程序，而无需处理架构或索引管理。 默认情况下，Azure Cosmos DB 自动对[容器](databases-containers-items.md#azure-cosmos-containers)中所有项的每个属性编制索引，不用定义任何架构或配置辅助索引。
+Azure Cosmos DB 是一种架构不可知的数据库，你可用它来迭代应用程序，而无需处理架构或索引管理。 默认情况下，Azure Cosmos DB 自动对[容器](account-databases-containers-items.md#azure-cosmos-containers)中所有项的每个属性编制索引，不用定义任何架构或配置辅助索引。
 
 本文的目的是说明 Azure Cosmos DB 如何为数据编制索引以及如何使用索引来提高查询性能。 建议先阅读本部分，然后再探索如何自定义[索引策略](index-policy.md)。
 
@@ -51,20 +53,20 @@ Azure Cosmos DB 将项转换为树的原因是，它允许通过这些树中属�
 
 下面是上述示例项中每个属性的路径：
 
-- /locations/0/country： "德国"
-- /locations/0/city： "柏林"
-- /locations/1/country： "法国"
-- /locations/1/city： "巴黎"
-- /headquarters/country： "华南"
-- /headquarters/employees：250
-- /exports/0/city： "莫斯科"
-- /exports/1/city： "雅典"
+- /locations/0/country:"Germany"
+- /locations/0/city:"Berlin"
+- /locations/1/country:"France"
+- /locations/1/city:"Paris"
+- /headquarters/country:"Belgium"
+- /headquarters/employees:250
+- /exports/0/city:"Moscow"
+- /exports/1/city:"Athens"
 
 写入项时，Azure Cosmos DB 会有效地对每个属性的路径及其相应的值编制索引。
 
-## <a name="index-kinds"></a>索引类型
+## <a name="types-of-indexes"></a><a id="index-types"></a>索引的类型
 
-Azure Cosmos DB 目前支持三种类型的索引。
+Azure Cosmos DB 目前支持三种类型的索引。 定义索引策略时，可以配置这些索引类型。
 
 ### <a name="range-index"></a>范围索引
 
@@ -120,7 +122,7 @@ Azure Cosmos DB 目前支持三种类型的索引。
    SELECT child FROM container c JOIN child IN c.properties WHERE child = 'value'
    ```
 
-范围索引可用于标量值（字符串或数字）。
+范围索引可用于标量值（字符串或数字）。 新建容器的默认索引策略会对任何字符串或数字强制使用范围索引。 若要了解如何配置范围索引，请参阅 [范围索引策略示例](how-to-manage-indexing-policy.md#range-index)
 
 ### <a name="spatial-index"></a>空间索引
 
@@ -135,7 +137,7 @@ Azure Cosmos DB 目前支持三种类型的索引。
 - 在查询的地理空间：
 
    ```sql
-   SELECT * FROM container c WHERE ST_WITHIN(c.property, {"type": "Point", "coordinates": [0.0, 10.0] } })
+   SELECT * FROM container c WHERE ST_WITHIN(c.property, {"type": "Point", "coordinates": [0.0, 10.0] })
    ```
 
 - 地理空间相交查询：
@@ -144,11 +146,11 @@ Azure Cosmos DB 目前支持三种类型的索引。
    SELECT * FROM c WHERE ST_INTERSECTS(c.property, { 'type':'Polygon', 'coordinates': [[ [31.8, -5], [32, -5], [31.8, -5] ]]  })  
    ```
 
-空间索引可在格式正确的 [GeoJSON](geospatial.md) 对象上使用。 目前支持点、线串、多边形和多面。
+空间索引可在格式正确的 [GeoJSON](./sql-query-geospatial-intro.md) 对象上使用。 目前支持点、线串、多边形和多面。 若要使用此索引类型，请 `"kind": "Range"` 在配置索引策略时使用属性设置。 若要了解如何配置空间索引，请参阅 [空间索引策略示例](how-to-manage-indexing-policy.md#spatial-index)
 
 ### <a name="composite-indexes"></a>组合索引
 
-对多个字段执行操作时，组合索引可提高效率。 组合索引类型用于：
+对多个字段执行操作时，组合索引可提高效率。 复合索引类型用于：
 
 - 对多个属性的 `ORDER BY` 查询：
 
@@ -168,11 +170,13 @@ Azure Cosmos DB 目前支持三种类型的索引。
  SELECT * FROM container c WHERE c.property1 = 'value' AND c.property2 > 'value'
 ```
 
-只要有一个筛选器谓词使用某一索引类型，查询引擎就将在扫描其余部分之前先评估该谓词。 例如，如果你有一个 SQL 查询，如 `SELECT * FROM c WHERE c.firstName = "Andrew" and CONTAINS(c.lastName, "Liu")`
+只要一个筛选器谓词使用其中一种索引类型，查询引擎就会在扫描其余部分之前计算。 例如，如果你有一个 SQL 查询，如 `SELECT * FROM c WHERE c.firstName = "Andrew" and CONTAINS(c.lastName, "Liu")`
 
 * 上面的查询将先使用索引筛选 firstName = "Andrew" 的条目， 然后通过后续管道传递所有 firstName = "Andrew" 的条目来评估 CONTAINS 筛选器谓词。
 
 * 如果使用不采用索引（如 CONTAINS）的函数，可额外添加使用该索引的筛选器谓词来加快查询速度和避免完整容器扫描。 筛选子句的顺序并不重要。 查询引擎将确定哪些谓词更具选择性，并相应地运行查询。
+
+若要了解如何配置复合索引，请参阅 [复合索引策略示例](how-to-manage-indexing-policy.md#composite-index)
 
 ## <a name="querying-with-indexes"></a>使用索引进行查询
 

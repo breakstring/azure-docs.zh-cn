@@ -8,16 +8,17 @@ ms.devlang: nodejs
 ms.topic: tutorial
 ms.date: 12/26/2018
 ms.author: jopapa
-ms.custom: seodec18, devx-track-javascript
+ms.custom: seodec18, devx-track-js
 ms.reviewer: sngun
-ms.openlocfilehash: e9cb30ca64fe697f9b8304f55381709083b8fbd2
-ms.sourcegitcommit: e71da24cc108efc2c194007f976f74dd596ab013
+ms.openlocfilehash: 181af5cf26d19a9f51e8d456e777badf7efa224d
+ms.sourcegitcommit: 3bdeb546890a740384a8ef383cf915e84bd7e91e
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/29/2020
-ms.locfileid: "87424233"
+ms.lasthandoff: 10/30/2020
+ms.locfileid: "93097815"
 ---
 # <a name="create-an-angular-app-with-azure-cosmos-dbs-api-for-mongodb---build-the-ui-with-angular"></a>使用 Azure Cosmos DB 的用于 MongoDB 的 API 创建 Angular 应用 - 使用 Angular 生成 UI
+[!INCLUDE[appliesto-mongodb-api](includes/appliesto-mongodb-api.md)]
 
 本教程包含多个部分，演示了如何通过 Express 和 Angular 创建以 Node.js 编写的新应用，然后将其连接到[使用 Cosmos DB 的用于 MongoDB 的 API 配置的 Cosmos 帐户](mongodb-introduction.md)。
 
@@ -353,7 +354,7 @@ ms.locfileid: "87424233"
 
 有了组件以后，如何让其显示在平面上？ 请修改 app.component.ts 中的默认组件。
 
-1. 在“资源管理器”窗格中，打开 **/app/app.component.ts**，将标题更改为 Heroes，然后将已创建组件的名称置于 heroes.components.ts (app-heroes) 中，以便引用该新组件。 文件的内容现在应如下所示： 
+1. 在“资源管理器”窗格中，打开 **/app/app.component.ts** ，将标题更改为 Heroes，然后将已创建组件的名称置于 heroes.components.ts (app-heroes) 中，以便引用该新组件。 文件的内容现在应如下所示： 
 
     ```ts
     import { Component } from '@angular/core';

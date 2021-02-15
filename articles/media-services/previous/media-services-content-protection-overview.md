@@ -14,17 +14,19 @@ ms.devlang: na
 ms.topic: article
 ms.date: 04/01/2019
 ms.author: juliako
-ms.openlocfilehash: a3a931955451722d7d925be482a78e1f6cc6d43d
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.openlocfilehash: 287f93a60a1c44b29b75def8cc3ee9adc577971c
+ms.sourcegitcommit: 77afc94755db65a3ec107640069067172f55da67
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87042981"
+ms.lasthandoff: 01/22/2021
+ms.locfileid: "98695918"
 ---
-# <a name="content-protection-overview"></a>内容保护概述 
+# <a name="content-protection-overview"></a>内容保护概述
+
+[!INCLUDE [media services api v2 logo](./includes/v2-hr.md)] 
 
 > [!NOTE]
-> 不会向媒体服务 v2 添加任何新特性或新功能。 <br/>查看最新版本：[媒体服务 v3](../latest/index.yml)。 另请参阅[从 v2 到 v3 的迁移指南](../latest/migrate-from-v2-to-v3.md)
+> 不会向媒体服务 v2 添加任何新特性或新功能。 <br/>查看最新版本：[媒体服务 v3](../latest/index.yml)。 另请参阅[从 v2 到 v3 的迁移指南](../latest/migrate-v-2-v-3-migration-introduction.md)
 
 可以使用 Azure 媒体服务在媒体从计算机离开到存储、处理和传送的整个过程中确保其安全。 借助媒体服务，可以传送使用高级加密标准 (AES-128) 或三个主要数字版权管理 (DRM) 系统（Microsoft PlayReady、Google Widevine 和 Apple FairPlay）中任意一个动态加密的实时和请求内容。 媒体服务还提供了用于向已授权客户端传送 AES 密钥和 DRM（PlayReady、Widevine 和 FairPlay）许可证的服务。 
 
@@ -36,7 +38,7 @@ ms.locfileid: "87042981"
 
 ## <a name="dynamic-encryption"></a>动态加密
 
-可以通过 Azure 媒体服务传送使用 AES 明文密钥或 DRM 加密（利用 PlayReady、Widevine 或 FairPlay）动态加密的内容。 如果内容是使用 AES 明文密钥加密的，并且是通过 HTTPS 发送的，则它在到达客户端之前不会以明文形式发送。 
+可以通过 Azure 媒体服务传送使用 AES 明文密钥或 DRM 加密（利用 PlayReady、Widevine 或 FairPlay）动态加密的内容。 如果内容使用 AES 明文密钥加密并通过 HTTPS 发送，则在到达客户端之前，内容不会处于明文状态。 
 
 每个加密方法均支持以下流式处理协议：
  
@@ -82,7 +84,7 @@ PlayReady 和 Widevine 使用通用加密模式（AES CTR 模式）。 FairPlay 
 
 ### <a name="token-replay-prevention"></a>令牌重放防护
 
-*令牌重放防护*功能允许媒体服务客户对同一令牌可用于请求密钥或许可证的次数设置限制。 客户可以在令牌中添加 `urn:microsoft:azure:mediaservices:maxuses` 类型的声明，其中值是令牌可用于获取许可证或密钥的次数。 对密钥传送服务使用同一令牌的所有后续请求都将返回未经授权的响应。 请参阅“如何在 [DRM 示例](https://github.com/Azure-Samples/media-services-v3-dotnet-tutorials/blob/master/AMSV3Tutorials/EncryptWithDRM/Program.cs#L601)中添加声明”。
+*令牌重放防护* 功能允许媒体服务客户对同一令牌可用于请求密钥或许可证的次数设置限制。 客户可以在令牌中添加 `urn:microsoft:azure:mediaservices:maxuses` 类型的声明，其中值是令牌可用于获取许可证或密钥的次数。 对密钥传送服务使用同一令牌的所有后续请求都将返回未经授权的响应。 请参阅“如何在 [DRM 示例](https://github.com/Azure-Samples/media-services-v3-dotnet-tutorials/blob/master/AMSV3Tutorials/EncryptWithDRM/Program.cs#L601)中添加声明”。
  
 #### <a name="considerations"></a>注意事项
 
@@ -103,7 +105,7 @@ PlayReady 和 Widevine 使用通用加密模式（AES CTR 模式）。 FairPlay 
 * 加密类型区分大小写。
 * 可以指定以下加密类型：
 
-  * **cenc**：适用于 PlayReady 或 Widevine （通用加密）
+  * **cenc**：对于 PlayReady 或 Widevine (常见的加密) 
   * **cbcs-aapl**：用于 FairPlay（AES CBC 加密）
   * **cbc**：用于 AES 信封加密
 
@@ -122,6 +124,6 @@ PlayReady 和 Widevine 使用通用加密模式（AES CTR 模式）。 FairPlay 
 ## <a name="related-links"></a>相关链接
 
 * [JWT 令牌身份验证](http://www.gtrifonov.com/2015/01/03/jwt-token-authentication-in-azure-media-services-and-dynamic-encryption/)
-* [将基于 Azure 媒体服务 OWIN MVC 的应用与 Azure Active Directory 集成，并基于 JWT 声明限制内容密钥传递](http://www.gtrifonov.com/2015/01/24/mvc-owin-azure-media-services-ad-integration/)
+* [将基于 Azure 媒体服务 OWIN MVC 的应用与 Azure Active Directory 相集成，并基于 JWT 声明限制内容密钥传送](http://www.gtrifonov.com/2015/01/24/mvc-owin-azure-media-services-ad-integration/)
 
 [content-protection]: ./media/media-services-content-protection-overview/media-services-content-protection.png

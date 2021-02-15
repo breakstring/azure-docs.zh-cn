@@ -4,12 +4,12 @@ ms.service: azure-functions
 ms.topic: include
 ms.date: 03/25/2020
 ms.author: glenga
-ms.openlocfilehash: 3f5c7021461b407e90d61ed045c112aab3c1c4e9
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.openlocfilehash: f102a5dd5b7dccba6643176d06d17a2a65171c90
+ms.sourcegitcommit: 80c1056113a9d65b6db69c06ca79fa531b9e3a00
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87055991"
+ms.lasthandoff: 12/09/2020
+ms.locfileid: "96904054"
 ---
 ## <a name="configure-your-local-environment"></a>配置本地环境
 
@@ -17,8 +17,8 @@ ms.locfileid: "87055991"
 
 + 具有活动订阅的 Azure 帐户。 [免费创建帐户](https://azure.microsoft.com/free/?ref=microsoft.com&utm_source=microsoft.com&utm_medium=docs&utm_campaign=visualstudio)。
 
-::: zone pivot="programming-language-csharp,programming-language-javascript,programming-language-typescript,programming-language-powershell,programming-language-java"  
-+ [Azure Functions Core Tools](../articles/azure-functions/functions-run-local.md#v2) 2.7.1846 或更高的 2.x 版本。
+::: zone pivot="programming-language-csharp,programming-language-javascript,programming-language-typescript,programming-language-powershell,programming-language-java,programming-language-other"  
++ [Azure Functions Core Tools](../articles/azure-functions/functions-run-local.md#v2) 版本 2.7.1846 或更高版本。
 ::: zone-end  
 ::: zone pivot="programming-language-python"
 + 对应于已安装的 Python 版本的 Azure Functions Core Tools 版本：
@@ -39,17 +39,14 @@ ms.locfileid: "87055991"
 + Azure Functions 支持的 [Python 3.8（64 位）](https://www.python.org/downloads/release/python-382/)、[Python 3.7（64 位）](https://www.python.org/downloads/release/python-375/)、[Python 3.6（64 位）](https://www.python.org/downloads/release/python-368/)。 
 ::: zone-end
 ::: zone pivot="programming-language-powershell"
-+ [PowerShell Core](/powershell/scripting/install/installing-powershell-core-on-windows)
-
-+ [.NET Core SDK 2.2+](https://www.microsoft.com/net/download)
++ [.NET Core SDK 3.1](https://www.microsoft.com/net/download)
 ::: zone-end
 ::: zone pivot="programming-language-java"  
-+ [Java 开发人员工具包](https://aka.ms/azure-jdks)版本 8。 
-
-    > [!IMPORTANT]
-    > + Java 11 的函数支持目前处于预览状态，Maven 原型默认创建 Java 8 部署。 如果要改为在 Java 11 上运行函数应用，则必须使用 Java 11 值手动更新 pom.xml 文件。 若要了解详细信息，请参阅 [Java 版本](../articles/azure-functions/functions-reference-java.md#java-versions)。 
-    > + `JAVA_HOME` 环境变量必须设置为正确版本的 JDK 的安装位置，以完成本快速入门。
++ [Java 开发人员工具包](/azure/developer/java/fundamentals/java-jdk-long-term-support)版本 8 或 11。 
 
 + [Apache Maven](https://maven.apache.org) 3.0 或更高版本。
 
+::: zone-end
+::: zone pivot="programming-language-other"
++ 所用语言的开发工具。 本教程使用 [R 编程语言](https://www.r-project.org/)作为示例。
 ::: zone-end

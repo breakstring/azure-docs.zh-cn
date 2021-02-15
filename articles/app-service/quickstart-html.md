@@ -6,17 +6,17 @@ ms.assetid: 60495cc5-6963-4bf0-8174-52786d226c26
 ms.topic: quickstart
 ms.date: 08/23/2019
 ms.author: msangapu
-ms.custom: mvc, cli-validate, seodec18
-ms.openlocfilehash: bd1e44aefed310826465dbf44dee1324f5a085b3
-ms.sourcegitcommit: 2ffa5bae1545c660d6f3b62f31c4efa69c1e957f
+ms.custom: mvc, cli-validate, seodec18, devx-track-azurecli
+ms.openlocfilehash: 9b85f04ca507b5d40c091b52507d0fad2cd3e798
+ms.sourcegitcommit: 0aec60c088f1dcb0f89eaad5faf5f2c815e53bf8
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/11/2020
-ms.locfileid: "88083476"
+ms.lasthandoff: 01/14/2021
+ms.locfileid: "98185693"
 ---
 # <a name="create-a-static-html-web-app-in-azure"></a>在 Azure 中创建静态 HTML Web 应用
 
-[Azure 应用服务](overview.md)提供高度可缩放、自修复的 Web 托管服务。 本快速入门演示如何将基本 HTML+CSS 站点部署到 Azure 应用服务。 你将在 [Cloud Shell](https://docs.microsoft.com/azure/cloud-shell/overview) 中完成本快速入门，但是也可以使用 [Azure CLI](/cli/azure/install-azure-cli) 在本地运行这些命令。
+[Azure 应用服务](overview.md)提供高度可缩放、自修复的 Web 托管服务。 本快速入门演示如何将基本 HTML+CSS 站点部署到 Azure 应用服务。 你将在 [Cloud Shell](../cloud-shell/overview.md) 中完成本快速入门，但是也可以使用 [Azure CLI](/cli/azure/install-azure-cli) 在本地运行这些命令。
 
 ![示例应用主页](media/quickstart-html/hello-world-in-browser-az.png)
 
@@ -58,11 +58,11 @@ az webapp up --location westeurope --name <app_name> --html
 
 - 创建一个采用指定名称的应用。
 
-- [使用 Zip](https://docs.microsoft.com/azure/app-service/deploy-zip) 将文件从当前工作目录部署到 Web 应用。
+- [使用 Zip](./deploy-zip.md) 将文件从当前工作目录部署到 Web 应用。
 
 此命令可能需要花费几分钟时间运行。 运行时，该命令会显示类似于以下示例的信息：
 
-<pre>
+```output
 {
   "app_url": "https://&lt;app_name&gt;.azurewebsites.net",
   "location": "westeurope",
@@ -74,7 +74,7 @@ az webapp up --location westeurope --name <app_name> --html
   "src_path": "/home/&lt;username&gt;/quickstart/html-docs-hello-world ",
   &lt; JSON data removed for brevity. &gt;
 }
-</pre>
+```
 
 记下 `resourceGroup` 值。 需要在[清理资源](#clean-up-resources)部分使用它。
 
@@ -86,7 +86,7 @@ az webapp up --location westeurope --name <app_name> --html
 
 ![示例应用主页](media/quickstart-html/hello-world-in-browser-az.png)
 
-**祝贺你！** 现已将第一个 HTML 应用部署到应用服务。
+祝贺你！  现已将第一个 HTML 应用部署到应用服务。
 
 ## <a name="update-and-redeploy-the-app"></a>更新并重新部署应用
 
@@ -102,7 +102,7 @@ az webapp up --location westeurope --name <app_name> --html
 az webapp up --location westeurope --name <app_name> --html
 ```
 
-完成部署后，切换回**浏览到应用**步骤中打开的浏览器窗口，然后刷新页面。
+完成部署后，切换回 **浏览到应用** 步骤中打开的浏览器窗口，然后刷新页面。
 
 ![已更新的示例应用主页](media/quickstart-html/hello-azure-in-browser-az.png)
 

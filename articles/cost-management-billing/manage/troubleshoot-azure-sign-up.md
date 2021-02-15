@@ -6,22 +6,23 @@ author: v-miegge
 manager: dcscontentpm
 tags: billing
 ms.service: cost-management-billing
+ms.subservice: billing
 ms.topic: troubleshooting
-ms.date: 06/05/2020
+ms.date: 01/28/2021
 ms.author: v-miegge
-ms.openlocfilehash: 0cf6f1c0fcc9a2da0bbfacc9e51076add107ed26
-ms.sourcegitcommit: d7008edadc9993df960817ad4c5521efa69ffa9f
+ms.openlocfilehash: 015e6058236190a04df152573621f0e57030d23b
+ms.sourcegitcommit: d1e56036f3ecb79bfbdb2d6a84e6932ee6a0830e
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/08/2020
-ms.locfileid: "86102695"
+ms.lasthandoff: 01/29/2021
+ms.locfileid: "99054155"
 ---
 # <a name="troubleshoot-issues-when-you-sign-up-for-a-new-account-in-azure-portal-or-azure-account-center"></a>排查在 Azure 门户或 Azure 帐户中心注册新帐户时遇到的问题
 
 尝试在 Microsoft Azure 门户或 Azure 帐户中心注册新帐户时，可能会遇到问题。 本简短指南将指导你完成注册过程，并在每个步骤讨论一些常见问题。
 
 > [!NOTE]
-> 如果你已有一个现有帐户，并且正在寻求排查登录问题的指导，请参阅[排查 Azure 订阅登录问题](https://docs.microsoft.com/azure/cost-management-billing/manage/troubleshoot-sign-in-issue)。
+> 如果你已有一个现有帐户，并且正在寻求排查登录问题的指导，请参阅[排查 Azure 订阅登录问题](./troubleshoot-sign-in-issue.md)。
 
 ## <a name="before-you-begin"></a>开始之前
 
@@ -75,8 +76,8 @@ InPrivate 浏览如何？
 
 #### <a name="you-see-the-message-your-current-account-type-is-not-supported"></a>你会看到消息“你当前的帐户类型不受支持”
 
-如果该帐户是在[非托管 Azure AD 目录](https://docs.microsoft.com/azure/active-directory/users-groups-roles/directory-self-service-signup)中注册的，并且不在你组织的 Azure AD 目录中，则可能会发生此问题。
-若要解决此问题，请使用其他帐户注册 Azure 帐户，或接管非托管 AD 目录。 有关详细信息，请参阅[在 Azure Active Directory 中以管理员身份接管非托管目录](https://docs.microsoft.com/azure/active-directory/users-groups-roles/domains-admin-takeover)。
+如果该帐户是在[非托管 Azure AD 目录](../../active-directory/enterprise-users/directory-self-service-signup.md)中注册的，并且不在你组织的 Azure AD 目录中，则可能会发生此问题。
+若要解决此问题，请使用其他帐户注册 Azure 帐户，或接管非托管 AD 目录。 有关详细信息，请参阅[在 Azure Active Directory 中以管理员身份接管非托管目录](../../active-directory/enterprise-users/domains-admin-takeover.md)。
 
 ## <a name="identity-verification-by-phone"></a>通过手机进行身份验证
 
@@ -106,7 +107,7 @@ InPrivate 浏览如何？
 
 #### <a name="credit-card-declined-or-not-accepted"></a>信用卡被拒绝或不被接受
 
-虚拟或预付信用卡或借记卡不能作为 Azure 订阅有效的付款选项。 要查看可能导致卡被拒绝的其他原因，请参阅[对 Azure 注册时卡被拒绝进行故障排除](https://docs.microsoft.com/azure/cost-management-billing/manage/troubleshoot-declined-card)。
+虚拟或预付信用卡或借记卡不能作为 Azure 订阅有效的付款选项。 要查看可能导致卡被拒绝的其他原因，请参阅[对 Azure 注册时卡被拒绝进行故障排除](./troubleshoot-declined-card.md)。
 
 #### <a name="credit-card-form-doesnt-support-my-billing-address"></a>信用卡窗体不支持我的帐单地址
 
@@ -130,7 +131,7 @@ InPrivate 浏览如何？
 
 ### <a name="i-saw-a-charge-on-my-free-trial-account"></a>我看到我的免费试用版帐户上产生了费用
 
-注册后，你可能会看到你的信用卡帐户上存在少量临时验证费用。 这一费用会在 3 到 5 天内被删除。 如果你为如何管理成本而担忧，请阅读有关[防止意外成本](https://docs.microsoft.com/azure/cost-management-billing/manage/getting-started)的详细信息。
+注册后，你可能会看到你的信用卡帐户上存在少量临时验证费用。 这一费用会在 3 到 5 天内被删除。 如果你为如何管理成本而担忧，请阅读有关[分析意外费用](../understand/analyze-unexpected-charges.md)的详细信息。
 
 ## <a name="agreement"></a>协议
 
@@ -138,19 +139,18 @@ InPrivate 浏览如何？
 
 ## <a name="other-issues"></a>其他问题
 
-### <a name="cant-activate-azure-benefit-plan-like-msdn-bizspark-bizsparkplus-or-mpn"></a>无法激活 MSDN、BizSpark、BizSparkPlus 或 MPN 等 Azure 权益计划
+### <a name="cant-activate-azure-benefit-plan-like-visual-studio-bizspark-bizsparkplus-or-mpn"></a>无法激活 Visual Studio、BizSpark、BizSparkPlus 或 MPN 等 Azure 权益计划
 
 请检查使用的是否是正确的登录凭据。 然后检查权益计划，并验证是否符合资格。
-- MSDN
-  - 在 [MSDN 帐户页](https://msdn.microsoft.com/subscriptions/manage/default.aspx)上验证资格状态。
-  - 如果无法验证资格状态，请联系 [MSDN 订阅客服中心](https://msdn.microsoft.com/library/aa493452.aspx)。
+- Visual Studio
+  - 在 [Visual Studio 帐户页面](https://my.visualstudio.com/Benefits)上验证资格状态。
+  - 如果无法验证状态，请联系 [Visual Studio 订阅支持部门](https://visualstudio.microsoft.com/subscriptions/support/)。
 - 适用于初创企业的 Microsoft
   - 登录到[适用于初创企业的 Microsoft 门户](https://startups.microsoft.com/#start-two)，验证你的资格状态，看你是否符合适用于初创企业的 Microsoft 的资格。
   - 如果无法验证你的状态，可以在[适用于初创企业的 Microsoft 论坛](https://www.microsoftpartnercommunity.com/t5/Microsoft-for-Startups/ct-p/Microsoft_Startups)上获取帮助。
 - MPN
   - 登录到 [MPN 门户](https://mspartner.microsoft.com/Pages/Locale.aspx)，验证资格状态。 如果拥有相应的[云平台能力](https://mspartner.microsoft.com/pages/membership/cloud-platform-competency.aspx)，可能会符合其他权益的资格。
   - 如果无法验证资格状态，请联系 [MPN 支持](https://mspartner.microsoft.com/Pages/Support/Premium/contact-support.aspx)。
-
 
 ### <a name="cant-activate-new-azure-in-open-subscription"></a>无法激活新的 Azure 开放许可订阅
 
@@ -160,10 +160,10 @@ InPrivate 浏览如何？
 
 Azure 计费和订阅的其他疑难解答文章
 
-- [银行卡被拒绝](https://docs.microsoft.com/azure/cost-management-billing/manage/troubleshoot-declined-card)
-- [订阅登录问题](https://docs.microsoft.com/azure/cost-management-billing/manage/troubleshoot-sign-in-issue)
-- [找不到任何订阅](https://docs.microsoft.com/azure/cost-management-billing/manage/no-subscriptions-found)
-- [企业成本视图已禁用](https://docs.microsoft.com/azure/cost-management-billing/manage/enterprise-mgmt-grp-troubleshoot-cost-view)
+- [银行卡被拒绝](./troubleshoot-declined-card.md)
+- [订阅登录问题](./troubleshoot-sign-in-issue.md)
+- [找不到任何订阅](./no-subscriptions-found.md)
+- [企业成本视图已禁用](./enterprise-mgmt-grp-troubleshoot-cost-view.md)
 
 ## <a name="contact-us-for-help"></a>联系我们以获取帮助
 
@@ -171,4 +171,4 @@ Azure 计费和订阅的其他疑难解答文章
 
 ## <a name="find-out-more-about-azure-cost-management"></a>详细了解 Azure 成本管理
 
-- [Azure 成本管理和计费文档](https://docs.microsoft.com/azure/cost-management-billing)
+- [Azure 成本管理和计费文档](../index.yml)

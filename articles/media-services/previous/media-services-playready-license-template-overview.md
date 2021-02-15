@@ -14,14 +14,17 @@ ms.devlang: na
 ms.topic: article
 ms.date: 03/19/2019
 ms.author: juliako
-ms.openlocfilehash: 1fcb935a7a07629ba3d7424a39f6c8542628a842
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.openlocfilehash: 8cdf5915396fc40c12644552bb24a044279ea32d
+ms.sourcegitcommit: 2c586a0fbec6968205f3dc2af20e89e01f1b74b5
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87084613"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92019335"
 ---
 # <a name="media-services-playready-license-template-overview"></a>媒体服务 PlayReady 许可证模板概述
+
+[!INCLUDE [media services api v2 logo](./includes/v2-hr.md)]
+
 Azure 媒体服务现在提供了用于交付 PlayReady 许可证的服务。 当播放器（例如 Silverlight）尝试播放受 PlayReady 保护的内容时，将向许可证交付服务发送请求以获取许可证。 如果许可证服务批准了该请求，则会颁发该许可证，该许可证将发送到客户端，并用来解密和播放指定的内容。
 
 媒体服务还提供了可以用来配置 PlayReady 许可证的 API。 许可证包含了当用户尝试播放受保护的内容时要由 PlayReady 数字版权管理 (DRM) 运行时强制实施的权限和限制。
@@ -83,7 +86,7 @@ XML 遵循“PlayReady 许可证模板 XML 架构”部分中定义的 PlayReady
 > 
 > 
 
-有关 Silverlight 支持的保护级别的示例，请参阅 [Silverlight 支持的输出保护](https://go.microsoft.com/fwlink/?LinkId=617318)。
+有关 Silverlight 支持的保护级别的示例，请参阅 [Silverlight 支持的输出保护](/previous-versions/windows/silverlight/dotnet-windows-silverlight/cc838192(v=vs.95))。
 
 ## <a name="playready-license-template-xml-schema"></a><a id="schema"></a>PlayReady 许可证模板 XML 架构
 ```xml

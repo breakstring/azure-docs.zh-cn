@@ -1,30 +1,33 @@
 ---
-title: 管理 Azure 媒体服务 v3 帐户 | Microsoft Docs
+title: 管理 Azure 媒体服务 v3 帐户
 description: 若要开始管理、加密、编码、分析和流式处理 Azure 中的媒体内容，需要创建媒体服务帐户。 本文介绍如何管理 Azure 媒体服务 v3 帐户。
 services: media-services
-documentationcenter: ''
-author: Juliako
+author: IngridAtMicrosoft
 manager: femila
 editor: ''
 ms.service: media-services
 ms.workload: ''
-ms.topic: article
-ms.date: 07/08/2019
-ms.author: juliako
-ms.openlocfilehash: 46f5644fb47b840f273ccab37da4f4743ad335f3
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.topic: conceptual
+ms.date: 11/05/2020
+ms.author: inhenkel
+ms.openlocfilehash: 49cdee15923123ced03c2c6bc750e1b98dd42887
+ms.sourcegitcommit: 100390fefd8f1c48173c51b71650c8ca1b26f711
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87053124"
+ms.lasthandoff: 01/27/2021
+ms.locfileid: "98896370"
 ---
 # <a name="manage-azure-media-services-v3-accounts"></a>管理 Azure 媒体服务 v3 帐户
 
+[!INCLUDE [media services api v3 logo](./includes/v3-hr.md)]
+
 若要开始管理、加密、编码、分析和流式处理 Azure 中的媒体内容，需要创建媒体服务帐户。 创建媒体服务帐户时，需要提供 Azure 存储帐户资源的名称。 指定存储帐户会附加到媒体服务帐户。 媒体服务帐户和所有关联的存储帐户必须位于同一 Azure 订阅中。 有关详细信息，请参阅[存储帐户](storage-account-concept.md)。
+
+[!INCLUDE [account creation note](./includes/note-2020-05-01-account-creation.md)]
 
 ## <a name="moving-a-media-services-account-between-subscriptions"></a>在订阅之间移动媒体服务帐户 
 
-如果需要将媒体服务帐户移到新订阅，需要先将包含媒体服务帐户的整个资源组移到新订阅。 必须移动所有附加的资源： Azure 存储帐户、Azure CDN 配置文件等。有关详细信息，请参阅[将资源移到新的资源组或订阅](../../azure-resource-manager/management/move-resource-group-and-subscription.md)。 与 Azure 中的任何资源一样，资源组移动可能需要一些时间才能完成。
+如果需要将媒体服务帐户移到新订阅，需要先将包含媒体服务帐户的整个资源组移到新订阅。 必须移动所有附加的资源： Azure 存储帐户、Azure CDN 配置文件等。有关详细信息，请参阅 [将资源移到新的资源组或订阅](../../azure-resource-manager/management/move-resource-group-and-subscription.md)。 与 Azure 中的任何资源一样，资源组移动可能需要一些时间才能完成。
 
 > [!NOTE]
 > 媒体服务 v3 支持多租户模型。
@@ -37,7 +40,7 @@ ms.locfileid: "87053124"
 > [!IMPORTANT]
 > 在移动成功完成之前，请勿启动流式处理终结点。
 
-### <a name="troubleshoot"></a>故障排除 
+### <a name="troubleshoot"></a>故障排除
 
 如果媒体服务帐户或关联的 Azure 存储帐户在资源组移动后变为“已断开连接”状态，请尝试轮换存储帐户密钥。 如果轮换存储帐户密钥不能解决媒体服务帐户的“已断开连接”状态，请通过媒体服务帐户中的“支持 + 疑难解答”菜单来提交新的支持请求。  
 

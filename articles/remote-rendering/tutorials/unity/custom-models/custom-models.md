@@ -5,12 +5,13 @@ author: florianborn71
 ms.author: flborn
 ms.date: 06/15/2020
 ms.topic: tutorial
-ms.openlocfilehash: 3753c809d8222030a885693ede800fe17c08b14b
-ms.sourcegitcommit: 152c522bb5ad64e5c020b466b239cdac040b9377
+ms.custom: devx-track-csharp
+ms.openlocfilehash: 3a278b6e725488d6107e6b0819e002d1dafe4774
+ms.sourcegitcommit: f377ba5ebd431e8c3579445ff588da664b00b36b
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/14/2020
-ms.locfileid: "88224537"
+ms.lasthandoff: 02/05/2021
+ms.locfileid: "99591657"
 ---
 # <a name="tutorial-interfaces-and-custom-models"></a>教程：接口和自定义模型
 
@@ -29,18 +30,18 @@ ms.locfileid: "88224537"
 
 ## <a name="get-started-with-the-mixed-reality-toolkit-mrtk"></a>混合现实工具包 (MRTK) 入门
 
-混合现实工具包 (MRTK) 是用于构建混合现实体验的跨平台工具包。 我们将使用 MRTK 2.3 实现其交互和可视化功能。
+混合现实工具包 (MRTK) 是用于构建混合现实体验的跨平台工具包。 我们将使用 MRTK 2.5.1 实现其交互和可视化功能。
 
-若要添加 MRTK，请按照 [MRTK 入门](https://microsoft.github.io/MixedRealityToolkit-Unity/version/releases/2.3.0/Documentation/GettingStartedWithTheMRTK.html)中列出的[所需步骤](https://microsoft.github.io/MixedRealityToolkit-Unity/version/releases/2.3.0/Documentation/GettingStartedWithTheMRTK.html#required)进行操作。
+若要添加 MRTK，请按照 [MRTK 安装指南](https://microsoft.github.io/MixedRealityToolkit-Unity/version/releases/2.5.1/Documentation/Installation.html)中列出的[所需步骤](https://microsoft.github.io/MixedRealityToolkit-Unity/version/releases/2.5.1/Documentation/Installation.html#required)进行操作。
 
 这些步骤如下：
- - [获取最新的 MRTK Unity 包](https://microsoft.github.io/MixedRealityToolkit-Unity/version/releases/2.3.0/Documentation/GettingStartedWithTheMRTK.html#get-the-latest-mrtk-unity-packages)
-     - 即使显示它是“最新”版本，但本教程适用于版本 2.3。
+ - [获取最新的 MRTK Unity 包](https://microsoft.github.io/MixedRealityToolkit-Unity/version/releases/2.5.1/Documentation/Installation.html#1-get-the-latest-mrtk-unity-packages)
+     - 虽然指示获取“最新”版，但请使用 MRTK 版本页中的 2.5.1 版。
      - 在本教程中，我们只使用 Foundation 包。 不需要 Extensions、Tools 和 Examples 包  。
- - [将 MRTK 包导入 Unity 项目](https://microsoft.github.io/MixedRealityToolkit-Unity/version/releases/2.3.0/Documentation/GettingStartedWithTheMRTK.html#import-mrtk-packages-into-your-unity-project)
- - [将 Unity 项目切换到目标平台](https://microsoft.github.io/MixedRealityToolkit-Unity/version/releases/2.3.0/Documentation/GettingStartedWithTheMRTK.html#switch-your-unity-project-to-the-target-platform)
+ - [将 MRTK 包导入 Unity 项目](https://microsoft.github.io/MixedRealityToolkit-Unity/version/releases/2.5.1/Documentation/Installation.html#2-import-mrtk-packages-into-your-unity-project)
+ - [将 Unity 项目切换到目标平台](https://microsoft.github.io/MixedRealityToolkit-Unity/version/releases/2.5.1/Documentation/Installation.html#3-switch-your-unity-project-to-the-target-platform)
      - 你应在第一章中已执行过此步骤，但现在正适合再次检验学习成果。
- - [将 MRTK 添加到新场景或新项目中](https://microsoft.github.io/MixedRealityToolkit-Unity/version/releases/2.3.0/Documentation/GettingStartedWithTheMRTK.html#add-mrtk-to-a-new-scene-or-new-project)
+ - [将 MRTK 添加到新场景或新项目中](https://microsoft.github.io/MixedRealityToolkit-Unity/version/releases/2.5.1/Documentation/Installation.html#4-add-and-configure-mrtk-with-a-new-scene)
      - 可以将 MRTK 添加到新场景并重新添加协调器和模型对象/脚本，也可以使用“混合现实工具包 -> 添加到场景并配置”菜单命令将 MRTK 添加到现有场景。
 
 ## <a name="import-assets-used-by-this-tutorial"></a>导入本教程要使用的资产
@@ -93,7 +94,7 @@ ms.locfileid: "88224537"
 
 1. 在与 RemoteRenderingCoordinator 相同的文件夹中创建一个名为 RemoteRenderedModel 的新脚本 。 将整个内容替换为以下代码：
 
-    ```csharp
+    ```cs
     // Copyright (c) Microsoft Corporation. All rights reserved.
     // Licensed under the MIT License. See LICENSE in the project root for license information.
 

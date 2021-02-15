@@ -1,36 +1,44 @@
 ---
-title: 快速入门：计算机视觉客户端库 | Microsoft Docs
+title: 快速入门：计算机视觉客户端库
 titleSuffix: Azure Cognitive Services
-description: 参考本快速入门，将应用程序从 Azure 认知服务连接到计算机视觉 API。
+description: 了解如何在应用程序中通过所选语言的本机客户端库来使用 Azure 计算机视觉。
 services: cognitive-services
 author: PatrickFarley
 manager: nitinme
 ms.service: cognitive-services
 ms.subservice: computer-vision
 ms.topic: quickstart
-ms.date: 06/29/2020
+ms.date: 12/15/2020
 ms.author: pafarley
-ms.custom: devx-track-python, devx-track-javascript
-zone_pivot_groups: programming-languages-set-one
-ms.openlocfilehash: 699f2c3b16346a88bdd5828c32dc64225a712e05
-ms.sourcegitcommit: 7fe8df79526a0067be4651ce6fa96fa9d4f21355
+ms.custom:
+- devx-track-python
+- devx-track-js
+- devx-track-csharp
+- cog-serv-seo-aug-2020
+zone_pivot_groups: programming-languages-computer-vision
+keywords: computer vision, computer vision service
+ms.openlocfilehash: 50976de4a60e5330740bcbf387d74c505316c0cf
+ms.sourcegitcommit: 77ab078e255034bd1a8db499eec6fe9b093a8e4f
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/06/2020
-ms.locfileid: "87852032"
+ms.lasthandoff: 12/16/2020
+ms.locfileid: "97560808"
 ---
 # <a name="quickstart-use-the-computer-vision-client-library"></a>快速入门：使用计算机视觉客户端库
 
-开始使用计算机视觉客户端库。 请按照以下步骤安装程序包并试用基本任务的示例代码。 使用计算机视觉可以访问用于处理图像并返回信息的高级算法。
+开始使用计算机视觉 REST API 或客户端库。 计算机视觉服务提供 AI 算法，可用于处理图像并返回其视觉对象特征的相关信息。 请按照以下步骤将包安装到应用程序中并试用基本任务的示例代码。
 
-使用计算机视觉客户端库可以：
 
-* 分析图像中的标记、文本说明、人脸、成人内容，等等。
-* 使用批量读取 API 识别印刷体文本和手写文本。
 
 ::: zone pivot="programming-language-csharp"
 
 [!INCLUDE [C# SDK quickstart](../includes/quickstarts-sdk/csharp-sdk.md)]
+
+::: zone-end
+
+::: zone pivot="programming-language-python"
+
+[!INCLUDE [Python SDK quickstart](../includes/quickstarts-sdk/python-sdk.md)]
 
 ::: zone-end
 
@@ -46,14 +54,14 @@ ms.locfileid: "87852032"
 
 ::: zone-end
 
-::: zone pivot="programming-language-python"
-
-[!INCLUDE [Python SDK quickstart](../includes/quickstarts-sdk/python-sdk.md)]
-
-::: zone-end
-
 ::: zone pivot="programming-language-go"
 
 [!INCLUDE [Go SDK quickstart](../includes/quickstarts-sdk/go-sdk.md)]
+
+::: zone-end
+
+::: zone pivot="programming-language-rest-api"
+
+[!INCLUDE [REST API quickstart](../includes/curl-quickstart.md)]
 
 ::: zone-end

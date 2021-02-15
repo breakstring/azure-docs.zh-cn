@@ -1,7 +1,7 @@
 ---
 title: 双类支持向量机：模块参考
 titleSuffix: Azure Machine Learning
-description: 了解如何使用 Azure 机器学习中的**双类支持向量机**模块来基于支持向量机算法创建模型。
+description: 了解如何在 Azure 机器学习中使用 Two-Class 支持向量机模块来创建二进制分类器。
 services: machine-learning
 ms.service: machine-learning
 ms.subservice: core
@@ -9,16 +9,16 @@ ms.topic: reference
 author: likebupt
 ms.author: keli19
 ms.date: 04/22/2020
-ms.openlocfilehash: 912d6b80914232d1a2ed2b1fe987ebdf949a1abc
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 46cfdd319fc89e569d165dc2e11303e67c6dd54e
+ms.sourcegitcommit: 7cc10b9c3c12c97a2903d01293e42e442f8ac751
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "82136492"
+ms.lasthandoff: 11/06/2020
+ms.locfileid: "93420557"
 ---
 # <a name="two-class-support-vector-machine-module"></a>“双类支持向量机”模块
 
-本文介绍了 Azure 机器学习设计器（预览版）中的一个模块。
+本文介绍 Azure 机器学习设计器中的一个模块。
 
 使用此模块，可以基于支持向量机算法创建模型。 
 
@@ -38,13 +38,13 @@ ms.locfileid: "82136492"
 
 对于此模型类型，建议在使用数据集来训练分类器之前对数据集进行标准化。
   
-1.  将**双类支持向量机**模块添加到你的管道。  
+1.  将 **双类支持向量机** 模块添加到你的管道。  
   
 2.  通过设置“创建训练程序模式”选项，指定要如何对模型进行训练。  
   
     -   “单个参数”：如果你知道自己想要如何配置模型，可以提供一组特定的值作为参数。  
 
-    -   **参数范围**：如果不确定最佳参数，可以使用[优化模型超参数](tune-model-hyperparameters.md)模块来找到最佳参数。 你提供一定的值范围，然后训练程序会循环访问设置的多个组合，以确定可产生最佳结果的值组合。
+    -   **参数范围** ：如果不确定最佳参数，可以使用 [优化模型超参数](tune-model-hyperparameters.md)模块来找到最佳参数。 你提供一定的值范围，然后训练程序会循环访问设置的多个组合，以确定可产生最佳结果的值组合。
 
 3.  对于“迭代数”，请键入一个数字来指定在构建模型时使用的迭代数目。  
   
@@ -86,7 +86,7 @@ ms.locfileid: "82136492"
 
 + 若要保存已训练模型的快照，请选择“训练模型”模块右侧面板中的“输出”选项卡。 选择“注册数据集”图标将模型保存为可重用模块。
 
-+ 若要使用模型进行评分，请向管道中添加**评分模型**模块。
++ 若要使用模型进行评分，请向管道中添加 **评分模型** 模块。
 
 
 ## <a name="next-steps"></a>后续步骤

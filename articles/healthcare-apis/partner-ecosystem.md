@@ -8,12 +8,12 @@ ms.subservice: fhir
 ms.topic: reference
 ms.date: 10/22/2019
 ms.author: chrupa
-ms.openlocfilehash: edc337849b53cb8e818114d3dd100d30cf00b895
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 30fcaccbb4b87212cc4474b418712ba849156a8e
+ms.sourcegitcommit: 7e97ae405c1c6c8ac63850e1b88cf9c9c82372da
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "84871377"
+ms.lasthandoff: 12/29/2020
+ms.locfileid: "97803164"
 ---
 # <a name="partner-ecosystem-for-azure-api-for-fhir"></a>Azure API for FHIR 的合作伙伴生态系统
 Azure API for FHIR 已向所有 Azure 客户发行 Azure API for FHIR 正式版，对此我们感到非常兴奋。 对于大家可以使用本公司的服务构建的解决方案，我们尤其感到振奋。  
@@ -23,9 +23,9 @@ Azure API for FHIR 已向所有 Azure 客户发行 Azure API for FHIR 正式版�
 
 | Partner          | 功能                               | 支持的国家/地区         | 联系人                                                                                                                                |
 |------------------|--------------------------------------------|-----------------------------|----------------------------------------------------------------------------------------------------------------------------------------|
-| Medal            | 云标识化、传统 FHIR 转换  | USA                         | [联系人](http://www.medal.com/)                                                                                           |
+| Medal            | 云标识化、传统 FHIR 转换  | USA                         | [联系人](https://asab.squarespace.com/asab-medal/)                                                                                           |
 | Rhapsody         | 传统 FHIR 转换                     | 美国、澳大利亚、新西兰 | [联系人](https://rhapsody.health/contact-us)                                                                                          |
-| iNTERFACEWARE    | 传统 FHIR 转换                     | 美国、加拿大                 | [联系人](https://www.interfaceware.com/contact.html)                                                                                  |
+| iNTERFACEWARE    | 传统 FHIR 转换                     | 美国、加拿大                 | [联系人](https://www.interfaceware.com/contact)                                                                                  |
 | Darena Solutions | 应用程序开发、系统集成商 | USA                         | [联系人](https://www.darenasolutions.com/contact)                                                                                     |
 | NewWave          | 应用程序开发、系统集成商 | USA                         | [联系人](https://newwave.io/get-in-touch/)                                                                                            |
 | Dapasoft         | 应用程序开发、系统集成商 | 美国、加拿大                 | [联系人](https://www.dapasoft.com/contact-us/)                                                                                        |

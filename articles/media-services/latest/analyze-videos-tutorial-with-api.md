@@ -1,26 +1,27 @@
 ---
 title: 使用媒体服务 v3 来分析视频
-titleSuffix: Azure Media Services
 description: 了解如何使用 Azure 媒体服务分析视频。
 services: media-services
 documentationcenter: ''
-author: Juliako
+author: IngridAtMicrosoft
 manager: femila
 editor: ''
 ms.service: media-services
 ms.workload: ''
 ms.topic: tutorial
-ms.date: 07/09/2020
-ms.author: juliako
+ms.date: 08/31/2020
+ms.author: inhenkel
 ms.custom: seodec18
-ms.openlocfilehash: e5c74f6356c8b07cfef923dfb5e12547aa4693ab
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.openlocfilehash: c3ca3197e786bbfac20bec2370d2aa920ad2c4df
+ms.sourcegitcommit: 100390fefd8f1c48173c51b71650c8ca1b26f711
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87053558"
+ms.lasthandoff: 01/27/2021
+ms.locfileid: "98891516"
 ---
 # <a name="tutorial-analyze-videos-with-media-services-v3"></a>教程：使用媒体服务 v3 来分析视频
+
+[!INCLUDE [media services api v3 logo](./includes/v3-hr.md)]
 
 > [!NOTE]
 > 尽管本教程使用了 [.NET SDK](/dotnet/api/microsoft.azure.management.media.models.liveevent?view=azure-dotnet) 示例，但 [REST API](/rest/api/media/liveevents)、[CLI](/cli/azure/ams/live-event?view=azure-cli-latest) 或其他受支持的 [SDK](media-services-apis-overview.md#sdks) 的常规步骤是相同的。
@@ -66,8 +67,8 @@ ms.locfileid: "87053558"
 
 该示例执行以下操作：
 
-1. 创建**转换**和用于分析视频的**作业**。
-2. 创建输入**资产**，并将视频上传到其中。 该资产用作作业的输入。
+1. 创建 **转换** 和用于分析视频的 **作业**。
+2. 创建输入 **资产**，并将视频上传到其中。 该资产用作作业的输入。
 3. 创建用于存储作业输出的输出资产。
 4. 提交作业。
 5. 检查作业的状态。
@@ -84,7 +85,7 @@ ms.locfileid: "87053558"
 
 ### <a name="create-an-input-asset-and-upload-a-local-file-into-it"></a>创建输入资产并将本地文件上传到该资产 
 
-CreateInputAsset 函数创建新的输入[资产](/rest/api/media/assets)并将指定的本地视频文件上传到该资产。 此资产用作编码作业的输入。 在媒体服务 v3 中，作业输入可以是资产，也可以是可通过 HTTPS URL 使用媒体服务帐户访问的内容。 要了解如何从 HTTPS URL 进行编码，请参阅[此](job-input-from-http-how-to.md)文章。  
+CreateInputAsset 函数创建新的输入[资产](/rest/api/media/assets)并将指定的本地视频文件上传到该资产  。 此资产用作编码作业的输入。 在媒体服务 v3 中，作业输入可以是资产，也可以是可通过 HTTPS URL 使用媒体服务帐户访问的内容。 要了解如何从 HTTPS URL 进行编码，请参阅[此](job-input-from-http-how-to.md)文章。  
 
 在媒体服务 v3 中，使用 Azure 存储 API 上传文件。 以下 .NET 片段显示如何上传。
 
@@ -100,19 +101,19 @@ CreateInputAsset 函数创建新的输入[资产](/rest/api/media/assets)并将�
 
 ### <a name="create-an-output-asset-to-store-the-result-of-the-job"></a>创建一个输出资产以存储作业的结果
 
-输出[资产](/rest/api/media/assets)会存储作业结果。 项目定义 DownloadResults 函数，该函数将结果从此输出资产中下载到**输出**文件夹中，便于用户查看获取的内容。
+输出[资产](/rest/api/media/assets)会存储作业结果。 项目定义 DownloadResults 函数，该函数将结果从此输出资产中下载到 **输出** 文件夹中，便于用户查看获取的内容。
 
 [!code-csharp[Main](../../../media-services-v3-dotnet-tutorials/AMSV3Tutorials/AnalyzeVideos/Program.cs#CreateOutputAsset)]
 
 ### <a name="create-a-transform-and-a-job-that-analyzes-videos"></a>创建转换和分析视频的作业
 
-对媒体服务中的内容进行编码或处理时，一种常见的模式是将编码设置设为脚本。 然后，需提交**作业**，将该脚本应用于视频。 为每个新视频提交新 Job 后，可将该脚本应用到库中的所有视频。 媒体服务中的脚本称为“转换”。 有关详细信息，请参阅[转换和作业](./transforms-jobs-concept.md)。 本教程中所述的示例定义了分析指定视频的脚本。
+对媒体服务中的内容进行编码或处理时，一种常见的模式是将编码设置设为脚本。 然后，需提交 **作业**，将该脚本应用于视频。 为每个新视频提交新 Job 后，可将该脚本应用到库中的所有视频。 媒体服务中的脚本称为“转换”。 有关详细信息，请参阅[转换和作业](./transforms-jobs-concept.md)。 本教程中所述的示例定义了分析指定视频的脚本。
 
 #### <a name="transform"></a>转换
 
-创建新[转换](/rest/api/media/transforms)实例时，需要指定希望生成的输出内容。 TransformOutput 是必需参数。 每个 TransformOutput 包含一个预设 。 预设介绍视频和/或音频处理操作的各个步骤，这些操作可生成所需 TransformOutput 。 在此示例中，使用了 **VideoAnalyzerPreset** 预设，并且将语言 (“en-US”) 传递给了其构造函数 (`new VideoAnalyzerPreset("en-US")`)。 凭借此预设，可以从视频提取多个音频和视频见解。 如需从视频提取多个音频见解，可以使用**AudioAnalyzerPreset** 预设。
+创建新[转换](/rest/api/media/transforms)实例时，需要指定希望生成的输出内容。 TransformOutput 是必需参数。 每个 TransformOutput 包含一个预设 。 预设介绍视频和/或音频处理操作的各个步骤，这些操作可生成所需 TransformOutput 。 在此示例中，使用了 **VideoAnalyzerPreset** 预设，并且将语言 (“en-US”) 传递给了其构造函数 (`new VideoAnalyzerPreset("en-US")`)。 凭借此预设，可以从视频提取多个音频和视频见解。 如需从视频提取多个音频见解，可以使用 **AudioAnalyzerPreset** 预设。
 
-创建 Transform 时，首先检查是否其中一个已存在使用 Get 方法，如下面的代码中所示 。 在 Media Services v3**获取**实体上的方法返回**null**如果实体不存在 （不区分大小写的名称检查）。
+创建 Transform 时，首先检查是否其中一个已存在使用 Get 方法，如下面的代码中所示 。 在 Media Services v3 **获取** 实体上的方法返回 **null** 如果实体不存在 （不区分大小写的名称检查）。
 
 [!code-csharp[Main](../../../media-services-v3-dotnet-tutorials/AMSV3Tutorials/AnalyzeVideos/Program.cs#EnsureTransformExists)]
 
@@ -132,7 +133,7 @@ CreateInputAsset 函数创建新的输入[资产](/rest/api/media/assets)并将�
 
 事件网格旨在实现高可用性、一致性能和动态缩放。 使用事件网格，应用可以侦听和响应来自几乎所有 Azure 服务和自定义源的事件。 处理基于 HTTP 的反应事件非常简单，这有助于通过对事件的智能筛选和路由生成高效的解决方案。 有关详细信息，请参阅[将事件路由到自定义 Web 终结点](job-state-events-cli-how-to.md)。
 
-**作业**通常会经历以下状态：**已计划**、**已排队**、**正在处理**、**已完成**（最终状态）。 如果作业出错，则显示“错误”状态。 如果作业正处于取消过程中，则显示“正在取消”，完成时则显示“已取消” 。
+**作业** 通常会经历以下状态：**已计划**、**已排队**、**正在处理**、**已完成**（最终状态）。 如果作业出错，则显示“错误”状态。 如果作业正处于取消过程中，则显示“正在取消”，完成时则显示“已取消” 。
 
 [!code-csharp[Main](../../../media-services-v3-dotnet-tutorials/AMSV3Tutorials/AnalyzeVideos/Program.cs#WaitForJobToFinish)]
 

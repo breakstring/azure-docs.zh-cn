@@ -4,16 +4,16 @@ description: 了解如何连接到 Azure 中的 Analysis Services 服务器并�
 author: minewiskan
 ms.service: azure-analysis-services
 ms.topic: conceptual
-ms.date: 04/17/2020
+ms.date: 12/01/2020
 ms.author: owend
 ms.reviewer: minewiskan
 ms.custom: references_regions
-ms.openlocfilehash: 170cf0081e6671451ece6dc2924ae7e418f520a2
-ms.sourcegitcommit: 3543d3b4f6c6f496d22ea5f97d8cd2700ac9a481
+ms.openlocfilehash: 4abe1e9c6f9d7b62792936f816b9c46a937be41a
+ms.sourcegitcommit: d60976768dec91724d94430fb6fc9498fdc1db37
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/20/2020
-ms.locfileid: "86506768"
+ms.lasthandoff: 12/02/2020
+ms.locfileid: "96499418"
 ---
 # <a name="connecting-to-servers"></a>连接到服务器
 
@@ -21,9 +21,9 @@ ms.locfileid: "86506768"
 
 ## <a name="client-libraries"></a>客户端库
 
-[获取最新的客户端库](https://docs.microsoft.com/analysis-services/client-libraries?view=azure-analysis-services-current)
+[获取最新的客户端库](/analysis-services/client-libraries?view=azure-analysis-services-current&preserve-view=true)
 
-与服务器的所有连接（无论连接类型）都需要更新后的 AMO、ADOMD.NET 和 OLEDB 客户端库才能连接到 Analysis Services 服务器。 对于 SSMS、Visual Studio、Excel 2016 及更高版本和 Power BI，最新的客户端库会与每月发布一起安装或更新。 但是在某些情况下，应用程序可能不是最新版本。 例如，当策略延迟更新或 Office 365 更新在延期频道上时。
+与服务器的所有连接（无论连接类型）都需要更新后的 AMO、ADOMD.NET 和 OLEDB 客户端库才能连接到 Analysis Services 服务器。 对于 SSMS、Visual Studio、Excel 2016 及更高版本和 Power BI，最新的客户端库会与每月发布一起安装或更新。 但是在某些情况下，应用程序可能不是最新版本。 例如，当策略延迟更新或 Microsoft 365 更新在延期频道上时。
 
 > [!NOTE]
 > 客户端库无法通过需要用户名和密码的代理服务器连接到 Azure Analysis Services。 
@@ -39,12 +39,12 @@ ms.locfileid: "86506768"
 
 ### <a name="get-the-server-name"></a>获取服务器名称
 
-在 **Azure 门户**中，单击“服务器”>“概述” > “服务器名称”，并复制整个服务器名称。 如果组织中的其他用户也要连接此服务器，则可以将此服务器名称与他们共享。 指定服务器名称时，必须使用完整路径。
+在 **Azure 门户** 中，单击“服务器”>“概述” > “服务器名称”，并复制整个服务器名称。 如果组织中的其他用户也要连接此服务器，则可以将此服务器名称与他们共享。 指定服务器名称时，必须使用完整路径。
 
 ![在 Azure 中获取服务器名称](./media/analysis-services-deploy/aas-deploy-get-server-name.png)
 
 > [!NOTE]
-> 美国东部2地区的协议为**aspaaseastus2**。
+> 美国东部2地区的协议为 **aspaaseastus2**。
 
 ## <a name="connection-string"></a>连接字符串
 
@@ -77,10 +77,27 @@ ms.locfileid: "86506768"
 
 在较旧版本的 Excel 中，用户可以使用 Office 数据连接 (.odc) 文件连接到 Azure Analysis Services 服务器。 若要了解详细信息，请参阅[创建 Office 数据连接 (.odc) 文件](analysis-services-odc.md)。
 
+## <a name="connect-as-a-linked-server-from-sql-server"></a>从 SQL Server 以链接服务器的形式连接
+
+可以通过指定 MSOLAP 作为数据源提供程序，将 SQL Server 以[链接服务器](/sql/relational-databases/linked-servers/create-linked-servers-sql-server-database-engine)的形式连接到 Azure Analysis Services 资源。 配置链接服务器连接之前，请确保安装最新的 [MSOLAP 客户端库](/analysis-services/client-libraries?view=azure-analysis-services-current&preserve-view=true)（提供程序）。 
+
+要使链接服务器可以连接到 Azure Analysis Services，MSOLAP 提供程序必须在 SQL Server 进程外实例化。 配置链接服务器选项时，请确保“允许进程内”选项未选中。
+
+如果选择了“允许进程内”并且在 SQL Server 进程中实例化提供程序，则将返回以下错误：
+
+```
+OLE DB provider "MSOLAP" for linked server "(null)" returned message "The following system error occurred: ".
+
+OLE DB provider "MSOLAP" for linked server "(null)" returned message "The connection failed because user credentials are needed and Sign-In UI is not allowed.".
+
+Msg 7303, Level 16, State 1, Line 2
+Cannot initialize the data source object of OLE DB provider "MSOLAP" for linked server "(null)".
+```
+
+
 
 ## <a name="next-steps"></a>后续步骤
 
 [使用 Excel 进行连接](analysis-services-connect-excel.md)    
 [使用 Power BI 进行连接](analysis-services-connect-pbi.md)   
-[管理服务器](analysis-services-manage.md)   
-
+[管理服务器](analysis-services-manage.md)

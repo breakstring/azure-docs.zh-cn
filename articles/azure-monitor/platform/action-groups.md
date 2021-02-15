@@ -3,18 +3,18 @@ title: 在 Azure 门户中创建和管理器操作组
 description: 了解如何在 Azure 门户中创建和管理操作组。
 author: dkamstra
 ms.topic: conceptual
-ms.date: 07/28/2020
+ms.date: 01/28/2021
 ms.author: dukek
 ms.subservice: alerts
-ms.openlocfilehash: a9d0fa9efaa07582212344e617d9a42f264b99ee
-ms.sourcegitcommit: 46f8457ccb224eb000799ec81ed5b3ea93a6f06f
+ms.openlocfilehash: 08cf66edaa67ab1853a3b246afb9364b431445c6
+ms.sourcegitcommit: d1e56036f3ecb79bfbdb2d6a84e6932ee6a0830e
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/28/2020
-ms.locfileid: "87337708"
+ms.lasthandoff: 01/29/2021
+ms.locfileid: "99055104"
 ---
 # <a name="create-and-manage-action-groups-in-the-azure-portal"></a>在 Azure 门户中创建和管理器操作组
-操作组是由 Azure 订阅的所有者定义的通知首选项的集合。 Azure Monitor 和服务运行状况警报使用操作组来通知用户某个警报已触发。 各种警报可以使用相同的操作组或不同的操作组，具体取决于用户的要求。 可以在订阅中最多配置 2,000 个操作组。
+操作组是由 Azure 订阅的所有者定义的通知首选项的集合。 Azure Monitor 和服务运行状况警报使用操作组来通知用户某个警报已触发。 各种警报可以使用相同的操作组或不同的操作组，具体取决于用户的要求。 
 
 本文演示如何在 Azure 门户中创建和管理操作组。
 
@@ -22,7 +22,7 @@ ms.locfileid: "87337708"
 
 * **类型**：已执行的通知或操作。 示例包括发送语音呼叫、短信、电子邮件，或者触发各种类型的自动化操作。 请参阅本文下文中的“类型”。
 * **Name**：操作组中的唯一标识符。
-* **详细信息**：按*类型*变化的相应详细信息。
+* **详细信息**：因“类型”而异的相应详细信息。
 
 有关如何使用 Azure 资源管理器模板以配置操作组的信息，请参阅[操作组资源管理器模板](./action-groups-create-resource-manager-template.md)。
 
@@ -30,50 +30,50 @@ ms.locfileid: "87337708"
 
 1. 在 [Azure 门户](https://portal.azure.com)中，搜索并选择“监视”。 “监视”窗格将所有监视设置和数据合并到一个视图中。
 
-1. 选择 "**警报**"，然后选择 "**管理操作**"。
+1. 依次选择“警报”、“管理操作” 。
 
     ![“管理操作”按钮](./media/action-groups/manage-action-groups.png)
     
-1. 选择 "**添加操作组**"，并在向导体验中填写相关字段。
+1. 选择“添加操作组”，并在向导体验中填写相关字段。
 
     ![“添加操作组”命令](./media/action-groups/add-action-group.PNG)
 
 ### <a name="configure-basic-action-group-settings"></a>配置基本操作组设置
 
-在 "**项目详细信息**" 下：
+在“项目详细信息”下：
 
-选择要在其中保存操作组的**订阅**和**资源组**。
+选择在其中保存操作组的“订阅”和“资源组” 。
 
 在“实例详细信息”下：
 
-1. 输入**操作组名称**。
+1. 输入“操作组名称”。
 
-1. 输入**显示名称**。 使用此组发送通知时，显示名称用于代替完整的操作组名称。
+1. 输入“显示名称”。 使用此组发送通知时，显示名称被用来代替完整的操作组名称。
 
       ![“添加操作组”对话框](./media/action-groups/action-group-1-basics.png)
 
 
 ### <a name="configure-notifications"></a>配置通知
 
-1. 单击 "**下一步：通知 >** " 按钮转到 "**通知**" 选项卡，或选择屏幕顶部的 "**通知**" 选项卡。
+1. 单击“下一步:通知 >”按钮以移动到“通知”选项卡，或选择屏幕顶部的“通知”选项卡 。
 
-1. 定义要在触发警报时发送的通知的列表。 为每个通知提供以下内容：
+1. 定义触发警报时要发送的通知的列表。 为每个通知提供以下信息：
 
     a. **通知类型**：选择要发送的通知的类型。 可用选项是：
-      * 电子邮件 Azure 资源管理器角色-将电子邮件发送给分配到某些订阅级别 ARM 角色的用户。
-      * 电子邮件/短信/推送/语音-将这些通知类型发送给特定收件人。
+      * 向 Azure 资源管理器角色发送电子邮件 - 将电子邮件发送给分配有某些订阅级别 ARM 角色的用户。
+      * 电子邮件/短信/推送/语音 - 将这些通知类型发送给特定收件人。
     
     b. **名称**：输入通知的唯一名称。
 
     c. **详细信息**：根据所选的通知类型，输入电子邮件地址、电话号码等。
     
-    d. **常见警报架构**：可以选择启用[常见警报架构](https://aka.ms/commonAlertSchemaDocs)，这可获得在 Azure Monitor 中的所有警报服务中具有单个可扩展和统一的警报有效负载的优势。
+    d. **常见警报架构**：可以选择启用 [常见警报架构](./alerts-common-schema.md)，这可获得在 Azure Monitor 中的所有警报服务中具有单个可扩展和统一的警报有效负载的优势。
 
-    !["通知" 选项卡](./media/action-groups/action-group-2-notifications.png)
+    ![“通知”选项卡](./media/action-groups/action-group-2-notifications.png)
     
 ### <a name="configure-actions"></a>配置操作
 
-1. 单击 "**下一步：操作 >** " 按钮转到 "**操作**" 选项卡，或选择屏幕顶部的 "**操作**" 选项卡。
+1. 单击“下一步:操作 >”按钮以移动到“操作”选项卡，或选择屏幕顶部的“操作”选项卡 。
 
 1. 定义触发警报时要触发的操作的列表。 为每个操作提供以下内容：
 
@@ -83,22 +83,22 @@ ms.locfileid: "87337708"
 
     c. **详细信息**：根据操作类型，输入 webhook URI、Azure 应用、ITSM 连接或自动化 runbook。 对于 ITSM 操作，另外指定 ITSM 工具需要的“工作项”和其他字段。
     
-    d. **常见警报架构**：可以选择启用[常见警报架构](https://aka.ms/commonAlertSchemaDocs)，这可获得在 Azure Monitor 中的所有警报服务中具有单个可扩展和统一的警报有效负载的优势。
+    d. **常见警报架构**：可以选择启用 [常见警报架构](./alerts-common-schema.md)，这可获得在 Azure Monitor 中的所有警报服务中具有单个可扩展和统一的警报有效负载的优势。
     
-    !["操作" 选项卡](./media/action-groups/action-group-3-actions.png)
+    ![“操作”选项卡](./media/action-groups/action-group-3-actions.png)
 
 ### <a name="create-the-action-group"></a>创建操作组
 
-1. 如果你愿意，可以浏览“选项卡”设置。 这使你可以将键/值对关联到分类的操作组，并且是适用于任何 Azure 资源的功能。
+1. 如果你愿意，可以浏览“选项卡”设置。 这使你可将键/值对关联到操作组以进行分类，并且该功能可用于任何 Azure 资源。
 
-    !["标记" 选项卡](./media/action-groups/action-group-4-tags.png)
+    ![“标记”选项卡](./media/action-groups/action-group-4-tags.png)
     
-1. 单击“查看 + 创建”以查看设置。 这会快速验证输入，以确保选择所有必填字段。 如果有问题，将在此处报告。 查看设置后，单击 "**创建**" 预配操作组。
+1. 单击“查看 + 创建”以查看设置。 这将快速验证输入，确保已选择所有必填字段。 如果有问题，将在此处报告。 查看设置后，单击“创建”预配操作组。
     
-    !["查看" 和 "创建" 选项卡](./media/action-groups/action-group-5-review.png)
+    ![“查看 + 创建”选项卡](./media/action-groups/action-group-5-review.png)
 
 > [!NOTE]
-> 将操作配置为通过电子邮件或短信通知人员时，他们将收到一条确认消息，指示已将其添加到操作组。
+> 当配置操作来通过电子邮件或短信通知某个人员时，该人员将收到确认，指出其已被添加到操作组。
 
 ## <a name="manage-your-action-groups"></a>管理操作组
 
@@ -131,10 +131,24 @@ ms.locfileid: "87337708"
 ### <a name="email-azure-resource-manager-role"></a>通过电子邮件发送 Azure 资源管理器角色
 向订阅角色的成员发送电子邮件。 电子邮件将仅发送给该角色的“Azure AD 用户”成员。 不会将电子邮件发送到 Azure AD 组或服务主体。
 
+通知电子邮件将只发送到主电子邮件地址。
+
+如果你没有在“主电子邮件”中收到通知，则可以尝试以下步骤：
+
+1. 在 Azure 门户中，转到“Active Directory”。
+2. 单击“所有用户”（在左窗格中），你将看到用户列表（在右窗格中）。
+3. 选择你要查看其“主电子邮件”信息的用户。
+
+  :::image type="content" source="media/action-groups/active-directory-user-profile.png" alt-text="有关如何查看用户配置文件的示例。"border="true":::
+
+4. 在“联系人信息”下的“用户配置文件”中，如果“电子邮件”选项卡为空白，请单击顶部的“编辑”按钮，然后添加你的“主电子邮件”，然后单击顶部的“保存”按钮。
+
+  :::image type="content" source="media/action-groups/active-directory-add-primary-email.png" alt-text="有关如何添加主电子邮件的示例。"border="true":::
+
 操作组中的电子邮件操作数可能有限。 请参阅[速率限制信息](./alerts-rate-limiting.md)一文。
 
 ### <a name="function"></a>函数
-调用 [Azure Functions](../../azure-functions/functions-create-first-azure-function.md#create-a-function-app) 中的现有 HTTP 触发器终结点。
+调用 [Azure Functions](../../azure-functions/functions-get-started.md) 中的现有 HTTP 触发器终结点。
 
 操作组中的函数操作数可能有限。
 
@@ -147,18 +161,23 @@ ITSM 操作需要 ITSM 连接。 了解如何创建 [ITSM 连接](./itsmc-overvi
 操作组中的逻辑应用操作数可能有限。
 
 ### <a name="secure-webhook"></a>安全 Webhook
+
+> [!NOTE]
+> 使用 webhook 操作要求目标 webhook 终结点不需要警报的详细信息即可成功运行，或者它能够分析作为 POST 操作的一部分提供的警报上下文信息。 如果 webhook 终结点不能自行处理警报上下文信息，则可以使用类似于 [逻辑应用操作](./action-groups-logic-app.md) 的解决方案，对警报上下文信息的自定义操作进行匹配，以匹配 webhook 的预期数据格式。
+> 用户应是 webhook 服务主体的 **所有者** ，以确保不违反安全性。 由于任何 azure 客户都可以通过门户访问所有对象 Id，而不检查所有者，因此，任何人都可以将安全 webhook 添加到其自己的 azure monitor 警报通知的操作组，这会违反安全性。
+
 操作组 Webhook 操作使你能够利用 Azure Active Directory 来保护操作组和受保护的 Web API（Webhook 终结点）之间的连接。 下面介绍了利用此功能的整个工作流。 有关 Azure AD 应用程序和服务主体的概述，请参阅 [Microsoft 标识平台 (v2.0) 概述](../../active-directory/develop/v2-overview.md)。
 
-1. 为受保护的 Web API 创建 Azure AD 应用程序。 请参阅[受保护的 WEB API：应用注册](../../active-directory/develop/scenario-protected-web-api-app-registration.md)。
-    - 配置要[由后台程序应用调用的](../../active-directory/develop/scenario-protected-web-api-app-registration.md#if-your-web-api-is-called-by-a-daemon-app)受保护 API。
+1. 针对受保护的 Web API 创建 Azure AD 应用程序。 请参阅[受保护的 Web API：应用注册](../../active-directory/develop/scenario-protected-web-api-app-registration.md)中的说明进行操作。
+    - 将受保护的 API 配置为[通过守护程序应用进行调用](../../active-directory/develop/scenario-protected-web-api-app-registration.md#if-your-web-api-is-called-by-a-daemon-app)。
     
 2. 启用操作组以使用 Azure AD 应用程序。
 
     > [!NOTE]
-    > 你必须是 [Azure AD 应用程序管理员角色](../../active-directory/users-groups-roles/directory-assign-admin-roles.md#available-roles)的成员才能执行此脚本。
+    > 你必须是 [Azure AD 应用程序管理员角色](../../active-directory/roles/permissions-reference.md#available-roles)的成员才能执行此脚本。
     
     - 修改 PowerShell 脚本的 Connect-AzureAD 调用以使用 Azure AD 租户 ID。
-    - 将 PowerShell 脚本的变量 $myAzureADApplicationObjectId 修改为使用 Azure AD 应用程序的对象 ID。
+    - 修改 PowerShell 脚本的变量 $myAzureADApplicationObjectId，以便使用 Azure AD 应用程序的对象 ID。
     - 运行修改的脚本。
     
 3. 配置操作组安全 Webhook 操作。
@@ -244,7 +263,47 @@ Write-Host $myApp.AppRoles
 > 如果在 Azure 门户操作组用户界面无法选择你的国家/地区代码，则表示你所在的国家/地区不支持短信。  如果你的国家/地区代码不可用，则可以在[用户之声](https://feedback.azure.com/forums/913690-azure-monitor/suggestions/36663181-add-more-country-codes-for-sms-alerting-and-voice)投票以请求添加你的国家/地区。 此时，一个解决办法是使操作组向你所在国家/地区支持的第三方短信提供商调用 Webhook。  
 
 受支持国家/地区的定价在 [Azure Monitor 定价页](https://azure.microsoft.com/pricing/details/monitor/)中列出。
-  
+
+**支持短信通知的国家/地区列表**
+
+| 国家/地区代码 | 国家/地区名称 |
+|:---|:---|
+| 61 | 澳大利亚 |
+| 43 | 奥地利 |
+| 32 | 比利时 |
+| 55 | 巴西 |
+| 1 |加拿大 |
+| 56 | 智利 |
+| 86 | 中国 |
+| 420 | 捷克共和国 |
+| 45 | 丹麦 |
+| 372 | 爱沙尼亚 |
+| 358 | 芬兰 |
+| 33 | 法国 |
+| 49 | 德国 |
+| 852 | 香港特别行政区 |
+| 91 | 印度 |
+| 353 | 爱尔兰 |
+| 972 | 以色列 |
+| 39 | 意大利 |
+| 81 | 日本 |
+| 352 | 卢森堡 |
+| 60 | 马来西亚 |
+| 52 | 墨西哥 |
+| 31 | 荷兰 |
+| 64 | 新西兰 |
+| 47 | 挪威 |
+| 351 | 葡萄牙 |
+| 1 | 波多黎各 |
+| 40 | 罗马尼亚 |
+| 65 | 新加坡 |
+| 27 | 南非 |
+| 82 | 韩国 |
+| 34 | 西班牙 |
+| 41 | 瑞士 |
+| 886 | 台湾 |
+| 44 | 英国 |
+| 1 | 美国 |
 
 ### <a name="voice"></a>语音
 有关其他重要行为，请参阅[速率限制信息](./alerts-rate-limiting.md)一文。
@@ -253,45 +312,29 @@ Write-Host $myApp.AppRoles
 
 > [!NOTE]
 > 如果在 Azure 门户操作组用户界面无法选择你的国家/地区代码，则表示你所在的国家/地区不支持语音呼叫。 如果你的国家/地区代码不可用，则可以在[用户之声](https://feedback.azure.com/forums/913690-azure-monitor/suggestions/36663181-add-more-country-codes-for-sms-alerting-and-voice)投票以请求添加你的国家/地区。  此时，一个解决办法是使操作组向你所在国家/地区支持的第三方语音呼叫提供商调用 Webhook。  
+> 目前在 Azure 门户操作组中支持语音通知的国家/地区代码只有“+1(美国)”。 
 
 受支持国家/地区的定价在 [Azure Monitor 定价页](https://azure.microsoft.com/pricing/details/monitor/)中列出。
 
 ### <a name="webhook"></a>Webhook
-使用以下规则处理 webhook
-- 最多尝试三次 webhook 调用。
-- 如果在超时期限内未收到响应，或者返回以下 HTTP 状态代码之一，将重试此调用：408、429、503或504。
-- 第一次调用将为响应等待10秒。
-- 第二次和第三次尝试将为响应等待30秒。
-- 3次尝试调用 webhook 失败后，任何操作组都不会调用该终结点15分钟。
 
-源 IP 地址范围
- - 13.72.19.232
- - 13.106.57.181
- - 13.106.54.3
- - 13.106.54.19
- - 13.106.38.142
- - 13.106.38.148
- - 13.106.57.196
- - 13.106.57.197
- - 52.244.68.117
- - 52.244.65.137
- - 52.183.31.0
- - 52.184.145.166
- - 51.4.138.199
- - 51.5.148.86
- - 51.5.149.19
+> [!NOTE]
+> 使用 webhook 操作要求目标 webhook 终结点不需要警报的详细信息即可成功运行，或者它能够分析作为 POST 操作的一部分提供的警报上下文信息。 如果 webhook 终结点不能自行处理警报上下文信息，则可以使用类似于 [逻辑应用操作](./action-groups-logic-app.md) 的解决方案，对警报上下文信息的自定义操作进行匹配，以匹配 webhook 的预期数据格式。
 
-若要接收有关这些 IP 地址更改的更新，建议配置监视有关操作组服务的信息通知的服务运行状况警报。
+Webhook 使用以下规则进行处理
+- 最多尝试三次 Webhook 调用。
+- 如果在超时期限内未收到响应，或者返回以下 HTTP 状态代码之一，将重试此调用：408、429、503 或 504。
+- 第一次调用将等待响应 10 秒。
+- 第二次和第三次尝试将等待响应 30 秒。
+- 三次尝试调用 Webhook 失败后，任何操作组在 15 分钟内都不会再调用该终结点。
 
-操作组中的 Webhook 操作数可能有限。
-
+请参阅 [操作组](../app/ip-addresses.md) 源 ip 地址范围的 ip 地址。
 
 
 ## <a name="next-steps"></a>后续步骤
 * 详细了解[短信警报行为](./alerts-sms-behavior.md)。  
 * 获取[对活动日志警报 webhook 架构的了解](./activity-log-alerts-webhook.md)。  
-* 详细了解[ITSM 连接器](./itsmc-overview.md)。
+* 详细了解 [ITSM 连接器](./itsmc-overview.md)。
 * 详细了解有关警报的[速率限制](./alerts-rate-limiting.md)。
 * 获取[活动日志警报概述](./alerts-overview.md)，了解如何接收警报。  
 * 了解如何[配置每次发布服务运行状况通知时的警报](../../service-health/alerts-activity-log-service-notifications-portal.md)。
-

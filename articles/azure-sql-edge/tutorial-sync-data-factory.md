@@ -1,6 +1,6 @@
 ---
-title: 使用 Azure 数据工厂从 Azure SQL Edge（预览）同步数据
-description: 了解如何在 Azure SQL Edge（预览）与 Azure Blob 存储之间同步数据
+title: 使用 Azure 数据工厂从 Azure SQL Edge 同步数据
+description: 了解如何在 Azure SQL Edge 与 Azure Blob 存储之间同步数据
 keywords: SQL Edge, 从 SQL Edge 同步数据, SQL Edge 数据工厂
 services: sql-edge
 ms.service: sql-edge
@@ -9,12 +9,12 @@ author: SQLSourabh
 ms.author: sourabha
 ms.reviewer: sstein
 ms.date: 05/19/2020
-ms.openlocfilehash: 91bf2ba0957104b7ccba330f914734a362c3e309
-ms.sourcegitcommit: bf99428d2562a70f42b5a04021dde6ef26c3ec3a
+ms.openlocfilehash: b83201ae864d1f1eb9124af5268360bb1748f6c8
+ms.sourcegitcommit: 63d0621404375d4ac64055f1df4177dfad3d6de6
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 06/23/2020
-ms.locfileid: "85255426"
+ms.lasthandoff: 12/15/2020
+ms.locfileid: "97507602"
 ---
 # <a name="tutorial-sync-data-from-sql-edge-to-azure-blob-storage-by-using-azure-data-factory"></a>教程：使用 Azure 数据工厂将数据从 SQL Edge 同步到 Azure Blob 存储
 
@@ -59,8 +59,11 @@ ms.locfileid: "85255426"
     CREATE PROCEDURE usp_write_watermark @timestamp datetime, @TableName varchar(50)  
     AS  
     BEGIN
+    
     UPDATE [dbo].[watermarktable]
-    SET [WatermarkValue] = @timestamp WHERE [TableName] = @TableName
+    SET [WatermarkValue] = @timestamp
+    WHERE [TableName] = @TableName
+
     END
     Go
 ```
@@ -99,7 +102,7 @@ ms.locfileid: "85255426"
 
     3. 从列表中选择“数据库名称”。
 
-    4. 输入**用户名**和**密码**。
+    4. 输入 **用户名** 和 **密码**。
 
     5. 若要测试与 SQL Edge 实例的连接，请选择“测试连接”。
 
@@ -187,7 +190,7 @@ ms.locfileid: "85255426"
 
 30. 在管道设计器中选择“存储过程活动”，将其名称更改为 SPtoUpdateWatermarkActivity 。
 
-31. 切换到“SQL 帐户”选项卡，选择“链接服务”下的“*QLDBEdgeLinkedService”  。
+31. 切换到“SQL 帐户”选项卡，选择“链接服务”下的“*QLDBEdgeLinkedService”。
 
 32. 切换到“存储过程”选项卡，然后完成以下步骤：
 

@@ -3,28 +3,28 @@ title: 沉浸式阅读器 Node.js 客户端库快速入门
 titleSuffix: Azure Cognitive Services
 description: 在本快速入门中，你将从头开始构建一个 Web 应用，并添加沉浸式阅读器 API 功能。
 services: cognitive-services
-author: pasta
+author: nitinme
 manager: nitinme
 ms.service: cognitive-services
+ms.subservice: immersive-reader
 ms.topic: include
-ms.date: 05/20/2020
-ms.author: pasta
-ms.custom: devx-track-javascript
-ms.openlocfilehash: 91adff9a8330defb6c2b9f1e915c46886649fed3
-ms.sourcegitcommit: 023d10b4127f50f301995d44f2b4499cbcffb8fc
+ms.date: 09/14/2020
+ms.author: nitinme
+ms.custom: devx-track-js
+ms.openlocfilehash: c34ed97339076a4412f8b6bf36ddf342205c88be
+ms.sourcegitcommit: eb6bef1274b9e6390c7a77ff69bf6a3b94e827fc
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/18/2020
-ms.locfileid: "88602539"
+ms.lasthandoff: 10/05/2020
+ms.locfileid: "91376784"
 ---
-[沉浸式阅读器](https://www.onenote.com/learningtools)是一款经过广泛设计的工具，它实现了可靠的技术以提高阅读理解能力。
+[沉浸式阅读器](https://www.onenote.com/learningtools)是一款经过广泛设计的工具，它实现了可靠的技术，旨在提高新的读者、语言学习者和有学习差异（如阅读障碍）的用户的阅读理解能力。 你可在应用程序中使用沉浸式阅读器来隔离文本，以改进焦点、显示常用词的图片、突出显示语音的各个部分、大声朗读所选文本、实时翻译字词和短语等等。
 
-在本快速入门中，你将从头开始构建一个 Web 应用，并使用沉浸式阅读器客户端库集成沉浸式阅读器。 本快速入门的完整工作示例可在[此处](https://github.com/microsoft/immersive-reader-sdk/tree/master/js/samples/quickstart-nodejs)找到。
-
-如果没有 Azure 订阅，请在开始之前创建一个[免费帐户](https://azure.microsoft.com/free/cognitive-services/)。
+在本快速入门中，你将从头开始构建一个 Web 应用，并使用沉浸式阅读器客户端库集成沉浸式阅读器。 [GitHub](https://github.com/microsoft/immersive-reader-sdk/tree/master/js/samples/quickstart-nodejs) 提供了此快速入门的完整工作示例。
 
 ## <a name="prerequisites"></a>先决条件
 
+* Azure 订阅 - [免费创建订阅](https://azure.microsoft.com/free/cognitive-services)
 * 为 Azure Active Directory 身份验证配置的沉浸式阅读器资源。 按照[这些说明](../../how-to-create-immersive-reader.md)进行设置。 在配置环境属性时，将需要在此处创建的一些值。 将会话的输出保存到文本文件中，以供将来参考。
 * [Node.js](https://nodejs.org/) 和 [Yarn](https://yarnpkg.com)
 * IDE 如 [Visual Studio Code](https://code.visualstudio.com/)
@@ -246,13 +246,13 @@ npm start
 
 打开浏览器并导航到 _http://localhost:3000_ 。 应该看到以下内容：
 
-![示例应用](../../media/quickstart-nodejs/1-buildapp.png)
+![实例应用 - Node.js](../../media/quickstart-nodejs/1-buildapp.png)
 
 ## <a name="launch-the-immersive-reader"></a>启动沉浸式阅读器
 
 单击“沉浸式阅读器”按钮时，将会看到沉浸式阅读器随页面上的内容一起启动。
 
-![沉浸式阅读器](../../media/quickstart-nodejs/2-viewimmersivereader.png)
+![沉浸式阅读器 - Node.js](../../media/quickstart-nodejs/2-viewimmersivereader.png)
 
 ## <a name="next-steps"></a>后续步骤
 

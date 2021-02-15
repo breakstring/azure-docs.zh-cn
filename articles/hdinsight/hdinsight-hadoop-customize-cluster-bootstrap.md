@@ -1,19 +1,16 @@
 ---
 title: 使用 bootstrap 自定义 Azure HDInsight 群集配置
 description: 了解如何使用 .NET、PowerShell 和资源管理器模板以编程方式自定义 HDInsight 群集配置。
-author: hrasheed-msft
-ms.author: hrasheed
-ms.reviewer: jasonh
 ms.service: hdinsight
 ms.topic: how-to
 ms.custom: hdinsightactive
 ms.date: 04/01/2020
-ms.openlocfilehash: eaddae04c198742007947831046139d80828534b
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.openlocfilehash: 306ebcf7db3c11f783af8cf4c1779bd3d1a013a4
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87006579"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98945749"
 ---
 # <a name="customize-hdinsight-clusters-using-bootstrap"></a>使用 Bootstrap 自定义 HDInsight 群集
 
@@ -48,14 +45,14 @@ Bootstrap 脚本允许你以编程方式在 Azure HDInsight 中安装和配置�
 
 ## <a name="prerequisites"></a>先决条件
 
-* 如果使用 PowerShell，需要安装 [Az 模块](https://docs.microsoft.com/powershell/azure/)。
+* 如果使用 PowerShell，需要安装 [Az 模块](/powershell/azure/)。
 
 ## <a name="use-azure-powershell"></a>使用 Azure PowerShell
 
 以下 PowerShell 代码将自定义 [Apache Hive](https://hive.apache.org/) 配置：
 
 > [!IMPORTANT]  
-> 参数 `Spark2Defaults` 可能需要与 [Add-AzHDInsightConfigValues](https://docs.microsoft.com/powershell/module/az.hdinsight/add-azhdinsightconfigvalue) 一起使用。 你可以向参数传递空值，如以下代码示例中所示。
+> 参数 `Spark2Defaults` 可能需要与 [Add-AzHDInsightConfigValues](/powershell/module/az.hdinsight/add-azhdinsightconfigvalue) 一起使用。 你可以向参数传递空值，如以下代码示例中所示。
 
 ```powershell
 # hive-site.xml configuration
@@ -86,8 +83,8 @@ New-AzHDInsightCluster `
 **若要验证更改，请执行以下操作：**
 
 1. 导航至 `https://CLUSTERNAME.azurehdinsight.net/`，其中 `CLUSTERNAME` 是群集的名称。
-1. 从左侧菜单中，导航到“Hive”**** > “配置”**** > “高级”****。
-1. 展开“高级 hive-site”****。
+1. 从左侧菜单中，导航到“Hive” > “配置” > “高级”。
+1. 展开“高级 hive-site”。
 1. 找到 **hive.metastore.client.socket.timeout** 并确认该值为 **90s**。
 
 下面是有关自定义其他配置文件的更多示例：
@@ -108,7 +105,7 @@ $OozieConfigValues = @{ "oozie.service.coord.normal.default.timeout"="150" }  # 
 
 ## <a name="use-net-sdk"></a>使用 .NET SDK
 
-请参阅[用于 .NET 的 Azure HDInsight SDK](https://docs.microsoft.com/dotnet/api/overview/azure/hdinsight?view=azure-dotnet)。
+请参阅[用于 .NET 的 Azure HDInsight SDK](/dotnet/api/overview/azure/hdinsight?view=azure-dotnet&preserve-view=true)。
 
 ## <a name="use-resource-manager-template"></a>使用 Resource Manager 模板
 
@@ -143,7 +140,7 @@ spark2-defaults 中用于切换配置的示例资源管理器模板代码片段�
 * [在 HDInsight 中创建 Apache Hadoop 群集](hdinsight-hadoop-provision-linux-clusters.md)提供了有关如何使用其他自定义选项创建 HDInsight 群集的说明。
 * [为 HDInsight 开发脚本操作脚本](hdinsight-hadoop-script-actions-linux.md)
 * [在 HDInsight 群集上安装并使用 Apache Spark](spark/apache-spark-jupyter-spark-sql-use-portal.md)
-* [在 HDInsight 群集上安装并使用 Apache Giraph](hdinsight-hadoop-giraph-install.md)。
+* [在 HDInsight 群集上安装并使用 Apache Giraph](./hdinsight-hadoop-hue-linux.md)。
 
 ## <a name="appendix-powershell-sample"></a>附录：PowerShell 示例
 

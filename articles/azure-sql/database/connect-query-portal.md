@@ -1,5 +1,5 @@
 ---
-title: 在 Azure 门户中使用查询编辑器查询 SQL 数据库
+title: 在 Azure 门户中使用查询编辑器查询 SQL 数据库（预览）
 description: 了解如何使用查询编辑器针对 Azure SQL 数据库中的数据库运行 Transact-SQL (T-SQL) 查询。
 titleSuffix: Azure SQL Database
 keywords: 连接到 sql 数据库, 查询 sql 数据库, azure 门户, 门户, 查询编辑器
@@ -11,19 +11,19 @@ ms.devlang: ''
 ms.topic: quickstart
 author: Ninarn
 ms.author: ninarn
-ms.reviewer: carlrab
+ms.reviewer: sstein
 ms.date: 05/29/2020
-ms.openlocfilehash: 4dbbf8267b4a7a1ea280d16ee787c8ae6cd652c9
-ms.sourcegitcommit: 309cf6876d906425a0d6f72deceb9ecd231d387c
+ms.openlocfilehash: 4eb02c65a8ce486ea152863d8b6c6d0600280893
+ms.sourcegitcommit: eb6bef1274b9e6390c7a77ff69bf6a3b94e827fc
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 06/01/2020
-ms.locfileid: "84267352"
+ms.lasthandoff: 10/05/2020
+ms.locfileid: "91409574"
 ---
-# <a name="quickstart-use-the-azure-portals-query-editor-to-query-an-azure-sql-database"></a>快速入门：使用 Azure 门户的查询编辑器查询 Azure SQL 数据库
+# <a name="quickstart-use-the-azure-portals-query-editor-preview-to-query-an-azure-sql-database"></a>快速入门：使用 Azure 门户的查询编辑器（预览）查询 Azure SQL 数据库
 [!INCLUDE[appliesto-sqldb](../includes/appliesto-sqldb.md)]
 
-查询编辑器是 Azure 门户中的一个工具，用于针对 Azure SQL 数据库中的数据库或 Azure SQL 数据仓库中的数据仓库运行 SQL 查询。 
+查询编辑器是 Azure 门户中的一个工具，用于针对 Azure SQL 数据库中的数据库或 Azure Synapse Analytics 中的数据仓库运行 SQL 查询。 
 
 在本快速入门中，你将使用查询编辑器针对数据库运行 Transact-SQL (T-SQL) 查询。
 

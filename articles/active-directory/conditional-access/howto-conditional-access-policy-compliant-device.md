@@ -11,12 +11,12 @@ author: MicrosoftGuyJFlo
 manager: daveba
 ms.reviewer: calebb, rogoya
 ms.collection: M365-identity-device-management
-ms.openlocfilehash: c60c0324b04bca0a8115f4ac884704012e8e1d8c
-ms.sourcegitcommit: 25bb515efe62bfb8a8377293b56c3163f46122bf
+ms.openlocfilehash: c98269f9851272e8caa9b26ae0c57ed13e9a99f2
+ms.sourcegitcommit: 829d951d5c90442a38012daaf77e86046018e5b9
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/07/2020
-ms.locfileid: "87986842"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "89049122"
 ---
 # <a name="conditional-access-require-compliant-devices"></a>条件访问：要求符合的设备
 
@@ -44,7 +44,7 @@ ms.locfileid: "87986842"
 1. 在“云应用或操作”   >   “包括”下，选择“所有云应用”。 
    1. 如果必须将特定应用程序排除在策略之外，可以在“选择排除的云应用”下的“排除”选项卡中选择它们，然后选择“选择”。   
    1. 选择“完成”  。
-1. 在 "**条件**  >  **客户端应用 (预览") **  >  **选择 "此策略将应用到的客户端应用**"，保留所有默认设置，然后选择 "**完成**"。
+1. 在“条件” > “客户端应用(预览版)” > “选择该策略应用到的客户端应用”下保留选择的所有默认值，然后选择“完成”   。
 1. 在“访问控制”   >   “授予”下，选择“要求将设备标记为合规”。 
    1. 选择“选择”  。
 1. 确认设置，然后将“启用策略”设置为“打开”。  
@@ -61,7 +61,7 @@ ms.locfileid: "87986842"
 
 [条件访问常见策略](concept-conditional-access-policy-common.md)
 
-[使用条件访问仅限报告模式确定影响](howto-conditional-access-report-only.md)
+[使用条件访问仅限报告模式确定影响](howto-conditional-access-insights-reporting.md)
 
 [使用条件访问 What If 工具模拟登录行为](troubleshoot-conditional-access-what-if.md)
 

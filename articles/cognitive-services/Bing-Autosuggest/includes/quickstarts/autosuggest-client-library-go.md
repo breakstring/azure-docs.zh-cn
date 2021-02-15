@@ -8,12 +8,12 @@ ms.service: cognitive-services
 ms.topic: include
 ms.date: 05/06/2020
 ms.author: aahi
-ms.openlocfilehash: c0129ff25f1df492ab6eba9f49add18d5321a3e8
-ms.sourcegitcommit: c293217e2d829b752771dab52b96529a5442a190
+ms.openlocfilehash: 1c3ed6cc97c6fc77083baa915fac2f5530922eac
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/15/2020
-ms.locfileid: "88246574"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98947497"
 ---
 开始使用适用于 Go 的必应自动建议客户端库。 请按照以下步骤安装库并试用基本任务的示例。
 
@@ -33,7 +33,7 @@ ms.locfileid: "88246574"
 ## <a name="create-environment-variables"></a>创建环境变量
 
 >[!NOTE]
-> 在 2019 年 7 月 1 日之后创建的资源的终结点使用如下所示的自定义子域格式。 有关详细信息和区域终结点的完整列表，请参阅[认知服务的自定义子域名](https://docs.microsoft.com/azure/cognitive-services/cognitive-services-custom-subdomains)。
+> 在 2019 年 7 月 1 日之后创建的资源的终结点使用如下所示的自定义子域格式。 有关详细信息和区域终结点的完整列表，请参阅[认知服务的自定义子域名](../../../cognitive-services-custom-subdomains.md)。
 
 从创建的资源使用密钥和终结点，创建两个用于身份验证的环境变量：
 <!-- replace the below variable names with the names expected in the code sample.-->
@@ -155,7 +155,7 @@ func main() {
 ### <a name="authenticate-the-client"></a>验证客户端
 
 > [!NOTE]
-> 本快速入门假设你已为必应自动建议密钥创建了名为 `BING_AUTOSUGGEST_SUBSCRIPTION_KEY` 的[环境变量](https://docs.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account#configure-an-environment-variable-for-authentication)，以及一个用于终结点的名为 `BING_AUTOSUGGEST_ENDPOINT` 的环境变量。
+> 本快速入门假设你已为必应自动建议密钥创建了名为 `BING_AUTOSUGGEST_SUBSCRIPTION_KEY` 的[环境变量](../../../cognitive-services-apis-create-account.md#configure-an-environment-variable-for-authentication)，以及一个用于终结点的名为 `BING_AUTOSUGGEST_ENDPOINT` 的环境变量。
 
 在 `main()` 函数中，使用终结点和密钥实例化客户端。
 
@@ -171,7 +171,7 @@ client.Endpoint = endpoint
 
 ### <a name="send-an-api-request"></a>发送 API 请求
 
-在同一方法中，使用客户端的 [AutoSuggestMethodAsync](https://docs.microsoft.com/dotnet/api/microsoft.azure.cognitiveservices.search.autosuggest.autosuggestclientextensions.autosuggestmethodasync?view=azure-dotnet#Microsoft_Azure_CognitiveServices_Search_AutoSuggest_AutoSuggestClientExtensions_AutoSuggestMethodAsync_Microsoft_Azure_CognitiveServices_Search_AutoSuggest_IAutoSuggestClient_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_Collections_Generic_IList_System_String__System_Threading_CancellationToken_) 方法将查询发送到必应。 然后，循环访问[建议](https://docs.microsoft.com/dotnet/api/microsoft.azure.cognitiveservices.search.autosuggest.models.suggestions?view=azure-dotnet)响应，并输出第一个建议。
+在同一方法中，使用客户端的 [AutoSuggestMethodAsync](/dotnet/api/microsoft.azure.cognitiveservices.search.autosuggest.autosuggestclientextensions.autosuggestmethodasync#Microsoft_Azure_CognitiveServices_Search_AutoSuggest_AutoSuggestClientExtensions_AutoSuggestMethodAsync_Microsoft_Azure_CognitiveServices_Search_AutoSuggest_IAutoSuggestClient_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_Collections_Generic_IList_System_String__System_Threading_CancellationToken_) 方法将查询发送到必应。 然后，循环访问[建议](/dotnet/api/microsoft.azure.cognitiveservices.search.autosuggest.models.suggestions)响应，并输出第一个建议。
 
 ```Go
 // This should return the query suggestion "xbox."
@@ -220,4 +220,4 @@ go run sample-app.go
 ## <a name="see-also"></a>另请参阅
 
 - [什么是必应自动建议？](../../get-suggested-search-terms.md)
-- [必应自动推荐 API v7 参考](https://docs.microsoft.com/rest/api/cognitiveservices-bingsearch/bing-autosuggest-api-v7-reference)
+- [必应自动推荐 API v7 参考](/rest/api/cognitiveservices-bingsearch/bing-autosuggest-api-v7-reference)

@@ -1,26 +1,30 @@
 ---
 title: ResNet
 titleSuffix: Azure Machine Learning
-description: 了解如何使用 ResNet 算法创建图像分类模型。
+description: 了解如何使用 ResNet 算法在 Azure 机器学习设计器中创建图像分类模型。
 services: machine-learning
 ms.service: machine-learning
 ms.subservice: core
 ms.topic: reference
 author: likebupt
 ms.author: keli19
-ms.date: 05/26/2020
-ms.openlocfilehash: ea8c13e134eceeb27bd064e794d46d711092a867
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.date: 09/26/2020
+ms.openlocfilehash: 88a820d0f1fa9515b4f2992a8305a2d1065e0987
+ms.sourcegitcommit: 7cc10b9c3c12c97a2903d01293e42e442f8ac751
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "84450101"
+ms.lasthandoff: 11/06/2020
+ms.locfileid: "93421203"
 ---
 # <a name="resnet"></a>ResNet
 
-本文介绍如何使用 Azure 机器学习设计器（预览版）中的 ResNet 模块来通过 ResNet 算法创建图像分类模型****。  
+本文介绍如何使用 Azure 机器学习设计器中的 ResNet 模块来通过 ResNet 算法创建图像分类模型。  
 
-此分类算法是一种监督式学习方法，需要一个标记的数据集。 若要详细了解如何获取带标记的图像目录，请参阅[转换为图像目录](convert-to-image-directory.md)。 可通过提供模型和带标记的图像目录作为[训练 Pytorch 模型](train-pytorch-model.md)模块的输入来训练模型。 然后，可使用训练后的模型来预测使用[为图像模型评分](score-image-model.md)的新输入示例的值。
+此分类算法是一种监督式学习方法，需要一个标记的数据集。 
+> [!NOTE]
+> 此模块不支持从 studio 中的 *数据标签* 生成的标记的数据集，但仅支持从 [转换为图像目录](convert-to-image-directory.md) 模块生成的标记为图像目录。 
+
+可通过提供模型和带标记的图像目录作为[训练 Pytorch 模型](train-pytorch-model.md)模块的输入来训练模型。 然后，可使用训练后的模型来预测使用[为图像模型评分](score-image-model.md)的新输入示例的值。
 
 ### <a name="more-about-resnet"></a>关于 ResNet 的详细信息
 
@@ -28,13 +32,13 @@ ms.locfileid: "84450101"
 
 ## <a name="how-to-configure-resnet"></a>如何配置 ResNet
 
-1.  在设计器中将 ResNet 模块添加到管道****。  
+1.  在设计器中将 ResNet 模块添加到管道。  
 
-2.  对于“模型名称”，指定特定 ResNet 结构的名称，然后可以从支持的 resnet 中进行选择：“resnet18”、“resnet34”、“resnet50”、“resnet101”、“resnet152”、“resnet152”、“resnext50\_32x4d”、“resnext101\_32x8d”、“wide_resnet50\_2”、“wide_resnet101\_2”****。
+2.  对于“模型名称”，指定特定 ResNet 结构的名称，然后可以从支持的 resnet 中进行选择：“resnet18”、“resnet34”、“resnet50”、“resnet101”、“resnet152”、“resnet152”、“resnext50\_32x4d”、“resnext101\_32x8d”、“wide_resnet50\_2”、“wide_resnet101\_2”。
 
-3.  对于“预先训练”，指定是否使用在 ImageNet 上预先训练的模型****。 如果选择此选项，您可以根据所选的预先训练的模型来微调模型;如果取消选择，则可以从头开始训练。
+3.  对于“预先训练”，指定是否使用在 ImageNet 上预先训练的模型。 如果已选择，可以根据选定的预训练的模型来微调模型；如果取消选中，可以从头开始训练。
 
-4.  将**DenseNet**模块、定型和验证图像数据集模块的输出连接到[定型 Pytorch 模型](train-pytorch-model.md)。 
+4.  将 **DenseNet** 模块、定型和验证图像数据集模块的输出连接到 [定型 Pytorch 模型](train-pytorch-model.md)。 
 
 5. 提交管道。
 

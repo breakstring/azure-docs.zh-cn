@@ -8,14 +8,15 @@ ms.subservice: cosmosdb-cassandra
 ms.devlang: go
 ms.topic: quickstart
 ms.date: 07/14/2020
-ms.openlocfilehash: ba53fb786b1d1f61535168cda2152049a12dfb99
-ms.sourcegitcommit: 3543d3b4f6c6f496d22ea5f97d8cd2700ac9a481
+ms.openlocfilehash: 595ec1aaa4aedc3916d1b4d46986dcabae887aaf
+ms.sourcegitcommit: 3bdeb546890a740384a8ef383cf915e84bd7e91e
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/20/2020
-ms.locfileid: "86535505"
+ms.lasthandoff: 10/30/2020
+ms.locfileid: "93076395"
 ---
 # <a name="quickstart-build-a-go-app-with-the-gocql-client-to-manage-azure-cosmos-db-cassandra-api-data"></a>快速入门：使用 `gocql` 客户端构建 Go 应用来管理 Azure Cosmos DB Cassandra API 数据
+[!INCLUDE[appliesto-cassandra-api](includes/appliesto-cassandra-api.md)]
 
 > [!div class="op_single_selector"]
 > * [.NET](create-cassandra-dotnet.md)
@@ -85,7 +86,7 @@ func GetSession(cosmosCassandraContactPoint, cosmosCassandraPort, cosmosCassandr
 }
 ```
 
-会将 Azure Cosmos DB Cassandra 主机传递给 [`gocql.NewCluster`](https://godoc.org/github.com/gocql/gocql#NewCluster) 函数，以获取 [`*gocql.ClusterConfig`](https://godoc.org/github.com/gocql/gocql#ClusterConfig) 结构，然后进行配置，使其使用用户名、密码、端口以及合适的 TLS 版本（[HTTPS/SSL/TLS 加密安全要求](https://docs.microsoft.com/azure/cosmos-db/database-security?WT.mc_id=cassandrago-docs-abhishgu#how-does-azure-cosmos-db-secure-my-database)）
+会将 Azure Cosmos DB Cassandra 主机传递给 [`gocql.NewCluster`](https://godoc.org/github.com/gocql/gocql#NewCluster) 函数，以获取 [`*gocql.ClusterConfig`](https://godoc.org/github.com/gocql/gocql#ClusterConfig) 结构，然后进行配置，使其使用用户名、密码、端口以及合适的 TLS 版本（[HTTPS/SSL/TLS 加密安全要求](./database-security.md?WT.mc_id=cassandrago-docs-abhishgu#how-does-azure-cosmos-db-secure-my-database)）
 
 然后从 `main` 函数 (`main.go`) 调用 `GetSession` 函数。
 

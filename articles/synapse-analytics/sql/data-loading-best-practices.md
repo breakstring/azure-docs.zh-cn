@@ -1,6 +1,6 @@
 ---
 title: 数据加载最佳做法
-description: 将数据加载到 Synapse SQL 的建议和性能优化
+description: 用于将数据加载到专用 SQL pool Azure Synapse Analytics 的建议和性能优化。
 services: synapse-analytics
 author: kevinvngo
 manager: craigg
@@ -11,20 +11,20 @@ ms.date: 04/15/2020
 ms.author: kevin
 ms.reviewer: igorstan
 ms.custom: azure-synapse
-ms.openlocfilehash: acfb2af7d482f9c0a51596818b1302584277defb
-ms.sourcegitcommit: 11e2521679415f05d3d2c4c49858940677c57900
+ms.openlocfilehash: 31014d336b5122251cf8be4a166520064776fce3
+ms.sourcegitcommit: aacbf77e4e40266e497b6073679642d97d110cda
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/31/2020
-ms.locfileid: "87486810"
+ms.lasthandoff: 01/12/2021
+ms.locfileid: "98118160"
 ---
-# <a name="best-practices-for-loading-data-for-data-warehousing"></a>为数据仓库加载数据的最佳做法
+# <a name="best-practices-for-loading-data-into-a-dedicated-sql-pool-azure-synapse-analytics"></a>将数据加载到专用 SQL pool Azure Synapse Analytics 的最佳实践
 
-有关加载数据的建议和性能优化
+在本文中，你将找到用于加载数据的建议和性能优化。
 
 ## <a name="prepare-data-in-azure-storage"></a>在 Azure 存储中准备数据
 
-若要尽量减少延迟，请将存储层和数据仓库并置。
+若要最大程度地减少延迟，请将存储层和专用 SQL 池归置。
 
 将数据导出为 ORC 文件格式时，如果存在较大的文本列，可能会收到“Java 内存不足”错误。 若要解决此限制方面的问题，请仅导出列的一个子集。
 
@@ -36,13 +36,13 @@ PolyBase 无法加载数据大小超过 1,000,000 字节的行。 将数据置�
 
 ## <a name="run-loads-with-enough-compute"></a>运行具有足够计算的负载
 
-若要尽量提高加载速度，请一次只运行一个加载作业。 如果这不可行，请将同时运行的负载的数量降至最低。 如果预期的加载作业较大，可以考虑在加载前纵向扩展 SQL 池。
+若要尽量提高加载速度，请一次只运行一个加载作业。 如果这不可行，请将同时运行的负载的数量降至最低。 如果需要较大的加载作业，请考虑在负载之前向上扩展专用的 SQL 池。
 
 若要使用适当的计算资源运行负载，请创建指定运行负载的加载用户。 将每个加载用户分配给一个特定的资源类或工作负载组。 若要运行负载，请以某个加载用户的身份登录，然后运行该负载。 该负载使用用户的资源类运行。  与尝试根据当前的资源类需求更改用户的资源类相比，此方法更简单。
 
 ### <a name="create-a-loading-user"></a>创建加载用户
 
-此示例为 staticrc20 资源类创建加载用户。 第一步是**连接到主服务器**并创建登录名。
+此示例为 staticrc20 资源类创建加载用户。 第一步是 **连接到主服务器** 并创建登录名。
 
 ```sql
    -- Connect to master
@@ -64,7 +64,7 @@ PolyBase 无法加载数据大小超过 1,000,000 字节的行。 将数据置�
 
 ## <a name="allow-multiple-users-to-load"></a>允许多个用户加载
 
-通常需要允许多个用户将数据加载到数据仓库中。 使用 [CREATE TABLE AS SELECT (Transact-SQL)](/sql/t-sql/statements/create-table-as-select-azure-sql-data-warehouse?toc=/azure/synapse-analytics/toc.json&bc=/azure/synapse-analytics/breadcrumb/toc.json&view=azure-sqldw-latest) 进行加载需要数据库的“控制”权限。  “控制”权限允许对所有架构进行控制性访问。 可能不需要让所有加载用户都具有对所有架构的控制访问权限。 若要限制权限，请使用 DENY CONTROL 语句。
+通常需要允许多个用户将数据加载到数据仓库中。 使用 [CREATE TABLE AS SELECT (Transact-SQL)](/sql/t-sql/statements/create-table-as-select-azure-sql-data-warehouse?toc=/azure/synapse-analytics/toc.json&bc=/azure/synapse-analytics/breadcrumb/toc.json&view=azure-sqldw-latest&preserve-view=true) 进行加载需要数据库的“控制”权限。  “控制”权限允许对所有架构进行控制性访问。 可能不需要让所有加载用户都具有对所有架构的控制访问权限。 若要限制权限，请使用 DENY CONTROL 语句。
 
 例如，考虑为部门 A 使用数据库架构 schema_A，为部门 B 使用 schema_B；让数据库用户 user_A 和 user_B 分别作为部门 A 和 B 中加载的 PolyBase 用户。 这些用户已被授予 CONTROL 数据库权限。 架构 A 和 B 的创建者现在使用 DENY 锁定其架构：
 
@@ -83,14 +83,14 @@ PolyBase 无法加载数据大小超过 1,000,000 字节的行。 将数据置�
 
 ## <a name="load-to-a-columnstore-index"></a>加载到列存储索引
 
-列存储索引需要将数据压缩成高质量的行组，因此需要大量的内存。 若要最大程度地提高压缩和索引效率，列存储索引需将最多 1,048,576 行压缩到每个行组中。 存在内存压力时，列存储索引可能无法达到最大压缩率。 这反过来会影响查询性能。 若要进行深入了解，请参阅[列存储内存优化](data-load-columnstore-compression.md)。
+列存储索引需要将数据压缩成高质量的行组，因此需要大量的内存。 若要最大程度地提高压缩和索引效率，列存储索引需将最多 1,048,576 行压缩到每个行组中。 存在内存压力时，列存储索引可能无法达到最大压缩率。 这会影响查询性能。 若要进行深入了解，请参阅[列存储内存优化](data-load-columnstore-compression.md)。
 
 - 若要确保加载用户有足够的内存来实现最大压缩率，请使用属于中大型资源类的加载用户。
-- 加载足够的行，以便完全填充新的行组。 在大容量加载期间，数据会以 1,048,576 行为一个完整的行组直接压缩到列存储中。 不到 102,400 行的加载会将行发送到增量存储中以 B 树索引的形式保存。 如果加载的行太少，这些行可能会全部进入增量存储中，不会立即压缩成列存储格式。
+- 加载足够的行，以便完全填充新的行组。 在大容量加载期间，每1048576行直接作为完整行组压缩到列存储中。 不到 102,400 行的加载会将行发送到增量存储中以 B 树索引的形式保存。 如果加载的行太少，这些行可能会全部进入增量存储中，不会立即压缩成列存储格式。
 
 ## <a name="increase-batch-size-when-using-sqlbulkcopy-api-or-bcp"></a>使用 SQLBulkCopy API 或 BCP 时增加批大小
 
-如前所述，通过 PolyBase 加载将提供 Synapse SQL 池的最高吞吐量。 如果无法使用 PolyBase 加载并且必须使用 SQLBulkCopy API （或 BCP），则应考虑增加批大小以提高吞吐量-较好的经验法则是10到1M 行之间的批大小。
+如前所述，通过 PolyBase 加载将提供 Synapse SQL 池的最高吞吐量。 如果无法使用 PolyBase 加载，并且必须使用 SQLBulkCopy API (或 BCP) ，应考虑增加批大小以提高吞吐量-好的经验法则是10到1M 行之间的批大小。
 
 ## <a name="manage-loading-failures"></a>管理加载失败
 
@@ -100,13 +100,13 @@ PolyBase 无法加载数据大小超过 1,000,000 字节的行。 将数据置�
 
 ## <a name="insert-data-into-a-production-table"></a>将数据插入生产表
 
-可以使用 [INSERT 语句](/sql/t-sql/statements/insert-transact-sql?toc=/azure/synapse-analytics/toc.json&bc=/azure/synapse-analytics/breadcrumb/toc.json&view=azure-sqldw-latest)将数据一次性加载到小型表中，甚至可以使用 `INSERT INTO MyLookup VALUES (1, 'Type 1')` 之类的语句定期重新加载某个查找。  但是，单独插入的效率不如执行大容量加载的效率。
+可以使用 [INSERT 语句](/sql/t-sql/statements/insert-transact-sql?toc=/azure/synapse-analytics/toc.json&bc=/azure/synapse-analytics/breadcrumb/toc.json&view=azure-sqldw-latest&preserve-view=true)将数据一次性加载到小型表中，甚至可以使用 `INSERT INTO MyLookup VALUES (1, 'Type 1')` 之类的语句定期重新加载某个查找。  不过，单独插入的效率不如执行大容量加载的效率。
 
 如果一天中有成千上万的单个插入，可将插入成批进行大容量加载。  制定将单个插入追加到某个文件的流程，然后创建另一流程来定期加载该文件。
 
 ## <a name="create-statistics-after-the-load"></a>创建加载后的统计信息
 
-为了改进查询性能，在首次加载数据或者在数据发生重大更改之后，必须针对所有表的所有列创建统计信息。  这可以手动完成，也可以启用[自动创建统计信息](../sql-data-warehouse/sql-data-warehouse-tables-statistics.md?toc=/azure/synapse-analytics/toc.json&bc=/azure/synapse-analytics/breadcrumb/toc.json)。
+若要提高查询性能，必须在首次加载后对所有表的所有列创建统计信息，或者对数据进行重大更改。 可以手动执行创建统计信息，也可以启用 [自动创建统计信息](../sql-data-warehouse/sql-data-warehouse-tables-statistics.md?toc=/azure/synapse-analytics/toc.json&bc=/azure/synapse-analytics/breadcrumb/toc.json)。
 
 有关统计信息的详细说明，请参阅[统计信息](develop-tables-statistics.md)。 以下示例演示如何针对 Customer_Speed 表的五个列创建统计信息。
 
@@ -124,7 +124,7 @@ create statistics [YearMeasured] on [Customer_Speed] ([YearMeasured]);
 
 若要轮换 Azure 存储帐户密钥，请执行以下操作：
 
-对于每个已更改密钥的存储帐户，请发出 [ALTER DATABASE SCOPED CREDENTIAL](/sql/t-sql/statements/alter-database-scoped-credential-transact-sql?toc=/azure/synapse-analytics/toc.json&bc=/azure/synapse-analytics/breadcrumb/toc.json&view=azure-sqldw-latest) 命令。
+对于每个已更改密钥的存储帐户，请发出 [ALTER DATABASE SCOPED CREDENTIAL](/sql/t-sql/statements/alter-database-scoped-credential-transact-sql?toc=/azure/synapse-analytics/toc.json&bc=/azure/synapse-analytics/breadcrumb/toc.json&view=azure-sqldw-latest&preserve-view=true) 命令。
 
 示例：
 
@@ -144,6 +144,6 @@ ALTER DATABASE SCOPED CREDENTIAL my_credential WITH IDENTITY = 'my_identity', SE
 
 ## <a name="next-steps"></a>后续步骤
 
-- 若要详细了解 PolyBase 以及如何设计提取、加载和转换 (ELT) 过程，请参阅[为 SQL 数据仓库设计 ELT](../sql-data-warehouse/design-elt-data-loading.md?toc=/azure/synapse-analytics/toc.json&bc=/azure/synapse-analytics/breadcrumb/toc.json)。
-- 如需加载教程，请参阅[使用 PolyBase 将数据从 Azure Blob 存储加载到 Azure SQL 数据仓库](../sql-data-warehouse/load-data-from-azure-blob-storage-using-polybase.md?toc=/azure/synapse-analytics/toc.json&bc=/azure/synapse-analytics/breadcrumb/toc.json)。
+- 若要深入了解 PolyBase，并 (ELT) 过程中设计提取、加载和转换，请参阅 [为 Azure Synapse Analytics 设计 ELT](../sql-data-warehouse/design-elt-data-loading.md?toc=/azure/synapse-analytics/toc.json&bc=/azure/synapse-analytics/breadcrumb/toc.json)。
+- 有关加载教程，请 [使用 PolyBase 将数据从 azure blob 存储加载到 Azure Synapse Analytics](../sql-data-warehouse/load-data-from-azure-blob-storage-using-copy.md?bc=%2fazure%2fsynapse-analytics%2fbreadcrumb%2ftoc.json&toc=%2fazure%2fsynapse-analytics%2ftoc.json)。
 - 若要监视数据加载，请参阅[使用 DMV 监视工作负荷](../sql-data-warehouse/sql-data-warehouse-manage-monitor.md?toc=/azure/synapse-analytics/toc.json&bc=/azure/synapse-analytics/breadcrumb/toc.json)。

@@ -7,25 +7,28 @@ ms.topic: overview
 ms.date: 10/16/2019
 author: sivethe
 ms.author: sivethe
-ms.openlocfilehash: 7c5164a032e77d85c995384473935b134ff528e5
-ms.sourcegitcommit: 98854e3bd1ab04ce42816cae1892ed0caeedf461
+ms.openlocfilehash: d9e01ee8b1f6c1cd04e665ad9f7bc57155abfaab
+ms.sourcegitcommit: e46f9981626751f129926a2dae327a729228216e
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/07/2020
-ms.locfileid: "88009301"
+ms.lasthandoff: 01/08/2021
+ms.locfileid: "98028975"
 ---
 # <a name="azure-cosmos-dbs-api-for-mongodb-32-version-supported-features-and-syntax"></a>Azure Cosmos DB 的 API for MongoDB（3.2 版本）：支持的功能和语法
+[!INCLUDE[appliesto-mongodb-api](includes/appliesto-mongodb-api.md)]
 
-Azure Cosmos DB 由 Microsoft 提供，是全球分布的多模型数据库服务。 可通过任何开源 MongoDB 客户端[驱动程序](https://docs.mongodb.org/ecosystem/drivers)与 Azure Cosmos DB 的 MongoDB API 进行通信。 可以按照 MongoDB [有线协议](https://docs.mongodb.org/manual/reference/mongodb-wire-protocol)规定，通过 Azure Cosmos DB 的 MongoDB API 来使用现有客户端驱动程序。
+Azure Cosmos DB 由 Microsoft 提供，是全球分布的多模型数据库服务。 可通过任何开源 MongoDB 客户端[驱动程序](https://docs.mongodb.org/ecosystem/drivers)与 Azure Cosmos DB's API for MongoDB 进行通信。 可以按照 MongoDB [有线协议](https://docs.mongodb.org/manual/reference/mongodb-wire-protocol)规定，通过 Azure Cosmos DB 的 MongoDB API 来使用现有客户端驱动程序。
 
-通过使用 Azure Cosmos DB 的 MongoDB API，可以像以往一样从 MongoDB 中受益，并且可使用 Cosmos DB 提供的所有企业功能：[全局分发](distribute-data-globally.md)、[自动分片](partition-data.md)、可用性和延迟保证、自动编制每个字段的索引、静态加密和备份等。
+通过使用 Azure Cosmos DB 的 MongoDB API，可以像以往一样从 MongoDB 中受益，并且可使用 Cosmos DB 提供的所有企业功能：[全局分发](distribute-data-globally.md)、[自动分片](partitioning-overview.md)、可用性和延迟保证、自动编制每个字段的索引、静态加密和备份等。
 
 > [!NOTE]
 > 本文适用于 Azure Cosmos DB 的 API for MongoDB 3.2。 对于 MongoDB 3.6 版本，请参阅 [MongoDB 3.6 支持的功能和语法](mongodb-feature-support-36.md)。
 
 ## <a name="protocol-support"></a>协议支持
 
-Azure Cosmos DB 的 API for MongoDB 的所有新帐户都与 MongoDB 服务器版本 **3.6** 兼容。 本文介绍 MongoDB 版本 3.2。 支持的运算符以及限制或例外已列在下面。 任何理解这些协议的客户端驱动程序应该都能够连接到 Azure Cosmos DB 的 MongoDB API。
+Azure Cosmos DB 的 API for MongoDB 的所有新帐户都与 MongoDB 服务器版本 **3.6** 兼容。 本文介绍 MongoDB 版本 3.2。 支持的运算符以及限制或例外已列在下面。 任何理解这些协议的客户端驱动程序应该都能够连接到 Azure Cosmos DB 的 MongoDB API。 
+
+Azure Cosmos DB 的 API for MongoDB 还为符合资格的帐户提供了无缝升级体验。 有关详细信息，请参阅 [MongoDB 版本升级指南](mongodb-version-upgrade.md)。
 
 ## <a name="query-language-support"></a>查询语言支持
 
@@ -34,6 +37,9 @@ Azure Cosmos DB 的 MongoDB API 全面支持 MongoDB 查询语言构造。 可�
 ## <a name="database-commands"></a>数据库命令
 
 Azure Cosmos DB 的 MongoDB API 支持以下数据库命令：
+
+> [!NOTE]
+> 本文仅列出受支持的服务器命令，并排除客户端包装器函数。 客户端包装器函数（如 `deleteMany()` 和 `updateMany()`）在内部利用 `delete()` 和 `update()` 服务器命令。 利用受支持的服务器命令的函数与 Azure Cosmos DB API for MongoDB 兼容。
 
 ### <a name="query-and-write-operation-commands"></a>查询和写入操作命令
 
@@ -228,7 +234,7 @@ Azure Cosmos DB 的 MongoDB API 支持以下数据库命令：
 }
 ```
 
-操作员 | 示例 |
+运算符 | 示例 |
 --- | --- |
 $eq | `{ "Volcano Name": { $eq: "Rainier" } }` |  | -
 $gt | `{ "Elevation": { $gt: 4000 } }` |  | -
@@ -288,7 +294,7 @@ $regex | `{ "Volcano Name": { $regex: "^Rain"} }`|  | -
 
 ### <a name="geospatial-operators"></a>地理空间运算符
 
-操作员 | 示例 | 支持 |
+运算符 | 示例 | 支持 |
 --- | --- | --- |
 $geoWithin | ```{ "Location.coordinates": { $geoWithin: { $centerSphere: [ [ -121, 46 ], 5 ] } } }``` | 是 |
 $geoIntersects |  ```{ "Location.coordinates": { $geoIntersects: { $geometry: { type: "Polygon", coordinates: [ [ [ -121.9, 46.7 ], [ -121.5, 46.7 ], [ -121.5, 46.9 ], [ -121.9, 46.9 ], [ -121.9, 46.7 ] ] ] } } } }``` | 是 |
@@ -306,9 +312,9 @@ $polygon | ```{ "Location.coordinates": { $near: { $geometry: { type: "Polygon",
 
 使用 `findOneAndUpdate` 操作时，支持基于单个字段的排序操作，但不支持基于多个字段的排序操作。
 
-## <a name="additional-operators"></a>其他运算符
+## <a name="other-operators"></a>其他运算符
 
-操作员 | 示例 | 说明
+运算符 | 示例 | 说明
 --- | --- | --- |
 $all | ```{ "Location.coordinates": { $all: [-121.758, 46.87] } }``` |
 $elemMatch | ```{ "Location.coordinates": { $elemMatch: {  $lt: 0 } } }``` |

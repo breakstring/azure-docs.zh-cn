@@ -6,22 +6,23 @@ author: v-miegge
 manager: dcscontentpm
 tags: billing
 ms.service: cost-management-billing
+ms.subservice: billing
 ms.topic: troubleshooting
-ms.date: 06/05/2020
+ms.date: 08/20/2020
 ms.author: v-miegge
-ms.openlocfilehash: 15dc25c3092f0bbf1a79f107f9d5ca87fa896bee
-ms.sourcegitcommit: d7008edadc9993df960817ad4c5521efa69ffa9f
+ms.openlocfilehash: 915b4fb289b6af6f4aac84d8bfa4d491a7f77efe
+ms.sourcegitcommit: d1e56036f3ecb79bfbdb2d6a84e6932ee6a0830e
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/08/2020
-ms.locfileid: "86102508"
+ms.lasthandoff: 01/29/2021
+ms.locfileid: "99050464"
 ---
 # <a name="troubleshoot-azure-subscription-sign-in-issues"></a>排查 Azure 订阅登录问题
 
 本指南可帮助解决无法登录到 Azure 门户或 Azure 帐户中心的问题。
 
 > [!NOTE]
-> 如果在注册新的 Azure 帐户时遇到问题，请参阅[排查 Azure 订阅登录问题](https://docs.microsoft.com/azure/cost-management-billing/manage/troubleshoot-azure-sign-up)。
+> 如果在注册新的 Azure 帐户时遇到问题，请参阅[排查 Azure 订阅登录问题](./troubleshoot-azure-sign-up.md)。
 
 ## <a name="page-hangs-in-the-loading-status"></a>页面在加载状态下挂起
 
@@ -31,7 +32,7 @@ ms.locfileid: "86102508"
 - 使用另一个 Internet 浏览器。
 - 使用浏览器的隐私浏览模式：
 
-   - **Microsoft Edge：** 打开“设置”（配置文件图片旁边的三个点），选择“新建 InPrivate 窗口”，然后浏览并登录到 [Azure 门户](https://portal.azure.com/)或 [Azure 帐户中心](https://account.azure.com/Subscriptions) 。 
+   - **Microsoft Edge：** 打开“设置”（配置文件图片旁边的三个点），选择“新建 InPrivate 窗口”，然后浏览并登录 [Azure 门户](https://portal.azure.com/) 。 
    - **Chrome：** 选择“Incognito”模式。
    - **Safari：** 选择“文件”，然后选择“新建隐私窗口” 。
 
@@ -52,7 +53,7 @@ ms.locfileid: "86102508"
    - **Chrome：** 选择“设置”，在“隐私和安全”下选择“清除浏览数据”  。
 - 将浏览器设置重置为默认设置。
 - 使用浏览器的专用浏览模式。 
-   - **Microsoft Edge：** 打开“设置”（配置文件图片旁边的三个点），选择“新建 InPrivate 窗口”，然后浏览并登录到 [Azure 门户](https://portal.azure.com/)或 [Azure 帐户中心](https://account.azure.com/Subscriptions) 。 
+   - **Microsoft Edge：** 打开“设置”（配置文件图片旁边的三个点），选择“新建 InPrivate 窗口”，然后浏览并登录 [Azure 门户](https://portal.azure.com/) 。 
    - **Chrome：** 选择“Incognito”模式。
    - **Safari：** 选择“文件”，然后选择“新建隐私窗口” 。
 
@@ -65,7 +66,7 @@ ms.locfileid: "86102508"
 解决此问题：
 
 - 选择右上角的帐户，确认是否选择了正确的 Azure 目录。
-- 如果已选择正确的 Azure 目录，但仍收到错误消息，请将帐户[添加为所有者](https://docs.microsoft.com/azure/cost-management-billing/manage/add-change-subscription-administrator)。
+- 如果已选择正确的 Azure 目录，但仍收到错误消息，请将帐户[添加为所有者](./add-change-subscription-administrator.md)。
 
 **场景 2：** 登录到 [Azure 帐户中心](https://account.windowsazure.com/Subscriptions)时收到错误
 
@@ -79,11 +80,11 @@ ms.locfileid: "86102508"
 
 Azure 计费和订阅的其他疑难解答文章
 
-- [银行卡被拒绝](https://docs.microsoft.com/azure/cost-management-billing/manage/troubleshoot-declined-card)
-- [订阅注册问题](https://docs.microsoft.com/azure/cost-management-billing/manage/troubleshoot-azure-sign-up)
-- [找不到任何订阅](https://docs.microsoft.com/azure/cost-management-billing/manage/no-subscriptions-found)
-- [企业成本视图已禁用](https://docs.microsoft.com/azure/cost-management-billing/manage/enterprise-mgmt-grp-troubleshoot-cost-view)
-- [Azure 计费文档](https://docs.microsoft.com/azure/cost-management-billing/)
+- [银行卡被拒绝](./troubleshoot-declined-card.md)
+- [订阅注册问题](./troubleshoot-azure-sign-up.md)
+- [找不到任何订阅](./no-subscriptions-found.md)
+- [企业成本视图已禁用](./enterprise-mgmt-grp-troubleshoot-cost-view.md)
+- [Azure 计费文档](../index.yml)
 
 ## <a name="contact-us-for-help"></a>联系我们以获取帮助
 

@@ -6,14 +6,14 @@ services: application-gateway
 author: vhorne
 ms.service: application-gateway
 ms.topic: how-to
-ms.date: 11/14/2019
+ms.date: 09/24/2020
 ms.author: victorh
-ms.openlocfilehash: f6480bdd5139d5bc7a5a1887b80f43c3903bf579
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 5b2bb50fc2ad8084d79097fe7acb449821d0a4da
+ms.sourcegitcommit: 829d951d5c90442a38012daaf77e86046018e5b9
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "84804602"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "91331052"
 ---
 # <a name="create-an-application-gateway-with-external-redirection-using-azure-powershell"></a>使用 Azure PowerShell 创建支持外部重定向的应用程序网关
 
@@ -21,10 +21,9 @@ ms.locfileid: "84804602"
 
 在本文中，学习如何：
 
-> [!div class="checklist"]
-> * 设置网络
-> * 创建侦听器和重定向规则
-> * 创建应用程序网关
+* 设置网络
+* 创建侦听器和重定向规则
+* 创建应用程序网关
 
 如果没有 Azure 订阅，请在开始之前创建一个[免费帐户](https://azure.microsoft.com/free/?WT.mc_id=A261C142F)。
 
@@ -157,9 +156,4 @@ Get-AzPublicIPAddress -ResourceGroupName myResourceGroupAG -Name myAGPublicIPAdd
 
 ## <a name="next-steps"></a>后续步骤
 
-本文介绍了如何执行以下操作：
-
-> [!div class="checklist"]
-> * 设置网络
-> * 创建侦听器和重定向规则
-> * 创建应用程序网关
+- [使用 Azure PowerShell 创建支持内部重定向的应用程序网关](redirect-internal-site-powershell.md)

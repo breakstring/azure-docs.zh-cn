@@ -3,17 +3,19 @@ title: 使用 Azure Cosmos DB Python 笔记本中的内置笔记本命令和功�
 description: 了解如何使用 Azure Cosmos DB 内置 Python 笔记本中的内置命令和功能来执行常见操作。
 author: deborahc
 ms.service: cosmos-db
+ms.subservice: cosmosdb-sql
 ms.topic: how-to
 ms.date: 05/19/2020
 ms.author: dech
-ms.openlocfilehash: f4236b099915e737f9d489d89e5bf18b84736d75
-ms.sourcegitcommit: 5a37753456bc2e152c3cb765b90dc7815c27a0a8
+ms.openlocfilehash: b89fcf32ed033f359b4db601e36cc69bb899944d
+ms.sourcegitcommit: 16887168729120399e6ffb6f53a92fde17889451
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/04/2020
-ms.locfileid: "87761189"
+ms.lasthandoff: 01/13/2021
+ms.locfileid: "98165818"
 ---
 # <a name="use-built-in-notebook-commands-and-features-in-azure-cosmos-db-python-notebooks-preview"></a>使用 Azure Cosmos DB Python 笔记本中的内置笔记本命令和功能（预览版）
+[!INCLUDE[appliesto-sql-api](includes/appliesto-sql-api.md)]
 
 使用 Azure Cosmos DB 中的内置 Jupyter 笔记本，可以从 Azure 门户分析和可视化数据。 本文介绍如何在 Python 笔记本中使用内置笔记本命令和功能执行常见操作。
 
@@ -122,6 +124,8 @@ Total RUs consumed : 25022.58
 ```
 可以使用输出统计信息计算用于上传项的有效 RU/秒。 例如，如果在 38 秒内消耗了 25,000 个 RU，则有效 RU/秒为 25,000 RU / 38 秒 = 658 RU/秒。
 
+可以将文件 (如 CSV 或 JSON 文件) 保存到本地笔记本工作区。 建议在笔记本中添加一个单元格来保存文件。 你可以在笔记本环境的集成终端中查看这些文件。 可以使用 "ls" 命令查看已保存的文件。 但是，如果重置工作区，则会删除这些文件。 因此，最好使用持久性存储，例如 GitHub 或存储帐户而不是本地工作区。
+
 ## <a name="run-another-notebook-in-current-notebook"></a>在当前笔记本中运行另一个笔记本 
 可以使用 ``%%run`` magic 命令从当前笔记本运行工作区中的另一个笔记本。 使用语法：
 
@@ -167,7 +171,7 @@ container = database.create_container_if_not_exists(id='WebsiteData', partition_
 ## <a name="create-a-custom-instance-of-cosmos_client"></a>创建 ``cosmos_client`` 的自定义实例
 为了提高灵活性，可以创建 ``cosmos_client`` 的自定义实例，以便：
 
-- 自定义[连接策略](https://docs.microsoft.com/python/api/azure-cosmos/azure.cosmos.documents.connectionpolicy?view=azure-python-preview)
+- 自定义[连接策略](/python/api/azure-cosmos/azure.cosmos.documents.connectionpolicy?preserve-view=true&view=azure-python-preview)
 - 针对其他 Azure Cosmos 帐户（而不是你所在的帐户）运行操作
 
 可以通过[环境变量](#access-the-account-endpoint-and-primary-key-env-variables)访问当前帐户的连接字符串和主密钥。 

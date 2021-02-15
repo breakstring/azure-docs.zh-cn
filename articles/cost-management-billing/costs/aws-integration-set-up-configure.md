@@ -3,16 +3,17 @@ title: 设置 AWS 与 Azure 成本管理的集成
 description: 本文逐步讲解如何设置并配置 AWS 成本和使用情况报表与 Azure 成本管理的集成。
 author: bandersmsft
 ms.author: banders
-ms.date: 07/24/2020
+ms.date: 10/23/2020
 ms.topic: how-to
 ms.service: cost-management-billing
+ms.subservice: cost-management
 ms.reviewer: matrive
-ms.openlocfilehash: 293fbe49572b8eacc95331de909ed5a2a00441b6
-ms.sourcegitcommit: dccb85aed33d9251048024faf7ef23c94d695145
+ms.openlocfilehash: 2b8a008decc41a5686fb2c8d9fee271f95f0fef3
+ms.sourcegitcommit: b8a175b6391cddd5a2c92575c311cc3e8c820018
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/28/2020
-ms.locfileid: "87290848"
+ms.lasthandoff: 11/25/2020
+ms.locfileid: "96122403"
 ---
 # <a name="set-up-and-configure-aws-cost-and-usage-report-integration"></a>设置并配置 AWS 成本和使用情况报表集成
 
@@ -38,14 +39,12 @@ AWS 建议使用成本和使用情况报表来收集和处理 AWS 成本。 有�
 6. 对于“数据刷新设置”，请选择在最终完成帐单后，如果 AWS 向帐户应用退款、额度或支持费，你是否希望刷新 AWS 成本和使用情况报表。  刷新报表时，会将一份新报表上传到 Amazon S3。 建议将该项设置保持选中状态。
 7. 选择“**下一页**”。
 8. 对于“S3 桶”，请选择“配置”。  
-9. 在“配置 S3 桶”对话框中执行以下任务之一：
-    1. 从下拉列表中选择某个现有的桶，然后选择“下一步”。 
-    2. 输入桶名称以及要在其中创建新桶的区域，然后选择“下一步”。 
-10.    选择“我已确认此策略正确”，然后单击“保存”。  
-11.    （可选）对于“报表路径前缀”，请输入要附加在报表名称前面的报表路径前缀。
+9. 在“配置 S3 桶”对话框中输入桶名称以及要在其中创建新桶的区域，然后选择“下一步”。
+10. 选择“我已确认此策略正确”，然后单击“保存”。  
+11. （可选）对于“报表路径前缀”，请输入要附加在报表名称前面的报表路径前缀。
 如果不指定前缀，则默认前缀是为报表指定的名称。 日期范围采用 `/report-name/date-range/` 格式。
 12. 对于“时间单位”，请选择“小时”。  
-13.    对于“报表版本控制”，请选择是希望报表的每个版本覆盖以前的版本，还是要添加额外的新报表。 
+13. 对于“报表版本控制”，请选择是希望报表的每个版本覆盖以前的版本，还是要添加额外的新报表。 
 14. 对于“为以下对象启用数据集成”，无需做出任何选择。 
 15. 对于“压缩”，请选择“GZIP”。  
 16. 选择“**下一页**”。
@@ -70,7 +69,6 @@ Azure 成本管理每天会多次访问成本和使用情况报表所在的 S3 �
 5. 在“帐户 ID”中输入 **432263259397**。 
 6. 在“选项”中，选择“需要外部 ID (当第三方充当此角色时的最佳做法)”。  
 7. 在“外部 ID”中，输入充当 AWS 角色与 Azure 成本管理之间的共享密码的外部 ID。  在成本管理中的“新建连接器”页上，也要使用与此相同的外部 ID。  Microsoft 建议在输入外部 ID 时使用强密码策略。
-
     > [!NOTE]
     > 不要更改“需要 MFA”选项。  应将其保持清除状态。
 8. 在完成时选择“下一步:  权限”。
@@ -147,23 +145,24 @@ Azure 成本管理每天会多次访问成本和使用情况报表所在的 S3 �
 }
 ```
 
-## <a name="set-up-a-new-aws-connector-in-azure"></a>在 Azure 中设置新的 AWS 连接器
+## <a name="set-up-a-new-connector-for-aws-in-azure"></a>在 Azure 中为 AWS 设置新连接器
 
 使用以下信息创建 AWS 连接器并开始监视 AWS 成本：
 
 1. 登录 [Azure 门户](https://portal.azure.com)。
-2. 转到“成本管理 + 计费” > “成本管理”。  
-3. 在“设置”下，选择“云连接器(预览版)”。    
-    ![显示“云连接器(预览版)”设置的示例](./media/aws-integration-setup-configure/cloud-connectors-preview01.png)。
-4. 选择页面顶部的“+ 添加”来创建连接器。 
-5. 在“创建 AWS 连接器”页上的“显示名称”中，输入连接器的名称。    
-    ![用于创建 AWS 连接器的页面示例](./media/aws-integration-setup-configure/create-aws-connector01.png)
-6. （可选）选择默认的管理组。 此组将存储所有已发现的链接帐户。 稍后可对其进行设置。
-7. 在“计费”部分，若要确保在预览版过期后可继续操作，请选择“正式发布后自动收取 1%”。   如果选择自动选项，则必须选择计费订阅。
-8. 对于“角色 ARN”，请输入在 AWS 中设置角色时使用的值。 
-9. 对于“外部 ID”，请输入在 AWS 中设置角色时使用的值。 
-10. 对于“报表名称”，请输入在 AWS 中创建的名称。 
-11. 依次选择“下一步”、“创建”。  
+2. 通过单击左侧菜单中的“主页”（带有 3 条线的“汉堡”菜单图标）转到 Azure 主页。
+3. 转到页面底部的“工具” > “成本管理” 。
+3. 在“设置”下，选择“AWS 连接器” 。  
+4. 选择页面顶部的“+ 添加”来创建连接器。   
+    :::image type="content" source="./media/aws-integration-setup-configure/aws-connector.png" alt-text="显示 AWS 连接器设置的示例" :::
+1. 在“创建连接器”页上的“显示名称”中，输入连接器的名称 。  
+    :::image type="content" source="./media/aws-integration-setup-configure/create-aws-connector01.png" alt-text="用于创建 AWS 连接器的页面示例" :::
+1. （可选）选择默认的管理组。 此组将存储所有已发现的链接帐户。 稍后可对其进行设置。
+1. 在“计费”部分中，如果要确保连续操作，请将“自动续订”选择为“打开”  。 如果选择自动选项，则必须选择计费订阅。
+1. 对于“角色 ARN”，请输入在 AWS 中设置角色时使用的值。 
+1. 对于“外部 ID”，请输入在 AWS 中设置角色时使用的值。 
+1. 对于“报表名称”，请输入在 AWS 中创建的名称。 
+1. 依次选择“下一步”、“创建”。  
 
 新的 AWS 范围、AWS 合并帐户、AWS 链接帐户及其成本数据可能需要在几小时后才会显示。
 
@@ -177,16 +176,19 @@ Azure 成本管理每天会多次访问成本和使用情况报表所在的 S3 �
 - 检查新范围是否已添加到范围选取器。 选择“刷新”查看最新数据。 
 - 在“云连接器”页上选择你的连接器，然后选择“转到计费帐户”，以将链接帐户分配到管理组。  
 
-## <a name="manage-cloud-connectors"></a>管理云连接器
+> [!NOTE]
+> 管理组目前不受 Microsoft 客户协议 (MCA) 客户支持。 MCA 客户可以创建连接器并查看其 AWS 数据。 但是，MCA 客户无法在管理组下同时查看其 Azure 成本和 AWS 成本。
 
-在“云连接器”页上选择某个连接器时，可以： 
+## <a name="manage-aws-connectors"></a>管理 AWS 连接器
+
+在“AWS 连接器”页上选择某个连接器时，可以：
 
 - 选择“转到计费帐户”来查看 AWS 合并帐户的信息。 
 - 选择“访问控制”来管理连接器的角色分配。 
 - 选择“编辑”来更新连接器。  无法更改 AWS 帐号，因为它显示在角色 ARN 中。 但可以创建新的连接器。
 - 选择“验证”来重新运行验证测试，以确保成本管理能够使用连接器设置收集数据。 
 
-![创建的 AWS 连接器示例列表](./media/aws-integration-setup-configure/list-aws-connectors.png)
+:::image type="content" source="./media/aws-integration-setup-configure/aws-connector-details.png" alt-text="AWS 连接器详细信息示例" :::
 
 ## <a name="set-up-azure-management-groups"></a>设置 Azure 管理组
 
@@ -196,9 +198,9 @@ Azure 成本管理每天会多次访问成本和使用情况报表所在的 S3 �
 
 ## <a name="set-up-an-aws-consolidated-account"></a>设置 AWS 合并帐户
 
-AWS 合并帐户可以合并多个 AWS 帐户的计费和付款。 它还充当 AWS 链接帐户。
+AWS 合并帐户可以合并多个 AWS 帐户的计费和付款。 它还充当 AWS 链接帐户。 可以使用 AWS 连接器页上的链接查看 AWS 合并帐户的详细信息。 
 
-![AWS 合并帐户的示例详细信息](./media/aws-integration-setup-configure/aws-consolidated-account01.png)
+:::image type="content" source="./media/aws-integration-setup-configure/aws-consolidated-account01.png" alt-text="AWS 合并帐户的示例详细信息" :::
 
 在该页中，可以：
 
@@ -220,7 +222,7 @@ AWS 链接帐户是创建和管理 AWS 资源的位置。 链接帐户还充当�
 - 选择“更新”，以更新 AWS 链接帐户与管理组的关联。 
 - 选择“访问控制”，以设置范围的角色分配。 
 
-![AWS 链接帐户页的示例](./media/aws-integration-setup-configure/aws-linked-account01.png)
+:::image type="content" source="./media/aws-integration-setup-configure/aws-linked-account01.png" alt-text="AWS 链接帐户页的示例" :::
 
 ### <a name="permissions-for-an-aws-linked-account"></a>AWS 链接帐户的权限
 

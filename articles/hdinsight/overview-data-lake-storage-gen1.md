@@ -1,19 +1,16 @@
 ---
 title: HDInsight 中的 Azure Data Lake Storage Gen1 概述
 description: HDInsight 中的 Data Lake Storage Gen1 的概述。
-author: hrasheed-msft
-ms.author: hrasheed
-ms.reviewer: jasonh
 ms.service: hdinsight
 ms.topic: conceptual
 ms.custom: seoapr2020
 ms.date: 04/21/2020
-ms.openlocfilehash: 947dd125cf9c5f5874eed380b3d69cff11509e31
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 4ac1a48733d104e7674acbc13bfbb1e7a4cf02b4
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "82187239"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98938875"
 ---
 # <a name="azure-data-lake-storage-gen1-overview-in-hdinsight"></a>HDInsight 中的 Azure Data Lake Storage Gen1 概述
 
@@ -33,7 +30,7 @@ Data Lake Storage Gen1 是与 HDFS 和 Hadoop 环境兼容的 Apache Hadoop 文�
 
 ## <a name="unlimited-storage-petabyte-files"></a>无限存储空间，PB 量级的文件
 
-Data Lake Storage Gen1 提供无限制的存储，适用于存储不同种类的数据进行分析。 它不会对帐户大小或文件大小施加限制。 或可以存储在 data lake 中的数据量。 单个文件的大小范围是从 kb 到 pb，这 Data Lake Storage Gen1 是存储任何类型数据的最佳选择。 通过创建多个副本来持久存储数据。 而且，数据在 data lake 中可存储的时间长度没有限制。
+Data Lake Storage Gen1 提供无限制的存储，适用于存储不同种类的数据进行分析。 它不会对帐户大小或文件大小施加限制。 或可以存储在 data lake 中的数据量。 单个文件的大小范围是从 kb 到 pb，这 Data Lake Storage Gen1 是存储任何类型数据的最佳选择。 可通过创建多个副本来长期存储数据。 而且，数据在 data lake 中可存储的时间长度没有限制。
 
 ## <a name="performance-tuning-for-big-data-analytics"></a>针对大数据分析优化了性能
 
@@ -57,7 +54,7 @@ Data Lake Storage Gen1 使用 Azure Active Directory 进行身份验证，使用
 
 | **功能** | **说明** |
 | --- | --- |
-| 身份验证 |Data Lake Storage Gen1 与 Azure Active Directory (Azure AD) 集成，可对 Data Lake Storage Gen1 中存储的所有数据进行标识与访问管理。 因为这种集成，Data Lake Storage Gen1 可受益于所有 Azure AD 功能。 这些功能包括：多重身份验证、条件性访问和基于角色的访问控制。 此外，还可以使用应用程序监视、安全监视和警报等。 Data Lake Storage Gen1 支持在 REST 接口中使用 OAuth 2.0 协议进行身份验证。 参阅[使用 Azure Active Directory 进行 Azure Data Lake Storage Gen1 身份验证](../data-lake-store/data-lakes-store-authentication-using-azure-active-directory.md)。|
+| 身份验证 |Data Lake Storage Gen1 与 Azure Active Directory (Azure AD) 集成，可对 Data Lake Storage Gen1 中存储的所有数据进行标识与访问管理。 因为这种集成，Data Lake Storage Gen1 可受益于所有 Azure AD 功能。 这些功能包括：多重身份验证、条件性访问和 Azure 基于角色的访问控制。 此外，还可以使用应用程序监视、安全监视和警报等。 Data Lake Storage Gen1 支持在 REST 接口中使用 OAuth 2.0 协议进行身份验证。 参阅[使用 Azure Active Directory 进行 Azure Data Lake Storage Gen1 身份验证](../data-lake-store/data-lakes-store-authentication-using-azure-active-directory.md)。|
 | 访问控制 |Data Lake Storage Gen1 通过支持 WebHDFS 协议公开的 POSIX 样式权限来提供访问控制。 可对根文件夹、子文件夹和单个文件启用 ACL。 有关 ACL 在 Data Lake Storage Gen1 上下文中的工作原理的详细信息，请参阅 [Data Lake Storage Gen1 中的访问控制](../data-lake-store/data-lake-store-access-control.md)。 |
 | 加密 |Data Lake Storage Gen1 还针对帐户中存储的数据提供加密。 创建 Data Lake Storage Gen1 帐户时可以指定加密设置。 可以选择加密或不加密数据。 有关详细信息，请参阅 [Data Lake Storage Gen1 中的加密](../data-lake-store/data-lake-store-encryption.md)。 有关如何提供加密相关配置的说明，请参阅[通过 Azure 门户开始使用 Azure Data Lake Storage Gen1](../data-lake-store/data-lake-store-get-started-portal.md)。 |
 
@@ -67,13 +64,13 @@ Data Lake Storage Gen1 使用 Azure Active Directory 进行身份验证，使用
 
 Data Lake Storage Gen1 与 Hadoop 环境中大多数开源组件兼容。 此外，还与其他 Azure 服务完美集成。  请访问以下链接，了解有关如何将 Data Lake Storage Gen1 与开源组件和其他 Azure 服务一起使用的详细信息。
 
-* 请参阅[与 Azure Data Lake Storage Gen1 一起使用的开源大数据应用程序](../data-lake-store/data-lake-store-compatible-oss-other-applications.md)。
+* 请参阅 [与 Azure Data Lake Storage Gen1 一起使用的开源大数据应用程序](../data-lake-store/data-lake-store-compatible-oss-other-applications.md)。
 * 参阅[将 Azure Data Lake Storage Gen1 与其他 Azure 服务集成](../data-lake-store/data-lake-store-integrate-with-other-services.md)，了解如何将 Data Lake Storage Gen1 与其他 Azure 服务配合使用，以实现更多的方案。
 * [有关大数据要求，请参阅使用 Azure Data Lake Storage Gen1](../data-lake-store/data-lake-store-data-scenarios.md)。
 
 ## <a name="data-lake-storage-gen1-file-system-adl"></a>Data Lake Storage Gen1 文件系统 (adl://)
 
-在 Hadoop 环境中，可以通过新文件系统 AzureDataLakeFilesystem （adl://）访问 Data Lake Storage Gen1。 使用的应用程序和服务的性能 `adl://` 可以按照当前在 WebHDFS 中不可用的方式进行优化。 因此，你可以通过使用推荐的 adl://，灵活地获取最佳性能。 或通过继续直接使用 WebHDFS API 来维护现有代码。 Azure HDInsight 充分使用 AzureDataLakeFilesystem 来提供 Data Lake Storage Gen1 的最佳性能。
+在 Hadoop 环境中，你可以通过新的文件系统（AzureDataLakeFilesystem (adl://) 访问 Data Lake Storage Gen1。 使用的应用程序和服务的性能 `adl://` 可以按照当前在 WebHDFS 中不可用的方式进行优化。 因此，你可以通过使用推荐的 adl://，灵活地获取最佳性能。 或通过继续直接使用 WebHDFS API 来维护现有代码。 Azure HDInsight 充分使用 AzureDataLakeFilesystem 来提供 Data Lake Storage Gen1 的最佳性能。
 
 使用以下 URI 访问 Data Lake Storage Gen1 中的数据：
 

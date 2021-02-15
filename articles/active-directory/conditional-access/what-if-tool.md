@@ -11,16 +11,16 @@ author: MicrosoftGuyJFlo
 manager: daveba
 ms.reviewer: nigu
 ms.collection: M365-identity-device-management
-ms.openlocfilehash: a5f75ce20d24f98e5fcefde49b95a545281f8066
-ms.sourcegitcommit: bfeae16fa5db56c1ec1fe75e0597d8194522b396
+ms.openlocfilehash: a3ac799203cade3a907acbe28dee3a8023891db2
+ms.sourcegitcommit: 3bdeb546890a740384a8ef383cf915e84bd7e91e
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/10/2020
-ms.locfileid: "88032877"
+ms.lasthandoff: 10/30/2020
+ms.locfileid: "93077636"
 ---
 # <a name="troubleshoot-using-the-what-if-tool-in-conditional-access"></a>在条件访问中使用 What If 工具进行故障排除
 
-[条件访问](../active-directory-conditional-access-azure-portal.md)是 Azure Active Directory (Azure AD) 中的一项功能，用于控制已获授权的用户访问云应用的方式。 如何知道环境中的条件访问策略会带来什么？ 若要回答此问题，可以使用“条件访问 What If 工具”。
+[条件访问](./overview.md)是 Azure Active Directory (Azure AD) 中的一项功能，用于控制已获授权的用户访问云应用的方式。 如何知道环境中的条件访问策略会带来什么？ 若要回答此问题，可以使用“条件访问 What If 工具”。
 
 本文介绍如何使用此工具来测试条件访问策略。
 
@@ -36,19 +36,19 @@ ms.locfileid: "88032877"
 
 - 想要测试的用户 
 - 用户要尝试访问的云应用
-- 访问配置的云应用时存在的条件
+- 对已配置的云应用进行访问的条件
      
 下一步，可以启动用于评估设置的模拟运行。 评估运行中仅包含启用的策略。
 
-完成评估后，此工具将生成一份受影响策略的报表。 若要收集有关条件访问策略的详细信息，[条件性访问见解和报表工作簿](howto-conditional-access-insights-reporting.md)可以在 "仅报告" 模式下提供有关策略的其他详细信息，以及当前启用的策略。
+完成评估后，此工具将生成一份受影响策略的报表。 若要收集有关条件访问策略的详细信息，可参阅[条件访问见解和报表工作簿](howto-conditional-access-insights-reporting.md)，更详细地了解“仅限报告”模式的策略以及那些目前已启用的策略。
 
 ## <a name="running-the-tool"></a>运行此工具
 
-可以在 Azure 门户中的“[条件访问 - 策略](https://portal.azure.com/#blade/Microsoft_AAD_IAM/ConditionalAccessBlade/Policies)”页上找到 **What If** 工具。
+可以在 Azure 门户中的“ [条件访问 - 策略](https://portal.azure.com/#blade/Microsoft_AAD_IAM/ConditionalAccessBlade/Policies)”页上找到 **What If** 工具。
 
-若要启动此工具，请在策略列表顶部的工具栏中单击 **What If**。
+若要启动此工具，请在策略列表顶部的工具栏中单击 **What If** 。
 
-![What If](./media/what-if-tool/01.png)
+:::image type="content" source="./media/what-if-tool/01.png" alt-text="Azure 门户中的 &quot;条件访问-策略&quot; 页的屏幕截图。在工具栏中，突出显示 &quot;if&quot; 项。" border="false":::
 
 必须先配置设置，才可以运行评估。
 
@@ -56,7 +56,7 @@ ms.locfileid: "88032877"
 
 本部分介绍有关模拟运行的设置的信息。
 
-![What If](./media/what-if-tool/02.png)
+:::image type="content" source="./media/what-if-tool/02.png" alt-text="Azure 门户 &quot;What If&quot; 页的屏幕截图，其中包含用户的字段、云应用、I P 地址、设备平台、客户端应用和登录风险。" border="false":::
 
 ### <a name="user"></a>User
 
@@ -90,7 +90,7 @@ IP 地址为单个 IPv4 地址，用于模拟[位置条件](location-condition.m
 
 通过单击 **What If** 启动评估。 评估结果提供包含以下内容的报表： 
 
-![What If](./media/what-if-tool/03.png)
+:::image type="content" source="./media/what-if-tool/03.png" alt-text="计算报表的屏幕截图。文本指示至少配置了一个经典策略。选项卡可用于查看策略。" border="false":::
 
 - 一个指示器，指示环境中是否存在经典策略
 - 应用于用户的策略
@@ -104,5 +104,5 @@ IP 地址为单个 IPv4 地址，用于模拟[位置条件](location-condition.m
 
 ## <a name="next-steps"></a>后续步骤
 
-- 有关条件访问策略应用程序的详细信息，请参阅使用[条件性访问见解和报表](howto-conditional-access-insights-reporting.md)的仅限报告模式。
-- 如果已准备好为环境配置条件访问策略，请参阅[条件访问常见策略](concept-conditional-access-policy-common.md)。 
+- 有关条件访问策略应用程序的详细信息，可以使用[条件访问见解和报告](howto-conditional-access-insights-reporting.md)通过策略的“仅限报告”模式来查找。
+- 如果已准备好为环境配置条件访问策略，请参阅[条件访问常见策略](concept-conditional-access-policy-common.md)。

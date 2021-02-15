@@ -3,7 +3,7 @@ title: StorSimple Snapshot Manager 和卷 | Microsoft Docs
 description: 介绍如何使用 StorSimple Snapshot Manager MMC 管理单元查看和管理卷以及配置备份。
 services: storsimple
 documentationcenter: NA
-author: twooley
+author: alkohli
 manager: carmonm
 editor: ''
 ms.assetid: 78896323-e57c-431e-bbe2-0cbde1cf43a2
@@ -13,13 +13,13 @@ ms.topic: how-to
 ms.tgt_pltfrm: NA
 ms.workload: TBD
 ms.date: 04/18/2016
-ms.author: twooley
-ms.openlocfilehash: b27cf605c978e15d81a43db3371a71b0ccc48c8d
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.author: alkohli
+ms.openlocfilehash: 309fa85d0a4d877522a89dd8f1e6e71fb2074744
+ms.sourcegitcommit: a43a59e44c14d349d597c3d2fd2bc779989c71d7
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "85508914"
+ms.lasthandoff: 11/25/2020
+ms.locfileid: "96022932"
 ---
 # <a name="use-storsimple-snapshot-manager-to-view-and-manage-volumes"></a>使用 StorSimple Snapshot Manager 查看和管理卷
 ## <a name="overview"></a>概述
@@ -45,7 +45,7 @@ ms.locfileid: "85508914"
 > 
 
 ## <a name="mount-volumes"></a>装载卷
-使用以下过程装载、初始化和格式化 StorSimple 卷。 此过程使用磁盘管理（一个系统实用工具）来管理硬盘和相应的卷或分区。 有关磁盘管理的详细信息，请转到 Microsoft TechNet 网站上的[磁盘管理](https://technet.microsoft.com/library/cc770943.aspx)。
+使用以下过程装载、初始化和格式化 StorSimple 卷。 此过程使用磁盘管理（一个系统实用工具）来管理硬盘和相应的卷或分区。 有关磁盘管理的详细信息，请转到 Microsoft TechNet 网站上的[磁盘管理](/previous-versions/windows/it-pro/windows-server-2008-R2-and-2008/cc770943(v=ws.11))。
 
 #### <a name="to-mount-volumes"></a>装载卷
 1. 在主计算机上，启动 Microsoft iSCSI 发起程序。
@@ -80,20 +80,20 @@ ms.locfileid: "85508914"
       * 选择 NTFS 文件系统。
       * 指定 64 KB 分配单元大小。
       * 执行快速格式化。
-7. 格式化多分区卷。 有关说明，请转到[实施磁盘管理](https://msdn.microsoft.com/library/dd163556.aspx)中的“分区和卷”部分。
+7. 格式化多分区卷。 有关说明，请转到[实施磁盘管理](/previous-versions/tn-archive/dd163556(v=technet.10))中的“分区和卷”部分。
 
 ## <a name="view-information-about-your-volumes"></a>查看卷的相关信息
 使用以下过程查看本地卷和 Azure StorSimple 卷的相关信息。
 
 #### <a name="to-view-volume-information"></a>查看卷信息
 1. 单击桌面图标启动 StorSimple Snapshot Manager。 
-2. 在 **“作用域”** 窗格中，单击 **“卷”** 节点。 本地卷和已装入卷的列表（其中包括所有 Azure StorSimple 卷）会显示在“**结果**”窗格中。 "**结果**" 窗格中的列是可配置的。 （右键单击 "**卷**" 节点，选择 "**查看**"，然后选择 "**添加/删除列**"。）
+2. 在 **“作用域”** 窗格中，单击 **“卷”** 节点。 本地卷和已装入卷的列表（其中包括所有 Azure StorSimple 卷）会显示在“**结果**”窗格中。 " **结果** " 窗格中的列是可配置的。  (右键单击 " **卷** " 节点，选择 " **查看**"，然后选择 " **添加/删除列**"。 ) 
    
     ![配置列](./media/storsimple-snapshot-manager-manage-volumes/HCS_SSM_View_volumes.png)
    
-   | 结果列 | 描述 |
+   | 结果列 | 说明 |
    |:--- |:--- |
-   |  “属性” |**“名称”** 列包含分配给每个已发现卷的驱动器号。 |
+   |  名称 |**“名称”** 列包含分配给每个已发现卷的驱动器号。 |
    |  设备 |“**设备**”列包含连接到主计算机的设备 IP 地址。 |
    |  设备卷名称 |**“设备卷名称”** 列包含选定卷所属的设备卷的名称。 这是在 Azure 门户中针对特定卷定义的卷名称。 |
    |  访问路径 |**“访问路径”** 列显示卷的访问路径。 这是在主计算机上可以访问该卷的驱动器号或装入点。 |
@@ -102,7 +102,7 @@ ms.locfileid: "85508914"
 使用以下过程从 StorSimple Snapshot Manager 中删除卷。
 
 > [!NOTE]
-> 如果该卷是任何卷组的一部分，则无法将其删除。 （"删除" 选项不可用于作为卷组的成员的卷。）必须删除整个卷组才能删除该卷。
+> 如果该卷是任何卷组的一部分，则无法将其删除。  (删除选项不可用于作为卷组的成员的卷。 ) 必须删除整个卷组才能删除该卷。
 
 #### <a name="to-delete-a-volume"></a>删除卷
 1. 单击桌面图标启动 StorSimple Snapshot Manager。
@@ -133,8 +133,8 @@ ms.locfileid: "85508914"
 ### <a name="prerequisites"></a>先决条件
 开始之前：
 
-* 请确保正确配置 StorSimple 设备和主计算机。 有关详细信息，请转到[部署本地 StorSimple 设备](storsimple-deployment-walkthrough-u2.md)。
-* 安装和配置 StorSimple Snapshot Manager。 有关详细信息，请参阅[部署 StorSimple Snapshot Manager](storsimple-snapshot-manager-deployment.md)。
+* 请确保正确配置 StorSimple 设备和主计算机。 有关详细信息，请转到[部署本地 StorSimple 设备](./storsimple-8000-deployment-walkthrough-u2.md)。
+* 安装和配置 StorSimple Snapshot Manager。 有关详细信息，请参阅 [部署 StorSimple Snapshot Manager](storsimple-snapshot-manager-deployment.md)。
 
 #### <a name="to-configure-backup-of-a-basic-volume"></a>配置基本卷的备份
 1. 在 StorSimple 设备上创建基本卷。
@@ -162,11 +162,11 @@ ms.locfileid: "85508914"
 开始之前：
 
 * 请确保正确配置 StorSimple 设备和主计算机。 有关详细信息，请转到[部署本地 StorSimple 设备](storsimple-8000-deployment-walkthrough-u2.md)。
-* 安装和配置 StorSimple Snapshot Manager。 有关详细信息，请参阅[部署 StorSimple Snapshot Manager](storsimple-snapshot-manager-deployment.md)。
+* 安装和配置 StorSimple Snapshot Manager。 有关详细信息，请参阅 [部署 StorSimple Snapshot Manager](storsimple-snapshot-manager-deployment.md)。
 * 在 StorSimple 设备上配置两个卷。 （在示例中，可用卷为 **“磁盘 1”** 和 **“磁盘 2”**。） 
 
 ### <a name="step-1-use-disk-management-to-create-a-dynamic-mirrored-volume"></a>步骤 1：使用磁盘管理创建动态镜像的卷
-磁盘管理是一个系统实用工具，用于管理硬盘以及其中包含的卷或分区。 有关磁盘管理的详细信息，请转到 Microsoft TechNet 网站上的[磁盘管理](https://technet.microsoft.com/library/cc770943.aspx)。
+磁盘管理是一个系统实用工具，用于管理硬盘以及其中包含的卷或分区。 有关磁盘管理的详细信息，请转到 Microsoft TechNet 网站上的[磁盘管理](/previous-versions/windows/it-pro/windows-server-2008-R2-and-2008/cc770943(v=ws.11))。
 
 #### <a name="to-create-a-dynamic-mirrored-volume"></a>创建动态镜像卷
 1. 使用以下任意选项启动磁盘管理： 
@@ -178,7 +178,7 @@ ms.locfileid: "85508914"
 3. 在“磁盘管理”窗口底部窗格的右列中，右键单击 **“磁盘 1”**，然后选择 **“新建镜像卷”**。 
    
     ![新建镜像卷](./media/storsimple-snapshot-manager-manage-volumes/HCS_SSM_New_mirrored_volume.png) 
-4. 在“新建镜像卷”**** 向导页上，单击“下一步”****。
+4. 在“新建镜像卷”向导页上，单击“下一步”。
 5. 在 **“选择磁盘”** 页的 **“选定项”** 窗格中选择 **“磁盘 2”**，单击 **“添加”**，然后单击 **“下一步”**。 
 6. 在“**分配驱动器号或路径**”页上，接受默认值，并单击“**下一步**”。 
 7. 在 **“格式化卷”** 页的 **“分配单元大小”** 框中，选择 **“64K”**。 选择 **“执行快速格式化”** 复选框，然后单击 **“下一步”**。 
@@ -198,7 +198,7 @@ ms.locfileid: "85508914"
 2. 在 **“作用域”** 窗格中，右键单击 **“卷”** 节点，然后选择 **“重新扫描卷”**。 当扫描完成时，**“结果”** 窗格中会显示卷列表。 动态镜像卷被列为单个卷。 
 3. 在 **“结果”** 窗格中，右键单击动态镜像卷，然后单击 **“创建卷组”**。 
 4. 在 **“创建卷组”** 对话框中，键入卷组的名称，将动态镜像卷分配给该组，然后单击 **“确定”**。 
-5. 在 **“作用域”** 窗格中，展开 **“卷组”** 节点。 新卷组应出现在 "**卷组**" 节点下。 
+5. 在 **“作用域”** 窗格中，展开 **“卷组”** 节点。 新卷组应出现在 "  **卷组** " 节点下。 
 6. 右键单击卷组名称。 
    
    * 若要启动交互式（按需）备份作业，请单击 **“单次备份”**。 
@@ -210,4 +210,4 @@ ms.locfileid: "85508914"
 * 了解如何[使用 StorSimple Snapshot Manager 创建和管理卷组](storsimple-snapshot-manager-manage-volume-groups.md)。
 
 <!--Reference links-->
-[1]: https://msdn.microsoft.com/library/ee338480(v=ws.10).aspx
+[1]: /previous-versions/windows/it-pro/windows-server-2008-R2-and-2008/ee338480(v=ws.10)

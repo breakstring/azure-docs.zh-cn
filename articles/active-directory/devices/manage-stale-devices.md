@@ -11,12 +11,12 @@ author: MicrosoftGuyJFlo
 manager: daveba
 ms.reviewer: spunukol
 ms.collection: M365-identity-device-management
-ms.openlocfilehash: fc8f599860b6095e1bab90e8e29818d8079e89a9
-ms.sourcegitcommit: faeabfc2fffc33be7de6e1e93271ae214099517f
+ms.openlocfilehash: d12679e64d690614aaf788837a02af007448f83d
+ms.sourcegitcommit: 0ce1ccdb34ad60321a647c691b0cff3b9d7a39c8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/13/2020
-ms.locfileid: "88184935"
+ms.lasthandoff: 11/05/2020
+ms.locfileid: "93393670"
 ---
 # <a name="how-to-manage-stale-devices-in-azure-ad"></a>如何：在 Azure AD 中管理过时设备
 
@@ -37,13 +37,13 @@ Azure AD 中的陈旧设备可能会影响到针对组织中设备实施的常�
 
 ## <a name="detect-stale-devices"></a>检测陈旧的设备
 
-由于陈旧设备定义为已注册的、但在特定的时间范围内未曾用来访问过任何云应用的设备，因此，检测陈旧设备需要时间戳相关的属性。 在 Azure AD 中，此属性称为 **ApproximateLastLogonTimestamp** 或**活动时间戳**。 如果某个设备的当前时间与**活动时间戳**值之间的差超过了为活动设备定义的时间范围，则将该设备视为陈旧设备。 此**活动时间戳**目前以公共预览版提供。
+由于陈旧设备定义为已注册的、但在特定的时间范围内未曾用来访问过任何云应用的设备，因此，检测陈旧设备需要时间戳相关的属性。 在 Azure AD 中，此属性称为 **ApproximateLastLogonTimestamp** 或 **活动时间戳** 。 如果某个设备的当前时间与 **活动时间戳** 值之间的差超过了为活动设备定义的时间范围，则将该设备视为陈旧设备。 此 **活动时间戳** 目前以公共预览版提供。
 
 ## <a name="how-is-the-value-of-the-activity-timestamp-managed"></a>如何管理活动时间戳的值？  
 
 设备尝试身份验证时，会触发活动时间戳的评估。 在以下情况下，Azure AD 会评估活动时间戳：
 
-- 已触发需要[托管设备](../conditional-access/require-managed-devices.md)或批准的[客户端应用](../conditional-access/app-based-conditional-access.md)的条件性访问策略。
+- 已触发需要 [托管设备](../conditional-access/require-managed-devices.md) 或批准的 [客户端应用](../conditional-access/app-based-conditional-access.md) 的条件性访问策略。
 - 已加入 Azure AD 或已加入混合 Azure AD 的 Windows 10 设备在网络中处于活动状态。 
 - Intune 受管理设备已签入服务。
 
@@ -53,13 +53,13 @@ Azure AD 中的陈旧设备可能会影响到针对组织中设备实施的常�
 
 可通过两个选项检索活动时间戳的值：
 
-- Azure 门户中[设备页](https://portal.azure.com/#blade/Microsoft_AAD_IAM/DevicesMenuBlade/Devices)上的“活动”列****
+- Azure 门户中[设备页](https://portal.azure.com/#blade/Microsoft_AAD_IAM/DevicesMenuBlade/Devices)上的“活动”列
 
-    ![活动时间戳](./media/manage-stale-devices/01.png)
+    :::image type="content" source="./media/manage-stale-devices/01.png" alt-text="Azure 门户列出设备上的名称、所有者和其他信息的页面屏幕截图。一列列出活动时间戳。" border="false":::
 
 - [Get-azureaddevice](/powershell/module/azuread/Get-AzureADDevice) cmdlet
 
-    ![活动时间戳](./media/manage-stale-devices/02.png)
+    :::image type="content" source="./media/manage-stale-devices/02.png" alt-text="显示命令行输出的屏幕截图。将突出显示一行，并列出 ApproximateLastLogonTimeStamp 值的时间戳。" border="false":::
 
 ## <a name="plan-the-cleanup-of-your-stale-devices"></a>规划陈旧设备的清理
 
@@ -91,7 +91,7 @@ Azure AD 中的陈旧设备可能会影响到针对组织中设备实施的常�
 
 不要删除系统管理的设备。 这些是通常的设备，如 Autopilot。 删除后，这些设备将无法重新预配。 默认情况下，新的 `Get-AzureADDevice` cmdlet 可以排除系统管理的设备。 
 
-### <a name="hybrid-azure-ad-joined-devices"></a>混合 Azure AD 加入设备
+### <a name="hybrid-azure-ad-joined-devices"></a>已加入混合 Azure AD 的设备
 
 加入混合 Azure AD 的设备应该遵循本地陈旧设备管理的策略。 
 
@@ -101,7 +101,7 @@ Azure AD 中的陈旧设备可能会影响到针对组织中设备实施的常�
 - **Windows 7/8** -首先在本地 AD 中禁用或删除 Windows 7/8 设备。 无法使用 Azure AD Connect 在 Azure AD 中禁用或删除 Windows 7/8 设备。 相反，当你在本地进行更改时，你必须在 Azure AD 中禁用/删除。
 
 > [!NOTE]
->* 删除本地 AD 或 Azure AD 中的设备不会删除客户端上的注册。 它只会阻止使用设备作为标识 (（例如条件访问) ）访问资源。 阅读有关如何在[客户端上删除注册](faq.md#hybrid-azure-ad-join-faq)的其他信息。
+>* 删除本地 AD 或 Azure AD 中的设备不会删除客户端上的注册。 它只会阻止使用设备作为标识 (（例如条件访问) ）访问资源。 阅读有关如何在 [客户端上删除注册](faq.md#hybrid-azure-ad-join-faq)的其他信息。
 >* 仅在 Azure AD 中删除 Windows 10 设备将使用 Azure AD connect 从本地重新同步设备，但作为 "挂起" 状态的新对象。 设备上需要重新注册。
 >* 从 Windows 10/服务器2016设备的同步作用域中删除设备将删除 Azure AD 设备。 将其添加回同步作用域会将新对象置于 "挂起" 状态。 需要重新注册设备。
 >* 如果不使用 Windows 10 设备 Azure AD Connect 来同步 (例如仅将 AD FS 用于注册) ，则必须管理与 Windows 7/8 设备类似的生命周期。
@@ -129,11 +129,11 @@ Azure AD 中的陈旧设备可能会影响到针对组织中设备实施的常�
 
 典型的例程包括以下步骤：
 
-1. 使用[AzureAD](/powershell/module/azuread/connect-azuread) cmdlet 连接到 Azure Active Directory
+1. 使用 [AzureAD](/powershell/module/azuread/connect-azuread) cmdlet 连接到 Azure Active Directory
 1. 获取设备列表
-1. 使用[get-azureaddevice](/powershell/module/azuread/Set-AzureADDevice) cmdlet 禁用设备 (禁用，方法是使用-AccountEnabled 选项) 。 
+1. 使用 [get-azureaddevice](/powershell/module/azuread/Set-AzureADDevice) cmdlet 禁用设备 (禁用，方法是使用-AccountEnabled 选项) 。 
 1. 在删除设备之前，将等待所选天数的宽限期。
-1. 使用[get-azureaddevice](/powershell/module/azuread/Remove-AzureADDevice) cmdlet 删除设备。
+1. 使用 [get-azureaddevice](/powershell/module/azuread/Remove-AzureADDevice) cmdlet 删除设备。
 
 ### <a name="get-the-list-of-devices"></a>获取设备列表
 
@@ -147,10 +147,10 @@ Get-AzureADDevice -All:$true | select-object -Property Enabled, DeviceId, Displa
 
 ```PowerShell
 $dt = [datetime]’2017/01/01’
-Get-AzureADDevice | Where {$_.ApproximateLastLogonTimeStamp -le $dt} | select-object -Property Enabled, DeviceId, DisplayName, DeviceTrustType, ApproximateLastLogonTimestamp | export-csv devicelist-olderthan-Jan-1-2017-summary.csv
+Get-AzureADDevice -All:$true | Where {$_.ApproximateLastLogonTimeStamp -le $dt} | select-object -Property Enabled, DeviceId, DisplayName, DeviceTrustType, ApproximateLastLogonTimestamp | export-csv devicelist-olderthan-Jan-1-2017-summary.csv
 ```
 
-## <a name="what-you-should-know"></a>应了解的内容
+## <a name="what-you-should-know"></a>要点
 
 ### <a name="why-is-the-timestamp-not-updated-more-frequently"></a>为何时间戳不经常更新？
 
@@ -163,9 +163,9 @@ Get-AzureADDevice | Where {$_.ApproximateLastLogonTimeStamp -le $dt} | select-ob
 ### <a name="why-should-i-worry-about-windows-autopilot-devices"></a>为什么要考虑 Windows Autopilot 设备？
 
 当你删除与 Windows Autopilot 对象关联的 Azure AD 设备时，如果以后重新使用该设备，可能会出现以下三种情况：
-- 使用 Windows Autopilot 用户驱动的部署而无需使用白手套，将创建一个新的 Azure AD 设备，但不会使用 ZTDID 标记它。
+- 使用 Windows Autopilot 用户驱动的部署而无需预配，将创建一个新的 Azure AD 设备，但不会使用 ZTDID 对其进行标记。
 - 使用 Windows Autopilot 自行部署模式部署，由于找不到关联 Azure AD 设备，它们将会失败。   (这是一种安全机制，可确保没有 "入侵者" 设备尝试将 Azure AD 加入无凭据。 ) 失败将指示 ZTDID 不匹配。
-- 对于 Windows Autopilot 纯白手套部署，由于找不到关联 Azure AD 设备，它们将会失败。  (后台，白色手套部署使用相同的自部署模式进程，因此它们强制实施相同的安全机制。 ) 
+- 对于 Windows Autopilot 预配部署，由于找不到关联的 Azure AD 设备，它们将会失败。  (在幕后，预配部署使用相同的自部署模式进程，因此它们强制实施相同的安全机制。 ) 
 
 ### <a name="how-do-i-know-all-the-type-of-devices-joined"></a>如何知道所有已加入的设备类型？
 
@@ -175,9 +175,9 @@ Get-AzureADDevice | Where {$_.ApproximateLastLogonTimeStamp -le $dt} | select-ob
 
 将拒绝使用该设备在 Azure AD 中进行身份验证。 常见示例包括：
 
-- **混合 Azure AD 联接的设备**-用户可以使用设备登录到其本地域。 但是，他们无法访问 Office 365 等 Azure AD 资源。
+- **混合 Azure AD 联接的设备** -用户可以使用设备登录到其本地域。 但是，它们无法访问 Azure AD 资源，如 Microsoft 365。
 - **已加入 Azure AD 的设备** - 用户无法使用该设备登录。 
-- **移动设备** - 用户无法访问 Office 365 等 Azure AD 资源。 
+- **移动设备** -用户无法访问 Azure AD 资源，如 Microsoft 365。 
 
 ## <a name="next-steps"></a>后续步骤
 

@@ -14,14 +14,17 @@ ms.devlang: na
 ms.topic: article
 ms.date: 03/19/2019
 ms.author: juliako
-ms.openlocfilehash: faf0db31b458ed6b8dd4961fffbf2a810990574d
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.openlocfilehash: 9f86f7a0a7eaef7c0dc244a2e089596de3779eae
+ms.sourcegitcommit: 2c586a0fbec6968205f3dc2af20e89e01f1b74b5
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87084477"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92018946"
 ---
-# <a name="publish-content-in-the-azure-portal"></a>在 Azure 门户中发布内容  
+# <a name="publish-content-in-the-azure-portal"></a>在 Azure 门户中发布内容
+
+[!INCLUDE [media services api v2 logo](./includes/v2-hr.md)]
+
 > [!div class="op_single_selector"]
 > * [门户](media-services-portal-publish.md)
 > * [.NET](media-services-deliver-streaming-content.md)
@@ -31,7 +34,7 @@ ms.locfileid: "87084477"
 
 ## <a name="overview"></a>概述
 > [!NOTE]
-> 要完成本教程，需要一个 Azure 帐户。 有关详细信息，请参阅[Azure 免费试用](https://azure.microsoft.com/pricing/free-trial/)。 
+> 要完成本教程，需要一个 Azure 帐户。 有关详细信息，请参阅 [Azure 免费试用](https://azure.microsoft.com/pricing/free-trial/)。 
 > 
 > 
 
@@ -63,7 +66,7 @@ ms.locfileid: "87084477"
 > 
 > 
 
-可以使用 [REST API](/rest/api/media/operations/locator#update_a_locator) 或 [.NET API](https://go.microsoft.com/fwlink/?LinkID=533259) 来更新定位符的过期日期。 
+可以使用 [REST API](/rest/api/media/operations/locator#update_a_locator) 或 [.NET API](/dotnet/api/microsoft.windowsazure.mediaservices.client.ilocator) 来更新定位符的过期日期。 
 
 > [!NOTE]
 > 更新共享访问签名定位符的过期日期时，URL 会发生变化。

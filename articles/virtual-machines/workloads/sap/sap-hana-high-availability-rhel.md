@@ -7,17 +7,18 @@ author: rdeltcheva
 manager: juergent
 editor: ''
 ms.service: virtual-machines-linux
+ms.subservice: workloads
 ms.topic: article
 ms.tgt_pltfrm: vm-linux
 ms.workload: infrastructure
-ms.date: 05/21/2020
+ms.date: 10/16/2020
 ms.author: radeltch
-ms.openlocfilehash: 2ce3a4116c12065bbaee8e11d5ada3b8c89b1a9d
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.openlocfilehash: 277ed8ad5f9888daa911cb3b5c7dcf00fd285bf4
+ms.sourcegitcommit: d60976768dec91724d94430fb6fc9498fdc1db37
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87088217"
+ms.lasthandoff: 12/02/2020
+ms.locfileid: "96489150"
 ---
 # <a name="high-availability-of-sap-hana-on-azure-vms-on-red-hat-enterprise-linux"></a>Red Hat Enterprise Linux 上 Azure VM 中 SAP HANA 的高可用性
 
@@ -65,7 +66,7 @@ SAP HANA 复制由一个主节点和至少一个辅助节点组成。 对主节�
 * SAP 说明 [2243692] 包含 Azure 中的 Linux 上的 SAP 许可的相关信息。
 * SAP 说明 [1999351] 包含适用于 SAP 的 Azure 增强型监视扩展的其他故障排除信息。
 * [SAP Community WIKI](https://wiki.scn.sap.com/wiki/display/HOME/SAPonLinuxNotes) 包含适用于 Linux 的所有必需 SAP 说明。
-* [适用于 Linux 上的 SAP 的 Azure 虚拟机规划和实施][planning-guide]
+* [针对 Linux 上的 SAP 的 Azure 虚拟机规划和实施][planning-guide]
 * [适用于 Linux 上的 SAP 的 Azure 虚拟机部署（本文）][deployment-guide]
 * [适用于 Linux 上的 SAP 的 Azure 虚拟机 DBMS 部署][dbms-guide]
 * [SAP HANA system replication in pacemaker cluster](https://access.redhat.com/articles/3004101)（Pacemaker 群集中的 SAP HANA 系统复制）
@@ -108,7 +109,7 @@ Azure 市场中包含适用于 SUSE Linux Red Hat Enterprise Linux 7.4 for SAP H
     * **SAP 系统大小**：输入新系统将提供的 SAPS 数量。 如果不确定系统需要多少 SAPS，请咨询 SAP 技术合作伙伴或系统集成商。
     * **系统可用性**：选择“HA”。
     * **管理员用户名、管理员密码或 SSH 密钥**：创建可用于登录计算机的新用户。
-    * **子网 ID**：如果要将 VM 部署到现有 VNet 中，并且该 VNet 中已定义了 VM 应分配到的子网，请指定该特定子网的 ID。 ID 通常如下所示： **/Subscriptions/ \<subscription ID> /resourceGroups/ \<resource group name> /providers/Microsoft.Network/virtualNetworks/ \<virtual network name> /subnets/ \<subnet name> **。 如果要创建新的虚拟网络，请将其留空
+    * **子网 ID**：如果要将 VM 部署到现有 VNet 中，并且该 VNet 中已定义了 VM 应分配到的子网，请指定该特定子网的 ID。 ID 通常如下所示： **/Subscriptions/ \<subscription ID> /resourceGroups/ \<resource group name> /providers/Microsoft.Network/virtualNetworks/ \<virtual network name> /subnets/ \<subnet name>**。 如果要创建新的虚拟网络，请将其留空
 
 ### <a name="manual-deployment"></a>手动部署
 
@@ -123,10 +124,17 @@ Azure 市场中包含适用于 SUSE Linux Red Hat Enterprise Linux 7.4 for SAP H
 1. 创建虚拟机 2。  
    最低使用 Red Hat Enterprise Linux 7.4 for SAP HANA。 本示例使用 Red Hat Enterprise Linux 7.4 for SAP HANA 映像 <https://portal.azure.com/#create/RedHat.RedHatEnterpriseLinux75forSAP-ARM> 选择在步骤 3 中创建的可用性集。
 1. 添加数据磁盘。
+
+> [!IMPORTANT]
+> 负载平衡方案中的 NIC 辅助 IP 配置不支持浮动 IP。 有关详细信息，请参阅 [Azure 负载均衡器限制](../../../load-balancer/load-balancer-multivip-overview.md#limitations)。 如果需要 VM 的其他 IP 地址，请部署第二个 NIC。    
+
+> [!Note]
+> 如果没有公共 IP 地址的 VM 被放在内部（无公共 IP 地址）标准 Azure 负载均衡器的后端池中，就不会有出站 Internet 连接，除非执行额外的配置来允许路由到公共终结点。 有关如何实现出站连接的详细信息，请参阅 [SAP 高可用性方案中使用 Azure 标准负载均衡器的虚拟机的公共终结点连接](./high-availability-guide-standard-load-balancer-outbound-connections.md)。  
+
 1. 如果使用标准负载均衡器，请执行以下配置步骤：
    1. 首先创建前端 IP 池：
 
-      1. 打开负载均衡器，选择**前端 IP 池**，然后选择“添加”。
+      1. 打开负载均衡器，选择 **前端 IP 池**，然后选择“添加”。
       1. 输入新前端 IP 池的名称（例如 **hana-frontend**）。
       1. 将“分配”设置为“静态”并输入 IP 地址（例如 **10.0.0.13**）。 
       1. 选择“确定”。
@@ -134,7 +142,7 @@ Azure 市场中包含适用于 SUSE Linux Red Hat Enterprise Linux 7.4 for SAP H
 
    1. 接下来创建后端池：
 
-      1. 打开负载均衡器，选择**后端池**，然后选择“添加”。
+      1. 打开负载均衡器，选择 **后端池**，然后选择“添加”。
       1. 输入新后端池的名称（例如 **hana-backend**）。
       1. 选择“添加虚拟机”。
       1. 选择“虚拟机”。
@@ -143,28 +151,26 @@ Azure 市场中包含适用于 SUSE Linux Red Hat Enterprise Linux 7.4 for SAP H
 
    1. 接下来创建运行状况探测：
 
-      1. 打开负载均衡器，选择**运行状况探测**，然后选择“添加”。
+      1. 打开负载均衡器，选择 **运行状况探测**，然后选择“添加”。
       1. 输入新运行状况探测的名称（例如 **hana-hp**）。
-      1. 选择“TCP”作为协议，并选择端口 625**03**。 将“间隔”值保留设置为 5，将“不正常阈”值设置为 2。 
+      1. 选择“TCP”作为协议，并选择端口 625 **03**。 将“间隔”值保留设置为 5，将“不正常阈”值设置为 2。 
       1. 选择“确定”。
 
    1. 接下来，创建负载均衡规则：
    
-      1. 打开负载均衡器，选择**负载均衡规则**，然后选择“添加”。
+      1. 打开负载均衡器，选择 **负载均衡规则**，然后选择“添加”。
       1. 输入新负载均衡器规则的名称（例如 hana-lb）。
       1. 选择前面创建的前端 IP 地址、后端池和运行状况探测（例如 hana-frontend、hana-backend 和 hana-hp）。
       1. 选择“HA 端口”。
       1. 将“空闲超时”增大到 30 分钟。
-      1. 确保**启用浮动 IP**。
+      1. 确保 **启用浮动 IP**。
       1. 选择“确定”。
 
-   > [!Note]
-   > 如果没有公共 IP 地址的 VM 被放在内部（无公共 IP 地址）标准 Azure 负载均衡器的后端池中，就不会有出站 Internet 连接，除非执行额外的配置来允许路由到公共终结点。 有关如何实现出站连接的详细信息，请参阅 [SAP 高可用性方案中使用 Azure 标准负载均衡器的虚拟机的公共终结点连接](./high-availability-guide-standard-load-balancer-outbound-connections.md)。  
 
 1. 或者，如果你的方案指示使用基本负载均衡器，请执行以下配置步骤：
    1. 配置负载均衡器。 首先创建前端 IP 池：
 
-      1. 打开负载均衡器，选择**前端 IP 池**，然后选择“添加”。
+      1. 打开负载均衡器，选择 **前端 IP 池**，然后选择“添加”。
       1. 输入新前端 IP 池的名称（例如 **hana-frontend**）。
       1. 将“分配”设置为“静态”并输入 IP 地址（例如 **10.0.0.13**）。 
       1. 选择“确定”。
@@ -172,7 +178,7 @@ Azure 市场中包含适用于 SUSE Linux Red Hat Enterprise Linux 7.4 for SAP H
 
    1. 接下来创建后端池：
 
-      1. 打开负载均衡器，选择**后端池**，然后选择“添加”。
+      1. 打开负载均衡器，选择 **后端池**，然后选择“添加”。
       1. 输入新后端池的名称（例如 **hana-backend**）。
       1. 选择“添加虚拟机”。
       1. 选择在步骤 3 中创建的可用性集。
@@ -181,43 +187,43 @@ Azure 市场中包含适用于 SUSE Linux Red Hat Enterprise Linux 7.4 for SAP H
 
    1. 接下来创建运行状况探测：
 
-      1. 打开负载均衡器，选择**运行状况探测**，然后选择“添加”。
+      1. 打开负载均衡器，选择 **运行状况探测**，然后选择“添加”。
       1. 输入新运行状况探测的名称（例如 **hana-hp**）。
-      1. 选择“TCP”作为协议，并选择端口 625**03**。 将“间隔”值保留设置为 5，将“不正常阈”值设置为 2。 
+      1. 选择“TCP”作为协议，并选择端口 625 **03**。 将“间隔”值保留设置为 5，将“不正常阈”值设置为 2。 
       1. 选择“确定”。
 
    1. 对于 SAP HANA 1.0，请创建负载均衡规则：
 
-      1. 打开负载均衡器，选择**负载均衡规则**，然后选择“添加”。
-      1. 输入新负载均衡器规则的名称（例如 hana-lb-3**03**15）。
+      1. 打开负载均衡器，选择 **负载均衡规则**，然后选择“添加”。
+      1. 输入新负载均衡器规则的名称（例如 hana-lb-3 **03** 15）。
       1. 选择前面创建的前端 IP 地址、后端池和运行状况探测（例如 **hana-frontend**）。
-      1. 将“协议”保留设置为“TCP”，输入端口 3**03**15。 
+      1. 将“协议”保留设置为“TCP”，输入端口 3 **03** 15。 
       1. 将“空闲超时”增大到 30 分钟。
-      1. 确保**启用浮动 IP**。
+      1. 确保 **启用浮动 IP**。
       1. 选择“确定”。
-      1. 针对端口 3**03**17 重复上述步骤。
+      1. 针对端口 3 **03** 17 重复上述步骤。
 
    1. 对于 SAP HANA 2.0，请为系统数据库创建负载均衡规则：
 
-      1. 打开负载均衡器，选择**负载均衡规则**，然后选择“添加”。
-      1. 输入新负载均衡器规则的名称（例如 hana-lb-3**03**13）。
+      1. 打开负载均衡器，选择 **负载均衡规则**，然后选择“添加”。
+      1. 输入新负载均衡器规则的名称（例如 hana-lb-3 **03** 13）。
       1. 选择前面创建的前端 IP 地址、后端池和运行状况探测（例如 **hana-frontend**）。
-      1. 将“协议”保留设置为“TCP”，输入端口 3**03**13。 
+      1. 将“协议”保留设置为“TCP”，输入端口 3 **03** 13。 
       1. 将“空闲超时”增大到 30 分钟。
-      1. 确保**启用浮动 IP**。
+      1. 确保 **启用浮动 IP**。
       1. 选择“确定”。
-      1. 针对端口 3**03**14 重复上述步骤。
+      1. 针对端口 3 **03** 14 重复上述步骤。
 
    1. 对于 SAP HANA 2.0，请先为租户数据库创建负载均衡规则：
 
-      1. 打开负载均衡器，选择**负载均衡规则**，然后选择“添加”。
-      1. 输入新负载均衡器规则的名称（例如 hana-lb-3**03**40）。
+      1. 打开负载均衡器，选择 **负载均衡规则**，然后选择“添加”。
+      1. 输入新负载均衡器规则的名称（例如 hana-lb-3 **03** 40）。
       1. 选择前面创建的前端 IP 地址、后端池和运行状况探测（例如 **hana-frontend**）。
-      1. 将“协议”保留设置为“TCP”，输入端口 3**03**40。 
+      1. 将“协议”保留设置为“TCP”，输入端口 3 **03** 40。 
       1. 将“空闲超时”增大到 30 分钟。
-      1. 确保**启用浮动 IP**。
+      1. 确保 **启用浮动 IP**。
       1. 选择“确定”。
-      1. 针对端口 3**03**41 和 3**03**42 重复上述步骤。
+      1. 针对端口 3 **03** 41 和 3 **03** 42 重复上述步骤。
 
 有关 SAP HANA 所需端口的详细信息，请参阅 [SAP HANA 租户数据库](https://help.sap.com/viewer/78209c1d3a9b41cd8624338e42a12bf6)指南中的[连接到租户数据库](https://help.sap.com/viewer/78209c1d3a9b41cd8624338e42a12bf6/latest/en-US/7a9343c9f2a2436faa3cfdb5ca00c052.html)一章或 [SAP 说明 2388694][2388694]。
 
@@ -342,7 +348,12 @@ Azure 市场中包含适用于 SUSE Linux Red Hat Enterprise Linux 7.4 for SAP H
 
 1. **[A]** RHEL for HANA 配置
 
-   按照 SAP 说明 [2292690] 和 [2455582] 以及 <https://access.redhat.com/solutions/2447641> 中的说明配置 RHEL。
+   如和中所述配置 RHEL，请参阅 <https://access.redhat.com/solutions/2447641> 以下 SAP 说明：  
+   - [2292690 - SAP HANA DB: Recommended OS settings for RHEL 7](https://launchpad.support.sap.com/#/notes/2292690)（2292690 - SAP HANA DB：RHEL 7 的建议 OS 设置）
+   - [2777782-SAP HANA DB：适用于 RHEL 8 的建议 OS 设置](https://launchpad.support.sap.com/#/notes/2777782)
+   - [2455582-Linux：运行用 GCC 1.x 编译的 SAP 应用程序](https://launchpad.support.sap.com/#/notes/2455582)
+   - [2593824-Linux：运行用 GCC 7. x 编译的 SAP 应用程序](https://launchpad.support.sap.com/#/notes/2593824) 
+   - [2886607-Linux：运行用 GCC 6.x 编译的 SAP 应用程序](https://launchpad.support.sap.com/#/notes/2886607)
 
 1. **[A]** 安装 SAP HANA
 
@@ -551,7 +562,7 @@ Azure 市场中包含适用于 SUSE Linux Red Hat Enterprise Linux 7.4 for SAP H
 
 ## <a name="create-sap-hana-cluster-resources"></a>创建 SAP HANA 群集资源
 
-在所有节点上安装 SAP HANA 资源代理。 确保启用包含程序包的存储库。
+在所有节点上安装 SAP HANA 资源代理。 确保启用包含程序包的存储库。 如果使用已启用 RHEL 8.x HA 的映像，则不需要启用其他存储库。  
 
 <pre><code># Enable repository that contains SAP HANA resource agents
 sudo subscription-manager repos --enable="rhel-sap-hana-for-rhel-7-server-rpms"
@@ -566,13 +577,18 @@ sudo yum install -y resource-agents-sap-hana
 # Replace the bold string with your instance number and HANA system ID
 sudo pcs resource create SAPHanaTopology_<b>HN1</b>_<b>03</b> SAPHanaTopology SID=<b>HN1</b> InstanceNumber=<b>03</b> \
 op start timeout=600 op stop timeout=300 op monitor interval=10 timeout=600 \
---clone clone-max=2 clone-node-max=1 interleave=true
+clone clone-max=2 clone-node-max=1 interleave=true
 </code></pre>
 
-接着，创建 HANA 资源：
+接着，创建 HANA 资源。
+
+> [!NOTE]
+> 本文包含对字词 *从属* 的引用，这是 Microsoft 不再使用的术语。 从软件中删除该字词后，我们会将其从本文中删除。
+
+如果在 **RHEL 7、windows** 上构建群集，请使用以下命令：  
 
 <pre><code># Replace the bold string with your instance number, HANA system ID, and the front-end IP address of the Azure load balancer.
-
+#
 sudo pcs resource create SAPHana_<b>HN1</b>_<b>03</b> SAPHana SID=<b>HN1</b> InstanceNumber=<b>03</b> PREFER_SITE_TAKEOVER=true DUPLICATE_PRIMARY_TIMEOUT=7200 AUTOMATED_REGISTER=false \
 op start timeout=3600 op stop timeout=3600 \
 op monitor interval=61 role="Slave" timeout=700 \
@@ -581,14 +597,32 @@ op promote timeout=3600 op demote timeout=3600 \
 master notify=true clone-max=2 clone-node-max=1 interleave=true
 
 sudo pcs resource create vip_<b>HN1</b>_<b>03</b> IPaddr2 ip="<b>10.0.0.13</b>"
-
 sudo pcs resource create nc_<b>HN1</b>_<b>03</b> azure-lb port=625<b>03</b>
-
 sudo pcs resource group add g_ip_<b>HN1</b>_<b>03</b> nc_<b>HN1</b>_<b>03</b> vip_<b>HN1</b>_<b>03</b>
 
 sudo pcs constraint order SAPHanaTopology_<b>HN1</b>_<b>03</b>-clone then SAPHana_<b>HN1</b>_<b>03</b>-master symmetrical=false
-
 sudo pcs constraint colocation add g_ip_<b>HN1</b>_<b>03</b> with master SAPHana_<b>HN1</b>_<b>03</b>-master 4000
+
+sudo pcs property set maintenance-mode=false
+</code></pre>
+
+如果在 **RHEL** 2.x 上构建群集，请使用以下命令：  
+
+<pre><code># Replace the bold string with your instance number, HANA system ID, and the front-end IP address of the Azure load balancer.
+#
+sudo pcs resource create SAPHana_<b>HN1</b>_<b>03</b> SAPHana SID=<b>HN1</b> InstanceNumber=<b>03</b> PREFER_SITE_TAKEOVER=true DUPLICATE_PRIMARY_TIMEOUT=7200 AUTOMATED_REGISTER=false \
+op start timeout=3600 op stop timeout=3600 \
+op monitor interval=61 role="Slave" timeout=700 \
+op monitor interval=59 role="Master" timeout=700 \
+op promote timeout=3600 op demote timeout=3600 \
+promotable meta notify=true clone-max=2 clone-node-max=1 interleave=true
+
+sudo pcs resource create vip_<b>HN1</b>_<b>03</b> IPaddr2 ip="<b>10.0.0.13</b>"
+sudo pcs resource create nc_<b>HN1</b>_<b>03</b> azure-lb port=625<b>03</b>
+sudo pcs resource group add g_ip_<b>HN1</b>_<b>03</b> nc_<b>HN1</b>_<b>03</b> vip_<b>HN1</b>_<b>03</b>
+
+sudo pcs constraint order SAPHanaTopology_<b>HN1</b>_<b>03</b>-clone then SAPHana_<b>HN1</b>_<b>03</b>-clone symmetrical=false
+sudo pcs constraint colocation add g_ip_<b>HN1</b>_<b>03</b> with master SAPHana_<b>HN1</b>_<b>03</b>-clone 4000
 
 sudo pcs property set maintenance-mode=false
 </code></pre>
@@ -638,7 +672,10 @@ Resource Group: g_ip_HN1_03
 
 可通过执行以下命令来迁移 SAP HANA 主控节点：
 
-<pre><code>[root@hn1-db-0 ~]# pcs resource move SAPHana_HN1_03-master
+<pre><code># On RHEL <b>7.x</b> 
+[root@hn1-db-0 ~]# pcs resource move SAPHana_HN1_03-master
+# On RHEL <b>8.x</b>
+[root@hn1-db-0 ~]# pcs resource move SAPHana_HN1_03-clone --master
 </code></pre>
 
 如果设置了 `AUTOMATED_REGISTER="false"`，则此命令应将 SAP HANA 主控节点以及包含虚拟 IP 地址的组迁移到 hn1-db-1。
@@ -686,6 +723,9 @@ Resource Group: g_ip_HN1_03
 
 ### <a name="test-the-azure-fencing-agent"></a>测试 Azure 隔离代理
 
+> [!NOTE]
+> 本文包含对字词 *从属* 的引用，这是 Microsoft 不再使用的术语。 从软件中删除该字词后，我们会将其从本文中删除。  
+
 开始测试之前的资源状态：
 
 <pre><code>Clone Set: SAPHanaTopology_HN1_03-clone [SAPHanaTopology_HN1_03]
@@ -717,7 +757,10 @@ hn1adm@hn1-db-1:/usr/sap/HN1/HDB03> hdbnsutil -sr_register --remoteHost=<b>hn1-d
 
 # Switch back to root and clean up the failed state
 exit
+# On RHEL <b>7.x</b>
 [root@hn1-db-1 ~]# pcs resource cleanup SAPHana_HN1_03-master
+# On RHEL <b>8.x</b>
+[root@hn1-db-1 ~]# pcs resource cleanup SAPHana_HN1_03 node=&lt;hostname on which the resource needs to be cleaned&gt;
 </code></pre>
 
 测试之后的资源状态：
@@ -762,7 +805,10 @@ hn1adm@hn1-db-0:/usr/sap/HN1/HDB03> hdbnsutil -sr_register --remoteHost=<b>hn1-d
 
 # Switch back to root and clean up the failed state
 hn1adm@hn1-db-0:/usr/sap/HN1/HDB03> exit
+# On RHEL <b>7.x</b>
 [root@hn1-db-1 ~]# pcs resource cleanup SAPHana_HN1_03-master
+# On RHEL <b>8.x</b>
+[root@hn1-db-1 ~]# pcs resource cleanup SAPHana_HN1_03 node=&lt;hostname on which the resource needs to be cleaned&gt;
 </code></pre>
 
 测试之后的资源状态：

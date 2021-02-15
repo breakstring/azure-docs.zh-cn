@@ -1,22 +1,20 @@
 ---
 title: 托管的虚拟网络 & 托管的专用终结点
 description: 了解 Azure 数据工厂中托管的虚拟网络和托管的专用终结点。
-services: data-factory
 ms.author: abnarain
 author: nabhishek
-manager: shwang
-ms.reviewer: douglasl
 ms.service: data-factory
-ms.workload: data-services
 ms.topic: conceptual
-ms.custom: seo-lt-2019
+ms.custom:
+- seo-lt-2019
+- references_regions
 ms.date: 07/15/2020
-ms.openlocfilehash: 14a3a76ef4fefb7a33b272b846e1f1cb66644c3e
-ms.sourcegitcommit: 152c522bb5ad64e5c020b466b239cdac040b9377
+ms.openlocfilehash: d950b05dd34788c2c5ef0b34b8ec8ac0b20ad4b6
+ms.sourcegitcommit: d4734bc680ea221ea80fdea67859d6d32241aefc
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/14/2020
-ms.locfileid: "88225676"
+ms.lasthandoff: 02/14/2021
+ms.locfileid: "100379567"
 ---
 # <a name="azure-data-factory-managed-virtual-network-preview"></a>Azure 数据工厂托管的虚拟网络 (预览) 
 
@@ -49,17 +47,17 @@ ms.locfileid: "88225676"
 
 ![新托管专用终结点](./media/tutorial-copy-data-portal-private/new-managed-private-endpoint.png)
 
-Azure 数据工厂支持专用链接。 通过专用链接，你可以访问 Azure (PaaS) 服务 (如 Azure 存储、Azure Cosmos DB、Azure Synapse 分析 (以前的 Azure SQL 数据仓库) # A5。
+Azure 数据工厂支持专用链接。 通过专用链接，你可以访问 Azure (PaaS) 服务 (如 Azure 存储、Azure Cosmos DB、Azure Synapse Analytics) 。
 
 使用专用链接时，数据存储和托管虚拟网络之间的流量完全通过 Microsoft 骨干网络进行遍历。 专用链接可防止数据泄露风险。 可以通过创建专用终结点来建立到资源的专用链接。
 
-专用终结点在托管的虚拟网络中使用专用 IP 地址，以有效地将服务引入其中。 专用终结点映射到 Azure 中的特定资源，而不是整个服务。 客户可以将连接限制到其组织批准的特定资源。 详细了解[专用链接和专用终结点](https://docs.microsoft.com/azure/private-link/)。
+专用终结点在托管的虚拟网络中使用专用 IP 地址，以有效地将服务引入其中。 专用终结点映射到 Azure 中的特定资源，而不是整个服务。 客户可以将连接限制到其组织批准的特定资源。 详细了解[专用链接和专用终结点](../private-link/index.yml)。
 
 > [!NOTE]
 > 建议你创建托管专用终结点来连接到所有 Azure 数据源。 
  
 > [!WARNING]
-> 如果 PaaS 数据存储 (Blob、ADLS Gen2、SQL DW) 已经为其创建了专用终结点，即使它允许从所有网络进行访问，ADF 也只能使用托管的专用终结点来访问它。 请确保在此类方案中创建专用终结点。 
+> 如果 PaaS 数据存储 (Blob、ADLS Gen2、Azure Synapse Analytics) 已经为其创建了专用终结点，即使它允许来自所有网络的访问，ADF 也只能使用托管的专用终结点来访问它。 请确保在此类方案中创建专用终结点。 
 
 在 Azure 数据工厂中创建托管专用终结点时，将以 "挂起" 状态创建专用终结点连接。 将启动审批工作流。 专用链接资源所有者负责批准或拒绝该连接。
 
@@ -71,6 +69,11 @@ Azure 数据工厂支持专用链接。 通过专用链接，你可以访问 Azu
 
 只有处于已批准状态的托管专用终结点才能将流量发送到给定的专用链接资源。
 
+## <a name="interactive-authoring"></a>交互式创作
+交互式创作功能用于功能，如测试连接、浏览文件夹列表和表列表、获取架构和预览数据。 可以在创建或编辑处于 ADF 托管的虚拟网络中的 Azure Integration Runtime 时启用交互式创作。 后端服务将为交互式创作功能预先分配计算。 否则，每次执行任何交互式操作时都会分配计算，这将花费更多时间。 交互式创作的生存时间 (TTL) 为60分钟，这意味着它将在上次交互创作操作60分钟后自动变为禁用状态。
+
+![交互式创作](./media/managed-vnet/interactive-authoring.png)
+
 ## <a name="limitations-and-known-issues"></a>限制和已知问题
 ### <a name="supported-data-sources"></a>支持的数据源
 以下数据源支持通过来自 ADF 托管虚拟网络的私有链接进行连接。
@@ -79,14 +82,37 @@ Azure 数据工厂支持专用链接。 通过专用链接，你可以访问 Azu
 - Azure 文件
 - Azure Data Lake Gen2
 - Azure SQL Database (不包括 Azure SQL 托管实例) 
-- Azure Synapse Analytics（以前称为 Azure SQL 数据仓库）
+- Azure Synapse Analytics
 - Azure CosmosDB SQL
 - Azure Key Vault
 - Azure 专用链接服务
+- Azure 搜索
+- Azure Database for MySQL
+- Azure Database for PostgreSQL
+- Azure Database for MariaDB
+
+### <a name="azure-data-factory-managed-virtual-network-is-available-in-the-following-azure-regions"></a>Azure 数据工厂托管的虚拟网络在以下 Azure 区域中提供：
+- 美国东部
+- 美国东部 2
+- 美国中西部
+- 美国西部
+- 美国西部 2
+- 美国中南部
+- Central US
+- 北欧
+- 西欧
+- 英国南部
+- Southeast Asia
+- 澳大利亚东部
+- 澳大利亚东南部
 
 ### <a name="outbound-communications-through-public-endpoint-from-adf-managed-virtual-network"></a>从 ADF 托管虚拟网络通过公共终结点进行的出站通信
 - 对于出站通信，只打开端口443。
 - 不支持将 Azure 存储和 Azure Data Lake Gen2 从 ADF 托管的虚拟网络通过公共终结点进行连接。
+
+### <a name="linked-service-creation-of-azure-key-vault"></a>Azure Key Vault 的链接服务创建 
+- 为 Azure Key Vault 创建链接服务时，没有 Azure Integration Runtime 引用。 因此，在 Azure Key Vault 的链接服务创建过程中无法创建专用终结点。 但是，当你为引用 Azure Key Vault 链接服务的数据存储创建链接服务，并且此链接服务引用启用了托管虚拟网络 Azure Integration Runtime 时，你可以在创建期间为 Azure Key Vault 链接的服务创建专用终结点。 
+- Azure Key Vault 的链接服务的 **测试连接** 操作仅验证 URL 格式，但不执行任何网络操作。
 
 ## <a name="next-steps"></a>后续步骤
 

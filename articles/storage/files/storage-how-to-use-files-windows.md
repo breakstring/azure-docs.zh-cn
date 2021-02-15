@@ -7,12 +7,13 @@ ms.topic: how-to
 ms.date: 06/22/2020
 ms.author: rogarana
 ms.subservice: files
-ms.openlocfilehash: fcc79a0763d7441a8a3c04723578ccc27cf5fe4e
-ms.sourcegitcommit: 4e5560887b8f10539d7564eedaff4316adb27e2c
+ms.custom: devx-track-azurepowershell
+ms.openlocfilehash: e64b7efdd430287a7a3a969c5bf62b0c0e2aec9c
+ms.sourcegitcommit: 9826fb9575dcc1d49f16dd8c7794c7b471bd3109
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/06/2020
-ms.locfileid: "87905748"
+ms.lasthandoff: 11/14/2020
+ms.locfileid: "94626888"
 ---
 # <a name="use-an-azure-file-share-with-windows"></a>将 Azure 文件共享与 Windows 配合使用
 [Azure 文件](storage-files-introduction.md)是 Microsoft 推出的易用云文件系统。 Azure 文件共享可以在 Windows 和 Windows Server 中无缝使用。 本文介绍在 Windows 和 Windows Server 中使用 Azure 文件共享时的注意事项。
@@ -33,8 +34,8 @@ ms.locfileid: "87905748"
 | Windows 7<sup>3</sup> | SMB 2.1 | 是 | 否 |
 | Windows Server 2008 R2<sup>3</sup> | SMB 2.1 | 是 | 否 |
 
-<sup>1</sup>Windows 10 版本 1507、1607、1709、1803、1809、1903 和 1909。  
-<sup>2</sup>Windows Server 版本 1809、1903 和 1909。  
+<sup>1</sup>Windows 10 版本1507、1607、1803、1809、1903、1909和2004。  
+<sup>2</sup>Windows Server，版本1809、1903、1909、2004。  
 <sup>3</sup>Microsoft 对 Windows 7 和 Windows Server 2008 R2 的常规支持已结束。 只有通过[扩展安全更新 (ESU) 程序](https://support.microsoft.com/help/4497181/lifecycle-faq-extended-security-updates)才能购买对安全更新的附加支持。 我们强烈建议从这些操作系统中迁移。
 
 > [!Note]  
@@ -45,7 +46,7 @@ ms.locfileid: "87905748"
 确保端口 445 处于打开状态：SMB 协议要求 TCP 端口 445 处于打开状态；如果端口 445 已被阻止，连接将会失败。 可以使用 `Test-NetConnection` cmdlet 检查防火墙是否正在阻止端口 445。 若要了解如何解决 445 端口被阻止的问题，请参阅 Windows 故障排除指南的[原因 1：端口 445 被阻止](storage-troubleshoot-windows-file-connection-problems.md#cause-1-port-445-is-blocked)部分。
 
 ## <a name="using-an-azure-file-share-with-windows"></a>在 Windows 中使用 Azure 文件共享
-若要在 Windows 中使用某个 Azure 文件共享，必须装载该文件共享（为其分配驱动器号或装载点路径），或通过其 [UNC 路径](https://msdn.microsoft.com/library/windows/desktop/aa365247.aspx)来访问它。 
+若要在 Windows 中使用某个 Azure 文件共享，必须装载该文件共享（为其分配驱动器号或装载点路径），或通过其 [UNC 路径](/windows/win32/fileio/naming-a-file)来访问它。 
 
 本文使用存储帐户密钥来访问文件共享。 存储帐户密钥是用于存储帐户的管理员密钥，包括对你要访问的文件共享中所有文件和文件夹的管理员权限，以及对所有文件共享和其他包含在存储帐户中的存储资源（Blob、队列、表等）的权限。 如果这对你的工作负载来说还不够，可使用 [Azure 文件同步](storage-sync-files-planning.md)，或者可使用[通过 SMB 的基于标识的身份验证](storage-files-active-directory-overview.md)。
 
@@ -132,13 +133,13 @@ Azure 门户为你提供了一个脚本，你可以使用该脚本将文件共�
 | Windows Server 2019                       | 已禁用             | 使用 Windows 功能删除 |
 | Windows Server 版本 1709+            | 已禁用             | 使用 Windows 功能删除 |
 | Windows 10 版本 1709+                | 已禁用             | 使用 Windows 功能删除 |
-| Windows Server 2016                       | 已启用              | 使用 Windows 功能删除 |
-| Windows 10 版本 1507、1607 和 1703 | 已启用              | 使用 Windows 功能删除 |
-| Windows Server 2012 R2                    | 已启用              | 使用 Windows 功能删除 | 
-| Windows 8.1                               | 已启用              | 使用 Windows 功能删除 | 
-| Windows Server 2012                       | 已启用              | 使用注册表禁用       | 
-| Windows Server 2008 R2                    | 已启用              | 使用注册表禁用       |
-| Windows 7                                 | 已启用              | 使用注册表禁用       | 
+| Windows Server 2016                       | Enabled              | 使用 Windows 功能删除 |
+| Windows 10 版本 1507、1607 和 1703 | Enabled              | 使用 Windows 功能删除 |
+| Windows Server 2012 R2                    | Enabled              | 使用 Windows 功能删除 | 
+| Windows 8.1                               | Enabled              | 使用 Windows 功能删除 | 
+| Windows Server 2012                       | Enabled              | 使用注册表禁用       | 
+| Windows Server 2008 R2                    | Enabled              | 使用注册表禁用       |
+| Windows 7                                 | Enabled              | 使用注册表禁用       | 
 
 ### <a name="auditing-smb-1-usage"></a>审核 SMB 1 使用情况
 > 适用于 Windows Server 2019、Windows Server 半年通道（版本 1709 和 1803）、Windows Server 2016、Windows 10（版本 1507、1607、1703、1709 和 1803）、Windows Server 2012 R2 和 Windows 8.1
@@ -195,11 +196,11 @@ Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\LanmanServer\Par
 ### <a name="smb-resources"></a>SMB 资源
 - [Stop using SMB 1](https://blogs.technet.microsoft.com/filecab/2016/09/16/stop-using-smb1/)（停止使用 SMB 1）
 - [SMB 1 Product Clearinghouse](https://blogs.technet.microsoft.com/filecab/2017/06/01/smb1-product-clearinghouse/)（SMB 1 产品交换所）
-- [Discover SMB 1 in your environment with DSCEA](https://blogs.technet.microsoft.com/ralphkyttle/2017/04/07/discover-smb1-in-your-environment-with-dscea/)（使用 DSCEA 发现环境中的 SMB 1）
-- [Disabling SMB 1 through Group Policy](https://blogs.technet.microsoft.com/secguide/2017/06/15/disabling-smbv1-through-group-policy/)（通过组策略禁用 SMB 1）
+- [Discover SMB 1 in your environment with DSCEA](/archive/blogs/ralphkyttle/discover-smb1-in-your-environment-with-dscea)（使用 DSCEA 发现环境中的 SMB 1）
+- [Disabling SMB 1 through Group Policy](/archive/blogs/secguide/disabling-smbv1-through-group-policy)（通过组策略禁用 SMB 1）
 
 ## <a name="next-steps"></a>后续步骤
 请参阅以下链接，获取有关 Azure 文件的更多信息：
 - [规划 Azure 文件部署](storage-files-planning.md)
-- [常见问题](../storage-files-faq.md)
-- [在 Windows 上进行故障排除](storage-troubleshoot-windows-file-connection-problems.md)      
+- [常见问题](./storage-files-faq.md)
+- [在 Windows 上进行故障排除](storage-troubleshoot-windows-file-connection-problems.md)

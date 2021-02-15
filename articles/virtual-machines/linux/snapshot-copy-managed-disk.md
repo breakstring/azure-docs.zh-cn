@@ -1,5 +1,5 @@
 ---
-title: 在 Azure 中创建 VHD 的快照
+title: 使用 Azure CLI 创建 VHD 的快照
 description: 了解如何在 Azure 中创建 VHD 的副本作为备份或用于解决问题。
 author: roygara
 manager: twooley
@@ -9,14 +9,14 @@ ms.topic: how-to
 ms.date: 07/11/2018
 ms.author: rogarana
 ms.subservice: disks
-ms.openlocfilehash: 7f4489b3073462a93319886ee5560ed5a6660111
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: d041f864c6c8cd3ae9c522d79447d71c86f9ac04
+ms.sourcegitcommit: aaa65bd769eb2e234e42cfb07d7d459a2cc273ab
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "84659967"
+ms.lasthandoff: 01/27/2021
+ms.locfileid: "98875598"
 ---
-# <a name="create-a-snapshot"></a>创建快照 
+# <a name="create-a-snapshot-using-the-portal-or-azure-cli"></a>使用门户或 Azure CLI 创建快照
 
 创建 OS 或数据磁盘的快照作为备份，或用于解决 VM 问题。 快照是 VHD 的完整只读副本。 
 
@@ -46,7 +46,7 @@ az snapshot create \
 ```
 
 > [!NOTE]
-> 如果希望将快照存储在具有区域复原能力的存储中，需要在支持[可用性区域](../../availability-zones/az-overview.md)的区域中创建该快照并包括 **--sku Standard_ZRS** 参数。
+> 如果希望将快照存储在具有区域复原能力的存储中，需要在支持 [可用性区域](../../availability-zones/az-overview.md)的区域中创建该快照并包括 **--sku Standard_ZRS** 参数。
 
 可以使用 [az snapshot list](/cli/azure/snapshot#az-snapshot-list) 查看快照列表。
 
@@ -58,17 +58,16 @@ az snapshot list \
 
 ## <a name="use-azure-portal"></a>使用 Azure 门户 
 
-1. 登录到 [Azure 门户](https://portal.azure.com)。
-2. 首先在左上角单击“创建资源”**** 并搜索“快照”****。 从搜索结果中选择“快照”****。
-3. 在 "**快照**" 边栏选项卡中，单击 "**创建**"。
+1. 登录 [Azure 门户](https://portal.azure.com)。
+2. 首先在左上角单击“创建资源”并搜索“快照”。 从搜索结果中选择“快照”。
+3. 在“快照”边栏选项卡中，单击“创建” 。
 4. 输入快照的 **名称** 。
 5. 选择现有的资源组，或键入新资源组的名称。 
-7. 对于**源磁盘**，选择要获取其快照的托管磁盘。
+7. 对于 **源磁盘**，选择要获取其快照的托管磁盘。
 8. 选择用于存储快照的“帐户类型”。 使用 **Standard HDD**，除非需要将其存储在高性能 SSD 上。
 9. 单击“创建”。
 
 
 ## <a name="next-steps"></a>后续步骤
 
- 通过从快照创建托管磁盘，然后将新的托管磁盘附加为 OS 磁盘来从快照创建虚拟机。 有关详细信息，请参阅[从快照创建 VM](./../scripts/virtual-machines-linux-cli-sample-create-vm-from-snapshot.md?toc=%2fcli%2fmodule%2ftoc.json) 脚本。
-
+ 通过从快照创建托管磁盘，然后将新的托管磁盘附加为 OS 磁盘来从快照创建虚拟机。 有关详细信息，请参阅[从快照创建 VM](/previous-versions/azure/virtual-machines/scripts/virtual-machines-linux-cli-sample-create-vm-from-snapshot?toc=%2fcli%2fmodule%2ftoc.json) 脚本。

@@ -4,7 +4,7 @@ description: 介绍对应用程序进行许可期间可能发生的错误，以�
 services: active-directory
 documentationcenter: ''
 author: kenwith
-manager: celestedg
+manager: daveba
 ms.assetid: ''
 ms.service: active-directory
 ms.subservice: app-mgmt
@@ -16,16 +16,16 @@ ms.date: 07/11/2017
 ms.author: kenwith
 ms.reviewer: asteen
 ms.collection: M365-identity-device-management
-ms.openlocfilehash: 0be99a673fe3d062e114f375891f3c821c118d76
-ms.sourcegitcommit: 11e2521679415f05d3d2c4c49858940677c57900
+ms.openlocfilehash: 9f829672f88ea848e4611000b54d9cc200bc166d
+ms.sourcegitcommit: d49bd223e44ade094264b4c58f7192a57729bada
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/31/2020
-ms.locfileid: "87499494"
+ms.lasthandoff: 02/02/2021
+ms.locfileid: "99259971"
 ---
 # <a name="unexpected-error-when-performing-consent-to-an-application"></a>对应用程序执行许可时发生的意外错误
 
-本文介绍对应用程序进行许可期间可能发生的错误。 如果要对不包含任何错误消息的意外许可提示进行故障排除，请参阅 [Azure AD 的身份验证方案](https://docs.microsoft.com/azure/active-directory/develop/active-directory-authentication-scenarios)。
+本文介绍对应用程序进行许可期间可能发生的错误。 如果要对不包含任何错误消息的意外许可提示进行故障排除，请参阅 [Azure AD 的身份验证方案](../develop/authentication-vs-authorization.md)。
 
 与 Azure Active Directory 集成的许多应用程序需要获取访问其他资源的权限才能正常工作。 当这些资源也与 Azure Active Directory 集成时，通常使用通用许可框架来请求访问它们的权限。 这会显示许可提示，此情形通常发生在首次使用应用程序时，但也可能发生在后续使用应用程序时。
 
@@ -35,16 +35,16 @@ ms.locfileid: "87499494"
 * **AADSTS90093：** &lt;clientAppDisplayName&gt; 正在请求一个或多个你无权授予的权限。 请与管理员联系，他/她可代表你对此应用程序进行许可。
 * AADSTS90094：  &lt;clientAppDisplayName&gt; 需要访问组织中资源的权限（只有管理员可以授予）。 请先让管理员授予对此应用的权限，然后你才能使用此应用。
 
-当非公司管理员用户尝试使用的应用程序请求只有管理员才能授予的权限时，会发生此错误。 此错误可通过管理员代表其组织授予访问此应用程序的权限进行解决。
+如果非全局管理员用户尝试使用的应用程序请求只有管理员才能授予的权限，则会发生此错误。 此错误可通过管理员代表其组织授予访问此应用程序的权限进行解决。
 
 如果 Microsoft 检测到权限请求存在风险而阻止用户许可应用程序，则也可能会发生此错误。 在这种情况下，还将记录一个审核事件，其“类别”为“ApplicationManagement”、“活动类型”为“许可应用程序”、“状态原因”为“检测到风险应用程序”。
 
-可能发生此错误的另一种情况是，应用程序需要用户分配，但未提供管理员同意。 在这种情况下，管理员必须先提供管理员同意。   
+可能发生此错误的另一种情况是，应用程序需要用户分配，但未获得管理员同意。 在这种情况下，必须先获得管理员同意。   
 
 ## <a name="policy-prevents-granting-permissions-error"></a>策略阻止权限授予错误
 * **AADSTS90093：** &lt;tenantDisplayName&gt; 管理员设置的策略阻止授予 &lt;name of app&gt; 请求的权限。 请与 &lt;tenantDisplayName&gt; 管理员联系，他/她可代表你授予对此应用的权限。
 
-当公司管理员关闭用户对应用程序进行许可的能力，非管理员用户尝试使用的应用程序需要许可时，会发生此错误。 此错误可通过管理员代表其组织授予访问此应用程序的权限进行解决。
+当全局管理员关闭用户同意应用程序的能力，而非管理员用户尝试使用要求同意的应用程序时，会发生此错误。 此错误可通过管理员代表其组织授予访问此应用程序的权限进行解决。
 
 ## <a name="intermittent-problem-error"></a>不稳定问题错误
 * **AADSTS90090：** 登录过程似乎遇到了间歇性问题，它记录了尝试授予 &lt;clientAppDisplayName&gt; 的权限。 请稍后重试。
@@ -78,10 +78,18 @@ ms.locfileid: "87499494"
 
     -   从 Azure AD 应用程序库添加应用程序
 
+## <a name="risky-app-error-and-warning"></a>关于有风险的应用的错误和警告
+* **AADSTS900941:** 管理员同意是必需的。 应用被视为有风险。 (AdminConsentRequiredDueToRiskyApp)
+* 这个应用可能有风险。 如果你信任此应用，请让管理员授予你访问权限。
+* **AADSTS900981:** 有风险的应用收到一个管理员同意请求。 (AdminConsentRequestRiskyAppWarning)
+* 这个应用可能有风险。 仅当你信任此应用时继续。
+
+当 Microsoft 确定同意请求可能存在风险时，将显示这两条消息。 在许多其他因素中，如果已 [验证的发布者](../develop/publisher-verification-overview.md) 尚未添加到应用注册中，则可能会发生这种情况。 禁用 [管理员同意工作流](configure-admin-consent-workflow.md) 时，会向最终用户显示第一个错误代码和消息。 如果启用管理员同意工作流，则将向最终用户和管理员显示第二个代码和消息。 
+
+最终用户将无法对检测为有风险的应用授予许可。 管理员可以评估应用，但必须谨慎行事。 如果该应用在进一步审查后看起来可疑，可以从同意屏幕向 Microsoft 报告。 
+
 ## <a name="next-steps"></a>后续步骤 
 
-[Azure Active Directory（v1 终结点）中的应用、权限和许可](https://docs.microsoft.com/azure/active-directory/active-directory-apps-permissions-consent)<br>
+[Azure Active Directory（v1 终结点）中的应用、权限和许可](../develop/quickstart-register-app.md)<br>
 
-[Azure Active Directory（v2.0 终结点）中的范围、权限和许可](https://docs.microsoft.com/azure/active-directory/develop/active-directory-v2-scopes)
-
-
+[Azure Active Directory（v2.0 终结点）中的范围、权限和许可](../develop/v2-permissions-and-consent.md)

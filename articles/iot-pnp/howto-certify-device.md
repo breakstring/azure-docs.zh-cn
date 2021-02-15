@@ -5,19 +5,19 @@ author: konichi3
 ms.author: koichih
 ms.date: 08/21/2020
 ms.topic: how-to
-ms.custom: mvc
+ms.custom: mvc, devx-track-azurecli
 ms.service: iot-pnp
 services: iot-pnp
-ms.openlocfilehash: eaae6d90799c11d2475105a30f830db8dfae7fcf
-ms.sourcegitcommit: b33c9ad17598d7e4d66fe11d511daa78b4b8b330
+ms.openlocfilehash: b3ba007f03b3aa4883d9455dc43b2bc19676da59
+ms.sourcegitcommit: 7e97ae405c1c6c8ac63850e1b88cf9c9c82372da
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/25/2020
-ms.locfileid: "88860832"
+ms.lasthandoff: 12/29/2020
+ms.locfileid: "97803963"
 ---
 # <a name="how-to-certify-iot-plug-and-play-devices"></a>如何认证 IoT 即插即用设备
 
-IoT 即插即用设备认证计划包含用于检查设备是否满足 IoT 即插即用认证要求的工具。 这些工具还可帮助组织了解他们的 IoT 即插即用设备的可用性。 这些认证的设备专为 IoT 解决方案定制，有助于缩短投放市场的时间。
+IoT 即插即用设备认证计划包含用于检查设备是否符合 IoT 即插即用认证要求的工具。 这些工具还可帮助组织了解他们的 IoT 即插即用设备的可用性。 这些认证的设备专为 IoT 解决方案定制，有助于缩短投放市场的时间。
 
 本文介绍如何：
 
@@ -41,19 +41,23 @@ IoT 即插即用设备认证计划包含用于检查设备是否满足 IoT 即�
 - 使用 [DPS](../iot-dps/about-iot-dps.md)连接到 Azure IoT 中心。
 - 按照 IoT 即插即用约定实现遥测、属性或命令。
 - 介绍与 [DTDL v2](https://aka.ms/dtdl) 模型的设备交互。
-- 在[Azure IoT 公共模型存储库](https://devicemodels.azureiotsolutions.com/)中发布模型和所有所需的接口
-- 在 dps 预配负载中，在 [dps 注册](concepts-developer-guide.md#dps-payload) 过程中发送模型 ID。
-- 在 [MQTT 连接](/concepts-developer-guide.md#model-id-announcement)过程中公告模型 ID。
+- 在 Azure IoT 公共模型存储库中发布模型和所有所需的接口
+- 在 dps 预配负载中，在 [dps 注册](./concepts-developer-guide-device.md#dps-payload) 过程中发送模型 ID。
+- 在 [MQTT 连接](./concepts-developer-guide-device.md#model-id-announcement)过程中公告模型 ID。
+- 所有设备型号必须兼容 [Azure IoT Central](../iot-central/core/overview-iot-central-developer.md)。
 
-## <a name="test-with-the-azure-iot-extension-cli"></a>用 Azure IoT 扩展 CLI 测试
+> [!NOTE]
+> 目前，Azure IoT Central 不完全支持 **数组** 和 **地理空间** DTDL 数据类型。
 
-使用 [Azure IOT CLI 扩展](https://docs.microsoft.com/cli/azure/ext/azure-iot/iot/product?view=azure-cli-latest) ，可以在提交设备以通过 Azure 认证的设备门户提交设备之前，验证设备实现是否与该模型匹配。
+## <a name="test-with-the-azure-iot-extension-cli"></a>使用 Azure IoT 扩展 CLI 进行测试
+
+使用 [Azure IOT CLI 扩展](/cli/azure/ext/azure-iot/iot/product?preserve-view=true&view=azure-cli-latest) ，可以在提交设备以通过 Azure 认证的设备门户提交设备之前，验证设备实现是否与该模型匹配。
 
 以下步骤演示了如何使用 CLI 准备和运行证书测试：
 
 ### <a name="install-the-azure-iot-extension-for-the-azure-cli"></a>安装适用于 Azure CLI 的 Azure IoT 扩展
 
-请参阅安装说明，以在你的环境中设置 [Azure CLI](https://docs.microsoft.com/cli/azure/?view=azure-cli-latest) 。
+请参阅安装说明，以在你的环境中设置 [Azure CLI](/cli/azure/?preserve-view=true&view=azure-cli-latest) 。
 
 若要安装 Azure IoT 扩展，请运行以下命令：
 
@@ -61,7 +65,7 @@ IoT 即插即用设备认证计划包含用于检查设备是否满足 IoT 即�
 az extension add --name azure-iot
 ```
 
-若要了解详细信息，请参阅 [Azure IoT Azure CLI](https://docs.microsoft.com/cli/azure/azure-cli-reference-for-iot?view=azure-cli-latest)。
+若要了解详细信息，请参阅 [Azure IoT Azure CLI](/cli/azure/azure-cli-reference-for-iot?preserve-view=true&view=azure-cli-latest)。
 
 ### <a name="create-a-new-product-test"></a>创建新的产品测试
 
@@ -75,7 +79,7 @@ az iot product test create --badge-type Pnp --at SymmetricKey --device-type Fini
 ```
 
 > [!NOTE]
-> 使用 CLI 时，需要 [登录](https://docs.microsoft.com/cli/azure/authenticate-azure-cli?view=azure-cli-latest) 到订阅。
+> 使用 CLI 时，需要 [登录](/cli/azure/authenticate-azure-cli?preserve-view=true&view=azure-cli-latest) 到订阅。
 
 命令的 JSON 输出包含在 `primaryKey` `registrationId` `scopeID` 连接设备时要使用的、和。
 
@@ -162,18 +166,15 @@ az iot product test task create --type QueueTestRun --test-id d45d53d9-656d-4be7
             },
 ```
 
-## <a name="test-using-the-azure-certified-device-portal"></a>使用 Azure 认证的设备门户进行测试
+## <a name="test-using-the-azure-certified-device-portal"></a>使用 Azure 认证设备门户进行测试
 
 以下步骤演示了如何使用 [Azure 认证的设备门户](https://aka.ms/acdp) 来加入、注册产品详细信息、提交入门指南以及运行认证测试。
-
-> [!NOTE]
-> 撰写本文时，门户不支持发布到 [Azure IoT 设备目录的认证](https://aka.ms/devicecatalog)。
 
 ### <a name="onboarding"></a>登记
 
 若要使用 [证书门户](https://aka.ms/acdp)，必须使用工作或学校租户中的 Azure Active Directory。
 
-若要将模型发布到 Azure IoT 公共模型存储库，你的帐户必须是 [Microsoft 合作伙伴网络](https://partner.microsoft.com)的成员。 系统将检查 Microsoft 合作伙伴网络 ID 是否存在，并在发布到设备目录之前完全审查帐户。
+若要将模型发布到 [Azure IoT 公共模型存储库](https://github.com/Azure/iot-plugandplay-models)，你的帐户必须是 [Microsoft 合作伙伴网络](https://partner.microsoft.com)的成员。 系统将检查 Microsoft 合作伙伴网络 ID 是否存在，并在发布到设备目录之前完全审查帐户。
 
 ### <a name="company-profile"></a>公司配置文件
 
@@ -190,7 +191,7 @@ az iot product test task create --type QueueTestRun --test-id d45d53d9-656d-4be7
 在认证过程中提供的产品信息分为四类：
 
 - 设备信息。 收集有关设备的信息，例如设备的名称、描述、证书和操作系统。
-- **入门**指南。 在发布设备之前，你必须以 PDF 文档的形式提交指南以供系统管理员批准。
+- **入门** 指南。 在发布设备之前，你必须以 PDF 文档的形式提交指南以供系统管理员批准。
 - 市场营销详细信息。 为设备提供客户可用的营销信息。 营销信息包括为说明、照片和分销商。
 - 其他行业认证。 此可选部分允许你提供有关设备已获取的任何其他证书的其他信息。
 
@@ -203,6 +204,14 @@ az iot product test task create --type QueueTestRun --test-id d45d53d9-656d-4be7
 1. 连接并发现接口。 设备必须通过 DPS 连接到 Azure IoT 认证服务。 选择身份验证方法 (x.509 证书、对称密钥或受信任的平台模块) 使用并使用 DPS 信息更新设备应用程序。
 1. 查看接口。 查看接口，确保每个接口都具有可用于测试的有效负载输入。
 1. 测试。 系统将测试每个设备模型，以检查模型中所述的遥测、属性和命令是否遵循 IoT 即插即用约定。 测试完成后，请选择 " **查看日志** " 链接以查看来自设备的遥测数据以及发送到 IoT 中心设备克隆属性的原始数据。
+
+### <a name="submit-and-publish"></a>提交并发布
+
+最终要求的阶段是提交项目以供评审。 此步骤通知 Azure 认证的设备团队成员查看你的项目的完整性，包括设备和营销详细信息以及入门指南。 在批准之前，团队成员可以通过与问题相关的公司电子邮件地址与你联系。
+
+如果你的设备需要进一步的手动验证作为认证的一部分，此时你会收到通知。
+
+在认证设备后，你可以选择使用产品摘要页中的 " **发布到目录** " 功能将产品详细信息发布到 Azure 认证设备目录。
 
 ## <a name="next-steps"></a>后续步骤
 

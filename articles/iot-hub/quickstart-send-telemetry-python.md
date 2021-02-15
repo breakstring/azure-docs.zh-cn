@@ -1,5 +1,5 @@
 ---
-title: 向 Azure IoT 中心发送遥测数据 (Python) | Microsoft Docs
+title: 快速入门 - 向 Azure IoT 中心发送遥测数据快速入门 (Python) | Microsoft Docs
 description: 在本快速入门中，将会运行一个示例 Python 应用程序，向 IoT 中心发送模拟遥测数据，并从 IoT 中心使用实用工具读取遥测数据。
 author: wesmc7777
 manager: philmea
@@ -13,13 +13,14 @@ ms.custom:
 - mqtt
 - devx-track-python
 - 'Role: Cloud Development'
+- devx-track-azurecli
 ms.date: 06/16/2020
-ms.openlocfilehash: 3df26f78e66aa1806fd13fd1a46444bb5dc79742
-ms.sourcegitcommit: dea88d5e28bd4bbd55f5303d7d58785fad5a341d
+ms.openlocfilehash: c1ea343a2674346e1028f8bb1f3d8ee61cb7e20e
+ms.sourcegitcommit: a0c1d0d0906585f5fdb2aaabe6f202acf2e22cfc
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/06/2020
-ms.locfileid: "87876217"
+ms.lasthandoff: 01/21/2021
+ms.locfileid: "98624869"
 ---
 # <a name="quickstart-send-telemetry-from-a-device-to-an-iot-hub-and-read-it-with-a-back-end-application-python"></a>快速入门：将遥测数据从设备发送到 IoT 中心并使用后端应用程序读取该数据 (Python)
 
@@ -37,15 +38,7 @@ ms.locfileid: "87876217"
 
 * 端口 8883 在防火墙中处于打开状态。 本快速入门中的设备示例使用 MQTT 协议，该协议通过端口 8883 进行通信。 在某些公司和教育网络环境中，此端口可能被阻止。 有关解决此问题的更多信息和方法，请参阅[连接到 IoT 中心(MQTT)](iot-hub-mqtt-support.md#connecting-to-iot-hub)。
 
-[!INCLUDE [cloud-shell-try-it.md](../../includes/cloud-shell-try-it.md)]
-
-### <a name="add-azure-iot-extension"></a>添加 Azure IoT 扩展
-
-运行以下命令将用于 Azure CLI 的 Microsoft Azure IoT 扩展添加到 Cloud Shell 实例。 IoT 扩展会将特定于 IoT 中心、IoT Edge 和 IoT 设备预配服务 (DPS) 的命令添加到 Azure CLI。
-
-```azurecli-interactive
-az extension add --name azure-iot
-```
+[!INCLUDE [azure-cli-prepare-your-environment.md](../../includes/azure-cli-prepare-your-environment-no-header.md)]
 
 [!INCLUDE [iot-hub-cli-version-info](../../includes/iot-hub-cli-version-info.md)]
 
@@ -67,12 +60,12 @@ az extension add --name azure-iot
     az iot hub device-identity create --hub-name {YourIoTHubName} --device-id MyPythonDevice
     ```
 
-1. 在 Azure Cloud Shell 中运行以下命令，以获取已注册设备的_设备连接字符串_：
+1. 在 Azure Cloud Shell 中运行以下命令，以获取已注册设备的 _设备连接字符串_：
 
     **YourIoTHubName**：将下面的占位符替换为你为 IoT 中心选择的名称。
 
     ```azurecli-interactive
-    az iot hub device-identity show-connection-string --hub-name {YourIoTHubName} --device-id MyPythonDevice --output table
+    az iot hub device-identity connection-string show --hub-name {YourIoTHubName} --device-id MyPythonDevice --output table
     ```
 
     记下如下所示的设备连接字符串：
@@ -132,7 +125,7 @@ az extension add --name azure-iot
 
 2. 在所选的文本编辑器中打开 read_device_to_cloud_messages_sync.py 文件。 更新以下变量并保存对文件所做的更改。
 
-    | 变量 | Value |
+    | 变量 | 值 |
     | -------- | ----------- |
     | `EVENTHUB_COMPATIBLE_ENDPOINT` | 将变量的值替换为之前记下的与事件中心兼容的终结点。 |
     | `EVENTHUB_COMPATIBLE_PATH`     | 将变量的值替换为之前记下的与事件中心兼容的路径。 |

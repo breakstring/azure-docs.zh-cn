@@ -109,8 +109,8 @@
               href: tutorial-data-flow.md
             - name: 映射数据流视频教程
               href: data-flow-tutorials.md
-        - name: 使用整理数据流准备数据
-          href: wrangling-data-flow-tutorial.md
+        - name: 使用整理功能准备数据
+          href: wrangling-tutorial.md
         - name: 使用外部服务
           items:
             - name: HDInsight Spark
@@ -145,6 +145,10 @@
           href: tutorial-deploy-ssis-packages-azure-powershell.md
         - name: 加入虚拟网络
           href: tutorial-deploy-ssis-virtual-network.md
+    - name: 沿袭
+      items:
+        - name: 将数据工厂世系数据推送到 Azure Purview
+          href: turorial-push-lineage-to-purview.md
     - name: 端到端实验室
       items:
         - name: 使用数据工厂和数据共享实现数据集成
@@ -187,22 +191,24 @@
               href: concepts-data-flow-monitoring.md
             - name: 数据流性能
               href: concepts-data-flow-performance.md
-            - name: 管理图
+            - name: 管理数据流画布
               href: concepts-data-flow-manage-graph.md
             - name: 表达式生成器
               href: concepts-data-flow-expression-builder.md
             - name: 表达式语言
               href: data-flow-expression-functions.md
-        - name: 使用整理数据流准备数据
+        - name: 使用 Power Query 数据整理功能准备数据
           items:
-            - name: 整理数据流概述
-              href: wrangling-data-flow-overview.md
+            - name: 数据整理概述
+              href: wrangling-overview.md
             - name: 支持的函数
-              href: wrangling-data-flow-functions.md
+              href: wrangling-functions.md
     - name: 角色和权限
       href: concepts-roles-permissions.md
     - name: 命名规则
       href: naming-rules.md
+    - name: 数据冗余
+      href: concepts-data-redundancy.md
 - name: 操作指南
   items:
     - name: 作者
@@ -217,6 +223,8 @@
           href: source-control.md
         - name: 持续集成和交付
           href: continuous-integration-deployment.md
+        - name: 自动发布
+          href: continuous-integration-deployment-improvements.md
     - name: 连接器
       items:
         - name: 连接器概述
@@ -249,13 +257,15 @@
           href: connector-azure-database-for-mysql.md
         - name: Azure Database for PostgreSQL
           href: connector-azure-database-for-postgresql.md
+        - name: Azure Databricks Delta Lake
+          href: connector-azure-databricks-delta-lake.md
         - name: Azure 文件存储
           href: connector-azure-file-storage.md
         - name: Azure SQL 数据库
           href: connector-azure-sql-database.md
         - name: Azure SQL 托管实例
           href: connector-azure-sql-managed-instance.md
-        - name: Azure Synapse Analytics（以前称为 SQL 数据仓库）
+        - name: Azure Synapse Analytics
           href: connector-azure-sql-data-warehouse.md
         - name: Azure 表存储
           href: connector-azure-table-storage.md
@@ -332,6 +342,8 @@
           items:
             - name: MongoDB（旧版）
               href: connector-mongodb-legacy.md
+        - name: MongoDB Atlas
+          href: connector-mongodb-atlas.md
         - name: MySQL
           href: connector-mysql.md
         - name: Netezza
@@ -445,6 +457,8 @@
           href: copy-activity-fault-tolerance.md
         - name: 数据一致性验证
           href: copy-activity-data-consistency.md
+        - name: 复制活动日志
+          href: copy-activity-log.md
         - name: 格式和压缩支持（旧版）
           href: supported-file-formats-and-compression-codecs-legacy.md
     - name: 转换数据
@@ -452,6 +466,8 @@
       items:
         - name: 执行数据流活动
           href: control-flow-execute-data-flow-activity.md
+        - name: 执行 Power Query 活动
+          href: control-flow-power-query-activity.md
         - name: Azure 函数活动
           href: control-flow-azure-function-activity.md
         - name: 自定义活动
@@ -542,6 +558,8 @@
           href: data-flow-new-branch.md
         - name: 透视
           href: data-flow-pivot.md
+        - name: 级别
+          href: data-flow-rank.md
         - name: Select
           href: data-flow-select.md
         - name: 接收器
@@ -590,6 +608,8 @@
           href: enable-customer-managed-key.md
         - name: 托管的虚拟网络
           href: managed-virtual-network-private-endpoint.md
+        - name: 用于数据工厂的 Azure 专用链接
+          href: data-factory-private-link.md
     - name: 监视和管理
       items:
         - name: 直观地监视
@@ -613,15 +633,19 @@
         - name: Azure 集成运行时
           href: create-azure-integration-runtime.md
         - name: 自承载集成运行时
-          href: create-self-hosted-integration-runtime.md
+          items:
+            - name: 创建和配置自承载集成运行时
+              href: create-self-hosted-integration-runtime.md
+            - name: 自承载集成运行时自动更新和过期通知
+              href: self-hosted-integration-runtime-auto-update.md
+            - name: 共享的自承载集成运行时
+              href: create-shared-self-hosted-integration-runtime-powershell.md
+            - name: 自承载集成运行时的自动化脚本
+              href: self-hosted-integration-runtime-automation-scripts.md
+            - name: 在 Windows 容器中运行自承载集成运行时
+              href: how-to-run-self-hosted-integration-runtime-in-windows-container.md
         - name: Azure-SSIS 集成运行时
           href: create-azure-ssis-integration-runtime.md
-        - name: 共享的自承载集成运行时
-          href: create-shared-self-hosted-integration-runtime-powershell.md
-        - name: 自承载集成运行时的自动化脚本
-          href: self-hosted-integration-runtime-automation-scripts.md
-        - name: 在 Windows 容器中运行自承载集成运行时
-          href: how-to-run-self-hosted-integration-runtime-in-windows-container.md
     - name: 在 Azure 中运行 SSIS 包
       items:
         - name: 从 SSDT 运行 Azure 中的 SSIS 包
@@ -676,6 +700,12 @@
           href: how-to-create-tumbling-window-trigger.md
         - name: 创建翻转窗口触发器依赖项
           href: tumbling-window-trigger-dependency.md
+    - name: 数据目录与治理
+      items:
+        - name: 将数据工厂连接到 Azure Purview
+          href: connect-data-factory-to-azure-purview.md
+        - name: 使用 Purview 发现和探索 ADF 中的数据
+          href: how-to-discover-explore-purview-data.md
     - name: 方案
       items:
         - name: Data Lake 与 EDW 的数据迁移
@@ -688,6 +718,10 @@
               href: data-migration-guidance-hdfs-azure-storage.md
             - name: 将数据从本地 Netezza 服务器迁移到 Azure
               href: data-migration-guidance-netezza-azure-sqldw.md
+        - name: Azure 机器学习
+          items:
+            - name: 数据引入
+              href: ../machine-learning/how-to-data-ingest-adf.md?toc=/azure/data-factory/toc.json&bc=/azure/data-factory/breadcrumb/toc.json
         - name: 使用映射数据流进行转换
           items:
             - name: 处理固定宽度的文本文件
@@ -696,6 +730,8 @@
               href: how-to-data-flow-error-rows.md
             - name: Azure SQL DB 到 Azure Cosmos DB
               href: how-to-sqldb-to-cosmosdb.md
+            - name: 对代码片段进行重复数据消除和 NULL 检查
+              href: how-to-data-flow-dedupe-nulls-snippets.md
         - name: 从本地进行 SSIS 迁移
           items:
             - name: SSIS 迁移概述
@@ -724,6 +760,10 @@
           href: solution-template-databricks-notebook.md
     - name: 了解定价
       items:
+        - name: 数据流 - 预留容量概述
+          href: data-flow-reserved-capacity-overview.md
+        - name: 数据流 - 了解预留费用
+          href: data-flow-understand-reservation-charges.md
         - name: 计划和管理成本
           href: plan-manage-costs.md
         - name: 定价示例
@@ -736,10 +776,14 @@
           href: data-factory-troubleshoot-guide.md
         - name: 连接器
           href: connector-troubleshoot-guide.md
+        - name: 管道触发器
+          href: pipeline-trigger-troubleshoot-guide.md
         - name: 数据流
           href: data-flow-troubleshoot-guide.md
-        - name: 复制数据工具
-          href: copy-data-tool-troubleshoot-guide.md
+        - name: 持续集成和部署
+          href: ci-cd-github-troubleshoot-guide.md
+        - name: 安全性和访问控制
+          href: security-and-access-control-troubleshoot-guide.md
         - name: 自承载集成运行时
           href: self-hosted-integration-runtime-troubleshoot-guide.md
         - name: Azure-SSIS 集成运行时
@@ -761,7 +805,7 @@
     - name: 资源管理器模板
       href: /azure/templates/microsoft.datafactory/allversions
     - name: Python
-      href: /python/api/overview/azure/datafactory?view=azure-python
+      href: /python/api/overview/azure/datafactory
 - name: 资源
   items:
     - name: 白皮书
@@ -773,7 +817,7 @@
     - name: 博客
       href: 'https://techcommunity.microsoft.com/t5/azure-data-factory/bg-p/AzureDataFactoryBlog#'
     - name: 提问 - Microsoft Q&A 问题页面
-      href: 'https://docs.microsoft.com/answers/topics/azure-data-factory.html'
+      href: /answers/topics/azure-data-factory.html
     - name: 提出问题 - Stack Overflow
       href: 'https://stackoverflow.com/questions/tagged/azure-data-factory'
     - name: 请求功能

@@ -3,13 +3,13 @@ title: 使用 Azure Active Directory 对 Batch Management 解决方案进行身�
 description: 探讨如何通过 Azure Active Directory 在使用 Batch Management .NET 库的应用程序中进行身份验证。
 ms.topic: how-to
 ms.date: 04/27/2017
-ms.custom: has-adal-ref
-ms.openlocfilehash: 829a742c144f2bba39f1ca392e80db25640d4dee
-ms.sourcegitcommit: 5cace04239f5efef4c1eed78144191a8b7d7fee8
+ms.custom: has-adal-ref, devx-track-csharp
+ms.openlocfilehash: ff49d5e88df7c56ed4dee0685f09e45eb372aa5c
+ms.sourcegitcommit: 829d951d5c90442a38012daaf77e86046018e5b9
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/08/2020
-ms.locfileid: "86141961"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "88930207"
 ---
 # <a name="authenticate-batch-management-solutions-with-active-directory"></a>使用 Active Directory 对 Batch 管理解决方案进行身份验证
 
@@ -23,15 +23,15 @@ ms.locfileid: "86141961"
 
 ## <a name="register-your-application-with-azure-ad"></a>将应用程序注册到 Azure AD
 
-[Azure Active Directory Authentication 库](../active-directory/azuread-dev/active-directory-authentication-libraries.md) (ADAL) 提供了一个编程接口，用于 Azure AD 在应用程序中使用。 若要从应用程序调用 ADAL，必须在 Azure AD 租户中注册该应用程序。 注册应用程序时，请向 Azure AD 提供有关该应用程序的信息，包括该应用程序在 Azure AD 租户中的名称。 然后，Azure AD 将提供一个应用程序 ID，在运行时，可以使用该 ID 将应用程序与 Azure AD 相关联。 若要详细信息应用程序 ID，请参阅 [Azure Active Directory 中的应用程序对象和服务主体对象](../active-directory/develop/app-objects-and-service-principals.md)。
+[Azure Active Directory 身份验证库](../active-directory/azuread-dev/active-directory-authentication-libraries.md) (ADAL) 提供一个可在应用程序中使用的 Azure AD 编程接口。 若要从应用程序调用 ADAL，必须在 Azure AD 租户中注册该应用程序。 注册应用程序时，请向 Azure AD 提供有关该应用程序的信息，包括该应用程序在 Azure AD 租户中的名称。 然后，Azure AD 将提供一个应用程序 ID，在运行时，可以使用该 ID 将应用程序与 Azure AD 相关联。 若要详细信息应用程序 ID，请参阅 [Azure Active Directory 中的应用程序对象和服务主体对象](../active-directory/develop/app-objects-and-service-principals.md)。
 
-若要注册 AccountManagement 示例应用程序，请按照[将应用程序与 Azure Active Directory 集成](../active-directory/develop/quickstart-register-app.md)的[添加应用程序](../active-directory/develop/quickstart-register-app.md)部分中的步骤进行操作。 指定“本机客户端应用程序”作为应用程序类型。 用于重定向 URI 的行业标准 OAuth 2.0 URI 是 `urn:ietf:wg:oauth:2.0:oob`。 但是，可以为 `http://myaccountmanagementsample` **重定向 uri**指定任何有效的 uri (如) ，因为它不需要是实际的终结点。
+若要注册 AccountManagement 示例应用程序，请按照[将应用程序与 Azure Active Directory 集成](../active-directory/develop/quickstart-register-app.md)的[添加应用程序](../active-directory/develop/quickstart-register-app.md)部分中的步骤进行操作。 指定“本机客户端应用程序”作为应用程序类型。 用于重定向 URI 的行业标准 OAuth 2.0 URI 是 `urn:ietf:wg:oauth:2.0:oob`。 但可为重定向 URI 指定任何有效的 URI（例如 `http://myaccountmanagementsample`），因为它不需要是实际的终结点。
 
 ![添加应用程序](./media/batch-aad-auth-management/app-registration-management-plane.png)
 
 完成注册过程后，将列出应用程序的应用程序 ID 和对象（服务主体）ID。
 
-![已完成注册过程](./media/batch-aad-auth-management/app-registration-client-id.png)
+![完成的注册过程](./media/batch-aad-auth-management/app-registration-client-id.png)
 
 ## <a name="grant-the-azure-resource-manager-api-access-to-your-application"></a>向 Azure 资源管理器 API 授予应用程序访问权限
 

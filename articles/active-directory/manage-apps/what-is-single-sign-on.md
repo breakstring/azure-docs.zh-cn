@@ -3,7 +3,7 @@ title: 什么是 Azure 单一登录 (SSO)？
 description: 了解如何将单一登录 (SSO) 与 Azure Active Directory 配合使用。 使用 SSO，使用户无需记住每个应用程序的密码。 还可以使用 SSO 简化帐户管理。
 services: active-directory
 author: kenwith
-manager: celestedg
+manager: daveba
 ms.service: active-directory
 ms.subservice: app-mgmt
 ms.workload: identity
@@ -11,12 +11,13 @@ ms.topic: overview
 ms.date: 12/03/2019
 ms.author: kenwith
 ms.reviewer: arvindh, japere
-ms.openlocfilehash: 3e845507404e0dd7ec3d11c68aaa553ae75eef0b
-ms.sourcegitcommit: c28fc1ec7d90f7e8b2e8775f5a250dd14a1622a6
+ms.custom: contperf-fy21q1
+ms.openlocfilehash: 36025a5a68e4c3d0de1d6b11a13df656c72745d4
+ms.sourcegitcommit: d49bd223e44ade094264b4c58f7192a57729bada
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/13/2020
-ms.locfileid: "88164489"
+ms.lasthandoff: 02/02/2021
+ms.locfileid: "99260191"
 ---
 # <a name="what-is-single-sign-on-sso"></a>什么是单一登录 (SSO)？
 
@@ -52,7 +53,7 @@ Web 应用程序极为常用。 Web 应用由各种公司托管，并以一种�
 > [!TIP]
 > 云托管应用也称为软件即服务 (SaaS) 应用。 
 
-云托管应用的单一登录非常简单。 只需让标识提供者知道应用正在使用单一登录。 然后，将应用配置为信任标识提供者。 若要了解如何将 Azure AD 用作应用的标识提供者，请参阅[应用程序管理快速入门系列](view-applications-portal.md)。
+云托管应用的单一登录非常简单。 只需让标识提供者知道应用正在使用单一登录。 然后，将应用配置为信任标识提供者。 若要了解如何将 Azure AD 用作应用的标识提供者，请参阅[应用程序管理快速入门系列](add-application-portal.md)。
 
 > [!TIP]
 > 术语“云”和“Internet”通常可以互换。 这与网络图有关。 由于绘制每个组件是不可行的，因此通常会在图中将大型计算机网络表示为云的形状。 Internet 是最著名的网络，因此这两个术语很容易互换使用。 但是，任何计算机网络都可以被称为云。

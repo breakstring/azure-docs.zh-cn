@@ -3,22 +3,18 @@ title: 快速入门：创建自动化帐户 - Azure 模板
 titleSuffix: Azure Automation
 description: 本快速入门介绍如何使用 Azure 资源管理器模板创建自动化帐户。
 services: automation
-documentationcenter: na
-author: mgoedtel
 Customer intent: I want to create an Automation account by using an Azure Resource Manager template so that I can automate processes with runbooks.
-ms.service: automation
-ms.devlang: na
 ms.topic: quickstart
 ms.workload: infrastructure-services
-ms.date: 07/23/2020
+ms.date: 01/07/2021
 ms.author: magoedte
 ms.custom: mvc,subject-armqs
-ms.openlocfilehash: 4246d8324eebe15b314393fc4a26adcaf12c9f6f
-ms.sourcegitcommit: 0820c743038459a218c40ecfb6f60d12cbf538b3
+ms.openlocfilehash: d0582876a08b433a10106b97179ab603d4ec5762
+ms.sourcegitcommit: d1e56036f3ecb79bfbdb2d6a84e6932ee6a0830e
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87117309"
+ms.lasthandoff: 01/29/2021
+ms.locfileid: "99050662"
 ---
 # <a name="quickstart-create-an-automation-account-by-using-arm-template"></a>快速入门：使用 ARM 模板创建自动化帐户
 
@@ -44,13 +40,13 @@ Azure 自动化提供基于云的自动化和配置服务，用于支持 Azure �
 * 将示例自动化 runbook 添加到帐户。
 
 >[!NOTE]
->使用 ARM 模板时，不支持创建自动化运行方式帐户。 若要从门户或使用 PowerShell 手动创建运行方式帐户，请参阅[管理运行方式帐户](manage-runas-account.md)。
+>使用 ARM 模板时，不支持创建自动化运行方式帐户。 若要从门户或使用 PowerShell 手动创建运行方式帐户，请参阅[创建运行方式帐户](create-run-as-account.md)。
 
 完成这些步骤后，你需要为自动化帐户[配置诊断设置](automation-manage-send-joblogs-log-analytics.md)，以将 runbook 作业状态和作业流发送到链接的 Log Analytics 工作区。
 
 本快速入门中使用的模板来自 [Azure 快速启动模板](https://azure.microsoft.com/resources/templates/101-automation/)。
 
-:::code language="json" source="~/quickstart-templates/101-automation/azuredeploy.json" range="1-324" highlight="58-122":::
+:::code language="json" source="~/quickstart-templates/101-automation/azuredeploy.json":::
 
 ### <a name="api-versions"></a>API 版本
 
@@ -60,7 +56,7 @@ Azure 自动化提供基于云的自动化和配置服务，用于支持 Azure �
 |:---|:---|:---|
 | [工作区](/azure/templates/microsoft.operationalinsights/workspaces) | workspaces | 2020-03-01-preview |
 | [自动化帐户](/azure/templates/microsoft.automation/automationaccounts) | automation | 2020-01-13-preview |
-| [工作区关联的服务](/azure/templates/microsoft.operationalinsights/workspaces/linkedservices) | 工作区 | 2020-03-01-preview |
+| [工作区关联的服务](/azure/templates/microsoft.operationalinsights/workspaces/linkedservices) | workspaces | 2020-03-01-preview |
 
 ### <a name="before-you-use-the-template"></a>使用模版之前
 
@@ -84,7 +80,7 @@ JSON 模板为其他参数指定默认值，这些参数将会用作环境中的
 
 如果你不熟悉 Azure 自动化和 Azure Monitor，请务必了解以下配置详细信息。 当你尝试创建、配置和使用链接到新自动化帐户的 Log Analytics 工作区时，这些信息有助于避免出错。
 
-* 查看[其他详细信息](../azure-monitor/platform/template-workspace-configuration.md#create-a-log-analytics-workspace)以充分了解工作区配置选项，如访问控制模式、定价层、保留期和产能预留级别。
+* 查看[其他详细信息](../azure-monitor/samples/resource-manager-workspace.md#create-a-log-analytics-workspace)以充分了解工作区配置选项，如访问控制模式、定价层、保留期和产能预留级别。
 
 * 查看[工作区映射](how-to/region-mappings.md)，以内联方式或在参数文件中指定支持的区域。 只有某些区域支持链接订阅中的 Log Analytics 工作区和自动化帐户。
 

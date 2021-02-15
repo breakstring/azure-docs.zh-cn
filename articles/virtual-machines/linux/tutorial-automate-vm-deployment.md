@@ -5,21 +5,18 @@ services: virtual-machines-linux
 documentationcenter: virtual-machines
 author: cynthn
 manager: gwallace
-tags: azure-resource-manager
-ms.assetid: ''
 ms.service: virtual-machines-linux
 ms.topic: tutorial
-ms.tgt_pltfrm: vm-linux
 ms.workload: infrastructure
 ms.date: 09/12/2019
 ms.author: cynthn
-ms.custom: mvc, devx-track-javascript
-ms.openlocfilehash: f1d439569f15d7680d54b35e7ec1c52ca7843af7
-ms.sourcegitcommit: 2ff0d073607bc746ffc638a84bb026d1705e543e
+ms.custom: mvc, devx-track-js, devx-track-azurecli
+ms.openlocfilehash: ebff49db895468549a7abd420e7b74292b742eab
+ms.sourcegitcommit: 48e5379c373f8bd98bc6de439482248cd07ae883
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/06/2020
-ms.locfileid: "87828959"
+ms.lasthandoff: 01/12/2021
+ms.locfileid: "98108630"
 ---
 # <a name="tutorial---how-to-use-cloud-init-to-customize-a-linux-virtual-machine-in-azure-on-first-boot"></a>教程 - 如何在 Azure 中的 Linux 虚拟机首次启动时使用 cloud-init 对其进行自定义
 
@@ -37,19 +34,9 @@ ms.locfileid: "87828959"
 ## <a name="cloud-init-overview"></a>Cloud-init 概述
 [Cloud-init](https://cloudinit.readthedocs.io) 是一种广泛使用的方法，用于在首次启动 Linux VM 时对其进行自定义。 可使用 cloud-init 来安装程序包和写入文件，或者配置用户和安全性。 在初始启动期间运行 cloud-init 时，无需额外的步骤且无需代理来应用配置。
 
-Cloud-init 还支持不同的发行版。 例如，不需使用 apt-get install 或 yum install 来安装包， 而是可定义要安装的程序包的列表。 Cloud-init 将对所选发行版自动使用本机包管理工具。
+Cloud-init 还支持不同的发行版。 例如，不要使用 apt-get 安装或 yum 安装来安装包。 可定义要安装的程序包的列表。 Cloud-init 将为所选发行版自动使用本机包管理工具。
 
-我们正在与合作伙伴协作，将 cloud-init 纳入用户向 Azure 提供的映像中并使其在映像中正常运行。 下表概述了 cloud-init 当前在 Azure 平台映像上的可用性：
-
-| 发布者 | 产品/服务 | SKU | 版本 | cloud-init 就绪 |
-|:--- |:--- |:--- |:--- |:--- |
-|Canonical |UbuntuServer |18.04-LTS |最新 |是 | 
-|Canonical |UbuntuServer |16.04-LTS |最新 |是 | 
-|Canonical |UbuntuServer |14.04.5-LTS |最新 |是 |
-|CoreOS |CoreOS |Stable |最新 |是 |
-|OpenLogic 7.6 |CentOS |7-CI |最新 |预览 |
-|RedHat 7.6 |RHEL |7-RAW-CI |7.6.2019072418 |是 |
-|RedHat 7.7 |RHEL |7-RAW-CI |7.7.2019081601 |预览 |
+我们正在与合作伙伴协作，将 cloud-init 纳入用户向 Azure 提供的映像中并使其在映像中正常运行。 有关每个发行版的 cloud-init 支持的详细信息，请参阅 [Azure 中 VM 的 Cloud-init 支持](using-cloud-init.md)。
 
 
 ## <a name="create-cloud-init-config-file"></a>创建 cloud-init 配置文件
@@ -147,7 +134,7 @@ Azure Key Vault 保护加密密钥和机密，例如证书或密码。 Key Vault
 - 创建 VM 并注入证书
 
 ### <a name="create-an-azure-key-vault"></a>创建 Azure Key Vault
-首先，使用 [az keyvault create](/cli/azure/keyvault#az-keyvault-create) 创建 Key Vault，并在部署 VM 时启用该 Key Vault。 每个 Key Vault 均需具备唯一名称且全部小写。 将下例中的 mykeyvault  替换为自己唯一的 Key Vault 名称：
+首先，使用 [az keyvault create](/cli/azure/keyvault#az-keyvault-create) 创建 Key Vault，并在部署 VM 时启用该 Key Vault。 每个 Key Vault 均需具备唯一名称且全部小写。 将下例中的 `mykeyvault` 替换为自己唯一的 Key Vault 名称：
 
 ```azurecli-interactive
 keyvault_name=mykeyvault

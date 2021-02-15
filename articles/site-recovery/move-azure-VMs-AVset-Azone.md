@@ -1,20 +1,25 @@
 ---
 title: 使用 Azure Site Recovery 将 VM 迁移至包含可用性区域的 Azure 区域
+description: 了解如何使用 Site Recovery 将 VM 移动到其他区域中的可用性区域
 services: site-recovery
-author: rajani-janaki-ram
+author: sideeksh
 ms.service: site-recovery
 ms.topic: tutorial
 ms.date: 01/28/2019
-ms.author: rajanaki
+ms.author: sideeksh
 ms.custom: MVC
-ms.openlocfilehash: 7d92311dfa699247995c7ded3e3930e19a9a537a
-ms.sourcegitcommit: 62717591c3ab871365a783b7221851758f4ec9a4
+ms.openlocfilehash: 8224ae4a48bb4915492240c414b90edb86a4c258
+ms.sourcegitcommit: 0ce1ccdb34ad60321a647c691b0cff3b9d7a39c8
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/22/2020
-ms.locfileid: "86135467"
+ms.lasthandoff: 11/05/2020
+ms.locfileid: "93393126"
 ---
 # <a name="move-azure-vms-into-availability-zones"></a>将 Azure VM 移到可用性区域中
+
+本文介绍如何将 Azure VM 移动到其他区域中的可用性区域。 如果要移动到同一区域中的其他区域，请[查看本文](./azure-to-azure-how-to-enable-zone-to-zone-disaster-recovery.md)。
+
+
 数据中心发生故障时，Azure 中的可用性区域可帮助保护应用程序和数据。 每个可用性区域都由一个或多个数据中心组成，这些数据中心都配置了独立电源、冷却和网络。 为确保能够进行复原，所有已启用的区域中必须至少有三个单独的区域。 数据中心发生故障时，区域中的可用性区域的物理隔离可帮助保护应用程序和数据。 随着可用性区域的推出，Azure 可为虚拟机 (VM) 的运行时间提供 99.99% 的服务级别协议 (SLA)。 如[支持可用性区域的区域](../availability-zones/az-region.md)中所述，选定区域支持可用性区域。
 
 如果你将 VM 作为单一实例部署到了特定的区域，并想要通过将这些 VM 移到可用性区域来提高可用性，可以使用 Azure Site Recovery。 此操作可进一步划分为：
@@ -23,7 +28,15 @@ ms.locfileid: "86135467"
 - 将可用性集中的 VM 移到目标区域中的可用性区域
 
 > [!IMPORTANT]
-> 目前，Azure Site Recovery 支持将 VM 从一个区域移到另一个区域。 仅支持在几个区域的区域内跨地区移动。 [了解详细信息](./azure-to-azure-how-to-enable-zone-to-zone-disaster-recovery.md)。
+> 若要将 Azure VM 移动到其他区域中的可用性区域，我们现在建议使用 [Azure 资源转移器](../resource-mover/move-region-availability-zone.md)。 资源转移器已推出公共预览版，并提供：
+> - 跨区域移动资源的单一中心。
+> - 缩短了移动时间并降低了复杂性。 你所需要的一切都在同一个位置。
+> - 移动不同类型的 Azure 资源的简单、一致的体验。
+> - 标识要移动的资源之间的依赖项的一种简单方法。 这有助于将相关资源移动到一起，以便在移动后，所有资源在目标区域中都按预期方式工作。
+> - 如果要在移动后删除源区域中的资源，请在源区域中自动清除它们。
+> - 测试。 如果不想进行完整移动，可以尝试移动，然后将其丢弃。
+
+
 
 ## <a name="check-prerequisites"></a>检查先决条件
 
@@ -49,7 +62,7 @@ ms.locfileid: "86135467"
 4. 对于 Linux VM，请遵循 Linux 分销商提供的指导，在 VM 上获取最新的受信任根证书和证书吊销列表。
 5. 确保未使用身份验证代理来控制要移动的 VM 的网络连接。
 
-6. 如果要移动的 VM 无法访问 Internet，并且使用防火墙代理来控制出站访问，请检查[配置出站网络连接](azure-to-azure-tutorial-enable-replication.md#set-up-outbound-network-connectivity-for-vms)中所述的要求。
+6. 验证 [VM 出站连接需求](azure-to-azure-tutorial-enable-replication.md#set-up-vm-connectivity)。
 
 7. 标识源网络布局以及当前用于验证的资源，包括负载均衡器、NSG 和公共 IP。
 
@@ -86,16 +99,12 @@ ms.locfileid: "86135467"
 1. 在 Azure 门户中选择“虚拟机”，然后选择要移到可用性区域中的 VM。
 2. 在“操作”中，选择“灾难恢复” 。
 3. 在“配置灾难恢复” > “目标区域”中，选择要复制到的目标区域 。 确保此区域[支持](../availability-zones/az-region.md)可用性区域。
-
-    ![选择目标区域](media/azure-vms-to-zones/enable-rep-1.PNG)
-
 4. 在完成时选择“下一步:高级设置”。
 5. 为目标订阅、目标 VM 资源组和虚拟网络选择适当的值。
 6. 在“可用性”部分，选择要将 VM 移到的可用性区域。 
    > [!NOTE]
    > 如果未看到可用性集或可用性区域的选项，请确保符合[先决条件](#prepare-the-source-vms)，并且源 VM 的[准备](#prepare-the-source-vms)工作已完成。
   
-    ![可用性区域的选项](media/azure-vms-to-zones/enable-rep-2.PNG)
 
 7. 选择“启用复制”。 此操作会启动用于为 VM 启用复制的作业。
 
@@ -106,7 +115,6 @@ ms.locfileid: "86135467"
 1. 在 VM 菜单中，选择“灾难恢复”。
 2. 可以检查复制运行状况、已创建的恢复点以及地图中的源和目标区域。
 
-   ![复制状态](media/azure-to-azure-quickstart/replication-status.png)
 
 ## <a name="test-the-configuration"></a>测试配置
 
@@ -132,7 +140,7 @@ ms.locfileid: "86135467"
 1.  在虚拟机菜单中，选择“灾难恢复”。
 2. 选择“故障转移”图标。
 3. 在“故障转移”中，选择“最新”。 
-4. 选择“在开始故障转移前关闭计算机”。 Site Recovery 在触发故障转移之前会尝试关闭源 VM。 即使关机失败，故障转移也仍会继续。 可以在“作业”页上跟踪故障转移进度。 
+4. 选择“在开始故障转移前关闭计算机”  。 Site Recovery 在触发故障转移之前会尝试关闭源 VM。 即使关机失败，故障转移也仍会继续。 可以在“作业”  页上跟踪故障转移进度。 
 5. 该作业完成后，检查 VM 是否按预期显示在目标 Azure 区域中。
 6. 在“复制的项”中，右键单击 VM >“提交”。 这会完成移到目标区域的过程。 请等待提交作业完成。
 

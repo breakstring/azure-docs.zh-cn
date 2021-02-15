@@ -2,14 +2,14 @@
 title: 标记资源、资源组和订阅以便对其进行逻辑组织
 description: 演示如何应用标记来组织 Azure 资源进行计费和管理。
 ms.topic: conceptual
-ms.date: 07/27/2020
+ms.date: 01/04/2021
 ms.custom: devx-track-azurecli
-ms.openlocfilehash: daedb5dcd660ec2637557fe5af75db2939318495
-ms.sourcegitcommit: 11e2521679415f05d3d2c4c49858940677c57900
+ms.openlocfilehash: fb93673b643fd13efe9ffea148c5fb1d072f9e05
+ms.sourcegitcommit: 100390fefd8f1c48173c51b71650c8ca1b26f711
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/31/2020
-ms.locfileid: "87499987"
+ms.lasthandoff: 01/27/2021
+ms.locfileid: "98896217"
 ---
 # <a name="use-tags-to-organize-your-azure-resources-and-management-hierarchy"></a>使用标记对 Azure 资源和管理层次结构进行组织
 
@@ -26,9 +26,11 @@ ms.locfileid: "87499987"
 
 ## <a name="required-access"></a>所需访问权限
 
-若要将标记应用到资源，必须对 Microsoft.Resources/tags 资源类型拥有写入权限。 [标记参与者](../../role-based-access-control/built-in-roles.md#tag-contributor)角色可让你将标记应用到实体，无需访问该实体本身。 目前，标记参与者角色无法通过门户将标记应用到资源或资源组。 该角色可以通过门户将标记应用到订阅。 它支持通过 PowerShell 和 REST API 执行所有标记操作。  
+可以通过两种方式获取对标记资源的所需访问权限。
 
-[参与者](../../role-based-access-control/built-in-roles.md#contributor)角色还授予对任何实体应用标记所需的访问权限。 要将标记仅应用于一种资源类型，请使用该资源的参与者角色。 例如，要将标记应用到虚拟机，请使用[虚拟机参与者](../../role-based-access-control/built-in-roles.md#virtual-machine-contributor)。
+- 你可以拥有对 Microsoft.Resources/tags 资源类型的写入权限。 此权限允许你标记任何资源，即使你无权访问资源本身。 [标记参与者](../../role-based-access-control/built-in-roles.md#tag-contributor)角色授予此访问权限。 目前，标记参与者角色无法通过门户将标记应用到资源或资源组。 该角色可以通过门户将标记应用到订阅。 它支持通过 PowerShell 和 REST API 执行所有标记操作。  
+
+- 你可以拥有对资源本身的写入权限。 [参与者](../../role-based-access-control/built-in-roles.md#contributor)角色授予对任何实体应用标记所需的访问权限。 要将标记仅应用于一种资源类型，请使用该资源的参与者角色。 例如，要将标记应用到虚拟机，请使用[虚拟机参与者](../../role-based-access-control/built-in-roles.md#virtual-machine-contributor)。
 
 ## <a name="powershell"></a>PowerShell
 
@@ -240,92 +242,208 @@ Remove-AzTag -ResourceId "/subscriptions/$subscription"
 
 ### <a name="apply-tags"></a>应用标记
 
-将标记添加到资源组或资源时，可以覆盖现有的标记，或将新标记追加到现有标记之后。
+Azure CLI 提供了两个命令用于应用标记 - [az tag create](/cli/azure/tag#az_tag_create) 和 [az tag update](/cli/azure/tag#az_tag_update)。 必须具有 Azure CLI 2.10.0 或更高版本。 可以使用 `az version` 检查自己的版本。 若要更新或安装 CLI，请参阅[安装 Azure CLI](/cli/azure/install-azure-cli)。
 
-若要覆盖资源的标记，请使用：
+az tag create 替换资源、资源组或订阅中的所有标记。 调用该命令时，请传入要标记的实体的资源 ID。
 
-```azurecli-interactive
-az resource tag --tags 'Dept=IT' 'Environment=Test' -g examplegroup -n examplevnet --resource-type "Microsoft.Network/virtualNetworks"
-```
-
-若将标记追加到资源的现有标记之后，请使用：
+以下示例将一组标记应用到存储帐户：
 
 ```azurecli-interactive
-az resource update --set tags.'Status'='Approved' -g examplegroup -n examplevnet --resource-type "Microsoft.Network/virtualNetworks"
+resource=$(az resource show -g demoGroup -n demoStorage --resource-type Microsoft.Storage/storageAccounts --query "id" --output tsv)
+az tag create --resource-id $resource --tags Dept=Finance Status=Normal
 ```
 
-若要覆盖资源组的现有标记，请使用：
+该命令完成后，会发现该资源带有两个标记。
+
+```output
+"properties": {
+  "tags": {
+    "Dept": "Finance",
+    "Status": "Normal"
+  }
+},
+```
+
+如果再次运行该命令（但这一次使用不同的标记），则会发现以前的标记已删除。
 
 ```azurecli-interactive
-az group update -n examplegroup --tags 'Environment=Test' 'Dept=IT'
+az tag create --resource-id $resource --tags Team=Compliance Environment=Production
 ```
 
-若要将标记追加到资源组的现有标记之后，请使用：
+```output
+"properties": {
+  "tags": {
+    "Environment": "Production",
+    "Team": "Compliance"
+  }
+},
+```
+
+若要将标记添加到已经有标记的资源，请使用 `az tag update`。 将 `--operation` 参数设置为 `Merge`。
 
 ```azurecli-interactive
-az group update -n examplegroup --set tags.'Status'='Approved'
+az tag update --resource-id $resource --operation Merge --tags Dept=Finance Status=Normal
 ```
 
-目前，Azure CLI 没有用于将标记应用于订阅的命令。 但是，可以使用 CLI 来部署将标记应用于订阅的 ARM 模板。 请参阅[将标记应用于资源组或订阅](#apply-tags-to-resource-groups-or-subscriptions)。
+你会发现，已将两个新标记添加到了两个现有标记中。
+
+```output
+"properties": {
+  "tags": {
+    "Dept": "Finance",
+    "Environment": "Production",
+    "Status": "Normal",
+    "Team": "Compliance"
+  }
+},
+```
+
+每个标记名称只能有一个值。 如果为标记提供新值，则即使使用合并操作，也会替换旧值。 以下示例将 Status 标记从 Normal 更改为 Green。
+
+```azurecli-interactive
+az tag update --resource-id $resource --operation Merge --tags Status=Green
+```
+
+```output
+"properties": {
+  "tags": {
+    "Dept": "Finance",
+    "Environment": "Production",
+    "Status": "Green",
+    "Team": "Compliance"
+  }
+},
+```
+
+将 `--operation` 参数设置为 `Replace` 时，现有标记会替换为新的标记集。
+
+```azurecli-interactive
+az tag update --resource-id $resource --operation Replace --tags Project=ECommerce CostCenter=00123 Team=Web
+```
+
+资源中只会保留新标记。
+
+```output
+"properties": {
+  "tags": {
+    "CostCenter": "00123",
+    "Project": "ECommerce",
+    "Team": "Web"
+  }
+},
+```
+
+相同的命令也适用于资源组或订阅。 传入要标记的资源组或订阅的标识符。
+
+若要将一组新标记添加到资源组，请使用：
+
+```azurecli-interactive
+group=$(az group show -n demoGroup --query id --output tsv)
+az tag create --resource-id $group --tags Dept=Finance Status=Normal
+```
+
+若要更新资源组的标记，请使用：
+
+```azurecli-interactive
+az tag update --resource-id $group --operation Merge --tags CostCenter=00123 Environment=Production
+```
+
+若要将一组新标记添加到订阅，请使用：
+
+```azurecli-interactive
+sub=$(az account show --subscription "Demo Subscription" --query id --output tsv)
+az tag create --resource-id /subscriptions/$sub --tags CostCenter=00123 Environment=Dev
+```
+
+若要更新订阅的标记，请使用：
+
+```azurecli-interactive
+az tag update --resource-id /subscriptions/$sub --operation Merge --tags Team="Web Apps"
+```
 
 ### <a name="list-tags"></a>列出标记
 
-若要查看资源的现有标记，请使用：
+若要获取资源、资源组或订阅的标记，请使用 [az tag list](/cli/azure/tag#az_tag_list) 命令并传入实体的资源 ID。
+
+若要查看资源的标记，请使用：
 
 ```azurecli-interactive
-az resource show -n examplevnet -g examplegroup --resource-type "Microsoft.Network/virtualNetworks" --query tags
+resource=$(az resource show -g demoGroup -n demoStorage --resource-type Microsoft.Storage/storageAccounts --query "id" --output tsv)
+az tag list --resource-id $resource
 ```
 
-若要查看资源组的现有标记，请使用：
+若要查看资源组的标记，请使用：
 
 ```azurecli-interactive
-az group show -n examplegroup --query tags
+group=$(az group show -n demoGroup --query id --output tsv)
+az tag list --resource-id $group
 ```
 
-该脚本返回以下格式：
+若要查看订阅的标记，请使用：
 
-```json
-{
-  "Dept"        : "IT",
-  "Environment" : "Test"
-}
+```azurecli-interactive
+sub=$(az account show --subscription "Demo Subscription" --query id --output tsv)
+az tag list --resource-id /subscriptions/$sub
 ```
 
 ### <a name="list-by-tag"></a>按标记列出
 
-若要获取具有特定标记和值的所有资源，请使用 `az resource list`：
+若要获取具有特定标记名称和值的资源，请使用：
 
 ```azurecli-interactive
-az resource list --tag Dept=Finance
+az resource list --tag CostCenter=00123 --query [].name
 ```
 
-若要获取具有特定标记的资源组，请使用 `az group list`：
+若要获取具有特定标记名称和任意标记值的资源，请使用：
 
 ```azurecli-interactive
-az group list --tag Dept=IT
+az resource list --tag Team --query [].name
+```
+
+若要获取具有特定标记名称和值的资源组，请使用：
+
+```azurecli-interactive
+az group list --tag Dept=Finance
+```
+
+### <a name="remove-tags"></a>删除标记
+
+若要删除特定标记，请使用 `az tag update`，并将 `--operation` 设置为 `Delete`。 传入要删除的标记。
+
+```azurecli-interactive
+az tag update --resource-id $resource --operation Delete --tags Project=ECommerce Team=Web
+```
+
+指定的标记随即被删除。
+
+```output
+"properties": {
+  "tags": {
+    "CostCenter": "00123"
+  }
+},
+```
+
+若要删除所有标记，请使用 [az tag delete](/cli/azure/tag#az_tag_delete) 命令。
+
+```azurecli-interactive
+az tag delete --resource-id $resource
 ```
 
 ### <a name="handling-spaces"></a>处理空格
 
-如果标记名称或值包含空格，则必须执行几个额外的步骤。 下面的示例在标记可能包含空格时将资源组中的所有标记应用于其资源。
+如果标记名称或值包含空格，请将它们括在双引号中。
 
 ```azurecli-interactive
-jsontags=$(az group show --name examplegroup --query tags -o json)
-tags=$(echo $jsontags | tr -d '{}"' | sed 's/: /=/g' | sed "s/\"/'/g" | sed 's/, /,/g' | sed 's/ *$//g' | sed 's/^ *//g')
-origIFS=$IFS
-IFS=','
-read -a tagarr <<< "$tags"
-resourceids=$(az resource list -g examplegroup --query [].id --output tsv)
-for id in $resourceids
-do
-  az resource tag --tags "${tagarr[@]}" --id $id
-done
-IFS=$origIFS
+az tag update --resource-id $group --operation Merge --tags "Cost Center"=Finance-1222 Location="West US"
 ```
 
-## <a name="templates"></a>模板
+## <a name="arm-templates"></a>ARM 模板
 
-可以在使用资源管理器模板进行部署期间标记资源、资源组和订阅。
+可以在部署期间使用 Azure 资源管理器模板 (ARM 模板) 标记资源、资源组和订阅。
+
+> [!NOTE]
+> 通过 ARM 模板应用的标记将覆盖任何现有标记。
 
 ### <a name="apply-values"></a>应用值
 
@@ -333,7 +451,7 @@ IFS=$origIFS
 
 ```json
 {
-    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
         "utcShort": {
@@ -372,7 +490,7 @@ IFS=$origIFS
 
 ```json
 {
-    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
         "location": {
@@ -410,7 +528,7 @@ IFS=$origIFS
 
 ```json
 {
-    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
         "location": {
@@ -439,11 +557,11 @@ IFS=$origIFS
 
 ### <a name="apply-tags-from-resource-group"></a>应用资源组中的标记
 
-若要将资源组中的标记应用于资源，请使用[resourceGroup （）](../templates/template-functions-resource.md#resourcegroup)函数。 获取标记值时，请使用 `tags[tag-name]` 语法而不是 `tags.tag-name` 语法，因为有些字符在点表示法中无法正确解析。
+若要将资源组中的标记应用于资源，请使用 [resourceGroup()](../templates/template-functions-resource.md#resourcegroup) 函数。 获取标记值时，请使用 `tags[tag-name]` 语法而不是 `tags.tag-name` 语法，因为有些字符在点表示法中无法正确解析。
 
 ```json
 {
-    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
         "location": {
@@ -579,7 +697,7 @@ az deployment sub create --name tagresourcegroup --location westus2 --template-u
 
 可使用标记对计费数据进行分组。 例如，如果针对不同组织运行多个 VM，可以使用标记根据成本中心对使用情况进行分组。 还可使用标记根据运行时环境（例如，在生产环境中运行的 VM 的计费使用情况）对成本进行分类。
 
-可以通过[Azure 资源使用情况和费率卡 api](../../cost-management-billing/manage/usage-rate-card-overview.md)或使用情况逗号分隔值（CSV）文件来检索有关标记的信息。 可从 [Azure 帐户中心](https://account.azure.com/Subscriptions)或 Azure 门户下载使用情况文件。 有关详细信息，请参阅[下载或查看 Azure 帐单发票和每日使用数据](../../cost-management-billing/manage/download-azure-invoice-daily-usage-date.md)。 从 Azure 帐户中心下载使用情况文件时，选择**版本 2**。 对于支持为账单提供标记的服务，标记会显示在“标记”列中。****
+你可以通过下载使用情况文件来检索有关标记的信息，这是一个以逗号分隔的值， (Azure 门户提供的 CSV) 文件。 有关详细信息，请参阅[下载或查看 Azure 帐单发票和每日使用数据](../../cost-management-billing/manage/download-azure-invoice-daily-usage-date.md)。 从 Azure 帐户中心下载使用情况文件时，选择 **版本 2**。 对于支持为账单提供标记的服务，标记会显示在“标记”列中。
 
 有关 REST API 操作，请参阅 [Azure 计费 REST API 参考](/rest/api/billing/)。
 
@@ -598,7 +716,7 @@ az deployment sub create --name tagresourcegroup --location westus2 --template-u
    >
    > Azure Front Door 不支持在标记名称中使用 `#`。
    >
-   > Azure 自动化和 Azure CDN 仅支持15个资源标记。
+   > Azure 自动化和 Azure CDN 仅支持资源上的 15 个标记。
 
 ## <a name="next-steps"></a>后续步骤
 

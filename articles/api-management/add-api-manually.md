@@ -12,12 +12,12 @@ ms.tgt_pltfrm: na
 ms.topic: tutorial
 ms.date: 04/20/2020
 ms.author: apimpm
-ms.openlocfilehash: 644e29c3b5e37cd95280cfd2261e644b20bbda98
-ms.sourcegitcommit: c5021f2095e25750eb34fd0b866adf5d81d56c3a
+ms.openlocfilehash: 39a3b9d7dd9efbda93de0b5d7c5f9938922d0012
+ms.sourcegitcommit: d22a86a1329be8fd1913ce4d1bfbd2a125b2bcae
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/25/2020
-ms.locfileid: "82203245"
+ms.lasthandoff: 11/26/2020
+ms.locfileid: "96183804"
 ---
 # <a name="add-an-api-manually"></a>手动添加 API
 
@@ -39,13 +39,13 @@ ms.locfileid: "82203245"
 2. 在左侧菜单中，选择“+ 添加 API”。
 3. 从列表中选择“空白 API”。  
     空白 API![](media/add-api-manually/blank-api.png)  
-4. 输入 API 的设置。 在[导入和发布第一个 API](import-and-publish.md#-import-and-publish-a-backend-api) 教程中对这些设置进行了说明。
+4. 输入 API 的设置。 在[导入和发布第一个 API](import-and-publish.md#import-and-publish-a-backend-api) 教程中对这些设置进行了说明。
 5. 选择“创建” 。
 
 此时，API 管理中没有任何操作映射到后端 API 中的操作。 如果调用通过后端（而不是通过 API 管理）公开的操作，则会收到 404 错误。
 
 >[!NOTE] 
-> 默认情况下，在添加某个 API 时，除非已将某些操作列入允许列表，否则即使该 API 已连接到某个后端服务，APIM 也不会公开任何操作。 若要将后端服务的某个操作列入允许列表，请创建一个映射到后端操作的 APIM 操作。
+> 默认情况下，在添加某个 API 时，除非你允许，否则即使该 API 已连接到某个后端服务，APIM 也不会公开任何操作。 若要允许后端服务的某个操作，请创建一个映射到后端操作的 APIM 操作。
 
 ## <a name="add-and-test-an-operation"></a>添加并测试操作
 
@@ -61,7 +61,7 @@ ms.locfileid: "82203245"
 
 ### <a name="test-an-operation"></a>测试操作
 
-在 Azure 门户中测试操作。 或者，可以在**开发人员门户**中测试操作。
+在 Azure 门户中测试操作。 或者，可以在 **开发人员门户** 中测试操作。
 
 1. 选择“测试”选项卡。
 2. 选择“FetchData”。
@@ -83,7 +83,7 @@ ms.locfileid: "82203245"
 
 ### <a name="test-the-operation"></a>测试操作 
 
-在 Azure 门户中测试操作。  或者，可以在**开发人员门户**中测试操作。
+在 Azure 门户中测试操作。  或者，可以在 **开发人员门户** 中测试操作。
 
 1. 选择“测试”选项卡。
 2. 选择“GetStatus”。 默认情况下，代码值设置为“200”。 可以更改默认值以测试其他值。 例如，键入“418”。

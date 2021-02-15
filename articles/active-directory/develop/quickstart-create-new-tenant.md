@@ -1,6 +1,7 @@
 ---
-title: 创建一个 Azure Active Directory 租户
-description: 了解如何创建用于注册和生成应用程序的 Azure AD 租户。
+title: 快速入门：创建一个 Azure Active Directory 租户
+titleSuffix: Microsoft identity platform
+description: 本快速入门介绍如何创建 Azure Active Directory 租户，以便在开发使用 Microsoft 标识平台进行身份验证和授权的应用程序时使用。
 services: active-directory
 author: rwike77
 manager: CelesteDG
@@ -12,12 +13,12 @@ ms.date: 03/12/2020
 ms.author: ryanwi
 ms.reviewer: jmprieur
 ms.custom: aaddev, identityplatformtop40, fasttrack-edit
-ms.openlocfilehash: df873e49e1bc581a32bcb4e4b40b2b24db98cee5
-ms.sourcegitcommit: b8702065338fc1ed81bfed082650b5b58234a702
+ms.openlocfilehash: 869b37aea823cf91dc59211b23fcaccd7646afb9
+ms.sourcegitcommit: 42a4d0e8fa84609bec0f6c241abe1c20036b9575
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/11/2020
-ms.locfileid: "88120807"
+ms.lasthandoff: 01/08/2021
+ms.locfileid: "98012013"
 ---
 # <a name="quickstart-set-up-a-tenant"></a>快速入门：设置租户
 
@@ -26,6 +27,10 @@ Microsoft 标识平台可让开发人员生成面向各种自定义 Microsoft 36
 租户是组织的表示形式。 它是 Azure AD 专用实例，组织或应用开发人员与 Microsoft 建立关系时（例如注册 Azure、Microsoft Intune 或 Microsoft 365）会收到该实例。
 
 每个 Azure AD 租户都与其他 Azure AD 租户不同并单独存在，而且使用自己的工作和学校标识、消费者标识（如果是 Azure AD B2C 租户）以及应用注册进行表示。 租户内部的应用注册只允许从租户或所有租户的帐户中进行身份验证。
+
+## <a name="prerequisites"></a>先决条件
+
+- 具有活动订阅的 Azure 帐户。 [免费创建帐户](https://azure.microsoft.com/free/?WT.mc_id=A261C142F)。
 
 ## <a name="determining-environment-type"></a>确定环境类型
 
@@ -42,7 +47,7 @@ Microsoft 标识平台可让开发人员生成面向各种自定义 Microsoft 36
 
 许多开发人员已通过绑定到 Azure AD 租户的服务或订阅（例如 Microsoft 365 或 Azure 订阅）获得了租户。
 
-1. 要检查租户，请使用要用于管理应用程序的帐户登录 [Azure 门户](https://portal.azure.com)。
+1. 若要检查租户，请使用要用于管理应用程序的帐户登录 <a href="https://portal.azure.com/" target="_blank">Azure 门户<span class="docon docon-navigate-external x-hidden-focus"></span></a>。
 1. 查看右上角。 如果你有一个租户，则会自动登录到该租户，并且帐户名的正下方会显示租户名称。
    * 将鼠标指针悬停在 Azure 门户右上角的帐户名上，可以查看你的姓名、电子邮件、目录/租户 ID (GUID) 以及域。
    * 如果帐户与多个租户相关联，则可以选择帐户名打开一个菜单，并在其中切换租户。 每个租户都有自己的唯一租户 ID。
@@ -50,7 +55,7 @@ Microsoft 标识平台可让开发人员生成面向各种自定义 Microsoft 36
 > [!TIP]
 > 如果需要查找租户 ID，可执行以下操作：
 > * 将鼠标指针悬停在帐户名上以获取目录/租户 ID，或
-> * 在 Azure 门户中选择“Azure Active Directory”>“属性”>“目录 ID”
+> * 在 Azure 门户中搜索并选择“Azure Active Directory”>“属性”>“租户 ID”
 
 如果没有任何与帐户关联的现有租户，则帐户名下面会显示一个 GUID；另外，除非按照下一节的步骤操作，否则无法执行注册应用等操作。
 
@@ -71,6 +76,5 @@ Microsoft 标识平台可让开发人员生成面向各种自定义 Microsoft 36
 
 ## <a name="next-steps"></a>后续步骤
 
-* [注册应用](quickstart-register-app.md)并与 Microsoft 标识平台集成。 
-* 了解[身份验证的基础知识](./authentication-vs-authorization.md)。
-* 若要详细了解订阅和 Azure AD 租户之间的关系，请参阅[将 Azure 订阅关联或添加到 Azure Active Directory 租户](../fundamentals/active-directory-how-subscriptions-associated-directory.md)。
+> [!div class="nextstepaction"]
+> [注册应用](quickstart-register-app.md)以与 Microsoft 标识平台集成。

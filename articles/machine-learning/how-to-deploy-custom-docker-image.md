@@ -1,35 +1,32 @@
 ---
 title: 使用自定义 Docker 映像部署模型
 titleSuffix: Azure Machine Learning
-description: 了解如何在部署 Azure 机器学习模型时使用自定义 Docker 基础映像。 虽然 Azure 机器学习提供了默认的基础映像，但你也可以使用自己的基础映像。
+description: 了解如何使用自定义 Docker 基本映像部署 Azure 机器学习模型。 虽然 Azure 机器学习提供了默认的基础映像，但你也可以使用自己的基础映像。
 services: machine-learning
 ms.service: machine-learning
 ms.subservice: core
-ms.author: jordane
-author: jpe316
+ms.author: sagopal
+author: saachigopal
 ms.reviewer: larryfr
-ms.date: 06/17/2020
+ms.date: 11/16/2020
 ms.topic: conceptual
-ms.custom: how-to, devx-track-python
-ms.openlocfilehash: 76eed22052b8c9fe2cc849e68dd926ef2c85208a
-ms.sourcegitcommit: 7fe8df79526a0067be4651ce6fa96fa9d4f21355
+ms.custom: how-to, devx-track-python, deploy, devx-track-azurecli
+ms.openlocfilehash: 1ff4d7693a7e493ccb736ab9363fd26c93017c79
+ms.sourcegitcommit: e2dc549424fb2c10fcbb92b499b960677d67a8dd
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/06/2020
-ms.locfileid: "87843209"
+ms.lasthandoff: 11/17/2020
+ms.locfileid: "94695344"
 ---
 # <a name="deploy-a-model-using-a-custom-docker-base-image"></a>使用自定义 Docker 基础映像部署模型
-[!INCLUDE [applies-to-skus](../../includes/aml-applies-to-basic-enterprise-sku.md)]
 
 了解如何在使用 Azure 机器学习部署已训练的模型时使用自定义 Docker 基础映像。
 
-将已训练的模型部署到 Web 服务或 IoT 边缘设备时，将创建一个包，其中包含用于处理传入请求的 Web 服务器。
+如果未指定 Docker 基础映像，Azure 机器学习将使用默认的 Docker 基础映像。 可以找到与 `azureml.core.runconfig.DEFAULT_CPU_IMAGE` 一起使用的特定 Docker 映像。 你还可以使用 Azure 机器学习环境来选择特定的基础映像，或者使用自己的基础映像。
 
-Azure 机器学习提供了一个默认的 Docker 基础映像，因此你无需担心创建基础映像的问题。 你还可以使用 Azure 机器学习环境来选择特定的基础映像，或者使用自己的基础映像。
+为部署创建映像时，可以从基础映像着手。 基础映像提供基本的操作系统和组件。 然后，部署过程会将其他组件（如模型、Conda 环境和其他资产）添加到该映像中。
 
-为部署创建映像时，可以从基础映像着手。 基础映像提供基本的操作系统和组件。 然后，部署过程会在部署基础映像之前将其他组件（如模型、Conda 环境和其他资产）添加到该映像中。
-
-一般而言，如果希望使用 Docker 来管理依赖项、对组件版本进行更严格的控制或节省部署时间，则可以创建自定义基础映像。 例如，你可能希望对 Python、Conda 或其他组件的特定版本进行标准化。 你可能还希望安装模型所需的软件，而安装过程需要很长时间。 如果在创建基础映像时安装软件，你就不必为每个部署安装它。
+通常情况下，如果希望使用 Docker 来管理依赖项、对组件版本进行更严格的控制或节省部署时间，则可以创建自定义基础映像。 你可能还希望安装模型所需的软件，而安装过程需要很长时间。 如果在创建基础映像时安装软件，你就不必为每个部署安装它。
 
 > [!IMPORTANT]
 > 部署模型时，不能覆盖核心组件，如 Web 服务器或 IoT Edge 组件。 这些组件提供已知的工作环境并由 Microsoft 进行测试和支持。
@@ -44,12 +41,12 @@ Azure 机器学习提供了一个默认的 Docker 基础映像，因此你无需
 
 ## <a name="prerequisites"></a>先决条件
 
-* Azure 机器学习工作组。 有关详细信息，请参阅[创建工作区](how-to-manage-workspace.md)一文。
-* [Azure 机器学习 SDK](https://docs.microsoft.com/python/api/overview/azure/ml/install?view=azure-ml-py)。 
-* [Azure CLI](https://docs.microsoft.com/cli/azure/install-azure-cli?view=azure-cli-latest)。
+* Azure 机器学习工作区。 有关详细信息，请参阅[创建工作区](how-to-manage-workspace.md)一文。
+* [Azure 机器学习 SDK](/python/api/overview/azure/ml/install?preserve-view=true&view=azure-ml-py)。 
+* [Azure CLI](/cli/azure/install-azure-cli?preserve-view=true&view=azure-cli-latest)。
 * [用于 Azure 机器学习的 CLI 扩展](reference-azure-machine-learning-cli.md)。
-* 可在 Internet 上访问的 [Azure 容器注册表](/azure/container-registry)或其他 Docker 注册表。
-* 本文档中的步骤假设你熟悉如何创建和使用“推理配置”对象作为模型部署的一部分。 有关详细信息，请参阅[部署位置和方式](how-to-deploy-and-where.md)。
+* 可在 Internet 上访问的 [Azure 容器注册表](../container-registry/index.yml)或其他 Docker 注册表。
+* 本文档中的步骤假设你熟悉如何创建和使用“推理配置”对象作为模型部署的一部分。 有关详细信息，请参阅[部署位置及方式](how-to-deploy-and-where.md)。
 
 ## <a name="create-a-custom-base-image"></a>创建自定义基础映像
 
@@ -62,23 +59,41 @@ Azure 机器学习提供了一个默认的 Docker 基础映像，因此你无需
     > [!WARNING]
     > 首次使用工作区训练或部署模型时，将创建工作区的 Azure 容器注册表。 如果你创建了一个新的工作区，但没有训练或创建模型，则该工作区将不存在 Azure 容器注册表。
 
-    有关检索工作区的 Azure 容器注册表名称的信息，请参阅本文的[获取容器注册表名称](#getname)部分。
-
     使用存储在“独立容器注册表”中的映像时，需要配置至少具有读取访问权限的服务主体。 然后向使用注册表中的映像的任何人提供服务主体 ID（用户名）和密码。 但你使容器注册表可公开访问的情况例外。
 
-    有关如何创建专用 Azure 容器注册表的信息，请参阅[创建专用容器注册表](/azure/container-registry/container-registry-get-started-azure-cli)。
+    有关如何创建专用 Azure 容器注册表的信息，请参阅[创建专用容器注册表](../container-registry/container-registry-get-started-azure-cli.md)。
 
-    有关在 Azure 容器注册表中使用服务主体的信息，请参阅[使用服务主体的 Azure 容器注册表身份验证](/azure/container-registry/container-registry-auth-service-principal)。
+    有关在 Azure 容器注册表中使用服务主体的信息，请参阅[使用服务主体的 Azure 容器注册表身份验证](../container-registry/container-registry-auth-service-principal.md)。
 
 * Azure 容器注册表和映像信息：请为需要使用映像的任何人提供映像名。 例如，使用名为 `myimage` 的映像（存储在名为 `myregistry` 的注册表中）进行模型部署时，该映像将被引用为 `myregistry.azurecr.io/myimage`
 
-* 映像要求：Azure 机器学习仅支持提供以下软件的 Docker 映像：
+### <a name="image-requirements"></a>图像要求
 
-    * Ubuntu 16.04 或更高版本。
-    * Conda 4.5.# 或更高版本。
-    * Python 3.5. #、3.6. # 或 3.7. #。
+Azure 机器学习仅支持提供以下软件的 Docker 映像：
+* Ubuntu 16.04 或更高版本。
+* Conda 4.5.# 或更高版本。
+* Python 3.5+。
 
+若要使用数据集，请安装 libfuse-dev 包。 另外，请确保安装你可能需要的所有用户空间包。
+
+Azure ML 会维护一组发布到 Microsoft 容器注册表的 CPU 和 GPU 基础映像，你可以选择利用（或引用）这些映像，而不是创建自己的自定义映像。 若要查看这些映像的 Dockerfile，请参考 [Azure/AzureML-Container](https://github.com/Azure/AzureML-Containers) GitHub 存储库。
+
+对于 GPU 映像，Azure ML 目前同时提供了 cuda9 和 cuda10 基础映像。 这些基础映像中安装的主要依赖项包括：
+
+| 依赖项 | IntelMPI CPU | OpenMPI CPU | IntelMPI GPU | OpenMPI GPU |
+| --- | --- | --- | --- | --- |
+| miniconda | ==4.5.11 | ==4.5.11 | ==4.5.11 | ==4.5.11 |
+| mpi | intelmpi==2018.3.222 |openmpi==3.1.2 |intelmpi==2018.3.222| openmpi==3.1.2 |
+| cuda | - | - | 9.0/10.0 | 9.0/10.0/10.1 |
+| cudnn | - | - | 7.4/7.5 | 7.4/7.5 |
+| nccl | - | - | 2.4 | 2.4 |
+| git | 2.7.4 | 2.7.4 | 2.7.4 | 2.7.4 |
+
+CPU 映像从 ubuntu16.04 生成。 cuda9 的 GPU 映像从 nvidia/cuda:9.0-cudnn7-devel-ubuntu16.04 生成。 cuda10 的 GPU 映像从 nvidia/cuda:10.0-cudnn7-devel-ubuntu16.04 生成。
 <a id="getname"></a>
+
+> [!IMPORTANT]
+> 使用自定义 Docker 映像时，建议固定包版本，以便更好地确保可再现性。
 
 ### <a name="get-container-registry-information"></a>获取容器注册表信息
 
@@ -117,33 +132,43 @@ Azure 机器学习提供了一个默认的 Docker 基础映像，因此你无需
 
 ### <a name="build-a-custom-base-image"></a>生成自定义基础映像
 
-本部分中的步骤将介绍如何在 Azure 容器注册表中创建自定义 Docker 映像。
+本部分中的步骤将介绍如何在 Azure 容器注册表中创建自定义 Docker 映像。 有关示例 dockerfile，请参阅 [Azure/AzureML-Containers](https://github.com/Azure/AzureML-Containers) GitHub 存储库。
 
 1. 创建名为 `Dockerfile` 的新文本文件，并将以下文本用作内容：
 
     ```text
     FROM ubuntu:16.04
 
-    ARG CONDA_VERSION=4.5.12
-    ARG PYTHON_VERSION=3.6
+    ARG CONDA_VERSION=4.7.12
+    ARG PYTHON_VERSION=3.7
+    ARG AZUREML_SDK_VERSION=1.13.0
+    ARG INFERENCE_SCHEMA_VERSION=1.1.0
 
     ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
     ENV PATH /opt/miniconda/bin:$PATH
+    ENV DEBIAN_FRONTEND=noninteractive
 
     RUN apt-get update --fix-missing && \
         apt-get install -y wget bzip2 && \
-        apt-get clean && \
+        apt-get install -y fuse && \
+        apt-get clean -y && \
         rm -rf /var/lib/apt/lists/*
 
+    RUN useradd --create-home dockeruser
+    WORKDIR /home/dockeruser
+    USER dockeruser
+
     RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-${CONDA_VERSION}-Linux-x86_64.sh -O ~/miniconda.sh && \
-        /bin/bash ~/miniconda.sh -b -p /opt/miniconda && \
+        /bin/bash ~/miniconda.sh -b -p ~/miniconda && \
         rm ~/miniconda.sh && \
-        /opt/miniconda/bin/conda clean -tipsy
+        ~/miniconda/bin/conda clean -tipsy
+    ENV PATH="/home/dockeruser/miniconda/bin/:${PATH}"
 
     RUN conda install -y conda=${CONDA_VERSION} python=${PYTHON_VERSION} && \
+        pip install azureml-defaults==${AZUREML_SDK_VERSION} inference-schema==${INFERENCE_SCHEMA_VERSION} &&\
         conda clean -aqy && \
-        rm -rf /opt/miniconda/pkgs && \
-        find / -type d -name __pycache__ -prune -exec rm -rf {} \;
+        rm -rf ~/miniconda/pkgs && \
+        find ~/miniconda/ -type d -name __pycache__ -prune -exec rm -rf {} \;
     ```
 
 2. 在 shell 或命令提示符下，使用以下命令对 Azure 容器注册表进行身份验证。 将 `<registry_name>` 替换为要将映像存储在其中的容器注册表的名称：
@@ -167,15 +192,15 @@ Azure 机器学习提供了一个默认的 Docker 基础映像，因此你无需
     Run ID: cda was successful after 2m56s
     ```
 
-如需深入了解如何使用 Azure 容器注册表生成映像，请参阅[使用 Azure 容器注册表任务](https://docs.microsoft.com/azure/container-registry/container-registry-quickstart-task-cli)生成和运行容器映像
+如需深入了解如何使用 Azure 容器注册表生成映像，请参阅[使用 Azure 容器注册表任务](../container-registry/container-registry-quickstart-task-cli.md)生成和运行容器映像
 
-如需深入了解如何将现有映像上传到 Azure 容器注册表，请参阅[将首个映像推送到专用 Docker 容器注册表](/azure/container-registry/container-registry-get-started-docker-cli)。
+如需深入了解如何将现有映像上传到 Azure 容器注册表，请参阅[将首个映像推送到专用 Docker 容器注册表](../container-registry/container-registry-get-started-docker-cli.md)。
 
 ## <a name="use-a-custom-base-image"></a>使用自定义基础映像
 
 若要使用自定义映像，需要以下信息：
 
-* 映像名称。 例如，`mcr.microsoft.com/azureml/o16n-sample-user-base/ubuntu-miniconda:latest` 是 Microsoft 提供的基础 Docker 映像的路径。
+* 映像名称。 例如，`mcr.microsoft.com/azureml/o16n-sample-user-base/ubuntu-miniconda:latest` 是 Microsoft 提供的简单 Docker 映像的路径。
 
     > [!IMPORTANT]
     > 对于已创建的自定义映像，请确保包含用于该映像的任何标记。 例如，如果映像是使用特定标记（如 `:v1`）创建的。 如果创建映像时未使用特定标记，则应用标记 `:latest`。
@@ -193,11 +218,11 @@ Microsoft 在可公开访问的存储库中提供了多个 docker 映像，可�
 
 | 映像 | 说明 |
 | ----- | ----- |
-| `mcr.microsoft.com/azureml/o16n-sample-user-base/ubuntu-miniconda` | Azure 机器学习的基础映像 |
+| `mcr.microsoft.com/azureml/o16n-sample-user-base/ubuntu-miniconda` | Azure 机器学习的核心映像 |
 | `mcr.microsoft.com/azureml/onnxruntime:latest` | 包含用于 CPU 推理的 ONNX 运行时 |
 | `mcr.microsoft.com/azureml/onnxruntime:latest-cuda` | 包含用于 GPU 的 ONNX 运行时和 CUDA |
 | `mcr.microsoft.com/azureml/onnxruntime:latest-tensorrt` | 包含用于 GPU 的 ONNX 运行时和 TensorRT |
-| `mcr.microsoft.com/azureml/onnxruntime:latest-openvino-vadm ` | 包含用于基于 Movidius<sup>TM</sup> MyriadX VPU 的 Intel<sup></sup> Vision Accelerator Design 的 ONNX 运行时和 OpenVINO |
+| `mcr.microsoft.com/azureml/onnxruntime:latest-openvino-vadm` | 包含用于基于 Movidius<sup>TM</sup> MyriadX VPU 的 Intel<sup></sup> Vision Accelerator Design 的 ONNX 运行时和 OpenVINO |
 | `mcr.microsoft.com/azureml/onnxruntime:latest-openvino-myriad` | 包含用于 Intel<sup></sup> Movidius<sup>TM</sup> U 盘的 ONNX 运行时和 OpenVINO |
 
 有关 ONNX 运行时基础映像的更多信息，请参阅 GitHub 存储库中的 [ONNX 运行时 dockerfile 部分](https://github.com/microsoft/onnxruntime/blob/master/dockerfiles/README.md)。
@@ -209,7 +234,7 @@ Microsoft 在可公开访问的存储库中提供了多个 docker 映像，可�
 
 ### <a name="use-an-image-with-the-azure-machine-learning-sdk"></a>将映像与 Azure 机器学习 SDK 结合使用
 
-若要使用存储在工作区的 Azure 容器注册表中的映像，或使用存储在可公开访问的容器注册表中的映像，请设置以下[环境](https://docs.microsoft.com/python/api/azureml-core/azureml.core.environment.environment?view=azure-ml-py)属性 ：
+若要使用存储在工作区的 Azure 容器注册表中的映像，或使用存储在可公开访问的容器注册表中的映像，请设置以下[环境](/python/api/azureml-core/azureml.core.environment.environment?preserve-view=true&view=azure-ml-py)属性 ：
 
 + `docker.enabled=True`
 + `docker.base_image`：设置为注册表和映像的路径。
@@ -243,7 +268,7 @@ myenv.python.conda_dependencies=conda_dep
 
 必须添加版本 >= 1.0.45 的 azureml-defaults 作为 pip 依赖项。 此包包含将模型作为 Web 服务托管时所需的功能。 还必须将环境的 inferencing_stack_version 属性设置为“latest”，这将安装 Web 服务所需的特定 apt 包。 
 
-定义环境后，将其与 [InferenceConfig](https://docs.microsoft.com/python/api/azureml-core/azureml.core.model.inferenceconfig?view=azure-ml-py) 对象一起使用，以定义模型和 Web 服务将在其中运行的推理环境。
+定义环境后，将其与 [InferenceConfig](/python/api/azureml-core/azureml.core.model.inferenceconfig?preserve-view=true&view=azure-ml-py) 对象一起使用，以定义模型和 Web 服务将在其中运行的推理环境。
 
 ```python
 from azureml.core.model import InferenceConfig
@@ -272,7 +297,7 @@ print(service.state)
 > [!IMPORTANT]
 > 目前，机器学习 CLI 可以使用来自工作区的 Azure 容器注册表或可公开访问的存储库的映像。 而不能使用来自独立的专用注册表的映像。
 
-使用机器学习 CLI 部署模型之前，请创建一个使用自定义映像的[环境](https://docs.microsoft.com/python/api/azureml-core/azureml.core.environment.environment?view=azure-ml-py)。 然后创建引用该环境的推理配置文件。 也可以在推理配置文件中直接定义环境。 下面的 JSON 文档演示了如何在公共容器注册表中引用映像。 在本示例中，以内联方式定义环境：
+使用机器学习 CLI 部署模型之前，请创建一个使用自定义映像的[环境](/python/api/azureml-core/azureml.core.environment.environment?preserve-view=true&view=azure-ml-py)。 然后创建引用该环境的推理配置文件。 也可以在推理配置文件中直接定义环境。 下面的 JSON 文档演示了如何在公共容器注册表中引用映像。 在本示例中，以内联方式定义环境：
 
 ```json
 {
@@ -329,4 +354,4 @@ az ml model deploy -n myservice -m mymodel:1 --ic inferenceconfig.json --dc depl
 ## <a name="next-steps"></a>后续步骤
 
 * 详细了解[部署位置和方式](how-to-deploy-and-where.md)。
-* 了解如何[使用 Azure Pipelines 训练和部署机器学习模型](/azure/devops/pipelines/targets/azure-machine-learning?view=azure-devops)。
+* 了解如何[使用 Azure Pipelines 训练和部署机器学习模型](/azure/devops/pipelines/targets/azure-machine-learning?view=azure-devops&preserve-view=true)。

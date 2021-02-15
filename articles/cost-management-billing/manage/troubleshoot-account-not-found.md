@@ -5,15 +5,16 @@ author: amberbhargava
 ms.reviewer: banders
 tags: billing
 ms.service: cost-management-billing
+ms.subservice: billing
 ms.topic: conceptual
-ms.date: 06/24/2020
+ms.date: 08/20/2020
 ms.author: banders
-ms.openlocfilehash: 671189a6a328a77653b61542e3e30c848a75cb65
-ms.sourcegitcommit: f98ab5af0fa17a9bba575286c588af36ff075615
+ms.openlocfilehash: 71561f6ecdde09f259e54260e7bab4dcc0e85c98
+ms.sourcegitcommit: 33368ca1684106cb0e215e3280b828b54f7e73e8
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 06/25/2020
-ms.locfileid: "85364251"
+ms.lasthandoff: 10/16/2020
+ms.locfileid: "92132629"
 ---
 # <a name="troubleshoot-viewing-your-billing-account-in-the-azure-portal"></a>在 Azure 门户中查看计费帐户时遇到问题
 
@@ -58,7 +59,7 @@ ms.locfileid: "85364251"
 
 阅读以下计费和订阅文章以帮助解决问题。
 
-- [银行卡被拒绝](https://docs.microsoft.com/azure/cost-management-billing/manage/troubleshoot-declined-card)
-- [订阅登录问题](https://docs.microsoft.com/azure/cost-management-billing/manage/troubleshoot-sign-in-issue)
-- [找不到任何订阅](https://docs.microsoft.com/azure/cost-management-billing/manage/no-subscriptions-found)
-- [企业成本视图已禁用](https://docs.microsoft.com/azure/cost-management-billing/manage/enterprise-mgmt-grp-troubleshoot-cost-view)
+- [银行卡被拒绝](./troubleshoot-declined-card.md)
+- [订阅登录问题](./troubleshoot-sign-in-issue.md)
+- [找不到任何订阅](./no-subscriptions-found.md)
+- [企业成本视图已禁用](./enterprise-mgmt-grp-troubleshoot-cost-view.md)

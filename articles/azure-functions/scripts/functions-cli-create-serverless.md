@@ -1,31 +1,31 @@
 ---
 title: 使用 Azure CLI 创建无服务器函数应用
-description: 使用 Azure CLI 在 Azure 中创建可无服务器执行的函数应用
+description: 使用 Azure CLI 在 Azure 中创建可无服务器执行的函数应用。
 ms.assetid: 0e221db6-ee2d-4e16-9bf6-a456cd05b6e7
 ms.topic: sample
 ms.date: 07/03/2018
 ms.author: glenga
 ms.custom: mvc, devx-track-azurecli
-ms.openlocfilehash: f94048014f18c584637b9863bb59982f9143661e
-ms.sourcegitcommit: 11e2521679415f05d3d2c4c49858940677c57900
+ms.openlocfilehash: 3a52d7ea8c940a33f4fbd2b9ad69f4f889615e7f
+ms.sourcegitcommit: 2aa52d30e7b733616d6d92633436e499fbe8b069
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/31/2020
-ms.locfileid: "87498236"
+ms.lasthandoff: 01/06/2021
+ms.locfileid: "97934333"
 ---
 # <a name="create-a-function-app-for-serverless-code-execution"></a>创建适合无服务器代码执行的函数应用 
 
-此 Azure Functions 示例脚本将创建一个函数应用，作为函数的容器。 将使用[消耗计划](../functions-scale.md#consumption-plan)创建最适合事件驱动无服务器工作负荷的函数应用。
+此 Azure Functions 示例脚本将创建一个函数应用，作为函数的容器。 将使用[消耗计划](../consumption-plan.md)创建最适合事件驱动无服务器工作负荷的函数应用。
 
 [!INCLUDE [quickstarts-free-trial-note](../../../includes/quickstarts-free-trial-note.md)]
 
-[!INCLUDE [cloud-shell-try-it.md](../../../includes/cloud-shell-try-it.md)]
+[!INCLUDE [azure-cli-prepare-your-environment.md](../../../includes/azure-cli-prepare-your-environment.md)]
 
-如果选择在本地安装并使用 CLI，本文要求运行 Azure CLI 2.0 版或更高版本。 运行 `az --version` 即可查找版本。 如需进行安装或升级，请参阅[安装 Azure CLI]( /cli/azure/install-azure-cli)。 
+ - 本教程需要 Azure CLI 版本 2.0 或更高版本。 如果使用 Azure Cloud Shell，则最新版本已安装。 
 
 ## <a name="sample-script"></a>示例脚本
 
-此脚本使用[消耗计划](../functions-scale.md#consumption-plan)创建 Azure 函数应用。
+此脚本使用[消耗计划](../consumption-plan.md)创建 Azure 函数应用。
 
 [!code-azurecli-interactive[main](../../../cli_scripts/azure-functions/create-function-app-consumption/create-function-app-consumption.sh "Create an Azure Function on a Consumption plan")]
 

@@ -3,23 +3,25 @@ title: Azure 媒体服务中的配额和限制
 description: 本主题介绍 Microsoft Azure 媒体服务中的配额和限制。
 services: media-services
 documentationcenter: ''
-author: Juliako
+author: IngridAtMicrosoft
 manager: femila
 editor: ''
 ms.service: media-services
 ms.workload: ''
 ms.topic: article
-ms.date: 04/01/2020
-ms.author: juliako
-ms.openlocfilehash: c2845cd0fad8375db67d1aa86333f144222dc0aa
-ms.sourcegitcommit: cee72954f4467096b01ba287d30074751bcb7ff4
+ms.date: 10/23/2020
+ms.author: inhenkel
+ms.openlocfilehash: d6ca7a444f2a3d4babe220548edb10bd37784be7
+ms.sourcegitcommit: 4cb89d880be26a2a4531fedcc59317471fe729cd
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/30/2020
-ms.locfileid: "87446334"
+ms.lasthandoff: 10/27/2020
+ms.locfileid: "92678118"
 ---
 <!-- If you update limits in this topic, make sure to also update https://docs.microsoft.com/azure/azure-resource-manager/management/azure-subscription-service-limits#media-services-limits -->
 # <a name="azure-media-services-quotas-and-limits"></a>Azure 媒体服务的配额和限制
+
+[!INCLUDE [media services api v3 logo](./includes/v3-hr.md)]
 
 本文列出了一些最常见的 Microsoft Azure 媒体服务限制，有时也称为配额。
 
@@ -30,7 +32,7 @@ ms.locfileid: "87446334"
 
 | 资源 | 默认限制 |
 | --- | --- |
-| 单个订阅中的[媒体服务帐户数](media-services-account-concept.md) | 25（固定） |
+| 单个订阅中的[媒体服务帐户数](media-services-account-concept.md) | 100 (固定)  |
 
 ## <a name="asset-limits"></a>资产限制
 
@@ -88,7 +90,7 @@ ms.locfileid: "87446334"
 
 | 资源 | 默认限制 |
 | --- | --- |
-| 每个媒体服务帐户的[流式处理终结点数](streaming-endpoint-concept.md)（“已停止的”或“正在运行的”）|2 |
+| 每个媒体服务帐户的[流式处理终结点数](streaming-endpoint-concept.md)（“已停止的”或“正在运行的”） | 2 |
 | 高级流式处理单元 | 10 |
 | [动态清单筛选器数](filters-dynamic-manifest-overview.md)|100|
 | [流式处理策略](streaming-policy-concept.md) | 100 <sup>(6)</sup> |
@@ -100,9 +102,9 @@ ms.locfileid: "87446334"
 
 ## <a name="protection-limits"></a>保护限制
 
-| 资源 | 默认限制 | 
-| --- | --- | 
-| 每个[内容密钥策略](content-key-policy-concept.md)的选项 |30 | 
+| 资源 | 默认限制 |
+| --- | --- |
+| 每个[内容密钥策略](content-key-policy-concept.md)的选项 |30 |
 | 每个帐户的媒体服务密钥交付服务上每种 DRM 类型的每月许可证数|1,000,000|
 
 ## <a name="support-ticket"></a>支持票证

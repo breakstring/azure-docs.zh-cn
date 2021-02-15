@@ -7,12 +7,12 @@ ms.service: application-gateway
 ms.topic: conceptual
 ms.date: 04/27/2020
 ms.author: absha
-ms.openlocfilehash: fb5196f9612cb4ce1f0a49be8b5a76f6703fdab6
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 7c5b4f0d5d4b153684683963c56b7506e76d963e
+ms.sourcegitcommit: 1f1d29378424057338b246af1975643c2875e64d
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "85248664"
+ms.lasthandoff: 02/05/2021
+ms.locfileid: "99575647"
 ---
 # <a name="rewrite-http-headers-with-application-gateway"></a>重写应用程序网关的 HTTP 标头
 
@@ -22,7 +22,7 @@ HTTP 标头可让客户端和服务器连同请求或响应一起传递附加的
 
 当请求和响应数据包在客户端与后端池之间移动时，可以通过应用程序网关添加、删除或更新 HTTP 请求和响应标头。 还可以通过它来添加条件，确保只有在满足特定条件的情况下才能重写指定标头。
 
-应用程序网关还支持多个[服务器变量](https://docs.microsoft.com/azure/application-gateway/rewrite-http-headers#server-variables)，这些变量可帮助你存储有关请求和响应的附加信息。 这样，你就可以更轻松地创建强大的重写规则。
+应用程序网关还支持多个[服务器变量](#server-variables)，这些变量可帮助你存储有关请求和响应的附加信息。 这样，你就可以更轻松地创建强大的重写规则。
 
 > [!NOTE]
 >
@@ -49,14 +49,14 @@ HTTP 标头可让客户端和服务器连同请求或响应一起传递附加的
 使用重写操作指定要重写的请求和响应标头，以及标头的新值。 可以创建新标头、修改现有标头的值，或删除现有标头。 新标头或现有标头的值可设置为以下类型的值：
 
 - 文本。
-- 请求标头。 若要指定请求标头，需使用语法 {http_req_*headerName*}。
-- 响应标头。 若要指定响应标头，需使用语法 {http_resp_*headerName*}。
-- 服务器变量。 若要指定服务器变量，需使用语法 {var_*serverVariable*}。
+- 请求标头。 若要指定请求标头，需使用语法 {http_req_ *headerName*}。
+- 响应标头。 若要指定响应标头，需使用语法 {http_resp_ *headerName*}。
+- 服务器变量。 若要指定服务器变量，需使用语法 {var_ *serverVariable*}。
 - 文本、请求标头、响应标头和服务器变量的组合。
 
 ## <a name="server-variables"></a>服务器变量
 
-应用程序网关使用服务器变量来存储有关服务器、与客户端建立的连接以及对连接的当前请求的有用信息。 例如，存储的信息包括客户端的 IP 地址和 Web 浏览器类型。 服务器变量会动态更改，例如，加载新页或发布表单时就会更改。 可以使用这些变量来评估重写条件和重写标头。 若要使用服务器变量的值重写标头，需要在语法 {var_*serverVariable*} 中指定这些变量
+应用程序网关使用服务器变量来存储有关服务器、与客户端建立的连接以及对连接的当前请求的有用信息。 例如，存储的信息包括客户端的 IP 地址和 Web 浏览器类型。 服务器变量会动态更改，例如，加载新页或发布表单时就会更改。 可以使用这些变量来评估重写条件和重写标头。 若要使用服务器变量的值重写标头，需要在语法 {var_ *serverVariable*} 中指定这些变量
 
 应用程序网关支持以下服务器变量：
 
@@ -69,21 +69,21 @@ HTTP 标头可让客户端和服务器连同请求或响应一起传递附加的
 | client_port                | 客户端端口。                                                  |
 | client_tcp_rtt             | 有关客户端 TCP 连接的信息。 在支持 TCP_INFO 套接字选项的系统上可用。 |
 | client_user                | 使用 HTTP 身份验证时提供用于身份验证的用户名。 |
-| host                       | 按此优先顺序排列：请求行中的主机名、Host 请求标头字段中的主机名，或与请求匹配的服务器名称。 示例：在请求 http://contoso.com:8080/article.aspx?id=123&title=fabrikam 中，主机值将为 contoso.com  |
-| cookie_*name*              | *name* Cookie。                                            |
+| host                       | 按此优先顺序排列：请求行中的主机名、Host 请求标头字段中的主机名，或与请求匹配的服务器名称。 示例：在请求中 `http://contoso.com:8080/article.aspx?id=123&title=fabrikam` ，主机值将为 *contoso.com* |
+| cookie_ *name*              | *name* Cookie。                                            |
 | http_method                | 用于发出 URL 请求的方法。 例如 GET 或 POST。 |
 | http_status                | 会话状态。 例如 200、400 或 403。                       |
 | http_version               | 请求协议。 通常为 HTTP/1.0、HTTP/1.1 或 HTTP/2.0。 |
-| query_string               | 请求的 URL 中“?”后面的变量/值对列表。 示例：在请求 http://contoso.com:8080/article.aspx?id=123&title=fabrikam 中，query_string 值将为 id=123&title=fabrikam  |
+| query_string               | 请求的 URL 中“?”后面的变量/值对列表。 示例：在请求中 `http://contoso.com:8080/article.aspx?id=123&title=fabrikam` ，query_string 值将为 *id = 123&title = fabrikam* |
 | received_bytes             | 请求的长度（包括请求行、标头和请求正文）。 |
 | request_query              | 请求行中的参数。                                |
 | request_scheme             | 请求方案：http 或 https。                            |
-| request_uri                | 完整的原始请求 URI（带参数）。 示例：在请求 http://contoso.com:8080/article.aspx?id=123&title=fabrikam 中，request_uri 值将为 /article.aspx?id=123&title=fabrikam    |
+| request_uri                | 完整的原始请求 URI（带参数）。 示例：在请求中 `http://contoso.com:8080/article.aspx?id=123&title=fabrikam` ，request_uri 值将为 */article.aspx？ id = 123&title = fabrikam*   |
 | sent_bytes                 | 发送到客户端的字节数。                             |
 | server_port                | 接受请求的服务器端口。                 |
 | ssl_connection_protocol    | 已建立的 TLS 连接的协议。        |
 | ssl_enabled                | 如果连接在 TLS 模式下建立，则为“On”。 否则为空字符串。 |
-| uri_path                   | 标识 Web 客户端要访问的主机中的特定资源。 这是请求 URI 中没有参数的部分。 示例：在请求 http://contoso.com:8080/article.aspx?id=123&title=fabrikam 中，uri_path 值将为 /article.aspx   |
+| uri_path                   | 标识 Web 客户端要访问的主机中的特定资源。 这是请求 URI 中没有参数的部分。 示例：在请求中 `http://contoso.com:8080/article.aspx?id=123&title=fabrikam` ，uri_path 值将为 */article.aspx*  |
 
 ## <a name="rewrite-configuration"></a>重写配置
 
@@ -121,11 +121,11 @@ HTTP 标头可让客户端和服务器连同请求或响应一起传递附加的
 
 ### <a name="modify-a-redirection-url"></a>修改重定向 URL
 
-当后端应用程序发送重定向响应时，你可能希望将客户端重定向到不同的 URL，而不是后端应用程序指定的 URL。 例如，当应用服务托管在应用程序网关后面，并要求客户端重定向到其相对路径时，你可能希望这样做。 （例如，从 contoso.azurewebsites.net/path1 重定向到 contoso.azurewebsites.net/path2。）
+当后端应用程序发送重定向响应时，你可能希望将客户端重定向到不同的 URL，而不是后端应用程序指定的 URL。 例如，当应用服务托管在应用程序网关后面，并要求客户端重定向到其相对路径时，你可能希望这样做。  (例如，从 contoso.azurewebsites.net/path1 重定向到 contoso.azurewebsites.net/path2。 ) 
 
-由于应用服务是多租户服务，因此它会使用请求中的主机标头将请求路由到正确的终结点。 应用服务的默认域名为 *. azurewebsites.net （例如 contoso.azurewebsites.net），不同于应用程序网关的域名（例如，contoso.com）。 因为来自客户端的原始请求将应用程序网关的域名（contoso.com）作为主机名，所以，应用程序网关会将主机名更改为 contoso.azurewebsites.net。 做出此更改的目的是使应用服务能够将请求路由到正确的终结点。
+由于应用服务是多租户服务，因此它会使用请求中的主机标头将请求路由到正确的终结点。 应用服务的默认域名为 *. azurewebsites.net (说 contoso.azurewebsites.net) 不同于应用程序网关的域名 (说 contoso.com) 。 由于客户端的原始请求具有应用程序网关的域名 (contoso.com) 作为主机名，因此应用程序网关会将主机名更改为 contoso.azurewebsites.net。 做出此更改的目的是使应用服务能够将请求路由到正确的终结点。
 
-当应用服务发送重定向响应时，它会在其响应的位置标头中，使用它从应用程序网关收到的请求中的相同主机名。 因此，客户端将直接向 contoso.azurewebsites.net/path2 发出请求，而不是通过应用程序网关（contoso.com/path2）。 不应该绕过应用程序网关。
+当应用服务发送重定向响应时，它会在其响应的位置标头中，使用它从应用程序网关收到的请求中的相同主机名。 因此，客户端将直接向 contoso.azurewebsites.net/path2 发出请求，而不是通过应用程序网关 (contoso.com/path2) 。 不应该绕过应用程序网关。
 
 将 location 标头中的主机名设置为应用程序网关的域名即可解决此问题。
 
@@ -168,5 +168,5 @@ HTTP 标头可让客户端和服务器连同请求或响应一起传递附加的
 
 若要了解如何重写 HTTP 标头，请参阅：
 
-- [使用 Azure 门户重写 HTTP 标头](https://docs.microsoft.com/azure/application-gateway/rewrite-http-headers-portal)
+- [使用 Azure 门户重写 HTTP 标头](./rewrite-http-headers-portal.md)
 - [使用 Azure PowerShell 重写 HTTP 标头](add-http-header-rewrite-rule-powershell.md)

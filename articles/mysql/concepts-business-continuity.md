@@ -1,17 +1,17 @@
 ---
-title: 业务连续性-Azure Database for MySQL
+title: 业务连续性 - Azure Database for MySQL
 description: 使用 Azure Database for MySQL 服务时，了解业务连续性（时间点还原、数据中心服务中断、异地还原）。
-author: ajlam
-ms.author: andrela
+author: savjani
+ms.author: pariks
 ms.service: mysql
 ms.topic: conceptual
 ms.date: 7/7/2020
-ms.openlocfilehash: 74fdfb9f3a3f59f55b0f0ed4865601c0ddb7b7f2
-ms.sourcegitcommit: dabd9eb9925308d3c2404c3957e5c921408089da
+ms.openlocfilehash: 15fde6e7558c685537d36f45bcc7e3ff341544ff
+ms.sourcegitcommit: 6ab718e1be2767db2605eeebe974ee9e2c07022b
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/11/2020
-ms.locfileid: "86241958"
+ms.lasthandoff: 11/12/2020
+ms.locfileid: "94542487"
 ---
 # <a name="understand-business-continuity-in-azure-database-for-mysql"></a>了解 Azure Database for MySQL 中的业务连续性
 
@@ -19,7 +19,7 @@ ms.locfileid: "86241958"
 
 ## <a name="features-that-you-can-use-to-provide-business-continuity"></a>可用来提供业务连续性的功能
 
-Azure Database for MySQL 提供了业务连续性功能，这包括自动备份和允许用户启动异地还原的功能。 每种功能在估计恢复时间 (ERT) 和可能丢失的数据方面都有不同的特性。 了解这些选项后，便可从中进行选择，可以针对不同方案将其搭配使用。 制定业务连续性计划时，需了解应用程序在破坏性事件发生后完全恢复前的最大可接受时间，即恢复时间目标 (RTO)。 此外，还需要了解从破坏性事件恢复时，应用程序可忍受丢失的最近数据更新（时间间隔）最大数量，即恢复点目标 (RPO)。
+Azure Database for MySQL 提供了业务连续性功能，这包括自动备份和允许用户启动异地还原的功能。 每种功能在估计恢复时间 (ERT) 和可能丢失的数据方面都有不同的特性。 估计的恢复时间 (ERT) 是指从发出还原/故障转移请求开始，到数据库恢复完全正常运行所需的估计持续时间。 了解这些选项后，便可从中进行选择，可以针对不同方案将其搭配使用。 制定业务连续性计划时，需了解应用程序在破坏性事件发生后完全恢复前的最大可接受时间，即恢复时间目标 (RTO)。 此外，还需要了解从破坏性事件恢复时，应用程序可忍受丢失的最近数据更新（时间间隔）最大数量，即恢复点目标 (RPO)。
 
 下表比较了各种可用功能的 ERT 和 RPO：
 
@@ -29,7 +29,7 @@ Azure Database for MySQL 提供了业务连续性功能，这包括自动备份�
 | 从异地复制的备份执行异地还原 | 不支持 | ERT < 12 小时<br/>RPO < 1 小时 | ERT < 12 小时<br/>RPO < 1 小时 |
 
 > [!IMPORTANT]
-> 已删除的服务器**无法**还原。 如果删除服务器，则属于该服务器的所有数据库也会被删除且不可恢复。
+> 已删除的服务器 **无法** 还原。 如果删除服务器，则属于该服务器的所有数据库也会被删除且不可恢复。
 
 ## <a name="recover-a-server-after-a-user-or-application-error"></a>在发生用户或应用程序错误之后恢复服务器
 
@@ -50,11 +50,11 @@ Azure 数据中心会罕见地发生中断。 发生中断时，可能仅导致�
 
 ## <a name="cross-region-read-replicas"></a>跨区域只读副本
 
-可以使用跨区域只读副本来增强业务连续性和灾难恢复规划。 使用 MySQL 的二进制日志复制技术异步更新读取副本。 从[只读副本概念文章](concepts-read-replicas.md)详细了解有关只读副本、可用区域以及如何进行故障转移的信息。 
+可以使用跨区域只读副本来增强业务连续性和灾难恢复规划。 只读副本使用 MySQL 的二进制日志复制技术进行异步更新。 从[只读副本概念文章](concepts-read-replicas.md)详细了解有关只读副本、可用区域以及如何进行故障转移的信息。 
 
 ## <a name="faq"></a>常见问题解答
 ### <a name="where-does-azure-database-for-mysql-store-customer-data"></a>Azure Database for MySQL 将客户数据存储在何处？
-默认情况下，Azure Database for MySQL 不会将客户数据从其部署到的区域中移出或存储。 但是，客户可以选择启用[异地冗余备份](concepts-backup.md#backup-redundancy-options)，或创建[跨区域读取副本](concepts-read-replicas.md#cross-region-replication)以便将数据存储在另一个区域中。
+默认情况下，Azure Database for MySQL 不会将客户数据移出部署的区域或存储到部署区域以外的区域。 但是，客户可以选择启用[地域冗余备份](concepts-backup.md#backup-redundancy-options)或创建[跨区域读取副本](concepts-read-replicas.md#cross-region-replication)，以便在另一个区域存储数据。
 
 ## <a name="next-steps"></a>后续步骤
 

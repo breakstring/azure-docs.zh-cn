@@ -1,19 +1,16 @@
 ---
 title: 使用 SSH 隧道访问 Azure HDInsight
 description: 了解如何使用 SSH 隧道来安全浏览基于 Linux 的 HDInsight 节点上托管的 Web 资源。
-author: hrasheed-msft
-ms.author: hrasheed
-ms.reviewer: jasonh
 ms.service: hdinsight
 ms.topic: how-to
 ms.custom: hdinsightactive
 ms.date: 04/14/2020
-ms.openlocfilehash: 09fef350a0ff8cc8c2481acd7b8f74cee15d1b9d
-ms.sourcegitcommit: 124f7f699b6a43314e63af0101cd788db995d1cb
+ms.openlocfilehash: 5bbc770fa6ae5ac69b2aa939f9d2c70bb01f5403
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/08/2020
-ms.locfileid: "86075546"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98945289"
 ---
 # <a name="use-ssh-tunneling-to-access-apache-ambari-web-ui-jobhistory-namenode-apache-oozie-and-other-uis"></a>使用 SSH 隧道访问 Apache Ambari Web UI、JobHistory、NameNode、Apache Oozie 和其他 UI
 
@@ -79,11 +76,11 @@ ssh -C2qTnNf -D 9876 sshuser@CLUSTERNAME-ssh.azurehdinsight.net
 
 ## <a name="create-a-tunnel-using-putty"></a><a name="useputty"></a>使用 PuTTY 创建隧道
 
-[PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty) 是适用于 Windows 的图形 SSH 客户端。 如果你不熟悉 PuTTY，请参阅[PuTTY 文档](https://www.chiark.greenend.org.uk/~sgtatham/putty/docs.html)。 执行以下步骤可使用 PuTTY 创建 SSH 隧道：
+[PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty) 是适用于 Windows 的图形 SSH 客户端。 如果你不熟悉 PuTTY，请参阅 [PuTTY 文档](https://www.chiark.greenend.org.uk/~sgtatham/putty/docs.html)。 执行以下步骤可使用 PuTTY 创建 SSH 隧道：
 
 ### <a name="create-or-load-a-session"></a>创建或加载会话
 
-1. 打开 PuTTY，并确保在左侧菜单中选择“会话”。 如果已保存会话，请从 "**保存的会话**" 列表中选择会话名称，然后选择 "**加载**"。
+1. 打开 PuTTY，并确保在左侧菜单中选择“会话”。 如果已保存会话，请从 " **保存的会话** " 列表中选择会话名称，然后选择 " **加载**"。
 
 1. 如果你没有已保存的会话，请输入你的连接信息：
 

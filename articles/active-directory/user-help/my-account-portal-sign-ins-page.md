@@ -9,14 +9,14 @@ ms.service: active-directory
 ms.workload: identity
 ms.subservice: user-help
 ms.topic: end-user-help
-ms.date: 08/03/2020
+ms.date: 01/19/2021
 ms.author: curtand
-ms.openlocfilehash: d9023579b6627e9dab9feac8dfaccd94dc9f5c12
-ms.sourcegitcommit: c5021f2095e25750eb34fd0b866adf5d81d56c3a
+ms.openlocfilehash: 1062c8dfe416af2d39063bf71f39d52e151e28d3
+ms.sourcegitcommit: 24f30b1e8bb797e1609b1c8300871d2391a59ac2
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/25/2020
-ms.locfileid: "88798119"
+ms.lasthandoff: 02/10/2021
+ms.locfileid: "100096066"
 ---
 # <a name="view-and-search-your-recent-sign-in-activity-from-the-my-sign-ins-page"></a>从 "我的登录" 页查看和搜索最近的登录活动
 
@@ -25,6 +25,12 @@ ms.locfileid: "88798119"
 - 是否有人尝试破解你的密码。
 - 是否有攻击者成功登录你的帐户以及登录位置。
 - 攻击者尝试访问的应用。
+
+>[!Note]
+> 如果你在使用个人 Microsoft 帐户登录时遇到错误，你仍可以使用组织的域名 (例如，你可以通过以下 Url 之一中的管理员使用你的组织的域名例如 contoso.com) 或你的组织的 **租户 ID** ：
+>
+>   - https://myaccount.microsoft.com?tenantId=*your_domain_name*
+>   - https://myaccount.microsoft.com?tenant=*your_tenant_ID*
 
 ## <a name="view-your-recent-sign-in-activity"></a>查看近期的登录活动
 
@@ -46,7 +52,7 @@ ms.locfileid: "88798119"
 
 ### <a name="if-you-see-an-unsuccessful-sign-in"></a>如果你看到 "登录失败"
 
-如果你看到登录失败，这可能意味着你键入了错误的凭据。 这也可能表示攻击者试图猜测密码。 若要应对此风险，无需更改密码，但建议注册 Azure 多重身份验证 (MFA) 。 使用多重身份验证，即使黑客推测了密码，也不能访问帐户。
+如果你看到登录失败，这可能意味着你键入了错误的凭据。 这也可能表示攻击者试图猜测密码。 若要应对此风险，无需更改密码，但建议 (MFA) 注册 Azure AD 多重身份验证。 使用多重身份验证，即使黑客推测了密码，也不能访问帐户。
 
 ![不成功的登录磁贴](media/my-account-portal-sign-ins-page/unsuccessful.png)
 

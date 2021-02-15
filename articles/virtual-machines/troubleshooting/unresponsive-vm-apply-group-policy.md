@@ -14,12 +14,12 @@ ms.tgt_pltfrm: na
 ms.topic: troubleshooting
 ms.date: 05/07/2020
 ms.author: v-mibufo
-ms.openlocfilehash: cbf2fe491e1fe0b553eab04ca7190da0413a3ba6
-ms.sourcegitcommit: 3543d3b4f6c6f496d22ea5f97d8cd2700ac9a481
+ms.openlocfilehash: 7160ec9564ede21eab0a205b2d66a7d566639506
+ms.sourcegitcommit: 484f510bbb093e9cfca694b56622b5860ca317f7
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/20/2020
-ms.locfileid: "86526004"
+ms.lasthandoff: 01/21/2021
+ms.locfileid: "98632650"
 ---
 # <a name="vm-is-unresponsive-when-applying-group-policy-local-users-and-groups-policy"></a>应用“组策略本地用户和组”策略时，VM 无响应
 
@@ -47,6 +47,9 @@ ms.locfileid: "86526004"
 ## <a name="resolution"></a>解决方法
 
 ### <a name="process-overview"></a>过程概述
+
+> [!TIP]
+> 如果你有 VM 的最新备份，则可以尝试 [从备份还原 vm](../../backup/backup-azure-arm-restore-vms.md) ，以解决启动问题。
 
 1. [创建和访问修复 VM](#step-1-create-and-access-a-repair-vm)
 1. [禁用策略](#step-2-disable-the-policy)

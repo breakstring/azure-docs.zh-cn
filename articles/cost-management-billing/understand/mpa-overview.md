@@ -4,15 +4,16 @@ description: 了解 Microsoft 合作伙伴协议计费帐户 (CSP)
 author: bandersmsft
 ms.reviewer: amberb
 ms.service: cost-management-billing
+ms.subservice: billing
 ms.topic: conceptual
-ms.date: 02/13/2020
+ms.date: 08/20/2020
 ms.author: banders
-ms.openlocfilehash: 45dbf43966b71d7db7ada8be7704f6b3b37aab25
-ms.sourcegitcommit: 0947111b263015136bca0e6ec5a8c570b3f700ff
+ms.openlocfilehash: 4dff56db9f1450ff7eb2a2b9ca6f4ca648e2ac38
+ms.sourcegitcommit: dbe434f45f9d0f9d298076bf8c08672ceca416c6
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/24/2020
-ms.locfileid: "77199171"
+ms.lasthandoff: 10/17/2020
+ms.locfileid: "92150098"
 ---
 # <a name="get-started-with-your-microsoft-partner-agreement-billing-account"></a>Microsoft 合作伙伴协议计费帐户入门
 
@@ -28,7 +29,7 @@ Microsoft 合作伙伴协议的计费帐户包含开展业务时使用的每种�
 
 ![显示 Microsoft 合作伙伴协议计费层次结构的关系图](./media/mpa-overview/mpa-hierarchy.svg)
 
-在组织中具有“全局管理员”和“管理员代理”角色的用户可以管理计费帐户、计费对象信息和客户。   若要了解详细信息，请参阅[合作伙伴中心 - 为用户分配角色和权限](https://docs.microsoft.com/partner-center/permissions-overview)。
+在组织中具有“全局管理员”和“管理员代理”角色的用户可以管理计费帐户、计费对象信息和客户。   若要了解详细信息，请参阅[合作伙伴中心 - 为用户分配角色和权限](/partner-center/permissions-overview)。
 
 ## <a name="billing-profiles"></a>计费对象信息
 
@@ -46,7 +47,7 @@ Microsoft 合作伙伴协议的计费帐户包含开展业务时使用的每种�
 
 ### <a name="enable-policy-to-give-visibility-into-cost"></a>启用用于了解成本的策略
 
-应用策略来控制是否允许客户的组织中的用户查看和分析其 Azure 消耗的成本（采用即用即付费率）。 默认情况下，此策略处于关闭状态，用户不能查看成本。 启用以后，在订阅上有相应的 [Azure RBAC](https://docs.microsoft.com/azure/role-based-access-control/overview) 访问权限的用户即可查看和分析订阅的成本。
+应用策略来控制是否允许客户的组织中的用户查看和分析其 Azure 消耗的成本（采用即用即付费率）。 默认情况下，此策略处于关闭状态，用户不能查看成本。 启用以后，在订阅上有相应的 [Azure RBAC](../../role-based-access-control/overview.md) 访问权限的用户即可查看和分析订阅的成本。
 
 若要启用此策略，请执行以下操作：
 
@@ -54,7 +55,7 @@ Microsoft 合作伙伴协议的计费帐户包含开展业务时使用的每种�
 
 1. 在“成本管理 + 计费”  中进行搜索。
 
-   ![显示了 Azure 门户搜索的屏幕截图](./media/mpa-overview/search-cmb.png)
+   ![屏幕截图显示在 Azure 门户中搜索“成本管理 + 计费”。](./media/mpa-overview/search-cmb.png)
 
 1. 在左侧选择“客户”，然后从列表中选择一位客户。 
 
@@ -68,7 +69,7 @@ Microsoft 合作伙伴协议的计费帐户包含开展业务时使用的每种�
 
 ## <a name="resellers"></a>经销商
 
-在 Azure 门户中，CSP [双层模型](https://docs.microsoft.com/partner-center)中的间接提供商可以在为客户创建订阅的同时选择一位经销商。 创建以后，他们可以查看订阅的列表（按经销商筛选），并在 Azure 成本分析中按经销商分析客户的成本。
+在 Azure 门户中，CSP [双层模型](/partner-center)中的间接提供商可以在为客户创建订阅的同时选择一位经销商。 创建以后，他们可以查看订阅的列表（按经销商筛选），并在 Azure 成本分析中按经销商分析客户的成本。
 
 ## <a name="check-access-to-a-microsoft-partner-agreement"></a>检查对 Microsoft 合作伙伴协议的访问权限
 [!INCLUDE [billing-check-mpa](../../../includes/billing-check-mpa.md)]
@@ -82,5 +83,5 @@ Microsoft 合作伙伴协议的计费帐户包含开展业务时使用的每种�
 请参阅以下文章，了解计费帐户：
 
 - [为 Microsoft 合作伙伴协议创建其他 Azure 订阅](../manage/create-subscription.md)
-- 使用 [Azure 计费 API](https://docs.microsoft.com/rest/api/billing/) 将计费数据与你自己的报表系统集成
-- [适用于合作伙伴的 Azure 成本管理快速入门指南](https://go.microsoft.com/fwlink/?linkid=2106482)
+- 使用 [Azure 计费 API](/rest/api/billing/) 将计费数据与你自己的报表系统集成
+- [适用于合作伙伴的 Azure 成本管理快速入门指南](../costs/get-started-partners.md)

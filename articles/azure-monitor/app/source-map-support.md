@@ -2,16 +2,16 @@
 title: JavaScript 应用程序的源映射支持 - Azure Monitor Application Insights
 description: 了解如何使用 Application Insights 将源映射上传到自己的存储帐户 Blob 容器。
 ms.topic: conceptual
-author: markwolff
-ms.author: marwolff
+author: DavidCBerry13
+ms.author: daberry
 ms.date: 06/23/2020
-ms.custom: devx-track-javascript
-ms.openlocfilehash: de475cbd7cbb0d8dbcda026109b0387da14bedff
-ms.sourcegitcommit: 5b8fb60a5ded05c5b7281094d18cf8ae15cb1d55
+ms.custom: devx-track-js
+ms.openlocfilehash: 79462dcb503e5835254b89f7ebaa7a9ee34946d3
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/29/2020
-ms.locfileid: "87386786"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98933947"
 ---
 # <a name="source-map-support-for-javascript-applications"></a>JavaScript 应用程序的源映射支持
 
@@ -36,9 +36,9 @@ Application Insights 支持将源映射上传到你自己的存储帐户 Blob �
 
 可以将源映射上传到 Blob 存储容器，该容器的文件夹结构与 & 部署时所编译的文件夹结构相同。 常见的用例是使用其版本作为部署文件夹的前缀， `1.2.3/static/js/main.js` 例如。 当通过名为的 Azure Blob 容器 unminifying 时 `sourcemaps` ，它将尝试提取位于处的源映射 `sourcemaps/1.2.3/static/js/main.js.map` 。
 
-### <a name="upload-source-maps-via-azure-pipelines-recommended"></a>通过 Azure Pipelines 上传源映射（推荐）
+### <a name="upload-source-maps-via-azure-pipelines-recommended"></a>通过 Azure Pipelines 推荐 (上传源地图) 
 
-如果使用 Azure Pipelines 持续生成和部署应用程序，请将[Azure 文件复制][azure file copy]任务添加到管道，以自动上传源映射。
+如果使用 Azure Pipelines 持续生成和部署应用程序，请将 [Azure 文件复制][azure file copy] 任务添加到管道，以自动上传源映射。
 
 > [!div class="mx-imgBorder"]
 > ![将 Azure 文件复制任务添加到管道，以将源映射上载到 Azure Blob 存储](./media/source-map-support/azure-file-copy.png)
@@ -67,7 +67,7 @@ Application Insights 支持将源映射上传到你自己的存储帐户 Blob �
 
 ## <a name="troubleshooting"></a>故障排除
 
-### <a name="required-role-based-access-control-rbac-settings-on-your-blob-container"></a>Blob 容器中所需的基于角色的访问控制 (RBAC) 设置
+### <a name="required-azure-role-based-access-control-azure-rbac-settings-on-your-blob-container"></a>Blob 容器中所需的 Azure 基于角色的访问控制 (Azure RBAC) 设置
 
 门户上使用此功能的任何用户都必须至少作为[存储 Blob 数据读取者][storage blob data reader]分配给 Blob 容器。 你必须将此角色分配给要通过此功能使用源映射的任何其他人。
 
@@ -83,7 +83,7 @@ Application Insights 支持将源映射上传到你自己的存储帐户 Blob �
 
 ## <a name="next-steps"></a>后续步骤
 
-* [Azure 文件复制任务](/azure/devops/pipelines/tasks/deploy/azure-file-copy?view=azure-devops)
+* [Azure 文件复制任务](/azure/devops/pipelines/tasks/deploy/azure-file-copy)
 
 
 <!-- Remote URLs -->

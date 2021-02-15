@@ -3,12 +3,12 @@ title: 以编程方式创建策略
 description: 本文逐步讲解如何使用 Azure CLI、Azure PowerShell 和 REST API 以编程方式创建和管理适用于 Azure Policy 的策略。
 ms.date: 08/17/2020
 ms.topic: how-to
-ms.openlocfilehash: 7a72986d8ffe64953e68ff166de9a02a15fb9c86
-ms.sourcegitcommit: 023d10b4127f50f301995d44f2b4499cbcffb8fc
+ms.openlocfilehash: 4c3a503e8d48573441093879511490608437b1e1
+ms.sourcegitcommit: c4c554db636f829d7abe70e2c433d27281b35183
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/18/2020
-ms.locfileid: "88548305"
+ms.lasthandoff: 01/08/2021
+ms.locfileid: "98033857"
 ---
 # <a name="programmatically-create-policies"></a>以编程方式创建策略
 
@@ -75,7 +75,7 @@ ms.locfileid: "88548305"
    在没有位置参数的情况下调用时，`New-AzPolicyDefinition` 默认将策略定义保存在会话上下文的选定订阅中。 若要将定义保存到其他位置，请使用以下参数：
 
    - **SubscriptionId** - 保存到其他订阅。 需要 _GUID_ 值。
-   - **ManagementGroupName** - 保存到管理组。 需要_字符串_值。
+   - **ManagementGroupName** - 保存到管理组。 需要 _字符串_ 值。
 
 1. 创建策略定义后，可运行以下命令创建策略分配：
 
@@ -87,15 +87,15 @@ ms.locfileid: "88548305"
 
    将 _ContosoRG_ 替换为所需资源组的名称。
 
-   `New-AzPolicyAssignment` 的 Scope 参数适用于管理组、订阅、资源组或单个资源。 该参数使用完整资源路径，它将返回 `Get-AzResourceGroup` 的 **ResourceId** 属性。 每个容器的**范围**模式如下所示。 将 `{rName}`、`{rgName}`、`{subId}` 和 `{mgName}` 分别替换为你的资源名称、资源组名称、订阅 ID 和管理组名称。
-   `{rType}` 将替换为资源的**资源类型**，例如 VM 的 `Microsoft.Compute/virtualMachines`。
+   `New-AzPolicyAssignment` 的 Scope 参数适用于管理组、订阅、资源组或单个资源。 该参数使用完整资源路径，它将返回 `Get-AzResourceGroup` 的 **ResourceId** 属性。 每个容器的 **范围** 模式如下所示。 将 `{rName}`、`{rgName}`、`{subId}` 和 `{mgName}` 分别替换为你的资源名称、资源组名称、订阅 ID 和管理组名称。
+   `{rType}` 将替换为资源的 **资源类型**，例如 VM 的 `Microsoft.Compute/virtualMachines`。
 
    - 资源 - `/subscriptions/{subID}/resourceGroups/{rgName}/providers/{rType}/{rName}`
    - 资源组 - `/subscriptions/{subId}/resourceGroups/{rgName}`
-   - 订阅 - `/subscriptions/{subId}/`
+   - 订阅 - `/subscriptions/{subId}`
    - 管理组 - `/providers/Microsoft.Management/managementGroups/{mgName}`
 
-有关使用资源管理器 PowerShell 模块管理资源策略的详细信息，请参阅 [Az.Resources](/powershell/module/az.resources/#policies)。
+有关使用资源管理器 PowerShell 模块管理资源策略的详细信息，请参阅 [Az.Resources](/powershell/module/az.resources/#policy)。
 
 ### <a name="create-and-assign-a-policy-definition-using-armclient"></a>使用 ARMClient 创建并分配策略定义
 
@@ -203,12 +203,12 @@ ms.locfileid: "88548305"
    ```
 
    该命令创建名为 _Audit Storage Accounts Open to Public Networks_ 的策略定义。
-   有关其他可用的参数的详细信息，请参阅 [az policy definition create](/cli/azure/policy/definition#az-policy-definition-create)。
+   有关其他可用的参数的详细信息，请参阅 [az policy definition create](/cli/azure/policy/definition#az_policy_definition_create)。
 
    在没有位置参数的情况下调用时，`az policy definition creation` 默认将策略定义保存在会话上下文的选定订阅中。 若要将定义保存到其他位置，请使用以下参数：
 
-   - subscription - 保存到其他订阅。 订阅 ID 需要 _GUID_ 值，订阅名称需要_字符串_值。
-   - management-group - 保存到管理组。 需要_字符串_值。
+   - subscription - 保存到其他订阅。 订阅 ID 需要 _GUID_ 值，订阅名称需要 _字符串_ 值。
+   - management-group - 保存到管理组。 需要 _字符串_ 值。
 
 1. 使用以下命令创建策略分配。 请将 &lt;&gt; 符号中的示例信息替换为自己的值。
 
@@ -216,7 +216,7 @@ ms.locfileid: "88548305"
    az policy assignment create --name '<name>' --scope '<scope>' --policy '<policy definition ID>'
    ```
 
-   `az policy assignment create` 的 scope 参数适用于管理组、订阅、资源组或单个资源。 该参数使用完整资源路径。 每个容器的 scope 模式如下所示。 将 `{rName}`、`{rgName}`、`{subId}` 和 `{mgName}` 分别替换为你的资源名称、资源组名称、订阅 ID 和管理组名称。 `{rType}` 将替换为资源的**资源类型**，例如 VM 的 `Microsoft.Compute/virtualMachines`。
+   `az policy assignment create` 的 scope 参数适用于管理组、订阅、资源组或单个资源。 该参数使用完整资源路径。 每个容器的 scope 模式如下所示。 将 `{rName}`、`{rgName}`、`{subId}` 和 `{mgName}` 分别替换为你的资源名称、资源组名称、订阅 ID 和管理组名称。 `{rType}` 将替换为资源的 **资源类型**，例如 VM 的 `Microsoft.Compute/virtualMachines`。
 
    - 资源 - `/subscriptions/{subID}/resourceGroups/{rgName}/providers/{rType}/{rName}`
    - 资源组 - `/subscriptions/{subID}/resourceGroups/{rgName}`
@@ -235,14 +235,14 @@ az policy definition show --name 'Audit Storage Accounts with Open Public Networ
 "/subscription/<subscriptionId>/providers/Microsoft.Authorization/policyDefinitions/Audit Storage Accounts Open to Public Networks"
 ```
 
-有关如何使用 Azure CLI 管理资源策略的详细信息，请参阅 [Azure CLI 资源策略](/cli/azure/policy?view=azure-cli-latest)。
+有关如何使用 Azure CLI 管理资源策略的详细信息，请参阅 [Azure CLI 资源策略](/cli/azure/policy)。
 
 ## <a name="next-steps"></a>后续步骤
 
 查看以下文章，详细了解本文中所示的命令和查询。
 
 - [Azure REST API 资源](/rest/api/resources/)
-- [Azure PowerShell 模块](/powershell/module/az.resources/#policies)
-- [Azure CLI 策略命令](/cli/azure/policy?view=azure-cli-latest)
+- [Azure PowerShell 模块](/powershell/module/az.resources/#policy)
+- [Azure CLI 策略命令](/cli/azure/policy)
 - [Azure Policy Insights 资源提供程序 REST API 参考](/rest/api/policy-insights)
 - [使用 Azure 管理组来组织资源](../../management-groups/overview.md)。

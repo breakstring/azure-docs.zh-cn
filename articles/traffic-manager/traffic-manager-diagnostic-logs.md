@@ -2,20 +2,20 @@
 title: 启用 Azure 流量管理器中的资源日志记录
 description: 了解如何为流量管理器配置文件启用资源日志记录，并访问作为结果创建的日志文件。
 services: traffic-manager
-author: rohinkoul
+author: duongau
 ms.service: traffic-manager
 ms.devlang: na
 ms.topic: how-to
 ms.tgt_pltfrm: na
 ms.workload: infrastructure-services
 ms.date: 01/25/2019
-ms.author: rohink
-ms.openlocfilehash: 09c04d727e42f88bb376a59d66a23688e16abb13
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.author: duau
+ms.openlocfilehash: f24a4a0d982ff78ca4d6726e950825ed2c784e67
+ms.sourcegitcommit: 0aec60c088f1dcb0f89eaad5faf5f2c815e53bf8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87089050"
+ms.lasthandoff: 01/14/2021
+ms.locfileid: "98184534"
 ---
 # <a name="enable-resource-logging-in-azure-traffic-manager"></a>启用 Azure 流量管理器中的资源日志记录
 
@@ -31,7 +31,7 @@ ms.locfileid: "87089050"
 
 1. **检索流量管理器配置文件：**
 
-    若要启用资源日志记录，需要使用流量管理器配置文件的 ID。 使用[AzTrafficManagerProfile](/powershell/module/az.TrafficManager/Get-azTrafficManagerProfile)检索要为其启用资源日志记录的流量管理器配置文件。 输出包括流量管理器配置文件的 ID 信息。
+    若要启用资源日志记录，需要使用流量管理器配置文件的 ID。 使用 [AzTrafficManagerProfile](/powershell/module/az.TrafficManager/Get-azTrafficManagerProfile)检索要为其启用资源日志记录的流量管理器配置文件。 输出包括流量管理器配置文件的 ID 信息。
 
     ```azurepowershell-interactive
     Get-AzTrafficManagerProfile -Name <TrafficManagerprofilename> -ResourceGroupName <resourcegroupname>
@@ -39,14 +39,14 @@ ms.locfileid: "87089050"
 
 2. **为流量管理器配置文件启用资源日志记录：**
 
-    使用在上一步骤中使用[AzDiagnosticSetting](https://docs.microsoft.com/powershell/module/az.monitor/set-azdiagnosticsetting?view=latest)获取的 ID 为流量管理器配置文件启用资源日志记录。 以下命令将流量管理器配置文件的详细日志存储到指定的 Azure 存储帐户。 
+    使用在上一步骤中使用 [AzDiagnosticSetting](/powershell/module/az.monitor/set-azdiagnosticsetting?view=latest)获取的 ID 为流量管理器配置文件启用资源日志记录。 以下命令将流量管理器配置文件的详细日志存储到指定的 Azure 存储帐户。 
 
       ```azurepowershell-interactive
     Set-AzDiagnosticSetting -ResourceId <TrafficManagerprofileResourceId> -StorageAccountId <storageAccountId> -Enabled $true
       ``` 
 3. **验证诊断设置：**
 
-      使用 [Get-AzDiagnosticSetting](https://docs.microsoft.com/powershell/module/az.monitor/get-azdiagnosticsetting?view=latest) 验证流量管理器配置文件的诊断设置。 以下命令显示为某个资源记录的类别。
+      使用 [Get-AzDiagnosticSetting](/powershell/module/az.monitor/get-azdiagnosticsetting?view=latest) 验证流量管理器配置文件的诊断设置。 以下命令显示为某个资源记录的类别。
 
      ```azurepowershell-interactive
      Get-AzDiagnosticSetting -ResourceId <TrafficManagerprofileResourceId>
@@ -54,27 +54,26 @@ ms.locfileid: "87089050"
       请确保与流量管理器配置文件资源关联的所有日志类别都显示为已启用。 另外，请验证存储帐户是否已正确设置。
 
 ## <a name="access-log-files"></a>访问日志文件
-1. 登录 [Azure 门户](https://portal.azure.com)。 
+1. 登录到 [Azure 门户](https://portal.azure.com)。 
 1. 在门户中导航到你的 Azure 存储帐户。
-2. 在你的 Azure 存储帐户的“概述”**** 页面上，在“服务”**** 下选择“Blob”****。
-3. 对于“容器”****，选择“insights-logs-probehealthstatusevents”****，向下导航到 PT1H.json 文件并单击“下载”**** 以下载并保存此日志文件的副本。
+2. 在你的 Azure 存储帐户的“概述”页面上，在“服务”下选择“Blob”。
+3. 对于“容器”，选择“insights-logs-probehealthstatusevents”，向下导航到 PT1H.json 文件并单击“下载”以下载并保存此日志文件的副本。
 
     ![从 blob 存储访问流量管理器配置文件的日志文件](./media/traffic-manager-logs/traffic-manager-logs.png)
 
 
 ## <a name="traffic-manager-log-schema"></a>流量管理器日志架构
 
-通过 Azure Monitor 提供的所有资源日志共享公共顶级架构，且每个服务都能灵活地为其事件发出唯一属性。 有关顶级资源日志架构，请参阅[Azure 资源日志支持的服务、架构和类别](../azure-monitor/platform/tutorial-dashboards.md)。
+通过 Azure Monitor 提供的所有资源日志共享公共顶级架构，且每个服务都能灵活地为其事件发出唯一属性。 有关顶级资源日志架构，请参阅 [Azure 资源日志支持的服务、架构和类别](../azure-monitor/platform/resource-logs-schema.md)。
 
 下表包含特定于 Azure 流量管理器配置文件资源的日志架构。
 
 |字段名称|字段类型|定义|示例|
 |----|----|---|---|
 |EndpointName|字符串|记录其运行状况状态的流量管理器终结点的名称。|*myPrimaryEndpoint*|
-|状态|字符串|所探测的流量管理器终结点的运行状况状态。 状态可以是 **Up** 或 **Down**。|**Up**|
+|状态|String|所探测的流量管理器终结点的运行状况状态。 状态可以是 **Up** 或 **Down**。|**Up**|
 |||||
 
 ## <a name="next-steps"></a>后续步骤
 
 * 详细了解[流量管理器监视](traffic-manager-monitoring.md)
-

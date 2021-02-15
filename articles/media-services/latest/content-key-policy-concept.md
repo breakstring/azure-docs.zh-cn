@@ -1,25 +1,27 @@
 ---
-title: 媒体服务中的内容密钥策略 - Azure | Microsoft Docs
+title: 媒体服务中的内容密钥策略-Azure
 description: 本文介绍了何为内容密钥策略以及 Azure 媒体服务如何使用这些终结点。
 services: media-services
 documentationcenter: ''
-author: Juliako
+author: IngridAtMicrosoft
 manager: femila
 editor: ''
 ms.service: media-services
 ms.workload: ''
-ms.topic: article
-ms.date: 07/26/2019
-ms.author: juliako
+ms.topic: conceptual
+ms.date: 08/31/2020
+ms.author: inhenkel
 ms.custom: seodec18
-ms.openlocfilehash: 49226ba703e8ade963b368616102db035b3c07ba
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.openlocfilehash: 29907a12f7edf7439f9bcfae0a1ad46b395d9ecf
+ms.sourcegitcommit: 100390fefd8f1c48173c51b71650c8ca1b26f711
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87092059"
+ms.lasthandoff: 01/27/2021
+ms.locfileid: "98897201"
 ---
 # <a name="content-key-policies"></a>内容密钥策略
+
+[!INCLUDE [media services api v3 logo](./includes/v3-hr.md)]
 
 借助媒体服务，可以传送使用高级加密标准 (AES-128) 或三个主要数字版权管理 (DRM) 系统（Microsoft PlayReady、Google Widevine 和 Apple FairPlay）中任意一个动态加密的实时和请求内容。 媒体服务还提供了用于向已授权客户端传送 AES 密钥和 DRM（PlayReady、Widevine 和 FairPlay）许可证的服务。 
 

@@ -4,15 +4,15 @@ description: 使用 Azure 高级 SSD 托管磁盘设计高性能应用程序。 
 author: roygara
 ms.service: virtual-machines
 ms.topic: conceptual
-ms.date: 06/27/2017
+ms.date: 10/05/2020
 ms.author: rogarana
 ms.subservice: disks
-ms.openlocfilehash: a13fa7c819dcccc101c23015214bac55d2ab26c9
-ms.sourcegitcommit: b33c9ad17598d7e4d66fe11d511daa78b4b8b330
+ms.openlocfilehash: 7e93c659ad58db8d82e68380ab6a0855af27e1bf
+ms.sourcegitcommit: aaa65bd769eb2e234e42cfb07d7d459a2cc273ab
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/25/2020
-ms.locfileid: "88855538"
+ms.lasthandoff: 01/27/2021
+ms.locfileid: "98882376"
 ---
 # <a name="azure-premium-storage-design-for-high-performance"></a>Azure 高级存储：高性能设计
 
@@ -33,10 +33,10 @@ ms.locfileid: "88855538"
 > [!NOTE]
 > 有时，显示为磁盘性能问题的原因实际上是网络瓶颈。 在这些情况下，应优化[网络性能](../virtual-network/virtual-network-optimize-network-bandwidth.md)。
 >
-> 如果你想要基准磁盘基准，请参阅有关磁盘基准测试的文章：
+> 如果你希望对磁盘进行基准测试，请参阅我们的关于磁盘基准测试的文章：
 >
-> * 对于 Linux： [基准应用程序 Azure 磁盘存储](linux/disks-benchmarks.md)
-> * 对于 Windows：对 [磁盘进行基准测试](windows/disks-benchmarks.md)。
+> * 对于 Linux：[在 Azure 磁盘存储上对应用程序进行基准测试](./disks-benchmarks.md)
+> * 对于 Windows：[磁盘基准测试](./disks-benchmarks.md)。
 >
 > 如果 VM 支持加速网络，则应确保它已启用。 如果未启用，则可以在 [Windows](../virtual-network/create-vm-accelerated-networking-powershell.md#enable-accelerated-networking-on-existing-vms) 和 [Linux](../virtual-network/create-vm-accelerated-networking-cli.md#enable-accelerated-networking-on-existing-vms) 上已部署的 VM 上启用它。
 
@@ -130,7 +130,7 @@ PerfMon 计数器适用于处理器、内存以及服务器的每个逻辑磁盘
 | **最大内存** |顺利运行应用程序所需的内存量 |提交的在用字节数百分比 |使用 vmstat |
 | **最大CPU** |顺利运行应用程序所需的 CPU 速度 |处理器时间百分比 |%util |
 
-详细了解 [iostat](https://linux.die.net/man/1/iostat) 和 [PerfMon](https://msdn.microsoft.com/library/aa645516.aspx)。
+详细了解 [iostat](https://linux.die.net/man/1/iostat) 和 [PerfMon](/windows/win32/perfctrs/performance-counters-portal)。
 
 
 
@@ -144,7 +144,7 @@ PerfMon 计数器适用于处理器、内存以及服务器的每个逻辑磁盘
 
 下表汇总了性能因素以及进行 IOPS、吞吐量和延迟优化所需的步骤。 此汇总以后的部分更深入地介绍每个因素。
 
-有关 VM 大小以及每种类型的 VM 的 IOPS、吞吐量和延迟的详细信息，请参阅 [Azure 中虚拟机的大小](sizes.md)。
+有关 VM 大小以及每种类型的 VM 可用的 IOPS、吞吐量和延迟的详细信息，请参阅 [Azure 中虚拟机的大小](sizes.md)。
 
 | | **IOPS** | **吞吐量** | **延迟** |
 | --- | --- | --- | --- |
@@ -206,7 +206,7 @@ IO 大小是较为重要的因素之一。 IO 大小是由应用程序生成的�
 | Standard_DS14 |16 |112 GB |OS = 1023 GB <br> 本地 SSD = 224 GB |32 |576 GB |50,000 IOPS <br> 512 MB/秒 |4,000 IOPS，33 MB/秒 |
 | Standard_GS5 |32 |448 GB |OS = 1023 GB <br> 本地 SSD = 896 GB |64 |4224 GB |80,000 IOPS <br> 每秒 2,000 MB |5,000 IOPS，50 MB/秒 |
 
-若要查看所有可用 Azure VM 大小的完整列表，请参阅 [Azure 中虚拟机的大小](sizes.md) 或。 选择能够满足或者在扩展后能够满足所需应用程序性能要求的 VM 大小。 除此之外，在选择 VM 大小时，还需考虑以下重要事项。
+若要查看所有可用 Azure VM 大小的完整列表，请参阅 [Azure 中虚拟机的大小](sizes.md)。 选择能够满足或者在扩展后能够满足所需应用程序性能要求的 VM 大小。 除此之外，在选择 VM 大小时，还需考虑以下重要事项。
 
 *规模限制*  
 每个 VM 和每个磁盘的最大 IOPS 限制是不同的，互不影响。 请确保应用程序所要实现的 IOPS 处于 VM 以及连接到 VM 的高级磁盘的限制内。 否则，应用程序性能就会受到限制。
@@ -222,7 +222,7 @@ IO 大小是较为重要的因素之一。 IO 大小是由应用程序生成的�
 
 下表总结了这种情况下标准存储和高级存储的成本明细。
 
-| &nbsp; | **标准** | **高级** |
+| &nbsp; | **Standard** | **高级** |
 | --- | --- | --- |
 | **VM 每月的成本** |$1,570.58 (Standard\_D14) |$1,003.66 (Standard\_DS13) |
 | **每月磁盘成本** |$1,638.40（32 x 1-TB 磁盘） |$544.34（4 x P30 磁盘） |
@@ -230,7 +230,7 @@ IO 大小是较为重要的因素之一。 IO 大小是由应用程序生成的�
 
 Linux 发行版  
 
-使用 Azure 高级存储，可以让运行 Windows 和 Linux 的 VM 获得相同的性能级别。 支持多种 Linux 发行版，可在[此处](linux/endorsed-distros.md?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json)查看完整列表。 请务必注意，不同的发行版适用于不同类型的工作负荷。 根据运行工作负荷的发行版，所见性能级别会有所不同。 使用应用程序测试各种 Linux 发行版，选择最适合的。
+使用 Azure 高级存储，可以让运行 Windows 和 Linux 的 VM 获得相同的性能级别。 支持多种 Linux 发行版，可在[此处](linux/endorsed-distros.md)查看完整列表。 请务必注意，不同的发行版适用于不同类型的工作负荷。 根据运行工作负荷的发行版，所见性能级别会有所不同。 使用应用程序测试各种 Linux 发行版，选择最适合的。
 
 使用高级存储运行 Linux 时，请查看与所需驱动程序相关的最新更新，确保实现高性能。
 
@@ -305,45 +305,11 @@ Azure 高级存储提供了多种大小，因此你可以选择最适合需求�
 
 ## <a name="optimize-performance-on-linux-vms"></a>优化 Linux Vm 的性能
 
-对于缓存设置为 ReadOnly 或 None 的所有高级存储 SSD 或极致磁盘，必须在装入文件系统时禁用“屏障” 。 在此方案中不需要屏障，因为写入高级存储磁盘对于这些缓存设置是持久性的。 成功完成写入请求时，数据已写入持久存储。 若要禁用“屏障”，请使用以下方法之一： 选择适用于文件系统的方法：
-  
-* 对于 **reiserFS**，请使用 `barrier=none` 装入选项来禁用屏障。 （若要启用屏障，请使用 `barrier=flush`。）
-* 对于 **ext3/ext4**，请使用 `barrier=0` 装入选项来禁用屏障。 （若要启用屏障，请使用 `barrier=1`。）
-* 对于 **XFS**，请使用 `nobarrier` 装入选项来禁用屏障。 （若要启用屏障，请使用 `barrier`。）
-* 对于缓存设置为 **ReadWrite** 的高级存储磁盘，请启用屏障来实现写入持久性。
-* 若要在重新启动 VM 后保留卷标，必须在 /etc/fstab 中更新对磁盘的全局唯一标识符 (UUID) 引用。 有关详细信息，请参阅[将托管磁盘添加到 Linux VM](./linux/add-disk.md)。
+对于所有高级 Ssd 或超磁盘，你可能会对磁盘上的文件系统禁用 "屏障"，以便在已知没有可能丢失数据的缓存的情况下提高性能。  如果 Azure 磁盘缓存设置为 ReadOnly 或 None，则可以禁用屏障。  但是，如果缓存设置为 ReadWrite，则屏障应保持启用状态以确保写入持续性。  默认情况下，屏障通常处于启用状态，但你可以根据文件系统类型使用以下方法之一禁用屏障：
 
-下面是我们使用高级 SSD 验证过的 Linux 发行版。 为了提高高级 SSD 的性能和稳定性，建议将 VM 升级到其中一个版本（或更新版本）。 
-
-某些版本需要最新的适用于 Azure 的 Linux Integration Services (LIS) v4.0。 若要下载并安装某个发行版，请单击下表中所列的链接。 完成验证后，我们将陆续在该列表中添加映像。 我们的验证表明，性能根据每个映像的不同而异。 性能取决于工作负荷特征和映像设置。 不同的映像已针对不同种类的工作负荷进行优化。
-
-| 分发 | 版本 | 支持的内核 | 详细信息 |
-| --- | --- | --- | --- |
-| Ubuntu | 12.04 或更高版本| 3.2.0-75.110+ | &nbsp; |
-| Ubuntu | 14.04 或更高版本| 3.13.0-44.73+  | &nbsp; |
-| Debian | 7.x、8.x 或更高版本| 3.16.7-ckt4-1+ | &nbsp; |
-| SUSE | SLES 12 或更高版本| 3.12.36-38.1+ | &nbsp; |
-| SUSE | SLES 11 SP4 或更高版本| 3.0.101-0.63.1+ | &nbsp; |
-| CoreOS | 584.0.0+ 或更高版本| 3.18.4+ | &nbsp; |
-| CentOS | 6.5、6.6、6.7、7.0 或更高版本| &nbsp; | [需要 LIS4](https://www.microsoft.com/download/details.aspx?id=55106) <br> *请参阅下一部分中的注释* |
-| CentOS | 7.1+ 或更高版本| 3.10.0-229.1.2.el7+ | [建议使用 LIS4](https://www.microsoft.com/download/details.aspx?id=55106) <br> 请参阅下一部分中的注释 |
-| Red Hat Enterprise Linux (RHEL) | 6.8+、7.2+ 或更高版本 | &nbsp; | &nbsp; |
-| Oracle | 6.0+、7.2+ 或更高版本 | &nbsp; | UEK4 或 RHCK |
-| Oracle | 7.0-7.1 或更高版本 | &nbsp; | UEK4 或 RHCK，带 [LIS4](https://www.microsoft.com/download/details.aspx?id=55106) |
-| Oracle | 6.4-6.7 或更高版本 | &nbsp; | UEK4 或 RHCK，带 [LIS4](https://www.microsoft.com/download/details.aspx?id=55106) |
-
-### <a name="lis-drivers-for-openlogic-centos"></a>OpenLogic CentOS 的 LIS 驱动程序
-
-运行 OpenLogic CentOS VM 时，请运行以下命令来安装最新的驱动程序：
-
-```
-sudo yum remove hypervkvpd  ## (Might return an error if not installed. That's OK.)
-sudo yum install microsoft-hyper-v
-sudo reboot
-```
-
-在某些情况下，上述命令还会升级内核。 如果需要内核更新，则可能需要在重新启动后再次运行上述命令以完全安装 microsoft-hyper-v 包。
-
+* 对于 reiserFS，请使用 barrier=none 装入选项来禁用屏障。  若要显式启用屏障，请使用 barrier=flush。
+* 对于 ext3/ext4，请使用 barrier=0 装入选项来禁用屏障。  若要显式启用屏障，请使用 barrier=1。
+* 对于 XFS，请使用 nobarrier 装入选项来禁用屏障。  若要显式启用屏障，请使用 barrier。  请注意，在更高版本的 Linux 内核版本中，XFS 文件系统的设计始终确保持续性，禁用屏障没有任何效果。  
 
 ## <a name="disk-striping"></a>磁盘条带化
 
@@ -353,7 +319,7 @@ sudo reboot
 
 重要说明：使用服务器管理器 UI，可以将列的总数设置为每个条带化卷最多 8 个。 连接 8 个以上的磁盘时，可使用 PowerShell 来创建卷。 使用 PowerShell，可以将列数设置为与磁盘数相等。 例如，如果一个条带集中有 16 个磁盘，可在 *New-VirtualDisk* PowerShell cmdlet 的 *NumberOfColumns* 参数中指定 16 个列。
 
-在 Linux 中，可使用 MDADM 实用工具将磁盘条带化。 有关在 Linux 中对磁盘进行条带化操作的详细步骤，请参阅[在 Linux 上配置软件 RAID](linux/configure-raid.md)。
+在 Linux 中，可使用 MDADM 实用工具将磁盘条带化。 有关在 Linux 中对磁盘进行条带化操作的详细步骤，请参阅[在 Linux 上配置软件 RAID](/previous-versions/azure/virtual-machines/linux/configure-raid)。
 
 *条带大小*  
 进行磁盘条带化操作时，一项重要配置是条带大小。 条带大小或块大小是应用程序可以在条带化卷上处理的最小数据块区。 配置的条带大小取决于应用程序类型及其请求模式。 如果选择了错误的条带大小，可能导致 IO 不一致，从而导致应用程序性能下降。
@@ -377,7 +343,7 @@ Azure 将高级存储平台设计为可以进行大规模并行处理。 因此�
 
 例如，假设应用程序使用 SQL Server，且同时执行大型查询和索引操作。 假设想让索引操作性能优于大型查询。 在这种情况下，可以将索引操作的 MAXDOP 值设为高于查询的 MAXDOP 值。 这样一来，SQL Server 在进行索引操作时，就可以利用比进行大型查询所需的处理器更多的处理器。 请记住，无法人为控制 SQL Server 要用于每个操作的线程数。 可以控制多线程处理专用的最大处理器数。
 
-详细了解 SQL Server 中的[并行度](https://technet.microsoft.com/library/ms188611.aspx)。 找出应用程序中影响多线程处理的此类设置及其配置，以便优化性能。
+详细了解 SQL Server 中的[并行度](/previous-versions/sql/sql-server-2008-r2/ms188611(v=sql.105))。 找出应用程序中影响多线程处理的此类设置及其配置，以便优化性能。
 
 ## <a name="queue-depth"></a>队列深度
 
@@ -412,15 +378,15 @@ Azure 高级存储根据所选 VM 大小和磁盘大小，预配指定数目的 
 
 ## <a name="next-steps"></a>后续步骤
 
-如果你想要基准磁盘基准，请参阅有关磁盘基准测试的文章：
+如果你希望对磁盘进行基准测试，请参阅我们的关于磁盘基准测试的文章：
 
-* 对于 Linux： [基准应用程序 Azure 磁盘存储](linux/disks-benchmarks.md)
-* 对于 Windows：对 [磁盘进行基准测试](windows/disks-benchmarks.md)。
+* 对于 Linux：[在 Azure 磁盘存储上对应用程序进行基准测试](./disks-benchmarks.md)
+* 对于 Windows：[磁盘基准测试](./disks-benchmarks.md)。
 
 了解有关可用磁盘类型的详细信息：
 
-* 对于 Linux： [选择磁盘类型](disks-types.md)
-* 对于 Windows： [选择磁盘类型](disks-types.md)
+* 对于 Linux：[选择磁盘类型](disks-types.md)
+* 对于 Windows：[选择磁盘类型](disks-types.md)
 
 SQL Server 用户请阅读有关 SQL Server 性能最佳实践的文章：
 

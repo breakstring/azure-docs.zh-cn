@@ -1,25 +1,19 @@
 ---
 title: 在 Azure Linux VM 上实现 Oracle Golden Gate | Microsoft Docs
 description: 在 Azure 环境中快速建立 Oracle Golden Gate 并运行。
-services: virtual-machines-linux
-documentationcenter: virtual-machines
-author: rgardler
-manager: ''
-editor: ''
-tags: azure-resource-manager
-ms.assetid: ''
+author: dbakevlar
 ms.service: virtual-machines-linux
+ms.subservice: workloads
 ms.topic: article
-ms.tgt_pltfrm: vm-linux
-ms.workload: infrastructure
 ms.date: 08/02/2018
-ms.author: rogardle
-ms.openlocfilehash: 5ed99fd6a16743846033313fcf13702f69f3e728
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.author: kegorman
+ms.reviewer: cynthn
+ms.openlocfilehash: 6b3f4ef82813fd4c0e5b3b24be59b68a2dc5b2a7
+ms.sourcegitcommit: aaa65bd769eb2e234e42cfb07d7d459a2cc273ab
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87088353"
+ms.lasthandoff: 01/27/2021
+ms.locfileid: "98880383"
 ---
 # <a name="implement-oracle-golden-gate-on-an-azure-linux-vm"></a>在 Azure Linux VM 上实现 Oracle Golden Gate 
 
@@ -31,7 +25,7 @@ Azure CLI 用于从命令行或脚本创建和管理 Azure 资源。 本指南�
 
 ## <a name="prepare-the-environment"></a>准备环境
 
-若要执行 Oracle Golden Gate 安装，需要在同一可用性集中创建两个 Azure VM。 用于创建 Vm 的 Marketplace 映像是**oracle： oracle-数据库-Ee：12.1.0.2：最新版本**。
+若要执行 Oracle Golden Gate 安装，需要在同一可用性集中创建两个 Azure VM。 用于创建 Vm 的 Marketplace 映像是 **oracle： oracle-数据库-Ee：12.1.0.2：最新版本**。
 
 还需要熟悉 Unix 编辑器 vi 并基本了解 x11 (X Windows)。
 
@@ -40,7 +34,7 @@ Azure CLI 用于从命令行或脚本创建和管理 Azure 资源。 本指南�
 > |  | **主站点** | **复制站点** |
 > | --- | --- | --- |
 > | **Oracle 版本** |Oracle 12c 版本 2 – (12.1.0.2) |Oracle 12c 版本 2 – (12.1.0.2)|
-> | **计算机名称** |myVM1 |myVM2 |
+> | **计算机名** |myVM1 |myVM2 |
 > | **操作系统** |Oracle Linux 6.x |Oracle Linux 6.x |
 > | **Oracle SID** |CDB1 |CDB1 |
 > | **复制架构** |TEST|TEST |
@@ -68,7 +62,7 @@ az group create --name myResourceGroup --location westus
 
 ### <a name="create-an-availability-set"></a>创建可用性集
 
-以下步骤是可选的，但建议执行。 有关详细信息，请参阅 [Azure 可用性集指南](../../windows/infrastructure-example.md)。
+以下步骤是可选的，但建议执行。 有关详细信息，请参阅 [Azure 可用性集指南](/previous-versions/azure/virtual-machines/windows/infrastructure-example)。
 
 ```azurecli
 az vm availability-set create \
@@ -395,10 +389,10 @@ SQL> EXIT;
 
 3. 在 PuTTY 密钥生成器中：
 
-   - 若要生成密钥，请选择“生成”按钮。****
-   - 复制密钥的内容（**Ctrl + C**）。
-   - 选择“保存私钥”按钮。****
-   - 忽略显示的警告，并选择“确定”。****
+   - 若要生成密钥，请选择“生成”按钮。
+   - 将密钥内容复制 (**Ctrl + C**) 。
+   - 选择“保存私钥”按钮。
+   - 忽略显示的警告，并选择“确定”。
 
    ![PuTTY 密钥生成器页屏幕截图](./media/oracle-golden-gate/puttykeygen.png)
 
@@ -410,7 +404,7 @@ SQL> EXIT;
    $ cd .ssh
    ```
 
-5. 创建一个名为**authorized_keys**的文件。 在此文件中粘贴密钥的内容，然后保存该文件。
+5. 创建一个名为 **authorized_keys** 的文件。 在此文件中粘贴密钥的内容，然后保存该文件。
 
    > [!NOTE]
    > 该密钥必须包含字符串 `ssh-rsa`。 此外，密钥的内容必须是单行文本。
@@ -420,11 +414,11 @@ SQL> EXIT;
 
    ![“设置私钥”页屏幕截图](./media/oracle-golden-gate/setprivatekey.png)
 
-7. 在“类别”**** 窗格中，选择“连接”**** > “SSH”**** > “X11”****。 然后选中“启用 X11 转发”**** 框。
+7. 在“类别”窗格中，选择“连接” > “SSH” > “X11”。 然后选中“启用 X11 转发”框。
 
    ![“启用 X11”页屏幕截图](./media/oracle-golden-gate/enablex11.png)
 
-8. 在“类别”窗格中，转到“会话”。******** 输入主机信息，并选择“打开”。****
+8. 在“类别”窗格中，转到“会话”。 输入主机信息，并选择“打开”。
 
    ![会话页屏幕截图](./media/oracle-golden-gate/puttysession.png)
 
@@ -432,36 +426,36 @@ SQL> EXIT;
 
 若要安装 Oracle Golden Gate，请完成以下步骤：
 
-1. 以 oracle 身份登录。 （你应该能够在不提示输入密码的情况下登录。）在开始安装之前，请确保 Xming 正在运行。
+1. 以 oracle 身份登录。  (你应该能够在不提示输入密码的情况下登录。 ) 确保在开始安装之前运行 Xming。
 
    ```bash
    $ cd /opt/fbo_ggs_Linux_x64_shiphome/Disk1
    $ ./runInstaller
    ```
 
-2. 选择“Oracle GoldenGate for Oracle Database 12c”。 然后选择 "**下一步**" 继续。
+2. 选择“Oracle GoldenGate for Oracle Database 12c”。 然后选择 " **下一步** " 继续。
 
    ![安装程序中的“选择安装”页屏幕截图](./media/oracle-golden-gate/golden_gate_install_01.png)
 
-3. 更改软件位置。 然后选中“启动管理器”**** 框，并输入数据库位置。 选择“下一步”继续操作。
+3. 更改软件位置。 然后选中“启动管理器”框，并输入数据库位置。 选择“下一步”继续操作。
 
    ![“选择安装”页屏幕截图](./media/oracle-golden-gate/golden_gate_install_02.png)
 
-4. 更改清单目录，然后选择“下一步”**** 继续。
+4. 更改清单目录，然后选择“下一步”继续。
 
-   ![“选择安装”页屏幕截图](./media/oracle-golden-gate/golden_gate_install_03.png)
+   ![显示安装目录的 "选择安装" 页的屏幕截图。](./media/oracle-golden-gate/golden_gate_install_03.png)
 
-5. 在“摘要”**** 屏幕上，选择“安装”**** 以继续。
+5. 在“摘要”屏幕上，选择“安装”以继续。
 
-   ![安装程序中的“选择安装”页屏幕截图](./media/oracle-golden-gate/golden_gate_install_04.png)
+   ![显示 "选择安装" 页和 "安装" 按钮的屏幕截图。](./media/oracle-golden-gate/golden_gate_install_04.png)
 
-6. 系统可能会提示以“root”身份运行脚本。 如果是这样，则打开单独的会话，通过 ssh 连接到 VM，执行 sudo 操作到 root，然后运行脚本。 选择“确定”**** 继续。
+6. 系统可能会提示以“root”身份运行脚本。 如果是这样，则打开单独的会话，通过 ssh 连接到 VM，执行 sudo 操作到 root，然后运行脚本。 选择“确定”继续。
 
-   ![“选择安装”页屏幕截图](./media/oracle-golden-gate/golden_gate_install_05.png)
+   ![显示脚本位置和如何执行配置脚本的屏幕截图。](./media/oracle-golden-gate/golden_gate_install_05.png)
 
-7. 完成安装后，选择“关闭”**** 完成过程。
+7. 完成安装后，选择“关闭”完成过程。
 
-   ![“选择安装”页屏幕截图](./media/oracle-golden-gate/golden_gate_install_06.png)
+   ![显示 "关闭" 按钮的 "选择安装" 页的屏幕截图。](./media/oracle-golden-gate/golden_gate_install_06.png)
 
 ### <a name="set-up-service-on-myvm1-primary"></a>在 myVM1（主）上设置服务
 
@@ -732,7 +726,7 @@ SQL> EXIT;
 
 ### <a name="set-up-the-replication-myvm1-and-myvm2"></a>设置复制（myVM1 和 myVM2）
 
-#### <a name="1-set-up-the-replication-on-myvm2-replicate"></a>1. 在 myVM2 上设置复制（复制）
+#### <a name="1-set-up-the-replication-on-myvm2-replicate"></a>1. 在 myVM2 上设置复制 (复制) 
 
   ```bash
   $ cd /u01/app/oracle/product/12.1.0/oggcore_1
@@ -755,7 +749,7 @@ SQL> EXIT;
   GGSCI> EXIT
   ```
 
-#### <a name="2-set-up-the-replication-on-myvm1-primary"></a>2. 在 myVM1 （主）上设置复制
+#### <a name="2-set-up-the-replication-on-myvm1-primary"></a>2. 在 myVM1 上设置复制 (主) 
 
 启动初始加载，并检查错误：
 
@@ -766,7 +760,7 @@ GGSCI> START EXTRACT INITEXT
 GGSCI> VIEW REPORT INITEXT
 ```
 
-#### <a name="3-set-up-the-replication-on-myvm2-replicate"></a>3. 在 myVM2 上设置复制（复制）
+#### <a name="3-set-up-the-replication-on-myvm2-replicate"></a>3. 在 myVM2 上设置复制 (复制) 
 
 使用之前获取的编号更改 SCN 编号：
 
@@ -781,7 +775,7 @@ GGSCI> VIEW REPORT INITEXT
 
 ### <a name="view-job-status-and-troubleshooting"></a>查看作业状态和故障排除
 
-#### <a name="view-reports"></a>查看报告
+#### <a name="view-reports"></a>查看报表
 若要在 myVM1 上查看报告，请运行以下命令：
 
   ```bash
@@ -823,4 +817,4 @@ az group delete --name myResourceGroup
 
 [创建高可用性虚拟机教程](../../linux/create-cli-complete.md)
 
-[浏览 VM 部署 CLI 示例](../../linux/cli-samples.md)
+[浏览 VM 部署 CLI 示例](https://github.com/Azure-Samples/azure-cli-samples/tree/master/virtual-machine)

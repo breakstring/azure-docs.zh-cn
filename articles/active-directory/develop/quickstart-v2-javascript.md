@@ -1,7 +1,7 @@
 ---
-title: 在 JavaScript 单页应用中登录用户 | Azure
+title: 快速入门：在 JavaScript 单页应用中登录用户 | Azure
 titleSuffix: Microsoft identity platform
-description: 了解 JavaScript 应用如何使用 Microsoft 标识平台调用需要访问令牌的 API。
+description: 本快速入门介绍 JavaScript 应用如何调用 API，该 API 需要 Microsoft 标识平台颁发的访问令牌。
 services: active-directory
 author: navyasric
 manager: CelesteDG
@@ -11,24 +11,25 @@ ms.topic: quickstart
 ms.workload: identity
 ms.date: 04/11/2019
 ms.author: nacanuma
-ms.custom: aaddev, identityplatformtop40, scenarios:getting-started, languages:JavaScript, devx-track-javascript
-ms.openlocfilehash: 1e537c6f61a7c461b2a9edb4097fba95f5c66a6f
-ms.sourcegitcommit: b8702065338fc1ed81bfed082650b5b58234a702
+ms.custom: aaddev, identityplatformtop40, scenarios:getting-started, languages:JavaScript, devx-track-js
+ms.openlocfilehash: b2ae48c76ccba80d274e7463b31782b4fbc6a976
+ms.sourcegitcommit: 2dd0932ba9925b6d8e3be34822cc389cade21b0d
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/11/2020
-ms.locfileid: "88120518"
+ms.lasthandoff: 02/01/2021
+ms.locfileid: "99225708"
 ---
 # <a name="quickstart-sign-in-users-and-get-an-access-token-in-a-javascript-spa"></a>快速入门：在 JavaScript SPA 中登录用户并获得访问令牌
 
-在本快速入门中，你将使用代码示例了解 JavaScript 单页应用程序 (SPA) 如何登录个人帐户、工作帐户和学校帐户的用户。 JavaScript SPA 还可以获取用于调用 Microsoft Graph API 或任何 Web API 的访问令牌。 （有关说明，请参阅[示例工作原理](#how-the-sample-works)。）
+在本快速入门中，你将下载并运行一个代码示例，该示例演示 JavaScript 单页应用程序 (SPA) 如何让用户登录并调用 Microsoft Graph。 此代码示例还演示如何获取访问令牌来调用 Microsoft Graph API 或任何 Web API。
+
+有关说明，请参阅[示例工作原理](#how-the-sample-works)。
 
 ## <a name="prerequisites"></a>先决条件
 
-* Azure 订阅 - [免费创建 Azure 订阅](https://azure.microsoft.com/free/?WT.mc_id=A261C142F)
+* 具有活动订阅的 Azure 帐户。 [免费创建帐户](https://azure.microsoft.com/free/?WT.mc_id=A261C142F)。
 * [Node.js](https://nodejs.org/en/download/)
 * [Visual Studio Code](https://code.visualstudio.com/download)（用于编辑项目文件）
-
 
 > [!div renderon="docs"]
 > ## <a name="register-and-download-your-quickstart-application"></a>注册并下载快速入门应用程序
@@ -36,34 +37,32 @@ ms.locfileid: "88120518"
 >
 > ### <a name="option-1-express-register-and-auto-configure-your-app-and-then-download-your-code-sample"></a>选项 1（快速）：注册并自动配置应用，然后下载代码示例
 >
-> 1. 使用工作或学校帐户或个人 Microsoft 帐户登录到 [Azure 门户](https://portal.azure.com)。
-> 1. 如果你的帐户有权访问多个租户，请在右上角选择该帐户，然后将门户会话设置为要使用的 Azure Active Directory (Azure AD) 租户。
-> 1. 转到新的 [Azure 门户 - 应用注册](https://portal.azure.com/#blade/Microsoft_AAD_RegisteredApps/ApplicationsListBlade/quickStartType/JavascriptSpaQuickstartPage/sourceType/docs)窗格。
+> 1. 转到 <a href="https://portal.azure.com/#blade/Microsoft_AAD_RegisteredApps/ApplicationsListBlade/quickStartType/JavascriptSpaQuickstartPage/sourceType/docs" target="_blank">Azure 门户 - 应用注册<span class="docon docon-navigate-external x-hidden-focus"></span></a>快速入门体验。
 > 1. 输入应用程序的名称。
-> 1. 在“支持的帐户类型”下，选择“任何组织目录中的帐户和个人 Microsoft 帐户”。
-> 1. 选择“注册”。
+> 1. 在“支持的帐户类型”下，选择“任何组织目录中的帐户和个人 Microsoft 帐户”。 
+> 1. 选择“注册”  。
 > 1. 遵照说明下载内容，系统会自动配置新应用程序。
 >
 > ### <a name="option-2-manual-register-and-manually-configure-your-application-and-code-sample"></a>选项 2（手动）：注册并手动配置应用程序和代码示例
 >
 > #### <a name="step-1-register-your-application"></a>步骤 1：注册应用程序
 >
-> 1. 使用工作或学校帐户或个人 Microsoft 帐户登录到 [Azure 门户](https://portal.azure.com)。
->
-> 1. 如果你的帐户有权访问多个租户，请在右上角选择该帐户，然后将门户会话设置为要使用的 Azure AD 租户。
-> 1. 转到面向开发人员的 Microsoft 标识平台的[应用注册](https://go.microsoft.com/fwlink/?linkid=2083908)页。
-> 1. 选择“新注册”。
-> 1. “注册应用程序”页显示后，请输入应用程序的名称。
-> 1. 在“支持的帐户类型”下，选择“任何组织目录中的帐户和个人 Microsoft 帐户”。
-> 1. 选择“注册”。 在应用的“概述”页上，记下“应用程序(客户端) ID”值，供稍后使用 。
-> 1. 本快速入门要求启用[隐式授权流](v2-oauth2-implicit-grant-flow.md)。 在已注册的应用程序的左窗格中，选择“身份验证”。
-> 1. 在“平台配置”下，选择“添加平台”。 左侧将打开一个面板。 在此面板中选择“Web 应用程序”区域。
-> 1. 在左侧将“重定向 URI”值设置为 `http://localhost:3000/`。 然后选择“访问令牌”和“ID 令牌”。
+> 1. 登录到 <a href="https://portal.azure.com/" target="_blank">Azure 门户<span class="docon docon-navigate-external x-hidden-focus"></span></a>。
+> 1. 如果有权访问多个租户，请使用顶部菜单中的“目录 + 订阅”筛选器:::image type="icon" source="./media/common/portal-directory-subscription-filter.png" border="false":::，选择要在其中注册应用程序的租户。
+> 1. 搜索并选择“Azure Active Directory”  。
+> 1. 在“管理”下，选择“应用注册” > “新建注册”  。
+> 1. 输入应用程序的 **名称**。 应用的用户可能会看到此名称，你稍后可对其进行更改。
+> 1. 在“支持的帐户类型”下，选择“任何组织目录中的帐户和个人 Microsoft 帐户”。 
+> 1. 选择“注册”  。 在应用的“概述”页上，记下“应用程序(客户端) ID”值，供稍后使用 。
+> 1. 本快速入门要求启用[隐式授权流](v2-oauth2-implicit-grant-flow.md)。 在“管理”下，选择“身份验证”。 
+> 1. 在“平台配置” > “添加平台”下 。 选择“Web”。
+> 1. 将“重定向 URI”值设为 `http://localhost:3000/` 
+> 1. 在“隐式授权和混合流”下，选择“访问令牌”和“ID 令牌”  。
 > 1. 选择“配置” 。
 
 > [!div class="sxs-lookup" renderon="portal"]
 > #### <a name="step-1-configure-your-application-in-the-azure-portal"></a>步骤 1：在 Azure 门户中配置应用程序
-> 为使本快速入门中的代码示例正常运行，需将 `redirectUri` 添加为 `http://localhost:3000/` 并启用“隐式授权”。
+> 本快速入门的示例代码要求使用重定向 URI `http://localhost:3000/` 并启用“隐式授权” 。
 > > [!div renderon="portal" id="makechanges" class="nextstepaction"]
 > > [为我进行这些更改]()
 >
@@ -75,10 +74,10 @@ ms.locfileid: "88120518"
 > [!div renderon="docs"]
 > 若要使用 Node.js 在 Web 服务器中运行项目，请[下载核心项目文件](https://github.com/Azure-Samples/active-directory-javascript-graphapi-v2/archive/quickstart.zip)。
 
-> [!div renderon="portal"]
+> [!div renderon="portal" class="sxs-lookup"]
 > 使用 Node.js 在 Web 服务器中运行项目
 
-> [!div renderon="portal" id="autoupdate" class="nextstepaction"]
+> [!div renderon="portal" id="autoupdate" class="sxs-lookup nextstepaction"]
 > [下载代码示例](https://github.com/Azure-Samples/active-directory-javascript-graphapi-v2/archive/quickstart.zip)
 
 > [!div renderon="docs"]
@@ -103,7 +102,7 @@ ms.locfileid: "88120518"
 >
 >```
 
-> [!div renderon="portal"]
+> [!div class="sxs-lookup" renderon="portal"]
 > > [!NOTE]
 > > `Enter_the_Supported_Account_Info_Here`
 
@@ -111,14 +110,14 @@ ms.locfileid: "88120518"
 >
 > 其中：
 > - \<Enter_the_Application_Id_Here> 是所注册应用程序的应用程序（客户端）ID。
-> - \<Enter_the_Cloud_Instance_Id_Here> 是 Azure 云的实例。 对于主要或全球 Azure 云，只需输入 *https://login.microsoftonline.com* 。 对于**国家**云（例如“中国”云），请参阅[国家云](./authentication-national-cloud.md)。
+> - \<Enter_the_Cloud_Instance_Id_Here> 是 Azure 云的实例。 对于主要或全球 Azure 云，只需输入 *https://login.microsoftonline.com* 。 对于 **国家** 云（例如“中国”云），请参阅 [国家云](./authentication-national-cloud.md)。
 > - \<Enter_the_Tenant_info_here> 设置为以下选项之一：
 >    - 如果应用程序支持“此组织目录中的帐户”，请将此值替换为“租户 ID”或“租户名称”（例如，*contoso.microsoft.com*）。
 >    - 如果应用程序支持“任何组织目录中的帐户”，请将此值替换为 **organizations**。
 >    - 如果应用程序支持“任何组织目录中的帐户和个人 Microsoft 帐户”，请将此值替换为 **common**。 若要限制对“仅限个人 Microsoft 帐户”的支持，请将此值替换为 **consumers**。
 >
 > > [!TIP]
-> > 若要查找“应用程序(客户端) ID”、“目录(租户) ID”和“支持的帐户类型”的值，请转到 Azure 门户中应用的“概述”页。
+> > 若要查找“应用程序(客户端) ID”、“目录(租户) ID”和“支持的帐户类型”的值，请转到 Azure 门户中应用的“概述”页。   
 >
 > [!div class="sxs-lookup" renderon="portal"]
 > #### <a name="step-3-your-app-is-configured-and-ready-to-run"></a>步骤 3：应用已配置并可以运行
@@ -151,7 +150,7 @@ ms.locfileid: "88120518"
 使用 [Node.js](https://nodejs.org/en/download/) 在 Web 服务器中运行项目：
 
 1. 若要启动服务器，请从项目目录运行以下命令：
-    ```batch
+    ```cmd
     npm install
     npm start
     ```
@@ -179,7 +178,7 @@ MSAL 库会将登录用户，并请求用于访问受 Microsoft 标识平台保�
 
 另外，如果已安装 Node.js，则可通过 Node.js 包管理器 (npm) 下载最新版本：
 
-```batch
+```cmd
 npm install msal
 ```
 
@@ -268,14 +267,14 @@ myMSALObj.acquireTokenSilent(tokenRequest)
 
 #### <a name="get-a-user-token-interactively"></a>以交互方式获取用户令牌
 
-在某些情况下，需要强制用户与 Microsoft 标识平台终结点交互。 例如：
+在某些情况下，需要强制用户与 Microsoft 标识平台交互。 例如：
 * 由于密码已过期，用户可能需要重新输入凭据。
 * 应用程序正在请求访问用户需要许可的其他资源范围。
 * 需要双重身份验证。
 
 建议用于大多数应用程序的常用模式是先调用 `acquireTokenSilent`，然后捕获异常，然后再调用 `acquireTokenPopup`（或 `acquireTokenRedirect`），以便启动交互式请求。
 
-调用 `acquireTokenPopup` 会显示用于登录的弹出窗口。 （调用 `acquireTokenRedirect` 会将用户重定向到 Microsoft 标识平台终结点。）在该窗口中，为了进行交互，用户需要确认其凭证、为所需的资源提供许可，或者完成双重身份验证。
+调用 `acquireTokenPopup` 会显示用于登录的弹出窗口。 （调用 `acquireTokenRedirect` 则会将用户重定向到 Microsoft 标识平台。） 在该窗口中，为了进行交互，用户需要确认其凭证、为所需的资源提供许可，或者完成双重身份验证。
 
 ```javascript
 // Add here scopes for access token to be used at MS Graph API endpoints.
@@ -300,9 +299,4 @@ myMSALObj.acquireTokenPopup(requestObj)
 有关为本快速入门生成应用程序的更详细分步指导，请参阅：
 
 > [!div class="nextstepaction"]
-> [有关登录和调用 MS Graph 的教程](./tutorial-v2-javascript-spa.md)
-
-若要浏览 MSAL 存储库中的文档、常见问题解答、问题等，请参阅：
-
-> [!div class="nextstepaction"]
-> [MSAL.js GitHub 存储库](https://github.com/AzureAD/microsoft-authentication-library-for-js)
+> [教程：从 JavaScript 单页应用程序 (SPA) 将用户登录并调用 Microsoft Graph API](tutorial-v2-javascript-spa.md)

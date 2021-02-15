@@ -3,12 +3,13 @@ title: PowerShell 脚本 - 撤销删除已删除的文件共享
 description: 了解如何使用 Azure PowerShell 脚本撤消删除意外删除的文件共享。
 ms.topic: sample
 ms.date: 02/02/2020
-ms.openlocfilehash: d3a3ad3c2904b98f7a3350d3672b51f3a1e9415e
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.custom: devx-track-azurepowershell
+ms.openlocfilehash: 99cd980e13b3b9b9a7a450520218c76ccf26fd69
+ms.sourcegitcommit: 829d951d5c90442a38012daaf77e86046018e5b9
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87007626"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "89079857"
 ---
 # <a name="powershell-script-to-undelete-an-accidentally-deleted-file-share"></a>用于撤销删除意外删除的文件共享的 PowerShell 脚本
 

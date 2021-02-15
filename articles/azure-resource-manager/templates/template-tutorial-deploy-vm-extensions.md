@@ -1,20 +1,21 @@
 ---
 title: 使用模板部署 VM 扩展
-description: 了解如何使用 Azure 资源管理器模板部署虚拟机扩展
+description: 了解如何使用 Azure 资源管理器模板（ARM 模板）部署虚拟机扩展。
 author: mumian
 ms.date: 04/23/2020
 ms.topic: tutorial
 ms.author: jgao
-ms.openlocfilehash: fb99babfd53b26874bed62183871d13ae0ae4baf
-ms.sourcegitcommit: d7008edadc9993df960817ad4c5521efa69ffa9f
+ms.custom: devx-track-azurepowershell
+ms.openlocfilehash: 9e04006a0908832c623230d89caa62b0985f32e4
+ms.sourcegitcommit: d2d1c90ec5218b93abb80b8f3ed49dcf4327f7f4
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/08/2020
-ms.locfileid: "86120120"
+ms.lasthandoff: 12/16/2020
+ms.locfileid: "97587938"
 ---
 # <a name="tutorial-deploy-virtual-machine-extensions-with-arm-templates"></a>教程：使用 ARM 模板部署虚拟机扩展
 
-了解如何使用 [Azure 虚拟机扩展](../../virtual-machines/extensions/features-windows.md)在 Azure VM 上执行部署后配置和自动化任务。 有许多不同的 VM 扩展可与 Azure VM 配合使用。 在本教程中，你将从 Azure 资源管理器 (ARM) 模板部署自定义脚本扩展，以便在 Windows VM 上运行 PowerShell 脚本。  此脚本在 VM 上安装 Web 服务器。
+了解如何使用 [Azure 虚拟机扩展](../../virtual-machines/extensions/features-windows.md)在 Azure VM 上执行部署后配置和自动化任务。 有许多不同的 VM 扩展可与 Azure VM 配合使用。 在本教程中，你将从 Azure 资源管理器模板（ARM 模板）部署自定义脚本扩展，以便在 Windows VM 上运行 PowerShell 脚本。 此脚本在 VM 上安装 Web 服务器。
 
 本教程涵盖以下任务：
 
@@ -30,7 +31,7 @@ ms.locfileid: "86120120"
 
 若要完成本文，需要做好以下准备：
 
-* 包含资源管理器工具扩展的 Visual Studio Code。 请参阅[快速入门：使用 Visual Studio Code 创建 Azure 资源管理器模板](quickstart-create-templates-use-visual-studio-code.md)。
+* 包含资源管理器工具扩展的 Visual Studio Code。 请参阅[快速入门：使用 Visual Studio Code 创建 ARM 模板](quickstart-create-templates-use-visual-studio-code.md)。
 * 若要提高安全性，请使用为虚拟机管理员帐户生成的密码。 以下是密码生成示例：
 
     ```console
@@ -41,7 +42,7 @@ ms.locfileid: "86120120"
 
 ## <a name="prepare-a-powershell-script"></a>准备 PowerShell 脚本
 
-可以使用内联 PowerShell 脚本或脚本文件。  本教程介绍如何使用脚本文件。 从 [GitHub](https://raw.githubusercontent.com/Azure/azure-docs-json-samples/master/tutorial-vm-extension/installWebServer.ps1) 共享包含以下内容的 PowerShell 脚本：
+可以使用内联 PowerShell 脚本或脚本文件。 本教程介绍如何使用脚本文件。 从 [GitHub](https://raw.githubusercontent.com/Azure/azure-docs-json-samples/master/tutorial-vm-extension/installWebServer.ps1) 共享包含以下内容的 PowerShell 脚本：
 
 ```azurepowershell
 Install-WindowsFeature -name Web-Server -IncludeManagementTools
@@ -104,12 +105,12 @@ Azure 快速入门模板是 ARM 模板的存储库。 无需从头开始创建�
 
 有关此资源定义的详细信息，请查看[扩展参考](/azure/templates/microsoft.compute/virtualmachines/extensions)。 下面是一些重要元素：
 
-* **名称**：由于扩展资源是虚拟机对象的子资源，因此其名称必须有虚拟机名称前缀。 请参阅[设置子资源的名称和类型](child-resource-name-type.md)。
-* **dependsOn**：在创建虚拟机以后创建扩展资源。
-* **fileUris**：存储脚本文件的位置。 如果不使用提供的位置，则需更新这些值。
-* **commandToExecute**：此命令调用脚本。
+* `name`：由于扩展资源是虚拟机对象的子资源，因此其名称必须有虚拟机名称前缀。 请参阅[设置子资源的名称和类型](child-resource-name-type.md)。
+* `dependsOn`：在创建虚拟机以后创建扩展资源。
+* `fileUris`：存储脚本文件的位置。 如果不使用提供的位置，则需更新这些值。
+* `commandToExecute`：此命令调用脚本。
 
-若要使用内联脚本，请删除“fileUris”并将“commandToExecute”更新为：
+若要使用内联脚本，请删除 `fileUris`，然后将 `commandToExecute` 更新为：
 
 ```powershell
 powershell.exe Install-WindowsFeature -name Web-Server -IncludeManagementTools && powershell.exe remove-item 'C:\\inetpub\\wwwroot\\iisstart.htm' && powershell.exe Add-Content -Path 'C:\\inetpub\\wwwroot\\iisstart.htm' -Value $('Hello World from ' + $env:computername)
@@ -119,7 +120,7 @@ powershell.exe Install-WindowsFeature -name Web-Server -IncludeManagementTools &
 
 还必须打开 HTTP 端口，以便访问 Web 服务器。
 
-1. 在模板中找到 **securityRules**。
+1. 在模板中找到 `securityRules`。
 1. 将以下规则添加到 **default-allow-3389** 旁边。
 
     ```json

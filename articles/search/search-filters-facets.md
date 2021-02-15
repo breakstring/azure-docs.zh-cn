@@ -7,13 +7,14 @@ author: HeidiSteen
 ms.author: heidist
 ms.service: cognitive-search
 ms.topic: conceptual
-ms.date: 11/04/2019
-ms.openlocfilehash: 852d8f8f85536dc62dd792e5727dd7ec0571ba29
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.date: 10/05/2020
+ms.custom: devx-track-csharp
+ms.openlocfilehash: 9360fc000e01e1c52561cbaa3e2f2968e67e2fa2
+ms.sourcegitcommit: 829d951d5c90442a38012daaf77e86046018e5b9
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87084205"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "91740864"
 ---
 # <a name="how-to-build-a-facet-filter-in-azure-cognitive-search"></a>如何在 Azure 认知搜索中生成分面筛选器 
 
@@ -28,7 +29,8 @@ ms.locfileid: "87084205"
 
 分面为动态并在查询中返回。 搜索响应带有用于导航结果的分面类别。 如果不熟悉分面，可通过以下示例了解分面导航结构。
 
-  ![显示搜索对话框的图像，其中包含按业务标题分组的筛选的搜索结果。 箭头指示结果是分面导航结构中显示的方面。](./media/search-filters-facets/facet-nav.png)
+:::image type="complex" source="media/search-filters-facets/facet-nav.png" alt-text="筛选的搜索结果":::
+"显示带有筛选的搜索结果的搜索对话框的图像，按业务标题分组。 箭头指示结果是分面导航结构中显示的方面 :::image-end:::
 
 不熟悉分面导航并希望了解更多详情？ 请参阅[如何在 Azure 认知搜索中实现分面导航](search-faceted-navigation.md)。
 
@@ -38,7 +40,7 @@ ms.locfileid: "87084205"
 
 通过将 `facetable` 属性设置为 `true`，便可在创建索引时逐字段启用分面。 通常，对于此类字段，还应该将 `filterable` 属性设置为 `true`，使搜索应用程序能够根据最终用户选择的分面，基于这些字段进行筛选。 
 
-使用 REST API 创建索引时，可能会在分面导航中使用的任何[字段类型](https://docs.microsoft.com/rest/api/searchservice/supported-data-types)默认将被标记为 `facetable`：
+使用 REST API 创建索引时，可能会在分面导航中使用的任何[字段类型](/rest/api/searchservice/supported-data-types)默认将被标记为 `facetable`：
 
 + `Edm.String`
 + `Edm.DateTimeOffset`
@@ -77,11 +79,11 @@ ms.locfileid: "87084205"
 ```
 
 > [!Note]
-> 此索引定义复制自[使用 REST API 创建 Azure 认知搜索索引](https://docs.microsoft.com/azure/search/search-create-index-rest-api)。 除了字段定义的表面差异外，二者完全相同。 已在 `category`、`tags`、`parkingIncluded`、`smokingAllowed` 和 `rating` 字段中显式添加 `filterable` 和 `facetable` 属性。 在实践中，使用 REST API 时，默认会在这些字段中启用 `filterable` 和 `facetable`。 使用 .NET SDK 时，必须显式启用这些属性。
+> 此索引定义复制自[使用 REST API 创建 Azure 认知搜索索引](./search-get-started-powershell.md)。 除了字段定义的表面差异外，二者完全相同。 已在 `category`、`tags`、`parkingIncluded`、`smokingAllowed` 和 `rating` 字段中显式添加 `filterable` 和 `facetable` 属性。 在实践中，使用 REST API 时，默认会在这些字段中启用 `filterable` 和 `facetable`。 使用 .NET SDK 时，必须显式启用这些属性。
 
 ## <a name="build-and-load-an-index"></a>生成和加载索引
 
-编写查询之前的一个中间步骤（也许是众所周知的步骤）是[生成并填充索引](https://docs.microsoft.com/azure/search/search-get-started-dotnet#1---create-index)。 为了保持内容完整，此处阐述了此步骤。 确定索引是否可用的一种方法是在[门户](https://portal.azure.com)中查看索引列表。
+编写查询之前的一个中间步骤（也许是众所周知的步骤）是[生成并填充索引](./search-get-started-dotnet.md#1---create-an-index)。 为了保持内容完整，此处阐述了此步骤。 确定索引是否可用的一种方法是在[门户](https://portal.azure.com)中查看索引列表。
 
 ## <a name="add-facet-filters-to-a-query"></a>将分面筛选器添加到查询
 
@@ -124,5 +126,5 @@ if (!String.IsNullOrEmpty(categoryFacet))
 ## <a name="see-also"></a>另请参阅
 
 + [Azure 认知搜索中的筛选器](search-filters.md)
-+ [创建索引 REST API](https://docs.microsoft.com/rest/api/searchservice/create-index)
-+ [搜索文档 REST API](https://docs.microsoft.com/rest/api/searchservice/search-documents)
++ [创建索引 REST API](/rest/api/searchservice/create-index)
++ [搜索文档 REST API](/rest/api/searchservice/search-documents)

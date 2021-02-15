@@ -6,12 +6,12 @@ ms.topic: conceptual
 ms.date: 04/22/2019
 ms.author: tyleonha
 ms.reviewer: glenga
-ms.openlocfilehash: 6be397631621c727bb8979df2ee8eec3aca43096
-ms.sourcegitcommit: c5021f2095e25750eb34fd0b866adf5d81d56c3a
+ms.openlocfilehash: a668024db126c82f96756555aba513b77f7d7366
+ms.sourcegitcommit: 7cc10b9c3c12c97a2903d01293e42e442f8ac751
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/25/2020
-ms.locfileid: "88799360"
+ms.lasthandoff: 11/06/2020
+ms.locfileid: "93422954"
 ---
 # <a name="debug-powershell-azure-functions-locally"></a>本地调试 PowerShell Azure Functions
 
@@ -38,7 +38,7 @@ PSFunctionApp
  | - profile.ps1
 ```
 
-此函数应用与完成 [PowerShell 快速入门](./functions-create-first-function-vs-code.md?pivots=programming-language-powershell)时获取的应用类似。
+此函数应用与完成 [PowerShell 快速入门](./create-first-function-vs-code-powershell.md)时获取的应用类似。
 
 中的函数代码 `run.ps1` 类似于以下脚本：
 
@@ -66,6 +66,9 @@ Push-OutputBinding -Name Response -Value ([HttpResponseContext]@{
 
 若要调试任何 PowerShell 函数，该函数需要停止才能附加调试器。 该 `Wait-Debugger` cmdlet 将停止执行并等待调试器。
 
+>[!NOTE]
+>使用 PowerShell 7 时，无需 `Wait-Debugger` 在代码中添加调用。
+
 只需添加对 `Wait-Debugger` 语句上方的 cmdlet 的调用 `if` ，如下所示：
 
 ```powershell
@@ -92,10 +95,10 @@ if($name) {
 若要在 Visual Studio Code 中调试 PowerShell 函数，则必须安装以下各项：
 
 * [适用于 Visual Studio Code 的 PowerShell 扩展](/powershell/scripting/components/vscode/using-vscode)
-* [适用于 Visual Studio Code 的 Azure Functions 扩展](functions-create-first-function-vs-code.md)
+* [适用于 Visual Studio Code 的 Azure Functions 扩展](./create-first-function-cli-powershell.md)
 * [PowerShell Core 6.2 或更高版本](/powershell/scripting/install/installing-powershell-core-on-windows)
 
-安装这些依赖项后，加载现有的 PowerShell 函数项目，或者 [创建第一个 Powershell 函数项目](./functions-create-first-function-vs-code.md?pivots=programming-language-powershell)。
+安装这些依赖项后，加载现有的 PowerShell 函数项目，或者 [创建第一个 Powershell 函数项目](./create-first-function-vs-code-powershell.md)。
 
 >[!NOTE]
 > 如果你的项目没有所需的配置文件，则系统会提示你添加它们。
@@ -106,9 +109,9 @@ PowerShell Core 与 Windows PowerShell 并行安装。 将 PowerShell Core 设�
 
 1. 按 F1 显示命令托盘，然后搜索 `Session` 。
 
-1. 选择 **PowerShell：显示会话菜单**。
+1. 选择 **PowerShell：显示会话菜单** 。
 
-1. 如果 **当前会话** 不是 **PowerShell core 6**，请选择 " **切换到： PowerShell core 6**"。
+1. 如果 **当前会话** 不是 **PowerShell core 6** ，请选择 " **切换到： PowerShell core 6** "。
 
 打开 PowerShell 文件后，会看到该版本在窗口右下角显示为绿色。 选择此文本还会显示 "会话" 菜单。 若要了解详细信息，请参阅 [选择用于扩展的 PowerShell 版本](/powershell/scripting/components/vscode/using-vscode#choosing-a-version-of-powershell-to-use-with-the-extension)。
 
@@ -116,7 +119,7 @@ PowerShell Core 与 Windows PowerShell 并行安装。 将 PowerShell Core 设�
 
 验证 `Wait-Debugger` 是否在要附加调试器的函数中进行了设置。  `Wait-Debugger`添加后，可以使用 Visual Studio Code 调试函数应用。
 
-选择 " **调试** " 窗格，并 **附加到 PowerShell 函数**。
+选择 " **调试** " 窗格，并 **附加到 PowerShell 函数** 。
 
 ![调试器](https://user-images.githubusercontent.com/2644648/56166073-8a7b3780-5f89-11e9-85ce-36ed38e221a2.png)
 
@@ -243,11 +246,11 @@ PowerShell 扩展使用 `Debug-Runspace` ，后者又依赖于 PowerShell 的 `B
 
 如果发生此中断，请运行 `continue` 或 `c` 命令跳过此断点。 然后，在预期的断点处停止。
 
-## <a name="troubleshooting"></a>疑难解答
+## <a name="troubleshooting"></a>故障排除
 
 如果在调试过程中遇到困难，应检查以下各项：
 
-| 勾选标记 | 操作 |
+| 检查 | 操作 |
 |------|------|
 | `func --version`从终端运行。 如果收到一个 `func` 找不到的错误，则可能是本地变量中缺少 ( # A0) 的核心工具 `path` 。| [重新安装核心工具](functions-run-local.md#v2)。|  
 | 在 Visual Studio Code 中，默认终端需要有权访问 func.exe。 请确保未使用未安装核心工具的默认终端，如适用于 Linux 的 Windows 子系统 (WSL) 。  | 将 Visual Studio Code 中的默认 shell 设置为 PowerShell 7 (推荐的) 或 Windows PowerShell 5.1。|

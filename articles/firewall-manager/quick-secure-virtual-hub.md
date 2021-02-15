@@ -1,19 +1,19 @@
 ---
 title: 快速入门：使用 Azure 防火墙管理器保护虚拟中心安全 - 资源管理器模板
-description: 了解如何使用 Azure 防火墙管理器保护虚拟中心安全。
+description: 本快速入门介绍了如何使用 Azure 防火墙管理器保护虚拟中心安全。
 services: firewall-manager
 author: vhorne
-ms.service: firewall
+ms.service: firewall-manager
 ms.topic: quickstart
 ms.custom: subject-armqs
-ms.date: 06/30/2020
+ms.date: 08/28/2020
 ms.author: victorh
-ms.openlocfilehash: 1917bed7727b97de27e560a0f2d8032a8ae08996
-ms.sourcegitcommit: dabd9eb9925308d3c2404c3957e5c921408089da
+ms.openlocfilehash: 050dfa737ad04127f8c72158fbecb2e8e70e05c1
+ms.sourcegitcommit: eb6bef1274b9e6390c7a77ff69bf6a3b94e827fc
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/11/2020
-ms.locfileid: "86242009"
+ms.lasthandoff: 10/05/2020
+ms.locfileid: "89075335"
 ---
 # <a name="quickstart-secure-your-virtual-hub-using-azure-firewall-manager---arm-template"></a>快速入门：使用 Azure 防火墙管理器保护虚拟中心安全 - ARM 模板
 
@@ -37,7 +37,7 @@ ms.locfileid: "86242009"
 
 本快速入门中使用的模板来自 [Azure 快速启动模板](https://azure.microsoft.com/resources/templates/fwm-docs-qs/)。
 
-:::code language="json" source="~/quickstart-templates/fwm-docs-qs/azuredeploy.json" range="001-477" highlight="47-76":::
+:::code language="json" source="~/quickstart-templates/fwm-docs-qs/azuredeploy.json":::
 
 模板中定义了多个 Azure 资源：
 

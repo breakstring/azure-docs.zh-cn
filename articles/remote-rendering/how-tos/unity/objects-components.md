@@ -5,18 +5,19 @@ author: jakrams
 ms.author: jakras
 ms.date: 02/28/2020
 ms.topic: how-to
-ms.openlocfilehash: e55589a388a1883f42284f2e20c6d5619b63f48f
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.custom: devx-track-csharp
+ms.openlocfilehash: 15822c357db63db81e6c1efda2467279a98d7c34
+ms.sourcegitcommit: f377ba5ebd431e8c3579445ff588da664b00b36b
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "85565474"
+ms.lasthandoff: 02/05/2021
+ms.locfileid: "99594140"
 ---
 # <a name="interact-with-unity-game-objects-and-components"></a>与 Unity 游戏对象和组件交互
 
-Azure 远程呈现（ARR）针对大量对象进行了优化（请参阅[限制](../../reference/limits.md)）。 尽管可以在主机上管理大型和复杂的层次结构，但在低功率设备上，在 Unity 中复制它们都是不可行的。
+Azure 远程渲染 (ARR) 经过优化，可用于大量对象 (请参阅 [限制](../../reference/limits.md)) 。 尽管可以在主机上管理大型和复杂的层次结构，但在低功率设备上，在 Unity 中复制它们都是不可行的。
 
-因此，当在主机上加载模型时，Azure 远程呈现会镜像客户端设备上有关模型结构的信息（这会产生网络流量），但不会复制 Unity 中的对象和组件。 相反，它要求您手动请求所需的 Unity 游戏对象和组件，以便您可以将系统开销限制在实际所需的范围之外。 这样，就可以更好地控制客户端性能。
+因此，当在主机上加载模型时，Azure 远程呈现会镜像客户端设备上有关模型结构的信息 (这将导致网络流量) ，但不会复制 Unity 中的对象和组件。 相反，它要求您手动请求所需的 Unity 游戏对象和组件，以便您可以将系统开销限制在实际所需的范围之外。 这样，就可以更好地控制客户端性能。
 
 因此，Azure 远程呈现的 Unity 集成附带了附加功能，可根据需要复制远程呈现结构。
 
@@ -24,42 +25,21 @@ Azure 远程呈现（ARR）针对大量对象进行了优化（请参阅[限制]
 
 在加载模型时，将获取对已加载模型的根对象的引用。 此引用不是 Unity 游戏对象，但您可以使用扩展方法将其转换为一个对象 `Entity.GetOrCreateGameObject()` 。 该函数需要类型为的参数 `UnityCreationMode` 。 如果传递 `CreateUnityComponents` ，则新创建的 Unity 游戏对象将另外用代理组件填充主机上存在的所有远程呈现组件。 但建议使用此选项，以 `DoNotCreateUnityComponents` 将开销降到最低。
 
-### <a name="load-model-with-task"></a>加载包含任务的模型
-
-```cs
-LoadModelAsync _pendingLoadTask = null;
-void LoadModelWithTask()
-{
-    _pendingLoadTask = RemoteManagerUnity.CurrentSession.Actions.LoadModelFromSASAsync(new LoadModelFromSASParams("builtin://Engine"));
-
-    _pendingLoadTask.Completed += (LoadModelAsync res) =>
-    {
-        // turn the root object into a Unity game object
-        var gameObject = res.Result.Root?.GetOrCreateGameObject(UnityCreationMode.DoNotCreateUnityComponents);
-        _pendingLoadTask = null;
-    };
-
-    // also listen to progress updates:
-    _pendingLoadTask.ProgressUpdated += (float progress) =>
-    {
-        // progress is a fraction in [0..1] range
-        int percentage = (int)(progress * 100.0f);
-        // do something...
-        // Since the updates are triggered by the main thread, we may access unity objects here.
-    };
-}
-```
-
 ### <a name="load-model-with-unity-coroutines"></a>具有 Unity 协同程序的负载模型
 
 ```cs
-IEnumerator LoadModelWithCoroutine()
+IEnumerator LoadModelWithCoroutine(RenderingSession session)
 {
-    LoadModelAsync task = RemoteManagerUnity.CurrentSession.Actions.LoadModelFromSASAsync(new LoadModelFromSASParams("builtin://Engine"));
+    float currentProgress = 0.0f;
+    var task = session.Connection.LoadModelFromSasAsync(new LoadModelFromSasOptions("builtin://Engine"),
+        (float progress) =>
+        {
+            currentProgress = progress;
+        });
 
-    while (!task.IsCompleted)
+    while (!task.IsCompleted && !task.IsFaulted)
     {
-        int percentage = (int)(task.Progress * 100.0f);
+        int percentage = (int)(currentProgress * 100.0f);
         yield return null;
     }
 
@@ -67,22 +47,20 @@ IEnumerator LoadModelWithCoroutine()
     {
         var gameObject = task.Result.Root?.GetOrCreateGameObject(UnityCreationMode.DoNotCreateUnityComponents);
     }
-
-    task = null;
 }
 ```
 
 ### <a name="load-model-with-await-pattern"></a>采用 await 模式的负载模型
 
 ```cs
-async void LoadModelWithAwait()
+async void LoadModelWithAwait(RenderingSession session)
 {
-    var result = await RemoteManagerUnity.CurrentSession.Actions.LoadModelFromSASAsync(new LoadModelFromSASParams("builtin://Engine")).AsTask();
+    var result = await session.Connection.LoadModelFromSasAsync(new LoadModelFromSasOptions("builtin://Engine"), null);
     var gameObject = result.Root?.GetOrCreateGameObject(UnityCreationMode.DoNotCreateUnityComponents);
 }
 ```
 
-上面的代码示例通过 SAS 使用模型加载路径，因为内置模型已加载。 通过 blob 容器（使用和）对模型进行寻址 `LoadModelAsync` `LoadModelParams` 完全类似。
+上面的代码示例通过 SAS 使用模型加载路径，因为内置模型已加载。 使用 (的 blob 容器来寻址模型 `LoadModelAsync` ， `LoadModelOptions`) 完全类似。
 
 ## <a name="remoteentitysyncobject"></a>RemoteEntitySyncObject
 
@@ -104,7 +82,7 @@ var cutplane = gameObject.GetOrCreateArrComponent<ARRCutPlaneComponent>(RemoteMa
 
 ## <a name="coupled-lifetimes"></a>耦合生存期
 
-远程[实体](../../concepts/entities.md)和 Unity 游戏对象的生存期是耦合的，而是通过绑定 `RemoteEntitySyncObject` 。 如果调用 `UnityEngine.Object.Destroy(...)` 此类游戏对象，也会删除远程实体。
+远程 [实体](../../concepts/entities.md) 和 Unity 游戏对象的生存期是耦合的，而是通过绑定 `RemoteEntitySyncObject` 。 如果调用 `UnityEngine.Object.Destroy(...)` 此类游戏对象，也会删除远程实体。
 
 若要销毁 Unity 游戏对象，而不影响远程实体，首先需要对调用 `Unbind()` `RemoteEntitySyncObject` 。
 

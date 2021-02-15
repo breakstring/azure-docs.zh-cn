@@ -3,13 +3,13 @@ title: 快速入门-将事件发送到事件网格
 description: 在本快速入门中，我们将为容器注册表启用事件网格事件，然后将容器映像推送和删除事件发送到示例应用程序。
 ms.topic: article
 ms.date: 08/23/2018
-ms.custom: seodec18
-ms.openlocfilehash: dbeba56820a520e3435eeb0c5c8dbc5aae981241
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.custom: seodec18, devx-track-azurecli
+ms.openlocfilehash: b4038bb232c14278e838f2c34706dcc103def7e4
+ms.sourcegitcommit: 436518116963bd7e81e0217e246c80a9808dc88c
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "78403243"
+ms.lasthandoff: 01/27/2021
+ms.locfileid: "98919640"
 ---
 # <a name="quickstart-send-events-from-private-container-registry-to-event-grid"></a>快速入门：将事件从私有容器注册表发送到事件网格
 
@@ -19,11 +19,11 @@ Azure 事件网格是一个完全托管的事件路由服务，可以通过发�
 
 ![呈现示例 Web 应用程序的 Web 浏览器，其中包含三个收到的事件][sample-app-01]
 
-如果没有 Azure 订阅，请在开始之前创建一个[免费帐户][azure-account]。
+[!INCLUDE [quickstarts-free-trial-note](../../includes/quickstarts-free-trial-note.md)]
 
-[!INCLUDE [cloud-shell-try-it.md](../../includes/cloud-shell-try-it.md)]
+[!INCLUDE [azure-cli-prepare-your-environment.md](../../includes/azure-cli-prepare-your-environment.md)]
 
-本文中的 Azure CLI 命令已根据 **Bash** shell 设置了格式。 如果使用其他 shell（例如 PowerShell 或命令提示符），则可能需要相应地调整行连续字符或变量赋值行。 本文使用变量来最大程度地减少所需的命令编辑量。
+- 本文中的 Azure CLI 命令已根据 **Bash** shell 设置了格式。 如果使用其他 shell（例如 PowerShell 或命令提示符），则可能需要相应地调整行连续字符或变量赋值行。 本文使用变量来最大程度地减少所需的命令编辑量。
 
 ## <a name="create-a-resource-group"></a>创建资源组
 
@@ -78,7 +78,7 @@ az acr create --resource-group $RESOURCE_GROUP_NAME --name $ACR_NAME --sku Basic
 ```azurecli-interactive
 SITE_NAME=<your-site-name>
 
-az group deployment create \
+az deployment group create \
     --resource-group $RESOURCE_GROUP_NAME \
     --template-uri "https://raw.githubusercontent.com/Azure-Samples/azure-event-grid-viewer/master/azuredeploy.json" \
     --parameters siteName=$SITE_NAME hostingPlanName=$SITE_NAME-plan
@@ -96,7 +96,7 @@ az group deployment create \
 
 ## <a name="subscribe-to-registry-events"></a>订阅注册表事件
 
-在事件网格中订阅一个主题，以告知你要跟踪哪些事件，以及要将事件发送到何处。** 以下 [az eventgrid event-subscription create][az-eventgrid-event-subscription-create] 命令订阅创建的容器注册表，并将 Web 应用的 URL 指定为要将事件发送到的终结点。 此处可以重复使用在前面几个部分填充的环境变量，因此无需进行编辑。
+在事件网格中订阅一个主题，以告知你要跟踪哪些事件，以及要将事件发送到何处。 以下 [az eventgrid event-subscription create][az-eventgrid-event-subscription-create] 命令订阅创建的容器注册表，并将 Web 应用的 URL 指定为要将事件发送到的终结点。 此处可以重复使用在前面几个部分填充的环境变量，因此无需进行编辑。
 
 ```azurecli-interactive
 ACR_REGISTRY_ID=$(az acr show --name $ACR_NAME --query id --output tsv)
@@ -144,7 +144,7 @@ az eventgrid event-subscription create \
 执行以下 Azure CLI 命令，基于 GitHub 存储库的内容生成容器映像。 默认情况下，ACR 任务会自动将成功生成的映像推送到注册表，后者会生成 `ImagePushed` 事件。
 
 ```azurecli-interactive
-az acr build --registry $ACR_NAME --image myimage:v1 -f Dockerfile https://github.com/Azure-Samples/acr-build-helloworld-node.git
+az acr build --registry $ACR_NAME --image myimage:v1 -f Dockerfile https://github.com/Azure-Samples/acr-build-helloworld-node.git#main
 ```
 
 当 ACR 任务生成然后推送映像时，应会显示如下所示的输出。 为简洁起见，以下示例输出已截断。

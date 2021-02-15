@@ -8,13 +8,13 @@ ms.topic: tutorial
 ms.reviewer: dseven
 ms.author: matjazl
 author: matjazl
-ms.date: 02/07/2019
-ms.openlocfilehash: f8b5e344fc963d466571e75ff16f17367dc32971
-ms.sourcegitcommit: 7fe8df79526a0067be4651ce6fa96fa9d4f21355
+ms.date: 02/01/2021
+ms.openlocfilehash: 5771f95da7b63c6c16bb581b84cc28c4b838ec27
+ms.sourcegitcommit: d49bd223e44ade094264b4c58f7192a57729bada
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/06/2020
-ms.locfileid: "87844841"
+ms.lasthandoff: 02/02/2021
+ms.locfileid: "99259010"
 ---
 # <a name="access-azure-api-for-fhir-with-postman"></a>使用 Postman 访问 Azure API for FHIR
 
@@ -23,7 +23,8 @@ ms.locfileid: "87844841"
 ## <a name="prerequisites"></a>先决条件
 
 - Azure 中存在 FHIR 终结点。 可使用托管的 Azure API for FHIR 或 Azure 的开放源代码 FHIR 服务器设置该终结点。 使用 [Azure 门户](fhir-paas-portal-quickstart.md)、[PowerShell](fhir-paas-powershell-quickstart.md) 或 [Azure CLI](fhir-paas-cli-quickstart.md) 设置托管的 Azure API for FHIR。
-- 要用于访问 FHIR 服务的[客户端应用程序](register-confidential-azure-ad-client-app.md)
+- 要用于访问 FHIR 服务的[客户端应用程序](register-confidential-azure-ad-client-app.md)。
+- 你已向客户端应用程序授予访问 FHIR 服务所需的权限，例如“FHIR 数据参与者”。 [为 FHIR 配置 Azure RBAC](https://docs.microsoft.com/azure/healthcare-apis/configure-azure-rbac) 提供了详细信息
 - 已安装 Postman。 可以从 [https://www.getpostman.com](https://www.getpostman.com) 获取它。
 
 ## <a name="fhir-server-and-authentication-details"></a>FHIR 服务器和身份验证详细信息
@@ -32,7 +33,7 @@ ms.locfileid: "87844841"
 
 - FHIR 服务器 URL，例如 `https://MYACCOUNT.azurehealthcareapis.com`
 - FHIR 服务器的标识提供者 `Authority`，例如 `https://login.microsoftonline.com/{TENANT-ID}`
-- 已配置的 `audience`。 这通常是 FHIR 服务器的 URL，例如 `https://MYACCOUNT.azurehealthcareapis.com` 或仅 `https://azurehealthcareapis.com`。
+- 已配置的 `audience`。 这通常是 FHIR 服务器的 URL，例如 `https://<FHIR-SERVER-NAME>.azurehealthcareapis.com` 或仅 `https://azurehealthcareapis.com`。
 - 要用于访问 FHIR 服务的[客户端应用程序](register-confidential-azure-ad-client-app.md)的 `client_id`（或应用程序 ID）。
 - 客户端应用程序的 `client_secret`（或应用程序机密）。
 
@@ -121,7 +122,7 @@ ms.locfileid: "87844841"
 
 点击“发送”，你应可看到患者已成功创建：
 
-![已创建患者](media/tutorial-postman/postman-patient-created.png)
+![显示患者已成功创建的屏幕截图。](media/tutorial-postman/postman-patient-created.png)
 
 如果重复患者搜索，现在应会看到患者记录：
 

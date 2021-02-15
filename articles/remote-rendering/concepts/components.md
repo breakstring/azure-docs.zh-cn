@@ -5,12 +5,13 @@ author: florianborn71
 ms.author: flborn
 ms.date: 02/04/2020
 ms.topic: conceptual
-ms.openlocfilehash: bd2a6e16d34bf6c5b59ce7fa5c99975d44947770
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.custom: devx-track-csharp
+ms.openlocfilehash: 9679be03c69090a0c11d007cfc542bae70bd3cbc
+ms.sourcegitcommit: f377ba5ebd431e8c3579445ff588da664b00b36b
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "84021664"
+ms.lasthandoff: 02/05/2021
+ms.locfileid: "99592188"
 ---
 # <a name="components"></a>组件
 
@@ -26,8 +27,8 @@ Azure 远程渲染使用[实体组件系统](https://en.wikipedia.org/wiki/Entit
 
 ```cs
 // create a point light component
-AzureSession session = GetCurrentlyConnectedSession();
-PointLightComponent lightComponent = session.Actions.CreateComponent(ObjectType.PointLightComponent, ownerEntity) as PointLightComponent;
+RenderingSession session = GetCurrentlyConnectedSession();
+PointLightComponent lightComponent = session.Connection.CreateComponent(ObjectType.PointLightComponent, ownerEntity) as PointLightComponent;
 
 lightComponent.Color = new Color4Ub(255, 150, 20, 255);
 lightComponent.Intensity = 11;
@@ -41,9 +42,9 @@ lightComponent = null;
 
 ```cpp
 // create a point light component
-ApiHandle<AzureSession> session = GetCurrentlyConnectedSession();
+ApiHandle<RenderingSession> session = GetCurrentlyConnectedSession();
 
-ApiHandle<PointLightComponent> lightComponent = session->Actions()->CreateComponent(ObjectType::PointLightComponent, ownerEntity)->as<PointLightComponent>();
+ApiHandle<PointLightComponent> lightComponent = session->Connection()->CreateComponent(ObjectType::PointLightComponent, ownerEntity)->as<PointLightComponent>();
 
 // ...
 
@@ -52,7 +53,6 @@ lightComponent->Destroy();
 lightComponent = nullptr;
 ```
 
-
 组件在创建时附加到实体。 之后不能将其迁移至其他实体。 使用 `Component.Destroy()` 显式删除组件，或者在组件的所有者实体被销毁时自动显式删除组件。
 
 一次只能向一个实体添加每个组件类型的一个实例。
@@ -60,6 +60,15 @@ lightComponent = nullptr;
 ## <a name="unity-specific"></a>Unity 特定
 
 Unity 集成具有其他扩展函数，用于与组件进行交互。 请参阅 [Unity 游戏对象和组件](../how-tos/unity/objects-components.md)。
+
+## <a name="api-documentation"></a>API 文档
+
+* [C # ComponentBase](/dotnet/api/microsoft.azure.remoterendering.componentbase)
+* [C # RenderingConnection CreateComponent ( # B1 ](/dotnet/api/microsoft.azure.remoterendering.renderingconnection.createcomponent)
+* [C # FindComponentOfType ( # B1 ](/dotnet/api/microsoft.azure.remoterendering.entity.findcomponentoftype)
+* [C + + ComponentBase](/cpp/api/remote-rendering/componentbase)
+* [C + + RenderingConnection：： CreateComponent ( # B1 ](/cpp/api/remote-rendering/renderingconnection#createcomponent)
+* [C + + Entity：： FindComponentOfType ( # B1 ](/cpp/api/remote-rendering/entity#findcomponentoftype)
 
 ## <a name="next-steps"></a>后续步骤
 

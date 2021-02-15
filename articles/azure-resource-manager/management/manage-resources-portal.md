@@ -5,12 +5,12 @@ author: mumian
 ms.topic: conceptual
 ms.date: 02/11/2019
 ms.author: jgao
-ms.openlocfilehash: 051361860a6a2d9ad70aa81e313857ec86cacfb4
-ms.sourcegitcommit: 2ff0d073607bc746ffc638a84bb026d1705e543e
+ms.openlocfilehash: e2274a551542b06996941b49e7d047baf3e8b3ca
+ms.sourcegitcommit: 4064234b1b4be79c411ef677569f29ae73e78731
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/06/2020
-ms.locfileid: "87827039"
+ms.lasthandoff: 10/28/2020
+ms.locfileid: "92894026"
 ---
 # <a name="manage-azure-resources-by-using-the-azure-portal"></a>使用 Azure 门户管理 Azure 资源
 
@@ -40,11 +40,11 @@ Azure 资源按 Azure 服务和资源组进行组织。 以下过程说明如何
 
 3. 选择要打开的资源。
 
-    ![在门户中打开 Azure 资源](./media/manage-resources-portal/manage-azure-resources-portal-open-resource.png)
+    ![突出显示所选资源的屏幕截图。](./media/manage-resources-portal/manage-azure-resources-portal-open-resource.png)
 
     存储帐户类似于：
 
-    ![在门户中打开 Azure 资源](./media/manage-resources-portal/manage-azure-resources-portal-open-resource-storage.png)
+    ![显示存储帐户的外观的屏幕截图。](./media/manage-resources-portal/manage-azure-resources-portal-open-resource-storage.png)
 
 按资源组打开资源：
 
@@ -114,7 +114,7 @@ Azure 资源按 Azure 服务和资源组进行组织。 以下过程说明如何
 
 ## <a name="manage-access-to-resources"></a>管理对资源的访问
 
-Azure [RBAC) 的 azure 基于角色的访问控制 (](../../role-based-access-control/overview.md)是管理 azure 中资源访问权限的方式。 有关详细信息，请参阅[使用 RBAC 和 Azure 门户管理访问权限](../../role-based-access-control/role-assignments-portal.md)。
+可以通过 [Azure 基于角色的访问控制 (Azure RBAC)](../../role-based-access-control/overview.md) 管理对 Azure 中资源的访问权限。 有关详细信息，请参阅[使用 Azure 门户添加或删除 Azure 角色分配](../../role-based-access-control/role-assignments-portal.md)。
 
 ## <a name="next-steps"></a>后续步骤
 

@@ -9,13 +9,13 @@ metadata:
   ms.collection: collection
   author: DCtheGeek
   ms.author: dacoulte
-  ms.date: 08/10/2020
-  ms.openlocfilehash: 66095427637b52d9bc220cba911c3099fd8f397c
-  ms.sourcegitcommit: 1aef4235aec3fd326ded18df7fdb750883809ae8
+  ms.date: 10/26/2020
+  ms.openlocfilehash: 753a2b112929b785526e32df9c9836f48b8675ba
+  ms.sourcegitcommit: c4c554db636f829d7abe70e2c433d27281b35183
   ms.translationtype: HT
   ms.contentlocale: zh-CN
-  ms.lasthandoff: 08/12/2020
-  ms.locfileid: "88135940"
+  ms.lasthandoff: 01/08/2021
+  ms.locfileid: "98034945"
 landingContent:
 - title: 关于 Azure Policy
   linkLists:
@@ -27,8 +27,12 @@ landingContent:
       url: ./concepts/effects.md
     - text: 定义结构
       url: ./concepts/definition-structure.md
+    - text: 范围
+      url: ./concepts/scope.md
     - text: 分配结构
       url: ./concepts/assignment-structure.md
+    - text: 例外结构
+      url: ./concepts/exemption-structure.md
   - linkListType: video
     links:
     - text: 版本 2018 中的 Azure Policy
@@ -43,20 +47,28 @@ landingContent:
       url: ./assign-policy-azurecli.md
     - text: 分配策略 (Azure PowerShell)
       url: ./assign-policy-powershell.md
+    - text: 分配策略 (.NET)
+      url: ./assign-policy-dotnet.md
+    - text: 分配策略 (JavaScript)
+      url: ./assign-policy-javascript.md
     - text: 分配策略 (Python)
       url: ./assign-policy-python.md
     - text: 分配策略 (REST)
       url: ./assign-policy-rest-api.md
     - text: 分配策略（ARM 模板）
       url: ./assign-policy-template.md
+    - text: 分配策略 (Terraform)
+      url: ./assign-policy-terraform.md
   - linkListType: tutorial
     links:
     - text: 创建和管理策略
       url: ./tutorials/create-and-manage.md
     - text: 使用 VS Code 扩展
       url: ./how-to/extension-for-vscode.md
-    - text: 将策略设计为代码工作流
+    - text: 设计 Azure Policy as Code 工作流
       url: ./concepts/policy-as-code.md
+    - text: 通过 GitHub 实现 Azure Policy as Code
+      url: ./tutorials/policy-as-code-github.md
   - linkListType: deploy
     links:
     - text: 策略示例索引
@@ -75,13 +87,15 @@ landingContent:
       url: ./how-to/programmatically-create.md
     - text: 为数组创作策略
       url: ./how-to/author-policies-for-arrays.md
+    - text: 导出资源
+      url: ./how-to/export-resources.md
   - linkListType: concept
     links:
     - text: 合规性
       url: ./concepts/regulatory-compliance.md
-    - text: 适用于 Kubernetes 的策略
+    - text: 适用于 Kubernetes 的 Azure Policy
       url: ./concepts/policy-for-kubernetes.md
-    - text: 适用于 VM 的策略
+    - text: 适用于 VM 的Azure Policy
       url: ./concepts/guest-configuration.md
 - title: 评估并修正资源
   linkLists:
@@ -91,6 +105,8 @@ landingContent:
       url: ./how-to/get-compliance-data.md
     - text: 确定导致非符合性的原因
       url: ./how-to/determine-non-compliance.md
+    - text: 免除资源
+      url: ./concepts/exemption-structure.md
     - text: 修正不符合资源
       url: ./how-to/remediate-resources.md
 - title: 参与
@@ -112,15 +128,17 @@ landingContent:
     - text: Azure CLI
       url: /cli/azure/policy
     - text: Azure PowerShell（策略）
-      url: /powershell/module/az.resources/#policies
+      url: /powershell/module/az.resources/#policy
     - text: Azure PowerShell（策略见解）
-      url: /powershell/module/az.policyinsights#policy_insights
+      url: /powershell/module/az.policyinsights#policy-insights
     - text: REST（策略见解）
       url: /rest/api/policy-insights/
     - text: REST（分配）
       url: /rest/api/resources/policyassignments
     - text: REST（定义）
       url: /rest/api/resources/policydefinitions
+    - text: REST（豁免）
+      url: /rest/api/resources/policyexemptions
     - text: REST（计划）
       url: /rest/api/resources/policysetdefinitions
     - text: 资源管理器模板

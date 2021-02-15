@@ -1,110 +1,113 @@
 ---
-title: 快速入门：创建服务器 - Azure 门户 - Azure Database for PostgreSQL（单一服务器）
-description: 使用 Azure 门户用户界面创建和管理 Azure Database for PostgreSQL - 单一服务器的快速入门指南。
-author: rachel-msft
-ms.author: raagyema
+title: 快速入门：创建服务器 - Azure 门户 - Azure Database for PostgreSQL - 单个服务器
+description: 在本快速入门指南中，你将使用 Azure 门户创建和管理 Azure Database for PostgreSQL 服务器。
+author: lfittl-msft
+ms.author: lufittl
 ms.service: postgresql
 ms.custom: mvc
 ms.topic: quickstart
-ms.date: 06/27/2020
-ms.openlocfilehash: 9741e00cdcc4907c547ebfcc6f8e7df7a3b32891
-ms.sourcegitcommit: 3543d3b4f6c6f496d22ea5f97d8cd2700ac9a481
+ms.date: 10/18/2020
+ms.openlocfilehash: 000ab3e3911c65554622a48d34abda79d60411df
+ms.sourcegitcommit: d60976768dec91724d94430fb6fc9498fdc1db37
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/20/2020
-ms.locfileid: "86529656"
+ms.lasthandoff: 12/02/2020
+ms.locfileid: "96492380"
 ---
-# <a name="quickstart-create-an-azure-database-for-postgresql-server-in-the-azure-portal"></a>快速入门：在 Azure 门户中创建用于 PostgreSQL 的 Azure 数据库服务器
+# <a name="quickstart-create-an-azure-database-for-postgresql-server-by-using-the-azure-portal"></a>快速入门：使用 Azure 门户创建 Azure Database for PostgreSQL 服务器
 
-用于 PostgreSQL 的 Azure 数据库是一种托管服务，可用于在云中运行、管理和缩放具有高可用性的 PostgreSQL 数据库。 本快速入门介绍如何使用 Azure 门户在大约五分钟内创建 Azure Database for PostgreSQL 服务器。
+用于 PostgreSQL 的 Azure 数据库是一种托管服务，可用于在云中运行、管理和缩放具有高可用性的 PostgreSQL 数据库。 本快速入门介绍如何创建单个 Azure Database for PostgreSQL 服务器并与其连接。
 
-如果还没有 Azure 订阅，可以在开始前创建一个[免费 Azure 帐户](https://azure.microsoft.com/free/)。
-
-## <a name="sign-in-to-the-azure-portal"></a>登录到 Azure 门户
-打开 Web 浏览器并转到[门户](https://portal.azure.com/)。 输入登录到门户所需的凭据。 默认视图是服务仪表板。
+## <a name="prerequisites"></a>先决条件
+需要一个 Azure 订阅。 如果还没有 Azure 订阅，可以在开始前创建一个[免费 Azure 帐户](https://azure.microsoft.com/free/)。
 
 ## <a name="create-an-azure-database-for-postgresql-server"></a>创建 Azure Database for PostgreSQL 服务器
+转到 [Azure 门户](https://portal.azure.com/)创建 Azure Database for PostgreSQL 单一服务器数据库。 搜索并选择 Azure Database for PostgreSQL 服务器。
 
-创建的 Azure Database for PostgreSQL 服务器中包含一组已配置的[计算和存储资源](./concepts-pricing-tiers.md)。 将在 [Azure 资源组](../azure-resource-manager/management/overview.md)中创建服务器。
+>[!div class="mx-imgBorder"]
+> :::image type="content" source="./media/quickstart-create-database-portal/search-postgres.png" alt-text="查找 Azure Database for PostgreSQL。":::
 
-若要创建用于 PostgreSQL 的 Azure 数据库服务器，请执行以下步骤：
-1. 在门户左上角选择“创建资源”(+)。
+1. 选择 **添加** 。
 
-2. 选择“数据库” > “用于 PostgreSQL 的 Azure 数据库”。
+2. 在“创建 Azure Database for PostgreSQL”页面上，选择“单一服务器”。
 
-   > [!div class="mx-imgBorder"]
-   > ![菜单中的“Azure Database for PostgreSQL”](./media/quickstart-create-database-portal/1-create-database.png)
+    >[!div class="mx-imgBorder"]
+    > :::image type="content" source="./media/quickstart-create-database-portal/select-single-server.png" alt-text="选择“单一服务器”":::
 
-3. 选择“单个服务器”部署选项。
-
-   > [!div class="mx-imgBorder"]
-   > ![选择 Azure Database for PostgreSQL - 单个服务器部署选项](./media/quickstart-create-database-portal/select-deployment-option.png)
-
-4. 填写“基本”表单，其中包含以下信息：
+3. 现在将以下内容输入“基本信息”窗体。
 
    > [!div class="mx-imgBorder"]
-   > ![创建服务器](./media/quickstart-create-database-portal/create-basics.png)
+   > :::image type="content" source="./media/quickstart-create-database-portal/create-basics.png" alt-text="显示创建单个服务器的基本选项卡的屏幕截图。":::
 
-   设置|建议的值|说明
-   ---|---|---
-   订阅|订阅名称|要用于服务器的 Azure 订阅。 如果有多个订阅，请选择要计费的资源所在的订阅。
-   资源组|myresourcegroup| 新的资源组名称，或订阅中的现有资源组。
-   服务器名称 |*mydemoserver*|用于标识用于 PostgreSQL 的 Azure 数据库服务器的唯一名称。 域名 *postgres.database.azure.com* 附加到提供的服务器名称。 服务器名称只能包含小写字母、数字和连字符 (-) 字符。 该名称必须至少包含 3 到 63 个字符。
-   数据源 | *无* | 选择“无”，从头开始创建新的服务器。 （如果是从现有 Azure Database for PostgreSQL 服务器的异地备份创建服务器，则会选择“备份”）。
-   管理员用户名 |*myadmin*| 连接到服务器时使用的自己的登录帐户。 管理员登录名不能是 **azure_superuser**、**azure_pg_admin**、**admin**、**administrator**、**root**、**guest** 或 **public**， 不能以 **pg_** 开头。
-   密码 |你的密码| 服务器管理员帐户的新密码。 该密码必须包含 8 到 128 个字符。 密码必须包含以下三个类别的字符：英文大写字母、英文小写字母、数字 (0 到 9)和非字母数字字符（!, $, #, % 等）。
-   位置|离用户最近的区域| 最靠近用户的位置。
-   版本|最新主版本| 除非另有特定的要求，否则为最新 PostgreSQL 主版本。
-   计算 + 存储 | **常规用途**、**第 5 代**、**2 vCore**、**5 GB**、**7 天**、**异地冗余** | 新服务器的计算、存储和备份配置。 选择“配置服务器”。 接下来，选择适当的定价层，有关详细信息，请参阅[定价详细信息](https://azure.microsoft.com/pricing/details/postgresql/server/)。 若要在异地冗余存储中启用服务器备份，请从**备份冗余选项**中选择“异地冗余”。 选择“确定”。
+   |设置|建议的值|描述|
+   |:---|:---|:---|
+   |订阅|订阅名称|选择所需的 Azure 订阅。|
+   |资源组| myresourcegroup| 新的资源组，或订阅中的现有资源组。|
+   |服务器名称 |*mydemoserver*|用于标识用于 PostgreSQL 的 Azure 数据库服务器的唯一名称。 域名 postgres.database.azure.com 将追加到你提供的服务器名称。 服务器名称只能包含小写字母、数字和连字符 (-) 字符。 必须包含 3 到 63 个字符。|
+   |数据源 | 无 | 选择“无”，从头开始创建新的服务器  。 仅当从现有服务器的异地备份进行还原时，才选择“备份”。|
+   |管理员用户名 |*myadmin*| 输入服务器管理员用户名。 它不能以 pg_ 开头，并且不允许以下值：azure_superuser、azure_pg_admin、admin、administrator、root、guest 或 public       。|
+   |密码 |你的密码| 服务器管理员用户的新密码。 密码必须包含以下三个类别的 8 到 128 个字符：英文大写字母、英文小写字母、数字（0 到 9）和非字母数字字符（例如 !、$、#、%）。|
+   |位置|你所需的位置| 从下拉列表中选择一个位置。|
+   |版本|最新主版本| 除非另有特定的要求，否则为最新 PostgreSQL 主版本。|
+   |计算 + 存储 | 使用默认值| 默认定价层是“常规用途”，其中包含 4 个 vCore 和 100 GB 存储  。 备份保留期设置为 7 天，并提供“异地冗余”备份选项 。<br/>了解[定价](https://azure.microsoft.com/pricing/details/postgresql/server/)并按需更新默认值。|
+
 
    > [!NOTE]
-   > 如果轻量级计算和 I/O 足以满足工作负荷要求，请考虑使用“基本”定价层。 请注意，在“基本”定价层中创建的服务器以后不能扩展到“常规用途”或“内存优化”定价层。 
-   
-5. 选择“查看 + 创建”，查看所选内容。 选择“创建”以预配服务器。 此操作可能需要几分钟的时间。
+   > 如果轻量级计算和 I/O 足以满足工作负荷要求，请考虑使用“基本”定价层。 请注意，在“基本”定价层中创建的服务器以后不能扩展到“常规用途”或“内存优化”定价层。
 
-6. 在工具栏上选择“通知”图标（铃铛）以监视部署过程。 部署完成后，选择“转到资源”，打开服务器的“概览”页面 。
-
-将创建一个空数据库“postgres”。 你还将找到用于将托管服务进程与用户操作分离的“azure_maintenance”数据库。你无法访问“azure_maintenance”数据库 。
-
-## <a name="configure-a-server-level-firewall-rule"></a>配置服务器级防火墙规则
-默认情况下，创建的服务器不可公开进行访问，需要为你的 IP 授予相应权限。 若要授予对 IP 的访问权限，请转到 Azure 门户中的服务器资源，然后从左侧菜单中为服务器资源选择“连接安全性”。 如果你不确定如何找到资源，请参阅[如何打开资源](https://docs.microsoft.com/azure/azure-resource-manager/management/manage-resources-portal#open-resources)。
+5. 选择“查看 + 创建”，查看所选内容。 选择“创建”以预配服务器。 此操作可能需要几分钟时间。
+    > [!NOTE]
+    > 将创建一个空数据库“postgres”。 你还会发现一个 azure_maintenance 数据库，用于将托管服务进程与用户操作分开。 你不能访问 azure_maintenance 数据库。
 
 > [!div class="mx-imgBorder"]
-> ![连接安全性 - 防火墙规则](./media/quickstart-create-database-portal/add-current-ip-firewall.png)
-  
-现在选择“添加当前客户端 IP 地址”，然后选择“保存” 。 你可以添加其他 IP 或提供一个 IP 范围，从该范围中的 IP 连接到服务器。 有关详细信息，请参阅[如何管理防火墙规则](./concepts-firewall-rules.md)
-   
+> :::image type="content" source="./media/quickstart-create-database-portal/deployment-success.png" alt-text="成功部署。":::
+
+[存在问题？请告诉我们。](https://aka.ms/postgres-doc-feedback)
+
+## <a name="configure-a-firewall-rule"></a>配置防火墙规则
+默认情况下，你创建的服务器不可公开访问。 需要向你的 IP 地址授予权限。 请转到 Azure 门户中的服务器资源，然后从左侧菜单中为服务器资源选择“连接安全性”。 如果你不确定如何找到资源，请参阅[打开资源](../azure-resource-manager/management/manage-resources-portal.md#open-resources)。
+
+> [!div class="mx-imgBorder"]
+> :::image type="content" source="./media/quickstart-create-database-portal/add-current-ip-firewall.png" alt-text="显示连接安全的防火墙规则的屏幕截图。":::
+
+选择“添加当前客户端 IP 地址”，然后选择“保存” 。 你可以添加更多 IP 地址或提供一个 IP 范围，从该范围中的 IP 地址连接到服务器。 有关详细信息，请参阅 [Azure Database for PostgreSQL 中的防火墙规则](./concepts-firewall-rules.md)。
+
 > [!NOTE]
-> 检查网络是否允许通过端口 5432 送出出站流量，该端口由 Azure Database for PostgreSQL 使用，旨在避免连接问题。  
+> 若要避免连接问题，请检查你的网络是否允许通过端口 5432 进行出站通信。 Azure Database for PostgreSQL 使用该端口。
 
-## <a name="connect-to-azure-database-for-postgresql-server-using-psql"></a>使用 psql 连接到 Azure Database for PostgreSQL 服务器
+[存在问题？请告诉我们。](https://aka.ms/postgres-doc-feedback)
 
-可以使用 [psql](http://postgresguide.com/utilities/psql.html) 或 [pgAdmin](https://www.pgadmin.org/docs/pgadmin4/latest/connecting.html)，这是常用的 PostgreSQL 客户端。 在本快速入门中，我们将在 Azure 门户的 [Azure Cloud Shell](https://docs.microsoft.com/azure/cloud-shell/overview) 中使用 psql 进行连接。
+## <a name="connect-to-the-server-with-psql"></a>通过 psql 连接到服务器
 
-1. 通过服务器的“概述”部分记录下你的服务器名称、服务器管理员登录名、密码和新创建的服务器的订阅 ID，如下图所示。
+可以使用 [psql](http://postgresguide.com/utilities/psql.html) 或 [pgAdmin](https://www.pgadmin.org/docs/pgadmin4/latest/connecting.html)，它们都是热门 PostgreSQL 客户端。 在本快速入门中，我们将在 Azure 门户内的 [Azure Cloud Shell](../cloud-shell/overview.md) 中使用 psql 进行连接。
 
-2. 通过选择左上角的图标（如下图所示）在门户中启动 Azure Cloud Shell。
+1. 通过服务器的“概述”部分，记录新创建的服务器的服务器名称、服务器管理员登录名、密码和订阅 ID。
+    > [!div class="mx-imgBorder"]
+    > :::image type="content" source="./media/quickstart-create-database-portal/overview-new.png" alt-text="获取连接信息。":::
+
+
+2. 通过选择左上角的图标在门户中打开 Azure Cloud Shell。
 
    > [!NOTE]
-   > 如果你是第一次启动 Cloud Shell，会看到一个提示，提示你创建资源组、存储帐户。 这是一个一次性步骤，将来会针对所有会话自动附加。 
+   > 如果你是第一次打开 Cloud Shell，你将看到创建资源组和存储帐户的提示。 这是一个一次性步骤，将来会针对所有会话自动附加。
 
    > [!div class="mx-imgBorder"]
-   > ![打开 Azure Cloud Shell](media/quickstart-create-database-portal/use-in-cloud-shell.png)
+   > :::image type="content" source="media/quickstart-create-database-portal/use-in-cloud-shell.png" alt-text="显示服务器信息和用于打开 Azure Cloud Shell 的图标的屏幕截图。":::
 
-3. 在 Azure Cloud Shell 终端上运行此命令。 将值替换为实际的服务器名称和管理员用户登录名。 通过管理员用户身份使用空数据库 postgres，格式采用 '<admin-username>@<servername>，如下所示，适用于 Azure database for PostgreSQL。
+3. 在 Azure Cloud Shell 终端中运行以下命令。 将值替换为实际的服务器名称和管理员用户登录名。 以管理员用户的身份使用空数据库 postgres，格式如下：`<admin-username>@<servername>`。
 
    ```azurecli-interactive
    psql --host=mydemoserver.postgres.database.azure.com --port=5432 --username=myadmin@mydemoserver --dbname=postgres
    ```
- 
-   下图显示了 Cloud Shell 终端中的该体验过程
-   
+
+   下图显示了 Cloud Shell 终端中的该体验过程：
+
    ```bash
     Requesting a Cloud Shell.Succeeded.
     Connecting terminal...
 
     Welcome to Azure Cloud Shell
- 
+
     Type "az" to use Azure CLI
     Type "help" to learn about Cloud Shell
 
@@ -116,30 +119,43 @@ ms.locfileid: "86529656"
 
     postgres=>
     ```
-4. 在同一个 Azure Cloud Shell 终端中，创建一个数据库“guest”
+4. 在同一个 Azure Cloud Shell 终端中，创建一个名为“guest”的数据库。
+
    ```bash
    postgres=> CREATE DATABASE guest;
    ```
 
-5. 现在切换为与新创建的数据库“guest”之间的连接
+5. 切换为与新创建的“guest”数据库的连接。
 
    ```bash
    \c guest
    ```
-6. 键入 `\q`，再按 Enter 键退出 psql。 
+6. 键入 `\q`，再按 Enter 键关闭 psql。
+
+[存在问题？请告诉我们。](https://aka.ms/postgres-doc-feedback)
 
 ## <a name="clean-up-resources"></a>清理资源
-现在已成功在资源组中创建了 Azure Database for PostgreSQL 服务器。  如果将来不再需要这些资源，可以通过删除资源组或只删除 PostgreSQL 服务器来删除它们。 若要删除资源组，请执行以下步骤：
+现在已成功在资源组中创建了 Azure Database for PostgreSQL 服务器。 如果将来不再需要这些资源，可以通过删除资源组或 PostgreSQL 服务器来删除它们。
 
-1. 在 Azure 门户中，搜索并选择“资源组”。 
+若要删除资源组，请执行以下操作：
+
+1. 在 Azure 门户中，搜索并选择“资源组”。
 2. 在资源组列表中，选择你的资源组的名称。
-3. 在资源组的概述页面中，选择“删除资源组”。
-4. 在确认对话框中，键入资源组的名称，然后选择“删除”。
+3. 在资源组的“概述”页面中，选择“删除资源组” 。
+4. 在确认对话框中，输入资源组的名称，然后选择“删除”。
 
-若要删除服务器，可以单击服务器的“概述”页面上的“删除”按钮，如下所示 ：
+若要删除服务器，请在服务器的“概述”页面上选择“删除”按钮 ：
+
 > [!div class="mx-imgBorder"]
-> ![删除资源](media/quickstart-create-database-portal/12-delete.png)
+> :::image type="content" source="media/quickstart-create-database-portal/12-delete.png" alt-text="显示用于删除服务器的按钮的屏幕截图。":::
+
+[存在问题？请告诉我们。](https://aka.ms/postgres-doc-feedback)
 
 ## <a name="next-steps"></a>后续步骤
 > [!div class="nextstepaction"]
-> [使用导出和导入功能迁移数据库](./howto-migrate-using-export-and-import.md)
+> [使用导出和导入功能迁移数据库](./howto-migrate-using-export-and-import.md) <br/>
+
+> [!div class="nextstepaction"]
+> [设计数据库](./tutorial-design-database-using-azure-portal.md#create-tables-in-the-database)
+
+[找不到要查找的内容？请告诉我们。](https://aka.ms/postgres-doc-feedback)

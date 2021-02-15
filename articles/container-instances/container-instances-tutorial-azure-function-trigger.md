@@ -3,13 +3,13 @@ title: 教程 - 通过 Azure 函数触发容器组
 description: 创建 HTTP 触发的无服务器 PowerShell 函数，以便自动创建 Azure 容器实例
 ms.topic: tutorial
 ms.date: 06/10/2020
-ms.custom: ''
-ms.openlocfilehash: 298cf1452e514ede540e23d4e64f6dd1059cceab
-ms.sourcegitcommit: dabd9eb9925308d3c2404c3957e5c921408089da
+ms.custom: devx-track-azurepowershell
+ms.openlocfilehash: e7315796f2f7f89800b58f5fa607e69cd7ae3447
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/11/2020
-ms.locfileid: "86259752"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98935416"
 ---
 # <a name="tutorial-use-an-http-triggered-azure-function-to-create-a-container-group"></a>教程：使用 HTTP 触发的 Azure 函数创建容器组
 
@@ -27,13 +27,13 @@ ms.locfileid: "86259752"
 
 ## <a name="prerequisites"></a>先决条件
 
-请参阅[在 Azure 中使用 Visual Studio Code 创建你的第一个函数](../azure-functions/functions-create-first-function-vs-code.md?pivots=programming-language-powershell#configure-your-environment)，了解在 OS 上安装 Visual Studio Code 并将其与 Azure Functions 扩展配合使用的先决条件。
+请参阅[在 Azure 中使用 Visual Studio Code 创建你的第一个函数](../azure-functions/create-first-function-vs-code-csharp.md?pivots=programming-language-powershell#configure-your-environment)，了解在 OS 上安装 Visual Studio Code 并将其与 Azure Functions 扩展配合使用的先决条件。
 
 本文中的其他步骤使用 Azure PowerShell。 如果需要进行安装或升级，请参阅[安装 Azure PowerShell][azure-powershell-install] 和[登录到 Azure](/powershell/azure/get-started-azureps#sign-in-to-azure)。
 
 ## <a name="create-a-basic-powershell-function"></a>创建基本的 PowerShell 函数
 
-请按[在 Azure 中创建第一个 PowerShell 函数](../azure-functions/functions-create-first-function-vs-code.md?pivots=programming-language-powershell)中的步骤操作，使用“HTTP 触发器”模板创建 PowerShell 函数。 使用默认的 Azure 函数名称 **HttpTrigger**。 按快速入门中的演示操作，在本地测试函数，并将项目发布到 Azure 中的函数应用。 此示例是一个基本的 HTTP 触发的函数，返回文本字符串。 在本文后面的步骤中，我们通过修改该函数来创建容器组。
+请按[在 Azure 中创建第一个 PowerShell 函数](../azure-functions/create-first-function-vs-code-csharp.md?pivots=programming-language-powershell)中的步骤操作，使用“HTTP 触发器”模板创建 PowerShell 函数。 使用默认的 Azure 函数名称 **HttpTrigger**。 按快速入门中的演示操作，在本地测试函数，并将项目发布到 Azure 中的函数应用。 此示例是一个基本的 HTTP 触发的函数，返回文本字符串。 在本文后面的步骤中，我们通过修改该函数来创建容器组。
 
 本文假定你在一个 Azure 资源组中使用名称 *myfunctionapp* 发布项目，该资源组自动根据函数应用名称（也是 *myfunctionapp*）命名。 请在后面的步骤中将上述名称替换为自己的唯一函数应用名称和资源组名称。
 
@@ -105,7 +105,7 @@ if ($name) {
 
 ## <a name="run-the-function-in-azure"></a>在 Azure 中运行函数
 
-部署成功完成以后，请获取函数 URL。 例如，使用 Visual Studio Code 中的“Azure:Functions”区域复制 HttpTrigger 函数 URL，或者在 [Azure 门户](../azure-functions/functions-create-first-azure-function.md#test-the-function)中获取函数 URL。
+部署成功完成以后，请获取函数 URL。 例如，使用 Visual Studio Code 中的“Azure:Functions”区域复制 HttpTrigger 函数 URL，或者在 [Azure 门户](../azure-functions/functions-get-started.md)中获取函数 URL。
 
 函数 URL 的格式为：
 

@@ -1,22 +1,24 @@
 ---
-title: 教程：在 Azure Spring Cloud 中缩放应用程序 | Microsoft Docs
+title: 在 Azure Spring Cloud 中缩放应用程序 | Microsoft Docs
 description: 了解如何在 Azure 门户中通过 Azure Spring Cloud 缩放应用程序
 ms.service: spring-cloud
-ms.topic: tutorial
+ms.topic: how-to
 ms.author: brendm
 author: bmitchell287
 ms.date: 10/06/2019
 ms.custom: devx-track-java
-ms.openlocfilehash: edbb3c1b2ed3e696c304f72c7b40fa926cae2c54
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.openlocfilehash: 5632f9a6126615255306cc89425bd08a9ffa9753
+ms.sourcegitcommit: 5b93010b69895f146b5afd637a42f17d780c165b
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87021182"
+ms.lasthandoff: 12/02/2020
+ms.locfileid: "96531796"
 ---
-# <a name="tutorial-scale-an-application-in-azure-spring-cloud"></a>教程：在 Azure Spring Cloud 中缩放应用程序
+# <a name="scale-an-application-in-azure-spring-cloud"></a>在 Azure Spring Cloud 中缩放应用程序
 
-本教程演示如何在 Azure 门户中使用 Azure Spring Cloud 仪表板缩放任何微服务应用程序。
+本文适用于：✔️ Java ✔️ C#
+
+本文档演示如何在 Azure 门户中使用 Azure Spring Cloud 仪表板缩放任何微服务应用程序。
 
 上下缩放应用程序，方法是：修改其虚拟 CPU (vCPU) 数目和内存容量。 水平缩放应用程序，方法是：修改应用程序实例的数目。
 
@@ -27,7 +29,7 @@ ms.locfileid: "87021182"
 若要遵循这些过程进行操作，需要：
 
 * Azure 订阅。 如果没有 Azure 订阅，请在开始之前创建一个[免费帐户](https://azure.microsoft.com/free/?WT.mc_id=A261C142F)。 
-* 部署的 Azure Spring Cloud 服务实例。  按[有关如何通过 Azure CLI 来部署应用的快速入门](spring-cloud-quickstart-launch-app-cli.md)中的说明开始操作。
+* 部署的 Azure Spring Cloud 服务实例。  按[有关如何通过 Azure CLI 来部署应用的快速入门](spring-cloud-quickstart.md)中的说明开始操作。
 * 至少已在该服务实例中创建一个应用程序。
 
 ## <a name="navigate-to-the-scale-page-in-the-azure-portal"></a>导航到 Azure 门户中的“缩放”页
@@ -65,7 +67,7 @@ ms.locfileid: "87021182"
 
 ## <a name="next-steps"></a>后续步骤
 
-本教程介绍了如何手动缩放 Azure Spring Cloud 应用程序。 若要了解如何通过设置警报来监视应用程序，请继续学习下一教程。
+本示例介绍了如何手动缩放 Azure Spring Cloud 应用程序。 若要了解如何通过设置警报来监视应用程序，请参阅[设置自动缩放](spring-cloud-tutorial-setup-autoscale.md)。
 
 > [!div class="nextstepaction"]
 > [了解如何设置警报](spring-cloud-tutorial-alerts-action-groups.md)

@@ -2,13 +2,14 @@
 title: Azure Windows Communication Foundation (WCF) 中继本地混合/云应用程序 (.NET) | Microsoft Docs
 description: 了解如何使用 Azure 中继向云中的 Web 应用程序公开本地 WCF 服务
 ms.topic: conceptual
+ms.custom: devx-track-csharp
 ms.date: 06/23/2020
-ms.openlocfilehash: a9ac01beb28b1246122f437bcf1c7a7be7a1dfd9
-ms.sourcegitcommit: 2ffa5bae1545c660d6f3b62f31c4efa69c1e957f
+ms.openlocfilehash: 22b582634b623b39545eca225c8df0130606c2bb
+ms.sourcegitcommit: 829d951d5c90442a38012daaf77e86046018e5b9
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/11/2020
-ms.locfileid: "88079954"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "90983895"
 ---
 # <a name="expose-an-on-premises-wcf-service-to-a-web-application-in-the-cloud-by-using-azure-relay"></a>使用 Azure 中继向云中的 Web 应用程序公开本地 WCF 服务
 
@@ -343,7 +344,7 @@ ms.locfileid: "88079954"
 
 应用程序应在浏览器中显示为正在运行。
 
-![Web 应用程序][21]
+![屏幕截图显示了在浏览器中运行的应用程序的示例，其中突出显示了 URL。][21]
 
 ## <a name="put-the-pieces-together"></a>将各个部分组合在一起
 

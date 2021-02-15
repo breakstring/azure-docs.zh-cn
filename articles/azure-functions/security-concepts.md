@@ -3,12 +3,12 @@ title: 保护 Azure Functions
 description: 了解如何使 Azure 中运行的函数代码更安全，使其免遭常见攻击的威胁。
 ms.date: 4/13/2020
 ms.topic: conceptual
-ms.openlocfilehash: 9bec32c4c3d8005ef0d3c9fc5732785a5fa19a0c
-ms.sourcegitcommit: 7fe8df79526a0067be4651ce6fa96fa9d4f21355
+ms.openlocfilehash: 351bdca7ff94b6c058b5ab62fd9c16d707e7dc78
+ms.sourcegitcommit: d4734bc680ea221ea80fdea67859d6d32241aefc
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/06/2020
-ms.locfileid: "87850706"
+ms.lasthandoff: 02/14/2021
+ms.locfileid: "100368483"
 ---
 # <a name="securing-azure-functions"></a>保护 Azure Functions
 
@@ -24,11 +24,11 @@ ms.locfileid: "87850706"
 
 ### <a name="security-center"></a>安全中心
 
-安全中心与门户中的函数应用集成。 它免费提供了对潜在配置相关安全漏洞的快速评估。 在专用计划中运行的函数应用也可以使用安全中心的实时安全功能，但需要额外付费。 若要了解更多信息，请参阅[保护你的 Azure 应用服务 Web 应用和 API](../security-center/security-center-app-services.md)。 
+安全中心与门户中的函数应用集成。 它免费提供了对潜在配置相关安全漏洞的快速评估。 在专用计划中运行的函数应用也可以使用安全中心的实时安全功能，但需要额外付费。 若要了解更多信息，请参阅[保护你的 Azure 应用服务 Web 应用和 API](../security-center/defender-for-app-service-introduction.md)。 
 
 ### <a name="log-and-monitor"></a>日志和监视器
 
-检测攻击的方法之一是通过活动监视活动和日志分析。 Functions 与 Application Insights 相集成，可收集函数应用的日志、性能和错误数据。 Application Insights 可自动检测性能异常，并且包含了强大的分析工具来帮助你诊断问题并了解函数的使用方式。 若要了解详细信息，请参阅[监视 Azure Functions](functions-monitoring.md)。
+检测攻击的一种方法是对活动进行监视和进行日志分析。 Functions 与 Application Insights 相集成，可收集函数应用的日志、性能和错误数据。 Application Insights 可自动检测性能异常，并且包含了强大的分析工具来帮助你诊断问题并了解函数的使用方式。 若要了解详细信息，请参阅[监视 Azure Functions](functions-monitoring.md)。
 
 Functions 还与 Azure Monitor 日志集成，使你能够将函数应用日志与系统事件合并，以便更轻松地进行分析。 你可以使用诊断设置将函数的平台日志和指标流式导出配置到你选择的目标位置，例如 Log Analytics 工作区。 若要了解更多信息，请参阅[使用 Azure Monitor 日志监视 Azure Functions](functions-monitor-log-analytics.md)。 
 
@@ -72,16 +72,16 @@ Functions 还与 Azure Monitor 日志集成，使你能够将函数应用日志�
 若要了解有关访问密钥的更多信息，请参阅 [HTTP 触发器绑定文章](functions-bindings-http-webhook-trigger.md#obtaining-keys)。
 
 
-#### <a name="secret-repositories"></a>密钥存储库
+#### <a name="secret-repositories"></a>机密存储库
 
-默认情况下，密钥存储在设置提供的帐户中的 Blob 存储容器中 `AzureWebJobsStorage` 。 您可以使用特定的应用程序设置来覆盖此行为，并将密钥存储在不同的位置。
+默认情况下，密钥存储在通过 `AzureWebJobsStorage` 设置提供的帐户中的 Blob 存储容器中。 可以使用特定的应用程序设置来重写此行为，将密钥存储在另一位置。
 
-|位置  |设置 | 值 | 描述  |
+|位置  |设置 | “值” | 描述  |
 |---------|---------|---------|---------|
-|不同的存储帐户     |  `AzureWebJobsSecretStorageSas`       | `<BLOB_SAS_URL` | 根据提供的 SAS URL，将密钥存储在另一个存储帐户的 Blob 存储中。 在使用函数应用独有的机密存储密钥之前对密钥进行加密。 |
-|文件系统   | `AzureWebJobsSecretStorageType`   |  `files`       | 密钥在文件系统上保留，在使用函数应用独有的机密存储之前加密。 |
-|Azure Key Vault  | `AzureWebJobsSecretStorageType`<br/>`AzureWebJobsSecretStorageKeyVaultName` | `keyvault`<br/>`<VAULT_NAME>` | 保管库必须具有与系统分配的托管资源的托管标识对应的访问策略。 访问策略应授予标识以下机密权限： `Get` 、 `Set` 、 `List` 和 `Delete` 。 <br/>在本地运行时，使用开发人员标识，并且设置必须位于[local.settings.js文件](functions-run-local.md#local-settings-file)中。 | 
-|Kubernetes 机密  |`AzureWebJobsSecretStorageType`<br/>`AzureWebJobsKubernetesSecretName`（可选） | `kubernetes`<br/>`<SECRETS_RESOURCE>` | 仅当在 Kubernetes 中运行函数运行时才受支持。 如果 `AzureWebJobsKubernetesSecretName` 未设置，则会将存储库视为只读。 在这种情况下，必须在部署之前生成值。 在部署到 Kubernetes 时，Azure Functions Core Tools 会自动生成值。|
+|不同的存储帐户     |  `AzureWebJobsSecretStorageSas`       | `<BLOB_SAS_URL` | 根据提供的 SAS URL，将密钥存储在另一个存储帐户的 Blob 存储中。 在使用函数应用特有的机密存储密钥之前对密钥进行加密。 |
+|文件系统   | `AzureWebJobsSecretStorageType`   |  `files`       | 密钥持久保留在文件系统中，在使用函数应用特有的机密进行存储之前加密。 |
+|Azure Key Vault  | `AzureWebJobsSecretStorageType`<br/>`AzureWebJobsSecretStorageKeyVaultName` | `keyvault`<br/>`<VAULT_NAME>` | 保管库必须有一项与承载资源的系统分配托管标识相对应的访问策略。 访问策略应向标识授予以下机密权限：`Get`、`Set`、`List` 和 `Delete`。 <br/>在本地运行时使用开发人员标识，且设置必须位于 [local.settings.json 文件](functions-run-local.md#local-settings-file)中。 | 
+|Kubernetes 机密  |`AzureWebJobsSecretStorageType`<br/>`AzureWebJobsKubernetesSecretName`（可选） | `kubernetes`<br/>`<SECRETS_RESOURCE>` | 仅当在 Kubernetes 中运行 Functions 运行时时才受支持。 如果未设置 `AzureWebJobsKubernetesSecretName`，则会将存储库视为只读。 在这种情况下，必须在部署之前生成值。 在部署到 Kubernetes 时，Azure Functions Core Tools 会自动生成值。|
 
 ### <a name="authenticationauthorization"></a>身份验证/授权
 
@@ -95,7 +95,7 @@ Functions 还与 Azure Monitor 日志集成，使你能够将函数应用日志�
 
 #### <a name="user-management-permissions"></a>用户管理权限
 
-函数支持[AZURE RBAC) 的内置 azure 基于角色的访问控制 (](../role-based-access-control/overview.md)。 函数支持的 Azure 角色为 "[参与者](../role-based-access-control/built-in-roles.md#contributor)"、"[所有者](../role-based-access-control/built-in-roles.md#owner)" 和 "[读者](../role-based-access-control/built-in-roles.md#owner)"。 
+函数支持内置 [Azure 基于角色的访问控制 (Azure RBAC)](../role-based-access-control/overview.md)。 函数支持的 Azure 角色有[参与者](../role-based-access-control/built-in-roles.md#contributor)、[所有者](../role-based-access-control/built-in-roles.md#owner)和[读者](../role-based-access-control/built-in-roles.md#owner)。 
 
 权限在函数应用级别有效。 参与者角色是执行大多数函数应用级任务所必需的。 只有所有者角色才能删除函数应用。 
 
@@ -106,6 +106,8 @@ Functions 还与 Azure Monitor 日志集成，使你能够将函数应用日志�
 #### <a name="managed-identities"></a>托管标识
 
 [!INCLUDE [app-service-managed-identities](../../includes/app-service-managed-identities.md)]
+
+托管标识可用于替代来自某些触发器和绑定的连接的机密。 请参阅 [基于标识的连接](#identity-based-connections)。
 
 有关详细信息，请参阅[如何使用应用服务和 Azure Functions 的托管标识](../app-service/overview-managed-identity.md?toc=%2fazure%2fazure-functions%2ftoc.json)。
 
@@ -129,11 +131,21 @@ Functions 还与 Azure Monitor 日志集成，使你能够将函数应用日志�
 
 应用设置和连接字符串以加密方式存储在 Azure 中。 只有在应用程序启动时，它们才会被解密，然后再注入到应用程序内存中。 加密密钥会定期轮换。 如果希望管理机密的安全存储，则应该将应用设置改为对 Azure Key Vault 的引用。 
 
+在本地计算机上开发功能时，默认情况下，还可以在 local.settings.json 文件中加密设置。 若要了解详细信息，请参阅[本地设置文件](functions-run-local.md#local-settings-file)中的 `IsEncrypted` 属性。  
+
 #### <a name="key-vault-references"></a>Key Vault 引用
 
 虽然应用程序设置足以满足大多数功能，但你可能希望跨多个服务共享相同的机密。 在这种情况下，机密的冗余存储会导致更多潜在的漏洞。 一种更安全的方法是使用中央机密存储服务，并使用对该服务的引用而不是对机密本身的引用。      
 
 [Azure Key Vault](../key-vault/general/overview.md) 是一项服务，可以提供集中式机密管理，并且可以完全控制访问策略和审核历史记录。 你可在应用程序设置中使用 Key Vault 引用来代替连接字符串或密钥。 若要了解详细信息，请参阅[使用应用服务和 Azure Functions 的 Key Vault 引用](../app-service/app-service-key-vault-references.md?toc=%2fazure%2fazure-functions%2ftoc.json)。
+
+### <a name="identity-based-connections"></a>基于标识的连接
+
+标识可用于代替机密来连接到某些资源。 这种方法的优点是不需要管理机密，而是提供更精细的访问控制和审核。 
+
+编写用于创建与 [支持 Azure AD 身份验证的 Azure 服务](../active-directory/managed-identities-azure-resources/services-support-managed-identities.md#azure-services-that-support-azure-ad-authentication)的连接的代码时，可以选择使用标识，而不是使用机密或连接字符串。 每个服务的文档中介绍了这两种连接方法的详细信息。
+
+某些 Azure Functions 的触发器和绑定扩展可以使用基于标识的连接进行配置。 如今，这包括 [Azure Blob](./functions-bindings-storage-blob.md) 和 [azure 队列](./functions-bindings-storage-queue.md) 扩展。 有关如何配置这些扩展以使用标识的信息，请参阅 [如何在 Azure Functions 中使用基于标识的连接](./functions-reference.md#configure-an-identity-based-connection)。
 
 ### <a name="set-usage-quotas"></a>设置使用配额
 

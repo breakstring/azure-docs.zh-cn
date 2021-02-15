@@ -4,26 +4,26 @@ description: 在 Azure Kubernetes 服务 (AKS) 中为群集创建和管理 Azure
 services: container-service
 ms.topic: conceptual
 ms.date: 06/16/2020
-ms.openlocfilehash: 7f62c7dc7aacf9be4a59498aa5c556e9991ad578
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: b7f8060666612049026f2602ab7c8511aea22757
+ms.sourcegitcommit: 445ecb22233b75a829d0fcf1c9501ada2a4bdfa3
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "85298542"
+ms.lasthandoff: 02/02/2021
+ms.locfileid: "99475431"
 ---
 # <a name="service-principals-with-azure-kubernetes-service-aks"></a>使用 Azure Kubernetes 服务 (AKS) 的服务主体
 
-要与 Azure Api 交互，AKS 群集需要[Azure Active Directory （AD）服务主体][aad-service-principal]或[托管标识](use-managed-identity.md)。 动态创建和管理其他 Azure 资源（例如 Azure 负载均衡器或容器注册表（ACR））需要服务主体或托管标识。
+AKS 群集需要 [Azure Active Directory (AD) 服务主体][aad-service-principal]或[托管标识](use-managed-identity.md)才能与 Azure API 交互。 需要服务主体或托管标识才能动态创建和管理其他 Azure 资源，例如 Azure 负载均衡器或容器注册表 (ACR)。
 
 本文介绍如何创建和使用适用于 AKS 群集的服务主体。
 
-## <a name="before-you-begin"></a>开始之前
+## <a name="before-you-begin"></a>准备阶段
 
 若要创建 Azure AD 服务主体，必须具有相应的权限，能够向 Azure AD 租户注册应用程序，并将应用程序分配到订阅中的角色。 如果没有必需的权限，可能需要请求 Azure AD 或订阅管理员来分配必需的权限，或者预先创建一个可以与 AKS 群集配合使用的服务主体。
 
 如果使用来自另一 Azure AD 租户的服务主体，则还需围绕部署群集时可用的权限进行更多的考虑。 你可能没有读取和写入目录信息的适当权限。 有关详细信息，请参阅 [Azure Active Directory 中的默认用户权限是什么？][azure-ad-permissions]
 
-还需安装并配置 Azure CLI 2.0.59 或更高版本。 运行  `az --version` 即可查找版本。 如果需要进行安装或升级，请参阅 [安装 Azure CLI][install-azure-cli]。
+还需安装并配置 Azure CLI 2.0.59 或更高版本。 运行 `az --version` 即可查找版本。 如果需要进行安装或升级，请参阅[安装 Azure CLI][install-azure-cli]。
 
 ## <a name="automatically-create-and-use-a-service-principal"></a>自动创建和使用服务主体
 
@@ -70,10 +70,10 @@ az aks create \
 > [!NOTE]
 > 如果使用的是具有自定义机密的现有服务主体，请确保该机密不超过 190 字节。
 
-如果使用 Azure 门户来部署 AKS 群集，请在“创建 Kubernetes 群集”对话框的“身份验证”页上选择“配置服务主体”。    选择“使用现有”并指定以下值： 
+如果使用 Azure 门户来部署 AKS 群集，请在“创建 Kubernetes 群集”对话框的“身份验证”页上选择“配置服务主体”。  选择“使用现有”并指定以下值：
 
 - **服务主体客户端 ID** 是你的 *appId*
-- **服务主体客户端机密**是  密码值
+- **服务主体客户端机密** 是密码值
 
 ![浏览到 Azure Vote 的图像](media/kubernetes-service-principal/portal-configure-service-principal.png)
 
@@ -87,10 +87,10 @@ AKS 群集的服务主体可以用来访问其他资源。 例如，如果希望
 az role assignment create --assignee <appId> --scope <resourceScope> --role Contributor
 ```
 
-`--scope`资源的需要是完整的资源 ID，如 */subscriptions/ \<guid\> /ResourceGroups/myResourceGroup*或 */subscriptions/ \<guid\> /resourceGroups/myResourceGroupVnet/providers/Microsoft.Network/virtualNetworks/myVnet*
+资源的 `--scope` 需要是完整的资源 ID，例如 /subscriptions/\<guid\>/resourceGroups/myResourceGroup 或 /subscriptions/\<guid\>/resourceGroups/myResourceGroupVnet/providers/Microsoft.Network/virtualNetworks/myVnet
 
 > [!NOTE]
-> 如果已从节点资源组中删除了 "参与者" 角色分配，以下操作可能会失败。  
+> 如果从节点资源组删除了参与者角色分配，则以下操作可能会失败。  
 
 以下各部分详述了可能需要使用的常见委托。
 
@@ -100,19 +100,7 @@ az role assignment create --assignee <appId> --scope <resourceScope> --role Cont
 
 ### <a name="networking"></a>网络
 
-可以使用高级网络，在该网络中，虚拟网络和子网或公共 IP 地址位于另一资源组中。 分配下列角色权限集之一：
-
-- 创建一个[自定义角色][rbac-custom-role]，并定义以下角色权限：
-  - *Microsoft.Network/virtualNetworks/subnets/join/action*
-  - *Microsoft.Network/virtualNetworks/subnets/read*
-  - *Microsoft.Network/virtualNetworks/subnets/write*
-  - *Microsoft.Network/publicIPAddresses/join/action*
-  - *Microsoft.Network/publicIPAddresses/read*
-  - *Microsoft.Network/publicIPAddresses/write*
-  - 如果[在 Kubenet 群集上使用自定义路由表](configure-kubenet.md#bring-your-own-subnet-and-route-table-with-kubenet)，请添加以下附加权限：
-    - *Microsoft.Network/routeTables/write*
-    - *Microsoft.Network/routeTables/read*
-- 或者，在虚拟网络的子网上分配[网络参与者][rbac-network-contributor]内置角色
+可以使用高级网络，在该网络中，虚拟网络和子网或公共 IP 地址位于另一资源组中。 在虚拟网络的子网上分配[网络参与者][rbac-network-contributor]内置角色。 或者，可以创建有权访问该资源组中网络资源的[自定义角色][rbac-custom-role]。 有关更多详细信息，请参阅 [AKS 服务权限][aks-permissions]。
 
 ### <a name="storage"></a>存储
 
@@ -125,7 +113,7 @@ az role assignment create --assignee <appId> --scope <resourceScope> --role Cont
 
 ### <a name="azure-container-instances"></a>Azure 容器实例
 
-如果使用虚拟 Kubelet 与 AKS 集成并选择在与 AKS 群集分开的资源组中运行 Azure 容器实例 (ACI)，则必须在 ACI 资源组上授予 AKS 服务主体“参与者”** 权限。
+如果使用虚拟 Kubelet 与 AKS 集成并选择在与 AKS 群集分开的资源组中运行 Azure 容器实例 (ACI)，则必须在 ACI 资源组上授予 AKS 服务主体“参与者”权限。
 
 ## <a name="additional-considerations"></a>其他注意事项
 
@@ -133,20 +121,20 @@ az role assignment create --assignee <appId> --scope <resourceScope> --role Cont
 
 - Kubernetes 的服务主体是群集配置的一部分。 但是，请勿使用标识来部署群集。
 - 默认情况下，服务主体凭据的有效期为一年。 可以随时[更新或轮换服务主体凭据][update-credentials]。
-- 每个服务主体都与一个 Azure AD 应用程序相关联。 Kubernetes 群集的服务主体可以与任何有效的 Azure AD 应用程序名称关联（例如： *https://www.contoso.org/example* ）。 应用程序的 URL 不一定是实际的终结点。
-- 指定服务主体**客户端 ID** 时，请使用 `appId` 的值。
+- 每个服务主体都与一个 Azure AD 应用程序相关联。 Kubernetes 群集的服务主体可以与任何有效的 Azure AD 应用程序名称（例如 *https://www.contoso.org/example* ）相关联。 应用程序的 URL 不一定是实际的终结点。
+- 指定服务主体 **客户端 ID** 时，请使用 `appId` 的值。
 - 在 Kubernetes 群集的代理节点 VM 中，服务主体凭据存储在 `/etc/kubernetes/azure.json` 文件中
 - 使用 [az aks create][az-aks-create] 命令自动生成服务主体时，会将服务主体凭据写入用于运行命令的计算机上的 `~/.azure/aksServicePrincipal.json` 文件中。
 - 如果没有在其他 AKS CLI 命令中明确传递服务主体，则将使用位于 `~/.azure/aksServicePrincipal.json` 的默认服务主体。  
 - 也可以选择删除 aksServicePrincipal.json 文件，AKS 将创建新的服务主体。
 - 删除通过 [az aks create][az-aks-create] 创建的 AKS 群集时，不会删除自动创建的服务主体。
-    - 若要删除服务主体，请查询群集 *servicePrincipalProfile.clientId*，然后使用 [az ad app delete][az-ad-app-delete] 进行删除。 将以下资源组和群集名称替换为你自己的值：
+    - 若要删除服务主体，请查询群集 *servicePrincipalProfile* ，然后删除 [az ad sp delete] [az-sp-delete]。 将以下资源组和群集名称替换为你自己的值：
 
         ```azurecli
         az ad sp delete --id $(az aks show -g myResourceGroup -n myAKSCluster --query servicePrincipalProfile.clientId -o tsv)
         ```
 
-## <a name="troubleshoot"></a>疑难解答
+## <a name="troubleshoot"></a>故障排除
 
 AKS 群集的服务主体凭据由 Azure CLI 缓存。 如果这些凭据已过期，则会在部署 AKS 群集时遇到错误。 运行 [az aks create][az-aks-create] 时，如果出现以下错误消息，则可能表示缓存的服务主体凭据出现问题：
 
@@ -166,7 +154,7 @@ ls -la $HOME/.azure/aksServicePrincipal.json
 
 ## <a name="next-steps"></a>后续步骤
 
-有关 Azure Active Directory 服务主体的详细信息，请参阅[应用程序对象和服务主体对象][service-principal]。
+若要详细了解 Azure Active Directory 服务主体，请参阅[应用程序和服务主体对象][service-principal]。
 
 有关如何更新凭据的信息，请参阅[为 AKS 中的服务主体更新或轮换凭据][update-credentials]。
 
@@ -189,3 +177,4 @@ ls -la $HOME/.azure/aksServicePrincipal.json
 [aks-to-acr]: cluster-container-registry-integration.md
 [update-credentials]: update-credentials.md
 [azure-ad-permissions]: ../active-directory/fundamentals/users-default-permissions.md
+[aks-permissions]: concepts-identity.md#aks-service-permissions

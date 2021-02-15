@@ -3,24 +3,23 @@ title: 使用事件处理程序主机接收事件 - Azure 事件中心 | Microso
 description: 本文介绍 Azure 事件中心中的事件处理程序主机，它简化了检查点操作、租用和读取事件的管理。
 ms.topic: conceptual
 ms.date: 06/23/2020
-ms.openlocfilehash: dd11e3ef77ff665a0207a2cf7e63b1b9f2df0e08
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.custom: devx-track-csharp
+ms.openlocfilehash: de5d8f0f8bf9f64a473b18a50434cac83e8e38c3
+ms.sourcegitcommit: a0c1d0d0906585f5fdb2aaabe6f202acf2e22cfc
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87002516"
+ms.lasthandoff: 01/21/2021
+ms.locfileid: "98622056"
 ---
 # <a name="event-processor-host"></a>事件处理程序主机
 > [!NOTE]
-> 本文适用于旧版 Azure 事件中心 SDK。 若要了解如何将代码迁移到新版 SDK，请参阅以下迁移指南。 
+> 本文适用于旧版 Azure 事件中心 SDK。 有关 SDK 的当前版本，请参阅[跨应用程序的多个实例均衡分区负载](event-processor-balance-partition-load.md)。 若要了解如何将代码迁移到新版 SDK，请参阅以下迁移指南。 
 > - [.NET](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/MigrationGuide.md)
 > - [Java](https://github.com/Azure/azure-sdk-for-java/blob/master/sdk/eventhubs/azure-messaging-eventhubs/migration-guide.md)
 > - [Python](https://github.com/Azure/azure-sdk-for-python/blob/master/sdk/eventhub/azure-eventhub/migration_guide.md)
 > - [Java Script](https://github.com/Azure/azure-sdk-for-js/blob/master/sdk/eventhub/event-hubs/migrationguide.md)
->
-> 另请参阅[跨应用程序的多个实例均衡分区负载](event-processor-balance-partition-load.md)。
 
-Azure 事件中心是强大的遥测引入服务，使用它能以较低的成本流式传输数百万个事件。 本文介绍如何通过*事件处理程序主机* (EPH) 使用引用的事件；EPH 是一个智能使用者代理，可以简化检查点、租用和并行事件读取器的管理。  
+Azure 事件中心是强大的遥测引入服务，使用它能以较低的成本流式传输数百万个事件。 本文介绍如何通过 *事件处理程序主机* (EPH) 使用引用的事件；EPH 是一个智能使用者代理，可以简化检查点、租用和并行事件读取器的管理。  
 
 缩放事件中心的关键在于分区使用者的思路。 与[竞争性使用者](/previous-versions/msp-n-p/dn568101(v=pandp.10))模式相比，分区使用者模式能够通过消除争用瓶颈和简化端到端的并行度，来实现较高的缩放度。
 
@@ -36,14 +35,14 @@ Azure 事件中心是强大的遥测引入服务，使用它能以较低的成�
 
 1. **缩放：** 创建多个使用者，每个使用者获取若干事件中心分区的读取所有权。
 2. **负载均衡：** 动态增加或减少使用者。 例如，将新的传感器类型（例如一氧化碳检测器）添加到每个家庭后，事件数会增多。 在这种情况下，操作员（人类）会增加使用者实例的数目。 然后，使用者池可以重新均衡它们拥有的分区数，以便与新添加的使用者分担负载。
-3. **故障时无缝恢复：** 如果某个使用者（使用者 A）发生故障（例如，托管使用者的虚拟机突然崩溃），其他使用者必须能够拾取使用者 A 拥有的分区并继续 。 此外，称作“检查点”或“偏移量”的延续点应该位于**使用者 A** 发生故障时的确切位置，或者略微在该位置的前面。 
+3. **故障时无缝恢复：** 如果某个使用者（使用者 A）发生故障（例如，托管使用者的虚拟机突然崩溃），其他使用者必须能够拾取使用者 A 拥有的分区并继续 。 此外，称作“检查点”或“偏移量”的延续点应该位于 **使用者 A** 发生故障时的确切位置，或者略微在该位置的前面。 
 4. **使用事件：** 尽管前面三个要点能够应对使用者的管理，但还必须提供代码来使用事件并对其执行有用的操作；例如，聚合事件并将其上传到 Blob 存储。
 
 你无需为此生成自己的解决方案，事件中心会通过 [IEventProcessor](/dotnet/api/microsoft.azure.eventhubs.processor.ieventprocessor) 接口和 [EventProcessorHost](/dotnet/api/microsoft.azure.eventhubs.processor.eventprocessorhost) 类提供此功能。
 
 ## <a name="ieventprocessor-interface"></a>IEventProcessor 接口
 
-首先，使用事件的应用程序会实现 [IEventProcessor](/dotnet/api/microsoft.azure.eventhubs.processor.ieventprocessor) 接口，该接口有四种方法：[OpenAsync、CloseAsync、ProcessErrorAsync 和 ProcessEventsAsync](/dotnet/api/microsoft.azure.eventhubs.processor.ieventprocessor?view=azure-dotnet#methods)。 此接口包含实际的代码用于使用事件中心发送的事件。 以下代码演示了一个简单的实现：
+首先，使用事件的应用程序会实现 [IEventProcessor](/dotnet/api/microsoft.azure.eventhubs.processor.ieventprocessor) 接口，该接口有四种方法：[OpenAsync、CloseAsync、ProcessErrorAsync 和 ProcessEventsAsync](/dotnet/api/microsoft.azure.eventhubs.processor.ieventprocessor#methods)。 此接口包含实际的代码用于使用事件中心发送的事件。 以下代码演示了一个简单的实现：
 
 ```csharp
 public class SimpleEventProcessor : IEventProcessor
@@ -88,6 +87,8 @@ public class SimpleEventProcessor : IEventProcessor
 
 最后，使用者将 [EventProcessorHost](/dotnet/api/microsoft.azure.eventhubs.processor.eventprocessorhost) 实例注册到事件中心服务。 向 EventProcessorHost 实例注册事件处理程序类会启动事件处理。 注册操作告知事件中心服务预期使用者应用会使用其某些分区发送的事件，并且每当推送要使用的事件时，都要调用 [IEventProcessor](/dotnet/api/microsoft.azure.eventhubs.processor.ieventprocessor) 实现代码。 
 
+> [!NOTE]
+> consumerGroupName 区分大小写。  对 consumerGroupName 的更改可能会导致从流的开头读取所有分区。
 
 ### <a name="example"></a>示例
 
@@ -112,8 +113,8 @@ public class SimpleEventProcessor : IEventProcessor
 | $Default | 0 | Consumer\_VM3 | 2018-04-15T01:23:45 | 156 |
 | $Default | 1 | Consumer\_VM4 | 2018-04-15T01:22:13 | 734 |
 | $Default | 2 | Consumer\_VM0 | 2018-04-15T01:22:56 | 122 |
-| 解码的字符： |   |   |   |   |
-| 解码的字符： |   |   |   |   |
+| : |   |   |   |   |
+| : |   |   |   |   |
 | $Default | 15 | Consumer\_VM3 | 2018-04-15T01:22:56 | 976 |
 
 此处，每个主机按特定的持续时间（租约持续时间）获取分区所有权。 如果某个主机发生故障（VM 关闭），则租约将会过期。 其他主机尝试获取分区所有权，其中一个主机会成功。 此过程会重置具有新所有者的分区上的租约。 这样，每次只会有一个读取者可以从使用者组中任意给定的分区读取事件。
@@ -149,7 +150,7 @@ public class SimpleEventProcessor : IEventProcessor
 
 ## <a name="control-event-processor-host-options"></a>控制事件处理程序主机选项
 
-此外，[RegisterEventProcessorAsync](/dotnet/api/microsoft.azure.eventhubs.processor.eventprocessorhost.registereventprocessorasync?view=azure-dotnet#Microsoft_Azure_EventHubs_Processor_EventProcessorHost_RegisterEventProcessorAsync__1_Microsoft_Azure_EventHubs_Processor_EventProcessorOptions_) 的一个重载采用 [EventProcessorOptions](/dotnet/api/microsoft.azure.eventhubs.processor.eventprocessorhost.registereventprocessorasync?view=azure-dotnet#Microsoft_Azure_EventHubs_Processor_EventProcessorHost_RegisterEventProcessorAsync__1_Microsoft_Azure_EventHubs_Processor_EventProcessorOptions_) 对象作为参数。 使用此参数可以控制 [EventProcessorHost.UnregisterEventProcessorAsync](/dotnet/api/microsoft.azure.eventhubs.processor.eventprocessorhost.unregistereventprocessorasync) 本身的行为。 [EventProcessorOptions](/dotnet/api/microsoft.azure.eventhubs.processor.eventprocessoroptions) 定义四个属性和一个事件：
+此外，[RegisterEventProcessorAsync](/dotnet/api/microsoft.azure.eventhubs.processor.eventprocessorhost.registereventprocessorasync#Microsoft_Azure_EventHubs_Processor_EventProcessorHost_RegisterEventProcessorAsync__1_Microsoft_Azure_EventHubs_Processor_EventProcessorOptions_) 的一个重载采用 [EventProcessorOptions](/dotnet/api/microsoft.azure.eventhubs.processor.eventprocessorhost.registereventprocessorasync#Microsoft_Azure_EventHubs_Processor_EventProcessorHost_RegisterEventProcessorAsync__1_Microsoft_Azure_EventHubs_Processor_EventProcessorOptions_) 对象作为参数。 使用此参数可以控制 [EventProcessorHost.UnregisterEventProcessorAsync](/dotnet/api/microsoft.azure.eventhubs.processor.eventprocessorhost.unregistereventprocessorasync) 本身的行为。 [EventProcessorOptions](/dotnet/api/microsoft.azure.eventhubs.processor.eventprocessoroptions) 定义四个属性和一个事件：
 
 - [MaxBatchSize](/dotnet/api/microsoft.azure.eventhubs.processor.eventprocessoroptions.maxbatchsize)：要在 [ProcessEventsAsync](/dotnet/api/microsoft.azure.eventhubs.processor.ieventprocessor.processeventsasync) 调用中接收的集合的最大大小。 这不是最小大小，而只是最大大小。 如果要接收的消息较少，将使用可用数量的消息执行 **ProcessEventsAsync**。
 - [PrefetchCount](/dotnet/api/microsoft.azure.eventhubs.processor.eventprocessoroptions.prefetchcount)：底层 AMQP 通道在确定客户端应接收的消息数上限时使用的值。 此值应大于或等于 [MaxBatchSize](/dotnet/api/microsoft.azure.eventhubs.processor.eventprocessoroptions.maxbatchsize)。
@@ -162,7 +163,7 @@ public class SimpleEventProcessor : IEventProcessor
 下面是接收 Epoch 的工作原理：
 
 ### <a name="with-epoch"></a>使用 Epoch
-Epoch 是服务用来强制实施分区/租约所有权的唯一标识符（Epoch 值）。 使用 [CreateEpochReceiver](/dotnet/api/microsoft.azure.eventhubs.eventhubclient.createepochreceiver?view=azure-dotnet) 方法创建基于 Epoch 的接收器。 此方法创建基于 Epoch 的接收器。 该接收器是针对指定使用者组中的特定事件中心分区创建的。
+Epoch 是服务用来强制实施分区/租约所有权的唯一标识符（Epoch 值）。 使用 [CreateEpochReceiver](/dotnet/api/microsoft.azure.eventhubs.eventhubclient.createepochreceiver) 方法创建基于 Epoch 的接收器。 此方法创建基于 Epoch 的接收器。 该接收器是针对指定使用者组中的特定事件中心分区创建的。
 
 Epoch 功能可让用户确保在任意时间点使用者组中只有一个接收器，并附带以下规则：
 
@@ -171,7 +172,7 @@ Epoch 功能可让用户确保在任意时间点使用者组中只有一个接�
 - 如果某个接收器的 Epoch 值为 e1，创建的新接收器的 Epoch 值为 e2，而 e1 > e2，那么，创建 e2 将会失败并出现错误：使用 Epoch e1 的接收器已存在。
 
 ### <a name="no-epoch"></a>无 Epoch
-使用 [CreateReceiver](/dotnet/api/microsoft.azure.eventhubs.eventhubclient.createreceiver?view=azure-dotnet) 方法创建不是基于 Epoch 的接收器。 
+使用 [CreateReceiver](/dotnet/api/microsoft.azure.eventhubs.eventhubclient.createreceiver) 方法创建不是基于 Epoch 的接收器。 
 
 在流处理中，用户有时想要在单个使用者组中创建多个接收器。 若要支持此类方案，我们确实可以创建一个不带 Epoch 的接收器；在本例中，我们最多允许在使用者组中创建 5 个并发的接收器。
 
@@ -192,10 +193,10 @@ Epoch 功能可让用户确保在任意时间点使用者组中只有一个接�
 熟悉事件处理程序主机后，请参阅以下文章来详细了解事件中心：
 
 - 事件中心入门
-    - [.NET Core](get-started-dotnet-standard-send-v2.md)
-    - [Java](get-started-java-send-v2.md)
-    - [Python](get-started-python-send-v2.md)
-    - [JavaScript](get-started-node-send-v2.md)
+    - [.NET Core](event-hubs-dotnet-standard-getstarted-send.md)
+    - [Java](event-hubs-java-get-started-send.md)
+    - [Python](event-hubs-python-get-started-send.md)
+    - [JavaScript](event-hubs-node-get-started-send.md)
 * [事件中心编程指南](event-hubs-programming-guide.md)
 * [事件中心中的可用性和一致性](event-hubs-availability-and-consistency.md)
 * [事件中心常见问题](event-hubs-faq.md)

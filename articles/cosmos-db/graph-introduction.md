@@ -1,20 +1,21 @@
 ---
 title: Azure Cosmos DB Gremlin API 简介
 description: 了解如何在 Azure Cosmos DB 中通过使用 Apache TinkerPop 的 Gremlin 图形查询语言以较低的延迟存储、查询和遍历大量图形。
-author: LuisBosquez
+author: christopheranderson
 ms.service: cosmos-db
 ms.subservice: cosmosdb-graph
 ms.topic: overview
-ms.date: 07/10/2020
-ms.author: lbosq
-ms.openlocfilehash: 3dc534d1cbb195cd93ede091503222b297b17059
-ms.sourcegitcommit: 3543d3b4f6c6f496d22ea5f97d8cd2700ac9a481
+ms.date: 11/25/2020
+ms.author: chrande
+ms.openlocfilehash: c2165ea6273ad90cfb95242dfe72538c0a5ef64c
+ms.sourcegitcommit: 9eda79ea41c60d58a4ceab63d424d6866b38b82d
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/20/2020
-ms.locfileid: "86523734"
+ms.lasthandoff: 11/30/2020
+ms.locfileid: "96350052"
 ---
 # <a name="introduction-to-gremlin-api-in-azure-cosmos-db"></a>Azure Cosmos DB 中的 Gremlin API 简介
+[!INCLUDE[appliesto-gremlin-api](includes/appliesto-gremlin-api.md)]
 
 [Azure Cosmos DB](introduction.md)  是 Microsoft 针对任务关键型应用程序提供的全球分布的多模型数据库服务。 它是多模型数据库并支持文档、键-值、图和列系列数据模型。 Azure Cosmos DB 通过 Gremlin API 在为任何规模设计的完全托管数据库服务中提供图形数据库服务。  
 
@@ -24,6 +25,9 @@ ms.locfileid: "86523734"
 
 Azure Cosmos DB 的 Gremlin API 将强大的图形数据库算法与高度可扩展的托管基础结构相结合，为缺乏灵活性和关系型方法的大多数常见数据问题提供独特、灵活的解决方案。
 
+> [!NOTE]
+> [无服务器容量模式](serverless.md)现在在 Azure Cosmos DB 的 Gremlin API 上可用。
+
 ## <a name="features-of-azure-cosmos-dbs-gremlin-api"></a>Azure Cosmos DB 的 Gremlin API 的功能
  
 Azure Cosmos DB 是一个完全托管的图形数据库，提供全局分发、存储和吞吐量弹性缩放、自动索引编制与查询、可优化的一致性级别，并支持 TinkerPop 标准。
@@ -32,7 +36,7 @@ Azure Cosmos DB 是一个完全托管的图形数据库，提供全局分发、�
 
 * **可灵活缩放吞吐量和存储**
 
-  现实世界中的图形需要扩展到超越单个服务器的容量。 Azure Cosmos DB 支持横向可缩放的图形数据库，就存储和预配吞吐量而言，这些数据库的大小几乎无限制。 随着图形数据库规模的增长，数据将使用[图形分区](https://docs.microsoft.com/azure/cosmos-db/graph-partitioning)自动分发。
+  现实世界中的图形需要扩展到超越单个服务器的容量。 Azure Cosmos DB 支持横向可缩放的图形数据库，就存储和预配吞吐量而言，这些数据库的大小几乎无限制。 随着图形数据库规模的增长，数据将使用[图形分区](./graph-partitioning.md)自动分发。
 
 * **多区域复制**
 
@@ -48,11 +52,11 @@ Azure Cosmos DB 是一个完全托管的图形数据库，提供全局分发、�
 
   通过 Azure Cosmos DB 无需管理数据库和计算机资源。 大多数现有的图形数据库平台受其基础结构的限制，并且通常需要进行高度维护才能确保其运营。 
   
-  作为一种完全托管的服务，Cosmos DB 无需管理虚拟机、更新运行时软件、管理分片或复制或者处理复杂的数据层升级。 每个图形会自动备份，以防受到区域故障的影响。 这些保证使得开发人员能够专注于提供应用程序价值，而不是专注于操作和管理其图形数据库。 
+  作为一种完全托管的服务，Cosmos DB 无需管理虚拟机、更新运行时软件、管理分片或复制或者处理复杂的数据层升级。 每个图形会自动备份，以防受到区域故障的影响。 这使得开发人员能够专注于提供应用程序价值，而不是专注于操作和管理其图形数据库。 
 
 * **自动编制索引**
 
-  默认情况下，Azure Cosmos DB 自动为图形中的节点（也称为顶点）和边缘包含的所有属性编制索引，无需任何架构或创建二级索引。 深入了解 [Azure Cosmos DB 中的索引](https://docs.microsoft.com/azure/cosmos-db/index-overview)。
+  默认情况下，Azure Cosmos DB 自动为图形中的节点（也称为顶点）和边缘包含的所有属性编制索引，无需任何架构或创建二级索引。 深入了解 [Azure Cosmos DB 中的索引](./index-overview.md)。
 
 * **与 Apache TinkerPop 兼容**
 

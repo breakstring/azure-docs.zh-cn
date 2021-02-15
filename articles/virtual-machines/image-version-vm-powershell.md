@@ -1,5 +1,5 @@
 ---
-title: 从 VM 创建映像（预览版）
+title: 从 VM 创建映像
 description: 了解如何使用 Azure PowerShell，在共享映像库中从 Azure 中的现有 VM 创建映像。
 author: cynthn
 ms.topic: how-to
@@ -9,18 +9,18 @@ ms.workload: infrastructure
 ms.date: 05/04/2020
 ms.author: cynthn
 ms.reviewer: akjosh
-ms.openlocfilehash: 757b297d3d74365928cda0934485c0018f28ffee
-ms.sourcegitcommit: 152c522bb5ad64e5c020b466b239cdac040b9377
+ms.openlocfilehash: a7b8cb10f75d7a99198ddfdc1a1bbef3c34a03da
+ms.sourcegitcommit: b39cf769ce8e2eb7ea74cfdac6759a17a048b331
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/14/2020
-ms.locfileid: "88225642"
+ms.lasthandoff: 01/22/2021
+ms.locfileid: "98685100"
 ---
-# <a name="preview-create-an-image-from-a-vm"></a>预览版：从 VM 创建映像
+# <a name="create-an-image-from-a-vm"></a>从 VM 创建映像
 
 如果要使用现有 VM 生成多个相同的 VM，你可以使用该 VM 在共享映像库中通过 Azure PowerShell 创建映像。 还可以使用 [Azure CLI](image-version-vm-cli.md) 从 VM 创建映像。
 
-你可以使用 Azure PowerShell 从[专用化和通用化](./windows/shared-image-galleries.md#generalized-and-specialized-images) VM 捕获映像。 
+你可以使用 Azure PowerShell 从[专用化和通用化](./shared-image-galleries.md#generalized-and-specialized-images) VM 捕获映像。 
 
 映像库中的映像具有两个组件，我们将在此示例中创建这两个组件：
 - “映像定义”包含有关映像及其使用要求的信息。 这包括该映像是 Windows 映像还是 Linux 映像、是专用映像还是通用映像，此外还包括发行说明以及最低和最高内存要求。 它是某种映像类型的定义。 
@@ -77,7 +77,7 @@ Stop-AzVM `
 
 制作映像定义时，请确保它具有所有正确信息。 如果已通用化 VM（使用适用于 Windows 的 Sysprep，或适用于 Linux 的 waagent -deprovision），则应使用 `-OsState generalized` 创建映像定义。 如果未通用化 VM，请使用 `-OsState specialized` 创建映像定义。
 
-若要详细了解可以为映像定义指定的值，请参阅[映像定义](./windows/shared-image-galleries.md#image-definitions)。
+若要详细了解可以为映像定义指定的值，请参阅[映像定义](./shared-image-galleries.md#image-definitions)。
 
 使用 [New-AzGalleryImageDefinition](/powershell/module/az.compute/new-azgalleryimageversion) 创建映像定义。 
 
@@ -103,9 +103,9 @@ $imageDefinition = New-AzGalleryImageDefinition `
 
 允许用于映像版本的字符为数字和句点。 数字必须在 32 位整数范围内。 格式：*MajorVersion*.*MinorVersion*.*Patch*。
 
-在此示例中，映像版本为 1.0.0，该版本被复制到美国中西部和美国中南部数据中心******。 选择复制的目标区域时，请记住，你还需包括源区域作为复制的目标。
+在此示例中，映像版本为 1.0.0，该版本被复制到美国中西部和美国中南部数据中心。 选择复制的目标区域时，请记住，你还需包括源区域作为复制的目标。
 
-若要从 VM 创建映像版本，请对 `-Source` 使用 `$vm.Id.ToString()`。
+若要从 VM 创建映像版本，请对 `-SourceImageId` 使用 `$vm.Id.ToString()`。
 
 ```azurepowershell-interactive
    $region1 = @{Name='South Central US';ReplicaCount=1}
@@ -119,7 +119,7 @@ $job = $imageVersion = New-AzGalleryImageVersion `
    -ResourceGroupName $gallery.ResourceGroupName `
    -Location $gallery.Location `
    -TargetRegion $targetRegions  `
-   -Source $sourceVm.Id.ToString() `
+   -SourceImageId $sourceVm.Id.ToString() `
    -PublishingProfileEndOfLifeDate '2020-12-01' `  
    -asJob 
 ```
@@ -140,4 +140,4 @@ $job.State
 
 验证新映像版本正常工作后，即可创建 VM。 从[专用化映像版本](vm-specialized-image-version-powershell.md)或[通用化映像版本](vm-generalized-image-version-powershell.md)创建 VM。
 
-有关如何提供购买计划信息的信息，请参阅 [创建映像时提供 Azure Marketplace 购买计划信息](marketplace-images.md)。
+有关如何提供购买计划信息的信息，请参阅[在创建映像时提供 Azure 市场购买计划信息](marketplace-images.md)。

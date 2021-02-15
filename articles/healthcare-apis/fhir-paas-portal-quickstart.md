@@ -7,13 +7,13 @@ ms.service: healthcare-apis
 ms.subservice: fhir
 ms.topic: quickstart
 ms.date: 03/15/2020
-ms.author: matjazl
-ms.openlocfilehash: 8c0448d31cd89e2ca969b81361b30bac3f9610e9
-ms.sourcegitcommit: 7fe8df79526a0067be4651ce6fa96fa9d4f21355
+ms.author: cavoeg
+ms.openlocfilehash: cabacd5204f4a9ac5c17c7bd66924482b5bf688a
+ms.sourcegitcommit: a43a59e44c14d349d597c3d2fd2bc779989c71d7
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/06/2020
-ms.locfileid: "87851930"
+ms.lasthandoff: 11/25/2020
+ms.locfileid: "96023459"
 ---
 # <a name="quickstart-deploy-azure-api-for-fhir-using-azure-portal"></a>快速入门：使用 Azure 门户部署 Azure API for FHIR
 
@@ -67,7 +67,10 @@ ms.locfileid: "87851930"
 
 ## <a name="next-steps"></a>后续步骤
 
-在本快速入门指南中，你已将 Azure API for FHIR 部署到订阅中。 若要在 Azure API for FHIR 中设置其他设置，请转到其他设置操作指南。
+在本快速入门指南中，你已将 Azure API for FHIR 部署到订阅中。 若要在 Azure API for FHIR 中设置其他设置，请转到其他设置操作指南。 如果你已经准备好开始使用 Azure API for FHIR，请阅读有关如何注册应用程序的详细信息。
 
 >[!div class="nextstepaction"]
 >[Azure API for FHIR 中的其他设置](azure-api-for-fhir-additional-settings.md)
+
+>[!div class="nextstepaction"]
+>[注册应用程序概览](fhir-app-registration.md)

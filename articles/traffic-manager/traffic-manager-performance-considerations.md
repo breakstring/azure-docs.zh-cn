@@ -3,20 +3,20 @@ title: Azure 流量管理器的性能注意事项 | Microsoft 文档
 description: 了解流量管理器的性能以及如何测试使用流量管理器时的网站性能
 services: traffic-manager
 documentationcenter: ''
-author: rohinkoul
+author: duongau
 ms.service: traffic-manager
 ms.devlang: na
 ms.topic: article
 ms.tgt_pltfrm: na
 ms.workload: infrastructure-services
 ms.date: 03/16/2017
-ms.author: rohink
-ms.openlocfilehash: 84367a00643c48e7fe2fb7f907bab64589193b2e
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.author: duau
+ms.openlocfilehash: 5a0de772598877029649f8a985c79e28f5264535
+ms.sourcegitcommit: 0aec60c088f1dcb0f89eaad5faf5f2c815e53bf8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "76938544"
+ms.lasthandoff: 01/14/2021
+ms.locfileid: "98186169"
 ---
 # <a name="performance-considerations-for-traffic-manager"></a>流量管理器的性能注意事项
 
@@ -50,7 +50,7 @@ DNS 名称解析速度会加快，结果会被缓存。 初始 DNS 查找速度�
 
     其中最简单的工具就是 WebSitePulse。 输入 URL 即可查看 DNS 解析时间、第一个字节、最后一个字节和其他性能统计信息。 可以从三个不同的测试位置中选择。 在此示例中可以看到，第一次执行显示 DNS 查找花费了 0.204 秒。
 
-    ![pulse1](./media/traffic-manager-performance-considerations/traffic-manager-web-site-pulse.png)
+    ![显示 "WebSitePulse" 工具，其中突出显示了 "DNS" 查找结果的屏幕截图。](./media/traffic-manager-performance-considerations/traffic-manager-web-site-pulse.png)
 
     由于结果会缓存，针对同一个流量管理器终结点执行第二次测试时，DNS 查找仅花费了 0.002 秒。
 
@@ -80,7 +80,6 @@ DNS 名称解析速度会加快，结果会被缓存。 初始 DNS 查找速度�
 
 [测试流量管理器设置](traffic-manager-testing-settings.md)
 
-[流量管理器上的操作（REST API 参考）](https://go.microsoft.com/fwlink/?LinkId=313584)
+[流量管理器上的操作（REST API 参考）](/previous-versions/azure/reference/hh758255(v=azure.100))
 
-[Azure 流量管理器 cmdlet](https://docs.microsoft.com/powershell/module/az.trafficmanager)
-
+[Azure 流量管理器 cmdlet](/powershell/module/az.trafficmanager)

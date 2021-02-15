@@ -3,12 +3,12 @@ title: Azure Functions 的应用设置参考
 description: 有关 Azure Functions 应用设置或环境变量的参考文档。
 ms.topic: conceptual
 ms.date: 09/22/2018
-ms.openlocfilehash: b17db828aeb19c3347c0db4babf0eee2b9d5f280
-ms.sourcegitcommit: 02ca0f340a44b7e18acca1351c8e81f3cca4a370
+ms.openlocfilehash: 8cb3e12c48adf1273c58f4914e34590e21b9d3cc
+ms.sourcegitcommit: d4734bc680ea221ea80fdea67859d6d32241aefc
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/19/2020
-ms.locfileid: "88589294"
+ms.lasthandoff: 02/14/2021
+ms.locfileid: "100378292"
 ---
 # <a name="app-settings-reference-for-azure-functions"></a>Azure Functions 的应用设置参考
 
@@ -19,11 +19,11 @@ ms.locfileid: "88589294"
 [host.json](functions-host-json.md) 文件和 [local.settings.json](functions-run-local.md#local-settings-file) 文件中提供了其他全局配置选项。
 
 > [!NOTE]  
-> 您可以使用应用程序设置重写设置值 host.js，而不必更改文件本身的 host.js。 这对于需要配置或修改特定环境设置的特定 host.js的情况非常有用。 这还允许更改设置 host.js，而无需重新发布项目。 若要了解详细信息，请参阅 [ 参考文章host.js](functions-host-json.md#override-hostjson-values)。  
+> 可以使用应用程序设置替代 host.json 设置值，而不必更改 host.json 文件本身。 这对于需要针对特定环境配置或修改特定 host.json 设置的方案很有用。 这也让你可以更改 host.json 设置，而不必重新发布项目。 若要了解详细信息，请参阅 [host.json 参考文章](functions-host-json.md#override-hostjson-values)。 如果更改函数应用设置，则需要重启函数应用。
 
 ## <a name="appinsights_instrumentationkey"></a>APPINSIGHTS_INSTRUMENTATIONKEY
 
-Application Insights 的检测密钥。 仅使用或之一 `APPINSIGHTS_INSTRUMENTATIONKEY` `APPLICATIONINSIGHTS_CONNECTION_STRING` 。 有关详细信息，请参阅[监视 Azure Functions](functions-monitoring.md)。 
+Application Insights 的检测密钥。 仅使用 `APPINSIGHTS_INSTRUMENTATIONKEY` 或 `APPLICATIONINSIGHTS_CONNECTION_STRING` 中的一个。 当 Application Insights 在主权云中运行时，请使用 `APPLICATIONINSIGHTS_CONNECTION_STRING`。 有关详细信息，请参阅[如何配置对 Azure Functions 的监视](configure-monitoring.md)。 
 
 |键|示例值|
 |---|------------|
@@ -31,31 +31,36 @@ Application Insights 的检测密钥。 仅使用或之一 `APPINSIGHTS_INSTRUME
 
 ## <a name="applicationinsights_connection_string"></a>APPLICATIONINSIGHTS_CONNECTION_STRING
 
-Application Insights 的连接字符串。 `APPLICATIONINSIGHTS_CONNECTION_STRING` `APPINSIGHTS_INSTRUMENTATIONKEY` 当函数应用需要使用连接字符串支持的已添加自定义时，请使用而不是。 有关详细信息，请参阅 [连接字符串](../azure-monitor/app/sdk-connection-string.md)。 
+Application Insights 的连接字符串。 在以下情况下使用 `APPLICATIONINSIGHTS_CONNECTION_STRING` 而不是 `APPINSIGHTS_INSTRUMENTATIONKEY`：
+
++ 当函数应用需要通过连接字符串提供支持的已添加自定义项时。 
++ 当 Application Insights 实例在需要自定义终结点的主权云中运行时。
+
+有关详细信息，请参阅[连接字符串](../azure-monitor/app/sdk-connection-string.md)。 
 
 |键|示例值|
 |---|------------|
-|APPLICATIONINSIGHTS_CONNECTION_STRING|InstrumentationKey = [key]; IngestionEndpoint = [url];LiveEndpoint = [url];ProfilerEndpoint = [url];SnapshotEndpoint = [url];|
+|APPLICATIONINSIGHTS_CONNECTION_STRING|InstrumentationKey=[key];IngestionEndpoint=[url];LiveEndpoint=[url];ProfilerEndpoint=[url];SnapshotEndpoint=[url];|
 
 ## <a name="azure_function_proxy_disable_local_call"></a>AZURE_FUNCTION_PROXY_DISABLE_LOCAL_CALL
 
-默认情况下， [函数代理](functions-proxies.md) 使用快捷方式将 API 调用从代理直接发送到相同函数应用中的函数。 使用此快捷方式，而不是创建新的 HTTP 请求。 此设置允许您禁用该快捷方式行为。
+默认情况下，[Functions 代理](functions-proxies.md)使用快捷方式从代理直接将 API 调用发送到同一函数应用中的函数。 使用此快捷方式取代创建新的 HTTP 请求。 此设置让你能够禁用该快捷方式行为。
 
-|密钥|值|说明|
+|键|“值”|说明|
 |-|-|-|
-|AZURE_FUNCTION_PROXY_DISABLE_LOCAL_CALL|是|使用指向本地函数应用中的函数的后端 URL 的调用不会直接发送到函数。 相反，请求会定向回函数应用的 HTTP 前端。|
-|AZURE_FUNCTION_PROXY_DISABLE_LOCAL_CALL|false|使用指向本地函数应用中的函数的后端 URL 的调用将直接转发给函数。 这是默认值。 |
+|AZURE_FUNCTION_PROXY_DISABLE_LOCAL_CALL|是|具有指向本地函数应用中函数的后端 URL 的调用不会直接发送到函数， 相反，请求会定向回函数应用的 HTTP 前端。|
+|AZURE_FUNCTION_PROXY_DISABLE_LOCAL_CALL|false|具有指向本地函数应用中函数的后端 URL 的调用会直接转发到函数。 这是默认值。 |
 
 ## <a name="azure_function_proxy_backend_url_decode_slashes"></a>AZURE_FUNCTION_PROXY_BACKEND_URL_DECODE_SLASHES
 
-此设置控制 `%2F` 将字符插入后端 URL 时是否将这些字符解码为路由参数中的斜杠。 
+此设置控制字符 `%2F` 在路由参数插入后端 URL 时是否在路由参数中解码为斜杠。 
 
-|密钥|值|说明|
+|键|“值”|说明|
 |-|-|-|
-|AZURE_FUNCTION_PROXY_BACKEND_URL_DECODE_SLASHES|是|编码的斜杠的路由参数已解码。 |
-|AZURE_FUNCTION_PROXY_BACKEND_URL_DECODE_SLASHES|false|所有路由参数都将按未更改的方式传递，这是默认行为。 |
+|AZURE_FUNCTION_PROXY_BACKEND_URL_DECODE_SLASHES|是|包含编码斜杠的路由参数已解码。 |
+|AZURE_FUNCTION_PROXY_BACKEND_URL_DECODE_SLASHES|false|所有路由参数均原样传递，这是默认行为。 |
 
-例如，请考虑域上函数应用的文件 proxies.js`myfunction.com` 。
+例如，考虑位于 `myfunction.com` 域的函数应用的 proxies.json 文件。
 
 ```JSON
 {
@@ -71,7 +76,7 @@ Application Insights 的连接字符串。 `APPLICATIONINSIGHTS_CONNECTION_STRIN
 }
 ```
 
-当 `AZURE_FUNCTION_PROXY_BACKEND_URL_DECODE_SLASHES` 设置为时 `true` ，URL `example.com/api%2ftest` 解析为 `example.com/api/test` 。 默认情况下，URL 保持不变 `example.com/test%2fapi` 。 有关详细信息，请参阅 [函数代理](functions-proxies.md)。
+如果 `AZURE_FUNCTION_PROXY_BACKEND_URL_DECODE_SLASHES` 设置为 `true`，则 URL `example.com/api%2ftest` 解析为 `example.com/api/test`。 默认情况下，URL 保持为 `example.com/test%2fapi` 不变。 有关详细信息，请参阅 [Functions 代理](functions-proxies.md)。
 
 ## <a name="azure_functions_environment"></a>AZURE_FUNCTIONS_ENVIRONMENT
 
@@ -90,7 +95,7 @@ Application Insights 的连接字符串。 `APPLICATIONINSIGHTS_CONNECTION_STRIN
 |AzureWebJobsDashboard|DefaultEndpointsProtocol=https;AccountName=<name>;AccountKey=<key>|
 
 > [!NOTE]
-> 为了获得更好的性能和体验，运行时版本2.x 和更高版本使用 APPINSIGHTS_INSTRUMENTATIONKEY 和 App Insights 进行监视，而不是 `AzureWebJobsDashboard` 。
+> 为了获得更好的性能和体验，运行时版本 2.x 及更高版本使用 APPINSIGHTS_INSTRUMENTATIONKEY 和 App Insights 进行监视，而不是使用 `AzureWebJobsDashboard`。
 
 ## <a name="azurewebjobsdisablehomepage"></a>AzureWebJobsDisableHomepage
 
@@ -130,7 +135,7 @@ Application Insights 的连接字符串。 `APPLICATIONINSIGHTS_CONNECTION_STRIN
 
 ## <a name="azurewebjobsstorage"></a>AzureWebJobsStorage
 
-Azure Functions 运行时针对除 HTTP 触发的函数以外的其他所有函数使用此存储帐户连接字符串。 存储帐户必须是支持 Blob、队列和表的通用帐户。 请参阅[存储帐户](functions-infrastructure-as-code.md#storage-account)和[存储帐户要求](storage-considerations.md#storage-account-requirements)。
+Azure Functions 运行时使用此存储帐户连接字符串执行常规操作。 此存储帐户的一些用途包括密钥管理、计时器触发器管理和事件中心检查点。 存储帐户必须是支持 Blob、队列和表的通用帐户。 请参阅[存储帐户](functions-infrastructure-as-code.md#storage-account)和[存储帐户要求](storage-considerations.md#storage-account-requirements)。
 
 |键|示例值|
 |---|------------|
@@ -181,6 +186,14 @@ Azure Functions 运行时针对除 HTTP 触发的函数以外的其他所有函�
 |---|------------|
 |FUNCTIONS\_WORKER\_PROCESS\_COUNT|2|
 
+## <a name="python_threadpool_thread_count"></a>PYTHON \_ THREADPOOL \_ 线程 \_ 计数
+
+指定 Python 语言辅助角色将用于执行函数调用的最大线程数，其默认值 `1` 为 Python 版本及更高版本 `3.8` 。 对于 Python 版本 `3.9` 及更高版本，该值设置为 `None` 。 请注意，此设置不能保证在执行过程中设置的线程数。 此设置允许 Python 将线程数扩展到指定的值。 此设置仅适用于 Python 函数应用。 此外，此设置还适用于同步函数调用，不适用于协同程序。
+
+|键|示例值|最大值|
+|---|------------|---------|
+|PYTHON \_ THREADPOOL \_ 线程 \_ 计数|2|32|
+
 
 ## <a name="functions_worker_runtime"></a>FUNCTIONS\_WORKER\_RUNTIME
 
@@ -200,42 +213,56 @@ Azure Functions 运行时针对除 HTTP 触发的函数以外的其他所有函�
 
 若要了解详细信息，请参阅 Python 开发人员参考中的 [自定义依赖项](functions-reference-python.md#remote-build-with-extra-index-url) 。
 
-## <a name="scale_controller_logging_enable"></a>\_启用缩放控制器 \_ 日志记录 \_
+## <a name="scale_controller_logging_enabled"></a>扩展 \_ 控制器 \_ 日志记录 \_ 已启用
 
 _此设置当前处于预览状态。_  
 
-此设置控制来自 Azure Functions 缩放控制器的日志记录。 有关详细信息，请参阅 [缩放控制器日志](functions-monitoring.md#scale-controller-logs-preview)。
+此设置控制 Azure Functions 缩放控制器中的日志记录。 有关详细信息，请参阅[缩放控制器日志](functions-monitoring.md#scale-controller-logs)。
 
 |键|示例值|
 |-|-|
-|SCALE_CONTROLLER_LOGGING_ENABLE|AppInsights：详细|
+|SCALE_CONTROLLER_LOGGING_ENABLED|AppInsights:Verbose|
 
-此键的值以格式提供 `<DESTINATION>:<VERBOSITY>` ，其定义如下：
+此键的值以 `<DESTINATION>:<VERBOSITY>` 格式提供，其定义如下：
 
 [!INCLUDE [functions-scale-controller-logging](../../includes/functions-scale-controller-logging.md)]
 
-## <a name="website_contentazurefileconnectionstring"></a>网站 \_ CONTENTAZUREFILECONNECTIONSTRING
+## <a name="website_contentazurefileconnectionstring"></a>WEBSITE\_CONTENTAZUREFILECONNECTIONSTRING
 
-仅限 & 高级计划。 存储函数应用代码和配置的存储帐户的连接字符串。 请参阅[创建函数应用](functions-infrastructure-as-code.md#create-a-function-app)。
+存储帐户的连接字符串，该帐户的函数应用代码和配置存储在 Windows 上运行的事件驱动缩放计划中。 有关详细信息，请参阅[创建函数应用](functions-infrastructure-as-code.md#windows)。
 
 |键|示例值|
 |---|------------|
 |WEBSITE_CONTENTAZUREFILECONNECTIONSTRING|DefaultEndpointsProtocol=https;AccountName=[name];AccountKey=[key]|
 
+仅在部署到高级计划或在 Windows 上运行的消耗计划时使用。 对于运行 Linux 的使用量计划不支持。 更改或删除此设置可能会导致函数应用无法启动。 若要了解详细信息，请参阅[此故障排除文章](functions-recover-storage-account.md#storage-account-application-settings-were-deleted)。 
+
+## <a name="website_contentovervnet"></a>WEBSITE\_CONTENTOVERVNET
+
+仅用于高级计划。 将存储帐户限制在虚拟网络中时，值 `1` 允许函数应用进行缩放。 将存储帐户限制于一个虚拟网络时，应启用此设置。 若要了解详细信息，请参阅[将存储帐户限制在虚拟网络中](functions-networking-options.md#restrict-your-storage-account-to-a-virtual-network)。
+
+|键|示例值|
+|---|------------|
+|WEBSITE_CONTENTOVERVNET|1|
+
 ## <a name="website_contentshare"></a>WEBSITE\_CONTENTSHARE
 
-仅限 & 高级计划。 函数应用代码和配置的文件路径。 与 WEBSITE_CONTENTAZUREFILECONNECTIONSTRING 结合使用。 默认值是以函数应用名称开头的唯一字符串。 请参阅[创建函数应用](functions-infrastructure-as-code.md#create-a-function-app)。
+Windows 上事件驱动的缩放计划中函数应用代码和配置的文件路径。 与 WEBSITE_CONTENTAZUREFILECONNECTIONSTRING 结合使用。 默认值是以函数应用名称开头的唯一字符串。 请参阅[创建函数应用](functions-infrastructure-as-code.md#windows)。
 
 |键|示例值|
 |---|------------|
 |WEBSITE_CONTENTSHARE|functionapp091999e2|
+
+仅在部署到高级计划或在 Windows 上运行的消耗计划时使用。 对于运行 Linux 的使用量计划不支持。 更改或删除此设置可能会导致函数应用无法启动。 若要了解详细信息，请参阅[此故障排除文章](functions-recover-storage-account.md#storage-account-application-settings-were-deleted)。
+
+在部署期间使用 Azure 资源管理器创建函数应用时，请不要在模板中包括 WEBSITE_CONTENTSHARE。 此应用程序设置是在部署过程中生成的。 若要了解详细信息，请参阅[为函数应用自动执行资源部署](functions-infrastructure-as-code.md#windows)。   
 
 ## <a name="website_max_dynamic_application_scale_out"></a>WEBSITE\_MAX\_DYNAMIC\_APPLICATION\_SCALE\_OUT
 
 函数应用可以横向扩展到的最大实例数。 默认值为无限制。
 
 > [!IMPORTANT]
-> 此设置处于预览阶段。  添加了 [函数最大 scale out 的应用属性](./functions-scale.md#limit-scale-out) ，建议使用此属性限制横向扩展。
+> 此设置处于预览状态。  添加了一个[函数应用横向扩展上限属性](./event-driven-scaling.md#limit-scale-out)，建议使用此方法限制横向扩展。
 
 |键|示例值|
 |---|------------|
@@ -260,14 +287,14 @@ _仅限 Windows_。
 
 有效值是解析为部署包文件位置的 URL 或 `1`。 设置为 `1` 时，包必须位于 `d:\home\data\SitePackages` 文件夹中。 使用此设置的 zip 部署时，包将自动上传到此位置。 在预览版中，此设置名为 `WEBSITE_RUN_FROM_ZIP`。 有关详细信息，请参阅[从包文件运行函数](run-functions-from-deployment-package.md)。
 
-## <a name="website_time_zone"></a>网站 \_ 时区 \_
+## <a name="website_time_zone"></a>WEBSITE\_TIME\_ZONE
 
-允许您设置 function app 的时区。 
+允许为函数应用设置时区。 
 
-|密钥|(OS)|示例值|
+|键|(OS)|示例值|
 |---|--|------------|
-|网站 \_ 时区 \_|Windows|东部标准时间|
-|网站 \_ 时区 \_|Linux|美洲/New_York|
+|WEBSITE\_TIME\_ZONE|Windows|东部标准时间|
+|WEBSITE\_TIME\_ZONE|Linux|美洲/New_York|
 
 [!INCLUDE [functions-timezone](../../includes/functions-timezone.md)]
 

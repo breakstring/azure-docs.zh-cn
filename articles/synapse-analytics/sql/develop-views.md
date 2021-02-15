@@ -1,23 +1,24 @@
 ---
-title: 使用 Synapse SQL 的 t-sql 视图
-description: 使用 T-sql 视图和使用 Synapse SQL 开发解决方案的技巧。
+title: 使用 SQL 池的 t-sql 视图
+description: 有关在 Azure Synapse 分析中使用 T-sql 视图和开发专用 SQL 池和无服务器 SQL 池的解决方案的技巧。
 services: synapse-analytics
 author: azaricstefan
 ms.service: synapse-analytics
 ms.topic: conceptual
-ms.subservice: ''
+ms.subservice: sql
 ms.date: 04/15/2020
-ms.author: v-stazar
+ms.author: stefanazaric
 ms.reviewer: jrasnick
-ms.openlocfilehash: 84cd5c2de0b1a6d0909a31071506d98627966775
-ms.sourcegitcommit: 11e2521679415f05d3d2c4c49858940677c57900
+ms.openlocfilehash: de04be2495c6e81e9c5f8d32f9d876b49482c5fe
+ms.sourcegitcommit: b39cf769ce8e2eb7ea74cfdac6759a17a048b331
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/31/2020
-ms.locfileid: "87500736"
+ms.lasthandoff: 01/22/2021
+ms.locfileid: "98678366"
 ---
-# <a name="t-sql-views-using-synapse-sql"></a>使用 Synapse SQL 的 t-sql 视图
-在本文中，你将了解有关使用 T-sql 视图的技巧，以及如何使用 Synapse SQL 开发解决方案。 
+# <a name="t-sql-views-with-dedicated-sql-pool-and-serverless-sql-pool-in-azure-synapse-analytics"></a>Azure Synapse Analytics 中具有专用 SQL 池和无服务器 SQL 池的 t-sql 视图
+
+在本文中，你将了解有关在 Azure Synapse 分析中使用 T-sql 视图和开发专用 SQL 池和无服务器 SQL 池的解决方案的技巧。
 
 ## <a name="why-use-views"></a>为什么使用视图
 
@@ -26,16 +27,11 @@ ms.locfileid: "87500736"
 ### <a name="sql-pool---create-view"></a>SQL 池-创建视图
 
 > [!NOTE]
-> **SQL pool**：本文不讨论 CREATE VIEW 的语法。 有关详细信息，请参阅 [CREATE VIEW](/sql/t-sql/statements/create-view-transact-sql?toc=/azure/synapse-analytics/toc.json&bc=/azure/synapse-analytics/breadcrumb/toc.json&view=azure-sqldw-latest) 文档。
-
-### <a name="sql-on-demand-preview---create-view"></a>SQL 点播（预览版）-创建视图
-
-> [!NOTE]
-> **SQL 点播**：创建视图的语法不在本文中讨论。 有关详细信息，请参阅 [CREATE VIEW](/sql/t-sql/statements/create-view-transact-sql?toc=/azure/synapse-analytics/toc.json&bc=/azure/synapse-analytics/breadcrumb/toc.json&view=azure-sqldw-latest) 文档。
+> 本文未讨论 CREATE VIEW 的语法。 有关详细信息，请参阅 [CREATE VIEW](/sql/t-sql/statements/create-view-transact-sql?toc=/azure/synapse-analytics/toc.json&bc=/azure/synapse-analytics/breadcrumb/toc.json&view=azure-sqldw-latest&preserve-view=true) 文档。
 
 ## <a name="architectural-abstraction"></a>体系结构摘要
 
-常见的应用程序模式是使用[CREATE TABLE AS SELECT](/sql/t-sql/statements/create-table-as-select-azure-sql-data-warehouse?toc=/azure/synapse-analytics/toc.json&bc=/azure/synapse-analytics/breadcrumb/toc.json&view=azure-sqldw-latest) （CTAS）重新创建表，在加载数据时，将使用后跟对象重命名模式。
+常见的应用程序模式是使用 [CREATE TABLE 作为 SELECT](/sql/t-sql/statements/create-table-as-select-azure-sql-data-warehouse?toc=/azure/synapse-analytics/toc.json&bc=/azure/synapse-analytics/breadcrumb/toc.json&view=azure-sqldw-latest&preserve-view=true) (CTAS) 重新创建表，在加载数据时，该模式后面跟有对象重命名模式。
 
 以下示例向日期维度添加新的日期记录。 请注意，这里先创建了一个新表 DimDate_New，然后将它重命名以替换表的原始版本。
 
@@ -54,7 +50,6 @@ FROM   dbo.DimDate_stg AS stg
 
 RENAME OBJECT DimDate TO DimDate_Old;
 RENAME OBJECT DimDate_New TO DimDate;
-
 ```
 
 请记住，此方法可能导致表在用户的视图中出现和消失，并提示 "表不存在" 错误消息。 使用视图可为用户提供一致的呈现层，同时对基础对象重命名。

@@ -8,12 +8,12 @@ author: mlearned
 ms.author: mlearned
 description: 排查已启用 Arc 的 Kubernetes 群集的常见问题。
 keywords: Kubernetes, Arc, Azure, 容器
-ms.openlocfilehash: 404516778255409d56dd5c3a7d1fd96711cc981f
-ms.sourcegitcommit: 5b6acff3d1d0603904929cc529ecbcfcde90d88b
+ms.openlocfilehash: 0827386eb6ec089cf7951e8fa513a77fc78aef22
+ms.sourcegitcommit: b39cf769ce8e2eb7ea74cfdac6759a17a048b331
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/21/2020
-ms.locfileid: "88723667"
+ms.lasthandoff: 01/22/2021
+ms.locfileid: "98684083"
 ---
 # <a name="azure-arc-enabled-kubernetes-troubleshooting-preview"></a>已启用 Azure Arc 的 Kubernetes 故障排除（预览版）
 
@@ -24,7 +24,7 @@ ms.locfileid: "88723667"
 ### <a name="azure-cli-set-up"></a>Azure CLI 设置
 使用 az connectedk8s 或 az k8sconfiguration CLI 命令之前，请确保将 az 设置为对应合适的 Azure 订阅。
 
-```console
+```azurecli
 az account set --subscription 'subscriptionId'
 az account show
 ```
@@ -50,16 +50,16 @@ TEST SUITE: None
 
 ```console
 $ kubectl -n azure-arc get deployments,pods
-NAME                                        READY   UP-TO-DATE AVAILABLE AGE
-deployment.apps/cluster-metadata-operator   1/1     1           1        16h
-deployment.apps/clusteridentityoperator     1/1     1           1        16h
-deployment.apps/config-agent                1/1     1           1        16h
-deployment.apps/controller-manager          1/1     1           1        16h
-deployment.apps/flux-logs-agent             1/1     1           1        16h
-deployment.apps/metrics-agent               1/1     1           1        16h
-deployment.apps/resource-sync-agent         1/1     1           1        16h
+NAME                                       READY  UP-TO-DATE  AVAILABLE  AGE
+deployment.apps/clusteridentityoperator     1/1       1          1       16h
+deployment.apps/config-agent                1/1       1          1       16h
+deployment.apps/cluster-metadata-operator   1/1       1          1       16h
+deployment.apps/controller-manager          1/1       1          1       16h
+deployment.apps/flux-logs-agent             1/1       1          1       16h
+deployment.apps/metrics-agent               1/1       1          1       16h
+deployment.apps/resource-sync-agent         1/1       1          1       16h
 
-NAME                                            READY   STATUS   RESTART AGE
+NAME                                            READY   STATUS  RESTART  AGE
 pod/cluster-metadata-operator-7fb54d9986-g785b  2/2     Running  0       16h
 pod/clusteridentityoperator-6d6678ffd4-tx8hr    3/3     Running  0       16h
 pod/config-agent-544c4669f9-4th92               3/3     Running  0       16h
@@ -69,7 +69,7 @@ pod/metrics-agent-58b765c8db-n5l7k              2/2     Running  0       16h
 pod/resource-sync-agent-5cf85976c7-522p5        3/3     Running  0       16h
 ```
 
-所有 Pod 应将 `STATUS` 显示为 `Running`，且 `READY` 应为 `3/3` 或 `2/2`。 提取日志，并描述返回 `Error` 或 `CrashLoopBackOff` 的 Pod。 如果这些 pod 中有任何一个处于粘滞 `Pending` 状态，则可能是由于群集节点上的资源不足造成的。 [向上缩放群集](https://kubernetes.io/docs/tasks/administer-cluster/cluster-management/#resizing-a-cluster) 会使这些 pod 转换到 `Running` 状态。
+所有 Pod 应将 `STATUS` 显示为 `Running`，且 `READY` 应为 `3/3` 或 `2/2`。 提取日志，并描述返回 `Error` 或 `CrashLoopBackOff` 的 Pod。 如果这些 pod 中有任何一个处于粘滞 `Pending` 状态，则可能是由于群集节点上的资源不足造成的。 [向上缩放群集](https://kubernetes.io/docs/tasks/administer-cluster/) 会使这些 pod 转换到 `Running` 状态。
 
 ## <a name="connecting-kubernetes-clusters-to-azure-arc"></a>将 Kubernetes 群集连接到 Azure Arc
 
@@ -79,7 +79,7 @@ pod/resource-sync-agent-5cf85976c7-522p5        3/3     Running  0       16h
 
 如果提供的 kubeconfig 文件没有足够的权限来安装 Azure Arc 代理，则 Azure CLI 命令在尝试调用 Kubernetes API 时将返回一个错误。
 
-```console
+```azurecli
 $ az connectedk8s connect --resource-group AzureArc --name AzureArcCluster
 Command group 'connectedk8s' is in preview. It may be changed/removed in a future release.
 Ensure that you have the latest helm version installed before proceeding to avoid unexpected errors.
@@ -94,12 +94,40 @@ Error: list: failed to list: secrets is forbidden: User "myuser" cannot list res
 
 Azure Arc 代理安装需要在目标群集上运行一组容器。 如果群集在网速缓慢的 Internet 连接上运行，则容器映像请求可能需要比 Azure CLI 超时更长的时间。
 
-```console
+```azurecli
 $ az connectedk8s connect --resource-group AzureArc --name AzureArcCluster
 Command group 'connectedk8s' is in preview. It may be changed/removed in a future release.
 Ensure that you have the latest helm version installed before proceeding to avoid unexpected errors.
 This operation might take a while...
 ```
+
+### <a name="helm-issue"></a>Helm 问题
+
+Helm `v3.3.0-rc.1` 版本存在一个 [问题](https://github.com/helm/helm/pull/8527) ，其中，Helm 安装/升级 (在 connectedk8s CLI 扩展的内部使用) 导致所有挂钩运行，导致以下错误：
+
+```console
+$ az connectedk8s connect -n shasbakstest -g shasbakstest
+Command group 'connectedk8s' is in preview. It may be changed/removed in a future release.
+Ensure that you have the latest helm version installed before proceeding.
+This operation might take a while...
+
+Please check if the azure-arc namespace was deployed and run 'kubectl get pods -n azure-arc' to check if all the pods are in running state. A possible cause for pods stuck in pending state could be insufficientresources on the kubernetes cluster to onboard to arc.
+ValidationError: Unable to install helm release: Error: customresourcedefinitions.apiextensions.k8s.io "connectedclusters.arc.azure.com" not found
+```
+
+若要从此问题恢复，请执行以下步骤：
+
+1. 删除 Azure 门户中问题的 Azure Arc 已启用 Kubernetes 资源。
+2. 在计算机上运行以下命令：
+    
+    ```console
+    kubectl delete ns azure-arc
+    kubectl delete clusterrolebinding azure-arc-operator
+    kubectl delete secret sh.helm.release.v1.azure-arc.v1
+    ```
+
+3. 在计算机上[安装稳定版本](https://helm.sh/docs/intro/install/)的 Helm 3，而不是预发行版。
+4. 运行 `az connectedk8s connect` 具有适当值的命令，将群集连接到 Azure Arc。
 
 ## <a name="configuration-management"></a>配置管理
 

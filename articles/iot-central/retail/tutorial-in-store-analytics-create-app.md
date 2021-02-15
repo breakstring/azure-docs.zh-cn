@@ -11,16 +11,14 @@ ms.custom:
 ms.author: timlt
 author: timlt
 ms.date: 11/12/2019
-ms.openlocfilehash: 50dd6038a8642f13cea7840fff723a5cf12ce2dd
-ms.sourcegitcommit: 25490467e43cbc3139a0df60125687e2b1c73c09
+ms.openlocfilehash: 112039b9227d5ff34e68b6dc6643597f335fbdb5
+ms.sourcegitcommit: d1b0cf715a34dd9d89d3b72bb71815d5202d5b3a
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/09/2020
-ms.locfileid: "80999777"
+ms.lasthandoff: 02/08/2021
+ms.locfileid: "99832226"
 ---
 # <a name="tutorial-create-an-in-store-analytics-application-in-azure-iot-central"></a>教程：在 Azure IoT Central 中创建店内分析应用程序
-
-
 
 本教程向解决方案构建者介绍如何创建 Azure IoT Central 店内分析应用程序。 示例应用程序适用于零售商店。 这是一种满足常见业务需求的解决方案，可监视和适应占用和环境情况。
 
@@ -148,7 +146,7 @@ ms.locfileid: "80999777"
 
 1. 在完成时选择“下一步:  自定义”。
 
-    ![Azure IoT Central RuuviTag 传感器设备模板](./media/tutorial-in-store-analytics-create-app/ruuvitag-device-template.png)
+    ![突出显示“下一步:自定义”按钮的屏幕截图。](./media/tutorial-in-store-analytics-create-app/ruuvitag-device-template.png)
 
 1. 选择“创建”  。 应用程序将添加 RuuviTag 设备模板。
 
@@ -191,7 +189,7 @@ ms.locfileid: "80999777"
 
 1. 选择“保存”  以保存更改。
 
-    ![Azure IoT Central RuuviTag 设备模板自定义](./media/tutorial-in-store-analytics-create-app/ruuvitag-device-template-customize.png)
+    ![显示“自定义”屏幕并突出显示“保存”按钮的屏幕截图。](./media/tutorial-in-store-analytics-create-app/ruuvitag-device-template-customize.png)
 
 若要将云属性添加到应用程序中的设备模板，请执行以下操作：
 
@@ -276,7 +274,12 @@ ms.locfileid: "80999777"
 
     几分钟后，指定的电子邮件帐户应开始收到电子邮件。 每当传感器指示湿度级别超出条件中的值时，应用程序都会发送电子邮件。
 
+## <a name="clean-up-resources"></a>清理资源
+
+[!INCLUDE [iot-central-clean-up-resources](../../../includes/iot-central-clean-up-resources.md)]
+
 ## <a name="next-steps"></a>后续步骤
+
 在本教程中，你了解了如何执行以下操作：
 
 * 使用 Azure IoT Central“店内分析 - 结帐”模板来创建零售商店应用程序 

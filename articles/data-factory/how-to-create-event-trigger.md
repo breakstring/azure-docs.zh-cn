@@ -1,22 +1,18 @@
 ---
 title: 在 Azure 数据工厂中创建基于事件的触发器
 description: 了解如何在 Azure 数据工厂中创建运行管道的触发器来响应事件。
-services: data-factory
-documentationcenter: ''
 ms.service: data-factory
-ms.workload: data-services
-author: djpmsft
-ms.author: daperlov
-manager: jroth
+author: chez-charlie
+ms.author: chez
 ms.reviewer: maghan
 ms.topic: conceptual
 ms.date: 10/18/2018
-ms.openlocfilehash: 10f0079f47e5d2fd99b358fcc5cfb4c80aa9bd91
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 0364bc46059593a51c3e5cd756bd7be032e69028
+ms.sourcegitcommit: d4734bc680ea221ea80fdea67859d6d32241aefc
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "84508890"
+ms.lasthandoff: 02/14/2021
+ms.locfileid: "100393728"
 ---
 # <a name="create-a-trigger-that-runs-a-pipeline-in-response-to-an-event"></a>如何运行管道的触发器来响应事件
 [!INCLUDE[appliesto-adf-asa-md](includes/appliesto-adf-asa-md.md)]
@@ -50,12 +46,16 @@ ms.locfileid: "84508890"
 1. 从 Azure 订阅下拉列表中选择你的存储帐户，或使用其存储帐户资源 ID 手动选择。 选择希望事件在哪个容器中发生。 容器是可选的，但是请注意，选择所有容器可能会导致生成大量的事件。
 
    > [!NOTE]
-   > 事件触发器目前仅支持 Azure Data Lake Storage Gen2 和“常规用途”版本 2 存储帐户。 你必须至少具有存储帐户的“所有者”访问权限。  由于 Azure 事件网格的限制，对于每个存储帐户，Azure 数据工厂最多仅支持 500 个事件触发器。
+   > 事件触发器目前仅支持 Azure Data Lake Storage Gen2 和常规用途版本 2 存储帐户。 由于 Azure 事件网格的限制，对于每个存储帐户，Azure 数据工厂最多仅支持 500 个事件触发器。
+
+   > [!NOTE]
+   > 若要创建和修改新的事件触发器，用于登录到数据工厂的 Azure 帐户必须至少拥有存储帐户的 " *所有者* " 权限。 无需其他权限： Azure 数据工厂的服务主体 _不_ 需要存储帐户或事件网格的特殊权限。
 
 1. 使用“Blob 路径开头为”和“Blob路径结尾为”属性，可以指定要为其接收事件的容器、文件夹和 Blob 的名称。  事件触发器要求至少定义其中的一个属性。 可以为“Blob 路径开头为”和“Blob路径结尾为”属性使用各种模式，如本文中后面的示例所示。
 
     * **Blob 路径开头为：** Blob 路径必须以文件夹路径开头。 有效值包括 `2018/` 和 `2018/april/shoes.csv`。 如果未选择容器，则无法选择此字段。
     * **Blob 路径结尾为：** Blob 路径必须以文件名或扩展名结尾。 有效值包括 `shoes.csv` 和 `.csv`。 容器和文件夹名称是可选的，但如果指定，它们必须由 `/blobs/` 段分隔。 例如，名为“orders”的容器可以使用 `/orders/blobs/2018/april/shoes.csv` 值。 若要指定任何容器中的某个文件夹，请省略前导“/”字符。 例如，`april/shoes.csv` 将会针对任何容器中名为“april”的文件夹内名为 `shoes.csv` 的任何文件触发事件。 
+    * 注意： Blob 路径以 **开头** ， **结尾** 是事件触发器中唯一允许的模式匹配。 触发器类型不支持其他类型的通配符匹配。
 
 1. 选择触发器是要响应“已创建 Blob”事件、“已删除 Blob”事件，还是同时响应这两者。  在指定的存储位置中，每个事件将触发与触发器关联的数据工厂管道。
 
@@ -69,23 +69,23 @@ ms.locfileid: "84508890"
 
 1. 若要将管道附加到此触发器，请转到管道画布，然后单击“添加触发器”并选择“新建/编辑”。  出现边侧导航栏时，单击“选择触发器...”下拉列表，然后选择创建的触发器。 单击“下一步:数据预览”确认配置是否正确，然后单击“下一步”验证数据预览是否正确。
 
-1. 如果管道具有参数，则你可以在触发器运行参数边侧导航栏中指定这些参数。 事件触发器将 Blob 的文件夹路径和文件名捕获到属性 `@trigger().outputs.body.folderPath` 和 `@trigger().outputs.body.fileName` 中。 若要在管道中使用这些属性的值，必须将这些属性映射至管道参数。 将这些属性映射至参数后，可以通过管道中的 `@pipeline().parameters.parameterName` 表达式访问由触发器捕获的值。 完成后，单击“完成”。
+1. 如果管道具有参数，则你可以在触发器运行参数边侧导航栏中指定这些参数。 事件触发器将 Blob 的文件夹路径和文件名捕获到属性 `@triggerBody().folderPath` 和 `@triggerBody().fileName` 中。 若要在管道中使用这些属性的值，必须将这些属性映射至管道参数。 将这些属性映射至参数后，可以通过管道中的 `@pipeline().parameters.parameterName` 表达式访问由触发器捕获的值。 完成后，单击“完成”。
 
     ![将属性映射至管道参数](media/how-to-create-event-trigger/event-based-trigger-image4.png)
 
-在前面的示例中，触发器配置为在容器 sample-data 中的文件夹 event-testing 内创建以 .csv 结尾的 Blob 路径时激发。 **folderPath** 和 **fileName** 属性捕获新 Blob 的位置。 例如，将 MoviesDB.csv 添加到路径 sample-data/event-testing 时，`@trigger().outputs.body.folderPath` 的值为 `sample-data/event-testing`，`@trigger().outputs.body.fileName` 的值为 `moviesDB.csv`。 示例中的这些值将映射到管道参数 `sourceFolder` 和 `sourceFile`，这两个参数在整个管道中分别可以用作 `@pipeline().parameters.sourceFolder` 和 `@pipeline().parameters.sourceFile`。
+在前面的示例中，触发器配置为在容器 sample-data 中的文件夹 event-testing 内创建以 .csv 结尾的 Blob 路径时激发。 **folderPath** 和 **fileName** 属性捕获新 Blob 的位置。 例如，将 MoviesDB.csv 添加到路径 sample-data/event-testing 时，`@triggerBody().folderPath` 的值为 `sample-data/event-testing`，`@triggerBody().fileName` 的值为 `moviesDB.csv`。 示例中的这些值将映射到管道参数 `sourceFolder` 和 `sourceFile`，这两个参数在整个管道中分别可以用作 `@pipeline().parameters.sourceFolder` 和 `@pipeline().parameters.sourceFile`。
 
 ## <a name="json-schema"></a>JSON 架构
 
 下表概述了与基于事件的触发器相关的架构元素：
 
-| **JSON 元素** | **说明** | **类型** | **允许的值** | **必需** |
+| **JSON 元素** | **说明** | 类型 | **允许的值** | **必需** |
 | ---------------- | --------------- | -------- | ------------------ | ------------ |
 | **作用域** | 存储帐户的 Azure 资源管理器资源 ID。 | String | Azure 资源管理器 ID | 是 |
 | **events** | 导致此触发器触发的事件的类型。 | Array    | Microsoft.Storage.BlobCreated、Microsoft.Storage.BlobDeleted | 是的，这些值的任意组合。 |
 | **blobPathBeginsWith** | blob 路径必须使用为要触发的触发器提供的模式开头。 例如，`/records/blobs/december/` 只会触发 `records` 容器下 `december` 文件夹中的 blob 触发器。 | String   | | 必须为其中至少一个属性提供值：`blobPathBeginsWith` 或 `blobPathEndsWith`。 |
 | **blobPathEndsWith** | blob 路径必须使用为要触发的触发器提供的模式结尾。 例如，`december/boxes.csv` 只会触发 `december` 文件夹中名为 `boxes` 的 blob 的触发器。 | String   | | 必须为其中至少一个属性提供值：`blobPathBeginsWith` 或 `blobPathEndsWith`。 |
-| **ignoreEmptyBlobs** | 零字节 Blob 是否触发管道运行。 默认情况下，此元素设置为 true。 | 布尔 | true 或 false | 否 |
+| **ignoreEmptyBlobs** | 零字节 Blob 是否触发管道运行。 默认情况下，此元素设置为 true。 | Boolean | true 或 false | 否 |
 
 ## <a name="examples-of-event-based-triggers"></a>基于事件的触发器的示例
 

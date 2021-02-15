@@ -9,16 +9,16 @@ ms.topic: reference
 author: likebupt
 ms.author: keli19
 ms.date: 07/27/2020
-ms.openlocfilehash: 7f37a598c31f340e66437a6478512fad1f79121f
-ms.sourcegitcommit: dccb85aed33d9251048024faf7ef23c94d695145
+ms.openlocfilehash: 39bdf9cb0c97e19a67b23046c6f06b60daa30147
+ms.sourcegitcommit: 2817d7e0ab8d9354338d860de878dd6024e93c66
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/28/2020
-ms.locfileid: "87285945"
+ms.lasthandoff: 02/05/2021
+ms.locfileid: "99584934"
 ---
 # <a name="evaluate-model-module"></a>“评估模型”模块
 
-本文介绍 Azure 机器学习设计器（预览版）中的一个模块。
+本文介绍 Azure 机器学习设计器中的一个模块。
 
 使用此模块可以度量已训练模型的准确度。 提供包含通过模型生成的评分的数据集后，“评估模型”模块将计算一组符合行业标准的评估指标。
   
@@ -30,7 +30,7 @@ ms.locfileid: "87285945"
 
 
 > [!TIP]
-> 如果你还不熟悉模型评估，我们建议观看 Stephen Elston 博士的视频系列，该系列是 EdX [机器学习课程](https://blogs.technet.microsoft.com/machinelearning/2015/09/08/new-edx-course-data-science-machine-learning-essentials/)的一部分. 
+> 如果你还不熟悉模型评估，我们建议观看 Stephen Elston 博士的视频系列，该系列是 EdX [机器学习课程](/archive/blogs/machinelearning/new-edx-course-data-science-machine-learning-essentials)的一部分. 
 
 
 ## <a name="how-to-use-evaluate-model"></a>如何使用“评估模型”
@@ -39,6 +39,14 @@ ms.locfileid: "87285945"
     > 如果使用“在数据集中选择列”等模块来选择部分输入数据集，请确保存在“实际标签”列（用于模型训练）、“评分概率”列和“评分标签”列以计算指标（如 AUC、二进制分类/异常检测的准确性）。
     > 存在“实际标签”列、“评分标签”列以计算多类分类/回归的指标。
     > 存在“赋值”列、“DistancesToClusterCenter no.X”列（X 是重心索引，范围为 0，...，重心数量 -1）以计算聚类分析的指标。
+
+    > [!IMPORTANT]
+    > + 若要计算结果，输出数据集应包含符合评估模型模块要求的特定分数列名称。
+    > + `Labels` 列会被视为实际标签。
+    > + 对于回归任务，要计算的数据集必须设一个列，名为 `Regression Scored Labels`，表示评分标签。
+    > + 对于二进制分类任务，要计算的数据集必须具有两列，名为 `Binary Class Scored Labels`、`Binary Class Scored Probabilities`，分别表示评分标签和概率。
+    > + 对于多分类任务，要计算的数据集必须设一个列，名为 `Multi Class Scored Labels`，表示评分标签。
+    > 如果上游模块的输出没有这些列，则需要根据上述要求进行修改。
 
 2. [可选] 将[评分模型](./score-model.md)的“得分数据集”输出或第二个模型的“将数据分配到聚类”的“结果数据集”输出连接到“评估模型”的右侧输入端口  。 你可以在相同数据上轻松比较两个不同模型的结果。 两个输入算法应为同一算法类型。 你也可以使用不同的参数对相同数据运行两次，然后比较两次运行的评分。
 
@@ -51,8 +59,8 @@ ms.locfileid: "87285945"
 
 运行“评估模型”后，选择模块以打开右侧的“评估模型”导航面板 。  然后，选择“输出 + 日志”选项卡，然后在该选项卡上，“数据输出”部分包含多个图标。 “可视化”图标有一个条形图图标，这是查看结果的第一种方法。
 
-对于二元分类，单击 "**可视化**" 图标后，可以可视化二进制混淆矩阵。
-对于多分类，可以在 "**输出 + 日志**" 选项卡下找到混乱的矩阵绘图文件，如下所示：
+对于二元分类，单击“可视化”图标后，可以直观显示二元混淆矩阵。
+对于多元分类，可以在“输出 + 日志”选项卡下找到混淆矩阵绘图文件，如下所示：
 > [!div class="mx-imgBorder"]
 > ![预览已上传的图像](media/module/multi-class-confusion-matrix.png)
 
@@ -76,17 +84,17 @@ ms.locfileid: "87285945"
 ### <a name="metrics-for-classification-models"></a>分类模型的指标
 
 
-评估二元分类模型时，将报告以下度量值。
+评估二元分类模型时，会报告以下指标。
   
 -   “准确度”衡量分类模型的优劣，即真实结果占总体的比例。  
   
--   “精准率”是真实结果与所有正面结果之比。 Precision = TP/（TP + FP）  
+-   “精准率”是真实结果与所有正面结果之比。 查准率 = TP/(TP+FP)  
   
--   **撤回**是实际检索的相关实例总数的小数部分。 召回 = TP/（TP + FN）  
+-   “查全率”是实际检索到的相关实例总数的分数。 查全率 = TP/(TP+FN)  
   
--   **F1 分数**计算为精度和值介于0和1之间的加权平均值，其中理想的 F1 评分值为1。  
+-   “F1 分数”计算为查准率与查全率的加权平均值，介于 0 到 1 之间，理想的 F1 分数值为 1。  
   
--   “AUC”度量绘制的曲线下面的面积（在 y 轴上绘制真报率，在 x 轴上绘制误报率）。 此指标非常有用，因为它提供单个数字让你比较不同类型的模型。  
+-   “AUC”度量绘制的曲线下面的面积（在 y 轴上绘制真报率，在 x 轴上绘制误报率）。 此指标非常有用，因为它提供单个数字让你比较不同类型的模型。 AUC 是分类阈值固定的。 它会衡量模型预测的质量，而不考虑所选的分类阈值。
 
 
 ### <a name="metrics-for-regression-models"></a>回归模型的指标
@@ -134,4 +142,4 @@ ms.locfileid: "87285945"
 
 ## <a name="next-steps"></a>后续步骤
 
-请参阅 Azure 机器学习的[可用模块集](module-reference.md)。 
+请参阅 Azure 机器学习的[可用模块集](module-reference.md)。

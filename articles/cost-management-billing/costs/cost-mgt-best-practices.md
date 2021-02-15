@@ -6,14 +6,15 @@ ms.author: banders
 ms.date: 05/27/2020
 ms.topic: conceptual
 ms.service: cost-management-billing
+ms.subservice: cost-management
 ms.reviewer: adwise
 ms.custom: seodec18
-ms.openlocfilehash: f328f17b1d64bc9b8f0be35321aecaba0cb85fa6
-ms.sourcegitcommit: f0b206a6c6d51af096a4dc6887553d3de908abf3
+ms.openlocfilehash: fc9b6c4edc5d08c30b1eadb5084155b10d0e55a3
+ms.sourcegitcommit: fc401c220eaa40f6b3c8344db84b801aa9ff7185
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 05/28/2020
-ms.locfileid: "84142412"
+ms.lasthandoff: 01/20/2021
+ms.locfileid: "98601518"
 ---
 # <a name="how-to-optimize-your-cloud-investment-with-azure-cost-management"></a>如何通过 Azure 成本管理优化云投资
 
@@ -102,7 +103,7 @@ Azure 提供了有助于评估过程的工具。 借助这些工具，可以充�
 
 #### <a name="enterprise-agreement"></a>[企业协议](https://azure.microsoft.com/pricing/enterprise-agreement/)
 
-- 可选择预先货币承诺付款
+- 预付的 Azure 预付款（以前称为货币承诺）选项
 - 可享受 Azure 价格优惠
 
 #### <a name="azure-in-csp"></a>[Azure in CSP](https://azure.microsoft.com/offers/ms-azr-0145p/)
@@ -125,7 +126,7 @@ Azure 提供了有助于评估过程的工具。 借助这些工具，可以充�
 
 Azure Migrate 服务可以评估本地数据中心中的组织当前工作负载。 你可以深入了解你对 Azure 替代解决方案的需求。 首先，Migrate 会分析本地计算机，确定迁移是否可行。 然后，它会建议 Azure 中的 VM 大小，以最大程度优化性能。 最后，它还会创建基于 Azure 的解决方案的成本估算值。
 
-有关详细信息，请参阅 [Azure Migrate](https://docs.microsoft.com/azure/migrate/migrate-services-overview)。
+有关详细信息，请参阅 [Azure Migrate](../../migrate/migrate-services-overview.md)。
 
 ## <a name="analyze-and-manage-your-costs"></a>分析和管理成本
 

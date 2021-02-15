@@ -3,13 +3,13 @@ title: 在 Azure 中创建 Linux Service Fabric 群集
 description: 了解如何使用 Azure CLI 将 Linux Service Fabric 群集部署到现有 Azure 虚拟网络。
 ms.topic: conceptual
 ms.date: 02/14/2019
-ms.custom: mvc
-ms.openlocfilehash: c4b71328ce59284f8870407c9492d24afe9acd8a
-ms.sourcegitcommit: 02ca0f340a44b7e18acca1351c8e81f3cca4a370
+ms.custom: mvc, devx-track-azurecli
+ms.openlocfilehash: 77cc49c1b79e5c24e78a67a69493aa0b0059d565
+ms.sourcegitcommit: a055089dd6195fde2555b27a84ae052b668a18c7
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/19/2020
-ms.locfileid: "88586914"
+ms.lasthandoff: 01/26/2021
+ms.locfileid: "98791065"
 ---
 # <a name="deploy-a-linux-service-fabric-cluster-into-an-azure-virtual-network"></a>将 Linux Service Fabric 群集部署到 Azure 虚拟网络
 
@@ -41,12 +41,12 @@ ms.locfileid: "88586914"
 * [AzureDeploy.json][template2]
 * [AzureDeploy.Parameters.json][parameters2]
 
-对于 Ubuntu 18.04 LTS，这两个模板之间的区别是 
-* **vmImageSku**属性设置为 "18.04-LTS"
-* 每个节点的 **typeHandlerVersion** 设置为1。1
-* ServiceFabric/群集资源的
-   - **apiVersion** 设置为 "2019-03-01" 或更高
-   - 要设置为 "Ubuntu18_04" 的**vmImage**属性
+对于 Ubuntu 18.04 LTS，这两个模板之间的区别在于 
+* vmImageSku 特性设置为“18.04-LTS”
+* 每个节点的 typeHandlerVersion 设置为 1.1
+* Microsoft.ServiceFabric/clusters 资源的
+   - **apiVersion** 设置为“2019-03-01”或更高版本
+   - **vmImage** 属性设置为“Ubuntu18_04”
 
 此模板将包含七个虚拟机和三个节点类型的安全群集部署到虚拟网络中。  其他示例模板可以在 [GitHub](https://github.com/Azure-Samples/service-fabric-cluster-templates) 上找到。 [AzureDeploy.json][template] 部署一些资源，包括以下项。
 
@@ -106,7 +106,7 @@ AzureDeploy.Parameters 文件声明用于部署群集和关联资源的多个值
 
 ### <a name="create-a-cluster-using-an-existing-certificate"></a>使用现有证书创建群集
 
-以下脚本使用 [az sf cluster create](/cli/azure/sf/cluster?view=azure-cli-latest) 命令和模板部署一个以现有证书保护的新群集。 该命令还会在 Azure 中创建新的 Key Vault，并上传证书。
+以下脚本使用 [az sf cluster create](/cli/azure/sf/cluster) 命令和模板部署一个以现有证书保护的新群集。 该命令还会在 Azure 中创建新的 Key Vault，并上传证书。
 
 ```azurecli
 ResourceGroupName="sflinuxclustergroup"
@@ -132,7 +132,7 @@ az sf cluster create --resource-group $ResourceGroupName --location $Location \
 
 ### <a name="create-a-cluster-using-a-new-self-signed-certificate"></a>使用新的自签名证书创建群集
 
-以下脚本使用 [az sf cluster create](/cli/azure/sf/cluster?view=azure-cli-latest) 命令和模板在 Azure 中部署新群集。 此命令还会在 Azure 中创建新的密钥保管库、向密钥保管库添加新的自签名证书，并将证书文件下载到本地。
+以下脚本使用 [az sf cluster create](/cli/azure/sf/cluster) 命令和模板在 Azure 中部署新群集。 此命令还会在 Azure 中创建新的密钥保管库、向密钥保管库添加新的自签名证书，并将证书文件下载到本地。
 
 ```azurecli
 ResourceGroupName="sflinuxclustergroup"

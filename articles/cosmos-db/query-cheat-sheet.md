@@ -3,17 +3,19 @@ title: Azure Cosmos DB PDF 查询速查表
 description: 可打印的 PDF 备忘单，借助该备忘录可使用 Azure Cosmos DB SQL、MongoDB、Graph 和表 API 来查询数据
 author: SnehaGunda
 ms.service: cosmos-db
+ms.subservice: cosmosdb-sql
 ms.topic: conceptual
 ms.date: 05/28/2019
 ms.author: sngun
-ms.openlocfilehash: fb080858ff6be98846c542844810cf976eb3f264
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 2ef8aed7243e8956ad9ca62b630cda0efbd2deb9
+ms.sourcegitcommit: fa90cd55e341c8201e3789df4cd8bd6fe7c809a3
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "85117975"
+ms.lasthandoff: 11/04/2020
+ms.locfileid: "93339642"
 ---
 # <a name="azure-cosmos-db-query-cheat-sheets"></a>Azure Cosmos DB 查询备忘单
+[!INCLUDE[appliesto-sql-api](includes/appliesto-sql-api.md)]
 
 Azure Cosmos DB 查询备忘单通过在易于打印的 PDF 参考单中显示常见的数据查询、操作、函数和运算符帮助快速编写数据查询  。 备忘单包含 SQL API、MongoDB API、表 API 和 Gremlin API 的参考信息。 
 
@@ -32,7 +34,7 @@ Azure Cosmos DB 查询备忘单通过在易于打印的 PDF 参考单中显示�
 
 ## <a name="next-steps"></a>后续步骤
 如需查询编写的相关帮助，请参阅以下文章：
-* 有关 SQL API 查询，请参阅[使用 SQL API 的查询](tutorial-query-sql-api.md)、[Azure Cosmos DB 的 SQL 查询](how-to-sql-query.md)和 [SQL 语法参考](sql-api-query-reference.md)
+* 有关 SQL API 查询，请参阅[使用 SQL API 的查询](tutorial-query-sql-api.md)、[Azure Cosmos DB 的 SQL 查询](./sql-query-getting-started.md)和 [SQL 语法参考](./sql-query-getting-started.md)
 * 有关 MongoDB 查询，请参阅[使用 Azure Cosmos DB 的 API for MongoDB 进行查询](tutorial-query-mongodb.md)和 [Azure Cosmos DB 的 API for MongoDB 功能支持和语法](mongodb-feature-support.md)
 * 有关 Gremlin API 查询，请参阅[使用 Gremlin API 的查询](tutorial-query-graph.md)和 [Azure Cosmos DB Gremlin 图形支持](gremlin-support.md)
 * 有关表 API 查询，请参阅[使用表 API 的查询](tutorial-query-table.md)

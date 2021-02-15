@@ -7,12 +7,12 @@ ms.service: site-recovery
 ms.topic: how-to
 ms.date: 04/10/2020
 ms.author: ramamill
-ms.openlocfilehash: 431f1da463e4bd9970bc92b0842393f2de882220
-ms.sourcegitcommit: d661149f8db075800242bef070ea30f82448981e
+ms.openlocfilehash: 8c90427e2dd4ecf23cb803c4f75dbee34c38f992
+ms.sourcegitcommit: 100390fefd8f1c48173c51b71650c8ca1b26f711
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/19/2020
-ms.locfileid: "88604723"
+ms.lasthandoff: 01/27/2021
+ms.locfileid: "98898573"
 ---
 # <a name="about-the-mobility-service-for-vmware-vms-and-physical-servers"></a>关于适用于 VMware VM 和物理服务器的移动服务
 
@@ -37,7 +37,7 @@ ms.locfileid: "88604723"
 
 - 确保符合所有推送安装[先决条件](vmware-azure-install-mobility-service.md)。
 - 确保所有服务器配置均符合[将 VMware VM 和物理服务器灾难恢复到 Azure 的支持矩阵](vmware-physical-azure-support-matrix.md)中的条件。
-- 从[9.36 版本](https://support.microsoft.com/help/4578241/)开始，对于 SUSE LINUX ENTERPRISE SERVER 11 SP4，请确保[配置服务器和横向扩展进程服务器上提供](#download-latest-mobility-agent-installer-for-suse-11-sp3-server)最新的安装程序
+- 从 9.36 版本开始，对于 SUSE Linux Enterprise Server 11 SP3、RHEL 5、CentOS 5 和 Debian 7，请确保最新的安装程序[在配置服务器和横向扩展进程服务器上可用](#download-latest-mobility-agent-installer-for-suse-11-sp3-rhel-5-debian-7-server)
 
 以下部分介绍了推送安装工作流：
 
@@ -85,7 +85,7 @@ ms.locfileid: "88604723"
 
 1. 在“安装进度”中监视安装。 安装完成后，选择“转到配置”，将该服务注册到配置服务器。
 
-    :::image type="content" source="./media/vmware-physical-mobility-service-install-manual/mobility3.png" alt-text="“移动服务注册”页。":::
+    :::image type="content" source="./media/vmware-physical-mobility-service-install-manual/mobility3.png" alt-text="此屏幕截图显示了安装进度以及安装完成后激活的“继续配置”按钮。":::
 
 1. 在“配置服务器详细信息”中，指定已配置的 IP 地址和通行短语。
 
@@ -108,7 +108,7 @@ ms.locfileid: "88604723"
 
   ```cmd
   cd C:\Temp
-  ren Microsoft-ASR_UA_version_Windows_GA_date_release.exe MobilityServiceInstaller.exe
+  ren Microsoft-ASR_UA*Windows*release.exe MobilityServiceInstaller.exe
   MobilityServiceInstaller.exe /q /x:C:\Temp\Extracted
   cd C:\Temp\Extracted
   ```
@@ -202,30 +202,62 @@ ms.locfileid: "88604723"
 安装程序文件 | 操作系统（仅限 64 位）
 --- | ---
 `Microsoft-ASR_UA_version_Windows_GA_date_release.exe` | Windows Server 2016 </br> Windows Server 2012 R2 </br> Windows Server 2012 </br> Windows Server 2008 R2 SP1
+[等待手动下载并放置在此文件夹中](#rhel-5-or-centos-5-server) | Red Hat Enterprise Linux (RHEL) 5 </br> CentOS 5
 `Microsoft-ASR_UA_version_RHEL6-64_GA_date_release.tar.gz` | Red Hat Enterprise Linux (RHEL) 6 </br> CentOS 6
 `Microsoft-ASR_UA_version_RHEL7-64_GA_date_release.tar.gz` | Red Hat Enterprise Linux (RHEL) 7 </br> CentOS 7
+`Microsoft-ASR_UA_version_RHEL8-64_GA_date_release.tar.gz` | Red Hat Enterprise Linux (RHEL) 8 </br> CentOS 8
 `Microsoft-ASR_UA_version_SLES12-64_GA_date_release.tar.gz` | SUSE Linux Enterprise Server 12 SP1 </br> 包括 SP2 和 SP3。
-[手动下载并放置在此文件夹中](#download-latest-mobility-agent-installer-for-suse-11-sp3-server)。 | SUSE Linux Enterprise Server 11 SP3
+[等待手动下载并放置在此文件夹中](#suse-11-sp3-server) | SUSE Linux Enterprise Server 11 SP3
 `Microsoft-ASR_UA_version_SLES11-SP4-64_GA_date_release.tar.gz` | SUSE Linux Enterprise Server 11 SP4
-`Microsoft-ASR_UA_version_OL6-64_GA_date_release.tar.gz` | Oracle Enterprise Linux 6。4 </br> Oracle Enterprise Linux 6。5
+`Microsoft-ASR_UA_version_SLES15-64_GA_date_release.tar.gz` | SUSE Linux Enterprise Server 15 
+`Microsoft-ASR_UA_version_OL6-64_GA_date_release.tar.gz` | Oracle Enterprise Linux 6.4 </br> Oracle Enterprise Linux 6.5
+`Microsoft-ASR_UA_version_OL7-64_GA_date_release.tar.gz` | Oracle Enterprise Linux 7 
+`Microsoft-ASR_UA_version_OL8-64_GA_date_release.tar.gz` | Oracle Enterprise Linux 8
 `Microsoft-ASR_UA_version_UBUNTU-14.04-64_GA_date_release.tar.gz` | Ubuntu Linux 14.04
 `Microsoft-ASR_UA_version_UBUNTU-16.04-64_GA_date_release.tar.gz` | Ubuntu Linux 16.04 LTS 服务器
-`Microsoft-ASR_UA_version_DEBIAN7-64_GA_date_release.tar.gz` | Debian 7
+`Microsoft-ASR_UA_version_UBUNTU-18.04-64_GA_date_release.tar.gz` | Ubuntu Linux 18.04 LTS 服务器
+`Microsoft-ASR_UA_version_UBUNTU-20.04-64_GA_date_release.tar.gz` | Ubuntu Linux 20.04 LTS 服务器
+[等待手动下载并放置在此文件夹中](#debian-7-server) | Debian 7
 `Microsoft-ASR_UA_version_DEBIAN8-64_GA_date_release.tar.gz` | Debian 8
+`Microsoft-ASR_UA_version_DEBIAN9-64_GA_date_release.tar.gz` | Debian 9
 
-### <a name="download-latest-mobility-agent-installer-for-suse-11-sp3-server"></a>下载适用于 SUSE 11 SP3 服务器的最新移动代理安装程序
+## <a name="download-latest-mobility-agent-installer-for-suse-11-sp3-rhel-5-debian-7-server"></a>下载适用于 SUSE 11 SP3、RHEL 5 和 Debian 7 服务器的最新移动代理安装程序
 
-作为 **更新或保护 SUSE Linux Enterprise Server 11 SP3 计算机** （从 [9.36 版本](https://support.microsoft.com/help/4578241/) 开始）的先决条件：
+### <a name="suse-11-sp3-server"></a>SUSE 11 SP3 服务器
+
+从 9.36 版本开始作为更新或保护 SUSE Linux Enterprise Server 11 SP3 计算机的先决条件：
 
 1. 确保从 Microsoft 下载中心下载最新的移动代理安装程序，并将其放置在配置服务器和所有横向扩展进程服务器上的推送安装程序存储库中
-2. [下载](https://download.microsoft.com/download/0/3/4/0341b388-1ff5-4ead-b197-7cf6d2bb3e40/Microsoft-ASR_UA_9.36.0.0_SLES11-SP3-64_GA_06Aug2020_release.tar.gz) SUSE LINUX ENTERPRISE SERVER 11 SP3 agent 安装程序。
-3. 导航到 "配置服务器"，将 SUSE Linux Enterprise Server 11 SP3 agent 安装程序复制到以下路径
-    1. INSTALL_DIR \home\svsystems\pushinstallsvc\repository
-    1.  INSTALL_DIR \home\svsystems\admin\web\sw 文件夹
-4. 现在，导航到关联的横向扩展进程服务器 & 在第三步中提到的两个路径中复制安装程序。
-5. **例如**，如果安装路径为 C:\Program Files (x86) \microsoft Azure Site Recovery，则上述目录将为
-    1. C:\Program 文件 (x86) \Microsoft Azure Site Recovery\home\svsystems\pushinstallsvc\repository
-    1. C:\Program 文件 (x86) \Microsoft Azure Site Recovery\home\svsystems\admin\web\sw 路径
+2. [下载](site-recovery-whats-new.md) 最新的 SUSE LINUX ENTERPRISE SERVER 11 SP3 agent 安装程序。
+3. 导航到配置服务器，将 SUSE Linux Enterprise Server 11 SP3 代理安装程序复制到路径 INSTALL_DIR\home\svsystems\pushinstallsvc\repository
+1. 复制最新的安装程序后，请重启 InMage PushInstall 服务。 
+1. 现在，导航到关联的横向扩展进程服务器，重复步骤 3 和步骤 4。
+1. 例如，如果安装路径为 C:\Program Files (x86)\Microsoft Azure Site Recovery，则上述目录将为
+    1. C:\Program Files (x86)\Microsoft Azure Site Recovery\home\svsystems\pushinstallsvc\repository
+
+### <a name="rhel-5-or-centos-5-server"></a>RHEL 5 或 CentOS 5 服务器
+
+从 9.36 版本开始作为更新或保护 RHEL 5 计算机的先决条件：
+
+1. 确保从 Microsoft 下载中心下载最新的移动代理安装程序，并将其放置在配置服务器和所有横向扩展进程服务器上的推送安装程序存储库中
+2. [下载](site-recovery-whats-new.md) 最新的 RHEL 5 或 CentOS 5 代理安装程序。 
+3. 导航到配置服务器，将 RHEL 5 或 CentOS 5 代理安装程序复制到路径 INSTALL_DIR\home\svsystems\pushinstallsvc\repository
+1. 复制最新的安装程序后，请重启 InMage PushInstall 服务。 
+1. 现在，导航到关联的横向扩展进程服务器，重复步骤 3 和步骤 4。
+1. 例如，如果安装路径为 C:\Program Files (x86)\Microsoft Azure Site Recovery，则上述目录将为
+    1. C:\Program Files (x86)\Microsoft Azure Site Recovery\home\svsystems\pushinstallsvc\repository
+
+## <a name="debian-7-server"></a>Debian 7 服务器
+
+从 9.36 版本开始作为更新或保护 Debian 7 计算机的先决条件：
+
+1. 确保从 Microsoft 下载中心下载最新的移动代理安装程序，并将其放置在配置服务器和所有横向扩展进程服务器上的推送安装程序存储库中
+2. [下载](site-recovery-whats-new.md) 最新的 Debian 7 代理安装程序。
+3. 导航到配置服务器，将 Debian 7 代理安装程序复制到路径 INSTALL_DIR\home\svsystems\pushinstallsvc\repository
+1. 复制最新的安装程序后，请重启 InMage PushInstall 服务。 
+1. 现在，导航到关联的横向扩展进程服务器，重复步骤 3 和步骤 4。
+1. 例如，如果安装路径为 C:\Program Files (x86)\Microsoft Azure Site Recovery，则上述目录将为
+    1. C:\Program Files (x86)\Microsoft Azure Site Recovery\home\svsystems\pushinstallsvc\repository
 
 ## <a name="next-steps"></a>后续步骤
 

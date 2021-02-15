@@ -11,12 +11,12 @@ ms.date: 09/04/2018
 ms.author: xiaoyul
 ms.reviewer: igorstan
 ms.custom: seo-lt-2019
-ms.openlocfilehash: 0bd15da523281a52d36c9ed1336244aa21eb48cd
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: bc101e6bb743b9290593937a4d1bac656430b438
+ms.sourcegitcommit: b39cf769ce8e2eb7ea74cfdac6759a17a048b331
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "85206693"
+ms.lasthandoff: 01/22/2021
+ms.locfileid: "98685304"
 ---
 # <a name="development-best-practices-for-synapse-sql-pool"></a>Synapse SQL 池开发最佳做法
 
@@ -55,7 +55,7 @@ ms.locfileid: "85206693"
 
 加载分布的表时，请确保传入数据的分布键没有排序，因为这会拖慢加载速度。  下文详细介绍了如何选择分布列以提高性能，以及如何在 CREATE TABLES 语句的 WITH 子句中定义分布表。
 
-另请参阅[表概述](sql-data-warehouse-tables-overview.md)、[表分布](sql-data-warehouse-tables-distribute.md)、[选择表分布](https://blogs.msdn.microsoft.com/sqlcat/20../../choosing-hash-distributed-table-vs-round-robin-distributed-table-in-azure-sql-dw-service/)、[CREATE TABLE](sql-data-warehouse-tables-overview.md) 以及 [CREATE TABLE AS SELECT](sql-data-warehouse-develop-ctas.md)。
+另请参阅[表概述](sql-data-warehouse-tables-overview.md)、[表分布](sql-data-warehouse-tables-distribute.md)、[选择表分布](/archive/blogs/sqlcat/choosing-hash-distributed-table-vs-round-robin-distributed-table-in-azure-sql-dw-service)、[CREATE TABLE](sql-data-warehouse-tables-overview.md) 以及 [CREATE TABLE AS SELECT](sql-data-warehouse-develop-ctas.md)。
 
 ## <a name="do-not-over-partition"></a>不要过度分区
 
@@ -80,7 +80,7 @@ ms.locfileid: "85206693"
 
 对于未分区的表，请考虑使用 CTAS 将想要保留的数据写入表中，而不是使用 DELETE。  如果 CTAS 花费的时间相同，则运行起来要安全得多，因为它的事务日志记录最少，并且可以根据需要快速取消。
 
-另请参阅[了解事务](sql-data-warehouse-develop-transactions.md)、[优化事务](sql-data-warehouse-develop-best-practices-transactions.md)、[表分区](sql-data-warehouse-tables-partition.md)、[TRUNCATE TABLE](/sql/t-sql/statements/truncate-table-transact-sql?toc=/azure/synapse-analytics/sql-data-warehouse/toc.json&bc=/azure/synapse-analytics/sql-data-warehouse/breadcrumb/toc.json&view=azure-sqldw-latest)、[ALTER TABLE](/sql/t-sql/statements/alter-table-transact-sql?toc=/azure/synapse-analytics/sql-data-warehouse/toc.json&bc=/azure/synapse-analytics/sql-data-warehouse/breadcrumb/toc.json&view=azure-sqldw-latest) 和 [Create table as select (CTAS)](sql-data-warehouse-develop-ctas.md)。
+另请参阅[了解事务](sql-data-warehouse-develop-transactions.md)、[优化事务](sql-data-warehouse-develop-best-practices-transactions.md)、[表分区](sql-data-warehouse-tables-partition.md)、[TRUNCATE TABLE](/sql/t-sql/statements/truncate-table-transact-sql?toc=/azure/synapse-analytics/sql-data-warehouse/toc.json&bc=/azure/synapse-analytics/sql-data-warehouse/breadcrumb/toc.json&view=azure-sqldw-latest&preserve-view=true)、[ALTER TABLE](/sql/t-sql/statements/alter-table-transact-sql?toc=/azure/synapse-analytics/sql-data-warehouse/toc.json&bc=/azure/synapse-analytics/sql-data-warehouse/breadcrumb/toc.json&view=azure-sqldw-latest&preserve-view=true) 和 [Create table as select (CTAS)](sql-data-warehouse-develop-ctas.md)。
 
 ## <a name="use-the-smallest-possible-column-size"></a>使用最小可能的列大小
 
@@ -114,14 +114,14 @@ ms.locfileid: "85206693"
 > [!TIP]
 > 查询列存储表时，如果只选择需要的列，查询运行将更快速。  
 
-另请参阅[表索引](sql-data-warehouse-tables-index.md)、[列存储索引指南](/sql/relational-databases/indexes/columnstore-indexes-overview?toc=/azure/synapse-analytics/sql-data-warehouse/toc.json&bc=/azure/synapse-analytics/sql-data-warehouse/breadcrumb/toc.json&view=azure-sqldw-latest)、[重新生成列存储索引](sql-data-warehouse-tables-index.md#rebuilding-indexes-to-improve-segment-quality)。
+另请参阅[表索引](sql-data-warehouse-tables-index.md)、[列存储索引指南](/sql/relational-databases/indexes/columnstore-indexes-overview?toc=/azure/synapse-analytics/sql-data-warehouse/toc.json&bc=/azure/synapse-analytics/sql-data-warehouse/breadcrumb/toc.json&view=azure-sqldw-latest&preserve-view=true)、[重新生成列存储索引](sql-data-warehouse-tables-index.md#rebuilding-indexes-to-improve-segment-quality)。
 
 ## <a name="next-steps"></a>后续步骤
 
 如果在本文中没有找到所需内容，可尝试使用本页面左侧的“搜索文档”来搜索所有 Azure Synapse 文档。  
 
-可以在[有关 Azure Synapse 的 Microsoft 问答页面](https://docs.microsoft.com/answers/topics/azure-synapse-analytics.html)上向其他用户和 Azure Synapse 产品组发布问题。  我们会主动观察此论坛，确保用户的问题获得其他用户或我们的回答。  
+可以在[有关 Azure Synapse 的 Microsoft 问答页面](/answers/topics/azure-synapse-analytics.html)上向其他用户和 Azure Synapse 产品组发布问题。  我们会主动观察此论坛，确保用户的问题获得其他用户或我们的回答。  
 
-若要提问有关堆栈溢出的问题，请访问 [Azure SQL 数据仓库堆栈溢出论坛](https://stackoverflow.com/questions/tagged/azure-sqldw)。
+如果你希望在 Stack Overflow 上提出问题，我们还会获得一个 [Azure Synapse Analytics Stack Overflow 论坛](https://stackoverflow.com/questions/tagged/azure-sqldw)。
 
 请使用 [Azure Synapse 反馈](https://feedback.azure.com/forums/307516-sql-data-warehouse)页面提出功能请求。  添加请求或对其他请求投赞成票对我们确定功能的优先级有很大的帮助。

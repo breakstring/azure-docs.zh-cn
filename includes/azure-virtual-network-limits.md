@@ -8,12 +8,12 @@ ms.topic: include
 ms.date: 01/14/2020
 ms.author: anavin
 ms.custom: include file
-ms.openlocfilehash: b963cc459094e823499e962736550dcea2345ba2
-ms.sourcegitcommit: b33c9ad17598d7e4d66fe11d511daa78b4b8b330
+ms.openlocfilehash: 59329fccda77f16e4a595e9b1789ef684c5cbf95
+ms.sourcegitcommit: c7153bb48ce003a158e83a1174e1ee7e4b1a5461
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/25/2020
-ms.locfileid: "88854111"
+ms.lasthandoff: 01/15/2021
+ms.locfileid: "98256443"
 ---
 ### <a name="networking-limits---azure-resource-manager"></a><a name="azure-resource-manager-virtual-networking-limits"></a>网络限制 - Azure 资源管理器
 以下限制仅适用于通过每个订阅的每个区域的 Azure 资源管理器进行管理的网络资源。 了解如何[针对订阅限制查看当前资源使用情况](../articles/networking/check-usage-against-limits.md)。
@@ -34,7 +34,7 @@ ms.locfileid: "88854111"
 | 每个虚拟机的专用 IP 地址数 |256 |
 | 每个网络接口的公共 IP 地址数 |256 |
 | 每个虚拟机的公共 IP 地址数 |256 |
-| [虚拟机或角色实例的单 NIC 并发 TCP 或 UDP 流数](../articles/virtual-network/virtual-machine-network-throughput.md#flow-limits-and-recommendations) |500,000 |
+| [虚拟机或角色实例的单 NIC 并发 TCP 或 UDP 流数](../articles/virtual-network/virtual-machine-network-throughput.md#flow-limits-and-active-connections-recommendations) |500,000 |
 | 网络接口卡数 |65,536 |
 | 网络安全组 |5,000 |
 | 每个 NSG 的 NSG 规则数 |1,000 |
@@ -55,6 +55,7 @@ ms.locfileid: "88854111"
 | 公共 IP 地址<sup>1</sup> | 基本版为 10。 | 请联系支持人员。 |
 | 静态公共 IP 地址<sup>1</sup> | 基本版为 10。 | 请联系支持人员。 |
 | 标准公共 IP 地址<sup>1</sup> | 10 | 请联系支持人员。 |
+| [每个资源组的公共 IP 地址](../articles/azure-resource-manager/management/resources-without-resource-group-limit.md#microsoftnetwork) | 800 | 请联系支持人员。 | 
 | 公共 IP 前缀 | 受订阅中的标准公共 IP 数限制 | 请联系支持人员。 |
 | 公共 IP 前缀长度 | /28 | 请联系支持人员。 |
 
@@ -72,10 +73,10 @@ ms.locfileid: "88854111"
 | 每个 NIC 的规则数（在 NIC 上的所有 IP 上） | 300                           |
 | 前端 IP 配置数              | 600                           |
 | 后端池大小                       | 单个虚拟网络 1000 个 IP 配置 |
-| 每个负载均衡器的后端资源数 <sup>1<sup> | 150                   |
+| 每个负载均衡器的后端资源数 <sup>1<sup> | 250                   |
 | 高可用性端口                 | 每个内部前端 1 个       |
 | 每个负载均衡器的出站规则        | 600                           |
-| [TCP 空闲超时](https://docs.microsoft.com/azure/load-balancer/load-balancer-tcp-idle-timeout#tcp-idle-timeout) | 4 分钟/30 分钟          |
+| 每个 VM 的负载均衡器数                   | 2（1 个公共，1 个内部）   |
 
 <sup>1</sup>限制是最多 150 种资源，采用独立虚拟机资源、可用性集资源和虚拟机规模集放置组的任意组合。
 
@@ -88,14 +89,15 @@ ms.locfileid: "88854111"
 | 每个 NIC 的规则数（在 NIC 上的所有 IP 上） | 300                          |
 | 前端 IP 配置数              | 200                          |
 | 后端池大小                       | 单个可用性集 300 个 IP 配置 |
-| 每个负载均衡器的可用性集数     | 150                          |
+| 每个负载均衡器的可用性集数     | 1                            |
+| 每个 VM 的负载均衡器数                   | 2（1 个公共，1 个内部）  |
 
 <a name="virtual-networking-limits-classic"></a>以下限制仅适用于每个订阅通过经典部署模型托管的网络资源。 了解如何[针对订阅限制查看当前资源使用情况](../articles/networking/check-usage-against-limits.md)。
 
 | 资源 | 默认限制 | 最大限制 |
 | --- | --- | --- |
 | 虚拟网络 |100 |100 |
-| 本地网络站点 |20 个 |50 |
+| 本地网络站点 |20 |50 |
 | 每个虚拟网络的 DNS 服务器数 |20 |20 |
 | 每个虚拟网络的专用 IP 地址数 |4,096 |4,096 |
 | 虚拟机或角色实例的单 NIC 并发 TCP 或 UDP 流数 |如果 NIC 至少有两个，则为 500,000（至多 1,000,000）。 |如果 NIC 至少有两个，则为 500,000（至多 1,000,000）。 |
@@ -105,6 +107,6 @@ ms.locfileid: "88854111"
 | 每个路由表的用户定义的路由数 |400 |400 |
 | 公共 IP 地址 (动态) |500 |500 |
 | 保留的公共 IP 地址 |500 |500 |
-| 每个部署的公共 VIP |5 |联系支持人员 |
-| 每个部署的专用 VIP（内部负载均衡） |1 |1 |
+| 每个部署的公共 IP |5 |联系支持人员 |
+| 每个部署的专用 IP（内部负载均衡） |1 |1 |
 | 终结点访问控制列表 (ACL) |50 |50 |

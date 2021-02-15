@@ -1,18 +1,15 @@
 ---
 title: Azure HDInsight 上的 Apache Spark 准则
 description: 了解在 Azure HDInsight 中使用 Apache Spark 的准则。
-author: hrasheed-msft
-ms.author: hrasheed
-ms.reviewer: jasonh
 ms.service: hdinsight
 ms.topic: conceptual
 ms.date: 04/28/2020
-ms.openlocfilehash: 01cdc121abded954c2443599c5d69689acd69b62
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: f81435abbedec25cb8abe0b958065a493c15ce4c
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "82562332"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98938806"
 ---
 # <a name="apache-spark-guidelines"></a>Apache Spark 准则
 
@@ -56,14 +53,14 @@ ms.locfileid: "82562332"
 | HDInsight 上的 Apache Hive | [将 Apache Spark 和 Apache Hive 与 Hive Warehouse Connector 集成](../interactive-query/apache-hive-warehouse-connector.md) |
 | Apache HBase on HDInsight | [使用 Apache Spark 读取和写入 Apache HBase 数据](../hdinsight-using-spark-query-hbase.md) |
 | Apache Kafka on HDInsight | [教程：将 Apache Spark 结构化流式处理与 Apache Kafka on HDInsight 配合使用](../hdinsight-apache-kafka-spark-structured-streaming.md) |
-| Azure Cosmos DB | [Azure Cosmos DB：在 Azure 平台上实现 lambda 体系结构](../../cosmos-db/lambda-architecture.md) |
+| Azure Cosmos DB | [Azure Synapse Link for Azure Cosmos DB](../../cosmos-db/synapse-link.md) |
 
 ## <a name="what-are-my-storage-options"></a>可以使用哪些存储选项？
 
 | 选项 | 文档 |
 |---|---|
-| Data Lake Storage Gen2 | [将 Azure Data Lake Storage Gen2 用于 Azure HDInsight 群集](../hdinsight-hadoop-use-data-lake-storage-gen2.md) |
-| Data Lake Storage Gen1 | [将 Data Lake Storage Gen1 与 Azure HDInsight 群集配合使用](../hdinsight-hadoop-use-data-lake-store.md) |
+| Azure Data Lake Storage Gen2 | [将 Azure Data Lake Storage Gen2 用于 Azure HDInsight 群集](../hdinsight-hadoop-use-data-lake-storage-gen2.md) |
+| Azure Data Lake Storage Gen1 | [将 Azure Data Lake Storage Gen1 与 Azure HDInsight 群集配合使用](../hdinsight-hadoop-use-data-lake-storage-gen1.md) |
 | Azure Blob 存储 | [将 Azure 存储与 Azure HDInsight 群集配合使用](../hdinsight-hadoop-use-blob-storage.md) |
 
 ## <a name="next-steps"></a>后续步骤

@@ -1,113 +1,117 @@
 ---
 title: 在 Azure 数据工厂中排查自承载集成运行时问题
 description: 了解如何在 Azure 数据工厂中排查自承载集成运行时问题。
-services: data-factory
-author: nabhishek
+author: lrtoyou1223
 ms.service: data-factory
 ms.topic: troubleshooting
-ms.date: 08/05/2020
-ms.author: abnarain
-ms.openlocfilehash: 49d173e0d0f2b96c385b4325335483d25e9a7c2d
-ms.sourcegitcommit: fbb66a827e67440b9d05049decfb434257e56d2d
+ms.date: 01/25/2021
+ms.author: lle
+ms.openlocfilehash: 2cb0e0870b32270340e37d54dc54a43b22ee014a
+ms.sourcegitcommit: d4734bc680ea221ea80fdea67859d6d32241aefc
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/05/2020
-ms.locfileid: "87800554"
+ms.lasthandoff: 02/14/2021
+ms.locfileid: "100376456"
 ---
 # <a name="troubleshoot-self-hosted-integration-runtime"></a>排查自承载集成运行时问题
 
 [!INCLUDE[appliesto-adf-asa-md](includes/appliesto-adf-asa-md.md)]
 
-本文探讨 Azure 数据工厂中的自承载集成运行时的常用故障排除方法。
+本文探讨 Azure 数据工厂中的自承载集成运行时 (IR) 的常用故障排除方法。
 
 ## <a name="gather-self-hosted-ir-logs-from-azure-data-factory"></a>从 Azure 数据工厂收集自承载 IR 日志
 
-对于在自承载 IR/共享 IR 上运行的失败的活动，Azure 数据工厂支持查看和上载错误日志。 你可以执行以下步骤来获取错误报告 ID，然后输入报表 ID 以查找相关的已知问题。
+对于在自承载 IR 或共享 IR 上运行的失败活动，Azure 数据工厂支持查看和上载错误日志。 若要获取错误报告 ID，请按照此处的说明操作，然后输入报表 ID 以搜索相关的已知问题。
 
-1. "中转到**活动运行**" 页。
+1. 在数据工厂中，选择 " **管道运行**"。
 
-1. 在 "**错误**" 列下，单击 "下一按钮"。
+1. 在 " **活动运行**" 下的 " **错误** " 列中，选择突出显示的按钮以显示活动日志，如以下屏幕截图所示：
 
-    !["活动运行" 页](media/self-hosted-integration-runtime-troubleshoot-guide/activity-runs-page.png)
+    !["所有管道运行" 窗格上的 "活动运行" 部分的屏幕截图。](media/self-hosted-integration-runtime-troubleshoot-guide/activity-runs-page.png)
 
-1. 你会看到失败的活动运行的相关日志。 单击 "**发送日志**" 按钮以获得进一步帮助。
+    将显示失败的活动运行的活动日志。
 
-    ![发送日志](media/self-hosted-integration-runtime-troubleshoot-guide/send-logs.png)
+    ![失败活动的活动日志的屏幕截图。](media/self-hosted-integration-runtime-troubleshoot-guide/send-logs.png) 
+    
+1. 要获得进一步的帮助，请选择 " **发送日志**"。
+ 
+   " **共享自承载集成运行时" ("带有 Microsoft 的 IR) 日志** " 窗口打开。
 
-1. 您可以选择要发送的日志。 对于*自承载 ir*，你可以上载与失败的活动或自承载 ir 节点上的所有日志相关的日志。 对于*共享 IR*，只能上载与失败的活动相关的日志。
+    !["与 Microsoft 共享自承载集成运行时 (IR) 日志" 窗口的屏幕截图。](media/self-hosted-integration-runtime-troubleshoot-guide/choose-logs.png)
 
-    ![选择日志](media/self-hosted-integration-runtime-troubleshoot-guide/choose-logs.png)
+1. 选择要发送的日志。 
+    * 对于 *自承载 ir*，你可以上载与失败的活动相关的日志或自承载 ir 节点上的所有日志。 
+    * 对于 *共享 IR*，只能上载与失败的活动相关的日志。
 
-1. 当上载日志时，如果需要进一步的帮助来解决此问题，请保留报表 ID 记录。
+1. 当上传日志时，如果需要进一步的帮助来解决问题，请保留报表 ID 的记录供以后使用。
 
-    ![上传日志](media/self-hosted-integration-runtime-troubleshoot-guide/upload-logs.png)
+    ![红外日志的 "上载进度" 窗口中显示的报表 ID 的屏幕截图。](media/self-hosted-integration-runtime-troubleshoot-guide/upload-logs.png)
 
 > [!NOTE]
-> 将对所有联机的自承载 IR 实例执行日志查看和上载请求。 请确保所有自承载 IR 实例都处于联机状态，以防丢失任何日志。 
+> 日志查看和上载请求在所有联机的自承载 IR 实例上执行。 如果缺少任何日志，请确保所有自承载 IR 实例都处于联机状态。 
 
 
-## <a name="self-hosted-ir-general-failure-or-error"></a>自承载 IR 一般故障或错误
+## <a name="self-hosted-ir-general-failure-or-error"></a>自承载 IR 一般性故障或错误
 
-### <a name="tlsssl-certificate-issue"></a>TLS/SSL 证书问题
+### <a name="out-of-memory-issue"></a>内存不足问题
 
 #### <a name="symptoms"></a>症状
 
-尝试从**自承载 IR Configuration Manager**远程访问中 (高级) 启用 tls/ssl 证书时  ->  **Remote access from intranet**，请在选择 TLS/ssl 证书后，出现以下错误：
-
-`Remote access settings are invalid. Identity check failed for outgoing message. The expected DNS identity of the remote endpoint was ‘abc.microsoft.com’ but the remote endpoint provided DNS claim ‘microsoft.com’. If this is a legitimate remote endpoint, you can fix the problem by explicitly specifying DNS identity ‘microsoft.com’ as the Identity property of EndpointAddress when creating channel proxy.`
-
-在上述情况下，用户使用证书，并将 "microsoft.com" 作为最后一项。
+尝试使用链接 IR 或自承载 IR 运行查找活动时，出现 OutOfMemoryException (OOM) 错误。
 
 #### <a name="cause"></a>原因
 
-这是 WCF 中的一个已知问题： WCF TLS/SSL 验证仅检查 SAN 中的最后一个 DNSName。 
+如果 IR 计算机瞬时内存占用量高，新活动可能会引发 OOM 错误。 该问题可能是由大量的并发活动导致的，该错误是设计使然。
 
 #### <a name="resolution"></a>解决方法
 
-Azure 数据工厂 v2 自承载 IR 支持通配符证书。 发生此问题的原因通常是 SSL 证书不正确。 SAN 中的最后一个 DNSName 应该是有效的。 请按照以下步骤进行验证。 
-1.  打开管理控制台，双击证书详细信息中的 "*使用者*" 和 "*使用者备用名称*"。 例如，在上面的示例中，"*使用者备用名称*" 中的最后一项是 "DNS 名称 = microsoft.com.com"，它是非法的。
-2.  请与证书颁发公司联系，以删除错误的 DNS 名称。
+检查 IR 节点上的资源使用情况和并发活动执行情况。 调整活动运行的内部和触发器时间，以避免在单个 IR 节点上同时执行太多操作。
 
 ### <a name="concurrent-jobs-limit-issue"></a>并发作业限制问题
 
 #### <a name="symptoms"></a>症状
 
-尝试增加 Azure 数据工厂 UI 中的并发作业限制时，它会挂起，因为它会永久*更新*。
-并发作业的最大值设置为24，你需要增加计数，以便作业运行速度更快。 可以输入的最小值为3，可输入的最大值为32。 增加了从24到32的值，并按 "更新" 按钮上的 "*更新*" 按钮，如下面所示，它会停滞在*更新*中。 刷新后，客户仍将值视为24，并且它永远不会更新到32。
+尝试从 Azure 数据工厂接口提高并发作业数限制时，进程以“正在更新”状态挂起。
 
-![正在更新状态](media/self-hosted-integration-runtime-troubleshoot-guide/updating-status.png)
+示例场景：并发作业数的最大值当前设置为 24，而你希望增加该值，使作业运行速度更快。 可输入的最小值为 3，可输入的最大值为 32。 将值从 24 增加到 32，然后选择“更新”按钮。 此进程停滞在“正在更新”状态，如下面的屏幕截图所示。 刷新页面，该值仍显示为 24。 它未如你预期的那样更新为 32。
+
+![集成运行时“节点”窗格的屏幕截图，显示进程停滞在“正在更新”状态。](media/self-hosted-integration-runtime-troubleshoot-guide/updating-status.png)
 
 #### <a name="cause"></a>原因
 
-此设置存在限制，因为该值取决于计算机的 logicCore 和内存，只需将其调整为较小的值（如24），即可查看结果。
+并发作业数的限制取决于计算机的逻辑核心和内存。 尝试将值下调（如调整为 24），然后查看结果。
 
 > [!TIP] 
-> - 有关逻辑核心计数的详细信息以及如何查找计算机的逻辑核心计数的详细信息，请参阅[此文](https://www.top-password.com/blog/find-number-of-cores-in-your-cpu-on-windows-10/)。
-> - 有关如何计算 math 的详细信息，请参阅[此文](https://www.rapidtables.com/calc/math/Log_Calculator.html)。
+> -    若要详细了解逻辑核心计数以及如何确定计算机的逻辑核心计数，请参阅[在 Windows 10 上查找 CPU 中的核心数的四种方法](https://www.top-password.com/blog/find-number-of-cores-in-your-cpu-on-windows-10/)。
+> -    要了解如何计算 math.log，请转到[对数计算器](https://www.rapidtables.com/calc/math/Log_Calculator.html)。
 
 
-### <a name="self-hosted-ir-ha-ssl-certificate-issue"></a>自承载 IR HA SSL 证书问题
+### <a name="self-hosted-ir-high-availability-ha-ssl-certificate-issue"></a>自承载 IR 高可用性 (HA) SSL 证书问题
 
 #### <a name="symptoms"></a>症状
 
 自承载 IR 工作节点已报告以下错误：
 
-`Failed to pull shared states from primary node net.tcp://abc.cloud.corp.Microsoft.com:8060/ExternalService.svc/. Activity ID: XXXXX The X.509 certificate CN=abc.cloud.corp.Microsoft.com, OU=test, O=Microsoft chain building failed. The certificate that was used has a trust chain that cannot be verified. Replace the certificate or change the certificateValidationMode. The revocation function was unable to check revocation because the revocation server was offline.`
+“从主节点 net.tcp://abc.cloud.corp.Microsoft.com:8060/ExternalService.svc/ 拉取共享状态失败。 活动 ID:XXXXX X.509 证书 CN=abc.cloud.corp.Microsoft.com, OU=test, O=Microsoft 链生成失败。 所使用的证书具有无法验证的信任链。 请替换该证书或更改 certificateValidationMode。 吊销功能无法检查吊销，因为吊销服务器已脱机。”
 
 #### <a name="cause"></a>原因
 
-当我们处理与 SSL/TLS 握手相关的事例时，我们可能会遇到一些与证书链验证相关的问题。 
+当你处理与 SSL/TLS 握手相关的事例时，可能会遇到一些与证书链验证相关的问题。 
 
 #### <a name="resolution"></a>解决方法
 
-- 下面是对 x.509 证书链生成失败进行故障排除的快速而直观的方法。
+- 下面是对 X.509 证书链生成失败进行故障排除的快速且直观的方法：
  
-    1. 导出需要验证的证书。 前往 "管理计算机证书" 并找到要检查的证书，然后右键单击 "**所有任务**" "  ->  **导出**"。
+    1. 导出需要验证的证书。 为此，请执行以下操作：
     
-        ![导出任务](media/self-hosted-integration-runtime-troubleshoot-guide/export-tasks.png)
+       a. 在 Windows 中，选择“开始”，开始键入“证书”，然后选择“管理计算机证书”  。
+       
+       b. 在文件资源管理器的左侧窗格中，搜索要检查的证书，右键单击它，然后选择“所有任务” > “导出” 。
+    
+        ![“管理计算机证书”窗格上为证书选择“所有任务”>“导出”控件的屏幕截图。](media/self-hosted-integration-runtime-troubleshoot-guide/export-tasks.png)
 
     2. 将导出的证书复制到客户端计算机。 
-    3. 在客户端上，在 CMD 中运行以下命令。 请确保已将下面的 *\<certificate path>* 和占位符替换为 *\<output txt file path>* 相关路径。
+    3. 在客户端的命令提示符窗口中运行以下命令。 请务必将 \<certificate path> 和 \<output txt file path> 替换为实际路径 。
     
         ```
         Certutil -verify -urlfetch    <certificate path>   >     <output txt file path> 
@@ -118,330 +122,400 @@ Azure 数据工厂 v2 自承载 IR 支持通配符证书。 发生此问题的�
         ```
         Certutil -verify -urlfetch c:\users\test\desktop\servercert02.cer > c:\users\test\desktop\Certinfo.txt
         ```
-    4. 检查输出 txt 文件中是否有任何错误。 可以在 txt 文件末尾找到错误摘要。
+    4. 在 TXT 输出文件中检查是否有错误。 可在 TXT 文件末尾找到错误摘要。
 
         例如： 
 
-        ![错误摘要](media/self-hosted-integration-runtime-troubleshoot-guide/error-summary.png)
+        ![TXT 文件末尾的错误摘要的屏幕截图。](media/self-hosted-integration-runtime-troubleshoot-guide/error-summary.png)
 
-        如果在日志文件的末尾看不到任何错误（如下所示），则可以考虑在客户端计算机上成功生成证书链。
+        如果日志文件末尾未显示任何错误（如以下屏幕截图所示），可认为已在客户端计算机中成功生成了证书链。
         
-        ![日志文件中没有错误](media/self-hosted-integration-runtime-troubleshoot-guide/log-file.png)      
+        ![显示没有错误的日志文件的屏幕截图。](media/self-hosted-integration-runtime-troubleshoot-guide/log-file.png)      
 
-- 如果在证书文件中配置了 AIA、CDP 和 OCSP。 我们可以以更直观的方式对其进行检查。
+- 如果证书文件中配置了 AIA（授权信息访问）、CDP（CRL 分发点）或 OCSP（联机证书状态协议）文件扩展名，可采用更直观的方式查看它：
  
-    1. 可以通过检查证书的详细信息来获取此信息。
+    1. 查看证书详细信息即可获取此信息，如以下屏幕截图所示：
     
-        ![证书详细信息](media/self-hosted-integration-runtime-troubleshoot-guide/certificate-detail.png)
-    1. 运行以下命令。 请确保已将占位符替换 *\<certificate path>* 为证书的相关路径。
+        ![证书详细信息的屏幕截图。](media/self-hosted-integration-runtime-troubleshoot-guide/certificate-detail.png)
+    
+    1. 运行以下命令。 务必将 \<certificate path> 替换为证书的实际路径。
     
         ```
           Certutil   -URL    <certificate path> 
         ```
-    1. 然后，将打开**URL 检索工具**。 可以通过单击 "**检索**" 按钮，验证来自 AIA、CDP 和 OCSP 的证书。
+    
+        URL 检索工具在此时打开。 
+        
+    1. 要验证带 AIA、CDP 和 OCSP 文件扩展名的证书，请选择“检索”。
 
-        ![检索按钮](media/self-hosted-integration-runtime-troubleshoot-guide/retrieval-button.png)
+        ![URL 检索工具和检索按钮的屏幕截图。](media/self-hosted-integration-runtime-troubleshoot-guide/retrieval-button.png)
  
-        如果 AIA 的证书已 "验证"，并且 CDP 或 OCSP 的证书已 "验证"，则可以成功地构建证书链。
+        如果来自 AIA 的证书状态为“已验证”，来自 CDP 或 OCSP 的证书状态也为“已验证”，说明已成功生成证书链 。
 
-        如果在检索 AIA、CDP 时出现故障，请与网络团队合作，使客户端计算机可以连接到目标 URL。 如果可以验证 http 路径或 ldap 路径，则它会足够。
+        如果在尝试检索 AIA 或 CDP 时出现故障，请与网络团队合作，使客户端计算机可以连接到目标 URL。 如果可以验证 HTTP 路径或轻型目录访问协议 (LDAP) 路径，就足够了。
 
-### <a name="self-hosted-ir-could-not-load-file-or-assembly"></a>自承载 IR 无法加载文件或程序集
+### <a name="self-hosted-ir-could-not-load-file-or-assembly"></a>自承载 IR 未能加载文件或程序集
 
 #### <a name="symptoms"></a>症状
 
-`Could not load file or assembly 'XXXXXXXXXXXXXXXX, Version=4.0.2.0, Culture=neutral, PublicKeyToken=XXXXXXXXX' or one of its dependencies. The system cannot find the file specified. Activity ID: 92693b45-b4bf-4fc8-89da-2d3dc56f27c3`
- 
-例如： 
+您会看到以下错误信息：
 
-`Could not load file or assembly 'System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=XXXXXXXXX' or one of its dependencies. The system cannot find the file specified. Activity ID: 92693b45-b4bf-4fc8-89da-2d3dc56f27c3`
+“无法加载文件或程序集‘XXXXXXXXXXXXXXXX, Version=4.0.2.0, Culture=neutral, PublicKeyToken=XXXXXXXXX’或其依赖项之一。 系统找不到指定的文件。 活动 ID:92693b45-b4bf-4fc8-89da-2d3dc56f27c3”
+ 
+下面是更为具体的错误消息： 
+
+“无法加载文件或程序集‘System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=XXXXXXXXX’或其依赖项之一。 系统找不到指定的文件。 活动 ID:92693b45-b4bf-4fc8-89da-2d3dc56f27c3”
 
 #### <a name="cause"></a>原因
 
-如果使用进程监视器，可以看到以下结果：
+在进程监视器中，可以看到以下结果：
 
-[![进程监视器](media/self-hosted-integration-runtime-troubleshoot-guide/process-monitor.png)](media/self-hosted-integration-runtime-troubleshoot-guide/process-monitor.png#lightbox)
+[![进程监视器中的路径列表的屏幕截图。](media/self-hosted-integration-runtime-troubleshoot-guide/process-monitor.png)](media/self-hosted-integration-runtime-troubleshoot-guide/process-monitor.png#lightbox)
 
 > [!TIP] 
-> 你可以设置筛选器，如以下屏幕截图所示。
-> 它告诉我们，dll **ValueTuple**不在 GAC 相关文件夹中，或位于*C:\Program Files\Microsoft integration Runtime\4.0\Gateway*或*C:\Program Files\Microsoft integration Runtime\4.0\Shared*文件夹中。
-> 基本上，它首先从*GAC*文件夹加载 dll，然后从*共享*，最后从*网关子*文件夹加载 dll。 因此，可以将 dll 放到可帮助的任何路径。
+> 在进程监视器中，你可以按以下屏幕截图所示设置筛选器。
+>
+> 前面的错误消息告诉我们 DLL System.ValueTuple 不在“全局程序集缓存”(GAC) 文件夹中，不在 C:\Program Files\Microsoft Integration Runtime\4.0\Gateway 文件夹中，也不在 C:\Program Files\Microsoft Integration Runtime\4.0\Shared 文件夹中  。
+>
+> 简单来说，该进程加载 DLL 的顺序是：首先从 GAC 文件夹加载，再从共享文件夹加载，最后从网关文件夹加载  。 因此，可以从任何有用的路径加载 DLL。
 
-![设置筛选器](media/self-hosted-integration-runtime-troubleshoot-guide/set-filters.png)
+<br>
+
+![“进程监视器筛选器”页面的屏幕截图，其中列出了 DLL 的筛选器。](media/self-hosted-integration-runtime-troubleshoot-guide/set-filters.png)
 
 #### <a name="resolution"></a>解决方法
 
-你可以找到**System.ValueTuple.dll**位于*C:\Program Files\Microsoft Integration Runtime\4.0\Gateway\DataScan*文件夹中。 将**System.ValueTuple.dll**复制到*C:\Program Files\Microsoft Integration Runtime\4.0\Gateway*文件夹以解决此问题。
+可以在 C:\Program Files\Microsoft Integration Runtime\4.0\Gateway\DataScan 文件夹中发现 System.ValueTuple.dll 。 若要解决此问题，请将 System.ValueTuple.dll 文件复制到 C:\Program Files\Microsoft Integration Runtime\4.0\Gateway 文件夹中 。
 
-您可以使用相同的方法解决其他文件或程序集缺少的问题。
+你可以使用相同的方法来解决其他文件或程序集缺失问题。
 
-#### <a name="more-information"></a>更多信息
+#### <a name="more-information-about-this-issue"></a>有关此问题的详细信息
 
-在 *%windir%\Microsoft.NET\assembly*和 *%windir%\assembly*下看到 System.ValueTuple.dll 的原因是它是 .net 行为。 
+System.ValueTuple.dll 位于 %windir%\Microsoft.NET\assembly 和 %windir%\assembly 下，因为这是 .NET 行为  。 
 
-在下面的错误中，可以清楚地看到程序集*ValueTuple* 。 因此，当应用程序尝试检查程序集时，会发生此类问题*System.ValueTuple.dll*。
+在以下错误中，你可以清楚地了解到 System.ValueTuple 程序集缺失。 应用程序尝试检查 System.ValueTuple.dll 程序集时会出现此问题。
  
-`<LogProperties><ErrorInfo>[{"Code":0,"Message":"The type initializer for 'Npgsql.PoolManager' threw an exception.","EventType":0,"Category":5,"Data":{},"MsgId":null,"ExceptionType":"System.TypeInitializationException","Source":"Npgsql","StackTrace":"","InnerEventInfos":[{"Code":0,"Message":"Could not load file or assembly 'System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=XXXXXXXXX' or one of its dependencies. The system cannot find the file specified.","EventType":0,"Category":5,"Data":{},"MsgId":null,"ExceptionType":"System.IO.FileNotFoundException","Source":"Npgsql","StackTrace":"","InnerEventInfos":[]}]}]</ErrorInfo></LogProperties>`
+"\<LogProperties>\<ErrorInfo>[{"Code":0,"Message":"Npgsql.PoolManager 的类型初始值设定项引发了一个错误。","EventType":0,"Category":5,"Data":{},"MsgId":null,"ExceptionType":"System.TypeInitializationException","Source":"Npgsql","StackTrace":"","InnerEventInfos":[{"Code":0,"Message":"无法加载文件或程序集 'System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=XXXXXXXXX' 或其依赖项之一。 系统找不到指定的文件。","EventType":0,"Category":5,"Data":{},"MsgId":null,"ExceptionType":"System.IO.FileNotFoundException","Source":"Npgsql","StackTrace":"","InnerEventInfos":[]}]}]\</ErrorInfo>\</LogProperties>"
  
-有关 GAC 的详细信息，请参阅[此文](https://docs.microsoft.com/dotnet/framework/app-domains/gac)。
+有关 GAC 的详细信息，请参阅[全局程序集缓存](/dotnet/framework/app-domains/gac)。
 
 
-### <a name="how-to-audit-self-hosted-ir-key-missing"></a>如何审核缺少的自承载 IR 密钥
+### <a name="self-hosted-integration-runtime-authentication-key-is-missing"></a>自承载集成运行时身份验证密钥缺失
 
 #### <a name="symptoms"></a>症状
 
-自承载集成运行时突然进入脱机状态，但在事件日志中显示以下错误消息：`Authentication Key is not assigned yet`
+自承载集成运行时在无身份验证密钥的情况下突然脱机，事件日志显示以下错误消息： 
 
-![缺少身份验证密钥](media/self-hosted-integration-runtime-troubleshoot-guide/key-missing.png)
+“尚未分配身份验证密钥”
+
+![显示“尚未分配身份验证密钥”的集成运行时事件窗格的屏幕截图。](media/self-hosted-integration-runtime-troubleshoot-guide/key-missing.png)
 
 #### <a name="cause"></a>原因
 
-- 在门户中删除了自承载 IR 节点或逻辑自承载 IR。
-- 完全卸载已完成。
+- 在 Azure 门户中删除了自承载 IR 节点或逻辑自承载 IR。
+- 执行了完全卸载。
 
 #### <a name="resolution"></a>解决方法
 
-如果上述两个原因均不适用，你可以前往文件夹： *%Programdata%\Microsoft\Data Transfer\DataManagementGateway*，并检查是否删除了名为的文件**配置**。 如果删除了该文件，请按照[此处](https://www.netwrix.com/how_to_detect_who_deleted_file.html)的说明进行操作以审核删除该文件的人员。
+如果上述两个原因均不适用，你可前往 %programdata%\Microsoft\Data Transfer\DataManagementGateway 文件夹，检查是否删除了 Configurations 文件 。 如果已删除，请按照 Netwrix 文章[检测从 Windows 文件服务器中删除文件的人员](https://www.netwrix.com/how_to_detect_who_deleted_file.html)中的说明进行操作。
 
-![检查配置文件](media/self-hosted-integration-runtime-troubleshoot-guide/configurations-file.png)
+![用于检查 Configurations 文件的事件日志详细信息窗格的屏幕截图。](media/self-hosted-integration-runtime-troubleshoot-guide/configurations-file.png)
 
 
-### <a name="cannot-use-self-hosted-ir-to-bridge-two-on-premises-data-stores"></a>无法使用自承载 IR 桥接两个本地数据存储
+### <a name="cant-use-self-hosted-ir-to-bridge-two-on-premises-datastores"></a>无法使用自承载 IR 桥接两个本地数据存储
 
 #### <a name="symptoms"></a>症状
 
-为源和目标数据存储创建自承载的 IRs 后，你需要将两个 IRs 连接在一起以完成复制。 如果数据存储是在不同的 Vnet 中配置的，或者无法理解网关机制，则会遇到如下错误：在*目标 IR 中找不到源的驱动程序*;*目标 IR 无法访问源*。
+为源数据存储和目标数据存储创建自承载 IR 后，需要连接这两个 IR 以完成复制活动。 如果数据存储是在不同的虚拟网络中配置的，或者数据存储无法理解网关机制，你将收到以下错误消息之一： 
+
+* “在目标 IR 中找不到源的驱动程序”
+* “目标 IR 无法访问源”
  
 #### <a name="cause"></a>原因
 
 自承载 IR 设计为复制活动的中心节点，而不是需要为每个数据存储安装的客户端代理。
  
-在上述情况下，应使用相同的 IR 创建每个数据存储的链接服务，并且 IR 应该能够通过网络访问这两个数据存储区。 无论 IR 与源数据存储、目标数据存储或第三台计算机一起安装，如果使用不同的 IRs 创建两个链接的服务，但在同一复制活动中使用，则将使用目标 IR，并且需要在目标 IR 计算机上安装这两个数据存储的驱动程序。
+在这种情况下，应使用相同的 IR 为每个数据存储创建链接服务，并且 IR 应该能够通过网络访问这两个数据存储。 IR 的安装位置（源数据存储、目标数据存储或第三方计算机）并不重要。 如果两个链接服务是使用不同 IR 创建的，却在同一复制活动中使用，则使用目标 IR，并且你需要在目标 IR 计算机上安装两个数据存储的驱动程序。
 
 #### <a name="resolution"></a>解决方法
 
-在目标 IR 上安装源和目标的驱动程序，并确保它可以访问源数据存储。
+在目标 IR 上为源和目标数据存储安装驱动程序，并确保它可访问源数据存储。
  
-如果流量无法通过网络在两个数据存储间传递 (例如，它们在两个 Vnet) 中进行配置，即使安装了 IR，也不能在一个活动中完成复制。 在这种情况下，你可以创建两个包含两个 IRs 的复制活动，每个活动都在一个通风： 1 IR 中，用于从数据存储1复制到 Azure Blob 存储，另一个用于从 Azure Blob 存储复制到数据存储2。 这可以模拟要求使用 IR 创建连接两个已断开连接的数据存储的桥。
+如果流量无法通过网络在两个数据存储间传递（例如是在两个虚拟网络中配置的这两个数据存储），即使安装了 IR，也不能在一个活动中完成复制。 如果无法在一个活动中完成复制，可以使用两个 IR 创建两个复制活动，分别位于一个 VENT 中： 
+* 将一个 IR 从数据存储 1 复制到 Azure Blob 存储
+* 将另一个 IR 从 Azure Blob 存储复制到数据存储2。 
+
+此解决方案可以模拟以下要求：使用 IR 创建一个网桥来连接两个已断开连接的数据存储。
 
 
-### <a name="credential-sync-issue-causes-credential-lost-from-ha"></a>凭据同步问题导致凭据从 HA 丢失
-
-#### <a name="symptoms"></a>症状
-
-当你删除 Azure 门户上的链接服务时，将从当前 Integration Runtime 节点中删除数据源凭据 "XXXXXXXXXX"，或者在该任务具有错误的负载时，请再次通过凭据创建新的链接服务 "。
-
-#### <a name="cause"></a>原因
-
-你的自承载 IR 在 HA 模式下构建，其中包含两个节点，但它们不处于凭据同步状态，这意味着，存储在调度程序节点中的凭据不会同步到其他辅助角色节点。 如果从调度程序节点到辅助角色节点发生故障转移，但凭据仅存在于以前的调度程序节点中，则在尝试访问凭据时任务将失败，并且你将会遇到错误。
-
-#### <a name="resolution"></a>解决方法
-
-避免此问题的唯一方法是确保两个节点处于凭据同步状态。 否则，你必须为新的调度程序 reinput 凭据。
-
-
-### <a name="cannot-choose-the-certificate-due-to-private-key-missing"></a>由于缺少私钥，因此无法选择证书
+### <a name="credential-sync-issue-causes-credential-loss-from-ha"></a>凭据同步问题导致凭据从 HA 丢失
 
 #### <a name="symptoms"></a>症状
 
-1.  将 PFX 文件导入到证书存储中。
-2.  通过 IR Configuration Manager UI 选择证书时，出现以下错误：
+如果从具有有效负载的当前集成运行时节点中删除了数据源凭据“XXXXXXXXXX”，你将收到以下错误消息：
 
-    ![缺少私钥](media/self-hosted-integration-runtime-troubleshoot-guide/private-key-missing.png)
+“删除 Azure 门户上的链接服务，或者任务的有效负载错误时，请再次使用凭据创建新的链接服务。”
 
 #### <a name="cause"></a>原因
 
-- 用户帐户处于低权限，无法访问私钥。
-- 此证书生成为签名，而不是密钥交换。
+自承载 IR 是在 HA 模式下构建的，包含两个节点，但节点不处于凭据同步状态。 这意味着存储在调度程序节点中的凭据不会同步到其他工作器节点。 如果从调度程序节点到工作器节点发生了故障转移，并且凭据仅存在于以前的调度程序节点中，则任务将在尝试访问凭据时失败，并且你将会收到上述错误。
 
 #### <a name="resolution"></a>解决方法
 
-1.  使用可以访问私钥以操作 UI 的特权帐户。
-2.  运行以下命令以导入证书：
+避免此问题的唯一方法是确保两个节点处于凭据同步状态。 如果它们不同步，你必须重新输入新调度程序的凭据。
+
+
+### <a name="cant-choose-the-certificate-because-the-private-key-is-missing"></a>由于私钥缺失而无法选择证书
+
+#### <a name="symptoms"></a>症状
+
+* 你已将 PFX 文件导入到证书存储中。
+* 通过 IR 配置管理器 UI 选择证书时，收到以下错误消息：
+
+   “更改 Intranet 通信加密模式失败。 证书 \<*certificate name*> 可能没有能够进行密钥交换的私钥，或者进程可能不具有对私钥的访问权限。 有关详细信息，请参阅内部异常。”
+
+    ![“Integration Runtime 配置管理器设置”窗格的屏幕截图，其中显示“私钥缺失”错误消息。](media/self-hosted-integration-runtime-troubleshoot-guide/private-key-missing.png)
+
+#### <a name="cause"></a>原因
+
+- 用户帐户的权限级别较低，无法访问私钥。
+- 此证书是作为签名证书（而不是密钥交换证书）生成的。
+
+#### <a name="resolution"></a>解决方法
+
+* 若要操作 UI，请使用具有适当权限的帐户访问私钥。  
+* 通过运行以下命令导入证书：
     
     ```
     certutil -importpfx FILENAME.pfx AT_KEYEXCHANGE
     ```
 
-
 ## <a name="self-hosted-ir-setup"></a>自承载 IR 设置
 
-### <a name="the-integration-runtime-registration-error"></a>Integration Runtime 注册错误 
+### <a name="integration-runtime-registration-error"></a>Integration Runtime 注册错误 
 
 #### <a name="symptoms"></a>症状
 
-有时我们希望在不同的帐户中运行自承载 IR，原因如下：
-- 公司策略不允许服务帐户。
+出于以下原因之一，你可能偶尔希望在不同的帐户中运行自承载 IR：
+- 公司策略不允许使用服务帐户。
 - 需要进行一些身份验证。
 
-在服务面板中更改服务帐户后，你可能会发现 Integration Runtime 停止工作。
+在服务窗格中更改服务帐户后，你可能会发现集成运行时停止工作，并收到以下错误消息：
 
-![IR 注册错误](media/self-hosted-integration-runtime-troubleshoot-guide/ir-registration-error.png)
+“Integration Runtime (自承载)节点在注册期间遇到错误。 无法连接到 Integration Runtime (自承载)主机服务。”
+
+![“Integration Runtime 配置管理器”窗口的屏幕截图，其中显示 IR 注册错误。](media/self-hosted-integration-runtime-troubleshoot-guide/ir-registration-error.png)
 
 #### <a name="cause"></a>原因
 
-有很多资源只授予服务帐户。 将服务帐户更改为另一个帐户时，所有从属资源的权限保持不变。
+许多资源仅授予服务帐户访问。 将服务帐户更改为另一个帐户时，所有从属资源的权限保持不变。
 
 #### <a name="resolution"></a>解决方法
 
-请参阅 Integration Runtime 事件日志以检查错误。
+查看 Integration Runtime 事件日志以检查错误。
 
-![IR 事件日志](media/self-hosted-integration-runtime-troubleshoot-guide/ir-event-log.png)
+![IR 事件日志的屏幕截图，其中显示发生了运行时错误。](media/self-hosted-integration-runtime-troubleshoot-guide/ir-event-log.png)
 
-如果错误显示为*system.unauthorizedaccessexception*以上，请遵循以下说明：
+* 如果事件日志中的错误为“UnauthorizedAccessException”，请执行以下操作：
 
+    1. 在 Windows 服务面板中，勾选 DIAHostService 登录服务帐户。
 
-1. 检查 Windows 服务面板中的*DIAHostService* logon service 帐户。
+        ![“登录服务帐户属性”窗格的屏幕截图。](media/self-hosted-integration-runtime-troubleshoot-guide/logon-service-account.png)
 
-    ![登录服务帐户](media/self-hosted-integration-runtime-troubleshoot-guide/logon-service-account.png)
+    1. 检查登录服务帐户是否具有对 %programdata%\Microsoft\DataTransfer\DataManagementGateway 文件夹的读取/写入权限：。
 
-2. 检查登录服务帐户是否具有对文件夹的 R/W 权限： *%programdata%\Microsoft\DataTransfer\DataManagementGateway*。
+        - 默认情况下，如果未更改服务登录帐户，则它应具有读取/写入权限。
 
-    - 默认情况下，如果服务登录帐户尚未更改，则它应具有 R/W 的权限。
+            ![服务权限窗格的屏幕截图。](media/self-hosted-integration-runtime-troubleshoot-guide/service-permission.png)
 
-        ![服务权限](media/self-hosted-integration-runtime-troubleshoot-guide/service-permission.png)
+        - 如果更改了服务登录帐户，请执行以下操作来缓解此问题：
+ 
+            a. 对当前自承载 IR 执行完全卸载。   
+            b. 安装自承载 IR 位。  
+            c. 通过执行以下操作更改服务帐户：  
 
-    - 如果更改了服务登录帐户，请按照以下步骤来缓解此问题：
-        1. 清理卸载当前的自承载 IR。
-        1. 安装自承载 IR 位。
-        1. 按照以下说明更改服务帐户： 
-            1. 转到 selfhosted IR 的安装文件夹，切换到 " *Microsoft Integration Runtime\4.0\Shared*" 文件夹。
-            1. 使用提升的权限启动命令行。 *\<user>* 将和替换 *\<password>* 为你自己的用户名和密码，并运行以下命令：
-                       
-                ```
-                dmgcmd.exe -SwitchServiceAccount "<user>" "<password>"
-                ```
-            1. 如果要更改为 LocalSystem 帐户，请确保对此帐户使用正确的格式。 下面是正确格式的示例：
+             i. 转到自承载 IR 安装文件夹，然后切换到 Microsoft Integration Runtime\4.0\Shared 文件夹。  
+             ii. 使用提升的权限打开命令提示符窗口。 将 \<user> 和 \<password> 替换为自己的用户名和密码，然后运行以下命令 ：   
+                `dmgcmd.exe -SwitchServiceAccount "<user>" "<password>"`  
+             iii. 如果要更改为 LocalSystem 帐户，请确保为此帐户使用正确的格式：`dmgcmd.exe -SwitchServiceAccount "NT Authority\System" ""`  
+                请勿使用此格式：`dmgcmd.exe -SwitchServiceAccount "LocalSystem" ""`     
+             iv. （可选）由于 Local System 具有高于管理员的权限，因此你也可以直接在“服务”中进行更改。  
+             v. 你可以使用本地/域用户作为 IR 服务登录帐户。            
 
-                ```
-                dmgcmd.exe -SwitchServiceAccount "NT Authority\System" ""
-                ```         
-                不要**使用如下**所示的格式：
+            d. 注册 Integration Runtime。
 
-                ```
-                dmgcmd.exe -SwitchServiceAccount "LocalSystem" ""
-                ```              
-            1. 作为替代方法，因为本地系统的权限高于管理员，你也可以在 "服务" 中直接对其进行更改。
-            1. 您可以使用 IR 服务登录帐户的本地/域用户。            
-        1. 注册 Integration Runtime。
+* 如果错误为“Integration Runtime 服务 (DIAHostService) 未能启动。 请确保有足够的权限启动系统服务”，请执行以下操作：
 
-如果错误显示为：*服务 "Integration Runtime service" (DIAHostService) 无法启动。请验证你是否具有足够的权限来启动系统服务*，请遵循以下说明：
+    1. 在 Windows 服务面板中，勾选 DIAHostService 登录服务帐户。
+    
+        ![服务帐户的“登录”窗格的屏幕截图。](media/self-hosted-integration-runtime-troubleshoot-guide/logon-service-account.png)
 
-1. 检查 Windows 服务面板中的*DIAHostService* logon service 帐户。
-   
-    ![登录服务帐户](media/self-hosted-integration-runtime-troubleshoot-guide/logon-service-account.png)
+    1. 检查以确定登录服务帐户是否具有启动 Windows 服务的 **"作为服务登录** " 权限：
 
-2. 检查登录服务帐户是否具有启动 Windows 服务的 "**作为服务登录**" 权限：
+        ![“以服务形式登录”属性窗格的屏幕截图。](media/self-hosted-integration-runtime-troubleshoot-guide/logon-as-service.png)
 
-    ![作为服务登录](media/self-hosted-integration-runtime-troubleshoot-guide/logon-as-service.png)
+#### <a name="more-information"></a>详细信息
 
-#### <a name="more-information"></a>更多信息
+如果上述两种解决方法模式都不适用于你的情况，请尝试收集以下 Windows 事件日志： 
+- 应用程序和服务日志 > Integration Runtime
+- Windows 日志 > 应用程序
 
-如果在这种情况下，解决方法中的两种模式都不适用，请尝试在下面的 Windows 事件日志中收集： 
-- 应用程序和服务日志-> Integration Runtime
-- Windows 日志-> 应用程序
-
-### <a name="cannot-find-register-button-to-register-a-self-hosted-ir"></a>找不到注册按钮来注册自承载 IR    
+### <a name="cant-find-the-register-button-to-register-a-self-hosted-ir"></a>找不到“注册”按钮来注册自承载 IR    
 
 #### <a name="symptoms"></a>症状
 
-注册自承载 IR 时，在 Configuration Manager UI 上找不到 "**注册**" 按钮。
+注册自承载 IR 时，“注册”按钮未显示在“配置管理器”窗格中。
 
-![无注册按钮](media/self-hosted-integration-runtime-troubleshoot-guide/no-register-button.png)
+![“配置管理器”窗格的屏幕截图，其中显示一条表明未注册集成运行时节点的消息。](media/self-hosted-integration-runtime-troubleshoot-guide/no-register-button.png)
 
 #### <a name="cause"></a>原因
 
-由于版本*3.0 Integration Runtime*，因此已删除现有 Integration Runtime 节点上的 "**注册**" 按钮，以启用更清晰和更安全的环境。 如果某个节点已注册到某些 Integration Runtime (是联机还是不) Integration Runtime，则必须卸载上一个节点，然后安装并注册该节点。
+自 Integration Runtime 3.0 发行以来，为了实现更干净、更安全的环境，删除了现有集成运行时节点上的“注册”按钮。 如果某个节点已注册到某个集成运行时（无论是否联机），则必须卸载之前的节点，然后安装并注册该节点，才能将该节点重新注册到另一个集成运行时。
 
 #### <a name="resolution"></a>解决方法
 
-1. 请在 "控制面板" 中，卸载现有 Integration Runtime。
+1. 在控制面板中，卸载现有的 Integration Runtime。
 
     > [!IMPORTANT] 
-    > 在下面的过程中，选择 "是"。 不要在卸载过程中保留数据。
+    > 在下面的过程中，选择“是”。 在卸载过程中请勿保留数据。
 
-    ![删除数据](media/self-hosted-integration-runtime-troubleshoot-guide/delete-data.png)
+    ![用于从集成运行时删除所有用户数据的“是”按钮的屏幕截图。](media/self-hosted-integration-runtime-troubleshoot-guide/delete-data.png)
 
-1. 如果你没有集成运行时安装程序 MSI，请前往[下载中心](https://www.microsoft.com/en-sg/download/details.aspx?id=39717)下载最新的 Integration Runtime。
-1. 安装 MSI 并注册 Integration Runtime。
+1. 如果没有 Integration Runtime 安装程序 MSI 文件，请转到[下载中心](https://www.microsoft.com/en-sg/download/details.aspx?id=39717)以下载最新的 Integration Runtime。
+1. 安装 MSI 文件，并注册 Integration Runtime。
 
 
-### <a name="unable-to-register-the-self-hosted-ir-due-to-localhost"></a>由于 localhost，无法注册自承载 IR    
+### <a name="unable-to-register-the-self-hosted-ir-because-of-localhost"></a>因 localhost 而无法注册自承载 IR    
 
 #### <a name="symptoms"></a>症状
 
-Get_LoopbackIpOrName 时，无法在新计算机上注册自承载 IR。
+使用 get_LoopbackIpOrName 时，无法在新计算机上注册自承载 IR。
 
 **调试：** 出现运行时错误。
-"DataTransfer" 的类型初始值设定项引发了异常。
-在数据库查找期间发生了不可恢复的错误。
+“Microsoft.DataTransfer.DIAgentHost.DataSourceCache”的类型初始化表达式引发了异常。
+数据库查找期间发生不可恢复的错误。
  
-**异常详细信息：** System.typeinitializationexception： "DataTransfer" 的类型初始值设定项引发了异常。 ---> 系统 SocketException：在数据库查找期间出现不可恢复的错误，在 GetAddrInfo (字符串名称) 。
+**异常详细信息：** System.TypeInitializationException：“Microsoft.DataTransfer.DIAgentHost.DataSourceCache”的类型初始化表达式引发了异常。 ---> System.Net.Sockets.SocketException：数据库查找 System.Net.Dns.GetAddrInfo(String name) 期间发生不可恢复的错误。
 
 #### <a name="cause"></a>原因
 
-解决本地主机时通常会发生此问题。
+此问题通常在解决 localhost 时出现。
 
 #### <a name="resolution"></a>解决方法
 
-使用 Localhost 127.0.0.1 来托管文件和解决此类问题。
-
+使用 localhost IP 地址 127.0.0.1 托管文件，然后解决问题。
 
 ### <a name="self-hosted-setup-failed"></a>自承载设置失败    
 
 #### <a name="symptoms"></a>症状
 
-无法卸载现有 IR，或无法安装新的 IR，或将现有 IR 升级到新的 IR。
+无法卸载现有 IR，无法安装新 IR，或无法将现有 IR 升级为新 IR。
 
 #### <a name="cause"></a>原因
 
-安装依赖于 Windows Installer 服务。 有多种原因可能导致安装问题：
-- 磁盘空间不足
-- 缺少权限
-- 由于某种原因，NT 服务处于锁定状态
-- CPU 利用率过高
-- MSI 文件托管在慢速网络位置
-- 某些系统文件或注册表被意外触摸
+集成运行时的安装取决于 Windows Installer 服务。 你可能会遇到安装问题，原因如下：
+- 可用磁盘空间不足。
+- 权限不足。
+- Windows NT 服务已锁定。
+- CPU 使用率太高。
+- MSI 文件托管位置的网络慢。
+- 意外改动了某些系统文件或注册表。
+
+### <a name="the-ir-service-account-failed-to-fetch-certificate-access"></a>IR 服务帐户无法获取证书访问权限
+
+#### <a name="symptoms"></a>症状
+
+通过 Microsoft Integration Runtime 配置管理器安装自承载 IR 时，会生成一个包含受信任证书颁发机构 (CA) 的证书。 无法将证书应用于加密两个节点之间的通信，并显示以下错误消息： 
+
+更改 Intranet 通信加密模式失败:未能向 Integration Runtime 服务帐户授予访问证书 "\<*certificate name*>" 的权限。 错误代码 103
+
+![屏幕截图显示以下错误消息：“…未能向 Integration Runtime 服务帐户授予证书访问权限。”](media/self-hosted-integration-runtime-troubleshoot-guide/integration-runtime-service-account-certificate-error.png)
+
+#### <a name="cause"></a>原因
+
+证书使用的是尚不受支持的密钥存储提供程序 (KSP) 存储。 到目前为止，自承载 IR 仅支持加密服务提供程序 (CSP) 存储。
+
+#### <a name="resolution"></a>解决方法
+
+在这种情况下，建议使用 CSP 证书。
+
+**解决方案 1** 
+
+若要导入证书，请运行以下命令：
+
+`Certutil.exe -CSP "CSP or KSP" -ImportPFX FILENAME.pfx`
+
+![用于导入证书的 certutil 命令的屏幕截图。](media/self-hosted-integration-runtime-troubleshoot-guide/use-certutil.png)
+
+**解决方案 2** 
+
+若要转换证书，请运行以下命令：
+
+`openssl pkcs12 -in .\xxxx.pfx -out .\xxxx_new.pem -password pass: <EnterPassword>`
+`openssl pkcs12 -export -in .\xxxx_new.pem -out xxxx_new.pfx`
+
+转换前后：
+
+![证书转换前的结果的屏幕截图。](media/self-hosted-integration-runtime-troubleshoot-guide/before-certificate-change.png)
+
+![证书转换后的结果的屏幕截图。](media/self-hosted-integration-runtime-troubleshoot-guide/after-certificate-change.png)
+
+### <a name="self-hosted-integration-runtime-version-5x"></a>自承载集成运行时版本 5.x
+若要升级为 Azure 数据工厂自承载集成运行时版本 5.x，必须使用 .NET Framework 运行时 4.7.2 或更高版本。 在下载页中，你会发现最新的 4.x 版本和最新的两个 5.x 版本的下载链接。 
+
+对于 Azure 数据工厂 v2 客户：
+- 如果自动更新已打开，并且你已将 .NET Framework 运行时升级到 4.7.2 或更高版本，则自承载集成运行时会自动升级到最新的 5.x 版本。
+- 如果自动更新已打开，并且你尚未将 .NET Framework 运行时升级到 4.7.2 或更高版本，则自承载集成运行时不会自动升级到最新的 5.x 版本。 自承载集成运行时仍然保留为当前的 4.x 版本。 你可以在门户和自承载集成运行时客户端中看到有关 .NET Framework 运行时升级的警告。
+- 如果自动更新已关闭，并且你已将 .NET Framework 运行时升级到 4.7.2 或更高版本，则可以手动下载最新的 5.x，并将其安装在计算机上。
+- 如果自动更新已关闭，并且你尚未将 .NET Framework 运行时升级到 4.7.2 或更高版本。 则当你尝试手动安装自承载集成运行时 5.x 并注册密钥时，你需要先升级 .NET Framework 运行时版本。
+
+
+对于 Azure 数据工厂 v1 客户：
+- 自承载集成运行时6.x 不支持 Azure 数据工厂 v1。
+- 自承载集成运行时将自动升级到最新版本的4.x。 最新版本的4.x 不会过期。 
+- 如果尝试手动安装自承载集成运行时1.x 并注册密钥，则会通知你自承载集成运行时的版本 5. x 不支持 Azure 数据工厂 v1。
 
 
 ## <a name="self-hosted-ir-connectivity-issues"></a>自承载 IR 连接问题
 
-### <a name="self-hosted-integration-runtime-cant-connect-to-cloud-service"></a>自承载集成运行时无法连接到云服务
+### <a name="self-hosted-integration-runtime-cant-connect-to-the-cloud-service"></a>自承载集成运行时无法连接到云服务
 
 #### <a name="symptoms"></a>症状
 
-![自承载 IR 连接问题](media/self-hosted-integration-runtime-troubleshoot-guide/unable-to-connect-to-cloud-service.png)
+尝试注册自承载集成运行时的时候，配置管理器显示以下错误消息：
+
+“Integration Runtime (自承载)节点在注册期间遇到错误。”
+
+![“Integration Runtime (自承载)节点在注册期间遇到错误”消息的屏幕截图。](media/self-hosted-integration-runtime-troubleshoot-guide/unable-to-connect-to-cloud-service.png)
 
 #### <a name="cause"></a>原因 
 
-自承载集成运行时无法连接到数据工厂服务（后端）。 此问题通常是防火墙中的网络设置导致的。
+自承载 IR 无法连接到 Azure 数据工厂服务后端。 此问题通常是防火墙中的网络设置导致的。
 
 #### <a name="resolution"></a>解决方法
 
-1. 检查集成运行时服务是否正在运行。
+1. 检查集成运行时服务是否正在运行。 如果是，转到步骤 2。
     
-   ![自承载 IR 服务运行状态](media/self-hosted-integration-runtime-troubleshoot-guide/integration-runtime-service-running-status.png)
+   ![显示自承载 IR 服务正在运行的屏幕截图。](media/self-hosted-integration-runtime-troubleshoot-guide/integration-runtime-service-running-status.png)
     
-1. 如果服务正在运行，请转到步骤 3。
-
-1. 如果自承载集成运行时上没有配置代理（这是默认设置），请在安装了自承载集成运行时的计算机上运行以下 PowerShell 命令：
+1. 如果自承载 IR 上没有配置代理（这是默认设置），请在安装了自承载集成运行时的计算机上运行以下 PowerShell 命令：
 
     ```powershell
     (New-Object System.Net.WebClient).DownloadString("https://wu2.frontend.clouddatahub.net/")
     ```
         
    > [!NOTE]     
-   > 服务 URL 可能会有所不同，具体取决于数据工厂位置。 可以在“ADF UI” > “连接” > “集成运行时” > “编辑自承载 IR” > “节点” > “查看服务 URL”下找到服务 URL。
+   > 服务 URL 可能会有所不同，具体取决于数据工厂实例的位置。 若要查找服务 URL，请选择“ADF UI” > “连接” > “集成运行时” > “编辑自承载 IR” > “节点” > “查看服务 URL”     。
             
     下面是预期的响应：
             
-    ![PowerShell 命令响应](media/self-hosted-integration-runtime-troubleshoot-guide/powershell-command-response.png)
+    ![PowerShell 命令响应的屏幕截图。](media/self-hosted-integration-runtime-troubleshoot-guide/powershell-command-response.png)
             
 1. 如果未收到预期的响应，请根据情况使用以下方法之一：
             
-    * 如果收到“无法解析远程名称”消息，则表明存在域名系统 (DNS) 问题。 请与网络团队联系以解决此问题。
-    * 如果收到“ssl/tls 证书不受信任”消息，请检查 https://wu2.frontend.clouddatahub.net/ 的证书在计算机上是否受信任，然后使用证书管理器安装公共证书。 此操作应该会缓解此问题。
-    * 转到“Windows” > “事件查看器(日志)” > “应用程序和服务日志” > “Integration Runtime”，检查是否存在由 DNS、防火墙规则或公司网络设置导致的故障。 （如果发现此类故障，请强行关闭连接。）由于每个公司都有自定义的网络设置，因此请与网络小组联系以排查这些问题。
+    * 如果收到“无法解析远程名称”消息，则表明存在域名系统 (DNS) 问题。 请联系你的网络团队来修复此问题。
+    * 如果收到“ssl/tls 证书不受信任”消息，请[检查证书](https://wu2.frontend.clouddatahub.net/)在计算机上是否受信任，然后使用证书管理器安装公共证书。 此操作应该会缓解此问题。
+    * 转到“Windows” > “事件查看器(日志)” > “应用程序和服务日志” > “Integration Runtime”，检查是否存在由 DNS、防火墙规则或公司网络设置导致的故障   。 如果发现此类故障，请强行关闭连接。 每个公司都有自己自定义的网络设置，因此请与网络团队联系以排查这些问题。
 
 1. 如果在自承载集成运行时上配置了“代理”，请验证代理服务器是否可以访问服务终结点。 有关示例命令，请参阅 [PowerShell, web requests, and proxies](https://stackoverflow.com/questions/571429/powershell-web-requests-and-proxies)（PowerShell、Web 请求和代理）。    
                 
@@ -464,27 +538,27 @@ Get_LoopbackIpOrName 时，无法在新计算机上注册自承载 IR。
 
 下面是预期的响应：
             
-![PowerShell 命令响应 2](media/self-hosted-integration-runtime-troubleshoot-guide/powershell-command-response.png)
+![预期的 PowerShell 命令响应的屏幕截图。](media/self-hosted-integration-runtime-troubleshoot-guide/powershell-command-response.png)
 
 > [!NOTE] 
 > 代理注意事项：
-> *    检查是否需要将代理服务器放在“安全接收方”列表中。 如果是，请确保“安全接收方”列表中包含[这些域](https://docs.microsoft.com/azure/data-factory/data-movement-security-considerations#firewall-requirements-for-on-premisesprivate-network)。
-> *    检查 TLS/SSL 证书“wu2.frontend.clouddatahub.net/”在代理服务器上是否受信任。
-> *    如果在代理上使用 Active Directory 身份验证，请将服务帐户更改为能够以“Integration Runtime 服务”身份访问代理的用户帐户。
+> * 检查是否需要将代理服务器放在“安全接收方”列表中。 如果需要，请确保[这些域](./data-movement-security-considerations.md#firewall-requirements-for-on-premisesprivate-network)在“安全接收方”列表中。
+> * 查看是否信任代理服务器上的 SSL/TLS 证书 "wu2.frontend.clouddatahub.net/"。
+> * 如果在代理上使用 Active Directory 身份验证，请将服务帐户更改为可作为“Integration Runtime 服务”访问该代理的用户帐户。
 
-### <a name="error-message-self-hosted-integration-runtime-node-logical-shir-is-in-inactive-running-limited-state"></a>错误消息：自承载集成运行时节点/逻辑 SHIR 处于“非活动”/“正在运行(受限)”状态
+### <a name="error-message-self-hosted-integration-runtime-nodelogical-self-hosted-ir-is-in-inactive-running-limited-state"></a>错误消息：自承载集成运行时节点/逻辑自承载 IR 处于“非活动”/“正在运行(受限)”状态
 
 #### <a name="cause"></a>原因 
 
 自承载集成运行时节点的状态可能为“非活动”，如以下屏幕截图所示：
 
-![非活动的自承载 IR 节点](media/self-hosted-integration-runtime-troubleshoot-guide/inactive-self-hosted-ir-node.png)
+![自承载集成运行时节点处于非活动状态的屏幕截图](media/self-hosted-integration-runtime-troubleshoot-guide/inactive-self-hosted-ir-node.png)
 
 当节点无法相互通信时，会出现此行为。
 
 #### <a name="resolution"></a>解决方法
 
-1. 登录到节点托管的 VM。 在“应用程序和服务日志” > “Integration Runtime”下，打开事件查看器并筛选所有错误日志。
+1. 登录到节点托管的虚拟机 (VM)。 在“应用程序和服务日志” > “Integration Runtime”下，打开事件查看器并筛选错误日志 。
 
 1. 检查错误日志是否包含以下错误： 
     
@@ -497,17 +571,17 @@ Get_LoopbackIpOrName 时，无法在新计算机上注册自承载 IR。
     at System.ServiceModel.Channels.SocketConnectionInitiator.Connect(Uri uri, TimeSpan timeout)
     ```
        
-1. 如果看到此错误，请在命令行上运行以下命令： 
+1. 如果看到此错误，请在命令提示符窗口中运行以下命令： 
 
    ```
    telnet 10.2.4.10 8060
    ```
    
-1. 如果收到以下错误，请与 IT 部门联系以获得解决此问题的帮助。 成功 telnet 后，如果集成运行时节点状态仍存在问题，请联系 Microsoft 支持部门。
+1. 如果收到以下屏幕截图中显示的命令行错误“无法打开与主机的连接”，请联系 IT 部门帮忙修复此问题。 成功 telnet 后，如果仍然遇到 integration runtime 节点状态问题，请联系 Microsoft 支持部门。
         
-   ![命令行错误](media/self-hosted-integration-runtime-troubleshoot-guide/command-line-error.png)
+   ![“无法打开与主机的连接”命令行错误的屏幕截图。](media/self-hosted-integration-runtime-troubleshoot-guide/command-line-error.png)
         
-1. 检查错误日志是否包含以下错误：
+1. 检查错误日志是否包含以下条目：
 
     ```
     Error log: Cannot connect to worker manager: net.tcp://xxxxxx:8060/ExternalService.svc/ No DNS entries exist for host azranlcir01r1. No such host is known Exception detail: System.ServiceModel.EndpointNotFoundException: No DNS entries exist for host xxxxx. ---> System.Net.Sockets.SocketException: No such host is known at System.Net.Dns.GetAddrInfo(String name) at System.Net.Dns.InternalGetHostByName(String hostName, Boolean includeIPv6) at System.Net.Dns.GetHostEntry(String hostNameOrAddress) at System.ServiceModel.Channels.DnsCache.Resolve(Uri uri) --- End of inner exception stack trace --- Server stack trace: at System.ServiceModel.Channels.DnsCache.Resolve(Uri uri)
@@ -517,42 +591,44 @@ Get_LoopbackIpOrName 时，无法在新计算机上注册自承载 IR。
     - 将所有节点置于同一域中。
     - 在所有托管 VM 的主机文件中添加 IP 到主机映射。
 
-### <a name="connectivity-issue-between-self-hosted-ir-and-data-factory-or-self-hosted-ir-and-data-sourcesink"></a>自承载 IR 与数据工厂或自承载 IR 与数据源/接收器之间的连接问题
+### <a name="connectivity-issue-between-the-self-hosted-ir-and-your-data-factory-instance-or-the-self-hosted-ir-and-the-data-source-or-sink"></a>自承载 IR 与数据工厂实例或自承载 IR 与数据源/接收器之间的连接问题
 
-若要排查网络连接问题，应知道如何[收集网络跟踪](#how-to-collect-netmon-trace)，了解如何使用它，并在通过自承载 IR 在实际案例中应用 Netmon 工具之前[分析 netmon 跟踪](#how-to-analyze-netmon-trace)。
+若要排查网络连接问题，应知道如何收集网络跟踪，了解如何使用它，并在通过自承载 IR 在实际案例中应用 Netmon 工具之前[分析 Microsoft 网络监视器 (Netmon) 跟踪](#analyze-the-netmon-trace)。
 
 #### <a name="symptoms"></a>症状
 
-有时，在排查自承载 IR 与数据工厂之间的连接问题（例如下面的问题）时，会出现以下情况： 
+有时可能需要对自承载 IR 和数据工厂实例之间的某些连接问题进行故障排除（如以下屏幕截图所示），或者对自承载 IR 与数据源或接收器之间的连接问题进行故障排除。 
 
-![HTTP 请求失败](media/self-hosted-integration-runtime-troubleshoot-guide/http-request-error.png)
+![“处理的 HTTP 请求失败”消息的屏幕截图](media/self-hosted-integration-runtime-troubleshoot-guide/http-request-error.png)
 
-或者，在排查自承载 IR 与数据源/接收器之间的连接问题时，会遇到以下错误：
+在任一种情况中，你都可能会遇到以下错误：
 
-`Copy failed with error:Type=Microsoft.DataTransfer.Common.Shared.HybridDeliveryException,Message=Cannot connect to SQL Server: ‘IP address’`
+* “复制失败，出现错误: Type=Microsoft.DataTransfer.Common.Shared.HybridDeliveryException,Message=无法连接到 SQL Server:IP 地址”
 
-`One or more errors occurred. An error occurred while sending the request. The underlying connection was closed: An unexpected error occurred on a receive. Unable to read data from the transport connection: An existing connection was forcibly closed by the remote host. An existing connection was forcibly closed by the remote host Activity ID.`
+* “发生了一个或多个错误。 发送请求时出错。 基础连接已关闭:接收时出现意外错误。 无法从传输连接中读取数据:远程主机强行关闭了现有连接。 远程主机活动 ID 强行关闭了现有连接。”
 
-#### <a name="resolution"></a>解决方法：
+#### <a name="resolution"></a>解决方法
 
-遇到以上问题时，请参考以下说明进一步解决问题：
+遇到上述错误时，请按照本部分中的说明进行故障排除。
 
-获取 netmon 跟踪并进一步进行分析。
-- 首先，你可以设置筛选器来查看从服务器到客户端的任何重置。 在下面的示例中，你可以看到服务器端是数据工厂服务器。
+- 收集用于分析的 Netmon 跟踪： 
 
-    ![数据工厂服务器](media/self-hosted-integration-runtime-troubleshoot-guide/data-factory-server.png)
+    1. 你可以设置筛选器来查看从服务器到客户端的任何重置。 在下面的示例屏幕截图中，可以看到服务器端是数据工厂服务器。
 
-- 当你获得重置包时，可以顺着 TCP 来查找对话。
+        ![数据工厂服务器的屏幕截图。](media/self-hosted-integration-runtime-troubleshoot-guide/data-factory-server.png)
 
-    ![查找对话](media/self-hosted-integration-runtime-troubleshoot-guide/find-conversation.png)
+    1. 当你获得重置包时，可以按传输控制协议 (TCP) 来查找对话。
 
-- 然后，你可以通过删除筛选器来获取客户端与数据工厂服务器之间的对话。
+        ![TCP 对话的屏幕截图。](media/self-hosted-integration-runtime-troubleshoot-guide/find-conversation.png)
 
-    ![获取对话](media/self-hosted-integration-runtime-troubleshoot-guide/get-conversation.png)
-- 根据收集的 netmon 跟踪，我们可以判断 TTL (TimeToLive) 总计为 64。 根据[此文](https://packetpushers.net/ip-time-to-live-and-hop-limit-basics/)中提到的**默认 TTL 和跃点限制值**（摘录如下），我们可以确定是 Linux 系统重置了包并导致连接断开。
+    1. 通过删除筛选器来获取客户端与数据工厂服务器之间的对话。
 
-    默认 TTL 和跃点限制值在不同的操作系统中有所不同，下面是一些操作系统的默认值：
-    - Linux 内核 2.4 (circa 2001)：对于 TCP、UDP 和 ICMP，该值为 255
+        ![对话详细信息的屏幕截图。](media/self-hosted-integration-runtime-troubleshoot-guide/get-conversation.png)
+
+- 对已收集的 Netmon 跟踪的分析表明，生存时间 (TTL) 总计为 64。 根据 [IP 生存时间 (TTL) 和跃点限制基础知识](https://packetpushers.net/ip-time-to-live-and-hop-limit-basics/)一文中提及的值（摘录在以下列表中），你可以看到是 Linux 系统重置了包并导致连接断开。
+
+    默认 TTL 和跃点限制值在不同的操作系统中有所不同，如下所示：
+    - Linux 内核 2.4 (circa 2001)：对于 TCP、用户数据报协议 (UDP) 和 Internet 控制消息协议 (ICMP)，该值为 255
     - Linux 内核 4.10 (2015)：对于 TCP、UDP 和 ICMP，该值为 64
     - Windows XP (2001)：对于 TCP、UDP 和 ICMP，该值为 128
     - Windows 10 (2015)：对于 TCP、UDP 和 ICMP，该值为 128
@@ -560,115 +636,160 @@ Get_LoopbackIpOrName 时，无法在新计算机上注册自承载 IR。
     - Windows Server 2019 (2018)：对于 TCP、UDP 和 ICMP，该值为 128
     - macOS (2001)：对于 TCP、UDP 和 ICMP，该值为 64
 
-    ![TTL 61](media/self-hosted-integration-runtime-troubleshoot-guide/ttl-61.png)
+    ![显示 TTL 值 61 的屏幕截图。](media/self-hosted-integration-runtime-troubleshoot-guide/ttl-61.png)
     
-    但在上面的示例中，它显示为 61 而不是 64，因为当网络包到达目标时，它需要通过不同的跃点，例如路由器/网络设备。 将在最终 TTL 中扣减路由器/网络设备的数目。
-    在本例中，我们可以看到，可以从 Linux 系统以 TTL 64 发送重置。
+    在上面的示例中，TTL 显示为 61 而不是 64，因为在网络包到达目标时，它需要经过各个跃点（如路由器或网络设备）。 扣除这些路由器或网络设备的数量以获得最终 TTL。
+    
+    在本例中，可以看到可从 Linux 系统以 TTL 64 发送重置。
 
-- 我们需要检查从自承载 IR 算起的第四个跃点，以确认重置设备可能来自何处。
+-  若要确认重置设备可能来自何处，请检查从自承载 IR 算起的第四个跃点。
  
     *来自 Linux 系统 A 的网络包的 TTL 64 -> B 的 TTL (64 - 1 = 63) -> C 的 TTL (63 - 1 = 62) -> 自承载 IR 的 TTL (62 - 1 = 61)*
 
-- 在理想情况下，TTL 将为 128，这意味着 Windows 系统正在运行我们的数据工厂。 如以下示例中所示，128 – 107 = 21 个跃点，这意味着在 TCP 3 握手期间，包从数据工厂发送到自承载 IR 共经过了 21 个跃点。
+- 在理想情况下，TTL 跃点数为 128，这意味着 Windows 操作系统正在运行你的数据工厂实例。 如以下示例所示，128 减去 107 得 21 个跃点，这意味着在 TCP 3 握手期间，将包的 21 个跃点从数据工厂实例发送到了自承载 IR。
  
-    ![TTL 107](media/self-hosted-integration-runtime-troubleshoot-guide/ttl-107.png)
+    ![显示 TTL 值 107 的屏幕截图。](media/self-hosted-integration-runtime-troubleshoot-guide/ttl-107.png)
 
-    因此，你需要与网络团队合作，以检查从自承载 IR 算起的第四个跃点是什么。 如果它是作为 Linux 系统存在的防火墙，请检查日志来确认设备为何在 TCP 3 握手后重置了包。 但是，如果不确定要在何处进行调查，请尝试一起获取自承载 IR 和防火墙在有问题的时间内的 netmon 跟踪，以找出可能重置此包并导致连接断开的设备。 在这种情况下，你还需要与网络团队合作才能继续进行调查。
+    因此，你需要与网络团队合作，以检查从自承载 IR 算起的第四个跃点是什么。 如果它是作为 Linux 系统存在的防火墙，请检查日志来确认设备为何在 TCP 3 握手后重置了包。 
+    
+    如果你不确定从何处开始着手调查，请尝试在有问题的期间从自承载 IR 和防火墙获取 Netmon 跟踪。 此方法将帮助你确定哪个设备可能重置了包且造成了连接断开。 在这种情况下，你还需要与网络团队合作才能继续进行调查。
 
-### <a name="how-to-collect-netmon-trace"></a>如何收集 netmon 跟踪
+### <a name="analyze-the-netmon-trace"></a>分析 Netmon 跟踪
 
-1.  从[此网站](https://www.microsoft.com/en-sg/download/details.aspx?id=4865)下载 Netmon 工具，并将其安装在服务器计算机（有问题的任何服务器）和客户端（如自承载 IR）上。
+> [!NOTE] 
+> 以下说明适用于 Netmon 跟踪。 目前不支持 Netmon 跟踪，可以改为使用 Wireshark。
 
-2.  创建一个文件夹，例如在以下路径中创建：D:\netmon。 请确保它有足够的空间来保存日志。
+尝试通过 telnet 连接 8.8.8.8 888 和收集的 Netmon 跟踪时，会看到以下屏幕截图中的跟踪：
 
-3.  捕获 IP 和端口信息。 
-    1. 启动 CMD 提示符。
-    2. 选择“以管理员身份运行”并运行以下命令：
-       
-        ```
-        Ipconfig /all >D:\netmon\IP.txt
-        netstat -abno > D:\netmon\ServerNetstat.txt
-        ```
+![显示错误消息“无法打开与端口 888 上的主机的连接”的屏幕截图。](media/self-hosted-integration-runtime-troubleshoot-guide/netmon-trace-1.png)
 
-4.  捕获 Netmon 跟踪（网络包）。
-    1. 启动 CMD 提示符。
-    2. 选择“以管理员身份运行”并运行以下命令：
-        
-        ```
-        cd C:\Program Files\Microsoft Network Monitor 3
-        ```
-    3. 可以使用三个不同的命令来捕获网络包：
-        - 选项 A：轮循式 File 命令（只捕获一个文件，将覆盖旧日志）。
-
-            ```
-            nmcap /network * /capture /file D:\netmon\ServerConnection.cap:200M
-            ```         
-        - 选项 B：链式 File 命令（如果达到 200 MB 的限制，将创建新文件）。
-        
-            ```
-            nmcap /network * /capture /file D:\netmon\ServerConnection.chn:200M
-            ```          
-        - 选项 C：计划的 File 命令。
-
-            ```
-            nmcap /network * /capture /StartWhen /Time 10:30:00 AM 10/28/2011 /StopWhen /Time 11:30:00 AM 10/28/2011 /file D:\netmon\ServerConnection.chn:200M
-            ```  
-
-5.  按 **Ctrl+C** 可停止捕获 Netmon 跟踪。
- 
-> [!NOTE]
-> 如果只能在客户端计算机上收集 netmon 跟踪，请获取有助于分析跟踪的服务器 IP 地址。
-
-### <a name="how-to-analyze-netmon-trace"></a>如何分析 netmon 跟踪
-
-如果收集到以上 netmon 跟踪，则在尝试 telnet **8.8.8.8 888** 时会看到以下跟踪：
-
-![netmon 跟踪 1](media/self-hosted-integration-runtime-troubleshoot-guide/netmon-trace-1.png)
-
-![netmon 跟踪 2](media/self-hosted-integration-runtime-troubleshoot-guide/netmon-trace-2.png)
+![显示 Netmon 跟踪的说明的屏幕截图。](media/self-hosted-integration-runtime-troubleshoot-guide/netmon-trace-2.png)
  
 
-这意味着你无法基于端口 **888** 与服务器端 **8.8.8.8** 建立 TCP 连接，因此你会看到两个额外的 **SynReTransmit** 包。 由于源 **SELF-HOST2** 在发送第一个包时无法建立到 **8.8.8.8** 的连接，因此它将继续建立连接。
+前面的图像显示你无法在端口 888 上与服务器端 8.8.8.8 建立 TCP 连接，因此你会看到两个额外的 SynReTransmit 包  。 由于源 SELF-HOST2 无法通过第一个包连接到 8.8.8.8，它将继续尝试建立连接 。
 
 > [!TIP]
-> - 你可以单击“加载筛选器” -> “标准筛选器” -> “地址” -> “IPv4 地址”。   
-> - 输入 **IPv4.Address == 8.8.8.8** 作为筛选器，然后单击“应用”。 之后，你将只能看到从本地计算机到目标 **8.8.8.8** 的通信。
+> 若要进行此连接，请尝试以下解决方案：
+> 1. 选择“加载筛选器” > “标准筛选器” > “地址” > “IPv4 地址”   。
+> 1. 若要应用筛选器，请输入“IPv4.Address == 8.8.8.8”，然后选择“应用” 。 然后应该能看到从本地计算机到目标 8.8.8.8 的通信。
 
-![筛选器地址 1](media/self-hosted-integration-runtime-troubleshoot-guide/filter-addresses-1.png)
+![显示筛选器地址的屏幕截图。](media/self-hosted-integration-runtime-troubleshoot-guide/filter-addresses-1.png)
         
-![筛选器地址 2](media/self-hosted-integration-runtime-troubleshoot-guide/filter-addresses-2.png)
+![显示更多筛选器地址的屏幕截图。](media/self-hosted-integration-runtime-troubleshoot-guide/filter-addresses-2.png)
 
-下面的示例演示了一个优秀方案。 
+成功的方案如以下示例所示： 
 
-- 如果 Telnet **8.8.8.8 53** 正常运行且没有任何问题，则可以看到发生了 TCP 3 握手，然后会话完成了 TCP 4 握手。
+- 如果可以在没有任何问题的情况下通过 telnet 连接 8.8.8.8 53，则 TCP 3 握手成功，会话以 TCP 4 握手结束。
 
-    ![优秀方案示例 1](media/self-hosted-integration-runtime-troubleshoot-guide/good-scenario-1.png)
+    ![显示成功连接方案的屏幕截图。](media/self-hosted-integration-runtime-troubleshoot-guide/good-scenario-1.png)
      
-    ![优秀方案示例 2](media/self-hosted-integration-runtime-troubleshoot-guide/good-scenario-2.png)
+    ![显示成功连接方案详细信息的屏幕截图。](media/self-hosted-integration-runtime-troubleshoot-guide/good-scenario-2.png)
 
-- 基于上面的 TCP 3 握手，你可以看到以下工作流：
+- 前面的 TCP 3 握手产生以下工作流：
 
-    ![TCP 3 握手工作流](media/self-hosted-integration-runtime-troubleshoot-guide/tcp-3-handshake-workflow.png)
+    ![TCP 3 握手工作流的关系图。](media/self-hosted-integration-runtime-troubleshoot-guide/tcp-3-handshake-workflow.png)
  
-- 完成会话所需的 TCP 4 握手及其工作流将如下所示：
+- 以下工作流说明了完成会话的 TCP 4 握手：
 
-    ![TCP 4 握手](media/self-hosted-integration-runtime-troubleshoot-guide/tcp-4-handshake.png)
+    ![TCP 4 握手详细信息的屏幕截图。](media/self-hosted-integration-runtime-troubleshoot-guide/tcp-4-handshake.png)
 
-    ![TCP 4 握手工作流](media/self-hosted-integration-runtime-troubleshoot-guide/tcp-4-handshake-workflow.png) 
+    ![TCP 4 握手工作流的关系图。](media/self-hosted-integration-runtime-troubleshoot-guide/tcp-4-handshake-workflow.png) 
+
+### <a name="microsoft-email-notification-about-updating-your-network-configuration"></a>有关更新网络配置的 Microsoft 电子邮件通知
+
+你可能会收到以下电子邮件通知，该通知建议于 2020 年 11 月 8 日之前更新网络配置，以允许与 Azure 数据工厂的新 IP 地址进行通信：
+
+   ![请求更新网络配置的 Microsoft 电子邮件通知的屏幕截图。](media/self-hosted-integration-runtime-troubleshoot-guide/email-notification.png)
+
+#### <a name="determine-whether-this-notification-affects-you"></a>确定此通知是否影响你
+
+此通知适用于以下场景：
+
+##### <a name="scenario-1-outbound-communication-from-a-self-hosted-integration-runtime-thats-running-on-premises-behind-a-corporate-firewall"></a>应用场景 1：在公司防火墙后本地运行的自承载集成运行时的出站通信
+
+如何确定你是否受到影响：
+
+- 如果你使用[设置防火墙配置和 IP 地址的允许列表](data-movement-security-considerations.md#firewall-configurations-and-allow-list-setting-up-for-ip-addresses)中所述的方法基于完全限定的域名 (FQDN) 定义防火墙规则，则不受影响。
+
+- 如果你在公司防火墙上显式启用了出站 IP 允许列表，则会受影响。
+
+   如果受到影响，请执行以下操作：在 2020 年 11 月 8 日之前，通知网络基础设施团队更新网络配置，以使用最新的数据工厂 IP 地址。 若要下载最新的 IP 地址，请转到[使用可下载的 JSON 文件发现服务标记](../virtual-network/service-tags-overview.md#discover-service-tags-by-using-downloadable-json-files)。
+
+##### <a name="scenario-2-outbound-communication-from-a-self-hosted-integration-runtime-thats-running-on-an-azure-vm-inside-a-customer-managed-azure-virtual-network"></a>应用场景 2：在客户管理的 Azure 虚拟网络内的 Azure VM 上运行的自承载集成运行时的出站通信
+
+如何确定你是否受到影响：
+
+- 检查在包含自承载集成运行时的专用网络中是否有任何出站网络安全组 (NSG) 规则。 如果没有出站限制，则不会受到影响。
+
+- 如果有出站规则限制，请检查是否是在使用服务标记。 如果在使用服务标记，则不会受到影响。 无需更改或添加任何内容，因为新 IP 范围包含在现有服务标记之内。 
+
+  ![显示数据工厂作为目标的目标检查的屏幕截图。](media/self-hosted-integration-runtime-troubleshoot-guide/destination-check.png)
+
+- 不过，如果你在 Azure 虚拟网络上的 NSG 规则设置中显式启用了出站 IP 地址的允许列表，则你会受影响。
+
+   如果受到影响，请执行以下操作：在 2020 年 11 月 8 日之前，通知网络基础设施团队更新 Azure 虚拟网络配置上的 NSG 规则，以使用最新的数据工厂 IP 地址。 若要下载最新的 IP 地址，请转到[使用可下载的 JSON 文件发现服务标记](../virtual-network/service-tags-overview.md#discover-service-tags-by-using-downloadable-json-files)。
+
+##### <a name="scenario-3-outbound-communication-from-ssis-integration-runtime-in-a-customer-managed-azure-virtual-network"></a>应用场景 3：客户管理的 Azure 虚拟网络中 SSIS Integration Runtime 的出站通信
+
+如何确定你是否受到影响：
+
+- 检查在包含 SQL Server Integration Services (SSIS) Integration Runtime 的专用网络中是否有任何出站 NSG 规则。 如果没有出站限制，则不会受到影响。
+
+- 如果有出站规则限制，请检查是否是在使用服务标记。 如果在使用服务标记，则不会受到影响。 无需更改或添加任何内容，因为新 IP 范围包含在现有服务标记之内。
+
+- 不过，如果你在 Azure 虚拟网络上的 NSG 规则设置中显式启用了出站 IP 地址的允许列表，则你会受影响。
+
+  如果受到影响，请执行以下操作：在 2020 年 11 月 8 日之前，通知网络基础设施团队更新 Azure 虚拟网络配置上的 NSG 规则，以使用最新的数据工厂 IP 地址。 若要下载最新的 IP 地址，请转到[使用可下载的 JSON 文件发现服务标记](../virtual-network/service-tags-overview.md#discover-service-tags-by-using-downloadable-json-files)。
+
+### <a name="couldnt-establish-a-trust-relationship-for-the-ssltls-secure-channel"></a>无法建立 SSL/TLS 安全通道的信任关系 
+
+#### <a name="symptoms"></a>症状
+
+自承载 IR 无法连接到 Azure 数据工厂服务。
+
+当你在 CustomLogEvent 表中检查自承载 IR 事件日志或客户端通知日志时，你会发现以下错误消息：
+
+“The underlying connection was closed:无法建立 SSL/TLS 安全通道的信任关系。 根据验证过程，远程证书无效。”
+
+检查数据工厂服务的服务器证书最简单方法是在浏览器中打开数据工厂服务 URL。 例如，在安装了自承载 IR 的计算机上打开[检查服务器证书链接](https://eu.frontend.clouddatahub.net/)，然后查看服务器证书信息。
+
+  ![Azure 数据工厂服务的“检查服务器证书”窗格的屏幕截图。](media/self-hosted-integration-runtime-troubleshoot-guide/server-certificate.png)
+
+  ![用于检查服务器认证路径的窗口的屏幕截图。](media/self-hosted-integration-runtime-troubleshoot-guide/certificate-path.png)
+
+#### <a name="cause"></a>原因
+
+此问题有两个可能的原因：
+
+- 原因 1：数据工厂服务服务器证书的根 CA 在安装了自承载 IR 的计算机上不受信任。 
+- 原因 2：你在环境中使用了代理，代理替代了数据工厂服务的服务器证书，而安装了自承载 IR 的计算机不信任被替换的服务器证书。
+
+#### <a name="resolution"></a>解决方法
+
+- 对于原因 1：请确保数据工厂服务器证书及其证书链在安装了自承载 IR 的计算机上受信任。
+- 对于原因 2：请在自承载 IR 计算机上信任被替换的根 CA，或者将代理配置为不替换数据工厂服务器证书。
+
+有关在 Windows 上信任证书的详细信息，请参阅[安装受信任的根证书](/skype-sdk/sdn/articles/installing-the-trusted-root-certificate)。
+
+#### <a name="additional-information"></a>其他信息
+我们推出了一个新的 SSL 证书，该证书已从 DigiCert 进行签名。 检查以查看 DigiCert 全局根 G2 是否在受信任的根 CA 中。
+
+  ![显示 "受信任的根证书颁发机构" 目录中的 DigiCert 全局根 G2 文件夹的屏幕截图。](media/self-hosted-integration-runtime-troubleshoot-guide/trusted-root-ca-check.png)
+
+如果此证书不在受信任的根 CA 中，请在 [此处下载](http://cacerts.digicert.com/DigiCertGlobalRootG2.crt )。 
 
 
 ## <a name="self-hosted-ir-sharing"></a>自承载 IR 共享
 
-### <a name="share-self-hosted-ir-from-a-different-tenant-is-not-supported"></a>不支持从其他租户共享自承载 IR 
+### <a name="sharing-a-self-hosted-ir-from-a-different-tenant-is-not-supported"></a>不支持从其他租户共享自承载 IR 
 
 #### <a name="symptoms"></a>症状
 
-你可能会注意到，在尝试从 Azure 数据工厂 UI 共享自承载 IR 时，其他租户)  (其他数据工厂，但不能在不同租户上的数据工厂之间共享自承载 IR。
+尝试从 Azure 数据工厂 UI 共享自承载 IR 时，你可能会注意到其他数据工厂（位于不同租户），但你无法在位于不同租户的数据工厂之间共享自承载 IR。
 
 #### <a name="cause"></a>原因
 
 不能跨租户共享自承载 IR。
-
 
 ## <a name="next-steps"></a>后续步骤
 
@@ -677,7 +798,7 @@ Get_LoopbackIpOrName 时，无法在新计算机上注册自承载 IR。
 *  [数据工厂博客](https://azure.microsoft.com/blog/tag/azure-data-factory/)
 *  [数据工厂功能请求](https://feedback.azure.com/forums/270578-data-factory)
 *  [Azure 视频](https://azure.microsoft.com/resources/videos/index/?sort=newest&services=data-factory)
-*  [Microsoft Q&A 问题页](https://docs.microsoft.com/answers/topics/azure-data-factory.html)
+*  [Microsoft Q&页面](/answers/topics/azure-data-factory.html)
 *  [数据工厂 Stack Overflow 论坛](https://stackoverflow.com/questions/tagged/azure-data-factory)
 *  [关于数据工厂的 Twitter 信息](https://twitter.com/hashtag/DataFactory)
 *  [映射数据流性能指南](concepts-data-flow-performance.md)

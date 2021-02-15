@@ -1,23 +1,25 @@
 ---
-title: Azure Cosmos DB Gremlin 支持
-description: 了解 Apache TinkerPop 的 Gremlin 语言。 了解 Azure Cosmos DB 中提供了哪些功能和步骤
-author: LuisBosquez
+title: Azure Cosmos DB Gremlin 支持并兼容 TinkerPop 功能
+description: 了解 Apache TinkerPop 的 Gremlin 语言。 了解 Azure Cosmos DB 中可用的功能和步骤，以及 TinkerPop Graph 引擎兼容性差异。
+author: SnehaGunda
 ms.service: cosmos-db
 ms.subservice: cosmosdb-graph
 ms.topic: overview
-ms.date: 04/23/2020
-ms.author: lbosq
-ms.openlocfilehash: ba3b20f263f37d85389bb11c0674584408a0c223
-ms.sourcegitcommit: 58faa9fcbd62f3ac37ff0a65ab9357a01051a64f
+ms.date: 11/11/2020
+ms.author: sngun
+ms.openlocfilehash: 036338e90a3e7b466924d419400c0dcc692dec5f
+ms.sourcegitcommit: 8c3a656f82aa6f9c2792a27b02bbaa634786f42d
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/29/2020
-ms.locfileid: "82161633"
+ms.lasthandoff: 12/17/2020
+ms.locfileid: "97630745"
 ---
-# <a name="azure-cosmos-db-gremlin-graph-support"></a>Azure Cosmos DB Gremlin 图形支持
-Azure Cosmos DB 支持 [Apache Tinkerpop](https://tinkerpop.apache.org) 的图形遍历语言（称为 [Gremlin](https://tinkerpop.apache.org/docs/3.3.2/reference/#graph-traversal-steps)）。 可以使用 Gremlin 语言创建图形实体（顶点和边缘）、修改这些实体内部的属性、执行查询和遍历，以及删除实体。 
+# <a name="azure-cosmos-db-gremlin-graph-support-and-compatibility-with-tinkerpop-features"></a>Azure Cosmos DB Gremlin 图形支持并兼容 TinkerPop 功能
+[!INCLUDE[appliesto-gremlin-api](includes/appliesto-gremlin-api.md)]
 
-本文提供 Gremlin 的快速演练，并列举 Gremlin API 支持的 Gremlin 功能。
+Azure Cosmos DB 支持 [Apache Tinkerpop](https://tinkerpop.apache.org) 的图形遍历语言（称为 [Gremlin](https://tinkerpop.apache.org/docs/3.3.2/reference/#graph-traversal-steps)）。 可以使用 Gremlin 语言创建图形实体（顶点和边缘）、修改这些实体内部的属性、执行查询和遍历，以及删除实体。
+
+Azure Cosmos DB Graph 引擎严格遵循 [Apache TinkerPop](https://tinkerpop.apache.org/docs/current/reference/#graph-traversal-steps) 遍历步骤规范，但在实现中存在特定于 Azure Cosmos DB 的差异。 本文提供 Gremlin 的快速演练，并列举 Gremlin API 支持的 Gremlin 功能。
 
 ## <a name="compatible-client-libraries"></a>兼容的客户端库
 
@@ -25,14 +27,16 @@ Azure Cosmos DB 支持 [Apache Tinkerpop](https://tinkerpop.apache.org) 的图�
 
 | 下载 | 源 | 入门 | 支持的连接器版本 |
 | --- | --- | --- | --- |
-| [.NET](https://tinkerpop.apache.org/docs/3.3.1/reference/#gremlin-DotNet) | [GitHub 上的 Gremlin.NET](https://github.com/apache/tinkerpop/tree/master/gremlin-dotnet) | [使用 .NET 创建图形](create-graph-dotnet.md) | 3.4.0-RC2 |
+| [.NET](https://tinkerpop.apache.org/docs/3.4.6/reference/#gremlin-DotNet) | [GitHub 上的 Gremlin.NET](https://github.com/apache/tinkerpop/tree/master/gremlin-dotnet) | [使用 .NET 创建图形](create-graph-dotnet.md) | 3.4.6 |
 | [Java](https://mvnrepository.com/artifact/com.tinkerpop.gremlin/gremlin-java) | [Gremlin JavaDoc](https://tinkerpop.apache.org/javadocs/current/full/) | [使用 Java 创建图形](create-graph-java.md) | 3.2.0+ |
 | [Node.js](https://www.npmjs.com/package/gremlin) | [GitHub 上的 Gremlin-JavaScript](https://github.com/apache/tinkerpop/tree/master/gremlin-javascript) | [使用 Node.js 创建图形](create-graph-nodejs.md) | 3.3.4+ |
 | [Python](https://tinkerpop.apache.org/docs/3.3.1/reference/#gremlin-python) | [GitHub 上的 Gremlin-Python](https://github.com/apache/tinkerpop/tree/master/gremlin-python) | [使用 Python 创建图形](create-graph-python.md) | 3.2.7 |
 | [PHP](https://packagist.org/packages/brightzone/gremlin-php) | [GitHub 上的 Gremlin-PHP](https://github.com/PommeVerte/gremlin-php) | [使用 PHP 创建图形](create-graph-php.md) | 3.1.0 |
+| [Go Lang](https://github.com/supplyon/gremcos/) | [Go Lang](https://github.com/supplyon/gremcos/) | | 此库由外部参与者生成。 Azure Cosmos DB 团队不对该库提供任何支持或维护。 |
 | [Gremlin 控制台](https://tinkerpop.apache.org/downloads.html) | [TinkerPop 文档](https://tinkerpop.apache.org/docs/current/reference/#gremlin-console) |  [使用 Gremlin 控制台创建图形](create-graph-gremlin-console.md) | 3.2.0 + |
 
 ## <a name="supported-graph-objects"></a>支持的图对象
+
 TinkerPop 是涵盖多种图形技术的标准。 因此，它使用标准的术语来描述图形提供程序提供的功能。 Azure Cosmos DB 提供一个可跨多个服务器或群集分区的持久性、高并发性、可写的图形数据库。 
 
 下表列出了 Azure Cosmos DB 实现的 TinkerPop 功能： 
@@ -114,6 +118,7 @@ TinkerPop 是涵盖多种图形技术的标准。 因此，它使用标准的术
 | `value` | 属性的值
 
 ## <a name="gremlin-steps"></a>Gremlin 的步骤
+
 现在，让我们了解 Azure Cosmos DB 支持的 Gremlin 步骤。 有关 Gremlin 的完整参考信息，请参阅 [TinkerPop 参考](https://tinkerpop.apache.org/docs/3.3.2/reference)。
 
 | 步骤 | 说明 | TinkerPop 3.2 文档 |
@@ -162,6 +167,61 @@ TinkerPop 是涵盖多种图形技术的标准。 因此，它使用标准的术
 
 Azure Cosmos DB 提供的写入优化引擎默认支持自动对顶点和边缘中的所有属性编制索引。 因此，使用筛选器、范围查询、排序或聚合对任何属性执行的查询将从索引处理，并可有效完成。 有关 Azure Cosmos DB 中索引编制的工作原理的详细信息，请参阅有关[架构不可知的索引编制](https://www.vldb.org/pvldb/vol8/p1668-shukla.pdf)的文章。
 
+## <a name="behavior-differences"></a>行为差异
+
+* Azure Cosmos DB Graph 引擎运行“广度优先”遍历，而 TinkerPop Gremlin 则是深度优先。 这种行为在像 Cosmos DB 这样的水平可缩放系统中可实现更好的性能。
+
+## <a name="unsupported-features"></a>不支持的功能
+
+[Gremlin 字节码](https://tinkerpop.apache.org/docs/current/tutorials/gremlin-language-variants/)是与编程语言无关的图遍历规范。 Cosmos DB Graph 尚不支持它。 请使用 `GremlinClient.SubmitAsync()` 并以文本字符串的形式传递遍历。
+
+目前不支持 `property(set, 'xyz', 1)` 集基数。 请改用 `property(list, 'xyz', 1)`。 若要了解详细信息，请参阅 [TinkerPop 的顶点属性](http://tinkerpop.apache.org/docs/current/reference/#vertex-properties)。
+
+`match()` 步骤当前不可用。 此步骤提供声明性查询功能。
+
+在顶点或边缘，不支持对象作为属性。 属性只能是基元类型或数组。
+
+不支持按数组属性排序 `order().by(<array property>)`。 只支持按基元类型排序。
+
+不支持非基元 JSON 类型。 使用 `string`、`number` 或 `true`/`false` 类型。 不支持 `null` 值。 
+
+当前不支持 GraphSONv3 序列化程序。 在连接配置中使用 `GraphSONv2` Serializer、Reader 和 Writer 类。 Azure Cosmos DB Gremlin API 返回的结果的格式与 GraphSON 格式不同。 
+
+当前不支持 Lambda 表达式和函数。 这包括 `.map{<expression>}`、`.by{<expression>}` 和 `.filter{<expression>}` 函数。 若要了解详细信息，并了解如何使用 Gremlin 步骤重写这些函数，请参阅[关于 Lambda 的说明](http://tinkerpop.apache.org/docs/current/reference/#a-note-on-lambdas)。
+
+* 由于系统的分布式特性，因此事务不受支持*。  在 Gremlin 帐户上配置适当的一致性模型以“读取自己的写入”，并使用乐观并发解决冲突的写入。
+
+## <a name="known-limitations"></a>已知的限制
+
+具有中间遍历 `.V()` 步骤的 Gremlin 查询的索引利用率：目前，只有遍历的第一次 `.V()` 调用将使用索引来解析附加到它的任何筛选器或谓词。 后续调用将不会访问索引，因为这可能会增加查询的延迟和成本。
+    
+假设使用默认索引，以 `.V()` 步骤开始的典型读取 Gremlin 查询将在其附加的筛选步骤中使用参数，例如 `.has()` 或 `.where()`，以优化查询的成本和性能。 例如：
+
+```java
+g.V().has('category', 'A')
+```
+
+但是，当 Gremlin 查询中包含多个 `.V()` 步骤时，查询的数据解析可能达不到最优效果。 以下列查询为例：
+
+```java
+g.V().has('category', 'A').as('a').V().has('category', 'B').as('b').select('a', 'b')
+```
+
+此查询将根据名为 `category` 的属性返回两组顶点。 在这种情况下，只有第一次调用 `g.V().has('category', 'A')` 将使用索引根据其属性值解析顶点。
+
+对于此查询，一个解决方法是使用 `.map()` 和 `union()` 等子遍历步骤。 下面来举例说明：
+
+```java
+// Query workaround using .map()
+g.V().has('category', 'A').as('a').map(__.V().has('category', 'B')).as('b').select('a','b')
+
+// Query workaround using .union()
+g.V().has('category', 'A').fold().union(unfold(), __.V().has('category', 'B'))
+```
+
+可以使用 [Gremlin `executionProfile()` 步骤](graph-execution-profile.md)查看查询的性能。
+
 ## <a name="next-steps"></a>后续步骤
+
 * 开始[使用我们的 SDK](create-graph-dotnet.md) 构建图形应用程序 
 * 详细了解 Azure Cosmos DB 中的[图形支持](graph-introduction.md)

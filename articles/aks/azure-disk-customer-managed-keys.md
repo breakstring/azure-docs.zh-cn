@@ -3,45 +3,31 @@ title: 使用客户管理的密钥加密 Azure Kubernetes Service (AKS) 中的 A
 description: 自带密钥 (BYOK) 来加密 AKS OS 和数据磁盘。
 services: container-service
 ms.topic: article
-ms.date: 07/17/2020
-ms.openlocfilehash: 5725bc9a4d16b93ba36ac800d25e3c30f090c2df
-ms.sourcegitcommit: c5021f2095e25750eb34fd0b866adf5d81d56c3a
+ms.date: 09/01/2020
+ms.openlocfilehash: 60a7e36039500ccb8a46fd1f5998c23c37174689
+ms.sourcegitcommit: 78ecfbc831405e8d0f932c9aafcdf59589f81978
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/25/2020
-ms.locfileid: "88796878"
+ms.lasthandoff: 01/23/2021
+ms.locfileid: "98728129"
 ---
 # <a name="bring-your-own-keys-byok-with-azure-disks-in-azure-kubernetes-service-aks"></a>对 Azure Kubernetes Service (AKS) 中的 Azure 磁盘使用自带密钥 (BYOK)
 
-Azure 存储对静态存储帐户中的所有数据进行加密。 默认情况下，数据使用 Microsoft 管理的密钥进行加密。 为了更进一步控制加密密钥，可以提供[客户托管密钥][customer-managed-keys]，将其用于对 AKS 群集的 OS 和数据磁盘进行静态加密。
+Azure 存储对静态存储帐户中的所有数据进行加密。 默认情况下，数据使用 Microsoft 管理的密钥进行加密。 为了更进一步控制加密密钥，可以提供客户托管密钥，将其用于对 AKS 群集的 OS 和数据磁盘进行静态加密。 详细了解 [Linux][customer-managed-keys-linux] 和 [Windows][customer-managed-keys-windows] 上的客户管理密钥。
 
-## <a name="before-you-begin"></a>准备阶段
+## <a name="limitations"></a>限制
+* 数据磁盘加密支持仅限于运行 Kubernetes 1.17 及更高版本的 AKS 群集。
+* 只有在创建 AKS 群集时才能启用使用客户管理的密钥对 OS 和数据磁盘进行加密。
 
-* 本文假定你要创建*新的 AKS 群集*。
-
-* 使用密钥保管库加密托管磁盘时，必须为 *Azure 密钥保管库*启用软删除和清除保护。
-
-* 需要 Azure CLI 2.0.79 或更高版本，以及 aks-preview 0.4.26 扩展
-
-[!INCLUDE [preview features callout](./includes/preview/preview-callout.md)]
-
-## <a name="install-latest-aks-cli-preview-extension"></a>安装最新的 AKS CLI 预览版扩展
-
-若要使用客户管理的密钥，需要具有 *aks-preview* CLI 扩展版本 0.4.26 或更高版本。 使用 [az extension add][az-extension-add] 命令安装 *aks-preview* Azure CLI 扩展，然后使用 [az extension update][az-extension-update] 命令检查是否有任何可用的更新：
-
-```azurecli-interactive
-# Install the aks-preview extension
-az extension add --name aks-preview
-
-# Update the extension to make sure you have the latest version installed
-az extension update --name aks-preview
-```
+## <a name="prerequisites"></a>先决条件
+* 使用密钥保管库加密托管磁盘时，必须为 *Azure 密钥保管库* 启用软删除和清除保护。
+* 需要 Azure CLI 版本 2.11.1 或更高版本。
 
 ## <a name="create-an-azure-key-vault-instance"></a>创建 Azure Key Vault 实例
 
 使用 Azure Key Vault 实例来存储密钥。  可以通过 Azure 门户[使用 Azure Key Vault 配置客户管理的密钥][byok-azure-portal]
 
-创建一个新的*资源组*，然后创建一个新的*密钥保管库*实例，并启用软删除和清除保护。  确保对每个命令使用同一区域和资源组名称。
+创建一个新的 *资源组*，然后创建一个新的 *密钥保管库* 实例，并启用软删除和清除保护。  确保对每个命令使用同一区域和资源组名称。
 
 ```azurecli-interactive
 # Optionally retrieve Azure region short names for use on upcoming commands
@@ -58,14 +44,14 @@ az keyvault create -n myKeyVaultName -g myResourceGroup -l myAzureRegionName  --
 
 ## <a name="create-an-instance-of-a-diskencryptionset"></a>创建 DiskEncryptionSet 的实例
 
-将 *myKeyVaultName* 替换为你的密钥保管库的名称。  若要完成以下步骤，还需一个存储在 Azure Key Vault 中的“密钥”。  可以将现有密钥存储在通过前面的步骤创建的 Key Vault 中，也可以[生成新密钥][key-vault-generate]并将下面的 *myKeyName* 替换为你的密钥的名称。
+将 *myKeyVaultName* 替换为你的密钥保管库的名称。  若要完成以下步骤，还需一个存储在 Azure Key Vault 中的“密钥”。  可以将现有密钥存储在通过前面的步骤创建的 Key Vault 中，也可以 [生成新密钥][key-vault-generate]并将下面的 *myKeyName* 替换为你的密钥的名称。
     
 ```azurecli-interactive
 # Retrieve the Key Vault Id and store it in a variable
-keyVaultId=$(az keyvault show --name myKeyVaultName --query [id] -o tsv)
+keyVaultId=$(az keyvault show --name myKeyVaultName --query "[id]" -o tsv)
 
 # Retrieve the Key Vault key URL and store it in a variable
-keyVaultKeyUrl=$(az keyvault key show --vault-name myKeyVaultName  --name myKeyName  --query [key.kid] -o tsv)
+keyVaultKeyUrl=$(az keyvault key show --vault-name myKeyVaultName  --name myKeyName  --query "[key.kid]" -o tsv)
 
 # Create a DiskEncryptionSet
 az disk-encryption-set create -n myDiskEncryptionSetName  -l myAzureRegionName  -g myResourceGroup --source-vault $keyVaultId --key-url $keyVaultKeyUrl 
@@ -77,7 +63,7 @@ az disk-encryption-set create -n myDiskEncryptionSetName  -l myAzureRegionName  
 
 ```azurecli-interactive
 # Retrieve the DiskEncryptionSet value and set a variable
-desIdentity=$(az disk-encryption-set show -n myDiskEncryptionSetName  -g myResourceGroup --query [identity.principalId] -o tsv)
+desIdentity=$(az disk-encryption-set show -n myDiskEncryptionSetName  -g myResourceGroup --query "[identity.principalId]" -o tsv)
 
 # Update security policy settings
 az keyvault set-policy -n myKeyVaultName -g myResourceGroup --object-id $desIdentity --key-permissions wrapkey unwrapkey get
@@ -85,14 +71,14 @@ az keyvault set-policy -n myKeyVaultName -g myResourceGroup --object-id $desIden
 
 ## <a name="create-a-new-aks-cluster-and-encrypt-the-os-disk"></a>创建一个新的 AKS 群集，并对 OS 磁盘加密
 
-创建一个**新的资源组**和 AKS 群集，然后使用密钥对 OS 磁盘进行加密。 只有高于 1.17 的 Kubernetes 版本才支持客户托管密钥。 
+创建一个 **新的资源组** 和 AKS 群集，然后使用密钥对 OS 磁盘进行加密。 只有高于 1.17 的 Kubernetes 版本才支持客户托管密钥。 
 
 > [!IMPORTANT]
 > 确保为 AKS 群集创建新的资源组
 
 ```azurecli-interactive
 # Retrieve the DiskEncryptionSet value and set a variable
-diskEncryptionSetId=$(az disk-encryption-set show -n mydiskEncryptionSetName -g myResourceGroup --query [id] -o tsv)
+diskEncryptionSetId=$(az disk-encryption-set show -n mydiskEncryptionSetName -g myResourceGroup --query "[id]" -o tsv)
 
 # Create a resource group for the AKS cluster
 az group create -n myResourceGroup -l myAzureRegionName
@@ -155,11 +141,6 @@ az aks get-credentials --name myAksCluster --resource-group myResourceGroup --ou
 kubectl apply -f byok-azure-disk.yaml
 ```
 
-## <a name="limitations"></a>限制
-
-* Kubernetes 版本 1.17 及更高版本支持数据磁盘加密
-* 使用客户托管密钥进行加密的功能当前仅适用于新的 AKS 群集，无法升级现有群集
-
 ## <a name="next-steps"></a>后续步骤
 
 查看 [AKS 群集安全性最佳做法][best-practices-security]
@@ -170,7 +151,8 @@ kubectl apply -f byok-azure-disk.yaml
 [az-extension-add]: /cli/azure/extension#az-extension-add
 [az-extension-update]: /cli/azure/extension#az-extension-update
 [best-practices-security]: ./operator-best-practices-cluster-security.md
-[byok-azure-portal]: ../storage/common/storage-encryption-keys-portal.md
-[customer-managed-keys]: ../virtual-machines/windows/disk-encryption.md#customer-managed-keys
+[byok-azure-portal]: ../storage/common/customer-managed-keys-configure-key-vault.md
+[customer-managed-keys-windows]: ../virtual-machines/disk-encryption.md#customer-managed-keys
+[customer-managed-keys-linux]: ../virtual-machines/disk-encryption.md#customer-managed-keys
 [key-vault-generate]: ../key-vault/general/manage-with-cli2.md
-[supported-regions]: ../virtual-machines/windows/disk-encryption.md#supported-regions
+[supported-regions]: ../virtual-machines/disk-encryption.md#supported-regions

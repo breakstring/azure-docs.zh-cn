@@ -2,17 +2,17 @@
 title: 关于 Azure ExpressRoute 直通
 description: 了解 Azure ExpressRoute 直通的主要功能，以及与 ExpressRoute 直接集成所需的信息，如可用的 Sku 和技术要求。
 services: expressroute
-author: jaredr80
+author: duongau
 ms.service: expressroute
 ms.topic: conceptual
 ms.date: 08/12/2019
-ms.author: jaredro
-ms.openlocfilehash: f0faa4992b025783e4e5448dcf04fcfa958ba5ed
-ms.sourcegitcommit: 9ce0350a74a3d32f4a9459b414616ca1401b415a
+ms.author: duau
+ms.openlocfilehash: 0365fd8d0d04b7d144ca6826d3d5eff976558eb3
+ms.sourcegitcommit: 957c916118f87ea3d67a60e1d72a30f48bad0db6
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/13/2020
-ms.locfileid: "88192357"
+ms.lasthandoff: 10/19/2020
+ms.locfileid: "92202137"
 ---
 # <a name="about-expressroute-direct"></a>关于 ExpressRoute Direct
 
@@ -35,7 +35,7 @@ ExpressRoute Direct 提供的主要功能包括但不限于：
 
 ## <a name="expressroute-using-a-service-provider-and-expressroute-direct"></a>使用服务提供程序的 ExpressRoute，以及 ExpressRoute Direct
 
-| **使用服务提供程序的 ExpressRoute** | **ExpressRoute 直接** | 
+| **使用服务提供程序的 ExpressRoute** | **ExpressRoute Direct** | 
 | --- | --- |
 | 使用服务提供程序可以快速载入并连接到现有的基础结构 | 需要 100 Gbps/10 Gbps 基础结构和所有层的完全管理
 | 集成数百个提供程序，包括以太网和 MPLS | 直接/专用容量，适用于受管制行业和大规模数据引入 |
@@ -44,7 +44,7 @@ ExpressRoute Direct 提供的主要功能包括但不限于：
 
 ## <a name="expressroute-direct-circuits"></a>ExpressRoute Direct 线路
 
-使用 Microsoft Azure ExpressRoute 可通过连接服务提供商所提供的专用连接，将本地网络扩展到 Microsoft 云。 通过 ExpressRoute，你可以与 Microsoft 云服务（如 Microsoft Azure 和 Office 365）建立连接。
+使用 Microsoft Azure ExpressRoute 可通过连接服务提供商所提供的专用连接，将本地网络扩展到 Microsoft 云。 通过 ExpressRoute，你可以与 Microsoft 云服务建立连接，例如 Microsoft Azure 和 Microsoft 365。
 
 每个对等互连位置都可以访问 Microsoft 的全球网络，可以默认访问地缘政治区域中的任何区域，还可以访问使用高级线路的所有全球区域。  
 
@@ -73,7 +73,7 @@ ExpressRoute Direct 支持将数据大规模引入到 Azure 存储和其他大�
     * 必须基于 Microsoft 指定的 VLAN ID (STAG) 添加外部 VLAN 标记（ *仅适用于 QinQ）*
     * 必须支持多个 BGP 会话 (Vlan) 每个端口和设备
     * IPv4 和 IPv6 连接。 *对于 IPv6，将不会创建其他子接口。IPv6 地址将添加到现有子接口*。 
-    * 可选： [双向转发检测 (BFD) ](https://docs.microsoft.com/azure/expressroute/expressroute-bfd) 支持，默认情况下，它在 ExpressRoute 线路上的所有专用对等互连上配置
+    * 可选： [双向转发检测 (BFD) ](./expressroute-bfd.md) 支持，默认情况下，它在 ExpressRoute 线路上的所有专用对等互连上配置
 
 ## <a name="vlan-tagging"></a>VLAN 标记
 

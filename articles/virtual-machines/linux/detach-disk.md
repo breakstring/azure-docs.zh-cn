@@ -8,12 +8,12 @@ ms.date: 07/18/2018
 ms.author: rogarana
 ms.subservice: disks
 ms.custom: devx-track-azurecli
-ms.openlocfilehash: 41f70a476e5cc562207614c4e04658d5f0fc6d09
-ms.sourcegitcommit: 11e2521679415f05d3d2c4c49858940677c57900
+ms.openlocfilehash: 7e618475d7d0160bce5aee39c267bb191a3a9f0a
+ms.sourcegitcommit: 100390fefd8f1c48173c51b71650c8ca1b26f711
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/31/2020
-ms.locfileid: "87499511"
+ms.lasthandoff: 01/27/2021
+ms.locfileid: "98897133"
 ---
 # <a name="how-to-detach-a-data-disk-from-a-linux-virtual-machine"></a>如何从 Linux 虚拟机中分离数据磁盘
 
@@ -117,5 +117,6 @@ az vm disk detach \
 
 
 ## <a name="next-steps"></a>后续步骤
-要重新使用数据磁盘，只需[将其附加到其他 VM](add-disk.md?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json) 即可。
+要重新使用数据磁盘，只需[将其附加到其他 VM](add-disk.md) 即可。
 
+如果要删除磁盘，以便不再产生存储费用，请参阅 [查找并删除未连接的 Azure 托管和非托管磁盘-Azure 门户](../disks-find-unattached-portal.md)。

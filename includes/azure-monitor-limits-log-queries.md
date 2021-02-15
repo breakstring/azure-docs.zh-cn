@@ -8,32 +8,32 @@ ms.topic: include
 ms.date: 07/22/2019
 ms.author: bwren
 ms.custom: include file
-ms.openlocfilehash: 627b020ce618a2a1f2646a95e143947876bd6a15
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
-ms.translationtype: MT
+ms.openlocfilehash: ff5d04a2923f16c763e1529ecb365f60d6275ca2
+ms.sourcegitcommit: a43a59e44c14d349d597c3d2fd2bc779989c71d7
+ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "82072631"
+ms.lasthandoff: 11/25/2020
+ms.locfileid: "96028074"
 ---
 ### <a name="general-query-limits"></a>一般查询限制
 
 | 限制 | 说明 |
 |:---|:---|
-| 查询语言 | Azure Monitor 使用与 Azure 数据资源管理器相同的 [Kusto 查询语言](/azure/kusto/query/)。 有关 Azure Monitor 中不支持的 KQL 语言元素，请参阅 [Azure Monitor 日志查询语言差异](../articles/azure-monitor/log-query/data-explorer-difference.md)。 |
-| Azure 区域 | 当数据跨多个 Azure 区域中的 Log Analytics 工作区时，日志查询可能会遇到过多的开销。 有关详细信息，请参阅[查询限制](../articles/azure-monitor/log-query/scope.md#query-limits)。 |
+| 查询语言 | Azure Monitor 使用与 Azure 数据资源管理器相同的 [Kusto 查询语言](/azure/kusto/query/)。 有关 Azure Monitor 中不支持的 KQL 语言元素，请参阅 [Azure Monitor 日志查询语言差异](/azure/data-explorer/kusto/query/)。 |
+| Azure 区域 | 当数据跨多个 Azure 区域中的 Log Analytics 工作区时，日志查询可能会遇到过多的开销。 有关详细信息，请参阅[查询限制](../articles/azure-monitor/log-query/scope.md#query-scope-limits)。 |
 | 跨资源查询 | 单个查询中的 Application Insights 资源和 Log Analytics 工作区的最大数量限制为 100。<br>视图设计器不支持跨资源查询。<br>新的 scheduledQueryRules API 支持日志警报中的跨资源查询。<br>有关详细信息，请参阅[跨资源查询限制](../articles/azure-monitor/log-query/cross-workspace-query.md#cross-resource-query-limits)。 |
 
 ### <a name="user-query-throttling"></a>用户查询限制
-Azure Monitor 具有多个限制，可防止用户发送过多的查询。 此类行为可能会重载系统后端资源，并危害服务的响应能力。 以下限制旨在防止客户中断，并确保服务级别一致。 用户限制和限制旨在仅影响极端使用方案，不应与典型用法相关。
+Azure Monitor 具有多个限制，可防止用户发送过多的查询。 这种行为可能会重载系统后端资源，并危害服务响应能力。 以下限制旨在防止客户中断，并确保服务级别一致。 用户限制的设计决定其仅影响极端使用方案，不应与典型使用情况相关。
 
 
 | 度量 | 每用户限制 | 说明 |
 |:---|:---|:---|
-| 并发查询 | 5 | 如果已经为用户运行了5个查询，则会在每个用户的并发队列中放置任何新的查询。 当其中一个正在运行的查询结束时，将从队列中提取下一个查询并开始。 这不包括来自警报规则的查询。
-| 并发队列中的时间 | 2.5 分钟 | 如果查询在队列中的等待时间超过2.5 分钟，则它将通过代码429的 HTTP 错误响应终止。 |
-| 并发队列中的查询总数 | 40 | 队列中的查询数达到40后，任何其他查询将被拒绝，并出现 HTTP 错误代码429。 此数字是对可同时运行的5个查询的补充。 |
-| 查询速率 | 每30秒200个查询 | 这是单个用户可以向所有工作区提交查询的总速率。  此限制适用于可视化部件（如 Azure 仪表板和 Log Analytics 工作区摘要页）启动的编程查询或查询。 |
+| 并发查询 | 5 | 如果已经为用户运行了 5 个查询，则任何新查询都将被放入按用户的并发队列。 当其中一个正在运行的查询结束时，从队列中拉取下一个查询并启动它。 这不包括来自警报规则的查询。
+| 并发队列中的时间 | 3 分钟 | 如果查询在队列中等待超过 3 分钟而未启动，将终止该查询并发出包含代码 429 的 HTTP 错误响应。 |
+| 并发队列中的查询总数 | 200 | 队列中的查询数达到 200 后，将拒绝其他任何查询，并发出 HTTP 错误代码 429。 这一数字不包含可同时运行的 5 个查询。 |
+| 查询速率 | 每 30 秒 200 个查询 | 这是单个用户可以向所有工作区提交查询的整体速率。  此限制适用于编程查询或由可视化部件（如 Azure 仪表板和 Log Analytics 工作区摘要页）启动的查询。 |
 
 - 优化查询，如[在 Azure Monitor 中优化日志查询](../articles/azure-monitor/log-query/query-optimization.md)中所述。
-- 仪表板和工作簿可以在单个视图中包含多个查询，每次加载或刷新查询时都会产生大量的查询。 考虑将它们拆分为按需加载的多个视图。 
-- 在 Power BI 中，请考虑仅提取聚合结果而不是原始日志。
+- 仪表板和工作簿可以在单个视图中包含多个查询，每次加载或刷新视图时都会产生大量的查询。 请考虑将它们拆分为按需加载的多个视图。 
+- 在 Power BI 中，考虑仅提取聚合结果而不提取原始日志。

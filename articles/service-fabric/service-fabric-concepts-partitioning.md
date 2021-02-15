@@ -1,17 +1,21 @@
 ---
 title: Service Fabric 服务分区
-description: 介绍如何对 Service Fabric 有状态服务进行分区。 使用分区可以将数据存储在本地计算机上，以便数据和计算可以一起扩展。
+description: 了解如何在无状态和有状态服务 Service Fabric 分区
 ms.topic: conceptual
 ms.date: 06/30/2017
-ms.openlocfilehash: e395fc31550dfdbedf963db0d648191453d016b2
-ms.sourcegitcommit: e132633b9c3a53b3ead101ea2711570e60d67b83
+ms.custom: devx-track-csharp
+ms.openlocfilehash: 199ae9d9844149c1931da638633110f717fe0517
+ms.sourcegitcommit: 67b44a02af0c8d615b35ec5e57a29d21419d7668
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/07/2020
-ms.locfileid: "86045410"
+ms.lasthandoff: 01/06/2021
+ms.locfileid: "97915889"
 ---
 # <a name="partition-service-fabric-reliable-services"></a>Service Fabric Reliable Services 分区
-本文介绍 Azure Service Fabric Reliable Services 分区的基本概念。 本文中使用的源代码也可以在 [GitHub](https://github.com/Azure-Samples/service-fabric-dotnet-getting-started/tree/classic/Services/AlphabetPartitions)上获取。
+本文介绍 Azure Service Fabric Reliable Services 分区的基本概念。 分区可实现本地计算机上的数据存储，因此可以将数据和计算一起扩展。
+
+> [!TIP]
+> GitHub 上提供了本文中代码的 [完整示例](https://github.com/Azure-Samples/service-fabric-dotnet-getting-started/tree/classic/Services/AlphabetPartitions) 。
 
 ## <a name="partitioning"></a>分区
 分区并不是 Service Fabric 所独有的。 事实上，它是生成可缩放服务的核心模式。 从更广泛的意义来说，可将分区视为将状态（数据）和计算划分为更小的可访问单元，以提高可伸缩性和性能的一种概念。 [数据分区][wikipartition]是一种众所周知的分区形式，也称为分片。
@@ -21,11 +25,11 @@ ms.locfileid: "86045410"
 
 ![无状态服务](./media/service-fabric-concepts-partitioning/statelessinstances.png)
 
-实际上有两种类型的无状态服务解决方案。 第一个服务是在外部保持其状态的服务，例如，在 Azure SQL 数据库中的数据库中（如存储会话信息和数据的网站）。 第二种是不管理任何持久状态的仅计算服务（如计算器或图像缩略）。
+实际上有两种类型的无状态服务解决方案。 第一种是在外部（例如在 Azure SQL 数据库中的数据库中）保持其状态的服务（如存储会话信息和数据的网站）。 第二种是不管理任何持久状态的仅计算服务（如计算器或图像缩略）。
 
 在任一情况下，对无状态服务进行分区都是非常少见的方案 — 通常通过添加更多实例实现可伸缩性和可用性。 对于无状态服务实例要考虑多个分区的唯一情况是在需要满足特殊路由请求时。
 
-例如，考虑以下这种情况：ID 处于特定范围内的用户只应该由特定服务实例提供服务。 如果你可以对无状态服务进行分区，另一个示例是当你具有真正分区的后端（例如，SQL 数据库中的分片数据库），并且你想要控制哪个服务实例应写入数据库分片，或在无状态服务中执行其他需要与后端中使用的分区信息相同的准备工作。 这些类型的情况也可以通过其他方式进行解决，并不一定需要服务分区。
+例如，考虑以下这种情况：ID 处于特定范围内的用户只应该由特定服务实例提供服务。 可对无状态服务进行分区的情况的另一个示例是在用户具有真正分区的后端（例如 SQL 数据库中的分片数据库）并且要控制哪个服务实例应写入数据库分片（或是在无状态服务中执行的其他准备工作需要的分区信息与后端中使用的信息相同）时。 这些类型的情况也可以通过其他方式进行解决，并不一定需要服务分区。
 
 本演练的其余部分侧重于有状态服务。
 
@@ -230,7 +234,7 @@ Service Fabric 提供了三个分区方案可供选择：
     此服务可用作简单 Web 界面，它接受姓氏作为查询字符串参数，确定分区键，并将它发送到 Alphabet.Processing 服务进行处理。
 11. 在“创建服务”对话框中，选择“无状态”服务并将它称为“Alphabet.Web”，如下所示 。
     
-    ![无状态服务屏幕截图](./media/service-fabric-concepts-partitioning/createnewstateless.png)上获取。
+    ![无状态服务屏幕截图](./media/service-fabric-concepts-partitioning/createnewstateless.png).
 12. 在 Alphabet.WebApi 服务的 ServiceManifest.xml 中更新终结点信息，以打开端口，如下所示。
     
     ```xml
@@ -347,14 +351,14 @@ Service Fabric 提供了三个分区方案可供选择：
     
     ![浏览器屏幕截图](./media/service-fabric-concepts-partitioning/samplerunning.png)
 
-该示例的完整源代码位于 [GitHub](https://github.com/Azure-Samples/service-fabric-dotnet-getting-started/tree/classic/Services/AlphabetPartitions)。
+本文中使用的代码的完整解决方案如下所示： https://github.com/Azure-Samples/service-fabric-dotnet-getting-started/tree/classic/Services/AlphabetPartitions 。
 
 ## <a name="next-steps"></a>后续步骤
-有关 Service Fabric 概念的信息，请参阅以下内容：
+了解有关 Service Fabric 服务的详细信息：
 
+* [在 Service Fabric 中与服务建立连接和通信](service-fabric-connect-and-communicate-with-services.md)
 * [Service Fabric 服务的可用性](service-fabric-availability-services.md)
 * [Service Fabric 服务的可伸缩性](service-fabric-concepts-scalability.md)
-* [Service Fabric 应用程序的容量规划](service-fabric-capacity-planning.md)
 
 [wikipartition]: https://en.wikipedia.org/wiki/Partition_(database)
 

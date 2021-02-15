@@ -3,29 +3,29 @@ title: 适用于 Linux 的 Azure DSC 扩展
 description: 安装 OMI 和 DSC 包，以便能够使用 Desired State Configuration 来配置 Azure Linux VM。
 services: virtual-machines-linux
 documentationcenter: ''
-author: bobbytreed
-manager: carmonm
+author: mgoedtel
 editor: ''
 ms.assetid: ''
 ms.service: virtual-machines-linux
+ms.subservice: extensions
 ms.topic: article
 ms.tgt_pltfrm: vm-linux
 ms.workload: infrastructure-services
 ms.date: 06/12/2018
-ms.author: robreed
-ms.openlocfilehash: 59b05fcd7fbaf9b0fd9b4083c884edadb4bfef4e
-ms.sourcegitcommit: 54d8052c09e847a6565ec978f352769e8955aead
+ms.author: magoedte
+ms.openlocfilehash: bfd5da519116eff66aede607f4cab7c207b30ee6
+ms.sourcegitcommit: 24f30b1e8bb797e1609b1c8300871d2391a59ac2
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/18/2020
-ms.locfileid: "88505574"
+ms.lasthandoff: 02/10/2021
+ms.locfileid: "100093703"
 ---
 # <a name="dsc-extension-for-linux-microsoftostcextensionsdscforlinux"></a>适用于 Linux 的 DSC 扩展 (Microsoft.OSTCExtensions.DSCForLinux)
 
 Desired State Configuration (DSC) 是一个管理平台，可让你使用“配置即代码”来管理 IT 和开发基础结构。
 
 > [!NOTE]
-> 适用于 Linux 的 DSC 扩展和[适用于 Linux 的 Azure Monitor 虚拟机扩展](./oms-linux.md)当前存在冲突，并在并列配置中不受支持。 不要在同一 VM 上同时使用这两个解决方案。
+> 适用于 linux 的 DSC 扩展和适用于 [linux 的 Log Analytics 虚拟机扩展](./oms-linux.md) 当前存在冲突，并行配置中不支持。 不要在同一 VM 上同时使用这两个解决方案。
 
 DSCForLinux 扩展已发布并受 Microsoft 支持。 该扩展在 Azure 虚拟机上安装 OMI 和 DSC 代理。 DSC 扩展还能执行以下操作：
 
@@ -74,10 +74,10 @@ DSCForLinux 扩展要求目标虚拟机已连接到 Internet。 例如，Registe
 * `RegistrationUrl`：（可选，字符串）Azure 自动化帐户的 URL
 * `RegistrationKey`：（可选，字符串）Azure 自动化帐户的访问密钥
 
-
 ## <a name="scenarios"></a>方案
 
 ### <a name="register-an-azure-automation-account"></a>注册 Azure 自动化帐户
+
 protected.json
 ```json
 {
@@ -143,7 +143,6 @@ $publicConfig = '{
 }'
 ```
 
-
 ### <a name="apply-an-mof-configuration-file-in-public-storage-to-the-vm"></a>将 MOF 配置文件（在公共存储中）应用到 VM
 
 public.json
@@ -192,14 +191,18 @@ $publicConfig = '{
 ```
 
 ### <a name="apply-a-meta-mof-configuration-file-in-public-storage-to-the-vm"></a>将元 MOF 配置文件（在公共存储中）应用到 VM
+
 public.json
+
 ```json
 {
   "FileUri": "<meta-mof-file-uri>",
   "ExtensionAction": "Pull"
 }
 ```
+
 PowerShell 格式
+
 ```powershell
 $publicConfig = '{
   "FileUri": "<meta-mof-file-uri>",
@@ -208,14 +211,18 @@ $publicConfig = '{
 ```
 
 ### <a name="install-a-custom-resource-module-a-zip-file-in-an-azure-storage-account-to-the-vm"></a>将自定义资源模块（Azure 存储帐户中的 zip 文件）安装到 VM
+
 protected.json
+
 ```json
 {
   "StorageAccountName": "<storage-account-name>",
   "StorageAccountKey": "<storage-account-key>"
 }
 ```
+
 public.json
+
 ```json
 {
   "ExtensionAction": "Install",
@@ -237,14 +244,19 @@ $publicConfig = '{
 ```
 
 ### <a name="install-a-custom-resource-module-a-zip-file-in-public-storage-to-the-vm"></a>将自定义资源模块（公共存储中的 zip 文件）安装到 VM
+
 public.json
+
 ```json
 {
   "ExtensionAction": "Install",
   "FileUri": "<resource-zip-file-uri>"
 }
+
 ```
+
 PowerShell 格式
+
 ```powershell
 $publicConfig = '{
   "ExtensionAction": "Install",
@@ -253,14 +265,18 @@ $publicConfig = '{
 ```
 
 ### <a name="remove-a-custom-resource-module-from-the-vm"></a>从 VM 中删除自定义资源模块
+
 public.json
+
 ```json
 {
   "ResourceName": "<resource-name>",
   "ExtensionAction": "Remove"
 }
 ```
+
 PowerShell 格式
+
 ```powershell
 $publicConfig = '{
   "ResourceName": "<resource-name>",
@@ -276,10 +292,10 @@ $publicConfig = '{
 
 有关 Azure 资源管理器模板的详细信息，请参阅[创作 Azure 资源管理器模板](../../azure-resource-manager/templates/template-syntax.md)。
 
-
 ## <a name="azure-cli-deployment"></a>Azure CLI 部署
 
 ### <a name="use-azure-cliazure-cli"></a>使用 [Azure CLI][azure-cli]
+
 在部署 DSCForLinux 扩展之前，请根据第 3 部分中所述的不同方案配置 `public.json` 和 `protected.json`。
 
 #### <a name="classic"></a>经典
@@ -287,33 +303,40 @@ $publicConfig = '{
 [!INCLUDE [classic-vm-deprecation](../../../includes/classic-vm-deprecation.md)]
 
 经典部署模式也称为 Azure 服务管理模式。 可运行以下命令切换到该模式：
+
 ```
 $ azure config mode asm
 ```
 
 可运行以下命令部署 DSCForLinux 扩展：
+
 ```
 $ azure vm extension set <vm-name> DSCForLinux Microsoft.OSTCExtensions <version> \
 --private-config-path protected.json --public-config-path public.json
 ```
 
 若要了解最新可用的扩展版本，请运行：
+
 ```
 $ azure vm extension list
 ```
 
 #### <a name="resource-manager"></a>Resource Manager
+
 可运行以下命令切换到 Azure 资源管理器模式：
+
 ```
 $ azure config mode arm
 ```
 
 可运行以下命令部署 DSCForLinux 扩展：
+
 ```
 $ azure vm extension set <resource-group> <vm-name> \
 DSCForLinux Microsoft.OSTCExtensions <version> \
 --private-config-path protected.json --public-config-path public.json
 ```
+
 > [!NOTE]
 > 在 Azure 资源管理器模式下，`azure vm extension list` 目前不可用。
 >
@@ -339,6 +362,7 @@ $version = '< version>'
 ```
 
 根据上面部分所述的不同方案更改 $privateConfig 和 $publicConfig 的内容。
+
 ```
 $privateConfig = '{
   "StorageAccountName": "<storage-account-name>",
@@ -353,7 +377,7 @@ $publicConfig = '{
 }'
 ```
 
-```
+```powershell
 Set-AzureVMExtension -ExtensionName $extensionName -VM $vm -Publisher $publisher `
   -Version $version -PrivateConfiguration $privateConfig `
   -PublicConfiguration $publicConfig | Update-AzureVM
@@ -381,6 +405,7 @@ $version = '< version>'
 ```
 
 根据上面部分所述的不同方案更改 $privateConfig 和 $publicConfig 的内容。
+
 ```
 $privateConfig = '{
   "StorageAccountName": "<storage-account-name>",
@@ -395,7 +420,7 @@ $publicConfig = '{
 }'
 ```
 
-```
+```powershell
 Set-AzVMExtension -ResourceGroupName $rgName -VMName $vmName -Location $location `
   -Name $extensionName -Publisher $publisher -ExtensionType $extensionName `
   -TypeHandlerVersion $version -SettingString $publicConfig -ProtectedSettingString $privateConfig
@@ -420,11 +445,10 @@ az vm extension list --resource-group myResourceGroup --vm-name myVM -o table
 错误代码：51 表示分发或扩展操作不受支持。
 在某些情况下，如果计算机中存在较高版本的 OMI，则 DSC Linux 扩展无法安装 OMI。 [错误响应: (000003)不允许降级]
 
-
-
 ### <a name="support"></a>支持
 
 如果对本文中的任何内容需要更多帮助，可以联系 [MSDN Azure 和 Stack Overflow 论坛](https://azure.microsoft.com/support/community/)上的 Azure 专家。 或者，你可以提供 Azure 支持事件。 转到 [Azure 支持站点](https://azure.microsoft.com/support/options/)并选择 " **获取支持**"。 有关使用 Azure 支持的信息，请阅读 [Microsoft Azure 支持常见问题](https://azure.microsoft.com/support/faq/)。
 
 ## <a name="next-steps"></a>后续步骤
+
 有关扩展的详细信息，请参阅[适用于 Linux 的虚拟机扩展和功能](features-linux.md)。

@@ -5,16 +5,17 @@ author: SnehaGunda
 services: cosmos-db
 ms.service: cosmos-db
 ms.topic: how-to
-ms.date: 05/05/2020
+ms.date: 01/06/2021
 ms.author: sngun
-ms.openlocfilehash: 881ddfec587df61201f2c251fd0dd0a8164496c3
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: d78ddf983f1c8f2bfeaf733c273afc1cc98b1185
+ms.sourcegitcommit: b39cf769ce8e2eb7ea74cfdac6759a17a048b331
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "85549974"
+ms.lasthandoff: 01/22/2021
+ms.locfileid: "98684852"
 ---
 # <a name="monitor-azure-cosmos-db-data-by-using-diagnostic-settings-in-azure"></a>使用 Azure 中的诊断设置监视 Azure Cosmos DB 数据
+[!INCLUDE[appliesto-all-apis](includes/appliesto-all-apis.md)]
 
 Azure 中的诊断设置用于收集资源日志。 Azure 资源日志由资源发出，提供与该资源的操作相关的各种频繁生成的数据。 这些日志是按请求捕获的，也称为“数据平面日志”。 部分数据平面操作的示例包括 delete、insert 和 readFeed。 这些日志的内容因资源类型而异。
 
@@ -22,33 +23,67 @@ Azure 中的诊断设置用于收集资源日志。 Azure 资源日志由资源�
 
 1. 登录到 [Azure 门户](https://portal.azure.com)。
 
-1. 导航到 Azure Cosmos 帐户。 打开“诊断设置”窗格，然后选择“添加诊断设置”选项。**** ****
+1. 导航到 Azure Cosmos 帐户。 打开“诊断设置”窗格，然后选择“添加诊断设置”选项。 
 
-1. 在“诊断设置”窗格的表单中填充以下详细信息：**** 
+1. 在“诊断设置”窗格的表单中填充以下详细信息： 
 
     * **名称**：为要创建的日志输入名称。
 
-    * 可以存储日志以执行“存档到存储帐户”、“流式传输到事件中心”或“发送到 Log Analytics”的操作**** **** ****
+    * 可以存储日志以执行“存档到存储帐户”、“流式传输到事件中心”或“发送到 Log Analytics”的操作  
 
 1. 创建诊断设置时，请指定要收集的日志类别。 下面列出了 Azure Cosmos DB 支持的日志类别，以及收集的示例日志：
 
- * **DataPlaneRequests**：选择此选项可在 Azure Cosmos DB 中将后端请求记录到所有 API，其中包括 SQL、图形、MongoDB、Cassandra 和表 API 帐户。 要记录的关键属性：`Requestcharge`、`statusCode`、`clientIPaddress` 和 `partitionID`。
+ * **DataPlaneRequests**：选择此选项可将后端请求记录到 Azure Cosmos DB 中的 SQL API 帐户。 要记录的关键属性：`Requestcharge`、`statusCode`、`clientIPaddress`、`partitionID`、`resourceTokenPermissionId` 和 `resourceTokenPermissionMode`。
 
-    ```json
-    { "time": "2019-04-23T23:12:52.3814846Z", "resourceId": "/SUBSCRIPTIONS/<your_subscription_ID>/RESOURCEGROUPS/<your_resource_group>/PROVIDERS/MICROSOFT.DOCUMENTDB/DATABASEACCOUNTS/<your_database_account>", "category": "DataPlaneRequests", "operationName": "ReadFeed", "properties": {"activityId": "66a0c647-af38-4b8d-a92a-c48a805d6460","requestResourceType": "Database","requestResourceId": "","collectionRid": "","statusCode": "200","duration": "0","userAgent": "Microsoft.Azure.Documents.Common/2.2.0.0","clientIpAddress": "10.0.0.24","requestCharge": "1.000000","requestLength": "0","responseLength": "372","resourceTokenUserRid": "","region": "East US","partitionId": "062abe3e-de63-4aa5-b9de-4a77119c59f8","keyType": "PrimaryReadOnlyMasterKey","databaseName": "","collectionName": ""}}
-    ```
+   ```json
+    { "time": "2019-04-23T23:12:52.3814846Z", "resourceId": "/SUBSCRIPTIONS/<your_subscription_ID>/RESOURCEGROUPS/<your_resource_group>/PROVIDERS/MICROSOFT.DOCUMENTDB/DATABASEACCOUNTS/<your_database_account>", "category": "DataPlaneRequests", "operationName": "ReadFeed", "properties": {"activityId": "66a0c647-af38-4b8d-a92a-c48a805d6460","requestResourceType": "Database","requestResourceId": "","collectionRid": "","statusCode": "200","duration": "0","userAgent": "Microsoft.Azure.Documents.Common/2.2.0.0","clientIpAddress": "10.0.0.24","requestCharge": "1.000000","requestLength": "0","responseLength": "372", "resourceTokenPermissionId": "perm-prescriber-app","resourceTokenPermissionMode": "all", "resourceTokenUserRid": "","region": "East US","partitionId": "062abe3e-de63-4aa5-b9de-4a77119c59f8","keyType": "PrimaryReadOnlyMasterKey","databaseName": "","collectionName": ""}}
+   ```
+   
+   使用以下查询获取与数据平面请求对应的日志：
+  
+   ```kusto
+   AzureDiagnostics 
+   | where ResourceProvider=="MICROSOFT.DOCUMENTDB" and Category=="DataPlaneRequests"
+   ```
 
 * **MongoRequests**：选择此选项可记录用户从前端发起的请求，这些请求的内容是要求处理发送给 Azure Cosmos DB 的 MongoDB API 的请求。 此日志类型不适用于其他 API 帐户。 要记录的关键属性：`Requestcharge`、`opCode`。 在诊断日志中启用 MongoRequests 时，请务必禁用 DataPlaneRequests。 对于在 API 上发出的每个请求，都会看到一个日志。
 
     ```json
     { "time": "2019-04-10T15:10:46.7820998Z", "resourceId": "/SUBSCRIPTIONS/<your_subscription_ID>/RESOURCEGROUPS/<your_resource_group>/PROVIDERS/MICROSOFT.DOCUMENTDB/DATABASEACCOUNTS/<your_database_account>", "category": "MongoRequests", "operationName": "ping", "properties": {"activityId": "823cae64-0000-0000-0000-000000000000","opCode": "MongoOpCode_OP_QUERY","errorCode": "0","duration": "0","requestCharge": "0.000000","databaseName": "admin","collectionName": "$cmd","retryCount": "0"}}
     ```
+  
+  使用以下查询获取与 MongoDB 请求对应的日志：
+  
+  ```kusto
+   AzureDiagnostics 
+   | where ResourceProvider=="MICROSOFT.DOCUMENTDB" and Category=="MongoRequests"
+  ```
 
-* CassandraRequests****：选择此选项可记录用户从前端发起的请求，这些请求的内容是要求处理发送给 Azure Cosmos DB API for Cassandra 的请求。 此日志类型不适用于其他 API 帐户。 要记录的关键属性为 `operationName`、`requestCharge`、`piiCommandText`。 在诊断日志中启用 CassandraRequests 时，请务必禁用 DataPlaneRequests。 对于在 API 上发出的每个请求，都会看到一个日志。
+* CassandraRequests：选择此选项可记录用户从前端发起的请求，这些请求的内容是要求处理发送给 Azure Cosmos DB API for Cassandra 的请求。 此日志类型不适用于其他 API 帐户。 要记录的关键属性为 `operationName`、`requestCharge`、`piiCommandText`。 在诊断日志中启用 CassandraRequests 时，请务必禁用 DataPlaneRequests。 对于在 API 上发出的每个请求，都会看到一个日志。
 
    ```json
    { "time": "2020-03-30T23:55:10.9579593Z", "resourceId": "/SUBSCRIPTIONS/<your_subscription_ID>/RESOURCEGROUPS/<your_resource_group>/PROVIDERS/MICROSOFT.DOCUMENTDB/DATABASEACCOUNTS/<your_database_account>", "category": "CassandraRequests", "operationName": "QuerySelect", "properties": {"activityId": "6b33771c-baec-408a-b305-3127c17465b6","opCode": "<empty>","errorCode": "-1","duration": "0.311900","requestCharge": "1.589237","databaseName": "system","collectionName": "local","retryCount": "<empty>","authorizationTokenType": "PrimaryMasterKey","address": "104.42.195.92","piiCommandText": "{"request":"SELECT key from system.local"}","userAgent": """"}}
    ```
+   
+  使用以下查询获取对应于 Cassandra 请求的日志：
+  
+  ```kusto
+   AzureDiagnostics 
+   | where ResourceProvider=="MICROSOFT.DOCUMENTDB" and Category=="CassandraRequests"
+  ```
+
+* **GremlinRequests**：选择此选项可记录前端用户启动的请求，以便为 Gremlin AZURE COSMOS DB 的 API 提供请求。 此日志类型不适用于其他 API 帐户。 要注意的关键属性为 `operationName` 和 `requestCharge` 。 在诊断日志中启用 GremlinRequests 时，请务必关闭 DataPlaneRequests。 对于在 API 上发出的每个请求，都会看到一个日志。
+
+  ```json
+  { "time": "2021-01-06T19:36:58.2554534Z", "resourceId": "/SUBSCRIPTIONS/<your_subscription_ID>/RESOURCEGROUPS/<your_resource_group>/PROVIDERS/MICROSOFT.DOCUMENTDB/DATABASEACCOUNTS/<your_database_account>", "category": "GremlinRequests", "operationName": "eval", "properties": {"activityId": "b16bd876-0e5c-4448-90d1-7f3134c6b5ff", "errorCode": "200", "duration": "9.6036", "requestCharge": "9.059999999999999", "databaseName": "GraphDemoDatabase", "collectionName": "GraphDemoContainer", "authorizationTokenType": "PrimaryMasterKey", "address": "98.225.2.189", "estimatedDelayFromRateLimitingInMilliseconds": "0", "retriedDueToRateLimiting": "False", "region": "Australia East", "requestLength": "266", "responseLength": "364", "userAgent": "<empty>"}}
+  ```
+  
+  使用以下查询获取对应于 Gremlin 请求的日志：
+  
+  ```kusto
+   AzureDiagnostics 
+   | where ResourceProvider=="MICROSOFT.DOCUMENTDB" and Category=="GremlinRequests"
+  ```
 
 * **QueryRuntimeStatistics**：选择此选项以记录已执行的查询文本。 此日志类型仅适用于 SQL API 帐户。
 
@@ -71,7 +106,7 @@ Azure 中的诊断设置用于收集资源日志。 Azure 资源日志由资源�
 有关如何使用 Azure 门户、CLI 或 PowerShell 创建诊断设置的详细信息，请参阅[创建诊断设置以在 Azure 中收集平台日志和指标](../azure-monitor/platform/diagnostic-settings.md)一文。
 
 
-## <a name="troubleshoot-issues-with-diagnostics-queries"></a><a id="diagnostic-queries"></a>诊断查询问题疑难解答
+## <a name="troubleshoot-issues-with-diagnostics-queries"></a><a id="diagnostic-queries"></a> 诊断查询问题疑难解答
 
 1. 如何查询运行时间超过 3 毫秒的操作：
 
@@ -104,7 +139,7 @@ Azure 中的诊断设置用于收集资源日志。 Azure 资源日志由资源�
    ```Kusto
    AzureDiagnostics 
    | where ResourceProvider=="MICROSOFT.DOCUMENTDB" and Category=="PartitionKeyStatistics" 
-   | project SubscriptionId, regionName_s, databaseName_s, collectionname_s, partitionkey_s, sizeKb_s, ResourceId 
+   | project SubscriptionId, regionName_s, databaseName_s, collectionName_s, partitionKey_s, sizeKb_d, ResourceId 
    ```
 
 1. 如何获取高开销查询的请求开销？
@@ -131,7 +166,7 @@ Azure 中的诊断设置用于收集资源日志。 Azure 资源日志由资源�
    | summarize max(responseLength_s), max(requestLength_s), max(requestCharge_s), count = count() by OperationName, requestResourceType_s, userAgent_s, collectionRid_s, bin(TimeGenerated, 1h)
    ```
 
-1. 如何获取与 DataPlaneRequests 和 QueryRunTimeStatistics 中的数据联接时消耗超过 100 RU/s 的所有查询**** ****。
+1. 如何获取与 DataPlaneRequests 和 QueryRunTimeStatistics 中的数据联接时消耗超过 100 RU/s 的所有查询 。
 
    ```Kusto
    AzureDiagnostics
@@ -214,14 +249,6 @@ Azure 中的诊断设置用于收集资源日志。 Azure 资源日志由资源�
    | where todouble(sizeKb_d) > 800000
    ```
 
-1. 如何获取分区键统计信息，以评估数据库帐户的最大三个分区之间的偏差？
-
-   ```Kusto
-   AzureDiagnostics 
-   | where ResourceProvider=="MICROSOFT.DOCUMENTDB" and Category=="PartitionKeyStatistics" 
-   | project SubscriptionId, regionName_s, databaseName_s, collectionName_s, partitionKey_s, sizeKb_d, ResourceId
-   ```
-
 1. 如何获取操作的 P99 或 P50 复制延迟、请求费用或响应时间？
 
    ```Kusto
@@ -236,16 +263,15 @@ Azure 中的诊断设置用于收集资源日志。 Azure 资源日志由资源�
    by OperationName, requestResourceType_s, userAgent_s, collectionRid_s, bin(TimeGenerated, 1h)
    ```
  
-1. 如何获取 Controlplane 日志？
+1. 如何获取 ControlPlane 日志？
  
-   切记按照[禁用基于键的元数据写访问权限](audit-control-plane-logs.md#disable-key-based-metadata-write-access)一文中所述打开标志，并通过 Azure PowerShell、CLI 或 ARM 执行操作。
+   切记按照[禁用基于键的元数据写访问权限](audit-control-plane-logs.md#disable-key-based-metadata-write-access)一文中所述打开标志，并通过使用 Azure PowerShell、Azure CLI 或 Azure 资源管理器执行操作。
  
    ```Kusto  
    AzureDiagnostics 
    | where Category =="ControlPlaneRequests"
    | summarize by OperationName 
    ```
-
 
 ## <a name="next-steps"></a>后续步骤
 

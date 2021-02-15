@@ -6,17 +6,17 @@ ms.service: sql-database
 ms.subservice: performance
 ms.custom: sqldbrb=1
 ms.devlang: ''
-ms.topic: conceptual
+ms.topic: how-to
 author: danimir
 ms.author: danil
-ms.reviewer: jrasnik, carlrab
+ms.reviewer: wiassaf, sstein
 ms.date: 12/19/2018
-ms.openlocfilehash: 72f0d361f69232894df3a9131d173411614a2055
-ms.sourcegitcommit: 4f1c7df04a03856a756856a75e033d90757bb635
+ms.openlocfilehash: 748ac448ad8bf5c06e5be8b7a4a8b00a9b7af84b
+ms.sourcegitcommit: d60976768dec91724d94430fb6fc9498fdc1db37
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/07/2020
-ms.locfileid: "87921208"
+ms.lasthandoff: 12/02/2020
+ms.locfileid: "96500880"
 ---
 # <a name="find-and-apply-performance-recommendations"></a>查找并应用性能建议
 [!INCLUDE[appliesto-sqldb](../includes/appliesto-sqldb.md)]
@@ -25,7 +25,7 @@ ms.locfileid: "87921208"
 
 ## <a name="viewing-recommendations"></a>查看建议
 
-若要查看和应用性能建议，需要 azure 中的[AZURE RBAC) 权限的正确 azure 基于角色的访问控制 (](../../role-based-access-control/overview.md) 。 查看建议需要“读取者”、“SQL DB 参与者”权限，执行任何操作（如创建或删除索引、取消创建索引）需要“所有者”、“SQL DB 参与者”权限。   
+若要查看和应用性能建议，需要 Azure 中相应的 [Azure 基于角色的访问控制 (Azure RBAC)](../../role-based-access-control/overview.md) 权限。 查看建议需要“读取者”、“SQL DB 参与者”权限，执行任何操作（如创建或删除索引、取消创建索引）需要“所有者”、“SQL DB 参与者”权限。   
 
 在 Azure 门户中使用以下步骤查找性能建议：
 
@@ -35,7 +35,7 @@ ms.locfileid: "87921208"
 
 性能建议会显示在类似于下图所示的表中：
 
-![建议](./media/database-advisor-find-recommendations-portal/recommendations.png)
+![屏幕截图显示了包含操作和建议说明的表中的性能建议。](./media/database-advisor-find-recommendations-portal/recommendations.png)
 
 按其对性能的潜在影响将建议分为以下类别：
 
@@ -103,7 +103,7 @@ Azure SQL 数据库允许通过以下三个选项之一完全控制建议的启�
    ![索引顾问设置](./media/database-advisor-find-recommendations-portal/settings.png)
 2. 选择要自动执行的操作：
 
-   ![建议的索引](./media/database-advisor-find-recommendations-portal/server.png)
+   ![屏幕截图显示了在何处选择要自动执行的操作。](./media/database-advisor-find-recommendations-portal/server.png)
 
 > [!NOTE]
 > 请注意，**DROP_INDEX** 选项当前与使用分区切换和索引提示的应用程序不兼容。
@@ -114,7 +114,7 @@ Azure SQL 数据库允许通过以下三个选项之一完全控制建议的启�
 
 选择任意建议，然后单击“查看脚本”。 针对数据库运行此脚本以手动应用建议。
 
-不通过该服务监视和验证手动执行的索引的性能影响，因此建议在创建后监视这些索引以验证它们是否提供性能提升，并在必要时调整或删除它们。 有关创建索引的详细信息，请参阅 [CREATE INDEX (Transact-SQL)](https://docs.microsoft.com/sql/t-sql/statements/create-index-transact-sql)。 此外，手动应用的建议在系统自动撤消它们之前， 将在 24-48 小时内保持活动状态并显示在建议列表中。 如果你想要更快地删除建议，可以手动放弃它。
+不通过该服务监视和验证手动执行的索引的性能影响，因此建议在创建后监视这些索引以验证它们是否提供性能提升，并在必要时调整或删除它们。 有关创建索引的详细信息，请参阅 [CREATE INDEX (Transact-SQL)](/sql/t-sql/statements/create-index-transact-sql)。 此外，手动应用的建议在系统自动撤消它们之前， 将在 24-48 小时内保持活动状态并显示在建议列表中。 如果你想要更快地删除建议，可以手动放弃它。
 
 ### <a name="canceling-recommendations"></a>取消建议
 
@@ -139,7 +139,7 @@ Azure SQL 数据库允许通过以下三个选项之一完全控制建议的启�
 
 单击列表中的进程内建议即可查看详细信息：
 
-![建议的索引](./media/database-advisor-find-recommendations-portal/operations.png)
+![屏幕截图显示了进程内建议的列表。](./media/database-advisor-find-recommendations-portal/operations.png)
 
 ### <a name="reverting-a-recommendation"></a>正在还原建议
 
@@ -170,6 +170,6 @@ Azure SQL 数据库提供可提高数据库性能的建议。 通过提供 T-SQL
 
 ## <a name="additional-resources"></a>其他资源
 
-* [查询存储](https://msdn.microsoft.com/library/dn817826.aspx)
-* [CREATE INDEX](https://msdn.microsoft.com/library/ms188783.aspx)
-* [Azure RBAC) 的 azure 基于角色的访问控制 (](../../role-based-access-control/overview.md)
+* [查询存储](/sql/relational-databases/performance/monitoring-performance-by-using-the-query-store)
+* [CREATE INDEX](/sql/t-sql/statements/create-index-transact-sql)
+* [Azure 基于角色的访问控制 (Azure RBAC)](../../role-based-access-control/overview.md)

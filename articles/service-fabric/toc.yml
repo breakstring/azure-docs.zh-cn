@@ -4,12 +4,16 @@
   items:
     - name: 什么是 Service Fabric？
       href: service-fabric-overview.md
+    - name: Service Fabric 托管群集
+      href: overview-managed-cluster.md
 - name: 快速入门
   expanded: true
   items:
     - name: ARM 模板
       displayName: Resource Manager
       href: quickstart-cluster-template.md
+    - name: 托管群集
+      href: quickstart-managed-cluster-template.md
     - name: 创建 .NET 应用程序
       href: service-fabric-quickstart-dotnet.md
     - name: 部署 Linux 容器应用程序
@@ -64,6 +68,16 @@
           href: service-fabric-tutorial-package-containers.md
         - name: 3 - 故障转移和缩放
           href: service-fabric-tutorial-containers-failover.md
+    - name: 创建 Service Fabric 托管群集
+      items:
+        - name: 1- 部署 Service Fabric 托管群集
+          href: tutorial-managed-cluster-deploy.md
+        - name: 2- 横向扩展托管群集节点类型
+          href: tutorial-managed-cluster-scale.md
+        - name: 3- 添加和删除托管群集节点类型
+          href: tutorial-managed-cluster-add-remove-node-type.md
+        - name: 4- 连接到托管群集并部署应用程序
+          href: tutorial-managed-cluster-deploy-app.md
     - name: 创建和管理群集
       items:
         - name: 1- 在 Azure 上创建群集
@@ -116,9 +130,6 @@
       href: service-fabric-powershell-samples.md
     - name: Service Fabric CLI
       href: samples-cli.md
-    - name: Azure Policy 内置策略定义
-      displayName: 'samples, policies, definitions'
-      href: ./policy-samples.md
 - name: 概念
   items:
     - name: 了解微服务
@@ -137,8 +148,6 @@
           href: service-fabric-application-and-service-security.md
         - name: Service Fabric 群集安全性
           href: service-fabric-cluster-security.md
-        - name: 内置安全控件
-          href: service-fabric-security-controls.md
         - name: Service Fabric 中基于证书的身份验证
           href: cluster-security-certificates.md
         - name: Service Fabric 中的证书管理
@@ -158,7 +167,7 @@
           items:
             - name: 容器概述
               href: service-fabric-containers-overview.md
-            - name: Docker Compose（预览）
+            - name: Docker Compose
               href: service-fabric-docker-compose.md
             - name: 探测
               href: probes-codepackage.md
@@ -433,7 +442,7 @@
               href: service-fabric-deploy-existing-app.md
         - name: 生成容器服务
           items:
-            - name: Docker Compose（预览）
+            - name: Docker Compose
               href: service-fabric-docker-compose.md
             - name: 卷和日志记录驱动程序
               href: service-fabric-containers-volume-logging-drivers.md
@@ -512,7 +521,7 @@
                   href: service-fabric-application-secret-management-windows.md
                 - name: 在 Linux 上设置加密证书并加密机密
                   href: service-fabric-application-secret-management-linux.md
-                - name: 通过 KeyVaultReference 安全地存储机密（预览版）
+                - name: 通过 KeyVaultReference 安全地存储机密
                   href: service-fabric-keyvault-references.md
             - name: 配置反向代理以进行安全通信
               href: service-fabric-reverseproxy-configure-secure-communication.md
@@ -654,6 +663,8 @@
                   href: service-fabric-cluster-creation-via-portal.md
                 - name: 跨可用性区域部署 Azure Service Fabric 群集
                   href: service-fabric-cross-availability-zones.md
+                - name: 通过无状态节点类型部署 Azure Service Fabric 群集
+                  href: service-fabric-stateless-node-types.md
                 - name: 设置 Azure Active Directory 身份验证
                   href: service-fabric-cluster-creation-setup-aad.md
                 - name: 创建自定义群集模板
@@ -678,6 +689,8 @@
                   href: service-fabric-how-to-remove-node-type.md
             - name: 升级
               items:
+                - name: 将虚拟机规模集扩展添加到托管群集节点类型
+                  href: how-to-managed-cluster-vmss-extension.md
                 - name: 升级 Service Fabric 版本
                   href: service-fabric-cluster-upgrade-version-azure.md
                 - name: 升级群集配置
@@ -700,8 +713,6 @@
                   href: service-fabric-cluster-security-update-certs-azure.md
                 - name: 远程连接到群集节点 VM
                   href: service-fabric-cluster-remote-connect-to-azure-cluster-node.md
-                - name: 将群集节点升级为使用托管磁盘
-                  href: upgrade-managed-disks.md
         - name: 独立群集
           items:
             - name: 创建
@@ -786,6 +797,8 @@
               href: configure-existing-cluster-enable-managed-identity-token-service.md
             - name: 将新 Azure Service Fabric 群集配置为启用托管标识
               href: configure-new-azure-service-fabric-enable-managed-identity.md
+            - name: 将 Service Fabric 托管群集配置为启用托管标识
+              href: how-to-managed-identity-managed-cluster-virtual-machine-scale-sets.md
         - name: 应用程序设置
           items:
             - name: 如何部署具有托管标识的应用程序
@@ -803,7 +816,7 @@
     - name: Azure PowerShell
       href: /powershell/module/az.servicefabric/
     - name: PowerShell
-      href: /powershell/module/servicefabric/?view=azureservicefabricps
+      href: /powershell/module/ServiceFabric/New-ServiceFabricService?view=azureservicefabricps
     - name: Azure CLI (az sf)
       href: /cli/azure/sf
     - name: Service Fabric CLI (sfctl)
@@ -895,12 +908,17 @@
           href: service-fabric-service-model-schema-element-groups.md
     - name: 环境变量
       href: service-fabric-environment-variables-reference.md
+    - name: Azure Policy 内置策略定义
+      displayName: 'samples, policies, definitions'
+      href: ./policy-reference.md
 - name: 资源
   items:
     - name: Azure 路线图
       href: 'https://azure.microsoft.com/roadmap/'
     - name: 常见问题
       href: service-fabric-common-questions.md
+    - name: Service Fabric 托管群集常见问题
+      href: faq-managed-cluster.md
     - name: Microsoft Q&A 问题页面
       href: /answers/topics/azure-service-fabric.html
     - name: Azure 资源管理器部署准则
@@ -912,7 +930,7 @@
     - name: 发行说明
       href: release-notes.md
     - name: 示例代码
-      href: 'https://aka.ms/servicefabricsamples'
+      href: /samples/browse/?products=azure
     - name: 支持选项
       href: service-fabric-support.md
     - name: Service Fabric 版本

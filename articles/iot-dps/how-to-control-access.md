@@ -8,13 +8,13 @@ services: iot-dps
 ms.topic: conceptual
 ms.date: 04/09/2019
 ms.author: wesmc
-ms.custom: devx-track-javascript
-ms.openlocfilehash: 7ca1620c51640699fe8b31aef3504b8c67185253
-ms.sourcegitcommit: e71da24cc108efc2c194007f976f74dd596ab013
+ms.custom: devx-track-js, devx-track-csharp
+ms.openlocfilehash: 024dbf6518748a4048873de4eb54a53f9d9a6362
+ms.sourcegitcommit: cd9754373576d6767c06baccfd500ae88ea733e4
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/29/2020
-ms.locfileid: "87423484"
+ms.lasthandoff: 11/20/2020
+ms.locfileid: "94954318"
 ---
 # <a name="control-access-to-azure-iot-hub-device-provisioning-service"></a>控制对 Azure IoT 中心设备预配服务的访问
 
@@ -192,4 +192,4 @@ var token = generateSasToken(endpoint, policyKey, policyName, 60);
 [lnk-sdks]: ../iot-hub/iot-hub-devguide-sdks.md
 [lnk-management-portal]: https://portal.azure.com
 [lnk-azure-resource-manager]: ../azure-resource-manager/management/overview.md
-[lnk-resource-provider-apis]: https://docs.microsoft.com/rest/api/iot-dps/
+[lnk-resource-provider-apis]: /rest/api/iot-dps/

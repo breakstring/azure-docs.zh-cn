@@ -4,16 +4,17 @@ description: 可以使用 Azure 成本管理和计费功能执行计费管理任
 keywords: ''
 author: bandersmsft
 ms.author: banders
-ms.date: 07/29/2020
+ms.date: 01/28/2021
 ms.topic: overview
 ms.service: cost-management-billing
-ms.custom: ''
-ms.openlocfilehash: 76121dd8126922de2843e430a4e01cae1c7c0d53
-ms.sourcegitcommit: e71da24cc108efc2c194007f976f74dd596ab013
+ms.subservice: common
+ms.custom: contperf-fy21q2
+ms.openlocfilehash: a070b2329777accab6f62b767f74dbc28e5d2623
+ms.sourcegitcommit: d1e56036f3ecb79bfbdb2d6a84e6932ee6a0830e
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/29/2020
-ms.locfileid: "87412994"
+ms.lasthandoff: 01/29/2021
+ms.locfileid: "99051087"
 ---
 # <a name="what-is-azure-cost-management--billing"></a>什么是 Azure 成本管理和计费？
 
@@ -42,11 +43,11 @@ Azure 计费功能用于查看已开票成本并管理对计费信息的访问�
 
 Azure 门户当前支持以下类型的计费帐户：
 
-- **Microsoft Online Services 计划**：当你通过 Azure 网站注册 Azure 时，将创建 Microsoft Online Services 计划的个人计费帐户。 例如，当你注册 [Azure 免费帐户](https://azure.microsoft.com/offers/ms-azr-0044p/)、[采用即用即付费率的帐户](https://azure.microsoft.com/offers/ms-azr-0003p/)或作为 [Visual Studio 订阅者](https://azure.microsoft.com/pricing/member-offers/credit-for-visual-studio-subscribers/)时。
+- **Microsoft Online Services 计划**：当你通过 Azure 网站注册 Azure 时，将创建 Microsoft Online Services 计划的个人计费帐户。 例如，当你注册 [Azure 免费帐户](./manage/create-free-services.md)、采用即用即付费率的帐户，或者以 Visual Studio 订阅者的身份进行注册时。
 
-- **企业协议**：当组织签署使用 Azure 的[企业协议 (EA)](https://azure.microsoft.com/pricing/enterprise-agreement/) 时，将为企业协议创建一个计费帐户。
+- **企业协议**：当组织签署使用 Azure 的企业协议 (EA) 时，将为企业协议创建一个计费帐户。
 
-- **Microsoft 客户协议**：当组织与 Microsoft 代表一起签署 Microsoft 客户协议时，将会为 Microsoft 客户协议创建一个计费帐户。 特定区域的某些客户通过 Azure 网站注册[采用即用即付费率的帐户](https://azure.microsoft.com/offers/ms-azr-0003p/)或者升级其 [Azure 免费帐户](https://azure.microsoft.com/offers/ms-azr-0044p/)，这些客户可能也有一个适用于 Microsoft 客户协议的计费帐户。 有关详细信息，请参阅 [Microsoft 客户协议的计费帐户入门](./understand/mca-overview.md)。
+- **Microsoft 客户协议**：当组织与 Microsoft 代表一起签署 Microsoft 客户协议时，将会为 Microsoft 客户协议创建一个计费帐户。 特定区域的某些客户通过 Azure 网站注册采用即用即付费率的帐户或者升级其 [Azure 免费帐户](./manage/create-free-services.md)，这些客户可能也有一个适用于 Microsoft 客户协议的计费帐户。
 
 ### <a name="scopes-for-billing-accounts"></a>计费帐户的范围
 范围是计费帐户中的一个节点，可使用该节点查看和管理计费。 可以在其中管理计费数据、付款、发票，以及执行常规的帐户管理。
@@ -82,7 +83,7 @@ Azure 门户当前支持以下类型的计费帐户：
 
 你可以使用 Azure 门户或各种 API 执行自动导出，从而将成本数据与外部系统和过程进行整合。 另外，还可自动导出计费数据和计划的报表。
 
-观看 [Azure 成本管理概述视频](https://www.youtube.com/watch?v=el4yN5cHsJ0)来快速了解 Azure 成本管理如何帮助你在 Azure 中节省金钱。 若要观看其他视频，请访问[成本管理 YouTube 频道](https://www.youtube.com/c/AzureCostManagement)。
+观看 Azure 成本管理概述视频来快速了解 Azure 成本管理如何帮助你在 Azure 中节省金钱。 若要观看其他视频，请访问[成本管理 YouTube 频道](https://www.youtube.com/c/AzureCostManagement)。
 
 >[!VIDEO https://www.youtube.com/embed/el4yN5cHsJ0]
 
@@ -100,18 +101,14 @@ Azure 门户当前支持以下类型的计费帐户：
 
 ### <a name="cloudyn-deprecation"></a>Cloudyn 弃用
 
-[Cloudyn](./cloudyn/overview.md) 是与成本管理相关的 Azure 服务，将在 2020 年底弃用。 在可能的情况下，我们会将现有的 Cloudyn 功能直接集成到 Azure 门户中。 暂时不会登记任何新客户，但对 Cloudyn 的支持将保持到该产品完全被弃用为止。
+Cloudyn 是与成本管理相关的 Azure 服务，将在 2020 年底弃用。 在可能的情况下，我们会将现有的 Cloudyn 功能直接集成到 Azure 门户中。 暂时不会登记任何新客户，但对 Cloudyn 的支持将保持到该产品完全被弃用为止。
  
-请观看 [Azure 成本管理和 Cloudyn 视频](https://www.youtube.com/watch?v=15DzKPMBRxM)来详细了解是要根据业务需求使用 Azure 成本管理还是 Cloudyn。 若要观看其他视频，请访问[成本管理 YouTube 频道](https://www.youtube.com/c/AzureCostManagement)。
- 
->[!VIDEO https://www.youtube.com/embed/15DzKPMBRxM]
-
 ### <a name="additional-azure-tools"></a>其他 Azure 工具
 
 Azure 还包含其他一些工具，虽然这些工具不属于 Azure 成本管理和计费功能集， 但它们在成本管理过程中都发挥着重要作用。 若要详细了解这些工具，请参阅以下链接。
 
 - [Azure 定价计算器](https://azure.microsoft.com/pricing/calculator/) - 使用此工具可估计前期云成本。
-- [Azure Migrate](../migrate/migrate-overview.md) - 评估当前数据中心的工作负载，获取有关 Azure 替代解决方案所需内容的见解。
+- [Azure Migrate](../migrate/migrate-services-overview.md) - 评估当前数据中心的工作负载，获取有关 Azure 替代解决方案所需内容的见解。
 - [Azure 顾问](../advisor/advisor-overview.md) - 识别未使用的 VM，并获得有关 Azure 预留实例购买的建议。
 - [Azure 混合权益](https://azure.microsoft.com/pricing/hybrid-benefit/) - 使用当前用于 Azure 中 VM 的本地 Windows Server 或 SQL Server 许可证来实现成本节省。
 

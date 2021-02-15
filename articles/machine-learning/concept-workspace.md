@@ -1,28 +1,26 @@
 ---
 title: 什么是工作区
 titleSuffix: Azure Machine Learning
-description: 工作区是 Azure 机器学习的顶级资源。 它保留所有训练运行的历史记录，包括日志、指标、输出和脚本快照。 使用此信息可以确定哪个训练运行产生最佳模型
+description: 工作区是 Azure 机器学习的顶级资源。 它保留所有训练运行的历史记录，包括日志、指标、输出和脚本快照。
 services: machine-learning
 ms.service: machine-learning
 ms.subservice: core
 ms.topic: conceptual
 ms.author: sgilley
 author: sdgilley
-ms.date: 07/08/2020
-ms.openlocfilehash: 53f151c63c85e958aad3bd0eaf16c50294bf250f
-ms.sourcegitcommit: dccb85aed33d9251048024faf7ef23c94d695145
+ms.date: 09/22/2020
+ms.openlocfilehash: 5211555102c0a8d29eb05abd7a680935d828f9dc
+ms.sourcegitcommit: b39cf769ce8e2eb7ea74cfdac6759a17a048b331
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/28/2020
-ms.locfileid: "87287228"
+ms.lasthandoff: 01/22/2021
+ms.locfileid: "98683434"
 ---
 # <a name="what-is-an-azure-machine-learning-workspace"></a>什么是 Azure 机器学习工作区？
 
 工作区是 Azure 机器学习的顶级资源，为使用 Azure 机器学习时创建的所有项目提供了一个集中的处理位置。  工作区保留所有训练运行的历史记录，包括日志、指标、输出和脚本快照。 使用此信息可以确定哪个训练运行产生最佳模型。  
 
 拥有了所需的模型后，可将其注册到工作区。 然后，使用已注册的模型和评分脚本，将其部署到 Azure 容器实例、Azure Kubernetes 服务中或部署到现场可编程门阵列 (FPGA) 作为基于 REST 的 HTTP 终结点。 还可以将模型作为模块部署到 Azure IoT Edge 设备。
-
-定价和可用的功能取决于为工作区选择了[普通版还是企业版](overview-what-is-azure-ml.md#sku)。 在[创建工作区](#create-workspace)时需要选择版本。  也可以从普通版[升级](#upgrade)到企业版。
 
 ## <a name="taxonomy"></a>分类 
 
@@ -34,7 +32,7 @@ ms.locfileid: "87287228"
 
 + 工作区可以包含 [Azure 机器学习计算实例](concept-compute-instance.md)和配置了运行 Azure 机器学习所需的 Python 环境的云资源。
 
-+ [用户角色](how-to-assign-roles.md)使你可以与其他用户、团队或项目共享你的工作区。
++ [用户角色](how-to-assign-roles.md) 使你可以与其他用户、团队或项目共享你的工作区。
 + [计算目标](concept-azure-machine-learning-architecture.md#compute-targets)用于运行试验。
 + 创建工作区的同时还会创建[关联的资源](#resources)。
 + [试验](concept-azure-machine-learning-architecture.md#experiments)是用于构建模型的训练用运行。  
@@ -48,15 +46,15 @@ ms.locfileid: "87287228"
 可以通过以下方式与工作区交互：
 
 > [!IMPORTANT]
-> 以下标记为（预览版）的工具当前公开预览版。
-> 提供的预览版本没有服务级别协议，不建议用于生产工作负荷。 某些功能可能不受支持或者受限。 有关详细信息，请参阅 [Microsoft Azure 预览版补充使用条款](https://azure.microsoft.com/support/legal/preview-supplemental-terms/)。
+> 下面标记了“（预览版）”的工具目前为公共预览版。
+> 该预览版在提供时没有附带服务级别协议，建议不要将其用于生产工作负载。 某些功能可能不受支持或者受限。 有关详细信息，请参阅 [Microsoft Azure 预览版补充使用条款](https://azure.microsoft.com/support/legal/preview-supplemental-terms/)。
 
 + 在 Web 上：
     + [Azure 机器学习工作室](https://ml.azure.com) 
-    + [Azure 机器学习设计器（预览版）](concept-designer.md)- 仅在[企业版](overview-what-is-azure-ml.md#sku)工作区中可用。
-+ 在任何 Python 环境中使用[适用于 Python 的 Azure 机器学习 SDK](https://docs.microsoft.com/python/api/overview/azure/ml/intro?view=azure-ml-py)。
-+ 在带有[用于 R 的 AZURE 机器学习 SDK （预览版）](https://azure.github.io/azureml-sdk-for-r/reference/index.html)的任何 R 环境中。
-+ 在命令行上使用 Azure 机器学习 [CLI 扩展](https://docs.microsoft.com/azure/machine-learning/reference-azure-machine-learning-cli)
+    + [Azure 机器学习设计器](concept-designer.md) 
++ 在任何 Python 环境中使用[适用于 Python 的 Azure 机器学习 SDK](/python/api/overview/azure/ml/intro?preserve-view=true&view=azure-ml-py)。
++ 在任何 R 环境中使用[适用于 R 的 Azure 机器学习 SDK（预览版）](https://azure.github.io/azureml-sdk-for-r/reference/index.html)。
++ 在命令行上使用 Azure 机器学习 [CLI 扩展](./reference-azure-machine-learning-cli.md)
 + [Azure 机器学习 VS Code 扩展](how-to-manage-resources-vscode.md#workspaces)
 
 
@@ -80,7 +78,6 @@ ms.locfileid: "87287228"
 |---------------------------|---------|---------|------------|------------|------------|
 | 创建工作区        | **&check;**     | | **&check;** | **&check;** | **&check;** |
 | 管理工作区访问权限    | **&check;**   || |  **&check;**    ||
-| 升级到企业版    | **&check;** | **&check;**  | |     ||
 | 创建和管理计算资源    | **&check;**   | **&check;** | **&check;** |  **&check;**   ||
 | 创建笔记本 VM |   | **&check;** | |     ||
 
@@ -89,45 +86,53 @@ ms.locfileid: "87287228"
 
 ## <a name="create-a-workspace"></a><a name='create-workspace'></a> 创建工作区
 
-创建工作区时，可以选择使用[基本版或企业版](overview-what-is-azure-ml.md#sku)来创建工作区。 版本确定工作区中可用的功能。 企业版的突出功能包括可以访问 [Azure 机器学习设计器](concept-designer.md)和提供工作室版本的[自动机器学习试验](tutorial-first-experiment-automated-ml.md)构建功能。  有关详细信息和定价信息，请参阅 [Azure 机器学习定价](https://azure.microsoft.com/pricing/details/machine-learning/)。
-
 可通过多种方式创建工作区：  
 
-* 使用 [Azure 门户](how-to-manage-workspace.md)作为点击界面来逐步完成每个步骤。
-* 使用[适用于 Python 的 Azure 机器学习 SDK](https://docs.microsoft.com/python/api/overview/azure/ml/intro?view=azure-ml-py#workspace) 从 Python 脚本或 Jupiter 笔记本动态创建工作区
+* 使用 [Azure 门户](how-to-manage-workspace.md?tabs=azure-portal#create-a-workspace)作为点击界面来逐步完成每个步骤。
+* 使用用于 [python 的 AZURE 机器学习 SDK](how-to-manage-workspace.md?tabs=python#create-a-workspace) 从 Python 脚本或 Jupyter 笔记本动态创建工作区
 * 需要按企业安全标准自动创建或自定义创建时，请使用 [Azure 资源管理器模板](how-to-create-workspace-template.md)或 [Azure 机器学习 CLI](reference-azure-machine-learning-cli.md)。
 * 如果使用 Visual Studio Code，请使用 [VS Code 扩展](how-to-manage-resources-vscode.md#create-a-workspace)。
 
 > [!NOTE]
 > 工作区名称不区分大小写。
 
-## <a name="upgrade-to-enterprise-edition"></a><a name="upgrade"></a> 升级到企业版
-
-可使用 Azure 门户将[工作区从基本版升级到企业版](how-to-manage-workspace.md#upgrade)。 不能将企业版工作区降级为基本版工作区。 
-
 ## <a name="associated-resources"></a><a name="resources"></a> 关联的资源
 
 创建新工作区时，它会自动创建工作区使用的几个 Azure 资源：
 
++ [Azure 存储帐户](https://azure.microsoft.com/services/storage/)，用作工作区的默认数据存储。  与 Azure 机器学习计算实例一起使用的 Jupyter 笔记本也存储在此处。 
+  
+  > [!IMPORTANT]
+  > 默认情况下，存储帐户是常规用途 v1 帐户。 创建工作区后，可以[将其升级到常规用途 v2](../storage/common/storage-account-upgrade.md)。 升级到常规用途 v2 后，请勿在存储帐户上启用分层命名空间。
+
+  若要使用现有 Azure 存储帐户，则该帐户不能是高级帐户（Premium_LRS 和 Premium_GRS）。 它也不能具有分层命名空间（与 Azure Data Lake Storage Gen2 一起使用）。 工作区的默认存储帐户不支持高级存储和分层命名空间。 可以将高级存储或分层命名空间用于非默认存储帐户。
+  
 + [Azure 容器注册表](https://azure.microsoft.com/services/container-registry/)：注册在训练期间和部署模型时使用的 Docker 容器。 要最大程度地降低成本，ACR 在创建部署映像之前会“延迟加载”。
-+ [Azure 存储帐户](https://azure.microsoft.com/services/storage/)，用作工作区的默认数据存储。  与 Azure 机器学习计算实例一起使用的 Jupyter 笔记本也存储在此处。
+
 + [Azure Application Insights](https://azure.microsoft.com/services/application-insights/)：存储有关模型的监视信息。
+
 + [Azure Key Vault](https://azure.microsoft.com/services/key-vault/)：存储计算目标使用的机密和工作区所需的其他敏感信息。
 
 > [!NOTE]
-> 除创建新版本以外，还可以使用现有的 Azure 服务。
+> 使用 [Python SDK](how-to-manage-workspace.md?tabs=python#create-a-workspace)、[R SDK](https://azure.github.io/azureml-sdk-for-r/reference/create_workspace.html) 或 Azure 机器学习 CLI [通过 ARM 模板](how-to-create-workspace-template.md)创建工作区时，可以改用现有的 Azure 资源实例。
 
-> [!IMPORTANT]
-> 如果要使用现有的 Azure 存储帐户，则该帐户不能是高级帐户（Premium_LRS 和 Premium_GRS）。 它也不能具有分层命名空间（与 Azure Data Lake Storage Gen2 一起使用）。 工作区的_默认_存储帐户不支持高级存储或分层命名空间。 可以将高级存储或分层命名空间用于_非默认_存储帐户。
+<a name="wheres-enterprise"></a>
+
+## <a name="what-happened-to-enterprise-edition"></a>企业版发生了什么情况
+
+截至 2020 年 9 月，企业版工作区中提供的所有功能现在都可在基本版工作区中使用。 无法再创建新的企业工作区。  使用 `sku` 参数的所有 SDK、CLI 或 Azure 资源管理器调用将继续运行，但将预配基本工作区。
+
+从 12 月 21 日起，所有企业版工作区都将自动设置为基本版，该版本具有相同的功能。 在此过程中不会发生停机。 2021 年 1 月 1 日，企业版将正式停用。 
+
+在这两个版本中，客户都应支付使用的 Azure 资源的成本，并且无需为 Azure 机器学习支付任何额外费用。 有关更多详细信息，请参阅 [Azure 机器学习定价页](https://azure.microsoft.com/pricing/details/machine-learning/)。
 
 ## <a name="next-steps"></a>后续步骤
 
 若要开始使用 Azure 机器学习，请参阅：
 
 + [Azure 机器学习概述](overview-what-is-azure-ml.md)
-+ [创建工作区](how-to-manage-workspace.md)
-+ [管理工作区](how-to-manage-workspace.md)
-+ [教程：开始使用 Python SDK 创建第一个 ML 试验](tutorial-1st-experiment-sdk-setup.md)
-+ [教程：通过 R SDK 开始使用 Azure 机器学习](tutorial-1st-r-experiment.md)
-+ [教程：使用自动化机器学习创建第一个分类模型](tutorial-first-experiment-automated-ml.md)（仅在[企业版](overview-what-is-azure-ml.md#sku)工作区可用）
-+ [教程：使用设计器预测汽车价格](tutorial-designer-automobile-price-train-score.md)（仅在[企业版](overview-what-is-azure-ml.md#sku)工作区可用）
++ [创建和管理工作区](how-to-manage-workspace.md)
++ [教程：开始在开发环境中使用 Azure 机器学习](tutorial-1st-experiment-sdk-setup-local.md)
++ [教程：开始在计算实例上创建第一个 ML 试验](tutorial-1st-experiment-sdk-setup.md)
++ [教程：使用自动化机器学习创建第一个分类模型](tutorial-first-experiment-automated-ml.md) 
++ [教程：使用设计器预测汽车价格](tutorial-designer-automobile-price-train-score.md)

@@ -3,18 +3,20 @@ title: 使用 Blitzz 将数据从 Oracle 迁移到 Azure Cosmos DB Cassandra API
 description: 了解如何使用 Blitzz 将数据从 Oracle 数据库迁移到 Azure Cosmos DB Cassandra API。
 author: SnehaGunda
 ms.service: cosmos-db
+ms.subservice: cosmosdb-cassandra
 ms.topic: how-to
 ms.date: 08/21/2019
 ms.author: sngun
 ms.reviewer: sngun
-ms.openlocfilehash: 882ba7f0b8f896c51e340fe921e53b27dd07ff8a
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 15bcd0c54fc5f6614f4d1925759704309048acae
+ms.sourcegitcommit: fa90cd55e341c8201e3789df4cd8bd6fe7c809a3
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "85262457"
+ms.lasthandoff: 11/04/2020
+ms.locfileid: "93336433"
 ---
 # <a name="migrate-data-from-oracle-to-azure-cosmos-db-cassandra-api-account-using-blitzz"></a>使用 Blitzz 将数据从 Oracle 迁移到 Azure Cosmos DB Cassandra API 帐户
+[!INCLUDE[appliesto-cassandra-api](includes/appliesto-cassandra-api.md)]
 
 Azure Cosmos DB 中的 Cassandra API 已成为在 Oracle 上运行的企业工作负荷的极佳选择，原因各种各样，例如：
 
@@ -98,7 +100,7 @@ Blitzz 的迁移解决方案遵循迁移复杂的操作工作负荷的分步方�
 
    :::image type="content" source="./media/oracle-migrate-cosmos-db-blitzz/scale-throughput.png" alt-text="缩放 Azure Cosmos 容器吞吐量":::
 
-   必须在迁移完成后降低吞吐量。 可以根据存储的数据量以及每次操作所需的 RU 数，估算数据迁移后所需的吞吐量。 若要详细了解如何估算所需的 ru，请参阅使用 Azure Cosmos DB 容量规划器文章为[容器和数据库预配吞吐量](set-throughput.md)和[估计 RU/秒](estimate-ru-with-capacity-planner.md)。
+   必须在迁移完成后降低吞吐量。 可以根据存储的数据量以及每次操作所需的 RU 数，估算数据迁移后所需的吞吐量。 若要详细了解如何估算所需的 RU，请参阅[预配容器和数据库的吞吐量](set-throughput.md)和[使用 Azure Cosmos DB Capacity Planner 估算 RU/秒](estimate-ru-with-capacity-planner.md)这两篇文章。
 
 1. 在“连接字符串”窗格中获取“联系点、端口、用户名”，以及 Azure Cosmos 帐户的“主密码”。    需要在配置文件中使用这些值。
 
@@ -119,9 +121,9 @@ Blitzz 的迁移解决方案遵循迁移复杂的操作工作负荷的分步方�
 
 1. 接下来，使用 Blitzz 迁移数据。 可以按“完全”或“快照”模式运行 Blizz 复制器：  
 
-   * **完全模式**–在此模式下，replicant 将继续在迁移后运行，并侦听源 Oracle 系统上的任何更改。 如果它检测到任何更改，则会将更改实时复制到目标 Azure Cosmos 帐户。
+   * **完全模式** –在此模式下，replicant 将继续在迁移后运行，并侦听源 Oracle 系统上的任何更改。 如果它检测到任何更改，则会将更改实时复制到目标 Azure Cosmos 帐户。
 
-   * **快照模式**–在此模式下，你可以执行架构迁移和一次性数据复制。 此选项不支持实时复制。
+   * **快照模式** –在此模式下，你可以执行架构迁移和一次性数据复制。 此选项不支持实时复制。
 
 
    可以通过上述两种模式进行迁移，不会造成停机。
@@ -150,4 +152,4 @@ Blitzz 的迁移解决方案遵循迁移复杂的操作工作负荷的分步方�
 
 * [在容器和数据库上预配吞吐量](set-throughput.md) 
 * [分区键最佳做法](partitioning-overview.md#choose-partitionkey)
-* [使用 Azure Cosmos DB 容量规划器文章估算 RU/秒](estimate-ru-with-capacity-planner.md)
+* [使用 Azure Cosmos DB Capacity Planner 估算 RU/秒](estimate-ru-with-capacity-planner.md)

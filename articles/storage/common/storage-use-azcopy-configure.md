@@ -1,6 +1,6 @@
 ---
 title: 对配合 Azure 存储使用的 AzCopy 进行配置、优化和故障排除 | Microsoft Docs
-description: 通过 Azure 存储配置、优化 AzCopy 并对其进行故障排除。 更改或删除计划和日志文件的位置。 更改默认的日志级别。
+description: 对配合 Azure 存储使用的 AzCopy 进行配置、优化和故障排除。 更改计划和日志文件的位置或将这些文件删除。 更改默认日志级别。
 author: normesta
 ms.service: storage
 ms.topic: how-to
@@ -8,12 +8,12 @@ ms.date: 07/27/2020
 ms.author: normesta
 ms.subservice: common
 ms.reviewer: dineshm
-ms.openlocfilehash: 9742f97832c1fc931a1679132e262f92c9f11225
-ms.sourcegitcommit: bfeae16fa5db56c1ec1fe75e0597d8194522b396
+ms.openlocfilehash: 1a319c728b918dbad7dd5f240bc7a0bfeb0c4c09
+ms.sourcegitcommit: aaa65bd769eb2e234e42cfb07d7d459a2cc273ab
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/10/2020
-ms.locfileid: "88037178"
+ms.lasthandoff: 01/27/2021
+ms.locfileid: "98881038"
 ---
 # <a name="configure-optimize-and-troubleshoot-azcopy"></a>对 AzCopy 进行配置、优化和故障排除
 
@@ -22,19 +22,19 @@ AzCopy 是一个命令行实用工具，可用于向/从存储帐户复制 Blob 
 > [!NOTE]
 > 如果你正在寻找 AzCopy 入门内容，请参阅以下文章：
 > - [AzCopy 入门](storage-use-azcopy-v10.md)
-> - [使用 AzCopy 和 Blob 存储传输数据](storage-use-azcopy-blobs.md)
+> - [使用 AzCopy 和 Blob 存储传输数据](./storage-use-azcopy-v10.md#transfer-data)
 > - [使用 AzCopy 和文件存储传输数据](storage-use-azcopy-files.md)
 > - [使用 AzCopy 和 Amazon S3 Bucket 传输数据](storage-use-azcopy-s3.md)
 
 ## <a name="configure-proxy-settings"></a>配置代理设置
 
-若要为 AzCopy 配置代理设置，请设置 `https_proxy` 环境变量。 如果在 Windows 中运行 AzCopy，AzCopy 会自动检测代理设置，因此你无需在 Windows 中使用此设置。 如果在 Windows 中选择使用此设置，此设置会替代自动检测。
+若要为 AzCopy 配置代理设置，请设置 `HTTPS_PROXY` 环境变量。 如果在 Windows 中运行 AzCopy，AzCopy 会自动检测代理设置，因此你无需在 Windows 中使用此设置。 如果在 Windows 中选择使用此设置，此设置会替代自动检测。
 
 | 操作系统 | 命令  |
 |--------|-----------|
-| **Windows** | 在命令提示符处使用 `set https_proxy=<proxy IP>:<proxy port>`<br> 在 PowerShell 中使用 `$env:https_proxy="<proxy IP>:<proxy port>"`|
-| **Linux** | `export https_proxy=<proxy IP>:<proxy port>` |
-| **macOS** | `export https_proxy=<proxy IP>:<proxy port>` |
+| **Windows** | 在命令提示符处使用 `set HTTPS_PROXY=<proxy IP>:<proxy port>`<br> 在 PowerShell 中使用 `$env:HTTPS_PROXY="<proxy IP>:<proxy port>"`|
+| **Linux** | `export HTTPS_PROXY=<proxy IP>:<proxy port>` |
+| **macOS** | `export HTTPS_PROXY=<proxy IP>:<proxy port>` |
 
 AzCopy 目前不支持要求通过 NTLM 或 Kerberos 进行身份验证的代理。
 
@@ -63,7 +63,7 @@ AzCopy 目前不支持要求通过 NTLM 或 Kerberos 进行身份验证的代理
 
 ### <a name="run-benchmark-tests"></a>运行基准测试
 
-可对特定的 Blob 容器或文件共享运行性能基准测试，以查看常规的性能统计信息和识别性能瓶颈。 您可以通过上传或下载生成的测试数据来运行测试。 
+可对特定的 Blob 容器或文件共享运行性能基准测试，以查看常规的性能统计信息和识别性能瓶颈。 可以通过上传或下载生成的测试数据来运行测试。 
 
 使用以下命令运行性能基准测试。
 
@@ -77,7 +77,7 @@ AzCopy 目前不支持要求通过 NTLM 或 Kerberos 进行身份验证的代理
 
 此命令通过将测试数据上传到指定的目标来运行性能基准测试。 测试数据将在内存中生成、上传到目标，并在完成测试后从目标中删除。 可以使用可选的命令参数来指定要生成的文件数以及文件的大小。
 
-如果希望通过下载数据来运行此测试，请将 `mode` 参数设置为 `download` 。 如需详细的参考文档，请参阅 [azcopy benchmark](storage-ref-azcopy-bench.md)。 
+如果希望通过下载数据来运行此测试，请将 `mode` 参数设置为 `download`。 如需详细的参考文档，请参阅 [azcopy benchmark](storage-ref-azcopy-bench.md)。 
 
 ### <a name="optimize-throughput"></a>优化吞吐量
 
@@ -87,7 +87,7 @@ AzCopy 目前不支持要求通过 NTLM 或 Kerberos 进行身份验证的代理
 azcopy jobs resume <job-id> --cap-mbps 10
 ```
 
-传输小型文件时，吞吐量可能会下降。 可以设置 `AZCOPY_CONCURRENCY_VALUE` 环境变量来提高吞吐量。 此变量指定可发生的并发请求数。  
+传输小型文件时，吞吐量可能会下降。 可以通过设置 `AZCOPY_CONCURRENCY_VALUE` 环境变量来提高吞吐量。 此变量指定可发生的并发请求数。  
 
 如果计算机中的 CPU 少于 5 个，则此变量的值将设置为 `32`。 否则，默认值等于 16 乘以 CPU 数。 此变量的最大默认值为 `3000`，但可以手动增大或减小此值。 
 
@@ -220,5 +220,3 @@ AzCopy 日志级别默认设置为 `INFO`。 若要降低日志详细程度以�
 若要从本地计算机中删除所有计划和日志文件以节省磁盘空间，请使用 `azcopy jobs clean` 命令。
 
 若要删除只与一个作业关联的计划和日志文件，请使用 `azcopy jobs rm <job-id>`。 请将此示例中的 `<job-id>` 占位符替换为作业的作业 ID。
-
-

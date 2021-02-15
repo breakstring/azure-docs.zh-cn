@@ -1,18 +1,18 @@
 ---
-title: 在 Azure Site Recovery 中管理 VMware Vm/物理服务器灾难恢复的进程服务器
-description: 本文介绍如何使用 Azure Site Recovery 管理用于 VMware Vm/物理服务器的灾难恢复的进程服务器。
+title: 在 Azure Site Recovery 中管理用于 VMware VM/物理服务器灾难恢复的进程服务器
+description: 本文介绍如何使用 Azure Site Recovery 管理用于 VMware VM/物理服务器灾难恢复的进程服务器。
 author: Rajeswari-Mamilla
 manager: rochakm
 ms.service: site-recovery
 ms.topic: conceptual
 ms.date: 04/28/2019
 ms.author: ramamill
-ms.openlocfilehash: ef16e3b75ca8e051b1b7abb1a92843279884c697
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: a547a874c42d06d8453b154847561d8b5f0dabb8
+ms.sourcegitcommit: a43a59e44c14d349d597c3d2fd2bc779989c71d7
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "85846565"
+ms.lasthandoff: 11/25/2020
+ms.locfileid: "96019171"
 ---
 # <a name="manage-process-servers"></a>管理进程服务器
 
@@ -41,11 +41,11 @@ ms.locfileid: "85846565"
 2. 单击进程服务器注册到的配置服务器。
 3. 单击要对其流量进行负载均衡的进程服务器。
 
-    ![LoadBalance](media/vmware-azure-manage-process-server/LoadBalance.png)
+    ![屏幕截图显示了可对其流量进行负载均衡的进程服务器。](media/vmware-azure-manage-process-server/LoadBalance.png)
 
 4. 单击“负载均衡”，选择要将计算机移动到其中的目标进程服务器。  然后单击“确定” 
 
-    ![LoadPS](media/vmware-azure-manage-process-server/LoadPS.PNG)
+    ![屏幕截图显示了“负载均衡”窗格，其中已选择了“选择目标进程服务器”。](media/vmware-azure-manage-process-server/LoadPS.PNG)
 
 2. 单击“选择计算机”，选择要从当前进程服务器移动到目标进程服务器的计算机  。 针对每个虚拟机显示平均数据更改的详细信息。  。 
 3. 在保管库的“监视” > “Site Recovery 作业”下监视作业进程。  
@@ -61,7 +61,7 @@ ms.locfileid: "85846565"
 3. 单击要在其中切换工作负荷的进程服务器。
 4. 单击“切换”，选择要将工作负荷移动到其中的目标进程服务器。  然后单击“确定” 
 
-    ![Switch](media/vmware-azure-manage-process-server/Switch.PNG)
+    ![屏幕截图显示了“选择目标进程服务器”窗格。](media/vmware-azure-manage-process-server/Switch.PNG)
 
 5. 在保管库的“监视” > “Site Recovery 作业”下监视作业进程。  
 
@@ -69,7 +69,7 @@ ms.locfileid: "85846565"
 
 ## <a name="register-a-master-target-server"></a>注册主目标服务器
 
-主目标服务器驻留在配置服务器和横向扩展进程服务器上。 它必须向配置服务器注册。 如果此注册中出现故障，则可能会影响受保护项的运行状况。 若要将主目标服务器注册到配置服务器，请登录到需要注册的特定配置服务器/横向扩展进程服务器。 导航到 " **%PROGRAMDATA%\ASR\Agent**" 文件夹，并在管理员命令提示符下运行以下命令。
+主目标服务器位于配置服务器和横向扩展进程服务器上。 它必须向配置服务器注册。 如果此注册失败，可能会影响受保护项的运行状况。 若要将主目标服务器注册到配置服务器，请登录到需要在其上注册的特定配置服务器/横向扩展进程服务器。 导航到文件夹 %PROGRAMDATA%\ASR\Agent，然后在管理员命令提示符下运行以下命令。
 
    ```
    cmd
@@ -138,4 +138,4 @@ ms.locfileid: "85846565"
 - C:\ProgramData\ASRSetupLogs
 - C:\ProgramData\LogUploadServiceLogs
 - C:\ProgramData\Microsoft Azure Site Recovery
-- 进程服务器安装目录。 例如： C:\Program Files （x86） \Microsoft Azure Site Recovery
+- 进程服务器安装目录。 例如：C:\Program Files (x86)\Microsoft Azure Site Recovery

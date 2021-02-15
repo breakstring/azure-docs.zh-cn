@@ -8,12 +8,12 @@ ms.topic: conceptual
 ms.tgt_pltfrm: arduino
 ms.date: 03/19/2018
 ms.author: liydu
-ms.openlocfilehash: dae797e73d52391288a5e8b7cf4a5c6ab2a122fc
-ms.sourcegitcommit: 46f8457ccb224eb000799ec81ed5b3ea93a6f06f
+ms.openlocfilehash: e3649ac786c07459695a1e6ca6ad52620e23d59f
+ms.sourcegitcommit: dbe434f45f9d0f9d298076bf8c08672ceca416c6
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/28/2020
-ms.locfileid: "87337868"
+ms.lasthandoff: 10/17/2020
+ms.locfileid: "92148805"
 ---
 # <a name="door-monitor----using-azure-functions-and-sendgrid-send-email-when-a-door-is-opened"></a>门监视器 - 使用 Azure Functions 和 SendGrid 在门打开时发送电子邮件           
 
@@ -39,7 +39,7 @@ MXChip IoT DevKit 包含内置的磁传感器。 在此项目中，请检测附�
 
 一个有效的 Azure 订阅。 如果没有订阅，可以通过以下方法之一进行注册：
 
-* 激活[30 天免费试用 Microsoft Azure 帐户](https://azure.microsoft.com/free/)。
+* 激活 [30 天免费试用 Microsoft Azure 帐户](https://azure.microsoft.com/free/)。
 * 声明你的 [Azure 信用额度](https://azure.microsoft.com/pricing/member-offers/msdn-benefits-details/)（如果你是 MSDN 或 Visual Studio 订阅者）。
 
 ## <a name="deploy-the-sendgrid-service-in-azure"></a>在 Azure 中部署 SendGrid 服务
@@ -171,7 +171,7 @@ API 密钥仅显示一次。 请确保将其安全地复制和存储，因为下
 
 然后，VS Code 开始验证 Arduino 草图并将其上传到 DevKit。
 
-![设备上传](media/iot-hub-arduino-iot-devkit-az3166-door-monitor/device-upload.png)
+![屏幕截图显示 Visual Studio Code 验证和上传 Arduino 草图。](media/iot-hub-arduino-iot-devkit-az3166-door-monitor/device-upload.png)
 
 DevKit 将重新启动并开始运行代码。
 
@@ -184,9 +184,9 @@ DevKit 将重新启动并开始运行代码。
 
 初始化以后，屏幕上会显示 `Door closed`。 磁场变化时，状态更改为 `Door opened`。 门状态一变化，你就会收到电子邮件通知。 （收到这些电子邮件可能需要长达五分钟的时间。）
 
-![磁铁靠近传感器：门已关闭](media/iot-hub-arduino-iot-devkit-az3166-door-monitor/test-door-closed.jpg "磁体靠近传感器：门已关闭")
+![磁铁靠近传感器：门已关闭](media/iot-hub-arduino-iot-devkit-az3166-door-monitor/test-door-closed.jpg "磁铁靠近传感器：门关闭")
 
-![磁铁从传感器移开：门已打开](media/iot-hub-arduino-iot-devkit-az3166-door-monitor/test-door-opened.jpg "磁移离开传感器：门已打开")
+![磁铁从传感器移开：门已打开](media/iot-hub-arduino-iot-devkit-az3166-door-monitor/test-door-opened.jpg "磁铁从传感器移开：门打开")
 
 ## <a name="problems-and-feedback"></a>问题和反馈
 
@@ -197,4 +197,4 @@ DevKit 将重新启动并开始运行代码。
 
 ## <a name="next-steps"></a>后续步骤
 
-你已经了解了如何将 DevKit 设备连接到 Azure IoT 远程监视解决方案加速器并使用 SendGrid 服务来发送电子邮件。 下面是建议的下一步：[Azure IoT 远程监视解决方案加速器概述](https://docs.microsoft.com/azure/iot-suite/)
+你已经了解了如何将 DevKit 设备连接到 Azure IoT 远程监视解决方案加速器并使用 SendGrid 服务来发送电子邮件。 下面是建议的下一步：[Azure IoT 远程监视解决方案加速器概述](/azure/iot-suite/)

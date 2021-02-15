@@ -1,29 +1,29 @@
 ---
 title: Azure VMware 解决方案（通过 CloudSimple）使用 ExpressRoute 的本地连接
 description: 介绍如何使用 CloudSimple 区域网络中的 ExpressRoute 请求本地连接
-author: sharaths-cs
-ms.author: b-shsury
+author: Ajayan1008
+ms.author: v-hborys
 ms.date: 08/14/2019
 ms.topic: article
 ms.service: azure-vmware-cloudsimple
 ms.reviewer: cynthn
 manager: dikamath
-ms.openlocfilehash: 0dd5ede110255b6e53bbc397e683e66b3beffc65
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 27d1d9e54838d9f45a28d634fa1c24fb8785aee1
+ms.sourcegitcommit: d7d5f0da1dda786bda0260cf43bd4716e5bda08b
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "77019615"
+ms.lasthandoff: 01/05/2021
+ms.locfileid: "97899229"
 ---
 # <a name="connect-from-on-premises-to-cloudsimple-using-expressroute"></a>使用 ExpressRoute 从本地连接到 CloudSimple
 
-如果已具有从外部位置（如本地）到 Azure 的 Azure ExpressRoute 连接，则可以将其连接到 CloudSimple 环境。 可以通过 Azure 功能实现此操作，这种功能允许两条 ExpressRoute 线路彼此连接。 此方法在两个环境之间建立安全、专用、高带宽、低延迟连接。
+如果已具有从外部位置 (例如本地) 到 Azure 的 Azure ExpressRoute 连接，则可以将其连接到 CloudSimple 环境。 可以通过 Azure 功能实现此操作，这种功能允许两条 ExpressRoute 线路彼此连接。 此方法在两个环境之间建立安全、专用、高带宽、低延迟连接。
 
 [![本地 ExpressRoute 连接-Global Reach](media/cloudsimple-global-reach-connection.png)](media/cloudsimple-global-reach-connection.png)
 
 ## <a name="before-you-begin"></a>开始之前
 
-从本地建立 Global Reach 连接需要一个 **/29**网络地址块。  /29 地址空间用于 ExpressRoute 线路之间的传输网络。  传输网络不应与任何 Azure 虚拟网络、本地网络或 CloudSimple 私有云网络重叠。
+从本地建立 Global Reach 连接需要一个 **/29** 网络地址块。  /29 地址空间用于 ExpressRoute 线路之间的传输网络。  传输网络不应与任何 Azure 虚拟网络、本地网络或 CloudSimple 私有云网络重叠。
 
 ## <a name="prerequisites"></a>先决条件
 
@@ -49,26 +49,26 @@ ms.locfileid: "77019615"
 
 1. 登录到 Azure 门户。
 
-2. 在顶部搜索栏中，搜索 " **expressroute 线路**"，然后单击 "**服务**" 下的**expressroute 线路**。
+2. 在顶部搜索栏中，搜索 " **expressroute 线路**"，然后单击 "**服务**" 下的 **expressroute 线路**。
     [![ExpressRoute 线路](media/azure-expressroute-transit-search.png)](media/azure-expressroute-transit-search.png)
 
 3. 选择要连接到 CloudSimple 网络的 ExpressRoute 线路。
 
-4. 在 "ExpressRoute" 页上，单击 "**授权**"，为授权输入名称，然后单击 "**保存**"。
+4. 在 "ExpressRoute" 页上，单击 " **授权**"，为授权输入名称，然后单击 " **保存**"。
     [![ExpressRoute 线路授权](media/azure-expressroute-transit-authorizations.png)](media/azure-expressroute-transit-authorizations.png)
 
 5. 单击 "复制" 图标，复制 "资源 ID" 和 "授权密钥"。 将 ID 和密钥粘贴到文本文件中。
     [![ExpressRoute 线路授权复制](media/azure-expressroute-transit-authorization-copy.png)](media/azure-expressroute-transit-authorization-copy.png)
 
     > [!IMPORTANT]
-    > 必须从 UI 复制**资源 ID** ，并在 ```/subscriptions/<subscription-ID>/resourceGroups/<resource-group-name>/providers/Microsoft.Network/expressRouteCircuits/<express-route-circuit-name>``` 提供支持时将其设置为格式。
+    > 必须从 UI 复制 **资源 ID** ，并在 ```/subscriptions/<subscription-ID>/resourceGroups/<resource-group-name>/providers/Microsoft.Network/expressRouteCircuits/<express-route-circuit-name>``` 提供支持时将其设置为格式。
 
-6. 为要创建的连接提供<a href="https://portal.azure.com/#blade/Microsoft_Azure_Support/HelpAndSupportBlade/newsupportrequest" target="_blank">支持</a>的票证。
-    * 问题类型：**技术**
-    * 订阅：**部署 CloudSimple 服务的订阅**
+6. 为要创建的连接提供 <a href="https://portal.azure.com/#blade/Microsoft_Azure_Support/HelpAndSupportBlade/newsupportrequest" target="_blank">支持</a> 的票证。
+    * 问题类型： **技术**
+    * 订阅： **部署 CloudSimple 服务的订阅**
     * 服务： **VMware 解决方案（按 CloudSimple** ）
-    * 问题类型：**服务请求**
-    * 问题子类型：**创建与本地的 ExpressRoute 连接**
+    * 问题类型： **服务请求**
+    * 问题子类型： **创建与本地的 ExpressRoute 连接**
     * 提供已复制并保存在详细信息窗格中的资源 ID 和授权密钥。
     * 为传输网络提供一个/29 网络地址空间。
     * 是否通过 ExpressRoute 发送默认路由？

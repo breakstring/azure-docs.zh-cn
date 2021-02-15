@@ -1,5 +1,5 @@
 ---
-title: 用设计器生成 ML 模型（预览）
+title: 使用设计器生成 ML 模型
 titleSuffix: Azure Machine Learning
 description: 了解组成 Azure 机器学习设计器的术语、概念和工作流。
 services: machine-learning
@@ -10,15 +10,15 @@ ms.author: peterlu
 author: peterclu
 ms.date: 06/28/2020
 ms.custom: designer
-ms.openlocfilehash: 181f0d62f160a6644e0423be052012521752525f
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.openlocfilehash: 059b521461969d8148ced90cb3ceffd14a00c4bb
+ms.sourcegitcommit: 96918333d87f4029d4d6af7ac44635c833abb3da
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87012937"
+ms.lasthandoff: 11/04/2020
+ms.locfileid: "93322264"
 ---
-# <a name="what-is-azure-machine-learning-designer-preview"></a>什么是 Azure 机器学习设计器（预览版）？ 
-[!INCLUDE [applies-to-skus](../../includes/aml-applies-to-enterprise-sku.md)]
+# <a name="what-is-azure-machine-learning-designer"></a>什么是 Azure 机器学习设计器？ 
+
 
 使用 Azure 机器学习设计器，能够在交互式画布上直观地连接[数据集](#datasets)和[模块](#module)，以创建机器学习模型。 若要了解如何开始使用设计器，请参阅[教程：使用设计器预测汽车价格](tutorial-designer-automobile-price-train-score.md)
 
@@ -44,7 +44,7 @@ ms.locfileid: "87012937"
 + 将管道[发布](#publish)到 REST 管道终结点，以提交具有不同参数和数据集的新管道运行。
     + 发布训练管道，在更改参数和数据集时重用单个管道训练多个模型。
     + 发布批量推理管道，通过使用以前训练的模型针对新数据进行预测。
-+ 将**实时推理管道**[部署](#deploy)到实时终结点，以便对新数据进行实时预测。
++ 将 **实时推理管道**[部署](#deploy)到实时终结点，以便对新数据进行实时预测。
 
 ![设计器中的训练、批量推理和实时推理的工作流示意图](./media/concept-designer/designer-workflow-diagram.png)
 
@@ -96,11 +96,11 @@ ms.locfileid: "87012937"
 | Azure 机器学习计算实例 | ✓ | |
 | Azure Kubernetes 服务 | | ✓ |
 
-计算目标会附加至 [Azure 机器学习工作区](concept-workspace.md)。 可在 [Azure 机器学习工作室](https://ml.azure.com)的工作区中管理计算目标。
+计算目标会附加到 [Azure 机器学习工作区](concept-workspace.md)。 可在 [Azure 机器学习工作室](https://ml.azure.com)的工作区中管理计算目标。
 
 ## <a name="deploy"></a>部署
 
-若要执行实时推理，必须将管道部署为**实时终结点**。 实时终结点在外部应用程序和评分模型之间创建接口。 对实时端点的调用会将预测结果实时返回给应用程序。 若要调用实时终结点，请传递部署终结点时创建的 API 密钥。 该终结点基于 REST，这是一种流行的 Web 编程项目的体系结构。
+若要执行实时推理，必须将管道部署为 **实时终结点** 。 实时终结点在外部应用程序和评分模型之间创建接口。 对实时端点的调用会将预测结果实时返回给应用程序。 若要调用实时终结点，请传递部署终结点时创建的 API 密钥。 该终结点基于 REST，这是一种流行的 Web 编程项目的体系结构。
 
 必须将实时终结点部署到 Azure Kubernetes 服务群集。
 
@@ -114,9 +114,9 @@ ms.locfileid: "87012937"
 
 已发布的管道在每个模块的管道草稿中定义的计算资源上运行。
 
-设计器创建与 SDK 相同的 [PublishedPipeline](https://docs.microsoft.com/python/api/azureml-pipeline-core/azureml.pipeline.core.graph.publishedpipeline?view=azure-ml-py) 对象。
+设计器创建与 SDK 相同的 [PublishedPipeline](/python/api/azureml-pipeline-core/azureml.pipeline.core.graph.publishedpipeline?preserve-view=true&view=azure-ml-py) 对象。
 
 ## <a name="next-steps"></a>后续步骤
 
-* 若要了解有关预测分析和机器学习的基本知识，请参阅[教程：使用设计器预测汽车价格](tutorial-designer-automobile-price-train-score.md)
+* 使用以下教程了解有关预测分析和机器学习的基础知识 - [教程：使用设计器预测汽车价格](tutorial-designer-automobile-price-train-score.md)
 * 了解如何根据自己的需求修改现有的[设计器示例](samples-designer.md)。

@@ -1,5 +1,6 @@
 ---
-title: 构建调用 Web API 的 Web API - Microsoft 标识平台 | Azure
+title: 生成用于调用 web Api 的 web API |Microsoft
+titleSuffix: Microsoft identity platform
 description: 了解如何构建调用下游 Web API 的 Web API（概述）
 services: active-directory
 author: jmprieur
@@ -11,12 +12,12 @@ ms.workload: identity
 ms.date: 05/07/2019
 ms.author: jmprieur
 ms.custom: aaddev, identityplatformtop40
-ms.openlocfilehash: 88a0177755fbd913bdaaf0ecf3e12c62dee294c1
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: a66f0a2de1d8239baffbe53dfb5d6f2dd275d448
+ms.sourcegitcommit: 5cdd0b378d6377b98af71ec8e886098a504f7c33
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "80885066"
+ms.lasthandoff: 01/25/2021
+ms.locfileid: "98756332"
 ---
 # <a name="scenario-a-web-api-that-calls-web-apis"></a>方案：调用 Web API 的 Web API
 
@@ -24,7 +25,7 @@ ms.locfileid: "80885066"
 
 ## <a name="prerequisites"></a>先决条件
 
-此方案（受保护的 Web API 调用 Web API）基于“保护 Web API”方案。 若要详细了解此基础方案，请参阅[方案：受保护的 Web API](scenario-protected-web-api-overview.md)。
+此方案（受保护的 Web API 调用其他 Web API）基于[方案：受保护的 Web API](scenario-protected-web-api-overview.md)。
 
 ## <a name="overview"></a>概述
 
@@ -40,5 +41,4 @@ ms.locfileid: "80885066"
 
 ## <a name="next-steps"></a>后续步骤
 
-> [!div class="nextstepaction"]
-> [应用注册](scenario-web-api-call-api-app-registration.md)
+转到此方案中的下一篇文章：[应用注册](scenario-web-api-call-api-app-registration.md)。

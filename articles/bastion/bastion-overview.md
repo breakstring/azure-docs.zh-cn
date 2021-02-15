@@ -5,20 +5,20 @@ services: bastion
 author: cherylmc
 ms.service: bastion
 ms.topic: overview
-ms.date: 01/31/2020
+ms.date: 10/13/2020
 ms.author: cherylmc
-ms.openlocfilehash: 8b27a7c2fd03ed0a80f1775465f1f1bbb44f0202
-ms.sourcegitcommit: 2bab7c1cd1792ec389a488c6190e4d90f8ca503b
+ms.openlocfilehash: 18672d76c262f8919489ccf132532c117666abe4
+ms.sourcegitcommit: 740698a63c485390ebdd5e58bc41929ec0e4ed2d
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/17/2020
-ms.locfileid: "88270336"
+ms.lasthandoff: 02/03/2021
+ms.locfileid: "99492172"
 ---
 # <a name="what-is-azure-bastion"></a>什么是 Azure Bastion？
 
-Azure Bastion 服务是的一种新型的完全托管平台 PaaS 服务，可在虚拟网络中进行预配。 可通过 TLS 直接在 Azure 门户中实现与虚拟机之间的安全无缝的 RDP/SSH 连接。 在你通过 Azure Bastion 连接时，你的虚拟机无需公共 IP 地址。
+Azure Bastion 是你部署的一项服务，借此可使用浏览器和 Azure 门户连接到虚拟机。 Azure Bastion 服务是的一种完全平台管理的 PaaS 服务，可在虚拟网络中进行预配。 可通过 TLS 直接从 Azure 门户实现与虚拟机之间的安全无缝的 RDP/SSH 连接。 通过 Azure Bastion 连接时，你的虚拟机无需公共 IP、代理或特殊的客户端软件。
 
-Bastion 为预配它的虚拟网络中的所有 VM 提供安全的 RDP 和 SSH 连接。 使用 Azure Bastion 可防止虚拟机向外部公开 RDP/SSH 端口，同时仍然使用 RDP/SSH 提供安全访问。 使用 Azure Bastion，可直接从 Azure 门户连接到虚拟机。 无需额外的客户端、代理或软件。
+Bastion 为预配它的虚拟网络中的所有 VM 提供安全的 RDP 和 SSH 连接。 使用 Azure Bastion 可防止虚拟机向外部公开 RDP/SSH 端口，同时仍然使用 RDP/SSH 提供安全访问。
 
 ## <a name="architecture"></a>体系结构
 
@@ -26,11 +26,11 @@ Azure Bastion 部署是按虚拟网络进行的，而不是按订阅/帐户或�
 
 RDP 和 SSH 是连接 Azure 中运行的工作负载的基本方法。 不要通过 Internet 公开 RDP/SSH 端口，这被视为一个严重的威胁面。 这通常是由于协议漏洞造成的。 若要包含此威胁面，可以在外围网络的公共端部署 bastion 主机（也称为跳转服务器）。 Bastion 主机服务器在设计和配置上考虑了抵御攻击。 Bastion 服务器还为位于 bastion 后以及网络内的工作负载提供 RDP 和 SSH 连接。
 
-![体系结构](./media/bastion-overview/architecture.png)
+![Azure Bastion 体系结构](./media/bastion-overview/architecture.png)
 
 此图显示了 Azure Bastion 部署体系结构。 在此图中：
 
-* Bastion 主机部署在虚拟网络中。
+* 堡垒主机部署在虚拟网络中，该网络包含具有最小 /27 前缀的 AzureBastionSubnet 子网。
 * 用户使用任何 HTML5 浏览器连接到 Azure 门户。
 * 用户选择要连接到的虚拟机。
 * 单击一下，在浏览器中打开 RDP/SSH 会话。
@@ -47,11 +47,15 @@ RDP 和 SSH 是连接 Azure 中运行的工作负载的基本方法。 不要通
 * 端口扫描防护  ：因为无需将虚拟机公开到公共 Internet，因此可防止 VM 受到虚拟网络外部的恶意用户的端口扫描。
 * **防止零日漏洞。仅在一个位置强化：** Azure Bastion 是完全托管平台 PaaS 服务。 由于它位于虚拟网络外围，因此你无需担心如何强化虚拟网络中的每个虚拟机。 Azure 平台通过使 Azure Bastion 保持强化且始终保持最新来防范零天攻击。
 
-## <a name="faq"></a>常见问题解答
+## <a name="whats-new"></a><a name="new"></a>新增功能
+
+订阅 RSS 源，并在 [Azure 更新](https://azure.microsoft.com/updates/?category=networking&query=Azure%20Bastion)页面上查看最新的 Azure Bastion 功能更新。
+
+## <a name="faq"></a>常见问题
 
 [!INCLUDE [Bastion FAQ](../../includes/bastion-faq-include.md)]
 
 ## <a name="next-steps"></a>后续步骤
 
-* [创建 Azure Bastion 主机资源](bastion-create-host-portal.md)。
+* [教程：创建 Azure Bastion 主机并连接到 Windows VM](tutorial-create-host-portal.md)。
 * 了解 Azure 的一些其他关键[网络功能](../networking/networking-overview.md)。

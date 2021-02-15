@@ -1,19 +1,16 @@
 ---
 title: 使用 SSIS 计划 Azure Data Lake Analytics U-SQL 作业
 description: 了解如何使用 SQL Server Integration Services 通过内联脚本或从 U SQL 查询文件来计划 U SQL 作业。
-services: data-lake-analytics
 ms.reviewer: jasonh
-ms.assetid: 66dd58b1-0b28-46d1-aaae-43ee2739ae0a
 ms.service: data-lake-analytics
 ms.topic: how-to
-ms.workload: big-data
 ms.date: 07/17/2018
-ms.openlocfilehash: ac747b87cf1a0f2d7c85d05975a31f953bfa5aae
-ms.sourcegitcommit: 0e8a4671aa3f5a9a54231fea48bcfb432a1e528c
+ms.openlocfilehash: b080b433f5af49e970faba02003fb68e21a08365
+ms.sourcegitcommit: 8d8deb9a406165de5050522681b782fb2917762d
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/24/2020
-ms.locfileid: "87132494"
+ms.lasthandoff: 10/20/2020
+ms.locfileid: "92221445"
 ---
 # <a name="schedule-u-sql-jobs-using-sql-server-integration-services-ssis"></a>使用 SQL Server Integration Services (SSIS) 计划 U-SQL 作业
 
@@ -21,16 +18,16 @@ ms.locfileid: "87132494"
 
 ## <a name="prerequisites"></a>先决条件
 
-[用于 Integration Services 的 Azure 功能包](https://docs.microsoft.com/sql/integration-services/azure-feature-pack-for-integration-services-ssis?view=sql-server-2017#scenario-managing-data-in-the-cloud)提供 [Azure Data Lake Analytics 任务](https://docs.microsoft.com/sql/integration-services/control-flow/azure-data-lake-analytics-task?view=sql-server-2017)和 [Azure Data Lake Analytics 连接管理器](https://docs.microsoft.com/sql/integration-services/connection-manager/azure-data-lake-analytics-connection-manager?view=sql-server-2017)，该管理器可帮助连接 Azure Data Lake Analytics 服务。 若要使用此任务，请务必：
+[用于 Integration Services 的 Azure 功能包](/sql/integration-services/azure-feature-pack-for-integration-services-ssis#scenario-managing-data-in-the-cloud)提供 [Azure Data Lake Analytics 任务](/sql/integration-services/control-flow/azure-data-lake-analytics-task)和 [Azure Data Lake Analytics 连接管理器](/sql/integration-services/connection-manager/azure-data-lake-analytics-connection-manager)，该管理器可帮助连接 Azure Data Lake Analytics 服务。 若要使用此任务，请务必：
 
-- [下载并安装适用于 Visual Studio 的 SQL Server Data Tools (SSDT)](https://docs.microsoft.com/sql/ssdt/download-sql-server-data-tools-ssdt?view=sql-server-2017)
-- [安装适用于 Integration Services (SSIS) 的 Azure 功能包](https://docs.microsoft.com/sql/integration-services/azure-feature-pack-for-integration-services-ssis?view=sql-server-2017)
+- [下载并安装适用于 Visual Studio 的 SQL Server Data Tools (SSDT)](/sql/ssdt/download-sql-server-data-tools-ssdt)
+- [安装适用于 Integration Services (SSIS) 的 Azure 功能包](/sql/integration-services/azure-feature-pack-for-integration-services-ssis)
 
 ## <a name="azure-data-lake-analytics-task"></a>Azure Data Lake Analytics 任务
 
 Azure Data Lake Analytics 任务允许用户向 Azure Data Lake Analytics 帐户提交 U-SQL 作业。 
 
-[了解如何配置 Azure Data Lake Analytics 任务](https://docs.microsoft.com/sql/integration-services/control-flow/azure-data-lake-analytics-task?view=sql-server-2017)。
+[了解如何配置 Azure Data Lake Analytics 任务](/sql/integration-services/control-flow/azure-data-lake-analytics-task)。
 
 ![SSIS 中的 Azure Data Lake Analytics 任务](./media/data-lake-analytics-schedule-jobs-ssis/data-lake-analytics-azure-data-lake-analytics-task-in-ssis.png)
 
@@ -56,18 +53,18 @@ Azure Data Lake Analytics 任务允许用户向 Azure Data Lake Analytics 帐户
 
 在 SSIS 包设计视图中，添加一个 Azure Data Lake Store 文件系统任务、一个 Foreach 循环容器和一个位于 Foreach 循环容器内的 Azure Data Lake Analytics 任务************。 Azure Data Lake Store 文件系统任务有助于将 ADLS 帐户中的 U-SQL 文件下载到临时文件夹。 Foreach 循环容器和 Azure Data Lake Analytics 任务有助于将临时文件夹下的每个 U-SQL 文件作为 U-SQL 作业提交给 Azure Data Lake Analytics 帐户。
 
-![使用 Azure Data Lake Store 中的 U-SQL 文件](./media/data-lake-analytics-schedule-jobs-ssis/use-u-sql-files-in-azure-data-lake-store.png)
+![显示要添加到 Foreach 循环容器的 Azure Data Lake Store 文件系统任务的关系图。](./media/data-lake-analytics-schedule-jobs-ssis/use-u-sql-files-in-azure-data-lake-store.png)
 
 ### <a name="configure-azure-data-lake-store-file-system-task"></a>配置 Azure Data Lake Store 文件系统任务
 
 1. 将“操作”设置为“CopyFromADLS”********。
-2. 设置 AzureDataLakeConnection，详细了解 [Azure Data Lake Store 连接管理器](https://docs.microsoft.com/sql/integration-services/connection-manager/azure-data-lake-store-connection-manager?view=sql-server-2017)****。
+2. 设置 AzureDataLakeConnection，详细了解 [Azure Data Lake Store 连接管理器](/sql/integration-services/connection-manager/azure-data-lake-store-connection-manager)****。
 3. 设置 AzureDataLakeDirectory****。 指向存储 U-SQL 脚本的文件夹。 使用相对于 Azure Data Lake Store 帐户根文件夹的相对路径。
 4. 将“目标”设置为缓存下载的 U-SQL 脚本的文件夹****。 此文件夹路径将在 Foreach 循环容器中用于 U-SQL 作业提交。 
 
 ![配置 Azure Data Lake Store 文件系统任务](./media/data-lake-analytics-schedule-jobs-ssis/configure-azure-data-lake-store-file-system-task.png)
 
-[详细了解 Azure Data Lake Store 文件系统任务](https://docs.microsoft.com/sql/integration-services/control-flow/azure-data-lake-store-file-system-task?view=sql-server-2017)。
+[详细了解 Azure Data Lake Store 文件系统任务](/sql/integration-services/control-flow/azure-data-lake-store-file-system-task)。
 
 ### <a name="configure-foreach-loop-container"></a>配置 Foreach 循环容器
 
@@ -77,7 +74,7 @@ Azure Data Lake Analytics 任务允许用户向 Azure Data Lake Analytics 帐户
 
 3. 将“枚举器配置”下的“文件”设置为 `*.usql`，使循环容器仅捕获以 `.usql` 结尾的文件********。
 
-    ![配置 Foreach 循环容器](./media/data-lake-analytics-schedule-jobs-ssis/configure-foreach-loop-container-collection.png)
+    ![屏幕截图，显示选定了 "集合" 的 "Foreach 循环编辑器"，并突出显示了 "枚举器和枚举器配置" 部分。](./media/data-lake-analytics-schedule-jobs-ssis/configure-foreach-loop-container-collection.png)
 
 4. 在“变量映射”页中，添加一个用户定义变量，获取每个 U-SQL 文件的文件名****。 将“索引”**** 设置为 0 以获取文件名。 在本示例中，定义一个名为 `User::FileName` 的变量。 此变量将用于动态地获取 U-SQL 脚本文件连接，并在 Azure Data Lake Analytics 任务中设置 U-SQL 作业名称。
 
@@ -94,7 +91,7 @@ Azure Data Lake Analytics 任务允许用户向 Azure Data Lake Analytics 帐户
    1. 选择 **\<New Connection...>** FileConnection 设置。
    2. 将“使用类型”**** 设置为“现有文件”****，并将“文件”**** 设置为任何现有文件的文件路径。
 
-       ![配置 Foreach 循环容器](./media/data-lake-analytics-schedule-jobs-ssis/configure-file-connection-for-foreach-loop-container.png)
+       ![显示文件连接管理器编辑器的屏幕截图，其中选择了 "使用类型" 的 "现有文件"。](./media/data-lake-analytics-schedule-jobs-ssis/configure-file-connection-for-foreach-loop-container.png)
 
    3. 在“连接管理器”**** 视图中，右键单击刚才创建的文件连接，选择“属性”****。
 
@@ -102,9 +99,9 @@ Azure Data Lake Analytics 任务允许用户向 Azure Data Lake Analytics 帐户
 
        ![配置 Foreach 循环容器](./media/data-lake-analytics-schedule-jobs-ssis/configure-file-connection-property-for-foreach-loop-container.png)
 
-3. 将“AzureDataLakeAnalyticsConnection”**** 设置为要向其提交作业的 Azure Data Lake Analytics 帐户。 详细了解 [Azure Data Lake Analytics 连接管理器](https://docs.microsoft.com/sql/integration-services/connection-manager/azure-data-lake-analytics-connection-manager?view=sql-server-2017)。
+3. 将“AzureDataLakeAnalyticsConnection”**** 设置为要向其提交作业的 Azure Data Lake Analytics 帐户。 详细了解 [Azure Data Lake Analytics 连接管理器](/sql/integration-services/connection-manager/azure-data-lake-analytics-connection-manager)。
 
-4. 设置其他作业配置。 [了解详细信息](https://docs.microsoft.com/sql/integration-services/control-flow/azure-data-lake-analytics-task?view=sql-server-2017)。
+4. 设置其他作业配置。 [了解详细信息](/sql/integration-services/control-flow/azure-data-lake-analytics-task)。
 
 5. 使用“表达式”**** 动态地设置 U-SQL 作业名称：
 
@@ -117,7 +114,7 @@ Azure Data Lake Analytics 任务允许用户向 Azure Data Lake Analytics 帐户
 
 通过使用 Azure 功能包中的 Azure Blob 下载任务****，可使用 Azure Blob 存储中的 U-SQL 文件。 通过这种方法，可使用云中的脚本。
 
-步骤类似于[方案2：在 Azure Data Lake Store 中使用 U-SQL 文件](#scenario-2-use-u-sql-files-in-azure-data-lake-store)。 将 Azure Data Lake Store 文件系统任务更改为 Azure Blob 下载任务。 [详细了解 Azure Blob 下载任务](https://docs.microsoft.com/sql/integration-services/control-flow/azure-blob-download-task?view=sql-server-2017)。
+步骤类似于 [方案2：在 Azure Data Lake Store 中使用 U-SQL 文件](#scenario-2-use-u-sql-files-in-azure-data-lake-store)。 将 Azure Data Lake Store 文件系统任务更改为 Azure Blob 下载任务。 [详细了解 Azure Blob 下载任务](/sql/integration-services/control-flow/azure-blob-download-task)。
 
 控制流如下所示。
 
@@ -135,7 +132,7 @@ Azure Data Lake Analytics 任务允许用户向 Azure Data Lake Analytics 帐户
 
     ![添加本地文件的文件连接](./media/data-lake-analytics-schedule-jobs-ssis/configure-file-connection-for-foreach-loop-container.png)
 
-4. 添加**Azure Data Lake Analytics**任务和：
+4. 添加 **Azure Data Lake Analytics** 任务和：
     1. 将“SourceType”**** 设置为“FileConnection”****。
     2. 将“FileConnection”**** 设置为刚创建的文件连接。
 
@@ -162,10 +159,10 @@ Azure Data Lake Analytics 任务允许用户向 Azure Data Lake Analytics 帐户
 - 根据当前日期和时间动态设置输入和输出文件路径变量。
 - 设置存储过程的参数。
 
-[详细了解如何设置 U-SQL 脚本的参数](https://docs.microsoft.com/sql/integration-services/control-flow/azure-data-lake-analytics-task?view=sql-server-2017#parameter-mapping-page-configuration)。
+[详细了解如何设置 U-SQL 脚本的参数](/sql/integration-services/control-flow/azure-data-lake-analytics-task#parameter-mapping-page-configuration)。
 
 ## <a name="next-steps"></a>后续步骤
 
-- [在 Azure 中运行 SSIS 包](https://docs.microsoft.com/azure/data-factory/how-to-invoke-ssis-package-ssis-activity)
-- [用于 Azure 的 Integration Services (SSIS) 功能包](https://docs.microsoft.com/sql/integration-services/azure-feature-pack-for-integration-services-ssis?view=sql-server-2017#scenario-managing-data-in-the-cloud)
-- [使用 Azure 数据工厂计划 U-SQL 作业](https://docs.microsoft.com/azure/data-factory/transform-data-using-data-lake-analytics)
+- [在 Azure 中运行 SSIS 包](../data-factory/how-to-invoke-ssis-package-ssis-activity.md)
+- [用于 Azure 的 Integration Services (SSIS) 功能包](/sql/integration-services/azure-feature-pack-for-integration-services-ssis#scenario-managing-data-in-the-cloud)
+- [使用 Azure 数据工厂计划 U-SQL 作业](../data-factory/transform-data-using-data-lake-analytics.md)

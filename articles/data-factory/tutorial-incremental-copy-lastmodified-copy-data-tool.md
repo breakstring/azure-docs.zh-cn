@@ -1,23 +1,18 @@
 ---
 title: 用于增量复制新文件和已更新文件的数据工具
 description: 创建一个 Azure 数据工厂，然后使用复制数据工具根据 LastModifiedDate 以增量方式加载新文件。
-services: data-factory
 author: dearandyxu
 ms.author: yexu
-ms.reviewer: ''
-manager: ''
 ms.service: data-factory
-ms.workload: data-services
-ms.devlang: na
 ms.topic: conceptual
 ms.custom: seo-lt-2019
-ms.date: 6/10/2020
-ms.openlocfilehash: 402214da75bffd278e12db94f089d64acd62221e
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.date: 11/09/2020
+ms.openlocfilehash: f2f0b3e452b39cb81f435dbee4a3b0f524b0213d
+ms.sourcegitcommit: d4734bc680ea221ea80fdea67859d6d32241aefc
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "84730131"
+ms.lasthandoff: 02/14/2021
+ms.locfileid: "100361137"
 ---
 # <a name="incrementally-copy-new-and-changed-files-based-on-lastmodifieddate-by-using-the-copy-data-tool"></a>使用复制数据工具根据 LastModifiedDate 以增量方式复制新的和已更改的文件
 
@@ -39,7 +34,7 @@ ms.locfileid: "84730131"
 
 ## <a name="prerequisites"></a>先决条件
 
-* **Azure 订阅**：如果没有 Azure 订阅，请在开始之前创建一个[免费帐户](https://azure.microsoft.com/free/)。
+* **Azure 订阅**：如果没有 Azure 订阅，请在开始之前创建一个 [免费帐户](https://azure.microsoft.com/free/)。
 * **Azure 存储帐户**，将 Blob 存储用作源和接收器数据存储。 如果没有 Azure 存储帐户，请按照[创建存储帐户](../storage/common/storage-account-create.md)中的说明操作。
 
 ## <a name="create-two-containers-in-blob-storage"></a>在 Blob 存储中创建两个容器
@@ -52,7 +47,7 @@ ms.locfileid: "84730131"
 
 ## <a name="create-a-data-factory"></a>创建数据工厂
 
-1. 在左窗格中，选择“创建资源”  。 选择“分析” > “数据工厂”   ：
+1. 在左窗格中，选择“创建资源”  。 选择 **集成**  >  **数据工厂**：
 
    ![选择“数据工厂”](./media/doc-common-process/new-azure-data-factory-menu.png)
 

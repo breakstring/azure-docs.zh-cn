@@ -1,23 +1,20 @@
 ---
 title: Azure 工具包：远程调试 Apache Spark 应用-Azure HDInsight
 description: 了解如何使用 Azure Toolkit for IntelliJ 中的 HDInsight 工具通过 VPN 远程调试 HDInsight 群集上运行的 Spark 应用程序。
-author: hrasheed-msft
-ms.author: hrasheed
-ms.reviewer: jasonh
 ms.service: hdinsight
 ms.custom: hdinsightactive
 ms.topic: how-to
 ms.date: 11/28/2017
-ms.openlocfilehash: 7ec49ee4f07aff6e9b9f9d6fc43e37742d7e163a
-ms.sourcegitcommit: 124f7f699b6a43314e63af0101cd788db995d1cb
+ms.openlocfilehash: 1daf59c47bf71ad019011036bf42bf6727754345
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/08/2020
-ms.locfileid: "86085117"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98940358"
 ---
 # <a name="use-azure-toolkit-for-intellij-to-debug-apache-spark-applications-remotely-in-hdinsight-through-vpn"></a>使用 Azure Toolkit for IntelliJ 通过 VPN 在 HDInsight 中远程调试 Apache Spark 应用程序
 
-我们建议通过 SSH 远程调试 [Apache Spark](https://spark.apache.org/) 应用程序。 有关说明，请参阅[使用 Azure Toolkit for IntelliJ 通过 SSH 远程调试 HDInsight 群集上的 Apache Spark 应用程序](https://docs.microsoft.com/azure/hdinsight/hdinsight-apache-spark-intellij-tool-debug-remotely-through-ssh)。
+我们建议通过 SSH 远程调试 [Apache Spark](https://spark.apache.org/) 应用程序。 有关说明，请参阅[使用 Azure Toolkit for IntelliJ 通过 SSH 远程调试 HDInsight 群集上的 Apache Spark 应用程序](./apache-spark-intellij-tool-debug-remotely-through-ssh.md)。
 
 本文提供有关如何在 HDInsight Spark 群集上使用用于 IntelliJ 的 Azure 工具包中的 HDInsight 工具插件提交 Spark 作业，并从台式机远程调试该作业的逐步指导。 若要完成这些任务，必须执行以下概要步骤：
 
@@ -31,17 +28,17 @@ ms.locfileid: "86085117"
 
 * **Azure 订阅**。 有关详细信息，请参阅[获取 Azure 免费试用版](https://azure.microsoft.com/documentation/videos/get-azure-free-trial-for-testing-hadoop-in-hdinsight/)。
 * **HDInsight 中的 Apache Spark 群集**。 有关说明，请参阅[在 Azure HDInsight 中创建 Apache Spark 群集](apache-spark-jupyter-spark-sql.md)。
-* **Oracle Java 开发工具包**。 可以从 [Oracle 网站](https://aka.ms/azure-jdks)安装该工具包。
+* **Oracle Java 开发工具包**。 可以从 [Oracle 网站](/azure/developer/java/fundamentals/java-jdk-long-term-support)安装该工具包。
 * **IntelliJ IDEA**。 本文使用版本 2017.1。 可以从 [JetBrains 网站](https://www.jetbrains.com/idea/download/)进行安装。
-* **Azure Toolkit for IntelliJ 中的 HDInsight 工具**。 用于 IntelliJ 的 Azure 工具包随附了用于 IntelliJ 的 HDInsight 工具。 有关 Azure 工具包的安装方法说明，请参阅[安装用于 IntelliJ 的 Azure 工具包](https://docs.microsoft.com/java/azure/intellij/azure-toolkit-for-intellij-installation)。
+* **Azure Toolkit for IntelliJ 中的 HDInsight 工具**。 用于 IntelliJ 的 Azure 工具包随附了用于 IntelliJ 的 HDInsight 工具。 有关 Azure 工具包的安装方法说明，请参阅[安装用于 IntelliJ 的 Azure 工具包](/java/azure/intellij/azure-toolkit-for-intellij-installation)。
 * **从 IntelliJ IDEA 登录到 Azure 订阅**。 遵照[使用 Azure Toolkit for IntelliJ 为 HDInsight 群集创建 Apache Spark 应用程序](apache-spark-intellij-tool-plugin.md)中的说明操作。
-* **异常解决方法**。 在 Windows 计算机上运行 Spark Scala 应用程序进行远程调试时，可能会出现异常。 [SPARK-2356](https://issues.apache.org/jira/browse/SPARK-2356) 中解释了此异常，其原因是 Windows 中缺少 WinUtils.exe 文件。 若要解决此错误，必须将[Winutils.exe](https://github.com/steveloughran/winutils)下载到**C:\WinUtils\bin**等位置。 添加环境变量 **HADOOP_HOME**，并将其值设置为 **C\WinUtils**。
+* **异常解决方法**。 在 Windows 计算机上运行 Spark Scala 应用程序进行远程调试时，可能会出现异常。 [SPARK-2356](https://issues.apache.org/jira/browse/SPARK-2356) 中解释了此异常，其原因是 Windows 中缺少 WinUtils.exe 文件。 若要解决此错误，必须将 [Winutils.exe](https://github.com/steveloughran/winutils) 下载到某个位置（例如 **C:\WinUtils\bin**）。 添加环境变量 **HADOOP_HOME**，并将其值设置为 **C\WinUtils**。
 
 ## <a name="step-1-create-an-azure-virtual-network"></a>步骤 1：创建 Azure 虚拟网络
 
 遵照以下链接中的说明创建 Azure 虚拟网络，并验证台式机与虚拟网络之间的连接。
 
-* [使用 Azure 门户创建具有站点到站点 VPN 连接的 VNet](../../vpn-gateway/vpn-gateway-howto-site-to-site-resource-manager-portal.md)
+* [使用 Azure 门户创建具有站点到站点 VPN 连接的 VNet](../../vpn-gateway/tutorial-site-to-site-portal.md)
 * [使用 PowerShell 创建具有站点到站点 VPN 连接的 VNet](../../vpn-gateway/vpn-gateway-create-site-to-site-rm-powershell.md)
 * [使用 PowerShell 配置与虚拟网络的点到站点连接](../../vpn-gateway/vpn-gateway-howto-point-to-site-rm-ps.md)
 
@@ -59,11 +56,11 @@ ms.locfileid: "86085117"
 
     ![选择 Apache Ambari 中的主机](./media/apache-spark-intellij-tool-plugin-debug-jobs-remotely/apache-ambari-hosts1.png)
 
-1. 此时会显示头节点、工作节点和 zookeeper 节点的列表。 头节点带有 **hn*** 前缀。 选择第一个头节点。
+1. 此时会显示头节点、工作节点和 zookeeper 节点的列表。 头节点带有 **hn** _ 前缀。 选择第一个头节点。
 
     ![在 Apache Ambari 中查找头节点](./media/apache-spark-intellij-tool-plugin-debug-jobs-remotely/ambari-cluster-headnodes.png)
 
-1. 在打开的页面底部的“摘要”窗格中，复制头节点的“IP 地址”和“主机名”。   
+1. 在打开的页面底部的“摘要”窗格中，复制头节点的“IP 地址”和“主机名”。 
 
     ![查找 Apache Ambari 中的 IP 地址](./media/apache-spark-intellij-tool-plugin-debug-jobs-remotely/headnode-ip-address1.png)
 
@@ -255,43 +252,43 @@ ms.locfileid: "86085117"
       * 对于.`.set("spark.yarn.jar", "wasb:///hdp/apps/2.4.2.0-258/spark-assembly-1.6.1.2.4.2.0-258-hadoop2.7.1.2.4.2.0-258.jar")`，请确保 Spark 程序集 JAR 可在指定路径上的群集存储中使用。
       * 对于 `setJars`，请指定项目 JAR 的创建位置。 这通常是 `<Your IntelliJ project directory>\out\<project name>_DefaultArtifact\default_artifact.jar`。
 
-1. 在 `*RemoteClusterDebugging` 类中，右键单击 `test` 关键字，并选择“创建 RemoteClusterDebugging 配置”****。
+1. 在 `*RemoteClusterDebugging` 类中，右键单击 `test` 关键字，并选择“创建 RemoteClusterDebugging 配置”。
 
     ![IntelliJ 构思创建远程配置](./media/apache-spark-intellij-tool-plugin-debug-jobs-remotely/create-remote-config.png)
 
-1. 在“创建 RemoteClusterDebugging 配置”对话框中，为配置提供名称，并选择选择“测试种类”作为“测试名称”。************ 将其他所有值保留默认设置。 依次选择“应用”、“确定” 。
+1. 在“创建 RemoteClusterDebugging 配置”对话框中，为配置提供名称，并选择选择“测试种类”作为“测试名称”。 将其他所有值保留默认设置。 依次选择“应用”、“确定” 。
 
     ![创建 RemoteClusterDebugging 配置](./media/apache-spark-intellij-tool-plugin-debug-jobs-remotely/provide-config-value.png)
 
-1. 现在，菜单栏中应会显示“远程运行”**** 配置下拉列表。
+1. 现在，菜单栏中应会显示“远程运行”配置下拉列表。
 
     ![IntelliJ "远程运行" 下拉列表](./media/apache-spark-intellij-tool-plugin-debug-jobs-remotely/intellij-config-remote-run.png)
 
 ## <a name="step-5-run-the-application-in-debug-mode"></a>步骤 5：在调试模式下运行应用程序
 
-1. 在 IntelliJ IDEA 项目中打开 `SparkSample.scala` 并在 `val rdd1` 旁边创建一个断点。 在“在为以下对象创建断点”弹出菜单中，选择“line in function executeJob”********。
+1. 在 IntelliJ IDEA 项目中打开 `SparkSample.scala` 并在 `val rdd1` 旁边创建一个断点。 在“在为以下对象创建断点”弹出菜单中，选择“line in function executeJob”。
 
     ![IntelliJ 构思添加断点](./media/apache-spark-intellij-tool-plugin-debug-jobs-remotely/intellij-create-breakpoint.png)
 
-1. 若要运行应用程序，请选择“远程运行”**** 配置下拉列表旁边的“调试运行”**** 按钮。
+1. 若要运行应用程序，请选择“远程运行”配置下拉列表旁边的“调试运行”按钮。
 
     ![IntelliJ 创意选择 "调试" 运行按钮](./media/apache-spark-intellij-tool-plugin-debug-jobs-remotely/debug-run-mode-button.png)
 
-1. 程序执行步骤到达断点时，底部窗格中应会显示“调试程序”**** 选项卡。
+1. 程序执行步骤到达断点时，底部窗格中应会显示“调试程序”选项卡。
 
     ![IntelliJ 主意查看 "调试器" 选项卡](./media/apache-spark-intellij-tool-plugin-debug-jobs-remotely/intellij-debugger-tab.png)
 
-1. 若要添加监视，请选择（ **+** ）图标。
+1. 若要添加监视，请选择 ( **+** ) 图标。
 
     ![IntelliJ 调试-添加监视-变量](./media/apache-spark-intellij-tool-plugin-debug-jobs-remotely/debug-add-watch-variable.png)
 
-    在此示例中，应用程序在创建变量 `rdd1` 之前已中断。 使用此监视可查看变量 `rdd` 中的前五行。 按 **Enter**。
+    在此示例中，应用程序在创建变量 `rdd1` 之前已中断。 使用此监视可查看变量 `rdd` 中的前五行。 选择 **Enter**。
 
     ![IntelliJ 在调试模式下运行程序](./media/apache-spark-intellij-tool-plugin-debug-jobs-remotely/debug-add-watch-variable-value.png)
 
     从上图可以看到，在运行时，可以查询 TB 量级的数据，并可以逐步调试应用程序。 例如，在上图显示的输出中，可以看到输出的第一行是标头。 基于此输出，可以修改应用程序代码，以根据需要跳过标头行。
 
-1. 现在可以选择“恢复程序”**** 图标继续运行应用程序。
+1. 现在可以选择“恢复程序”图标继续运行应用程序。
 
     ![IntelliJ 创意选择恢复程序](./media/apache-spark-intellij-tool-plugin-debug-jobs-remotely/debug-continue-remote-run.png)
 
@@ -313,21 +310,21 @@ ms.locfileid: "86085117"
 * [Apache Spark 与 BI：使用 HDInsight 中的 Spark 和 BI 工具执行交互式数据分析](apache-spark-use-bi-tools.md)
 * [Apache Spark 与机器学习：通过 HDInsight 中的 Spark 使用 HVAC 数据分析建筑物温度](apache-spark-ipython-notebook-machine-learning.md)
 * [Apache Spark 与机器学习：使用 HDInsight 中的 Spark 预测食品检查结果](apache-spark-machine-learning-mllib-ipython.md)
-* [使用 HDInsight 中的 Apache Spark 分析网站日志](../hdinsight-apache-spark-custom-library-website-log-analysis.md)
+* [使用 HDInsight 中的 Apache Spark 分析网站日志](./apache-spark-custom-library-website-log-analysis.md)
 
 ### <a name="create-and-run-applications"></a>创建和运行应用程序
 
-* [使用 Scala 创建独立的应用程序](../hdinsight-apache-spark-create-standalone-application.md)
+* [使用 Scala 创建独立的应用程序](./apache-spark-create-standalone-application.md)
 * [使用 Apache Livy 在 Apache Spark 群集中远程运行作业](apache-spark-livy-rest-interface.md)
 
 ### <a name="tools-and-extensions"></a>工具和扩展
 
 * [使用 Azure Toolkit for IntelliJ 为 HDInsight 群集创建 Apache Spark 应用程序](apache-spark-intellij-tool-plugin.md)
 * [使用 Azure Toolkit for IntelliJ 通过 SSH 远程调试 Apache Spark 应用程序](apache-spark-intellij-tool-debug-remotely-through-ssh.md)
-* [使用 Azure Toolkit for Eclipse 中的 HDInsight 工具创建 Apache Spark 应用程序](../hdinsight-apache-spark-eclipse-tool-plugin.md)
+* [使用 Azure Toolkit for Eclipse 中的 HDInsight 工具创建 Apache Spark 应用程序](./apache-spark-eclipse-tool-plugin.md)
 * [在 HDInsight 上的 Apache Spark 群集中使用 Apache Zeppelin 笔记本](apache-spark-zeppelin-notebook.md)
-* [在 HDInsight 的 Apache Spark 群集中可用于 Jupyter Notebook 的内核](apache-spark-jupyter-notebook-kernels.md)
-* [Use external packages with Jupyter notebooks（将外部包与 Jupyter 笔记本配合使用）](apache-spark-jupyter-notebook-use-external-packages.md)
+* [适用于 HDInsight 的 Apache Spark 群集中的 Jupyter Notebook 可用的内核](apache-spark-jupyter-notebook-kernels.md)
+* [将外部包与 Jupyter 笔记本配合使用](apache-spark-jupyter-notebook-use-external-packages.md)
 * [Install Jupyter on your computer and connect to an HDInsight Spark cluster（在计算机上安装 Jupyter 并连接到 HDInsight Spark 群集）](apache-spark-jupyter-notebook-install-locally.md)
 
 ### <a name="manage-resources"></a>管理资源

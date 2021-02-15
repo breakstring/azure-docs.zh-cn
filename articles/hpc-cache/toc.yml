@@ -8,6 +8,10 @@
   items:
     - name: 规划聚合命名空间
       href: hpc-cache-namespace.md
+    - name: 安全性
+      items:
+        - name: 安全基线
+          href: security-baseline.md
 - name: 操作指南
   items:
     - name: 先决条件
@@ -18,6 +22,8 @@
       items:
         - name: 添加存储目标
           href: hpc-cache-add-storage.md
+        - name: 添加命名空间路径
+          href: add-namespace-paths.md
         - name: 将数据移到存储目标（如果需要）
           items:
             - name: 将数据预加载到新的 Blob 存储
@@ -36,12 +42,20 @@
       href: hpc-cache-mount.md
     - name: 管理缓存
       href: hpc-cache-manage.md
-    - name: 配置可选设置
-      href: configuration.md
+    - name: 使用可选设置
+      items:
+        - name: 配置可选设置
+          href: configuration.md
+        - name: 访问策略自定义
+          href: access-policies.md
+        - name: 设置目录服务
+          href: directory-services.md
 - name: 参考
   items:
     - name: Azure CLI
       href: /cli/azure/ext/hpc-cache/hpc-cache
+    - name: Azure PowerShell
+      href: /powershell/module/Az.HPCCache
 - name: 资源
   items:
     - name: 开具支持票证

@@ -5,18 +5,18 @@ services: active-directory
 ms.service: active-directory
 ms.subservice: conditional-access
 ms.topic: conceptual
-ms.date: 02/11/2020
+ms.date: 10/16/2020
 ms.author: joflore
 author: MicrosoftGuyJFlo
 manager: daveba
 ms.reviewer: calebb
 ms.collection: M365-identity-device-management
-ms.openlocfilehash: defb959a56446da337c4c7c16ee118ceecd3e674
-ms.sourcegitcommit: 7fe8df79526a0067be4651ce6fa96fa9d4f21355
+ms.openlocfilehash: 1b3b4da4e21bca421b76f820c04ba68375be5ca0
+ms.sourcegitcommit: 96918333d87f4029d4d6af7ac44635c833abb3da
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/06/2020
-ms.locfileid: "87846303"
+ms.lasthandoff: 11/04/2020
+ms.locfileid: "93307780"
 ---
 # <a name="conditional-access-cloud-apps-or-actions"></a>条件访问：云应用或操作
 
@@ -31,12 +31,12 @@ ms.locfileid: "87846303"
 
 许多现有 Microsoft 云应用程序都包含在可供选择的应用程序的列表中。 
 
-管理员可以向 Microsoft 提供的以下云应用分配条件访问策略。 某些应用（例如 Office 365 预览版和 Microsoft Azure 管理）包含多个相关子应用或服务。 以下列表并不完整，且随时可能会更改。
+管理员可以向 Microsoft 提供的以下云应用分配条件访问策略。 某些应用（如 Office 365 和 Microsoft Azure 管理）包含多个相关的子应用或服务。 以下列表并不完整，且随时可能会更改。
 
-- [Office 365（预览版）](#office-365-preview)
+- [Office 365](#office-365)
 - Azure Analysis Services
 - Azure DevOps
-- [Azure SQL 数据库和数据仓库](../../azure-sql/database/conditional-access-configure.md)
+- [Azure SQL 数据库和 Azure Synapse Analytics](../../azure-sql/database/conditional-access-configure.md)
 - Dynamics CRM Online
 - Microsoft Application Insights Analytics
 - [Microsoft Azure 信息保护](/azure/information-protection/faqs#i-see-azure-information-protection-is-listed-as-an-available-cloud-app-for-conditional-accesshow-does-this-work)
@@ -55,9 +55,9 @@ ms.locfileid: "87846303"
 - Microsoft StaffHub
 - Microsoft Stream
 - Microsoft Teams
-- Office 365 Exchange Online
-- Office 365 SharePoint Online
-- Office 365 Yammer
+- Exchange Online
+- SharePoint
+- Yammer
 - Office Delve
 - Office Sway
 - Outlook Groups
@@ -67,25 +67,25 @@ ms.locfileid: "87846303"
 - 虚拟专用网络 (VPN)
 - Windows Defender ATP
 
-### <a name="office-365-preview"></a>Office 365（预览版）
+### <a name="office-365"></a>Office 365
 
-Office 365 提供基于云的生产力和协作服务，如 Exchange、SharePoint 和 Microsoft Teams。 Office 365 云服务已深度集成，以确保提供顺利的协作体验。 在创建策略时，这种集成可能会造成混淆，因为某些应用（如 Microsoft Teams）依赖于 SharePoint 或 Exchange 等其他一些应用。
+Microsoft 365 提供基于云的高效生产和协作服务，如 Exchange、SharePoint 和 Microsoft Teams。 Microsoft 365 云服务已深度集成，以确保用户拥有顺畅的协作体验。 在创建策略时，这种集成可能会造成混淆，因为某些应用（如 Microsoft Teams）依赖于 SharePoint 或 Exchange 等其他一些应用。
 
-在 Office 365（预览版）应用中可以一次性将所有这些服务作为目标。 我们建议使用新的 Office 365（预览版）应用，而不要将单个云应用作为目标，以免[服务依赖关系](service-dependencies.md)出现问题。 将这一组应用程序作为目标有助于避免因策略和依赖关系不一致而导致的问题。
+使用 Office 365 应用可以同时将这些服务作为目标。 建议使用新的 Office 365 应用，而不是以单个云应用作为目标，以避免[服务依赖项](service-dependencies.md)出现问题。 将这一组应用程序作为目标有助于避免因策略和依赖关系不一致而导致的问题。
 
-如果需要，管理员可以选择从策略中排除特定的应用，只需在策略中包含 Office 365（预览版）应用，并排除所选的特定应用即可。
+如果需要，管理员可以选择从策略中排除特定应用，方法是在策略中包括 Office 365 应用并排除所选的特定应用。
 
-Office 365（预览版）客户端应用中包含的关键应用程序：
+Office 365 客户端应用中包含的关键应用程序：
 
    - Microsoft Flow
    - Microsoft Forms
    - Microsoft Stream
    - 微软待办
    - Microsoft Teams
-   - Office 365 Exchange Online
-   - Office 365 SharePoint Online
-   - Office 365 Search Service
-   - Office 365 Yammer
+   - Exchange Online
+   - SharePoint Online
+   - Microsoft 365 搜索服务
+   - Yammer
    - Office Delve
    - Office Online
    - Office.com
@@ -102,6 +102,7 @@ Microsoft Azure 管理应用程序包括多个基础服务。
    - Azure 资源管理器提供程序
    - 经典部署模型 API
    - Azure PowerShell
+   - Azure CLI
    - Visual Studio 订阅管理员门户
    - Azure DevOps
    - Azure 数据工厂门户
@@ -115,13 +116,12 @@ Microsoft Azure 管理应用程序包括多个基础服务。
 
 - 通过 [Azure AD 应用程序代理](../manage-apps/what-is-application-proxy.md)发布的应用程序
 - [从库中添加的应用程序](../manage-apps/add-application-portal.md)
-- [不在库中的自定义应用程序](../manage-apps/add-non-gallery-app.md)
+- [不在库中的自定义应用程序](../manage-apps/view-applications-portal.md)
 - [通过应用交付控制器和网络发布的传统应用程序](../manage-apps/secure-hybrid-access.md)
 - 使用[基于密码的单一登录](../manage-apps/configure-password-single-sign-on-non-gallery-applications.md)的应用程序
 
 > [!NOTE]
-> 由于条件访问策略规定了有关访问服务的要求，因此你无法将其应用于客户端（公共/本机）应用程序。 换句话说，该策略不是直接在客户端（公共/本机）应用程序上设置的，而是在客户端调用服务时应用的。 例如，在 SharePoint 服务上设置的策略将应用于调用 SharePoint 的客户端。 在 Exchange 上设置的策略将应用于使用 Outlook 客户端访问电子邮件的尝试。 正因如此，云应用选取器没有客户端（公共/本机）应用程序可供选择，并且在租户中注册的客户端（公共/本机）应用程序的应用程序设置中未提供条件访问选项。 
-
+> 由于条件访问策略会设置访问服务的要求，因此不能将其应用于 (公共/本机) 应用程序的客户端。 换句话说，该策略不是直接在客户端（公共/本机）应用程序上设置的，而是在客户端调用服务时应用的。 例如，在 SharePoint 服务上设置的策略将应用于调用 SharePoint 的客户端。 在 Exchange 上设置的策略将应用于使用 Outlook 客户端访问电子邮件的尝试。 正因如此，云应用选取器没有客户端（公共/本机）应用程序可供选择，并且在租户中注册的客户端（公共/本机）应用程序的应用程序设置中未提供条件访问选项。 
 
 ## <a name="user-actions"></a>用户操作
 

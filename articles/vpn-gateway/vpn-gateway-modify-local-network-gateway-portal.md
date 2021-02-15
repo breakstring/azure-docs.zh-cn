@@ -5,40 +5,82 @@ services: vpn-gateway
 author: cherylmc
 ms.service: vpn-gateway
 ms.topic: how-to
-ms.date: 06/19/2017
+ms.date: 10/16/2020
 ms.author: cherylmc
-ms.openlocfilehash: fa43df8c4f17bff4e97d999c6653bdcb045bfec3
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 4ff4f1238764d7bdab6e74d29254a6388ea76d78
+ms.sourcegitcommit: dbe434f45f9d0f9d298076bf8c08672ceca416c6
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "84985219"
+ms.lasthandoff: 10/17/2020
+ms.locfileid: "92143149"
 ---
 # <a name="modify-local-network-gateway-settings-using-the-azure-portal"></a>使用 Azure 门户修改本地网络网关设置
 
 有时本地网络网关 AddressPrefix 或 GatewayIPAddress 的设置会变更。 本文演示如何修改本地网络网关设置。 还可以选择以下列表中的其他选项，使用另一种方法来修改这些设置：
-
-在删除连接之前，可能需要下载用于连接设备的配置，以便获取已定义的 PSK。 这样，便无需在另一端重新定义它。
 
 > [!div class="op_single_selector"]
 > * [Azure 门户](vpn-gateway-modify-local-network-gateway-portal.md)
 > * [PowerShell](vpn-gateway-modify-local-network-gateway.md)
 > * [Azure CLI](vpn-gateway-modify-local-network-gateway-cli.md)
 >
+
+## <a name="local-network-gateway-configuration"></a><a name="configure-lng"></a>本地网络网关配置
+
+下面的屏幕截图显示了使用公共 IP 地址终结点的本地网络网关资源的 **配置** 页：
+
+:::image type="content" source="./media/vpn-gateway-modify-local-network-gateway-portal/settings.png" alt-text="IP 地址设置" lightbox="./media/vpn-gateway-modify-local-network-gateway-portal/settings-expand.png":::
+
+这是具有 FQDN 终结点的配置页：
+
+:::image type="content" source="./media/vpn-gateway-modify-local-network-gateway-portal/name.png" alt-text="IP 地址设置":::
+
+## <a name="to-modify-the-gateway-ip-address-or-fqdn"></a><a name="ip"></a>修改网关 IP 地址或 FQDN
+
+> [!NOTE]
+> 不能在 FQDN 终结点和 IP 地址终结点之间更改本地网络网关。 必须删除与此本地网络网关关联的所有连接，使用新终结点 (IP 地址或 FQDN) 创建新的连接，然后重新创建连接。
 >
 
+如果要连接到的 VPN 设备已更改其公共 IP 地址，请使用以下步骤修改本地网络网关：
 
-## <a name="modify-ip-address-prefixes"></a><a name="ipaddprefix"></a>修改 IP 地址前缀
+1. 在 "本地网络网关" 资源的 " **设置** " 部分，选择 " **配置**"。
+2. 在“IP 地址”**** 框中，修改 IP 地址。
+3. 选择“保存”****，保存这些设置。
 
-修改 IP 地址前缀时，执行的步骤取决于你的本地网络网关是否具有连接。
+如果要连接到的 VPN 设备已更改其 FQDN (完全限定的域名) ，请使用以下步骤修改本地网络网关：
 
-[!INCLUDE [modify prefix](../../includes/vpn-gateway-modify-ip-prefix-portal-include.md)]
+1. 在 "本地网络网关" 资源的 " **设置** " 部分，选择 " **配置**"。
+2. 在 " **FQDN** " 框中，修改域名。
+3. 选择“保存”****，保存这些设置。
 
-## <a name="modify-the-gateway-ip-address"></a><a name="gwip"></a>修改网关 IP 地址
+## <a name="to-modify-ip-address-prefixes"></a><a name="ipaddprefix"></a>修改 IP 地址前缀
 
-如果要连接的 VPN 设备已更改其公共 IP 地址，则需根据该更改修改本地网关。 更改公共 IP 地址时，执行的步骤取决于你的本地网络网关是否具有连接。
+添加其他地址前缀：
 
-[!INCLUDE [modify gateway IP](../../includes/vpn-gateway-modify-lng-gateway-ip-portal-include.md)]
+1. 在 "本地网络网关" 资源的 " **设置** " 部分，选择 " **配置**"。
+2. 在“添加更多地址范围”** 框中添加 IP 地址空间。
+3. 选择“保存”以保存设置。
+
+删除地址前缀：
+
+1. 在 "本地网络网关" 资源的 " **设置** " 部分，选择 " **配置**"。
+2. 在包含要删除的前缀的行上，选择 **"..."** 。
+3. 选择“删除” 。
+4. 选择“保存”以保存设置。
+
+## <a name="to-modify-bgp-settings"></a><a name="bgp"></a>修改 BGP 设置
+
+添加或更新 BGP 设置：
+
+1. 在 "本地网络网关" 资源的 " **设置** " 部分，选择 " **配置**"。
+2. 选择 **"配置 BGP 设置"** 以显示或更新此本地网络网关的 BGP 配置
+3. 在相应的字段中添加或更新自治系统编号或 BGP 对等节点 IP 地址
+4. 选择“保存”以保存设置。
+
+删除 BGP 设置：
+
+1. 在 "本地网络网关" 资源的 " **设置** " 部分，选择 " **配置**"。
+2. 取消选择 **"配置 BGP 设置"** 以删除现有的 bgp ASN 和 BGP 对等节点 IP 地址
+3. 选择“保存”以保存设置。
 
 ## <a name="next-steps"></a>后续步骤
 

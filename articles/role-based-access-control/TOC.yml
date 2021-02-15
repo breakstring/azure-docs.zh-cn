@@ -26,13 +26,12 @@
       href: tutorial-custom-role-powershell.md
     - name: 创建自定义角色 - CLI
       href: tutorial-custom-role-cli.md
-- name: 示例
-  items:
-    - name: Azure Policy 内置策略定义
-      displayName: 'samples, policies, definitions'
-      href: ./policy-samples.md
 - name: 概念
   items:
+    - name: 角色定义
+      href: role-definitions.md
+    - name: 范围
+      href: scope-overview.md
     - name: 最佳做法
       href: best-practices.md
     - name: 用于 Azure 管理的条件访问
@@ -45,11 +44,7 @@
 - name: 操作指南
   items:
     - name: 列出角色定义
-      items:
-        - name: 概述
-          href: role-definitions.md
-        - name: 列出角色定义
-          href: role-definitions-list.md
+      href: role-definitions-list.md
     - name: 列出角色分配
       items:
         - name: 门户
@@ -62,10 +57,18 @@
           href: role-assignments-list-rest.md
     - name: 添加或删除角色分配
       items:
+        - name: 角色分配的添加步骤
+          href: role-assignments-steps.md
         - name: 门户
-          href: role-assignments-portal.md
-        - name: 门户 - 来宾用户
-          href: role-assignments-external-users.md
+          items:
+            - name: 添加或删除角色分配
+              href: role-assignments-portal.md
+            - name: 订阅管理员
+              href: role-assignments-portal-subscription-admin.md
+            - name: 托管标识
+              href: role-assignments-portal-managed-identity.md
+            - name: 外部来宾用户
+              href: role-assignments-external-users.md
         - name: PowerShell
           href: role-assignments-powershell.md
         - name: Azure CLI
@@ -85,7 +88,7 @@
           href: deny-assignments-powershell.md
         - name: REST API
           href: deny-assignments-rest.md
-    - name: 创建或更新自定义角色
+    - name: 创建自定义角色
       items:
         - name: 概述
           href: custom-roles.md
@@ -106,7 +109,7 @@
       href: elevate-access-global-admin.md
     - name: 经典管理员
       href: classic-administrators.md
-    - name: 将订阅传输到不同的目录（预览）
+    - name: 将订阅传输到不同的目录
       href: transfer-subscription.md
     - name: 疑难解答
       href: troubleshooting.md
@@ -117,7 +120,7 @@
     - name: 资源提供程序操作
       href: resource-provider-operations.md
     - name: Azure RBAC 限制
-      href: ../azure-resource-manager/management/azure-subscription-service-limits.md#role-based-access-control-limits
+      href: ../azure-resource-manager/management/azure-subscription-service-limits.md#azure-role-based-access-control-limits
     - name: Azure PowerShell
       href: /powershell/module/az.resources
     - name: Azure CLI
@@ -131,6 +134,9 @@
           href: /azure/templates/microsoft.authorization/roleassignments
         - name: 角色定义
           href: /azure/templates/microsoft.authorization/roledefinitions
+    - name: Azure Policy 内置策略定义
+      displayName: 'samples, policies, definitions'
+      href: ./policy-reference.md
 - name: 资源
   items:
     - name: 利用 Microsoft Learn 掌握技能

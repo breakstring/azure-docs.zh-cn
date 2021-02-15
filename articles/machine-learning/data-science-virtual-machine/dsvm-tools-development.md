@@ -4,18 +4,17 @@ titleSuffix: Azure Data Science Virtual Machine
 description: 了解 Data Science Virtual Machine 上提供的工具和集成开发环境。
 keywords: 数据科学工具, 数据科学虚拟机, 数据科学工具, Linux 数据科学
 services: machine-learning
-ms.service: machine-learning
-ms.subservice: data-science-vm
+ms.service: data-science-vm
 author: lobrien
 ms.author: laobri
 ms.topic: conceptual
 ms.date: 12/12/2019
-ms.openlocfilehash: 42a595246f45b2c7423aaf77c95f17243cf8813c
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.openlocfilehash: cecc195b8b97ffd9b25cf12898726352ddd698a9
+ms.sourcegitcommit: e972837797dbad9dbaa01df93abd745cb357cde1
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87012377"
+ms.lasthandoff: 02/14/2021
+ms.locfileid: "100519433"
 ---
 # <a name="development-tools-on-the-azure-data-science-virtual-machine"></a>Azure Data Science Virtual Machine 上的开发工具
 
@@ -23,7 +22,7 @@ Data Science Virtual Machine (DSVM) 在高效集成开发环境 (IDE) 中捆绑�
 
 ## <a name="visual-studio-community-edition"></a>Visual Studio Community Edition
 
-| Category | 值 |
+| 类别 | 值 |
 | ------------- | ------------- |
 | 它是什么？   | 常规用途 IDE      |
 | 支持的 DSVM 版本      | Windows:Visual Studio 2017、Windows 2019：Visual Studio 2019      |
@@ -37,7 +36,7 @@ Data Science Virtual Machine (DSVM) 在高效集成开发环境 (IDE) 中捆绑�
 
 ## <a name="visual-studio-code"></a>Visual Studio Code 
 
-| Category | 值 |
+| 类别 | 值 |
 | ------------- | ------------- |
 | 它是什么？   | 常规用途 IDE      |
 | 支持的 DSVM 版本      | Windows、Linux     |
@@ -47,7 +46,7 @@ Data Science Virtual Machine (DSVM) 在高效集成开发环境 (IDE) 中捆绑�
 
 ## <a name="rstudio-desktop"></a>RStudio 桌面
 
-| Category | 值 |
+| 类别 | 值 |
 | ------------- | ------------- |
 | 它是什么？   | R 语言的客户端 IDE   |
 | 支持的 DSVM 版本      | Windows、Linux      |
@@ -57,7 +56,7 @@ Data Science Virtual Machine (DSVM) 在高效集成开发环境 (IDE) 中捆绑�
 
 ## <a name="rstudio-server"></a>RStudio Server
 
-| Category | 值 |
+| 类别 | 值 |
 | ------------- | ------------- |
 | 它是什么？   | R 语言的客户端 IDE   |
 | 它是什么？   | R 的基于 Web 的 IDE    |
@@ -68,7 +67,7 @@ Data Science Virtual Machine (DSVM) 在高效集成开发环境 (IDE) 中捆绑�
 
 ## <a name="juno"></a>Juno 
 
-| Category | 值 |
+| 类别 | 值 |
 | ------------- | ------------- |
 | 它是什么？   | Julia 语言的客户端 IDE   |
 | 支持的 DSVM 版本      | Windows、Linux      |
@@ -78,7 +77,7 @@ Data Science Virtual Machine (DSVM) 在高效集成开发环境 (IDE) 中捆绑�
 
 ## <a name="pycharm"></a>Pycharm
 
-| Category | 值 |
+| 类别 | 值 |
 | ------------- | ------------- |
 | 它是什么？   | Python 语言的客户端 IDE    |
 | 支持的 DSVM 版本      | Windows 2019、Linux      |

@@ -5,12 +5,12 @@ description: 了解如何为 Azure Kubernetes 服务 (AKS) 群集更新或重置
 services: container-service
 ms.topic: article
 ms.date: 03/11/2019
-ms.openlocfilehash: a824606bc0e77ba069b6b54725645ee3f348de27
-ms.sourcegitcommit: 5b8fb60a5ded05c5b7281094d18cf8ae15cb1d55
+ms.openlocfilehash: ba2c31872ae026cfdfcb7be17d333fb98194dce6
+ms.sourcegitcommit: d4734bc680ea221ea80fdea67859d6d32241aefc
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/29/2020
-ms.locfileid: "87386922"
+ms.lasthandoff: 02/14/2021
+ms.locfileid: "100389002"
 ---
 # <a name="update-or-rotate-the-credentials-for-azure-kubernetes-service-aks"></a>更新或轮换 Azure Kubernetes 服务 (AKS) 的凭据
 
@@ -22,20 +22,21 @@ ms.locfileid: "87386922"
 
 ## <a name="before-you-begin"></a>准备阶段
 
-需要安装并配置 Azure CLI 2.0.65 或更高版本。 运行  `az --version` 即可查找版本。 如果需要进行安装或升级，请参阅 [安装 Azure CLI][install-azure-cli]。
+需要安装并配置 Azure CLI 2.0.65 或更高版本。 运行 `az --version` 即可查找版本。 如果需要进行安装或升级，请参阅[安装 Azure CLI][install-azure-cli]。
 
 ## <a name="update-or-create-a-new-service-principal-for-your-aks-cluster"></a>为 AKS 群集更新或创建新的服务主体
 
-要更新 AKS 群集的凭据时，可以选择以下任一操作：
+要为 AKS 群集更新凭据时，可以选择以下任一操作：
 
-* 更新现有服务主体的凭据。
-* 创建新的服务主体并更新群集以使用这些新凭据。 
+* 为现有服务主体更新凭据。
+* 创建新服务主体并更新群集以使用这些新凭据。 
 
-> !出现如果选择创建*新*的服务主体，则更新大型 AKS 群集以使用这些凭据可能需要很长时间才能完成。
+> [!WARNING]
+> 如果选择创建新服务主体，那么更新大型 AKS 群集以使用这些凭据可能需要很长时间才能完成。
 
 ### <a name="check-the-expiration-date-of-your-service-principal"></a>检查服务主体的到期日期
 
-若要检查服务主体的到期日期，请使用[az ad sp credential list][az-ad-sp-credential-list]命令。 以下示例在*myResourceGroup*资源组中使用[az aks show][az-aks-show]命令获取名为*myAKSCluster*的群集的服务主体 ID。 服务主体 ID 设置为一个名为*SP_ID*的变量，用于[az ad SP credential list][az-ad-sp-credential-list]命令。
+若要检查服务主体的到期日期，请使用 [az ad sp credential list][az-ad-sp-credential-list] 命令。 以下示例使用 [az aks show][az-aks-show] 命令获取 myResourceGroup 资源组中名为 myAKSCluster 的群集的服务主体 ID 。 将服务主体 ID 设置为名为“SP_ID”的变量，以便与 [az ad sp credential list][az-ad-sp-credential-list] 命令一起使用。
 
 ```azurecli
 SP_ID=$(az aks show --resource-group myResourceGroup --name myAKSCluster \
@@ -46,6 +47,9 @@ az ad sp credential list --id $SP_ID --query "[].endDate" -o tsv
 ### <a name="reset-the-existing-service-principal-credential"></a>重置现有的服务主体凭据
 
 若要为现有服务主体更新凭据，请使用 [az aks show][az-aks-show] 命令获取群集的服务主体 ID。 以下示例获取 myResourceGroup 资源组中名为 myAKSCluster 的群集的 ID 。 服务主体 ID 设置为名为“SP_ID”变量以供在其他命令中使用。 这些命令使用 Bash 语法。
+
+> [!WARNING]
+> 当你在使用 Azure 虚拟机规模集的 AKS 群集上重置群集凭据时，将执行 [节点映像升级][node-image-upgrade] ，以使用新凭据信息更新节点。
 
 ```azurecli-interactive
 SP_ID=$(az aks show --resource-group myResourceGroup --name myAKSCluster \
@@ -60,7 +64,7 @@ SP_SECRET=$(az ad sp credential reset --name $SP_ID --query password -o tsv)
 
 现在继续浏览[使用新的服务主体凭据更新 AKS 群集](#update-aks-cluster-with-new-service-principal-credentials)。 若要在 AKS 群集上反映服务主体更改，必须执行此步骤。
 
-### <a name="create-a-new-service-principal"></a>创建新的服务主体
+### <a name="create-a-new-service-principal"></a>创建新服务主体
 
 如果在上一部分中选择更新现有服务主体凭据，请跳过此步骤。 继续浏览[使用新的服务主体凭据更新 AKS 群集](#update-aks-cluster-with-new-service-principal-credentials)。
 
@@ -90,7 +94,7 @@ SP_SECRET=a5ce83c9-9186-426d-9183-614597c7f2f7
 
 现在继续浏览[使用新的服务主体凭据更新 AKS 群集](#update-aks-cluster-with-new-service-principal-credentials)。 若要在 AKS 群集上反映服务主体更改，必须执行此步骤。
 
-## <a name="update-aks-cluster-with-new-service-principal-credentials"></a>更新具有新服务主体凭据的 AKS 群集
+## <a name="update-aks-cluster-with-new-service-principal-credentials"></a>使用新的服务主体凭据更新 AKS 群集
 
 > [!IMPORTANT]
 > 对于大型群集，使用新服务主体更新 AKS 群集可能需要较长时间才能完成。
@@ -103,10 +107,10 @@ az aks update-credentials \
     --name myAKSCluster \
     --reset-service-principal \
     --service-principal $SP_ID \
-    --client-secret "$SP_SECRET"
+    --client-secret $SP_SECRET
 ```
 
-对于中小型群集，服务主体凭据需要几分钟时间才能在 AKS 中更新。
+对于中小型群集，在 AKS 中更新服务主体凭据需要一段时间。
 
 ## <a name="update-aks-cluster-with-new-aad-application-credentials"></a>使用新的 AAD 应用程序凭据更新 AKS 群集
 
@@ -137,3 +141,4 @@ az aks update-credentials \
 [az-ad-sp-create]: /cli/azure/ad/sp#az-ad-sp-create-for-rbac
 [az-ad-sp-credential-list]: /cli/azure/ad/sp/credential#az-ad-sp-credential-list
 [az-ad-sp-credential-reset]: /cli/azure/ad/sp/credential#az-ad-sp-credential-reset
+[node-image-upgrade]: ./node-image-upgrade.md

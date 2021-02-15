@@ -2,13 +2,13 @@
 title: 没有 800 计数限制的资源
 description: 列出可以在一个资源组中有 800 多个实例的 Azure 资源类型。
 ms.topic: conceptual
-ms.date: 05/04/2020
-ms.openlocfilehash: 6f7b45ec3691bc3a48d9aa3dfa072c1c68189007
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.date: 01/08/2021
+ms.openlocfilehash: 6a63fd7e41c03b542f4a43b483243702c5be5f14
+ms.sourcegitcommit: c4c554db636f829d7abe70e2c433d27281b35183
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87040764"
+ms.lasthandoff: 01/08/2021
+ms.locfileid: "98034928"
 ---
 # <a name="resources-not-limited-to-800-instances-per-resource-group"></a>没有每个资源组 800 个实例限制的资源
 
@@ -22,6 +22,8 @@ ms.locfileid: "87040764"
 
 ## <a name="microsoftazurestack"></a>Microsoft.AzureStack
 
+* edgeSubscriptions
+* linkedSubscriptions
 * registrations
 * registrations/customerSubscriptions
 * registrations/products
@@ -38,6 +40,7 @@ ms.locfileid: "87040764"
 * galleries/images/versions
 * images
 * snapshots
+* virtualMachineScaleSets - 默认情况下，限制为 800 个实例。 可以通过联系支持人员来提高该限制。
 * virtualMachines
 
 ## <a name="microsoftcontainerinstance"></a>Microsoft.ContainerInstance
@@ -55,24 +58,30 @@ ms.locfileid: "87040764"
 * registries/tasks
 * registries/webhooks
 
+## <a name="microsoftd365customerinsights"></a>D365CustomerInsights
+
+* instances
+
 ## <a name="microsoftdbformariadb"></a>Microsoft.DBforMariaDB
 
 * servers
 
 ## <a name="microsoftdbformysql"></a>Microsoft.DBforMySQL
 
+* flexibleServers
 * servers
 
 ## <a name="microsoftdbforpostgresql"></a>Microsoft.DBforPostgreSQL
 
+* flexibleServers
 * serverGroups
 * servers
 * serversv2
-* singleServers
 
 ## <a name="microsoftdevtestlab"></a>Microsoft.DevTestLab
 
-* 计划-默认情况下限制为800实例。 可以通过联系支持人员来提高该限制。
+* 实验室/virtualMachines-默认情况下，限于800实例。 
+* schedules
 
 ## <a name="microsoftenterpriseknowledgegraph"></a>Microsoft.EnterpriseKnowledgeGraph
 
@@ -96,6 +105,11 @@ ms.locfileid: "87040764"
 * softwareUpdateProfile
 * softwareUpdates
 
+## <a name="microsofthybridcompute"></a>Microsoft.HybridCompute
+
+* 计算机-最多支持5000实例
+* 扩展-支持不限数量的 VM 扩展实例
+
 ## <a name="microsoftinsights"></a>microsoft.insights
 
 * metricalerts
@@ -104,6 +118,10 @@ ms.locfileid: "87040764"
 
 * integrationAccounts
 * workflows
+
+## <a name="microsoftmedia"></a>Microsoft.Media
+
+* mediaservices/liveEvents
 
 ## <a name="microsoftnetapp"></a>Microsoft.NetApp
 
@@ -160,6 +178,10 @@ ms.locfileid: "87040764"
 
 * workspaceCollections - 默认情况下，限制为 800 个实例。 可以通过联系支持人员来提高该限制。
 
+## <a name="microsoftpowerbidedicated"></a>Microsoft.PowerBIDedicated
+
+* capacities - 默认情况下，限制为 800 个实例。 可以通过联系支持人员来提高该限制。
+
 ## <a name="microsoftrelay"></a>Microsoft.Relay
 
 * namespaces
@@ -172,18 +194,21 @@ ms.locfileid: "87040764"
 
 * namespaces
 
-## <a name="microsoftservicefabricmesh"></a>Microsoft.ServiceFabricMesh
+## <a name="microsoftsingularity"></a>奇点
 
-* applications
-* containerGroups
-* gateways
-* networks
-* secrets
-* volumes
+* accounts
+* 帐户/accountQuotaPolicies
+* 帐户/groupPolicies
+* 帐户/作业
+* 帐户/storageContainers
 
 ## <a name="microsoftstorage"></a>Microsoft.Storage
 
 * storageAccounts
+
+## <a name="microsoftsql"></a>Microsoft.Sql
+
+* servers/databases
 
 ## <a name="microsoftweb"></a>Microsoft.Web
 

@@ -8,14 +8,14 @@ manager: nitinme
 ms.service: cognitive-services
 ms.subservice: text-analytics
 ms.topic: tutorial
-ms.date: 07/27/2020
+ms.date: 08/31/2020
 ms.author: aahi
-ms.openlocfilehash: a97619abdedd60f827f524cd279c4ffc360d92e1
-ms.sourcegitcommit: dccb85aed33d9251048024faf7ef23c94d695145
+ms.openlocfilehash: d987797c2c25f685a3c9250afeb17cec3ad3cb2e
+ms.sourcegitcommit: 22da82c32accf97a82919bf50b9901668dc55c97
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/28/2020
-ms.locfileid: "87291656"
+ms.lasthandoff: 11/08/2020
+ms.locfileid: "94369539"
 ---
 # <a name="tutorial-integrate-power-bi-with-the-text-analytics-cognitive-service"></a>教程：将 Power BI 与文本分析认知服务集成
 
@@ -103,7 +103,7 @@ CSV 导入对话框用于验证 Power BI Desktop 是否已正确检测到字符�
 现在你可以创建集成 Power BI 与文本分析的自定义函数了。 此函数将要处理的文本作为参数接收。 它将数据转换为所需的 JSON 格式或从该格式进行转换，并对关键短语 API 发出 HTTP 请求。 然后该函数会分析来自 API 的响应，并返回包含所提取关键短语的逗号分隔列表的字符串。
 
 > [!NOTE]
-> Power BI Desktop 自定义函数是以 [Power Query M 公式语言](https://docs.microsoft.com/powerquery-m/power-query-m-reference)（简称“M”）编写的。 M 是基于 [F#](https://docs.microsoft.com/dotnet/fsharp/) 的函数编程语言。 不过，完成本教程不需要你是程序员；所需代码已在下面提供。
+> Power BI Desktop 自定义函数是以 [Power Query M 公式语言](/powerquery-m/power-query-m-reference)（简称“M”）编写的。 M 是基于 [F#](/dotnet/fsharp/) 的函数编程语言。 不过，完成本教程不需要你是程序员；所需代码已在下面提供。
 
 在 Power BI Desktop 中，确保你仍处于“查询编辑器”窗口。 如果并非如此，请选择“开始”功能区，然后在“外部数据”组中，单击“编辑查询”。
 
@@ -121,7 +121,7 @@ CSV 导入对话框用于验证 Power BI Desktop 是否已正确检测到字符�
 // Returns key phrases from the text in a comma-separated list
 (text) => let
     apikey      = "YOUR_API_KEY_HERE",
-    endpoint    = "https://<your-custom-subdomain>.cognitiveservices.azure.com/text/analytics" & "/v2.1/keyPhrases",
+    endpoint    = "https://<your-custom-subdomain>.cognitiveservices.azure.com/text/analytics" & "/v3.0/keyPhrases",
     jsontext    = Text.FromBinary(Json.FromValue(Text.Start(Text.Trim(text), 5000))),
     jsonbody    = "{ documents: [ { language: ""en"", id: ""0"", text: " & jsontext & " } ] }",
     bytesbody   = Text.ToBinary(jsonbody),
@@ -225,14 +225,14 @@ Power BI Desktop 需要时间来发出必需的 HTTP 请求。 对于表中的�
 // Returns the sentiment score of the text, from 0.0 (least favorable) to 1.0 (most favorable)
 (text) => let
     apikey      = "YOUR_API_KEY_HERE",
-    endpoint    = "https://<your-custom-subdomain>.cognitiveservices.azure.com" & "/text/analytics/v2.1/sentiment",
+    endpoint    = "https://<your-custom-subdomain>.cognitiveservices.azure.com" & "/text/analytics/v3.0/sentiment",
     jsontext    = Text.FromBinary(Json.FromValue(Text.Start(Text.Trim(text), 5000))),
     jsonbody    = "{ documents: [ { language: ""en"", id: ""0"", text: " & jsontext & " } ] }",
     bytesbody   = Text.ToBinary(jsonbody),
     headers     = [#"Ocp-Apim-Subscription-Key" = apikey],
     bytesresp   = Web.Contents(endpoint, [Headers=headers, Content=bytesbody]),
     jsonresp    = Json.Document(bytesresp),
-    sentiment   = jsonresp[documents]{0}[score]
+    sentiment   = jsonresp[documents]{0}[confidenceScores]
 in  sentiment
 ```
 
@@ -242,7 +242,7 @@ in  sentiment
 // Returns the two-letter language code (for example, 'en' for English) of the text
 (text) => let
     apikey      = "YOUR_API_KEY_HERE",
-    endpoint    = "https://<your-custom-subdomain>.cognitiveservices.azure.com" & "/text/analytics/v2.1/languages",
+    endpoint    = "https://<your-custom-subdomain>.cognitiveservices.azure.com" & "/text/analytics/v3.0/languages",
     jsontext    = Text.FromBinary(Json.FromValue(Text.Start(Text.Trim(text), 5000))),
     jsonbody    = "{ documents: [ { id: ""0"", text: " & jsontext & " } ] }",
     bytesbody   = Text.ToBinary(jsonbody),
@@ -256,7 +256,7 @@ in  language
 // Returns the name (for example, 'English') of the language in which the text is written
 (text) => let
     apikey      = "YOUR_API_KEY_HERE",
-    endpoint    = "https://<your-custom-subdomain>.cognitiveservices.azure.com" & "/text/analytics/v2.1/languages",
+    endpoint    = "https://<your-custom-subdomain>.cognitiveservices.azure.com" & "/text/analytics/v3.0/languages",
     jsontext    = Text.FromBinary(Json.FromValue(Text.Start(Text.Trim(text), 5000))),
     jsonbody    = "{ documents: [ { id: ""0"", text: " & jsontext & " } ] }",
     bytesbody   = Text.ToBinary(jsonbody),
@@ -276,7 +276,7 @@ in  language
 // Returns key phrases from the text as a list object
 (text) => let
     apikey      = "YOUR_API_KEY_HERE",
-    endpoint    = "https://<your-custom-subdomain>.cognitiveservices.azure.com" & "/text/analytics/v2.1/keyPhrases",
+    endpoint    = "https://<your-custom-subdomain>.cognitiveservices.azure.com" & "/text/analytics/v3.0/keyPhrases",
     jsontext    = Text.FromBinary(Json.FromValue(Text.Start(Text.Trim(text), 5000))),
     jsonbody    = "{ documents: [ { language: ""en"", id: ""0"", text: " & jsontext & " } ] }",
     bytesbody   = Text.ToBinary(jsonbody),
@@ -293,10 +293,10 @@ in  keyphrases
 详细了解文本分析服务、Power Query M 公式语言或 Power BI。
 
 > [!div class="nextstepaction"]
-> [文本分析 API 参考](https://westus.dev.cognitive.microsoft.com/docs/services/TextAnalytics-V2-1/operations/56f30ceeeda5650db055a3c6)
+> [文本分析 API 参考](https://westus.dev.cognitive.microsoft.com/docs/services/TextAnalytics-v3-0)
 
 > [!div class="nextstepaction"]
-> [Power Query M reference](https://docs.microsoft.com/powerquery-m/power-query-m-reference)（Power Query M 参考）
+> [Power Query M reference](/powerquery-m/power-query-m-reference)（Power Query M 参考）
 
 > [!div class="nextstepaction"]
 > [Power BI 文档](https://powerbi.microsoft.com/documentation/powerbi-landing-page/)

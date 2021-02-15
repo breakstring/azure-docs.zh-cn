@@ -2,14 +2,14 @@
 title: 有关使用 Azure 资源管理器模板创建 Azure 恢复服务保管库的快速入门。
 description: 本快速入门介绍如何使用 Azure 资源管理器模板（ARM 模板）创建 Azure 恢复服务保管库。
 ms.topic: quickstart
-ms.custom: subject-armqs
+ms.custom: subject-armqs, devx-track-azurecli
 ms.date: 04/29/2020
-ms.openlocfilehash: 9112841f6f07808d80fa2b8b61e612d57d0ec20e
-ms.sourcegitcommit: dabd9eb9925308d3c2404c3957e5c921408089da
+ms.openlocfilehash: c1c6d625c67130a4e3608cee6134b8c81404c01b
+ms.sourcegitcommit: 8c7f47cc301ca07e7901d95b5fb81f08e6577550
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/11/2020
-ms.locfileid: "86248819"
+ms.lasthandoff: 10/27/2020
+ms.locfileid: "92745876"
 ---
 # <a name="quickstart-create-a-recovery-services-vault-using-an-arm-template"></a>快速入门：使用 ARM 模板创建恢复服务保管库
 
@@ -29,7 +29,7 @@ ms.locfileid: "86248819"
 
 本快速入门中使用的模板来自 [Azure 快速启动模板](https://azure.microsoft.com/resources/templates/101-recovery-services-vault-create/)。
 
-:::code language="json" source="~/quickstart-templates/101-recovery-services-vault-create/azuredeploy.json" range="1-66" highlight="41-65":::
+:::code language="json" source="~/quickstart-templates/101-recovery-services-vault-create/azuredeploy.json":::
 
 该模板中定义了两个 Azure 资源：
 
@@ -52,18 +52,18 @@ ms.locfileid: "86248819"
 
    :::image type="content" source="media/quickstart-create-vault-template/create-vault-template.png" alt-text="用于创建恢复服务保管库的模板。":::
 
-   - **订阅**：选择 Azure 订阅。
-   - **资源组**：选择现有的组，或选择“新建”以添加组。
-   - **位置**：默认为资源组的位置，选择资源组后将不可用。
-   - **保管库名称**：提供保管库的名称。
-   - **更改存储类型**：默认值为 **false**。 只有在需要更改保管库的存储类型时，才选择“true”。
-   - **保管库存储类型**：默认值为“GloballyRedundant”。 如果存储类型设置为“true”，请选择“LocallyRedundant” 。
-   - **位置**：函数 `[resourceGroup().location]` 默认为资源组的位置。 若要更改位置，请输入一个值，例如 westus。
+   - **订阅** ：选择 Azure 订阅。
+   - **资源组** ：选择现有的组，或选择“新建”以添加组。
+   - **位置** ：默认为资源组的位置，选择资源组后将不可用。
+   - **保管库名称** ：提供保管库的名称。
+   - **更改存储类型** ：默认值为 **false** 。 只有在需要更改保管库的存储类型时，才选择“true”。
+   - **保管库存储类型** ：默认值为“GloballyRedundant”。 如果存储类型设置为“true”，请选择“LocallyRedundant” 。
+   - **位置** ：函数 `[resourceGroup().location]` 默认为资源组的位置。 若要更改位置，请输入一个值，例如 westus。
    - 选中“我同意上述条款和条件”复选框。
 
 1. 若要开始部署保管库，请选择“购买”按钮。 成功部署后，会显示一条通知。
 
-   :::image type="content" source="media/quickstart-create-vault-template/deployment-success.png" alt-text="保管库部署成功。":::
+   :::image type="content" source="media/quickstart-create-vault-template/deployment-success.png" alt-text="用于创建恢复服务保管库的模板。":::
 
 ## <a name="validate-the-deployment"></a>验证部署
 

@@ -1,22 +1,23 @@
 ---
-title: Azure 服务总线 SQLFilter 语法参考 | Microsoft Docs
-description: 本文提供了有关 SQLFilter 语法的详细信息。 SqlFilter 支持 SQL-92 标准的子集。
+title: Azure 服务总线订阅规则 SQL 筛选器语法 |Microsoft Docs
+description: 本文提供了有关 SQL 筛选器语法的详细信息。 SQL 筛选器支持 SQL-92 标准的子集。
 ms.topic: article
-ms.date: 06/23/2020
-ms.openlocfilehash: 8412dea583ae119b30976e53d4751411b45339a4
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.date: 11/24/2020
+ms.openlocfilehash: 810d17d458de79c851b6f1ada4556a231bfd20eb
+ms.sourcegitcommit: 6272bc01d8bdb833d43c56375bab1841a9c380a5
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "85341595"
+ms.lasthandoff: 01/23/2021
+ms.locfileid: "98742975"
 ---
-# <a name="sqlfilter-syntax"></a>SQLFilter 语法
+# <a name="subscription-rule-sql-filter-syntax"></a>订阅规则 SQL 筛选器语法
 
-SqlFilter 对象是 [SqlFilter 类](/dotnet/api/microsoft.servicebus.messaging.sqlfilter)的实例，代表基于 SQL 语言的筛选器表达式，该表达式针对 [BrokeredMessage](/dotnet/api/microsoft.servicebus.messaging.brokeredmessage) 进行计算。 SqlFilter 支持 SQL-92 标准的子集。  
+SQL 筛选器是服务总线主题订阅的某个可用筛选器类型。 这是一种文本表达式，可倾向标准的92一部分。 筛选表达式与 [Azure 资源管理器模板](service-bus-resource-manager-namespace-topic-with-rule.md)中服务总线 `Rule` 的“sqlFilter”属性的 `sqlExpression` 元素一起使用，或者与 Azure CLI `az servicebus topic subscription rule create` 命令的 [`--filter-sql-expression`](/cli/azure/servicebus/topic/subscription/rule#az_servicebus_topic_subscription_rule_create) 参数以及几个允许管理订阅规则的 SDK 函数一起使用。
+
+服务总线高级版还通过 JMS 2.0 API 支持 [JMS SQL 消息选择器语法](https://docs.oracle.com/javaee/7/api/javax/jms/Message.html)。
+
   
- 本主题列出有关 SqlFilter 语法的详细信息。  
-  
-```  
+``` 
 <predicate ::=  
       { NOT <predicate> }  
       | <predicate> AND <predicate>  
@@ -53,7 +54,7 @@ SqlFilter 对象是 [SqlFilter 类](/dotnet/api/microsoft.servicebus.messaging.s
   
 ## <a name="remarks"></a>备注
 
-访问不存在的系统属性的尝试是错误，访问不存在的用户属性的尝试不是错误。 相反，不存在的用户属性在内部作为未知值进行求值。 运算符求值期间会对未知值进行特殊处理。  
+尝试访问不存在的系统属性属于错误，而尝试访问不存在的用户属性不属于错误。 相反，不存在的用户属性在内部作为未知值进行求值。 运算符求值期间会对未知值进行特殊处理。  
   
 ## <a name="property_name"></a>property_name  
   
@@ -91,7 +92,7 @@ SqlFilter 对象是 [SqlFilter 类](/dotnet/api/microsoft.servicebus.messaging.s
   
 ```  
   
-`<quoted_identifier>` 是指使用双引号引起来的任何字符串。 标识符中的双引号以两个双引号表示。 不建议使用带引号的标识符，因为很容易将其与字符串常量混淆。 如果可能，请使用分隔标识符。 下面是 `<quoted_identifier>`的示例：  
+`<quoted_identifier>` 是指使用双引号引起来的任何字符串。 标识符中的双引号以两个双引号表示。 不建议使用带引号的标识符，因为很容易将其与字符串常量混淆。 如果可能，请使用分隔标识符。 下面是 `<quoted_identifier>` 的示例：  
   
 ```  
 "Contoso & Northwind"  
@@ -192,7 +193,7 @@ SqlFilter 对象是 [SqlFilter 类](/dotnet/api/microsoft.servicebus.messaging.s
   
 ### <a name="remarks"></a>备注
   
-`newid()` 函数返回 `System.Guid.NewGuid()` 方法生成的 **System.Guid**。  
+`newid()` 函数返回 `System.Guid.NewGuid()` 方法生成的 `System.Guid`。  
   
 `property(name)` 函数返回 `name` 所引用的属性的值。 `name` 值可以是返回字符串值的任何有效表达式。  
   
@@ -214,17 +215,17 @@ SqlFilter 对象是 [SqlFilter 类](/dotnet/api/microsoft.servicebus.messaging.s
   
 - 尝试对不存在的系统属性求值会引发 [FilterException](/dotnet/api/microsoft.servicebus.messaging.filterexception) 异常。  
   
-- 不存在的属性在内部作为 **未知**进行求值。  
+- 不存在的属性在内部作为未知进行求值。  
   
   算术运算符中的未知求值：  
   
-- 对于二元运算符，如果操作数的左侧和/或右侧的求值结果为**未知**，则结果为**未知**。  
+- 对于二元运算符，如果操作数的左侧或右侧的求值结果为未知，则结果为未知 。  
   
-- 对于一元运算符，如果操作数的求值结果为**未知**，则结果为**未知**。  
+- 对于一元运算符，如果操作数的求值结果为 **未知**，则结果为 **未知**。  
   
   二进制比较运算符中的未知求值：  
   
-- 如果操作数的左侧和/或右侧的求值结果为**未知**，则结果为**未知**。  
+- 如果操作数的左侧或右侧的求值结果为未知，则结果为未知 。  
   
   `[NOT] LIKE`中的未知求值：  
   
@@ -268,8 +269,14 @@ SqlFilter 对象是 [SqlFilter 类](/dotnet/api/microsoft.servicebus.messaging.s
   
 -   在进行数据类型提升和隐式转换时，算术运算符（例如 `+`、`-`、`*`、`/` 和 `%`）与 C# 运算符绑定遵循相同的语义。
 
+
+[!INCLUDE [service-bus-filter-examples](../../includes/service-bus-filter-examples.md)]
+
 ## <a name="next-steps"></a>后续步骤
 
 - [SQLFilter 类 (.NET Framework)](/dotnet/api/microsoft.servicebus.messaging.sqlfilter)
 - [SQLFilter 类 (.NET Framework)](/dotnet/api/microsoft.azure.servicebus.sqlfilter)
-- [SQLRuleAction 类](/dotnet/api/microsoft.servicebus.messaging.sqlruleaction)
+- [SqlFilter 类 (Java)](/java/api/com.microsoft.azure.servicebus.rules.SqlFilter)
+- [SqlRuleFilter (JavaScript)](/javascript/api/@azure/service-bus/sqlrulefilter)
+- [`az servicebus topic subscription rule`](/cli/azure/servicebus/topic/subscription/rule)
+- [New-AzServiceBusRule](/powershell/module/az.servicebus/new-azservicebusrule)

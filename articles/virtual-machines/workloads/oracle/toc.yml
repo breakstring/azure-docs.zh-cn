@@ -4,8 +4,10 @@
       href: oracle-overview.md
     - name: Azure VM 上的解决方案
       href: oracle-vm-solutions.md
-    - name: 什么是 Azure 上的 Oracle WebLogic Server？
+    - name: 采用哪些解决方案在 Azure 虚拟机上运行 Oracle WebLogic Server？
       href: oracle-weblogic.md
+    - name: 采用哪些解决方案在 Azure Kubernetes 服务上运行 Oracle WebLogic Server？
+      href: weblogic-aks.md
     - name: 与 OCI 集成的解决方案
       href: oracle-oci-overview.md
 - name: 快速入门
@@ -28,8 +30,12 @@
       href: oracle-reference-architecture.md
     - name: 设计 Oracle DB
       href: oracle-design.md
-    - name: Oracle DB 的备份策略
-      href: oracle-backup-recovery.md
+    - name: Oracle Database 备份策略
+      href: oracle-database-backup-strategies.md
+    - name: 使用 Azure 存储的 Oracle Database 备份
+      href: oracle-database-backup-azure-storage.md
+    - name: 使用 Azure 备份的 Oracle Database 备份
+      href: oracle-database-backup-azure-backup.md
     - name: Oracle 灾难恢复选项
       href: oracle-disaster-recovery.md
 - name: 操作指南

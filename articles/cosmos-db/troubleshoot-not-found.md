@@ -1,76 +1,84 @@
 ---
-title: Azure Cosmos DB 找不到异常的疑难解答
-description: 如何诊断和修复未找到的异常
+title: 排查 Azure Cosmos DB 的“未找到”异常
+description: 了解如何诊断和修复“未找到”异常。
 author: j82w
 ms.service: cosmos-db
+ms.subservice: cosmosdb-sql
 ms.date: 07/13/2020
 ms.author: jawilley
 ms.topic: troubleshooting
 ms.reviewer: sngun
-ms.openlocfilehash: f391772672904a1e2bdfa0a741d9f85a6edeea8b
-ms.sourcegitcommit: dccb85aed33d9251048024faf7ef23c94d695145
+ms.openlocfilehash: 7b112cc80984a761e780f134731476f9dff4f687
+ms.sourcegitcommit: ea822acf5b7141d26a3776d7ed59630bf7ac9532
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/28/2020
-ms.locfileid: "87294039"
+ms.lasthandoff: 02/03/2021
+ms.locfileid: "99525765"
 ---
-# <a name="diagnose-and-troubleshoot-azure-cosmos-db-not-found"></a>找不到 Azure Cosmos DB 的诊断和故障排除
-HTTP 状态代码404表示资源不再存在。
+# <a name="diagnose-and-troubleshoot-azure-cosmos-db-not-found-exceptions"></a>诊断和排查 Azure Cosmos DB 的“未找到”异常
+[!INCLUDE[appliesto-sql-api](includes/appliesto-sql-api.md)]
+
+HTTP 状态代码 404 表示资源不再存在。
 
 ## <a name="expected-behavior"></a>预期行为
-存在许多有效方案，其中应用程序应为404，并正确处理方案。
+应用程序预期接收代码 404 并正确进行处理的有效方案有许多。
 
-## <a name="not-found-was-returned-for-an-item-that-should-exist-or-does-exist"></a>对于应存在或存在的项，返回了 "找不到"
-下面是在项应该或退出时返回状态代码404的可能原因。
+## <a name="a-not-found-exception-was-returned-for-an-item-that-should-exist-or-does-exist"></a>对应该存在或确实存在的项返回了“未找到”异常
+以下是在该项应该或确实存在的情况下返回状态代码 404 的可能原因。
 
-### <a name="1-race-condition"></a>1. 争用条件
-存在多个 SDK 客户端实例，在写入之前会发生读取。
+### <a name="the-read-session-is-not-available-for-the-input-session-token"></a>读取会话不可用于输入会话令牌
 
 #### <a name="solution"></a>解决方案：
-1. Cosmos DB 的默认帐户一致性是会话一致性。 创建或更新项时，响应将返回一个会话令牌，该令牌可在 SDK 实例之间传递，以保证读取请求从具有该更改的副本中读取。
-2. 将[一致性级别](consistency-levels-choosing.md)更改为[更高级别](consistency-levels-tradeoffs.md)
+1. 将当前 SDK 更新到已发布的最新版本。 此特定错误的最常见原因问题已在最新版 SDK 中得到解决。
 
-### <a name="2-invalid-partition-key-and-id-combination"></a>2. 分区键和 ID 组合无效
+### <a name="race-condition"></a>争用条件
+有多个 SDK 客户端实例且读取在写入之前发生。
+
+#### <a name="solution"></a>解决方案：
+1. Azure Cosmos DB 的默认帐户一致性为会话一致性。 创建或更新项时，响应将返回一个会话令牌，该令牌可以在 SDK 实例之间传递，以确保读取请求在从具有该更改的副本中进行读取。
+1. 将[一致性级别](./consistency-levels.md)更改为[更高级别](./consistency-levels.md)。
+
+### <a name="invalid-partition-key-and-id-combination"></a>分区键和 ID 组合无效
 分区键和 ID 组合无效。
 
 #### <a name="solution"></a>解决方案：
 修复导致错误组合的应用程序逻辑。 
 
-### <a name="3-invalid-character-in-item-id"></a>3. 项 ID 中的字符无效
-项将插入到 Cosmos DB 中，其中的项 ID 包含[无效字符](https://docs.microsoft.com/dotnet/api/microsoft.azure.documents.resource.id?view=azure-dotnet#remarks)。
+### <a name="invalid-character-in-an-item-id"></a>项 ID 中的字符无效
+项被插入 Azure Cosmos DB，并且项 ID 中带有[无效字符](/dotnet/api/microsoft.azure.documents.resource.id?preserve-view=true&view=azure-dotnet#remarks)。
 
 #### <a name="solution"></a>解决方案：
-建议用户将 ID 更改为不包含特殊字符的其他值。 如果更改 ID 不是一个选项，则可以对 ID 进行 Base64 编码，以对特殊字符进行转义。
+将 ID 更改为不包含特殊字符的其他值。 如果不能更改 ID，则可以对 ID 进行 Base64 编码以将特殊字符转义。 Base64 仍然会生成一个包含无效字符“/”的名称，该字符需要替换。
 
-已在容器中插入的项可以使用 RID 值（而不是基于名称的引用）替换该 ID。
+对于已经插入容器中的项，可以使用 RID 值来替换其 ID，而不使用基于名称的引用。
 ```c#
-// Get a container reference that use RID values
+// Get a container reference that uses RID values.
 ContainerProperties containerProperties = await this.Container.ReadContainerAsync();
 string[] selfLinkSegments = containerProperties.SelfLink.Split('/');
 string databaseRid = selfLinkSegments[1];
 string containerRid = selfLinkSegments[3];
 Container containerByRid = this.cosmosClient.GetContainer(databaseRid, containerRid);
 
-// List of invalid characters are listed here.
-//https://docs.microsoft.com/dotnet/api/microsoft.azure.documents.resource.id?view=azure-dotnet#remarks
+// Invalid characters are listed here.
+//https://docs.microsoft.com/dotnet/api/microsoft.azure.documents.resource.id?view=azure-dotnet&preserve-view=true#remarks
 FeedIterator<JObject> invalidItemsIterator = this.Container.GetItemQueryIterator<JObject>(
     @"select * from t where CONTAINS(t.id, ""/"") or CONTAINS(t.id, ""#"") or CONTAINS(t.id, ""?"") or CONTAINS(t.id, ""\\"") ");
 while (invalidItemsIterator.HasMoreResults)
 {
     foreach (JObject itemWithInvalidId in await invalidItemsIterator.ReadNextAsync())
     {
-        // It recommend to chose a new ID that does not contain special characters, but
-        // if that is not possible then it can be Base64 encoded to escape the special characters
+        // Choose a new ID that doesn't contain special characters.
+        // If that isn't possible, then Base64 encode the ID to escape the special characters.
         byte[] plainTextBytes = Encoding.UTF8.GetBytes(itemWithInvalidId["id"].ToString());
-        itemWithInvalidId["id"] = Convert.ToBase64String(plainTextBytes);
+        itemWithInvalidId["id"] = Convert.ToBase64String(plainTextBytes).Replace('/', '!');
 
-        // Update the item with the new ID value using the rid based container reference
+        // Update the item with the new ID value by using the RID-based container reference.
         JObject item = await containerByRid.ReplaceItemAsync<JObject>(
             item: itemWithInvalidId,
             ID: itemWithInvalidId["_rid"].ToString(),
             partitionKey: new Cosmos.PartitionKey(itemWithInvalidId["status"].ToString()));
 
-        // Validate the new ID can be read using the original name based contianer reference
+        // Validating the new ID can be read by using the original name-based container reference.
         await this.Container.ReadItemAsync<ToDoActivity>(
             item["id"].ToString(),
             new Cosmos.PartitionKey(item["status"].ToString())); ;
@@ -78,25 +86,33 @@ while (invalidItemsIterator.HasMoreResults)
 }
 ```
 
-### <a name="4-time-to-live-ttl-purge"></a>4. 生存时间（TTL）清除
-该项的[生存时间（TTL）](https://docs.microsoft.com/azure/cosmos-db/time-to-live)属性集已设置。 由于生存时间已过，因此清除了该项。
+### <a name="time-to-live-purge"></a>生存时间清除
+项已设置[生存时间 (TTL)](./time-to-live.md) 属性。 由于 TTL 属性已过期，项被清除。
 
 #### <a name="solution"></a>解决方案：
-更改 "生存时间" 以防止项目被清除。
+更改 TTL 属性以防止清除该项。
 
-### <a name="5-lazy-indexing"></a>5. 延迟索引
-尚未捕获[延迟索引](index-policy.md#indexing-mode)。
-
-#### <a name="solution"></a>解决方案：
-等待索引捕获或更改索引策略
-
-### <a name="6-parent-resource-deleted"></a>6. 已删除父资源
-项所在的数据库和/或容器已被删除。
+### <a name="lazy-indexing"></a>惰性索引编制
+[惰性索引编制](index-policy.md#indexing-mode)未跟进。
 
 #### <a name="solution"></a>解决方案：
-1. [还原](https://docs.microsoft.com/azure/cosmos-db/online-backup-and-restore#backup-retention-period)父资源或重新创建资源。
-2. 创建新资源来替换已删除的资源
+等待索引编制跟进或更改索引编制策略。
+
+### <a name="parent-resource-deleted"></a>已删除父资源
+项所在的数据库或容器已删除。
+
+#### <a name="solution"></a>解决方案：
+1. [还原](./configure-periodic-backup-restore.md#request-restore)父资源或重新创建资源。
+1. 创建新资源来替换已删除的资源。
+
+### <a name="7-containercollection-names-are-case-sensitive"></a>7.容器/集合名称区分大小写
+容器/集合名称在 Cosmos DB 中区分大小写。
+
+#### <a name="solution"></a>解决方案：
+请确保在连接到 Cosmos DB 时使用确切的名称。
 
 ## <a name="next-steps"></a>后续步骤
-* 使用 Azure Cosmos DB .NET SDK 时[诊断和解决](troubleshoot-dot-net-sdk.md)问题
-* 了解[.Net V3](performance-tips-dotnet-sdk-v3-sql.md)和[.net V2](performance-tips.md)的性能准则
+* [诊断和排查](troubleshoot-dot-net-sdk.md)在使用 Azure Cosmos DB .NET SDK 时遇到的问题。
+* 了解 [.NET v3](performance-tips-dotnet-sdk-v3-sql.md) 和 [.NET v2](performance-tips.md) 的性能准则。
+* [诊断和排查](troubleshoot-java-sdk-v4-sql.md)使用 Azure Cosmos DB Java v4 SDK 时遇到的问题。
+* 了解 [Java v4 SDK](performance-tips-java-sdk-v4-sql.md) 的性能准则。

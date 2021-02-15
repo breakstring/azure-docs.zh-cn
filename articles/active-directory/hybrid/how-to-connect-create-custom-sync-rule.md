@@ -1,6 +1,6 @@
 ---
 title: 如何在 Azure AD Connect 中自定义同步规则 | Microsoft Docs
-description: 本主题提供有关如何排查 Azure AD Connect 安装问题的步骤。
+description: 了解如何使用同步规则编辑器来编辑或创建新的同步规则。
 services: active-directory
 documentationcenter: ''
 author: billmath
@@ -15,12 +15,12 @@ ms.date: 01/31/2019
 ms.subservice: hybrid
 ms.author: billmath
 ms.collection: M365-identity-device-management
-ms.openlocfilehash: 75300824d94ecbd77f426539ce99da6caaa2e27a
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: e2bb86988454141dc692b4a9967997c4ff7574a2
+ms.sourcegitcommit: 829d951d5c90442a38012daaf77e86046018e5b9
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "85359987"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "90530482"
 ---
 # <a name="how-to-customize-a-synchronization-rule"></a>如何自定义同步规则
 
@@ -43,13 +43,13 @@ ms.locfileid: "85359987"
 * 若要修改“出站”  规则，请从同步规则编辑器更改筛选器。
 
 ## <a name="recommended-documents"></a>**建议的文档**
-* [Azure AD Connect 同步：技术概念](https://docs.microsoft.com/azure/active-directory/hybrid/how-to-connect-sync-technical-concepts)
-* [Azure AD Connect 同步：了解体系结构](https://docs.microsoft.com/azure/active-directory/hybrid/concept-azure-ad-connect-sync-architecture)
-* [Azure AD Connect 同步：了解声明性预配](https://docs.microsoft.com/azure/active-directory/hybrid/concept-azure-ad-connect-sync-declarative-provisioning)
-* [Azure AD Connect 同步：了解声明性设置表达式](https://docs.microsoft.com/azure/active-directory/hybrid/concept-azure-ad-connect-sync-declarative-provisioning-expressions)
-* [Azure AD Connect 同步：了解默认配置](https://docs.microsoft.com/azure/active-directory/hybrid/concept-azure-ad-connect-sync-default-configuration)
-* [Azure AD Connect 同步：了解用户、组和联系人](https://docs.microsoft.com/azure/active-directory/hybrid/concept-azure-ad-connect-sync-user-and-contacts)
-* [Azure AD Connect 同步：影子属性](https://docs.microsoft.com/azure/active-directory/hybrid/how-to-connect-syncservice-shadow-attributes)
+* [Azure AD Connect 同步：技术概念](./how-to-connect-sync-technical-concepts.md)
+* [Azure AD Connect 同步：了解体系结构](./concept-azure-ad-connect-sync-architecture.md)
+* [Azure AD Connect 同步：了解声明性预配](./concept-azure-ad-connect-sync-declarative-provisioning.md)
+* [Azure AD Connect 同步：了解声明性设置表达式](./concept-azure-ad-connect-sync-declarative-provisioning-expressions.md)
+* [Azure AD Connect 同步：了解默认配置](./concept-azure-ad-connect-sync-default-configuration.md)
+* [Azure AD Connect 同步：了解用户、组和联系人](./concept-azure-ad-connect-sync-user-and-contacts.md)
+* [Azure AD Connect 同步：影子属性](./how-to-connect-syncservice-shadow-attributes.md)
 
 ## <a name="next-steps"></a>后续步骤
 - [Azure AD Connect 同步](how-to-connect-sync-whatis.md)。

@@ -9,12 +9,12 @@ ms.topic: how-to
 ms.service: storage
 ms.subservice: blobs
 ms.custom: devx-track-azurecli
-ms.openlocfilehash: c670c011f911e9b27f1280800508124d32e696cb
-ms.sourcegitcommit: 11e2521679415f05d3d2c4c49858940677c57900
+ms.openlocfilehash: f629ec5ccc1895b83cf7f1e831de8d128c49836d
+ms.sourcegitcommit: e7152996ee917505c7aba707d214b2b520348302
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/31/2020
-ms.locfileid: "87489837"
+ms.lasthandoff: 12/20/2020
+ms.locfileid: "97702423"
 ---
 # <a name="quickstart-route-storage-events-to-web-endpoint-with-azure-cli"></a>快速入门：使用 Azure CLI 将存储事件路由到 Web 终结点
 
@@ -24,15 +24,13 @@ Azure 事件网格是针对云的事件处理服务。 在本文中，请使用 
 
 完成本文所述步骤后，即可看到事件数据已发送到 Web 应用。
 
-![查看订阅事件](./media/storage-blob-event-quickstart/view-results.png)
+![Azure 事件网格查看器的屏幕截图，显示已发送到 Web 应用的事件数据。](./media/storage-blob-event-quickstart/view-results.png)
 
 [!INCLUDE [quickstarts-free-trial-note.md](../../../includes/quickstarts-free-trial-note.md)]
 
-[!INCLUDE [cloud-shell-try-it.md](../../../includes/cloud-shell-try-it.md)]
+[!INCLUDE [azure-cli-prepare-your-environment.md](../../../includes/azure-cli-prepare-your-environment.md)]
 
-如果选择在本地安装并使用 CLI，本文要求运行最新版本的 Azure CLI （2.0.70 或更高版本）。 若要查找版本，请运行 `az --version`。 如果需要进行安装或升级，请参阅[安装 Azure CLI](/cli/azure/install-azure-cli)。
-
-如果不使用 Cloud Shell，则必须先使用 `az login` 登录。
+- 本文需要 Azure CLI 版本 2.0.70 或更高版本。 如果使用 Azure Cloud Shell，则最新版本已安装。
 
 ## <a name="create-a-resource-group"></a>创建资源组
 
@@ -40,7 +38,7 @@ Azure 事件网格是针对云的事件处理服务。 在本文中，请使用 
 
 使用 [az group create](/cli/azure/group) 命令创建资源组。 
 
-下面的示例在 westcentralus 位置创建了一个名为 `<resource_group_name>` 的资源组**。  将 `<resource_group_name>` 替换为资源组的唯一名称。
+下面的示例在 westcentralus 位置创建了一个名为 `<resource_group_name>` 的资源组。  将 `<resource_group_name>` 替换为资源组的唯一名称。
 
 ```azurecli-interactive
 az group create --name <resource_group_name> --location westcentralus
@@ -71,7 +69,7 @@ az storage account create \
 ```azurecli-interactive
 sitename=<your-site-name>
 
-az group deployment create \
+az deployment group create \
   --resource-group <resource_group_name> \
   --template-uri "https://raw.githubusercontent.com/Azure-Samples/azure-event-grid-viewer/master/azuredeploy.json" \
   --parameters siteName=$sitename hostingPlanName=viewerhost

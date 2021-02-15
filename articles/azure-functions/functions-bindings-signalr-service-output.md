@@ -1,17 +1,17 @@
 ---
 title: Azure Functions SignalR 服务输出绑定
-description: 了解如何从 Azure Functions 发送 SignalR 服务消息。
+description: 了解 Azure Functions 的 SignalR 服务输出绑定。
 author: craigshoemaker
 ms.topic: reference
 ms.custom: devx-track-csharp
 ms.date: 02/20/2020
 ms.author: cshoe
-ms.openlocfilehash: b401ff20b553629341c5190deb4cfc54c474d789
-ms.sourcegitcommit: 4913da04fd0f3cf7710ec08d0c1867b62c2effe7
+ms.openlocfilehash: 159df4c228f74bb605c745e899d99bfff2aa511b
+ms.sourcegitcommit: 799f0f187f96b45ae561923d002abad40e1eebd6
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/14/2020
-ms.locfileid: "88212576"
+ms.lasthandoff: 12/24/2020
+ms.locfileid: "97763279"
 ---
 # <a name="signalr-service-output-binding-for-azure-functions"></a>Azure Functions 的 SignalR 服务输出绑定
 
@@ -116,7 +116,7 @@ module.exports = async function (context, req) {
 ```json
 {
   "type": "signalR",
-  "name": "out_message",
+  "name": "outMessage",
   "hubName": "<hub_name>",
   "connectionStringSetting": "<name of setting containing SignalR Service connection string>",
   "direction": "out"
@@ -126,9 +126,9 @@ module.exports = async function (context, req) {
 下面是 Python 代码：
 
 ```python
-def main(req: func.HttpRequest, out_message: func.Out[str]) -> func.HttpResponse:
+def main(req: func.HttpRequest, outMessage: func.Out[str]) -> func.HttpResponse:
     message = req.get_json()
-    out_message.set(json.dumps({
+    outMessage.set(json.dumps({
         'target': 'newMessage',
         'arguments': [ message ]
     }))
@@ -156,7 +156,7 @@ public SignalRMessage sendMessage(
 
 ## <a name="send-to-a-user"></a>发送给用户
 
-可以设置 SignalR 消息的用户 ID，以便将消息只发送给已针对某个用户进行身份验证的连接**。
+可以设置 SignalR 消息的用户 ID，以便将消息只发送给已针对某个用户进行身份验证的连接  。
 
 # <a name="c"></a>[C#](#tab/csharp)
 
@@ -248,7 +248,7 @@ module.exports = async function (context, req) {
 ```json
 {
   "type": "signalR",
-  "name": "out_message",
+  "name": "outMessage",
   "hubName": "<hub_name>",
   "connectionStringSetting": "<name of setting containing SignalR Service connection string>",
   "direction": "out"
@@ -258,9 +258,9 @@ module.exports = async function (context, req) {
 下面是 Python 代码：
 
 ```python
-def main(req: func.HttpRequest, out_message: func.Out[str]) -> func.HttpResponse:
+def main(req: func.HttpRequest, outMessage: func.Out[str]) -> func.HttpResponse:
     message = req.get_json()
-    out_message.set(json.dumps({
+    outMessage.set(json.dumps({
         #message will only be sent to this user ID
         'userId': 'userId1',
         'target': 'newMessage',
@@ -291,7 +291,7 @@ public SignalRMessage sendMessage(
 
 ## <a name="send-to-a-group"></a>发送给组
 
-可以设置 SignalR 消息的组名称，以便将消息只发送给已添加到某个组的连接**。
+可以设置 SignalR 消息的组名称，以便将消息只发送给已添加到某个组的连接  。
 
 # <a name="c"></a>[C#](#tab/csharp)
 
@@ -383,7 +383,7 @@ module.exports = async function (context, req) {
 ```json
 {
   "type": "signalR",
-  "name": "out_message",
+  "name": "outMessage",
   "hubName": "<hub_name>",
   "connectionStringSetting": "<name of setting containing SignalR Service connection string>",
   "direction": "out"
@@ -393,9 +393,9 @@ module.exports = async function (context, req) {
 下面是 Python 代码：
 
 ```python
-def main(req: func.HttpRequest, out_message: func.Out[str]) -> func.HttpResponse:
+def main(req: func.HttpRequest, outMessage: func.Out[str]) -> func.HttpResponse:
     message = req.get_json()
-    out_message.set(json.dumps({
+    outMessage.set(json.dumps({
         #message will only be sent to this group
         'groupName': 'myGroup',
         'target': 'newMessage',
@@ -485,7 +485,7 @@ public static Task RemoveFromGroup(
 
 以下示例将用户添加到组。
 
-示例 *function.js*
+示例 function.json 
 
 ```json
 {
@@ -497,7 +497,7 @@ public static Task RemoveFromGroup(
 }
 ```
 
-*运行 run.csx*
+Run.csx 
 
 ```cs
 #r "Microsoft.Azure.WebJobs.Extensions.SignalRService"
@@ -523,7 +523,7 @@ public static Task Run(
 
 以下示例从组中删除用户。
 
-示例 *function.js*
+示例 function.json 
 
 ```json
 {
@@ -535,7 +535,7 @@ public static Task Run(
 }
 ```
 
-*运行 run.csx*
+Run.csx 
 
 ```cs
 #r "Microsoft.Azure.WebJobs.Extensions.SignalRService"
@@ -566,7 +566,7 @@ public static Task Run(
 
 以下示例将用户添加到组。
 
-示例 *function.js*
+示例 function.json 
 
 ```json
 {
@@ -594,7 +594,7 @@ module.exports = async function (context, req) {
 
 以下示例从组中删除用户。
 
-示例 *function.js*
+示例 function.json 
 
 ```json
 {
@@ -624,7 +624,7 @@ module.exports = async function (context, req) {
 
 以下示例将用户添加到组。
 
-示例 *function.js*
+示例 function.json 
 
 ```json
 {
@@ -636,7 +636,7 @@ module.exports = async function (context, req) {
 }
 ```
 
-*\_\_init. py__*
+*\_\_init.py__*
 
 ```python
 def main(req: func.HttpRequest, action: func.Out[str]) -> func.HttpResponse:
@@ -651,7 +651,7 @@ def main(req: func.HttpRequest, action: func.Out[str]) -> func.HttpResponse:
 
 以下示例从组中删除用户。
 
-示例 *function.js*
+示例 function.json 
 
 ```json
 {
@@ -663,7 +663,7 @@ def main(req: func.HttpRequest, action: func.Out[str]) -> func.HttpResponse:
 }
 ```
 
-*\_\_init. py__*
+*\_\_init.py__*
 
 ```python
 def main(req: func.HttpRequest, action: func.Out[str]) -> func.HttpResponse:
@@ -722,11 +722,11 @@ public SignalRGroupAction removeFromGroup(
 
 ---
 
-## <a name="configuration"></a>Configuration
+## <a name="configuration"></a>配置
 
 ### <a name="signalrconnectioninfo"></a>SignalRConnectionInfo
 
-下表解释了在 function.json 文件和 `SignalRConnectionInfo` 特性中设置的绑定配置属性。
+下表解释了在 function.json  文件和 `SignalRConnectionInfo` 特性中设置的绑定配置属性。
 
 |function.json 属性 | Attribute 属性 |说明|
 |---------|---------|----------------------|
@@ -739,7 +739,7 @@ public SignalRGroupAction removeFromGroup(
 
 ### <a name="signalr"></a>SignalR
 
-下表解释了在 function.json 文件和 `SignalR` 特性中设置的绑定配置属性。
+下表解释了在 function.json  文件和 `SignalR` 特性中设置的绑定配置属性。
 
 |function.json 属性 | Attribute 属性 |说明|
 |---------|---------|----------------------|
@@ -753,4 +753,5 @@ public SignalRGroupAction removeFromGroup(
 
 ## <a name="next-steps"></a>后续步骤
 
-- [返回服务终结点 URL 并 (输入绑定中的访问令牌) ](./functions-bindings-signalr-service-input.md)
+- [处理来自 SignalR 服务的消息 (触发器绑定) ](./functions-bindings-signalr-service-trigger.md)
+- [返回服务终结点 URL 和访问令牌（输入绑定）](./functions-bindings-signalr-service-input.md)

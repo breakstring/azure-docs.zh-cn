@@ -1,6 +1,6 @@
 ---
 title: Azure 虚拟机上的 SAP NW 高可用性与 Azure NetApp 文件 |Microsoft Docs
-description: Azure 虚拟机在 Red Hat Enterprise Linux 上为 SAP NetWeaver 提供的高可用性
+description: 在 Azure 虚拟机上通过 Azure NetApp 文件 (Vm) RHEL 为 SAP NW 建立高可用性。
 services: virtual-machines-windows,virtual-network,storage
 documentationcenter: saponazure
 author: rdeltcheva
@@ -9,17 +9,18 @@ editor: ''
 tags: azure-resource-manager
 keywords: ''
 ms.service: virtual-machines-windows
+ms.subservice: workloads
 ms.topic: article
 ms.tgt_pltfrm: vm-windows
 ms.workload: infrastructure-services
-ms.date: 08/04/2020
+ms.date: 01/11/2021
 ms.author: radeltch
-ms.openlocfilehash: 5ba5ebcb68ed206bab038f0a892e24834ddb0f22
-ms.sourcegitcommit: 271601d3eeeb9422e36353d32d57bd6e331f4d7b
+ms.openlocfilehash: 8fa51bec1918b8dce99c80a61da0160c9650d5e4
+ms.sourcegitcommit: aacbf77e4e40266e497b6073679642d97d110cda
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/20/2020
-ms.locfileid: "88653420"
+ms.lasthandoff: 01/12/2021
+ms.locfileid: "98116086"
 ---
 # <a name="azure-virtual-machines-high-availability-for-sap-netweaver-on-red-hat-enterprise-linux-with-azure-netapp-files-for-sap-applications"></a>适用于 sap NetWeaver 的 azure 虚拟机高可用性，适用于 SAP 应用程序的 Azure NetApp 文件 Red Hat Enterprise Linux
 
@@ -195,13 +196,13 @@ Azure NetApp 文件在多个 [azure 区域](https://azure.microsoft.com/global-i
       1. 选择 (A)SCS 群集的虚拟机及其 IP 地址。
       1. 单击“添加”
    1. 创建运行状况探测
-      1. ASCS 的端口 620**00**
+      1. ASCS 的端口 620 **00**
          1. 打开负载均衡器，选择运行状况探测，并单击“添加”
          1. 输入新运行状况探测的名称（例如，“health.QAS.ASCS”）
-         1. 选择 TCP 作为协议，选择端口 620**00**，将“间隔”保留为 5，将“不正常阈值”保留为 2
+         1. 选择 TCP 作为协议，选择端口 620 **00**，将“间隔”保留为 5，将“不正常阈值”保留为 2
          1. 单击“确定”
-      1. ASCS ERS 的端口 621**01**
-            * 重复上述“c”下的步骤，为 ERS 创建运行状况探测（例如，621**01** 和“health.QAS.ERS”）
+      1. ASCS ERS 的端口 621 **01**
+            * 重复上述“c”下的步骤，为 ERS 创建运行状况探测（例如，621 **01** 和“health.QAS.ERS”）
    1. 负载均衡规则
       1. ASCS 的负载均衡规则
          1. 打开负载均衡器，选择 "负载均衡规则"，然后单击 "添加"
@@ -229,15 +230,15 @@ Azure NetApp 文件在多个 [azure 区域](https://azure.microsoft.com/global-i
       1. 选择 (A)SCS 群集的虚拟机
       1. 单击“确定”
    1. 创建运行状况探测
-      1. ASCS 的端口 620**00**
+      1. ASCS 的端口 620 **00**
          1. 打开负载均衡器，选择运行状况探测，并单击“添加”
          1. 输入新运行状况探测的名称（例如，“health.QAS.ASCS”）
-         1. 选择 TCP 作为协议，选择端口 620**00**，将“间隔”保留为 5，将“不正常阈值”保留为 2
+         1. 选择 TCP 作为协议，选择端口 620 **00**，将“间隔”保留为 5，将“不正常阈值”保留为 2
          1. 单击“确定”
-      1. ASCS ERS 的端口 621**01**
-            * 重复上述“c”下的步骤，为 ERS 创建运行状况探测（例如，621**01** 和“health.QAS.ERS”）
+      1. ASCS ERS 的端口 621 **01**
+            * 重复上述“c”下的步骤，为 ERS 创建运行状况探测（例如，621 **01** 和“health.QAS.ERS”）
    1. 负载均衡规则
-      1. ASCS 的 32**00** TCP
+      1. ASCS 的 32 **00** TCP
          1. 打开负载均衡器，选择 "负载均衡规则"，然后单击 "添加"
          1. 输入新负载均衡器规则的名称（例如，“lb.QAS.ASCS.3200”）
          1. 选择先前创建的 ASCS 的前端 IP 地址、后端池和运行状况探测（例如，“frontend.QAS.ASCS”）
@@ -246,9 +247,12 @@ Azure NetApp 文件在多个 [azure 区域](https://azure.microsoft.com/global-i
          1. **确保启用浮动 IP**
          1. 单击“确定”
       1. ASCS 的其他端口
-         * 针对 ASCS 的端口 36**00**、39**00**、81**00**、5**00**13、5**00**14、5**00**16 和 TCP 重复上述“d”下的步骤
+         * 针对 ASCS 的端口 36 **00**、39 **00**、81 **00**、5 **00** 13、5 **00** 14、5 **00** 16 和 TCP 重复上述“d”下的步骤
       1. ASCS ERS 的其他端口
-         * 针对 ASCS ERS 的端口 32**01**、33**01**、5**01**13、5**01**14、5**01**16 和 TCP 重复上述“d”下的步骤
+         * 针对 ASCS ERS 的端口 32 **01**、33 **01**、5 **01** 13、5 **01** 14、5 **01** 16 和 TCP 重复上述“d”下的步骤
+
+      > [!IMPORTANT]
+      > 负载平衡方案中的 NIC 辅助 IP 配置不支持浮动 IP。 有关详细信息，请参阅 [Azure 负载均衡器限制](../../../load-balancer/load-balancer-multivip-overview.md#limitations)。 如果需要 VM 的其他 IP 地址，请部署第二个 NIC。  
 
       > [!Note]
       > 如果没有公共 IP 地址的 VM 被放在内部（无公共 IP 地址）标准 Azure 负载均衡器的后端池中，就不会有出站 Internet 连接，除非执行额外的配置来允许路由到公共终结点。 有关如何实现出站连接的详细信息，请参阅 [SAP 高可用性方案中使用 Azure 标准负载均衡器的虚拟机的公共终结点连接](./high-availability-guide-standard-load-balancer-outbound-connections.md)。  
@@ -504,7 +508,7 @@ Azure NetApp 文件在多个 [azure 区域](https://azure.microsoft.com/global-i
    sudo <swpm>/sapinst SAPINST_REMOTE_ACCESS_USER=sapadmin SAPINST_USE_HOSTNAME=<virtual_hostname>
    ```
 
-   如果安装无法在/usr/sap/**QAS**/ASCS**00**中创建子文件夹，请尝试设置 ASCS**00** 文件夹的所有者和组，然后重试。
+   如果安装无法在/usr/sap/**QAS**/ASCS **00** 中创建子文件夹，请尝试设置 ASCS **00** 文件夹的所有者和组，然后重试。
 
    ```
    sudo chown qasadm /usr/sap/QAS/ASCS00
@@ -571,7 +575,7 @@ Azure NetApp 文件在多个 [azure 区域](https://azure.microsoft.com/global-i
    sudo <swpm>/sapinst SAPINST_REMOTE_ACCESS_USER=sapadmin SAPINST_USE_HOSTNAME=<virtual_hostname>
    ```
 
-   如果安装过程无法在 /usr/sap/**QAS**/ERS**01** 中创建子文件夹，请尝试设置 ERS**01** 文件夹的所有者和组，然后重试。
+   如果安装过程无法在 /usr/sap/**QAS**/ERS **01** 中创建子文件夹，请尝试设置 ERS **01** 文件夹的所有者和组，然后重试。
 
    ```
    sudo chown qaadm /usr/sap/QAS/ERS01
@@ -611,11 +615,11 @@ Azure NetApp 文件在多个 [azure 区域](https://azure.microsoft.com/global-i
 
 1. [A] 配置 Keep Alive
 
-   SAP NetWeaver 应用程序服务器和 ASCS/SCS 之间的通信是通过软件负载均衡器进行路由的。 负载均衡器在可配置的超时之后将断开非活动连接。 若要防止出现这种情况，需要在 SAP NetWeaver ASCS/SCS 配置文件中设置参数并更改 Linux 系统设置。 有关详细信息，请参阅 [SAP 说明 1410736][1410736]。
+   SAP NetWeaver 应用程序服务器和 ASCS/SCS 之间的通信是通过软件负载均衡器进行路由的。 负载均衡器在可配置的超时之后将断开非活动连接。 若要防止出现这种情况，需要在 SAP NetWeaver ASCS/SCS 配置文件中设置一个参数（如果使用 ENSA1），并 `keepalive` 在所有 SAP 服务器上为 ENSA1/ENSA2 更改 Linux 系统设置。 有关详细信息，请参阅 [SAP 说明 1410736][1410736]。
 
    ```
    # Change the Linux system configuration
-   sudo sysctl net.ipv4.tcp_keepalive_time=120
+   sudo sysctl net.ipv4.tcp_keepalive_time=300
    ```
 
 1. **[A]** 更新 /usr/sap/sapservices 文件
@@ -662,7 +666,7 @@ Azure NetApp 文件在多个 [azure 区域](https://azure.microsoft.com/global-i
     ```
 
    从 SAP NW 7.52 开始，SAP 引入了对排队服务器 2 的支持，包括复制。 从 ABAP 平台 1809 开始，系统将默认安装排队服务器 2。 有关排队服务器 2 的支持，请参阅 SAP 说明 [2630416](https://launchpad.support.sap.com/#/notes/2630416)。
-   如果使用 ([ENSA2](https://help.sap.com/viewer/cff8531bc1d9416d91bb6781e628d4e0/1709%20001/en-US/6d655c383abf4c129b0e5c8683e7ecd8.html)) 的排队 server 2 体系结构，请安装 resource agent resource-agents-sap-x86_64 4.1.1 或更高版本，并按如下所示定义资源：
+   如果使用 ([ENSA2](https://help.sap.com/viewer/cff8531bc1d9416d91bb6781e628d4e0/1709%20001/en-US/6d655c383abf4c129b0e5c8683e7ecd8.html)) 的排队 server 2 体系结构，安装资源代理资源代理-sap-12.el7.x86_64 4.1.1 或更新版本，并按如下所示定义资源：
 
     ```
     sudo pcs property set maintenance-mode=true
@@ -738,6 +742,8 @@ Azure NetApp 文件在多个 [azure 区域](https://azure.microsoft.com/global-i
    # Probe Port of ERS
    sudo firewall-cmd --zone=public --add-port=62101/tcp --permanent
    sudo firewall-cmd --zone=public --add-port=62101/tcp
+   sudo firewall-cmd --zone=public --add-port=3201/tcp --permanent
+   sudo firewall-cmd --zone=public --add-port=3201/tcp
    sudo firewall-cmd --zone=public --add-port=3301/tcp --permanent
    sudo firewall-cmd --zone=public --add-port=3301/tcp
    sudo firewall-cmd --zone=public --add-port=50113/tcp --permanent
@@ -1086,7 +1092,7 @@ Azure NetApp 文件在多个 [azure 区域](https://azure.microsoft.com/global-i
    运行以下命令作为根，确定消息服务器的进程并将其终止。
 
    ```
-   [root@anftstsapcl1 ~]# pgrep ms.sapQAS | xargs kill -9
+   [root@anftstsapcl1 ~]# pgrep -f ms.sapQAS | xargs kill -9
    ```
 
    如果仅终止消息服务器一次，则 `sapstart` 会重启它。 如果经常终止消息服务器，Pacemaker 会最终将 ASCS 实例移动到另一个节点。 运行以下命令作为根，清除测试后的 ASCS 和 ERS 实例的资源状态。
@@ -1133,7 +1139,10 @@ Azure NetApp 文件在多个 [azure 区域](https://azure.microsoft.com/global-i
    在运行 ASCS 实例的节点上，运行以下命令作为根，以终止排队服务器。
 
    ```
-   [root@anftstsapcl2 ~]# pgrep en.sapQAS | xargs kill -9
+   #If using ENSA1
+   [root@anftstsapcl2 ~]# pgrep -f en.sapQAS | xargs kill -9
+   #If using ENSA2
+   [root@anftstsapcl2 ~]# pgrep -f enq.sapQAS | xargs kill -9
    ```
 
    ASCS 实例应会立即故障转移到另一个节点。 ASCS 实例启动后，ERS 实例也会进行故障转移。 运行以下命令作为根，清除测试后的 ASCS 和 ERS 实例的资源状态。
@@ -1180,7 +1189,10 @@ Azure NetApp 文件在多个 [azure 区域](https://azure.microsoft.com/global-i
    在运行 ERS 实例的节点上，运行以下命令作为根，以终止排队复制服务器。
 
    ```
-   [root@anftstsapcl2 ~]# pgrep er.sapQAS | xargs kill -9
+   #If using ENSA1
+   [root@anftstsapcl2 ~]# pgrep -f er.sapQAS | xargs kill -9
+   #If using ENSA2
+   [root@anftstsapcl2 ~]# pgrep -f enqr.sapQAS | xargs kill -9
    ```
 
    如果仅运行该命令一次，则 `sapstart` 会重启该进程。 如果经常运行此命令，则 `sapstart` 不会重启该进程，并且资源会处于停止状态。 运行以下命令作为根，清除测试后的 ERS 实例的资源状态。

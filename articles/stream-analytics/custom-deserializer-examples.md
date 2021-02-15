@@ -1,18 +1,18 @@
 ---
 title: 在 Azure 流分析中使用 .NET 自定义反序列化程序读取任何格式的输入
 description: 本文介绍了序列化格式，以及用来为 Azure 流分析云和边缘作业定义 .NET 自定义反序列化程序的接口。
-author: mamccrea
-ms.author: mamccrea
-ms.reviewer: mamccrea
+author: sidramadoss
+ms.author: sidram
 ms.service: stream-analytics
 ms.topic: conceptual
 ms.date: 1/28/2020
-ms.openlocfilehash: b7994754d3ca9c43fe7935b2b52c42f2f113b1d3
-ms.sourcegitcommit: 64fc70f6c145e14d605db0c2a0f407b72401f5eb
+ms.custom: devx-track-csharp
+ms.openlocfilehash: 140a836882ad3abe048047120e4fe1ebc0a3067c
+ms.sourcegitcommit: 42a4d0e8fa84609bec0f6c241abe1c20036b9575
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 05/27/2020
-ms.locfileid: "83873041"
+ms.lasthandoff: 01/08/2021
+ms.locfileid: "98018150"
 ---
 # <a name="read-input-in-any-format-using-net-custom-deserializers"></a>使用 .NET 自定义反序列化程序读取任何格式的输入
 
@@ -200,7 +200,7 @@ namespace ExampleCustomCode.Serialization
 
 ## <a name="serialization-format-for-rest-apis"></a>REST API 的序列化格式
 
-每个流分析输入都有一种**序列化格式**。 有关输入选项的详细信息，请参阅[输入 REST API](https://docs.microsoft.com/rest/api/streamanalytics/stream-analytics-input) 文档。
+每个流分析输入都有一种 **序列化格式**。 有关输入选项的详细信息，请参阅[输入 REST API](/rest/api/streamanalytics/2016-03-01/inputs) 文档。
 
 以下 Javascript 代码是使用 REST API 时的 .NET 反序列化程序序列化格式示例：
 
@@ -238,7 +238,7 @@ namespace ExampleCustomCode.Serialization
 
 ### <a name="when-will-this-feature-be-available-in-all-azure-regions"></a>此功能何时在所有 Azure 区域中推出？
 
-此功能已在 [6 个区域](https://docs.microsoft.com/azure/stream-analytics/custom-deserializer-examples#region-support)中推出。 如果你希望在其他区域使用此功能，可以[提交请求](https://aka.ms/ccodereqregion)。 在所有 Azure 区域中支持此功能已在规划中。
+此功能已在 [6 个区域](#region-support)中推出。 如果你希望在其他区域使用此功能，可以[提交请求](https://aka.ms/ccodereqregion)。 在所有 Azure 区域中支持此功能已在规划中。
 
 ### <a name="can-i-access-metadatapropertyvalue-from-my-inputs-similar-to-getmetadatapropertyvalue-function"></a>是否可以从类似于 GetMetadataPropertyValue 函数的输入访问 MetadataPropertyValue？
 
@@ -248,9 +248,9 @@ namespace ExampleCustomCode.Serialization
 
 实现反序列化程序后，可以在社区中分享，以便为其他人提供帮助。 请将代码提交到 [Azure 流分析 GitHub 存储库](https://github.com/Azure/azure-stream-analytics/tree/master/CustomDeserializers)。
 
-### <a name="what-are-the-other-limitation-of-using-custom-deserializers-in-stream-analytics"></a>在流分析中使用自定义反序列化程序还有其他哪些限制？
+### <a name="what-are-the-other-limitations-of-using-custom-deserializers-in-stream-analytics"></a>在流分析中使用自定义反有哪些其他限制？
 
-如果输入采用 Protobuf 格式，并且该格式的架构包含 MapField 类型，则无法实现自定义反序列化程序。 我们正在为今后支持此类型付出努力。
+如果输入的 Protobuf 格式为包含类型的架构 `MapField` ，则将无法实现自定义反序列化程序。 此外，自定义反不支持示例数据或预览数据。 
 
 ## <a name="next-steps"></a>后续步骤
 

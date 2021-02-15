@@ -11,22 +11,22 @@ ms.topic: article
 ms.date: 01/10/2020
 ms.author: tdsp
 ms.custom: seodec18, previous-author=deguhath, previous-ms.author=deguhath
-ms.openlocfilehash: 1127a470a48660ffffa892d24c9f2991ec64c8e6
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 940d4c465acb5e8478d2b204ab5b9b18c79254f0
+ms.sourcegitcommit: 96918333d87f4029d4d6af7ac44635c833abb3da
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "76716681"
+ms.lasthandoff: 11/04/2020
+ms.locfileid: "93321318"
 ---
 # <a name="feature-selection-in-the-team-data-science-process-tdsp"></a>Team Data Science Process (TDSP) 中的功能选择
 本文介绍特征工程的目的，并提供其在机器学习数据增强过程中作用的相关示例。 这些示例来自 Azure 机器学习工作室。
 
-特征的工程设计和选择是 [Team Data Science Process (TDSP) 是什么？](overview.md)一文中所述的 Team Data Science Process (TDSP) 的一部分。 特征工程和选择是 TDSP 的**开发特征**步骤的一部分。
+特征的工程设计和选择是 [Team Data Science Process (TDSP) 是什么？](overview.md)一文中所述的 Team Data Science Process (TDSP) 的一部分。 特征工程和选择是 TDSP 的 **开发特征** 步骤的一部分。
 
-* **特征工程**：该过程尝试从数据中的现有原始特征创建其他相关特征，并提高学习算法的预测能力。
-* **特征选择**：该过程选择原始数据特征的关键子集，试图降低定型问题的维度。
+* **特征工程** ：该过程尝试从数据中的现有原始特征创建其他相关特征，并提高学习算法的预测能力。
+* **特征选择** ：该过程选择原始数据特征的关键子集，试图降低定型问题的维度。
 
-通常，首先应用**特征工程**生成其他特征，然后执行**特征选择**步骤，消除不相关、冗余或高度相关的特征。
+通常，首先应用 **特征工程** 生成其他特征，然后执行 **特征选择** 步骤，消除不相关、冗余或高度相关的特征。
 
 ## <a name="filter-features-from-your-data---feature-selection"></a>从数据中筛选特征 - 特征选择
 功能选择可用于分类或回归任务。 目标是从原始数据集中选择特征子集，即通过使用最少特征集来表示数据中最大方差量以减少其维度。 此特征子集用于定型模型。 特征选择有两个主要目的。
@@ -44,7 +44,7 @@ ms.locfileid: "76716681"
 
 例如，考虑使用[基于筛选器的特征选择][filter-based-feature-selection]模块。 为方便起见，继续使用文本挖掘示例。 假设在通过[特征哈希][feature-hashing]模块创建了一组 256 个特征后想要生成回归模型，并且响应变量为“Col1”（包含范围为 1 到 5 的书籍审核评级）。 通过将“特征评分方法”设为“皮尔逊相关”，“目标列”将设为“Col1”，而“所需特征数”将设为 50。 然后，[基于筛选器的特征选择][filter-based-feature-selection]模块将生成一个包含 50 个特征且目标属性为“Col1”的数据集。 下图显示了此实验的流程以及输入参数：
 
-![基于筛选器的特征选择模块属性](./media/select-features/feature-Selection1.png)
+![Filter-Based 功能选择模块属性](./media/select-features/feature-Selection1.png)
 
 下图显示了生成的数据集：
 
@@ -64,7 +64,6 @@ ms.locfileid: "76716681"
 并不总是必须执行特征工程或特征选择。 根据收集的数据、选择的算法以及实验的目的决定是否需要。
 
 <!-- Module References -->
-[feature-hashing]: https://msdn.microsoft.com/library/azure/c9a82660-2d9c-411d-8122-4d9e0b3ce92a/
-[filter-based-feature-selection]: https://msdn.microsoft.com/library/azure/918b356b-045c-412b-aa12-94a1d2dad90f/
-[fisher-linear-discriminant-analysis]: https://msdn.microsoft.com/library/azure/dcaab0b2-59ca-4bec-bb66-79fd23540080/
-
+[feature-hashing]: /azure/machine-learning/studio-module-reference/feature-hashing
+[filter-based-feature-selection]: /previous-versions/azure/dn905854(v=azure.100)
+[fisher-linear-discriminant-analysis]: /azure/machine-learning/studio-module-reference/fisher-linear-discriminant-analysis

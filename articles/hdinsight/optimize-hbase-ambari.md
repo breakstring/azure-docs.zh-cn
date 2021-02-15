@@ -1,30 +1,30 @@
 ---
 title: 在 Azure HDInsight 中使用 Apache Ambari 优化 Apache HBase
 description: 使用 Apache Ambari Web UI 来配置和优化 Apache HBase。
-author: hrasheed-msft
-ms.author: hrasheed
-ms.reviewer: jasonh
 ms.service: hdinsight
 ms.topic: how-to
-ms.date: 05/04/2020
-ms.openlocfilehash: d143c9648f84dd0c8b45122cf2271539a0b9d1cf
-ms.sourcegitcommit: 124f7f699b6a43314e63af0101cd788db995d1cb
+ms.date: 02/01/2021
+ms.openlocfilehash: 60c9916bc7d7b3b380a332f41924ee744002fd66
+ms.sourcegitcommit: eb546f78c31dfa65937b3a1be134fb5f153447d6
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/08/2020
-ms.locfileid: "86086324"
+ms.lasthandoff: 02/02/2021
+ms.locfileid: "99428194"
 ---
 # <a name="optimize-apache-hbase-with-apache-ambari-in-azure-hdinsight"></a>在 Azure HDInsight 中使用 Apache Ambari 优化 Apache HBase
 
 Apache Ambari 是用于管理和监视 HDInsight 群集的 Web 界面。 有关 Ambari Web UI 的简介，请参阅[使用 Apache Ambari Web UI 管理 HDInsight 群集](hdinsight-hadoop-manage-ambari.md)。
 
-可以通过“HBase 配置”**** 选项卡修改 Apache HBase 配置。以下部分介绍了一些影响 HBase 性能的重要配置设置。
+可以通过“HBase 配置”选项卡修改 Apache HBase 配置。以下部分介绍了一些影响 HBase 性能的重要配置设置。
 
 ## <a name="set-hbase_heapsize"></a>设置 HBASE_HEAPSIZE
 
-HBase 堆大小指定区域服务器和主服务器要使用的最大堆数量（以 MB 为单位）。** ** 默认值为 1,000 MB。 应该为群集工作负荷优化此值。
+> [!NOTE]
+> 本文包含对术语 " *master*" 的引用，这是 Microsoft 不再使用的术语。 在从软件中删除该术语后，我们会将其从本文中删除。
 
-1. 若要修改，请导航到 HBase“配置”选项卡中的“高级 HBase-env”窗格，然后找到 `HBASE_HEAPSIZE` 设置。**** ****
+HBase 堆大小指定区域服务器和主服务器要使用的最大堆数量（以 MB 为单位）。  默认值为 1,000 MB。 应该为群集工作负荷优化此值。
+
+1. 若要修改，请导航到 HBase“配置”选项卡中的“高级 HBase-env”窗格，然后找到 `HBASE_HEAPSIZE` 设置。 
 
 1. 将默认值更改为 5,000 MB。
 
@@ -38,11 +38,11 @@ HBase 堆大小指定区域服务器和主服务器要使用的最大堆数量�
 
 块缓存是读取缓存。 其大小由 `hfile.block.cache.size` 参数控制。 默认值为 0.4，即总区域服务器内存的 40%。 块缓存大小越大，随机读取的速度越快。
 
-1. 若要修改此参数，请导航到 HBase“配置”选项卡中的“设置”选项卡，然后找到“分配到读取缓冲区的 RegionServer 内存百分比”。**** **** ****
+1. 若要修改此参数，请导航到 HBase“配置”选项卡中的“设置”选项卡，然后找到“分配到读取缓冲区的 RegionServer 内存百分比”。  
 
     ![“Apache HBase 内存块缓存大小”](./media/optimize-hbase-ambari/hbase-block-cache-size.png)
 
-1. 若要更改此值，请选择“编辑”图标。****
+1. 若要更改此值，请选择“编辑”图标。
 
 ### <a name="memstore-size"></a>Memstore 大小
 
@@ -89,7 +89,7 @@ HBase 使用称作 *HFile* 的内部文件格式存储数据。 属性 `hbase.hr
 
 ## <a name="define-memstore-size"></a>定义 Memstore 大小
 
-Memstore 大小由 `hbase.regionserver.global.memstore.UpperLimit` 和 `hbase.regionserver.global.memstore.LowerLimit` 参数定义。 将这些值设置为相等可以减少写入期间的暂停次数（同时提高刷新频率），并可以提高写入性能。
+Memstore 大小由 `hbase.regionserver.global.memstore.upperLimit` 和 `hbase.regionserver.global.memstore.lowerLimit` 参数定义。 将这些值设置为相等可以减少写入期间的暂停次数（同时提高刷新频率），并可以提高写入性能。
 
 ## <a name="set-memstore-local-allocation-buffer"></a>设置 Memstore 本地分配缓冲区
 

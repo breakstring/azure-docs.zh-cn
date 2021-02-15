@@ -9,14 +9,14 @@ ms.service: active-directory
 ms.subservice: saas-app-tutorial
 ms.workload: identity
 ms.topic: tutorial
-ms.date: 05/21/2020
+ms.date: 08/20/2020
 ms.author: jeedes
-ms.openlocfilehash: 280dda4d3864f2c659272ffb63d6ac2566524c45
-ms.sourcegitcommit: 023d10b4127f50f301995d44f2b4499cbcffb8fc
+ms.openlocfilehash: 8ef2dadfc0099822d68a5b1cfb2cc35759e1a866
+ms.sourcegitcommit: 9b8425300745ffe8d9b7fbe3c04199550d30e003
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/18/2020
-ms.locfileid: "88549417"
+ms.lasthandoff: 10/23/2020
+ms.locfileid: "92457650"
 ---
 # <a name="tutorial-azure-active-directory-single-sign-on-sso-integration-with-askspoke"></a>教程：Azure Active Directory 单一登录 (SSO) 与 askSpoke 集成
 
@@ -26,7 +26,7 @@ ms.locfileid: "88549417"
 * 让用户使用其 Azure AD 帐户自动登录到 askSpoke。
 * 在一个中心位置（Azure 门户）管理帐户。
 
-若要了解有关 SaaS 应用与 Azure AD 集成的详细信息，请参阅 [Azure Active Directory 的应用程序访问与单一登录是什么](https://docs.microsoft.com/azure/active-directory/manage-apps/what-is-single-sign-on)。
+若要了解有关 SaaS 应用与 Azure AD 集成的详细信息，请参阅 [Azure Active Directory 的应用程序访问与单一登录是什么](../manage-apps/what-is-single-sign-on.md)。
 
 ## <a name="prerequisites"></a>先决条件
 
@@ -35,16 +35,16 @@ ms.locfileid: "88549417"
 * 一个 Azure AD 订阅。 如果没有订阅，可以获取一个[免费帐户](https://azure.microsoft.com/free/)。
 * 已启用 askSpoke 单一登录 (SSO) 的订阅。
 
-> [!NOTE]
-> 此应用程序的标识符是一个固定字符串值，因此只能在一个租户中配置一个实例。
-
 ## <a name="scenario-description"></a>方案描述
 
 本教程在测试环境中配置并测试 Azure AD SSO。
 
 * askSpoke 支持 SP 和 IDP 发起的 SSO
 * askSpoke 支持恰时用户预配
-* 配置 askSpoke 后，就可以强制实施会话控制，从而实时保护组织的敏感数据免于外泄和渗透。 会话控制从条件访问扩展而来。 [了解如何通过 Microsoft Cloud App Security 强制实施会话控制](https://docs.microsoft.com/cloud-app-security/proxy-deployment-any-app)。
+* 配置 askSpoke 后，就可以强制实施会话控制，从而实时保护组织的敏感数据免于外泄和渗透。 会话控制从条件访问扩展而来。 [了解如何通过 Microsoft Cloud App Security 强制实施会话控制](/cloud-app-security/proxy-deployment-any-app)。
+
+> [!NOTE]
+> 此应用程序的标识符是一个固定字符串值，因此只能在一个租户中配置一个实例。
 
 ## <a name="adding-askspoke-from-the-gallery"></a>从库中添加 askSpoke
 
@@ -57,7 +57,7 @@ ms.locfileid: "88549417"
 1. 在“从库中添加”部分的搜索框中，键入“askSpoke” 。
 1. 从结果面板中选择“askSpoke”，然后添加该应用。 在该应用添加到租户时等待几秒钟。
 
-## <a name="configure-and-test-azure-ad-single-sign-on-for-askspoke"></a>为 askSpoke 配置和测试 Azure AD 单一登录
+## <a name="configure-and-test-azure-ad-sso-for-askspoke"></a>配置并测试 askSpoke 的 Azure AD SSO
 
 使用名为 B.Simon 的测试用户配置并测试 askSpoke 的 Azure AD SSO。 若要使 SSO 正常工作，需要在 Azure AD 用户与 askSpoke 中的相关用户之间建立链接关系。
 
@@ -146,15 +146,15 @@ ms.locfileid: "88549417"
 
 1. 在左侧导航窗格中单击“设置”选项卡。
 
-    ![askSpoke 配置](./media/askspoke-tutorial/configure1.png)
+    ![askSpoke 设置选项卡](./media/askspoke-tutorial/configure1.png)
 
 1. 向下滚动到“SSO”并单击“连接” 。
 
-    ![askSpoke 配置](./media/askspoke-tutorial/configure2.png)
+    ![askSpoke 连接](./media/askspoke-tutorial/configure2.png)
 
 1. 在“启用 SAML 和 SCIM”部分中，执行以下步骤：
 
-    ![askSpoke 配置](./media/askspoke-tutorial/configure3.png)
+    ![askSpoke 启用 SAML 和 SCIM 部分](./media/askspoke-tutorial/configure3.png)
 
     1. 在“登录 URL”文本框中，粘贴从 Azure 门户复制的“登录 URL”值 。
 
@@ -174,19 +174,16 @@ ms.locfileid: "88549417"
 
 在本部分中，使用访问面板测试 Azure AD 单一登录配置。
 
-单击访问面板中的 askSpoke 磁贴时，应当会自动登录到你为其设置了 SSO 的 askSpoke。 有关访问面板的详细信息，请参阅 [Introduction to the Access Panel](https://docs.microsoft.com/azure/active-directory/active-directory-saas-access-panel-introduction)（访问面板简介）。
+单击访问面板中的 askSpoke 磁贴时，应当会自动登录到你为其设置了 SSO 的 askSpoke。 有关访问面板的详细信息，请参阅 [Introduction to the Access Panel](../user-help/my-apps-portal-end-user-access.md)（访问面板简介）。
 
 ## <a name="additional-resources"></a>其他资源
 
-- [有关如何将 SaaS 应用与 Azure Active Directory 集成的教程列表](https://docs.microsoft.com/azure/active-directory/active-directory-saas-tutorial-list)
+- [有关如何将 SaaS 应用与 Azure Active Directory 集成的教程列表](./tutorial-list.md)
 
-- [什么是使用 Azure Active Directory 的应用程序访问和单一登录？](https://docs.microsoft.com/azure/active-directory/manage-apps/what-is-single-sign-on)
+- [什么是使用 Azure Active Directory 的应用程序访问和单一登录？](../manage-apps/what-is-single-sign-on.md)
 
-- [什么是 Azure Active Directory 中的条件访问？](https://docs.microsoft.com/azure/active-directory/conditional-access/overview)
+- [什么是 Azure Active Directory 中的条件访问？](../conditional-access/overview.md)
 
 - [通过 Azure AD 试用 askSpoke](https://aad.portal.azure.com/)
 
-- [Microsoft Cloud App Security 中的会话控制是什么？](https://docs.microsoft.com/cloud-app-security/proxy-intro-aad)
-
-- [如何使用高级可见性和控制保护 askSpoke](https://docs.microsoft.com/cloud-app-security/proxy-intro-aad)
-
+- [Microsoft Cloud App Security 中的会话控制是什么？](/cloud-app-security/proxy-intro-aad)

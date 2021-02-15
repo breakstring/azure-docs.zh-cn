@@ -2,18 +2,18 @@
 title: Azure 中支持的 FHIR 功能 - Azure API for FHIR
 description: 本文介绍 Azure API for FHIR 中实现的 FHIR 规范功能
 services: healthcare-apis
-author: matjazl
+author: caitlinv39
 ms.service: healthcare-apis
 ms.subservice: fhir
 ms.topic: reference
-ms.date: 02/07/2019
-ms.author: matjazl
-ms.openlocfilehash: 46568bf3969d050fd964c85278debd9d599db266
-ms.sourcegitcommit: c5021f2095e25750eb34fd0b866adf5d81d56c3a
+ms.date: 1/30/2021
+ms.author: cavoeg
+ms.openlocfilehash: e75cf8d6660bf6f2630b83e0c2c812fa7cf59057
+ms.sourcegitcommit: eb546f78c31dfa65937b3a1be134fb5f153447d6
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/25/2020
-ms.locfileid: "88796555"
+ms.lasthandoff: 02/02/2021
+ms.locfileid: "99430236"
 ---
 # <a name="features"></a>功能
 
@@ -37,15 +37,15 @@ Azure API for FHIR 为适用于 Azure 的 Microsoft FHIR 服务器提供完全�
 | 修补                          | 否        | 否        | 否        |                                                     |
 | delete                         | 是       | 是       | 是       |                                                     |
 | 删除（条件性）           | 否        | 否        | 否        |                                                     |
-| create                         | 是       | 是       | 是       | 支持 POST/PUT                               |
-| 创建（条件性）           | 是       | 是       | 是       |                                                     |
+| history                        | 是       | 是       | 是       |                                                     |
+| create                         | 是       | 是       | 是       | 同时支持 POST/PUT                               |
+| 创建 (条件)            | 是       | 是       | 是       | 问题 [#1382](https://github.com/microsoft/fhir-server/issues/1382) |
 | 搜索                         | 部分   | 部分   | 部分   | 请参阅下文                                           |
-| 链式搜索                 | 否        | 是       | 否        |                                           |
-| 反向链接搜索         | 否        | 否        | 否        |                                            |
+| 链式搜索                 | 否        | 是       | 否        |                                                     |
+| 反向链接搜索         | 否        | 是       | 否        |                                                     |
 | capabilities                   | 是       | 是       | 是       |                                                     |
 | 批处理                          | 是       | 是       | 是       |                                                     |
 | transaction                    | 否        | 是       | 否        |                                                     |
-| history                        | 是       | 是       | 是       |                                                     |
 | 分页                         | 部分   | 部分   | 部分   | `self``next`支持和                     |
 | 中间人                 | 否        | 否        | 否        |                                                     |
 
@@ -53,9 +53,9 @@ Azure API for FHIR 为适用于 Azure 的 Microsoft FHIR 服务器提供完全�
 
 支持所有搜索参数类型。 
 
-| 搜索参数类型 | 支持-PaaS | 支持-OSS (SQL)  | 支持-OSS (Cosmos DB)  | 评论 |
+| 搜索参数类型 | 支持-PaaS | 支持-OSS (SQL)  | 支持-OSS (Cosmos DB)  | 注释 |
 |-----------------------|-----------|-----------|-----------|---------|
-| Number                | 是       | 是       | 是       |         |
+| 数字                | 是       | 是       | 是       |         |
 | Date/DateTime         | 是       | 是       | 是       |         |
 | 字符串                | 是       | 是       | 是       |         |
 | 令牌                 | 是       | 是       | 是       |         |
@@ -72,40 +72,54 @@ Azure API for FHIR 为适用于 Azure 的 Microsoft FHIR 服务器提供完全�
 |`:exact`               | 是       | 是       | 是       |         |
 |`:contains`            | 是       | 是       | 是       |         |
 |`:text`                | 是       | 是       | 是       |         |
+|`:[type]` (引用)   | 是       | 是       | 是       |         |
+|`:not`                 | 是       | 是       | 是       |         |
+|`:below` (uri)          | 是       | 是       | 是       |         |
+|`:above` (uri)          | 否        | 否        | 否        | 问题 [#158](https://github.com/Microsoft/fhir-server/issues/158) |
 |`:in` (标记)           | 否        | 否        | 否        |         |
 |`:below` (标记)        | 否        | 否        | 否        |         |
 |`:above` (标记)        | 否        | 否        | 否        |         |
 |`:not-in` (标记)       | 否        | 否        | 否        |         |
-|`:[type]` (引用)   | 否        | 否        | 否        |         |
-|`:below` (uri)         | 是       | 是       | 是       |         |
-|`:not`                 | 否        | 否        | 否        |         |
-|`:above` (uri)          | 否        | 否        | 否        | 问题 [#158](https://github.com/Microsoft/fhir-server/issues/158) |
 
 | 常用搜索参数 | 支持-PaaS | 支持-OSS (SQL)  | 支持-OSS (Cosmos DB)  | 注释 |
 |-------------------------| ----------| ----------| ----------|---------|
 | `_id`                   | 是       | 是       | 是       |         |
 | `_lastUpdated`          | 是       | 是       | 是       |         |
 | `_tag`                  | 是       | 是       | 是       |         |
-| `_profile`              | 是       | 是       | 是       |         |
+| `_list`                 | 是       | 是       | 是       |         |
+| `_type`                 | 是       | 是       | 是       | 问题 [#1562](https://github.com/microsoft/fhir-server/issues/1562)        |
 | `_security`             | 是       | 是       | 是       |         |
+| `_profile`              | 部分   | 部分   | 部分   | 仅在 STU3 中受支持，在 R4 中不支持 |
 | `_text`                 | 否        | 否        | 否        |         |
 | `_content`              | 否        | 否        | 否        |         |
-| `_list`                 | 是       | 是       | 是       |         |
 | `_has`                  | 否        | 否        | 否        |         |
-| `_type`                 | 是       | 是       | 是       |         |
 | `_query`                | 否        | 否        | 否        |         |
-
-| 搜索操作       | 支持-PaaS | 支持-OSS (SQL)  | 支持-OSS (Cosmos DB)  | 评论 |
-|-------------------------|-----------|-----------|-----------|---------|
 | `_filter`               | 否        | 否        | 否        |         |
-| `_sort`                 | 否        | 否        | 否        |         |
-| `_score`                | 否        | 否        | 否        |         |
-| `_count`                | 是       | 是       | 是       |         |
+
+| 搜索结果参数 | 支持-PaaS | 支持-OSS (SQL)  | 支持-OSS (Cosmos DB)  | 注释 |
+|-------------------------|-----------|-----------|-----------|---------|
+| `_elements`             | 是       | 是       | 是       | 问题 [#1256](https://github.com/microsoft/fhir-server/issues/1256)        |
+| `_count`                | 是       | 是       | 是       | `_count` 限制为100个字符。 如果设置为高于100，则仅返回100，并在捆绑包中返回警告。 |
+| `_include`              | 是       | 是       | 是       |包含的项限制为100。 在 PaaS 上包含 PaaS，Cosmos DB 上的 OSS 不包括：循环访问支持。|
+| `_revinclude`           | 是       | 是       | 是       | 包含的项限制为100。 在 PaaS 上包含 PaaS，Cosmos DB 上的 OSS [不包括：循环访问支持](https://github.com/microsoft/fhir-server/issues/1313)。 问题 [#1319](https://github.com/microsoft/fhir-server/issues/1319)|
 | `_summary`              | 部分   | 部分   | 部分   | 支持 `_summary=count` |
-| `_include`              | 否        | 是       | 否        |         |
-| `_revinclude`           | 否        | 是       | 否        | 包含的项限制为100。 |
+| `_total`                | 部分   | 部分   | 部分   | `_total=none` 和 `_total=accurate`      |
+| `_sort`                 | 部分   | 部分   | 部分   |   支持 `_sort=_lastUpdated`       |
 | `_contained`            | 否        | 否        | 否        |         |
-| `_elements`             | 否        | 否        | 否        |         |
+| `containedType`         | 否        | 否        | 否        |         |
+| `_score`                | 否        | 否        | 否        |         |
+
+## <a name="extended-operations"></a>扩展操作
+
+支持扩展 RESTful API 的所有操作。
+
+| 搜索参数类型 | 支持-PaaS | 支持-OSS (SQL)  | 支持-OSS (Cosmos DB)  | 注释 |
+|------------------------|-----------|-----------|-----------|---------|
+|  (整个系统的 $export)  | 是       | 是       | 是       |         |
+| 患者/$export        | 是       | 是       | 是       |         |
+| 组/$export          | 是       | 是       | 是       |         |
+| $convert 数据          | 是       | 是       | 是       |         |
+
 
 ## <a name="persistence"></a>持久性
 
@@ -120,6 +134,29 @@ Cosmos DB 是一种全球分布的多模型 (SQL API、MongoDB API 等 ) 数据�
 FHIR 服务器使用 [Azure Active Directory](https://azure.microsoft.com/services/active-directory/) 进行访问控制。 具体而言，如果将配置参数设置为，则会强制实施基于角色的访问控制 (RBAC) ， `FhirServer:Security:Enabled` `true` 并且除 `/metadata`) 到 FHIR 服务器的所有 (请求都必须 `Authorization` 将请求标头设置为 `Bearer <TOKEN>` 。 令牌必须包含声明中定义的一个或多个角色 `roles` 。 如果令牌包含允许指定资源上指定操作的角色，则将允许请求。
 
 目前，对给定角色允许的操作在 API 上 *全局* 应用。
+
+## <a name="service-limits"></a>服务限制
+
+* [**请求单位 (ru)**](../cosmos-db/concepts-limits.md) -可在门户中为 FHIR 的 Azure API 配置最多10000个 ru。 你将需要至少 400 ru 或10个 ru/GB，取两者中较大者。 如果你需要10000个多个 ru，则可以将其放在支持票证中，以增加此项。 可用的最大值为1000000。
+
+* **并发连接** 和 **实例** -默认情况下，在群集中的两个实例上有5个并发连接 (总计10个并发请求) 。 如果你认为你需要更多的并发请求，请打开支持票证，详细了解你的需求。
+
+* **束大小** -每个束限制为500个项目。
+
+* **数据大小** -数据/文档每个都必须略微小于 2 MB。
+
+## <a name="performance-expectations"></a>性能预期
+
+系统的性能取决于多个 ru、并发连接以及您正在执行的操作的类型 (Put、Post 等 ) 。 下面是你可以基于已配置的 ru 获得的一些常规范围。 通常，性能会随 RUs 的增加而线性缩放：
+
+| Ru 数 | 资源数/秒 |    最大存储 (GB) *    |
+|----------|---------------|--------|                 
+| 400      | 5-10          |     40   |
+| 1,000    | 100-150       |      100  |
+| 10,000   | 225-400       |      1,000  |
+| 100,000  | 2500-4000   |      10,000  |
+
+注意：根据 Cosmos DB 要求，每 GB 存储要求的最小吞吐量为 10 RU/秒。 有关详细信息，请查看 [Cosmos DB 的服务配额](../cosmos-db/concepts-limits.md)。
 
 ## <a name="next-steps"></a>后续步骤
 

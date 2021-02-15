@@ -1,6 +1,6 @@
 ---
 title: 适用于 Linux 容器的 SSH 访问
-description: 可以在 Azure App Service 中打开 Linux 容器的 SSH 会话。 自定义映像的一些修改支持自定义 Linux 容器。
+description: 可以在 Azure 应用服务中打开 Linux 容器的 SSH 会话。 支持自定义 Linux 容器，并对自定义映像进行了一些修改。
 keywords: azure 应用服务, web 应用, linux, oss
 author: msangapu-msft
 ms.assetid: 66f9988f-8ffa-414a-9137-3a9b15a5573c
@@ -8,16 +8,16 @@ ms.topic: article
 ms.date: 02/25/2019
 ms.author: msangapu
 ms.custom: seodec18
-ms.openlocfilehash: f663b58de666e2a0fe44fa3c023816a524b7d6c5
-ms.sourcegitcommit: 2ffa5bae1545c660d6f3b62f31c4efa69c1e957f
+ms.openlocfilehash: 7178b8079bbb2411e0b38c3ef59a9981fb2d55be
+ms.sourcegitcommit: 273c04022b0145aeab68eb6695b99944ac923465
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/11/2020
-ms.locfileid: "88082925"
+ms.lasthandoff: 12/10/2020
+ms.locfileid: "97005233"
 ---
-# <a name="open-an-ssh-session-to-a-linux-container-in-azure-app-service"></a>在 Azure App Service 中打开 Linux 容器的 SSH 会话
+# <a name="open-an-ssh-session-to-a-linux-container-in-azure-app-service"></a>在 Azure 应用服务中打开 Linux 容器的 SSH 会话
 
-[安全外壳 (SSH)](https://wikipedia.org/wiki/Secure_Shell) 通常用于通过命令行终端以远程方式执行管理命令。 Linux 应用服务在应用容器中提供 SSH 支持。 
+[安全外壳 (SSH) ](https://wikipedia.org/wiki/Secure_Shell) 通常用于从命令行终端远程执行管理命令。 Linux 上的应用服务在应用容器中提供 SSH 支持。 
 
 ![Linux 应用服务 SSH](./media/configure-linux-open-ssh-session/app-service-linux-ssh.png)
 
@@ -29,7 +29,7 @@ ms.locfileid: "88082925"
 
 ## <a name="use-ssh-support-with-custom-docker-images"></a>将 SSH 支持与自定义 Docker 映像配合使用
 
-请参阅[在自定义容器中配置 SSH](configure-custom-container.md#enable-ssh)。
+请参阅 [在自定义容器中配置 SSH](configure-custom-container.md#enable-ssh)。
 
 ## <a name="open-ssh-session-from-remote-shell"></a>从远程 shell 打开 SSH 会话
 
@@ -39,9 +39,9 @@ ms.locfileid: "88082925"
 
 使用 TCP 隧道，可以通过经身份验证的 WebSocket 连接在开发计算机与适用于容器的 Web 应用之间创建网络连接。 这样就可以通过所选客户端使用在应用服务中运行的容器打开一个 SSH 会话。
 
-若要开始，需安装 [Azure CLI](/cli/azure/install-azure-cli?view=azure-cli-latest)。 若要了解它在不安装 Azure CLI 的情况下的工作方式，请打开 [Azure Cloud Shell](../cloud-shell/overview.md)。 
+若要开始，需安装 [Azure CLI](/cli/azure/install-azure-cli)。 若要了解它在不安装 Azure CLI 的情况下的工作方式，请打开 [Azure Cloud Shell](../cloud-shell/overview.md)。 
 
-使用 [az webapp remote-connection create](/cli/azure/ext/webapp/webapp/remote-connection?view=azure-cli-latest#ext-webapp-az-webapp-remote-connection-create) 命令打开到应用的远程连接。 _\<subscription-id>_ _\<group-name>_ \_ \<app-name> 为你的应用指定和 _。
+使用 [az webapp remote-connection create](/cli/azure/ext/webapp/webapp/remote-connection#ext-webapp-az-webapp-remote-connection-create) 命令打开到应用的远程连接。 为应用指定 \<subscription-id>、\<group-name> 和 \_\<app-name>_。
 
 ```azurecli-interactive
 az webapp create-remote-connection --subscription <subscription-id> --resource-group <resource-group-name> -n <app-name> &
@@ -113,7 +113,7 @@ Load average: 0.07 0.04 0.08 4/765 45738
 
 ## <a name="next-steps"></a>后续步骤
 
-如有问题和疑问，请在 [Azure 论坛](https://docs.microsoft.com/answers/topics/azure-webapps.html)上发帖。
+如有问题和疑问，请在 [Azure 论坛](/answers/topics/azure-webapps.html)上发帖。
 
 有关用于容器的 Web 应用的详细信息，请参阅：
 

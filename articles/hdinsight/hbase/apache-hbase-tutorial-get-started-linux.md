@@ -1,19 +1,16 @@
 ---
 title: 教程 - 在 Azure HDInsight 中使用 Apache HBase
 description: 按照本 Apache HBase 教程开始在 HDInsight 上使用 Hadoop。 从 HBase shell 创建表，并使用 Hive 查询这些表。
-author: hrasheed-msft
-ms.author: hrasheed
-ms.reviewer: jasonh
 ms.service: hdinsight
 ms.topic: tutorial
 ms.custom: hdinsightactive,hdiseo17may2017
-ms.date: 04/14/2020
-ms.openlocfilehash: a19e2c6647f1ff072c61044e8e5777d5d3f8d2db
-ms.sourcegitcommit: 845a55e6c391c79d2c1585ac1625ea7dc953ea89
+ms.date: 01/22/2021
+ms.openlocfilehash: 05e40dd38fc7111521b600908cda38084249e4de
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/05/2020
-ms.locfileid: "85958355"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98936054"
 ---
 # <a name="tutorial-use-apache-hbase-in-azure-hdinsight"></a>教程：在 Azure HDInsight 中使用 Apache HBase
 
@@ -32,7 +29,7 @@ ms.locfileid: "85958355"
 
 * SSH 客户端。 有关详细信息，请参阅[使用 SSH 连接到 HDInsight (Apache Hadoop)](../hdinsight-hadoop-linux-use-ssh-unix.md)。
 
-* Bash。 本文中的示例使用 Windows 10 上的 Bash shell 执行 curl 命令。 有关安装步骤，请参阅[适用于 Linux 的 Windows 子系统 (Windows 10) 安装指南](https://docs.microsoft.com/windows/wsl/install-win10)。  其他 [Unix shell](https://www.gnu.org/software/bash/) 也将适用。  Curl 示例经过一些细微的修改，可在 Windows 命令提示符下运行。  也可使用 Windows PowerShell cmdlet [Invoke-RestMethod](https://docs.microsoft.com/powershell/module/microsoft.powershell.utility/invoke-restmethod)。
+* Bash。 本文中的示例使用 Windows 10 上的 Bash shell 执行 curl 命令。 有关安装步骤，请参阅[适用于 Linux 的 Windows 子系统 (Windows 10) 安装指南](/windows/wsl/install-win10)。  其他 [Unix shell](https://www.gnu.org/software/bash/) 也将适用。  Curl 示例经过一些细微的修改，可在 Windows 命令提示符下运行。  也可使用 Windows PowerShell cmdlet [Invoke-RestMethod](/powershell/module/microsoft.powershell.utility/invoke-restmethod)。
 
 ## <a name="create-apache-hbase-cluster"></a>创建 Apache HBase 群集
 
@@ -207,9 +204,51 @@ HBase 提供了多种方法用于将数据载入表中。  有关详细信息，
 
 1. 若要退出 SSH 连接，请使用 `exit`。
 
+### <a name="separate-hive-and-hbase-clusters"></a>单独的 Hive 和 Hbase 群集
+
+无需从 HBase 群集执行访问 HBase 数据的 Hive 查询。 如果已完成以下步骤，Hive 随附的任何群集（包括 Spark、Hadoop、HBase 或 Interactive Query）都可以用于查询 HBase 数据：
+
+1. 两个群集必须附加到同一虚拟网络和子网
+2. 将 `/usr/hdp/$(hdp-select --version)/hbase/conf/hbase-site.xml` 从 HBase 群集头节点复制到 Hive 群集头节点
+
+### <a name="secure-clusters"></a>安全群集
+
+还可以使用启用了 ESP 的 HBase 从 Hive 查询 HBase 数据： 
+
+1. 遵循多群集模式时，两个群集都必须启用 ESP。 
+2. 要允许 Hive 查询 HBase 数据，请确保 `hive` 用户有权通过 Hbase Apache Ranger 插件访问 HBase 数据
+3. 使用启用了 ESP 的单独群集时，必须将 HBase 群集头节点中 `/etc/hosts` 的内容追加到 Hive 群集头节点的 `/etc/hosts`。 
+> [!NOTE]
+> 缩放任一群集后，必须再次追加 `/etc/hosts`
+
 ## <a name="use-hbase-rest-apis-using-curl"></a>通过 Curl 使用 HBase REST API
 
 REST API 通过 [基本身份验证](https://en.wikipedia.org/wiki/Basic_access_authentication)进行保护。 始终应该使用安全 HTTP (HTTPS) 来发出请求，确保安全地将凭据发送到服务器。
+
+1. 要在 HDInsight 群集中启用 HBase REST API，请将以下自定义启动脚本添加到“脚本操作”部分。 可在创建群集时或创建群集后添加启动脚本。 对于“节点类型”，选择“区域服务器”以确保脚本仅在 HBase 区域服务器中执行 。
+
+
+    ```bash
+    #! /bin/bash
+
+    THIS_MACHINE=`hostname`
+
+    if [[ $THIS_MACHINE != wn* ]]
+    then
+        printf 'Script to be executed only on worker nodes'
+        exit 0
+    fi
+
+    RESULT=`pgrep -f RESTServer`
+    if [[ -z $RESULT ]]
+    then
+        echo "Applying mitigation; starting REST Server"
+        sudo python /usr/lib/python2.7/dist-packages/hdinsight_hbrest/HbaseRestAgent.py
+    else
+        echo "Rest server already running"
+        exit 0
+    fi
+    ```
 
 1. 为便于使用，请设置环境变量。 将 `MYPASSWORD` 替换为群集登录密码，以编辑下面的命令。 将 `MYCLUSTERNAME` 替换为 HBase 群集的名称。 然后，输入相应的命令。
 
@@ -302,14 +341,20 @@ HDInsight 中的 HBase 随附了一个 Web UI 用于监视群集。 使用该 We
    - 任务
    - 软件属性
 
+## <a name="cluster-recreation"></a>重新创建群集
+
+在删除 HBase 群集后，可以通过使用相同的默认 Blob 容器创建另一个 HBase 群集。 新群集将选取已在原始群集中创建的 HBase 表。 不过，为了避免不一致，建议在删除群集之前先禁用 HBase 表。 
+
+可以使用 HBase 命令 `disable 'Contacts'`。 
+
 ## <a name="clean-up-resources"></a>清理资源
 
-为了避免不一致，建议在删除群集之前先禁用 HBase 表。 可以使用 HBase 命令 `disable 'Contacts'`。 如果不打算继续使用此应用程序，请使用以下步骤删除创建的 HBase 群集：
+如果不打算继续使用此应用程序，请使用以下步骤删除创建的 HBase 群集：
 
-1. 登录 [Azure 门户](https://portal.azure.com/)。
+1. 登录到 [Azure 门户](https://portal.azure.com/)。
 1. 在顶部的“搜索”框中，键入 **HDInsight**。
 1. 选择“服务”下的“HDInsight 群集” 。
-1. 在显示的 HDInsight 群集列表中，单击为本教程创建的群集旁边的“...”。
+1. 在显示的 HDInsight 群集列表中，单击为本教程创建的群集旁边的“...”。 
 1. 单击 **“删除”** 。 单击 **“是”** 。
 
 ## <a name="next-steps"></a>后续步骤

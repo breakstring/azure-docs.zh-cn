@@ -3,13 +3,12 @@ title: 使用虚拟网络的方案
 description: 将容器组部署到 Azure 虚拟网络的方案、资源和限制。
 ms.topic: article
 ms.date: 08/11/2020
-ms.author: danlep
-ms.openlocfilehash: d904f1333ddf4b22bfca2546bd064b1ae8f299dd
-ms.sourcegitcommit: c5021f2095e25750eb34fd0b866adf5d81d56c3a
+ms.openlocfilehash: 65d7fa46ebbb9b072b50731bff68b9b88809075d
+ms.sourcegitcommit: c4c554db636f829d7abe70e2c433d27281b35183
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/25/2020
-ms.locfileid: "88797848"
+ms.lasthandoff: 01/08/2021
+ms.locfileid: "98033823"
 ---
 # <a name="virtual-network-scenarios-and-resources"></a>虚拟网络方案和资源
 
@@ -34,6 +33,7 @@ ms.locfileid: "88797848"
 * **Azure 负载均衡器** - 不支持在网络容器组中将 Azure 负载均衡器置于容器实例之前
 * **全球虚拟网络对等互连** - 不支持全球对等互连（跨 Azure 区域连接虚拟网络）
 * **公共 IP 或 DNS 标签** - 部署到虚拟网络的容器组目前不支持使用公共 IP 地址或完全限定的域名直接向 Internet 公开容器
+* **虚拟网络 NAT** -部署到虚拟网络的容器组目前不支持使用 NAT 网关资源进行出站 internet 连接。
 
 ## <a name="other-limitations"></a>其他限制
 
@@ -42,6 +42,7 @@ ms.locfileid: "88797848"
 * 不能在部署到虚拟网络的容器组中使用[托管标识](container-instances-managed-identity.md)。
 * 不能在部署到虚拟网络的容器组中启用[运行情况探测](container-instances-liveness-probe.md)或[就绪情况探测](container-instances-readiness-probe.md)。
 * 由于涉及到其他网络资源，部署到虚拟网络通常比部署标准容器实例要慢。
+* 如果要将容器组连接到 Azure 存储帐户，则必须将 [服务终结点](../virtual-network/virtual-network-service-endpoints-overview.md) 添加到该资源。
 
 [!INCLUDE [container-instances-restart-ip](../../includes/container-instances-restart-ip.md)]
 
@@ -80,6 +81,7 @@ ms.locfileid: "88797848"
 * 有关使用 Azure CLI 的部署示例，请参阅[将容器实例部署到 Azure 虚拟网络](container-instances-vnet.md)。
 * 若要使用资源管理器模板部署新的虚拟网络、子网、网络配置文件和容器组，请参阅 [Create an Azure container group with VNet](https://github.com/Azure/azure-quickstart-templates/tree/master/101-aci-vnet
 )（使用 VNet 创建 Azure 容器组）。
+* 使用 [Azure 门户](container-instances-quickstart-portal.md)创建容器实例时，还可以在“网络”选项卡上为新的或现有的虚拟网络提供设置。
 
 
 <!-- IMAGES -->

@@ -1,7 +1,7 @@
 ---
 title: 诊断 VM 网络路由问题 - Azure CLI
 titleSuffix: Azure Network Watcher
-description: 本文介绍如何使用 Azure 网络观察程序的“下一个跃点”功能来诊断虚拟机网络路由问题。
+description: 本文介绍如何通过 Azure CLI 使用 Azure 网络观察程序的“下一跃点”功能来诊断虚拟机网络路由问题。
 services: network-watcher
 documentationcenter: network-watcher
 author: damendo
@@ -14,25 +14,27 @@ ms.devlang: na
 ms.topic: how-to
 ms.tgt_pltfrm: network-watcher
 ms.workload: infrastructure
-ms.date: 04/20/2018
+ms.date: 01/07/2021
 ms.author: damendo
 ms.custom: ''
-ms.openlocfilehash: 889db5cdcb1807b859339eaf326e3cec7ea64b84
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 42174ce094242a6e7412deea0bf1f0eed0f3b6ea
+ms.sourcegitcommit: 42a4d0e8fa84609bec0f6c241abe1c20036b9575
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "84738798"
+ms.lasthandoff: 01/08/2021
+ms.locfileid: "98013169"
 ---
 # <a name="diagnose-a-virtual-machine-network-routing-problem---azure-cli"></a>诊断虚拟机网络路由问题 - Azure CLI
 
 本文首先部署虚拟机 (VM)，然后检查其与 IP 地址和 URL 的通信。 确定通信失败的原因以及解决方法。
 
-如果没有 Azure 订阅，请在开始之前创建一个[免费帐户](https://azure.microsoft.com/free/?WT.mc_id=A261C142F)。
+[!INCLUDE [quickstarts-free-trial-note](../../includes/quickstarts-free-trial-note.md)]
 
-[!INCLUDE [cloud-shell-try-it.md](../../includes/cloud-shell-try-it.md)]
+[!INCLUDE [azure-cli-prepare-your-environment.md](../../includes/azure-cli-prepare-your-environment.md)]
 
-如果选择在本地安装并使用 Azure CLI，则本文要求运行 Azure CLI 版本2.0.28 或更高版本。 要查找已安装的版本，请运行 `az --version`。 如需进行安装或升级，请参阅[安装 Azure CLI](/cli/azure/install-azure-cli)。 验证 Azure CLI 版本以后，请运行 `az login`，以便创建与 Azure 的连接。 本文中 Azure CLI 命令的格式设置为在 Bash shell 中运行。
+- 本文需要 Azure CLI 版本 2.0 或更高版本。 如果使用 Azure Cloud Shell，则最新版本已安装。 
+
+- 本文中的 Azure CLI 命令已格式化，适合在 Bash Shell 中运行。
 
 ## <a name="create-a-vm"></a>创建 VM
 
@@ -113,7 +115,7 @@ az network nic show-effective-route-table \
 
 返回的输出中包含以下文本：
 
-```
+```console
 {
   "additionalProperties": {
     "disableBgpRoutePropagation": false
@@ -133,7 +135,7 @@ az network nic show-effective-route-table \
 
 但是，使用 `az network watcher show-next-hop` 命令测试发送到 172.31.0.100 的出站通信时，结果显示没有下一跃点类型。 返回的输出中包含以下文本：
 
-```
+```console
 {
   "additionalProperties": {
     "disableBgpRoutePropagation": false

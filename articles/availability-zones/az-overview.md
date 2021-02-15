@@ -1,18 +1,19 @@
 ---
 title: Azure 中的区域和可用性区域
 description: 了解 Azure 中的区域和可用性区域，以满足你的技术和法规要求。
-author: cynthn
+author: prsandhu
 ms.service: azure
-ms.topic: article
-ms.date: 04/28/2020
-ms.author: cynthn
+ms.topic: conceptual
+ms.date: 01/26/2021
+ms.author: prsandhu
+ms.reviewer: cynthn
 ms.custom: fasttrack-edit, mvc
-ms.openlocfilehash: 78f50abf68412d2edcb7a6504c8e5c1b788e5901
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: dae5319e6c8b87d6a9eef98875ad7e8da623e65c
+ms.sourcegitcommit: 4e70fd4028ff44a676f698229cb6a3d555439014
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "85413155"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98955794"
 ---
 # <a name="regions-and-availability-zones-in-azure"></a>Azure 中的区域和可用性区域
 
@@ -24,20 +25,20 @@ Microsoft Azure 服务可在全球范围内实现云操作的最佳水平。 你
 
 | 术语或概念 | 说明 |
 | --- | --- |
-| region | 在延迟定义的外围中部署的一组数据中心，并通过专用的区域低延迟网络进行连接。 |
+| 区域 | 在延迟定义的外围中部署的一组数据中心，并通过专用的区域低延迟网络进行连接。 |
 | geography | 世界上至少包含一个 Azure 区域的区域。 地理位置定义了一个保持数据驻留和符合性界限的离散市场。 地域允许具有特定数据驻留和符合性要求的客户保持他们的数据和应用程序相邻近。 地域具有容错能力，可通过其与专用的高容量网络基础结构的连接来经受完成区域故障。 |
 | 可用性区域 | 区域中的唯一物理位置。 每个区域由一个或多个数据中心组成，这些数据中心配置了独立电源、冷却和网络。 |
-| 推荐的区域 | 提供最广泛的服务功能的区域，旨在支持可用性区域现在或将来使用。 根据**建议**在 Azure 门户中指定这些项。 |
-| 备用（其他）区域 | 一种区域，它在 "数据驻留" 边界内扩展 Azure 占用量，其中还存在建议的区域。 备用区域有助于优化延迟，并为灾难恢复需要提供另一个区域。 它们不支持可用性区域（尽管 Azure 会定期评估这些区域，以确定是否应成为推荐的区域）。 它们在 Azure 门户中指定为 "**其他**"。 |
+| 推荐的区域 | 提供最广泛的服务功能的区域，旨在支持可用性区域现在或将来使用。 根据 **建议** 在 Azure 门户中指定这些项。 |
+| 备用 (其他) 区域 | 一种区域，它在 "数据驻留" 边界内扩展 Azure 占用量，其中还存在建议的区域。 备用区域有助于优化延迟，并为灾难恢复需要提供另一个区域。 它们不是为了支持可用性区域 (，不过 Azure 会定期评估这些区域，以确定它们是否应该成为推荐的区域) 。 它们在 Azure 门户中指定为 " **其他**"。 |
 | 基础服务 | 一种核心 Azure 服务，该服务在区域公开上市时在所有区域提供。 |
 | 主流服务 | 一项 Azure 服务，该服务在区域/服务的12个月内的所有推荐区域中提供，在备用区域中公开上市或要求驱动。 |
 | 专用服务 | 一项 Azure 服务，在自定义/专用硬件支持的各区域之间实现了要求驱动的可用性。 |
-| 区域服务 | 突破部署的 Azure 服务，可让客户指定要将服务部署到的区域。 有关完整列表，请参阅[可用产品（按区域](https://azure.microsoft.com/global-infrastructure/services/?products=all)）。 |
-| 非区域服务 | 一个 Azure 服务，它与特定的 Azure 区域没有任何依赖关系。 非区域服务部署到两个或多个区域，如果出现区域性故障，另一个区域中的服务实例将继续为客户提供服务。 有关完整列表，请参阅[可用产品（按区域](https://azure.microsoft.com/global-infrastructure/services/?products=all)）。 |
+| 区域服务 | 突破部署的 Azure 服务，可让客户指定要将服务部署到的区域。 有关完整列表，请参阅 [可用产品（按区域](https://azure.microsoft.com/global-infrastructure/services/?products=all)）。 |
+| 非区域服务 | 一个 Azure 服务，它与特定的 Azure 区域没有任何依赖关系。 非区域服务部署到两个或多个区域，如果出现区域性故障，另一个区域中的服务实例将继续为客户提供服务。 有关完整列表，请参阅 [可用产品（按区域](https://azure.microsoft.com/global-infrastructure/services/?products=all)）。 |
 
 ## <a name="regions"></a>区域
 
-区域是在延迟定义的外围中部署的一组数据中心，通过专用的区域低延迟网络进行连接。 Azure 可让你灵活地部署需要的应用程序，包括跨多个区域，以提供跨区域复原能力。 有关详细信息，请参阅[复原支柱概述](https://docs.microsoft.com/azure/architecture/framework/resiliency/overview)。
+区域是在延迟定义的外围中部署的一组数据中心，通过专用的区域低延迟网络进行连接。 Azure 可让你灵活地部署需要的应用程序，包括跨多个区域，以提供跨区域复原能力。 有关详细信息，请参阅 [复原支柱概述](/azure/architecture/framework/resiliency/overview)。
 
 ## <a name="availability-zones"></a>可用性区域
 
@@ -47,32 +48,32 @@ Azure 区域中的可用性区域是容错域和更新域的组合。 例如，�
 
 通过将计算、存储、网络和数据资源共置在一个区域并将其复制到其他区域，在应用程序体系结构中内置高可用性。 支持可用性区域的 Azure 服务划分为两类：
 
-- **区域性服务**–将资源固定到特定区域（例如虚拟机、托管磁盘、标准 IP 地址）或
-- **区域冗余服务**–当 Azure 平台跨区域自动复制时（例如，区域冗余存储、SQL 数据库）。
+- **区域性服务** –将资源固定到特定区域的位置 (例如，虚拟机、托管磁盘、标准 IP 地址) 或
+- **区域冗余服务** –当 Azure 平台跨区域自动复制时 (例如，区域冗余存储、SQL Database) 。
 
 若要在 Azure 上实现全面的业务连续性，可结合使用可用性区域和 Azure 区域对来构建应用程序体系结构。 可以使用 Azure 区域中的可用性区域以同步方式复制应用程序和数据以实现高可用性，并以异步方式跨 Azure 区域复制以实现灾难恢复保护。
  
 ![地区中发生故障的一个区域的概念视图](./media/az-overview/az-graphic-two.png)
 
 > [!IMPORTANT]
-> 可用性区域标识符（上图中的数字1、2和3）在逻辑上分别映射到每个订阅的实际物理区域。 这意味着，给定订阅中的可用性区域1可能引用不同订阅中不同于可用性区域1的物理区域。 因此，建议不要在虚拟机放置的不同订阅之间依赖于可用性区域 Id。
+>  () 上图中的数字1、2和3的可用性区域标识符在逻辑上分别映射到每个订阅的实际物理区域。 这意味着，给定订阅中的可用性区域1可能引用不同订阅中不同于可用性区域1的物理区域。 因此，建议不要在虚拟机放置的不同订阅之间依赖于可用性区域 Id。
 
 ## <a name="region-and-service-categories"></a>区域和服务类别
 
 Azure 上跨区域提供 Azure 服务可用性的最佳方法是通过表达在建议区域和备用区域中提供的服务来对其进行说明。
 
-- **推荐的区域**-一种提供范围最广的服务功能并设计为支持可用性区域现在或将来的服务的区域。 根据**建议**在 Azure 门户中指定这些项。
-- **备用（其他）区域**-在数据驻留边界内扩展 Azure 占用量的区域，该区域也存在建议的区域。 备用区域有助于优化延迟，并为灾难恢复需要提供另一个区域。 它们不支持可用性区域（尽管 Azure 会定期评估这些区域，以确定是否应成为推荐的区域）。 它们在 Azure 门户中指定为 "**其他**"。
+- **推荐的区域** -一种提供范围最广的服务功能并设计为支持可用性区域现在或将来的服务的区域。 根据 **建议** 在 Azure 门户中指定这些项。
+- **备用 (其他) 区域** -一个区域，该区域在一个推荐的区域也存在的数据派驻边界内扩展 Azure 占用空间。 备用区域有助于优化延迟，并为灾难恢复需要提供另一个区域。 它们不是为了支持可用性区域 (，不过 Azure 会定期评估这些区域，以确定它们是否应该成为推荐的区域) 。 它们在 Azure 门户中指定为 " **其他**"。
 
 ### <a name="comparing-region-types"></a>比较区域类型
 
 Azure 服务分为三个类别：基本、主流和专用服务。 将服务部署到任何给定区域的 Azure 一般策略主要由区域类型、服务类别和客户需求驱动：
 
-- **基础**–当区域公开上市时，或在新的基础服务公开上市后的12个月内提供。
-- **主流**–在区域/服务正式发布后12个月内的所有推荐区域提供;备用区域中的按需驱动（多个已部署到备用区域的较大子集）。
-- **专门**面向行业的服务产品，通常由自定义/专用硬件集中或支持。 跨区域的按需驱动的可用性（很多已部署到建议区域的大型部分）。
+- **基础** –当区域公开上市时，或在新的基础服务公开上市后的12个月内提供。
+- **主流** –在区域/服务正式发布后12个月内的所有推荐区域提供;备用区域中的按需驱动 (许多已部署到) 的一大部分备用区域中。
+- **专门** 面向行业的服务产品，通常由自定义/专用硬件集中或支持。 跨区域的需求驱动可用性 (许多都已部署到) 的建议区域的一小部分。
 
-若要查看给定区域中部署了哪些服务，以及区域中服务的预览或公开服务的未来发展路线图，请参阅[按区域提供的产品](https://azure.microsoft.com/global-infrastructure/services/?products=all)。
+若要查看给定区域中部署了哪些服务，以及区域中服务的预览或公开服务的未来发展路线图，请参阅 [按区域提供的产品](https://azure.microsoft.com/global-infrastructure/services/?products=all)。
 
 如果某个服务产品在特定区域中不可用，你可以通过联系 Microsoft 销售代表来分享你的兴趣。
 
@@ -85,95 +86,75 @@ Azure 服务分为三个类别：基本、主流和专用服务。 将服务部�
 
 如前所述，Azure 将服务分为三个类别：基础、主流和专用化。 服务类别在正式发布时分配。 通常，服务会将其生命周期作为专用服务启动，并按需求和利用率增加，从而提升为主流或基础。 下表列出了 "基本"、"主流" 或 "专用" 服务的类别。 应注意以下有关表的信息：
 
-- 某些服务不是区域。 有关非区域性服务的信息和列表，请参阅[可用产品（按区域](https://azure.microsoft.com/global-infrastructure/services/)）。
-- 不会列出较旧的代虚拟机。 有关详细信息，请参阅[之前代虚拟机大小的](../virtual-machines/sizes-previous-gen.md)文档。
+- 某些服务不是区域。 有关非区域性服务的信息和列表，请参阅 [可用产品（按区域](https://azure.microsoft.com/global-infrastructure/services/)）。
+- 不会列出较旧的代虚拟机。 有关详细信息，请参阅[之前代虚拟机大小的](../virtual-machines/sizes-previous-gen.md)文档
+- .在公开上市 (GA) 之前，不会为服务分配类别。 有关信息以及预览服务的列表，请参阅 [可用产品（按区域](https://azure.microsoft.com/global-infrastructure/services/)）。 
 
 > [!div class="mx-tableFixed"]
-> | 基础 | 主要支持 | 专用 |
-> | --- | --- | --- |
-> | 帐户存储 | API 管理 | 适用于 FHIR 的 Azure API |
-> | 应用程序网关 | 应用配置 | Azure 区块链服务 |
-> | Azure 备份 | 应用服务 | Azure 蓝图 |
-> | Azure Cosmos DB | 自动化 | Azure Database for MariaDB |
-> | Azure Data Lake Storage Gen2 | Azure Active Directory 域服务 | Azure 专用 HSM |
-> | Azure ExpressRoute | Azure Analysis Services | Azure Dev Spaces |
-> | Azure SQL Database | Azure Bastion | Azure 数字孪生 |
-> | 云服务 | 用于 Redis 的 Azure 缓存 | Azure 实验室服务 |
-> | 云服务： Av2 系列 | Azure 认知搜索 | Azure NetApp 文件 |
-> | 云服务： Dv2 系列 | Azure 数据资源管理器 | Azure 量程 |
-> | 云服务： Dv3 系列 | Azure Data Share | Azure 时序见解 |
-> | 云服务： Ev3 系列 | Azure Database for MySQL | Azure VMware Solution by CloudSimple |
-> | 云服务：实例级别 Ip | Azure Database for PostgreSQL | 云服务： A8-A11 （计算密集型） |
-> | 云服务：保留 IP | Azure 数据库迁移服务 | 云服务： G 系列 |
-> | 磁盘存储 | Azure Databricks | 云服务： H 系列 |
-> | 事件中心 | Azure DDoS 防护 | 认知服务：异常探测器 |
-> | Key Vault | Azure 开发测试实验室 | 认知服务：自定义视觉 |
-> | 负载均衡器 | Azure 防火墙管理器 | 认知服务：演讲者识别 |
-> | 服务总线 | Azure 防火墙 | Data Box Heavy |
-> | Service Fabric | Azure Functions | 数据目录 |
-> | 虚拟机规模集 | Azure HPC 缓存 | 数据工厂：数据工厂 V1 |
-> | 虚拟机 | Azure IoT 中心 | Data Lake Analytics |
-> | 虚拟机： Av2 系列 | Azure Kubernetes 服务 (AKS) | 机器学习工作室 |
-> | 虚拟机： Bs.1770 系列 | Azure 机器学习 | Microsoft 基因组学 |
-> | 虚拟机： DSv2 系列 | Azure 专用链接 | 远程渲染 |
-> | 虚拟机： DSv3 系列 | Azure Red Hat OpenShift | 空间定位点 |
-> | 虚拟机： Dv2 系列 | Azure Site Recovery | StorSimple |
-> | 虚拟机： Dv3 系列 | Azure 春季云服务 | 视频索引器 |
-> | 虚拟机： ESv3 系列 | Azure Stack Hub | 虚拟机： A8-A11 （计算密集型） |
-> | 虚拟机： Ev3 系列 | Azure 流分析 | 虚拟机： DASv4 系列 |
-> | 虚拟机： F 系列 | Azure Synapse Analytics | 虚拟机： DAv4 系列 |
-> | 虚拟机： FS 系列 | Azure SignalR 服务 | 虚拟机： DCsv2 系列 |
-> | 虚拟机：实例级别 Ip | Batch | 虚拟机： EASv4 系列 |
-> | 虚拟机：保留 IP | 云服务： M 系列 | 虚拟机： EAv4 系列 |
-> | 虚拟网络 | 认知服务 | 虚拟机： G 系列 |
-> | VPN 网关 | 认知服务：计算机视觉 | 虚拟机： GS 系列 |
-> |  | 认知服务：内容审查器 | 虚拟机： HBv1 系列 |
-> |  | 认知服务：面部 | 虚拟机： HBv2 系列 |
-> |  | 认知服务：语言理解 | 虚拟机： HCv1 系列 |
-> |  | 认知服务：语音服务 | 虚拟机： H 系列 |
-> |  | 认知服务：QnA Maker | 虚拟机： LS 系列 |
-> |  | 容器实例 | 虚拟机： LSv2 系列 |
-> |  | 容器注册表 | 虚拟机： Mv2 系列 |
-> |  | 数据工厂 | 虚拟机： NC 系列 |
-> |  | 事件网格 | 虚拟机： NCv2 系列 |
-> |  | HDInsight | 虚拟机： NCv3 系列 |
-> |  | 逻辑应用 | 虚拟机： NDs 系列 |
-> |  | 媒体服务 | 虚拟机： NDv2 系列 |
-> |  | 网络观察程序 | 虚拟机： NV 系列 |
-> |  | 通知中心 | 虚拟机： NVv3 系列 |
-> |  | Power BI Embedded | 虚拟机： NVv4 系列 |
-> |  | 高级 Blob 存储 | 虚拟机： Azure SAP HANA 大型实例 |
-> |  | 高级文件存储 | Visual Studio App Center |
-> |  | 存储：存档存储 |  |
-> |  | Ultra 磁盘存储 |  |
-> |  | 虚拟机： Fsv2 系列 |  |
-> |  | 虚拟机： M 系列 |  |
-> |  | 虚拟 WAN |  |
+> | 基础                          | 主要支持                                        | 专用                                          |
+> |---------------------------------------|---------------------------------------------------|------------------------------------------------------|
+> | 存储帐户                      | API 管理                                    | 适用于 FHIR 的 Azure API                                   |
+> | 应用程序网关                   | 应用程序配置                                 | Azure Analysis Services                              |
+> | Azure 备份                          | 应用服务                                       | Azure 认知服务：异常探测器           |
+> | Azure Cosmos DB                       | 自动化                                        | Azure 认知服务：自定义视觉              |
+> | Azure Data Lake Storage Gen2          | Azure Active Directory 域服务            | Azure 认知服务：窗体识别器            |
+> | Azure ExpressRoute                    | Azure Bastion                                     | Azure 认知服务： Personalizer               |
+> | Azure 公共 IP                       | Azure Redis 缓存                             | Azure 认知服务： QnA Maker                  |
+> | Azure SQL 数据库                    | Azure 认知搜索                            | Azure Database for MariaDB                           |
+> | Azure SQL：托管实例          | Azure 认知服务                          | Azure 数据库迁移服务                     |
+> | 云服务                        | Azure 认知服务：计算机视觉         | Azure 专用 HSM                                  |
+> | 云服务： Av2-Series            | Azure 认知服务：内容审查器       | Azure 数字孪生                                  |
+> | 云服务： Dv2-Series            | Azure 认知服务：人脸                    | Azure 运行状况机器人                                     |
+> | 云服务： Dv3-Series            | Azure 认知服务：沉浸式读者        | Azure HPC 缓存                                      |
+> | 云服务： Ev3-Series            | Azure 认知服务：语言理解  | Azure 实验室服务                                   |
+> | 云服务：实例级别 Ip    | Azure 认知服务：语音服务         | Azure NetApp 文件                                   |
+> | 云服务：保留 IP           | Azure 认知服务：文本分析          | Azure SignalR 服务                                |
+> | 磁盘存储                          | Azure 认知服务：转换器              | Azure 春季云服务                           |
+> | 事件中心                            | Azure 数据资源管理器                               | Azure 时序见解                           |
+> | Key Vault                             | Azure Data Share                                  | Azure VMware 解决方案                                |
+> | 负载均衡器                         | Azure Database for MySQL                          | Azure VMware Solution by CloudSimple                 |
+> | 服务总线                           | Azure Database for PostgreSQL                     | 云服务： H 系列                             |
+> | Service Fabric                        | Azure Databricks                                  | 数据目录                                         |
+> | 存储：热/冷 Blob 存储层  | Azure DDoS 防护                             | Data Lake Analytics                                  |
+> | 存储：托管磁盘                | Azure 开发测试实验室                                | Azure 机器学习工作室（经典）              |
+> | 虚拟机规模集            | Azure 防火墙                                    | 空间定位点                                      |
+> | 虚拟机                      | Azure 防火墙管理器                            | 存储：存档存储                             |
+> | 虚拟机： Av2-Series          | Azure Functions                                   | StorSimple                                           |
+> | 虚拟机： Bs-Series           | Azure IoT 中心                                     | 超级磁盘存储                                   |
+> | 虚拟机： DSv2-Series         | Azure Kubernetes 服务 (AKS)                    | 视频索引器                                        |
+> | 虚拟机： DSv3-Series         | Azure 机器学习                            | 虚拟机： DASv4-Series                       |
+> | 虚拟机： Dv2-Series          | Azure Monitor： Application Insights               | 虚拟机： DAv4-Series                        |
+> | 虚拟机： Dv3-Series          | Azure Monitor： Log Analytics                      | 虚拟机： DCsv2 系列                       |
+> | 虚拟机： ESv3-Series         | Azure 专用链接                                | 虚拟机： EASv4-Series                       |
+> | 虚拟机： Ev3-Series          | Azure Red Hat OpenShift                           | 虚拟机： EAv4-Series                        |
+> | 虚拟机：实例级别 Ip  | Azure Site Recovery                               | 虚拟机： HBv1-Series                        |
+> | 虚拟机：保留 IP         | Azure 流分析                            | 虚拟机： HBv2-Series                        |
+> | 虚拟网络                       | Azure Synapse Analytics                           | 虚拟机： HCv1-Series                        |
+> | VPN 网关                           | Batch                                             | 虚拟机： H 系列                           |
+> |                                       | 云服务： M 系列                          | 虚拟机： LSv2-Series                        |
+> |                                       | 容器实例                               | 虚拟机： Mv2-Series                         |
+> |                                       | 容器注册表                                | 虚拟机： NCv3-Series                        |
+> |                                       | 数据工厂                                      | 虚拟机： NDv2-Series                        |
+> |                                       | 事件网格                                        | 虚拟机： NVv3-Series                        |
+> |                                       | HDInsight                                         | 虚拟机： NVv4-Series                        |> 
+> |                                       | 逻辑应用                                        | 虚拟机： Azure SAP HANA 大型实例  |
+> |                                       | 媒体服务                                    |                                                      |
+> |                                       | 网络观察程序                                   |                                                      |
+> |                                       | 通知中心                                 |                                                      |
+> |                                       | 高级 Blob 存储                              |                                                      |
+> |                                       | 高级文件存储                             |                                                      |
+> |                                       | 虚拟机： Ddsv4-Series                    |                                                      |
+> |                                       | 虚拟机： Ddv4-Series                     |                                                      |
+> |                                       | 虚拟机： Dsv4-Series                     |                                                      |
+> |                                       | 虚拟机： Dv4-Series                      |                                                      |
+> |                                       | 虚拟机： Edsv4-Series                    |                                                      |
+> |                                       | 虚拟机： Edv4-Series                     |                                                      |
+> |                                       | 虚拟机： Esv4-Series                     |                                                      |
+> |                                       | 虚拟机： Ev4-Series                      |                                                      |
+> |                                       | 虚拟机： Fsv2-Series                     |                                                      |
+> |                                       | 虚拟机： M 系列                        |                                                      |
+> |                                       | 虚拟 WAN                                       |                                                      |
 
-###  <a name="services-resiliency"></a>服务复原
-
-所有 Azure 管理服务都设计为可从区域级故障中复原。 在故障范围内，区域中的一个或多个可用性区域故障与整个区域发生故障相比具有更小的故障半径。 Azure 可以从区域内或其他 Azure 区域内的管理服务的区域级故障中恢复。 Azure 会在区域中一次执行关键维护，以防止任何影响在区域内的可用性区域部署的客户资源的故障。
-
-### <a name="pricing-for-vms-in-availability-zones"></a>可用性区域中 Vm 的定价
-
-在可用性区域中部署虚拟机不会产生额外的费用。 当两个或更多个 VM 部署在一个 Azure 区域中的两个或更多个可用性区域时，可获得 99.99% VM 运行时间 SLA。 会产生可用性区域间 VM 到 VM 的数据传输费用。 有关详细信息，请查看[带宽定价](https://azure.microsoft.com/pricing/details/bandwidth/)页。
-
-### <a name="get-started-with-availability-zones"></a>可用性区域入门
-
-- [创建虚拟机](../virtual-machines/windows/create-portal-availability-zone.md)
-- [使用 PowerShell 添加托管磁盘](../virtual-machines/windows/attach-disk-ps.md#add-an-empty-data-disk-to-a-virtual-machine)
-- [创建区域冗余的虚拟机规模集](../virtual-machine-scale-sets/virtual-machine-scale-sets-use-availability-zones.md)
-- [使用具有区域冗余前端的标准负载均衡器跨区域对 VM 进行负载均衡](../load-balancer/load-balancer-standard-public-zone-redundant-cli.md)
-- [使用具有区域性前端的标准负载均衡器在区域内对 VM 进行负载均衡](../load-balancer/load-balancer-standard-public-zonal-cli.md)
-- [区域冗余存储](../storage/common/storage-redundancy-zrs.md)
-- [SQL 数据库](../azure-sql/database/high-availability-sla.md#zone-redundant-configuration)
-- [事件中心异地灾难恢复](../event-hubs/event-hubs-geo-dr.md#availability-zones)
-- [服务总线异地灾难恢复](../service-bus-messaging/service-bus-geo-dr.md#availability-zones)
-- [创建区域冗余的虚拟网关](../vpn-gateway/create-zone-redundant-vnet-gateway.md)
-- [为 Azure Cosmos DB 添加区域冗余区域](../cosmos-db/high-availability.md#availability-zone-support)
-- [入门用于 Redis 的 Azure 缓存可用性区域](https://aka.ms/redis/az/getstarted)
-- [创建 Azure Active Directory 域服务实例](../active-directory-domain-services/tutorial-create-instance.md)
-- [创建使用可用性区域的 Azure Kubernetes 服务（AKS）群集](../aks/availability-zones.md)
 
 ## <a name="next-steps"></a>后续步骤
 

@@ -5,16 +5,16 @@ services: synapse-analytics
 author: azaricstefan
 ms.service: synapse-analytics
 ms.topic: conceptual
-ms.subservice: ''
+ms.subservice: sql
 ms.date: 04/15/2020
-ms.author: v-stazar
+ms.author: stefanazaric
 ms.reviewer: jrasnick
-ms.openlocfilehash: ac4753da1405fe6b8cd209bb4899192e9f317aa1
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 6920d6cd190927747a69fc4dc0f0791278665abe
+ms.sourcegitcommit: 6a350f39e2f04500ecb7235f5d88682eb4910ae8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "81428701"
+ms.lasthandoff: 12/01/2020
+ms.locfileid: "96451693"
 ---
 # <a name="user-defined-schemas-within-synapse-sql"></a>Synapse SQL 中用户定义的架构
 
@@ -27,7 +27,7 @@ ms.locfileid: "81428701"
 相反，Synapse SQL 将在一个数据库中运行整个分析工作负荷。 不允许跨数据库联接。 Synapse SQL 要求仓库使用的所有表都存储在一个数据库中。
 
 > [!NOTE]
-> SQL 池不支持任何种类的跨数据库查询。 因此，需要修改利用此模式的分析实现。 SQL 点播（预览版）支持跨数据库查询。
+> 专用 SQL 池不支持任何种类的跨数据库查询。 因此，需要修改利用此模式的分析实现。 无服务器 SQL 池支持跨数据库查询。
 
 ## <a name="user-defined-schema-recommendations"></a>用户定义的架构建议
 
@@ -118,7 +118,7 @@ FROM    [edw].customer
 > [!NOTE]
 > 架构策略中的任何更改都需要查看数据库的安全模型。 在许多情况下，可以在架构级别分配权限，以简化安全模型。
 
-如果需要更精细的权限，可以使用数据库角色。 有关数据库角色的详细信息，请参阅[管理数据库角色和用户](../../analysis-services/analysis-services-database-users.md)一文。
+如果需要更精细的权限，可以使用数据库角色。 有关数据库角色的详细信息，请参阅 [管理数据库角色和用户](../../analysis-services/analysis-services-database-users.md) 一文。
 
 ## <a name="next-steps"></a>后续步骤
 

@@ -3,12 +3,12 @@ title: 将基于事件的视频录制到云中并从云播放教程 - Azure
 description: 在本教程中，你将了解如何使用 Azure IoT Edge 上的 Azure 实时视频分析将基于事件的视频录制到云中并从云中播放。
 ms.topic: tutorial
 ms.date: 05/27/2020
-ms.openlocfilehash: cbd00bf5737e9833a860e154c629bb344416b6ca
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.openlocfilehash: fda727a1abb488910d52b756455d2b6843e0e8b1
+ms.sourcegitcommit: 5b926f173fe52f92fcd882d86707df8315b28667
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87011764"
+ms.lasthandoff: 02/04/2021
+ms.locfileid: "99550246"
 ---
 # <a name="tutorial-event-based-video-recording-to-the-cloud-and-playback-from-the-cloud"></a>教程：将基于事件的视频录制到云中并从云中播放
 
@@ -45,14 +45,17 @@ ms.locfileid: "87011764"
     > [!TIP]
     > 系统可能会提示你安装 Docker。 请忽略该提示。
 * 开发计算机上的 [.NET Core 3.1 SDK](https://dotnet.microsoft.com/download/dotnet-core/thank-you/sdk-3.1.201-windows-x64-installer)。
-* 完成[实时视频分析资源安装脚本](https://github.com/Azure/live-video-analytics/tree/master/edge/setup)并[设置环境](https://review.docs.microsoft.com/en-us/azure/media-services/live-video-analytics-edge/detect-motion-emit-events-quickstart?branch=release-preview-media-services-lva#set-up-the-environment)
+* 完成[实时视频分析资源安装脚本](https://github.com/Azure/live-video-analytics/tree/master/edge/setup)并[设置环境](https://docs.microsoft.com/azure/media-services/live-video-analytics-edge/detect-motion-emit-events-quickstart?pivots=programming-language-csharp#set-up-your-development-environment)
 
 完成这些步骤后，你将在 Azure 订阅中部署相关 Azure 资源：
 
 * Azure IoT 中心
 * Azure 存储帐户
 * Azure 媒体服务帐户
-* Azure 中的 Linux VM，已安装 [IoT Edge 运行时](../../iot-edge/how-to-install-iot-edge-linux.md)
+* Azure 中的 Linux VM，已安装 [IoT Edge 运行时](../../iot-edge/how-to-install-iot-edge.md)
+
+> [!TIP]
+> 如果在创建 Azure 资源时遇到问题，请查看[故障排除指南](troubleshoot-how-to.md#common-error-resolutions)来解决一些常见问题。
 
 ## <a name="concepts"></a>概念
 
@@ -62,25 +65,27 @@ ms.locfileid: "87011764"
 
 或者，可以仅在推理服务检测到特定事件发生时触发录制。 本教程将使用在高速公路上移动的车辆的视频，并在检测到卡车时录制视频剪辑。
 
-![媒体图](./media/event-based-video-recording-tutorial/overview.png)
+> [!div class="mx-imgBorder"]
+> :::image type="content" source="./media/event-based-video-recording-tutorial/overview.svg" alt-text="媒体图":::
 
 该图以图画形式呈现了[媒体图](media-graph-concept.md)以及用于完成所需方案的其他模块。 共涉及四个 IoT Edge 模块：
 
 * IoT Edge 上的实时视频分析模块。
-* Edge 模块，它在 HTTP 终结点后面运行 AI 模型。 此 AI 模块使用 [YOLO v3](https://github.com/Azure/live-video-analytics/tree/master/utilities/video-analysis/yolov3-onnx) 模型，该模型能够检测许多类型的对象。
+* Edge 模块，它在 HTTP 终结点后面运行 AI 模型。 此 AI 模块使用 [YOLOv3](https://github.com/Azure/live-video-analytics/tree/master/utilities/video-analysis/yolov3-onnx) 模型，该模型能够检测许多类型的对象。
 * 一个用于筛选对象并对其进行计数的自定义模块，该模块在图中称为对象计数器。 在本教程中，你将生成一个对象计数器并对其进行部署。
 * [RTSP 模拟器模块](https://github.com/Azure/live-video-analytics/tree/master/utilities/rtspsim-live555)用于模拟 RTSP 摄像机。
     
 如图所示，你将使用媒体图中的 [RTSP 源](media-graph-concept.md#rtsp-source)节点捕获模拟的实时视频（高速公路上的交通流视频），并将该视频发送到两条路径：
 
-* 第一条路径的目的地是[帧速率筛选处理器](media-graph-concept.md#frame-rate-filter-processor)节点，该节点以指定（降低的）帧速率输出视频帧。 这些视频帧将发送到 HTTP 扩展节点。 然后，该节点将这些帧作为图像转发到 AI 模块 YOLO v3（一个对象检测器）。 该节点接收结果，这些结果是模型检测到的对象（交通流中的车辆）。 然后，HTTP 扩展节点会通过 IoT 中心消息接收器节点向 IoT Edge 中心发布结果。
+* 第一个路径是 HTTP 扩展节点。 该节点对视频帧进行采样，结果将作为使用 `samplingOptions` 字段设置的值，然后将这些帧作为图像中继到 AI 模块 YOLOv3，这是一个对象检测器。 该节点接收结果，这些结果是模型检测到的对象（交通流中的车辆）。 然后，HTTP 扩展节点会通过 IoT 中心消息接收器节点向 IoT Edge 中心发布结果。
 * 设置了 objectCounter 模块，目的是从 IoT Edge 中心接收消息，其中包括对象检测结果（交通流中的车辆）。 该模块将检查这些消息，并查找通过设置进行配置的特定类型的对象。 当找到此类对象时，此模块将向 IoT Edge 中心发送消息。 然后系统将这些“找到对象”消息路由到媒体图的 IoT 中心源节点。 接收到此类消息后，媒体图中的 IoT 中心源节点会触发[信号入口处理器](media-graph-concept.md#signal-gate-processor)节点。 然后，信号入口处理器节点会在配置的时间内处于开启状态。 在此持续时间内，视频流会经过入口到达资产接收器节点。 然后，实时流的这一部分将通过[资产接收器](media-graph-concept.md#asset-sink)节点被记录到 Azure 媒体服务帐户中的[资产](terminology.md#asset)内。
 
 ## <a name="set-up-your-development-environment"></a>设置开发环境
 
 在开始之前，请检查是否满足[先决条件](#prerequisites)中的第三条。 资源设置脚本完成后，选择大括号，公开文件夹结构。 你将看到在 ~/clouddrive/lva-sample 目录下创建的几个文件。
 
-![应用设置](./media/quickstarts/clouddrive.png)
+> [!div class="mx-imgBorder"]
+> :::image type="content" source="./media/quickstarts/clouddrive.png" alt-text="应用设置":::
 
 本教程中涉及以下文件：
 
@@ -105,7 +110,7 @@ ms.locfileid: "87011764"
     借助 IoT 中心连接字符串，可以使用 Visual Studio Code 通过 Azure IoT 中心将命令发送到 Edge 模块。
     
 1. 接下来，浏览到 src/edge 文件夹并创建一个名为 .env 的文件。
-1. 复制 ~/clouddrive/lva-sample/.env 文件中的内容。 文本应如下所示：
+1. 复制 ~/clouddrive/lva-sample/edge-deployment/.env 文件中的内容。 文本应如下所示：
 
     ```
     SUBSCRIPTION_ID="<Subscription ID>"  
@@ -115,8 +120,8 @@ ms.locfileid: "87011764"
     AAD_TENANT_ID="<AAD Tenant ID>"  
     AAD_SERVICE_PRINCIPAL_ID="<AAD SERVICE_PRINCIPAL ID>"  
     AAD_SERVICE_PRINCIPAL_SECRET="<AAD SERVICE_PRINCIPAL ID>"  
-    INPUT_VIDEO_FOLDER_ON_DEVICE="/home/lvaadmin/samples/input"  
-    OUTPUT_VIDEO_FOLDER_ON_DEVICE="/home/lvaadmin/samples/output"  
+    VIDEO_INPUT_FOLDER_ON_DEVICE="/home/lvaadmin/samples/input"  
+    VIDEO_OUTPUT_FOLDER_ON_DEVICE="/home/lvaadmin/samples/output"  
     APPDATA_FOLDER_ON_DEVICE="/var/local/mediaservices"
     CONTAINER_REGISTRY_USERNAME_myacr="<your container registry username>"  
     CONTAINER_REGISTRY_PASSWORD_myacr="<your container registry username>"      
@@ -152,7 +157,8 @@ ms.locfileid: "87011764"
 
 使用 Visual Studio Code，按照[以下说明](../../iot-edge/tutorial-develop-for-linux.md#build-and-push-your-solution)登录到 Docker。 然后选择“生成并推送 IoT Edge 解决方案”。 在此步骤中使用 src/edge/deployment.objectCounter.template.json。
 
-![生成并推送 IoT Edge 解决方案](./media/event-based-video-recording-tutorial/build-push.png)
+> [!div class="mx-imgBorder"]
+> :::image type="content" source="./media/event-based-video-recording-tutorial/build-push.png" alt-text="生成并推送 IoT Edge 解决方案":::
 
 此操作会生成用于对象计数的 objectCounter 模块，并将图像推送到 Azure 容器注册表。
 
@@ -160,16 +166,24 @@ ms.locfileid: "87011764"
 
 此步骤会在 src/edge/config/deployment.objectCounter.amd64.json 创建 IoT Edge 部署清单。 右键单击该文件，然后选择“为单个设备创建部署”。
 
-![为单个设备创建部署](./media/quickstarts/create-deployment-single-device.png)
+> [!div class="mx-imgBorder"]
+> :::image type="content" source="./media/quickstarts/create-deployment-single-device.png" alt-text="为单个设备创建部署":::
 
 如果这是你第一次接触有关 IoT Edge 上的实时视频分析的教程，Visual Studio Code 将提示你输入 IoT 中心连接字符串。 可以从 appsettings.json 文件中复制字符串。
+
+> [!NOTE]
+> 系统可能会要求你提供 IoT 中心的内置终结点信息。 若要获取此信息，请在 Azure 门户中导航到 IoT 中心，然后在左侧导航窗格中查找“内置终结点”选项。 单击此处，在“与事件中心兼容的终结点”部分下查找“与事件中心兼容的终结点” 。 复制并使用框中的文本。 终结点将如下所示：  
+    ```
+    Endpoint=sb://iothub-ns-xxx.servicebus.windows.net/;SharedAccessKeyName=iothubowner;SharedAccessKey=XXX;EntityPath=<IoT Hub name>
+    ```
 
 接下来，Visual Studio Code 会要求你选择 IoT 中心设备。 选择 IoT Edge 设备（应为 lva-sample-device）。
 
 在此阶段，将启动将边缘模块部署到 IoT Edge 设备的过程。
 大约 30 秒后，在 Visual Studio Code 的左下部分刷新 Azure IoT 中心。 你应该会看到已部署四个模块，它们分别名为 lvaEdge、rtspsim、yolov3 和 objectCounter。
 
-![部署的 4 个模块](./media/event-based-video-recording-tutorial/iot-hub.png)
+> [!div class="mx-imgBorder"]
+> :::image type="content" source="./media/event-based-video-recording-tutorial/iot-hub.png" alt-text="部署的 4 个模块":::
 
 ## <a name="prepare-for-monitoring-events"></a>准备监视事件
 
@@ -179,21 +193,35 @@ ms.locfileid: "87011764"
 1. 展开“设备”节点。
 1. 右键单击 lva-sample-device 文件，然后选择“开始监视内置事件终结点”。
 
-   ![开始监视内置事件终结点](./media/quickstarts/start-monitoring-iothub-events.png)
+    > [!div class="mx-imgBorder"]
+    > :::image type="content" source="./media/quickstarts/start-monitoring-iothub-events.png" alt-text="开始监视内置事件终结点开始监视内置事件终结点":::
 
+    > [!NOTE]
+    > 系统可能会要求你提供 IoT 中心的内置终结点信息。 若要获取此信息，请在 Azure 门户中导航到 IoT 中心，然后在左侧导航窗格中查找“内置终结点”选项。 单击此处，在“与事件中心兼容的终结点”部分下查找“与事件中心兼容的终结点” 。 复制并使用框中的文本。 终结点将如下所示：  
+        ```
+        Endpoint=sb://iothub-ns-xxx.servicebus.windows.net/;SharedAccessKeyName=iothubowner;SharedAccessKey=XXX;EntityPath=<IoT Hub name>
+        ```
+    
 ## <a name="run-the-program"></a>运行程序
 
-1. 在 Visual Studio Code 中，转到 src/cloud-to-device-console-app/operations.json。
+1. 在 Visual Studio Code 中，打开“扩展”选项卡（或按 Ctrl+Shift+X），然后搜索“Azure IoT 中心”。
+1. 右键单击并选择“扩展设置”。
 
+    > [!div class="mx-imgBorder"]
+    > :::image type="content" source="./media/run-program/extensions-tab.png" alt-text="扩展设置":::
+1. 搜索并启用“显示详细消息”。
+
+    > [!div class="mx-imgBorder"]
+    > :::image type="content" source="./media/run-program/show-verbose-message.png" alt-text="显示详细消息":::
+1. <!--In Visual Studio Code, go-->转到 src/cloud-to-device-console-app/operations.json。
 1. 在 GraphTopologySet 节点下，编辑以下内容：
 
-    `"topologyUrl" : "https://raw.githubusercontent.com/Azure/live-video-analytics/master/MediaGraph/topologies/evr-hubMessage-assets/topology.json"`
+    `"topologyUrl" : "https://raw.githubusercontent.com/Azure/live-video-analytics/master/MediaGraph/topologies/evr-hubMessage-assets/2.0/topology.json"`
     
 1. 接下来，在 GraphInstanceSet 和 GraphTopologyDelete 节点下，编辑 ：
 
     `"topologyName" : "EVRtoAssetsOnObjDetect"`
 1. 选择 F5 以启动调试会话。 在“终端”窗口中，你将看到一些输出的消息。
-
 1. operations.json 文件首先调用 GraphTopologyList 和 GraphInstanceList。 如果在先前的快速入门或教程后清理了资源，此操作会返回空列表，然后暂停以便你能够选择 Enter，如下所示：
 
     ```
@@ -211,14 +239,13 @@ ms.locfileid: "87011764"
     Executing operation WaitForInput
     Press Enter to continue
     ```
-
 1. 在“终端”窗口中选择 Enter 后，会执行下一组直接方法调用 ：
    * 使用上述 topologyUrl 调用 GraphTopologySet
    * 使用以下正文调用 GraphInstanceSet
      
         ```
         {
-          "@apiVersion": "1.0",
+          "@apiVersion": "2.0",
           "name": "Sample-Graph-1",
           "properties": {
             "topologyName": "EVRtoAssetsOnObjDetect",
@@ -245,11 +272,9 @@ ms.locfileid: "87011764"
    * 再次调用 GraphInstanceList 以显示图形实例处于运行状态
      
 1. “终端”窗口中的输出现在会在出现“按 Enter 继续”提示时暂停 。 此时请勿选择 Enter。 向上滚动，查看调用的直接方法的 JSON 响应有效负载。
-
 1. 如果现在切换到 Visual Studio Code 中的“输出”窗口，则将看到 IoT Edge 上的实时视频分析模块向 IoT 中心发送消息。
 
    下节中讨论了这些消息。
-     
 1. 图形实例继续运行并录制视频。 RTSP 模拟器不断循环源视频。 根据下一部分中的介绍审阅这些消息。 然后，若要停止实例，请返回“终端”窗口，并选择 Enter 。 接下来会使用以下方法执行一系列调用，以清理资源：
 
    * 调用 GraphInstanceDeactivate 以停用图形实例。
@@ -390,13 +415,14 @@ applicationProperties 中的 subject 部分引用图形中的资产接收器节�
 1. 在订阅中的资源中找到媒体服务帐户。 打开帐户窗格。
 1. 选择“媒体服务”列表中的“资产” 。
 
-    ![资产](./media/continuous-video-recording-tutorial/assets.png)
+    > [!div class="mx-imgBorder"]
+    > :::image type="content" source="./media/continuous-video-recording-tutorial/assets.png" alt-text="连续视频录制":::
 1. 将找到以名称 sampleAssetFromEVR-LVAEdge-{DateTime} 列出的资产。 这是 RecordingStarted 事件的 outputLocation 属性中提供的名称。 拓扑中的 assetNamePattern 决定了此名称的生成方式。
 1. 选择资产。
 1. 在“资产详细信息”页上，选择“流式处理 URL”文本框下的“新建” 。
 
-    ![新建资产](./media/continuous-video-recording-tutorial/new-asset.png)
-
+    > [!div class="mx-imgBorder"]
+    > :::image type="content" source="./media/continuous-video-recording-tutorial/new-asset.png" alt-text="新建资产":::
 1. 在打开的向导中，接受默认选项，然后选择“添加”。 有关详细信息，请参阅[视频播放](video-playback-concept.md)。
 
     > [!TIP]
@@ -413,4 +439,4 @@ applicationProperties 中的 subject 部分引用图形中的资产接收器节�
 ## <a name="next-steps"></a>后续步骤
 
 * 使用支持 RTSP 的 [IP 相机](https://en.wikipedia.org/wiki/IP_camera)，而不是使用 RTSP 模拟器。 可以在 [ONVIF 一致性产品页](https://www.onvif.org/conformant-products/)上查找符合配置文件 G、S 或 T 的设备来搜索支持 RTSP 的 IP 照相机。
-* 使用 AMD64 或 X64 Linux 设备（与使用 Azure Linux VM 相比）。 此设备必须与 IP 相机位于同一网络中。 按照[在 Linux 上安装 Azure IoT Edge 运行时](../../iot-edge/how-to-install-iot-edge-linux.md)中的说明进行操作。 然后按照[将首个 IoT Edge 模块部署到虚拟 Linux 设备](../../iot-edge/quickstart-linux.md)快速入门中的说明进行操作，将设备注册到 Azure IoT 中心。
+* 使用 AMD64 或 X64 Linux 设备（与使用 Azure Linux VM 相比）。 此设备必须与 IP 相机位于同一网络中。 按照[在 Linux 上安装 Azure IoT Edge 运行时](../../iot-edge/how-to-install-iot-edge.md)中的说明进行操作。 然后按照[将首个 IoT Edge 模块部署到虚拟 Linux 设备](../../iot-edge/quickstart-linux.md)快速入门中的说明进行操作，将设备注册到 Azure IoT 中心。

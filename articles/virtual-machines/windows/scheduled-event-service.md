@@ -1,20 +1,20 @@
 ---
-title: 在 Azure 中监视 Windows VM 的计划事件
+title: 监视 Azure 中 Vm 的计划事件
 description: 了解如何监视 Azure 虚拟机的计划事件。
 author: mysarn
-ms.service: virtual-machines-windows
+ms.service: virtual-machines
 ms.subservice: monitoring
 ms.date: 08/20/2019
 ms.author: sarn
 ms.topic: how-to
-ms.openlocfilehash: 0806c6e0ed89c2c0f4712ec985599810119fcf89
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.openlocfilehash: e3e44019d09927ff700e74b713a1b02136fedbc1
+ms.sourcegitcommit: 75041f1bce98b1d20cd93945a7b3bd875e6999d0
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "86999014"
+ms.lasthandoff: 01/22/2021
+ms.locfileid: "98702264"
 ---
-# <a name="monitoring-scheduled-events"></a>监视计划事件
+# <a name="monitor-scheduled-events-for-your-azure-vms"></a>监视 Azure Vm 的计划事件
 
 每天都有更新应用到 Azure 的不同组成部分，使其中的服务保持安全和最新状态。 除了计划内更新以外，还可能发生计划外事件。 例如，如果检测到任何硬件降级或故障，Azure 服务可能需要执行计划外维护。 使用实时迁移时，内存预留将会更新，同时，更新所造成的影响通常受到严密跟踪，在大多数情况下，这些事件对于客户而言几乎是透明的，不会对他们造成任何影响，或者最多只会造成虚拟机冻结几秒钟。 但是，对于某些应用程序而言，即使是几秒钟的虚拟机冻结，也可能会造成影响。 提前了解即将进行的 Azure 维护非常重要，这可以确保为这些应用程序提供的最佳体验。 [计划事件服务](scheduled-events.md)提供一个编程接口，即将进行维护时它会发出通知，并使你能够正确处理维护。 
 
@@ -39,7 +39,7 @@ ms.locfileid: "86999014"
 
 ## <a name="set-up-the-environment"></a>设置环境
 
-现在，可用性集中应有 2 个初始 VM。 现在，需要在同一个可用性集中创建名为 myCollectorVM 的第 3 个 VM。 
+现在，可用性集中应有 2 个初始 VM。 现在，我们需要在同一可用性集中创建一个名为的第三 `myCollectorVM` 个 VM。 
 
 ```azurepowershell-interactive
 New-AzVm `
@@ -132,7 +132,7 @@ New-AzVm `
 ## <a name="creating-an-alert-rule-with-azure-monitor"></a>使用 Azure Monitor 创建警报规则 
 
 
-将事件推送到 Log Analytics 后，可运行以下[查询](../../azure-monitor/log-query/get-started-portal.md)来查找计划事件。
+将事件推送到 Log Analytics 后，可运行以下[查询](../../azure-monitor/log-query/log-analytics-tutorial.md)来查找计划事件。
 
 1. 在页面顶部选择“日志”，将以下内容粘贴到文本框中：
 
@@ -150,12 +150,12 @@ New-AzVm `
     | project-away RenderedDescription,ReqJson
     ```
 
-1. 选择“保存”，键入 *logQuery* 作为名称，保留“查询”作为类型，键入 *VMLogs* 作为**类别**，然后选择“保存”。   
+1. 选择 "**保存**"，然后键入作为 `ogQuery` "名称"，将 "**查询**" 类型保留为 "类别"， `VMLogs` 然后选择 "**保存**"。  
 
     ![保存查询](./media/notifications/save-query.png)
 
 1. 选择“新建警报规则”。 
-1. 在“创建规则”页中，保留 `collectorworkspace` 作为**资源**。
+1. 在“创建规则”页中，保留 `collectorworkspace` 作为 **资源**。
 1. 在“条件”下，选择条目“每当客户日志搜索为 <login undefined> 时”。 此时将打开“配置信号逻辑”页。
 1. 在“阈值”下输入 *0*，然后选择“完成”。 
 1. 在“操作”下，选择“创建操作组”。  此时将打开“添加操作组”页。

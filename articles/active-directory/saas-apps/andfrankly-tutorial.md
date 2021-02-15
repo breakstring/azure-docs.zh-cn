@@ -11,12 +11,12 @@ ms.workload: identity
 ms.topic: tutorial
 ms.date: 01/17/2019
 ms.author: jeedes
-ms.openlocfilehash: 71181a30785ba729b87ddd51077d1c07b0b9a8df
-ms.sourcegitcommit: 023d10b4127f50f301995d44f2b4499cbcffb8fc
+ms.openlocfilehash: acc1660be99b3b7cc9a3c7414c47f9f6e159b559
+ms.sourcegitcommit: d79513b2589a62c52bddd9c7bd0b4d6498805dbe
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/18/2020
-ms.locfileid: "88522098"
+ms.lasthandoff: 12/18/2020
+ms.locfileid: "97674072"
 ---
 # <a name="tutorial-azure-active-directory-integration-with-frankly"></a>教程：Azure Active Directory 与 &frankly 集成
 
@@ -27,7 +27,7 @@ ms.locfileid: "88522098"
 * 可以让用户使用其 Azure AD 帐户自动登录到 &frankly（单一登录）。
 * 可在中心位置（即 Azure 门户）管理帐户。
 
-如果要了解有关 SaaS 应用与 Azure AD 集成的更多详细信息，请参阅 [Azure Active Directory 的应用程序访问与单一登录是什么](https://docs.microsoft.com/azure/active-directory/active-directory-appssoaccess-whatis)。
+如果要了解有关 SaaS 应用与 Azure AD 集成的更多详细信息，请参阅 [Azure Active Directory 的应用程序访问与单一登录是什么](../manage-apps/what-is-single-sign-on.md)。
 如果还没有 Azure 订阅，可以在开始前[创建一个免费帐户](https://azure.microsoft.com/free/)。
 
 ## <a name="prerequisites"></a>必备条件
@@ -63,7 +63,7 @@ ms.locfileid: "88522098"
 
 4. 在搜索框中，键入“&frankly”，在结果面板中选择“&frankly”，然后单击“添加”按钮添加该应用程序。   
 
-     ![结果列表中的 &frankly](common/search-new-app.png)
+    ![结果列表中的 &frankly](common/search-new-app.png)
 
 ## <a name="configure-and-test-azure-ad-single-sign-on"></a>配置和测试 Azure AD 单一登录
 
@@ -89,7 +89,7 @@ ms.locfileid: "88522098"
 
     ![配置单一登录链接](common/select-sso.png)
 
-2. 在**选择单一登录方法**对话框中，选择 **SAML/WS-Fed**模式以启用单一登录。
+2. 在 **选择单一登录方法** 对话框中，选择 **SAML/WS-Fed** 模式以启用单一登录。
 
     ![单一登录选择模式](common/select-saml-option.png)
 
@@ -99,7 +99,7 @@ ms.locfileid: "88522098"
 
 4. 如果要在 **IDP** 发起的模式下配置应用程序，请在“基本 SAML 配置”部分中执行以下步骤：
 
-    ![&frankly 域和 URL 单一登录信息](common/idp-intiated.png)
+    ![屏幕截图显示“基本 SAML 配置”，可在其中输入“标识符”、“回复 URL”，并选择“保存”。](common/idp-intiated.png)
 
     a. 在“标识符”  文本框中，使用以下模式键入 URL：`https://andfrankly.com/saml/simplesaml/www/module.php/saml/sp/metadata.php/<tenant id>`
 
@@ -107,7 +107,7 @@ ms.locfileid: "88522098"
 
 5. 如果要在 SP 发起的模式下配置应用程序，请单击“设置其他 URL”，并执行以下步骤：
 
-    ![&frankly 域和 URL 单一登录信息](common/metadata-upload-additional-signon.png)
+    ![显示“设置其他 URL”的屏幕截图，可在其中输入登录 URL。](common/metadata-upload-additional-signon.png)
 
     在“登录 URL”  文本框中，使用以下模式键入 URL：`https://andfrankly.com/saml/okta/?saml_sso=<tenant id>`
 
@@ -125,7 +125,7 @@ ms.locfileid: "88522098"
 
 1. 登录到 &frankly。 转到“帐户”   > “用户管理”  。
 1. 将身份验证机制从默认值更改为“企业登录(SAML)”  。
-1. 上传在上一部分的步骤 6 中下载的**联合元数据 XML**。
+1. 上传在上一部分的步骤 6 中下载的 **联合元数据 XML**。
 1. 选择“保存”。 
 
 ### <a name="create-an-azure-ad-test-user"></a>创建 Azure AD 测试用户
@@ -145,7 +145,7 @@ ms.locfileid: "88522098"
     ![“用户”对话框](common/user-properties.png)
 
     a. 在“名称”  字段中，输入 BrittaSimon  。
-  
+
     b. 在“用户名”字段中，键入 brittasimon\@yourcompanydomain.extension  
     例如： BrittaSimon@contoso.com
 
@@ -181,18 +181,18 @@ ms.locfileid: "88522098"
 
 ### <a name="create-frankly-test-user"></a>创建 &frankly 测试用户
 
-在本部分中，将在 &frankly 中创建一个名为“Britta Simon”的用户。 请与  [&frankly 支持团队](mailto:help@andfrankly.com)协作，以将用户添加到 &frankly 平台。 使用单一登录前，必须先创建并激活用户。
+在本部分中，将在 &frankly 中创建一个名为“Britta Simon”的用户。 请与 [&frankly 支持团队](mailto:help@andfrankly.com)协作，以将用户添加到 &frankly 平台。 使用单一登录前，必须先创建并激活用户。
 
 ### <a name="test-single-sign-on"></a>测试单一登录
 
 在本部分中，使用访问面板测试 Azure AD 单一登录配置。
 
-单击访问面板中的 &frankly 磁贴时，应当会自动登录到为其设置了 SSO 的 &frankly。 有关访问面板的详细信息，请参阅 [Introduction to the Access Panel](https://docs.microsoft.com/azure/active-directory/active-directory-saas-access-panel-introduction)（访问面板简介）。
+单击访问面板中的 &frankly 磁贴时，应当会自动登录到为其设置了 SSO 的 &frankly。 有关访问面板的详细信息，请参阅 [Introduction to the Access Panel](../user-help/my-apps-portal-end-user-access.md)（访问面板简介）。
 
 ## <a name="additional-resources"></a>其他资源
 
-- [有关如何将 SaaS 应用与 Azure Active Directory 集成的教程列表](https://docs.microsoft.com/azure/active-directory/active-directory-saas-tutorial-list)
+- [有关如何将 SaaS 应用与 Azure Active Directory 集成的教程列表](./tutorial-list.md)
 
-- [Azure Active Directory 的应用程序访问与单一登录是什么？](https://docs.microsoft.com/azure/active-directory/active-directory-appssoaccess-whatis)
+- [Azure Active Directory 的应用程序访问与单一登录是什么？](../manage-apps/what-is-single-sign-on.md)
 
-- [什么是 Azure Active Directory 中的条件访问？](https://docs.microsoft.com/azure/active-directory/conditional-access/overview)
+- [什么是 Azure Active Directory 中的条件访问？](../conditional-access/overview.md)

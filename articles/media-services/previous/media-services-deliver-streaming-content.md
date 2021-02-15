@@ -14,14 +14,18 @@ ms.devlang: na
 ms.topic: article
 ms.date: 03/18/2019
 ms.author: juliako
-ms.openlocfilehash: 9c7a29ebb355a5733201ff01af9e38f371def1cf
-ms.sourcegitcommit: 845a55e6c391c79d2c1585ac1625ea7dc953ea89
+ms.custom: devx-track-csharp
+ms.openlocfilehash: a0343c607a342c3438d68627b97c71cdf05199b2
+ms.sourcegitcommit: 829d951d5c90442a38012daaf77e86046018e5b9
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/05/2020
-ms.locfileid: "85962809"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "89267779"
 ---
-# <a name="publish-media-services-content-using-net"></a>使用 .NET 发布媒体服务内容  
+# <a name="publish-media-services-content-using-net"></a>使用 .NET 发布媒体服务内容
+
+[!INCLUDE [media services api v2 logo](./includes/v2-hr.md)]
+
 > [!div class="op_single_selector"]
 > * [REST](media-services-rest-deliver-streaming-content.md)
 > * [.NET](media-services-deliver-streaming-content.md)
@@ -99,11 +103,11 @@ ms.locfileid: "85962809"
 
 输出：
 
-- 使用平滑流式处理协议的客户端流式处理清单的 URL： \
+- 用于使用平滑流式处理协议进行客户端流式处理的清单的 URL：\
   `http://amstest1.streaming.mediaservices.windows.net/3c5fe676-199c-4620-9b03-ba014900f214/BigBuckBunny.ism/manifest`
-- 使用 HLS 协议的客户端流式处理清单的 URL： \
+- 用于使用 HLS 协议进行客户端流式处理的清单的 URL：\
   `http://amstest1.streaming.mediaservices.windows.net/3c5fe676-199c-4620-9b03-ba014900f214/BigBuckBunny.ism/manifest(format=m3u8-aapl)`
-- 使用 MPEG 短划线协议的客户端流式处理清单的 URL： \
+- 用于使用 MPEG DASH 协议进行客户端流式处理的清单的 URL：\
   `http://amstest1.streaming.mediaservices.windows.net/3c5fe676-199c-4620-9b03-ba014900f214/BigBuckBunny.ism/manifest(format=mpd-time-csf)`
 
 > [!NOTE]

@@ -4,12 +4,12 @@ description: 本文介绍如何停止使用用于容器的 Azure Monitor 监视 
 ms.topic: conceptual
 ms.date: 08/19/2019
 ms.custom: devx-track-azurecli
-ms.openlocfilehash: af5f49dfe5e668f39f105a62ad20858e273b34cb
-ms.sourcegitcommit: 11e2521679415f05d3d2c4c49858940677c57900
+ms.openlocfilehash: 476934d84d8ffc63336ec620432db3507b2cbb34
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/31/2020
-ms.locfileid: "87489480"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98943834"
 ---
 # <a name="how-to-stop-monitoring-your-azure-kubernetes-service-aks-with-azure-monitor-for-containers"></a>如何停止使用用于容器的 Azure Monitor 监视 Azure Kubernetes 服务 (AKS)
 
@@ -18,7 +18,7 @@ ms.locfileid: "87489480"
 
 ## <a name="azure-cli"></a>Azure CLI
 
-使用 [az aks disable-addons](/cli/azure/aks?view=azure-cli-latest#az-aks-disable-addons) 命令禁用容器的 Azure Monitor。 该命令从群集节点中删除代理，它不会删除已收集并存储在 Azure Monitor 资源中的解决方案或数据。  
+使用 [az aks disable-addons](/cli/azure/aks#az-aks-disable-addons) 命令禁用容器的 Azure Monitor。 该命令从群集节点中删除代理，它不会删除已收集并存储在 Azure Monitor 资源中的解决方案或数据。  
 
 ```azurecli
 az aks disable-addons -a monitoring -n MyExistingManagedCluster -g MyExistingManagedClusterRG
@@ -35,7 +35,7 @@ az aks disable-addons -a monitoring -n MyExistingManagedCluster -g MyExistingMan
 * [使用资源管理器模板和 Azure CLI 部署资源](../../azure-resource-manager/templates/deploy-cli.md)
 
 >[!NOTE]
->模板需要部署在群集所在的资源组中。 如果在使用此模板时省略任何其他属性或加载项，则可能导致从群集中删除这些属性或加载项。 例如，*enableRBAC*（用于群集中实施的 RBAC 策略），或 *aksResourceTagValues*（如果为 AKS 群集指定了标记）。  
+>模板需要部署在群集所在的资源组中。 如果在使用此模板时省略任何其他属性或加载项，则可能导致从群集中删除这些属性或加载项。 例如，enableRBAC（用于群集中实施的 Kubernetes RBAC 策略），或 aksResourceTagValues（如果为 AKS 群集指定了标记）。  
 >
 
 如果选择使用 Azure CLI，首先需要在本地安装和使用 CLI。 必须运行 Azure CLI 2.0.27 版或更高版本。 若要确定版本，请运行 `az --version`。 如果需要安装或升级 Azure CLI，请参阅[安装 Azure CLI](/cli/azure/install-azure-cli)。
@@ -135,7 +135,7 @@ az aks disable-addons -a monitoring -n MyExistingManagedCluster -g MyExistingMan
 ```azurecli
 az login   
 az account set --subscription "Subscription Name"
-az group deployment create --resource-group <ResourceGroupName> --template-file ./OptOutTemplate.json --parameters @./OptOutParam.json  
+az deployment group create --resource-group <ResourceGroupName> --template-file ./OptOutTemplate.json --parameters @./OptOutParam.json  
 ```
 
 配置更改可能需要几分钟才能完成。 完成后，系统会返回包含结果的消息，如下所示：

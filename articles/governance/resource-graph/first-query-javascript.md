@@ -1,15 +1,15 @@
 ---
 title: 快速入门：你的第一个 JavaScript 查询
 description: 本快速入门介绍为 JavaScript 启用 Resource Graph 库并运行第一个查询的步骤。
-ms.date: 06/23/2020
+ms.date: 01/27/2021
 ms.topic: quickstart
-ms.custom: devx-track-javascript
-ms.openlocfilehash: fc9809dbe615950b4f5c9e4dc66cefcd054f5ebf
-ms.sourcegitcommit: e71da24cc108efc2c194007f976f74dd596ab013
+ms.custom: devx-track-js
+ms.openlocfilehash: 97cbd9ddf65a4135f55304f6dd67c704c6fcac5d
+ms.sourcegitcommit: 436518116963bd7e81e0217e246c80a9808dc88c
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/29/2020
-ms.locfileid: "87415918"
+ms.lasthandoff: 01/27/2021
+ms.locfileid: "98917515"
 ---
 # <a name="quickstart-run-your-first-resource-graph-query-using-javascript"></a>快速入门：使用 JavaScript 运行你的第一个 Resource Graph 查询
 
@@ -19,15 +19,15 @@ ms.locfileid: "87415918"
 
 ## <a name="prerequisites"></a>先决条件
 
-- **Azure 订阅**：如果没有 Azure 订阅，请在开始之前创建一个[免费](https://azure.microsoft.com/free/)帐户。
+- **Azure 订阅**：如果没有 Azure 订阅，请在开始之前创建一个 [免费](https://azure.microsoft.com/free/)帐户。
 
 - **Node.js**：需要 [Node.js](https://nodejs.org/) 版本 12 或更高版本。
 
-## <a name="application-setup"></a>应用程序设置
+## <a name="application-initialization"></a>应用程序初始化
 
-若要启用 JavaScript 以查询 Azure Resource Graph，必须设置环境。 此设置适用于可使用 JavaScript 的任何环境，包括 [Bash on Windows 10](/windows/wsl/install-win10)。
+若要启用 JavaScript 以查询 Azure Resource Graph，必须配置环境。 此设置适用于可使用 JavaScript 的任何环境，包括 [Bash on Windows 10](/windows/wsl/install-win10)。
 
-1. 运行以下命令，设置新的 Node.js 项目。
+1. 运行以下命令，初始化新的 Node.js 项目。
 
    ```bash
    npm init -y

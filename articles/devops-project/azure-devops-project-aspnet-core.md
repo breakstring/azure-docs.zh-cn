@@ -15,12 +15,12 @@ ms.topic: quickstart
 ms.date: 03/24/2020
 ms.author: mlearned
 ms.custom: devx-track-csharp, mvc
-ms.openlocfilehash: c434abdac19c0afd3a76256c27fc3316a8b09940
-ms.sourcegitcommit: c28fc1ec7d90f7e8b2e8775f5a250dd14a1622a6
+ms.openlocfilehash: 63d3ac356e4f2c1d17e1511227f5089b7ff4266f
+ms.sourcegitcommit: d2d1c90ec5218b93abb80b8f3ed49dcf4327f7f4
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/13/2020
-ms.locfileid: "88163690"
+ms.lasthandoff: 12/16/2020
+ms.locfileid: "97589151"
 ---
 # <a name="create-a-cicd-pipeline-for-net-with-azure-devops-starter"></a>通过 Azure DevOps Starter 创建用于 .NET 的 CI/CD 管道
 
@@ -50,13 +50,13 @@ DevOps Starter 在 Azure DevOps 中创建 CI/CD 管道。 可以创建新的 Azu
 
 ## <a name="configure-azure-devops-and-an-azure-subscription"></a>配置 Azure DevOps 和 Azure 订阅 
 
-1. 输入**项目名称**。
+1. 输入 **项目名称**。
 
-2. 创建新的免费 **Azure DevOps 组织**或从下拉列表中选择现有组织。
+2. 创建新的免费 **Azure DevOps 组织** 或从下拉列表中选择现有组织。
 
-3. 选择 **Azure 订阅**，输入 **Web 应用**的名称或采用默认值，然后选择“完成”  。 几分钟后，DevOps Starter 部署概述会 在 Azure 门户中显示。 
+3. 选择 **Azure 订阅**，输入 **Web 应用** 的名称或采用默认值，然后选择“完成”  。 几分钟后，DevOps Starter 部署概述会 在 Azure 门户中显示。 
 
-4. 选择“转到资源”以查看 DevOps Starter 仪表板。 在右上角，将“项目”  固定在仪表板上，以便快速访问。 示例应用设置在 **Azure DevOps 组织**的存储库中。 执行生成，并将应用部署到 Azure。
+4. 选择“转到资源”以查看 DevOps Starter 仪表板。 在右上角，将“项目”  固定在仪表板上，以便快速访问。 示例应用设置在 **Azure DevOps 组织** 的存储库中。 执行生成，并将应用部署到 Azure。
 
 5. 在此仪表板中可以查看代码存储库、CI/CD 管道，以及 Azure 中的应用。 在右侧的“Azure 资源”下，选择“浏览”以查看正在运行的应用。 
 
@@ -66,9 +66,9 @@ DevOps Starter 在 Azure DevOps 中创建 CI/CD 管道。 可以创建新的 Azu
 
 DevOps Starter 在 Azure Repos 或 GitHub 中创建了 Git 存储库。 若要查看存储库并对应用程序进行代码更改，请执行以下操作：
 
-1. 在 DevOps Starter 仪表板的左侧，选择“主”分支的链接。 该链接会打开新建 Git 存储库的视图。
+1. 在 DevOps Starter 仪表板的左侧，选择主分支的链接。 该链接会打开新建 Git 存储库的视图。
 
-2. 在后续几个步骤中，可以使用 Web 浏览器直接对 **master** 分支进行代码更改并提交所做的更改。 还可以通过从存储库页右上角选择“克隆”  ，在喜欢的 IDE 中克隆 Git 存储库。 
+2. 在后续几个步骤中，可以使用 Web 浏览器直接对主分支进行代码更改并提交所做的更改。 还可以通过从存储库页右上角选择“克隆”  ，在喜欢的 IDE 中克隆 Git 存储库。 
 
 3. 在左侧，将应用程序文件结构导航到 **Application/aspnet-core-dotnet-core/Pages/Index.cshtml**。
 
@@ -133,7 +133,7 @@ DevOps Starter 会创建一个发布管道，用于管理到 Azure 的部署。
 若要详细了解如何根据团队的需求修改生成和发布管道，请参阅以下教程：
 
 > [!div class="nextstepaction"]
-> [自定义 CD 过程](https://docs.microsoft.com/azure/devops/pipelines/release/define-multistage-release-process?view=vsts)
+> [自定义 CD 过程](/azure/devops/pipelines/release/define-multistage-release-process?view=vsts)
 
 ## <a name="videos"></a>视频
 

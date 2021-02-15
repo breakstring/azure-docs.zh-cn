@@ -3,7 +3,7 @@ title: 使用 Microsoft Cloud App Security 实现应用可见性和控制
 description: 了解如何识别应用风险级别、实时阻止违规和透露，以及使用应用连接器通过提供程序 API 来实现可见性和监管。
 services: active-directory
 author: kenwith
-manager: celestedg
+manager: daveba
 ms.service: active-directory
 ms.subservice: app-mgmt
 ms.topic: conceptual
@@ -11,12 +11,12 @@ ms.workload: identity
 ms.date: 02/03/2020
 ms.author: kenwith
 ms.collection: M365-identity-device-management
-ms.openlocfilehash: 62a77c1b21a6d602a2d54f56a2ed294fe800ac38
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
-ms.translationtype: HT
+ms.openlocfilehash: 682549b5b99169060437c8c91d465121002edc6e
+ms.sourcegitcommit: d49bd223e44ade094264b4c58f7192a57729bada
+ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "84763646"
+ms.lasthandoff: 02/02/2021
+ms.locfileid: "99259598"
 ---
 # <a name="cloud-app-visibility-and-control"></a>云应用可见性和控制
 
@@ -36,8 +36,8 @@ ms.locfileid: "84763646"
  
 ### <a name="learn-more"></a>了解详细信息
 
-- [发现和管理网络中的影子 IT](https://docs.microsoft.com/cloud-app-security/tutorial-shadow-it)
-- [使用 Cloud App Security 发现的应用](https://docs.microsoft.com/cloud-app-security/discovered-apps)
+- [发现和管理网络中的影子 IT](/cloud-app-security/tutorial-shadow-it)
+- [使用 Cloud App Security 发现的应用](/cloud-app-security/discovered-apps)
  
 ## <a name="user-session-visibility-and-control"></a>用户会话可见性和控制 
 
@@ -53,7 +53,7 @@ ms.locfileid: "84763646"
  
 ### <a name="learn-more"></a>了解详细信息
 
-- [在 Cloud App Security 中使用会话控制保护应用](https://docs.microsoft.com/cloud-app-security/proxy-intro-aad)
+- [在 Cloud App Security 中使用会话控制保护应用](/cloud-app-security/proxy-intro-aad)
  
 ## <a name="advanced-app-visibility-and-controls"></a>高级应用可见性和控制 
 
@@ -61,11 +61,11 @@ ms.locfileid: "84763646"
  
 ### <a name="learn-more"></a>了解详细信息  
 
-- [在 Cloud App Security 中连接应用](https://docs.microsoft.com/cloud-app-security/enable-instant-visibility-protection-and-governance-actions-for-your-apps)
+- [在 Cloud App Security 中连接应用](/cloud-app-security/enable-instant-visibility-protection-and-governance-actions-for-your-apps)
 
 ## <a name="next-steps"></a>后续步骤
 
-- [发现和管理网络中的影子 IT](https://docs.microsoft.com/cloud-app-security/tutorial-shadow-it)
-- [使用 Cloud App Security 发现的应用](https://docs.microsoft.com/cloud-app-security/discovered-apps)
-- [在 Cloud App Security 中使用会话控制保护应用](https://docs.microsoft.com/cloud-app-security/proxy-intro-aad)
-- [在 Cloud App Security 中连接应用](https://docs.microsoft.com/cloud-app-security/enable-instant-visibility-protection-and-governance-actions-for-your-apps)
+- [发现和管理网络中的影子 IT](/cloud-app-security/tutorial-shadow-it)
+- [使用 Cloud App Security 发现的应用](/cloud-app-security/discovered-apps)
+- [在 Cloud App Security 中使用会话控制保护应用](/cloud-app-security/proxy-intro-aad)
+- [在 Cloud App Security 中连接应用](/cloud-app-security/enable-instant-visibility-protection-and-governance-actions-for-your-apps)

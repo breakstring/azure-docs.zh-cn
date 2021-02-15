@@ -10,12 +10,12 @@ ms.workload: identity
 ms.service: active-directory
 manager: daveba
 ms.collection: M365-identity-device-management
-ms.openlocfilehash: 6c748df10e432e3bebbce0dc8cb39dd2101d52e2
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 58b4bbcac110398ee4ff132b76ce8c4868ee17f8
+ms.sourcegitcommit: 829d951d5c90442a38012daaf77e86046018e5b9
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "81680043"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "91317585"
 ---
 # <a name="azure-ad-userprincipalname-population"></a>Azure AD UserPrincipalName 填充
 
@@ -54,9 +54,9 @@ Azure AD 使用 UPN 让用户登录。  用户可以使用的 UPN 取决于域�
 
 若要在 Azure AD 中启用备用登录 ID，可以使用 Azure AD Connect，而无需执行任何附加的配置步骤。 可以直接通过向导配置备用 ID。 请参阅“同步”部分中适用于用户的 Azure AD 登录配置。在“用户主体名称”下拉列表中，选择“备用登录 ID”对应的属性。
 
-![未验证的域](./media/plan-connect-userprincipalname/altloginid.png)  
+![突出显示用户主体名称列表的屏幕截图，你可以在其中选择备用登录 ID 属性。](./media/plan-connect-userprincipalname/altloginid.png)  
 
-有关详细信息，请参阅[配置备用登录 ID](https://docs.microsoft.com/windows-server/identity/ad-fs/operations/configuring-alternate-login-id) 和 [Azure AD 登录配置](how-to-connect-install-custom.md#azure-ad-sign-in-configuration)
+有关详细信息，请参阅[配置备用登录 ID](/windows-server/identity/ad-fs/operations/configuring-alternate-login-id) 和 [Azure AD 登录配置](how-to-connect-install-custom.md#azure-ad-sign-in-configuration)
 
 ## <a name="non-verified-upn-suffix"></a>未验证的 UPN 后缀
 如果本地 UserPrincipalName 属性/备用登录 ID 后缀未在 Azure AD 租户中验证，则 Azure AD UserPrincipalName 属性值将设置为 MOERA。 Azure AD 基于 Azure AD MailNickName 属性和 &lt;MailNickName&gt;&#64;&lt;初始域&gt; 形式的 Azure AD 初始域计算 MOERA。

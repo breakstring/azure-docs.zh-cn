@@ -3,12 +3,12 @@ title: 将新式备份存储与 Azure 备份服务器一起使用
 description: 了解 Azure 备份服务器中的新功能。 本文介绍如何升级备份服务器安装。
 ms.topic: conceptual
 ms.date: 11/13/2018
-ms.openlocfilehash: b8620f6999c1fcb1a1e70c73fb71fcaac008d930
-ms.sourcegitcommit: ac7ae29773faaa6b1f7836868565517cd48561b2
+ms.openlocfilehash: b077296e58e1193e454a686a392d802e905500a5
+ms.sourcegitcommit: 829d951d5c90442a38012daaf77e86046018e5b9
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/25/2020
-ms.locfileid: "88825862"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "91292891"
 ---
 # <a name="add-storage-to-azure-backup-server"></a>将存储添加到 Azure 备份服务器
 
@@ -18,7 +18,7 @@ Azure 备份服务器 V2 及更高版本支持新式备份存储，后者可提�
 > 若要使用新式备份存储，必须在 Windows Server 2016 上运行备份服务器 V2 或 V3，或者在 Windows Server 2019 上运行备份服务器 V3。
 > 如果在早期版本的 Windows Server 上运行备份服务器 V2，则 Azure 备份服务器无法利用新式备份存储。 而是采用与备份服务器 V1 相同的方式来保护工作负载。 有关详细信息，请参阅备份服务器版本[保护矩阵](backup-mabs-protection-matrix.md)。
 >
-> 若要实现增强的备份性能，建议在 Windows Server 2019 上部署包含分层存储的 MABS v3。 有关配置分层存储的步骤，请参阅 DPM 文章 "[通过分层存储设置 mb](/system-center/dpm/add-storage?view=sc-dpm-2019#set-up-mbs-with-tiered-storage)"。
+> 若要实现增强的备份性能，建议在 Windows Server 2019 上部署具有分层存储的 MABS v3。 有关配置分层存储的步骤，请参阅 DPM 文章 "[通过分层存储设置 mb](/system-center/dpm/add-storage#set-up-mbs-with-tiered-storage)"。
 
 ## <a name="volumes-in-backup-server"></a>备份服务器中的卷
 
@@ -36,7 +36,7 @@ Azure 备份服务器 V2 及更高版本支持新式备份存储，后者可提�
 
 使用具有卷的备份服务器 V2 或更高版本作为磁盘存储可以帮助维护对存储的控制权。 卷可以是单个磁盘。 但是，如果要在将来扩展存储，请通过使用存储空间创建的磁盘来创建卷。 如果要为备份存储扩展卷，这可能有所帮助。 本部分提供有关使用此设置创建卷的最佳做法。
 
-1. 在服务器管理器中，选择 "**文件和存储服务**  >  **卷**" "  >  **存储池**"。 在“物理磁盘”****，选择“新建存储池”****。
+1. 在“服务器管理器”中，然后选择“文件和存储服务” > “卷” > “存储池”。 在“物理磁盘”****，选择“新建存储池”****。
 
     ![创建新的存储池](./media/backup-mabs-add-storage/mabs-add-storage-1.png)
 
@@ -56,7 +56,7 @@ Azure 备份服务器 V2 及更高版本支持新式备份存储，后者可提�
 
     ![创建新卷](./media/backup-mabs-add-storage/mabs-add-storage-5.png)
 
-6. 在“选择服务器和磁盘”**** 对话框中，选择服务器和新磁盘。 然后，选择“下一步”  。
+6. 在“选择服务器和磁盘”**** 对话框中，选择服务器和新磁盘。 然后，选择“下一步”。
 
     ![选择服务器和磁盘](./media/backup-mabs-add-storage/mabs-add-storage-6.png)
 
@@ -97,7 +97,7 @@ Update-DPMDiskStorage [-Volume] <Volume> [[-FriendlyName] <String> ] [[-Datasour
 
 ## <a name="migrate-legacy-storage-to-modern-backup-storage"></a>将旧存储迁移到 Modern Backup Storage
 
-升级到或安装备份服务器 V2 并将操作系统升级到 Windows Server 2016 之后，可更新保护组以使用新式备份存储。 默认情况下，保护组不会更改。 它们会继续按照初始设置运行。
+升级到或安装备份服务器 V2 并将操作系统升级到 Windows Server 2016 之后，可更新保护组以使用新式备份存储。 默认情况下，不会更改保护组。 它们会继续按照初始设置运行。
 
 可以选择更新保护组以使用新式备份存储。 若要更新保护组，请使用保留数据选项停止所有数据源的保护。 然后，将数据源添加到新保护组。
 
@@ -105,7 +105,7 @@ Update-DPMDiskStorage [-Volume] <Volume> [[-FriendlyName] <String> ] [[-Datasour
 
    ![停止保护成员](/system-center/dpm/media/upgrade-to-dpm-2016/dpm-2016-stop-protection1.png)
 
-2. 在“从组中删除”**** 对话框中，检查存储池的已用磁盘空间和可用空闲空间。 默认设置是在磁盘上保留恢复点，并让它们可以按照关联保留策略过期。 单击“确定”。
+2. 在“从组中删除”**** 对话框中，检查存储池的已用磁盘空间和可用空闲空间。 默认设置是在磁盘上保留恢复点，并让它们可以按照关联保留策略过期。 选择“确定”  。
 
    如果要立即将已用磁盘空间返回到可用存储池，则选中“删除磁盘上的副本”**** 复选框以删除与成员关联的备份数据（和恢复点）。
 
@@ -119,7 +119,7 @@ Update-DPMDiskStorage [-Volume] <Volume> [[-FriendlyName] <String> ] [[-Datasour
 
 添加磁盘存储：
 
-1. 在管理员控制台中，选择 "**管理**  >  **磁盘存储**"  >  **添加**"。
+1. 在管理员控制台中，选择“管理” > “磁盘存储” > “添加”。
 
     ![“添加磁盘存储”对话框](/system-center/dpm/media/upgrade-to-dpm-2016/dpm-2016-add-disk-storage.png)
 

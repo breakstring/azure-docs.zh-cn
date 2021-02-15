@@ -6,12 +6,12 @@ ms.topic: reference
 ms.date: 02/24/2020
 ms.author: cshoe
 ms.custom: devx-track-csharp, devx-track-python
-ms.openlocfilehash: 42932d712d6c4a94cad28aec924b88fbc126662b
-ms.sourcegitcommit: 4913da04fd0f3cf7710ec08d0c1867b62c2effe7
+ms.openlocfilehash: 49762b1844aec85ff55ae2a16243a231414b263f
+ms.sourcegitcommit: 3af12dc5b0b3833acb5d591d0d5a398c926919c8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/14/2020
-ms.locfileid: "88212789"
+ms.lasthandoff: 01/11/2021
+ms.locfileid: "98071572"
 ---
 # <a name="azure-cosmos-db-input-binding-for-azure-functions-2x-and-higher"></a>适用于 Azure Functions 2.x 及更高版本的 Azure Cosmos DB 输入绑定
 
@@ -20,7 +20,7 @@ Azure Cosmos DB 输入绑定会使用 SQL API 检索一个或多个 Azure Cosmos
 有关设置和配置详细信息，请参阅[概述](./functions-bindings-cosmosdb-v2.md)。
 
 > [!NOTE]
-> 如果集合已[分区](../cosmos-db/partition-data.md#logical-partitions)，则查找操作还需指定分区键值。
+> 如果集合已[分区](../cosmos-db/partitioning-overview.md#logical-partitions)，则查找操作还需指定分区键值。
 >
 
 <a id="example" name="example"></a>
@@ -212,7 +212,7 @@ namespace CosmosDBSamplesV2
 以下示例演示如何在 `SqlQuery` 参数中使用绑定表达式。 可以将路由数据传递至所示的 `SqlQuery` 参数，但目前[无法传递查询字符串值](https://github.com/Azure/azure-functions-host/issues/2554#issuecomment-392084583)。
 
 > [!NOTE]
-> 如果需要只按 ID 进行查询，则建议使用查找（如[以前的示例](#http-trigger-look-up-id-from-query-string-c)所示），因为该查找消耗较少的[请求单位](../cosmos-db/request-units.md)。 点读取操作 (GET) 比按 ID 进行的查询[更高效](../cosmos-db/optimize-cost-queries.md)。
+> 如果需要只按 ID 进行查询，则建议使用查找（如[以前的示例](#http-trigger-look-up-id-from-query-string-c)所示），因为该查找消耗较少的[请求单位](../cosmos-db/request-units.md)。 点读取操作 (GET) 比按 ID 进行的查询[更高效](../cosmos-db/optimize-cost-reads-writes.md)。
 >
 
 ```cs
@@ -300,7 +300,7 @@ namespace CosmosDBSamplesV2
 以下示例演示检索文档列表的 [C# 函数](functions-dotnet-class-library.md)。 此函数由 HTTP 请求触发。 此代码使用 Azure Cosmos DB 绑定提供的 `DocumentClient` 实例来读取文档列表。 `DocumentClient` 实例也可用于写入操作。
 
 > [!NOTE]
-> 还可以使用 [IDocumentClient](/dotnet/api/microsoft.azure.documents.idocumentclient?view=azure-dotnet) 接口来简化测试。
+> 还可以使用 [IDocumentClient](/dotnet/api/microsoft.azure.documents.idocumentclient?view=azure-dotnet&preserve-view=true) 接口来简化测试。
 
 ```cs
 using Microsoft.AspNetCore.Http;
@@ -721,6 +721,270 @@ public static async Task<HttpResponseMessage> Run(HttpRequestMessage req, Docume
 }
 ```
 
+# <a name="java"></a>[Java](#tab/java)
+
+本部分包含以下示例：
+
+* [HTTP 触发器，从查询字符串查找 ID - 字符串参数](#http-trigger-look-up-id-from-query-string---string-parameter-java)
+* [HTTP 触发器，从查询字符串查找 ID - POJO 参数](#http-trigger-look-up-id-from-query-string---pojo-parameter-java)
+* [HTTP 触发器，从路由数据查找 ID](#http-trigger-look-up-id-from-route-data-java)
+* [HTTP 触发器，使用 SqlQuery 从路由数据查找 ID](#http-trigger-look-up-id-from-route-data-using-sqlquery-java)
+* [HTTP 触发器，使用 SqlQuery 从路由数据获取多个文档（C# 脚本）](#http-trigger-get-multiple-docs-from-route-data-using-sqlquery-java)
+
+这些示例引用简单的 `ToDoItem` 类型：
+
+```java
+public class ToDoItem {
+
+  private String id;
+  private String description;
+
+  public String getId() {
+    return id;
+  }
+
+  public String getDescription() {
+    return description;
+  }
+
+  @Override
+  public String toString() {
+    return "ToDoItem={id=" + id + ",description=" + description + "}";
+  }
+}
+```
+
+<a id="http-trigger-look-up-id-from-query-string---string-parameter-java"></a>
+
+### <a name="http-trigger-look-up-id-from-query-string---string-parameter"></a>HTTP 触发器，从查询字符串查找 ID - 字符串参数
+
+以下示例展示了检索单个文档的 Java 函数。 此函数由 HTTP 请求触发，该请求使用的查询字符串用于指定要查找的 ID 和分区键值。 该 ID 和分区键值用于以字符串形式从指定的数据库和集合中检索文档。
+
+```java
+public class DocByIdFromQueryString {
+
+    @FunctionName("DocByIdFromQueryString")
+    public HttpResponseMessage run(
+            @HttpTrigger(name = "req",
+              methods = {HttpMethod.GET, HttpMethod.POST},
+              authLevel = AuthorizationLevel.ANONYMOUS)
+            HttpRequestMessage<Optional<String>> request,
+            @CosmosDBInput(name = "database",
+              databaseName = "ToDoList",
+              collectionName = "Items",
+              id = "{Query.id}",
+              partitionKey = "{Query.partitionKeyValue}",
+              connectionStringSetting = "Cosmos_DB_Connection_String")
+            Optional<String> item,
+            final ExecutionContext context) {
+
+        // Item list
+        context.getLogger().info("Parameters are: " + request.getQueryParameters());
+        context.getLogger().info("String from the database is " + (item.isPresent() ? item.get() : null));
+
+        // Convert and display
+        if (!item.isPresent()) {
+            return request.createResponseBuilder(HttpStatus.BAD_REQUEST)
+                          .body("Document not found.")
+                          .build();
+        }
+        else {
+            // return JSON from Cosmos. Alternatively, we can parse the JSON string
+            // and return an enriched JSON object.
+            return request.createResponseBuilder(HttpStatus.OK)
+                          .header("Content-Type", "application/json")
+                          .body(item.get())
+                          .build();
+        }
+    }
+}
+ ```
+
+在 [Java 函数运行时库](/java/api/overview/azure/functions/runtime)中，对其值将来自 Cosmos DB 的函数参数使用 `@CosmosDBInput` 注释。  可以将此注释与本机 Java 类型、POJO 或使用了 `Optional<T>` 的可为 null 的值一起使用。
+
+<a id="http-trigger-look-up-id-from-query-string---pojo-parameter-java"></a>
+
+### <a name="http-trigger-look-up-id-from-query-string---pojo-parameter"></a>HTTP 触发器，从查询字符串查找 ID - POJO 参数
+
+以下示例展示了检索单个文档的 Java 函数。 此函数由 HTTP 请求触发，该请求使用的查询字符串用于指定要查找的 ID 和分区键值。 该 ID 和分区键值用于从指定的数据库和集合中检索文档。 然后将该文档转换为先前创建的 ```ToDoItem``` POJO 实例，并作为参数传递给该函数。
+
+```java
+public class DocByIdFromQueryStringPojo {
+
+    @FunctionName("DocByIdFromQueryStringPojo")
+    public HttpResponseMessage run(
+            @HttpTrigger(name = "req",
+              methods = {HttpMethod.GET, HttpMethod.POST},
+              authLevel = AuthorizationLevel.ANONYMOUS)
+            HttpRequestMessage<Optional<String>> request,
+            @CosmosDBInput(name = "database",
+              databaseName = "ToDoList",
+              collectionName = "Items",
+              id = "{Query.id}",
+              partitionKey = "{Query.partitionKeyValue}",
+              connectionStringSetting = "Cosmos_DB_Connection_String")
+            ToDoItem item,
+            final ExecutionContext context) {
+
+        // Item list
+        context.getLogger().info("Parameters are: " + request.getQueryParameters());
+        context.getLogger().info("Item from the database is " + item);
+
+        // Convert and display
+        if (item == null) {
+            return request.createResponseBuilder(HttpStatus.BAD_REQUEST)
+                          .body("Document not found.")
+                          .build();
+        }
+        else {
+            return request.createResponseBuilder(HttpStatus.OK)
+                          .header("Content-Type", "application/json")
+                          .body(item)
+                          .build();
+        }
+    }
+}
+ ```
+
+<a id="http-trigger-look-up-id-from-route-data-java"></a>
+
+### <a name="http-trigger-look-up-id-from-route-data"></a>HTTP 触发器，从路由数据查找 ID
+
+以下示例展示了检索单个文档的 Java 函数。 此函数由 HTTP 请求触发，该请求使用的路由参数用于指定要查找的 ID 和分区键值。 该 ID 和分区键值用于从指定的数据库和集合中检索文档，将它作为 ```Optional<String>``` 返回。
+
+```java
+public class DocByIdFromRoute {
+
+    @FunctionName("DocByIdFromRoute")
+    public HttpResponseMessage run(
+            @HttpTrigger(name = "req",
+              methods = {HttpMethod.GET, HttpMethod.POST},
+              authLevel = AuthorizationLevel.ANONYMOUS,
+              route = "todoitems/{partitionKeyValue}/{id}")
+            HttpRequestMessage<Optional<String>> request,
+            @CosmosDBInput(name = "database",
+              databaseName = "ToDoList",
+              collectionName = "Items",
+              id = "{id}",
+              partitionKey = "{partitionKeyValue}",
+              connectionStringSetting = "Cosmos_DB_Connection_String")
+            Optional<String> item,
+            final ExecutionContext context) {
+
+        // Item list
+        context.getLogger().info("Parameters are: " + request.getQueryParameters());
+        context.getLogger().info("String from the database is " + (item.isPresent() ? item.get() : null));
+
+        // Convert and display
+        if (!item.isPresent()) {
+            return request.createResponseBuilder(HttpStatus.BAD_REQUEST)
+                          .body("Document not found.")
+                          .build();
+        }
+        else {
+            // return JSON from Cosmos. Alternatively, we can parse the JSON string
+            // and return an enriched JSON object.
+            return request.createResponseBuilder(HttpStatus.OK)
+                          .header("Content-Type", "application/json")
+                          .body(item.get())
+                          .build();
+        }
+    }
+}
+ ```
+
+ <a id="http-trigger-look-up-id-from-route-data-using-sqlquery-java"></a>
+
+### <a name="http-trigger-look-up-id-from-route-data-using-sqlquery"></a>HTTP 触发器，使用 SqlQuery 从路由数据查找 ID
+
+以下示例展示了检索单个文档的 Java 函数。 此函数由 HTTP 请求触发，该请求使用路由参数指定要查找的 ID。 该 ID 用于从指定的数据库和集合中检索文档，将结果集转换为 ```ToDoItem[]```，因为可能会返回许多文档，具体取决于查询条件。
+
+> [!NOTE]
+> 如果需要只按 ID 进行查询，则建议使用查找（如[以前的示例](#http-trigger-look-up-id-from-query-string---pojo-parameter-java)所示），因为该查找消耗较少的[请求单位](../cosmos-db/request-units.md)。 点读取操作 (GET) 比按 ID 进行的查询[更高效](../cosmos-db/optimize-cost-reads-writes.md)。
+>
+
+```java
+public class DocByIdFromRouteSqlQuery {
+
+    @FunctionName("DocByIdFromRouteSqlQuery")
+    public HttpResponseMessage run(
+            @HttpTrigger(name = "req",
+              methods = {HttpMethod.GET, HttpMethod.POST},
+              authLevel = AuthorizationLevel.ANONYMOUS,
+              route = "todoitems2/{id}")
+            HttpRequestMessage<Optional<String>> request,
+            @CosmosDBInput(name = "database",
+              databaseName = "ToDoList",
+              collectionName = "Items",
+              sqlQuery = "select * from Items r where r.id = {id}",
+              connectionStringSetting = "Cosmos_DB_Connection_String")
+            ToDoItem[] item,
+            final ExecutionContext context) {
+
+        // Item list
+        context.getLogger().info("Parameters are: " + request.getQueryParameters());
+        context.getLogger().info("Items from the database are " + item);
+
+        // Convert and display
+        if (item == null) {
+            return request.createResponseBuilder(HttpStatus.BAD_REQUEST)
+                          .body("Document not found.")
+                          .build();
+        }
+        else {
+            return request.createResponseBuilder(HttpStatus.OK)
+                          .header("Content-Type", "application/json")
+                          .body(item)
+                          .build();
+        }
+    }
+}
+ ```
+
+ <a id="http-trigger-get-multiple-docs-from-route-data-using-sqlquery-java"></a>
+
+### <a name="http-trigger-get-multiple-docs-from-route-data-using-sqlquery"></a>HTTP 触发器，使用 SqlQuery 从路由数据获取多个文档
+
+以下示例演示了检索多个文档的 Java 函数。 该函数由 HTTP 请求触发，该请求使用路由参数 ```desc``` 指定要在 ```description``` 字段中搜索的字符串。 搜索项用于从指定的数据库和集合中检索文档集合，将结果集转换为 ```ToDoItem[]``` 并将其作为参数传递给函数。
+
+```java
+public class DocsFromRouteSqlQuery {
+
+    @FunctionName("DocsFromRouteSqlQuery")
+    public HttpResponseMessage run(
+            @HttpTrigger(name = "req",
+              methods = {HttpMethod.GET},
+              authLevel = AuthorizationLevel.ANONYMOUS,
+              route = "todoitems3/{desc}")
+            HttpRequestMessage<Optional<String>> request,
+            @CosmosDBInput(name = "database",
+              databaseName = "ToDoList",
+              collectionName = "Items",
+              sqlQuery = "select * from Items r where contains(r.description, {desc})",
+              connectionStringSetting = "Cosmos_DB_Connection_String")
+            ToDoItem[] items,
+            final ExecutionContext context) {
+
+        // Item list
+        context.getLogger().info("Parameters are: " + request.getQueryParameters());
+        context.getLogger().info("Number of items from the database is " + (items == null ? 0 : items.length));
+
+        // Convert and display
+        if (items == null) {
+            return request.createResponseBuilder(HttpStatus.BAD_REQUEST)
+                          .body("No documents found.")
+                          .build();
+        }
+        else {
+            return request.createResponseBuilder(HttpStatus.OK)
+                          .header("Content-Type", "application/json")
+                          .body(items)
+                          .build();
+        }
+    }
+}
+ ```
+
 # <a name="javascript"></a>[JavaScript](#tab/javascript)
 
 此部分包含的以下示例可以通过指定各种源提供的 ID 值来读取单个文档：
@@ -920,14 +1184,229 @@ module.exports = function (context, req, toDoItem) {
 JavaScript 代码如下所示：
 
 ```javascript
-    module.exports = function (context, input) {
-        var documents = context.bindings.documents;
-        for (var i = 0; i < documents.length; i++) {
-            var document = documents[i];
-            // operate on each document
-        }
-        context.done();
-    };
+module.exports = function (context, input) {
+  var documents = context.bindings.documents;
+  for (var i = 0; i < documents.length; i++) {
+    var document = documents[i];
+    // operate on each document
+  }
+  context.done();
+};
+```
+
+# <a name="powershell"></a>[PowerShell](#tab/powershell)
+
+* [队列触发器，从 JSON 查找 ID](#queue-trigger-look-up-id-from-json-ps)
+* [HTTP 触发器，从查询字符串查找 ID](#http-trigger-id-query-string-ps)
+* [HTTP 触发器，从路由数据查找 ID](#http-trigger-id-route-data-ps)
+* [队列触发器，使用 SqlQuery 获取多个文档](#queue-trigger-multiple-docs-sqlquery-ps)
+
+### <a name="queue-trigger-look-up-id-from-json"></a>队列触发器，从 JSON 查找 ID
+
+下面的示例演示如何读取和更新单个 Cosmos DB 文档。 文档的唯一标识符通过队列消息中的 JSON 值提供。
+
+Cosmos DB 输入绑定首先列在函数配置文件中找到的绑定列表中 (_function.js_) 。
+
+<a name="queue-trigger-look-up-id-from-json-ps"></a>
+
+```json
+{
+  "name": "InputDocumentIn",
+  "type": "cosmosDB",
+  "databaseName": "MyDatabase",
+  "collectionName": "MyCollection",
+  "id" : "{queueTrigger_payload_property}",
+  "partitionKey": "{queueTrigger_payload_property}",
+  "connectionStringSetting": "CosmosDBConnection",
+  "direction": "in"
+},
+{
+  "name": "InputDocumentOut",
+  "type": "cosmosDB",
+  "databaseName": "MyDatabase",
+  "collectionName": "MyCollection",
+  "createIfNotExists": false,
+  "partitionKey": "{queueTrigger_payload_property}",
+  "connectionStringSetting": "CosmosDBConnection",
+  "direction": "out"
+}
+```
+
+_run.ps1_ 文件具有 PowerShell 代码，该代码读取传入的文档并输出更改。
+
+```powershell
+param($QueueItem, $InputDocumentIn, $TriggerMetadata) 
+
+$Document = $InputDocumentIn 
+$Document.text = 'This was updated!' 
+
+Push-OutputBinding -Name InputDocumentOut -Value $Document  
+```
+
+<a name="http-trigger-id-query-string-ps"></a>
+
+### <a name="http-trigger-look-up-id-from-query-string"></a>HTTP 触发器，从查询字符串查找 ID
+
+下面的示例演示如何从 web API 读取和更新单个 Cosmos DB 文档。 文档的唯一标识符是通过 HTTP 请求中的 querystring 参数提供的，该参数是在绑定的属性中定义的 `"Id": "{Query.Id}"` 。
+
+Cosmos DB 输入绑定首先列在函数配置文件中找到的绑定列表中 (_function.js_) 。
+
+```json
+{ 
+  "bindings": [ 
+    { 
+      "type": "cosmosDB", 
+      "name": "ToDoItem", 
+      "databaseName": "ToDoItems", 
+      "collectionName": "Items", 
+      "connectionStringSetting": "CosmosDBConnection", 
+      "direction": "in", 
+      "Id": "{Query.id}", 
+      "PartitionKey": "{Query.partitionKeyValue}" 
+    },
+    { 
+      "authLevel": "anonymous", 
+      "name": "Request", 
+      "type": "httpTrigger", 
+      "direction": "in", 
+      "methods": [ 
+        "get", 
+        "post" 
+      ] 
+    }, 
+    { 
+      "name": "Response", 
+      "type": "http", 
+      "direction": "out" 
+    },
+  ], 
+  "disabled": false 
+} 
+```
+  
+_run.ps1_ 文件具有 PowerShell 代码，该代码读取传入的文档并输出更改。
+
+```powershell
+using namespace System.Net 
+
+param($Request, $ToDoItem, $TriggerMetadata) 
+
+Write-Host 'PowerShell HTTP trigger function processed a request' 
+
+if (-not $ToDoItem) { 
+    Write-Host 'ToDo item not found' 
+
+    Push-OutputBinding -Name Response -Value ([HttpResponseContext]@{ 
+        StatusCode = [HttpStatusCode]::NotFound 
+        Body = $ToDoItem.Description 
+    }) 
+
+} else { 
+
+    Write-Host "Found ToDo item, Description=$($ToDoItem.Description)" 
+ 
+    Push-OutputBinding -Name Response -Value ([HttpResponseContext]@{ 
+        StatusCode = [HttpStatusCode]::OK 
+        Body = $ToDoItem.Description 
+    }) 
+}
+```
+
+<a name="http-trigger-id-route-data-ps"></a>
+
+### <a name="http-trigger-look-up-id-from-route-data"></a>HTTP 触发器，从路由数据查找 ID
+
+下面的示例演示如何从 web API 读取和更新单个 Cosmos DB 文档。 文档的唯一标识符通过路由参数提供。 路由参数在 HTTP 请求绑定的属性中定义 `route` ，并在 Cosmos DB `"Id": "{Id}"` 绑定属性中引用。
+
+Cosmos DB 输入绑定首先列在函数配置文件中找到的绑定列表中 (_function.js_) 。
+
+```json
+{ 
+  "bindings": [ 
+    { 
+      "type": "cosmosDB", 
+      "name": "ToDoItem", 
+      "databaseName": "ToDoItems", 
+      "collectionName": "Items", 
+      "connectionStringSetting": "CosmosDBConnection", 
+      "direction": "in", 
+      "Id": "{id}", 
+      "PartitionKey": "{partitionKeyValue}" 
+    },
+    { 
+      "authLevel": "anonymous", 
+      "name": "Request", 
+      "type": "httpTrigger", 
+      "direction": "in", 
+      "methods": [ 
+        "get", 
+        "post" 
+      ], 
+      "route": "todoitems/{partitionKeyValue}/{id}" 
+    }, 
+    { 
+      "name": "Response", 
+      "type": "http", 
+      "direction": "out" 
+    }
+  ], 
+  "disabled": false 
+} 
+```
+
+_run.ps1_ 文件具有 PowerShell 代码，该代码读取传入的文档并输出更改。
+
+```powershell
+using namespace System.Net 
+
+param($Request, $ToDoItem, $TriggerMetadata) 
+
+Write-Host 'PowerShell HTTP trigger function processed a request' 
+
+if (-not $ToDoItem) { 
+    Write-Host 'ToDo item not found' 
+
+    Push-OutputBinding -Name Response -Value ([HttpResponseContext]@{ 
+        StatusCode = [HttpStatusCode]::NotFound 
+        Body = $ToDoItem.Description 
+    }) 
+
+} else { 
+    Write-Host "Found ToDo item, Description=$($ToDoItem.Description)" 
+  
+    Push-OutputBinding -Name Response -Value ([HttpResponseContext]@{ 
+        StatusCode = [HttpStatusCode]::OK 
+        Body = $ToDoItem.Description 
+    }) 
+} 
+```
+
+<a name="queue-trigger-multiple-docs-sqlquery-ps"></a>
+
+### <a name="queue-trigger-get-multiple-docs-using-sqlquery"></a>队列触发器，使用 SqlQuery 获取多个文档
+
+下面的示例演示如何读取多个 Cosmos DB 文档。 函数的配置文件 (_上的function.js_) 定义绑定属性，其中包括 `sqlQuery` 。 为属性提供的 SQL 语句 `sqlQuery` 选择提供给函数的文档集。
+
+```json
+{ 
+  "name": "Documents", 
+  "type": "cosmosDB", 
+  "direction": "in", 
+  "databaseName": "MyDb", 
+  "collectionName": "MyCollection", 
+  "sqlQuery": "SELECT * from c where c.departmentId = {departmentId}", 
+  "connectionStringSetting": "CosmosDBConnection" 
+} 
+```
+
+_Run1.ps_ 文件包含用于读取传入文档的 PowerShell 代码。
+
+```powershell
+param($QueueItem, $Documents, $TriggerMetadata) 
+
+foreach ($Document in $Documents) { 
+    # operate on each document 
+} 
 ```
 
 # <a name="python"></a>[Python](#tab/python)
@@ -1136,270 +1615,6 @@ def main(queuemsg: func.QueueMessage, documents: func.DocumentList):
         # operate on each document
 ```
 
-# <a name="java"></a>[Java](#tab/java)
-
-本部分包含以下示例：
-
-* [HTTP 触发器，从查询字符串查找 ID - 字符串参数](#http-trigger-look-up-id-from-query-string---string-parameter-java)
-* [HTTP 触发器，从查询字符串查找 ID - POJO 参数](#http-trigger-look-up-id-from-query-string---pojo-parameter-java)
-* [HTTP 触发器，从路由数据查找 ID](#http-trigger-look-up-id-from-route-data-java)
-* [HTTP 触发器，使用 SqlQuery 从路由数据查找 ID](#http-trigger-look-up-id-from-route-data-using-sqlquery-java)
-* [HTTP 触发器，使用 SqlQuery 从路由数据获取多个文档（C# 脚本）](#http-trigger-get-multiple-docs-from-route-data-using-sqlquery-java)
-
-这些示例引用简单的 `ToDoItem` 类型：
-
-```java
-public class ToDoItem {
-
-  private String id;
-  private String description;
-
-  public String getId() {
-    return id;
-  }
-
-  public String getDescription() {
-    return description;
-  }
-
-  @Override
-  public String toString() {
-    return "ToDoItem={id=" + id + ",description=" + description + "}";
-  }
-}
-```
-
-<a id="http-trigger-look-up-id-from-query-string---string-parameter-java"></a>
-
-### <a name="http-trigger-look-up-id-from-query-string---string-parameter"></a>HTTP 触发器，从查询字符串查找 ID - 字符串参数
-
-以下示例展示了检索单个文档的 Java 函数。 此函数由 HTTP 请求触发，该请求使用的查询字符串用于指定要查找的 ID 和分区键值。 该 ID 和分区键值用于以字符串形式从指定的数据库和集合中检索文档。
-
-```java
-public class DocByIdFromQueryString {
-
-    @FunctionName("DocByIdFromQueryString")
-    public HttpResponseMessage run(
-            @HttpTrigger(name = "req",
-              methods = {HttpMethod.GET, HttpMethod.POST},
-              authLevel = AuthorizationLevel.ANONYMOUS)
-            HttpRequestMessage<Optional<String>> request,
-            @CosmosDBInput(name = "database",
-              databaseName = "ToDoList",
-              collectionName = "Items",
-              id = "{Query.id}",
-              partitionKey = "{Query.partitionKeyValue}",
-              connectionStringSetting = "Cosmos_DB_Connection_String")
-            Optional<String> item,
-            final ExecutionContext context) {
-
-        // Item list
-        context.getLogger().info("Parameters are: " + request.getQueryParameters());
-        context.getLogger().info("String from the database is " + (item.isPresent() ? item.get() : null));
-
-        // Convert and display
-        if (!item.isPresent()) {
-            return request.createResponseBuilder(HttpStatus.BAD_REQUEST)
-                          .body("Document not found.")
-                          .build();
-        }
-        else {
-            // return JSON from Cosmos. Alternatively, we can parse the JSON string
-            // and return an enriched JSON object.
-            return request.createResponseBuilder(HttpStatus.OK)
-                          .header("Content-Type", "application/json")
-                          .body(item.get())
-                          .build();
-        }
-    }
-}
- ```
-
-在 [Java 函数运行时库](/java/api/overview/azure/functions/runtime)中，对其值将来自 Cosmos DB 的函数参数使用 `@CosmosDBInput` 注释。  可以将此注释与本机 Java 类型、POJO 或使用了 `Optional<T>` 的可为 null 的值一起使用。
-
-<a id="http-trigger-look-up-id-from-query-string---pojo-parameter-java"></a>
-
-### <a name="http-trigger-look-up-id-from-query-string---pojo-parameter"></a>HTTP 触发器，从查询字符串查找 ID - POJO 参数
-
-以下示例展示了检索单个文档的 Java 函数。 此函数由 HTTP 请求触发，该请求使用的查询字符串用于指定要查找的 ID 和分区键值。 该 ID 和分区键值用于从指定的数据库和集合中检索文档。 然后将该文档转换为先前创建的 ```ToDoItem``` POJO 实例，并作为参数传递给该函数。
-
-```java
-public class DocByIdFromQueryStringPojo {
-
-    @FunctionName("DocByIdFromQueryStringPojo")
-    public HttpResponseMessage run(
-            @HttpTrigger(name = "req",
-              methods = {HttpMethod.GET, HttpMethod.POST},
-              authLevel = AuthorizationLevel.ANONYMOUS)
-            HttpRequestMessage<Optional<String>> request,
-            @CosmosDBInput(name = "database",
-              databaseName = "ToDoList",
-              collectionName = "Items",
-              id = "{Query.id}",
-              partitionKey = "{Query.partitionKeyValue}",
-              connectionStringSetting = "Cosmos_DB_Connection_String")
-            ToDoItem item,
-            final ExecutionContext context) {
-
-        // Item list
-        context.getLogger().info("Parameters are: " + request.getQueryParameters());
-        context.getLogger().info("Item from the database is " + item);
-
-        // Convert and display
-        if (item == null) {
-            return request.createResponseBuilder(HttpStatus.BAD_REQUEST)
-                          .body("Document not found.")
-                          .build();
-        }
-        else {
-            return request.createResponseBuilder(HttpStatus.OK)
-                          .header("Content-Type", "application/json")
-                          .body(item)
-                          .build();
-        }
-    }
-}
- ```
-
-<a id="http-trigger-look-up-id-from-route-data-java"></a>
-
-### <a name="http-trigger-look-up-id-from-route-data"></a>HTTP 触发器，从路由数据查找 ID
-
-以下示例展示了检索单个文档的 Java 函数。 此函数由 HTTP 请求触发，该请求使用的路由参数用于指定要查找的 ID 和分区键值。 该 ID 和分区键值用于从指定的数据库和集合中检索文档，将它作为 ```Optional<String>``` 返回。
-
-```java
-public class DocByIdFromRoute {
-
-    @FunctionName("DocByIdFromRoute")
-    public HttpResponseMessage run(
-            @HttpTrigger(name = "req",
-              methods = {HttpMethod.GET, HttpMethod.POST},
-              authLevel = AuthorizationLevel.ANONYMOUS,
-              route = "todoitems/{partitionKeyValue}/{id}")
-            HttpRequestMessage<Optional<String>> request,
-            @CosmosDBInput(name = "database",
-              databaseName = "ToDoList",
-              collectionName = "Items",
-              id = "{id}",
-              partitionKey = "{partitionKeyValue}",
-              connectionStringSetting = "Cosmos_DB_Connection_String")
-            Optional<String> item,
-            final ExecutionContext context) {
-
-        // Item list
-        context.getLogger().info("Parameters are: " + request.getQueryParameters());
-        context.getLogger().info("String from the database is " + (item.isPresent() ? item.get() : null));
-
-        // Convert and display
-        if (!item.isPresent()) {
-            return request.createResponseBuilder(HttpStatus.BAD_REQUEST)
-                          .body("Document not found.")
-                          .build();
-        }
-        else {
-            // return JSON from Cosmos. Alternatively, we can parse the JSON string
-            // and return an enriched JSON object.
-            return request.createResponseBuilder(HttpStatus.OK)
-                          .header("Content-Type", "application/json")
-                          .body(item.get())
-                          .build();
-        }
-    }
-}
- ```
-
- <a id="http-trigger-look-up-id-from-route-data-using-sqlquery-java"></a>
-
-### <a name="http-trigger-look-up-id-from-route-data-using-sqlquery"></a>HTTP 触发器，使用 SqlQuery 从路由数据查找 ID
-
-以下示例展示了检索单个文档的 Java 函数。 此函数由 HTTP 请求触发，该请求使用路由参数指定要查找的 ID。 该 ID 用于从指定的数据库和集合中检索文档，将结果集转换为 ```ToDoItem[]```，因为可能会返回许多文档，具体取决于查询条件。
-
-> [!NOTE]
-> 如果需要只按 ID 进行查询，则建议使用查找（如[以前的示例](#http-trigger-look-up-id-from-query-string---pojo-parameter-java)所示），因为该查找消耗较少的[请求单位](../cosmos-db/request-units.md)。 点读取操作 (GET) 比按 ID 进行的查询[更高效](../cosmos-db/optimize-cost-queries.md)。
->
-
-```java
-public class DocByIdFromRouteSqlQuery {
-
-    @FunctionName("DocByIdFromRouteSqlQuery")
-    public HttpResponseMessage run(
-            @HttpTrigger(name = "req",
-              methods = {HttpMethod.GET, HttpMethod.POST},
-              authLevel = AuthorizationLevel.ANONYMOUS,
-              route = "todoitems2/{id}")
-            HttpRequestMessage<Optional<String>> request,
-            @CosmosDBInput(name = "database",
-              databaseName = "ToDoList",
-              collectionName = "Items",
-              sqlQuery = "select * from Items r where r.id = {id}",
-              connectionStringSetting = "Cosmos_DB_Connection_String")
-            ToDoItem[] item,
-            final ExecutionContext context) {
-
-        // Item list
-        context.getLogger().info("Parameters are: " + request.getQueryParameters());
-        context.getLogger().info("Items from the database are " + item);
-
-        // Convert and display
-        if (item == null) {
-            return request.createResponseBuilder(HttpStatus.BAD_REQUEST)
-                          .body("Document not found.")
-                          .build();
-        }
-        else {
-            return request.createResponseBuilder(HttpStatus.OK)
-                          .header("Content-Type", "application/json")
-                          .body(item)
-                          .build();
-        }
-    }
-}
- ```
-
- <a id="http-trigger-get-multiple-docs-from-route-data-using-sqlquery-java"></a>
-
-### <a name="http-trigger-get-multiple-docs-from-route-data-using-sqlquery"></a>HTTP 触发器，使用 SqlQuery 从路由数据获取多个文档
-
-以下示例演示了检索多个文档的 Java 函数。 该函数由 HTTP 请求触发，该请求使用路由参数 ```desc``` 指定要在 ```description``` 字段中搜索的字符串。 搜索项用于从指定的数据库和集合中检索文档集合，将结果集转换为 ```ToDoItem[]``` 并将其作为参数传递给函数。
-
-```java
-public class DocsFromRouteSqlQuery {
-
-    @FunctionName("DocsFromRouteSqlQuery")
-    public HttpResponseMessage run(
-            @HttpTrigger(name = "req",
-              methods = {HttpMethod.GET},
-              authLevel = AuthorizationLevel.ANONYMOUS,
-              route = "todoitems3/{desc}")
-            HttpRequestMessage<Optional<String>> request,
-            @CosmosDBInput(name = "database",
-              databaseName = "ToDoList",
-              collectionName = "Items",
-              sqlQuery = "select * from Items r where contains(r.description, {desc})",
-              connectionStringSetting = "Cosmos_DB_Connection_String")
-            ToDoItem[] items,
-            final ExecutionContext context) {
-
-        // Item list
-        context.getLogger().info("Parameters are: " + request.getQueryParameters());
-        context.getLogger().info("Number of items from the database is " + (items == null ? 0 : items.length));
-
-        // Convert and display
-        if (items == null) {
-            return request.createResponseBuilder(HttpStatus.BAD_REQUEST)
-                          .body("No documents found.")
-                          .build();
-        }
-        else {
-            return request.createResponseBuilder(HttpStatus.OK)
-                          .header("Content-Type", "application/json")
-                          .body(items)
-                          .build();
-        }
-    }
-}
- ```
-
  ---
 
 ## <a name="attributes-and-annotations"></a>特性和注释
@@ -1414,23 +1629,27 @@ public class DocsFromRouteSqlQuery {
 
 C# 脚本不支持特性。
 
+# <a name="java"></a>[Java](#tab/java)
+
+在 [Java 函数运行时库](/java/api/overview/azure/functions/runtime)中，对写入 Cosmos DB 的参数使用 `@CosmosDBOutput` 注释。 注释参数类型应当为 `OutputBinding<T>`，其中 `T` 是本机 Java 类型或 POJO。
+
 # <a name="javascript"></a>[JavaScript](#tab/javascript)
 
 JavaScript 不支持特性。
+
+# <a name="powershell"></a>[PowerShell](#tab/powershell)
+
+PowerShell 不支持特性。
 
 # <a name="python"></a>[Python](#tab/python)
 
 Python 不支持特性。
 
-# <a name="java"></a>[Java](#tab/java)
-
-在 [Java 函数运行时库](/java/api/overview/azure/functions/runtime)中，对写入 Cosmos DB 的参数使用 `@CosmosDBOutput` 注释。 注释参数类型应当为 `OutputBinding<T>`，其中 `T` 是本机 Java 类型或 POJO。
-
 ---
 
 ## <a name="configuration"></a>配置
 
-下表解释了在 function.json 文件和 `CosmosDB` 特性中设置的绑定配置属性。
+下表解释了在 function.json  文件和 `CosmosDB` 特性中设置的绑定配置属性。
 
 |function.json 属性 | Attribute 属性 |说明|
 |---------|---------|----------------------|
@@ -1442,7 +1661,7 @@ Python 不支持特性。
 |**id**    | Id | 要检索的文档的 ID。 此属性支持[绑定表达式](./functions-bindings-expressions-patterns.md)。 不要同时设置 `id` 和 **sqlQuery** 属性。 如果上述两个属性都未设置，则会检索整个集合。 |
 |**sqlQuery**  |**SqlQuery**  | 用于检索多个文档的 Azure Cosmos DB SQL 查询。 该属性支持运行时绑定，如以下示例中所示：`SELECT * FROM c where c.departmentId = {departmentId}`。 不要同时设置 `id` 和 `sqlQuery` 属性。 如果上述两个属性都未设置，则会检索整个集合。|
 |**connectionStringSetting**     |**ConnectionStringSetting**|内含 Azure Cosmos DB 连接字符串的应用设置的名称。 |
-|**partitionKey**|**PartitionKey**|指定用于查找分区键值。 可以包含绑定参数。 它是在[分区的](../cosmos-db/partition-data.md#logical-partitions)集合中进行查询所需的。|
+|**partitionKey**|**PartitionKey**|指定用于查找分区键值。 可以包含绑定参数。 它是在[分区的](../cosmos-db/partitioning-overview.md#logical-partitions)集合中进行查询所需的。|
 |**preferredLocations**| **PreferredLocations**| （可选）为 Azure Cosmos DB 服务中的异地复制数据库帐户定义首选位置（区域）。 值应以逗号分隔。 例如，"美国东部"、"美国中南部" 北欧 "。 |
 
 [!INCLUDE [app settings to local.settings.json](../../includes/functions-app-settings-local.md)]
@@ -1457,17 +1676,21 @@ Python 不支持特性。
 
 函数成功退出时，通过命名输入参数对输入文档所做的任何更改都会自动保存。
 
+# <a name="java"></a>[Java](#tab/java)
+
+在 [Java 函数运行时库](/java/api/overview/azure/functions/runtime)中，[@CosmosDBInput](/java/api/com.microsoft.azure.functions.annotation.cosmosdbinput) 注释向函数公开 Cosmos DB 数据。 可以将此注释与本机 Java 类型、POJO 或使用了 `Optional<T>` 的可为 null 的值一起使用。
+
 # <a name="javascript"></a>[JavaScript](#tab/javascript)
 
-函数退出时不会自动进行更新。 请改用 `context.bindings.<documentName>In` 和 `context.bindings.<documentName>Out` 进行更新。 请参阅 JavaScript 示例。
+函数退出时不会自动进行更新。 请改用 `context.bindings.<documentName>In` 和 `context.bindings.<documentName>Out` 进行更新。 有关更多详细信息，请参阅 [JavaScript 示例](#example) 。
+
+# <a name="powershell"></a>[PowerShell](#tab/powershell)
+
+不会在函数退出时自动更新文档。 若要更新函数中的文档，请使用 [输出绑定](./functions-bindings-cosmosdb-v2-input.md)。 有关更多详细信息，请参阅 [PowerShell 示例](#example) 。
 
 # <a name="python"></a>[Python](#tab/python)
 
 数据通过参数提供给函数 `DocumentList` 。 对文档所做的更改不会自动保存。
-
-# <a name="java"></a>[Java](#tab/java)
-
-在 [Java 函数运行时库](/java/api/overview/azure/functions/runtime)中，[@CosmosDBInput](/java/api/com.microsoft.azure.functions.annotation.cosmosdbinput) 注释向函数公开 Cosmos DB 数据。 可以将此注释与本机 Java 类型、POJO 或使用了 `Optional<T>` 的可为 null 的值一起使用。
 
 ---
 

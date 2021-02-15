@@ -5,19 +5,20 @@ author: bandersmsft
 ms.reviewer: yashar
 tags: billing
 ms.service: cost-management-billing
+ms.subservice: reservations
 ms.topic: conceptual
 ms.date: 02/13/2020
 ms.author: banders
-ms.openlocfilehash: e3553515e2cbae007883ad75960aa1c6991926df
-ms.sourcegitcommit: bf99428d2562a70f42b5a04021dde6ef26c3ec3a
+ms.openlocfilehash: f6aad15d70157dda110fce233fbdafb7f3d896ad
+ms.sourcegitcommit: d1e56036f3ecb79bfbdb2d6a84e6932ee6a0830e
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 06/23/2020
-ms.locfileid: "85254542"
+ms.lasthandoff: 01/29/2021
+ms.locfileid: "99055053"
 ---
 # <a name="understand-azure-reservation-usage-for-your-individual-subscription-with-pay-as-you-go-rates-subscription"></a>了解采用即用即付费率的个人订阅的 Azure 预留使用情况
 
-使用[“预留”页](https://portal.azure.com/?microsoft_azure_marketplace_ItemHideKey=Reservations&Microsoft_Azure_Reservations=true#blade/Microsoft_Azure_Reservations/ReservationsBrowseBlade)中的 ReservationId 和 [Azure 帐户门户](https://account.azure.com)中的使用情况文件评估预留使用情况。
+使用[“预留”页面](https://portal.azure.com/?microsoft_azure_marketplace_ItemHideKey=Reservations&Microsoft_Azure_Reservations=true#blade/Microsoft_Azure_Reservations/ReservationsBrowseBlade)中的 ReservationId 和 [Azure 门户](https://portal.azure.com)中的使用情况文件评估预留项使用情况。
 
 如果你是企业协议的客户，请参阅[了解适用于企业合约的预留使用情况](understand-reserved-instance-usage-ea.md)。
 
@@ -46,13 +47,13 @@ CSV 文件的此部分显示预留的总体使用情况。 将筛选器应用到
 
 ### <a name="daily-usage-section-of-csv-file"></a>CSV 文件的“每日使用情况”部分
 
-筛选“其他信息”，并键入**预留 ID**。 以下屏幕截图显示了与预订相关的字段。
+筛选“其他信息”，并键入 **预留 ID**。 以下屏幕截图显示了与预订相关的字段。
 
 ![每日使用详细信息及收费的屏幕截图](./media/understand-reserved-instance-usage/billing-payg-reserved-instance-csv-details.png)
 
 1. “其他信息”字段中的 **ReservationId** 是应用到 VM 的预留。
 2. **ConsumptionMeter** 是 VM 的计量 ID。
-3. “预留-基础 VM”**计量子类别**行表示声明部分中的 0 美元成本。 已通过预留支付了运行此 VM 的成本。
+3. “预留-基础 VM”**计量子类别** 行表示声明部分中的 0 美元成本。 已通过预留支付了运行此 VM 的成本。
 4. “计量 ID”是预留的计量 ID。 此计量的成本是 0 美元。 对于任何符合预留折扣条件的 VM，将显示此计量 ID。
 5. Standard_DS1_v2 是 1 vCPU VM，此 VM 在不使用 Azure 混合权益的情况下部署。 因此，此计量涉及 Windows 软件的额外费用。 若要查找与 D 系列 1 核心 VM 相对应的计量，请参阅 [Azure 虚拟机预留实例 Windows 软件成本](reserved-instance-windows-software-costs.md)。 如果有 Azure 混合权益，则不会收取此额外费用。
 
@@ -73,15 +74,15 @@ CSV 文件的此部分显示预留的总体使用情况。 将筛选器应用到
 
 筛选“预留实例使用量”计量名称，并选择所需的“计量类别” - Azure SQL 数据库或 Azure Cosmos DB 。 此时会显示以下屏幕截图中所示的内容：
 
-![SQL 数据库预留容量的 CSV 文件](./media/understand-reserved-instance-usage/billing-payg-sql-db-reserved-capacity-csv-statements.png)
+![屏幕截图显示“计费类型”条目。](./media/understand-reserved-instance-usage/billing-payg-sql-db-reserved-capacity-csv-statements.png)
 
 “预留实例使用情况”行包含预留涵盖的核心小时总数。 此行的费率为 0 美元，因为预留涵盖了成本。
 
 ### <a name="detail-section-of-csv-file"></a>CSV 文件的详细信息部分
 
-筛选“其他信息”，并键入**预留 ID**。 以下屏幕截图显示了与 SQL 数据库预留容量预订相关的字段。
+筛选“其他信息”，并键入 **预留 ID**。 以下屏幕截图显示了与 SQL 数据库预留容量预订相关的字段。
 
-![SQL 数据库预留容量的 CSV 文件](./media/understand-reserved-instance-usage/billing-payg-sql-db-reserved-capacity-csv-details.png)
+![屏幕截图显示预留容量的 CSV 文件的详细信息。](./media/understand-reserved-instance-usage/billing-payg-sql-db-reserved-capacity-csv-details.png)
 
 1. “其他信息”字段中的 ReservationId 是应用到 SQL 数据库资源的 SQL 数据库预留容量预订。
 2. **ConsumptionMeter** 是 SQL 数据库资源的计量 ID。
@@ -96,7 +97,7 @@ CSV 文件的此部分显示预留的总体使用情况。 将筛选器应用到
 若要了解有关 Azure 预订的详细信息，请参阅以下文章：
 
 - [什么是 Azure 预订？](save-compute-costs-reservations.md)
-- [通过 Azure 虚拟机预留实例为虚拟机预付费](../../virtual-machines/windows/prepay-reserved-vm-instances.md)
+- [通过 Azure 虚拟机预留实例为虚拟机预付费](../../virtual-machines/prepay-reserved-vm-instances.md)
 - [通过 Azure SQL 数据库保留容量预付 SQL 数据库计算资源费用](../../azure-sql/database/reserved-capacity-overview.md)
 - [管理 Azure 预留项](manage-reserved-vm-instance.md)
 - [了解预留折扣的应用方式](../manage/understand-vm-reservation-charges.md)

@@ -9,20 +9,19 @@ ms.service: active-directory
 ms.subservice: user-help
 ms.workload: identity
 ms.topic: end-user-help
-ms.date: 05/20/2020
+ms.date: 01/27/2021
 ms.author: curtand
-ms.openlocfilehash: 795c68fc063d98bdee6ccf59dba6ee718dc92d03
-ms.sourcegitcommit: 58ff2addf1ffa32d529ee9661bbef8fbae3cddec
-ms.translationtype: HT
+ms.openlocfilehash: d499417414e560bdaa3fcd0a12255946aca413d9
+ms.sourcegitcommit: d1e56036f3ecb79bfbdb2d6a84e6932ee6a0830e
+ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 06/03/2020
-ms.locfileid: "84323019"
+ms.lasthandoff: 01/29/2021
+ms.locfileid: "99054832"
 ---
 # <a name="microsoft-authenticator-for-android-in-the-public-cloud-in-china"></a>中国公有云中的适用于 Android 的 Microsoft Authenticator
 
 适用于 Android 的 Microsoft Authenticator 应用可在中国下载。 Google Play 商店在中国不可用，因此必须从其他中文应用商店下载该应用。 适用于 Android 的 Microsoft Authenticator 应用目前在中国的以下应用商店中提供：
 
-- [百度](https://shouji.baidu.com/software/26638379.html)
 - [Lenovo](https://www.lenovomm.com/appdetail/com.azure.authenticator/20197724)
 - [Huawei](https://appgallery.cloud.huawei.com/uowap/index.html#/detailApp/C100262999?source=appshare&subsource=C100262999&shareTo=weixin&locale=zh_CN)
 - [Samsung Galaxy 应用商店](http://apps.samsung.com/appquery/appDetail.as?appId=com.azure.authenticator)
@@ -57,6 +56,7 @@ Microsoft Authenticator 功能 | 在中国的可用性
 手机登录注册 | 否
 现有手机登录使用推送通知 | 否
 通过手动检查是否存在身份验证请求对现有手机登录进行验证 | 是
+支持个人 Microsoft 帐户的验证器应用 | 否
 
 ## <a name="next-steps"></a>后续步骤
 

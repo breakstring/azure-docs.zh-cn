@@ -1,18 +1,18 @@
 ---
 title: Azure 容器注册表中存储库的权限
-description: 创建一个令牌，该令牌的权限范围限于高级注册表中的特定存储库，用于请求或推送映像，或执行其他操作
+description: 创建一个令牌，使其权限范围限定于高级注册表中的特定存储库，用来拉取或推送映像，或执行其他操作
 ms.topic: article
-ms.date: 05/27/2020
-ms.openlocfilehash: 8661ff2e320788d3899ae16dd3bee7d3ff662caa
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.date: 02/04/2021
+ms.openlocfilehash: ceec69d746f77ea7a23bc70d029c8b3736e7f292
+ms.sourcegitcommit: 7e117cfec95a7e61f4720db3c36c4fa35021846b
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "84509400"
+ms.lasthandoff: 02/09/2021
+ms.locfileid: "99988262"
 ---
 # <a name="create-a-token-with-repository-scoped-permissions"></a>创建具有存储库范围权限的令牌
 
-本文介绍了如何创建令牌和范围映射，以便管理容器注册表中存储库范围内的权限。 通过创建令牌，注册表所有者可以为用户或服务提供范围限定于存储库且有时间限制的访问权限，用来拉取或推送映像或执行其他操作。 令牌提供的权限比其他注册表[身份验证选项](container-registry-authentication.md)更精细，后者指定的权限范围是整个注册表。 
+本文介绍如何创建令牌和作用域映射，以管理对容器注册表中特定存储库的访问权限。 通过创建令牌，注册表所有者可以为用户或服务提供范围限定于存储库且有时间限制的访问权限，用来拉取或推送映像或执行其他操作。 令牌提供的权限比其他注册表[身份验证选项](container-registry-authentication.md)更精细，后者指定的权限范围是整个注册表。 
 
 适合创建令牌的场景包括：
 
@@ -53,7 +53,7 @@ ms.locfileid: "84509400"
     * 配置对一组存储库具有相同权限的多个令牌
     * 在范围映射中添加或删除存储库操作时更新令牌权限，或者在应用另一个范围映射时这样做 
 
-  Azure 容器注册表还提供了几个系统定义的作用域映射，你可以在创建令牌时应用此映射。 系统定义的作用域映射的权限将应用到注册表中的所有存储库。
+  Azure 容器注册表还提供了几个系统定义的范围映射，你可以在创建令牌时应用这些映射。 系统定义的范围映射的权限适用于注册表中的所有存储库。
 
 下图显示了令牌与范围映射之间的关系。 
 
@@ -61,7 +61,7 @@ ms.locfileid: "84509400"
 
 ## <a name="prerequisites"></a>先决条件
 
-* **Azure CLI** - Azure CLI 2.0.76 或更高版本中提供了用于创建和管理令牌的 Azure CLI 命令。 运行 `az --version` 即可查找版本。 如果需要进行安装或升级，请参阅[安装 Azure CLI](/cli/azure/install-azure-cli)。
+* 本文中 **Azure CLI** Azure CLI 的命令命令示例需要 Azure CLI 版本2.17.0 或更高版本。 运行 `az --version` 即可查找版本。 如果需要进行安装或升级，请参阅[安装 Azure CLI](/cli/azure/install-azure-cli)。
 * **Docker** - 若要对注册表进行身份验证以拉取或推送映像，你需要安装一个本地 Docker。 Docker 提供适用于 [macOS](https://docs.docker.com/docker-for-mac/)[Windows](https://docs.docker.com/docker-for-windows/) 和 [Linux](https://docs.docker.com/engine/installation/#supported-platforms) 系统的安装说明。
 * **容器注册表** - 如果没有，请在你的 Azure 订阅中创建一个高级容器注册表，或升级现有注册表。 例如，使用 [Azure 门户](container-registry-get-started-portal.md)或 [Azure CLI](container-registry-get-started-azure-cli.md)。 
 
@@ -69,7 +69,7 @@ ms.locfileid: "84509400"
 
 ### <a name="create-token-and-specify-repositories"></a>创建令牌并指定存储库
 
-可使用 [az acr token create][az-acr-token-create] 命令创建令牌。 创建令牌时，可以指定一个或多个存储库，并在每个存储库上指定关联的操作。 存储库不需要已在注册表中。 若要通过指定现有的范围映射来创建令牌，请参阅[下一节](#create-token-and-specify-scope-map)。
+可使用 [az acr token create][az-acr-token-create] 命令创建令牌。 创建令牌时，可以指定一个或多个存储库，并在每个存储库上指定关联的操作。 存储库不需要已在注册表中。 若要通过指定现有范围映射来创建令牌，请参阅[下一部分](#create-token-and-specify-scope-map)。
 
 下面的示例在注册表 myregistry 中创建一个令牌，该令牌对 `samples/hello-world` 存储库具有以下权限：`content/write` 和 `content/read`。 默认情况下，该命令会将默认令牌状态设置为 `enabled`，但你随时可以将状态更新为 `disabled`。
 
@@ -79,7 +79,7 @@ az acr token create --name MyToken --registry myregistry \
   content/write content/read
 ```
 
-输出显示有关令牌的详细信息。 默认情况下，会生成两个密码。 建议将密码保存在安全的位置，以便以后将其用于身份验证。 无法再次检索这些密码，但可以生成新密码。
+输出会显示有关令牌的详细信息。 默认情况下，将生成两个未过期的密码，但也可以选择设置过期日期。 建议将密码保存在安全的位置，以便以后将其用于身份验证。 无法再次检索这些密码，但可以生成新密码。
 
 ```console
 {
@@ -113,7 +113,7 @@ az acr token create --name MyToken --registry myregistry \
 ```
 
 > [!NOTE]
-> 如果要重新生成令牌密码并设置密码有效期，请参阅本文后面的 "[重新生成令牌密码](#regenerate-token-passwords)"。
+> 若要重新生成令牌密码和有效期，请参阅本文稍后部分中的 " [重新生成令牌密码](#regenerate-token-passwords) "。
 
 输出包含该命令创建的范围映射的详细信息。 可以使用范围映射（在此处名为 `MyToken-scope-map`）将相同的存储库操作应用于其他令牌。 或者，稍后更新范围映射以更改关联的令牌的权限。
 
@@ -138,10 +138,10 @@ az acr token create --name MyToken \
   --scope-map MyScopeMap
 ```
 
-输出显示有关令牌的详细信息。 默认情况下，会生成两个密码。 建议将密码保存在安全的位置，以便以后将其用于身份验证。 无法再次检索这些密码，但可以生成新密码。
+输出会显示有关令牌的详细信息。 默认情况下，会生成两个密码。 建议将密码保存在安全的位置，以便以后将其用于身份验证。 无法再次检索这些密码，但可以生成新密码。
 
 > [!NOTE]
-> 如果要重新生成令牌密码并设置密码有效期，请参阅本文后面的 "[重新生成令牌密码](#regenerate-token-passwords)"。
+> 若要重新生成令牌密码和有效期，请参阅本文稍后部分中的 " [重新生成令牌密码](#regenerate-token-passwords) "。
 
 ## <a name="create-token---portal"></a>创建令牌 - 门户
 
@@ -150,7 +150,7 @@ az acr token create --name MyToken \
 下面的示例创建了一个令牌和一个范围映射，后者具有对 `samples/hello-world` 存储库的以下权限：`content/write` 和 `content/read`。
 
 1. 在门户中，导航到容器注册表。
-1. 在 "**存储库权限**" 下，选择 "**令牌（预览） > + 添加**"。
+1. 在“存储库权限”下，选择“令牌(预览)”>“+添加”。
 
       :::image type="content" source="media/container-registry-repository-scoped-permissions/portal-token-add.png" alt-text="在门户中创建令牌":::
 1. 输入令牌名称。
@@ -171,7 +171,7 @@ az acr token create --name MyToken \
 若要使用在门户中创建的令牌，必须生成密码。 你可以生成一个或两个密码，并为每个密码设置到期日期。 
 
 1. 在门户中，导航到容器注册表。
-1. 在 "**存储库权限**" 下，选择 "**令牌（预览）**"，然后选择令牌。
+1. 在“存储库权限”下，选择“令牌(预览)”，然后选择一个令牌 。
 1. 在“令牌详细信息”中，选择“password1”或“password2”，然后选择“生成”图标 。
 1. 在“密码”屏幕上，根据需要为密码设置过期日期，并选择“生成”。 建议设置到期日期。
 1. 生成密码后，将其复制到一个安全的位置并保存。 关闭屏幕后无法检索生成的密码，但可以生成新的密码。
@@ -186,8 +186,8 @@ az acr token create --name MyToken \
 
 |操作  |如何进行身份验证  |
   |---------|---------|
-  |`content/delete`    | Azure CLI 中的 `az acr repository delete`<br/><br/>示例：`az acr repository delete --name myregistry --repository myrepo --username MyToken --password xxxxxxxxxx`|
-  |`content/read`     |  `docker login`<br/><br/>Azure CLI 中的 `az acr login`<br/><br/>示例：`az acr login --name myregistry --username MyToken --password xxxxxxxxxx`  |
+  |`content/delete`    | Azure CLI 中的 `az acr repository delete`<br/><br/>示例： `az acr repository delete --name myregistry --repository myrepo --username MyToken --password xxxxxxxxxx`|
+  |`content/read`     |  `docker login`<br/><br/>Azure CLI 中的 `az acr login`<br/><br/>示例： `az acr login --name myregistry --username MyToken --password xxxxxxxxxx`  |
   |`content/write`     |  `docker login`<br/><br/>Azure CLI 中的 `az acr login`     |
   |`metadata/read`    | `az acr repository show`<br/><br/>`az acr repository show-tags`<br/><br/>Azure CLI 中的 `az acr repository show-manifests`   |
   |`metadata/write`     |  `az acr repository untag`<br/><br/>Azure CLI 中的 `az acr repository update` |
@@ -198,18 +198,18 @@ az acr token create --name MyToken \
 
 ### <a name="pull-and-tag-test-images"></a>请求和标记测试映像
 
-对于以下示例，请从 Docker Hub 拉取 `hello-world` 和 `alpine` 映像，并针对注册表和存储库对其进行标记。
+对于以下示例，请 `hello-world` `nginx` 从 Microsoft 容器注册表中提取 public 和 images，并将其标记为注册表和存储库。
 
 ```bash
-docker pull hello-world
-docker pull alpine
-docker tag hello-world myregistry.azurecr.io/samples/hello-world:v1
-docker tag hello-world myregistry.azurecr.io/samples/alpine:v1
+docker pull mcr.microsoft.com/hello-world
+docker pull mcr.microsoft.com/oss/nginx/nginx:1.15.5-alpine
+docker tag mcr.microsoft.com/hello-world myregistry.azurecr.io/samples/hello-world:v1
+docker tag mcr.microsoft.com/oss/nginx/nginx:1.15.5-alpine myregistry.azurecr.io/samples/nginx:v1
 ```
 
 ### <a name="authenticate-using-token"></a>使用令牌进行身份验证
 
-运行 `docker login` 或 `az acr login` 以通过注册表进行身份验证，以便推送或请求映像。 提供令牌名称作为用户名，并提供其密码之一。 令牌必须具有 `Enabled` 状态。
+运行 `docker login` 或 `az acr login` 以通过注册表进行身份验证，以便推送或拉取映像。 提供令牌名称作为用户名，并提供其密码之一。 令牌必须具有 `Enabled` 状态。
 
 下面的示例针对 bash shell 进行了格式设置，并使用环境变量提供值。
 
@@ -234,17 +234,17 @@ Login Succeeded
 docker push myregistry.azurecr.io/samples/hello-world:v1
 ```
 
-该令牌无权访问 `samples/alpine` 存储库，因此，以下推送尝试将失败，并显示类似于 `requested access to the resource is denied` 的错误：
+该令牌无权访问 `samples/nginx` 存储库，因此，以下推送尝试将失败，并显示类似于 `requested access to the resource is denied` 的错误：
 
 ```bash
-docker push myregistry.azurecr.io/samples/alpine:v1
+docker push myregistry.azurecr.io/samples/nginx:v1
 ```
 
 ### <a name="update-token-permissions"></a>更新令牌权限
 
 若要更新令牌的权限，请更新相关联的范围映射中的权限。 更新的范围映射会立即应用于所有关联的令牌。 
 
-例如，使用对 `samples/alpine` 存储库的 `content/write` 和 `content/read` 操作更新 `MyToken-scope-map`，并删除对 `samples/hello-world` 存储库的 `content/write` 操作。  
+例如，使用对 `samples/ngnx` 存储库的 `content/write` 和 `content/read` 操作更新 `MyToken-scope-map`，并删除对 `samples/hello-world` 存储库的 `content/write` 操作。  
 
 若要使用 Azure CLI，请运行 [az acr scope map update][az-acr-scope-map-update] 来更新范围映射：
 
@@ -252,21 +252,21 @@ docker push myregistry.azurecr.io/samples/alpine:v1
 az acr scope-map update \
   --name MyScopeMap \
   --registry myregistry \
-  --add samples/alpine content/write content/read \
-  --remove samples/hello-world content/write 
+  --add-repository samples/nginx content/write content/read \
+  --remove-repository samples/hello-world content/write 
 ```
 
 在 Azure 门户中：
 
 1. 导航到容器注册表。
-1. 在 "**存储库权限**" 下，选择 "**范围映射（预览版）**"，然后选择要更新的范围映射。
-1. 在“存储库”下，输入 `samples/alpine`，并在“权限”下，选择 `content/read` 和 `content/write` 。 然后选择“+添加”。
+1. 在“存储库权限”下，选择“范围映射(预览)”，然后选择要更新的范围映射 。
+1. 在“存储库”下，输入 `samples/nginx`，并在“权限”下，选择 `content/read` 和 `content/write` 。 然后选择“+添加”。
 1. 在“存储库”下，选择 `samples/hello-world`，并在“权限”下，取消选择 `content/write` 。 再选择“保存”。
 
 范围映射更新后，以下推送成功：
 
 ```bash
-docker push myregistry.azurecr.io/samples/alpine:v1
+docker push myregistry.azurecr.io/samples/nginx:v1
 ```
 
 由于范围映射仅具有对 `samples/hello-world` 存储库的 `content/read` 权限，因此，对 `samples/hello-world` 存储库的推送尝试现在会失败：
@@ -278,29 +278,29 @@ docker push myregistry.azurecr.io/samples/hello-world:v1
 从这两个存储库中提取映像将成功，因为范围映射提供对两个存储库的 `content/read` 权限：
 
 ```bash
-docker pull myregistry.azurecr.io/samples/alpine:v1
+docker pull myregistry.azurecr.io/samples/nginx:v1
 docker pull myregistry.azurecr.io/samples/hello-world:v1
 ```
 ### <a name="delete-images"></a>删除映像
 
-通过将 `content/delete` 操作添加到 `alpine` 存储库可以更新范围映射。 此操作允许删除存储库中的映像或删除整个存储库。
+通过将 `content/delete` 操作添加到 `nginx` 存储库可以更新范围映射。 此操作允许删除存储库中的映像或删除整个存储库。
 
-为简洁起见，我们只显示用于更新范围映射的 [az acr scope map update][az-acr-scope-map-update] 命令：
+为简洁起见，我们仅显示用来更新范围映射的 [az acr scope-map update][az-acr-scope-map-update] 命令：
 
 ```azurecli
 az acr scope-map update \
   --name MyScopeMap \
   --registry myregistry \
-  --add samples/alpine content/delete
+  --add-repository samples/nginx content/delete
 ``` 
 
-若要使用门户更新作用域映射，请参阅[上一节](#update-token-permissions)。
+若要使用门户更新范围映射，请参阅[上一部分](#update-token-permissions)。
 
-使用以下 [az acr repository delete][az-acr-repository-delete] 命令删除 `samples/alpine` 存储库。 若要删除图像或存储库，请将令牌的名称和密码传递给命令。 下面的示例使用之前在本文中创建的环境变量：
+可使用以下 [az acr repository delete][az-acr-repository-delete] 命令删除 `samples/nginx` 存储库。 若要删除映像或存储库，请将令牌的名称和密码传递给命令。 以下示例使用本文前面创建的环境变量：
 
 ```azurecli
 az acr repository delete \
-  --name myregistry --repository samples/alpine \
+  --name myregistry --repository samples/nginx \
   --username $TOKEN_NAME --password $TOKEN_PWD
 ```
 
@@ -314,14 +314,14 @@ az acr repository delete \
 az acr scope-map update \
   --name MyScopeMap \
   --registry myregistry \
-  --add samples/hello-world metadata/read 
+  --add-repository samples/hello-world metadata/read 
 ```  
 
-若要使用门户更新作用域映射，请参阅[上一节](#update-token-permissions)。
+若要使用门户更新范围映射，请参阅[上一部分](#update-token-permissions)。
 
 若要读取 `samples/hello-world` 存储库中的元数据，请运行 [az acr repository show-manifests][az-acr-repository-show-manifests] 或 [az acr repository show-tags][az-acr-repository-show-tags] 命令。 
 
-若要读取元数据，请将令牌的名称和密码传递到任一命令。 下面的示例使用之前在本文中创建的环境变量：
+若要读取元数据，请将令牌的名称和密码传递给任一命令。 下面的示例使用之前在本文中创建的环境变量：
 
 ```azurecli
 az acr repository show-tags \
@@ -348,7 +348,7 @@ az acr scope-map list \
   --registry myregistry --output table
 ```
 
-输出由三个系统定义的作用域映射和由你生成的其他作用域映射组成。 可以用任何这些范围映射来配置标记。
+输出包括三个系统定义的范围映射和你生成的其他范围映射。 可以使用上述任一范围映射来配置令牌。
 
 ```
 NAME                 TYPE           CREATION DATE         DESCRIPTION
@@ -376,13 +376,13 @@ az acr token list --registry myregistry --output table
 
 ### <a name="regenerate-token-passwords"></a>重新生成令牌密码
 
-如果未生成令牌密码或要生成新密码，请运行[az acr token credential 生成][az-acr-token-credential-generate]命令。 
+如果未生成令牌密码，或者要生成新密码，请运行 [az acr token credential generate][az-acr-token-credential-generate] 命令。 
 
 下面的示例为 MyToken 令牌的 password1 生成新值，有效期为 30 天。 它将密码存储在环境变量 `TOKEN_PWD` 中。 此示例的格式是针对 bash shell 设置的。
 
 ```azurecli
 TOKEN_PWD=$(az acr token credential generate \
-  --name MyToken --registry myregistry --days 30 \
+  --name MyToken --registry myregistry --expiration-in-days 30 \
   --password1 --query 'passwords[0].value' --output tsv)
 ```
 

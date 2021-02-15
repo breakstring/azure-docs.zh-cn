@@ -2,17 +2,17 @@
 title: 使用 P2S：Azure VPN 网关
 description: 本页介绍如何在 COVID-19 疫情下利用 VPN 网关完成远程工作。
 services: vpn-gateway
-author: kumudD
+author: cherylmc
 ms.service: vpn-gateway
 ms.topic: conceptual
-ms.date: 04/07/2020
+ms.date: 09/03/2020
 ms.author: alzam
-ms.openlocfilehash: 302706b67900bd0dd82aabfa750bba48918b134a
-ms.sourcegitcommit: 3543d3b4f6c6f496d22ea5f97d8cd2700ac9a481
+ms.openlocfilehash: eb0291b18952efc643de18e111154ebe58f041af
+ms.sourcegitcommit: aaa65bd769eb2e234e42cfb07d7d459a2cc273ab
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/20/2020
-ms.locfileid: "86525358"
+ms.lasthandoff: 01/27/2021
+ms.locfileid: "98880078"
 ---
 # <a name="remote-work-using-azure-vpn-gateway-point-to-site"></a>使用 Azure VPN 网关点到站点连接实现远程工作
 
@@ -30,13 +30,13 @@ Azure 点到站点解决方案基于云且可快速预配，以满足在家办�
 
 下表显示了客户端操作系统及其可用的身份验证选项。 这些信息可以帮助用户根据已在使用的客户端 OS 选择身份验证方法。 例如，如果混合使用了需要连接的客户端操作系统，请选择使用基于证书的身份验证的 OpenVPN。 另请注意，只有基于路由的 VPN 网关才支持点到站点 VPN。
 
-![点到站点](./media/working-remotely-support/ostable.png "操作系统")
+![显示客户端操作系统和可用身份验证选项的屏幕截图。](./media/working-remotely-support/ostable.png "操作系统")
 
 ## <a name="scenario-1---users-need-access-to-resources-in-azure-only"></a><a name="scenario1"></a>方案 1 - 用户只需访问 Azure 中的资源
 
 在此场景中，远程用户只需访问 Azure 中的资源。
 
-![点到站点](./media/working-remotely-support/scenario1.png "方案 1")
+![此图显示了用户只需访问 Azure 中的资源的点到站点方案。](./media/working-remotely-support/scenario1.png "方案 1")
 
 从较高层面讲，需要执行以下步骤才能使用户安全连接到 Azure 资源：
 
@@ -55,7 +55,7 @@ Azure 点到站点解决方案基于云且可快速预配，以满足在家办�
 
 在此场景中，远程用户需要访问 Azure 中以及本地数据中心内的资源。
 
-![点到站点](./media/working-remotely-support/scenario2.png "方案 2")
+![此图显示了用户需要访问 Azure 中的资源的点到站点方案。](./media/working-remotely-support/scenario2.png "方案 2")
 
 从较高层面讲，需要执行以下步骤才能使用户安全连接到 Azure 资源：
 
@@ -65,7 +65,7 @@ Azure 点到站点解决方案基于云且可快速预配，以满足在家办�
 4. 配置本地设备以连接到 Azure 虚拟网关。
 5. 从 Azure 门户下载点到站点配置文件并将其分发到客户端
 
-若要了解如何设置站点到站点 VPN 隧道，请参阅[此链接](vpn-gateway-howto-site-to-site-resource-manager-portal.md)。
+若要了解如何设置站点到站点 VPN 隧道，请参阅[此链接](./tutorial-site-to-site-portal.md)。
 
 ## <a name="faq-for-native-azure-certificate-authentication"></a><a name="faqcert"></a>本机 Azure 证书身份验证常见问题解答
 

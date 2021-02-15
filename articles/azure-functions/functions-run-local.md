@@ -1,16 +1,16 @@
 ---
 title: 使用 Azure Functions Core Tools
-description: 了解如何通过本地计算机上的命令提示符或终端编写和测试 Azure 函数，然后在 Azure Functions 中运行这些函数。
+description: 了解如何在本地计算机上的命令提示符或终端中对 Azure Functions 进行编码和测试，然后在 Azure Functions 上运行它们。
 ms.assetid: 242736be-ec66-4114-924b-31795fd18884
 ms.topic: conceptual
 ms.date: 03/13/2019
 ms.custom: devx-track-csharp, 80e4ff38-5174-43
-ms.openlocfilehash: bbdc05d2b5a770791bb81f26a71b9dc3eb7523d5
-ms.sourcegitcommit: 54d8052c09e847a6565ec978f352769e8955aead
+ms.openlocfilehash: efb91c7b26c67a3672abb3f9cc8992fd45971a25
+ms.sourcegitcommit: 1756a8a1485c290c46cc40bc869702b8c8454016
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/18/2020
-ms.locfileid: "88505710"
+ms.lasthandoff: 12/09/2020
+ms.locfileid: "96932449"
 ---
 # <a name="work-with-azure-functions-core-tools"></a>使用 Azure Functions Core Tools
 
@@ -37,11 +37,11 @@ Azure Functions Core Tools 有三个版本。 使用的版本取决于本地开�
 
 + **版本 1.x**：支持 1.x 版的 Azure Functions 运行时。 此 Tools 版本仅在 Windows 计算机上受支持，需从 [npm 包](https://www.npmjs.com/package/azure-functions-core-tools)安装。
 
-除非另有说明，否则本文中的示例适用于版本 3.x。
+你只能在给定计算机上安装一个版本的核心工具。 除非另有说明，否则本文中的示例适用于版本 3.x。
 
 ## <a name="prerequisites"></a>先决条件
 
-Azure Functions Core Tools 当前依赖于 Azure CLI 通过 Azure 帐户进行身份验证。 这意味着，必须在 [本地安装 Azure CLI](/cli/azure/install-azure-cli) ，才能从 Azure Functions Core Tools [发布到 Azure](#publish) 。 
+Azure Functions Core Tools 当前依赖于 Azure CLI 通过 Azure 帐户进行身份验证。 这意味着必须[在本地安装 Azure CLI](/cli/azure/install-azure-cli)，才能从 Azure Functions Core Tools [发布到 Azure](#publish)。 
 
 ## <a name="install-the-azure-functions-core-tools"></a>安装 Azure Functions Core Tools
 
@@ -56,12 +56,12 @@ Azure Functions Core Tools 当前依赖于 Azure CLI 通过 Azure 帐户进行�
 
 # <a name="windows"></a>[Windows](#tab/windows)
 
-以下步骤使用 Windows installer (MSI) 来安装核心工具 v3. x。 若要详细了解安装 Core Tools v2 所需的其他基于包的安装程序，请参阅 [Core tools 自述文件](https://github.com/Azure/azure-functions-core-tools/blob/master/README.md#windows)。
+以下步骤使用 Windows 安装程序 (MSI) 安装 Core Tools v3.x。 若要详细了解安装 Core Tools v2.x 所需的其他基于包的安装程序，请参阅 [Core Tools 自述文件](https://github.com/Azure/azure-functions-core-tools/blob/master/README.md#windows)。
 
-1. 下载并运行基于你的 Windows 版本的 Core Tools 安装程序：
+1. 基于Windows 版本下载并运行 Core Tools 安装程序：
 
-    -  (建议使用[v3. x 64 位](https://go.microsoft.com/fwlink/?linkid=2135274)。 [Visual Studio Code 调试](functions-develop-vs-code.md#debugging-functions-locally) 需要64位。 ) 
-    - [v3. x-Windows 32 位](https://go.microsoft.com/fwlink/?linkid=2135275)
+    - [v3.x - Windows 64 位](https://go.microsoft.com/fwlink/?linkid=2135274)（推荐。 [Visual Studio Code 调试](functions-develop-vs-code.md#debugging-functions-locally)需要 64 位。）
+    - [v3.x - Windows 32 位](https://go.microsoft.com/fwlink/?linkid=2135275)
 
 1. 如果不打算使用[扩展捆绑包](functions-bindings-register.md#extension-bundles)，请安装[用于 Windows 的 .NET Core 3.x SDK](https://dotnet.microsoft.com/download)。
 
@@ -102,7 +102,7 @@ Azure Functions Core Tools 当前依赖于 Azure CLI 通过 Azure 帐户进行�
     sudo mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg
     ```
 
-1. 请在执行 APT 更新之前设置 APT 源列表。
+1. 在进行 APT 更新之前，设置 APT 源列表。
 
     ##### <a name="ubuntu"></a>Ubuntu
 
@@ -155,7 +155,7 @@ Azure Functions Core Tools 当前依赖于 Azure CLI 通过 Azure 帐户进行�
 
 ## <a name="create-a-local-functions-project"></a>创建本地 Functions 项目
 
-Functions 项目目录包含文件 [host.json](functions-host-json.md) 和 [local.settings.json](#local-settings-file) 以及若干个子文件夹，这些子文件夹包含各个函数的代码。 此目录相当于 Azure 中的一个函数应用。 若要详细了解 Functions 文件夹的结构，请参阅 [Azure Functions 开发人员指南](functions-reference.md#folder-structure)。
+函数项目目录包含 [host.js打开](functions-host-json.md) 和 [local.settings.js上](#local-settings-file)的文件，以及包含各个函数的代码的子文件夹。 此目录相当于 Azure 中的一个函数应用。 若要详细了解 Functions 文件夹的结构，请参阅 [Azure Functions 开发人员指南](functions-reference.md#folder-structure)。
 
 版本 3.x/2.x 要求在初始化项目时为项目选择默认语言。 在版本 3.x/2.x 中，添加的所有函数均使用默认语言模板。 在版本 1.x 中，每次创建函数时都要指定语言。
 
@@ -166,7 +166,7 @@ func init MyFunctionProj
 ```
 
 >[!IMPORTANT]
-> Java 使用 Maven 原型来创建本地函数项目，以及第一个 HTTP 触发的函数。 使用以下命令创建 Java 项目： `mvn archetype:generate -DarchetypeGroupId=com.microsoft.azure -DarchetypeArtifactId=azure-functions-archetype` 。 有关使用 Maven 原型的示例，请参阅 [命令行快速入门](/azure/azure-functions/functions-create-first-azure-function-azure-cli?pivots=programming-language-java)。  
+> Java 使用 Maven archetype 来创建本地 Functions 项目，以及第一个由 HTTP 触发的函数。 使用以下命令创建 Java 项目：`mvn archetype:generate -DarchetypeGroupId=com.microsoft.azure -DarchetypeArtifactId=azure-functions-archetype`。 有关使用 Maven archetype 的示例，请参阅[命令行快速入门](./create-first-function-cli-java.md)。  
 
 提供项目名称后，系统就会创建并初始化使用该名称的新文件夹， 否则会初始化当前文件夹。  
 在版本 3.x/2.x 中运行命令时，必须为项目选择一个运行时。 
@@ -194,29 +194,29 @@ Initialized empty Git repository in C:/myfunctions/myMyFunctionProj/.git/
 
 `func init` 支持以下选项。除非另有说明，否则这些选项仅限版本 3.x/2.x：
 
-| 选项     | 说明                            |
+| 选项     | 描述                            |
 | ------------ | -------------------------------------- |
-| **`--csx`** | 创建 .NET 函数作为 c # 脚本，这是版本1.x 的行为。 仅对有效 `--worker-runtime dotnet` 。 |
-| **`--docker`** | 使用基于所选的基本映像为容器创建 Dockerfile `--worker-runtime` 。 如果打算发布到自定义 Linux 容器，请使用此选项。 |
+| **`--csx`** | 以 C# 脚本的形式创建 .NET 函数，这是版本 1.x 行为。 仅对 `--worker-runtime dotnet` 有效。 |
+| **`--docker`** | 使用基于所选 `--worker-runtime` 的基础映像创建容器的 Dockerfile。 如果打算发布到自定义 Linux 容器，请使用此选项。 |
 | **`--docker-only`** |  将 Dockerfile 添加到现有项目中。 如果未在 local.settings.json 中指定或设置 worker-runtime，则会进行相应提示。 如果你打算将现有项目发布到自定义 Linux 容器，请使用此选项。 |
 | **`--force`** | 即使项目中存在现有的文件，也要初始化该项目。 此设置会覆盖同名的现有文件。 项目文件夹中的其他文件不受影响。 |
-| **`--language`** | 初始化语言特定的项目。 当前在设置为时受支持 `--worker-runtime` `node` 。 选项包括 `typescript` 和 `javascript`。 你还可以使用 `--worker-runtime javascript` 或 `--worker-runtime typescript` 。  |
-| **`--managed-dependencies`**  | 安装托管依赖项。 目前，只有 PowerShell 辅助运行时支持此功能。 |
+| **`--language`** | 初始化特定于语言的项目。 当前在 `--worker-runtime` 设为 `node` 时受支持。 选项包括 `typescript` 和 `javascript`。 你也可使用 `--worker-runtime javascript` 或 `--worker-runtime typescript`。  |
+| **`--managed-dependencies`**  | 安装托管的依赖项。 目前只有 PowerShell 辅助运行时支持此功能。 |
 | **`--source-control`** | 控制是否创建 git 存储库。 默认不会创建存储库。 如果为 `true`，则会创建存储库。 |
-| **`--worker-runtime`** | 设置项目的语言运行时。 支持的值包括： `csharp` 、 `dotnet` 、 `javascript` 、 `node` (JavaScript) 、 `powershell` 、 `python` 和 `typescript` 。 对于 Java，请使用 [Maven](functions-reference-java.md#create-java-functions)。如果未设置，则系统会提示你在初始化期间选择运行时。 |
+| **`--worker-runtime`** | 设置项目的语言运行时。 支持的值包括： `csharp` 、 `dotnet` 、 `javascript` 、 `node` (JavaScript) 、 `powershell` 、 `python` 和 `typescript` 。 对于 Java 使用 [Maven](functions-reference-java.md#create-java-functions)。如果未设置，则初始化期间系统会提示你选择运行时。 |
 |
 > [!IMPORTANT]
-> 默认情况下，版本2.x 和更高版本的核心工具会将 .NET 运行时的函数应用项目创建为 [c # 类项目](functions-dotnet-class-library.md) ， ( .csproj) 。 这些 C# 项目可以与 Visual Studio 或 Visual Studio Code 结合使用，在测试期间以及发布到 Azure 时进行编译。 如果希望创建并使用在版本 1.x 和门户中创建的相同 C# 脚本 (.csx) 文件，则在创建和部署函数时必须包含 `--csx` 参数。
+> 默认情况下，Core Tools 2.x 及更高版本会为 .NET 运行时创建函数应用项目作为 [C# 类项目](functions-dotnet-class-library.md) (.csproj)。 这些 C# 项目可以与 Visual Studio 或 Visual Studio Code 结合使用，在测试期间以及发布到 Azure 时进行编译。 如果希望创建并使用在版本 1.x 和门户中创建的相同 C# 脚本 (.csx) 文件，则在创建和部署函数时必须包含 `--csx` 参数。
 
 ## <a name="register-extensions"></a>注册扩展
 
 除了 HTTP 和计时器触发器外，运行时 2.x 版及更高版本中的 Functions 绑定是以扩展包的形式实现的。 HTTP 绑定和计时器触发器不需要扩展。 
 
-为了减少不同扩展包之间的不兼容性，函数允许你在项目文件的 host.js中引用扩展包。 如果选择不使用扩展捆绑，还需要在本地安装 .NET Core 2.x SDK，并使用函数项目维护扩展。 .csproj 和函数项目。  
+为了降低不同扩展包之间的不兼容性，可以使用函数，让你可以引用 host.json 项目文件中的扩展捆绑包。 如果选择不使用扩展捆绑包，则还需要在本地安装 .NET Core 2.x SDK，并在 functions 项目中维护 extensions.csproj。  
 
 在 2.x 版及更高版本的 Azure Functions 运行时中，必须显式注册在函数中使用的绑定类型的扩展。 可以选择单独安装绑定扩展，也可以将扩展捆绑包引用添加到 host.json 项目文件。 扩展捆绑包可避免在使用多种绑定类型时出现包兼容性问题。 建议使用此方法来注册绑定扩展。 扩展捆绑包还无需安装 .NET Core 2.x SDK。 
 
-### <a name="use-extension-bundles"></a>使用扩展捆绑
+### <a name="use-extension-bundles"></a>使用扩展捆绑包
 
 [!INCLUDE [Register extensions](../../includes/functions-extension-bundles.md)]
 
@@ -250,27 +250,28 @@ Initialized empty Git repository in C:/myfunctions/myMyFunctionProj/.git/
 - 在 [Azure 门户]中，搜索并选择“存储帐户”。 
   ![从 Azure 门户选择存储帐户](./media/functions-run-local/select-storage-accounts.png)
   
-  选择你的存储帐户，在“设置”中选择“访问密钥”，然后复制其中一个**连接字符串**值。 
+  选择你的存储帐户，在“设置”中选择“访问密钥”，然后复制其中一个 **连接字符串** 值。 
   ![从 Azure 门户复制连接字符串](./media/functions-run-local/copy-storage-connection-portal.png)
 
 - 使用 [Azure 存储资源管理器](https://storageexplorer.com/)连接到你的 Azure 帐户。 在“资源管理器”中，展开你的订阅，展开“存储帐户”，选择你的存储帐户，然后复制主或辅助连接字符串。
 
   ![从存储资源管理器复制连接字符串](./media/functions-run-local/storage-explorer.png)
 
-+ 使用核心工具通过下列命令之一从 Azure 下载连接字符串：
++ 使用项目根目录中的核心工具通过下列命令之一从 Azure 下载连接字符串：
 
   + 从现有函数应用下载所有设置：
 
     ```
     func azure functionapp fetch-app-settings <FunctionAppName>
     ```
+
   + 获取特定存储帐户的连接字符串。
 
     ```
     func azure storage fetch-connection-string <StorageAccountName>
     ```
 
-    如果你尚未登录到 Azure，系统会要求登录。
+    如果你尚未登录到 Azure，系统会要求登录。 这些命令将覆盖 local.settings.json 文件中的任何现有设置。 
 
 ## <a name="create-a-function"></a><a name="create-func"></a>创建函数
 
@@ -308,10 +309,10 @@ Writing C:\myfunctions\myMyFunctionProj\MyQueueTrigger\function.json
 
 也可以在命令中使用以下参数指定这些选项：
 
-| 参数     | 说明                            |
+| 参数     | 描述                            |
 | ------------------------------------------ | -------------------------------------- |
-| **`--csx`** |  (版本2.x 及更高版本。 ) 会生成在版本1.x 和门户中使用的相同的 c # 脚本 () 模板。 |
-| **`--language`**, **`-l`**| C#、F# 或 JavaScript 等模板编程语言。 此选项在版本 1.x 中是必需的。 在版本2.x 和更高版本中，请不要使用此选项或选择与工作运行时匹配的语言。 |
+| **`--csx`** | （2.x 及更高版本。）生成版本 1.x 和门户所用的相同 C# 脚本 (.csx) 模板。 |
+| **`--language`**, **`-l`**| C#、F# 或 JavaScript 等模板编程语言。 此选项在版本 1.x 中是必需的。 在 2.x 及更高版本中，请不要使用此选项或选择与辅助角色运行时匹配的语言。 |
 | **`--name`**, **`-n`** | 函数名称。 |
 | **`--template`**, **`-t`** | 使用 `func templates list` 命令查看每种受支持语言的可用模板的完整列表。   |
 
@@ -356,7 +357,7 @@ func start
 ```
 func start
 ```
-此命令必须 [在虚拟环境中运行](./functions-create-first-azure-function-azure-cli.md?pivots=programming-language-python#create-venv)。
+此命令必须 [在虚拟环境中运行](./create-first-function-cli-python.md)。
 
 # <a name="typescript"></a>[TypeScript](#tab/ts)
 
@@ -517,7 +518,7 @@ func azure functionapp publish <FunctionAppName>
 ```
 
 >[!IMPORTANT]
-> Java 使用 Maven 将本地项目发布到 Azure。 使用以下命令发布到 Azure： `mvn azure-functions:deploy` 。 Azure 资源是在初始部署期间创建的。
+> Java 使用 Maven 将本地项目发布到 Azure。 使用以下命令发布到 Azure：`mvn azure-functions:deploy`。 Azure 资源是在初始部署期间创建的。
 
 此命令发布到 Azure 中的现有函数应用。 如果尝试发布到订阅中不存在的 `<FunctionAppName>`，则会收到错误。 若要了解如何使用 Azure CLI 从命令提示符或终端窗口创建函数应用，请参阅[为无服务器执行创建函数应用](./scripts/functions-cli-create-serverless.md)。 默认情况下，此命令使用[远程生成](functions-deployment-technologies.md#remote-build)并将应用部署为[从部署包运行](run-functions-from-deployment-package.md)。 若要禁用此建议的部署模式，请使用 `--nozip` 选项。
 
@@ -532,7 +533,7 @@ func azure functionapp publish <FunctionAppName>
 | **`--publish-local-settings -i`** |  将 local.settings.json 中的设置发布到 Azure，如果该设置已存在，则提示进行覆盖。 如果使用的是 Microsoft Azure 存储模拟器，请先将应用设置更改为 [实际的存储连接](#get-your-storage-connection-strings)。 |
 | **`--overwrite-settings -y`** | 使用 `--publish-local-settings -i` 时隐藏覆盖应用设置的提示。|
 
-仅限版本2.x 和更高版本支持以下发布选项：
+以下发布选项仅在 2.x 及更高版本中受支持：
 
 | 选项     | 说明                            |
 | ------------ | -------------------------------------- |
@@ -545,7 +546,7 @@ func azure functionapp publish <FunctionAppName>
 | **`--additional-packages`** | 构建本机依赖项时要安装的包列表。 例如：`python3-dev libevent-dev`。 |
 | **`--force`** | 在某些情况下会忽略预发布验证。 |
 | **`--csx`** | 发布 C# 脚本 (.csx) 项目。 |
-| **`--no-build`** | 项目不是在发布过程中生成的。 对于 Python，则 `pip install` 不执行。 |
+| **`--no-build`** | 发布过程中不生成项目。 对于 Python，则 `pip install` 不执行。 |
 | **`--dotnet-cli-params`** | 发布编译的 C# (.csproj) 函数时，Core Tools 将调用“dotnet build --output bin/publish”。 传递到此选项的任何参数将追加到命令行。 |
 
 ### <a name="deploy-custom-container"></a>部署自定义容器
@@ -569,23 +570,19 @@ func deploy
 
 ## <a name="monitoring-functions"></a>监视函数
 
-若要监视函数的执行，推荐的方法是将与 Azure 应用程序 Insights 集成。 你还可以将执行日志流式传输到你的本地计算机。 若要了解详细信息，请参阅[监视 Azure Functions](functions-monitoring.md)。
+监视函数执行的建议方法是与 Azure Application Insights 集成。 还可以将执行日志流式传输到本地计算机。 若要了解详细信息，请参阅[监视 Azure Functions](functions-monitoring.md)。
 
 ### <a name="application-insights-integration"></a>Application Insights 集成
 
-在 Azure 中创建函数应用时，应启用 Application Insights 集成。 如果由于某种原因，函数应用未连接到 Application Insights 实例，则在 Azure 门户中可以很轻松地执行此集成。 
-
-[!INCLUDE [functions-connect-new-app-insights.md](../../includes/functions-connect-new-app-insights.md)]
+在 Azure 中创建函数应用时，应启用 Application Insights 集成。 如果由于某种原因，函数应用未连接到 Application Insights 实例，则在 Azure 门户中可以轻松地进行此集成。 若要了解详细信息，请参阅[启用 Application Insights 集成](configure-monitoring.md#enable-application-insights-integration)。
 
 ### <a name="enable-streaming-logs"></a>启用流式传输日志
 
-你可以在本地计算机上的命令行会话中查看函数正在生成的日志文件流。 
-
-#### <a name="native-streaming-logs"></a>本机流式处理日志
+可以在本地计算机的命令行会话中查看函数正在生成的日志文件流。 
 
 [!INCLUDE [functions-streaming-logs-core-tools](../../includes/functions-streaming-logs-core-tools.md)]
 
-这种类型的流式传输日志需要为 function app 启用 Application Insights 集成。   
+这种类型的流式传输日志需要为函数应用启用了 Application Insights 集成。   
 
 
 ## <a name="next-steps"></a>后续步骤

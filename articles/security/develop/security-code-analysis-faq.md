@@ -1,6 +1,6 @@
 ---
 title: Microsoft 安全代码分析文档常见问题解答
-description: 通过查看常见问题（Faq）了解 Microsoft 安全代码分析扩展。
+description: 请查看常见问题解答 (FAQ)，了解 Microsoft 安全代码分析扩展。
 author: sukhans
 manager: sukhans
 ms.author: terrylan
@@ -12,12 +12,12 @@ ms.assetid: 521180dc-2cc9-43f1-ae87-2701de7ca6b8
 ms.devlang: na
 ms.tgt_pltfrm: na
 ms.workload: na
-ms.openlocfilehash: f872159e538dc85121a7a6d4d6503fd18a263628
-ms.sourcegitcommit: 8def3249f2c216d7b9d96b154eb096640221b6b9
+ms.openlocfilehash: b851e52141cf93aba4aab9b2768658f0aac4660f
+ms.sourcegitcommit: aaa65bd769eb2e234e42cfb07d7d459a2cc273ab
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/03/2020
-ms.locfileid: "87543038"
+ms.lasthandoff: 01/27/2021
+ms.locfileid: "98879909"
 ---
 # <a name="frequently-asked-questions"></a>常见问题
 遇到问题？ 请查看以下常见问题解答来了解详细信息。
@@ -48,7 +48,7 @@ ms.locfileid: "87543038"
 
 明显差异：
 
-- 从代理 $ （Build.sourcesdirectory）的源文件夹或从% BUILD_SOURCESDIRECTORY% 运行的工具。 例如，C:\agent \_ work\1\s。
+- 工具将从代理 $ (的源文件夹中运行) 或% BUILD_SOURCESDIRECTORY%。 例如，C:\agent \_ work\1\s。
 - 自变量中的路径可以是相对于前面列出的源目录的根目录的相对路径。 路径也可以是绝对路径。 你可以使用 Azure DevOps 生成变量或运行本地代理和本地资源的已知部署位置来获取绝对路径。
 - 工具自动提供输出文件路径或文件夹。 如果提供生成任务的输出位置，则会将该位置替换为生成代理上的日志的众所周知位置的路径
 - 某些工具的其他命令行参数会被更改。 例如，添加或删除确保没有启动 GUI 的选项。
@@ -82,7 +82,7 @@ ms.locfileid: "87543038"
 
 ### <a name="from-where-do-the-build-tasks-download-the-tools"></a>生成任务从何处下载工具？
 
-生成任务可从[Azure DevOps 包管理源](https://securitytools.pkgs.visualstudio.com/_packaging/SecureDevelopmentTools/nuget/v3/index.json)下载工具的 NuGet 包。 生成任务还可以使用必须在生成代理上预先安装的 Node 包管理器。 此类安装的一个示例是 " **npm install tslint**" 命令。
+生成任务可从 [Azure DevOps 包管理源](https://securitytools.pkgs.visualstudio.com/_packaging/SecureDevelopmentTools/nuget/v3/index.json)下载工具的 NuGet 包。 生成任务还可以使用必须在生成代理上预先安装的 Node 包管理器。 此类安装的一个示例是 " **npm install tslint**" 命令。
 
 ### <a name="what-effect-does-installing-the-extension-have-on-my-azure-devops-organization"></a>在我的 Azure DevOps 组织中安装扩展有什么影响？ 
 
@@ -163,7 +163,7 @@ CredScan 输出文件中机密的哈希键是必需的，如以下示例所示�
  - [Azure AD 托管服务标识 (MSI)](https://azure.microsoft.com/blog/keep-credentials-out-of-code-introducing-azure-ad-managed-service-identity/)
  - [Azure 资源的托管标识](../../active-directory/managed-identities-azure-resources/overview.md)
  - [Azure 应用服务和 Azure Functions 中的托管标识](../../app-service/overview-managed-identity.md)
- - [AppAuthentication 库](../../key-vault/general/service-to-service-authentication.md)
+ - [AppAuthentication 库](/dotnet/api/overview/azure/service-to-service-authentication)
 
 
 有关详细信息，请参阅博客文章：[Managing Secrets Securely in the Cloud](https://devblogs.microsoft.com/visualstudio/managing-secrets-securely-in-the-cloud/)（在云中安全地管理机密）。
@@ -226,6 +226,6 @@ Roslyn 分析器生成任务需要从 MSBuild 生成任务中查询 MSBuild 日�
 
 如果你需要更多帮助，可以在周一到周五的太平洋标准时间上午 9:00 到下午 5:00 联系 Microsoft 安全代码分析支持人员。
 
-- 载入：请参阅我们的[载入文档](security-code-analysis-onboard.md)
+- 载入：请参阅我们的 [载入文档](security-code-analysis-onboard.md)
   
 - 支持：请通过 [Microsoft 安全代码分析支持](mailto:mscahelp@microsoft.com?Subject=Microsoft%20Security%20Code%20Analysis%20Support%20Request)向我们的团队发送电子邮件

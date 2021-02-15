@@ -5,24 +5,25 @@ services: storage
 author: roygara
 ms.service: storage
 ms.topic: include
-ms.date: 12/27/2019
-ms.author: rogarana
+ms.date: 02/03/2021
+ms.author: fauhse
 ms.custom: include file
-ms.openlocfilehash: cd7b889560acbe484581f065b641375c222f7ca8
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
-ms.translationtype: MT
+ms.openlocfilehash: a086aae35c9a800c6a4cfc3e872a34438bc84095
+ms.sourcegitcommit: f82e290076298b25a85e979a101753f9f16b720c
+ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "81536468"
+ms.lasthandoff: 02/04/2021
+ms.locfileid: "99569499"
 ---
-默认情况下，虽然可将共享限制增加到 100 TiB，但标准文件共享只能跨越最多 5 TiB。 为此，必须在存储帐户级别启用大文件共享** 功能。 高级存储帐户（*FileStorage*存储帐户）没有较大的文件共享功能标志，因为所有高级文件共享已启用，可预配到全部 100 TiB 容量。
+默认情况下，标准文件共享不得超过 5 TiB，但你可将共享上限提高到 100 TiB。 若要提高共享上限，请在存储帐户上启用“大型文件共享”。 高级存储帐户（FileStorage 存储帐户）没有“大型文件共享”功能标志，原因是所有高级文件共享都已经可以预配到全容量 100 TiB。
 
-只能在本地冗余或区域冗余标准存储帐户上启用大型文件共享。 启用大文件共享功能标志后，无法将冗余级别更改为异地冗余或地域冗余存储。
+仅可在本地冗余或区域冗余标准存储帐户上启用大型文件共享功能。 启用大型文件共享功能标志后，无法将冗余级别更改为异地冗余或异地区域冗余存储。
 
-若要在现有存储帐户上启用大文件共享，请导航到存储帐户的目录中的“配置”视图，将大文件共享摇杆开关切换到“启用”：****
+若要在现有存储帐户上启用“大型文件共享”功能，请在存储帐户的目录中导航到“文件共享”。
+在此边栏选项卡上，选择“共享容量”，将共享容量更改为“100 TiB”，然后选择“保存”  。
 
-![在 Azure 门户中启用大文件共享摇杆开关的屏幕截图](media/storage-files-tiers-enable-large-shares/enable-lfs-0.png)
+:::image type="content" source="media/storage-files-tiers-enable-large-shares/enable-lfs.png" alt-text="显示 Azure 门户中的“启用大型文件共享”选择加入设置的屏幕截图。" lightbox="media/storage-files-tiers-enable-large-shares/increase-share-capacity.png":::
 
-还可以通过 [`Set-AzStorageAccount`](https://docs.microsoft.com/powershell/module/az.storage/set-azstorageaccount) PowerShell cmdlet 和 [`az storage account update`](https://docs.microsoft.com/cli/azure/storage/account#az-storage-account-update) Azure CLI 命令启用 100 TiB 文件共享。 有关启用大型文件共享的详细说明，请参阅[启用和创建大型文件共享](../articles/storage/files/storage-files-how-to-create-large-file-share.md)。
+还可通过 PowerShell cmdlet [`Set-AzStorageAccount`](/powershell/module/az.storage/set-azstorageaccount) 和 Azure CLI 命令 [`az storage account update`](/cli/azure/storage/account#az-storage-account-update) 来启用 100 TiB 文件共享。 有关启用大型文件共享的详细说明，请参阅[启用和创建大型文件共享](../articles/storage/files/storage-files-how-to-create-large-file-share.md)。
 
 要详细了解如何在新存储帐户上创建大型文件共享，请参阅[创建 Azure 文件共享](../articles/storage/files/storage-how-to-create-file-share.md)。

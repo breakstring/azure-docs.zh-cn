@@ -8,12 +8,12 @@ ms.topic: include
 ms.date: 02/10/2020
 ms.author: sethm
 ms.custom: include file
-ms.openlocfilehash: a9e8574ea2d7222871c7f065383e6c0c62057dd3
-ms.sourcegitcommit: 58faa9fcbd62f3ac37ff0a65ab9357a01051a64f
-ms.translationtype: MT
+ms.openlocfilehash: 7b5034f2163e8478d7ddb7b9271402b094a809d7
+ms.sourcegitcommit: c95e2d89a5a3cf5e2983ffcc206f056a7992df7d
+ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/29/2020
-ms.locfileid: "81007826"
+ms.lasthandoff: 11/24/2020
+ms.locfileid: "95560198"
 ---
 ## <a name="generate-the-certificate-signing-request-file"></a>生成证书签名请求文件
 
@@ -58,7 +58,7 @@ Apple Push Notification 服务 (APNs) 使用证书对推送通知进行身份验
 
    * **说明**：键入应用的描述性名称。
 
-   * **捆绑 ID**：按[应用分发指南](https://help.apple.com/xcode/mac/current/#/dev91fe7130a)中所述，输入格式为 **Organization Identifier.Product Name** 的捆绑 ID。 “Organization Identifier”（组织标识符）和“Product Name”（产品名称）值必须与创建 Xcode 项目时使用的组织标识符与产品名称匹配。   在下面的屏幕截图中，**NotificationHubs** 值用作组织标识符，**GetStarted** 值用作产品名称。 确保“Bundle Identifier”（捆绑标识符）值与 Xcode 项目中的值匹配，这样 Xcode 就可以使用正确的发布配置文件。 
+   * **捆绑 ID**：按 [应用分发指南](https://help.apple.com/xcode/mac/current/#/dev91fe7130a)中所述，输入格式为 **Organization Identifier.Product Name** 的捆绑 ID。 “Organization Identifier”（组织标识符）和“Product Name”（产品名称）值必须与创建 Xcode 项目时使用的组织标识符与产品名称匹配。   在下面的屏幕截图中，**NotificationHubs** 值用作组织标识符，**GetStarted** 值用作产品名称。 确保“Bundle Identifier”（捆绑标识符）值与 Xcode 项目中的值匹配，这样 Xcode 就可以使用正确的发布配置文件。 
 
       ![iOS 预配门户“注册应用 ID”页](./media/notification-hubs-enable-apple-push-notifications/notification-hubs-new-appid-bundle.png)
 
@@ -78,9 +78,9 @@ Apple Push Notification 服务 (APNs) 使用证书对推送通知进行身份验
 必须有证书才能使通知中心与 APNS  配合工作。 可通过以下两种方式之一实现此目的：
 
 1. 创建可以直接上传到通知中心的 .p12  。  
-2. 创建可用于[基于令牌的身份验证](https://docs.microsoft.com/azure/notification-hubs/notification-hubs-push-notification-http2-token-authentification)的 .p8  （较新的方法  ）。
+2. 创建可用于[基于令牌的身份验证](../articles/notification-hubs/notification-hubs-push-notification-http2-token-authentication.md)的 .p8  （较新的方法  ）。
 
-如[基于令牌 (HTTP/2) 的 APNS 身份验证](https://docs.microsoft.com/azure/notification-hubs/notification-hubs-push-notification-http2-token-authentification)中所述，较新的方法（与使用证书相比）有很多好处。 不过，下面为这两种方法都提供了步骤。 
+如[基于令牌 (HTTP/2) 的 APNS 身份验证](../articles/notification-hubs/notification-hubs-push-notification-http2-token-authentication.md)中所述，较新的方法（与使用证书相比）有很多好处。 不过，下面为这两种方法都提供了步骤。 
 
 ### <a name="option-1-creating-a-p12-push-certificate-that-can-be-uploaded-directly-to-notification-hub"></a>选项 1：创建可以直接上传到通知中心的 .p12 推送证书
 
@@ -95,7 +95,7 @@ Apple Push Notification 服务 (APNs) 使用证书对推送通知进行身份验
     此时将显示“Create a new Certificate”（创建新证书）  屏幕。
 
     > [!NOTE]
-    > 本教程使用开发证书。 注册生产证书时使用相同的过程。 只需确保在发送通知时使用相同的证书类型。
+    > 本教程使用开发证书，应用使用该证书生成唯一的设备令牌。 注册生产证书时使用相同的过程。 只需确保在发送通知时使用相同的证书类型。
 
 3. 选择“Choose File”（选择文件），浏览到在第一个任务中保存 CSR 文件的位置，然后双击证书名以加载该证书。  然后选择“继续”。 
 
@@ -211,11 +211,11 @@ Apple Push Notification 服务 (APNs) 使用证书对推送通知进行身份验
 在“Notification Services”  下，选择“Apple (APNS)”  ，然后根据以前在[为通知中心创建证书](#creating-a-certificate-for-notification-hubs)部分中选择的方法，执行相应的步骤。  
 
 > [!NOTE]
-> 仅当希望将推送通知发送给已从应用商店购买应用的用户时，才应当对“应用程序模式”使用“生产”。  
+> 如果使用 App Store 或即席分发配置文件构建应用，请使用“生产”作为“应用程序模式” 。 这将允许设备向从应用商店购买了应用的用户发送推送通知。
 
 ### <a name="option-1-using-a-p12-push-certificate"></a>选项 1：使用 .p12 推送证书
 
-1. 选择“证书”。 
+1. 选择“证书”。
 
 1. 选择文件图标。
 
@@ -227,19 +227,19 @@ Apple Push Notification 服务 (APNs) 使用证书对推送通知进行身份验
 
     ![在 Azure 门户中配置 APNs 证书](./media/notification-hubs-enable-apple-push-notifications/notification-hubs-apple-config-cert.png)
 
-1. 选择“保存”。 
+1. 选择“保存”  。
 
 ### <a name="option-2-using-token-based-authentication"></a>选项 2：使用基于令牌的身份验证
 
-1. 选择“令牌”  。
+1. 选择“令牌”。
 1. 输入前面获取的以下值：
 
-    - 密钥 ID 
-    - 捆绑包 ID 
-    - 团队 ID 
+    - 密钥 ID
+    - 捆绑包 ID
+    - 团队 ID
     - 令牌  
 
 1. 选择“沙盒” 
-1. 选择“保存”。  
+1. 选择“保存”  。 
 
 现在已使用 APNs 配置通知中心。 此外还有了用于注册应用和发送推送通知的连接字符串。

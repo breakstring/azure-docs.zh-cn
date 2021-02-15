@@ -1,25 +1,24 @@
 ---
 title: 在 ML 管道中移动数据
 titleSuffix: Azure Machine Learning
-description: 了解 Azure 机器学习管道中数据的输入和输出。
+description: 了解 Azure 机器学习管道如何引入数据，以及如何在管道步骤之间管理和移动数据。
 services: machine-learning
 ms.service: machine-learning
 ms.subservice: core
 ms.author: laobri
 author: lobrien
-ms.date: 08/20/2020
+ms.date: 02/01/2021
 ms.topic: conceptual
-ms.custom: how-to, contperfq4, devx-track-python
-ms.openlocfilehash: 1b6b5af2e6533c13165ae8253813a52b2c7ad261
-ms.sourcegitcommit: afa1411c3fb2084cccc4262860aab4f0b5c994ef
+ms.custom: how-to, contperf-fy20q4, devx-track-python, data4ml
+ms.openlocfilehash: 894b0fcddaead6ce60e1becc7221c4f5e608de48
+ms.sourcegitcommit: 740698a63c485390ebdd5e58bc41929ec0e4ed2d
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/23/2020
-ms.locfileid: "88756956"
+ms.lasthandoff: 02/03/2021
+ms.locfileid: "99492291"
 ---
 # <a name="moving-data-into-and-between-ml-pipeline-steps-python"></a>将数据移入 ML 管道和在 ML 管道之间移动数据的步骤 (Python)
 
-[!INCLUDE [applies-to-skus](../../includes/aml-applies-to-basic-enterprise-sku.md)]
 
 本文提供了用于在 Azure 机器学习管道中的步骤之间导入、转换和移动数据的代码。 有关数据在 Azure 机器学习中的工作原理的概述，请参阅[访问 Azure 存储服务中的数据](how-to-access-data.md)。 有关 Azure 机器学习管道的优点和结构，请参阅[什么是 Azure 机器学习管道？](concept-ml-pipelines.md)。
 
@@ -32,18 +31,13 @@ ms.locfileid: "88756956"
 - 使用 `OutputFileDatasetConfig` 对象作为管道步骤的输入
 - 基于 `OutputFileDatasetConfig` 创建你要持久保存的新 `Dataset` 对象
 
-> [!NOTE]
->`OutputFileDatasetConfig`和 `OutputTabularDatasetConfig` 类是试验性预览功能，随时可能会更改。
->
->有关详细信息，请参阅 https://aka.ms/azuremlexperimental。
-
 ## <a name="prerequisites"></a>先决条件
 
 需要：
 
 - Azure 订阅。 如果没有 Azure 订阅，请在开始操作前先创建一个免费帐户。 试用[免费版或付费版 Azure 机器学习](https://aka.ms/AMLFree)。
 
-- [适用于 Python 的 Azure 机器学习 SDK](https://docs.microsoft.com/python/api/overview/azure/ml/intro?view=azure-ml-py)，或 [Azure 机器学习工作室](https://ml.azure.com/)的访问权限。
+- [适用于 Python 的 Azure 机器学习 SDK](/python/api/overview/azure/ml/intro?preserve-view=true&view=azure-ml-py)，或 [Azure 机器学习工作室](https://ml.azure.com/)的访问权限。
 
 - Azure 机器学习工作区。
   
@@ -56,13 +50,13 @@ ms.locfileid: "88756956"
    ws = Workspace.from_config()
    ```
 
-- 某些预先存在的数据。 本文简要介绍了如何使用 [Azure blob 容器](https://docs.microsoft.com/azure/storage/blobs/storage-blobs-overview)。
+- 某些预先存在的数据。 本文简要介绍了如何使用 [Azure blob 容器](../storage/blobs/storage-blobs-overview.md)。
 
-- 可选：现有机器学习管道，例如[使用 Azure 机器学习 SDK 创建和运行机器学习管道](how-to-create-your-first-pipeline.md)中所述的管道。
+- 可选：现有机器学习管道，例如[使用 Azure 机器学习 SDK 创建和运行机器学习管道](./how-to-create-machine-learning-pipelines.md)中所述的管道。
 
 ## <a name="use-dataset-objects-for-pre-existing-data"></a>将 `Dataset` 对象用于预先存在的数据 
 
-将数据引入到管道的首选方法是使用 [Dataset](https://docs.microsoft.com/python/api/azureml-core/azureml.core.dataset%28class%29?view=azure-ml-py) 对象。 `Dataset` 对象表示在整个工作区中可用的持久性数据。
+将数据引入到管道的首选方法是使用 [Dataset](/python/api/azureml-core/azureml.core.dataset%28class%29?preserve-view=true&view=azure-ml-py) 对象。 `Dataset` 对象表示在整个工作区中可用的持久性数据。
 
 可以通过许多方法来创建和注册 `Dataset` 对象。 表格数据集用于一个或多个文件中可用的分隔数据。 文件数据集用于二进制数据（例如图像）或你要分析的数据。 创建 `Dataset` 对象的最简单编程方式是使用工作区存储或公共 URL 中的现有 blob：
 
@@ -82,11 +76,11 @@ cats_dogs_dataset = Dataset.File.from_files(
 
 若要将数据集的路径传递给你的脚本，请使用 `Dataset` 对象的 `as_named_input()` 方法。 你可以将生成的 `DatasetConsumptionConfig` 对象作为参数传递给你的脚本，也可以通过使用管道脚本的 `inputs` 参数来使用 `Run.get_context().input_datasets[]` 检索数据集。
 
-创建命名输入后，可以选择其访问模式：`as_mount()` 或 `as_download()`。 如果你的脚本处理数据集中的所有文件，而计算资源上的磁盘足以容纳数据集，则下载访问模式是更好的选择。 下载访问模式可避免在运行时流式传输数据所产生的开销。 如果你的脚本访问数据集的子集或它对于你的计算而言太大，请使用装载访问模式。 有关详细信息，请阅读[装载与下载](https://docs.microsoft.com/azure/machine-learning/how-to-train-with-datasets#mount-vs-download)
+创建命名输入后，可以选择其访问模式：`as_mount()` 或 `as_download()`。 如果你的脚本处理数据集中的所有文件，而计算资源上的磁盘足以容纳数据集，则下载访问模式是更好的选择。 下载访问模式可避免在运行时流式传输数据所产生的开销。 如果你的脚本访问数据集的子集或它对于你的计算而言太大，请使用装载访问模式。 有关详细信息，请阅读[装载与下载](./how-to-train-with-datasets.md#mount-vs-download)
 
 若要将数据集传递给管道步骤，请执行以下操作：
 
-1. 使用 `TabularDataset.as_named_inputs()` 或 `FileDataset.as_named_input()`（末尾没有“s”）创建一个 `DatasetConsumptionConfig` 对象
+1. 使用 `TabularDataset.as_named_input()` 或 `FileDataset.as_named_input()`（末尾没有“s”）创建一个 `DatasetConsumptionConfig` 对象
 1. 使用 `as_mount()` 或 `as_download()` 设置访问模式
 1. 使用 `arguments` 或 `inputs` 参数将数据集传递给管道步骤
 
@@ -98,9 +92,12 @@ train_step = PythonScriptStep(
     name="train_data",
     script_name="train.py",
     compute_target=cluster,
-    inputs=[iris_dataset.as_named_inputs('iris').as_mount()]
+    inputs=[iris_dataset.as_named_input('iris').as_mount()]
 )
 ```
+
+> [!NOTE]
+> 你需要将所有这些参数（即，`"train_data"`、`"train.py"`、`cluster` 和 `iris_dataset`）的值替换为自己的数据。 上面的代码片段仅演示了调用的形式，不是 Microsoft 示例的一部分。 
 
 你还可以使用 `random_split()` 和 `take_sample()` 等方法来创建多个输入或减少传递给管道步骤的数据量：
 
@@ -113,7 +110,7 @@ train_step = PythonScriptStep(
     name="train_data",
     script_name="train.py",
     compute_target=cluster,
-    inputs=[train.as_named_inputs('train').as_download(), test.as_named_inputs('test').as_download()]
+    inputs=[train.as_named_input('train').as_download(), test.as_named_input('test').as_download()]
 )
 ```
 
@@ -128,8 +125,8 @@ train_step = PythonScriptStep(
     name="train_data",
     script_name="train.py",
     compute_target=cluster,
-    arguments=['--training-folder', train.as_named_inputs('train').as_download()]
-    inputs=[test.as_named_inputs('test').as_download()]
+    arguments=['--training-folder', train.as_named_input('train').as_download()]
+    inputs=[test.as_named_input('test').as_download()]
 )
 
 # In pipeline script
@@ -151,9 +148,12 @@ ws = run.experiment.workspace
 ds = Dataset.get_by_name(workspace=ws, name='mnist_opendataset')
 ```
 
+> [!NOTE]
+> 前面的代码片段演示了调用的形式，不是 Microsoft 示例的一部分。 你必须将各种参数替换为自己项目中的值。
+
 ## <a name="use-outputfiledatasetconfig-for-intermediate-data"></a>将 `OutputFileDatasetConfig` 用于中间数据
 
-尽管 `Dataset` 对象只表示持久性数据， [`OutputFileDatasetConfig`](https://docs.microsoft.com/python/api/azureml-core/azureml.data.outputfiledatasetconfig?view=azure-ml-py) 对象 () 可用于从管道步骤 **和** 永久性输出数据输出的临时数据。 
+尽管 `Dataset` 对象只表示持久性数据， [`OutputFileDatasetConfig`](/python/api/azureml-core/azureml.data.outputfiledatasetconfig?preserve-view=true&view=azure-ml-py) 对象 () 可用于从管道步骤 **和** 永久性输出数据输出的临时数据。 `OutputFileDatasetConfig` 支持将数据写入 blob 存储、文件共享、adlsgen1 或 adlsgen2。 它支持装入模式和上传模式。 在装入模式下，当文件关闭时，将永久存储写入到装载的目录中的文件。 在上传模式下，在作业结束时，将上载写入到输出目录中的文件。 如果作业失败或被取消，将不会上载输出目录。
 
  `OutputFileDatasetConfig` 对象的默认行为是写入工作区的默认数据存储。 `OutputFileDatasetConfig`用参数将对象传递给 `PythonScriptStep` `arguments` 。
 
@@ -175,8 +175,11 @@ dataprep_step = PythonScriptStep(
 ```python
 #get blob datastore already registered with the workspace
 blob_store= ws.datastores['my_blob_store']
-OutputFileDatasetConfig(name="clean_data", destination=blob_store).as_upload(overwrite=False)
+OutputFileDatasetConfig(name="clean_data", destination=(blob_store, 'outputdataset')).as_upload(overwrite=False)
 ```
+
+> [!NOTE]
+> 对的并发写入 `OutputFileDatasetConfig` 会失败。 不要尝试同时使用一个 `OutputFileDatasetConfig` 。 不要在多处理 `OutputFileDatasetConfig` 情况下共享单个，如使用分布式培训时。 
 
 ### <a name="use-outputfiledatasetconfig-as-outputs-of-a-training-step"></a>将 `OutputFileDatasetConfig` 用作训练步骤的输出
 
@@ -206,7 +209,7 @@ with open(args.output_path, 'w') as f:
 ```python
 # get adls gen 2 datastore already registered with the workspace
 datastore = workspace.datastores['my_adlsgen2']
-step1_output_data = OutputFileDatasetConfig(name="processed_data", destination=datastore).as_upload()
+step1_output_data = OutputFileDatasetConfig(name="processed_data", destination=(datastore, "mypath/{run-id}/{output-name}")).as_upload()
 
 step1 = PythonScriptStep(
     name="generate_data",
@@ -236,7 +239,8 @@ step1_output_ds = step1_output_data.register_on_complete(name='processed_data',
                                                          description = 'files from step1`)
 ```
 
+
 ## <a name="next-steps"></a>后续步骤
 
 * [创建 Azure 机器学习数据集](how-to-create-register-datasets.md)
-* [使用 Azure 机器学习 SDK 创建和运行机器学习管道](how-to-create-your-first-pipeline.md)
+* [使用 Azure 机器学习 SDK 创建和运行机器学习管道](./how-to-create-machine-learning-pipelines.md)

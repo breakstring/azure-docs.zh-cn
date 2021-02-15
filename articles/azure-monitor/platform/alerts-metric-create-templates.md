@@ -1,18 +1,18 @@
 ---
-title: 使用 Azure 资源管理器模板创建较新的指标警报
+title: 使用 Azure 资源管理器模板创建更新的指标警报
 description: 了解如何使用资源管理器模板创建指标警报。
 author: harelbr
 ms.author: harelbr
 services: azure-monitor
 ms.topic: conceptual
-ms.date: 7/9/2020
+ms.date: 10/7/2020
 ms.subservice: alerts
-ms.openlocfilehash: 3b0215ea2f02441f93e6eb9b672744638ae93b11
-ms.sourcegitcommit: a76ff927bd57d2fcc122fa36f7cb21eb22154cfa
+ms.openlocfilehash: 51ae97567e9c3720c7e36a81bfa7bff44935aac6
+ms.sourcegitcommit: 63d0621404375d4ac64055f1df4177dfad3d6de6
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/28/2020
-ms.locfileid: "87321133"
+ms.lasthandoff: 12/15/2020
+ms.locfileid: "97511614"
 ---
 # <a name="create-a-metric-alert-with-a-resource-manager-template"></a>使用 Resource Manager 模板创建指标警报
 
@@ -268,9 +268,9 @@ New-AzResourceGroupDeployment -Name AlertDeployment -ResourceGroupName ResourceG
 ```azurecli
 az login
 
-az group deployment create \
+az deployment group create \
     --name AlertDeployment \
-    --resource-group ResourceGroupofTargetResource \
+    --resource-group ResourceGroupOfTargetResource \
     --template-file simplestaticmetricalert.json \
     --parameters @simplestaticmetricalert.parameters.json
 ```
@@ -377,7 +377,7 @@ az group deployment create \
                 "description": "The number of unhealthy periods to alert on (must be lower or equal to numberOfEvaluationPeriods)."
             }
         },
-    "ignoreDataBefore": {
+        "ignoreDataBefore": {
             "type": "string",
             "defaultValue": "",
             "metadata": {
@@ -518,7 +518,7 @@ az group deployment create \
         "minFailingPeriodsToAlert": {
             "value": "3"
         },
-    "ignoreDataBefore": {
+        "ignoreDataBefore": {
             "value": ""
         },
         "timeAggregation": {
@@ -550,7 +550,7 @@ New-AzResourceGroupDeployment -Name AlertDeployment -ResourceGroupName ResourceG
 ```azurecli
 az login
 
-az group deployment create \
+az deployment group create \
     --name AlertDeployment \
     --resource-group ResourceGroupofTargetResource \
     --template-file simpledynamicmetricalert.json \
@@ -570,7 +570,6 @@ az group deployment create \
 - 不能使用“\*”作为维度值。
 - 如果在不同标准中配置的度量值支持同一维度，则必须以相同方式为所有这些指标（在相关标准中）显式设置配置的维度值。
     - 在下面的示例中，因为 **Transactions** 和 **SuccessE2ELatency** 指标都有 **ApiName** 维度，因此 *criterion1* 为 **ApiName** 维度指定 *"GetBlob"* 值，然后 *criterion2* 还必须为 **ApiName** 维度指定 *"GetBlob"* 值。
-
 
 为进行本次演练，请将下面的 json 保存为 advancedstaticmetricalert.json。
 
@@ -792,7 +791,7 @@ New-AzResourceGroupDeployment -Name AlertDeployment -ResourceGroupName ResourceG
 ```azurecli
 az login
 
-az group deployment create \
+az deployment group create \
     --name AlertDeployment \
     --resource-group ResourceGroupofTargetResource \
     --template-file advancedstaticmetricalert.json \
@@ -811,10 +810,10 @@ az group deployment create \
 2. **ApiName** - 只对“GetBlob”和“PutBlob”维度值监视不同的时序 。
 
 例如，该警报规则监视的几个潜在时序是：
-- Metric = 事务、ResponseType = 成功、ApiName = GetBlob  
-- Metric = 事务、ResponseType = 成功、ApiName = PutBlob  
-- Metric = 事务、ResponseType = 服务器超时、ApiName = GetBlob  
-- Metric = 事务、ResponseType = 服务器超时、ApiName = PutBlob  
+- Metric = 事务、ResponseType = 成功、ApiName = GetBlob
+- Metric = 事务、ResponseType = 成功、ApiName = PutBlob
+- Metric = 事务、ResponseType = 服务器超时、ApiName = GetBlob
+- Metric = 事务、ResponseType = 服务器超时、ApiName = PutBlob
 
 为进行本次演练，请将下面的 json 保存为 multidimensionalstaticmetricalert.json。
 
@@ -976,7 +975,7 @@ az group deployment create \
                             "values": ["*"]
                         },
                         {
-                "name":"ApiName",
+                            "name":"ApiName",
                             "operator": "Include",
                             "values": ["GetBlob", "PutBlob"]    
                         }
@@ -1012,7 +1011,7 @@ New-AzResourceGroupDeployment -Name AlertDeployment -ResourceGroupName ResourceG
 ```azurecli
 az login
 
-az group deployment create \
+az deployment group create \
     --name AlertDeployment \
     --resource-group ResourceGroupofTargetResource \
     --template-file multidimensionalstaticmetricalert.json \
@@ -1031,10 +1030,10 @@ az group deployment create \
 2. **ApiName** - 只对“GetBlob”和“PutBlob”维度值监视不同的时序 。
 
 例如，该警报规则监视的几个潜在时序是：
-- Metric = 事务、ResponseType = 成功、ApiName = GetBlob  
-- Metric = 事务、ResponseType = 成功、ApiName = PutBlob  
-- Metric = 事务、ResponseType = 服务器超时、ApiName = GetBlob  
-- Metric = 事务、ResponseType = 服务器超时、ApiName = PutBlob  
+- Metric = 事务、ResponseType = 成功、ApiName = GetBlob
+- Metric = 事务、ResponseType = 成功、ApiName = PutBlob
+- Metric = 事务、ResponseType = 服务器超时、ApiName = GetBlob
+- Metric = 事务、ResponseType = 服务器超时、ApiName = PutBlob
 
 为进行本次演练，请将下面的 json 保存为 advanceddynamicmetricalert.json。
 
@@ -1232,7 +1231,7 @@ New-AzResourceGroupDeployment -Name AlertDeployment -ResourceGroupName ResourceG
 ```azurecli
 az login
 
-az group deployment create \
+az deployment group create \
     --name AlertDeployment \
     --resource-group ResourceGroupofTargetResource \
     --template-file advanceddynamicmetricalert.json \
@@ -1495,7 +1494,7 @@ New-AzResourceGroupDeployment -Name AlertDeployment -ResourceGroupName ResourceG
 ```azurecli
 az login
 
-az group deployment create \
+az deployment group create \
     --name AlertDeployment \
     --resource-group ResourceGroupOfTargetResource \
     --template-file customstaticmetricalert.json \
@@ -1522,7 +1521,7 @@ az group deployment create \
 > [!NOTE]
 >
 > 在监视多个资源的指标警报规则中，以下限制适用：
-> - 警报规则的作用域必须包含至少一个所选资源类型的资源。
+> - 警报规则的范围必须至少包含所选资源类型的一个资源。
 > - 警报规则只能包含一个条件。
 
 ### <a name="static-threshold-alert-on-all-virtual-machines-in-one-or-more-resource-groups"></a>一个或多个资源组中所有虚拟机上的静态阈值警报
@@ -1636,7 +1635,7 @@ az group deployment create \
             "type": "string",
             "minLength": 1,
             "metadata": {
-                "description": "Resource type of target resources to be monitored. Currently only supported resource type is Microsoft.Compute/virtualMachines"
+                "description": "Resource type of target resources to be monitored."
             }
         },
         "metricName": {
@@ -1830,7 +1829,7 @@ New-AzResourceGroupDeployment -Name MultiResourceAlertDeployment -ResourceGroupN
 ```azurecli
 az login
 
-az group deployment create \
+az deployment group create \
     --name MultiResourceAlertDeployment \
     --resource-group ResourceGroupWhereRuleShouldbeSaved \
     --template-file all-vms-in-resource-group-static.json \
@@ -1948,7 +1947,7 @@ az group deployment create \
             "type": "string",
             "minLength": 1,
             "metadata": {
-                "description": "Resource type of target resources to be monitored. Currently only supported resource type is Microsoft.Compute/virtualMachines"
+                "description": "Resource type of target resources to be monitored."
             }
         },
         "metricName": {
@@ -2165,7 +2164,7 @@ New-AzResourceGroupDeployment -Name MultiResourceAlertDeployment -ResourceGroupN
 ```azurecli
 az login
 
-az group deployment create \
+az deployment group create \
     --name MultiResourceAlertDeployment \
     --resource-group ResourceGroupWhereRuleShouldbeSaved \
     --template-file all-vms-in-resource-group-dynamic.json \
@@ -2283,7 +2282,7 @@ az group deployment create \
             "type": "string",
             "minLength": 1,
             "metadata": {
-                "description": "Resource type of target resources to be monitored. Currently only supported resource type is Microsoft.Compute/virtualMachines"
+                "description": "Resource type of target resources to be monitored."
             }
         },
         "metricName": {
@@ -2475,7 +2474,7 @@ New-AzResourceGroupDeployment -Name MultiResourceAlertDeployment -ResourceGroupN
 ```azurecli
 az login
 
-az group deployment create \
+az deployment group create \
     --name MultiResourceAlertDeployment \
     --resource-group ResourceGroupWhereRuleShouldbeSaved \
     --template-file all-vms-in-subscription-static.json \
@@ -2593,7 +2592,7 @@ az group deployment create \
             "type": "string",
             "minLength": 1,
             "metadata": {
-                "description": "Resource type of target resources to be monitored. Currently only supported resource type is Microsoft.Compute/virtualMachines"
+                "description": "Resource type of target resources to be monitored."
             }
         },
         "metricName": {
@@ -2807,7 +2806,7 @@ New-AzResourceGroupDeployment -Name MultiResourceAlertDeployment -ResourceGroupN
 ```azurecli
 az login
 
-az group deployment create \
+az deployment group create \
     --name MultiResourceAlertDeployment \
     --resource-group ResourceGroupWhereRuleShouldbeSaved \
     --template-file all-vms-in-subscription-dynamic.json \
@@ -2925,7 +2924,7 @@ az group deployment create \
             "type": "string",
             "minLength": 1,
             "metadata": {
-                "description": "Resource type of target resources to be monitored. Currently only supported resource type is Microsoft.Compute/virtualMachines"
+                "description": "Resource type of target resources to be monitored."
             }
         },
         "metricName": {
@@ -3120,7 +3119,7 @@ New-AzResourceGroupDeployment -Name MultiResourceAlertDeployment -ResourceGroupN
 ```azurecli
 az login
 
-az group deployment create \
+az deployment group create \
     --name MultiResourceAlertDeployment \
     --resource-group ResourceGroupWhereRuleShouldbeSaved \
     --template-file list-of-vms-static.json \
@@ -3238,7 +3237,7 @@ az group deployment create \
             "type": "string",
             "minLength": 1,
             "metadata": {
-                "description": "Resource type of target resources to be monitored. Currently only supported resource type is Microsoft.Compute/virtualMachines"
+                "description": "Resource type of target resources to be monitored."
             }
         },
         "metricName": {
@@ -3455,7 +3454,7 @@ New-AzResourceGroupDeployment -Name MultiResourceAlertDeployment -ResourceGroupN
 ```azurecli
 az login
 
-az group deployment create \
+az deployment group create \
     --name MultiResourceAlertDeployment \
     --resource-group ResourceGroupWhereRuleShouldbeSaved \
     --template-file list-of-vms-dynamic.json \
@@ -3616,7 +3615,7 @@ New-AzResourceGroupDeployment -Name AvailabilityAlertDeployment -ResourceGroupNa
 ```azurecli
 az login
 
-az group deployment create \
+az deployment group create \
     --name AvailabilityAlertDeployment \
     --resource-group ResourceGroupofApplicationInsightsComponent \
     --template-file availabilityalert.json \

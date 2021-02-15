@@ -3,7 +3,7 @@ title: 快速入门：查看使用 Azure Active Directory (Azure AD) 租户进�
 description: 本快速入门使用 Azure 门户查看已注册以便使用 Azure Active Directory (Azure AD) 租户进行标识管理的应用程序列表。
 services: active-directory
 author: kenwith
-manager: celestedg
+manager: daveba
 ms.service: active-directory
 ms.subservice: app-mgmt
 ms.workload: identity
@@ -12,12 +12,12 @@ ms.date: 04/09/2019
 ms.author: kenwith
 ms.reviewer: arvinh
 ms.custom: it-pro
-ms.openlocfilehash: 8f6d9c3409e0b91b6744d406fb1af674f73dbe3c
-ms.sourcegitcommit: b8702065338fc1ed81bfed082650b5b58234a702
+ms.openlocfilehash: 4bf0353148a5f8474270b314a85d55c3cfd753ab
+ms.sourcegitcommit: d49bd223e44ade094264b4c58f7192a57729bada
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/11/2020
-ms.locfileid: "88117883"
+ms.lasthandoff: 02/02/2021
+ms.locfileid: "99257555"
 ---
 # <a name="quickstart-view-the-list-of-applications-that-are-using-your-azure-active-directory-azure-ad-tenant-for-identity-management"></a>快速入门：查看使用 Azure Active Directory (Azure AD) 租户进行标识管理的应用程序列表
 
@@ -27,7 +27,7 @@ ms.locfileid: "88117883"
 
 若要查看已在 Azure AD 租户中注册的应用程序，你需要：
 
-- 具有活动订阅的 Azure 帐户。 [免费创建帐户](https://azure.microsoft.com/free/?WT.mc_id=A261C142F)。
+- 一个 Azure 帐户。 [免费创建帐户](https://azure.microsoft.com/free/?WT.mc_id=A261C142F)。
 
 >[!IMPORTANT]
 >建议使用非生产环境来测试本快速入门中的步骤。
@@ -69,7 +69,7 @@ ms.locfileid: "88117883"
 
 
 > [!TIP]
-> 可使用 Graph API 自动管理应用，具体请参阅[使用 Microsoft Graph API 自动管理应用](https://docs.microsoft.com/graph/application-saml-sso-configure-api)。
+> 可使用 Graph API 自动管理应用，具体请参阅[使用 Microsoft Graph API 自动管理应用](/graph/application-saml-sso-configure-api)。
 
 
 ## <a name="clean-up-resources"></a>清理资源

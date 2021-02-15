@@ -6,14 +6,17 @@ ms.topic: conceptual
 author: agummadi
 ms.author: agummadi
 ms.date: 04/02/2018
-ms.openlocfilehash: f44afd84c58c94c6a8d3e6145e8a4f66e0e2e782
-ms.sourcegitcommit: 3543d3b4f6c6f496d22ea5f97d8cd2700ac9a481
+ms.openlocfilehash: 4b9e8a81095a63c667925f8b51d9f9f2aa081f8d
+ms.sourcegitcommit: d1b0cf715a34dd9d89d3b72bb71815d5202d5b3a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/20/2020
-ms.locfileid: "86539646"
+ms.lasthandoff: 02/08/2021
+ms.locfileid: "99832872"
 ---
 # <a name="pricing-changes-for-azure-network-performance-monitor"></a>Azure 网络性能监视器的定价变化
+
+> [!IMPORTANT]
+> 自2021年7月1日起，你将无法在现有工作区中添加新测试，也无法在网络性能监视器中启用新的工作区。 你可以继续使用在2021年7月之前创建的测试。 若要最大程度地减少对当前工作负荷的服务中断，请在2024年2月29日之前将 [测试从网络性能监视器迁移到](https://docs.microsoft.com/azure/network-watcher/migrate-to-connection-monitor-from-network-performance-monitor) Azure 网络观察程序中的新连接监视器。
 
 我们听取了客户的反馈，最近已针对 Azure 中的各种监视服务推出了[新的定价体验](https://azure.microsoft.com/blog/introducing-a-new-way-to-purchase-azure-monitoring-services/)。 本文以易于阅读的“问答”形式，汇总了与 Azure [网络性能监视器](../../networking/network-monitoring-overview.md) (NPM) 相关的定价变化。
 
@@ -30,7 +33,7 @@ ms.locfileid: "86539646"
 
 NPM 的计费基于以下两个组件的用量和消耗量：
 * **节点**：所有综合事务都在节点上发起和终结。 节点也称为代理或 Microsoft 管理代理。
-* **数据**：各种网络测试的结果存储在 Log Analytics 工作区中。
+* **Data**：各种网络测试的结果存储在 Log Analytics 工作区中。
 
 在旧模型中，帐单是根据节点数和生成的数据量计算的。 
 
@@ -45,9 +48,9 @@ NPM 中的性能监视器功能现在根据以下各项的组合计费：
 
 性能监视器监视网络中两个或更多个位置之间的连接。 一个子网中的一组节点或代理与另一个子网中的一组节点之间的连接称为子网链接。
 
-**我有两个子网（A 和 B），并且在每个子网中都有多个代理。性能监视器监视子网 A 上的所有代理与子网 B 上的所有代理的连接。是否会根据子网间连接的数量向我收费？**
+**我有两个子网（A 和 B），并且每个子网包含多个代理。性能监视器监视从子网 A 中所有代理到子网 B 中所有代理的连接。是否根据子网间的连接数计费？**
 
-不是。 计费时，从子网 A 到子网 B 的所有连接将统一合并成一个子网链接。 只会计收一个连接的费用。 性能监视器继续监视每个子网中各个代理之间的连接。
+否。 计费时，从子网 A 到子网 B 的所有连接将统一合并成一个子网链接。 只会计收一个连接的费用。 性能监视器继续监视每个子网中各个代理之间的连接。
 
 **监视子网链接的费用是多少？**
 
@@ -64,7 +67,7 @@ Log Analytics 的[定价页](https://azure.microsoft.com/pricing/details/log-ana
 
 ExpressRoute 监视器的费用根据监视期间生成的数据量计费。 有关详细信息，请参阅“如何对性能监视器生成的数据收费？”
 
-**我使用 ExpressRoute 监视器来监视多个 ExpressRoute 线路。我是否根据所监视的回路数量收费？**
+**我使用 ExpressRoute 监视器来监视多条 ExpressRoute 线路。费用是否根据监视的线路数来计收？**
 
 我们不会根据线路数或对等互连类型（例如专用对等互连、Microsoft 对等互连）来计费， 而是根据数据量计费，如前所述。
 
@@ -107,8 +110,8 @@ ExpressRoute 监视器的费用根据监视期间生成的数据量计费。 有
 
 **服务终结点监视器的费用是多少？**
 
-请参阅 "[连接监视](https://azure.microsoft.com/pricing/details/network-watcher/)" 部分，了解每月监视终结点的成本。 Log Analytics 的[定价页](https://azure.microsoft.com/pricing/details/log-analytics/)上的“数据引入”部分中提供了数据费用。
+请参阅[连接监视](https://azure.microsoft.com/pricing/details/network-watcher/)部分，了解监视终结点的整月费用。 Log Analytics 的[定价页](https://azure.microsoft.com/pricing/details/log-analytics/)上的“数据引入”部分中提供了数据费用。
 
 ## <a name="references"></a>参考
 
-[Log Analytics 定价常见问题解答](https://azure.microsoft.com/pricing/details/log-analytics/) - 常见问题解答部分提供了有关免费层、每个节点的定价和其他定价详细信息。
+[Log Analytics 定价常见问题解答](https://azure.microsoft.com/pricing/details/log-analytics/)：常见问题解答部分提供了有关免费层、每个节点的定价和其他定价详细信息。

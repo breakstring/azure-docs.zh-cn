@@ -8,19 +8,21 @@ ms.devlang: dotnet
 ms.topic: tutorial
 ms.date: 11/05/2019
 ms.author: kirankk
-ms.openlocfilehash: 10a630aa04f51dc96b948b01e5fc01cfad4356fd
-ms.sourcegitcommit: 23604d54077318f34062099ed1128d447989eea8
+ms.custom: devx-track-csharp
+ms.openlocfilehash: 49fa928285b29eaff806b009cf327e84e17491c6
+ms.sourcegitcommit: 3bdeb546890a740384a8ef383cf915e84bd7e91e
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 06/20/2020
-ms.locfileid: "85118808"
+ms.lasthandoff: 10/30/2020
+ms.locfileid: "93098716"
 ---
 # <a name="tutorial-build-a-net-console-app-to-manage-data-in-azure-cosmos-db-sql-api-account"></a>教程：生成一个用于在 Azure Cosmos DB SQL API 帐户中管理数据的 .NET 控制台应用
+[!INCLUDE[appliesto-sql-api](includes/appliesto-sql-api.md)]
 
 > [!div class="op_single_selector"]
 > * [.NET](sql-api-get-started.md)
-> * [Java](sql-api-java-get-started.md)
-> * [异步 Java](sql-api-async-java-get-started.md)
+> * [Java](./create-sql-api-java.md)
+> * [异步 Java](./create-sql-api-java.md)
 > * [Node.js](sql-api-nodejs-get-started.md)
 >
 
@@ -62,7 +64,7 @@ ms.locfileid: "85118808"
 
 1. 打开 Visual Studio 并选择“创建新项目”。
 1. 在“创建新项目”中，选择用于 C# 的“控制台应用(.NET Framework)”，然后选择“下一步”。
-1. 将项目命名为 *CosmosGettingStartedTutorial*，然后选择“创建”。
+1. 将项目命名为 *CosmosGettingStartedTutorial* ，然后选择“创建”。
 
     :::image type="content" source="./media/sql-api-get-started/configure-cosmos-getting-started-2019.png" alt-text="配置项目":::
 
@@ -116,7 +118,7 @@ ms.locfileid: "85118808"
     ```
 
    > [!NOTE]
-   > 如果你熟悉旧版 .NET SDK，则可能熟悉术语“集合”和“文档”。  由于 Azure Cosmos DB 支持多个 API 模型，因此 3.0 版的 .NET SDK 使用通用术语“容器”和“项”。  容器可以是集合、图或表。 项可以是文档、边缘/顶点或行，是容器中的内容。 有关详细信息，请参阅[在 Azure Cosmos DB 中使用数据库、容器和项](databases-containers-items.md)。
+   > 如果你熟悉旧版 .NET SDK，则可能熟悉术语“集合”和“文档”。  由于 Azure Cosmos DB 支持多个 API 模型，因此 3.0 版的 .NET SDK 使用通用术语“容器”和“项”。  容器可以是集合、图或表。 项可以是文档、边缘/顶点或行，是容器中的内容。 有关详细信息，请参阅[在 Azure Cosmos DB 中使用数据库、容器和项](account-databases-containers-items.md)。
 
 1. 打开 [Azure 门户](https://portal.azure.com)。 找到 Azure Cosmos DB 帐户，然后选择“密钥”。
 
@@ -156,7 +158,7 @@ ms.locfileid: "85118808"
 
 ## <a name="step-4-create-a-database"></a>步骤 4：创建数据库
 
-数据库是跨容器分区的项的逻辑容器。 [CosmosClient](https://docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.cosmosclient) 类的 `CreateDatabaseIfNotExistsAsync` 或 `CreateDatabaseAsync` 方法可以创建数据库。
+数据库是跨容器分区的项的逻辑容器。 [CosmosClient](/dotnet/api/microsoft.azure.cosmos.cosmosclient) 类的 `CreateDatabaseIfNotExistsAsync` 或 `CreateDatabaseAsync` 方法可以创建数据库。
 
 1. 复制 `CreateDatabaseAsync` 方法并将其粘贴到 `GetStartedDemoAsync` 方法下面。
 
@@ -259,7 +261,7 @@ ms.locfileid: "85118808"
 1. 选择 F5 来运行应用程序。
 
    > [!NOTE]
-   > 如果收到“503 服务不可用异常”错误，则直接连接模式所需的[端口](performance-tips.md#networking)可能已被防火墙阻止。 若要解决此问题，打开所需端口或使用网关模式连接，如以下代码所示：
+   > 如果收到“503 服务不可用异常”错误，则直接连接模式所需的[端口](sql-sdk-connection-modes.md#service-port-ranges)可能已被防火墙阻止。 若要解决此问题，打开所需端口或使用网关模式连接，如以下代码所示：
    ```csharp
      // Create a new instance of the Cosmos Client in Gateway mode
      this.cosmosClient = new CosmosClient(EndpointUri, PrimaryKey, new CosmosClientOptions()
@@ -277,7 +279,7 @@ ms.locfileid: "85118808"
 >
 >
 
-可以使用 `CosmosDatabase` 类中的 [**CreateContainerIfNotExistsAsync**](/dotnet/api/microsoft.azure.cosmos.database.createcontainerifnotexistsasync?view=azure-dotnet#Microsoft_Azure_Cosmos_Database_CreateContainerIfNotExistsAsync_Microsoft_Azure_Cosmos_ContainerProperties_System_Nullable_System_Int32__Microsoft_Azure_Cosmos_RequestOptions_System_Threading_CancellationToken_) 或 [**CreateContainerAsync**](/dotnet/api/microsoft.azure.cosmos.database.createcontainerasync?view=azure-dotnet#Microsoft_Azure_Cosmos_Database_CreateContainerAsync_Microsoft_Azure_Cosmos_ContainerProperties_System_Nullable_System_Int32__Microsoft_Azure_Cosmos_RequestOptions_System_Threading_CancellationToken_) 方法创建容器。 容器包含项（在使用 SQL API 的情况下为 JSON 文档）和关联的 JavaScript 服务器端应用程序逻辑，例如存储过程、用户定义的函数以及触发器。
+可以使用 `CosmosDatabase` 类中的 [**CreateContainerIfNotExistsAsync**](/dotnet/api/microsoft.azure.cosmos.database.createcontainerifnotexistsasync?view=azure-dotnet&preserve-view=true#Microsoft_Azure_Cosmos_Database_CreateContainerIfNotExistsAsync_Microsoft_Azure_Cosmos_ContainerProperties_System_Nullable_System_Int32__Microsoft_Azure_Cosmos_RequestOptions_System_Threading_CancellationToken_) 或 [**CreateContainerAsync**](/dotnet/api/microsoft.azure.cosmos.database.createcontainerasync?view=azure-dotnet&preserve-view=true#Microsoft_Azure_Cosmos_Database_CreateContainerAsync_Microsoft_Azure_Cosmos_ContainerProperties_System_Nullable_System_Int32__Microsoft_Azure_Cosmos_RequestOptions_System_Threading_CancellationToken_) 方法创建容器。 容器包含项（在使用 SQL API 的情况下为 JSON 文档）和关联的 JavaScript 服务器端应用程序逻辑，例如存储过程、用户定义的函数以及触发器。
 
 1. 复制 `CreateContainerAsync` 方法并将其粘贴到 `CreateDatabaseAsync` 方法下面。 `CreateContainerAsync` 使用 `containerId` 字段中指定的 ID `FamilyContainer` 来创建按 `LastName` 属性分区的新容器（如果尚不存在该容器）。
 
@@ -303,7 +305,7 @@ ms.locfileid: "85118808"
 
 ## <a name="step-6-add-items-to-the-container"></a><a id="CreateDoc"></a>步骤 6：向容器添加项
 
-`CosmosContainer` 类的 [**CreateItemAsync**](/dotnet/api/microsoft.azure.cosmos.container.createitemasync?view=azure-dotnet#Microsoft_Azure_Cosmos_Container_CreateItemAsync__1___0_System_Nullable_Microsoft_Azure_Cosmos_PartitionKey__Microsoft_Azure_Cosmos_ItemRequestOptions_System_Threading_CancellationToken_) 方法可以创建项。 使用 SQL API 时，项会投射为文档，后者是用户定义的任意 JSON 内容。 现在，可以将项插入 Azure Cosmos 容器中。
+`CosmosContainer` 类的 [**CreateItemAsync**](/dotnet/api/microsoft.azure.cosmos.container.createitemasync?view=azure-dotnet&preserve-view=true#Microsoft_Azure_Cosmos_Container_CreateItemAsync__1___0_System_Nullable_Microsoft_Azure_Cosmos_PartitionKey__Microsoft_Azure_Cosmos_ItemRequestOptions_System_Threading_CancellationToken_) 方法可以创建项。 使用 SQL API 时，项会投射为文档，后者是用户定义的任意 JSON 内容。 现在，可以将项插入 Azure Cosmos 容器中。
 
 在此示例中，让我们首先创建 `Family` 类来表示存储在 Azure Cosmos DB 中的对象。 我们还会创建在 `Family` 中使用的 `Parent`、`Child`、`Pet`、`Address` 子类。 该项必须有一个以 JSON 格式序列化为 `id` 的 `Id` 属性。
 
@@ -344,7 +346,7 @@ ms.locfileid: "85118808"
 
 ## <a name="step-7-query-azure-cosmos-db-resources"></a><a id="Query"></a>步骤 7：查询 Azure Cosmos DB 资源
 
-Azure Cosmos DB 支持对存储在每个容器中的 JSON 文档进行各种查询。 有关详细信息，请参阅 [SQL 查询入门](sql-api-sql-query.md)。 以下示例代码演示了如何针对我们在上一步插入的项来运行查询。
+Azure Cosmos DB 支持对存储在每个容器中的 JSON 文档进行各种查询。 有关详细信息，请参阅 [SQL 查询入门](./sql-query-getting-started.md)。 以下示例代码演示了如何针对我们在上一步插入的项来运行查询。
 
 1. 复制 `QueryItemsAsync` 方法，并将其粘贴到 `AddItemsToContainerAsync` 方法后面。
 
@@ -488,7 +490,7 @@ End of demo, press any key to exit.
 * 一个 [Azure Cosmos DB 帐户][cosmos-db-create-account]。
 * GitHub 上提供的 [GetStarted](https://github.com/Azure-Samples/cosmos-dotnet-getting-started) 解决方案。
 
-若要在 Visual Studio 中还原对 Azure Cosmos DB .NET SDK 的引用，请在解决方案资源管理器中右键单击此解决方案，然后选择“还原 NuGet 包” 。 接下来，在 *App.config* 文件中更新 `EndPointUri` 和 `PrimaryKey` 值，如[步骤 3：连接到 Azure Cosmos DB 帐户](#Connect)所述。
+若要在 Visual Studio 中还原对 Azure Cosmos DB .NET SDK 的引用，请在解决方案资源管理器中右键单击此解决方案，然后选择“还原 NuGet 包” 。 接下来，在 *App.config* 文件中更新 `EndPointUri` 和 `PrimaryKey` 值，如 [步骤 3：连接到 Azure Cosmos DB 帐户](#Connect)所述。
 
 就这么简单，生成以后即可开始操作！
 
@@ -496,8 +498,8 @@ End of demo, press any key to exit.
 
 * 需要更复杂的 ASP.NET MVC 教程？ 请参阅[教程：通过 .NET SDK 开发使用 Azure Cosmos DB 的 ASP.NET Core MVC Web 应用程序](sql-api-dotnet-application.md)。
 * 需要执行 Azure Cosmos DB 缩放和性能测试？ 请参阅 [Azure Cosmos DB 的性能和缩放测试](performance-testing.md)。
-* 若要了解如何监视 Azure Cosmos DB 请求、使用情况和存储，请参阅[监视 Azure Cosmos DB 中的性能和存储指标](monitor-accounts.md)。
+* 若要了解如何监视 Azure Cosmos DB 请求、使用情况和存储，请参阅[监视 Azure Cosmos DB 中的性能和存储指标](./monitor-cosmos-db.md)。
 * 若要对示例数据集运行查询，请参阅[查询操场](https://www.documentdb.com/sql/demo)。
-* 若要了解有关 Azure Cosmos DB 的详细信息，请参阅[欢迎使用 Azure Cosmos DB](https://docs.microsoft.com/azure/cosmos-db/introduction)。
+* 若要了解有关 Azure Cosmos DB 的详细信息，请参阅[欢迎使用 Azure Cosmos DB](./introduction.md)。
 
 [cosmos-db-create-account]: create-sql-api-java.md#create-a-database-account

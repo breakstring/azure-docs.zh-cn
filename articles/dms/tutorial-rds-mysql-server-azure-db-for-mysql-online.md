@@ -10,18 +10,18 @@ ms.reviewer: craigg
 ms.service: dms
 ms.workload: data-services
 ms.custom: seo-lt-2019
-ms.topic: article
+ms.topic: tutorial
 ms.date: 06/09/2020
-ms.openlocfilehash: c0c62cf28c9e9368e80982fa7c5badeb79d40ae4
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
-ms.translationtype: MT
+ms.openlocfilehash: 3f2efd4051b427a4d7cef0e609f733095c6b020f
+ms.sourcegitcommit: d49bd223e44ade094264b4c58f7192a57729bada
+ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87087724"
+ms.lasthandoff: 02/02/2021
+ms.locfileid: "99259179"
 ---
 # <a name="tutorial-migrate-rds-mysql-to-azure-database-for-mysql-online-using-dms"></a>教程：使用 DMS 将 RDS MySQL 联机迁移到 Azure Database for MySQL
 
-可以使用 Azure 数据库迁移服务将 RDS MySQL 实例中的数据库迁移到 [Azure Database for MySQL](https://docs.microsoft.com/azure/mysql/)，在迁移期间，源数据库可保持联机状态。 换而言之，实现这种迁移只会对应用程序造成极短暂的停机。 本教程介绍如何在 Azure 数据库迁移服务中使用联机迁移活动将 **Employees** 示例数据库从 RDS MySQL 实例迁移到 Azure Database for MySQL。
+可以使用 Azure 数据库迁移服务将 RDS MySQL 实例中的数据库迁移到 [Azure Database for MySQL](../mysql/index.yml)，在迁移期间，源数据库可保持联机状态。 换而言之，实现这种迁移只会对应用程序造成极短暂的停机。 本教程介绍如何在 Azure 数据库迁移服务中使用联机迁移活动将 **Employees** 示例数据库从 RDS MySQL 实例迁移到 Azure Database for MySQL。
 
 本教程介绍如何执行下列操作：
 > [!div class="checklist"]
@@ -52,13 +52,13 @@ ms.locfileid: "87087724"
     SELECT @@version;
     ```
 
-    有关详细信息，请参阅[支持的 Azure Database for MySQL 版本](https://docs.microsoft.com/azure/mysql/concepts-supported-versions)一文。
+    有关详细信息，请参阅[支持的 Azure Database for MySQL 版本](../mysql/concepts-supported-versions.md)一文。
 
 * 下载并安装 [MySQL **Employees** 示例数据库](https://dev.mysql.com/doc/employee/en/employees-installation.html)。
-* 创建 [Azure Database for MySQL](https://docs.microsoft.com/azure/mysql/quickstart-create-mysql-server-database-using-azure-portal) 的实例。
-* 使用 Azure 资源管理器部署模型创建 Azure 数据库迁移服务的 Microsoft Azure 虚拟网络，该模型通过使用[ExpressRoute](https://docs.microsoft.com/azure/expressroute/expressroute-introduction)或[VPN](https://docs.microsoft.com/azure/vpn-gateway/vpn-gateway-about-vpngateways)为本地源服务器提供站点到站点连接。 有关创建虚拟网络的详细信息，请参阅[虚拟网络文档](https://docs.microsoft.com/azure/virtual-network/)，尤其是提供了分步详细信息的快速入门文章。
-* 确保虚拟网络网络安全组规则未阻止到 Azure 数据库迁移服务的以下入站通信端口：443、53、9354、445、12000。 有关虚拟网络 NSG 流量筛选的更多详细信息，请参阅[使用网络安全组筛选网络流量](https://docs.microsoft.com/azure/virtual-network/virtual-networks-nsg)一文。
-* 配置 [Windows 防火墙](https://docs.microsoft.com/sql/database-engine/configure-windows/configure-a-windows-firewall-for-database-engine-access)（或 Linux 防火墙）以允许数据库引擎访问。 对于 MySQL 服务器，允许端口 3306 进行连接。
+* 创建 [Azure Database for MySQL](../mysql/quickstart-create-mysql-server-database-using-azure-portal.md) 的实例。
+* 使用 Azure 资源管理器部署模型创建适合 Azure 数据库迁移服务的 Microsoft Azure 虚拟网络，它将使用 [ExpressRoute](../expressroute/expressroute-introduction.md) 或 [VPN](../vpn-gateway/vpn-gateway-about-vpngateways.md) 为本地源服务器提供站点到站点连接。 有关创建虚拟网络的详细信息，请参阅[虚拟网络文档](../virtual-network/index.yml)，尤其是提供了分步详细信息的快速入门文章。
+* 请确保虚拟网络网络安全组规则未阻止到 Azure 数据库迁移服务的以下出站通信端口：443、53、9354、445、12000。 有关虚拟网络 NSG 流量筛选的更多详细信息，请参阅[使用网络安全组筛选网络流量](../virtual-network/virtual-network-vnet-plan-design-arm.md)一文。
+* 配置 [Windows 防火墙](https://docs.microsoft.com/azure/mysql/concepts-firewall-rules)（或 Linux 防火墙）以允许数据库引擎访问。 对于 MySQL 服务器，允许端口 3306 进行连接。
 
 > [!NOTE]
 > Azure Database for MySQL 仅支持 InnoDB 表。 若要将 MyISAM 表转换为 InnoDB，请参阅[将表从 MyISAM 转换为 InnoDB](https://dev.mysql.com/doc/refman/5.7/en/converting-tables-to-innodb.html) 一文。
@@ -72,6 +72,10 @@ ms.locfileid: "87087724"
     * binlog_checksum = NONE
 3. 保存新参数组。
 4. 将新参数组与 RDS MySQL 实例相关联。 可能需要重新启动。
+5. 参数组就绪后，连接到 MySQL 实例，并[将 binlog 保留期](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/mysql_rds_set_configuration.html#mysql_rds_set_configuration-usage-notes.binlog-retention-hours)设置为至少 5 天。
+```
+call mysql.rds_set_configuration('binlog retention hours', 120);
+```
 
 ## <a name="migrate-the-schema"></a>迁移架构
 
@@ -124,8 +128,8 @@ ms.locfileid: "87087724"
 4. 运行查询结果中的 drop foreign key（第二列），以删除外键。
 
 > [!NOTE]
-> Azure DMS 不支持级联引用操作，这有助于在父表中删除或更新行时，自动删除或更新子表中的匹配行。 有关详细信息，请参阅 MySQL 文档中的 "引用操作"[部分。](https://dev.mysql.com/doc/refman/8.0/en/create-table-foreign-keys.html)
-> Azure DMS 要求在初始数据加载过程中在目标数据库服务器中删除外键约束，并且不能使用引用操作。 如果工作负载依赖于通过此引用操作更新相关子表，则建议改为执行[转储和还原](https://docs.microsoft.com/azure/mysql/concepts-migrate-dump-restore)。 
+> Azure DMS 不支持 CASCADE 引用操作，这有助于在父表中删除或更新行时，自动删除或更新子表中的匹配行。 有关详细信息，请参见 MySQL 文档中的[外键约束](https://dev.mysql.com/doc/refman/8.0/en/create-table-foreign-keys.html)一文中的“引用操作”部分。
+> Azure DMS 要求在初始数据加载过程中在目标数据库服务器中删除外键约束，并且不能使用引用操作。 如果你的工作负载依赖于通过此引用操作更新相关子表，我们建议你改为执行[转储并还原](../mysql/concepts-migrate-dump-restore.md)。 
 
 5. 如果数据中包含触发器（insert 或 update 触发器），该触发器会在从源复制数据之前在目标中强制实施数据完整性。 建议在迁移期间禁用目标的所有表中的触发器，然后在迁移完成后再启用这些触发器。
 
@@ -140,7 +144,7 @@ ms.locfileid: "87087724"
 
 ## <a name="register-the-microsoftdatamigration-resource-provider"></a>注册 Microsoft.DataMigration 资源提供程序
 
-1. 登录到 Azure 门户，选择“所有服务”，然后选择“订阅”。
+1. 登录到 Azure 门户，选择“所有服务”  ，然后选择“订阅”  。
 
    ![显示门户订阅](media/tutorial-rds-mysql-server-azure-db-for-mysql-online/portal-select-subscription1.png)
 
@@ -154,11 +158,11 @@ ms.locfileid: "87087724"
 
 ## <a name="create-an-instance-of-azure-database-migration-service"></a>创建 Azure 数据库迁移服务的实例
 
-1. 在 Azure 门户中，选择 **+ 创建资源**，搜索 Azure 数据库迁移服务，然后从下拉列表选择**Azure 数据库迁移服务**。
+1. 在 Azure 门户中，选择 **+ 创建资源**，搜索 Azure 数据库迁移服务，然后从下拉列表选择 **Azure 数据库迁移服务**。
 
     ![Azure 市场](media/tutorial-rds-mysql-server-azure-db-for-mysql-online/portal-marketplace.png)
 
-2. 在“Azure 数据库迁移服务”屏幕上，选择“创建” 。
+2. 在“Azure 数据库迁移服务”屏幕上，选择“创建”   。
 
     ![创建 Azure 数据库迁移服务实例](media/tutorial-rds-mysql-server-azure-db-for-mysql-online/dms-create1.png)
   
@@ -170,19 +174,19 @@ ms.locfileid: "87087724"
 
     虚拟网络为 Azure 数据库迁移服务提供源 MySQL 实例和目标 Azure Database for MySQL 实例的访问权限。
 
-    有关如何在 Azure 门户中创建虚拟网络的详细信息，请参阅[使用 Azure 门户创建虚拟网络](https://aka.ms/DMSVnet)一文。
+    有关如何在 Azure 门户中创建虚拟网络的详细信息，请参阅[使用 Azure 门户创建虚拟网络](../virtual-network/quick-create-portal.md)一文。
 
 6. 选择定价层；对于此联机迁移，请务必选择“高级:4vCores”定价层。
 
     ![配置 Azure 数据库迁移服务实例设置](media/tutorial-rds-mysql-server-azure-db-for-mysql-online/dms-settings3.png)
 
-7. 选择“创建”来创建服务。
+7. 选择“创建”  来创建服务。
 
 ## <a name="create-a-migration-project"></a>创建迁移项目
 
 创建服务后，在 Azure 门户中找到并打开它，然后创建一个新的迁移项目。
 
-1. 在 Azure 门户中，选择“所有服务”，搜索 Azure 数据库迁移服务，然后选择“Azure 数据库迁移服务”。
+1. 在 Azure 门户中，选择“所有服务”  ，搜索 Azure 数据库迁移服务，然后选择“Azure 数据库迁移服务”  。
 
       ![查找 Azure 数据库迁移服务的所有实例](media/tutorial-rds-mysql-server-azure-db-for-mysql-online/dms-search.png)
 
@@ -204,7 +208,7 @@ ms.locfileid: "87087724"
 
 6. 选择“保存” 。
 
-7. 选择“创建并运行活动”，以便创建项目并运行迁移活动。
+7. 选择“创建并运行活动”，以便创建项目并运行迁移活动。 
 
     > [!NOTE]
     > 请在项目创建边栏选项卡中记下设置联机迁移所要满足的先决条件。
@@ -233,7 +237,7 @@ ms.locfileid: "87087724"
 
 ## <a name="run-the-migration"></a>运行迁移
 
-* 选择“运行迁移”。
+* 选择“运行迁移”  。
 
     迁移活动窗口随即出现，活动的“状态”为“正在初始化” 。
 
@@ -267,6 +271,6 @@ ms.locfileid: "87087724"
 
 ## <a name="next-steps"></a>后续步骤
 
-* 若要了解 Azure 数据库迁移服务，请参阅[什么是 Azure 数据库迁移服务？](https://docs.microsoft.com/azure/dms/dms-overview)一文。
-* 若要了解 Azure Database for MySQL，请参阅[什么是 Azure Database for MySQL？](https://docs.microsoft.com/azure/mysql/overview)一文。
+* 若要了解 Azure 数据库迁移服务，请参阅[什么是 Azure 数据库迁移服务？](./dms-overview.md)一文。
+* 若要了解 Azure Database for MySQL，请参阅[什么是 Azure Database for MySQL？](../mysql/overview.md)一文。
 * 如有其他问题，请向[咨询 Azure 数据库迁移](mailto:AskAzureDatabaseMigrations@service.microsoft.com)别名发送电子邮件。

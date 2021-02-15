@@ -1,6 +1,6 @@
 ---
 title: Azure AD Connect：版本发布历史记录 | Microsoft Docs
-description: 本文列出 Azure AD Connect 和 Azure AD Sync 的所有版本
+description: 本文列出了 Azure AD Connect 和 Azure AD Sync 的所有版本。
 services: active-directory
 author: billmath
 manager: daveba
@@ -12,12 +12,12 @@ ms.date: 08/07/2020
 ms.subservice: hybrid
 ms.author: billmath
 ms.collection: M365-identity-device-management
-ms.openlocfilehash: 9b0b0a98e80fb7f343411b49ff2ccd11046bcdc5
-ms.sourcegitcommit: 269da970ef8d6fab1e0a5c1a781e4e550ffd2c55
+ms.openlocfilehash: 706f759243fd9edbd5f47633cb2638d6b06beec1
+ms.sourcegitcommit: d4734bc680ea221ea80fdea67859d6d32241aefc
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/10/2020
-ms.locfileid: "88052923"
+ms.lasthandoff: 02/14/2021
+ms.locfileid: "100376354"
 ---
 # <a name="azure-ad-connect-version-release-history"></a>Azure AD Connect：版本发行历史记录
 Azure Active Directory (Azure AD) 团队会定期更新 Azure AD Sync 的新特性和功能。 并非所有的新增内容都适用于所有受众。
@@ -37,20 +37,25 @@ Azure Active Directory (Azure AD) 团队会定期更新 Azure AD Sync 的新特�
 >[!NOTE]
 >发布新版 Azure AD Connect 的过程需要采取多个质量控制的步骤来确保服务操作的功能，在执行此过程时，新版本的版本号和发布状态会进行更新，以反映最新状态。
 在执行此过程时，版本的版本号将以“X”的形式在次要版本号位置显示，如“1.3.X.0”，这个例子表明本文档中的发行说明适用于以“1.3.”开头的所有版本。 完成发布过程后，发行版本号将更新为最近发布的版本，发布状态将更新为“已发布，用于下载和自动升级”。
-并非所有版本的 Azure AD Connect 都可用于自动升级。 版本状态将指示版本是否可用于自动升级或仅供下载。 如果在 Azure AD Connect 服务器上启用了自动升级，那么该服务器将自动升级到针对自动升级发布的最新版 Azure AD Connect。 请注意，并非所有 Azure AD Connect 配置都有资格进行自动升级。 请点击此链接阅读有关[自动升级](how-to-connect-install-automatic-upgrade.md)的详细信息
+并非所有版本的 Azure AD Connect 都可用于自动升级。 版本状态将指示版本是否可用于自动升级或仅供下载。 如果在 Azure AD Connect 服务器上启用了自动升级，那么该服务器将自动升级到针对自动升级发布的最新版 Azure AD Connect。 请注意，并非所有 Azure AD Connect 配置都有资格进行自动升级。 
+
+为了阐明自动升级的使用，它旨在将所有重要的更新和关键修复程序推送到你。 这不一定是最新版本，因为并非所有版本都要求/包括对严重安全问题的修复 (只是许多) 的一个示例。 这样的问题会通过自动升级提供的新版本解决。 如果没有此类问题，则不会使用自动升级来推送更新，一般情况下，如果使用最新的自动升级版本，则会出现问题。
+但是，如果您想要了解所有最新的功能和更新，最好的办法就是检查此页，并根据需要安装它们。 
+
+请点击此链接阅读有关[自动升级](how-to-connect-install-automatic-upgrade.md)的详细信息
 
 >[!IMPORTANT]
-> 从 2020 年 11 月 1 日开始，我们将开始实现一个弃用过程，即弃用发布时间超过 18 个月的 Azure AD Connect 版本。 届时，我们将弃用已发布的所有版本为 1.3.20.0（发布日期为 2019/4/24）及更早版本的 Azure AD Connect，从而开启这一过程，而在每次发布新版本时，我们将继续对是否弃用旧版 Azure AD Connect 进行评估。
+> 从2024年4月1日开始，我们将停用1.1.751.0 之前发布的 Azure AD Connect 版本，并在 2018-版本之前和更早版本之前发布。 
 >
 > 需要确保运行最新版本的 Azure AD Connect，才能获得最佳支持体验。 
 >
->如果运行已弃用的 Azure AD Connect 版本，则可能无法获得最新的安全修补程序、性能改进、故障排除和诊断工具以及服务增强功能，同时，如果需要支持，我们可能无法为你提供组织所需的服务级别。
+>如果你运行的是 Azure AD Connect 的停用版本，你可能没有最新的安全修补程序、性能改进、故障排除和诊断工具和服务增强功能，并且如果你需要支持，我们可能无法为你提供组织所需的服务级别。
 >
->如果已启用支持同步的 Azure AD Connect，则在运行某个较旧版本时，你很快就会自动开始接收运行状况通知，警告你该版本即将弃用。
+
 >
->请参阅[本文](https://docs.microsoft.com/azure/active-directory/hybrid/how-to-upgrade-previous-version)，详细了解如何将 Azure AD Connect 升级到最新版本。
+>请参阅[本文](./how-to-upgrade-previous-version.md)，详细了解如何将 Azure AD Connect 升级到最新版本。
 >
->有关弃用版本的版本历史记录信息，请参阅[Azure AD Connect 版本发行历史记录存档](reference-connect-version-history-archive.md)
+>有关已停用版本的版本历史记录信息，请参阅 [Azure AD Connect 版本发行历史记录存档](reference-connect-version-history-archive.md)
 
 ## <a name="15450"></a>1.5.45.0
 
@@ -74,7 +79,7 @@ Azure Active Directory (Azure AD) 团队会定期更新 Azure AD Sync 的新特�
 ### <a name="functional-changes"></a>功能性更改
 此版本包含用于将现有 Azure AD Connect 服务器的配置导出到中的功能的公共预览版。JSON 文件，在安装新的 Azure AD Connect 服务器以创建原始服务器的副本时，可以使用该文件。
 
-可在[此文](https://docs.microsoft.com/azure/active-directory/hybrid/how-to-connect-import-export-config)中找到此新功能的详细说明
+可在[此文](./how-to-connect-import-export-config.md)中找到此新功能的详细说明
 
 ### <a name="fixed-issues"></a>已修复的问题
 - 修复了在升级过程中会出现有关本地化版本上的本地数据库大小的错误警告。
@@ -159,7 +164,7 @@ Azure Active Directory (Azure AD) 团队会定期更新 Azure AD Sync 的新特�
 ### <a name="release-status"></a>版本状态
 2019/12/9：已发布，供下载。 无法通过自动升级获得。
 ### <a name="new-features-and-improvements"></a>新增功能和改进
-- 为 Azure AD 域服务更新了密码哈希同步，以正确解释 Kerberos 哈希中的填充。  这将在从 Azue AD 到 Azure AD 域服务的密码同步期间提高性能。
+- 为 Azure AD 域服务更新了密码哈希同步，以正确解释 Kerberos 哈希中的填充。  这将在从 Azure AD 到 Azure AD 域服务的密码同步期间提高性能。
 - 添加了对身份验证代理和服务总线之间的可靠会话的支持。
 - 此版本会对身份验证代理与云服务之间的通信强制实施 TLS 1.2。
 - 为身份验证代理和云服务之间的 WebSocket 连接添加了 DNS 缓存。
@@ -208,13 +213,13 @@ Azure Active Directory (Azure AD) 团队会定期更新 Azure AD Sync 的新特�
 
 ### <a name="new-features-and-improvements"></a>新增功能和改进
 - 新疑难解答工具有助于对“用户不同步”、“组不同步”或“组成员不同步”的情况进行故障排除。
-- Azure AD Connect 疑难解答脚本中添加对国家/地区云的支持 
+- Azure AD Connect 故障排除脚本中添加对国家/地区云的支持。
 - 客户应接到关于以下信息的通知：MIIS_Service 已弃用的 WMI 终结点现已删除。 现在，任何 WMI 操作都应通过 PS cmdlet 完成。
-- 通过重置对 AZUREADSSOACC 对象的约束委派提高了安全性
+- 通过对 AZUREADSSOACC 对象重置约束委托，提高安全性。
 - 添加/编辑同步规则时，如果规则中使用的任何属性都在连接器架构中，但未添加到连接器，那么这些属性都会自动添加到连接器。 对于规则影响的对象类型也是如此。 如果在连接器中添加了任何内容，则会在下一个同步周期中将连接器标记为完全导入。
 - 新的 Azure AD Connect 部署中不再支持使用企业管理员或域管理员作为连接器帐户。 使用企业管理员或域管理员作为连接器帐户的当前 Azure AD Connect 部署不受此版本的影响。
 - 在同步管理器中，创建/编辑/删除规则时会运行完全同步。 进行任何规则更改时，都将显示一个弹出窗口，通知用户是否要运行完全导入或完全同步。
-- 向“连接器”>“属性”>“连接”页中添加了密码错误的缓解步骤添加
+- 向 "连接器 > 属性" > 连接 "页中添加了用于密码错误的缓解步骤。
 - 在连接器属性页上为同步服务管理器添加了弃用警告。 此警告通知用户应通过 Azure AD Connect 向导进行更改。
 - 为用户密码策略相关问题新增了错误消息。
 - 防止按域和 OU 筛选器对组筛选进行错误配置。 当所输入组的域/OU 已筛选出来时，组筛选将显示错误，并且会在问题解决前阻止用户继续执行操作。
@@ -233,7 +238,7 @@ Azure Active Directory (Azure AD) 团队会定期更新 Azure AD Sync 的新特�
 - “帮助”弹出窗口现在显示在键盘焦点上。
 - 对于自动升级，如果在 6 小时后有任何存在冲突的应用运行，请将其终止，然后继续升级。
 - 选择目录扩展时，将客户可为每个对象选择的属性数限制为 100。 这将防止在导出过程中发生错误，因为 Azure 每个对象最多具有 100 个扩展属性。
-- 修复了一个 bug，使 AD 连接性脚本更加可靠
+- 修复了一个 bug，使 AD 连接脚本更可靠。
 - 修复了一个 bug，使用现有的 Named Pipes WCF 服务将 Azure AD Connect 安装到计算机上。
 - 改进了有关组策略的诊断和疑难解答，这些策略不允许在最初安装时启动 ADSync 服务。
 - 修复了以下 bug：Windows 计算机的显示名称写入错误。
@@ -244,9 +249,9 @@ Azure Active Directory (Azure AD) 团队会定期更新 Azure AD Sync 的新特�
 
 ## <a name="13210"></a>1.3.21.0
 >[!IMPORTANT]
->将 Azure AD Connect 从早期版本升级到 1.3.21.0 时存在一个已知问题：即使 Azure AD Connect 已成功升级，O365 门户也不反映更新的版本。
+>将 Azure AD Connect 从早期版本升级到1.3.21.0 的已知问题，其中 Microsoft 365 门户不会反映更新的版本，即使 Azure AD Connect 升级成功。
 >
-> 若要解决此问题，需要导入 AdSync 模块，然后在 Azure AD Connect 服务器上运行 `Set-ADSyncDirSyncConfiguration` PowerShell cmdlet。  可以使用以下步骤：
+> 若要解决此问题，你需要导入 **AdSync** 模块，然后 `Set-ADSyncDirSyncConfiguration` 在 Azure AD Connect 服务器上运行 PowerShell cmdlet。  可以使用以下步骤：
 >
 >1. 在管理员模式下打开 PowerShell。
 >2. 运行 `Import-Module "ADSync"`。

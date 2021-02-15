@@ -11,12 +11,12 @@ ms.workload: identity
 ms.topic: tutorial
 ms.date: 02/13/2019
 ms.author: jeedes
-ms.openlocfilehash: d743785ad5525f582e5cb25df715d8211121e809
-ms.sourcegitcommit: 023d10b4127f50f301995d44f2b4499cbcffb8fc
+ms.openlocfilehash: 48d09a5ef43e267550dd584a9f6356493887d6d7
+ms.sourcegitcommit: d79513b2589a62c52bddd9c7bd0b4d6498805dbe
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/18/2020
-ms.locfileid: "88547250"
+ms.lasthandoff: 12/18/2020
+ms.locfileid: "97673777"
 ---
 # <a name="tutorial-azure-active-directory-integration-with-communifire"></a>教程：Azure Active Directory 与 Communifire 集成
 
@@ -27,7 +27,7 @@ ms.locfileid: "88547250"
 * 可以让用户使用其 Azure AD 帐户自动登录到 Communifire（单一登录）。
 * 可在中心位置（即 Azure 门户）管理帐户。
 
-如果要了解有关 SaaS 应用与 Azure AD 集成的更多详细信息，请参阅 [Azure Active Directory 的应用程序访问与单一登录是什么](https://docs.microsoft.com/azure/active-directory/active-directory-appssoaccess-whatis)。
+如果要了解有关 SaaS 应用与 Azure AD 集成的更多详细信息，请参阅 [Azure Active Directory 的应用程序访问与单一登录是什么](../manage-apps/what-is-single-sign-on.md)。
 如果还没有 Azure 订阅，可以在开始前[创建一个免费帐户](https://azure.microsoft.com/free/)。
 
 ## <a name="prerequisites"></a>先决条件
@@ -65,7 +65,7 @@ ms.locfileid: "88547250"
 
 4. 在搜索框中，键入“Communifire”，在结果面板中选择“Communifire”，然后单击“添加”按钮添加该应用程序    。
 
-     ![结果列表中的 Communifire](common/search-new-app.png)
+    ![结果列表中的 Communifire](common/search-new-app.png)
 
 ## <a name="configure-and-test-azure-ad-single-sign-on"></a>配置和测试 Azure AD 单一登录
 
@@ -91,7 +91,7 @@ ms.locfileid: "88547250"
 
     ![配置单一登录链接](common/select-sso.png)
 
-2. 在**选择单一登录方法**对话框中，选择 **SAML/WS-Fed**模式以启用单一登录。
+2. 在 **选择单一登录方法** 对话框中，选择 **SAML/WS-Fed** 模式以启用单一登录。
 
     ![单一登录选择模式](common/select-saml-option.png)
 
@@ -101,7 +101,7 @@ ms.locfileid: "88547250"
 
 4. 如果要在 **IDP** 发起的模式下配置应用程序，请在“基本 SAML 配置”部分中执行以下步骤：
 
-    ![Communifire 域和 URL 单一登录信息](common/idp-intiated.png)
+    ![显示“基本 SAML 配置”部分的屏幕截图，其中突出显示了“保存”操作、“标识符”字段和“回复 URL”字段。](common/idp-intiated.png)
 
     a. 在“标识符”  文本框中，使用以下模式键入 URL：`https://<subdomain>.communifire.com`
 
@@ -125,11 +125,11 @@ ms.locfileid: "88547250"
     ![编辑 SAML 签名证书](common/edit-certificate.png)
 
     a. 从“签名选项”中选择“为 SAML 响应和断言签名”   。
-    
+
     b. 单击“保存” 
 
     ![Communifire 签名选项](./media/communifire-tutorial/tutorial-communifire-signing-option.png)
- 
+
 8. 在“设置 Communifire”  部分中，根据要求复制相应的 URL。
 
     ![复制配置 URL](common/copy-configuration-urls.png)
@@ -161,7 +161,7 @@ ms.locfileid: "88547250"
     ![“用户”对话框](common/user-properties.png)
 
     a. 在“名称”  字段中，输入 BrittaSimon  。
-  
+
     b. 在“用户名”字段中，键入 brittasimon\@yourcompanydomain.extension  
     例如： BrittaSimon@contoso.com
 
@@ -197,7 +197,7 @@ ms.locfileid: "88547250"
 
 ### <a name="create-communifire-test-user"></a>创建 Communifire 测试用户
 
-本部分的目的是在 Communifire 中创建名为 Britta Simon 的用户。 Communifire 支持默认启用的**恰时预配**。 保存配置文件详细信息后，尝试访问 Communifire 期间会创建新用户（如果不存在）。
+本部分的目的是在 Communifire 中创建名为 Britta Simon 的用户。 Communifire 支持默认启用的 **恰时预配**。 保存配置文件详细信息后，尝试访问 Communifire 期间会创建新用户（如果不存在）。
 
 >[!Note]
 >如果需要手动创建用户，请联系 [Communifire 支持团队](mailto:support@axerosolutions.com)。
@@ -206,13 +206,12 @@ ms.locfileid: "88547250"
 
 在本部分中，使用访问面板测试 Azure AD 单一登录配置。
 
-单击访问面板中的 Communifire 磁贴时，应当会自动登录到为其设置了 SSO 的 Communifire。 有关访问面板的详细信息，请参阅 [Introduction to the Access Panel](https://docs.microsoft.com/azure/active-directory/active-directory-saas-access-panel-introduction)（访问面板简介）。
+单击访问面板中的 Communifire 磁贴时，应当会自动登录到为其设置了 SSO 的 Communifire。 有关访问面板的详细信息，请参阅 [Introduction to the Access Panel](../user-help/my-apps-portal-end-user-access.md)（访问面板简介）。
 
 ## <a name="additional-resources"></a>其他资源
 
-- [有关如何将 SaaS 应用与 Azure Active Directory 集成的教程列表](https://docs.microsoft.com/azure/active-directory/active-directory-saas-tutorial-list)
+- [有关如何将 SaaS 应用与 Azure Active Directory 集成的教程列表](./tutorial-list.md)
 
-- [Azure Active Directory 的应用程序访问与单一登录是什么？](https://docs.microsoft.com/azure/active-directory/active-directory-appssoaccess-whatis)
+- [Azure Active Directory 的应用程序访问与单一登录是什么？](../manage-apps/what-is-single-sign-on.md)
 
-- [什么是 Azure Active Directory 中的条件访问？](https://docs.microsoft.com/azure/active-directory/conditional-access/overview)
-
+- [什么是 Azure Active Directory 中的条件访问？](../conditional-access/overview.md)

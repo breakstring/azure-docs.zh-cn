@@ -10,18 +10,23 @@ ms.subservice: bing-spell-check
 ms.topic: conceptual
 ms.date: 02/20/2019
 ms.author: aahi
-ms.openlocfilehash: 5ffd9f05bb429ba611a08d7985dbc9d509a9df0c
-ms.sourcegitcommit: 58faa9fcbd62f3ac37ff0a65ab9357a01051a64f
+ms.openlocfilehash: a97bd6bfc1cb7a0760894faaf3fd0617e6165f58
+ms.sourcegitcommit: 9eda79ea41c60d58a4ceab63d424d6866b38b82d
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/29/2020
-ms.locfileid: "66390167"
+ms.lasthandoff: 11/30/2020
+ms.locfileid: "96351191"
 ---
 # <a name="language-and-region-support-for-bing-spell-check-api"></a>必应拼写检查 API 的语言和区域支持
 
+> [!WARNING]
+> 必应搜索 API 将从认知服务迁移到必应搜索服务。 从 2020 年 10 月 30 日开始，必应搜索的任何新实例都需按照[此处](/bing/search-apis/bing-web-search/create-bing-search-service-resource)所述的过程进行预配。
+> 使用认知服务进行预配的必应搜索 API 将在未来三年或在企业协议结束前（以先发生者为准）得到支持。
+> 有关迁移说明，请参阅[必应搜索服务](/bing/search-apis/bing-web-search/create-bing-search-service-resource)。
+
 必应拼写检查 API 支持以下语言（仅在 `spell` 模式有效）。
 
-请注意，要以 `en-US` 以外的任何语言工作，应将 `mkt` 设置为 `Accept-Language`或将 `setLang` 设置为 [拼写检查 API v7 参考](https://docs.microsoft.com/rest/api/cognitiveservices-bingsearch/bing-spell-check-api-v7-reference)中所述的值
+请注意，要以 `en-US` 以外的任何语言工作，应将 `mkt` 设置为 `Accept-Language`或将 `setLang` 设置为 [拼写检查 API v7 参考](/rest/api/cognitiveservices-bingsearch/bing-spell-check-api-v7-reference)中所述的值
 
 | 语言    | 语言代码 |
 |:----------- |:-------------:|
@@ -36,7 +41,7 @@ ms.locfileid: "66390167"
 | 英语（加拿大）     | `en-CA`          |
 | 英语（印度）    | `en-IN`          |
 | 英语(印度尼西亚)     | `en-ID`          |
-| 英语（马来西亚）     | `en-MY`          |
+| 英语(马来西亚)     | `en-MY`          |
 | 英语（新西兰）    | `en-NZ`          |
 | 英语（菲律宾）     | `en-PH`          |
 | 英语（南非）    | `en-ZA`          |
@@ -52,11 +57,11 @@ ms.locfileid: "66390167"
 | 德语（瑞士）      | `de-CH`          |
 | 意大利语     | `it`          |
 | 日语    | `ja`          |
-| 朝鲜语      | `ko`          |
+| 韩语      | `ko`          |
 | 挪威语   | `no`          |
 | 波兰语      | `pl`          |
 | 葡萄牙语（巴西）   | `pt-BR`|
-| 葡萄牙语(葡萄牙) | `pt-PT`|
+| 葡萄牙语（葡萄牙） | `pt-PT`|
 | 俄语     | `ru`          |
 | 西班牙语（阿根廷）    | `es-AR`          |
 | 西班牙语（智利）     | `es-CL`          |
@@ -68,5 +73,5 @@ ms.locfileid: "66390167"
 
 ## <a name="see-also"></a>请参阅
 
-- [认知服务文档页面](https://docs.microsoft.com/azure/cognitive-services/)
+- [认知服务文档页面](../index.yml)
 - [认知服务产品页](https://azure.microsoft.com/services/cognitive-services/)

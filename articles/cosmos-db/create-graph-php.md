@@ -1,21 +1,22 @@
 ---
 title: 快速入门：将 Gremlin API 与 PHP 配合使用 - Azure Cosmos DB
 description: 本快速入门介绍如何在 Azure 门户和 PHP 中使用 Azure Cosmos DB Gremlin API 创建控制台应用程序
-author: luisbosquez
+author: christopheranderson
 ms.service: cosmos-db
 ms.subservice: cosmosdb-graph
 ms.devlang: php
 ms.topic: quickstart
 ms.date: 01/05/2019
-ms.author: lbosq
-ms.openlocfilehash: 4a979fd4b3947be62f77bbd6d7c046c6af78466c
-ms.sourcegitcommit: 23604d54077318f34062099ed1128d447989eea8
+ms.author: chrande
+ms.openlocfilehash: dfb7b530ce7d907407eef987b5df8af245c90950
+ms.sourcegitcommit: 6a902230296a78da21fbc68c365698709c579093
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 06/20/2020
-ms.locfileid: "85118264"
+ms.lasthandoff: 11/05/2020
+ms.locfileid: "93360830"
 ---
 # <a name="quickstart-create-a-graph-database-in-azure-cosmos-db-using-php-and-the-azure-portal"></a>快速入门：在 Azure Cosmos DB 中使用 PHP 和 Azure 门户创建图形数据库
+[!INCLUDE[appliesto-gremlin-api](includes/appliesto-gremlin-api.md)]
 
 > [!div class="op_single_selector"]
 > * [Gremlin 控制台](create-graph-gremlin-console.md)
@@ -193,7 +194,7 @@ Azure Cosmos DB 由 Microsoft 提供，是全球分布的多模型数据库服�
 
 1. 单击“数据资源管理器”，展开“sample-graph”，再依次单击“图形”和“应用筛选器”。 
 
-   :::image type="content" source="./media/create-graph-php/azure-cosmosdb-data-explorer-expanded.png" alt-text="在 Azure 门户的数据资源管理器中创建新文档":::
+   :::image type="content" source="./media/create-graph-php/azure-cosmosdb-data-explorer-expanded.png" alt-text="屏幕截图显示了从 API 中选择了提供“应用筛选器”选项的“图形”。":::
 
 2. 在“结果”列表中，请注意添加到图形的新用户。 选择“ben”。请注意，他们已连接到 robin。 可以通过拖放操作来移动顶点，也可以通过滚动鼠标滚轮进行缩放，并能用双箭头放大图形。 
 
@@ -201,7 +202,7 @@ Azure Cosmos DB 由 Microsoft 提供，是全球分布的多模型数据库服�
 
 3. 接下来，添加几个新用户。 单击“新建顶点”按钮，向图形添加数据。
 
-   :::image type="content" source="./media/create-graph-php/azure-cosmosdb-data-explorer-new-vertex.png" alt-text="在 Azure 门户的数据资源管理器中创建新文档":::
+   :::image type="content" source="./media/create-graph-php/azure-cosmosdb-data-explorer-new-vertex.png" alt-text="屏幕截图显示了可以在其中输入值的“新建顶点”窗格。":::
 
 4. 输入标签“人员”。
 

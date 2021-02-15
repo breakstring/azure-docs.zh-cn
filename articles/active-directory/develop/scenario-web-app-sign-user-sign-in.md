@@ -1,5 +1,6 @@
 ---
-title: 编写可使用户登录/注销用户的 Web 应用 - Microsoft 标识平台 | Azure
+title: 编写用于登录/注销用户的 web 应用 |Microsoft
+titleSuffix: Microsoft identity platform
 description: 了解如何生成可使用户登录/注销用户的 Web 应用
 services: active-directory
 author: jmprieur
@@ -11,12 +12,12 @@ ms.workload: identity
 ms.date: 07/14/2020
 ms.author: jmprieur
 ms.custom: aaddev, devx-track-python
-ms.openlocfilehash: 28bbe1432777e9e15ae625fb9788f9182495bd66
-ms.sourcegitcommit: 7fe8df79526a0067be4651ce6fa96fa9d4f21355
+ms.openlocfilehash: f8fa5532a5664741c9ddb9b78b35d5eed8e2e4e0
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/06/2020
-ms.locfileid: "87845079"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98937848"
 ---
 # <a name="web-app-that-signs-in-users-sign-in-and-sign-out"></a>用于登录用户的 Web 应用：登录和注销
 
@@ -33,7 +34,7 @@ ms.locfileid: "87845079"
 
 # <a name="aspnet-core"></a>[ASP.NET Core](#tab/aspnetcore)
 
-在 ASP.NET Core 中，对于 Microsoft 标识平台应用程序，“登录”按钮在 `Views\Shared\_LoginPartial.cshtml`（适用于 MVC 应用）或 `Pages\Shared\_LoginPartial.cshtm`（适用于 Razor 应用）中公开。 仅当用户未经过身份验证时才会显示。 即，仅当用户尚未登录或者已注销时才显示。相反，当用户已登录时，将显示“注销”按钮。 请注意，帐户控制器是在“Microsoft.Identity.Web.UI”NuGet 包（位于名为“MicrosoftIdentity”的区域中）中定义的。
+在 ASP.NET Core 中，对于 Microsoft 标识平台应用程序，“登录”按钮在 `Views\Shared\_LoginPartial.cshtml`（适用于 MVC 应用）或 `Pages\Shared\_LoginPartial.cshtm`（适用于 Razor 应用）中公开。 仅当用户未经过身份验证时才会显示此按钮。 即，仅当用户尚未登录或者已注销时才显示。相反，当用户已登录时，将显示“注销”按钮。 请注意，帐户控制器是在“Microsoft.Identity.Web.UI”NuGet 包（位于名为“MicrosoftIdentity”的区域中）中定义的。
 
 ```html
 <ul class="navbar-nav">
@@ -213,7 +214,7 @@ def _get_token_from_cache(scope=None):
 从 Web 应用注销不仅仅涉及到从 Web 应用的状态中删除有关已登录帐户的信息。
 该 Web 应用还必须将用户重定向到 Microsoft 标识平台 `logout` 终结点才能注销。
 
-当 Web 应用将用户重定向到 `logout` 终结点时，此终结点将从浏览器中清除用户的会话。 如果应用尚未进入 `logout` 终结点，则用户不需要再次输入凭据就能重新通过应用的身份验证。 原因是他们与 Microsoft 标识平台终结点之间建立了有效的单一登录会话。
+当 Web 应用将用户重定向到 `logout` 终结点时，此终结点将从浏览器中清除用户的会话。 如果应用尚未进入 `logout` 终结点，则用户不需要再次输入凭据就能重新通过应用的身份验证。 原因是它们将具有 Microsoft 标识平台的有效单一登录会话。
 
 有关详细信息，请参阅 [Microsoft 标识平台和 OpenID Connect 协议](v2-protocols-oidc.md)文档中的[发送注销请求](v2-protocols-oidc.md#send-a-sign-out-request)部分。
 
@@ -221,19 +222,19 @@ def _get_token_from_cache(scope=None):
 
 # <a name="aspnet-core"></a>[ASP.NET Core](#tab/aspnetcore)
 
-在应用程序注册期间，需要注册一个注销后的 URI。 在本教程中，你已在“身份验证”页上“高级设置”部分的“注销 URL”字段中注册了 `https://localhost:44321/signout-oidc`。   有关详细信息，请参阅[注册 webApp 应用](https://github.com/Azure-Samples/active-directory-aspnetcore-webapp-openidconnect-v2/tree/master/1-WebApp-OIDC/1-1-MyOrg#register-the-webapp-app-webapp)。
+在应用程序注册过程中，将注册一个前声道注销 URL。 在本教程中，你已在 `https://localhost:44321/signout-oidc` "**身份验证**" 页上的 "**前端通道注销 URL** " 字段中进行注册。 有关详细信息，请参阅[注册 webApp 应用](scenario-web-app-sign-user-app-registration.md#register-an-app-by-using-the-azure-portal)。
 
 # <a name="aspnet"></a>[ASP.NET](#tab/aspnet)
 
-在应用程序注册期间，需要注册一个注销后的 URI。 在本教程中，你已在“身份验证”页上“高级设置”部分的“注销 URL”字段中注册了 `https://localhost:44308/Account/EndSession`。   有关详细信息，请参阅[注册 webApp 应用](https://github.com/Azure-Samples/active-directory-dotnet-web-single-sign-out#register-the-service-app-webapp-distributedsignout-dotnet)。
+在应用程序注册过程中，无需注册额外的前端通道注销 URL。 将在应用的主 URL 上回调应用。 
 
 # <a name="java"></a>[Java](#tab/java)
 
-在应用程序注册期间，需要注册一个注销后的 URI。 在本教程中，你已在“身份验证”页上“高级设置”部分的“注销 URL”字段中注册了 `http://localhost:8080/msal4jsample/sign_out`。  
+在应用程序注册中不需要前声道注销 URL。
 
 # <a name="python"></a>[Python](#tab/python)
 
-在应用程序注册过程中，无需注册额外的注销 URL。 将在应用的主 URL 上回调应用。
+在应用程序注册过程中，无需注册额外的前端通道注销 URL。 将在应用的主 URL 上回调应用。
 
 ---
 
@@ -335,7 +336,7 @@ else
 - 调用 `Signout()`，让 OpenID Connect 中间件联系 Microsoft 标识平台 `logout` 终结点。 然后，终结点将会：
 
   - 从浏览器中清除会话 Cookie。
-  - 回调注销 URL。 默认情况下，注销 URL 显示注销视图页面[SignedOut.cshtml.cs](https://github.com/AzureAD/microsoft-identity-web/blob/master/src/Microsoft.Identity.Web.UI/Areas/MicrosoftIdentity/Pages/Account/SignedOut.cshtml.cs)。 此页也作为 MIcrosoft.Identity.Web 的一部分提供。
+  - 回调注销后重定向 URI。 默认情况下，注销后的重定向 URI 显示注销视图页面 [SignedOut.cshtml.cs](https://github.com/AzureAD/microsoft-identity-web/blob/master/src/Microsoft.Identity.Web.UI/Areas/MicrosoftIdentity/Pages/Account/SignedOut.cshtml.cs)。 此页还作为 Microsoft 的一部分提供。
 
 # <a name="aspnet"></a>[ASP.NET](#tab/aspnet)
 
@@ -432,5 +433,4 @@ public class AccountController : Controller
 
 ## <a name="next-steps"></a>后续步骤
 
-> [!div class="nextstepaction"]
-> [转移到生产环境](scenario-web-app-sign-user-production.md)
+转到此方案中的下一篇文章：[移到生产环境](scenario-web-app-sign-user-production.md)。

@@ -3,23 +3,22 @@ title: 可靠集合中的事务和锁定模式
 description: Azure Service Fabric 可靠状态管理器和可靠集合事务和锁定。
 ms.topic: conceptual
 ms.date: 5/1/2017
-ms.custom: sfrev
-ms.openlocfilehash: d1094462ebabcea1fbead3d5b30fdfb8dda6463a
-ms.sourcegitcommit: 11e2521679415f05d3d2c4c49858940677c57900
+ms.openlocfilehash: 5d2cbb517ea5ca45697cd9124b82e9ef13dd32db
+ms.sourcegitcommit: a055089dd6195fde2555b27a84ae052b668a18c7
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/31/2020
-ms.locfileid: "87500276"
+ms.lasthandoff: 01/26/2021
+ms.locfileid: "98784336"
 ---
 # <a name="transactions-and-lock-modes-in-azure-service-fabric-reliable-collections"></a>Azure Service Fabric 可靠集合中的事务和锁模式
 
 ## <a name="transaction"></a>事务
 
-事务是作为单个逻辑工作单元执行的一系列操作。 它表现出数据库事务常见的 [ACID](https://en.wikipedia.org/wiki/ACID)（原子性  、一致性  、隔离性  、持续性  ）属性：
+事务是作为单个逻辑工作单元执行的一系列操作。 它展示了公共 [ACID](https://en.wikipedia.org/wiki/ACID) (数据库事务的 *原子* 性、 *一致性*、 *隔离* 和 *持续* 性) 属性：
 
 * **原子性**：事务必须是原子工作单元。 换而言之，要么执行其所有数据修改，要么一个数据修改也不执行。
 * **一致性**：事务在完成时，必须使所有的数据都保持一致状态。 事务结束时，所有内部数据结构必须都正确。
-* **隔离**：由并发事务所做的修改必须与任何其他并发事务所做的修改隔离。 用于 [ITransaction](/dotnet/api/microsoft.servicefabric.data.itransaction?view=azure-dotnet) 中某个操作的隔离级别由执行该操作的 [IReliableState](/dotnet/api/microsoft.servicefabric.data.ireliablestate?view=azure-dotnet) 确定。
+* **隔离**：由并发事务所做的修改必须与任何其他并发事务所做的修改隔离。 用于 [ITransaction](/dotnet/api/microsoft.servicefabric.data.itransaction) 中某个操作的隔离级别由执行该操作的 [IReliableState](/dotnet/api/microsoft.servicefabric.data.ireliablestate) 确定。
 * **持续性**：事务完成后，其效果永久存在于系统中。 即使系统发生故障，修改也会保留。
 
 ### <a name="isolation-levels"></a>隔离级别
@@ -77,7 +76,7 @@ Reliable Queue 权衡严格事务性 FIFO 属性的并发。
 可靠集合 API 中的超时参数用于死锁检测。
 例如，两个事务（T1 和 T2）正在尝试读取和更新 K1。
 它们有可能发生死锁，因为它们最后都拥有共享锁。
-在这种情况下，其中一个操作或两个操作都将超时。在这种情况下，更新锁可以防止这种死锁。
+在这种情况下，其中一个操作或两个操作都会超时。在这种情况下，更新锁可以防止这种死锁。
 
 ## <a name="next-steps"></a>后续步骤
 
@@ -85,4 +84,4 @@ Reliable Queue 权衡严格事务性 FIFO 属性的并发。
 * [Reliable Services 通知](service-fabric-reliable-services-notifications.md)
 * [Reliable Services 备份和还原（灾难恢复）](service-fabric-reliable-services-backup-restore.md)
 * [可靠状态管理器和配置](service-fabric-reliable-services-configuration.md)
-* [Reliable Collections 的开发人员参考](/dotnet/api/microsoft.servicefabric.data.collections?view=azure-dotnet#microsoft_servicefabric_data_collections)
+* [Reliable Collections 的开发人员参考](/dotnet/api/microsoft.servicefabric.data.collections#microsoft_servicefabric_data_collections)

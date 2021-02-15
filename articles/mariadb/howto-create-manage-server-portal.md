@@ -1,17 +1,17 @@
 ---
-title: 管理服务器-Azure 门户-Azure Database for MariaDB
+title: 管理服务器 - Azure 门户 - Azure Database for MariaDB
 description: 了解如何在 Azure 门户中管理 Azure Database for MariaDB 服务器。
-author: ajlam
-ms.author: andrela
-ms.service: mariadb
+author: savjani
+ms.author: pariks
+ms.service: jroth
 ms.topic: how-to
 ms.date: 3/18/2020
-ms.openlocfilehash: 196b1dda17de1c9430ab048ac90d1d10b6a595b4
-ms.sourcegitcommit: d7008edadc9993df960817ad4c5521efa69ffa9f
+ms.openlocfilehash: b492e04629f23c991c1c5d69dd5e2c472676d37a
+ms.sourcegitcommit: 52e3d220565c4059176742fcacc17e857c9cdd02
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/08/2020
-ms.locfileid: "86104684"
+ms.lasthandoff: 01/21/2021
+ms.locfileid: "98664395"
 ---
 # <a name="manage-an-azure-database-for-mariadb-server-using-the-azure-portal"></a>使用 Azure 门户管理 Azure Database for MariaDB 服务器
 本文介绍如何管理 Azure Database for MariaDB 服务器。 管理任务包括计算和存储缩放、管理员密码重置，以及查看服务器详细信息。
@@ -34,7 +34,7 @@ ms.locfileid: "86104684"
 
 2. 选择“常规用途”或“内存优化”，具体取决于你要缩放到哪一层。   
 
-    ![change-pricing-tier](./media/howto-create-manage-server-portal/change-pricing-tier.png)
+    ![屏幕截图显示已选择“定价”层和“内存优化”值的 Azure 门户。](./media/howto-create-manage-server-portal/change-pricing-tier.png)
 
     > [!NOTE]
     > 更改层级导致服务器重启。
@@ -79,7 +79,7 @@ ms.locfileid: "86104684"
 
 2. 输入新密码并确认。 文本框会就密码复杂性要求提示你。
 
-   ![reset-password](./media/howto-create-manage-server-portal/reset-password.png)
+   ![屏幕截图显示“重置密码”对话框以及“密码”和“确认密码”。](./media/howto-create-manage-server-portal/reset-password.png)
 
 3. 选择“确定”以保存新密码。 
 
@@ -90,11 +90,11 @@ ms.locfileid: "86104684"
 
 1. 在 Azure 门户中选择服务器。 在“概览”窗口中，选择“删除”。  
 
-    ![delete](./media/howto-create-manage-server-portal/overview-delete.png)
+    ![“删除”](./media/howto-create-manage-server-portal/overview-delete.png)
 
 2. 在输入框中键入服务器名称，确认这是要删除的服务器。
 
-    ![confirm-delete](./media/howto-create-manage-server-portal/confirm-delete.png)
+    ![屏幕截图显示验证是否要删除数据库（该操作不可撤销）的对话框。](./media/howto-create-manage-server-portal/confirm-delete.png)
 
     > [!NOTE]
     > 删除服务器的操作不可逆。

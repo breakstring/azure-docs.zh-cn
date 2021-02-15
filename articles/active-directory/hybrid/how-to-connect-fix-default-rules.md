@@ -13,12 +13,12 @@ ms.date: 03/21/2019
 ms.subservice: hybrid
 ms.author: billmath
 ms.collection: M365-identity-device-management
-ms.openlocfilehash: 0e52083b2413f28b0c95b3a86be44c501e97cfd7
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: a0fc1bc3158e04c9b1f677af7ef2375ac3ed2ce7
+ms.sourcegitcommit: 829d951d5c90442a38012daaf77e86046018e5b9
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "85359749"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "91320041"
 ---
 # <a name="fix-modified-default-rules-in-azure-ad-connect"></a>在 Azure AD Connect 中修复已修改的默认规则
 
@@ -73,7 +73,7 @@ Azure Active Directory (Azure AD) Connect 使用默认规则进行同步。  遗
 #### <a name="add-an-inbound-sync-rule"></a>添加入站同步规则
 入站同步规则表示属性的源是连接器空间，目标是 Metaverse。 例如，若要将本地 Active Directory 中的某个新属性流送到 Azure Active Directory，请创建一个新的入站同步规则。 启动“同步规则编辑器”，选择“入站”作为方向，然后选择“添加新规则”。    
 
- ![同步规则编辑器](media/how-to-connect-fix-default-rules/default3a.png)
+ ![屏幕截图，显示 "同步规则编辑器"，其中选择了 "入站" 和 "添加新规则"。](media/how-to-connect-fix-default-rules/default3a.png)
 
 遵循自己的命名约定为规则命名。 此处我们使用了“Custom In from AD - User”。  这表示该规则是自定义规则，并且是从 Active Directory 连接器空间到 Metaverse 的入站规则。   
 
@@ -89,7 +89,7 @@ Azure Active Directory (Azure AD) Connect 使用默认规则进行同步。  遗
 
 将“联接规则”保留为空。  这表示此规则将使用标准默认规则中定义的联接条件。 这是不禁用或删除标准默认规则的另一个原因。 如果没有联接条件，属性不会流动。 
 
-为属性添加适当的转换。 可以分配一个常量用于将常量值流送到目标属性。 可以在源或目标属性之间使用直接映射。 或者，可对属性使用表达式。 下面是可以使用的各种[表达式函数](https://docs.microsoft.com/azure/active-directory/hybrid/reference-connect-sync-functions-reference)。
+为属性添加适当的转换。 可以分配一个常量用于将常量值流送到目标属性。 可以在源或目标属性之间使用直接映射。 或者，可对属性使用表达式。 下面是可以使用的各种[表达式函数](./reference-connect-sync-functions-reference.md)。
 
 #### <a name="add-an-outbound-sync-rule"></a>添加出站同步规则
 若要将属性链接到目标目录，需要创建出站规则。 这表示源是 Metaverse，目标是连接的系统。 若要创建出站规则，请启动“同步规则编辑器”，将“方向”更改为“出站”，然后选择“添加新规则”。     
@@ -102,7 +102,7 @@ Azure Active Directory (Azure AD) Connect 使用默认规则进行同步。  遗
 
 将“范围筛选器”和“联接规则”保留为空。   填写“常量”、“直接”或表达式作为转换。 
 
-现在，你已了解如何将 Active Directory 中某个用户对象的新属性流送到 Azure Active Directory。 可以使用这些步骤将任意对象中的任意属性映射到源和目标。 有关详细信息，请参阅[创建自定义同步规则](how-to-connect-create-custom-sync-rule.md)和[准备预配用户](https://docs.microsoft.com/office365/enterprise/prepare-for-directory-synchronization)。
+现在，你已了解如何将 Active Directory 中某个用户对象的新属性流送到 Azure Active Directory。 可以使用这些步骤将任意对象中的任意属性映射到源和目标。 有关详细信息，请参阅[创建自定义同步规则](how-to-connect-create-custom-sync-rule.md)和[准备预配用户](/office365/enterprise/prepare-for-directory-synchronization)。
 
 ### <a name="override-the-value-of-an-existing-attribute"></a>替代现有属性的值
 你可能想要替代已映射属性的值。 例如，你始终想要对 Azure AD 中的某个属性设置 null 值，为此，只需创建一个入站规则即可。 使常量值 `AuthoritativeNull` 流送到目标属性。 
@@ -176,7 +176,7 @@ Azure AD Sync 负责处理大部分对象。 你可以缩小对象的范围，�
 
 在“预览”窗口的左窗格中选择“生成预览”和“导入属性流”。  
 
-![预览](media/how-to-connect-fix-default-rules/default14.png)
+![显示 "预览" 窗口的屏幕截图，其中选择了 "导入属性流" 和 "生成预览"。](media/how-to-connect-fix-default-rules/default14.png)
  
 在此处可以看到，新添加的规则已针对该对象运行，并且已将 `cloudFiltered` 属性设置为 true。
 
@@ -194,6 +194,3 @@ Azure AD Sync 负责处理大部分对象。 你可以缩小对象的范围，�
 - [硬件和先决条件](how-to-connect-install-prerequisites.md) 
 - [快速设置](how-to-connect-install-express.md)
 - [自定义设置](how-to-connect-install-custom.md)
-
-
-

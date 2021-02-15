@@ -3,7 +3,7 @@ title: 真实用户度量网页-Azure 流量管理器
 description: 本文介绍如何设置网页以将真实用户度量发送到 Azure 流量管理器。
 services: traffic-manager
 documentationcenter: traffic-manager
-author: rohinkoul
+author: duongau
 manager: twooley
 ms.service: traffic-manager
 ms.devlang: na
@@ -11,14 +11,14 @@ ms.topic: how-to
 ms.tgt_pltfrm: ''
 ms.workload: infrastructure
 ms.date: 03/16/2018
-ms.author: rohink
+ms.author: duau
 ms.custom: ''
-ms.openlocfilehash: f297057549263cd62783778b363665bfb4368c91
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 2bb104fd9cfc3c4ffddb82e4cf442e94c4650550
+ms.sourcegitcommit: 0aec60c088f1dcb0f89eaad5faf5f2c815e53bf8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "84711640"
+ms.lasthandoff: 01/14/2021
+ms.locfileid: "98184552"
 ---
 # <a name="how-to-send-real-user-measurements-to-azure-traffic-manager-using-web-pages"></a>如何使用网页将实际用户度量发送到 Azure 流量管理器
 
@@ -26,13 +26,13 @@ ms.locfileid: "84711640"
 
 ## <a name="obtain-a-real-user-measurements-key"></a>获取实际用户度量密钥
 
-从客户端应用程序获取并发送到流量管理器的度量由使用唯一字符串的服务标识，称为**实际用户度量 (RUM) 密钥**。 可以使用 Azure 门户、REST API 或使用 PowerShell/Azure CLI 获取 RUM 密钥。
+从客户端应用程序获取并发送到流量管理器的度量由使用唯一字符串的服务标识，称为 **实际用户度量 (RUM) 密钥**。 可以使用 Azure 门户、REST API 或使用 PowerShell/Azure CLI 获取 RUM 密钥。
 
 若要使用 Azure 门户获取 RUM 密钥，请执行以下操作：
 1. 在浏览器中，登录 Azure 门户。 如果还没有帐户，可以注册免费一个月试用版。
 2. 在门户的搜索栏中，搜索要修改的流量管理器配置文件名称，并在显示的结果中单击该流量管理器配置文件。
-3. 在“流量管理器配置文件”边栏选项卡中，单击“设置”**** 下的“实际用户度量”****。
-4. 单击“生成密钥”**** 新建 RUM 密钥。
+3. 在“流量管理器配置文件”边栏选项卡中，单击“设置”下的“实际用户度量”。
+4. 单击“生成密钥”新建 RUM 密钥。
  
    ![生成实际用户度量密钥](./media/traffic-manager-create-rum-visual-studio/generate-rum-key.png)
 
@@ -44,7 +44,7 @@ ms.locfileid: "84711640"
 
     **图 2：实际用户度量密钥和度量 JavaScript**
  
-6. 单击“复制”**** 按钮复制 JavaScript 代码。 
+6. 单击“复制”按钮复制 JavaScript 代码。 
 
 >[!IMPORTANT]
 > 使用生成的 JavaScript 使“实际用户度量”功能正常工作。 对此脚本或“实际用户度量”使用的脚本进行任何更改可能会导致不可预知的行为。
@@ -68,5 +68,4 @@ ms.locfileid: "84711640"
 - 详细了解[实际用户度量](traffic-manager-rum-overview.md)
 - 了解[流量管理器的工作原理](traffic-manager-overview.md)
 - 详细了解流量管理器支持的[流量路由方法](traffic-manager-routing-methods.md)
-- 了解如何[创建流量管理器配置文件](traffic-manager-create-profile.md)
-
+- 了解如何[创建流量管理器配置文件](./quickstart-create-traffic-manager-profile.md)

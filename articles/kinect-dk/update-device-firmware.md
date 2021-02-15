@@ -7,12 +7,12 @@ ms.prod: kinect-dk
 ms.date: 06/26/2019
 ms.topic: conceptual
 keywords: kinect, 固件, 更新, 恢复
-ms.openlocfilehash: eb60003a4233110cb33208bcb8e9784737bb2a8b
-ms.sourcegitcommit: fe6c9a35e75da8a0ec8cea979f9dec81ce308c0e
+ms.openlocfilehash: 71557798a584635356cc47fd7c4a0309df4d018a
+ms.sourcegitcommit: 0b9fe9e23dfebf60faa9b451498951b970758103
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/26/2020
-ms.locfileid: "75771590"
+ms.lasthandoff: 11/07/2020
+ms.locfileid: "94356214"
 ---
 # <a name="update-azure-kinect-dk-firmware"></a>更新 Azure Kinect DK 固件
 
@@ -27,7 +27,7 @@ Azure Kinect DK 不会自动更新固件。 可以使用 [Azure Kinect 固件工
 3. 在 SDK 安装位置的 tools 文件夹中，应该可以看到：
 
     - AzureKinectFirmwareTool.exe
-    - firmware 文件夹中的固件 .bin 文件，例如 *AzureKinectDK_Fw_1.5.926614.bin*。
+    - firmware 文件夹中的固件 .bin 文件，例如 *AzureKinectDK_Fw_1.5.926614.bin* 。
 
 4. 将设备连接到主机电脑并将其打开。
 
@@ -57,15 +57,15 @@ Azure Kinect DK 不会自动更新固件。 可以使用 [Azure Kinect 固件工
 
     ```console
        >AzureKinectFirmwareTool.exe -q
- == Azure Kinect DK Firmware Tool ==
-Device Serial Number: 000805192412
-Current Firmware Versions:
-  RGB camera firmware:      1.6.102
-  Depth camera firmware:    1.6.75
-  Depth config file:        6109.7
-  Audio firmware:           1.6.14
-  Build Config:             Production
-  Certificate Type:         Microsoft
+       == Azure Kinect DK Firmware Tool ==
+        Device Serial Number: 000805192412
+        Current Firmware Versions:
+        RGB camera firmware:      1.6.102
+        Depth camera firmware:    1.6.75
+        Depth config file:        6109.7
+        Audio firmware:           1.6.14
+        Build Config:             Production
+        Certificate Type:         Microsoft
     ```
 
 3. 如果看到上面的输出，则表示固件已更新。
@@ -82,7 +82,7 @@ Current Firmware Versions:
 
 3. 如果所有其他方法均失败，请遵循[恢复](https://support.microsoft.com/help/4494277/reset-azure-kinect-dk)步骤将固件还原为出厂设置，然后重试。
 
-如有其他任何问题，请参阅 [Microsoft 支持页](https://aka.ms/kinectsupport)
+如有其他任何问题，请参阅 [Microsoft 支持页](./index.yml)
 
 ## <a name="next-steps"></a>后续步骤
 

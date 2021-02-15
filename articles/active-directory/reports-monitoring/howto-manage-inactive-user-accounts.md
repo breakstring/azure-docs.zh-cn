@@ -13,16 +13,16 @@ ms.topic: how-to
 ms.tgt_pltfrm: na
 ms.workload: identity
 ms.subservice: report-monitor
-ms.date: 04/07/2020
+ms.date: 01/21/2021
 ms.author: markvi
-ms.reviewer: dhanyahk
+ms.reviewer: besiler
 ms.collection: M365-identity-device-management
-ms.openlocfilehash: 92f6f32298dcccca4eba08fd25de0504416e5560
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 8fb517f8c50ad2c32f23542e60069a0e0a496a2d
+ms.sourcegitcommit: 52e3d220565c4059176742fcacc17e857c9cdd02
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "85608137"
+ms.lasthandoff: 01/21/2021
+ms.locfileid: "98660658"
 ---
 # <a name="how-to-manage-inactive-user-accounts-in-azure-ad"></a>如何：管理 Azure AD 中的非活动用户帐户
 
@@ -58,7 +58,7 @@ ms.locfileid: "85608137"
 
 ### <a name="how-can-i-access-this-property"></a>如何访问此属性？
 
-lastSignInDateTime 属性由 [Microsoft Graph REST API](https://docs.microsoft.com/graph/overview?view=graph-rest-beta#whats-in-microsoft-graph) 的 [signInActivity 资源类型](https://docs.microsoft.com/graph/api/resources/signinactivity?view=graph-rest-beta)公开。   
+lastSignInDateTime 属性由 [Microsoft Graph REST API](/graph/overview?view=graph-rest-beta#whats-in-microsoft-graph) 的 [signInActivity 资源类型](/graph/api/resources/signinactivity?view=graph-rest-beta)公开。   
 
 ### <a name="is-the-lastsignindatetime-property-available-through-the-get-azureaduser-cmdlet"></a>lastSignInDateTime 属性是否可通过 Get-AzureAdUser cmdlet 获取？
 
@@ -85,11 +85,11 @@ lastSignInDateTime 属性由 [Microsoft Graph REST API](https://docs.microsoft.c
 
 若要生成 lastSignInDateTime 时间戳，你需要成功登录。 由于 lastSignInDateTime 属性是一项新功能，因此，在以下情况下，lastSignInDateTime 属性的值可能为空：
 
-- 用户的上次成功登录在此功能发布（2019 年 12 月 1 日）之前发生。
+- 用户的最后一次成功登录发生在2020年4月之前。
 - 受影响的用户帐户从未进行成功登录。
 
 ## <a name="next-steps"></a>后续步骤
 
 * [使用具有证书的 Azure Active Directory 报告 API 获取数据](tutorial-access-api-with-certificates.md)
-* [审核 API 参考](https://developer.microsoft.com/graph/docs/api-reference/beta/resources/directoryaudit) 
-* [登录活动报告 API 参考](https://developer.microsoft.com/graph/docs/api-reference/beta/resources/signin)
+* [审核 API 参考](/graph/api/resources/directoryaudit?view=graph-rest-beta) 
+* [登录活动报告 API 参考](/graph/api/resources/signin?view=graph-rest-beta)

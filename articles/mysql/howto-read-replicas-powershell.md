@@ -1,18 +1,18 @@
 ---
 title: 管理只读副本 - Azure PowerShell - Azure Database for MySQL
 description: 了解如何使用 PowerShell 在 Azure Database for MySQL 中设置和管理只读副本。
-author: ajlam
-ms.author: andrela
+author: savjani
+ms.author: pariks
 ms.service: mysql
 ms.topic: how-to
 ms.date: 8/24/2020
 ms.custom: devx-track-azurepowershell
-ms.openlocfilehash: c85af0f4078010fa5b6a1d116b3bfda942c0490c
-ms.sourcegitcommit: d39f2cd3e0b917b351046112ef1b8dc240a47a4f
+ms.openlocfilehash: fe33730fc11bfc18b7d67471e1077fb9490385d4
+ms.sourcegitcommit: 6ab718e1be2767db2605eeebe974ee9e2c07022b
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/25/2020
-ms.locfileid: "88816909"
+ms.lasthandoff: 11/12/2020
+ms.locfileid: "94541923"
 ---
 # <a name="how-to-create-and-manage-read-replicas-in-azure-database-for-mysql-using-powershell"></a>如何使用 PowerShell 在 Azure Database for MySQL 中创建和管理只读副本
 
@@ -38,12 +38,12 @@ ms.locfileid: "88816909"
 [!INCLUDE [cloud-shell-try-it.md](../../includes/cloud-shell-try-it.md)]
 
 > [!IMPORTANT]
-> 只读副本功能仅适用于“常规用途”或“内存优化”定价层中的 Azure Database for MySQL 服务器。 请确保主服务器位于其中一个定价层中。
+> 只读副本功能仅适用于“常规用途”或“内存优化”定价层中的 Azure Database for MySQL 服务器。 请确保源服务器位于其中一个定价层中。
 
 ### <a name="create-a-read-replica"></a>创建只读副本
 
 > [!IMPORTANT]
-> 如果为没有现有副本的主服务器创建副本，主服务器将首先重启以便为复制准备自身。 请考虑这一点并在非高峰期执行这些操作。
+> 如果为没有现有副本的源服务器创建副本，源服务器将首先重启，以便为复制做好准备。 请考虑这一点并在非高峰期执行这些操作。
 
 可以使用以下命令创建只读副本服务器：
 
@@ -54,9 +54,9 @@ Get-AzMySqlServer -Name mydemoserver -ResourceGroupName myresourcegroup |
 
 `New-AzMySqlReplica` 命令需要以下参数：
 
-| 设置 | 示例值 | 说明  |
+| 设置 | 示例值 | 说明  |
 | --- | --- | --- |
-| ResourceGroupName |  myresourcegroup |  在其中创建副本服务器的资源组。  |
+| ResourceGroupName |  myresourcegroup |  在其中创建副本服务器的资源组。  |
 | 名称 | mydemoreplicaserver | 所创建的新副本服务器的名称。 |
 
 若要创建跨区域只读副本，请使用 Location 参数。 以下示例在 **美国西部** 区域创建一个副本。
@@ -68,14 +68,14 @@ Get-AzMySqlServer -Name mrdemoserver -ResourceGroupName myresourcegroup |
 
 若要详细了解可以在哪些区域中创建副本，请访问[只读副本概念文章](concepts-read-replicas.md)。
 
-默认情况下，除非指定了 Sku 参数，否则将使用与主服务器相同的服务器配置来创建只读副本。
+默认情况下，除非指定了 Sku 参数，否则将使用与源服务器相同的服务器配置来创建只读副本。
 
 > [!NOTE]
-> 建议副本服务器的配置应保持在与主服务器相同或更大的值，以确保副本能够跟上主服务器。
+> 建议副本服务器的配置应始终采用与源服务器相同或更大的值，以确保副本能够与主服务器保持一致。
 
-### <a name="list-replicas-for-a-master-server"></a>列出主服务器的副本
+### <a name="list-replicas-for-a-source-server"></a>列出源服务器的副本
 
-若要查看给定的主服务器的所有副本，请运行以下命令：
+若要查看给定源服务器的所有副本，请运行以下命令：
 
 ```azurepowershell-interactive
 Get-AzMySqlReplica -ResourceGroupName myresourcegroup -ServerName mydemoserver
@@ -83,10 +83,10 @@ Get-AzMySqlReplica -ResourceGroupName myresourcegroup -ServerName mydemoserver
 
 `Get-AzMySqlReplica` 命令需要以下参数：
 
-| 设置 | 示例值 | 说明  |
+| 设置 | 示例值 | 说明  |
 | --- | --- | --- |
-| ResourceGroupName |  myresourcegroup |  要在其中创建副本服务器的资源组。  |
-| ServerName | mydemoserver | 主服务器的名称或 ID。 |
+| ResourceGroupName |  myresourcegroup |  要在其中创建副本服务器的资源组。  |
+| ServerName | mydemoserver | 源服务器的名称或 ID。 |
 
 ### <a name="delete-a-replica-server"></a>删除副本服务器
 
@@ -96,12 +96,12 @@ Get-AzMySqlReplica -ResourceGroupName myresourcegroup -ServerName mydemoserver
 Remove-AzMySqlServer -Name mydemoreplicaserver -ResourceGroupName myresourcegroup
 ```
 
-### <a name="delete-a-master-server"></a>删除主服务器
+### <a name="delete-a-source-server"></a>删除源服务器
 
 > [!IMPORTANT]
-> 删除主服务器会停止复制到所有副本服务器，并删除主服务器本身。 副本服务器成为现在支持读取和写入的独立服务器。
+> 删除源服务器会停止复制到所有副本服务器，并删除源服务器本身。 副本服务器成为现在支持读取和写入的独立服务器。
 
-若要删除主服务器，可以运行 `Remove-AzMySqlServer` cmdlet。
+若要删除源服务器，可以运行 `Remove-AzMySqlServer` cmdlet。
 
 ```azurepowershell-interactive
 Remove-AzMySqlServer -Name mydemoserver -ResourceGroupName myresourcegroup

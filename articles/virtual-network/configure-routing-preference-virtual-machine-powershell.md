@@ -10,14 +10,14 @@ ms.devlang: na
 ms.topic: how-to
 ms.tgt_pltfrm: na
 ms.workload: infrastructure-services
-ms.date: 05/18/2020
+ms.date: 12/01/2020
 ms.author: mnayak
-ms.openlocfilehash: 2002e4a11a2accbbc639c200372c393b8dc2f228
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: cdd86984e5594d330f0080ee5f4cf0e9a8374652
+ms.sourcegitcommit: d59abc5bfad604909a107d05c5dc1b9a193214a8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "84707525"
+ms.lasthandoff: 01/14/2021
+ms.locfileid: "98223537"
 ---
 # <a name="configure-routing-preference-for-a-vm-using-azure-powershell"></a>使用 Azure PowerShell 为 VM 配置路由首选项
 
@@ -28,12 +28,6 @@ ms.locfileid: "84707525"
 > [!IMPORTANT]
 > 路由首选项目前为公共预览版。
 > 此预览版在提供时没有附带服务级别协议，不建议将其用于生产工作负荷。 某些功能可能不受支持或者受限。 有关详细信息，请参阅 [Microsoft Azure 预览版补充使用条款](https://azure.microsoft.com/support/legal/preview-supplemental-terms/)。
-
-## <a name="register-the-feature-for-your-subscription"></a>为订阅注册此功能
-路由首选项功能目前为预览版。 为订阅注册此功能，如下所示：
-```azurepowershell
-Register-AzProviderFeature -FeatureName AllowRoutingPreferenceFeature -ProviderNamespace Microsoft.Network
-```
 
 ## <a name="create-a-resource-group"></a>创建资源组
 1. 如果使用 Cloud Shell，请跳到步骤 2。 打开命令会话并使用 `Connect-AzAccount` 登录到 Azure。
@@ -156,5 +150,5 @@ $nic = New-AzNetworkInterface `
 ## <a name="next-steps"></a>后续步骤
 
 * 详细了解[公共 IP 地址中的路由首选项](routing-preference-overview.md)。
-* 详细了解 Azure 中的[公共 IP 地址](virtual-network-ip-addresses-overview-arm.md#public-ip-addresses)。
+* 详细了解 Azure 中的[公共 IP 地址](./public-ip-addresses.md#public-ip-addresses)。
 * 详细了解[公共 IP 地址设置](virtual-network-public-ip-address.md#create-a-public-ip-address)。

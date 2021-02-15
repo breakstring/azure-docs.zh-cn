@@ -1,5 +1,6 @@
 ---
-title: 在调用 Web API 的 Web 应用中获取令牌 - Microsoft 标识平台 | Azure
+title: 获取调用 Web API 的 Web 应用中的令牌 | Azure
+titleSuffix: Microsoft identity platform
 description: 了解如何获取调用 Web API 的 Web 应用的令牌
 services: active-directory
 author: jmprieur
@@ -8,15 +9,15 @@ ms.service: active-directory
 ms.subservice: develop
 ms.topic: conceptual
 ms.workload: identity
-ms.date: 07/14/2020
+ms.date: 09/25/2020
 ms.author: jmprieur
 ms.custom: aaddev
-ms.openlocfilehash: 4904cd95dc81aad959c88c1dfdb09416923046e6
-ms.sourcegitcommit: 3543d3b4f6c6f496d22ea5f97d8cd2700ac9a481
+ms.openlocfilehash: cfd479382cb69e7355b033312e165699223fdbf0
+ms.sourcegitcommit: 5cdd0b378d6377b98af71ec8e886098a504f7c33
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/20/2020
-ms.locfileid: "86518175"
+ms.lasthandoff: 01/25/2021
+ms.locfileid: "98756303"
 ---
 # <a name="a-web-app-that-calls-web-apis-acquire-a-token-for-the-app"></a>调用 Web API 的 Web 应用：获取应用的令牌
 
@@ -27,7 +28,11 @@ ms.locfileid: "86518175"
 
 # <a name="aspnet-core"></a>[ASP.NET Core](#tab/aspnetcore)
 
-控制器方法受 `[Authorize]` 属性的保护，该属性会强制经身份验证的用户使用 Web 应用。 下面是用于调用 Microsoft Graph 的代码：
+Microsoft.Identity.Web 添加了扩展方法，这些方法为调用 Microsoft Graph 或下游 Web API 提供便利服务。 若要详细了解这些方法，请参阅[调用 Web API 的 Web 应用：调用 API](scenario-web-app-call-api-call-api.md)。 使用这些帮助程序方法，你无需手动获取令牌。
+
+但是，如果你确实想要手动获取令牌，可以通过以下代码以示例方式了解如何使用 Microsoft.Identity.Web 在主控制器中执行此操作。 它使用 REST API（而不是 Microsoft Graph SDK）调用 Microsoft Graph。 若要获取令牌以调用下游 API，可以通过控制器构造函数（如果使用 Blazor，则为页面构造函数）中的依赖项注入来注入 `ITokenAcquisition` 服务，并在控制器操作中使用该服务，从而为用户 (`GetAccessTokenForUserAsync`) 或守护程序方案中的应用程序本身 (`GetAccessTokenForAppAsync`) 获取令牌。
+
+控制器方法受 `[Authorize]` 属性的保护，该属性确保只有经过身份验证的用户可使用 Web 应用。
 
 ```csharp
 [Authorize]
@@ -66,7 +71,7 @@ public async Task<IActionResult> Profile()
 
 若要更好地了解此方案所需的代码，请参阅 [ms-identity-aspnetcore-webapp-tutorial](https://github.com/Azure-Samples/ms-identity-aspnetcore-webapp-tutorial) 教程的阶段 2（[2-1-Web 应用调用 Microsoft Graph](https://github.com/Azure-Samples/active-directory-aspnetcore-webapp-openidconnect-v2/tree/master/2-WebApp-graph-user/2-1-Call-MSGraph)）步骤。
 
-`AuthorizeForScopes`控制器操作顶部的属性（如果使用 razor 模板，则为 razor 页上的属性）由 Microsoft 提供。 它确保用户在需要时以及以增量方式向用户授予许可。
+在控制器操作顶部（如果你使用 Razor 模板，则为 Razor 页面顶部）的 `AuthorizeForScopes` 属性由 Microsoft.Identity.Web 提供。 它确保在需要时以增量方式要求用户提供许可。
 
 还有其他复杂的变化形式，例如：
 
@@ -82,9 +87,9 @@ public async Task<IActionResult> Profile()
 - 受 [Authorize] 属性保护的控制器操作会提取控制器的 `ClaimsPrincipal` 成员的租户 ID 和用户 ID。 （ASP.NET 使用 `HttpContext.User`。）
 - 然后，它会构建一个 MSAL.NET `IConfidentialClientApplication` 对象。
 - 最后，它调用机密客户端应用程序的 `AcquireTokenSilent` 方法。
-- 如果需要交互，web 应用需要质询用户（重新登录），并要求提供更多声明。
+- 在必须进行交互的情况下，Web 应用需要质询用户（重新登录）并要求提供更多声明。
 
-以下代码片段从[HomeController # L157-L192](https://github.com/Azure-Samples/ms-identity-aspnet-webapp-openidconnect/blob/257c8f96ec3ff875c351d1377b36403eed942a18/WebApp/Controllers/HomeController.cs#L157-L192)中的-- [webapp-openidconnect](https://github.com/Azure-Samples/ms-identity-aspnet-webapp-openidconnect) ASP.NET MVC 代码示例：
+以下代码片段是从 [ms-identity-aspnet-webapp-openidconnect](https://github.com/Azure-Samples/ms-identity-aspnet-webapp-openidconnect) ASP.NET MVC 代码示例中的 [HomeController.cs#L157-L192](https://github.com/Azure-Samples/ms-identity-aspnet-webapp-openidconnect/blob/257c8f96ec3ff875c351d1377b36403eed942a18/WebApp/Controllers/HomeController.cs#L157-L192) 提取的：
 
 ```C#
 public async Task<ActionResult> ReadMail()
@@ -110,7 +115,7 @@ public async Task<ActionResult> ReadMail()
 }
 ```
 
-有关详细信息，请参阅代码示例中的[BuildConfidentialClientApplication （）](https://github.com/Azure-Samples/ms-identity-aspnet-webapp-openidconnect/blob/master/WebApp/Utils/MsalAppBuilder.cs)和[GetMsalAccountId](https://github.com/Azure-Samples/ms-identity-aspnet-webapp-openidconnect/blob/257c8f96ec3ff875c351d1377b36403eed942a18/WebApp/Utils/ClaimPrincipalExtension.cs#L38)的代码
+有关详细信息，请参阅代码示例中 [BuildConfidentialClientApplication()](https://github.com/Azure-Samples/ms-identity-aspnet-webapp-openidconnect/blob/master/WebApp/Utils/MsalAppBuilder.cs) 和 [GetMsalAccountId](https://github.com/Azure-Samples/ms-identity-aspnet-webapp-openidconnect/blob/257c8f96ec3ff875c351d1377b36403eed942a18/WebApp/Utils/ClaimPrincipalExtension.cs#L38) 的代码
 
 
 # <a name="java"></a>[Java](#tab/java)
@@ -198,5 +203,4 @@ def graphcall():
 
 ## <a name="next-steps"></a>后续步骤
 
-> [!div class="nextstepaction"]
-> [调用 Web API](scenario-web-app-call-api-call-api.md)
+转到此方案中的下一篇文章：[调用 Web API](scenario-web-app-call-api-call-api.md)。

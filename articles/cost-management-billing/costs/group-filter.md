@@ -6,13 +6,14 @@ ms.author: banders
 ms.date: 06/08/2020
 ms.topic: conceptual
 ms.service: cost-management-billing
+ms.subservice: cost-management
 ms.reviewer: adwise
-ms.openlocfilehash: f67cc019e8e7d4da4b0db1c0bbfdb6ee1cd495d7
-ms.sourcegitcommit: 964af22b530263bb17fff94fd859321d37745d13
+ms.openlocfilehash: ac9828ca61009eb3ee39412169b2b454b9ecbd00
+ms.sourcegitcommit: 33368ca1684106cb0e215e3280b828b54f7e73e8
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 06/09/2020
-ms.locfileid: "84561863"
+ms.lasthandoff: 10/16/2020
+ms.locfileid: "92131864"
 ---
 # <a name="group-and-filter-options-in-cost-analysis"></a>成本分析中的分组和筛选选项
 
@@ -48,10 +49,10 @@ ms.locfileid: "84561863"
 | **服务名称**或**计量类别** | 按 Azure 服务细分成本。 | 购买和市场使用情况会显示为“不适用”或“未分配”。 |
 | **服务层级**或**计量子类别** | 按 Azure 使用情况计量子分类细分成本。 | 购买和市场使用情况会显示为“不适用”或“未分配”。 |
 | **订阅** | 按 Azure 订阅和 AWS 关联帐户细分成本。 | 购买和租户资源可能会显示为“不适用”。 |
-| **标记** | 按特定标记键的标记值细分成本。 | 标记不适用于：购买、不与订阅关联的租户资源、未部署到资源组的订阅资源、经典资源。 某些服务不在使用情况数据中包含标记。 详细了解[每种资源类型的标记支持](https://docs.microsoft.com/azure/azure-resource-manager/management/tag-support)。 |
+| **标记** | 按特定标记键的标记值细分成本。 | 标记不适用于：购买、不与订阅关联的租户资源、未部署到资源组的订阅资源、经典资源。 某些服务不在使用情况数据中包含标记。 详细了解[每种资源类型的标记支持](../../azure-resource-manager/management/tag-support.md)。 |
 
 有关术语的详细信息，请参阅[了解在 Azure 使用情况和费用文件中使用的术语](../understand/understand-usage.md)。
 
 ## <a name="next-steps"></a>后续步骤
 
-- [开始分析成本](https://docs.microsoft.com/azure/cost-management-billing/costs/quick-acm-cost-analysis)。
+- [开始分析成本](./quick-acm-cost-analysis.md)。

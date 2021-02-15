@@ -12,18 +12,19 @@ ms.workload: identity
 ms.topic: conceptual
 ms.date: 05/07/2020
 ms.author: ryanwi
-ms.openlocfilehash: dc37ce474ad3226f5dbf7e6efd687ddf55f7da03
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ROBOTS: NOINDEX
+ms.openlocfilehash: 778523869715916bf1e4c32af59ea7a0081df91b
+ms.sourcegitcommit: 126ee1e8e8f2cb5dc35465b23d23a4e3f747949c
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "82926674"
+ms.lasthandoff: 02/10/2021
+ms.locfileid: "100103305"
 ---
 # <a name="how-to-discover-endpoints"></a>如何发现终结点
 
 可以在 [Azure 门户](https://portal.azure.com)中找到应用程序的身份验证终结点。
 
-1. 登录到 [Azure 门户](https://portal.azure.com)。
+1. 登录到 <a href="https://portal.azure.com/" target="_blank">Azure 门户</a>。
 1. 选择“Azure Active Directory” 。
 1. 在“管理”下，选择“应用注册”，然后在顶部菜单中选择“终结点”。
 
@@ -31,7 +32,7 @@ ms.locfileid: "82926674"
     
     将与所用身份验证协议匹配的终结点与“应用程序(客户端) ID”结合使用，生成特定于应用程序的身份验证请求。
 
-**国内云**（例如，中国、德国和美国政府 Azure AD）有自己的应用注册门户和 Azure AD 身份验证终结点。 有关详细信息，请参阅[国家云概述](authentication-national-cloud.md)。
+**国家云** (例如 Azure AD 中国、德国和美国政府) 具有其自己的应用注册门户和 Azure AD 身份验证终结点。 有关详细信息，请参阅[国家云概述](authentication-national-cloud.md)。
 
 ## <a name="next-steps"></a>后续步骤
 

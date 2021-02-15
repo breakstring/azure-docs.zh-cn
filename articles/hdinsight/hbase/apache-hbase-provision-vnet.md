@@ -1,19 +1,16 @@
 ---
 title: 在虚拟网络中创建 HBase 群集 - Azure
 description: 开始在 Azure HDInsight 中使用 HBase。 了解如何在 Azure 虚拟网络上创建 HDInsight HBase 群集。
-author: hrasheed-msft
-ms.author: hrasheed
-ms.reviewer: jasonh
 ms.service: hdinsight
 ms.topic: how-to
 ms.custom: hdinsightactive
 ms.date: 12/23/2019
-ms.openlocfilehash: 82e3374491aa119d9985ea7ef31e180c920511d3
-ms.sourcegitcommit: 124f7f699b6a43314e63af0101cd788db995d1cb
+ms.openlocfilehash: 9f179981aa39402681b4830d58a29f5b1259c7e2
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/08/2020
-ms.locfileid: "86087735"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98946130"
 ---
 # <a name="create-apache-hbase-clusters-on-hdinsight-in-azure-virtual-network"></a>在 Azure 虚拟网络中的 HDInsight 上创建 Apache HBase 群集
 
@@ -43,7 +40,7 @@ ms.locfileid: "86087735"
 > * **子网名称**：subnet1
 > * **子网地址范围**：10.0.0.0/24
 >
-> `CLUSTERNAME`将替换为使用模板时提供的群集名称。
+> `CLUSTERNAME` 会替换为使用模板时提供的群集名称。
 
 1. 选择下面的图像即可在 Azure 门户中打开该模板。 该模板位于 [Azure 快速启动模板](https://azure.microsoft.com/resources/templates/101-hdinsight-hbase-linux-vnet/)中。
 

@@ -1,22 +1,18 @@
 ---
 title: 数据工厂计划和执行
 description: 了解 Azure 数据工厂应用程序模型的计划和执行方面。
-services: data-factory
-documentationcenter: ''
-author: djpmsft
-ms.author: daperlov
-manager: jroth
+author: dcstwh
+ms.author: weetok
 ms.reviewer: maghan
 ms.service: data-factory
-ms.workload: data-services
 ms.topic: conceptual
 ms.date: 01/10/2018
-ms.openlocfilehash: e0707f9a7694741f54771699f5aeb3b452b11b8c
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: bfdae688f7736149fe7ddf04cd3833d9adf30818
+ms.sourcegitcommit: d4734bc680ea221ea80fdea67859d6d32241aefc
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "85319714"
+ms.lasthandoff: 02/14/2021
+ms.locfileid: "100382712"
 ---
 # <a name="data-factory-scheduling-and-execution"></a>数据工厂计划和执行
 > [!NOTE]
@@ -29,7 +25,7 @@ ms.locfileid: "85319714"
 * [数据集](data-factory-create-datasets.md) 
 
 ## <a name="start-and-end-times-of-pipeline"></a>管道的开始和结束时间
-管道仅在其**开始**时间和**结束**时间之间处于活动状态。 开始时间之前或结束时间之后，不会执行管道。 如果暂停管道，则无论开始和结束时间，都不会执行管道。 不暂停才可运行管道。 可以在管道定义中找到这些设置（开始、结束、暂停）： 
+管道仅在其 **开始** 时间和 **结束** 时间之间处于活动状态。 开始时间之前或结束时间之后，不会执行管道。 如果暂停管道，则无论开始和结束时间，都不会执行管道。 不暂停才可运行管道。 可以在管道定义中找到这些设置（开始、结束、暂停）： 
 
 ```json
 "start": "2017-04-01T08:00:00Z",
@@ -41,7 +37,7 @@ ms.locfileid: "85319714"
 
 
 ## <a name="specify-schedule-for-an-activity"></a>为活动指定计划
-执行的不是管道。 它是在管道的总体上下文中执行的管道中的活动。 可以使用活动 JSON 的**计划程序**部分指定活动的定期计划。 例如，可将活动计划为每小时运行一次，如下所示：  
+执行的不是管道。 它是在管道的总体上下文中执行的管道中的活动。 可以使用活动 JSON 的 **计划程序** 部分指定活动的定期计划。 例如，可将活动计划为每小时运行一次，如下所示：  
 
 ```json
 "scheduler": {
@@ -50,16 +46,16 @@ ms.locfileid: "85319714"
 },
 ```
 
-如下图中所示，指定为活动计划创建一系列翻转与窗口在管道开始和结束时间。 翻转时段是一系列固定大小、非重叠、连续的时间间隔。 活动的这些逻辑翻转时段称为“活动时段”。****
+如下图中所示，指定为活动计划创建一系列翻转与窗口在管道开始和结束时间。 翻转时段是一系列固定大小、非重叠、连续的时间间隔。 活动的这些逻辑翻转时段称为“活动时段”。
 
 ![活动计划程序示例](media/data-factory-scheduling-and-execution/scheduler-example.png)
 
-活动的**计划程序**属性是可选的。 如果要指定一个属性，它必须与在输出数据集定义中指定的频率匹配。 目前，输出数据集驱动计划。 因此，必须创建一个输出数据集，即使活动不会生成任何输出。 
+活动的 **计划程序** 属性是可选的。 如果要指定一个属性，它必须与在输出数据集定义中指定的频率匹配。 目前，输出数据集驱动计划。 因此，必须创建一个输出数据集，即使活动不会生成任何输出。 
 
 ## <a name="specify-schedule-for-a-dataset"></a>为数据集指定计划
-数据工厂管道中的每个活动可获取零个或多个输入**数据集**，并生成一个或多个输出数据集。 对于活动，可以指定从该处有可用的输入的数据或使用生成的输出数据的频率**可用性**的数据集定义中的部分。 
+数据工厂管道中的每个活动可获取零个或多个输入 **数据集**，并生成一个或多个输出数据集。 对于活动，可以指定从该处有可用的输入的数据或使用生成的输出数据的频率 **可用性** 的数据集定义中的部分。 
 
-**可用性**部分中的**频率**指定时间单位。 频率的允许值为：分钟、小时、天、周和月。 可用性部分中的**间隔**属性指定频率的乘数。 例如：如果频率设置为“天”且间隔设置为 1 的输出数据集，每天生成输出数据。 如果将频率指定为分钟，建议将间隔设置为小于 15 的值。 
+**可用性** 部分中的 **频率** 指定时间单位。 频率的允许值为：分钟、小时、天、周和月。 可用性部分中的 **间隔** 属性指定频率的乘数。 例如：如果频率设置为“天”且间隔设置为 1 的输出数据集，每天生成输出数据。 如果将频率指定为分钟，建议将间隔设置为小于 15 的值。 
 
 在下面的示例中，输入有可用的数据每小时和每小时生成一次输出数据 (`"frequency": "Hour", "interval": 1`)。 
 
@@ -117,7 +113,7 @@ ms.locfileid: "85319714"
 
 目前，**输出数据集驱动计划**。 换而言之，使用指定的输出数据集的计划在运行时运行的活动。 因此，必须创建一个输出数据集，即使活动不会生成任何输出。 如果活动没有任何输入，可以跳过创建输入数据集。 
 
-在下面的管道定义中，**计划程序**属性用于指定活动的计划。 此属性是可选的。 目前，该活动的计划必须匹配指定的输出数据集的计划。
+在下面的管道定义中，**计划程序** 属性用于指定活动的计划。 此属性是可选的。 目前，该活动的计划必须匹配指定的输出数据集的计划。
  
 ```json
 {
@@ -164,7 +160,7 @@ ms.locfileid: "85319714"
 
 在此示例中，活动运行每小时之间的管道的开始和结束时间。 将在三个小时的时间范围内（上午 8-9 点、上午 9-10 点和上午 10-11 点），每小时生成输出数据。 
 
-活动运行使用或生成的每个数据单元称为**数据切片**。 下图显示了具有 1 个输入数据集和 1 个输出数据集的活动示例： 
+活动运行使用或生成的每个数据单元称为 **数据切片**。 下图显示了具有 1 个输入数据集和 1 个输出数据集的活动示例： 
 
 ![可用性计划程序](./media/data-factory-scheduling-and-execution/availability-scheduler.png)
 
@@ -180,15 +176,15 @@ ms.locfileid: "85319714"
 在数据集定义的可用性部分中，已了解频率和间隔属性。 有几个其他属性会影响活动的计划和执行。 
 
 ### <a name="dataset-availability"></a>数据集可用性 
-下表描述了可在**可用性**部分中使用的属性：
+下表描述了可在 **可用性** 部分中使用的属性：
 
-| Property | 描述 | 必须 | 默认 |
+| properties | 说明 | 必须 | 默认 |
 | --- | --- | --- | --- |
 | 频率 |指定数据集切片生成的时间单位。<br/><br/><b>支持的频率</b>：Minute、Hour、Day、Week、Month |是 |不可用 |
 | interval |指定频率的乘数<br/><br/>“频率 x 间隔”确定生成切片的频率。<br/><br/>若需要数据集每小时生成切片，则将“频率”<b></b>设置为“小时”<b></b>，“间隔”<b></b>设置为“1”<b></b>。<br/><br/><b>注意</b>：如果将 Frequency 指定为 Minute，建议将 interval 设置为不小于15 |是 |不可用 |
 | 样式 |指定是否应在间隔的开头/结尾生成切片。<ul><li>StartOfInterval</li><li>EndOfInterval</li></ul><br/><br/>若将 Month 设置为 Month，style 设置为 EndOfInterval，则会在每月的最后一天生成切片。 若将 style 设为 StartOfInterval，会在每月的第一天生成切片。<br/><br/>若将 Frequency 设置为 Day，style 设置为 EndOfInterval，则会在一天的最后一小时生成切片。<br/><br/>若将 Frequency 设置为 Hour，style 设置为 EndOfInterval，则会在一小时结束时生成切片。 例如，对于下午 1 点到下午 2 点期间的切片，则在下午 2 点生成切片。 |否 |EndOfInterval |
 | anchorDateTime |定义计划程序用于计算数据集切片边界的时间中的绝对位置。 <br/><br/><b>注意</b>：如果 AnchorDateTime 的日期部分比频率更精细，则忽略更精细的部分。 <br/><br/>例如，如果“interval”<b></b>是“每小时”<b></b>（frequency: hour 且 interval: 1），而 <b> AnchorDateTime</b> 包含<b>分钟和秒</b>，则将忽略 AnchorDateTime 的<b>分钟和秒</b>部分。 |否 |01/01/0001 |
-| offset |所有数据集切片的开始和结束之间偏移的时间跨度。 <br/><br/><b>注意</b>：如果同时指定了 anchorDateTime 和 offset，则结果是合并移位。 |否 |不可用 |
+| offset |所有数据集切片的开始和结束之间偏移的时间跨度。 <br/><br/><b>注意</b>：如果同时指定了 anchorDateTime 和 offset，则结果是合并移位。 |否 |NA |
 
 ### <a name="offset-example"></a>偏移示例
 默认情况下，每天 (`"frequency": "Day", "interval": 1`) 在 UTC 时间晚上 12 点（午夜）开始切片。 要将开始时间改为 UTC 时间早上 6 点，请按以下片段中所示设置偏移量： 
@@ -226,14 +222,14 @@ ms.locfileid: "85319714"
 ```
 
 ### <a name="dataset-policy"></a>数据集策略
-数据集可以具有定义的验证策略，该策略指定切片执行生成的数据在准备好进行使用之前应如何验证。 在这种情况下，切片执行完成后，输出切片状态将变为“等待”**** 且子状态为“验证”****。 切片验证后，切片状态将更改为“就绪”****。 如果数据切片已生成但没有通过验证，因此将不会处理依赖于此切片的下游切片的活动运行。 [监视和管理管道](data-factory-monitor-manage-pipelines.md)介绍数据工厂中的数据切片的各种状态。
+数据集可以具有定义的验证策略，该策略指定切片执行生成的数据在准备好进行使用之前应如何验证。 在这种情况下，切片执行完成后，输出切片状态将变为“等待”且子状态为“验证”。 切片验证后，切片状态将更改为“就绪”。 如果数据切片已生成但没有通过验证，因此将不会处理依赖于此切片的下游切片的活动运行。 [监视和管理管道](data-factory-monitor-manage-pipelines.md)介绍数据工厂中的数据切片的各种状态。
 
-数据集定义中的**策略**部分定义了数据集切片必须满足的标准或条件。 下表描述了可在 **policy** 节中使用的属性：
+数据集定义中的 **策略** 部分定义了数据集切片必须满足的标准或条件。 下表描述了可在 **policy** 节中使用的属性：
 
-| 策略名称 | 描述 | 适用对象 | 必须 | 默认 |
+| 策略名称 | 说明 | 适用对象 | 必须 | 默认 |
 | --- | --- | --- | --- | --- |
-| minimumSizeMB | 验证 **Azure Blob** 中的数据是否满足最小大小要求（以兆字节为单位）。 |Azure Blob |否 |不可用 |
-| minimumRows | 验证**AZURE SQL 数据库**或**azure 表**中的数据是否包含最小行数。 |<ul><li>Azure SQL Database</li><li>Azure 表</li></ul> |否 |不可用 |
+| minimumSizeMB | 验证 **Azure Blob** 中的数据是否满足最小大小要求（以兆字节为单位）。 |Azure Blob |否 |NA |
+| minimumRows | 验证 **AZURE SQL 数据库** 或 **azure 表** 中的数据是否包含最小行数。 |<ul><li>Azure SQL 数据库</li><li>Azure 表</li></ul> |否 |NA |
 
 #### <a name="examples"></a>示例
 **minimumSizeMB:**
@@ -266,7 +262,7 @@ ms.locfileid: "85319714"
 ## <a name="activity-policies"></a>活动策略
 策略会影响活动的运行时行为，尤其在处理表的切片时。 下表提供详细信息。
 
-| Property | 允许的值 | 默认值 | 描述 |
+| properties | 允许的值 | 默认值 | 说明 |
 | --- | --- | --- | --- |
 | concurrency |Integer <br/><br/>最大值：10 |1 |活动的并发执行次数。<br/><br/>它决定可在不同切片上发生的并行活动执行次数。 例如，如果活动需要完成大量可用数据，更大的并发值能加快数据处理速度。 |
 | executionPriorityOrder |NewestFirst<br/><br/>OldestFirst |OldestFirst |确定正在处理的数据切片的顺序。<br/><br/>例如，有两个切片（分别发生在下午 4 点和下午 5 点），且均在等待执行。 如果将 executionPriorityOrder 设置为 NewestFirst，则首先处理下午 5 点的切片。 同理，如果将 executionPriorityORder 设置为 OldestFIrst，则先处理下午 4 点的切片。 |
@@ -281,7 +277,7 @@ ms.locfileid: "85319714"
 ## <a name="parallel-processing-of-data-slices"></a>并行处理数据切片
 可设置过去管道的开始日期。 执行此操作时，数据工厂会自动计算（回填）过去的所有数据切片，并开始处理。 例如：如果创建开始日期为 2017-04-01 的管道，而当前日期是 2017-04-10。 如果输出数据集的频率为每日，则数据工厂将立即开始处理所有从 2017-04-01 到 2017-04-09 的切片，因为开始日期已过去。 从自 2017-04-10 未处理切片尚未因为可用性部分中的样式属性的值是 EndOfInterval 默认情况下。 处理最旧的切片 executionPriorityOrder 值是 OldestFirst 首先为默认值。 有关样式属性的说明，请参阅[数据集可用性](#dataset-availability)部分。 有关 executionPriorityOrder 部分的说明，请参阅[活动策略](#activity-policies)部分。 
 
-通过在活动 JSON 的**策略**部分中设置**并发**属性，用户可将回填数据切片配置为并行处理。 此属性决定可在不同切片上发生的并行活动执行次数。 并发性属性的默认值为 1。 因此，一个切片默认被处理一次。 最大值为 10。 当管道需要完成大量可用数据，更大的并发值能加快数据处理速度。 
+通过在活动 JSON 的 **策略** 部分中设置 **并发** 属性，用户可将回填数据切片配置为并行处理。 此属性决定可在不同切片上发生的并行活动执行次数。 并发性属性的默认值为 1。 因此，一个切片默认被处理一次。 最大值为 10。 当管道需要完成大量可用数据，更大的并发值能加快数据处理速度。 
 
 ## <a name="rerun-a-failed-data-slice"></a>重新运行失败的数据切片
 如果处理数据切片时出错，可以通过 Azure 门户边栏选项卡或监视器和管理应用程序的切片了解处理失败的原因。 有关详细信息，请参阅[使用 Azure 门户边栏选项卡监视和管理管道](data-factory-monitor-manage-pipelines.md)或[监视和管理应用](data-factory-monitor-manage-app.md)。
@@ -294,7 +290,7 @@ ms.locfileid: "85319714"
 
 使用数据工厂监视和管理工具可以深入查看失败切片的诊断日志，从而轻松找到问题的根本原因并进行修复。 修复问题后，便可轻松地启动活动运行以生成失败切片。 有关如何重新运行和了解数据切片的状态转换的详细信息，请参阅[使用 Azure 门户边栏选项卡监视和管理管道](data-factory-monitor-manage-pipelines.md)或[监视和管理应用](data-factory-monitor-manage-app.md)。
 
-重新运行“Dataset2”**** 的“上午 9-10 点”切片后，数据工厂会在最终数据集上启动运行“上午 9-10 点”依赖切片。
+重新运行“Dataset2”的“上午 9-10 点”切片后，数据工厂会在最终数据集上启动运行“上午 9-10 点”依赖切片。
 
 ![重新运行失败的切片](./media/data-factory-scheduling-and-execution/rerun-failed-slice.png)
 

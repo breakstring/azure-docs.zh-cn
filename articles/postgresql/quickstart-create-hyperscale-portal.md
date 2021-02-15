@@ -8,12 +8,12 @@ ms.subservice: hyperscale-citus
 ms.custom: mvc
 ms.topic: quickstart
 ms.date: 08/17/2020
-ms.openlocfilehash: 977082b7f9055b90ee5c93913154934741d93772
-ms.sourcegitcommit: 023d10b4127f50f301995d44f2b4499cbcffb8fc
+ms.openlocfilehash: 03a6e927a074067e85f1a3adca38cae386d1af38
+ms.sourcegitcommit: 10d00006fec1f4b69289ce18fdd0452c3458eca5
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/18/2020
-ms.locfileid: "88547692"
+ms.lasthandoff: 11/21/2020
+ms.locfileid: "95026210"
 ---
 # <a name="quickstart-create-a-hyperscale-citus-server-group-in-the-azure-portal"></a>快速入门：在 Azure 门户中创建超大规模 (Citus) 服务器组
 
@@ -25,7 +25,7 @@ ms.locfileid: "88547692"
 
 使用 psql 连接到 Hyperscale 协调器节点后，可以完成一些基本任务。
 
-Hyperscale 服务器中有三种类型的表：
+超大规模 (Citus) 服务器中有三种类型的表：
 
 - 分布式表或分片表（分散在不同的位置以帮助进行缩放，从而提高性能并便于并行化）
 - 引用表（保留多个副本）
@@ -71,7 +71,7 @@ CREATE INDEX event_type_index ON github_events (event_type);
 CREATE INDEX payload_index ON github_events USING GIN (payload jsonb_path_ops);
 ```
 
-接下来，我们将这些 Postgres 表放到协调器节点上，并告知 Hyperscale 在工作器节点之间将这些表分片。 为此，我们将针对每个表运行一个查询，指定将该表分片所依据的键。 在当前示例中，我们要将 `user_id` 上的事件和用户表分片：
+接下来，我们将这些 Postgres 表放到协调器节点上，并告知超大规模 (Citus) 在工作器之间将这些表分片。 为此，我们将针对每个表运行一个查询，指定将该表分片所依据的键。 在当前示例中，我们要将 `user_id` 上的事件和用户表分片：
 
 ```sql
 SELECT create_distributed_table('github_events', 'user_id');
@@ -117,7 +117,7 @@ ORDER BY hour;
 
 到目前为止，查询只是涉及到 github\_events，但我们可将这些信息与 github\_users 合并。 由于我们基于同一个标识符 (`user_id`) 分片了用户和事件，因此，这两个表中具有匹配用户 ID 的行将[共置](concepts-hyperscale-colocation.md)到同一个数据库节点，并可以轻松联接。
 
-如果在 `user_id` 上联接，则 Hyperscale 可将联接执行下推到分片中，以便在工作器节点上并行执行。 例如，让我们查找创建了最多存储库的用户：
+如果按 `user_id` 进行联接，则超大规模 (Citus) 可将联接执行下推到分片中，以便在工作器节点上并行执行。 例如，让我们查找创建了最多存储库的用户：
 
 ```sql
 SELECT gu.login, count(*)
@@ -138,6 +138,5 @@ SELECT gu.login, count(*)
 
 在本快速入门中，你已了解如何预配 Hyperscale (Citus) 服务器组。 你已使用 psql 连接到该组，创建了架构并分布了数据。
 
-接下来，请遵循以下教程生成可缩放的多租户应用程序。
-> [!div class="nextstepaction"]
-> [设计多租户数据库](https://aka.ms/hyperscale-tutorial-multi-tenant)
+- 遵循以下教程[生成可缩放的多租户应用程序](./tutorial-design-database-hyperscale-multi-tenant.md)
+- 确定服务器组的最佳[初始大小](howto-hyperscale-scale-initial.md)

@@ -12,14 +12,14 @@ ms.workload: storage
 ms.tgt_pltfrm: na
 ms.devlang: na
 ms.topic: how-to
-ms.date: 05/14/2019
+ms.date: 09/22/2020
 ms.author: b-juche
-ms.openlocfilehash: 7d1c54d05430600e9fffa2659dbaaf6db0b086b5
-ms.sourcegitcommit: 29400316f0c221a43aff3962d591629f0757e780
+ms.openlocfilehash: 62bf154c1dbf1a0d3f12e2cef916b37059ce985b
+ms.sourcegitcommit: a43a59e44c14d349d597c3d2fd2bc779989c71d7
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/02/2020
-ms.locfileid: "87512867"
+ms.lasthandoff: 11/25/2020
+ms.locfileid: "96012470"
 ---
 # <a name="resize-a-capacity-pool-or-a-volume"></a>重设容量池或卷的大小
 可以根据需要更改容量池或卷的大小。 
@@ -36,7 +36,12 @@ ms.locfileid: "87512867"
 
 可以根据需要更改卷大小。 卷的容量消耗是依据其池的预配容量计数的。
 
-1. 在“管理 NetApp 帐户”边栏选项卡中，单击“卷”****。 
+1. 在“管理 NetApp 帐户”边栏选项卡中，单击“卷”。 
 2. 右键单击要重设大小的卷的名称，或单击卷所在行末尾的“...”图标以显示上下文菜单。
 3. 使用上下文菜单选项来重设卷大小或删除卷。
 
+## <a name="next-steps"></a>后续步骤
+
+- [设置容量池](azure-netapp-files-set-up-capacity-pool.md)
+- [管理手动 QoS 容量池](manage-manual-qos-capacity-pool.md)
+- [动态更改卷的服务级别](dynamic-change-volume-service-level.md) 

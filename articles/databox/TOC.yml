@@ -1,5 +1,5 @@
 - name: Azure Data Box 文档 - 脱机传输
-  href: /azure/databox
+  href: ./index.yml
   items:
     - name: Data Box
       items:
@@ -76,8 +76,12 @@
               items:
                 - name: 安全基线
                   href: security-baseline.md
+                - name: Azure Policy 的安全控件
+                  href: ./security-controls-policy.md
                 - name: 检查安全性
                   href: data-box-security.md
+            - name: 传输 ACL 和元数据
+              href: data-box-file-acls-preservation.md
             - name: 常见问题解答
               href: data-box-faq.md
         - name: 如何
@@ -88,6 +92,8 @@
               href: data-box-local-web-ui-admin.md
             - name: 使用自我托管交付
               href: data-box-portal-customer-managed-shipping.md
+            - name: 使用自己的证书
+              href: data-box-bring-your-own-certificates.md
             - name: 启用客户管理的密钥
               href: data-box-customer-managed-encryption-key-portal.md
             - name: 使用客户密码箱
@@ -101,7 +107,7 @@
             - name: 迁移
               items:
                 - name: 到 Sharepoint Online
-                  href: 'https://docs.microsoft.com/sharepointmigration/how-to-migrate-file-share-content-to-spo-using-azuredatabox?context=/azure/databox/context/context'
+                  href: /sharepointmigration/how-to-migrate-file-share-content-to-spo-using-azuredatabox?context=%2fazure%2fdatabox%2fcontext%2fcontext
                 - name: 到 Azure 文件同步
                   href: ../storage/files/storage-sync-offline-data-transfer.md?toc=/azure/databox/toc.json&bc=/azure/databox/breadcrumb/toc.json
                 - name: 从 HDFS 存储
@@ -125,6 +131,7 @@
           items:
             - name: 设置 - Azure 门户
               href: data-box-disk-quickstart-portal.md
+              displayName: 'Azure CLI, az databox job create, create Data Box job'
         - name: 教程
           items:
             - name: 1 - 顺序
@@ -175,6 +182,7 @@
           items:
             - name: 设置 - Azure 门户
               href: data-box-heavy-quickstart-portal.md
+              displayName: 'Azure CLI, az databox job create, create Data Box job'
         - name: 教程
           items:
             - name: 1 - 顺序
@@ -235,6 +243,9 @@
           href: /powershell/module/az.databox
         - name: .NET API
           href: /dotnet/api/overview/azure/databox/management
+        - name: Azure Policy 内置策略定义
+          displayName: 'samples, policies, definitions'
+          href: ./policy-reference.md
     - name: 资源
       items:
         - name: Data Box 产品

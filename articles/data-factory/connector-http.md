@@ -1,22 +1,17 @@
 ---
 title: 使用 Azure 数据工厂从 HTTP 源复制数据
 description: 了解如何通过在 Azure 数据工厂管道中使用复制活动，将数据从云或本地 HTTP 源复制到支持的接收器数据存储。
-services: data-factory
-documentationcenter: ''
 author: linda33wj
-manager: shwang
-ms.reviewer: douglasl
 ms.service: data-factory
-ms.workload: data-services
 ms.topic: conceptual
 ms.date: 12/10/2019
 ms.author: jingwang
-ms.openlocfilehash: 730efb552ef218cc5a5ce6a984d20b4e23b364ac
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 0462dac12d41fff667212902152b420d1460186d
+ms.sourcegitcommit: d4734bc680ea221ea80fdea67859d6d32241aefc
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "81416938"
+ms.lasthandoff: 02/14/2021
+ms.locfileid: "100383630"
 ---
 # <a name="copy-data-from-an-http-endpoint-by-using-azure-data-factory"></a>使用 Azure 数据工厂从 HTTP 终结点复制数据
 
@@ -30,9 +25,9 @@ ms.locfileid: "81416938"
 
 此 HTTP 连接器、[REST 连接器](connector-rest.md)和 [Web 表连接器](connector-web-table.md)之间的区别如下：
 
-- **REST 连接器**专门支持从 RESTful API 复制数据。 
-- **HTTP 连接器**是通用的，可从任何 HTTP 终结点检索数据，以执行文件下载等操作。 在 REST 连接器可用之前，你可能偶然使用 HTTP 连接器从 RESTful API 复制数据，这是受支持的，但与 REST 连接器相比功能较少。
-- **Web 表连接器**用于从 HTML 网页中提取表内容。
+- **REST 连接器** 专门支持从 RESTful API 复制数据。 
+- **HTTP 连接器** 是通用的，可从任何 HTTP 终结点检索数据，以执行文件下载等操作。 在 REST 连接器可用之前，你可能偶然使用 HTTP 连接器从 RESTful API 复制数据，这是受支持的，但与 REST 连接器相比功能较少。
+- **Web 表连接器** 用于从 HTML 网页中提取表内容。
 
 ## <a name="supported-capabilities"></a>支持的功能
 
@@ -66,7 +61,7 @@ ms.locfileid: "81416938"
 
 HTTP 链接的服务支持以下属性：
 
-| properties | 说明 | 必需 |
+| 属性 | 说明 | 必须 |
 |:--- |:--- |:--- |
 | type | type 属性必须设置为 HttpServer   。 | 是 |
 | url | Web 服务器的基 URL。 | 是 |
@@ -78,7 +73,7 @@ HTTP 链接的服务支持以下属性：
 
 将 authenticationType 属性设置为 Basic、Digest 或 Windows     。 除了前面部分所述的通用属性，还指定以下属性：
 
-| properties | 说明 | 必选 |
+| 属性 | 说明 | 必须 |
 |:--- |:--- |:--- |
 | userName | 用于访问 HTTP 终结点的用户名。 | 是 |
 | password | 用户（userName 值）的密码  。 将此字段标记为 SecureString 类型，以便安全地将其存储在数据工厂中  。 此外，还可以[引用 Azure Key Vault 中存储的机密](store-credentials-in-key-vault.md)。 | 是 |
@@ -111,7 +106,7 @@ HTTP 链接的服务支持以下属性：
 
 若要使用 ClientCertificate 身份验证，将 authenticationType 属性设置为ClientCertificate   。 除了前面部分所述的通用属性，还指定以下属性：
 
-| properties | 说明 | 必须 |
+| 属性 | 说明 | 必须 |
 |:--- |:--- |:--- |
 | embeddedCertData | Base64 编码的证书数据。 | 指定是 embeddedCertData，还是 certThumbprint   。 |
 | certThumbprint | 自承载集成运行时计算机的证书存储中所安装证书的指纹。 仅当在 connectVia 属性中指定自承载类型的 Integration Runtime 时适用  。 | 指定是 embeddedCertData，还是 certThumbprint   。 |
@@ -176,7 +171,7 @@ HTTP 链接的服务支持以下属性：
 
 基于格式的数据集中 `location` 设置下的 HTTP 支持以下属性：
 
-| 属性    | 说明                                                  | 必需 |
+| 属性    | 说明                                                  | 必须 |
 | ----------- | ------------------------------------------------------------ | -------- |
 | type        | 数据集中 `location` 下的 type 属性必须设置为 **HttpServerLocation**。 | 是      |
 | relativeUrl | 包含数据的资源的相对 URL。 HTTP 连接器从以下组合 URL 复制数据：`[URL specified in linked service][relative URL specified in dataset]`。   | 否       |
@@ -272,7 +267,7 @@ HTTP 链接的服务支持以下属性：
 ]
 ```
 
-## <a name="lookup-activity-properties"></a>Lookup 活动属性
+## <a name="lookup-activity-properties"></a>查找活动属性
 
 若要了解有关属性的详细信息，请查看 [Lookup 活动](control-flow-lookup-activity.md)。
 

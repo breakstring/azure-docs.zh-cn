@@ -5,12 +5,12 @@ author: jakrams
 ms.author: jakras
 ms.date: 02/14/2020
 ms.topic: quickstart
-ms.openlocfilehash: d6acc16780179654975d63ab2c0b04caf141510c
-ms.sourcegitcommit: 73ac360f37053a3321e8be23236b32d4f8fb30cf
+ms.openlocfilehash: a5a44b9d27901fcd00f8813096de6bbae5f2310d
+ms.sourcegitcommit: c136985b3733640892fee4d7c557d40665a660af
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 06/30/2020
-ms.locfileid: "85557053"
+ms.lasthandoff: 01/13/2021
+ms.locfileid: "98179939"
 ---
 # <a name="quickstart-deploy-unity-sample-to-hololens"></a>快速入门：将 Unity 示例部署到 HoloLens
 
@@ -44,11 +44,11 @@ ms.locfileid: "85557053"
 1. 将配置更改为“发布”和“ARM64” 
 1. 将调试模式切换为“远程计算机”\
     ![解决方案配置](media/unity-deploy-config.png)
-1. 生成解决方案 (F7)
+1. 生成解决方案
 1. 在项目的“快速启动”页中，转到“属性”>“调试”
     1. 确保“发布”配置处于活动状态
     1. 将“要启动的调试器”设置为“远程计算机”
-    1. 将“计算机名”更改为“HoleLens 的 IP”
+    1. 将“计算机名称”更改为“HoloLens 的 IP”
 
 ## <a name="launch-the-sample-project"></a>启动示例项目
 

@@ -1,225 +1,283 @@
 ---
-title: 教程：在 Python 中训练第一个 Azure ML 模型
+title: 教程：训练你的第一个机器学习模型 - Python
 titleSuffix: Azure Machine Learning
-description: 本教程介绍 Azure 机器学习中的基础设计模式，并基于糖尿病数据集训练一个简单的 scikit-learn 模型。
+description: Azure 机器学习入门系列的第 3 部分介绍了如何训练机器学习模型。
 services: machine-learning
 ms.service: machine-learning
 ms.subservice: core
 ms.topic: tutorial
-ms.author: sgilley
-author: sdgilley
-ms.date: 02/10/2020
+author: aminsaied
+ms.author: amsaied
+ms.reviewer: sgilley
+ms.date: 09/15/2020
 ms.custom: devx-track-python
-ms.openlocfilehash: be8f0c85f62779dec9231a9f44155d4608e88b52
-ms.sourcegitcommit: 7fe8df79526a0067be4651ce6fa96fa9d4f21355
+ms.openlocfilehash: b1fa4d3e6c017232922e500352558e34726b90cc
+ms.sourcegitcommit: 0aec60c088f1dcb0f89eaad5faf5f2c815e53bf8
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/06/2020
-ms.locfileid: "87852695"
+ms.lasthandoff: 01/14/2021
+ms.locfileid: "98183075"
 ---
-# <a name="tutorial-train-your-first-ml-model"></a>教程：训练第一个 ML 模型
+# <a name="tutorial-train-your-first-machine-learning-model-part-3-of-4"></a>教程：训练你的第一个机器学习模型（第 3 部分，共 4 部分）
 
-[!INCLUDE [applies-to-skus](../../includes/aml-applies-to-basic-enterprise-sku.md)]
+本教程介绍如何在 Azure 机器学习中训练机器学习模型。
 
-本教程是由两个部分构成的系列教程的第二部分。 在上一篇教程中，你[创建了一个工作区并选择了一个开发环境](tutorial-1st-experiment-sdk-setup.md)。 本教程介绍 Azure 机器学习中的基础设计模式，并基于糖尿病数据集训练一个简单的 scikit-learn 模型。 完成本教程后，你将获得 SDK 的实践知识，继而可以开发更复杂的试验和工作流。
+本教程是由四部分组成的系列教程的第 3 部分。你可以在其中了解 Azure 机器学习基础知识，并在 Azure 中完成基于作业的机器学习任务。 本教程的基础是你在本系列的[第 1 部分：设置](tutorial-1st-experiment-sdk-setup-local.md)和[第 2 部分：运行“Hello world!”](tutorial-1st-experiment-hello-world.md) 中完成的工作。
 
-本教程将介绍以下任务：
+在本教程中，你通过提交用于训练机器学习模型的脚本来执行下一步。 此示例将有助于你了解 Azure 机器学习如何在本地调试和远程运行之间轻松实现一致的行为。
+
+本教程介绍以下操作：
 
 > [!div class="checklist"]
-> * 连接工作区并创建试验
-> * 加载数据并训练 scikit-learn 模型
-> * 在工作室中查看训练结果
-> * 检索最佳模型
+> * 创建训练脚本。
+> * 使用 Conda 定义 Azure 机器学习环境。
+> * 创建控制脚本。
+> * 了解 Azure 机器学习类（`Environment`、`Run`、`Metrics`）。
+> * 提交并运行训练脚本。
+> * 在云中查看代码输出。
+> * 将指标记录到 Azure 机器学习。
+> * 在云中查看指标。
 
 ## <a name="prerequisites"></a>先决条件
 
-唯一的先决条件是运行本教程的第一部分：[设置环境和工作区](tutorial-1st-experiment-sdk-setup.md)。
+- [Anaconda](https://www.anaconda.com/download/) 或 [Miniconda](https://www.anaconda.com/download/)，用于管理 Python 虚拟环境并安装包。
+- 完成本系列的[第 1 部分](tutorial-1st-experiment-sdk-setup-local.md)和[第 2 部分](tutorial-1st-experiment-hello-world.md)。
 
-在本教程的这一部分中，你将运行在第一部分末尾打开的示例 Jupyter 笔记本 tutorials/create-first-ml-experiment/tutorial-1st-experiment-sdk-train.ipynb 中的代码。 本文将介绍此 Notebook 中的相同代码。
+## <a name="create-training-scripts"></a>创建训练脚本
 
-## <a name="open-the-notebook"></a>打开笔记本
+首先，在 `model.py` 文件中定义神经网络体系结构。 所有训练代码（包括 `model.py`）都将进入 `src` 子目录。
 
-1. 登录到 [Azure 机器学习工作室](https://ml.azure.com/)。
+下面的代码来自 PyTorch 中的[介绍性示例](https://pytorch.org/tutorials/beginner/blitz/cifar10_tutorial.html)。 请注意，Azure 机器学习概念适用于任何机器学习代码，而不只是 PyTorch。
 
-1. 打开[第一部分](tutorial-1st-experiment-sdk-setup.md#open)中所示的文件夹中的 **tutorial-1st-experiment-sdk-train.ipynb**。
+:::code language="python" source="~/MachineLearningNotebooks/tutorials/get-started-day1/IDE-users/src/model.py":::
 
+接下来，定义训练脚本。 此脚本通过使用 PyTorch `torchvision.dataset` API 来下载 CIFAR10 数据集，设置 `model.py` 中定义的网络，并通过使用标准 SGD 和互熵损失对该数据集进行两个时期的训练。
 
-> [!Warning]
-> 在 Jupyter 界面中**不**创建*新的*笔记本！ 笔记本 tutorials/create-first-ml-experiment/tutorial-1st-experiment-sdk-train.ipynb 包含本教程**所需的所有代码和数据**。
+在 `src` 子目录中创建 `train.py` 脚本：
 
-## <a name="connect-workspace-and-create-experiment"></a>连接工作区并创建试验
+:::code language="python" source="~/MachineLearningNotebooks/tutorials/get-started-day1/IDE-users/src/train.py":::
 
-> [!Important]
-> 本文的其余部分包含的内容与在笔记本中看到的内容相同。  
->
-> 如果要在运行代码时继续阅读，请立即切换到 Jupyter 笔记本。 
-> 若要在笔记本中运行单个代码单元，请单击代码单元，然后按 **Shift+Enter**。 或者，通过从顶部工具栏中选择“全部运行”来运行整个笔记本。
+你现在具有以下目录结构：
 
-导入 `Workspace` 类，并使用函数 `from_config().` 从文件 `config.json` 中加载订阅信息。默认情况下，这会查找当前目录中的 JSON 文件，但你也可以使用 `from_config(path="your/file/path")` 指定一个路径参数以指向该文件。 在云笔记本服务器中，该文件自动位于根目录中。
+```txt
+tutorial
+└──.azureml
+|  └──config.json
+└──src
+|  └──hello.py
+|  └──model.py
+|  └──train.py
+└──01-create-workspace.py
+└──02-create-compute.py
+└──03-run-hello.py
+```
 
-如果以下代码要求进行额外的身份验证，只需在浏览器中粘贴链接，然后输入身份验证令牌即可。
+> [!div class="nextstepaction"]
+> [我创建了训练脚本](?success=create-scripts#environment) [我遇到了一个问题](https://www.research.net/r/7CTJQQN?issue=create-scripts)
+
+## <a name="create-a-new-python-environment"></a><a name="environment"></a> 创建新的 Python 环境
+
+在 `.azureml` 隐藏目录中创建名为 `pytorch-env.yml` 的文件：
+
+:::code language="yml" source="~/MachineLearningNotebooks/tutorials/get-started-day1/IDE-users/environments/pytorch-env.yml":::
+
+此环境具有你的模型和训练脚本所需的所有依赖项。 请注意，适用于 Python 的 Azure 机器学习 SDK 没有依赖项。
+
+> [!div class="nextstepaction"]
+> [我创建了环境文件](?success=create-env-file#test-local) [我遇到了一个问题](https://www.research.net/r/7CTJQQN?issue=create-env-file)
+
+## <a name="test-locally"></a><a name="test-local"></a> 本地测试
+
+在终端或 Anaconda 提示符窗口中，使用以下代码在新环境中本地测试脚本。  
+
+```bash
+conda deactivate                                # If you are still using the tutorial environment, exit it
+conda env create -f .azureml/pytorch-env.yml    # create the new Conda environment
+conda activate pytorch-env                      # activate new Conda environment
+python src/train.py                             # train model
+```
+
+运行此脚本后，你将会看到下载到名为 `tutorial/data` 的目录中的数据。
+
+> [!div class="nextstepaction"]
+> [我在本地运行代码](?success=test-local#create-local) [我遇到了一个问题](https://www.research.net/r/7CTJQQN?issue=test-local)
+
+## <a name="create-the-control-script"></a><a name="create-local"></a> 创建控制脚本
+
+下面的控制脚本和用于提交“Hello world!”的脚本之间的差异 在于你额外添加了几行来设置环境。
+
+在 `tutorial` 目录中创建名为 `04-run-pytorch.py` 的新 Python 文件：
 
 ```python
+# 04-run-pytorch.py
 from azureml.core import Workspace
-ws = Workspace.from_config()
-```
-
-现在，请在工作区中创建一个试验。 试验是代表一系列试运行（各个模型运行）的另一个基础云资源。 本教程使用试验来创建运行并在 Azure 机器学习工作室中跟踪模型训练。 参数包含工作区引用，以及试验的字符串名称。
-
-
-```python
 from azureml.core import Experiment
-experiment = Experiment(workspace=ws, name="diabetes-experiment")
+from azureml.core import Environment
+from azureml.core import ScriptRunConfig
+
+if __name__ == "__main__":
+    ws = Workspace.from_config()
+    experiment = Experiment(workspace=ws, name='day1-experiment-train')
+    config = ScriptRunConfig(source_directory='./src',
+                             script='train.py',
+                             compute_target='cpu-cluster')
+
+    # set up pytorch environment
+    env = Environment.from_conda_specification(
+        name='pytorch-env',
+        file_path='./.azureml/pytorch-env.yml'
+    )
+    config.run_config.environment = env
+
+    run = experiment.submit(config)
+
+    aml_url = run.get_portal_url()
+    print(aml_url)
+```    
+    
+### <a name="understand-the-code-changes"></a>了解代码更改
+
+:::row:::
+   :::column span="":::
+      `env = ...`
+   :::column-end:::
+   :::column span="2":::
+      Azure 机器学习提供了[环境](/python/api/azureml-core/azureml.core.environment.environment?preserve-view=true&view=azure-ml-py)概念来表示一个可重现的、进行了版本控制的 Python 环境，以便用来运行试验。 从本地 Conda 或 pip 环境创建一个环境很简单。
+   :::column-end:::
+:::row-end:::
+:::row:::
+   :::column span="":::
+      `config.run_config.environment = env`
+   :::column-end:::
+   :::column span="2":::
+      将该环境添加到 [ScriptRunConfig](/python/api/azureml-core/azureml.core.scriptrunconfig?preserve-view=true&view=azure-ml-py)。
+   :::column-end:::
+:::row-end:::
+
+> [!div class="nextstepaction"]
+> [我创建了控制脚本](?success=control-script#submit) [我遇到了一个问题](https://www.research.net/r/7CTJQQN?issue=control-script)
+
+
+## <a name="submit-the-run-to-azure-machine-learning"></a><a name="submit"></a> 将该运行提交到 Azure 机器学习
+
+切换回教程环境，该环境安装了适用于 Python 的 Azure 机器学习 SDK。 由于训练代码未在计算机上运行，因此无需安装 PyTorch。  但你确实需要教程环境中的 `azureml-sdk`。
+
+```bash
+conda deactivate
+conda activate tutorial
+python 04-run-pytorch.py
 ```
 
-## <a name="load-data-and-prepare-for-training"></a>加载数据并准备训练
+>[!NOTE] 
+> 首次运行此脚本时，Azure 机器学习会从 PyTorch 环境生成新的 Docker 映像。 完成整个运行可能需要 5 到 10 分钟。 
+>
+> 可以在 Azure 机器学习工作室中查看 Docker 生成日志。 单击指路向工作室的链接，选择“输出 + 日志”选项卡，然后选择 `20_image_build_log.txt`。
+>
+> 在将来的运行中将会重复使用此映像，以加快脚本的运行速度。
 
-对于本教程，使用糖尿病数据集，其中使用年龄、性别和 BMI 等特征来预测糖尿病的发展阶段。 从 [Azure 开放数据集](https://azure.microsoft.com/services/open-datasets/)类加载数据，并使用 `train_test_split()` 将其拆分为训练集和测试集。 此函数将隔离数据，以便在训练后为模型提供不可见的数据进行测试。
+生成映像之后，请选择 `70_driver_log.txt`，以查看训练脚本的输出。
 
+```txt
+Downloading https://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz to ./data/cifar-10-python.tar.gz
+...
+Files already downloaded and verified
+epoch=1, batch= 2000: loss 2.19
+epoch=1, batch= 4000: loss 1.82
+epoch=1, batch= 6000: loss 1.66
+epoch=1, batch= 8000: loss 1.58
+epoch=1, batch=10000: loss 1.52
+epoch=1, batch=12000: loss 1.47
+epoch=2, batch= 2000: loss 1.39
+epoch=2, batch= 4000: loss 1.38
+epoch=2, batch= 6000: loss 1.37
+epoch=2, batch= 8000: loss 1.33
+epoch=2, batch=10000: loss 1.31
+epoch=2, batch=12000: loss 1.27
+Finished Training
+```
+
+> [!WARNING]
+> 如果看到错误“`Your total snapshot size exceeds the limit`”，则表明 `data` 目录位于 `ScriptRunConfig` 中使用的 `source_directory` 值中。
+>
+> 请将 `data` 移到 `src` 之外。
+
+可以使用 `env.register(ws)` 将环境注册到工作区。 然后，可以轻松地对这些环境进行共享、重复使用和版本控制。 利用环境，可以轻松地重现以前的结果并与团队协作。
+
+Azure 机器学习还维护特选环境的集合。 这些环境涵盖了常见的机器学习方案，受缓存的 Docker 映像的支持。 缓存的 Docker 映像使第一个远程运行速度更快。
+
+简而言之，使用注册的环境可以节省时间！ 有关详细信息，请阅读[如何使用环境](./how-to-use-environments.md)。
+
+> [!div class="nextstepaction"]
+> [我提交了运行](?success=test-w-environment#log) [我遇到了一个问题](https://www.research.net/r/7CTJQQN?issue=test-w-environment)
+
+## <a name="log-training-metrics"></a><a name="log"></a> 记录训练指标
+
+你已在 Azure 机器学习中进行了模型训练，可以开始跟踪一些性能指标了。
+
+当前训练脚本将指标输出到终端。 Azure 机器学习提供了一种机制，用于记录具有更多功能的指标。 通过添加几行代码，你可以在工作室中可视化指标并在多个运行之间比较指标。
+
+### <a name="modify-trainpy-to-include-logging"></a>修改 `train.py`，使之包括日志记录
+
+修改 `train.py` 脚本，以包含另外两行代码：
+
+:::code language="python" source="~/MachineLearningNotebooks/tutorials/get-started-day1/code/pytorch-cifar10-train-with-logging/train.py":::
+
+
+#### <a name="understand-the-additional-two-lines-of-code"></a>了解这两行额外添加的代码
+
+在 `train.py` 中，你通过使用 `Run.get_context()` 方法从训练脚本本身中访问 run 对象，并使用该对象来记录指标：
 
 ```python
-from azureml.opendatasets import Diabetes
-from sklearn.model_selection import train_test_split
+# in train.py
+run = Run.get_context()
 
-x_df = Diabetes.get_tabular_dataset().to_pandas_dataframe().dropna()
-y_df = x_df.pop("Y")
+...
 
-X_train, X_test, y_train, y_test = train_test_split(x_df, y_df, test_size=0.2, random_state=66)
+run.log('loss', loss)
 ```
 
-## <a name="train-a-model"></a>训练模型
+Azure 机器学习中的指标具有以下特点：
 
-进行小规模的训练时，在本地就能轻松训练一个简单的 scikit-learn 学习模型；但是，在训练包含数十个不同特征组合方式和超参数设置的多个迭代时，很容易就会失去已训练的模型及其训练方式的跟踪。 以下设计模式演示如何利用 SDK 轻松跟踪云中的训练。
+- 按试验和运行进行组织，因此可以轻松地跟踪和比较指标。
+- 配备了一个 UI，使你能够在工作室中可视化训练性能。
+- 设计用于进行扩展，因此即使在运行数百个试验的情况下，你也始终有这些优势。
 
-生成一个脚本，用于通过不同的超参数 alpha 值训练循环中的岭回归模型。
+> [!div class="nextstepaction"]
+> [我修改了 train.py](?success=modify-train#log) [我遇到了一个问题](https://www.research.net/r/7CTJQQN?issue=modify-train)
 
+### <a name="update-the-conda-environment-file"></a>更新 Conda 环境文件
 
-```python
-from sklearn.linear_model import Ridge
-from sklearn.metrics import mean_squared_error
-from sklearn.externals import joblib
-import math
+`train.py` 脚本只有一个依赖于 `azureml.core` 的新依赖项。 更新 `pytorch-env.yml` 以反映此更改：
 
-alphas = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
+:::code language="python" source="~/MachineLearningNotebooks/tutorials/get-started-day1/configuration/pytorch-aml-env.yml":::
 
-for alpha in alphas:
-    run = experiment.start_logging()
-    run.log("alpha_value", alpha)
+> [!div class="nextstepaction"]
+> [我更新了环境文件](?success=update-environment#submit-again) [我遇到了一个问题](https://www.research.net/r/7CTJQQN?issue=update-environment)
 
-    model = Ridge(alpha=alpha)
-    model.fit(X=X_train, y=y_train)
-    y_pred = model.predict(X=X_test)
-    rmse = math.sqrt(mean_squared_error(y_true=y_test, y_pred=y_pred))
-    run.log("rmse", rmse)
+### <a name="submit-the-run-to-azure-machine-learning"></a><a name="submit-again"></a> 将该运行提交到 Azure 机器学习
+再次提交此脚本：
 
-    model_name = "model_alpha_" + str(alpha) + ".pkl"
-    filename = "outputs/" + model_name
-
-    joblib.dump(value=model, filename=filename)
-    run.upload_file(name=model_name, path_or_stream=filename)
-    run.complete()
+```bash
+python 04-run-pytorch.py
 ```
 
-以上代码完成以下操作：
+这一次，当你访问工作室时，请转到“指标”选项卡，此时可以看到有关模型训练损失的实时更新！
 
-1. 对于 `alphas` 数组中的每个 alpha 超参数值，在试验中创建一个新的运行。 记录 alpha 值以区分不同的运行。
-1. 在每个运行中，实例化、训练一个岭回归模型并使用它来运行预测。 计算实际值与预测值的均方根误差，然后将结果记录到该运行。 此时，该运行中已附加 alpha 值和 rmse 准确度的元数据。
-1. 接下来，序列化每个运行的模型并将其上传到运行。 这样便可从工作室中的运行下载模型文件。
-1. 每次迭代结束时，通过调用 `run.complete()` 完成运行。
+:::image type="content" source="media/tutorial-1st-experiment-sdk-train/logging-metrics.png" alt-text="“指标”选项卡中的训练损失图。":::
 
-完成训练后，调用 `experiment` 变量可提取工作室中的试验的链接。
-
-```python
-experiment
-```
-
-<table style="width:100%"><tr><th>名称</th><th>工作区</th><th>报告页</th><th>文档页</th></tr><tr><td>diabetes-experiment</td><td>your-workspace-name</td><td>Azure 机器学习工作室链接</td><td>文档链接</td></tr></table>
-
-## <a name="view-training-results-in-studio"></a>在工作室中查看训练结果
-
-单击“Azure 机器学习工作室链接”可转到试验主页。 在此处可以查看试验中的每个运行。 所有自定义记录的值（在本例中为 `alpha_value` 和 `rmse`）将成为每个运行的字段，并且可在图标中使用。 要绘制具有日志记录指标的新图表，请单击“添加图表”并选择要绘制的指标。
-
-对包含数百甚至数千个独立运行的模型进行大规模训练时，在此页中可以轻松查看训练的每个模型，具体而言，可以查看模型的训练方式，以及独特的指标在不同时间的变化。
-
-:::image type="content" source="./media/tutorial-1st-experiment-sdk-train/experiment-main.png" alt-text="工作室中的试验主页。":::
-
-
-选择 `RUN NUMBER` 列中的运行编号链接可查看单个运行的页面。 默认选项卡“详细信息”显示有关每个运行的详细信息。 导航到“输出 + 日志”选项卡可看到在每次训练迭代期间上传到运行的模型的 `.pkl` 文件。 在此处可以下载模型文件，而无需手动重新训练。
-
-:::image type="content" source="./media/tutorial-1st-experiment-sdk-train/model-download.png" alt-text="工作室中的运行详细信息页。":::
-
-## <a name="get-the-best-model"></a>获取最佳模型
-
-除了能够从工作室中的试验下载模型文件以外，还能够以编程方式下载这些文件。 以下代码循环访问试验中的每个运行，并访问记录的运行指标和运行详细信息（包含 run_id）。 这会跟踪最佳运行，在本例中，该运行是均方根误差最低的运行。
-
-```python
-minimum_rmse_runid = None
-minimum_rmse = None
-
-for run in experiment.get_runs():
-    run_metrics = run.get_metrics()
-    run_details = run.get_details()
-    # each logged metric becomes a key in this returned dict
-    run_rmse = run_metrics["rmse"]
-    run_id = run_details["runId"]
-
-    if minimum_rmse is None:
-        minimum_rmse = run_rmse
-        minimum_rmse_runid = run_id
-    else:
-        if run_rmse < minimum_rmse:
-            minimum_rmse = run_rmse
-            minimum_rmse_runid = run_id
-
-print("Best run_id: " + minimum_rmse_runid)
-print("Best run_id rmse: " + str(minimum_rmse))
-```
-
-```output
-Best run_id: 864f5ce7-6729-405d-b457-83250da99c80
-Best run_id rmse: 57.234760283951765
-```
-
-使用 `Run` 构造函数以及试验对象，通过最佳运行 ID 提取单个运行。 然后调用 `get_file_names()` 以查看可从此运行下载的所有文件。 在本例中，你在训练期间只为每个运行上传了一个文件。
-
-```python
-from azureml.core import Run
-best_run = Run(experiment=experiment, run_id=minimum_rmse_runid)
-print(best_run.get_file_names())
-```
-
-```output
-['model_alpha_0.1.pkl']
-```
-
-对运行对象调用 `download()`，并指定要下载的模型文件名。 默认情况下，此函数会将文件下载到当前目录。
-
-```python
-best_run.download_file(name="model_alpha_0.1.pkl")
-```
-
-## <a name="clean-up-resources"></a>清理资源
-
-如果打算运行其他 Azure 机器学习教程，请不要完成本部分。
-
-### <a name="stop-the-compute-instance"></a>停止计算实例
-
-[!INCLUDE [aml-stop-server](../../includes/aml-stop-server.md)]
-
-### <a name="delete-everything"></a>删除所有内容
-
-[!INCLUDE [aml-delete-resource-group](../../includes/aml-delete-resource-group.md)]
-
-还可保留资源组，但请删除单个工作区。 显示工作区属性，然后选择“删除”。
+> [!div class="nextstepaction"]
+> [我重新提交了运行](?success=resubmit-with-logging#next-steps) [我遇到了一个问题](https://www.research.net/r/7CTJQQN?issue=resubmit-with-logging)
 
 ## <a name="next-steps"></a>后续步骤
 
-在本教程中，你已执行以下任务：
+在本课程中，你从基本的“Hello world!” 脚本升级成了更逼真的训练脚本，该脚本要求运行特定的 Python 环境。 你了解了如何使用 Azure 机器学习环境将本地 Conda 环境带入云中。 最后，你看到了如何通过几行代码将指标记录到 Azure 机器学习。
 
-> [!div class="checklist"]
-> * 已连接工作区并创建试验
-> * 已加载数据并训练 scikit-learn 模型
-> * 已在工作室中查看训练结果并已检索模型
+创建 Azure 机器学习环境还有其他方法，包括[从 pip 的 requirements.txt](/python/api/azureml-core/azureml.core.environment.environment?preserve-view=true&view=azure-ml-py#from-pip-requirements-name--file-path-) 文件创建，或者[从现有的本地 Conda 环境](/python/api/azureml-core/azureml.core.environment.environment?preserve-view=true&view=azure-ml-py#from-existing-conda-environment-name--conda-environment-name-)创建。
 
-使用 Azure 机器学习来[部署模型](tutorial-deploy-models-with-aml.md)。
-了解如何开发[自动化机器学习](tutorial-auto-train-models.md)试验。
+在下一课程中，你将了解如何通过将 CIFAR10 数据集上传到 Azure 来处理 Azure 机器学习中的数据。
+
+> [!div class="nextstepaction"]
+> [教程：自带数据](tutorial-1st-experiment-bring-data.md)
+
+>[!NOTE] 
+> 如果你想就此完成本教程系列，不再继续进行下一步，请记得[清理你的资源](tutorial-1st-experiment-bring-data.md#clean-up-resources)。

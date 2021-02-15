@@ -3,16 +3,14 @@ title: 使用分块处理大型消息
 description: 了解如何在使用 Azure 逻辑应用创建的自动任务和工作流中使用分块处理大型消息大小
 services: logic-apps
 ms.suite: integration
-author: DavidCBerry13
-ms.author: daberry
 ms.topic: article
-ms.date: 12/03/2019
-ms.openlocfilehash: 54828dded5196c86946d99a9cd8cec7a42533661
-ms.sourcegitcommit: a8ee9717531050115916dfe427f84bd531a92341
+ms.date: 12/18/2020
+ms.openlocfilehash: de4af34182fc1a95968e95d322a6ec35101a3dc9
+ms.sourcegitcommit: b6267bc931ef1a4bd33d67ba76895e14b9d0c661
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 05/12/2020
-ms.locfileid: "83117557"
+ms.lasthandoff: 12/19/2020
+ms.locfileid: "97695876"
 ---
 # <a name="handle-large-messages-with-chunking-in-azure-logic-apps"></a>在 Azure 逻辑应用中使用分块处理大型消息
 
@@ -40,8 +38,57 @@ ms.locfileid: "83117557"
 
 支持分块的连接器的基础分块协议对最终用户不可见。 但是，并非所有连接器都支持分块，因此当传入消息超出连接器的大小限制时，这些不支持分块的连接器就会生成运行时错误。
 
-> [!NOTE]
-> 对于使用分块的操作，无法在这些操作中传递触发器正文或使用表达式（如 `@triggerBody()?['Content']`）。 相反，对于文本或 JSON 文件内容，可以尝试使用[撰写操作](../logic-apps/logic-apps-perform-data-operations.md#compose-action)或[创建变量](../logic-apps/logic-apps-create-variables-store-values.md)来处理该内容。 如果触发器正文包含其他内容类型（如媒体文件），则需要执行其他步骤来处理该内容。
+
+对于支持和启用分块的操作，不能使用触发器主体、变量和表达式（例如）， `@triggerBody()?['Content']` 因为使用任意这些输入会阻止分块操作的发生。 改为使用 " [**撰写** " 操作](../logic-apps/logic-apps-perform-data-operations.md#compose-action)。 具体来说，您必须 `body` 使用 **撰写** 操作来创建一个字段，以存储触发器正文、变量、表达式等的数据输出，例如：
+
+```json
+"Compose": {
+    "inputs": {
+        "body": "@variables('myVar1')"
+    },
+    "runAfter": {
+        "Until": [
+            "Succeeded"
+        ]
+    },
+    "type": "Compose"
+},
+```
+然后，若要引用数据，请在分块操作中使用 `@body('Compose')` 。
+
+```json
+"Create_file": {
+    "inputs": {
+        "body": "@body('Compose')",
+        "headers": {
+            "ReadFileMetadataFromServer": true
+        },
+        "host": {
+            "connection": {
+                "name": "@parameters('$connections')['sftpwithssh_1']['connectionId']"
+            }
+        },
+        "method": "post",
+        "path": "/datasets/default/files",
+        "queries": {
+            "folderPath": "/c:/test1/test1sub",
+            "name": "tt.txt",
+            "queryParametersSingleEncoded": true
+        }
+    },
+    "runAfter": {
+        "Compose": [
+            "Succeeded"
+        ]
+    },
+    "runtimeConfiguration": {
+        "contentTransfer": {
+            "transferMode": "Chunked"
+        }
+    },
+    "type": "ApiConnection"
+},
+```
 
 <a name="set-up-chunking"></a>
 
@@ -121,7 +168,7 @@ GET 请求将表示字节范围的 "Range" 标头设置为 "bytes=0-1023"。 如
 
 2. 终结点以“200”成功状态代码和以下可选信息进行响应：
 
-   | 终结点响应标头字段 | 类型 | 必选 | 说明 |
+   | 终结点响应标头字段 | 类型 | 必需 | 说明 |
    |--------------------------------|------|----------|-------------|
    | **x-ms-chunk-size** | Integer | 否 | 建议的区块大小（以字节为单位） |
    | **位置** | 字符串 | 是 | 要向其发送 HTTP PATCH 消息的 URL 位置 |
@@ -142,7 +189,7 @@ GET 请求将表示字节范围的 "Range" 标头设置为 "bytes=0-1023"。 如
 
 4. 每次进行 PATCH 请求之后，终结点会以“200”状态代码和以下响应标头进行响应，以此确认每个区块的接收情况：
 
-   | 终结点响应标头字段 | 类型 | 必选 | 说明 |
+   | 终结点响应标头字段 | 类型 | 必需 | 说明 |
    |--------------------------------|------|----------|-------------|
    | **范围** | 字符串 | 是 | 终结点收到的内容的字节范围，例如：“bytes=0-1023” |   
    | **x-ms-chunk-size** | Integer | 否 | 建议的区块大小（以字节为单位） |

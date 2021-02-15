@@ -4,15 +4,15 @@ description: 介绍 Azure HPC 缓存，它是一种用于高性能计算的文�
 author: ekpgh
 ms.service: hpc-cache
 ms.topic: overview
-ms.date: 07/16/2020
+ms.date: 11/23/2020
 ms.author: v-erkel
 ms.custom: references_regions
-ms.openlocfilehash: 8c8223872ec3ef1d875e10ead8f327db01a924c4
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.openlocfilehash: 0568d9b7fea2e4e048c0c1d1b2d6f81d64a9b114
+ms.sourcegitcommit: c95e2d89a5a3cf5e2983ffcc206f056a7992df7d
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87053674"
+ms.lasthandoff: 11/24/2020
+ms.locfileid: "95519330"
 ---
 # <a name="what-is-azure-hpc-cache"></a>什么是 Azure HPC 缓存？
 
@@ -65,11 +65,7 @@ Azure HPC 缓存部署可帮助加快定量分析计算、风险分析工作负�
 * US Gov 亚利桑那州
 * US Gov 弗吉尼亚州
 
-## <a name="service-availability"></a>服务可用性
-
-必须为将用于 Azure HPC 缓存的每个订阅请求访问权限。 此限制有助于确保服务质量。
-
-通过填写[此表单](https://aka.ms/onboard-hpc-cache)来请求访问权限。 将订阅添加到访问列表后，可以创建缓存。
+Azure HPC 缓存位于单个区域中。 如果将该缓存连接到位于其他区域的 Blob 容器，则它可以访问存储在该区域中的数据。 缓存不会永久存储客户数据。
 
 ## <a name="next-steps"></a>后续步骤
 

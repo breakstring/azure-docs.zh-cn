@@ -2,18 +2,16 @@
 title: 使用 ODBC 驱动程序和 PowerShell 查询 Apache Hive - Azure HDInsight
 description: 使用 Microsoft Hive ODBC 驱动程序和 PowerShell 查询 Azure HDInsight 上的 Apache Hive 群集。
 keywords: hive, hive odbc, powershell
-author: hrasheed-msft
-ms.author: hrasheed
-ms.reviewer: jasonh
 ms.service: hdinsight
 ms.topic: tutorial
 ms.date: 06/27/2019
-ms.openlocfilehash: f6139bb98fa0272e43c8e180d4ec029f7a7538bb
-ms.sourcegitcommit: c5021f2095e25750eb34fd0b866adf5d81d56c3a
+ms.custom: devx-track-azurepowershell
+ms.openlocfilehash: 1a6274ce36878af6cfbae04be935485c462bc86a
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/25/2020
-ms.locfileid: "73494322"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98941376"
 ---
 # <a name="tutorial-query-apache-hive-with-odbc-and-powershell"></a>教程：使用 ODBC 和 PowerShell 查询 Apache Hive
 

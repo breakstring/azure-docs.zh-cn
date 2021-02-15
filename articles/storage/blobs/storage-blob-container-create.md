@@ -5,19 +5,20 @@ services: storage
 author: tamram
 ms.service: storage
 ms.topic: how-to
-ms.date: 07/22/2020
+ms.date: 02/04/2020
 ms.author: tamram
 ms.subservice: blobs
-ms.openlocfilehash: abf4cb33fa953ec9a257397551b3d17752fe67f5
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.custom: devx-track-csharp
+ms.openlocfilehash: dac50d8e35080a083e42891732512e012fae8fbd
+ms.sourcegitcommit: 1f1d29378424057338b246af1975643c2875e64d
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87070734"
+ms.lasthandoff: 02/05/2021
+ms.locfileid: "99576441"
 ---
 # <a name="create-or-delete-a-container-in-azure-storage-with-net"></a>使用 .NET 在 Azure 存储中创建或删除容器
 
-Azure 存储中的 Blob 已组织成容器。 必须先创建容器，才能上传 Blob。 本文介绍如何使用[适用于 .NET 的 Azure 存储客户端库](/dotnet/api/overview/azure/storage?view=azure-dotnet)创建和删除容器。
+Azure 存储中的 Blob 已组织成容器。 必须先创建容器，才能上传 Blob。 本文介绍如何使用[适用于 .NET 的 Azure 存储客户端库](/dotnet/api/overview/azure/storage)创建和删除容器。
 
 ## <a name="name-a-container"></a>为容器命名
 
@@ -25,7 +26,7 @@ Azure 存储中的 Blob 已组织成容器。 必须先创建容器，才能上�
 
 - 容器名称的长度可以是 3 到 63 个字符。
 - 容器名称必须以字母或数字开头，并且只能包含小写字母、数字和短划线 (-) 字符。
-- 容器名称中不允许出现两个或更多的连续短划线字符。
+- 容器名称中不允许出现两个或更多个连续的短划线字符。
 
 容器的 URI 采用以下格式：
 
@@ -37,10 +38,10 @@ Azure 存储中的 Blob 已组织成容器。 必须先创建容器，才能上�
 
 # <a name="net-v12"></a>[\.NET v12](#tab/dotnet)
 
-- [创建](/dotnet/api/azure.storage.blobs.blobcontainerclient.create)
-- [CreateAsync](/dotnet/api/azure.storage.blobs.blobcontainerclient.createasync)
-- [CreateIfNotExists](/dotnet/api/azure.storage.blobs.blobcontainerclient.createifnotexists)
-- [CreateIfNotExistsAsync](/dotnet/api/azure.storage.blobs.blobcontainerclient.createifnotexistsasync)
+- [CreateBlobContainer](/dotnet/api/azure.storage.blobs.blobserviceclient.createblobcontainer)
+- [CreateBlobContainerAsync](/dotnet/api/azure.storage.blobs.blobserviceclient.createblobcontainerasync)
+
+如果已存在具有相同名称的容器，则这些方法会引发异常。
 
 # <a name="net-v11"></a>[\.NET v11](#tab/dotnetv11)
 
@@ -48,11 +49,12 @@ Azure 存储中的 Blob 已组织成容器。 必须先创建容器，才能上�
 - [CreateAsync](/dotnet/api/microsoft.azure.storage.blob.cloudblobcontainer.createasync)
 - [CreateIfNotExists](/dotnet/api/microsoft.azure.storage.blob.cloudblobcontainer.createifnotexists)
 - [CreateIfNotExistsAsync](/dotnet/api/microsoft.azure.storage.blob.cloudblobcontainer.createifnotexistsasync)
----
 
 如果已存在同名的容器，**Create** 和 **CreateAsync** 方法将引发异常。
 
-**CreateIfNotExists** 和 **CreateIfNotExistsAsync** 方法返回一个指示是否已创建容器的布尔值。 如果已存在具有相同名称的容器，则这些方法将返回**False**以指示未创建新的容器。
+**CreateIfNotExists** 和 **CreateIfNotExistsAsync** 方法返回一个指示是否已创建容器的布尔值。 如果已存在同名的容器，这些方法将返回 False，指示未创建新容器。
+
+---
 
 将立即在存储帐户下创建容器。 无法将一个容器嵌套在另一个容器下。
 
@@ -98,9 +100,9 @@ private static async Task<CloudBlobContainer> CreateSampleContainerAsync(CloudBl
 
 ## <a name="create-the-root-container"></a>创建根容器
 
-根容器充当存储帐户的默认容器。 每个存储帐户可以有一个根容器，该容器的名称必须 *$root*。 必须显式创建或删除根容器。
+根容器充当存储帐户的默认容器。 每个存储帐户只能包含一个根容器，该容器必须命名为 $root。 必须显式创建或删除根容器。
 
-可以引用存储在根容器中的 Blob，而无需包含根容器名称。 根容器允许引用位于存储帐户层次结构顶层的 Blob。 例如，可以通过以下方式引用根容器中的 blob：
+可以引用存储在根容器中的 Blob，而无需包含根容器名称。 根容器允许引用位于存储帐户层次结构顶层的 Blob。 例如，可通过以下方式引用根容器中的 blob：
 
 `https://myaccount.blob.core.windows.net/default.html`
 
@@ -158,13 +160,13 @@ private static void CreateRootContainer(CloudBlobClient blobClient)
 - [DeleteIfExistsAsync](/dotnet/api/microsoft.azure.storage.blob.cloudblobcontainer.deleteifexistsasync)
 ---
 
-如果容器不存在， **Delete**和**DeleteAsync**方法将引发异常。
+如果该容器不存在，Delete 和 DeleteAsync 方法将引发异常 。
 
-**DeleteIfExists** 和 **DeleteIfExistsAsync** 方法返回一个指示是否已删除容器的布尔值。 如果指定的容器不存在，则这些方法将返回**False**以指示未删除容器。
+**DeleteIfExists** 和 **DeleteIfExistsAsync** 方法返回一个指示是否已删除容器的布尔值。 如果指定的容器不存在，则这些方法将返回 False，指示未删除该容器。
 
-删除容器后，不能创建名称*至少*为30秒的容器。 尝试使用同一名称创建容器将失败，并出现 HTTP 错误代码409（冲突）。 容器或其包含的 blob 上的任何其他操作都将失败，并出现 HTTP 错误代码404（未找到）。
+删除容器后，至少在 30 秒内无法使用相同的名称创建容器。 尝试使用相同的名称创建容器将会失败，并出现 HTTP 错误代码 409（冲突）。 针对容器或其包含的 Blob 执行任何其他操作将会失败，并出现 HTTP 错误代码 404（未找到）。
 
-下面的示例将删除指定的容器，并在该容器不存在时处理异常：
+以下示例删除指定的容器，并在该容器不存在时处理异常：
 
 # <a name="net-v12"></a>[\.NET v12](#tab/dotnet)
 
@@ -228,7 +230,7 @@ private static async Task DeleteContainersWithPrefixAsync(CloudBlobClient blobCl
 
 [!INCLUDE [storage-blob-dotnet-resources-include](../../../includes/storage-blob-dotnet-resources-include.md)]
 
-## <a name="see-also"></a>另请参阅
+## <a name="see-also"></a>请参阅
 
 - [Create Container 操作](/rest/api/storageservices/create-container)
 - [Delete Container 操作](/rest/api/storageservices/delete-container)

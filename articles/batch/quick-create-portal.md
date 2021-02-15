@@ -1,15 +1,15 @@
 ---
 title: Azure 快速入门 - 在 Azure 门户中运行第一个 Batch 作业
-description: 了解如何使用 Azure 门户创建 Batch 帐户、计算节点池以及在池中运行基本任务的作业。
+description: 本快速入门介绍如何使用 Azure 门户创建 Batch 帐户、包含计算节点的池以及在池中运行基本任务的作业。
 ms.topic: quickstart
 ms.date: 08/17/2020
 ms.custom: mvc
-ms.openlocfilehash: cf65a681764a848f8132ec44b8ba313ef1a83235
-ms.sourcegitcommit: 54d8052c09e847a6565ec978f352769e8955aead
+ms.openlocfilehash: d8584ecea8ddd5934771dbe5945a6172a28c801c
+ms.sourcegitcommit: 6172a6ae13d7062a0a5e00ff411fd363b5c38597
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/18/2020
-ms.locfileid: "88511365"
+ms.lasthandoff: 12/11/2020
+ms.locfileid: "97106467"
 ---
 # <a name="quickstart-run-your-first-batch-job-in-the-azure-portal"></a>快速入门：在 Azure 门户中运行第一个 Batch 作业
 
@@ -43,7 +43,7 @@ ms.locfileid: "88511365"
 
 1. 在 Batch 帐户中，选择“池” > “添加”。
 
-1. 输入名为“mypool”的**池 ID**。
+1. 输入名为“mypool”的 **池 ID**。
 
 1. 在“操作系统”中选择以下设置（可以浏览其他选项）。
   
@@ -73,7 +73,7 @@ Batch 会立即创建池，但分配和启动计算节点则需要数分钟。 �
 
 1. 在 Batch 帐户视图中，选择“作业” > “添加”。
 
-1. 输入名为“myjob”的**作业 ID**。 在“池”中，选择“mypool”。 其余设置保留默认值，然后选择“确定”。
+1. 输入名为“myjob”的 **作业 ID**。 在“池”中，选择“mypool”。 其余设置保留默认值，然后选择“确定”。
 
 ## <a name="create-tasks"></a>创建任务
 
@@ -83,15 +83,15 @@ Batch 会立即创建池，但分配和启动计算节点则需要数分钟。 �
 
 若要创建第一个任务，请执行以下操作：
 
-1. 选择“添加”  。
+1. 选择“添加”   。
 
-1. 输入名为“mytask”的**任务 ID**。
+1. 输入名为“mytask”的 **任务 ID**。
 
 1. 在“命令行”中输入 `cmd /c "set AZ_BATCH & timeout /t 90 > NUL"`。 其余设置保留默认值，然后选择“提交”。
 
 创建任务后，Batch 会让其排队在池中运行。 可以使用节点来运行该任务后，任务就会运行。
 
-若要创建第二个任务，请重复上述步骤。 输入另一**任务 ID**，但请指定相同的命令行。 如果第一个任务仍在运行，Batch 会在池中的另一节点上启动第二个任务。
+若要创建第二个任务，请重复上述步骤。 输入另一 **任务 ID**，但请指定相同的命令行。 如果第一个任务仍在运行，Batch 会在池中的另一节点上启动第二个任务。
 
 ## <a name="view-task-output"></a>查看任务输出
 

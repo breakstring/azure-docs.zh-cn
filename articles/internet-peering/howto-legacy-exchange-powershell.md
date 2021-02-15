@@ -6,20 +6,21 @@ services: internet-peering
 author: prmitiki
 ms.service: internet-peering
 ms.topic: how-to
-ms.date: 11/27/2019
+ms.date: 12/15/2020
 ms.author: prmitiki
-ms.openlocfilehash: 2abd05243f30a32d8fe49f12bf4ee2ad09855002
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.custom: devx-track-azurepowershell
+ms.openlocfilehash: acc32f4916f5f7f8fe22eebdd1e72db297cac94c
+ms.sourcegitcommit: d2d1c90ec5218b93abb80b8f3ed49dcf4327f7f4
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "84699985"
+ms.lasthandoff: 12/16/2020
+ms.locfileid: "97590199"
 ---
 # <a name="convert-a-legacy-exchange-peering-to-an-azure-resource-by-using-powershell"></a>使用 PowerShell 将旧版 Exchange 对等互连转换为 Azure 资源
 
 本文介绍如何使用 PowerShell cmdlet 将现有的旧式 Exchange 对等互连转换为 Azure 资源。
 
-如果愿意，可以使用 Azure[门户](howto-legacy-exchange-portal.md)完成本指南。
+如果愿意，可以使用 Azure [门户](howto-legacy-exchange-portal.md)完成本指南。
 
 ## <a name="before-you-begin"></a>开始之前
 * 在开始配置之前，请查看[先决条件](prerequisites.md)和 [Exchange 对等互连演练](walkthrough-exchange-all.md)。

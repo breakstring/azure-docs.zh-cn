@@ -7,12 +7,12 @@ ms.service: virtual-machines-linux
 ms.subservice: security
 ms.topic: quickstart
 ms.date: 10/02/2019
-ms.openlocfilehash: 563b9c03141357eeacf9a7d890c386faae52c6df
-ms.sourcegitcommit: 54d8052c09e847a6565ec978f352769e8955aead
+ms.openlocfilehash: 13e6077ee9bd24cdfc9a7c1f405199989546680f
+ms.sourcegitcommit: 4064234b1b4be79c411ef677569f29ae73e78731
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/18/2020
-ms.locfileid: "88510686"
+ms.lasthandoff: 10/28/2020
+ms.locfileid: "92896015"
 ---
 # <a name="quickstart-create-and-encrypt-a-virtual-machine-with-the-azure-portal"></a>快速入门：使用 Azure 门户创建并加密虚拟机
 
@@ -38,7 +38,7 @@ ms.locfileid: "88510686"
     :::image type="content" source="../media/disk-encryption/portal-quickstart-linux-vm-creation.png" alt-text="Linux VM 创建屏幕":::
 
     > [!WARNING]
-    > “磁盘”选项卡在“磁盘选项”下提供了一个“加密类型”字段。 此字段用于指定[托管磁盘](managed-disks-overview.md) + CMK 的加密选项，而不是用于 Azure 磁盘加密。
+    > “磁盘”选项卡在“磁盘选项”下提供了一个“加密类型”字段。 此字段用于指定[托管磁盘](../managed-disks-overview.md) + CMK 的加密选项，而不是用于 Azure 磁盘加密。
     >
     > 为了避免混淆，建议在完成本教程时完全跳过“磁盘”选项卡。
 
@@ -58,12 +58,12 @@ ms.locfileid: "88510686"
 1. 在顶部栏上，选择“其他设置”。
 1. 在“加密设置” > “要加密的磁盘”下，选择“OS 和数据磁盘”  。
 
-    :::image type="content" source="../media/disk-encryption/portal-quickstart-disks-to-encryption.png" alt-text="磁盘和加密选择":::
+    :::image type="content" source="../media/disk-encryption/portal-quickstart-disks-to-encryption.png" alt-text="屏幕截图突出显示了 OS 磁盘和数据磁盘。":::
 
 1. 在“加密设置”下，选择“选择密钥保管库和用于加密的密钥” 。
 1. 在“从 Azure Key Vault 选择密钥”屏幕上选择“新建” 。
 
-    :::image type="content" source="../media/disk-encryption/portal-qs-keyvault-create.png" alt-text="磁盘和加密选择":::
+    :::image type="content" source="../media/disk-encryption/portal-qs-keyvault-create.png" alt-text="屏幕截图突出显示了“新建”。":::
 
 1. 在“密钥保管库和密钥”的左侧，选择“单击以选择密钥” 。
 1. 在“从 Azure Key Vault 选择密钥”的“密钥保管库”字段下选择“新建”  。

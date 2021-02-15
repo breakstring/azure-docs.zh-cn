@@ -10,40 +10,45 @@ ms.subservice: forms-recognizer
 ms.topic: conceptual
 ms.date: 08/17/2019
 ms.author: pafarley
-ms.openlocfilehash: 039f7343bcef64db9ad9eae558cd3e97f3678c59
-ms.sourcegitcommit: c5021f2095e25750eb34fd0b866adf5d81d56c3a
+ms.openlocfilehash: 4cd762d6c264d95ecb1bd0f3f4c3a4d96eb5a57d
+ms.sourcegitcommit: 2817d7e0ab8d9354338d860de878dd6024e93c66
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/25/2020
-ms.locfileid: "88799275"
+ms.lasthandoff: 02/05/2021
+ms.locfileid: "99585086"
 ---
-# <a name="business-card-concepts"></a>名片概念
+# <a name="form-recognizer-prebuilt-business-cards-model"></a>表单识别器预生成的名片模型 
 
-Azure 窗体识别器可以使用其预生成模型之一来分析和提取名片中的键值对。 此名片 API 结合了强大的光学字符识别功能 (OCR) 功能与我们的业务卡理解模型结合了来自名片的信息（英语）。 它提取个人联系信息、公司名称、职务等。 预构建的名片 API 在表单识别器2.1 版预览版中公开提供。 
+Azure 窗体识别器可以使用其预建的名片模型来分析和提取名片中的联系人信息。 它结合了强大的光学字符识别功能 (OCR) 功能与我们的业务卡理解模型结合了名片中的重要信息。 它提取个人联系信息、公司名称、职务等。 预构建的名片 API 在表单识别器2.1 版预览版中公开提供。 
 
-## <a name="what-does-the-business-card-api-do"></a>名片 API 有什么作用？
+## <a name="what-does-the-business-card-service-do"></a>名片服务有什么作用？
 
-名片 API 从名片提取关键字段，并将它们以组织的 JSON 响应返回。
+预构建的名片 API 从名片提取关键字段，并将它们以组织的 JSON 响应返回。
 
-![Contoso 详细的 FOTT + JSON 输出](./media/business-card-english.jpg)
+![Contoso 详细的 FOTT + JSON 输出](./media/business-card-example.jpg)
 
-### <a name="fields-extracted"></a>提取的字段： 
-* 联系人姓名 
-* 名字 
-* 姓氏 
-* 公司名称 
-* Departments 
-* 职务 
-* 电子邮件 
-* 网站 
-* 地址 
-* 电话号码 
-  * 移动电话 
-  * 传真 
-  * 工作电话 
-  * 其他电话 
 
-名片 API 还从名片返回所有已识别的文本。 此 OCR 输出包含在 JSON 响应中。  
+
+### <a name="fields-extracted"></a>提取的字段：
+
+|名称| 类型 | 说明 | 文本 | 
+|:-----|:----|:----|:----|
+| ContactNames | 对象数组 | 从名片提取的联系人姓名 | [{"FirstName"： "John"，"LastName"： "Doe"}] |
+| FirstName | string | 第一个 (给定) 联系人姓名 | "John" | 
+| LastName | string | 上次 (家庭) 联系人姓名 |     "Doe" | 
+| CompanyNames | 字符串数组 | 从名片提取的公司名称 | ["Contoso"] | 
+| Departments | 字符串数组 | 联系人的部门或组织 | ["R&D"] | 
+| JobTitles | 字符串数组 | 联系人职务 | ["软件工程师"] | 
+| 电子邮件 | 字符串数组 | 联系人电子邮件已从名片提取 | ["johndoe@contoso.com"] | 
+| 网站 | 字符串数组 | 从名片提取的网站 | ["https://www.contoso.com"] | 
+| 地址 | 字符串数组 | 从名片提取的地址 | ["123 主要街道，Redmond，WA 98052"] | 
+| MobilePhones | 电话号码的数组 | 从名片提取的移动电话号码 | ["+ 19876543210"] |
+| 传真 | 电话号码的数组 | 从名片提取的传真电话号码 | ["+ 19876543211"] |
+| WorkPhones | 电话号码的数组 | 从名片提取的工作电话号码 | ["+ 19876543231"] |
+| OtherPhones     | 电话号码的数组 | 从名片中提取的其他电话号码 | ["+ 19876543233"] |
+
+
+名片 API 还可以从名片返回所有已识别的文本。 此 OCR 输出包含在 JSON 响应中。  
 
 ### <a name="input-requirements"></a>输入要求 
 
@@ -51,30 +56,27 @@ Azure 窗体识别器可以使用其预生成模型之一来分析和提取名�
 
 ## <a name="the-analyze-business-card-operation"></a>"分析业务智能卡" 操作
 
-" [分析](https://westcentralus.dev.cognitive.microsoft.com/docs/services/form-recognizer-api-v2-1-preview-1/operations/AnalyzeBusinessCardAsync) " 名片会将名片的图像或 PDF 作为输入，并提取相关值和文本。 调用返回一个名为的响应标头字段 `Operation-Location` 。 `Operation-Location`该值是一个 URL，其中包含要在下一步中使用的结果 ID。
+" [分析](https://westcentralus.dev.cognitive.microsoft.com/docs/services/form-recognizer-api-v2-1-preview-2/operations/AnalyzeBusinessCardAsync) " 名片会将名片的图像或 PDF 作为输入，并提取相关值。 调用返回一个名为的响应标头字段 `Operation-Location` 。 `Operation-Location`该值是一个 URL，其中包含要在下一步中使用的结果 ID。
 
 |响应标头| 结果 URL |
 |:-----|:----|
-|Operation-Location | `https://cognitiveservice/formrecognizer/v2.1-preview.1/prebuilt/businessCard/analyzeResults/49a36324-fc4b-4387-aa06-090cfbf0064f` |
+|Operation-Location | `https://cognitiveservice/formrecognizer/v2.1-preview.2/prebuilt/businessCard/analyzeResults/49a36324-fc4b-4387-aa06-090cfbf0064f` |
 
 ## <a name="the-get-analyze-business-card-result-operation"></a>"获取分析业务智能卡" 结果操作
 
-第二步是调用 " [获取分析业务智能卡" 结果](https://westcentralus.dev.cognitive.microsoft.com/docs/services/form-recognizer-api-v2-1-preview-1/operations/GetAnalyzeBusinessCardResult) 操作。 此操作采用 "分析业务智能卡" 操作创建的结果 ID 作为输入。 它将返回一个 JSON 响应，该响应包含具有以下可能值的 **状态** 字段。 此操作以迭代方式调用，直到它返回 **成功** 值。 使用3到5秒的间隔，以避免超出每秒 (RPS) 速率的请求数。
+第二步是调用 " [获取分析业务智能卡" 结果](https://westcentralus.dev.cognitive.microsoft.com/docs/services/form-recognizer-api-v2-1-preview-2/operations/GetAnalyzeBusinessCardResult) 操作。 此操作采用 "分析业务智能卡" 操作创建的结果 ID 作为输入。 它将返回一个 JSON 响应，该响应包含具有以下可能值的 **状态** 字段。 此操作以迭代方式调用，直到它返回 **成功** 值。 使用3到5秒的间隔，以避免超出每秒 (RPS) 速率的请求数。
 
 |字段| 类型 | 可能值 |
 |:-----|:----:|:----|
-|状态 | string | notStarted：分析操作尚未开始。 |
-| |  | 正在运行：分析操作正在进行。 |
-| |  | 失败：分析操作失败。 |
-| |  | succeeded：分析操作成功。 |
+|status | string | notStarted：分析操作尚未开始。<br /><br />正在运行：分析操作正在进行。<br /><br />失败：分析操作失败。<br /><br />succeeded：分析操作成功。|
 
-当 " **状态** " 字段的值为 " **成功** " 时，JSON 响应将包括 "业务卡理解" 和 "文本识别" 结果。 业务卡理解结果被组织为命名字段值的字典，其中每个值都包含提取的文本、规范化值、边界框、置信度和对应的单词元素。 文本识别结果组织为带有文本、边界框和置信度信息的线条和单词的层次结构。
+当 " **状态** " 字段的值为 " **成功** " 时，如果请求，JSON 响应将包括业务卡理解和可选的文本识别结果。 业务卡理解结果被组织为命名字段值的字典，其中每个值都包含提取的文本、规范化值、边界框、置信度和对应的单词元素。 文本识别结果组织为带有文本、边界框和置信度信息的线条和单词的层次结构。
 
 ![示例名片输出](./media/business-card-results.png)
 
 ### <a name="sample-json-output"></a>示例 JSON 输出
 
-请参阅以下成功的 JSON 响应示例： "readResults" 节点包含所有已识别的文本。 文本按页，然后按行，然后按单个单词进行组织。 "DocumentResults" 节点包含模型发现的特定于业务的值。 在这里，你将找到有用的键/值对，如名字、姓氏、公司名称等。
+请参阅以下成功的 JSON 响应示例： "readResults" 节点包含所有已识别的文本。 文本按页，然后按行，然后按单个单词进行组织。 "DocumentResults" 节点包含模型发现的特定于业务的值。 在这里，你将找到有用的联系人信息，如名字、姓氏、公司名称等。
 
 ```json
 {
@@ -90,8 +92,8 @@ Azure 窗体识别器可以使用其预生成模型之一来分析和提取名�
                 "width": 4032,
                 "height": 3024,
                 "unit": "pixel",
-                "lines": 
-                          {
+                   "lines": 
+                             {
                         "text": "Dr. Avery Smith",
                         "boundingBox": [
                             419.3,
@@ -376,7 +378,7 @@ Azure 窗体识别器可以使用其预生成模型之一来分析和提取名�
 }
 ```
 
-按照 [提取名片数据](./QuickStarts/python-business-cards.md) 快速入门中的步骤，使用 Python 和 REST API 来实现名片数据提取。
+按照 [快速入门](./QuickStarts/client-library.md) 快速入门中的步骤使用 Python 和 REST API 来实现名片数据提取。
 
 ## <a name="customer-scenarios"></a>客户方案  
 
@@ -387,12 +389,13 @@ Azure 窗体识别器可以使用其预生成模型之一来分析和提取名�
 * 跟踪销售线索。  
 * 从现有的名片图像批量提取联系信息。 
 
-名片 API 还支持 [AIBuilder 名片处理功能](https://docs.microsoft.com/ai-builder/prebuilt-business-card)。
+此名片 API 还支持 [AI Builder 业务智能卡处理功能](/ai-builder/prebuilt-business-card)。
 
 ## <a name="next-steps"></a>后续步骤
 
-- 按照快速入门 [快速入门](./quickstarts/python-business-cards.md)
-- 了解 [窗体识别器 REST API](https://westcentralus.dev.cognitive.microsoft.com/docs/services/form-recognizer-api-v2-1-preview-1/operations/AnalyzeBusinessCardAsync)
-- 了解有关[窗体识别器](overview.md)的详细信息
+- 按照 [快速入门](./quickstarts/client-library.md) 中的步骤开始识别名片。
 
+## <a name="see-also"></a>请参阅
 
+* [什么是表单识别器？](./overview.md)
+* [REST API 参考文档](https://westcentralus.dev.cognitive.microsoft.com/docs/services/form-recognizer-api-v2-1-preview-2/operations/AnalyzeBusinessCardAsync)

@@ -1,23 +1,20 @@
 ---
 title: 非交互式身份验证 .NET 应用程序-Azure HDInsight
 description: 了解如何在 Azure HDInsight 中创建非交互式身份验证 Microsoft .NET 应用程序。
-author: hrasheed-msft
-ms.author: hrasheed
-ms.reviewer: jasonh
 ms.service: hdinsight
 ms.topic: how-to
-ms.custom: hdinsightactive
+ms.custom: hdinsightactive, devx-track-csharp
 ms.date: 12/23/2019
-ms.openlocfilehash: 5be217cd2afbb95c4c02a958c1299db599c349d0
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.openlocfilehash: 121c5850ef47999f54d206b95b69e10775d3e5c9
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87074769"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98946087"
 ---
 # <a name="create-a-non-interactive-authentication-net-hdinsight-application"></a>创建非交互式身份验证 .NET HDInsight 应用程序
 
-在应用程序自身的标识（非交互式）或应用程序的已登录用户标识（交互式）下运行 Microsoft .NET Azure HDInsight 应用程序。 本文介绍了如何创建非交互式身份验证 .NET 应用程序以连接到 Azure 并管理 HDInsight。 有关交互式应用程序的示例，请参阅[连接到 Azure HDInsight](hdinsight-administer-use-dotnet-sdk.md#connect-to-azure-hdinsight)。
+在应用程序自身的标识下运行 Microsoft .NET Azure HDInsight 应用程序， (非交互式) 或在应用程序的已登录用户的标识下 (交互式) 。 本文介绍了如何创建非交互式身份验证 .NET 应用程序以连接到 Azure 并管理 HDInsight。 有关交互式应用程序的示例，请参阅[连接到 Azure HDInsight](hdinsight-administer-use-dotnet-sdk.md#connect-to-azure-hdinsight)。
 
 从非交互式 .NET 应用程序，需要：
 
@@ -35,17 +32,17 @@ HDInsight 群集。 请参阅[入门教程](hadoop/apache-hadoop-linux-tutorial-
 
 **将“所有者”角色添加到 Azure AD 应用程序**
 
-1. 登录 [Azure 门户](https://portal.azure.com)。
+1. 登录到 [Azure 门户](https://portal.azure.com)。
 1. 导航到具有 HDInsight 群集的资源组，在本文的后面部分中你将在该群集上运行 Hive 查询。 如果有大量资源组，可以使用筛选器查找所需的资源组。
-1. 在“资源组”菜单中，选择“访问控制（标识和访问管理）”****。
-1. 选择“角色分配”**** 选项卡以查看当前的角色分配。
-1. 在页面顶部，选择“+ 添加”。****
+1. 在“资源组”菜单中，选择“访问控制（标识和访问管理）”。
+1. 选择“角色分配”选项卡以查看当前的角色分配。
+1. 在页面顶部，选择“+ 添加”。
 1. 按照说明将“所有者”角色添加到 Azure AD 应用程序。 成功添加角色后，应用程序将在“所有者”角色下列出。
 
 ## <a name="develop-an-hdinsight-client-application"></a>开发 HDInsight 客户端应用程序
 
 1. 创建 C# 控制台应用程序。
-2. 添加以下[NuGet](https://www.nuget.org/)包：
+2. 添加以下 [NuGet](https://www.nuget.org/) 包：
 
     * `Install-Package Microsoft.Azure.Common.Authentication -Pre`
     * `Install-Package Microsoft.Azure.Management.HDInsight -Pre`
@@ -123,4 +120,4 @@ HDInsight 群集。 请参阅[入门教程](hadoop/apache-hadoop-linux-tutorial-
 
 * [在 Azure 门户中创建 Azure Active Directory 应用程序和服务主体](../active-directory/develop/howto-create-service-principal-portal.md)。
 * 了解如何[使用 Azure 资源管理器对服务主体进行身份验证](../active-directory/develop/howto-authenticate-service-principal-powershell.md)。
-* 了解[azure 基于角色的访问控制（AZURE RBAC）](../role-based-access-control/role-assignments-portal.md)。
+* 了解 azure [RBAC)  (基于角色的访问控制 ](../role-based-access-control/role-assignments-portal.md)。

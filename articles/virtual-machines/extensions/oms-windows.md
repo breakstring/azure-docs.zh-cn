@@ -9,17 +9,18 @@ editor: ''
 tags: azure-resource-manager
 ms.assetid: feae6176-2373-4034-b5d9-a32c6b4e1f10
 ms.service: virtual-machines-windows
+ms.subservice: extensions
 ms.topic: article
 ms.tgt_pltfrm: vm-windows
 ms.workload: infrastructure-services
 ms.date: 06/26/2020
 ms.author: akjosh
-ms.openlocfilehash: 302a0361c19d247b6da4abd516d3a5df8dfd10c7
-ms.sourcegitcommit: 3543d3b4f6c6f496d22ea5f97d8cd2700ac9a481
+ms.openlocfilehash: 22cc9bf1bdfdb8a3026bb09f44e007ab3438325a
+ms.sourcegitcommit: 8dd8d2caeb38236f79fe5bfc6909cb1a8b609f4a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/20/2020
-ms.locfileid: "86494660"
+ms.lasthandoff: 01/08/2021
+ms.locfileid: "98046815"
 ---
 # <a name="log-analytics-virtual-machine-extension-for-windows"></a>适用于 Windows 的 Log Analytics 虚拟机扩展
 
@@ -29,14 +30,16 @@ Azure Monitor 日志提供跨云和本地资产的监视功能。 适用于 Wind
 
 ### <a name="operating-system"></a>操作系统
 
-有关支持的 Windows 操作系统的详细信息，请参阅 [Log Analytics 代理概述](../../azure-monitor/platform/log-analytics-agent.md#supported-windows-operating-systems)一文。
+有关支持的 Windows 操作系统的详细信息，请参阅 [Azure Monitor 代理的概述](../../azure-monitor/platform/agents-overview.md#supported-operating-systems)一文。
 
 ### <a name="agent-and-vm-extension-version"></a>代理和 VM 扩展版本
 下表提供了每次发布的 Windows Log Analytics VM 扩展和 Log Analytics 代理捆绑包的版本映射。 
 
 | Log Analytics Windows 代理捆绑包版本 | Log Analytics Windows VM 扩展版本 | 发布日期 | 发行说明 |
 |--------------------------------|--------------------------|--------------------------|--------------------------|
-| 10.20.18038 | 1.0.18038 | 2020 年 4 月   | <ul><li>使用 Azure Monitor 专用链接范围启用通过专用链接的连接</li><li>添加引入限制，以避免在引入工作区时突然出现意外流入</li><li>添加了对其他 Azure 政府云和区域的支持</li><li>解决 HealthService.exe 崩溃的 bug</li></ul> |
+| 10.20.18053| 1.0.18053.0 | 2020 年 10 月   | <ul><li>新代理疑难解答</li><li>更新代理如何处理 Azure 服务的证书更改</li></ul> |
+| 10.20.18040 | 1.0.18040.2 | 2020 年 8 月   | <ul><li>解决 Azure Arc 问题</li></ul> |
+| 10.20.18038 | 1.0.18038 | 2020 年 4 月   | <ul><li>使用 Azure Monitor 专用链接作用域启用通过专用链接建立连接</li><li>添加引入限制，以避免在引入工作区时突然出现意外流入</li><li>添加了对其他 Azure 政府云和区域的支持</li><li>解决 HealthService.exe 出现故障的 bug</li></ul> |
 | 10.20.18029 | 1.0.18029 | 2020 年 3 月   | <ul><li>添加 SHA-2 代码签名支持</li><li>改进了 VM 扩展安装和管理</li><li>解决了用于服务器的 Azure Arc 集成中的 Bug</li><li>添加了用于客户支持的内置故障排除工具</li><li>添加其他 Azure 政府区域支持</li> |
 | 10.20.18018 | 1.0.18018 | 2019 年 10 月 | <ul><li> 次要 bug 修复和稳定性改进 </li></ul> |
 | 10.20.18011 | 1.0.18011 | 2019 年 7 月 | <ul><li> 次要 bug 修复和稳定性改进 </li><li> MaxExpressionDepth 已增加到10000 </li></ul> |
@@ -183,7 +186,7 @@ Set-AzVMExtension -ExtensionName "MicrosoftMonitoringAgent" `
 
 ## <a name="troubleshoot-and-support"></a>故障排除和支持
 
-### <a name="troubleshoot"></a>故障排除
+### <a name="troubleshoot"></a>疑难解答
 
 有关扩展部署状态的数据可以从 Azure 门户和使用 Azure PowerShell 模块进行检索。 若要查看给定 VM 的扩展部署状态，请使用 Azure PowerShell 模块运行以下命令。
 

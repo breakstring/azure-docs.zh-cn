@@ -6,16 +6,16 @@ ms.topic: conceptual
 author: nolavime
 ms.author: v-jysur
 ms.date: 01/23/2018
-ms.openlocfilehash: 46c219a82d45129ed0856d22d88be819938e5240
-ms.sourcegitcommit: a76ff927bd57d2fcc122fa36f7cb21eb22154cfa
+ms.openlocfilehash: 3d9360b167a246e257d8c0b2ec4cb88f1ae39dcd
+ms.sourcegitcommit: fc401c220eaa40f6b3c8344db84b801aa9ff7185
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/28/2020
-ms.locfileid: "87325298"
+ms.lasthandoff: 01/20/2021
+ms.locfileid: "98600158"
 ---
 # <a name="create-service-manager-web-app-using-the-automated-script"></a>使用自动化脚本创建 Service Manager Web 应用
 
-使用以下脚本创建用于 Service Manager 实例的 Web 应用。 此处提供了有关 Service Manager 连接的详细信息：[Service Manager Web 应用](./itsmc-connections.md#create-and-deploy-service-manager-web-app-service)
+使用以下脚本创建用于 Service Manager 实例的 Web 应用。 此处提供了有关 Service Manager 连接的详细信息：[Service Manager Web 应用](./itsmc-connections-scsm.md)
 
 通过提供以下所需详细信息来运行脚本：
 
@@ -26,7 +26,7 @@ ms.locfileid: "87325298"
 - Web 应用的站点名称前缀
 - ServiceBus 命名空间。
 
-该脚本将使用指定的名称（以及使该名称保持唯一的其他几个字符串）创建 Web 应用。 它将生成**Web 应用 URL**、**客户端 ID**和**客户端密码**。
+该脚本将使用指定的名称（以及使该名称保持唯一的其他几个字符串）创建 Web 应用。 它将生成 **Web 应用 URL**、 **客户端 ID** 和 **客户端密码**。
 
 请保存这些值，因为在使用 IT 服务管理连接器创建连接时将需要这些值。
 
@@ -138,14 +138,14 @@ if(!$resourceProvider -or $resourceProvider[0].RegistrationState -ne "Registered
     {
         Write-Host "Failed to Register Microsoft.Web Resource Provider. Please register it in Azure Portal."
         exit
-    }   
+    }
 }
 do
 {
     $rand = Get-Random -Maximum 32000
 
     $siteName = $siteNamePrefix + $rand
-    
+
     $resource = Get-AzResource -Name $siteName -ResourceType Microsoft.Web/sites
 
 }while($resource)
@@ -276,7 +276,7 @@ if(!$resourceProvider -or $resourceProvider[0].RegistrationState -ne "Registered
     catch
     {
         Write-Host "Failed to Register Microsoft.Relay Resource Provider. Please register it in Azure Portal."
-    }   
+    }
 }
 
 $resource = Get-AzResource -Name $serviceName -ResourceType Microsoft.Relay/namespaces
@@ -317,6 +317,11 @@ if(!$err)
 }
 ```
 
-## <a name="next-steps"></a>后续步骤
-[配置混合连接](./itsmc-connections.md#configure-the-hybrid-connection)。
+## <a name="troubleshoot-service-manager-web-app-deployment"></a>Web 应用部署 Service Manager 疑难解答
 
+-   如果你在使用 web 应用部署时遇到问题，请确保你有权在订阅中创建/部署资源。
+-   如果在运行 [脚本](itsmc-service-manager-script.md)时，**未将对象引用设置为对象** 错误的实例，请确保在 "**用户配置**" 部分中输入了有效值。
+-   如果无法创建服务总线中继命名空间，请确保在订阅中注册所需的资源提供程序。 如果未注册，请从 Azure 门户中手动创建 service bus 中继命名空间。 在 Azure 门户中 [创建混合连接](./itsmc-connections-scsm.md#configure-the-hybrid-connection) 时，还可以创建它。
+
+## <a name="next-steps"></a>后续步骤
+[配置混合连接](./itsmc-connections-scsm.md#configure-the-hybrid-connection)。

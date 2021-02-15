@@ -8,12 +8,12 @@ ms.service: container-registry
 ms.topic: article
 ms.date: 01/14/2020
 ms.author: danlep
-ms.openlocfilehash: f3294698f6973437a23fab798e8daf5642cc9b49
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 8f2749a18a5ac6aed0822553d59beaacc9060228
+ms.sourcegitcommit: 436518116963bd7e81e0217e246c80a9808dc88c
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "77111760"
+ms.lasthandoff: 01/27/2021
+ms.locfileid: "98915941"
 ---
 # <a name="use-an-azure-managed-identity-in-acr-tasks"></a>在 ACR 任务中使用 Azure 托管标识 
 
@@ -58,7 +58,7 @@ Azure 资源的托管标识可在 Azure Active Directory 中为选定的 Azure �
 az acr task create \
     --image hello-world:{{.Run.ID}} \
     --name hello-world --registry MyRegistry \
-    --context https://github.com/Azure-Samples/acr-build-helloworld-node.git \
+    --context https://github.com/Azure-Samples/acr-build-helloworld-node.git#main \
     --file Dockerfile \
     --commit-trigger-enabled false \
     --assign-identity
@@ -70,7 +70,7 @@ az acr task create \
 az acr task create \
     --image hello-world:{{.Run.ID}} \
     --name hello-world --registry MyRegistry \
-    --context https://github.com/Azure-Samples/acr-build-helloworld-node.git \
+    --context https://github.com/Azure-Samples/acr-build-helloworld-node.git#main \
     --file Dockerfile \
     --commit-trigger-enabled false
     --assign-identity <resourceID>

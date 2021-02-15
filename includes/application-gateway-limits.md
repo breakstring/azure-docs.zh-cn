@@ -4,12 +4,12 @@ ms.service: application-gateway
 ms.topic: include
 ms.date: 03/04/2020
 ms.author: victorh
-ms.openlocfilehash: a3fb3dbf026a696b9d472efcba139c371ff1e587
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
-ms.translationtype: MT
+ms.openlocfilehash: 4c7c68bf690097004f2f3310a8d89ce954d7f87f
+ms.sourcegitcommit: 8a74ab1beba4522367aef8cb39c92c1147d5ec13
+ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "80334920"
+ms.lasthandoff: 01/20/2021
+ms.locfileid: "98612954"
 ---
 | 资源 | 限制 | 注意 |
 | --- | --- | --- |
@@ -32,6 +32,9 @@ ms.locfileid: "80334920"
 | 每个侦听器的 URL 映射数 |1 | |
 | 每个 URL 映射基于路径的最大规则数|100||
 | 重定向配置数 |100<sup>1</sup>| |
+| 重写规则集的数目 |400| |
+| 每个重写规则集的标头数或 URL 配置数|40| |
+| 每个重写规则集的条件数|40| |
 | 并发的 WebSocket 连接数 |中型网关 20k<br> 大型网关 50k| |
 | 最大 URL 长度|32KB| |
 | 适用于 HTTP/2 的最大标头大小 |4KB| |
@@ -39,6 +42,6 @@ ms.locfileid: "80334920"
 | 最大文件上传大小 WAF |V1 中型 WAF 网关，100 MB<br>V1 大型 WAF 网关，500 MB<br>V2 WAF，750 MB| |
 | WAF 正文大小限制（不带文件）|128 KB||
 | 最大 WAF 自定义规则数|100||
-| 最大 WAF 排除项数|100||
+| 每个应用程序网关的最大 WAF 排除项数|40||
 
-<sup>1</sup> 对于启用了 WAF 的 SKU，建议将资源数限制为 40 以获得最佳性能。
+<sup>1</sup> 对于启用了 WAF 的 SKU，必须将资源数限制为 40。

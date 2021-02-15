@@ -1,21 +1,25 @@
 ---
-title: 使用 Creator 创建室内定位
-description: 使用 Azure Maps Creator 创建室内定位。
+title: 教程：使用 Microsoft Azure Maps Creator（预览版）创建室内地图
+description: 有关如何使用 Microsoft Azure Maps Creator（预览版）创建室内地图的教程
 author: anastasia-ms
 ms.author: v-stharr
-ms.date: 08/29/2020
-ms.topic: conceptual
+ms.date: 12/07/2020
+ms.topic: tutorial
 ms.service: azure-maps
 services: azure-maps
 manager: philmea
-ms.openlocfilehash: bf2fbb48c34631bc74a3b712e135b618a1718d8e
-ms.sourcegitcommit: 56cbd6d97cb52e61ceb6d3894abe1977713354d9
-ms.translationtype: MT
+ms.openlocfilehash: dac5a434d7f7c62d7a20e971294992ea91c79d2b
+ms.sourcegitcommit: a0c1d0d0906585f5fdb2aaabe6f202acf2e22cfc
+ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/20/2020
-ms.locfileid: "88688074"
+ms.lasthandoff: 01/21/2021
+ms.locfileid: "98625009"
 ---
-# <a name="use-creator-to-create-indoor-maps"></a>使用 Creator 创建室内定位
+# <a name="tutorial-use-creator-preview-to-create-indoor-maps"></a>教程：使用 Creator（预览版）创建室内地图
+
+> [!IMPORTANT]
+> Azure Maps Creator 服务目前处于公共预览状态。
+> 此预览版在提供时没有附带服务级别协议，不建议将其用于生产工作负荷。 某些功能可能不受支持或者受限。 有关详细信息，请参阅 [Microsoft Azure 预览版补充使用条款](https://azure.microsoft.com/support/legal/preview-supplemental-terms/)。
 
 本教程介绍了如何创建室内定位。 本教程将介绍如何使用 API 完成以下操作：
 
@@ -34,17 +38,17 @@ ms.locfileid: "88688074"
 
 1. [创建 Azure Maps 帐户](quick-demo-map-app.md#create-an-azure-maps-account)
 2. [获取主订阅密钥](quick-demo-map-app.md#get-the-primary-key-for-your-account)（亦称为“主密钥”或“订阅密钥”）。
-3. [创建 Creator 资源](how-to-manage-creator.md)
-4. 下载[示例绘图包](https://github.com/Azure-Samples/am-creator-indoor-data-examples)。
+3. [创建 Creator（预览版）资源](how-to-manage-creator.md)
+4. 下载[示例绘图包](https://github.com/Azure-Samples/am-creator-indoor-data-examples/blob/master/Sample%20-%20Contoso%20Drawing%20Package.zip)。
 
 本教程使用 [Postman](https://www.postman.com/) 应用，但你也可以选择其他 API 开发环境。
 
 >[!IMPORTANT]
-> 此文档中的 API url 可能必须根据创建者资源的位置进行调整。 有关更多详细信息，请参阅 [访问 Creator 服务](how-to-manage-creator.md#access-to-creator-services)。
+> 本文档中的 API URL 可能会根据你的 Creator 资源的位置进行调整。 有关更多详细信息，请参阅[访问 Creator 服务](how-to-manage-creator.md#access-to-creator-services)。
 
 ## <a name="upload-a-drawing-package"></a>上传绘图包
 
-使用[数据上传 API](https://docs.microsoft.com/rest/api/maps/data/uploadpreview) 将绘图包上传到 Azure Maps 资源。
+使用[数据上传 API](/rest/api/maps/data/uploadpreview) 将绘图包上传到 Azure Maps 资源。
 
 数据上传 API 是一项长期事务，用于实现此处定义的模式。 在此操作完成后，我们就会使用 `udid` 访问已上传包来转换它。 若要获取 `udid`，请按照下面的步骤操作。
 
@@ -64,7 +68,7 @@ ms.locfileid: "88688074"
 
 5. 单击蓝色的“发送”按钮，然后等待请求处理完成。 在请求处理完成后，立即转到响应的“头”选项卡。 复制“位置”键的值，即 `status URL`。
 
-6. 检查 API 调用的状态，在 `status URL` 上创建“GET”HTTP 请求。 为了进行身份验证，需要将主订阅密钥追加到 URL 中。 **GET**请求应类似于以下 URL：
+6. 检查 API 调用的状态，在 `status URL` 上创建“GET”HTTP 请求。 为了进行身份验证，需要将主订阅密钥追加到 URL 中。 GET 请求应如下面的 URL 所示：
 
     ```http
     https://atlas.microsoft.com/mapData/operations/<operationId>?api-version=1.0&subscription-key={Azure-Maps-Primary-Subscription-key}
@@ -111,16 +115,16 @@ ms.locfileid: "88688074"
     ```
 
     >[!IMPORTANT]
-    > 此文档中的 API url 可能必须根据创建者资源的位置进行调整。 有关更多详细信息，请参阅 [访问 Creator 服务](how-to-manage-creator.md#access-to-creator-services)。
+    > 本文档中的 API URL 可能会根据你的 Creator 资源的位置进行调整。 有关更多详细信息，请参阅[访问 Creator 服务（预览版）](how-to-manage-creator.md#access-to-creator-services)。
 
-3. 单击“发送”按钮，然后等待请求处理完成。 在请求处理完成后，立即转到响应的“头”选项卡，然后查找“位置”键。 复制“位置”键的值，即转换请求的 `status URL`。 你将在下一步中使用它。
+3. 单击“发送”按钮，然后等待请求处理完成。 在请求处理完成后，立即转到响应的“头”选项卡，然后查找“位置”键。 复制“位置”键的值，即转换请求的 `status URL`。 你将下一步骤中使用此内容。
 
-    :::image type="content" source="./media/tutorial-creator-indoor-maps/copy-location-uri-dialog.png" border="true" alt-text="复制 location 键的值":::
+    :::image type="content" source="./media/tutorial-creator-indoor-maps/copy-location-uri-dialog.png" border="true" alt-text="复制“位置”键的值":::
 
-4. 在生成器选项卡中，启动新的 GET HTTP 方法。将 Azure Maps 主订阅密钥追加到 `status URL` 中。 在**GET** `status URL` 步骤3中复制的上发出 GET 请求。 类似于 `status URL` 以下 URL：
+4. 在生成器选项卡中，启动新的 GET HTTP 方法。将 Azure Maps 主订阅密钥追加到 `status URL` 中。 在步骤 3 中复制的 `status URL` 处发出 GET 请求。 `status URL` 如下面的 URL 所示：
 
     ```http
-    https://atlas.microsoft.com/conversion/operations/<operationId>?api-version=1.0
+    https://atlas.microsoft.com/conversion/operations/<operationId>?api-version=1.0&subscription-key={Azure-Maps-Primary-Subscription-key}
     ```
 
     如果转换过程还没有完成，你可能会看到如下所示的 JSON 响应：
@@ -164,11 +168,11 @@ ms.locfileid: "88688074"
 
 ## <a name="create-a-dataset"></a>创建数据集
 
-数据集是定位特征（如建筑物、楼层和房间等）的集合。 若要创建数据集，请使用[数据集创建 API](https://docs.microsoft.com/rest/api/maps/dataset/createpreview)。 数据集创建 API 需要使用已转换绘图包的 `conversionId`，并返回已创建数据集的 `datasetId`。 下面的步骤展示了如何创建数据集。
+数据集是定位特征（如建筑物、楼层和房间等）的集合。 若要创建数据集，请使用[数据集创建 API](/rest/api/maps/dataset/createpreview)。 数据集创建 API 需要使用已转换绘图包的 `conversionId`，并返回已创建数据集的 `datasetId`。 下面的步骤展示了如何创建数据集。
 
 1. 在 Postman 应用中，选择“新建”。 在“新建”窗口中，选择“请求”。 在“请求名称”中输入名称，然后选择一个集合。 单击“保存”
 
-2. 向[数据集创建 API](https://docs.microsoft.com/rest/api/maps/dataset/createpreview) 发出 POST 请求，以新建数据集。 提交请求前，请先追加订阅密钥和 `conversionId`（即在第 5 步的转换过程中获取的 `conversionId`）。  请求应如下面的 URL 所示：
+2. 向[数据集创建 API](/rest/api/maps/dataset/createpreview) 发出 POST 请求，以新建数据集。 提交请求前，请先追加订阅密钥和 `conversionId`（即在第 5 步的转换过程中获取的 `conversionId`）。  请求应如下面的 URL 所示：
 
     ```http
     https://atlas.microsoft.com/dataset/create?api-version=1.0&conversionID={conversionId}&type=facility&subscription-key={Azure-Maps-Primary-Subscription-key}
@@ -208,7 +212,7 @@ ms.locfileid: "88688074"
 3. 在图块集的 `statusURL` 处发出 GET 请求。 为了进行身份验证，请追加 Azure Maps 主订阅密钥。 请求应如下面的 URL 所示：
 
    ```http
-    https://atlas.microsoft.com/tileset/operations/<operationId>?api-version=1.0&subscription-key=<Azure-Maps-Primary-Subscription-key>
+    https://atlas.microsoft.com/tileset/operations/<operationId>?api-version=1.0&subscription-key={Azure-Maps-Primary-Subscription-key}
     ```
 
 4. 当 GET HTTP 请求成功完成时，响应头包含已创建图块集的 `tilesetId`。 复制 `tilesetId`。
@@ -224,7 +228,7 @@ ms.locfileid: "88688074"
 
 ## <a name="query-datasets-with-wfs-api"></a>使用 WFS API 查询数据集
 
- 可以使用 [WFS API](https://docs.microsoft.com/rest/api/maps/wfs) 查询数据集。 使用 WFS API，可以通过特征 ID 查询特征集合、特定集合或特定特征。 特征 ID 是数据集内特征的唯一标识。 例如，它用于标识应更新给定状态集中的哪个特征状态。
+ 可以使用 [WFS API](/rest/api/maps/wfs) 查询数据集。 使用 WFS API，可以通过特征 ID 查询特征集合、特定集合或特定特征。 特征 ID 是数据集内特征的唯一标识。 例如，它用于标识应更新给定状态集中的哪个特征状态。
 
 1. 在 Postman 应用中，选择“新建”。 在“新建”窗口中，选择“请求”。 在“请求名称”中输入名称，然后选择一个集合。 单击“保存”
 
@@ -234,7 +238,7 @@ ms.locfileid: "88688074"
     https://atlas.microsoft.com/wfs/datasets/{datasetId}/collections?subscription-key={Azure-Maps-Primary-Subscription-key}&api-version=1.0
     ```
 
-3. 响应正文将以 GeoJSON 格式传递，并包含数据集中的所有集合。 为了简单起见，此部分的示例只显示 `unit` 集合。 若要查看包含所有集合的示例，请参阅 [WFS 描述集合 API](https://docs.microsoft.com/rest/api/maps/wfs/collectiondescriptionpreview)。 若要详细了解任意集合，可以单击 `link` 元素中的任何一个 URL。
+3. 响应正文将以 GeoJSON 格式传递，并包含数据集中的所有集合。 为了简单起见，此部分的示例只显示 `unit` 集合。 若要查看包含所有集合的示例，请参阅 [WFS 描述集合 API](/rest/api/maps/wfs/collectiondescriptionpreview)。 若要详细了解任意集合，可以单击 `link` 元素中的任何一个 URL。
 
     ```json
     {
@@ -304,7 +308,7 @@ ms.locfileid: "88688074"
 
 1. 在 Postman 应用中，选择“新建”。 在“新建”窗口中，选择“请求”。 在“请求名称”中输入名称，然后选择一个集合。 单击“保存”
 
-2. 向[创建状态集 API](https://docs.microsoft.com/rest/api/maps/featurestate/createstatesetpreview) 发出 POST 请求。 使用包含要修改的状态的数据集的 `datasetId`。 请求应如下面的 URL 所示：
+2. 向[创建状态集 API](/rest/api/maps/featurestate/createstatesetpreview) 发出 POST 请求。 使用包含要修改的状态的数据集的 `datasetId`。 请求应如下面的 URL 所示：
 
     ```http
     https://atlas.microsoft.com/featureState/stateset?api-version=1.0&datasetId={datasetId}&subscription-key={Azure-Maps-Primary-Subscription-key}
@@ -402,45 +406,17 @@ ms.locfileid: "88688074"
 
 7. 在成功更新后，你就会收到 `200 OK` HTTP 状态代码。 如果你已为室内定位[实现动态样式](indoor-map-dynamic-styling.md)，更新将会在指定的时间戳显示在渲染的定位中。
 
-使用[特征状态获取 API](https://docs.microsoft.com/rest/api/maps/featurestate/getstatespreview)，可以通过特征 `ID` 检索特征的状态。 还可以使用[特征状态删除 API](https://docs.microsoft.com/rest/api/maps/featurestate/deletestatesetpreview) 来删除状态集及其资源。
+使用[特征状态获取 API](/rest/api/maps/featurestate/getstatespreview)，可以通过特征 `ID` 检索特征的状态。 还可以使用[特征状态删除 API](/rest/api/maps/featurestate/deletestatesetpreview) 来删除状态集及其资源。
+
+要详细了解本文中讨论的各种 Azure Maps Creator 服务（预览版），请参阅 [Creator 室内地图](creator-indoor-maps.md)。
+
+## <a name="clean-up-resources"></a>清理资源
+
+没有需要清理的资源。
 
 ## <a name="next-steps"></a>后续步骤
 
-在本教程中，你了解了如何执行以下操作：
-
-> [!div class="checklist"]
-> * 上传室内定位绘图包
-> * 将绘图包转换为定位数据
-> * 通过定位数据创建数据集
-> * 通过数据集中的数据创建图块集
-> * 通过查询 Azure Maps WFS 服务来了解定位特征
-> * 通过使用定位特征和数据集中的数据来创建特征状态集
-> * 更新特征状态集
-
-现在你已经具备了学习后续指南所需要的技能：
+若要了解如何使用室内地图模块，请参阅
 
 > [!div class="nextstepaction"]
-> [使用“室内定位”模块](how-to-use-indoor-module.md)
-
-> [!div class="nextstepaction"]
-> [实现室内定位的动态样式](indoor-map-dynamic-styling.md)
-
-详细了解本文中讨论的各种 Azure Maps 服务：
-
-> [!div class="nextstepaction"]
-> [数据上传](creator-indoor-maps.md#upload-a-drawing-package)
-
-> [!div class="nextstepaction"]
-> [数据转换](creator-indoor-maps.md#convert-a-drawing-package)
-
-> [!div class="nextstepaction"]
-> [数据集](creator-indoor-maps.md#datasets)
-
-> [!div class="nextstepaction"]
-> [图块集](creator-indoor-maps.md#tilesets)
-
-> [!div class="nextstepaction"]
-> [特征状态集](creator-indoor-maps.md#feature-statesets)
-
-> [!div class="nextstepaction"]
-> [WFS 服务](creator-indoor-maps.md#web-feature-service-api)
+> [使用室内定位模块](how-to-use-indoor-module.md)

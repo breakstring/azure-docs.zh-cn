@@ -1,19 +1,16 @@
 ---
 title: Apache Kafka TLS 加密 & 身份验证-Azure HDInsight
 description: 为 Kafka 客户端和 Kafka 代理之间以及 Kafka 代理之间的通信设置 TLS 加密。 设置客户端的 SSL 身份验证。
-author: hrasheed-msft
-ms.author: hrasheed
-ms.reviewer: jasonh
 ms.service: hdinsight
 ms.topic: how-to
 ms.custom: hdinsightactive
 ms.date: 05/01/2019
-ms.openlocfilehash: 9a95970647a26ea80db9f63fb8523c6a65cc5e06
-ms.sourcegitcommit: 124f7f699b6a43314e63af0101cd788db995d1cb
+ms.openlocfilehash: 6c020153d5c5cb5aad593c5b15e60e67951b89d4
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/08/2020
-ms.locfileid: "86082074"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98945188"
 ---
 # <a name="set-up-tls-encryption-and-authentication-for-apache-kafka-in-azure-hdinsight"></a>为 Azure HDInsight 中的 Apache Kafka 设置 TLS 加密和身份验证
 
@@ -127,17 +124,17 @@ Kafka TLS 代理设置按以下方式使用四个 HDInsight 群集 VM：
 若要完成配置修改，请按照以下步骤操作：
 
 1. 登录到 Azure 门户，并选择你的 Azure HDInsight Apache Kafka 群集。
-1. 单击**群集仪表板**下面的“Ambari 主页”转到 Ambari UI。****
-1. 在“Kafka 代理”下，将 **listeners** 属性设置为 `PLAINTEXT://localhost:9092,SSL://localhost:9093`****
-1. 在“高级 kafka-broker”下，将 **security.inter.broker.protocol** 属性设置为 `SSL`****
+1. 单击 **群集仪表板** 下面的“Ambari 主页”转到 Ambari UI。
+1. 在“Kafka 代理”下，将 **listeners** 属性设置为 `PLAINTEXT://localhost:9092,SSL://localhost:9093`
+1. 在“高级 kafka-broker”下，将 **security.inter.broker.protocol** 属性设置为 `SSL`
 
     ![在 Ambari 中编辑 Kafka ssl 配置属性](./media/apache-kafka-ssl-encryption-authentication/editing-configuration-ambari.png)
 
-1. 在“自定义 kafka-broker”下，将 **ssl.client.auth** 属性设置为 `required`。**** 仅当同时设置了身份验证和加密时，才需要执行此步骤。
+1. 在“自定义 kafka-broker”下，将 **ssl.client.auth** 属性设置为 `required`。 仅当同时设置了身份验证和加密时，才需要执行此步骤。
 
     ![在 Ambari 中编辑 kafka ssl 配置属性](./media/apache-kafka-ssl-encryption-authentication/editing-configuration-ambari2.png)
 
-1. 对于 HDI 版本 3.6，请转到 Ambari UI，并在“高级 kafka-env”和“kafka-env 模板”属性下添加以下配置**** ****。
+1. 对于 HDI 版本 3.6，请转到 Ambari UI，并在“高级 kafka-env”和“kafka-env 模板”属性下添加以下配置 。
 
     ```bash
     # Configure Kafka to advertise IP addresses instead of FQDN
@@ -221,7 +218,7 @@ Kafka TLS 代理设置按以下方式使用四个 HDInsight 群集 VM：
 ## <a name="client-setup-with-authentication"></a>客户端设置（使用身份验证）
 
 > [!Note]
-> 仅当同时设置了 TLS 加密和身份验证时，才需要执行以下步骤****。 如果仅设置加密，请参阅[不使用身份验证的客户端设置](apache-kafka-ssl-encryption-authentication.md#client-setup-without-authentication)。
+> 仅当同时设置了 TLS 加密和身份验证时，才需要执行以下步骤。 如果仅设置加密，请参阅[不使用身份验证的客户端设置](apache-kafka-ssl-encryption-authentication.md#client-setup-without-authentication)。
 
 以下四个步骤汇总了完成客户端安装所要执行的任务：
 

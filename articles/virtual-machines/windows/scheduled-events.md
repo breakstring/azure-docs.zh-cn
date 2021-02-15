@@ -1,6 +1,6 @@
 ---
 title: Azure 中适用于 Windows VM 的计划事件
-description: 为 Windows 虚拟机使用 Azure 元数据服务的计划事件。
+description: Windows 虚拟机上使用 Azure 元数据服务的计划事件。
 author: EricRadzikowskiMSFT
 ms.service: virtual-machines-windows
 ms.topic: how-to
@@ -8,12 +8,13 @@ ms.workload: infrastructure-services
 ms.date: 06/01/2020
 ms.author: ericrad
 ms.reviwer: mimckitt
-ms.openlocfilehash: b6e877f4e4ce7b50a2e50a2925850b9f533b7f97
-ms.sourcegitcommit: d39f2cd3e0b917b351046112ef1b8dc240a47a4f
+ms.custom: devx-track-azurepowershell
+ms.openlocfilehash: e4b5248ecb47c9456836aa9c4d7ebb2ad122c1dd
+ms.sourcegitcommit: c7153bb48ce003a158e83a1174e1ee7e4b1a5461
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/25/2020
-ms.locfileid: "88814818"
+ms.lasthandoff: 01/15/2021
+ms.locfileid: "98231865"
 ---
 # <a name="azure-metadata-service-scheduled-events-for-windows-vms"></a>Azure 元数据服务：适用于 Windows VM 的计划事件
 
@@ -54,6 +55,7 @@ ms.locfileid: "88814818"
 - 独立虚拟机。
 - 云服务中的所有 VM。
 - 可用性集中的所有 VM。
+- 可用性区域中的所有 Vm。
 - 规模集位置组中的所有 VM。 
 
 > [!NOTE]
@@ -77,7 +79,7 @@ ms.locfileid: "88814818"
 | 2019-04-01 | 正式版 | 全部 | <li> 添加了对事件说明的支持 |
 | 2019-01-01 | 正式版 | 全部 | <li> 已添加对虚拟机规模集 EventType“Terminate”的支持 |
 | 2017-11-01 | 正式版 | All | <li> 已添加对现成 VM 逐出 EventType“Preempt”的支持<br> | 
-| 2017-08-01 | 正式版 | All | <li> 已从 IaaS VM 的资源名称中删除前置下划线<br><li>针对所有请求强制执行元数据标头要求 | 
+| 2017-08-01 | 正式版 | 全部 | <li> 已从 IaaS VM 的资源名称中删除前置下划线<br><li>针对所有请求强制执行元数据标头要求 | 
 | 2017-03-01 | 预览 | 全部 | <li>初始版本 |
 
 
@@ -133,7 +135,7 @@ curl -H Metadata:true http://169.254.169.254/metadata/scheduledevents?api-versio
 | EventId | 此事件的全局唯一标识符。 <br><br> 示例： <br><ul><li>602d9444-d2cd-49c7-8624-8643e7171297  |
 | EventType | 此事件造成的影响。 <br><br> 值： <br><ul><li> `Freeze`：虚拟机计划暂停数秒。 CPU 和网络连接可能会暂停，但对内存或打开的文件没有影响。<li>`Reboot`：计划重启虚拟机（非永久性内存丢失）。 <li>`Redeploy`：计划将虚拟机移到另一节点（临时磁盘将丢失）。 <li>`Preempt`：正在删除现成虚拟机（临时磁盘将丢失）。 <li> `Terminate`：计划将删除虚拟机。 |
 | ResourceType | 此事件影响的资源类型。 <br><br> 值： <ul><li>`VirtualMachine`|
-| 资源| 此事件影响的资源列表。 它保证最多只能包含一个[更新域](manage-availability.md)的计算机，但可能不包含该更新域中的所有计算机。 <br><br> 示例： <br><ul><li> ["FrontEnd_IN_0", "BackEnd_IN_0"] |
+| 资源| 此事件影响的资源列表。 它保证最多只能包含一个[更新域](../manage-availability.md)的计算机，但可能不包含该更新域中的所有计算机。 <br><br> 示例： <br><ul><li> ["FrontEnd_IN_0", "BackEnd_IN_0"] |
 | EventStatus | 此事件的状态。 <br><br> 值： <ul><li>`Scheduled`：此事件计划在 `NotBefore` 属性指定的时间之后启动。<li>`Started`：此事件已启动。</ul> 不提供 `Completed` 或类似状态。 事件完成后，将不再返回该事件。
 | NotBefore| 在可以启动此事件之前所要经过的时间。 <br><br> 示例： <br><ul><li> 2016 年 9 月 19 日星期一 18:29:47 GMT  |
 | 说明 | 此事件的说明。 <br><br> 示例： <br><ul><li> 主机服务器正在维护中。 |
@@ -152,6 +154,10 @@ curl -H Metadata:true http://169.254.169.254/metadata/scheduledevents?api-versio
 
 > [!NOTE] 
 > 在某些情况下，由于硬件降级，Azure 能够预测主机故障，并会尝试通过对迁移进行计划来缓解服务中断。 受影响的虚拟机会收到计划事件，该事件的 `NotBefore` 通常是将来几天的时间。 实际时间因预测的故障风险评估而异。 Azure 会尽可能提前 7 天发出通知，但实际时间可能会有变化，如果预测硬件即将发生故障的可能性很大，则实际时间可能更早。 为了在系统启动迁移之前硬件出现故障时将服务风险降至最低，我们建议你尽快自行重新部署虚拟机。
+
+### <a name="polling-frequency"></a>轮询频率
+
+可根据需要频繁或偶尔轮询终结点以进行更新。 但是，两次请求之间的时间越长，你拥有的对即将发生的事件做出响应的时间就越少。 大多数事件都会提前 5 到 15 分钟通知，尽管在某些情况下，可能只会提前 30 秒通知。 为确保有尽可能多的时间采取缓解措施，我们建议你每秒轮询一次服务。
 
 ### <a name="start-an-event"></a>启动事件 
 

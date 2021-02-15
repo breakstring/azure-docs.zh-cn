@@ -1,172 +1,172 @@
 ---
-title: Microsoft 商业市场的地域可用性和货币支持
+title: Microsoft 商业应用商店的地理可用性和币种支持
 description: 商业市场中交易的地域可用性和货币支持
 ms.service: marketplace
 ms.subservice: partnercenter-marketplace-publisher
 ms.topic: reference
 author: keferna
 ms.author: keferna
-ms.date: 07/29/2020
-ms.openlocfilehash: 2ff8d962479188ddf324dc5ff75d22eac4fed3d6
-ms.sourcegitcommit: ac7ae29773faaa6b1f7836868565517cd48561b2
+ms.date: 12/07/2020
+ms.openlocfilehash: c71c13701d064110be0ef976920c0cc01f2fa308
+ms.sourcegitcommit: aaa65bd769eb2e234e42cfb07d7d459a2cc273ab
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/25/2020
-ms.locfileid: "88826763"
+ms.lasthandoff: 01/27/2021
+ms.locfileid: "98879758"
 ---
-# <a name="geographic-availability-and-currency-support-for-commercial-marketplace"></a>商业市场的地域可用性和货币支持
+# <a name="geographic-availability-and-currency-support-for-the-commercial-marketplace"></a>适用于商业市场的地理可用性和币种支持
 
 ## <a name="supported-geographic-locations"></a>支持的地理位置
 
 可在按客户的帐单地址定义的 141 个地理位置购买商业市场产品/服务，并可使用 17 个币种完成交易。 下表列出了每个受支持的地理位置、其 [ISO 3166 2 位字母代码](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes)和分配的货币。
 
-|   国家/地区名称               |   ISO-2   |   货币   |
-|-------------------------------------|-----------|--------------|
-| 阿富汗                         | AF        | USD          |
-| 阿尔巴尼亚                             | AL        | USD          |
-| 阿尔及利亚                             | DZ        | USD          |
-| 安道尔                             | AD        | EUR          |
-| 安哥拉                              | AO        | USD          |
-| 阿根廷                           | AR        | USD          |
-| 亚美尼亚                             | AM        | USD          |
-| 澳大利亚                           | AU        | AUD          |
-| 奥地利                             | AT        | EUR          |
-| 阿塞拜疆                          | AZ        | USD          |
-| 巴林                             | BH        | USD          |
-| 孟加拉                          | BD        | USD          |
-| 巴巴多斯                            | BB        | USD          |
-| 白俄罗斯                             | BY        | USD          |
-| 比利时                             | BE        | EUR          |
-| 伯利兹                              | BZ        | USD          |
-| 百慕大群岛                             | BM        | USD          |
-| 玻利维亚                             | BO        | USD          |
-| 波斯尼亚和黑塞哥维那              | BA        | USD          |
-| 博茨瓦纳                            | BW        | USD          |
-| 巴西                              | BR        | BRL\*        |
-| 文莱                              | BN        | USD          |
-| 保加利亚                            | BG        | EUR          |
-| 佛得角                          | CV        | USD          |
-| 喀麦隆                            | CM        | USD          |
-| Canada                              | CA        | CAD          |
-| 开曼群岛                      | KY        | USD          |
-| 智利                               | CL        | USD          |
-| 中国\**                            | CN        | 空值          |
-| 哥伦比亚                            | CO        | USD          |
-| 哥斯达黎加                          | CR        | USD          |
-| 科特迪瓦                       | CI        | USD          |
-| 克罗地亚                             | HR        | EUR          |
-| 库拉索岛                             | CW        | USD          |
-| 塞浦路斯                              | CY        | EUR          |
-| 捷克共和国                      | CZ        | EUR          |
-| 丹麦                             | DK        | DKK          |
-| 多米尼加共和国                  | DO        | USD          |
-| 厄瓜多尔                             | EC        | USD          |
-| 埃及                               | EG        | USD          |
-| 萨尔瓦多                         | SV        | USD          |
-| 爱沙尼亚                             | EE        | EUR          |
-| 埃塞俄比亚                            | ET        | USD          |
-| 法罗群岛                       | FO        | DKK          |
-| 斐济                                | FJ        | AUD          |
-| 芬兰                             | FI        | EUR          |
-| 法国                              | FR        | EUR          |
-| 格鲁吉亚                             | GE        | USD          |
-| 德国                             | DE        | EUR          |
-| 加纳                               | GH        | USD          |
-| 希腊                              | GR        | EUR          |
-| 危地马拉                           | GT        | USD          |
-| 洪都拉斯                            | HN        | USD          |
-| 香港特别行政区                       | HK        | USD          |
-| 匈牙利                             | HU        | EUR          |
-| 冰岛                             | IS        | EUR          |
-| 印度                               | IN        | INR          |
-| 印度尼西亚                           | ID        | USD          |
-| 伊拉克                                | IQ        | USD          |
-| 爱尔兰                             | IE        | EUR          |
-| 以色列                              | IL        | USD          |
-| 意大利                               | IT        | EUR          |
-| 牙买加                             | JM        | USD          |
-| 日本                               | JP        | JPY          |
-| 约旦                              | JO        | USD          |
-| 哈萨克斯坦                          | KZ        | USD          |
-| 肯尼亚                               | KE        | USD          |
-| 韩国（南部）                       | KR        | KRW          |
-| 科威特                              | KW        | USD          |
-| 吉尔吉斯斯坦                          | KG        | USD          |
-| 拉脱维亚                              | LV        | EUR          |
-| 黎巴嫩                             | LB        | USD          |
-| 利比亚                               | LY        | USD          |
-| 列支敦士登                       | LI        | EUR          |
-| 立陶宛                           | LT        | EUR          |
-| 卢森堡                          | LU        | EUR          |
-| 澳门特别行政区                           | MO        | USD          |
-| 北马其顿                     | MK        | USD          |
-| 马来西亚                            | MY        | USD          |
-| 马耳他                               | MT        | EUR          |
-| 毛里求斯                           | MU        | USD          |
-| 墨西哥                              | MX        | USD          |
-| 摩尔多瓦                             | MD        | USD          |
-| 摩纳哥                              | MC        | EUR          |
-| 蒙古                            | MN        | USD          |
-| 黑山                          | ME        | USD          |
-| 摩洛哥                             | MA        | USD          |
-| 纳米比亚                             | NA        | USD          |
-| 尼泊尔                               | NP        | USD          |
-| 荷兰                         | NL        | EUR          |
-| 新西兰                         | NZ        | NZD          |
-| 尼加拉瓜                           | NI        | USD          |
-| 尼日利亚                             | NG        | USD          |
-| 挪威                              | 是        | NOK          |
-| 阿曼                                | OM        | USD          |
-| 巴基斯坦                            | PK        | USD          |
-| 巴勒斯坦民族权力机构               | PS        | USD          |
-| 巴拿马                              | PA        | USD          |
-| 巴拉圭                            | PY        | USD          |
-| 秘鲁                                | PE        | USD          |
-| 菲律宾                         | PH        | USD          |
-| 波兰                              | PL        | EUR          |
-| 葡萄牙                            | PT        | EUR          |
-| 波多黎各                         | PR        | USD          |
-| 卡塔尔                               | QA        | USD          |
-| 罗马尼亚                             | RO        | EUR          |
-| 俄罗斯                              | RU        | RUB          |
-| 卢旺达                              | RW        | USD          |
-| 圣基茨和尼维斯               | KN        | USD          |
-| 沙特阿拉伯                        | SA        | USD          |
-| 塞内加尔                             | SN        | USD          |
-| 塞尔维亚                              | RS        | USD          |
-| 新加坡                           | SG        | USD          |
-| 斯洛伐克                            | SK        | EUR          |
-| 斯洛文尼亚                            | SI        | EUR          |
-| 南非                        | ZA        | USD          |
-| 西班牙                               | ES        | EUR          |
-| 斯里兰卡                           | LK        | USD          |
-| 瑞典                              | SE        | SEK          |
-| 瑞士                         | CH        | CHF          |
-| 中国台湾                              | TW        | TWD          |
-| 塔吉克斯坦                          | TJ        | USD          |
-| 坦桑尼亚                            | TZ        | USD          |
-| 泰国                            | TH        | USD          |
-| 特立尼达和多巴哥                 | TT        | USD          |
-| 突尼斯                             | TN        | USD          |
-| 土耳其                              | TR        | USD          |
-| 土库曼斯坦                        | TM        | USD          |
-| 乌干达                              | UG        | USD          |
-| 乌克兰                             | UA        | USD          |
-| 阿拉伯联合酋长国                | AE        | USD          |
-| United Kingdom                      | GB        | GBP          |
-| United States                       | 美国        | USD          |
-| 美国维尔京群岛                 | VI        | USD          |
-| 乌拉圭                             | UY        | USD          |
-| 乌兹别克斯坦                          | UZ        | USD          |
-| 梵蒂冈（教区）             | VA        | EUR          |
-| 委内瑞拉                           | VE        | USD          |
-| 越南                             | VN        | USD          |
-| 也门                               | YE        | USD          |
-| 赞比亚                              | ZM        | USD          |
-| 津巴布韦                            | ZW        | USD          |
+|   国家/地区名称               |   ISO-2   |   货币</br> (所有产品/服务类型)   |    货币</br> (咨询服务仅提供)     |
+|-------------------------------------|-----------|--------------|---------------------------------------------|
+| 阿富汗                         | AF        | USD          | AFN、EUR、USD |
+| 阿尔巴尼亚                             | AL        | USD          | 全部、EUR、USD |
+| 阿尔及利亚                             | DZ        | USD          | DZD、EUR、USD |
+| 安道尔                             | AD        | EUR          | EUR、USD |
+| 安哥拉                              | AO        | USD          | AOA、EUR、USD |
+| 阿根廷                           | AR        | USD          | ARS、EUR、USD |
+| 亚美尼亚                             | AM        | USD          | AMD、EUR、USD |
+| 澳大利亚                           | AU        | AUD          | AUD、EUR、USD |
+| 奥地利                             | AT        | EUR          | EUR、USD  |
+| 阿塞拜疆                          | AZ        | USD          | AZN、EUR、USD |
+| 巴林                             | BH        | USD          | BHD、EUR、USD |
+| 孟加拉                          | BD        | USD          | BDT、EUR、USD |
+| 巴巴多斯                            | BB        | USD          | BBD、EUR、USD |
+| 白俄罗斯                             | BY        | USD          | BYN、EUR、USD |
+| 比利时                             | BE        | EUR          | EUR、USD  |
+| 伯利兹                              | BZ        | USD          | BZD、EUR、USD |
+| 百慕大群岛                             | BM        | USD          | BMD、EUR、USD |
+| 玻利维亚                             | BO        | USD          | BOB、EUR、USD |
+| 波斯尼亚和黑塞哥维那              | BA        | USD          | BAM，EUR，USD |
+| 博茨瓦纳                            | BW        | USD          | BWP、EUR、USD |
+| 巴西                              | BR        | BRL\*        | BRL、EUR、USD |
+| 文莱                              | BN        | USD          | BND，EUR，SGD，USD |
+| 保加利亚                            | BG        | EUR          | BGN，EUR，USD |
+| 佛得角                          | CV        | USD          | CVE、EUR、USD |
+| 喀麦隆                            | CM        | USD          | EUR、USD、XAF |
+| Canada                              | CA        | CAD          | CAD、EUR、USD |
+| 开曼群岛                      | KY        | USD          | EUR、KYD、USD |
+| 智利                               | CL        | USD          | CLP，EUR，USD |
+| 中国\**                            | CN        | 空值          | 空值 |
+| 哥伦比亚                            | CO        | USD          | COP、EUR、USD |
+| 哥斯达黎加                          | CR        | USD          | CRC、EUR、USD |
+| 科特迪瓦                       | CI        | USD          | EUR、USD、XOF |
+| 克罗地亚                             | HR        | EUR          | EUR、HRK、USD |
+| 库拉索岛                             | CW        | USD          | ANG，EUR，USD |
+| 塞浦路斯                              | CY        | EUR          | EUR、USD  |
+| 捷克                             | CZ        | EUR          | CZK、EUR、USD |
+| 丹麦                             | DK        | DKK          | 克朗、EUR、USD |
+| 多米尼加共和国                  | DO        | USD          | DOP、EUR、USD |
+| 厄瓜多尔                             | EC        | USD          | EUR、USD |
+| 埃及                               | EG        | USD          | EGP、EUR、USD |
+| 萨尔瓦多                         | SV        | USD          | EUR、USD |
+| 爱沙尼亚                             | EE        | EUR          | EUR、USD |
+| 埃塞俄比亚                            | ET        | USD          | ETB、EUR、USD |
+| 法罗群岛                       | FO        | DKK          | 克朗、EUR、USD |
+| 斐济                                | FJ        | AUD          | AUD，EUR，FJD，USD |
+| 芬兰                             | FI        | EUR          | EUR、USD |
+| 法国                              | FR        | EUR          | EUR、USD |
+| 格鲁吉亚                             | GE        | USD          | EUR、GEL、USD |
+| 德国                             | DE        | EUR          | EUR、USD |
+| 加纳                               | GH        | USD          | EUR、GHS、USD |
+| 希腊                              | GR        | EUR          | EUR、USD |
+| 危地马拉                           | GT        | USD          | EUR、GTQ、USD |
+| 洪都拉斯                            | HN        | USD          | EUR、HNL、USD |
+| 香港特别行政区                       | HK        | USD          | EUR、HKD、USD |
+| 匈牙利                             | HU        | EUR          | EUR、HUF、USD |
+| 冰岛                             | IS        | EUR          | EUR、磁盘、USD |
+| 印度                               | IN        | INR          | EUR、INR、USD |
+| 印度尼西亚                           | ID        | USD          | EUR、IDR、USD |
+| 伊拉克                                | IQ        | USD          | EUR、IQD、USD |
+| 爱尔兰                             | IE        | EUR          | EUR、USD  |
+| 以色列                              | IL        | USD          | EUR、ILS、USD |
+| 意大利                               | IT        | EUR          | EUR、USD |
+| 牙买加                             | JM        | USD          | EUR、JMD、USD |
+| 日本                               | JP        | JPY          | EUR、JPY、USD |
+| 约旦                              | JO        | USD          | EUR、JOD、USD |
+| 哈萨克斯坦                          | KZ        | USD          | EUR、KZT、USD |
+| 肯尼亚                               | KE        | USD          | EUR、KES、USD |
+| 韩国（南部）                       | KR        | KRW          | EUR、韩元、USD |
+| 科威特                              | KW        | USD          | EUR、KWD、USD |
+| 吉尔吉斯斯坦                          | KG        | USD          | EUR、公斤之间、USD |
+| 拉脱维亚                              | LV        | EUR          | EUR、USD |
+| 黎巴嫩                             | LB        | USD          | EUR、LBP、USD |
+| 利比亚                               | LY        | USD          | EUR、LYD、USD |
+| 列支敦士登                       | LI        | EUR          | CHF、EUR、USD |
+| 立陶宛                           | LT        | EUR          | EUR、USD |
+| 卢森堡                          | LU        | EUR          | EUR、USD |
+| 澳门特别行政区                           | MO        | USD          | EUR、收尾、USD |
+| 马来西亚                            | MY        | USD          | EUR、MYR、USD |
+| 马耳他                               | MT        | EUR          | EUR、USD |
+| 毛里求斯                           | MU        | USD          | EUR、MUR、USD |
+| 墨西哥                              | MX        | USD          | EUR、MXN、USD |
+| 摩尔多瓦                             | MD        | USD          | EUR、MDL、USD |
+| 摩纳哥                              | MC        | EUR          | EUR、USD |
+| 蒙古                            | MN        | USD          | EUR、MNT、USD |
+| 黑山                          | ME        | USD          | EUR、USD |
+| 摩洛哥                             | MA        | USD          | EUR、MAD、USD |
+| 纳米比亚                             | NA        | USD          | EUR、NAD、USD、ZAR |
+| 尼泊尔                               | NP        | USD          | EUR、NPR、USD |
+| 荷兰                         | NL        | EUR          | EUR、USD |
+| 新西兰                         | NZ        | NZD          | EUR、NZD、USD |
+| 尼加拉瓜                           | NI        | USD          | EUR、NIO、USD |
+| 尼日利亚                             | NG        | USD          | EUR、NGN、USD |
+| 北马其顿                     | MK        | USD          | EUR、MKD、USD |
+| 挪威                              | 是        | NOK          | EUR、NOK、USD |
+| 阿曼                                | OM        | USD          | EUR、OMR、USD |
+| 巴基斯坦                            | PK        | USD          | EUR、PKR、USD |
+| 巴勒斯坦民族权力机构               | PS        | USD          | EUR、ILS、JOD、USD |
+| 巴拿马                              | PA        | USD          | EUR、PAB、USD |
+| 巴拉圭                            | PY        | USD          | EUR、PYG、USD |
+| 秘鲁                                | PE        | USD          | EUR、钢笔、USD |
+| 菲律宾                         | PH        | USD          | EUR、PHP、USD |
+| 波兰                              | PL        | EUR          | EUR、PLN、USD |
+| 葡萄牙                            | PT        | EUR          | EUR、USD |
+| 波多黎各                         | PR        | USD          | EUR、USD |
+| 卡塔尔                               | QA        | USD          | EUR、QAR、USD |
+| 罗马尼亚                             | RO        | EUR          | EUR、RON、USD |
+| 俄罗斯                              | RU        | RUB          | EUR、卢布、USD |
+| 卢旺达                              | RW        | USD          | EUR、RWF、USD |
+| 圣基茨和尼维斯               | KN        | USD          | EUR、USD、XCD |
+| 沙特阿拉伯                        | SA        | USD          | EUR、SAR、USD |
+| 塞内加尔                             | SN        | USD          | EUR、USD、XOF |
+| 塞尔维亚                              | RS        | USD          | EUR、RSD、USD |
+| 新加坡                           | SG        | USD          | BND，EUR，SGD，USD |
+| 斯洛伐克                            | SK        | EUR          | EUR、USD |
+| 斯洛文尼亚                            | SI        | EUR          | EUR、USD |
+| 南非                        | ZA        | USD          | EUR、USD、ZAR |
+| 西班牙                               | ES        | EUR          | EUR、USD |
+| 斯里兰卡                           | LK        | USD          | EUR、LKR、USD |
+| 瑞典                              | SE        | SEK          | EUR、SEK、USD  |
+| 瑞士                         | CH        | CHF          | CHF、EUR、USD |
+| 中国台湾                              | TW        | TWD          | EUR、台币、USD |
+| 塔吉克斯坦                          | TJ        | USD          | EUR、TJS、USD |
+| 坦桑尼亚                            | TZ        | USD          | EUR、TZS、USD |
+| 泰国                            | TH        | USD          | EUR、THB、USD |
+| 特立尼达和多巴哥                 | TT        | USD          | EUR、TTD、USD |
+| 突尼斯                             | TN        | USD          | EUR、TND、USD |
+| 土耳其                              | TR        | USD          | EUR，TRY，美元 |
+| 土库曼斯坦                        | TM        | USD          | EUR、TMT、USD |
+| 乌干达                              | UG        | USD          | EUR、UGX、USD |
+| 乌克兰                             | UA        | USD          | EUR、卢布、UAH、USD |
+| 阿拉伯联合酋长国                | AE        | USD          | AED、EUR、USD |
+| United Kingdom                      | GB        | GBP          | EUR、GBP、USD |
+| United States                       | 美国        | USD          | EUR、USD |
+| 美国维尔京群岛                 | VI        | USD          | EUR、USD|
+| 乌拉圭                             | UY        | USD          | EUR、USD、UYU |
+| 乌兹别克斯坦                          | UZ        | USD          | EUR、USD、UZS |
+| 梵蒂冈（教区）             | VA        | EUR          | EUR、USD |
+| 委内瑞拉                           | VE        | USD          | EUR，USD，VES |
+| 越南                             | VN        | USD          | EUR、USD、VND.APPLE.MPEGURL |
+| 也门                               | YE        | USD          | EUR、USD、YER |
+| 赞比亚                              | ZM        | USD          | EUR、USD、ZMW |
+| 津巴布韦                            | ZW        | USD          | EUR、USD|
 |   |   |   |
 
-\* 对于巴西的客户，市场通过云解决方案提供商 (CSP) 使用 USD。
+\* 对于巴西的客户，通过云解决方案提供商提供的商业市场 (CSP) 使用 USD。
 
 \** 仅适用于免费和 BYOL VM 映像。
 
@@ -177,14 +177,16 @@ ms.locfileid: "88826763"
 若要在发布之前调整任何价格，只需导出定价电子表格，对其进行修改，并将其上传到更改。
 
 > [!NOTE]
-> 发布计划中某个市场的价格后，无法再更改。 若要确保价格发布之前是正确的，请导出定价电子表格，并查看每个市场中的价格。
+> 发布计划中市场的价格后，不能对其进行更改。 若要确保价格发布之前是正确的，请导出定价电子表格，并查看每个市场中的价格。
 
 产品/服务的价格始终以当地货币向客户显示。 在合作伙伴中心中选择的价格将根据你在合作伙伴中心中保存价格时的汇率转换为客户的当地货币。 除非重新发布产品/服务，否则在线商店中的客户所显示的价格不会改变。
 
-Microsoft 以当地货币接收来自客户的付款，并以当地货币为您支付。 Microsoft 使用购买日的汇率将客户本地货币转换为本地货币。
+Microsoft 以当地货币的形式接收来自客户的付款，并按合作伙伴中心中所选的货币向你付费。 Microsoft 使用购买日的汇率来转换客户当地币种。
 
 > [!NOTE]
-> Microsoft 使用 Microsoft 国库券的汇率来转换优惠价格。
+> Microsoft 使用 Microsoft 国库券汇率转换优惠价格。
+
+[![币种转换流。](media/marketplace-geo-availability-currencies/currency-exchange-flow.png)](media/marketplace-geo-availability-currencies/currency-exchange-flow.png#lightbox)
 
 ## <a name="retrieving-currency-information-by-api"></a>按 API 检索货币信息
 
@@ -192,14 +194,14 @@ Microsoft 以当地货币接收来自客户的付款，并以当地货币为您�
 
 有关如何输入特定产品/服务类型的价格的详细信息，请参阅以下文章：
 
-- [创建 Azure 应用程序产品/服务](partner-center-portal/create-new-azure-apps-offer.md)
-- [创建 Azure 容器产品/服务](partner-center-portal/create-azure-container-offer.md)
-- [创建 Azure 虚拟机套餐](partner-center-portal/azure-vm-create-offer.md)
-- [创建咨询服务套餐](partner-center-portal/create-consulting-service-offer.md)
+- [创建 Azure 应用程序产品/服务](create-new-azure-apps-offer.md)
+- [创建 Azure 容器产品/服务](./create-azure-container-offer.md)
+- [创建 Azure 虚拟机套餐](azure-vm-create.md)
+- [创建咨询服务套餐](./create-consulting-service-offer.md)
 - [创建 Dynamics 365 for Customer Engagement & PowerApps 套餐](partner-center-portal/create-new-customer-engagement-offer.md)
 - [Dynamics 365 for Operations 产品/服务](partner-center-portal/create-new-operations-offer.md)
 - [Dynamics 365 Business Central 产品/服务](partner-center-portal/create-new-business-central-offer.md)
 - [创建 IoT Edge 模块产品/服务](partner-center-portal/azure-iot-edge-module-creation.md)
-- [创建托管服务产品](partner-center-portal/create-new-managed-service-offer.md)
+- [创建托管服务产品](./plan-managed-service-offer.md)
 - [创建 Power BI 应用](partner-center-portal/create-power-bi-app-offer.md)
-- [创建 SaaS 产品/服务](partner-center-portal/create-new-saas-offer.md)
+- [创建 SaaS 产品/服务](./create-new-saas-offer.md)

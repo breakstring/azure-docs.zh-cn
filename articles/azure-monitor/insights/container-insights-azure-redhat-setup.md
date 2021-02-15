@@ -3,14 +3,23 @@ title: 为容器 Azure Monitor 配置 Azure Red Hat OpenShift v3. x |Microsoft D
 description: 本文介绍如何使用 Azure Red Hat OpenShift 版本3和更高版本上托管 Azure Monitor 来配置监视 Kubernetes 群集。
 ms.topic: conceptual
 ms.date: 06/30/2020
-ms.openlocfilehash: e462fb25672fa1912f7bb24efad4ea9a6d27d078
-ms.sourcegitcommit: d39f2cd3e0b917b351046112ef1b8dc240a47a4f
+ms.openlocfilehash: f21a338a06d4a0947e2623854d828c720fb2d4bb
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/25/2020
-ms.locfileid: "88816637"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98944550"
 ---
-# <a name="configure-azure-red-hat-openshift-v3-with-azure-monitor-for-containers"></a>配置适用于容器 Azure Monitor 的 Azure Red Hat OpenShift v3 
+# <a name="configure-azure-red-hat-openshift-v3-with-azure-monitor-for-containers"></a>配置适用于容器 Azure Monitor 的 Azure Red Hat OpenShift v3
+
+>[!IMPORTANT]
+> Azure Red Hat OpenShift 3.11 6 2022 月将停用。
+>
+> 从10月2020起，你将无法再创建新的3.11 群集。
+> 现有3.11 群集将继续运行，直到6月2022，但在该日期之后将不再受支持。
+>
+> 按照本指南 [创建 Azure Red Hat OpenShift 4 群集](../../openshift/tutorial-create-cluster.md)。
+> 如果有特定问题， [请](mailto:aro-feedback@microsoft.com)联系我们。
 
 容器 Azure Monitor 为 Azure Kubernetes 服务提供丰富的监视体验 (AKS) 和 AKS Engine 群集。 本文介绍如何启用对 [Azure Red Hat OpenShift](../../openshift/intro-openshift.md) 版本3中托管的 Kubernetes 群集和版本3的最新支持版本的监视，以实现类似的监视体验。
 
@@ -21,7 +30,7 @@ ms.locfileid: "88816637"
 可以使用以下受支持的方法，为新的或 Azure Red Hat OpenShift 的一个或多个现有部署启用容器 Azure Monitor：
 
 - 对于来自 Azure 门户或使用 Azure 资源管理器模板的现有群集。
-- 对于使用 Azure 资源管理器模板的新群集，或在使用 [Azure CLI](/cli/azure/openshift?view=azure-cli-latest#az-openshift-create)创建新群集时使用。
+- 对于使用 Azure 资源管理器模板的新群集，或在使用 [Azure CLI](/cli/azure/openshift#az-openshift-create)创建新群集时使用。
 
 ## <a name="supported-and-unsupported-features"></a>支持和不支持的功能
 
@@ -30,11 +39,11 @@ ms.locfileid: "88816637"
 - 实时数据 (预览) 
 - [收集](container-insights-update-metrics.md) 群集节点和 pod 中的指标，并将其存储在 Azure Monitor 度量值数据库中
 
-## <a name="prerequisites"></a>先决条件
+## <a name="prerequisites"></a>必备条件
 
 - [Log Analytics 工作区](../platform/design-logs-deployment.md)。
 
-    用于容器的 Azure Monitor 支持在 Azure [产品(按区域)](https://azure.microsoft.com/global-infrastructure/services/?regions=all&products=monitor) 中列出的区域中的 Log Analytics 工作区。 若要创建你自己的工作区，可通过 [Azure 资源管理器](../platform/template-workspace-configuration.md)、[PowerShell](../scripts/powershell-sample-create-workspace.md?toc=%2fpowershell%2fmodule%2ftoc.json) 或 [Azure 门户](../learn/quick-create-workspace.md)进行创建。
+    用于容器的 Azure Monitor 支持在 Azure [产品(按区域)](https://azure.microsoft.com/global-infrastructure/services/?regions=all&products=monitor) 中列出的区域中的 Log Analytics 工作区。 若要创建你自己的工作区，可通过 [Azure 资源管理器](../samples/resource-manager-workspace.md)、[PowerShell](../scripts/powershell-sample-create-workspace.md?toc=%2fpowershell%2fmodule%2ftoc.json) 或 [Azure 门户](../learn/quick-create-workspace.md)进行创建。
 
 - 若要启用和访问容器 Azure Monitor 中的功能，至少需要是 Azure 订阅中的 Azure *参与者* 角色的成员，以及配置了 Azure Monitor for 容器的 Log Analytics 工作区的 [*Log Analytics 参与者*](../platform/manage-access.md#manage-access-using-azure-permissions) 角色的成员。
 
@@ -144,7 +153,7 @@ ms.locfileid: "88816637"
 5. 以下步骤使用 Azure CLI 在启用了监视的情况下部署群集。
 
     ```azurecli
-    az group deployment create --resource-group <ClusterResourceGroupName> --template-file ./newClusterWithMonitoring.json --parameters @./newClusterWithMonitoringParam.json
+    az deployment group create --resource-group <ClusterResourceGroupName> --template-file ./newClusterWithMonitoring.json --parameters @./newClusterWithMonitoringParam.json
     ```
 
     输出如下所示：
@@ -159,13 +168,13 @@ ms.locfileid: "88816637"
 
 ### <a name="from-the-azure-portal"></a>通过 Azure 门户
 
-1. 登录 [Azure 门户](https://portal.azure.com)。
+1. 登录到 [Azure 门户](https://portal.azure.com)。
 
 2. 在 "Azure 门户" 菜单或从 "主页" 中，选择 " **Azure Monitor**"。 在“见解”部分，选择“容器”。 
 
-3. 在“监视 - 容器”页上，选择“非监视群集”********。
+3. 在“监视 - 容器”页上，选择“非监视群集”。
 
-4. 在非监视群集列表中，找到列表中的群集，然后单击 " **启用**"。 您可以通过在列**分类类型**下查找值**ARO**来识别列表中的结果。
+4. 在非监视群集列表中，找到列表中的群集，然后单击 " **启用**"。 您可以通过在列 **分类类型** 下查找值 **ARO** 来识别列表中的结果。
 
 5. 在“载入到用于容器的 Azure Monitor”页上，如果现有 Log Analytics 工作区与群集在同一订阅中，请从下拉列表中选择该工作区  。  
     此列表 preselects 在订阅中部署群集的默认工作区和位置。
@@ -226,7 +235,7 @@ ms.locfileid: "88816637"
 6. 若要使用 Azure CLI 进行部署，请运行下列命令：
 
     ```azurecli
-    az group deployment create --resource-group <ClusterResourceGroupName> --template-file ./ExistingClusterOnboarding.json --parameters @./existingClusterParam.json
+    az deployment group create --resource-group <ClusterResourceGroupName> --template-file ./ExistingClusterOnboarding.json --parameters @./existingClusterParam.json
     ```
 
     输出如下所示：
@@ -244,4 +253,3 @@ ms.locfileid: "88816637"
 - 若要从群集中擦除和分析 Prometheus 指标，请查看 [配置 Prometheus 指标抓取](container-insights-prometheus-integration.md)
 
 - 若要了解如何停止监视包含容器 Azure Monitor 的群集，请参阅 [如何停止监视 Azure Red Hat OpenShift 群集](./container-insights-optout-openshift-v3.md)。
-

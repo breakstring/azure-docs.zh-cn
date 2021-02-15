@@ -4,6 +4,8 @@
   items:
     - name: 关于用于 Redis 的 Azure 缓存
       href: cache-overview.md
+    - name: 新增功能
+      href: cache-whats-new.md
 - name: 快速入门
   expanded: true
   items:
@@ -27,6 +29,10 @@
           href: cache-nodejs-get-started.md
         - name: Python 应用
           href: cache-python-get-started.md
+        - name: Go 应用
+          href: cache-go-get-started.md
+        - name: Rust 应用
+          href: cache-rust-get-started.md
 - name: 教程
   items:
     - name: ASP.NET
@@ -38,50 +44,68 @@
     - name: Java Spring
       items:
         - name: 使用 Spring Boot Initializer
-          href: cache-java-spring-boot-initializer-with-redis-cache.md
+          href: /azure/developer/java/spring-framework/configure-spring-boot-initializer-java-app-with-redis-cache
+    - name: Azure 事件网格
+      items:
+        - name: 使用 Azure 门户路由事件
+          href: cache-event-grid-quickstart-portal.md
+        - name: 使用 Azure CLI 路由事件
+          href: cache-event-grid-quickstart-cli.md
+        - name: 使用 PowerShell 路由事件
+          href: cache-event-grid-quickstart-powershell.md
     - name: 创建排行榜
       href: cache-web-app-cache-aside-leaderboard.md
+    - name: 部署机器学习模型
+      href: cache-ml.md
     - name: 使用 Azure PowerShell 进行管理
       href: cache-how-to-manage-redis-cache-powershell.md
     - name: 使用 Azure CLI 进行管理
       href: cli-samples.md
 - name: 概念
   items:
+    - name: 高可用性
+      href: cache-high-availability.md
     - name: 故障转移和修补
       href: cache-failover.md
     - name: 最佳做法
       href: cache-best-practices.md
     - name: 安全性
       items:
+        - name: 网络隔离选项
+          href: cache-network-isolation.md
         - name: Azure Policy 的安全控件
           displayName: 'regulatory, compliance, standards, domains'
           href: ./security-controls-policy.md
         - name: 安全基线
           href: security-baseline.md
     - name: 缓存体系结构
-      href: 'https://docs.microsoft.com/azure/architecture/best-practices/caching?toc=%2Fazure%2Fredis-cache%2Ftoc.json'
+      href: /azure/architecture/best-practices/caching?toc=%2fazure%2fredis-cache%2ftoc.json
 - name: 操作指南
   items:
     - name: 计划
       items:
         - name: 选择缓存层
           href: cache-overview.md#choosing-the-right-tier
+        - name: 设置 Redis 版本
+          href: cache-how-to-version.md
         - name: 使用群集分布缓存
           href: cache-how-to-premium-clustering.md
         - name: 使用 Redis 数据持久性保留缓存
           href: cache-how-to-premium-persistence.md
+        - name: 添加更多副本
+          href: cache-how-to-multi-replicas.md
         - name: 使用虚拟网络保护缓存
           href: cache-how-to-premium-vnet.md
         - name: 以非公开方式连接到缓存
           href: cache-private-link.md
+        - name: 启用区域冗余
+          href: cache-how-to-zone-redundancy.md
         - name: 设置异地复制
           href: cache-how-to-geo-replication.md
         - name: 借助预留容量节省资金
           href: cache-reserved-pricing.md
         - name: 迁移到 Azure Cache for Redis
           href: cache-migration-guide.md
-        - name: 从托管缓存服务（已弃用）迁移
-          href: cache-migrate-to-redis.md
         - name: 有关规划的常见问题
           href: cache-planning-faq.md
     - name: 生成
@@ -94,9 +118,11 @@
           href: cache-how-to-manage-redis-cache-powershell.md
         - name: 使用 Azure CLI 进行部署和管理
           href: cli-samples.md
-        - name: 预配用于 Redis 的 Azure 缓存
+        - name: 创建 Redis 缓存 - ARM 模板
+          displayName: Resource Manager
           href: cache-redis-cache-arm-provision.md
-        - name: 利用用于 Redis 的 Azure 缓存预配 Web 应用
+        - name: 创建带 Redis 缓存的 Web 应用 - ARM 模板
+          displayName: Resource Manager
           href: cache-web-app-arm-with-redis-cache-provision.md
     - name: 管理
       items:
@@ -110,6 +136,8 @@
           href: cache-administration.md#schedule-updates
         - name: 配置 redis-cli.exe 访问
           href: cache-how-to-redis-cli-tool.md
+        - name: 发布 Azure Cache for Redis 事件
+          href: cache-event-grid.md
         - name: 删除 TLS 1.0 和 1.1
           href: cache-remove-tls-10-11.md
         - name: 管理常见问题解答
@@ -155,11 +183,12 @@
     - name: Azure CLI
       href: /cli/azure/redis
     - name: REST
-      href: 'https://docs.microsoft.com/rest/api/redis/'
+      href: /rest/api/redis/
     - name: 资源管理器模板
       href: /azure/templates/microsoft.cache/allversions
     - name: Azure Policy 内置策略定义
-      href: ./policy-samples.md
+      displayName: 'samples, policies, definitions'
+      href: ./policy-reference.md
     - name: Redis 命令
       href: 'https://redis.io/commands#'
 - name: 资源
@@ -169,7 +198,7 @@
     - name: 视频
       href: 'https://www.youtube.com/results?search_query=azure+redis+cache'
     - name: Microsoft Q&A 问题页面
-      href: 'https://docs.microsoft.com/answers/topics/azure-cache-redis.html'
+      href: /answers/topics/azure-cache-redis.html
     - name: 定价
       href: 'https://azure.microsoft.com/pricing/details/cache/'
     - name: 利用 Microsoft Learn 掌握技能

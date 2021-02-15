@@ -11,12 +11,12 @@ author: MicrosoftGuyJFlo
 manager: daveba
 ms.reviewer: na
 ms.collection: M365-identity-device-management
-ms.openlocfilehash: 35669a7d80907e2335c68b1da9010f5879aa6c7c
-ms.sourcegitcommit: dccb85aed33d9251048024faf7ef23c94d695145
+ms.openlocfilehash: cb889298a09c30a629c69442ebf31bc735af31d1
+ms.sourcegitcommit: d22a86a1329be8fd1913ce4d1bfbd2a125b2bcae
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/28/2020
-ms.locfileid: "87274079"
+ms.lasthandoff: 11/26/2020
+ms.locfileid: "96173118"
 ---
 # <a name="settings-and-data-roaming-faq"></a>设置和数据漫游常见问题
 
@@ -28,16 +28,16 @@ ms.locfileid: "87274079"
 
 * 主题，包括桌面主题和任务栏设置等功能。
 * Internet Explorer 设置，包括最近打开的选项卡和收藏夹。
-* Microsoft Edge 浏览器设置，如收藏夹和阅读列表**。
-* *密码*，包括 Internet 密码、wi-fi 配置文件等。
+* Microsoft Edge 浏览器设置，如收藏夹和阅读列表。
+* *密码*，包括 Internet 密码、Wi-Fi 配置文件等。
 * 语言首选项，包括键盘布局、系统语言、日期和时间等的设置。
 * 轻松访问功能，如高对比度主题、讲述人和放大镜。
 * 其他 Windows 设置，如鼠标设置。
 
 > [!NOTE]
-> 本文适用于在7月2015中通过 Windows 10 启动的 Microsoft Edge 旧版 HTML 浏览器。 本文不适用于2020年1月15日发布的新的基于 Chromium 的 Microsoft Edge 浏览器。 有关新 Microsoft Edge 的同步行为的详细信息，请参阅[Microsoft Edge 同步](/deployedge/microsoft-edge-enterprise-sync)文章。
+> 本文适用于在7月2015中通过 Windows 10 启动的 Microsoft Edge 旧版 HTML 浏览器。 本文不适用于2020年1月15日发布的新的基于 Chromium 的 Microsoft Edge 浏览器。 有关新 Microsoft Edge 的同步行为的详细信息，请参阅 [Microsoft Edge 同步](/deployedge/microsoft-edge-enterprise-sync)文章。
 
-**应用程序数据**：通用 Windows 应用可将设置数据写入漫游文件夹，并且会自动同步写入到此文件夹中的任何数据。 各应用开发人员可根据需要设计应用，以利用此功能。 有关如何开发使用漫游的通用 Windows 应用的详细信息，请参阅[appdata 存储 API](https://msdn.microsoft.com/library/windows/apps/mt299098.aspx)和[Windows 8 appdata 漫游开发人员博客](https://blogs.windows.com/windowsdeveloper/2016/05/04/roaming-app-data-and-the-user-experience/)。
+**应用程序数据**：通用 Windows 应用可将设置数据写入漫游文件夹，并且会自动同步写入到此文件夹中的任何数据。 各应用开发人员可根据需要设计应用，以利用此功能。 有关如何开发使用漫游的通用 Windows 应用的详细信息，请参阅 [appdata 存储 API](/windows/uwp/design/app-settings/store-and-retrieve-app-data) 和 [Windows 8 appdata 漫游开发人员博客](https://blogs.windows.com/windowsdeveloper/2016/05/04/roaming-app-data-and-the-user-experience/)。
 
 ## <a name="what-account-is-used-for-settings-sync"></a>哪些帐户可用于设置同步？
 
@@ -50,7 +50,7 @@ ms.locfileid: "87274079"
 设备上不同用户帐户之间的数据永远不会混合。 设置同步有两个规则：
 
 * Windows 设置始终通过主帐户漫游。
-* 通过用于获取应用的帐户来标记应用数据。 只有用主要帐户标记的应用才会同步。应用所有权标记是在应用程序通过 Windows 应用商店或移动设备管理（MDM）进行端加载时确定的。
+* 通过用于获取应用的帐户来标记应用数据。 只有用主要帐户标记的应用才会同步。应用所有权标记是在应用程序通过 Windows 应用商店或移动设备管理 (MDM) 端加载时确定的。
 
 如果无法标识应用的所有者，它将通过主帐户漫游。 如果设备从 Windows 8 或 Windows 8.1 升级到 Windows 10，所有应用会被标记为由 Microsoft 帐户获取。 这是因为大多数用户通过 Windows 应用商店获取应用，而在 Windows 10 之前，未对 Azure AD 帐户提供 Windows 应用商店支持。 如果通过离线许可证安装应用，则应用会被标记为在设备上使用主帐户。
 
@@ -76,19 +76,19 @@ ms.locfileid: "87274079"
 
 当同一设备上有来自不同 Azure AD 租户的多个 Azure AD 帐户时，必须更新设备的注册表，才能与每个 Azure AD 租户的 Azure Rights Management 服务进行通信。  
 
-1. 为每个 Azure AD 租户查找 GUID。 打开 Azure 门户并选择 Azure AD 租户。 租户的 GUID 位于所选租户的“属性”页上（ https://portal.azure.com/#blade/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/Properties) ，标记为**目录 ID**。 
-2. 使用 GUID 后，需要将注册表项添加**HKEY_LOCAL_MACHINE \software\microsoft\windows\settingsync\winmsipc \<tenant ID GUID> **中。
-   从“租户 ID GUID”**** 键中，新建名为 **AllowedRMSServerUrls** 的多字符串值 (REG-MULTI-SZ)。 对于其数据，指定设备访问的其他 Azure 租户的授权分发点 URL。
+1. 为每个 Azure AD 租户查找 GUID。 打开 Azure 门户并选择 Azure AD 租户。 租户的 GUID 位于所选租户的“属性”页上（ https://portal.azure.com/#blade/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/Properties) ，标记为 **目录 ID**。 
+2. 使用 GUID 后，需要添加注册表项 **HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\SettingSync\WinMSIPC\<tenant ID GUID>**。
+   从“租户 ID GUID”键中，新建名为 **AllowedRMSServerUrls** 的多字符串值 (REG-MULTI-SZ)。 对于其数据，指定设备访问的其他 Azure 租户的授权分发点 URL。
 3. 可以通过从 AADRM 模块运行 **Get-AadrmConfiguration** cmdlet 找到授权分发点 URL。 如果 **LicensingIntranetDistributionPointUrl** 和 **LicensingExtranetDistributionPointUrl** 的值不同，则指定这两个值。 如果值相同，则指定该值一次。
 
 ## <a name="what-are-the-roaming-settings-options-for-existing-windows-desktop-applications"></a>现有 Windows 桌面应用程序的漫游设置选项有哪些？
 
 漫游仅适用于通用 Windows 应用。 有两种选项可用于在现有 Windows 桌面应用程序上启用漫游：
 
-* [桌面桥](https://aka.ms/desktopbridge)有助于将现有的 Windows 桌面应用引入到通用 Windows 平台。 在这里，只需要最少的代码更改，就可以利用 Azure AD 应用数据漫游。 桌面桥为应用提供应用标识，需要该标识才可为现有桌面应用启用应用数据漫游。
-* [用户体验虚拟化 (UE-V)](https://technet.microsoft.com/library/dn458947.aspx) 有助于为现有 Windows 桌面应用创建自定义设置模板，并为 Win32 应用启用漫游。 此选项不需要应用程发人员更改应用代码。 UE-V 仅限于已购买 Microsoft Desktop Optimization Pack 的客户的本地 Active Directory 漫游。
+* [桌面桥](/windows/msix/desktop/source-code-overview)有助于将现有的 Windows 桌面应用引入到通用 Windows 平台。 在这里，只需要最少的代码更改，就可以利用 Azure AD 应用数据漫游。 桌面桥为应用提供应用标识，需要该标识才可为现有桌面应用启用应用数据漫游。
+* [用户体验虚拟化 (UE-V)](/previous-versions//dn458947(v=vs.85)) 有助于为现有 Windows 桌面应用创建自定义设置模板，并为 Win32 应用启用漫游。 此选项不需要应用程发人员更改应用代码。 UE-V 仅限于已购买 Microsoft Desktop Optimization Pack 的客户的本地 Active Directory 漫游。
 
-通过 [UE-V 组策略](https://technet.microsoft.com/itpro/mdop/uev-v2/configuring-ue-v-2x-with-group-policy-objects-both-uevv2)更改 Windows OS 设置和通用应用程序数据的漫游，管理员可以配置 UE-V 来漫游 Windows 桌面应用。组策略包括：
+通过 [UE-V 组策略](/microsoft-desktop-optimization-pack/uev-v2/configuring-ue-v-2x-with-group-policy-objects-both-uevv2)更改 Windows OS 设置和通用应用程序数据的漫游，管理员可以配置 UE-V 来漫游 Windows 桌面应用。组策略包括：
 
 * “漫游 Windows 设置”组策略
 * “不同步 Windows 应用”组策略
@@ -112,7 +112,7 @@ Microsoft 致力于保护客户数据。 企业用户的设置数据离开 Windo
 
 ## <a name="how-can-i-enable-or-disable-roaming"></a>如何启用或禁用漫游？
 
-在“设置”**** 应用中，转到“帐户”**** > “同步设置”****。 可在此页看到正在使用哪个帐户漫游设置，并可以启用或禁用要进行漫游的各设置组。
+在“设置”应用中，转到“帐户” > “同步设置”。 可在此页看到正在使用哪个帐户漫游设置，并可以启用或禁用要进行漫游的各设置组。
 
 ## <a name="what-is-microsofts-recommendation-for-enabling-roaming-in-windows-10"></a>对于在 Windows 10 中启用漫游，Microsoft 有何建议？
 
@@ -133,8 +133,8 @@ Windows 10 客户端 SKU 支持企业状态漫游，但服务器 SKU 不支持�
 
 ## <a name="known-issues"></a>已知问题
 
-有关已知问题的列表，请参阅[故障排除](enterprise-state-roaming-troubleshooting.md)部分中的文档。 
+有关已知问题的列表，请参阅 [故障排除](enterprise-state-roaming-troubleshooting.md) 部分中的文档。 
 
 ## <a name="next-steps"></a>后续步骤 
 
-有关概述，请参阅[企业状态漫游概述](enterprise-state-roaming-overview.md)
+有关概述，请参阅 [企业状态漫游概述](enterprise-state-roaming-overview.md)

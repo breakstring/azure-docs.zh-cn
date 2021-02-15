@@ -1,19 +1,18 @@
 ---
 title: 使用 Azure 流分析生成 IoT 解决方案
 description: 使用收费站方案了解流分析 IoT 解决方案的入门教程
-author: mamccrea
-ms.author: mamccrea
-ms.reviewer: mamccrea
+author: enkrumah
+ms.author: ebnkruma
 ms.service: stream-analytics
 ms.topic: how-to
 ms.date: 12/06/2018
 ms.custom: seodec18
-ms.openlocfilehash: e0e2244d8c70ca2e6d379e741d543d9cd260b7f8
-ms.sourcegitcommit: e132633b9c3a53b3ead101ea2711570e60d67b83
+ms.openlocfilehash: ddec53b18cd6f374a5665298b43b46122bcfa143
+ms.sourcegitcommit: 42a4d0e8fa84609bec0f6c241abe1c20036b9575
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/07/2020
-ms.locfileid: "86044577"
+ms.lasthandoff: 01/08/2021
+ms.locfileid: "98016144"
 ---
 # <a name="build-an-iot-solution-by-using-stream-analytics"></a>使用流分析生成 IoT 解决方案
 
@@ -128,13 +127,13 @@ ms.locfileid: "86044577"
 
 6. 在“间隔”中指定若干秒。  此值将在示例 Web 应用中使用，指定将数据发送到事件中心的频率。
 
-7. **选中**表示同意条款和条件的复选框。
+7. **选中** 表示同意条款和条件的复选框。
 
 8. 选择“固定到仪表板”，以便稍后可以轻松找到资源。 
 
 9. 选择“购买”以部署示例模板。 
 
-10. 片刻之后，将会显示一条通知来确认**部署成功**。
+10. 片刻之后，将会显示一条通知来确认 **部署成功**。
 
 ### <a name="review-the-azure-stream-analytics-tollapp-resources"></a>查看 Azure 流分析 TollApp 资源
 
@@ -163,7 +162,7 @@ ms.locfileid: "86044577"
 
    为了解释查询的意图，我们假设需要统计进入某个收费亭的汽车数目。 由于进入高速公路收费亭的车流是连续性的，这些入口事件类似于永不停止的流。 若要量化流，必须定义要不断度量的“时间段”。 我们进一步将问题具体化为“每三分钟有多少汽车进入收费亭？” 这通常称为轮转计数。
 
-   如你所见，Azure 流分析会使用类似 SQL 的查询语言，并添加几个扩展来指定与时间相关的查询方面。  有关详细信息，请参阅[时间管理](https://docs.microsoft.com/stream-analytics-query/time-management-azure-stream-analytics)和查询中所用的[开窗](https://docs.microsoft.com/stream-analytics-query/windowing-azure-stream-analytics)构造。
+   如你所见，Azure 流分析会使用类似 SQL 的查询语言，并添加几个扩展来指定与时间相关的查询方面。  有关详细信息，请参阅[时间管理](/stream-analytics-query/time-management-azure-stream-analytics)和查询中所用的[开窗](/stream-analytics-query/windowing-azure-stream-analytics)构造。
 
 3. 检查 TollApp 示例作业的输入。 当前查询中仅使用了 EntryStream 输入。
    - **EntryStream** 输入是一个事件中心连接，它将代表每次汽车进入高速公路收费亭的事件数据排队。 示例中包含的 Web 应用将会创建事件，而这些数据将在此事件中心排队。 请注意，此输入在流式处理查询的 FROM 子句中查询。
@@ -297,7 +296,7 @@ GROUP BY TUMBLINGWINDOW(minute,3), TollId, PartitionId
 
 将流式处理作业纵向扩展为更多的流单元：
 
-1. **停止**当前作业。
+1. **停止** 当前作业。
 
 2. 在“< > 查询”页中更新查询语法，然后保存更改。 
 
@@ -305,7 +304,7 @@ GROUP BY TUMBLINGWINDOW(minute,3), TollId, PartitionId
 
 4. 将“流单元”滑块从 1 滑到 6。  流单元定义作业能够接收的计算能力大小。 选择“保存”  。
 
-5. **启动**流式处理作业，以演示其他缩放操作。 Azure 流分析可在更多的计算资源之间分配工作，并可以使用 PARTITION BY 子句中指定的列将不同资源中的工作分区，从而提高吞吐量。
+5. **启动** 流式处理作业，以演示其他缩放操作。 Azure 流分析可在更多的计算资源之间分配工作，并可以使用 PARTITION BY 子句中指定的列将不同资源中的工作分区，从而提高吞吐量。
 
 ## <a name="monitor-the-job"></a>监视作业
 “监视器”  区域包含正在运行的作业的相关统计信息。 需要完成首次配置，才能使用同一区域中的存储帐户（按本文档其余部分命名收费站）。

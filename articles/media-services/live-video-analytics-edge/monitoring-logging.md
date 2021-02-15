@@ -1,33 +1,35 @@
 ---
-title: 监视和日志记录-Azure
-description: 本文概述了有关 IoT Edge 监视和日志记录的实时视频分析。
+title: 监视和日志记录 - Azure
+description: 本文概述了 IoT Edge 上的实时视频分析中的监视和日志记录。
 ms.topic: reference
 ms.date: 04/27/2020
-ms.openlocfilehash: 82e4a5879e4c88e462edcddb02866ec9b671d7fe
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.openlocfilehash: a77ca6cf9dc66d1efda5741266f1a2eecc2599c0
+ms.sourcegitcommit: b85ce02785edc13d7fb8eba29ea8027e614c52a2
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87060454"
+ms.lasthandoff: 02/03/2021
+ms.locfileid: "99507806"
 ---
 # <a name="monitoring-and-logging"></a>监视和日志记录
 
-在本文中，你将了解如何从用于远程监视 IoT Edge 模块上的实时视频分析接收事件。 
+本文介绍如何从 IoT Edge 模块上的实时视频分析接收事件以进行远程监视。 
 
-你还将了解如何控制模块生成的日志。
+此外还介绍如何控制模块生成的日志。
 
 ## <a name="taxonomy-of-events"></a>事件的分类
 
-IoT Edge 上的实时视频分析根据以下分类发出事件或遥测数据。
+IoT Edge 上的实时视频分析根据以下分类发出事件或遥测数据：
 
-![IoT Edge 遥测架构上的实时视频分析](./media/telemetry-schema/taxonomy.png)
+> [!div class="mx-imgBorder"]
+> :::image type="content" source="./media/telemetry-schema/taxonomy.png" alt-text="显示事件分类的关系图。":::
 
-* 操作：作为用户执行的操作的一部分生成的事件，或在[媒体图形](media-graph-concept.md)执行过程中生成的事件。
+* 操作：通过用户操作生成的事件，或在执行[媒体图](media-graph-concept.md)期间生成的事件
    
-   * 卷：应较低（一分钟内几次，甚至越低）。
+   * 数量：应较低（每分钟几次，甚至更低）
    * 示例:
 
-      记录已启动（如下），记录已停止
+      - 记录已开始（如以下示例所示）
+      - 记录已停止
       
       ```
       {
@@ -44,12 +46,13 @@ IoT Edge 上的实时视频分析根据以下分类发出事件或遥测数据�
         }
       }
       ```
-* 诊断：有助于诊断问题和/或性能问题的事件。
+* 诊断：有助于诊断性能问题的事件
 
-   * 卷：可能会很长（一分钟时间）。
+   * 数量：可能很高（每分钟几次）
    * 示例:
    
-      RTSP [SDP](https://en.wikipedia.org/wiki/Session_Description_Protocol)信息（如下所示），或传入视频源中的间隙。
+      - RTSP [SDP](https://en.wikipedia.org/wiki/Session_Description_Protocol) 信息（如以下示例所示） 
+      - 传入视频源中的间隔
 
       ```
       {
@@ -65,12 +68,14 @@ IoT Edge 上的实时视频分析根据以下分类发出事件或遥测数据�
         }
       }
       ```
-* 分析：作为视频分析的一部分生成的事件。
+* 分析：在视频分析过程中生成的事件
 
-   * 卷：可能很高（一分钟或更长时间）。
+   * 数量：可能很高（每分钟几次或更高）
    * 示例:
       
-      检测到的动作（如下所示），推理结果。
+      - 检测到动作（如以下示例所示） 
+      - 推理结果
+
    ```      
    {
      "body": {
@@ -98,19 +103,42 @@ IoT Edge 上的实时视频分析根据以下分类发出事件或遥测数据�
      }
    }
    ```
-模块发出的事件将发送到[IoT Edge 集线器](../../iot-edge/iot-edge-runtime.md#iot-edge-hub)，然后可以将其路由到其他目标。 
+
+模块发出的事件会发送到 [IoT Edge 中心](../../iot-edge/iot-edge-runtime.md#iot-edge-hub)， 然后可以从那里路由到其他目标。 
+
+### <a name="timestamps-in-analytic-events"></a>分析事件中的时间戳
+
+如上所示，在视频分析过程中生成的事件具有关联的时间戳。 如果[将实时视频录制](video-recording-concept.md)为图拓扑的一部分，则这些时间戳有助于你定位录制的视频中发生特定事件的位置。 以下是有关如何将分析事件中的时间戳映射到已录制成 [Azure 媒体服务资产](terminology.md#asset)的视频的时间线的指导原则。
+
+首先，提取 `eventTime` 值。 在[时间范围筛选器](playback-recordings-how-to.md#time-range-filters)中使用此值检索录制的适当部分。 例如，你可能希望检索在 `eventTime` 之前 30 秒开始并在其之后 30 秒结束的视频。 对于上一示例（其中的 `eventTime` 为 2020-05-12T23:33:09.381Z），对 `eventTime` 之前和之后 30 秒的 HLS 清单的请求与以下请求类似：
+
+```
+https://{hostname-here}/{locatorGUID}/content.ism/manifest(format=m3u8-aapl,startTime=2020-05-12T23:32:39Z,endTime=2020-05-12T23:33:39Z).m3u8
+```
+
+上面的 URL 会返回一个[主播放列表](https://developer.apple.com/documentation/http_live_streaming/example_playlists_for_http_live_streaming)，其中包含媒体播放列表的 URL。 媒体播放列表会包含如下所示的条目：
+
+```
+...
+#EXTINF:3.103011,no-desc
+Fragments(video=143039375031270,format=m3u8-aapl)
+...
+```
+上面的条目报告有一个从 `timestamp` 值 `143039375031270` 开始的视频片段。 分析事件中的 `timestamp` 值使用与媒体播放列表相同的时间刻度， 可用于标识相关的视频片段，以及查找正确的帧。
+
+有关详细信息，请参阅[有关在 HLS 中进行精确到帧的查找的文章](https://www.bing.com/search?q=frame+accurate+seeking+in+HLS)。
 
 ## <a name="controlling-events"></a>控制事件
 
-可以使用[模块克隆 JSON 架构](module-twin-configuration-schema.md)中所述的以下模块克隆属性，来控制 IoT Edge 模块上的实时视频分析所发布的操作和诊断事件。
+你可以使用以下模块孪生属性，控制由 IoT Edge 模块上的实时视频分析发布的操作和诊断事件。 [模块孪生 JSON 架构](module-twin-configuration-schema.md)中介绍了这些属性。
 
-`diagnosticsEventsOutputName`–包括并提供此属性的（any）值，以便从该模块获取诊断事件。 省略它，或将其保留为空以停止模块发布诊断事件。
+- `diagnosticsEventsOutputName`：若要从模块中获取诊断事件，请包括此属性并为它提供任意值。 忽略它或将它留空可阻止模块发布诊断事件。
    
-`operationalEventsOutputName`–包括并提供此属性的（any）值，以便从模块中获取操作事件。 省略它，或将其保留为空，以使模块停止发布操作事件。
+- `operationalEventsOutputName`：若要从模块中获取操作事件，请包括此属性并为它提供任意值。 忽略它或将它留空可阻止模块发布操作事件。
    
-分析事件由节点（如运动检测处理器或 HTTP 扩展处理器）生成，IoT 中心接收器用于将其发送到 IoT Edge 集线器。 
+分析事件由动作检测处理器或 HTTP 扩展处理器等节点生成。 IoT 中心接收器用于将它们发送到 IoT Edge 中心。 
 
-你可以通过 $edgeHub 模块（在部署清单中）的所需属性控制[以上所有事件的路由](../../iot-edge/module-composition.md#declare-routes)：
+可以通过使用部署清单中 `$edgeHub` 模块孪生的 `desired` 属性控制[以上所有事件的路由](../../iot-edge/module-composition.md#declare-routes)：
 
 ```
  "$edgeHub": {
@@ -126,38 +154,38 @@ IoT Edge 上的实时视频分析根据以下分类发出事件或遥测数据�
  }
 ```
 
-在上面的 lvaEdge 中，"" 是 IoT Edge 模块上的实时视频分析的名称，路由规则遵循 "[声明路由](../../iot-edge/module-composition.md#declare-routes)" 中定义的架构。
+在上面的 JSON 中，`lvaEdge` 是 IoT Edge 模块上实时视频分析的名称。 路由规则遵循[声明路由](../../iot-edge/module-composition.md#declare-routes)中定义的架构。
 
 > [!NOTE]
-> 为了确保 analytics 事件到达 IoT Edge 中心，需要有任何运动检测处理器节点和/或任何 HTTP 扩展处理器节点的下游的 IoT 中心接收器节点。
+> 为了确保分析事件到达 IoT Edge 中心，在任何动作检测处理器节点和/或任何 HTTP 扩展处理器节点的下游都需要有一个 IoT 中心接收器节点。
 
 ## <a name="event-schema"></a>事件架构
 
-事件源自边缘设备，并可在边缘或云中使用。 IoT Edge 上的实时视频分析所生成的事件符合 Azure IoT 中心建立的[流式消息传递模式](../../iot-hub/iot-hub-devguide-messages-construct.md)，其中包含系统属性、应用程序属性和正文。
+事件来自边缘设备，并且可以在边缘或云中使用。 由 IoT Edge 上的实时视频分析生成的事件遵循由 Azure IoT 中心建立的[流式处理消息传送模式](../../iot-hub/iot-hub-devguide-messages-construct.md)。 此模式包含系统属性、应用程序属性和正文。
 
-### <a name="summary"></a>摘要
+### <a name="summary"></a>总结
 
-通过 IoT 中心观察到的每个事件都将具有一组共同的属性，如下所述。
+每个事件（在通过 IoT 中心观察到时）都有一组共同属性：
 
 |properties   |属性类型| 数据类型   |说明|
 |---|---|---|---|
-|message-id |system |GUID|  唯一的事件 ID。|
-|主题| applicationProperty |string|    媒体服务帐户的 Azure 资源管理器路径。|
-|subject|   applicationProperty |string|    发出事件的实体的子路径。|
-|EventTime| applicationProperty|    string| 事件的生成时间。|
-|eventType| applicationProperty |string|    事件类型标识符（见下文）。|
-|body|body  |object|    特定事件数据。|
-|dataVersion    |applicationProperty|   string  |{主}。微不足道|
+|`message-id`   |system |GUID|  唯一的事件 ID。|
+|`topic`|   applicationProperty |string|    Azure 媒体服务帐户的 Azure 资源管理器路径。|
+|`subject`| applicationProperty |string|    发出事件的实体的子路径。|
+|`eventTime`|   applicationProperty|    string| 生成事件的时间。|
+|`eventType`|   applicationProperty |string|    事件类型标识符。 （请参阅以下部分。）|
+|`body`|body    |object|    特定事件数据。|
+|`dataVersion`  |applicationProperty|   string  |{Major}.{Minor}|
 
-### <a name="properties"></a>“属性”
+### <a name="properties"></a>属性
 
 #### <a name="message-id"></a>message-id
 
-事件全局唯一标识符（GUID）
+事件的全局唯一标识符 (GUID)。
 
 #### <a name="topic"></a>主题
 
-表示与关系图关联的 Azure 媒体服务帐户。
+表示与图关联的 Azure 媒体服务帐户。
 
 `/subscriptions/{subId}/resourceGroups/{rgName}/providers/Microsoft.Media/mediaServices/{accountName}`
 
@@ -170,7 +198,7 @@ IoT Edge 上的实时视频分析根据以下分类发出事件或遥测数据�
 `/graphInstances/{graphInstanceName}/processors/{processorName}`<br/>
 `/graphInstances/{graphInstanceName}/sinks/{sinkName}`
 
-Subject 属性允许将一般事件映射到其生成模块。 例如，如果 RTSP 用户名或密码无效，则生成的事件将出现 `Microsoft.Media.Graph.Diagnostics.ProtocolError` 在节点上 `/graphInstances/myGraph/sources/myRtspSource` 。
+`subject` 属性用于将一般事件映射到生成模块。 例如，对于无效 RTSP 用户名或密码，生成的事件将是 `/graphInstances/myGraph/sources/myRtspSource` 节点上的 `Microsoft.Media.Graph.Diagnostics.ProtocolError`。
 
 #### <a name="event-types"></a>事件类型
 
@@ -182,66 +210,169 @@ Subject 属性允许将一般事件映射到其生成模块。 例如，如果 R
 
 |类名|说明|
 |---|---|
-|分析  |作为内容分析的一部分生成的事件。|
-|诊断    |有助于诊断问题和性能的事件。|
-|可运行    |作为资源操作的一部分生成的事件。|
+|分析  |在内容分析过程中生成的事件。|
+|诊断    |有助于对问题和性能进行诊断的事件。|
+|可运行    |在资源操作过程中生成的事件。|
 
 事件类型特定于每个事件类。
 
 示例:
 
-* Microsoft. node.js .。。
-* "Authorizationerror)"。
-* GraphInstanceStarted 的操作。
+* `Microsoft.Media.Graph.Analytics.Inference`
+* `Microsoft.Media.Graph.Diagnostics.AuthorizationError`
+* `Microsoft.Media.Graph.Operational.GraphInstanceStarted`
 
 ### <a name="event-time"></a>事件时间
 
-事件时间在 ISO8601 字符串和事件发生的时间中进行了描述。
+事件时间采用 ISO 8601 字符串格式。 它表示事件的发生时间。
 
+### <a name="azure-monitor-collection-via-telegraf"></a>通过 Telegraf 进行 Azure Monitor 收集
+
+这些指标将通过 IoT Edge 模块上的实时视频分析进行报告：  
+
+|指标名称|类型|Label|说明|
+|-----------|----|-----|-----------|
+|lva_active_graph_instances|仪表|iothub、edge_device、module_name、graph_topology|每个拓扑的活动图形总数。|
+|lva_received_bytes_total|计数器|iothub、edge_device、module_name、graph_topology、graph_instance、graph_node|一个节点接收的字节总数。 仅支持用于 RTSP 源。|
+|lva_data_dropped_total|计数器|iothub、edge_device、module_name、graph_topology、graph_instance、graph_node、data_kind|任何已删除数据（事件、媒体等）的计数器。|
+
+> [!NOTE]
+> 在容器的端口 9600 上公开了 [Prometheus 终结点](https://prometheus.io/docs/practices/naming/)。 如果你将 IoT Edge 模块上的实时视频分析命名为“lvaEdge”，则它们能够通过向 http://lvaEdge:9600/metrics 发送 GET 请求来访问指标。   
+
+请按照以下步骤，从 IoT Edge 模块上的实时视频分析启用指标收集：
+
+1. 在开发计算机上创建一个文件夹，并转到该文件夹。
+
+1. 在该文件夹中创建一个包含以下配置的 `telegraf.toml` 文件：
+    ```
+    [agent]
+        interval = "30s"
+        omit_hostname = true
+
+    [[inputs.prometheus]]
+      metric_version = 2
+      urls = ["http://edgeHub:9600/metrics", "http://edgeAgent:9600/metrics", "http://{LVA_EDGE_MODULE_NAME}:9600/metrics"]
+
+    [[outputs.azure_monitor]]
+      namespace_prefix = "lvaEdge"
+      region = "westus"
+      resource_id = "/subscriptions/{SUBSCRIPTON_ID}/resourceGroups/{RESOURCE_GROUP}/providers/Microsoft.Devices/IotHubs/{IOT_HUB_NAME}"
+    ```
+    > [!IMPORTANT]
+    > 请务必替换 .toml 文件中的变量。 变量由大括号 (`{}`) 表示。
+
+1. 在相同的文件夹中，创建包含以下命令的 Dockerfile：
+    ```
+        FROM telegraf:1.15.3-alpine
+        COPY telegraf.toml /etc/telegraf/telegraf.conf
+    ```
+
+1. 使用 Docker CLI 命令生成 Docker 文件，并将该映像发布到 Azure 容器注册表。
+    
+   若要详细了解如何使用 Docker CLI 将映像推送到容器注册表，请参阅[推送和拉取 Docker 映像](../../container-registry/container-registry-get-started-docker-cli.md)。 有关 Azure 容器注册表的其他信息，请参阅[文档](../../container-registry/index.yml)。
+
+
+1. 推送到 Azure 容器注册表以后，请将以下节点添加到部署清单文件：
+    ```
+    "telegraf": 
+    {
+      "settings": 
+        {
+            "image": "{AZURE_CONTAINER_REGISTRY_LINK_TO_YOUR_TELEGRAF_IMAGE}"
+        },
+      "type": "docker",
+      "version": "1.0",
+      "status": "running",
+      "restartPolicy": "always",
+      "env": 
+        {
+            "AZURE_TENANT_ID": { "value": "{YOUR_TENANT_ID}" },
+            "AZURE_CLIENT_ID": { "value": "{YOUR CLIENT_ID}" },
+            "AZURE_CLIENT_SECRET": { "value": "{YOUR_CLIENT_SECRET}" }
+        }
+    ``` 
+    > [!IMPORTANT]
+    > 请务必替换清单文件中的变量。 变量由大括号 (`{}`) 表示。
+
+
+   Azure Monitor 可[通过服务主体进行身份验证](https://github.com/influxdata/telegraf/blob/master/plugins/outputs/azure_monitor/README.md#azure-authentication)。
+        
+   Azure Monitor Telegraf 插件公开了[多种身份验证方法](https://github.com/influxdata/telegraf/blob/master/plugins/outputs/azure_monitor/README.md#azure-authentication)。 
+
+  1. 若要使用服务主体身份验证，请设置以下环境变量：  
+     `AZURE_TENANT_ID`：指定要向其进行身份验证的租户。  
+     `AZURE_CLIENT_ID`：指定要使用的应用客户端 ID。  
+     `AZURE_CLIENT_SECRET`：指定要使用的应用机密。  
+     
+     >[!TIP]
+     > 可为服务主体提供“监视指标发布者”角色。 按照 **[创建服务主体](https://docs.microsoft.com/azure/azure-arc/data/upload-metrics-and-logs-to-azure-monitor?pivots=client-operating-system-macos-and-linux#create-service-principal)** 中的步骤来创建服务主体并分配角色。
+
+1. 部署模块后，指标会显示在 Azure Monitor 中的单个命名空间下。 指标名称将与 Prometheus 发出的名称匹配。 
+
+   这种情况下，请在 Azure 门户中转到 IoT 中心，并在左窗格中选择“指标”。 你应会在那里看到指标。
+
+将 Prometheus 与 [Log Analytics](https://docs.microsoft.com/azure/azure-monitor/log-query/log-analytics-tutorial)一起使用，可以生成和 [监视指标](https://docs.microsoft.com/azure/azure-monitor/platform/metrics-supported) ，例如使用的 CPUPercent、MemoryUsedPercent 等。使用 Kusto 查询语言，你可以编写如下所示的查询并获取 IoT edge 模块使用的 CPU 百分比。
+```kusto
+let cpu_metrics = promMetrics_CL
+| where Name_s == "edgeAgent_used_cpu_percent"
+| extend dimensions = parse_json(Tags_s)
+| extend module_name = tostring(dimensions.module_name)
+| where module_name in ("lvaEdge","yolov3","tinyyolov3")
+| summarize cpu_percent = avg(Value_d) by bin(TimeGenerated, 5s), module_name;
+cpu_metrics
+| summarize cpu_percent = sum(cpu_percent) by TimeGenerated
+| extend module_name = "Total"
+| union cpu_metrics
+```
+
+[![使用 Kusto 查询显示指标的关系图。](./media/telemetry-schema/metrics.png)](./media/telemetry-schema/metrics.png#lightbox)
 ## <a name="logging"></a>日志记录
 
-与其他 IoT Edge 模块一样，你还可以在边缘设备上[检查容器日志](../../iot-edge/troubleshoot.md#check-container-logs-for-issues)。 写入日志的信息可由[以下模块](module-twin-configuration-schema.md)克隆属性控制：
+与其他 IoT Edge 模块一样，你也可以[检查边缘设备上的容器日志](../../iot-edge/troubleshoot.md#check-container-logs-for-issues)。 可以通过使用[以下模块孪生](module-twin-configuration-schema.md)属性来配置写入到日志中的信息：
 
-* logLevel
+* `logLevel`
 
-   * 允许的值包括详细、信息、警告、错误、无。
-   * 默认值为 "信息" –日志将包含错误、警告和信息。 讯息.
-   * 如果将值设置为 "警告"，则日志将包含错误消息和警告消息
-   * 如果将值设置为 "错误"，则日志中将仅包含错误消息。
-   * 如果将值设置为 "无"，则不会生成任何日志（不建议这样做）。
-   * 如果需要与 Azure 支持人员共享日志来诊断问题，则只能使用 "详细"。
-* logCategories
+   * 允许使用的值为 `Verbose`、`Information`、`Warning`、`Error` 和 `None`。
+   * 默认值为 `Information`。 日志将包含错误消息、警告消息和信息性消息。
+   * 如果将值设置为“`Warning`”，则日志将包含错误消息和警告消息。
+   * 如果将值设置为“`Error`”，则日志将仅包含错误消息。
+   * 如果将值设置为“`None`”，则不会生成任何日志。 （不建议采用此配置。）
+   * 只有在需要与 Azure 支持共享日志以诊断问题时，才使用“`Verbose`”。
 
-   * 以下一项或多项的逗号分隔列表： Application、Events、MediaPipeline。
-   * 默认值： "应用程序"、"事件"。
-   * 应用程序–这是模块中的高级信息，如模块启动消息、环境错误和直接方法调用。
-   * 事件-这是本文前面介绍的所有事件。
-   * MediaPipeline –这些是一些低级别的日志，可在解决问题时提供见解，如使用支持 RTSP 的相机建立连接时遇到的问题。
+* `logCategories`
+
+   * 以逗号分隔的以下一个或多个值的列表：`Application`、`Events`、`MediaPipeline`。
+   * 默认值为 `Application, Events`。
+   * `Application`：来自模块的概要信息，例如模块启动消息、环境错误和直接方法调用。
+   * `Events`：本文前面介绍的所有事件。
+   * `MediaPipeline`：低级别的日志，可在你排查问题（例如，与支持 RTSP 的相机建立连接时遇到困难）时提供见解。
    
 ### <a name="generating-debug-logs"></a>生成调试日志
 
-在某些情况下，可能需要生成比上述步骤更详细的日志，以帮助 Azure 支持人员解决问题。 完成此操作需要执行两个步骤。
+在某些情况下，可能需要生成比上述日志更详细的日志才能帮助 Azure 支持解决问题。 若要生成这些日志，请执行以下操作：
 
-首先，通过 createOptions 将[模块存储链接到设备存储](../../iot-edge/how-to-access-host-storage-from-module.md#link-module-storage-to-device-storage)。 如果你从快速入门中检查[部署清单模板](https://github.com/Azure-Samples/live-video-analytics-iot-edge-csharp/blob/master/src/edge/deployment.template.json)，你将看到：
+1. 通过 `createOptions` [将模块存储链接到设备存储](../../iot-edge/how-to-access-host-storage-from-module.md#link-module-storage-to-device-storage)。 如果你查看快速入门中的[部署清单模板](https://github.com/Azure-Samples/live-video-analytics-iot-edge-csharp/blob/master/src/edge/deployment.template.json)，则会看到以下代码：
 
-```
-"createOptions": {
-   …
-   "Binds": [
-     "/var/local/mediaservices/:/var/lib/azuremediaservices/"
-   ]
- }
-```
+   ```
+   "createOptions": {
+     …
+     "Binds": [
+       "/var/local/mediaservices/:/var/lib/azuremediaservices/"
+     ]
+    }
+   ```
 
-以上允许边缘模块将日志写入（设备）存储路径 "/var/local/mediaservices/"。 如果将以下所需属性添加到模块：
+   此代码让 Edge 模块将日志写入设备存储路径 `/var/local/mediaservices/`。 
 
-`"debugLogsDirectory": "/var/lib/azuremediaservices/debuglogs/",`
+ 1. 将以下 `desired` 属性添加到模块：
 
-然后，该模块将以二进制格式将调试日志写入（设备）存储路径/var/local/mediaservices/debuglogs/，可与 Azure 支持人员共享。
+    `"debugLogsDirectory": "/var/lib/azuremediaservices/debuglogs/",`
 
-## <a name="faq"></a>常见问题
+现在，该模块会以二进制格式将调试日志写入到设备存储路径 `/var/local/mediaservices/debuglogs/`。 你可以与 Azure 支持共享这些日志。
 
-[常见问题解答](faq.md#monitoring-and-metrics)
+## <a name="faq"></a>常见问题解答
+
+如有问题，请参阅[监视和指标常见问题解答](faq.md#monitoring-and-metrics)。
 
 ## <a name="next-steps"></a>后续步骤
 

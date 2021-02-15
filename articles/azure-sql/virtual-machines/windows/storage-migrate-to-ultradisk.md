@@ -8,18 +8,19 @@ editor: ''
 tags: azure-service-management
 ms.assetid: ''
 ms.service: virtual-machines-sql
-ms.topic: article
+ms.subservice: management
+ms.topic: how-to
 ms.tgt_pltfrm: vm-windows-sql-server
 ms.workload: iaas-sql-server
 ms.date: 07/09/2020
 ms.author: mathoma
 ms.reviewer: jroth
-ms.openlocfilehash: 42738ff71432284a156d0dfbb1f6cf160cbf4032
-ms.sourcegitcommit: 271601d3eeeb9422e36353d32d57bd6e331f4d7b
+ms.openlocfilehash: 42d7760d25f6ab591c19889eb2159711d6de1b07
+ms.sourcegitcommit: dfc4e6b57b2cb87dbcce5562945678e76d3ac7b6
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/20/2020
-ms.locfileid: "88653235"
+ms.lasthandoff: 12/12/2020
+ms.locfileid: "97356746"
 ---
 # <a name="migrate-log-disk-to-ultra-disk"></a>将日志磁盘迁移到超磁盘
 [!INCLUDE[appliesto-sqlvm](../../includes/appliesto-sqlvm.md)]
@@ -46,11 +47,11 @@ VM 大小和区域的子集都支持 Ultra 磁盘。 在继续之前，请验证
 1. 停止/解除分配虚拟机。 
 1. 选择 "**设置**" 下的 "**磁盘**"，然后选择 "**其他设置**"。 
 
-   :::image type="content" source="media/storage-migrate-to-ultradisk/additional-disks-settings-azure-portal.png" alt-text="为 设置 下的 磁盘 选择其他设置 Azure 门户":::
+   :::image type="content" source="media/storage-migrate-to-ultradisk/additional-disks-settings-azure-portal.png" alt-text="为 &quot;设置&quot; 下的 &quot;磁盘&quot; 选择其他设置 Azure 门户":::
 
 1. 选择 **"是"** 以 **启用超高磁盘兼容性**。 
 
-   :::image type="content" source="../../../virtual-machines/media/virtual-machines-disks-getting-started-ultra-ssd/ultra-options-yes-enable.png" alt-text="为 设置 下的 磁盘 选择其他设置 Azure 门户":::
+   :::image type="content" source="../../../virtual-machines/media/virtual-machines-disks-getting-started-ultra-ssd/ultra-options-yes-enable.png" alt-text="显示 &quot;是&quot; 选项的屏幕截图。":::
 
 1. 选择“保存”。 
 
@@ -58,7 +59,7 @@ VM 大小和区域的子集都支持 Ultra 磁盘。 在继续之前，请验证
 
 ### <a name="attach-disk"></a>附加磁盘
 
-使用 Azure 门户将超磁盘附加到你的虚拟机。 有关详细信息，请参阅 [附加超磁盘](../../../virtual-machines/disks-enable-ultra-ssd.md#attach-an-ultra-disk-using-the-azure-portal)
+使用 Azure 门户将超磁盘附加到你的虚拟机。 有关详细信息，请参阅 [附加超小型磁盘](../../../virtual-machines/disks-enable-ultra-ssd.md#attach-an-ultra-disk)。
 
 附加磁盘后，请使用 Azure 门户再次启动 VM。 
 
@@ -83,7 +84,7 @@ VM 大小和区域的子集都支持 Ultra 磁盘。 在继续之前，请验证
 1. 验证 SQL Server 使用的服务帐户。 可以通过使用 SQL Server 配置管理器或 services.msc 来实现此目的。
 1. 导航至新磁盘。 
 1. ) 要用于日志文件的 (或多个文件夹创建一个文件夹。 
-1. 右键单击该文件夹并选择“属性”。****
+1. 右键单击该文件夹并选择“属性”。
 1. 在 " **安全** " 选项卡上，对 SQL Server 服务帐户授予 "完全控制" 权限。 
 1. 选择 **"确定"**  以保存设置。 
 1. 对你计划包含 SQL 数据的每个根级别的文件夹重复此操作。 
@@ -97,7 +98,7 @@ VM 大小和区域的子集都支持 Ultra 磁盘。 在继续之前，请验证
 
 
 
-# <a name="transact-sql-t-sql"></a>[Transact-SQL (T-SQL)](#tab/tsql)
+# <a name="transact-sql-t-sql"></a>[Transact-sql (T-sql) ](#tab/tsql)
 
 使用 T-sql 将现有文件移动到新位置：
 
@@ -145,12 +146,12 @@ VM 大小和区域的子集都支持 Ultra 磁盘。 在继续之前，请验证
 1. SQL Server Management Studio (SSMS) 连接到数据库。 
 1. 右键单击该数据库，选择 " **属性** "，然后选择 " **文件**"。 
 1. 记下现有文件的路径。 
-1. 选择“确定”以关闭该对话框。**** 
+1. 选择“确定”关闭对话框  。 
 1. 右键单击该数据库，然后选择 "**任务**  >  **分离**"。 
 1. 按照向导分离数据库。 
 1. 使用文件资源管理器将日志文件手动移动到新位置。
 1. 在 SQL Server Management Studio 中附加数据库
-   1. 右键单击**对象资源管理器**中的 "**数据库**"，然后选择 "**附加数据库**"。 
+   1. 右键单击 **对象资源管理器** 中的 "**数据库**"，然后选择 "**附加数据库**"。 
    1. 使用该对话框，将每个文件（包括日志文件）添加到新位置。 
    1. 选择 **"确定"** 以附加该数据库。 
 

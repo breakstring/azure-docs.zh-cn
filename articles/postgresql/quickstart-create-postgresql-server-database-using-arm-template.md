@@ -1,18 +1,18 @@
 ---
 title: 快速入门：创建 Azure DB for PostgreSQL - ARM 模板
-description: 本文介绍如何使用 Azure 资源管理器模板创建 Azure Database for PostgreSQL 单一服务器。
-author: mgblythe
+description: 本快速入门介绍如何使用 Azure 资源管理器模板创建 Azure Database for PostgreSQL 单一服务器。
+author: lfittl-msft
+ms.author: lufittl
 ms.service: postgresql
 ms.topic: quickstart
 ms.custom: subject-armqs
-ms.author: mblythe
 ms.date: 05/14/2020
-ms.openlocfilehash: 00e8910627690d4713a7a86a56262519610c2392
-ms.sourcegitcommit: faeabfc2fffc33be7de6e1e93271ae214099517f
+ms.openlocfilehash: 9b022f83ed2a4e3a23165cc6bda298a53c008c7c
+ms.sourcegitcommit: fa90cd55e341c8201e3789df4cd8bd6fe7c809a3
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/13/2020
-ms.locfileid: "88183847"
+ms.lasthandoff: 11/04/2020
+ms.locfileid: "93331635"
 ---
 # <a name="quickstart-use-an-arm-template-to-create-an-azure-database-for-postgresql---single-server"></a>快速入门：使用 ARM 模板创建 Azure Database for PostgreSQL 单一服务器
 
@@ -22,7 +22,7 @@ ms.locfileid: "88183847"
 
 如果你的环境满足先决条件，并且你熟悉如何使用 ARM 模板，请选择“部署到 Azure”按钮。 Azure 门户中会打开模板。
 
-[![部署到 Azure](../media/template-deployments/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3a%2f%2fraw.githubusercontent.com%2fAzure%2fazure-quickstart-templates%2fmaster%2f101-managed-postgresql-with-vnet%2fazuredeploy.json)
+[:::image type="content" source="../media/template-deployments/deploy-to-azure.svg" alt-text="部署到 Azure":::](https://portal.azure.com/#create/Microsoft.Template/uri/https%3a%2f%2fraw.githubusercontent.com%2fAzure%2fazure-quickstart-templates%2fmaster%2f101-managed-postgresql-with-vnet%2fazuredeploy.json)
 
 ## <a name="prerequisites"></a>先决条件
 
@@ -48,7 +48,7 @@ ms.locfileid: "88183847"
 
 本快速入门中使用的模板来自 [Azure 快速启动模板](https://azure.microsoft.com/resources/templates/101-managed-postgresql-with-vnet/)。
 
-:::code language="json" source="~/quickstart-templates/101-managed-postgresql-with-vnet/azuredeploy.json" range="001-233" highlight="151,164,178,201,215":::
+:::code language="json" source="~/quickstart-templates/101-managed-postgresql-with-vnet/azuredeploy.json":::
 
 该模板定义了五个 Azure 资源：
 
@@ -66,7 +66,7 @@ ms.locfileid: "88183847"
 
 选择以下链接以在 Azure 门户中部署 Azure Database for PostgreSQL 服务器模板：
 
-[![部署到 Azure](../media/template-deployments/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3a%2f%2fraw.githubusercontent.com%2fAzure%2fazure-quickstart-templates%2fmaster%2f101-managed-postgresql-with-vnet%2fazuredeploy.json)
+[:::image type="content" source="../media/template-deployments/deploy-to-azure.svg" alt-text="部署到 Azure":::](https://portal.azure.com/#create/Microsoft.Template/uri/https%3a%2f%2fraw.githubusercontent.com%2fAzure%2fazure-quickstart-templates%2fmaster%2f101-managed-postgresql-with-vnet%2fazuredeploy.json)
 
 在“部署具有 VNet 的 Azure Database for PostgreSQL”页上：
 
@@ -76,24 +76,24 @@ ms.locfileid: "88183847"
 
 3. 输入服务器名称、管理员登录名和管理员登录密码  。
 
-    ![“部署具有 VNet 的 Azure Database for PostgreSQL”窗口，Azure 快速入门模板，Azure 门户](./media/quickstart-create-postgresql-server-database-using-arm-template/deploy-azure-database-for-postgresql-with-vnet.png)
+    :::image type="content" source="./media/quickstart-create-postgresql-server-database-using-arm-template/deploy-azure-database-for-postgresql-with-vnet.png" alt-text="“部署具有 VNet 的 Azure Database for PostgreSQL”窗口，Azure 快速入门模板，Azure 门户":::
 
 4. 根据需要更改其他默认设置：
 
-    * **订阅**：要用于服务器的 Azure 订阅。
-    * **SKU 容量**：vCore 容量，值可以是 2（默认值）、4、8、16、32 或 64     。
-    * **SKU 名称**：SKU 层前缀、SKU 系列和 SKU 容量，以下划线联接，例如 B_Gen5_1、GP_Gen5_2（默认值）或 MO_Gen5_32  。
+    * **订阅** ：要用于服务器的 Azure 订阅。
+    * **SKU 容量** ：vCore 容量，值可以是 2（默认值）、4、8、16、32 或 64     。
+    * **SKU 名称** ：SKU 层前缀、SKU 系列和 SKU 容量，以下划线联接，例如 B_Gen5_1、GP_Gen5_2（默认值）或 MO_Gen5_32  。
     * **SKU 大小(MB)** ：Azure Database for PostgreSQL 服务器的存储大小，以 MB 为单位（默认值为 51200）。
-    * **SKU 层**：部署层，例如“基本”、“常规用途”（默认值）或“内存优化”  。
-    * **SKU 系列**：“Gen4”或“Gen5”（默认值），表示服务器部署的硬件代系 。
-    * **PostgreSQL 版本**：要部署的 PostgreSQL 服务器版本，例如 9.5、9.6、10 或 11（默认值）   。
-    * **备份保留天数**：异地冗余备份的所需保留期，以天为单位（默认值为 7）。
-    * **异地冗余备份**：“已启用”或“已禁用”（默认值），具体取决于异地灾难恢复 (Geo-DR) 要求 。
-    * **虚拟网络名称**：虚拟网络的名称（默认值为 azure_postgresql_vnet）。
-    * **子网名称**：子网的名称（默认值为 azure_postgresql_subnet）。
-    * **虚拟网络规则名称**：允许子网的虚拟网络规则的名称（默认值为 AllowSubnet）。
-    * **VNet 地址前缀**：虚拟网络的地址前缀（默认值为 10.0.0.0/16）。
-    * **子网前缀**：子网的地址前缀（默认值为 10.0.0.0/16）。
+    * **SKU 层** ：部署层，例如“基本”、“常规用途”（默认值）或“内存优化”  。
+    * **SKU 系列** ：“Gen4”或“Gen5”（默认值），表示服务器部署的硬件代系 。
+    * **PostgreSQL 版本** ：要部署的 PostgreSQL 服务器版本，例如 9.5、9.6、10 或 11（默认值）   。
+    * **备份保留天数** ：异地冗余备份的所需保留期，以天为单位（默认值为 7）。
+    * **异地冗余备份** ：“已启用”或“已禁用”（默认值），具体取决于异地灾难恢复 (Geo-DR) 要求 。
+    * **虚拟网络名称** ：虚拟网络的名称（默认值为 azure_postgresql_vnet）。
+    * **子网名称** ：子网的名称（默认值为 azure_postgresql_subnet）。
+    * **虚拟网络规则名称** ：允许子网的虚拟网络规则的名称（默认值为 AllowSubnet）。
+    * **VNet 地址前缀** ：虚拟网络的地址前缀（默认值为 10.0.0.0/16）。
+    * **子网前缀** ：子网的地址前缀（默认值为 10.0.0.0/16）。
 
 5. 阅读条款和条件，并选择“我同意上述条款和条件”。
 

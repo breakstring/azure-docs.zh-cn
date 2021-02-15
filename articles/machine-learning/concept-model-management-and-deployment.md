@@ -6,17 +6,16 @@ services: machine-learning
 ms.service: machine-learning
 ms.subservice: core
 ms.topic: conceptual
-ms.reviewer: jmartens
 author: jpe316
 ms.author: jordane
 ms.date: 03/17/2020
 ms.custom: seodec18
-ms.openlocfilehash: d1d14fa9730e3ddd47378a45ff7a1442bdee69ac
-ms.sourcegitcommit: 8def3249f2c216d7b9d96b154eb096640221b6b9
+ms.openlocfilehash: 8813b2cad5800bd4ede6e64119117df57c230fdc
+ms.sourcegitcommit: 3af12dc5b0b3833acb5d591d0d5a398c926919c8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/03/2020
-ms.locfileid: "87543378"
+ms.lasthandoff: 01/11/2021
+ms.locfileid: "98071215"
 ---
 # <a name="mlops-model-management-deployment-and-monitoring-with-azure-machine-learning"></a>MLOps：模型管理、部署和监视 Azure 机器学习
 
@@ -71,6 +70,9 @@ ML 管道可以包含从数据准备、到特征提取、到超参数优化、�
 无法删除在活动部署中使用的已注册模型。
 有关详细信息，请参阅[部署模型](how-to-deploy-and-where.md#registermodel)的注册模型部分。
 
+> [!IMPORTANT]
+> 在 Azure 机器学习工作室的“模型”页上使用“按 `Tags` 筛选”选项时，客户应该使用 `TagName=TagValue`（无空格），而不是使用 `TagName : TagValue`
+
 ### <a name="profile-models"></a>分析模型
 
 Azure 机器学习可帮助你了解部署模型时要创建的服务的 CPU 和内存要求。 分析可测试运行模型并返回 CPU 使用率、内存使用率和响应延迟等信息的服务。 它还根据资源使用率提供 CPU 和内存建议。
@@ -106,11 +108,11 @@ Azure 机器学习可帮助你了解部署模型时要创建的服务的 CPU 和
 创建映像时，还会添加 Azure 机器学习所需的组件。 例如，运行 Web 服务以及与 IoT Edge 交互所需的资产。
 
 #### <a name="batch-scoring"></a>批评分
-支持通过 ML 管道进行批量评分。 有关详细信息，请参阅[针对大数据的批量预测](how-to-use-parallel-run-step.md)。
+支持通过 ML 管道进行批量评分。 有关详细信息，请参阅[针对大数据的批量预测](./tutorial-pipeline-batch-scoring-classification.md)。
 
 #### <a name="real-time-web-services"></a>实时 Web 服务
 
-可以在包含以下计算目标的 **Web 服务**中使用模型：
+可以在包含以下计算目标的 **Web 服务** 中使用模型：
 
 * Azure 容器实例
 * Azure Kubernetes 服务
@@ -136,13 +138,13 @@ Azure 机器学习可帮助你了解部署模型时要创建的服务的 CPU 和
 
 #### <a name="iot-edge-devices"></a>IoT Edge 设备
 
-可以通过 **Azure IoT Edge 模块**在 IoT 设备中使用模型。 IoT Edge 模块将部署到支持推理或模型评分的硬件设备。
+可以通过 **Azure IoT Edge 模块** 在 IoT 设备中使用模型。 IoT Edge 模块将部署到支持推理或模型评分的硬件设备。
 
 有关详细信息，请参阅[部署模型](how-to-deploy-and-where.md)。
 
 ### <a name="analytics"></a>分析
 
-Microsoft Power BI 支持使用机器学习模型进行数据分析。 有关详细信息，请参阅 [Power BI 中的 Azure 机器学习集成（预览版）](https://docs.microsoft.com/power-bi/service-machine-learning-integration)。
+Microsoft Power BI 支持使用机器学习模型进行数据分析。 有关详细信息，请参阅 [Power BI 中的 Azure 机器学习集成（预览版）](/power-bi/service-machine-learning-integration)。
 
 ## <a name="capture-the-governance-data-required-for-capturing-the-end-to-end-ml-lifecycle"></a>捕获所需的监管数据以捕获端到端的 ML 生命周期
 
@@ -158,7 +160,7 @@ Azure ML 提供使用元数据跟踪所有 ML 资产的端到端审核线索的�
 > [!TIP]
 > 系统会自动捕获有关模型和数据集的某些信息，同时你可以使用“标记”添加其他信息。 在工作区中查找已注册的模型和数据集时，可以使用标记作为筛选器。
 >
-> 可以选择将数据集与已注册的模型相关联。 若要了解如何在注册模型时引用数据集，请参阅 [Model](https://docs.microsoft.com/python/api/azureml-core/azureml.core.model(class)?view=azure-ml-py) 类参考信息。
+> 可以选择将数据集与已注册的模型相关联。 若要了解如何在注册模型时引用数据集，请参阅 [Model](/python/api/azureml-core/azureml.core.model%28class%29?preserve-view=true&view=azure-ml-py) 类参考信息。
 
 
 ## <a name="notify-automate-and-alert-on-events-in-the-ml-lifecycle"></a>针对 ML 生命周期中的事件发出通知和警报以及进行自动化处理
@@ -184,7 +186,7 @@ Azure ML 将关键事件发布到 Azure 事件网格。使用事件网格可以�
 - 将新模型的输出与旧模型的输出进行比较
 - 使用预定义的条件来确定是否替换旧模型 
 
-上述步骤的一个主旨是，重新训练应该是自动化的，而不是临时性的。 [Azure 机器学习管道](concept-ml-pipelines.md)非常适合用于创建与数据准备、训练、验证和部署相关的工作流。 请阅读[使用 Azure 机器学习设计器重新训练模型（预览版）](how-to-retrain-designer.md)，了解管道和 Azure 机器学习设计器如何适应重新训练方案。 
+上述步骤的一个主旨是，重新训练应该是自动化的，而不是临时性的。 [Azure 机器学习管道](concept-ml-pipelines.md)非常适合用于创建与数据准备、训练、验证和部署相关的工作流。 请阅读[使用 Azure 机器学习设计器重新训练模型](how-to-retrain-designer.md)，了解管道和 Azure 机器学习设计器如何适应重新训练方案。 
 
 ## <a name="automate-the-ml-lifecycle"></a>自动化 ML 生命周期 
 

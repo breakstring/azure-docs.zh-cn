@@ -3,12 +3,12 @@ title: Azure 中继常见问题 | Microsoft Docs
 description: 本文提供了一些有关 Azure 中继服务的常见问题解答 (FAQ)。
 ms.topic: article
 ms.date: 06/23/2020
-ms.openlocfilehash: 40e6f830e2314f7c8f36fcd25d24a41cc256bef2
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 83cbc4b02bb8b63878abd046ed2314728546e87a
+ms.sourcegitcommit: 25d1d5eb0329c14367621924e1da19af0a99acf1
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "85317022"
+ms.lasthandoff: 01/16/2021
+ms.locfileid: "98250039"
 ---
 # <a name="azure-relay-faqs"></a>Azure 中继常见问题解答
 
@@ -50,7 +50,6 @@ ms.locfileid: "85317022"
     *   在该月通过连接 B 发送了 6 GB 的数据。
     *   总费用是 10.50 美元。 其中 5 美元是针对连接 A 的收费，5 美元是针对连接 B 的收费，还有 0.50 美元是针对连接 B 额外的 1 GB 数据的收费。
 
-请注意，示例中所使用的价格仅适用于混合连接预览期。 在公开发布混合连接后，价格可能会变化。
 
 ### <a name="how-are-hours-calculated-for-relay"></a>如何计算中继小时数？
 
@@ -71,7 +70,7 @@ WCF 中继仅适用于标准层命名空间。 其他中继的定价和[连接�
 ## <a name="quotas"></a>配额
 | 配额名称 | 作用域 |  注释 | Value |
 | --- | --- | --- | --- |
-| 中继上的并发侦听器数 |实体 |系统会拒绝后续的附加连接请求，且调用代码会收到异常。 |25 |
+| 中继上的并发侦听器数 |实体 (混合连接或 WCF 中继)  |系统会拒绝后续的附加连接请求，且调用代码会收到异常。 |25 |
 | 服务命名空间中所有中继终结点的并发中继连接数 |命名空间 |- |5,000 |
 | 每个服务命名空间的中继终结点数 |命名空间 |- |10,000 |
 | [NetOnewayRelayBinding](/dotnet/api/microsoft.servicebus.netonewayrelaybinding) 和 [NetEventRelayBinding](/dotnet/api/microsoft.servicebus.neteventrelaybinding) 中继的消息大小 |命名空间 |会拒绝超过这些配额的传入消息，且调用代码会收到异常。 |64 KB |
@@ -119,7 +118,7 @@ Move-AzResource -DestinationResourceGroupName 'targetRG' -DestinationSubscriptio
 ### <a name="what-is-a-shared-access-signature-and-which-languages-can-i-use-to-generate-a-signature"></a>什么是共享访问签名？哪些语言可以用来生成签名？
 共享访问签名 (SAS) 是基于 SHA–256 安全哈希或 URI 的身份验证机制。 有关如何在 Node.js、PHP、Python、Java、C 和 C# 中生成自有签名的信息，请参阅[使用共享访问签名进行服务总线身份验证][Shared Access Signatures]。
 
-### <a name="is-it-possible-to-whitelist-relay-endpoints"></a>是否可以将中继终结点加入允许列表？
+### <a name="is-it-possible-to-allow-only-some-relay-endpoints"></a>是否可以仅允许某些中继终结点？
 是的。 中继客户端使用完全限定的域名连接到 Azure 中继服务。 客户可以在支持 DNS 允许列表的防火墙上为 `*.servicebus.windows.net` 添加一个条目。
 
 ## <a name="next-steps"></a>后续步骤

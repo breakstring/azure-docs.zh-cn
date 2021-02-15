@@ -3,12 +3,12 @@ title: IoT Edge 上的实时视频分析入门 - Azure
 description: 本快速入门演示如何开始使用 IoT Edge 上的实时视频分析。 了解如何检测实时视频流中的运动。
 ms.topic: quickstart
 ms.date: 04/27/2020
-ms.openlocfilehash: 16c3c849e7d936c6e94539176d8f171f52bd15de
-ms.sourcegitcommit: d8b8768d62672e9c287a04f2578383d0eb857950
+ms.openlocfilehash: d9f2637166c3807e36f4304e9394bf2ecf91d88c
+ms.sourcegitcommit: 1f1d29378424057338b246af1975643c2875e64d
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/11/2020
-ms.locfileid: "88067651"
+ms.lasthandoff: 02/05/2021
+ms.locfileid: "99573800"
 ---
 # <a name="quickstart-get-started---live-video-analytics-on-iot-edge"></a>快速入门：入门 - IoT Edge 上的实时视频分析
 
@@ -16,13 +16,22 @@ ms.locfileid: "88067651"
 
 完成设置步骤后，你将能通过媒体图运行模拟实时视频流，该媒体图可检测和报告该流中的任何运动。 下图显示了该媒体图的图形表示形式。
 
-![基于运动检测的实时视频分析](./media/analyze-live-video/motion-detection.png)
+> [!div class="mx-imgBorder"]
+> :::image type="content" source="./media/analyze-live-video/motion-detection.svg" alt-text="基于运动检测的实时视频分析":::
+
+可以查看以下视频，其中包含有关如何开始使用 IoT Edge 上的实时视频分析的详细步骤：
+
+> [!VIDEO https://www.microsoft.com/en-us/videoplayer/embed/RE4Hcax]
 
 ## <a name="prerequisites"></a>先决条件
 
 * 具有活动订阅的 Azure 帐户。 如果没有帐户，可[免费创建一个帐户](https://azure.microsoft.com/free/?WT.mc_id=A261C142F)。
+
+  > [!NOTE]
+  > 你将需要一个具有服务主体创建权限（所有者角色提供此权限）的 Azure 订阅。 如果你没有正确的权限，请联系帐户管理员，让其授予你适当的权限。  
+
 * 开发计算机上的 [Visual Studio Code](https://code.visualstudio.com/)。 请确保具有 [Azure IoT Tools 扩展](https://marketplace.visualstudio.com/items?itemName=vsciot-vscode.azure-iot-tools)。
-* 确保开发计算机连接到的网络允许经由端口 5671 的高级消息队列协议协议 (AMQP)。 此设置使 Azure IoT Tools 可以与 Azure IoT 中心通信。
+* 确保开发计算机连接到的网络允许出站流量采用高级消息队列协议 (AMQP) 流经端口 5671。 此设置使 Azure IoT Tools 可以与 Azure IoT 中心通信。
 
 > [!TIP]
 > 安装 Azure IoT Tools 扩展时，系统可能会提示你安装 Docker。 可以忽略此提示。
@@ -34,25 +43,45 @@ ms.locfileid: "88067651"
 * IoT 中心
 * 存储帐户
 * Azure 媒体服务帐户
-* Azure 中的 Linux VM，已安装 [IoT Edge 运行时](../../iot-edge/how-to-install-iot-edge-linux.md)
+* Azure 中的 Linux VM，已安装 [IoT Edge 运行时](../../iot-edge/how-to-install-iot-edge.md)
 
 在本快速入门中，我们建议你使用[实时视频分析资源设置脚本](https://github.com/Azure/live-video-analytics/tree/master/edge/setup)在 Azure 订阅中部署所需资源。 为此，请执行下列步骤：
 
-1. 转到 [Azure Cloud Shell](https://shell.azure.com)。
+1. 转到 [Azure 门户](https://portal.azure.com)并选择 Cloud Shell 图标。
+    > [!div class="mx-imgBorder"]
+    > :::image type="content" source="./media/quickstarts/cloud-shell.png" alt-text="Cloud Shell":::
 1. 如果你是第一次使用 Cloud Shell，系统将提示你选择一个订阅以创建存储帐户和 Microsoft Azure 文件存储共享。 选择“创建存储”，创建用于存储 Cloud Shell 会话信息的存储帐户。 此存储帐户不同于脚本将要创建的与 Azure 媒体服务帐户配合使用的帐户。
 1. 在 Cloud Shell 窗口左侧的下拉菜单中，选择“Bash”作为环境。
 
-    ![环境选择器](./media/quickstarts/env-selector.png)
-
+    > [!div class="mx-imgBorder"]
+    > :::image type="content" source="./media/quickstarts/env-selector.png" alt-text="环境选择器":::
 1. 运行以下命令。
 
     ```
     bash -c "$(curl -sL https://aka.ms/lva-edge/setup-resources-for-samples)"
     ```
     
-如果脚本成功完成，你应该可在订阅中看到所有所需资源。 在脚本输出中，资源表会列出 IoT 中心名称。 查找资源类型 `Microsoft.Devices/IotHubs`，并记下名称。 下一步骤需要用到此名称。 
+    在脚本成功完成后，你应可在订阅中看到所有所需资源。 脚本将设置总共 12 种资源：
+    1. **流式处理终结点** - 这将有助于播放记录的 AMS 资产。
+    1. **虚拟机** - 这是将充当边缘设备的虚拟机。
+    1. **磁盘** - 这是连接到虚拟机来存储媒体和项目的存储磁盘。
+    1. **网络安全组** - 这用于筛选 Azure 虚拟网络中出入 Azure 资源的网络流量。
+    1. **网络接口** - Azure 虚拟机可通过它与 Internet、Azure 和其他资源进行通信。
+    1. **堡垒连接** - 你可通过它使用浏览器和 Azure 门户连接到虚拟机。
+    1. **公共 IP 地址** - Azure 资源可通过它与 Internet 和面向公众的 Azure 服务通信
+    1. **虚拟网络** - 通过它，许多类型的 Azure 资源（例如虚拟机）可以安全方式彼此通信、与 Internet 通信，以及与本地网络通信。 详细了解[虚拟网络](https://docs.microsoft.com/azure/virtual-network/virtual-networks-overview)。
+    1. **IoT 中心** - 这充当消息中心，用于在 IoT 应用程序、IoT Edge 模块以及它管理的设备之间进行双向通信。
+    1. **媒体服务帐户** - 这有助于在 Azure 中管理和流式传输媒体内容。
+    1. **存储帐户** - 你必须具有一个主存储帐户，而且可拥有任意数量与媒体服务帐户关联的辅助存储帐户。 有关详细信息，请参阅 [Azure 存储帐户与 Azure 媒体服务帐户](https://docs.microsoft.com/azure/media-services/latest/storage-account-concept)。
+    1. **容器注册表** - 这有助于存储和管理专用 Docker 容器映像及相关项目。
 
-该脚本还会在 ~/clouddrive/lva-sample/ 目录中生成一些配置文件。 稍后在快速入门中需要用到这些文件。
+在脚本输出中，资源表会列出 IoT 中心名称。 查找资源类型 `Microsoft.Devices/IotHubs`，并记下名称。 下一步骤需要用到此名称。  
+
+> [!NOTE]
+> 该脚本还会在 ~/clouddrive/lva-sample/ 目录中生成一些配置文件。 稍后在快速入门中需要用到这些文件。
+
+> [!TIP]
+> 如果在创建 Azure 资源时遇到问题，请查看[故障排除指南](troubleshoot-how-to.md#common-error-resolutions)来解决一些常见问题。
 
 ## <a name="deploy-modules-on-your-edge-device"></a>在边缘设备上部署模块
 
@@ -75,14 +104,32 @@ RTSP 模拟器模块使用视频文件模拟实时视频流，该文件已在运
 
 按照以下说明使用 Azure IoT Tools 扩展连接到 IoT 中心。
 
-1. 在 Visual Studio Code 中选择“视图” > “资源管理器”。 或是选择 Ctrl+Shift+E。
+1. 在 Visual Studio Code 中，打开“扩展”选项卡（或按 Ctrl+Shift+X），然后搜索“Azure IoT 中心”。
+1. 右键单击并选择“扩展设置”。
+
+    > [!div class="mx-imgBorder"]
+    > :::image type="content" source="./media/run-program/extensions-tab.png" alt-text="扩展设置":::
+1. 搜索并启用“显示详细消息”。
+
+    > [!div class="mx-imgBorder"]
+    > :::image type="content" source="./media/run-program/show-verbose-message.png" alt-text="显示详细消息":::
+1. 选择”查看” > ”资源管理器”， 或选择 Ctrl+Shift+E。
 1. 在“资源管理器”选项卡的左下角，选择“Azure IoT 中心”。
 1. 选择“更多选项”图标以查看上下文菜单。 然后选择“设置 IoT 中心连接字符串”。
 1. 输入框出现时，在其中输入 IoT 中心连接字符串。 在 Cloud Shell 中，可以从 ~/clouddrive/lva-sample/appsettings.json 获取连接字符串。
 
+> [!NOTE]
+> 系统可能会要求你提供 IoT 中心的内置终结点信息。 若要获取此信息，请在 Azure 门户中导航到 IoT 中心，然后在左侧导航窗格中查找“内置终结点”选项。 单击此处，在“与事件中心兼容的终结点”部分下查找“与事件中心兼容的终结点” 。 复制并使用框中的文本。 终结点将如下所示：  
+    ```
+    Endpoint=sb://iothub-ns-xxx.servicebus.windows.net/;SharedAccessKeyName=iothubowner;SharedAccessKey=XXX;EntityPath=<IoT Hub name>
+    ```
+
 如果连接成功，边缘设备列表随即显示。 应该会看到至少一个设备，名为 lva-sample-device。 现在你可以管理 IoT Edge 设备，并通过上下文菜单与 Azure IoT 中心进行交互。 若有查看部署在边缘设备上的模块，请在“lva-sample-device”下，展开“模块”节点。
 
 ![lva-sample-device 节点](./media/quickstarts/lva-sample-device-node.png)
+
+> [!TIP]
+> 如果你自己已在边缘设备（例如 ARM64 设备）上[手动部署了 IoT Edge 上的实时视频分析](deploy-iot-edge-device.md)，则你会在 Azure IoT 中心看到模块显示在该设备下。 你可以选择该模块，然后执行下面的剩余步骤。
 
 ## <a name="use-direct-method-calls"></a>使用直接方法调用
 
@@ -98,7 +145,7 @@ RTSP 模拟器模块使用视频文件模拟实时视频流，该文件已在运
 
     ```
     {
-        "@apiVersion" : "1.0"
+        "@apiVersion" : "2.0"
     }
     ```
 
@@ -120,11 +167,11 @@ RTSP 模拟器模块使用视频文件模拟实时视频流，该文件已在运
 
 ### <a name="invoke-graphtopologyset"></a>调用 GraphTopologySet
 
-通过与调用 `GraphTopologyList` 相同的步骤，可以调用 `GraphTopologySet` 以设置[图形拓扑](media-graph-concept.md#media-graph-topologies-and-instances)。 使用以下 JSON 作为有效负载。
+与之前一样，现可调用 `GraphTopologySet` 来设置[图形拓扑](media-graph-concept.md#media-graph-topologies-and-instances)。 使用以下 JSON 作为有效负载。
 
 ```
 {
-    "@apiVersion": "1.0",
+    "@apiVersion": "2.0",
     "name": "MotionDetection",
     "properties": {
         "description": "Analyzing live video to detect motion and emit events",
@@ -287,7 +334,7 @@ RTSP 模拟器模块使用视频文件模拟实时视频流，该文件已在运
 
 ```
 {
-    "@apiVersion" : "1.0",
+    "@apiVersion" : "2.0",
     "name" : "MotionDetection"
 }
 ```
@@ -385,7 +432,7 @@ RTSP 模拟器模块使用视频文件模拟实时视频流，该文件已在运
 
 ```
 {
-    "@apiVersion" : "1.0",
+    "@apiVersion" : "2.0",
     "name" : "Sample-Graph-1",
     "properties" : {
         "topologyName" : "MotionDetection",
@@ -400,8 +447,8 @@ RTSP 模拟器模块使用视频文件模拟实时视频流，该文件已在运
 请注意，此有效负载：
 
 * 指定需要为其创建实例的拓扑名称 (`MotionDetection`)。
-* 包含 `rtspUrl`（它在图形拓扑有效负载中没有默认值）的参数值。
-
+* 包含 `rtspUrl`（它在图形拓扑有效负载中没有默认值）的参数值。 此值是指向以下示例视频的链接：
+    > [!VIDEO https://www.microsoft.com/en-us/videoplayer/embed/RE4LTY4]
 几秒钟内，“输出”窗口中显示以下响应：
 
 ```
@@ -445,7 +492,7 @@ RTSP 模拟器模块使用视频文件模拟实时视频流，该文件已在运
 
 ```
 {
-    "@apiVersion" : "1.0",
+    "@apiVersion" : "2.0",
     "name" : "Sample-Graph-1"
 }
 ```
@@ -469,7 +516,7 @@ RTSP 模拟器模块使用视频文件模拟实时视频流，该文件已在运
 
 ```
  {
-     "@apiVersion" : "1.0",
+     "@apiVersion" : "2.0",
      "name" : "Sample-Graph-1"
  }
  ```
@@ -516,6 +563,12 @@ RTSP 模拟器模块使用视频文件模拟实时视频流，该文件已在运
 3. 右键单击“lva-sample-device”，然后选择“开始监视内置事件监视” 。
 
     ![开始监视 IoT 中心事件](./media/quickstarts/start-monitoring-iothub-events.png)
+
+    > [!NOTE]
+    > 系统可能会要求你提供 IoT 中心的内置终结点信息。 若要获取此信息，请在 Azure 门户中导航到 IoT 中心，然后在左侧导航窗格中查找“内置终结点”选项。 单击此处，在“与事件中心兼容的终结点”部分下查找“与事件中心兼容的终结点” 。 复制并使用框中的文本。 终结点将如下所示：  
+        ```
+        Endpoint=sb://iothub-ns-xxx.servicebus.windows.net/;SharedAccessKeyName=iothubowner;SharedAccessKey=XXX;EntityPath=<IoT Hub name>
+        ```
     
 “输出”窗口显示以下消息：
 
@@ -548,13 +601,6 @@ RTSP 模拟器模块使用视频文件模拟实时视频流，该文件已在运
         }
         }
     ]
-    },
-    "applicationProperties": {
-    "topic": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.media/mediaservices/{amsAccountName}",
-    "subject": "/graphInstances/Sample-Graph-1/processors/motionDetection",
-    "eventType": "Microsoft.Media.Graph.Analytics.Inference",
-    "eventTime": "2020-05-19T07:45:34.404Z",
-    "dataVersion": "1.0"
     }
 }
 ```
@@ -602,7 +648,7 @@ RTSP 模拟器模块使用视频文件模拟实时视频流，该文件已在运
 
 ```
 {
-    "@apiVersion" : "1.0",
+    "@apiVersion" : "2.0",
     "name" : "Sample-Graph-1"
 }
 ```
@@ -628,7 +674,7 @@ RTSP 模拟器模块使用视频文件模拟实时视频流，该文件已在运
 
 ```
 {
-    "@apiVersion" : "1.0",
+    "@apiVersion" : "2.0",
     "name" : "Sample-Graph-1"
 }
 ```
@@ -652,7 +698,7 @@ RTSP 模拟器模块使用视频文件模拟实时视频流，该文件已在运
 
 ```
 {
-    "@apiVersion" : "1.0",
+    "@apiVersion" : "2.0",
     "name" : "MotionDetection"
 }
 ```

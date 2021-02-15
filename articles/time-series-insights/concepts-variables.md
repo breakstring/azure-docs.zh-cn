@@ -5,13 +5,13 @@ author: shreyasharmamsft
 ms.author: shresha
 ms.service: time-series-insights
 ms.topic: conceptual
-ms.date: 08/12/2020
-ms.openlocfilehash: d0a5b48e93e839b0a0adaf185700d7f60fec7948
-ms.sourcegitcommit: a2a7746c858eec0f7e93b50a1758a6278504977e
+ms.date: 01/22/2021
+ms.openlocfilehash: fd08dc98fa47617bbc7c8d1fff895377837a7327
+ms.sourcegitcommit: 78ecfbc831405e8d0f932c9aafcdf59589f81978
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/12/2020
-ms.locfileid: "88140677"
+ms.lasthandoff: 01/23/2021
+ms.locfileid: "98736728"
 ---
 # <a name="time-series-model-variables"></a>时序模型变量
 
@@ -34,7 +34,7 @@ ms.locfileid: "88140677"
 | 变量筛选器 | 筛选器是可选的条件子句，用于限制可在计算中考虑的行数。 |
 | 变量值 | 来自设备或传感器的，或使用时序表达式进行转换的用于计算的遥测值。 数字种类变量的类型必须为 *Double*。|
 | 变量内插 | 内插指定如何使用现有数据重构信号。 *Step* 和 *Linear* 内插选项适用于数字变量。 |
-| 变量聚合 | 通过[“数字”变量种类支持的聚合函数](https://docs.microsoft.com/rest/api/time-series-insights/reference-time-series-expression-syntax#numeric-variable-kind)执行计算。 |
+| 变量聚合 | 通过[“数字”变量种类支持的聚合函数](/rest/api/time-series-insights/reference-time-series-expression-syntax#numeric-variable-kind)执行计算。 |
 
 变量符合以下 JSON 示例：
 
@@ -102,7 +102,7 @@ ms.locfileid: "88140677"
 | 变量属性 | 说明 |
 | --- | ---|
 | 变量筛选器 | 筛选器是可选的条件子句，用于限制可在计算中考虑的行数。 |
-| 变量聚合 | 通过[“聚合”变量种类支持的聚合函数](https://docs.microsoft.com/rest/api/time-series-insights/reference-time-series-expression-syntax#aggregate-variable-kind)执行计算。 |
+| 变量聚合 | 通过[“聚合”变量种类支持的聚合函数](/rest/api/time-series-insights/reference-time-series-expression-syntax#aggregate-variable-kind)执行计算。 |
 
 变量符合以下 JSON 示例：
 

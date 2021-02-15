@@ -1,22 +1,17 @@
 ---
 title: 使用支持 Azure 的 dtexec 实用工具执行 SQL Server Integration Services (SSIS) 包
 description: 了解如何使用支持 Azure 的 dtexec 实用工具执行 SQL Server Integration Services (SSIS) 包。
-services: data-factory
-documentationcenter: ''
 ms.service: data-factory
-ms.workload: data-services
 ms.topic: conceptual
 ms.date: 04/12/2020
 author: swinarko
 ms.author: sawinark
-manager: mflasko
-ms.reviewer: douglasl
-ms.openlocfilehash: 94b581f677e370911a60db08276ff7dd0eb45486
-ms.sourcegitcommit: 4f1c7df04a03856a756856a75e033d90757bb635
+ms.openlocfilehash: 980e8e3c2f2c1ca1dc716df1e77caaa3fe3181aa
+ms.sourcegitcommit: d4734bc680ea221ea80fdea67859d6d32241aefc
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/07/2020
-ms.locfileid: "87927073"
+ms.lasthandoff: 02/14/2021
+ms.locfileid: "100386163"
 ---
 # <a name="run-sql-server-integration-services-packages-with-the-azure-enabled-dtexec-utility"></a>使用支持 Azure 的 dtexec 实用工具运行 SQL Server Integration Services 包
 
@@ -24,16 +19,16 @@ ms.locfileid: "87927073"
 
 本文介绍支持 Azure 的 dtexec (AzureDTExec) 命令提示符实用工具。 此实用工具用于在 Azure 数据工厂中的 Azure-SSIS Integration Runtime (IR) 上运行 SQL Server Integration Services (SSIS) 包。
 
-SQL Server 随附了传统的 dtexec 实用工具。 有关详细信息，请参阅 [dtexec 实用工具](https://docs.microsoft.com/sql/integration-services/packages/dtexec-utility?view=sql-server-2017)。 此实用工具通常由 ActiveBatch 和 Control-M 等第三方业务流程协调程序或计划程序调用，以在本地运行 SSIS 包。 
+SQL Server 随附了传统的 dtexec 实用工具。 有关详细信息，请参阅 [dtexec 实用工具](/sql/integration-services/packages/dtexec-utility)。 此实用工具通常由 ActiveBatch 和 Control-M 等第三方业务流程协调程序或计划程序调用，以在本地运行 SSIS 包。 
 
 SQL Server Management Studio (SSMS) 工具随附了新式 AzureDTExec 实用工具。 它也可以由第三方业务流程协调程序或计划程序调用，以在 Azure 中运行 SSIS 包。 此实用程序有助于将 SSIS 包直接转移或迁移到云中。 迁移后，如果你想要在日常运营中保持使用第三方业务流程协调程序或计划程序，这些程序现在可以调用 AzureDTExec 而不是 dtexec。
 
-AzureDTExec 将包作为数据工厂管道中的“执行 SSIS 包”活动运行。 有关详细信息，请参阅[将 SSIS 包作为 Azure 数据工厂活动运行](https://docs.microsoft.com/azure/data-factory/how-to-invoke-ssis-package-ssis-activity)。 
+AzureDTExec 将包作为数据工厂管道中的“执行 SSIS 包”活动运行。 有关详细信息，请参阅[将 SSIS 包作为 Azure 数据工厂活动运行](./how-to-invoke-ssis-package-ssis-activity.md)。 
 
 可以通过 SSMS 将 AzureDTExec 配置为使用在数据工厂中生成管道的 Azure Active Directory (Azure AD) 应用程序。 还可将其配置为访问存储包的文件系统、文件共享或 Azure 文件存储。 根据提供给 AzureDTExec 的调用选项值，AzureDTExec 将生成并运行一个独特的数据工厂管道，其中包含“执行 SSIS 包”活动。 结合提供的相同选项值调用 AzureDTExec 会重新运行现有管道。
 
 ## <a name="prerequisites"></a>先决条件
-若要使用 AzureDTExec，请下载并安装最新版本的 SSMS（18.3 或更高版本）。 从[此网站](https://docs.microsoft.com/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-2017)下载它。
+若要使用 AzureDTExec，请下载并安装最新版本的 SSMS（18.3 或更高版本）。 从[此网站](/sql/ssms/download-sql-server-management-studio-ssms)下载它。
 
 ## <a name="configure-the-azuredtexec-utility"></a>配置 AzureDTExec 实用工具
 在本地计算机上安装 SSMS 会同时安装 AzureDTExec。 若要配置 AzureDTExec 的设置，请使用“以管理员身份运行”选项启动 SSMS。  然后选择“工具” > “迁移到 Azure” > “配置支持 Azure 的 DTExec”。   
@@ -46,7 +41,7 @@ AzureDTExec 将包作为数据工厂管道中的“执行 SSIS 包”活动运�
 
 在“AzureDTExecConfig”窗口中，按如下所示输入配置设置： 
 
-- **ApplicationId**：输入使用适当权限创建的 Azure AD 应用的唯一标识符，以在数据工厂中生成管道。 有关详细信息，请参阅[通过 Azure 门户创建 Azure AD 应用和服务主体](https://docs.microsoft.com/azure/active-directory/develop/howto-create-service-principal-portal)。
+- **ApplicationId**：输入使用适当权限创建的 Azure AD 应用的唯一标识符，以在数据工厂中生成管道。 有关详细信息，请参阅[通过 Azure 门户创建 Azure AD 应用和服务主体](../active-directory/develop/howto-create-service-principal-portal.md)。
 - **AuthenticationKey**：输入 Azure AD 应用的身份验证密钥。
 - **TenantId**：输入在其下创建了 Azure AD 应用的 Azure AD 租户的唯一标识符。
 - **DataFactory**：输入数据工厂的名称，其中包含“执行 SSIS 包”活动的独特管道是基于调用 AzureDTExec 时提供的选项值生成的。
@@ -63,7 +58,7 @@ AzureDTExec 将包作为数据工厂管道中的“执行 SSIS 包”活动运�
 - **PackageAccessPassword**：输入密码凭据，以访问调用 AzureDTExec 时指定的 UNC 路径中的包。
 - **PackageAccessUserName**：输入用户名凭据，以访问调用 AzureDTExec 时指定的 UNC 路径中的包。
 
-若要将包和日志文件存储在本地的文件系统或文件共享中，请将 Azure-SSIS IR 加入到与本地网络连接的虚拟网络，使 IR 能够提取包并写入日志文件。 有关详细信息，请参阅[将 Azure-SSIS IR 加入虚拟网络](https://docs.microsoft.com/azure/data-factory/join-azure-ssis-integration-runtime-virtual-network)。
+若要将包和日志文件存储在本地的文件系统或文件共享中，请将 Azure-SSIS IR 加入到与本地网络连接的虚拟网络，使 IR 能够提取包并写入日志文件。 有关详细信息，请参阅[将 Azure-SSIS IR 加入虚拟网络](./join-azure-ssis-integration-runtime-virtual-network.md)。
 
 若要避免以纯文本显示写入 *AzureDTExec.settings* 的敏感值，请将其编码为 Base64 编码的字符串。 调用 AzureDTExec 时，所有 Base64 编码的字符串将解码回到原始值。 可以通过限制能够访问 *AzureDTExec* 文件的帐户来进一步保护该文件。
 
@@ -82,12 +77,12 @@ AzureDTExec 将包作为数据工厂管道中的“执行 SSIS 包”活动运�
   /De MyEncryptionPassword
 ```
 
-调用 AzureDTExec 时可用的选项类似于调用 dtexec 时可用的选项。 有关详细信息，请参阅 [dtexec 实用工具](https://docs.microsoft.com/sql/integration-services/packages/dtexec-utility?view=sql-server-2017)。 目前支持以下选项：
+调用 AzureDTExec 时可用的选项类似于调用 dtexec 时可用的选项。 有关详细信息，请参阅 [dtexec 实用工具](/sql/integration-services/packages/dtexec-utility)。 目前支持以下选项：
 
 - **/F[ile]** ：加载存储在文件系统、文件共享或 Azure 文件存储中的包。 可以指定包文件在文件系统、文件共享或 Azure 文件存储中的 UNC 路径及其 .dtsx 扩展名，作为此选项的值。 如果指定的 UNC 路径包含空格，请用引号括住整个路径。
-- **/Conf[igFile]** ：指定要从中提取值的配置文件。 使用此选项可为包设置不同的运行时配置（不同于设计时指定的配置）。 可以在 XML 配置文件中存储不同的设置，然后在执行包之前加载这些设置。 有关详细信息，请参阅 [SSIS 包配置](https://docs.microsoft.com/sql/integration-services/packages/package-configurations?view=sql-server-2017)。 若要指定此选项的值，请使用配置文件在文件系统、文件共享或 Azure 文件存储中的 UNC 路径及其 dtsConfig 扩展名。 如果指定的 UNC 路径包含空格，请用引号括住整个路径。
+- **/Conf[igFile]** ：指定要从中提取值的配置文件。 使用此选项可为包设置不同的运行时配置（不同于设计时指定的配置）。 可以在 XML 配置文件中存储不同的设置，然后在执行包之前加载这些设置。 有关详细信息，请参阅 [SSIS 包配置](/sql/integration-services/packages/package-configurations)。 若要指定此选项的值，请使用配置文件在文件系统、文件共享或 Azure 文件存储中的 UNC 路径及其 dtsConfig 扩展名。 如果指定的 UNC 路径包含空格，请用引号括住整个路径。
 - **/Conn[ection]** ：为包中的现有连接管理器指定连接字符串。 使用此选项可为包中的现有连接管理器设置不同的运行时连接字符串（不同于设计时指定的连接字符串）。 按如下所示指定此选项的值：`connection_manager_name_or_id;connection_string [[;connection_manager_name_or_id;connection_string]...]`。
-- **/Set**：重写包中参数、变量、属性、容器、日志提供程序、Foreach 枚举器或连接的配置。 可以多次指定此选项。 按如下所示指定此选项的值：`property_path;value`。 例如，`\package.variables[counter].Value;1` 将 `counter` 变量的值重写为 1。 可以使用“包配置”向导来查找、复制和粘贴包中要重写其值的项的 `property_path` 值。  有关详细信息，请参阅[包配置向导](https://docs.microsoft.com/sql/integration-services/packages/legacy-package-deployment-ssis)。
+- **/Set**：重写包中参数、变量、属性、容器、日志提供程序、Foreach 枚举器或连接的配置。 可以多次指定此选项。 按如下所示指定此选项的值：`property_path;value`。 例如，`\package.variables[counter].Value;1` 将 `counter` 变量的值重写为 1。 可以使用“包配置”向导来查找、复制和粘贴包中要重写其值的项的 `property_path` 值。  有关详细信息，请参阅[包配置向导](/sql/integration-services/packages/legacy-package-deployment-ssis)。
 - **/De[crypt]** ：设置使用 **EncryptAllWithPassword**/**EncryptSensitiveWithPassword** 保护级别为包配置的解密密码。
 
 > [!NOTE]
@@ -95,7 +90,7 @@ AzureDTExec 将包作为数据工厂管道中的“执行 SSIS 包”活动运�
 
 ## <a name="next-steps"></a>后续步骤
 
-在调用 AzureDTExec 时生成并运行包含“执行 SSIS 包”活动的唯一管道后，可以在数据工厂门户中监视这些管道。 如果要使用数据工厂来协调/计划这些管道，还可以向这些管道分配数据工厂触发器。 有关详细信息，请参阅[将 SSIS 包作为数据工厂活动运行](https://docs.microsoft.com/azure/data-factory/how-to-invoke-ssis-package-ssis-activity)。
+在调用 AzureDTExec 时生成并运行包含“执行 SSIS 包”活动的唯一管道后，可以在数据工厂门户中监视这些管道。 如果要使用数据工厂来协调/计划这些管道，还可以向这些管道分配数据工厂触发器。 有关详细信息，请参阅[将 SSIS 包作为数据工厂活动运行](./how-to-invoke-ssis-package-ssis-activity.md)。
 
 > [!WARNING]
 > 生成的管道预期仅由 AzureDTExec 使用。 其属性或参数将来可能会更改，因此请不要对其进行修改，或将其重复用于任何其他目的。 进行修改可能会破坏 AzureDTExec。 如果发生这种情况，请删除管道。 下一次调用 AzureDTExec 时，它会生成新的管道。

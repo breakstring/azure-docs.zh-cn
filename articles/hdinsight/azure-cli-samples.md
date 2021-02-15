@@ -1,19 +1,16 @@
 ---
 title: Azure HDInsight：Azure CLI 示例
 description: Azure HDInsight 中常见任务的 Azure CLI 示例。
-author: hrasheed-msft
-ms.author: hrasheed
-ms.reviewer: jasonh
 ms.service: hdinsight
 ms.topic: sample
 ms.date: 09/23/2019
 ms.custom: devx-track-azurecli
-ms.openlocfilehash: d0d621728ac1956b2c036c9a45202c5d75ee9153
-ms.sourcegitcommit: 11e2521679415f05d3d2c4c49858940677c57900
+ms.openlocfilehash: 9367c1b4d82e984b2b4200768a3f83f9245c7f0f
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/31/2020
-ms.locfileid: "87499562"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98946889"
 ---
 # <a name="azure-hdinsight-azure-cli-samples"></a>Azure HDInsight：Azure CLI 示例
 
@@ -26,13 +23,13 @@ ms.locfileid: "87499562"
 
 ## <a name="prerequisites"></a>先决条件
 
-* Azure CLI。 有关步骤，请参阅[安装 Azure CLI](https://docs.microsoft.com/cli/azure/install-azure-cli)。
+* Azure CLI。 有关步骤，请参阅[安装 Azure CLI](/cli/azure/install-azure-cli)。
 
-* 可选：Bash。 本文中的示例使用 Windows 10 上的 Bash shell。 有关安装步骤，请参阅[适用于 Linux 的 Windows 子系统 (Windows 10) 安装指南](https://docs.microsoft.com/windows/wsl/install-win10)。  这些示例经过一些细微的修改，即可在 Windows 命令提示符下运行。
+* 可选：Bash。 本文中的示例使用 Windows 10 上的 Bash shell。 有关安装步骤，请参阅[适用于 Linux 的 Windows 子系统 (Windows 10) 安装指南](/windows/wsl/install-win10)。  这些示例经过一些细微的修改，即可在 Windows 命令提示符下运行。
 
 ## <a name="az-login"></a>az login
 
-[登录到 Azure](https://docs.microsoft.com/cli/azure/reference-index?view=azure-cli-latest#az-login)。
+[登录到 Azure](/cli/azure/reference-index#az-login)。
 
 ```azurecli
 az login
@@ -43,7 +40,7 @@ az login
 
 ## <a name="az-hdinsight-create"></a>az hdinsight create
 
-[创建新群集](https://docs.microsoft.com/cli/azure/hdinsight?view=azure-cli-latest#az-hdinsight-create)。
+[创建新群集](/cli/azure/hdinsight#az-hdinsight-create)。
 
 ### <a name="create-a-cluster-with-an-existing-storage-account"></a>使用现有存储帐户创建群集
 
@@ -176,7 +173,7 @@ az hdinsight create \
 
 ## <a name="az-hdinsight-application-create"></a>az hdinsight application create
 
-[为 HDInsight 群集创建应用程序](https://docs.microsoft.com/cli/azure/hdinsight/application?view=azure-cli-latest#az-hdinsight-application-create)。
+[为 HDInsight 群集创建应用程序](/cli/azure/hdinsight/application#az-hdinsight-application-create)。
 
 ### <a name="create-an-application-with-a-script-uri"></a>使用脚本 URI 创建应用程序
 
@@ -243,7 +240,7 @@ az hdinsight application create \
 
 ## <a name="az-hdinsight-script-action-execute"></a>az hdinsight script-action execute
 
-[在指定的 HDInsight 群集上执行脚本操作](https://docs.microsoft.com/cli/azure/hdinsight/script-action?view=azure-cli-latest#az-hdinsight-script-action-execute)。
+[在指定的 HDInsight 群集上执行脚本操作](/cli/azure/hdinsight/script-action#az-hdinsight-script-action-execute)。
 
 ### <a name="execute-a-script-action-and-persist-on-success"></a>执行脚本操作并在成功时继续
 

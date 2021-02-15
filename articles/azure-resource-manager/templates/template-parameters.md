@@ -1,24 +1,26 @@
 ---
 title: 模板中的参数
-description: 介绍如何在 Azure 资源管理器模板中定义参数。
+description: 介绍如何在 Azure 资源管理器模板 (ARM 模板) 中定义参数。
 ms.topic: conceptual
-ms.date: 09/05/2019
-ms.openlocfilehash: 89c6984c587e8dae59c1825a99d4f8da1c06dafb
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.date: 11/24/2020
+ms.openlocfilehash: 929d871bc0087d4fda585773b349dee4e0945c7c
+ms.sourcegitcommit: 2aa52d30e7b733616d6d92633436e499fbe8b069
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "76122417"
+ms.lasthandoff: 01/06/2021
+ms.locfileid: "97934707"
 ---
-# <a name="parameters-in-azure-resource-manager-templates"></a>Azure 资源管理器模板中的参数
+# <a name="parameters-in-arm-templates"></a>ARM 模板中的参数
 
-本文介绍如何在 Azure 资源管理器模板中定义和使用参数。 为参数提供不同的值即可针对不同环境重复使用模板。
+本文介绍如何在 Azure 资源管理器模板 (ARM 模板) 中定义和使用参数。 为参数提供不同的值即可针对不同环境重复使用模板。
 
 资源管理器会在启动部署操作之前解析参数值。 只要在模板中使用参数，资源管理器就会将其替换为解析的值。
 
+每个参数都必需设置为[数据类型](template-syntax.md#data-types)之一。
+
 ## <a name="define-parameter"></a>定义参数
 
-以下示例展示了一个简单的参数定义。 它定义名为 **storageSKU** 的参数。 此参数为字符串值，仅接受适合其预期用途的值。 如果在部署过程中未提供任何值时，则此参数使用默认值。
+以下示例展示了一个简单的参数定义。 它定义了一个名为的参数 `storageSKU` 。 此参数为字符串值，仅接受适合其预期用途的值。 如果在部署过程中未提供任何值时，则此参数使用默认值。
 
 ```json
 "parameters": {
@@ -157,9 +159,8 @@ ms.locfileid: "76122417"
 |[包含用于默认值的函数的参数](https://github.com/Azure/azure-docs-json-samples/blob/master/azure-resource-manager/parameterswithfunctions.json) | 演示了为参数定义默认值时如何使用模板函数。 该模板不部署任何资源。 它构造参数值并返回这些值。 |
 |[参数对象](https://github.com/Azure/azure-docs-json-samples/blob/master/azure-resource-manager/parameterobject.json) | 演示了将对象用于参数。 该模板不部署任何资源。 它构造参数值并返回这些值。 |
 
-
 ## <a name="next-steps"></a>后续步骤
 
-* 若要了解参数的可用属性，请参阅[了解 Azure 资源管理器模板的结构和语法](template-syntax.md)。
+* 若要了解参数的可用属性，请参阅 [了解 ARM 模板的结构和语法](template-syntax.md)。
 * 若要了解如何以文件形式传入参数值，请参阅[创建资源管理器参数文件](parameter-files.md)。
 * 有关创建参数的建议，请参阅[最佳做法 - 参数](template-best-practices.md#parameters)。

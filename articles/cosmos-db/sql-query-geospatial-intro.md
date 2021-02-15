@@ -3,18 +3,20 @@ title: Azure Cosmos DB 中的地理空间和 GeoJSON 位置数据
 description: 了解如何使用 Azure Cosmos DB 和 SQL API 创建空间对象。
 author: timsander1
 ms.service: cosmos-db
+ms.subservice: cosmosdb-sql
 ms.topic: conceptual
 ms.date: 02/20/2020
 ms.author: tisande
-ms.custom: devx-track-javascript
-ms.openlocfilehash: 25150722e2d42625731cb741be80b86645c857e0
-ms.sourcegitcommit: e71da24cc108efc2c194007f976f74dd596ab013
+ms.custom: devx-track-js
+ms.openlocfilehash: a2e4e14927932575c9da42392329eea279f922fe
+ms.sourcegitcommit: fa90cd55e341c8201e3789df4cd8bd6fe7c809a3
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/29/2020
-ms.locfileid: "87420084"
+ms.lasthandoff: 11/04/2020
+ms.locfileid: "93336157"
 ---
 # <a name="geospatial-and-geojson-location-data-in-azure-cosmos-db"></a>Azure Cosmos DB 中的地理空间和 GeoJSON 位置数据
+[!INCLUDE[appliesto-sql-api](includes/appliesto-sql-api.md)]
 
 本文介绍 Azure Cosmos DB 中的地理空间功能。 目前，只有 Azure Cosmos DB SQL API 帐户支持存储和访问地理空间数据。 阅读有关地理空间索引的文档后，你将能够回答以下问题：
 
@@ -24,13 +26,13 @@ ms.locfileid: "87420084"
 
 ## <a name="spatial-data-use-cases"></a>空间数据用例
 
-地理空间数据通常涉及邻近查询，例如 "查找位于当前位置附近的所有咖啡厅"。 常见的用例包括：
+地理空间数据通常涉及邻近查询，例如“寻找我目前位置附近的所有咖啡厅”。 常见用例包括：
 
-* 地理位置分析，推动特定的市场营销计划。
-* 基于位置的个性化，适用于多个行业，如零售和医疗保健。
-* 用于传输优化的后勤增强。
-* 风险分析，特别是对于保险和金融公司。
-* 针对警报和通知的形势认知。
+* 地理位置分析，用于推动特定位置市场营销计划。
+* 基于位置的个性化，适用于零售和医疗保健等多个行业。
+* 物流增强，用于优化运输。
+* 风险分析，特别适用于保险和金融公司。
+* 态势感知，用于发出警报和通知。
 
 ## <a name="introduction-to-spatial-data"></a>空间数据简介
 
@@ -210,7 +212,7 @@ await container.CreateItemAsync( new UserProfile
     });
 ```
 
-如果没有经纬度信息，但有物理地址或位置名称，如城市或国家/地区，则可以使用必应地图 REST 服务等地理编码服务来查找实际的坐标。 在[此处](https://msdn.microsoft.com/library/ff701713.aspx)详细了解必应地图地理编码。
+如果没有经纬度信息，但有物理地址或位置名称，如城市或国家/地区，则可以使用必应地图 REST 服务等地理编码服务来查找实际的坐标。 在[此处](/bingmaps/rest-services/)详细了解必应地图地理编码。
 
 ## <a name="next-steps"></a>后续步骤
 

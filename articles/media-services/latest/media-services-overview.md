@@ -1,37 +1,21 @@
 ---
-title: Azure 媒体服务 v3 概述
-titleSuffix: Azure Media Services
-description: Azure 媒体服务 v3 的概述，其中包含指向快速入门、教程和代码示例的链接。
-services: media-services
-documentationcenter: na
-author: Juliako
-manager: femila
-editor: ''
-tags: ''
-keywords: azure 媒体服务, 流, 广播, 实时, 脱机
-ms.service: media-services
-ms.devlang: multiple
-ms.topic: overview
-ms.tgt_pltfrm: multiple
-ms.workload: media
-ms.date: 03/09/2020
-ms.author: juliako
-ms.custom: mvc
-ms.openlocfilehash: d5f54d65fcfd8a124b30a785697d53ad120fbf9c
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
-ms.translationtype: HT
-ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87000919"
+title:Azure 媒体服务 v3 概述:Azure 媒体服务说明:Azure 媒体服务 v3 的概述，其中包含指向快速入门、教程和代码示例的链接。
+services: media-services documentationcenter: na author:IngridAtMicrosoft manager: femila editor: '' tags: '' keywords: azure media services, stream, broadcast, live, offline
+
+ms.service: media-services ms.devlang: multiple ms.topic: overview ms.tgt_pltfrm: multiple ms.workload: media ms.date:08/31/2020 ms.author: inhenkel ms.custom: mvc
+#<a name="customer-intent-as-a-developer-or-a-content-provider-i-want-to-encode-stream-on-demand-or-live-analyze-my-media-content-so-that-my-customers-can-view-the-content-on-a-wide-variety-of-browsers-and-devices-gain-valuable-insights-from-recorded-content"></a>客户意向:作为开发人员或内容提供商，我希望编码、流式传输（按需或实时）和分析媒体内容，使我的客户能够在各种浏览器和设备上查看内容，通过记录的内容获得有价值的见解。
 ---
+
 # <a name="azure-media-services-v3-overview"></a>Azure 媒体服务 v3 概述
+
+[!INCLUDE [media services api v3 logo](./includes/v3-hr.md)]
 
 Azure 媒体服务是一个基于云的平台，用于生成解决方案，以便实现广播质量的视频流、增强可访问性和分发、分析内容，等等。 无论你是应用开发人员、呼叫中心、政府机构还是娱乐公司，媒体服务都能帮助你创建应用，通过当今最热门的移动设备和浏览器向广大受众提供品质卓越的媒体体验。
 
 媒体服务 v3 SDK 基于[媒体服务 v3 OpenAPI 规范 (Swagger)](https://aka.ms/ams-v3-rest-sdk)。
 
 > [!NOTE]
-> 目前，可以使用 [Azure 门户](https://portal.azure.com/)执行以下操作：管理媒体服务 v3 [直播活动](live-events-outputs-concept.md)、查看（而不是管理）v3 [资产](assets-concept.md)、[获取有关访问 API 的信息](./access-api-howto.md)。 对于其他所有管理任务（例如，[转换和作业](transforms-jobs-concept.md)和[内容保护](content-protection-overview.md)），请使用 [REST API](/rest/api/media/)、[CLI](https://aka.ms/ams-v3-cli-ref) 或某个受支持的 [SDK](media-services-apis-overview.md#sdks)。
+> 目前，可以使用 [Azure 门户](https://portal.azure.com/)执行以下操作：管理媒体服务 v3 [直播活动](live-events-outputs-concept.md)、查看（而不是管理）v3 [资产](assets-concept.md)、[获取有关访问 API 的信息](./access-api-howto.md)。 对于其他所有管理任务（例如，[转换和作业](transforms-jobs-concept.md)和[内容保护](content-protection-overview.md)），请使用 [REST API](/rest/api/media/)、[CLI](/cli/azure/ams) 或某个受支持的 [SDK](media-services-apis-overview.md#sdks)。
 
 [!INCLUDE [quickstarts-free-trial-note](../../../includes/quickstarts-free-trial-note.md)]
 
@@ -57,12 +41,12 @@ Azure 媒体服务是一个基于云的平台，用于生成解决方案，以�
 * 将 Azure 媒体服务与 [Azure 认知服务 API](../../index.yml?pivot=products&panel=ai) 配合使用来为视频添加字幕和描述文字，满足更多受众的需求（例如，听力障碍人士或想用不同语言阅读的人）。
 * 启用 Azure CDN 实现大幅度缩放，更好地处理即时高负载（例如在产品发布活动开始时）。
 
-## <a name="how-can-i-get-started-with-v3"></a>如何开始使用 v3？ 
+## <a name="how-can-i-get-started-with-v3"></a>如何开始使用 v3？
 
 了解如何使用媒体服务 v3 来编码和打包内容、进行视频点播流式处理、实时广播和视频分析。 教程、API 参考和其他文档介绍了如何安全地向数百万用户传送可缩放的点播和直播视频或音频流。
 
 > [!TIP]
-> 在开始开发之前，请查看：<br/>* [基本概念](concepts-overview.md)（包括打包、编码、保护等重要概念）<br/>* [使用媒体服务 v3 API 进行开发](media-services-apis-overview.md)（包括有关访问 API、命名约定等的信息）
+> 在开始开发之前，请查看：[基本概念](concepts-overview.md)（包含打包、编码和保护等重要概念）以及如何[通过媒体服务 v3 API 进行开发](media-services-apis-overview.md)（其中包含有关访问 API、命名约定等内容的信息）。
 
 ### <a name="sdks"></a>SDK
 

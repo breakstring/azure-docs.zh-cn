@@ -1,27 +1,27 @@
 ---
-title: 在 Angular 单页应用中将用户登录 - Azure
+title: 快速入门：在 Angular 单页应用中将用户登录 - Azure
 titleSuffix: Microsoft identity platform
-description: 了解 Angular 应用如何使用 Microsoft 标识平台调用需要访问令牌的 API。
+description: 本快速入门介绍 Angular 应用如何调用 API，该 API 需要 Microsoft 标识平台颁发的访问令牌。
 services: active-directory
 author: jasonnutter
 manager: CelesteDG
 ms.service: active-directory
 ms.subservice: develop
-ms.custom: aaddev, identityplatformtop40, scenarios:getting-started, languages:JavaScript, devx-track-javascript
+ms.custom: aaddev, identityplatformtop40, scenarios:getting-started, languages:JavaScript, devx-track-js
 ms.topic: quickstart
 ms.workload: identity
 ms.date: 03/18/2020
 ms.author: janutter
-ms.openlocfilehash: bf921ce4ce3ad65f0787ccab2f0a064da8973af1
-ms.sourcegitcommit: b8702065338fc1ed81bfed082650b5b58234a702
+ms.openlocfilehash: 56359ba07513ac648c682b8114001e251b0ee44c
+ms.sourcegitcommit: 2dd0932ba9925b6d8e3be34822cc389cade21b0d
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/11/2020
-ms.locfileid: "88115231"
+ms.lasthandoff: 02/01/2021
+ms.locfileid: "99225793"
 ---
 # <a name="quickstart-sign-in-users-and-get-an-access-token-in-an-angular-single-page-application"></a>快速入门：在 Angular 单页应用程序中将用户登录并获取访问令牌
 
-本快速入门通过代码示例来介绍 Angular 单页应用程序 (SPA) 如何将具有个人 Microsoft 帐户、工作帐户或学校帐户的用户登录。 Angular SPA 还可以获取用于调用 Microsoft Graph API 或任何 Web API 的访问令牌。
+在本快速入门中，你将下载并运行一个代码示例，该示例演示 Angular 单页应用程序 (SPA) 如何让用户登录并调用 Microsoft Graph。 此代码示例演示如何获取访问令牌来调用 Microsoft Graph API 或任何 Web API。
 
 ## <a name="prerequisites"></a>先决条件
 
@@ -35,7 +35,7 @@ ms.locfileid: "88115231"
 >
 > ### <a name="option-1-express-register-and-automatically-configure-the-app-and-then-download-the-code-sample"></a>选项 1（快速）：注册并自动配置应用，然后下载代码示例
 >
-> 1. 登录 [Azure 门户](https://portal.azure.com)。
+> 1. 登录到 <a href="https://portal.azure.com/" target="_blank">Azure 门户<span class="docon docon-navigate-external x-hidden-focus"></span></a>。
 > 1. 如果帐户有权访问多个租户，请在右上角选择该帐户，然后将门户会话设置为要使用的 Azure Active Directory (Azure AD) 租户。
 > 1. 在 Azure 门户中打开新的[应用注册](https://portal.azure.com/#blade/Microsoft_AAD_RegisteredApps/ApplicationsListBlade/quickStartType/JavascriptSpaQuickstartPage/sourceType/docs)窗格。
 > 1. 输入应用程序的名称并选择“注册”。
@@ -45,15 +45,15 @@ ms.locfileid: "88115231"
 >
 > #### <a name="step-1-register-the-application"></a>步骤 1：注册应用程序
 >
-> 1. 登录 [Azure 门户](https://portal.azure.com)。
+> 1. 登录到 <a href="https://portal.azure.com/" target="_blank">Azure 门户<span class="docon docon-navigate-external x-hidden-focus"></span></a>。
 > 1. 如果帐户有权访问多个租户，请在右上角选择该帐户，然后将门户会话设置为要使用的 Azure AD 租户。
 > 1. 按照说明在 Azure 门户中[注册单页应用程序](./scenario-spa-app-registration.md)。
 > 1. 在应用注册的“身份验证”窗格中添加新的平台，并注册重定向 URI：`http://localhost:4200/`。
-> 1. 本快速入门使用[隐式授权流](v2-oauth2-implicit-grant-flow.md)。 针对“ID 令牌”和“访问令牌”选择“隐式授权”设置。 由于此应用要将用户登录并调用 API，因此需要 ID 令牌和访问令牌。
+> 1. 本快速入门使用[隐式授权流](v2-oauth2-implicit-grant-flow.md)。 在“隐式授权和混合流”部分，选择“ID 令牌”和“访问令牌”  。 由于此应用要将用户登录并调用 API，因此需要 ID 令牌和访问令牌。
 
 > [!div class="sxs-lookup" renderon="portal"]
 > #### <a name="step-1-configure-the-application-in-the-azure-portal"></a>步骤 1：在 Azure 门户中配置应用程序
-> 为使本快速入门的代码示例正常运行，需将重定向 URI 添加为 **http://localhost:4200/** 并启用“隐式授权”。
+> 为使本快速入门的代码示例正常运行，需将重定向 URI 添加为 http://localhost:4200/ 并启用“隐式授权”。
 > > [!div renderon="portal" id="makechanges" class="nextstepaction"]
 > > [为我进行这些更改]()
 >

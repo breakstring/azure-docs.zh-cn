@@ -1,25 +1,22 @@
 ---
 title: 教程：具有数据工厂的 Azure HDInsight 中的按需群集
 description: 教程 - 了解如何使用 Azure 数据工厂在 HDInsight 中创建按需 Apache Hadoop 群集。
-author: hrasheed-msft
-ms.author: hrasheed
-ms.reviewer: jasonh
 ms.service: hdinsight
 ms.topic: tutorial
 ms.custom: seoapr2020
 ms.date: 04/24/2020
-ms.openlocfilehash: 7353366af14ca785c5635e1bde8101c1d71cd47f
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.openlocfilehash: 762938ebb4785a54224771e96c5bca274721dc30
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87079113"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98945969"
 ---
 # <a name="tutorial-create-on-demand-apache-hadoop-clusters-in-hdinsight-using-azure-data-factory"></a>教程：使用 Azure 数据工厂在 HDInsight 中创建按需 Apache Hadoop 群集
 
 [!INCLUDE [selector](../../includes/hdinsight-create-linux-cluster-selector.md)]
 
-本教程将介绍如何使用 Azure 数据工厂在 Azure HDInsight 中按需创建 [Apache Hadoop](./hadoop/apache-hadoop-introduction.md) 群集。 然后使用 Azure 数据工厂中的数据管道运行 Hive 作业并删除该群集。 本教程结束时，你便知道如何将大数据作业运行`operationalize`，其中的群集创建、作业运行和群集删除操作都是按计划执行的。
+本教程将介绍如何使用 Azure 数据工厂在 Azure HDInsight 中按需创建 [Apache Hadoop](../hdinsight/hdinsight-overview.md#cluster-types-in-hdinsight) 群集。 然后使用 Azure 数据工厂中的数据管道运行 Hive 作业并删除该群集。 本教程结束时，你便知道如何将大数据作业运行`operationalize`，其中的群集创建、作业运行和群集删除操作都是按计划执行的。
 
 本教程涵盖以下任务：
 
@@ -37,9 +34,9 @@ ms.locfileid: "87079113"
 
 ## <a name="prerequisites"></a>先决条件
 
-* 已安装 PowerShell [Az 模块](https://docs.microsoft.com/powershell/azure/)。
+* 已安装 PowerShell [Az 模块](/powershell/azure/)。
 
-* 一个 Azure Active Directory 服务主体。 创建服务主体后，请务必使用链接文章中的说明检索**应用程序 ID** 和**身份验证密钥**。 在本教程后面的步骤中，需要用到这些值。 另外，请确保此服务主体是订阅“参与者”角色的成员，或创建群集的资源组的成员。 有关检索所需值和分配适当角色的说明，请参阅[创建 Azure Active Directory 服务主体](../active-directory/develop/howto-create-service-principal-portal.md)。
+* 一个 Azure Active Directory 服务主体。 创建服务主体后，请务必使用链接文章中的说明检索 **应用程序 ID** 和 **身份验证密钥**。 在本教程后面的步骤中，需要用到这些值。 另外，请确保此服务主体是订阅“参与者”角色的成员，或创建群集的资源组的成员。 有关检索所需值和分配适当角色的说明，请参阅[创建 Azure Active Directory 服务主体](../active-directory/develop/howto-create-service-principal-portal.md)。
 
 ## <a name="create-preliminary-azure-objects"></a>创建初步 Azure 对象
 
@@ -216,7 +213,7 @@ Write-host "`nScript completed" -ForegroundColor Green
 在本部分，我们将在数据工厂中创作两个链接服务。
 
 * 一个用于将 Azure 存储帐户链接到数据工厂的 **Azure 存储链接服务**。 按需 HDInsight 群集使用此存储。 它还包含群集上运行的 Hive 脚本。
-* 一个**按需 HDInsight 链接服务**。 Azure 数据工厂自动创建 HDInsight 群集并运行 Hive 脚本。 然后，当群集空闲预配置的时间后，就会删除 HDInsight 群集。
+* 一个 **按需 HDInsight 链接服务**。 Azure 数据工厂自动创建 HDInsight 群集并运行 Hive 脚本。 然后，当群集空闲预配置的时间后，就会删除 HDInsight 群集。
 
 ### <a name="create-an-azure-storage-linked-service"></a>创建 Azure 存储链接服务
 

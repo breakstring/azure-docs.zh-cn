@@ -17,15 +17,15 @@ ms.subservice: hybrid
 ms.author: billmath
 ms.custom: seohack1
 ms.collection: M365-identity-device-management
-ms.openlocfilehash: 52b5e37c29e4b3df3f171f683266b5d0a3e0c95d
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 8c68be4e46693621f77cb25dd8f34f8e0b7d75dd
+ms.sourcegitcommit: 829d951d5c90442a38012daaf77e86046018e5b9
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "67109272"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "89278405"
 ---
 # <a name="determine-incident-response-requirements-for-your-hybrid-identity-solution"></a>确定混合标识解决方案的事件响应要求
-大型或中型组织很可能会部署[安全事件响应](https://technet.microsoft.com/library/cc700825.aspx)，帮助 IT 部门根据事件级别采取相应措施。 标识管理系统是事件响应过程的重要组成部分，因为可以使用它来帮助识别针对目标执行具体操作的用户。 混合标识解决方案必须能够提供监视和报告功能，IT 部门可以利用这些功能采取措施来识别和缓解潜在威胁。 在典型的事件响应计划中将包含以下几个阶段：
+大型或中型组织很可能会部署[安全事件响应](/previous-versions/tn-archive/cc700825(v=technet.10))，帮助 IT 部门根据事件级别采取相应措施。 标识管理系统是事件响应过程的重要组成部分，因为可以使用它来帮助识别针对目标执行具体操作的用户。 混合标识解决方案必须能够提供监视和报告功能，IT 部门可以利用这些功能采取措施来识别和缓解潜在威胁。 在典型的事件响应计划中将包含以下几个阶段：
 
 1. 初始评估。
 2. 事件通信。
@@ -52,7 +52,7 @@ ms.locfileid: "67109272"
 * 贵公司是否需要审核用户的访问和操作？
 * 你的公司是否需要知道何时用户重置其密码？
 
-## <a name="policy-enforcement"></a>策略强制
+## <a name="policy-enforcement"></a>策略强制执行
 在损害控制和风险降低阶段，务必快速消减攻击的实际和潜在影响。 此时会采取的措施可以决定是受轻微影响，还是受重大影响。 具体响应将取决于组织和你面对的攻击的性质。 如果初始评估得出的结论是某个帐户已受到威胁，将需要强制执行阻止该帐户的策略。 这只是一个示例，其中将用到标识管理系统。 以下问题用于帮助你设计混合标识解决方案，同时考虑将如何强制执行策略来对正在进行的事件作出反应：
 
 * 贵公司是否部署了策略来阻止用户访问网络（如有必要）？
@@ -60,7 +60,7 @@ ms.locfileid: "67109272"
 * 贵公司是否需要为隔离用户强制实施条件性访问？ 
 
 > [!NOTE]
-> 务必记下每个答案并了解答案背后的依据。 [定义数据保护策略](plan-hybrid-identity-design-considerations-data-protection-strategy.md)将会超出每个选项的可用选项和优点/缺点。  回答了这些问题之后，就会挑选出最适合业务需求的选项。
+> 务必记下每个答案并了解答案背后的依据。 [定义数据保护策略](plan-hybrid-identity-design-considerations-data-protection-strategy.md) 将会超出每个选项的可用选项和优点/缺点。  回答了这些问题之后，就会挑选出最适合业务需求的选项。
 > 
 > 
 
@@ -69,4 +69,3 @@ ms.locfileid: "67109272"
 
 ## <a name="see-also"></a>另请参阅
 [设计注意事项概述](plan-hybrid-identity-design-considerations-overview.md)
-

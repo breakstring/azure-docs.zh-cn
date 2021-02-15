@@ -1,6 +1,6 @@
 ---
 title: 使用 Azure 按需流式处理操作导入 Postman 集合
-description: 本文提供了用于 Azure 媒体服务 REST 调用的 Postman 集合的定义。
+description: 了解 Postman 集合，其中包含调用 Azure 媒体服务 REST API 的分组 HTTP 请求。
 services: media-services
 documentationcenter: ''
 author: Juliako
@@ -13,14 +13,16 @@ ms.devlang: na
 ms.topic: article
 ms.date: 03/20/2019
 ms.author: juliako
-ms.openlocfilehash: 2d3bf8b43bc12a2a8a193ea2708ab1668235edde
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.openlocfilehash: 30a139ca0569a2ada4a66befbf7c56a9f8edaab9
+ms.sourcegitcommit: ad677fdb81f1a2a83ce72fa4f8a3a871f712599f
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87047577"
+ms.lasthandoff: 12/17/2020
+ms.locfileid: "97656727"
 ---
-# <a name="import-a-postman-collection-with-on-demand-streaming-operations"></a>使用按需流式处理操作导入一个 Postman 集合 
+# <a name="import-a-postman-collection-with-on-demand-streaming-operations"></a>使用按需流式处理操作导入一个 Postman 集合
+
+[!INCLUDE [media services api v2 logo](./includes/v2-hr.md)]
 
 本文包含 Postman  集合的定义，该集合包含调用 Azure 媒体服务 REST API 的分组 HTTP 请求。 有关如何配置 Postman  以用于调用媒体服务 REST API 的信息，请参阅[配置 Postman 以便进行媒体服务 REST API 调用](media-rest-apis-with-postman.md)教程。
 
@@ -178,7 +180,7 @@ ms.locfileid: "87047577"
                                 ]
                             }
                         }
-                    ],                  
+                    ],
                     "request": {
                         "auth": {
                             "type": "bearer",
@@ -3251,7 +3253,7 @@ ms.locfileid: "87047577"
                                     "key": "access-control-expose-headers",
                                     "value": "request-id, x-ms-request-id",
                                     "name": "access-control-expose-headers",
-                                    "description": "Lets a server whitelist headers that browsers are allowed to access."
+                                    "description": "Lets a server allowlist headers that browsers are allowed to access."
                                 },
                                 {
                                     "key": "request-id",
@@ -3454,7 +3456,7 @@ ms.locfileid: "87047577"
                                     "key": "access-control-expose-headers",
                                     "value": "request-id, x-ms-request-id",
                                     "name": "access-control-expose-headers",
-                                    "description": "Lets a server whitelist headers that browsers are allowed to access."
+                                    "description": "Lets a server allowlist headers that browsers are allowed to access."
                                 },
                                 {
                                     "key": "request-id",
@@ -5589,3 +5591,4 @@ ms.locfileid: "87047577"
     ]
 }
 ```
+

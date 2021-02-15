@@ -1,19 +1,16 @@
 ---
 title: 通过 JDBC 驱动程序查询 Apache Hive - Azure HDInsight
 description: 从 Java 应用程序使用 JDBC 驱动程序将 Apache Hive 查询提交到 HDInsight 上的 Hadoop。 以编程方式以及通过 SQuirrel SQL 客户端进行连接。
-author: hrasheed-msft
-ms.author: hrasheed
-ms.reviewer: jasonh
 ms.service: hdinsight
 ms.topic: how-to
 ms.custom: hdinsightactive,hdiseo17may2017,seoapr2020
 ms.date: 04/20/2020
-ms.openlocfilehash: 183bc416dde941f11bd94cfcff3bf738b35f876f
-ms.sourcegitcommit: 3541c9cae8a12bdf457f1383e3557eb85a9b3187
+ms.openlocfilehash: d23b376384262c208fed70306e62634592d0b46b
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/09/2020
-ms.locfileid: "86207379"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98946772"
 ---
 # <a name="query-apache-hive-through-the-jdbc-driver-in-hdinsight"></a>在 HDInsight 中通过 JDBC 驱动程序查询 Apache Hive
 
@@ -39,7 +36,7 @@ JDBC 通过端口 443 连接到 Azure 上的 HDInsight 群集。 使用 TLS/SSL 
 
 将 `CLUSTERNAME` 替换为 HDInsight 群集的名称。
 
-或者，可以通过“Ambari UI”>“Hive”>“配置”>“高级”获取连接****。
+或者，可以通过“Ambari UI”>“Hive”>“配置”>“高级”获取连接。
 
 ![通过 Ambari 获取 JDBC 连接字符串](./media/apache-hadoop-connect-hive-jdbc-driver/hdinsight-get-connection-string-through-ambari.png)
 
@@ -49,7 +46,7 @@ JDBC 通过端口 443 连接到 Azure 上的 HDInsight 群集。 使用 TLS/SSL 
 
 ### <a name="port-in-connection-string"></a>连接字符串中的端口
 
-只能使用端口 443 从 Azure 虚拟网络外部的某个位置连接到群集****。 HDInsight 是一种托管服务，这意味着与群集的所有连接都通过安全网关进行管理。 不能直接在端口 10001 或 10000 上连接到 HiveServer 2。 这些端口不向外公开。
+只能使用端口 443 从 Azure 虚拟网络外部的某个位置连接到群集。 HDInsight 是一种托管服务，这意味着与群集的所有连接都通过安全网关进行管理。 不能直接在端口 10001 或 10000 上连接到 HiveServer 2。 这些端口不向外公开。
 
 ## <a name="authentication"></a>身份验证
 
@@ -75,11 +72,11 @@ SQuirreL SQL 是一个 JDBC 客户端，可用于通过 HDInsight 群集远程�
     scp sshuser@CLUSTERNAME-ssh.azurehdinsight.net:/usr/hdp/current/hive-client/lib/{commons-codec*.jar,commons-logging-*.jar,hive-*-*.jar,httpclient-*.jar,httpcore-*.jar,libfb*.jar,libthrift-*.jar} .
     ```
 
-3. 启动 SQuirreL SQL 应用程序。 在窗口左侧中，选择“驱动程序”****。
+3. 启动 SQuirreL SQL 应用程序。 在窗口左侧中，选择“驱动程序”。
 
     ![窗口左侧的“驱动程序”选项卡](./media/apache-hadoop-connect-hive-jdbc-driver/hdinsight-squirreldrivers.png)
 
-4. 从“驱动程序”**** 对话框顶部的图标中，选择 **+** 图标创建驱动程序。
+4. 从“驱动程序”对话框顶部的图标中，选择 **+** 图标创建驱动程序。
 
     ![SQuirreL SQL 应用程序驱动程序图标](./media/apache-hadoop-connect-hive-jdbc-driver/hdinsight-driversicons.png)
 
@@ -89,39 +86,39 @@ SQuirreL SQL 是一个 JDBC 客户端，可用于通过 HDInsight 群集远程�
     |---|---|
     |名称|Hive|
     |示例 URL|`jdbc:hive2://localhost:443/default;transportMode=http;ssl=true;httpPath=/hive2`|
-    |额外类路径|使用“添加”按钮添加此前下载的所有 jar 文件****。|
+    |额外类路径|使用“添加”按钮添加此前下载的所有 jar 文件。|
     |类名|org.apache.hive.jdbc.HiveDriver|
 
    ![添加包含参数的驱动程序对话框](./media/apache-hadoop-connect-hive-jdbc-driver/hdinsight-add-driver.png)
 
-   选择“确定”**** 保存这些设置。
+   选择“确定”保存这些设置。
 
-6. 在 SQuirreL SQL 窗口左侧，选择“别名”****。 然后选择 **+** 图标来创建连接别名。
+6. 在 SQuirreL SQL 窗口左侧，选择“别名”。 然后选择 **+** 图标来创建连接别名。
 
     !["SQuirreL SQL 添加新别名" 对话框](./media/apache-hadoop-connect-hive-jdbc-driver/hdinsight-new-aliases.png)
 
-7. 将以下值用于 "**添加别名**" 对话框：
+7. 将以下值用于 " **添加别名** " 对话框：
 
-    |属性 |值 |
+    |properties |值 |
     |---|---|
     |名称|Hive on HDInsight|
-    |驱动程序|使用下拉列表选择 Hive 驱动程序****。|
+    |驱动程序|使用下拉列表选择 Hive 驱动程序。|
     |URL|`jdbc:hive2://CLUSTERNAME.azurehdinsight.net:443/default;transportMode=http;ssl=true;httpPath=/hive2`. 将 **CLUSTERNAME** 替换为 HDInsight 群集的名称。|
-    |用户名|HDInsight 群集的群集登录帐户名。 默认值为“admin”****。|
+    |用户名|HDInsight 群集的群集登录帐户名。 默认值为“admin”。|
     |密码|群集登录帐户的密码。|
 
     ![添加具有参数的别名对话框](./media/apache-hadoop-connect-hive-jdbc-driver/hdinsight-addalias-dialog.png)
 
     > [!IMPORTANT]
-    > 使用“测试”**** 按钮验证连接是否有效。 出现“连接到: **** Hive on HDInsight”对话框时，选择“连接”**** 进行测试。 如果测试成功，将会显示“连接成功”**** 对话框。 如果发生错误，请参阅[故障排除](#troubleshooting)。
+    > 使用“测试”按钮验证连接是否有效。 出现“连接到: Hive on HDInsight”对话框时，选择“连接”进行测试。 如果测试成功，将会显示“连接成功”对话框。 如果发生错误，请参阅[故障排除](#troubleshooting)。
 
-    若要保存连接别名，请使用“添加别名”**** 对话框底部的“确定”**** 按钮。
+    若要保存连接别名，请使用“添加别名”对话框底部的“确定”按钮。
 
-8. 在 SQuirreL SQL 顶部的“连接到”**** 下拉列表中，选择“Hive on HDInsight”****。 出现提示时，选择“连接”****。
+8. 在 SQuirreL SQL 顶部的“连接到”下拉列表中，选择“Hive on HDInsight”。 出现提示时，选择“连接”。
 
     ![带参数的连接对话框](./media/apache-hadoop-connect-hive-jdbc-driver/hdinsight-connect-dialog.png)
 
-9. 连接后，在 SQL 查询对话框中输入以下查询，然后选择“运行”**** 图标（一个正在跑步的人）。 结果区域会显示查询的结果。
+9. 连接后，在 SQL 查询对话框中输入以下查询，然后选择“运行”图标（一个正在跑步的人）。 结果区域会显示查询的结果。
 
     ```hiveql
     select * from hivesampletable limit 10;

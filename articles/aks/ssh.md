@@ -4,16 +4,16 @@ description: 了解如何与 Azure Kubernetes 服务 (AKS) 群集节点建立 SS
 services: container-service
 ms.topic: article
 ms.date: 07/31/2019
-ms.openlocfilehash: 50a52584618e505aa2ae7bd9ed7e0a9f6bc330a9
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.openlocfilehash: c044b552cd0c28a7073364c48b9572045a290331
+ms.sourcegitcommit: 52e3d220565c4059176742fcacc17e857c9cdd02
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87015606"
+ms.lasthandoff: 01/21/2021
+ms.locfileid: "98662871"
 ---
 # <a name="connect-with-ssh-to-azure-kubernetes-service-aks-cluster-nodes-for-maintenance-or-troubleshooting"></a>使用 SSH 连接到 Azure Kubernetes 服务 (AKS) 群集节点以进行维护或故障排除
 
-在 Azure Kubernetes 服务 (AKS) 群集的整个生命周期内，可能需要访问 AKS 节点。 进行这种访问的原因包括维护、日志收集或其他故障排除操作。 您可以使用 SSH （包括 Windows Server 节点）访问 AKS 节点。 你还可以[使用远程桌面协议（RDP）连接连接到 Windows Server 节点][aks-windows-rdp]。 出于安全考虑，AKS 节点不会在 Internet 中公开。 若要通过 SSH 连接到 AKS 节点，需使用专用 IP 地址。
+在 Azure Kubernetes 服务 (AKS) 群集的整个生命周期内，可能需要访问 AKS 节点。 进行这种访问的原因包括维护、日志收集或其他故障排除操作。 可以使用 SSH 访问 AKS 节点（包括 Windows Server 节点）。 还可以[使用远程桌面协议 (RDP) 连接功能连接到 Windows Server 节点][aks-windows-rdp]。 出于安全考虑，AKS 节点不会在 Internet 中公开。 若要通过 SSH 连接到 AKS 节点，需使用专用 IP 地址。
 
 本文介绍如何使用 AKS 节点的专用 IP 地址来与它们建立 SSH 连接。
 
@@ -23,9 +23,9 @@ ms.locfileid: "87015606"
 
 默认情况下，在创建 AKS 群集时会获取或生成 SSH 密钥，然后将其添加到节点。 本文介绍如何指定与创建 AKS 群集时使用的 SSH 密钥不同的 SSH 密钥。 此外介绍如何确定节点的专用 IP 地址，并使用 SSH 连接到该节点。 如果不需要指定不同的 SSH 密钥，则可以跳过将 SSH 公钥添加到节点的步骤。
 
-本文假设你已有一个 SSH 密钥。 可以使用[macOS 或 Linux][ssh-nix]或[Windows][ssh-windows]创建 SSH 密钥。 如果使用 PuTTY Gen 来创建密钥对，请在保存密钥对时使用 OpenSSH 格式而不是默认的 PuTTy 私钥格式（.ppk 文件）。
+本文假设你已有一个 SSH 密钥。 可以使用 [macOS 或 Linux][ssh-nix] 或 [Windows][ssh-windows] 创建 SSH 密钥。 如果使用 PuTTY Gen 来创建密钥对，请在保存密钥对时使用 OpenSSH 格式而不是默认的 PuTTy 私钥格式（.ppk 文件）。
 
-还需安装并配置 Azure CLI 2.0.64 或更高版本。 运行  `az --version` 即可查找版本。 如果需要进行安装或升级，请参阅 [安装 Azure CLI][install-azure-cli]。
+还需安装并配置 Azure CLI 2.0.64 或更高版本。 运行 `az --version` 即可查找版本。 如果需要进行安装或升级，请参阅[安装 Azure CLI][install-azure-cli]。
 
 ## <a name="configure-virtual-machine-scale-set-based-aks-clusters-for-ssh-access"></a>配置基于虚拟机规模集的 AKS 群集以进行 SSH 访问
 
@@ -35,7 +35,7 @@ ms.locfileid: "87015606"
 
 ```azurecli-interactive
 CLUSTER_RESOURCE_GROUP=$(az aks show --resource-group myResourceGroup --name myAKSCluster --query nodeResourceGroup -o tsv)
-SCALE_SET_NAME=$(az vmss list --resource-group $CLUSTER_RESOURCE_GROUP --query [0].name -o tsv)
+SCALE_SET_NAME=$(az vmss list --resource-group $CLUSTER_RESOURCE_GROUP --query '[0].name' -o tsv)
 ```
 
 以上示例将 *myResourceGroup* 中 *myAKSCluster* 的群集资源组名称分配到 *CLUSTER_RESOURCE_GROUP*。 然后，该示例使用 *CLUSTER_RESOURCE_GROUP* 列出规模集名称并将其分配到 *SCALE_SET_NAME*。
@@ -43,7 +43,7 @@ SCALE_SET_NAME=$(az vmss list --resource-group $CLUSTER_RESOURCE_GROUP --query [
 > [!IMPORTANT]
 > 此时，应该使用 Azure CLI 仅更新基于虚拟机规模集的 AKS 群集的 SSH 密钥。
 > 
-> 对于 Linux 节点，目前只能使用 Azure CLI 添加 SSH 密钥。 如果要使用 SSH 连接到 Windows Server 节点，请使用创建 AKS 群集时提供的 SSH 密钥，并跳过下一组用于添加 SSH 公钥的命令。 你仍需要进行故障排除的节点的 IP 地址，该地址将显示在此部分的最后一个命令中。 或者，你可以[使用远程桌面协议（RDP）连接而不是使用 SSH 连接到 Windows Server 节点][aks-windows-rdp]。
+> 对于 Linux 节点，目前只能使用 Azure CLI 添加 SSH 密钥。 如果要使用 SSH 连接到 Windows Server 节点，则在创建 AKS 群集时使用提供的 SSH 密钥，并跳过下一组添加 SSH 公钥的命令。 仍需要要排除故障的节点的 IP 地址，该地址将在此部分的最后一个命令中显示。 此外，可以[使用远程桌面协议 (RDP) 连接连接到 Windows Server 节点][aks-windows-rdp]，而不需使用 SSH。
 
 若要将 SSH 密钥添加到虚拟机规模集中的节点，请使用 [az vmss extension set][az-vmss-extension-set] 和 [az vmss update-instances][az-vmss-update-instances] 命令。
 
@@ -72,7 +72,7 @@ az vmss update-instances --instance-ids '*' \
 kubectl get nodes -o wide
 ```
 
-以下示例输出显示群集中所有节点的内部 IP 地址，包括 Windows Server 节点。
+以下示例输出显示群集中所有节点（包括 Windows Server 节点）的内部 IP 地址。
 
 ```console
 $ kubectl get nodes -o wide
@@ -145,7 +145,7 @@ aks-nodepool1-79590246-0  10.240.0.4
     ```
 
     > [!TIP]
-    > 如果使用 Windows Server 节点，请将节点选择器添加到命令，以在 Linux 节点上计划 Debian 容器：
+    > 如果使用 Windows Server 节点，则将节点选择器添加到命令，以便在 Linux 节点上计划 Debian 容器：
     >
     > ```console
     > kubectl run -it --rm aks-ssh --image=debian --overrides='{"apiVersion":"v1","spec":{"nodeSelector":{"beta.kubernetes.io/os":"linux"}}}'

@@ -3,20 +3,18 @@ title: 导出和删除数据 - LUIS
 titleSuffix: Azure Cognitive Services
 description: 你对于查看、导出和删除其数据具有完全控制权。 删除客户数据以确保隐私和合规性。
 services: cognitive-services
-author: diberry
 manager: nitinme
-ms.custom: seodec18
+ms.custom: seodec18, references_regions
 ms.service: cognitive-services
 ms.subservice: language-understanding
 ms.topic: reference
-ms.date: 04/02/2019
-ms.author: diberry
-ms.openlocfilehash: 4e3e0d04b0086905b80e26fb4f838c36b5b5545e
-ms.sourcegitcommit: 58faa9fcbd62f3ac37ff0a65ab9357a01051a64f
+ms.date: 12/10/2020
+ms.openlocfilehash: 0a2d0ce683261ca3460c7aeaa0d7a42152b81a1e
+ms.sourcegitcommit: b39cf769ce8e2eb7ea74cfdac6759a17a048b331
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/29/2020
-ms.locfileid: "78273359"
+ms.lasthandoff: 01/22/2021
+ms.locfileid: "98680156"
 ---
 # <a name="export-and-delete-your-customer-data-in-language-understanding-luis-in-cognitive-services"></a>在认知服务中的语言理解 (LUIS) 中导出和删除客户数据
 
@@ -39,7 +37,7 @@ LUIS 用户具有完全控制权限，可通过 LUIS Web 门户或 LUIS 创作�
 
 | | **用户帐户** | **应用程序** | **示例话语** | **最终用户查询** |
 | --- | --- | --- | --- | --- |
-| **门户** | [链接](luis-concept-data-storage.md#delete-an-account) | [链接](luis-how-to-start-new-app.md#delete-app)。 | [链接](luis-concept-data-storage.md#utterances-in-an-intent) | [主动学习话语](luis-how-to-review-endpoint-utterances.md#disable-active-learning)<br>[记录的话语](luis-concept-data-storage.md#disable-logging-utterances) |
+| **门户** | [链接](luis-concept-data-storage.md#delete-an-account) | [链接](luis-how-to-start-new-app.md#delete-app) | [链接](luis-concept-data-storage.md#utterances-in-an-intent) | [主动学习话语](luis-how-to-review-endpoint-utterances.md#disable-active-learning)<br>[记录的话语](luis-concept-data-storage.md#disable-logging-utterances) |
 | **API** | [链接](https://westus.dev.cognitive.microsoft.com/docs/services/5890b47c39e2bb17b84a55ff/operations/5890b47c39e2bb052c5b9c4c) | [链接](https://westus.dev.cognitive.microsoft.com/docs/services/5890b47c39e2bb17b84a55ff/operations/5890b47c39e2bb052c5b9c39) | [链接](https://westus.dev.cognitive.microsoft.com/docs/services/5890b47c39e2bb17b84a55ff/operations/5890b47c39e2bb052c5b9c0b) | [链接](https://westus.dev.cognitive.microsoft.com/docs/services/5890b47c39e2bb17b84a55ff/operations/58b6f32139e2bb139ce823c9) |
 
 
@@ -52,7 +50,7 @@ LUIS 用户具有完全控制权限可在门户上查看数据，但是，若要
 
 ## <a name="location-of-active-learning"></a>主动学习的位置
 
-若要启用[活动学习](luis-how-to-review-endpoint-utterances.md#enable-active-learning)，在已发布的 LUIS 终结点上收到的用户的已记录最谈话存储在以下 Azure 地理区域中：
+若要启用 [活动学习](luis-how-to-review-endpoint-utterances.md#log-user-queries-to-enable-active-learning)，在已发布的 LUIS 终结点上收到的用户的已记录最谈话存储在以下 Azure 地理区域中：
 
 * [欧洲](#europe)
 * [澳大利亚](#australia)
@@ -60,31 +58,38 @@ LUIS 用户具有完全控制权限可在门户上查看数据，但是，若要
 
 除了主动学习数据（详见下文）外，LUIS 遵循[区域服务的数据存储做法](https://azuredatacentermap.azurewebsites.net/)。
 
+[!INCLUDE [portal consolidation](includes/portal-consolidation.md)]
+
+
 ### <a name="europe"></a>欧洲
 
-[Eu.luis.ai](https://eu.luis.ai)门户和欧洲创作（也称为编程式 api）托管在 Azure 欧洲地区。 Eu.luis.ai 门户和欧洲创作（也称为编程 Api）支持将终结点部署到以下 Azure 地域：
+欧洲创作 (也称为编程 Api) 资源托管在 Azure 欧洲地区，支持将终结点部署到以下 Azure 地域：
 
 * 欧洲
 * 法国
-* United Kingdom
+* 英国
 
-部署到这些 Azure 地理位置时，终结点从应用的最终用户那里收到的最谈话将存储在 Azure 欧洲地区，以便进行主动学习。 可以禁用主动学习，请参阅[禁用主动学习](luis-how-to-review-endpoint-utterances.md#disable-active-learning)。 若要管理存储的话语，请参阅[删除话语](luis-how-to-review-endpoint-utterances.md#delete-utterance)。
+部署到这些 Azure 地理位置时，终结点从应用的最终用户那里收到的最谈话将存储在 Azure 欧洲地区，以便进行主动学习。
 
 ### <a name="australia"></a>澳大利亚
 
-[Au.luis.ai](https://au.luis.ai)门户和澳大利亚创作（也称为编程式 api）托管在 Azure 的澳大利亚地区。 Au.luis.ai 门户和澳大利亚创作（也称为编程 Api）支持将终结点部署到以下 Azure 地域：
+澳大利亚创作 (也称为编程 Api) 资源托管在 Azure 澳大利亚地区，并支持将终结点部署到以下 Azure 地域：
 
 * 澳大利亚
 
-部署到这些 Azure 地理位置时，终结点从应用的最终用户那里收到的最谈话将存储在 Azure 的澳大利亚地区，以便进行主动学习。 可以禁用主动学习，请参阅[禁用主动学习](luis-how-to-review-endpoint-utterances.md#disable-active-learning)。 若要管理存储的话语，请参阅[删除话语](luis-how-to-review-endpoint-utterances.md#delete-utterance)。
+部署到这些 Azure 地理位置时，终结点从应用的最终用户那里收到的最谈话将存储在 Azure 的澳大利亚地区，以便进行主动学习。
 
-### <a name="united-states"></a>United States
+### <a name="united-states"></a>美国
 
-[Luis.ai](https://www.luis.ai)门户和美国创作（也称为编程式 api）托管在 Azure 美国地理位置。 Luis.ai 门户和美国创作（也称为编程 Api）支持将终结点部署到以下 Azure 地域：
+美国创作 (也称为编程 Api) 资源托管在 Azure 的美国地域中，并支持将终结点部署到以下 Azure 地域：
 
 * 欧洲或澳大利亚的创作区域不支持 Azure 地理位置
 
-部署到这些 Azure 地理位置时，终结点从应用的最终用户那里收到的最谈话将存储在 Azure 美国地理位置，以便进行主动学习。 可以禁用主动学习，请参阅[禁用主动学习](luis-how-to-review-endpoint-utterances.md#disable-active-learning)。 若要管理存储的话语，请参阅[删除话语](luis-how-to-review-endpoint-utterances.md#delete-utterance)。
+部署到这些 Azure 地理位置时，终结点从应用的最终用户那里收到的最谈话将存储在 Azure 美国地理位置，以便进行主动学习。 
+
+## <a name="disable-active-learning"></a>禁用主动学习
+
+若要禁用活动学习，请参阅 [禁用活动学习](luis-how-to-review-endpoint-utterances.md#disable-active-learning)。 若要管理存储的话语，请参阅[删除话语](luis-how-to-review-endpoint-utterances.md#delete-utterance)。
 
 
 ## <a name="next-steps"></a>后续步骤

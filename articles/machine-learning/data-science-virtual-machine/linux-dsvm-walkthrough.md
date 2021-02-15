@@ -3,22 +3,21 @@ title: 探索 Linux
 titleSuffix: Azure Data Science Virtual Machine
 description: 了解如何使用 Linux Data Science Virtual Machine 执行多种常见数据科学任务。
 services: machine-learning
-ms.service: machine-learning
-ms.subservice: data-science-vm
-author: vijetajo
-ms.author: vijetaj
+ms.service: data-science-vm
+author: lobrien
+ms.author: laobri
 ms.topic: conceptual
-ms.date: 07/17/2020
-ms.openlocfilehash: ca3cfa44bd4f757c6fbb0dd2c84d7a843f9bff36
-ms.sourcegitcommit: d39f2cd3e0b917b351046112ef1b8dc240a47a4f
+ms.date: 09/17/2020
+ms.openlocfilehash: 42136d0d58dbc318aab0e111fcef46f80751ca88
+ms.sourcegitcommit: e972837797dbad9dbaa01df93abd745cb357cde1
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/25/2020
-ms.locfileid: "88816212"
+ms.lasthandoff: 02/14/2021
+ms.locfileid: "100517665"
 ---
-# <a name="data-science-with-an-ubuntu-data-science-virtual-machine-in-azure"></a>使用 Azure 中的 Ubuntu Data Science Virtual Machine 进行数据科学
+# <a name="data-science-with-an-ubuntu-data-science-virtual-machine-in-azure"></a>使用 Azure 中的 Ubuntu Data Science Virtual Machine 完成数据科学任务
 
-本演练演示如何使用 Ubuntu Data Science Virtual Machine (DSVM) 完成几个常见的数据科学任务。 Ubuntu DSVM 是 Azure 中提供的虚拟机映像，预安装了一系列用于数据分析和机器学习的工具。 [预配 Ubuntu Data Science Virtual Machine](./dsvm-ubuntu-intro.md)中详细列出了重要软件组件。 DSVM 映像允许在几分钟之内轻松开始执行数据科学任务，而无需逐个安装和配置每个工具。 可以根据需要轻松扩展 DSVM，还可以在不使用时将其停用。 DSVM 资源既具有弹性，又具有成本效益。
+本演练介绍如何使用 Ubuntu Data Science Virtual Machine (DSVM) 完成多项常见数据科学任务。 Ubuntu DSVM 是 Azure 提供的虚拟机映像，其中预安装了一组常用于执行数据分析和机器学习的工具。 [预配 Ubuntu Data Science Virtual Machine](./dsvm-ubuntu-intro.md) 中逐项列出了主要的软件组件。 DSVM 映像允许在几分钟之内轻松开始执行数据科学任务，而无需逐个安装和配置每个工具。 可以根据需要轻松扩展 DSVM，还可以在不使用时将其停用。 DSVM 资源既具有弹性，又具有成本效益。
 
 在本演练中，我们对 [spambase](https://archive.ics.uci.edu/ml/datasets/spambase) 数据集进行了分析。 Spambase 是一组标记为 spam 或 ham（非 spam）的电子邮件。 Spambase 还包含有关电子邮件内容的一些统计信息。 我们稍后将在本演练中讨论这些统计信息。
 
@@ -28,8 +27,8 @@ ms.locfileid: "88816212"
 
 * **Azure 订阅**。 若要获取 Azure 订阅，请参阅[立即创建免费的 Azure 帐户](https://azure.microsoft.com/free/)。
 
-* [**Ubuntu Data Science Virtual Machine**](https://azuremarketplace.microsoft.com/marketplace/apps/microsoft-dsvm.ubuntu-1804)。 有关设置虚拟机的信息，请参阅 [预配 Ubuntu Data Science Virtual Machine](linux-dsvm-intro.md)。
-* 计算机上安装了 [X2Go](https://wiki.x2go.org/doku.php) 且 XFCE 会话处于打开状态。 有关详细信息，请参阅[安装和配置 X2Go 客户端](linux-dsvm-intro.md#x2go)。
+* [**Ubuntu Data Science Virtual Machine**](https://azuremarketplace.microsoft.com/marketplace/apps/microsoft-dsvm.ubuntu-1804)。 有关预配虚拟机的信息，请参阅[预配 Ubuntu Data Science Virtual Machine](./release-notes.md)。
+* 计算机上安装了 [X2Go](https://wiki.x2go.org/doku.php) 且 XFCE 会话处于打开状态。 有关详细信息，请参阅[安装和配置 X2Go 客户端](dsvm-ubuntu-intro.md#x2go)。
 * 为获得更流畅的滚动体验，请在 DSVM 的 Firefox Web 浏览器中切换 `about:config` 中的 `gfx.xrender.enabled` 标记。 [了解详细信息](https://www.reddit.com/r/firefox/comments/4nfmvp/ff_47_unbearable_slow_over_remote_x11/)。 此外，考虑将 `mousewheel.enable_pixel_scrolling` 设置为 `False`。 [了解详细信息](https://support.mozilla.org/questions/981140)。
 
 ## <a name="download-the-spambase-dataset"></a>下载 spambase 数据集
@@ -213,7 +212,7 @@ accuracy
 
 - [生成端到端解决方案以检测图像中的产品的操作指南](https://github.com/Azure/cortana-intelligence-product-detection-from-images)：图像检测是一种能够对图像中的对象进行定位和分类的技术。 此技术有可能在多个实际生活业务域中带来巨大回报。 例如，零售商可以使用此技术确定客户已从货架上选取哪个产品。 从而，此信息可帮助商店管理产品库存。 
 
-- [音频深度学习](https://blogs.technet.microsoft.com/machinelearning/2018/01/30/hearing-ai-getting-started-with-deep-learning-for-audio-on-azure/)：此教程展示如何使用[城市声音数据集](https://urbansounddataset.weebly.com/)训练用于音频事件检测的深度学习模型。 此教程提供有关如何处理音频数据的概述。
+- [音频深度学习](/archive/blogs/machinelearning/hearing-ai-getting-started-with-deep-learning-for-audio-on-azure)：此教程展示如何使用[城市声音数据集](https://urbansounddataset.weebly.com/)训练用于音频事件检测的深度学习模型。 此教程提供有关如何处理音频数据的概述。
 
 - [文本文档分类](https://github.com/anargyri/lstm_han)：本演练演示如何生成和训练两种不同的神经网络体系结构：分层注意网络和长短期记忆 (LSTM)。 这些神经网络使用用于深度学习的 Keras API 对文本文档进行分类。 Keras 是以下三大最热门深度学习框架的前端：Microsoft Cognitive Toolkit、TensorFlow 和 Theano。
 
@@ -328,7 +327,7 @@ rattle()
 > [!NOTE]
 > 无需在 DSVM 上安装 Rattle。 但 Rattle 打开时，系统可能会提示安装其他程序包。
 
-Rattle 使用一个基于选项卡的接口。 大部分选项卡与[团队数据科学过程](https://docs.microsoft.com/azure/machine-learning/team-data-science-process/)中的步骤相对应，如加载数据或浏览数据等。 数据科学过程从左到由通过选项卡流动。 最后一个选项卡包含 Rattle 所运行的 R 命令日志。
+Rattle 使用一个基于选项卡的接口。 大部分选项卡与[团队数据科学过程](../team-data-science-process/index.yml)中的步骤相对应，如加载数据或浏览数据等。 数据科学过程从左到由通过选项卡流动。 最后一个选项卡包含 Rattle 所运行的 R 命令日志。
 
 要加载和配置数据集：
 
@@ -479,7 +478,7 @@ CREATE TABLE data (word_freq_make real, word_freq_address real, word_freq_all re
 1. 将 URL 设置为 **jdbc:postgresql://localhost/spam**。
 1. 输入用户名和密码。
 1. 选择“确定”。
-1. 若要打开“连接”窗口，请双击**垃圾邮件数据库**别名。
+1. 若要打开“连接”窗口，请双击 **垃圾邮件数据库** 别名。
 1. 选择“连接”。
 
 运行一些查询：
@@ -506,7 +505,7 @@ SELECT * from data order by word_freq_3d desc;
 
 ### <a name="azure-synapse-analytics-formerly-sql-dw"></a>Azure Synapse Analytics（以前称为 SQL DW）
 
-Azure Synapse Analytics 是一种基于云的向外扩展数据库，可以处理大量数据（关系数据和非关系数据）。 有关详细信息，请参阅 [什么是 Azure Synapse Analytics？](../../synapse-analytics/sql-data-warehouse/sql-data-warehouse-overview-what-is.md)
+Azure Synapse Analytics 是一种基于云的横向扩展数据库，可以处理大量数据（包括关系数据和非关系数据）。 有关详细信息，请参阅[什么是 Azure Synapse Analytics？](../../synapse-analytics/sql-data-warehouse/sql-data-warehouse-overview-what-is.md)
 
 若要连接到数据仓库并创建表，请从命令提示符运行以下命令：
 
@@ -538,5 +537,3 @@ GO
 ```
 
 还可以使用 SQuirreL SQL 进行查询。 使用 SQL Server JDBC 驱动程序执行类似于 PostgreSQL 的步骤。 JDBC 驱动程序位于 /usr/share/java/jdbcdrivers/sqljdbc42.jar 文件夹中。
-
-

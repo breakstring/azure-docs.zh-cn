@@ -8,16 +8,16 @@ ms.service: virtual-machines
 ms.subservice: workloads
 ms.date: 4/17/2020
 ms.author: jencook
-ms.openlocfilehash: bb821d00a168e3b8f0636b93696376dc8b5d492e
-ms.sourcegitcommit: 318d1bafa70510ea6cdcfa1c3d698b843385c0f6
+ms.openlocfilehash: 38bf12b46002e767bba50cf833637e2c8ace078f
+ms.sourcegitcommit: aaa65bd769eb2e234e42cfb07d7d459a2cc273ab
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 05/21/2020
-ms.locfileid: "83772892"
+ms.lasthandoff: 01/27/2021
+ms.locfileid: "98872326"
 ---
 # <a name="frequently-asked-questions-for-azure-confidential-computing"></a>Azure 机密计算常见问题解答
 
-本文提供了有关运行 [Azure 上的机密计算工作负荷](overview.md)时出现的一些最常见问题的解答。
+本文提供了有关 [在 Azure 虚拟机上运行机密计算工作负荷](overview.md)的一些最常见问题的解答。
 
 如果本文未解决 Azure 问题，请访问 [MSDN 和 Stack Overflow](https://azure.microsoft.com/support/forums/) 上的 Azure 论坛。 可将问题发布到这些论坛上，或发布到 [Twitter 上的 @AzureSupport](https://twitter.com/AzureSupport)。 还可提交 Azure 支持请求。 若要提交支持请求，请在 [Azure 支持](https://azure.microsoft.com/support/options/)页上，选择“获取支持”。
 
@@ -32,7 +32,7 @@ ms.locfileid: "83772892"
 
 **是否所有 OS 映像均可与 Azure 机密计算配合工作？**
 
-不是。 只能在装有 Ubuntu Server 18.04、Ubuntu Server 16.04、Windows Server 2019 Datacenter 或 Windows Server 2016 Datacenter 的第 2 代操作计算机上部署虚拟机。 详细了解 [Linux](../virtual-machines/linux/generation-2.md) 和 [Windows](../virtual-machines/windows/generation-2.md) 上的第 2 代 VM
+不是。 只能在装有 Ubuntu Server 18.04、Ubuntu Server 16.04、Windows Server 2019 Datacenter 或 Windows Server 2016 Datacenter 的第 2 代操作计算机上部署虚拟机。 详细了解 [Linux](../virtual-machines/generation-2.md) 和 [Windows](../virtual-machines/generation-2.md) 上的第 2 代 VM
 
 **DCsv2 虚拟机在门户中灰显，我无法选择此类虚拟机**
 
@@ -45,6 +45,14 @@ ms.locfileid: "83772892"
 
 请确保已选择一个[可用区域](https://azure.microsoft.com/global-infrastructure/services/?products=virtual-machines)。 另外，请确保在大小选择器中选择“清除所有筛选器”。 
 
+**能否使用 Azure 机密计算启用加速网络？**
+
+ 否。 DC-Series 或 DCsv2-Series 的虚拟机上不支持加速网络。 无法为在机密计算上运行的任何机密计算虚拟机部署或 Azure Kubernetes Service 群集部署启用加速网络。
+
+**是否可以将 Azure 专用主机用于这些计算机？**
+
+是的。 Azure 专用主机支持 DCsv2 系列虚拟机。 Azure 专用主机提供了单租户物理服务器来运行虚拟机。 用户通常使用 Azure 专用主机来满足有关物理安全性、数据完整性和监视的符合性要求。 
+
 **我收到 Azure 资源管理器模板部署失败错误：“操作无法完成，因为此操作导致超出批准的标准 DcsV2 系列核心配额”**
 
 [创建支持请求以提高配额](../azure-portal/supportability/per-vm-quota-requests.md)。 免费试用订阅没有提供机密计算 VM 配额。 
@@ -56,6 +64,10 @@ DC 系列 VM 在较旧的 6 核 Intel 处理器上运行，使用 Intel SGX 并�
 **DCsv2 虚拟机是否可在全球使用？**
 
 不是。 目前，这些虚拟机只能在特定的区域中使用。 有关最新的可用区域，请查看[产品上市区域页](https://azure.microsoft.com/global-infrastructure/services/?products=virtual-machines)。 
+
+**这些计算机上的超线程是否处于关闭状态？**
+
+所有 Azure 机密计算群集均禁用超线程。
 
 **如何在 DCsv2 虚拟机上安装 Open Enclave SDK？**
    

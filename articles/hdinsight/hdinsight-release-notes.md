@@ -1,78 +1,71 @@
 ---
 title: Azure HDInsight 发行说明
 description: Azure HDInsight 的最新发行说明。 获取 Hadoop、Spark、R Server、Hive 和更多工具的开发技巧和详细信息。
-author: hrasheed-msft
-ms.author: hrasheed
-ms.reviewer: jasonh
 ms.custom: hdinsightactive
 ms.service: hdinsight
 ms.topic: conceptual
-ms.date: 08/25/2020
-ms.openlocfilehash: 0587a179b98a410cdba46b7817d86567f275f25d
-ms.sourcegitcommit: ac7ae29773faaa6b1f7836868565517cd48561b2
+ms.date: 02/08/2021
+ms.openlocfilehash: f6b7000812f1adfe6ff7bd93711c9b8fe4ff9adc
+ms.sourcegitcommit: 7e117cfec95a7e61f4720db3c36c4fa35021846b
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/25/2020
-ms.locfileid: "88826814"
+ms.lasthandoff: 02/09/2021
+ms.locfileid: "99988365"
 ---
 # <a name="azure-hdinsight-release-notes"></a>Azure HDInsight 发行说明
 
-本文提供有关**最新** Azure HDInsight 版本更新的信息。 有关较早版本的信息，请参阅 [HDInsight 发行说明存档](hdinsight-release-notes-archive.md)。
+本文提供有关 **最新** Azure HDInsight 版本更新的信息。 有关较早版本的信息，请参阅 [HDInsight 发行说明存档](hdinsight-release-notes-archive.md)。
 
 ## <a name="summary"></a>摘要
 
 Azure HDInsight 是 Azure 中最受企业客户青睐的开源分析服务之一。
 
-## <a name="release-date-08092020"></a>发布日期：08/09/2020
+如果要订阅发行说明，请查看[此 GitHub 存储库](https://github.com/hdinsight/release-notes/releases)上的版本。
 
-此版本仅适用于 HDInsight 4.0。 HDInsight 发行版在几天后即会在所有区域中推出。 此处的发行日期是指在第一个区域中的发行日期。 如果看不到以下更改，请耐心等待，几天后发行版会在你所在的区域推出。
+## <a name="release-date-02052021"></a>发布日期：02/05/2021
+
+此版本适用于 HDInsight 3.6 和 HDInsight 4.0。 HDInsight 发行版在几天后即会在所有区域中推出。 此处的发行日期是指在第一个区域中的发行日期。 如果看不到以下更改，请耐心等待，几天后发行版会在你所在的区域推出。
 
 ## <a name="new-features"></a>新增功能
-### <a name="support-for-sparkcruise"></a>对 SparkCruise 的支持
-SparkCruise 是 Spark 的自动计算重用系统。 它基于过去的查询工作负载选择要具体化的常见子表达式。 SparkCruise 将这些子表达式具体化为查询处理的一部分，系统会在后台自动应用计算重用。 无需对 Spark 代码进行任何修改，就可以通过 SparkCruise 受益。
- 
-### <a name="support-hive-view-for-hdinsight-40"></a>提供对 HDInsight 4.0 的 Hive 视图支持
-Apache Ambari Hive 视图的作用是帮助你通过 Web 浏览器创作、优化和执行 Hive 查询。 从此版本开始，提供对 HDInsight 4.0 群集的本机 Hive 视图支持。 它不适用于现有群集。 需要删除并重新创建群集才能获取内置的 Hive 视图。
- 
-### <a name="support-tez-view-for-hdinsight-40"></a>支持 HDInsight 4.0 的 Tez 视图
-Apache Tez 视图用于跟踪和调试 Hive Tez 作业的执行情况。 从此版本开始，HDInsight 4.0 支持本机 Tez 视图。 它不适用于现有群集。 需要删除并重新创建群集，才能获得内置的 Tez 视图。
+### <a name="dav4-series-support"></a>Dav4 系列支持
+HDInsight 在此版本中添加了 Dav4 系列支持。 [在此处了解有关 Dav4 系列的](https://docs.microsoft.com/azure/virtual-machines/dav4-dasv4-series)详细信息。
+
+### <a name="kafka-rest-proxy-ga"></a>Kafka REST 代理 GA 
+使用 Kafka REST 代理可以通过基于 HTTPS 的 REST API 与 Kafka 群集交互。 从此版本开始，Kafka Rest 代理已正式发布。 [在此处了解有关 KAFKA REST 代理](https://docs.microsoft.com/azure/hdinsight/kafka/rest-proxy)的详细信息。
+
+### <a name="moving-to-azure-virtual-machine-scale-sets"></a>迁移到 Azure 虚拟机规模集
+HDInsight 目前使用 Azure 虚拟机来预配群集。 服务将逐步迁移到 [Azure 虚拟机规模集](../virtual-machine-scale-sets/overview.md)。 整个过程可能需要几个月。 迁移区域和订阅后，新创建的 HDInsight 群集将在虚拟机规模集上运行，而无需客户执行任何操作。 预计不会有中断性变更。
 
 ## <a name="deprecation"></a>弃用
-### <a name="deprecation-of-spark-21-and-22-in-hdinsight-36-spark-cluster"></a>弃用 HDInsight 3.6 Spark 群集中的 Spark 2.1 和 2.2
-从 2020 年 7 月 1 日起，客户无法使用 HDInsight 3.6 上的 Spark 2.1 和 2.2 创建新的 Spark 群集。 现有群集将在没有 Microsoft 支持的情况下按原样运行。 请考虑在 2020 年 6 月 30 日之前转移到 HDInsight 3.6 上的 Spark 2.3，以避免潜在的系统/支持中断。
- 
-### <a name="deprecation-of-spark-23-in-hdinsight-40-spark-cluster"></a>弃用 HDInsight 4.0 Spark 群集中的 Spark 2.3
-从 2020 年 7 月 1 日起，客户无法使用 HDInsight 4.0 上的 Spark 2.3 创建新的 Spark 群集。 现有群集将在没有 Microsoft 支持的情况下按原样运行。 请考虑在 2020 年 6 月 30 日之前转移到 HDInsight 4.0 上的 Spark 2.4，避免出现潜在的系统/支持中断。
- 
-### <a name="deprecation-of-kafka-11-in-hdinsight-40-kafka-cluster"></a>弃用 HDInsight 4.0 Kafka 群集中的 Kafka 1.1
-从 2020 年 7 月 1 日开始，客户将无法使用 HDInsight 4.0 上的 Kafka 1.1 创建新的 Kafka 群集。 现有群集将在没有 Microsoft 支持的情况下按原样运行。 请考虑在 2020 年 6 月 30 日之前转移到 HDInsight 4.0 上的 Spark 2.1，避免出现潜在的系统/支持中断。
+### <a name="disabled-vm-sizes"></a>禁用的 VM 大小
+自 2021 年 1 月 9 日起，HDInsight 将阻止所有客户使用 standand_A8、standand_A9、standand_A10 和 standand_A11 VM 大小创建群集。 现有群集将照常运行。 请考虑迁移到 HDInsight 4.0，避免出现潜在的系统/支持中断。
 
 ## <a name="behavior-changes"></a>行为更改
-### <a name="ambari-stack-version-change"></a>Ambari 堆栈版本更改
-从此发布版开始，Ambari 版本从 2.x.x.x 更改为 4.1。 可以通过访问“Ambari UI”>“关于”获取 Ambari 版本。
+### <a name="default-cluster-vm-size-changes-to-ev3-series"></a>默认群集 VM 大小更改为 Ev3 系列 
+默认群集 VM 大小将从 D 系列更改为 Ev3 系列。 此更改适用于头节点和工作器节点。 若要避免此更改影响测试的工作流，请在 ARM 模板中指定要使用的 VM 大小。
+
+### <a name="network-interface-resource-not-visible-for-clusters-running-on-azure-virtual-machine-scale-sets"></a>对于在 Azure 虚拟机规模集上运行的群集，网络接口资源不可见
+HDInsight 将逐步迁移到 Azure 虚拟机规模集。 适用于使用 Azure 虚拟机规模集的群集的客户不再看到虚拟机的网络接口。
+
+
+### <a name="breaking-change-for-net-for-apache-spark-100"></a>Apache Spark 1.0.0 的 .NET 的重大更改
+HDInsight 在下一个版本中引入了 .NET for Apache Spark 的第一个主要版本。 它提供 Spark 2.4. x 和 Spark 3.0. x 与其他功能的数据帧 API 完整性。 此主要版本有重大更改，请参阅 [此迁移指南](https://github.com/dotnet/spark/blob/master/docs/migration-guide.md#upgrading-from-microsoftspark-0x-to-10) ，了解更新代码和管道所需的步骤。 在[此处](https://docs.microsoft.com/azure/hdinsight/spark/spark-dotnet-version-update#using-net-for-apache-spark-v10-in-hdinsight)了解更多信息。
 
 ## <a name="upcoming-changes"></a>即将推出的更改
-没有需要注意的即将发生的中断性变更。
+即将发布的版本中将推出以下变更。
+
+### <a name="default-cluster-version-will-be-changed-to-40"></a>默认群集版本将更改为 4.0
+自 2021 年 2 月起，HDInsight 群集的默认版本将从 3.6 更改为 4.0。 有关可用版本的详细信息，请参阅[可用版本](./hdinsight-component-versioning.md#available-versions)。 详细了解 [HDInsight 4.0](./hdinsight-version-release.md)中的新增功能。
+
+### <a name="os-version-upgrade"></a>OS 版本升级
+HDInsight 正在从 Ubuntu 16.04 升级到18.04。 升级将在2021年4月之前完成。
+
+### <a name="hdinsight-36-end-of-support-on-june-30-2021"></a>将于 2021 年 6 月 30 日终止支持 HDInsight 3.6
+将终止支持 HDInsight 3.6。 自 2021 年 6 月 30 日起，客户无法创建新的 HDInsight 3.6 群集。 现有群集将在没有 Microsoft 支持的情况下按原样运行。 请考虑迁移到 HDInsight 4.0，避免出现潜在的系统/支持中断。
 
 ## <a name="bug-fixes"></a>Bug 修复
 HDInsight 会持续改善群集的可靠性和性能。 
 
-已为 Hive 向后移植以下 JIRA：
-* [HIVE-23619](https://issues.apache.org/jira/browse/HIVE-23619)
-* [HIVE-21223](https://issues.apache.org/jira/browse/HIVE-21223)
-* [HIVE-22599](https://issues.apache.org/jira/browse/HIVE-22599)
-* [HIVE-22121](https://issues.apache.org/jira/browse/HIVE-22121)
-* [HIVE-22136](https://issues.apache.org/jira/browse/HIVE-22136)
-* [HIVE-18786](https://issues.apache.org/jira/browse/HIVE-18786)
-
-下面是适用于 HBase 的 JIRAs：
-* [HBASE-21458](https://issues.apache.org/jira/browse/HBASE-21458)
-* [HBASE-24208](https://issues.apache.org/jira/browse/HBASE-24208)
-* [HBASE-24205](https://issues.apache.org/jira/browse/HBASE-24205)
-
 ## <a name="component-version-change"></a>组件版本更改
-此发行版未发生组件版本更改。 可以在[此文档](https://docs.microsoft.com/azure/hdinsight/hdinsight-component-versioning#apache-hadoop-components-available-with-different-hdinsight-versions)中查找 HDInsight 4.0 和 HDInsight 3.6 的当前组件版本。
+此发行版未发生组件版本更改。 可以在[此文档](./hdinsight-component-versioning.md)中查找 HDInsight 4.0 和 HDInsight 3.6 的当前组件版本。
 
-## <a name="known-issues"></a>已知问题
-
-Azure 门户中已修复了一个问题，即用户使用 SSH 身份验证类型的公钥创建 Azure HDInsight 群集时遇到错误。 当用户单击 " **查看 + 创建**" 时，他们将收到 "不得包含 SSH 用户名中的任何三个连续字符" 的错误。 此问题已修复，但可能要求你通过按 CTRL + F5 来加载已更正的视图来刷新浏览器缓存。 此问题的解决方法是使用 ARM 模板创建群集。 

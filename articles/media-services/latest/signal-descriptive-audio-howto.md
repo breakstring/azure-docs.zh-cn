@@ -1,25 +1,27 @@
 ---
-title: 使用 Azure 媒体服务 v3 指示描述性音频轨道 | Microsoft Docs
+title: 带媒体服务 v3 的信号描述性音频曲目
 description: 按照本教程中的步骤，使用媒体服务 v3 上传文件、编码视频、添加描述性音频轨道和流式传输内容。
 services: media-services
 documentationcenter: ''
-author: Juliako
+author: IngridAtMicrosoft
 manager: femila
 editor: ''
 ms.service: media-services
 ms.workload: ''
-ms.topic: article
-ms.custom: ''
-ms.date: 09/25/2019
-ms.author: juliako
-ms.openlocfilehash: 99e0a78ea1aed0ecf08618c919e7949c5645de5b
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.topic: how-to
+ms.custom: devx-track-csharp
+ms.date: 08/31/2020
+ms.author: inhenkel
+ms.openlocfilehash: 3d029f23a094646d20dd6ae8cb6560aeef4aed54
+ms.sourcegitcommit: 4e70fd4028ff44a676f698229cb6a3d555439014
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87072081"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98954506"
 ---
 # <a name="signal-descriptive-audio-tracks"></a>指示描述性音频轨道
+
+[!INCLUDE [media services api v3 logo](./includes/v3-hr.md)]
 
 可以向视频中添加旁白轨道，以帮助视力受损的客户通过倾听旁白来跟随视频录制。 在媒体服务 v3 中，我们通过在清单文件中注释音频轨道来指示描述性音频轨道。
 
@@ -34,7 +36,7 @@ ms.locfileid: "87072081"
 
 ## <a name="create-an-input-asset-and-upload-a-local-file-into-it"></a>创建输入资产并将本地文件上传到该资产 
 
-CreateInputAsset 函数创建新的输入[资产](/rest/api/media/assets)并将指定的本地视频文件上传到该资产  。 此**资产**用作编码作业的输入。 在媒体服务 v3 中，**作业**输入可以是**资产**，也可以是可通过 HTTPS URL 使用媒体服务帐户访问的内容。 
+CreateInputAsset 函数创建新的输入[资产](/rest/api/media/assets)并将指定的本地视频文件上传到该资产  。 此 **资产** 用作编码作业的输入。 在媒体服务 v3 中，**作业** 输入可以是 **资产**，也可以是可通过 HTTPS URL 使用媒体服务帐户访问的内容。 
 
 如果想要了解如何从 HTTPS URL 进行编码，请参阅[此文](job-input-from-http-how-to.md)。  
 
@@ -42,7 +44,7 @@ CreateInputAsset 函数创建新的输入[资产](/rest/api/media/assets)并将�
 
 以下函数执行以下操作：
 
-* 创建**资产** 
+* 创建 **资产** 
 * 获取资产的[存储中容器](../../storage/blobs/storage-quickstart-blobs-dotnet.md#upload-blobs-to-a-container)的可写 [SAS URL](../../storage/common/storage-sas-overview.md)
 * 使用 SAS URL 将文件上传到存储中的容器中
 
@@ -62,7 +64,7 @@ CreateInputAsset 函数创建新的输入[资产](/rest/api/media/assets)并将�
 
 ## <a name="create-a-transform-and-a-job-that-encodes-the-uploaded-file"></a>创建转换和一个对上传的文件进行编码的作业
 
-对媒体服务中的内容进行编码或处理时，一种常见的模式是将编码设置设为脚本。 然后，需提交**作业**，将该脚本应用于视频。 为每个新视频提交新作业后，可将该脚本应用到库中的所有视频。 媒体服务中的脚本称为**转换**。 有关详细信息，请参阅[转换和作业](./transforms-jobs-concept.md)。 本教程中的示例定义有关将视频进行编码以将其流式传输到各种 iOS 和 Android 设备的脚本。 
+对媒体服务中的内容进行编码或处理时，一种常见的模式是将编码设置设为脚本。 然后，需提交 **作业**，将该脚本应用于视频。 为每个新视频提交新作业后，可将该脚本应用到库中的所有视频。 媒体服务中的脚本称为 **转换**。 有关详细信息，请参阅[转换和作业](./transforms-jobs-concept.md)。 本教程中的示例定义有关将视频进行编码以将其流式传输到各种 iOS 和 Android 设备的脚本。 
 
 以下示例创建一个转换（如果不存在）。
 
@@ -139,8 +141,8 @@ await UpoadAudioIntoOutputAsset(client, config.ResourceGroup, config.AccountName
 
 1. 在 Azure 门户中，导航到与媒体服务帐户关联的存储帐户。 
 1. 找到其名称为你的输出资产的容器。 
-1. 在容器中找到 .ism 文件，然后单击“编辑 Blob”（在右窗口中）。**** 
-1. 通过添加已上传的包含描述性音频的仅限音频的 MP4 文件（AAC 编解码器）的相关信息，对 .ism 文件进行编辑，在完成后按“保存”。****
+1. 在容器中找到 .ism 文件，然后单击“编辑 Blob”（在右窗口中）。 
+1. 通过添加已上传的包含描述性音频的仅限音频的 MP4 文件（AAC 编解码器）的相关信息，对 .ism 文件进行编辑，在完成后按“保存”。
 
     若要指示描述性音频轨道，需将“accessibility”和“role”参数添加到 .ism 文件。 你有责任正确设置这些参数，以将音频轨道作为音频描述发信号。 例如，将 `<param name="accessibility" value="description" />` 和 `<param name="role" value="alternate" />` 添加到特定音频轨道的 .ism 文件中，如以下示例所示。
  
@@ -204,9 +206,9 @@ await UpoadAudioIntoOutputAsset(client, config.ResourceGroup, config.AccountName
 
 编码完成后，下一步是使输出资产中的视频可供客户端播放。 可通过两个步骤完成此操作：首先创建[流定位符](/rest/api/media/streaminglocators)，然后生成客户端可以使用的流 URL。 
 
-创建**流定位符**的过程称为发布。 默认情况下，除非配置可选的开始和结束时间，否则调用 API 后，**流定位符**立即生效，并持续到被删除为止。 
+创建 **流定位符** 的过程称为发布。 默认情况下，除非配置可选的开始和结束时间，否则调用 API 后，**流定位符** 立即生效，并持续到被删除为止。 
 
-创建 [StreamingLocator](/rest/api/media/streaminglocators) 时，需要指定所需的 StreamingPolicyName****。 在此示例中将流式传输明文（或未加密的内容），因此使用预定义的明文流式传输策略 (**PredefinedStreamingPolicy.ClearStreamingOnly**)。
+创建 [StreamingLocator](/rest/api/media/streaminglocators) 时，需要指定所需的 StreamingPolicyName。 在此示例中将流式传输明文（或未加密的内容），因此使用预定义的明文流式传输策略 (**PredefinedStreamingPolicy.ClearStreamingOnly**)。
 
 > [!IMPORTANT]
 > 使用自定义的[流策略](/rest/api/media/streamingpolicies)时，应为媒体服务帐户设计有限的一组此类策略，并在需要同样的加密选项和协议时重新将这些策略用于 StreamingLocators。 媒体服务帐户具有对应于流式处理策略条目数的配额。 不应为每个流式处理定位符创建新的流式处理策略。
@@ -219,10 +221,10 @@ await UpoadAudioIntoOutputAsset(client, config.ResourceGroup, config.AccountName
 
 ### <a name="get-streaming-urls"></a>获取流式 URL
 
-创建[流定位符](/rest/api/media/streaminglocators)后，可以获取流 URL，如 **GetStreamingURLs** 中所示。 若要生成 URL，需要连接[流式处理终结点](/rest/api/media/streamingendpoints)的主机名和**流定位符**路径。 此示例使用默认的**流式处理终结点**。 首次创建媒体服务帐户时，此默认的**流式处理终结点**处于停止状态，因此需要调用 **Start**。
+创建 [流定位符](/rest/api/media/streaminglocators)后，可以获取流 URL，如 **GetStreamingURLs** 中所示。 若要生成 URL，需要连接 [流式处理终结点](/rest/api/media/streamingendpoints)的主机名和 **流定位符** 路径。 此示例使用默认的 **流式处理终结点**。 首次创建媒体服务帐户时，此默认的 **流式处理终结点** 处于停止状态，因此需要调用 **Start**。
 
 > [!NOTE]
-> 在此方法中，需要指定在创建输出资产的**流定位符**时所用的 locatorName。
+> 在此方法中，需要指定在创建输出资产的 **流定位符** 时所用的 locatorName。
 
 [!code-csharp[Main](../../../media-services-v3-dotnet-tutorials/AMSV3Tutorials/UploadEncodeAndStreamFiles/Program.cs#GetStreamingURLs)]
 
@@ -234,7 +236,7 @@ await UpoadAudioIntoOutputAsset(client, config.ResourceGroup, config.AccountName
 > 如果播放器在 Https 站点上进行托管，请确保将 URL 更新为“https”。
 
 1. 打开 Web 浏览器并导航到 [https://aka.ms/azuremediaplayer/](https://aka.ms/azuremediaplayer/)。
-2. 在“URL:”框中，粘贴从应用程序获取的某个流式处理 URL 值****。 
+2. 在“URL:”框中，粘贴从应用程序获取的某个流式处理 URL 值。 
  
      可以粘贴 HLS、Dash 或 Smooth 格式的 URL，Azure Media Player将切换到适当的流协议，以便在你的设备上自动播放。
 3. 按“更新播放器”。

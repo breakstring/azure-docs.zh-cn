@@ -11,12 +11,12 @@ ms.author: jlian
 ms.custom:
 - amqp
 - mqtt
-ms.openlocfilehash: 5cc8bae0f0245f5c4b45ca0cd446582b04788c21
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 421066ef30e23a79b26f97939cdfffb5be83afb5
+ms.sourcegitcommit: dbe434f45f9d0f9d298076bf8c08672ceca416c6
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "81758752"
+ms.lasthandoff: 10/17/2020
+ms.locfileid: "92148247"
 ---
 # <a name="403004-devicemaximumqueuedepthexceeded"></a>403004 DeviceMaximumQueueDepthExceeded
 
@@ -38,4 +38,4 @@ ms.locfileid: "81758752"
 
 也可增强设备端的逻辑，以便快速完成、拒绝或放弃排队的消息，缩短生存时间，或者考虑发送较少的消息。 请参阅 [C2D 消息的生存时间](./iot-hub-devguide-messages-c2d.md#message-expiration-time-to-live)。
 
-最后，请考虑使用[清除队列 API](https://docs.microsoft.com/rest/api/iothub/service/registrymanager/purgecommandqueue)，在达到限制之前定期清除挂起的消息。
+最后，请考虑使用[清除队列 API](/azure/iot-hub/iot-c-sdk-ref/iothub-registrymanager-h/iothubregistrymanager-deletedevice)，在达到限制之前定期清除挂起的消息。

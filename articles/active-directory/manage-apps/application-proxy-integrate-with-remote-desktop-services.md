@@ -1,27 +1,22 @@
 ---
-title: 使用 Azure AD 应用代理发布远程桌面 | Microsoft Docs
-description: 介绍有关 Azure AD 应用程序代理连接器的基础知识。
+title: 使用 Azure Active Directory 应用程序代理发布远程桌面
+description: '介绍如何配置应用程序代理与远程桌面服务 (RDS) '
 services: active-directory
-documentationcenter: ''
 author: kenwith
-manager: celestedg
+manager: daveba
 ms.service: active-directory
 ms.subservice: app-mgmt
 ms.workload: identity
-ms.tgt_pltfrm: na
-ms.devlang: na
 ms.topic: how-to
-ms.date: 07/22/2020
+ms.date: 11/30/2020
 ms.author: kenwith
-ms.custom: it-pro
 ms.reviewer: japere
-ms.collection: M365-identity-device-management
-ms.openlocfilehash: 9cba74c773e1f141db14e06cf0cda8b31d06ba4f
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.openlocfilehash: b6879d4869604af5232088063a6153a01208e7d0
+ms.sourcegitcommit: d49bd223e44ade094264b4c58f7192a57729bada
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87019516"
+ms.lasthandoff: 02/02/2021
+ms.locfileid: "99259332"
 ---
 # <a name="publish-remote-desktop-with-azure-ad-application-proxy"></a>使用 Azure AD 应用程序代理发布远程桌面
 
@@ -33,7 +28,7 @@ ms.locfileid: "87019516"
 
 ## <a name="how-application-proxy-fits-in-the-standard-rds-deployment"></a>应用程序代理如何适应标准 RDS 部署
 
-标准 RDS 部署包括 Windows Server 上运行的各种远程桌面角色服务。 在[远程桌面服务体系结构](https://technet.microsoft.com/windows-server-docs/compute/remote-desktop-services/desktop-hosting-logical-architecture)中了解多个部署选项。 和其他 RDS 部署选项不同，[使用 Azure AD 应用程序代理的 RDS 部署](https://technet.microsoft.com/windows-server-docs/compute/remote-desktop-services/desktop-hosting-logical-architecture)（如下图所示）可以从运行连接器服务的服务器提供永久性出站连接。 其他部署通过负载均衡器保留打开的入站连接。
+标准 RDS 部署包括 Windows Server 上运行的各种远程桌面角色服务。 在[远程桌面服务体系结构](/windows-server/remote/remote-desktop-services/Desktop-hosting-logical-architecture)中了解多个部署选项。 和其他 RDS 部署选项不同，[使用 Azure AD 应用程序代理的 RDS 部署](/windows-server/remote/remote-desktop-services/Desktop-hosting-logical-architecture)（如下图所示）可以从运行连接器服务的服务器提供永久性出站连接。 其他部署通过负载均衡器保留打开的入站连接。
 
 ![应用程序代理位于 RDS VM 与公共 Internet 之间](./media/application-proxy-integrate-with-remote-desktop-services/rds-with-app-proxy.png)
 
@@ -42,23 +37,18 @@ ms.locfileid: "87019516"
 - 用户启动 RDP 连接后，RD 网关开始发挥作用。 RD 网关处理通过 Internet 传入的加密 RDP 流量，并将其转换到用户要连接的本地服务器。 在此方案中，RD 网关接收的流量来自 Azure AD 应用程序代理。
 
 >[!TIP]
->如果以前尚未部署 RDS，或者在开始之前想要了解详细信息，请了解如何[使用 Azure 资源管理器和 Azure 市场无缝部署 RDS](https://technet.microsoft.com/windows-server-docs/compute/remote-desktop-services/rds-in-azure)。
+>如果以前尚未部署 RDS，或者在开始之前想要了解详细信息，请了解如何[使用 Azure 资源管理器和 Azure 市场无缝部署 RDS](/windows-server/remote/remote-desktop-services/rds-in-azure)。
 
 ## <a name="requirements"></a>要求
 
 - RD Web 和 RD 网关终结点必须位于同一台计算机上，并且有一个共用的根。 RD Web 和 RD 网关将作为具有应用程序代理的单个应用程序发布，因此，可以在两个应用程序之间体验单一登录。
-
-- 应该[已部署 RDS](https://technet.microsoft.com/windows-server-docs/compute/remote-desktop-services/rds-in-azure) 并[已启用应用程序代理](application-proxy-add-on-premises-application.md)。
-
-- 最终用户必须使用兼容的浏览器连接到 RD Web 或 RD Web 客户端。 有关更多详细信息，请参阅[客户端配置支持](#support-for-other-client-configurations)。
-
+- 应该[已部署 RDS](/windows-server/remote/remote-desktop-services/rds-in-azure) 并[已启用应用程序代理](application-proxy-add-on-premises-application.md)。 确保已满足启用应用程序代理的先决条件，如安装连接器、打开所需的端口和 URL，以及在服务器上启用 TLS 1.2。
+- 最终用户必须使用兼容的浏览器连接到 RD Web 或 RD Web 客户端。 有关更多详细信息，请参阅 [客户端配置支持](#support-for-other-client-configurations)。
 - 发布 RD Web 时，建议使用相同的内部和外部 FQDN。 如果内部和外部 FQDN 不同，应禁用请求头转换，以免客户端收到无效链接。
-
 - 如果在 Internet Explorer 上使用 RD Web，则需要启用 RDS ActiveX 外接程序。
-
-- 如果使用的是 RD Web 客户端，则需要使用应用程序代理[连接器版本1.5.1975 或更高版本](https://docs.microsoft.com/azure/active-directory/manage-apps/application-proxy-release-version-history)。
-
-- 对于 Azure AD 预身份验证流，用户只能在 " **RemoteApp 和桌面**" 窗格中连接到发布的资源。 用户无法使用 "**连接到远程电脑**" 窗格连接到桌面。
+- 如果使用的是 RD Web 客户端，则需要使用应用程序代理 [连接器版本1.5.1975 或更高版本](./application-proxy-release-version-history.md)。
+- 对于 Azure AD 预身份验证流，用户只能在 " **RemoteApp 和桌面** " 窗格中连接到发布的资源。 用户无法使用 " **连接到远程电脑** " 窗格连接到桌面。
+- 如果使用的是 Windows Server 2019，可能需要禁用 HTTP2 协议。 有关详细信息，请参阅 [教程：在 Azure Active Directory 中通过应用程序代理添加用于远程访问的本地应用程序](application-proxy-add-on-premises-application.md)。
 
 ## <a name="deploy-the-joint-rds-and-application-proxy-scenario"></a>部署 RDS 和应用程序代理联合方案
 
@@ -72,26 +62,26 @@ ms.locfileid: "87019516"
    - 预身份验证方法：Azure Active Directory
    - 转换 URL 标头：否
 2. 将用户分配到已发布的 RD 应用程序。 确保这些用户也都有权访问 RDS。
-3. 将应用程序的单一登录方法保留为“已禁用 Azure AD 单一登录”。****
+3. 将应用程序的单一登录方法保留为“已禁用 Azure AD 单一登录”。
 
    >[!Note]
    >你的用户需要进行一次身份验证，以便 Azure AD 一次，一次登录到 RD Web，但他们有权 RD 网关的单一登录。
 
-4. 选择 " **Azure Active Directory**"，然后选择 "**应用注册**"。 从列表中选择应用。
-5. 在 "**管理**" 下，选择 "**品牌**"。
-6. 将 "**主页 URL** " 字段更新为指向 RD Web 终结点（如 `https://\<rdhost\>.com/RDWeb` ）。
+4. 选择 " **Azure Active Directory**"，然后选择 " **应用注册**"。 从列表中选择应用。
+5. 在 " **管理**" 下，选择 " **品牌**"。
+6. 将 " **主页 URL** " 字段更新为指向 RD Web 终结点 (如 `https://\<rdhost\>.com/RDWeb`) 。
 
 ### <a name="direct-rds-traffic-to-application-proxy"></a>将 RDS 流量定向到应用程序代理
 
 以管理员身份连接到 RDS 部署，并更改部署的 RD 网关服务器名称。 此配置可确保连接通过 Azure AD 应用程序代理服务。
 
 1. 连接到运行 RD 连接代理角色的 RDS 服务器。
-2. 启动**服务器管理器**。
-3. 在左侧窗格中选择“远程桌面服务”。****
+2. 启动 **服务器管理器**。
+3. 在左侧窗格中选择“远程桌面服务”。
 4. 选择“概述”。
-5. 在“部署概述”部分中，选择下拉菜单并选择“编辑部署属性”。****
-6. 在“RD 网关”选项卡中，将“服务器名称”字段更改为针对应用程序代理中的 RD 主机终结点设置的外部 URL。****
-7. 将“登录方法”字段更改为“密码身份验证”。********
+5. 在“部署概述”部分中，选择下拉菜单并选择“编辑部署属性”。
+6. 在“RD 网关”选项卡中，将“服务器名称”字段更改为针对应用程序代理中的 RD 主机终结点设置的外部 URL。
+7. 将“登录方法”字段更改为“密码身份验证”。
 
    ![RDS 上的“部署属性”屏幕](./media/application-proxy-integrate-with-remote-desktop-services/rds-deployment-properties.png)
 
@@ -101,7 +91,7 @@ ms.locfileid: "87019516"
    Set-RDSessionCollectionConfiguration -CollectionName "<yourcollectionname>" -CustomRdpProperty "pre-authentication server address:s:<proxyfrontendurl>`nrequire pre-authentication:i:1"
    ```
 
-   **例如：**
+   例如：
    ```
    Set-RDSessionCollectionConfiguration -CollectionName "QuickSessionCollection" -CustomRdpProperty "pre-authentication server address:s:https://remotedesktoptest-aadapdemo.msappproxy.net/`nrequire pre-authentication:i:1"
    ```
@@ -116,9 +106,9 @@ ms.locfileid: "87019516"
 配置远程桌面后，Azure AD 应用程序代理会充当 RDS.的面向 Internet 的组件。 可以在 RD Web 和 RD 网关计算机上删除其他面向 Internet 的公共终结点。
 
 ### <a name="enable-the-rd-web-client"></a>启用 RD Web 客户端
-如果你还希望用户能够使用 RD Web 客户端，请按照[为你的用户设置远程桌面 Web 客户端中的](https://docs.microsoft.com/windows-server/remote/remote-desktop-services/clients/remote-desktop-web-client-admin)步骤来启用此操作。
+如果你还希望用户能够使用 RD Web 客户端，请按照 [为你的用户设置远程桌面 Web 客户端中的](/windows-server/remote/remote-desktop-services/clients/remote-desktop-web-client-admin) 步骤来启用此操作。
 
-远程桌面 web 客户端允许用户通过与 HTML5 兼容的 web 浏览器（如 Microsoft Edge、Internet Explorer 11、Google Chrome、Safari 或 Mozilla Firefox，v 55.0 及更高版本）访问组织的远程桌面基础结构。
+远程桌面 web 客户端允许用户通过与 HTML5 兼容的 web 浏览器（如 Microsoft Edge、Internet Explorer 11、Google Chrome、Safari 或 Mozilla Firefox (v 55.0 和) 更高版本）访问组织的远程桌面基础结构。
 
 ## <a name="test-the-scenario"></a>测试方案
 
@@ -135,17 +125,19 @@ ms.locfileid: "87019516"
 
 | 身份验证方法 | 支持的客户端配置 |
 | --------------------- | ------------------------------ |
-| 预身份验证    | 使用 Internet Explorer 和 RDS ActiveX 外接程序的 RD Web-Windows 7/10 |
-| 预身份验证    | RD Web 客户端-与 HTML5 兼容的 web 浏览器（如 Microsoft Edge、Internet Explorer 11、Google Chrome、Safari 或 Mozilla Firefox） |
+| 预身份验证    | 使用 Internet Explorer * 或 [Edge CHROMIUM IE 模式](/deployedge/edge-ie-mode) + RDS ActiveX 外接程序的 RD Web-Windows 7/10 |
+| 预身份验证    | RD Web 客户端-与 HTML5 兼容的 Web 浏览器（如 Microsoft Edge、Internet Explorer 11、Google Chrome、Safari 或 Mozilla Firefox (v 55.0 和更高版本)  |
 | 传递 | 支持 Microsoft 远程桌面应用程序的任何其他操作系统 |
+
+* 当 "我的应用" 门户用于访问远程桌面应用程序时，需要 Edge Chromium IE 模式。  
 
 相比传递流，预身份验证流可提供更多的安全优势。 使用预身份验证，你可以使用 Azure AD 身份验证功能，如单一登录、条件性访问和本地资源的双重验证。 此外，你还可以确保只有经过身份验证的流量才能访问你的网络。
 
 若要使用传递身份验证，本文列出的步骤仅有下面两处修改：
-1. 在[发布 RD 主机终结点](#publish-the-rd-host-endpoint)步骤 1 中，将预身份验证方法设置为“传递”****。
+1. 在[发布 RD 主机终结点](#publish-the-rd-host-endpoint)步骤 1 中，将预身份验证方法设置为“传递”。
 2. 在[使 RDS 流量直接流向应用程序代理](#direct-rds-traffic-to-application-proxy)中，完全跳过步骤 8。
 
 ## <a name="next-steps"></a>后续步骤
-
-[使用 Azure AD 应用程序代理启用对 SharePoint 的远程访问](application-proxy-integrate-with-sharepoint-server.md) 
-[使用 Azure AD 应用程序代理远程访问应用时的安全注意事项](application-proxy-security.md)
+- [通过 Azure AD 应用程序代理启用对 SharePoint 的远程访问](application-proxy-integrate-with-sharepoint-server.md)
+- [使用 Azure AD 应用程序代理远程访问应用时的安全注意事项](application-proxy-security.md)
+- [负载均衡多个应用服务器的最佳实践](application-proxy-high-availability-load-balancing.md#best-practices-for-load-balancing-among-multiple-app-servers)

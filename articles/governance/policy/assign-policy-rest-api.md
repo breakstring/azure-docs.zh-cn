@@ -1,14 +1,14 @@
 ---
 title: 快速入门：使用 REST API 进行新策略分配
 description: 本快速入门介绍如何使用 REST API 创建 Azure Policy 分配以识别不合规资源。
-ms.date: 08/10/2020
+ms.date: 01/29/2021
 ms.topic: quickstart
-ms.openlocfilehash: 04880ef013060bc5ff12618af6a9156295a26a88
-ms.sourcegitcommit: 1aef4235aec3fd326ded18df7fdb750883809ae8
+ms.openlocfilehash: 438d8004cd50e6e2ef7586c51adc63257f37978b
+ms.sourcegitcommit: 54e1d4cdff28c2fd88eca949c2190da1b09dca91
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/12/2020
-ms.locfileid: "88137081"
+ms.lasthandoff: 01/31/2021
+ms.locfileid: "99219971"
 ---
 # <a name="quickstart-create-a-policy-assignment-to-identify-non-compliant-resources-with-rest-api"></a>快速入门：使用 REST API 创建策略分配以识别不合规资源
 
@@ -23,7 +23,7 @@ REST API 用于创建和管理 Azure 资源。 本指南使用 REST API 创建�
 
 - 如果没有 Azure 订阅，请在开始之前创建一个[免费](https://azure.microsoft.com/free/)帐户。
 
-- 安装 [ARMClient](https://github.com/projectkudu/ARMClient)（如果尚未安装）。 该工具可将 HTTP 请求发送到基于 Azure 资源管理器的 REST API。 你也可以使用 REST 文档中的“试用”功能，或者使用 PowerShell 的 [Invoke-RestMethod](/powershell/module/microsoft.powershell.utility/invoke-restmethod) 或 [Postman](https://www.postman.com) 等工具。
+- 安装 [ARMClient](https://github.com/projectkudu/ARMClient)（如果尚未安装）。 该工具可将 HTTP 请求发送到基于 Azure 资源管理器的 REST API。 也可以使用 REST 文档中的“试用”功能，或者使用 PowerShell 的 [Invoke-RestMethod](/powershell/module/microsoft.powershell.utility/invoke-restmethod) 或 [Postman](https://www.postman.com) 等工具。
 
 [!INCLUDE [cloud-shell-try-it.md](../../../includes/cloud-shell-try-it.md)]
 
@@ -47,6 +47,11 @@ REST API 用于创建和管理 Azure 资源。 本指南使用 REST API 创建�
          "displayName": "Audit VMs without managed disks Assignment",
          "description": "Shows all virtual machines not using managed disks",
          "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/06a78e20-9358-41c9-923c-fb736d382a4d",
+         "nonComplianceMessages": [
+             {
+                 "message": "Virtual machines should use a managed disk"
+             }
+         ]
        }
      }
      ```
@@ -65,6 +70,7 @@ REST API URI：
 - **显示名称** - 策略分配的显示名称。 本例使用了“审核未使用托管磁盘分配的虚拟机”  。
 - **说明** - 有关策略用途或将其分配到此范围的原因的更深入说明。
 - **policyDefinitionId** - 策略定义 ID，用作创建分配的依据。 在本例中，它为策略定义“审核未使用托管磁盘的 VM”的 ID  。
+- **nonComplianceMessages** - 设置资源因不合规而被拒绝时或被评估为不合规时显示的消息。 有关详细信息，请参阅[“分配不合规”消息](./concepts/assignment-structure.md#non-compliance-messages)。
 
 ## <a name="identify-non-compliant-resources"></a>识别不合规的资源
 

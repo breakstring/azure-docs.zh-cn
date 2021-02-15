@@ -4,17 +4,16 @@ description: 本文介绍了在 Azure 流分析作业中很有用的多个常见
 services: stream-analytics
 author: rodrigoaatmicrosoft
 ms.author: rodrigoa
-ms.reviewer: mamccrea
 ms.service: stream-analytics
 ms.topic: how-to
 ms.date: 12/18/2019
-ms.custom: devx-track-javascript
-ms.openlocfilehash: 0eabe147563ee712e20e57aafc1029daf2a8610a
-ms.sourcegitcommit: 628be49d29421a638c8a479452d78ba1c9f7c8e4
+ms.custom: devx-track-js
+ms.openlocfilehash: 8fcda77858b3feb78a04971a7ad1f20c0ea51fa1
+ms.sourcegitcommit: 42a4d0e8fa84609bec0f6c241abe1c20036b9575
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/20/2020
-ms.locfileid: "88641035"
+ms.lasthandoff: 01/08/2021
+ms.locfileid: "98019986"
 ---
 # <a name="common-query-patterns-in-azure-stream-analytics"></a>Azure 流分析中的常见查询模式
 
@@ -283,13 +282,13 @@ FROM
 
 查询的第一步是查找 10 分钟范围内的最大时间戳，该时间戳是该范围的最后一个事件的时间戳。 第二个步骤是将第一个查询的结果与原始流联接，查找每个时间范围内与最后一个时间戳相匹配的事件。 
 
-DATEDIFF 是一种特定于日期的函数，用于比较并返回两个 DateTime 字段之间的时间差。有关详细信息，请参阅 [date 函数](https://docs.microsoft.com/stream-analytics-query/date-and-time-functions-azure-stream-analytics)。
+DATEDIFF 是一种特定于日期的函数，用于比较并返回两个 DateTime 字段之间的时间差。有关详细信息，请参阅 [date 函数](/stream-analytics-query/date-and-time-functions-azure-stream-analytics)。
 
 有关联接流的详细信息，请参阅 [JOIN](/stream-analytics-query/join-azure-stream-analytics)。
 
 ## <a name="data-aggregation-over-time"></a>随时间的数据聚合
 
-若要计算某个时间范围内的信息，可以将数据聚合在一起。 在此示例中，对每个特定汽车发出的过去10秒的时间计算一次计数。
+若要计算某个时间范围内的信息，可以将数据聚合在一起。 在此示例中，计数是根据过去 10 秒内每家特定汽车制造商计算的。
 
 **输入**：
 
@@ -837,7 +836,7 @@ From
 
 用户定义的函数将从每个使用的事件的 HexValue 计算 bigint 值。
 
-有关详细信息，请参阅 [JavaScript](/azure/stream-analytics/stream-analytics-javascript-user-defined-functions) 和 [C#](/azure/stream-analytics/stream-analytics-edge-csharp-udf)。
+有关详细信息，请参阅 [JavaScript](./stream-analytics-javascript-user-defined-functions.md) 和 [C#](./stream-analytics-edge-csharp-udf.md)。
 
 ## <a name="advanced-pattern-matching-with-match_recognize"></a>使用 MATCH_RECOGNIZE 进行高级模式匹配
 
@@ -932,11 +931,11 @@ JOIN
 
 ## <a name="get-help"></a>获取帮助
 
-若要获得进一步的帮助，可前往 [Azure 流分析的 Microsoft 问答页](https://docs.microsoft.com/answers/topics/azure-stream-analytics.html)。
+若要获得进一步的帮助，可前往 [Azure 流分析的 Microsoft 问答页](/answers/topics/azure-stream-analytics.html)。
 
 ## <a name="next-steps"></a>后续步骤
 * [Azure 流分析简介](stream-analytics-introduction.md)
 * [Azure 流分析入门](stream-analytics-real-time-fraud-detection.md)
 * [缩放 Azure 流分析作业](stream-analytics-scale-jobs.md)
-* [Azure 流分析查询语言参考](https://docs.microsoft.com/stream-analytics-query/stream-analytics-query-language-reference)
-* [Azure 流分析管理 REST API 参考](https://msdn.microsoft.com/library/azure/dn835031.aspx)
+* [Azure 流分析查询语言参考](/stream-analytics-query/stream-analytics-query-language-reference)
+* [Azure 流分析管理 REST API 参考](/rest/api/streamanalytics/)

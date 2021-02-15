@@ -1,4 +1,4 @@
-- name: 使用帮助文档
+- name: 用户帮助文档
   href: index.yml
 - name: 双重验证帮助
   items:
@@ -50,6 +50,8 @@
       href: auth-app-android-china.md
     - name: 备份并恢复帐户
       href: user-help-auth-app-backup-recovery.md
+    - name: 将密码导入 Authenticator 应用
+      href: user-help-authenticator-app-import-passwords.md
     - name: 常见问题解答
       href: user-help-auth-app-faq.md
 - name: “我的帐户”门户帮助
@@ -70,6 +72,10 @@
       href: my-account-portal-sign-ins-page.md
     - name: 更改门户设置
       href: my-account-portal-settings.md
+    - name: 查找我的帐户管理员
+      href: my-account-find-administrator.md
+    - name: 切换组织
+      href: cross-tenant-switcher.md
 - name: 安全信息帮助
   items:
     - name: 在登录过程中添加安全信息
@@ -106,12 +112,12 @@
   items:
     - name: 登录并使用“我的应用”门户
       href: my-apps-portal-end-user-access.md
-    - name: 更新配置文件和帐户信息
-      href: my-apps-portal-end-user-update-profile.md
     - name: 更新组信息
       href: my-apps-portal-end-user-groups.md
     - name: 利用集合组织应用
       href: my-applications-portal-workspaces.md
+    - name: “我的应用”中的集合预览
+      href: my-apps-portal-user-collections.md
     - name: 编辑或撤销应用权限
       href: my-applications-portal-permissions-saved-accounts.md
     - name: 执行自己的访问评审

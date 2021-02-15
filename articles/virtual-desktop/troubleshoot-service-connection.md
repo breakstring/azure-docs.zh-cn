@@ -1,17 +1,17 @@
 ---
 title: 排查 Windows 虚拟桌面服务连接问题 - Azure
-description: 如何解决在 Windows 虚拟桌面租户环境中设置客户端连接时遇到的问题。
+description: 如何解决在 Windows 虚拟桌面租户环境中设置服务连接时遇到的问题。
 author: Heidilohr
 ms.topic: troubleshooting
-ms.date: 06/19/2020
+ms.date: 10/15/2020
 ms.author: helohr
 manager: lizross
-ms.openlocfilehash: c6d0360a4fe957f43e38fd892cef6b4ab0a2325a
-ms.sourcegitcommit: 98854e3bd1ab04ce42816cae1892ed0caeedf461
+ms.openlocfilehash: 42502864cfed177adfe487e9c59247579628fec8
+ms.sourcegitcommit: fc23b4c625f0b26d14a5a6433e8b7b6fb42d868b
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/07/2020
-ms.locfileid: "88009369"
+ms.lasthandoff: 01/17/2021
+ms.locfileid: "98539077"
 ---
 # <a name="windows-virtual-desktop-service-connections"></a>Windows 虚拟桌面服务连接
 
@@ -40,10 +40,24 @@ ms.locfileid: "88009369"
 
 4. 如果用户是 Azure Active Directory (AD) 用户组的一部分，请确保该用户组是安全组，而不是通讯组。 Windows 虚拟桌面不支持 Azure AD 通讯组。
 
+## <a name="user-loses-existing-feed-and-no-remote-resource-is-displayed-no-feed"></a>用户丢失现有源，没有 (的源中显示远程资源) 
+
+此错误通常在用户将其订阅从一个 Azure AD 租户移到另一个租户后出现。 因此，该服务将无法跟踪其用户分配，因为它们仍与旧的 Azure AD 租户相关联。
+
+若要解决此问题，只需将用户重新分配到其应用组。
+
+如果 CSP 提供程序创建了订阅，然后将其传输给客户，则也会发生这种情况。 若要解决此问题，请重新注册资源提供程序。
+
+1. 登录到 Azure 门户。
+2. 中转到 " **订阅**"，然后选择订阅。
+3. 在页面左侧的菜单中，选择 " **资源提供程序**"。
+4. 找到并选择 **DesktopVirtualization**，然后选择 " **重新注册**"。
+
 ## <a name="next-steps"></a>后续步骤
 
 - 如需简要了解如何排查 Windows 虚拟桌面问题和跟踪升级，请参阅[故障排除概述、反馈和支持](troubleshoot-set-up-overview.md)。
 - 若要排查在 Windows 虚拟桌面环境中创建 Windows 虚拟桌面环境和主机池时遇到的问题，请参阅[环境和主机池创建](troubleshoot-set-up-issues.md)。
 - 若要排查在 Windows 虚拟桌面中配置虚拟机 (VM) 时遇到的问题，请参阅[会话主机虚拟机配置](troubleshoot-vm-configuration.md)。
+- 若要解决与 Windows 虚拟桌面代理或会话连接有关的问题，请参阅 [排查常见的 Windows 虚拟桌面代理问题](troubleshoot-agent.md)。
 - 若要排查将 PowerShell 与 Windows 虚拟桌面结合使用时遇到的问题，请参阅 [Windows 虚拟桌面 PowerShell](troubleshoot-powershell.md)。
 - 若要完成故障排除教程，请参阅[教程：排查资源管理器模板部署问题](../azure-resource-manager/templates/template-tutorial-troubleshoot.md)。

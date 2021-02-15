@@ -6,6 +6,8 @@
       href: automation-intro.md
     - name: 常见问题解答
       href: automation-faq.md
+    - name: 新增功能
+      href: whats-new.md
 - name: 快速入门
   items:
     - name: 创建自动化帐户
@@ -27,11 +29,8 @@
       href: learn/automation-tutorial-runbook-textual.md
     - name: 创建 Python Runbook
       href: learn/automation-tutorial-runbook-textual-python2.md
-- name: 示例
-  items:
-    - name: Azure Policy 内置策略定义
-      displayName: 'samples, policies, definitions'
-      href: ./policy-samples.md
+    - name: 创建 Python 3 Runbook
+      href: learn/automation-tutorial-runbook-textual-python-3.md
 - name: 概念
   items:
     - name: 自动化帐户身份验证概述
@@ -44,6 +43,8 @@
       href: automation-runbook-types.md
     - name: PowerShell DSC
       href: /powershell/scripting/dsc/overview/overview
+    - name: 自动化网络配置详细信息
+      href: automation-network-configuration.md
     - name: 安全性
       items:
         - name: Azure Policy 的安全控件
@@ -65,14 +66,20 @@
           href: automation-create-standalone-account.md
         - name: 使用资源管理器模板创建自动化帐户
           href: quickstart-create-automation-account-template.md
+        - name: 运行方式帐户
+          items:
+            - name: 创建运行方式帐户
+              href: create-run-as-account.md
+            - name: 删除运行方式帐户
+              href: delete-run-as-account.md
+            - name: 管理运行方式帐户
+              href: manage-runas-account.md
         - name: 使用 Amazon Web Services 配置身份验证
           href: automation-config-aws-account.md
         - name: 配置使用 Azure AD 进行的身份验证
           href: automation-use-azure-ad.md
         - name: 管理自动化服务使用的 DNS 记录
           href: how-to/automation-region-dns-records.md
-        - name: 管理自动化运行方式帐户
-          href: manage-runas-account.md
         - name: 专门连接到自动化帐户
           href: how-to/private-link-security.md
         - name: 管理角色权限和安全性
@@ -101,6 +108,8 @@
           href: shared-resources/variables.md
         - name: 管理 Python 2 程序包
           href: python-packages.md
+        - name: 管理 Python 3 包
+          href: python-3-packages.md
         - name: 排查共享资源问题
           href: troubleshoot/shared-resources.md
     - name: 流程自动化
@@ -133,7 +142,7 @@
               href: graphical-runbook-sdk.md
         - name: 监视 Runbook
           items:
-            - name: 监视 runbook 输出
+            - name: 配置 runbook 输出
               href: automation-runbook-output-and-messages.md
             - name: 处理图形 Runbook 中的错误
               href: automation-runbook-graphical-error-handling.md
@@ -198,29 +207,33 @@
         - name: 更改跟踪和库存
           items:
             - name: 概述
-              href: change-tracking.md
+              href: change-tracking/overview.md
             - name: 支持链接的 Log Analytics 工作区区域
               href: how-to/region-mappings.md
             - name: 启用
               items:
-                - name: 从 Azure 门户启用更改跟踪和清单
-                  href: automation-enable-changes-from-browse.md
-                - name: 从 Azure VM 启用更改跟踪和清单
-                  href: automation-enable-changes-from-vm.md
-                - name: 从自动化帐户启用更改跟踪和清单
-                  href: automation-enable-changes-from-auto-acct.md
-                - name: 从 runbook“启用更改跟踪和清单”
-                  href: automation-enable-changes-from-runbook.md
+                - name: 从 Azure 门户启用
+                  href: change-tracking/enable-from-portal.md
+                - name: 从 Azure VM 启用
+                  href: change-tracking/enable-from-vm.md
+                - name: 从自动化帐户启用
+                  href: change-tracking/enable-from-automation-account.md
+                - name: 从 runbook 启用
+                  href: change-tracking/enable-from-runbook.md
             - name: 管理更改跟踪和库存
-              href: change-tracking-file-contents.md
+              href: change-tracking/manage-change-tracking.md
             - name: 管理 VM 上的清单收集
-              href: automation-vm-inventory.md
+              href: change-tracking/manage-inventory-vms.md
             - name: 使用作用域配置
-              href: automation-scope-configurations-change-tracking.md
-            - name: 取消工作区与自动化帐户的链接
-              href: automation-unlink-workspace-change-tracking.md
-            - name: 从“更改跟踪和清单”中删除 VM
-              href: automation-remove-vms-from-change-tracking.md
+              href: change-tracking/manage-scope-configurations.md
+            - name: 配置警报
+              href: change-tracking/configure-alerts.md
+            - name: 禁用
+              items:
+                - name: 删除更改跟踪和清单
+                  href: change-tracking/remove-feature.md
+                - name: 从“更改跟踪和清单”中删除 VM
+                  href: change-tracking/remove-vms-from-change-tracking.md
             - name: 疑难解答
               items:
                 - name: 排查功能部署问题
@@ -239,54 +252,56 @@
           href: automation-solution-vm-management-config.md
         - name: 从“在空闲时间启动/停止 VM”查询日志
           href: automation-solution-vm-management-logs.md
+        - name: 删除“在空闲时间启动/停止 VM”
+          href: automation-solution-vm-management-remove.md
         - name: 排查“在空闲时间启动/停止 VM”问题
           href: troubleshoot/start-stop-vm.md
     - name: 更新管理
       items:
         - name: 概述
-          href: update-management/update-mgmt-overview.md
+          href: update-management/overview.md
         - name: 链接的 Log Analytics 工作区支持的区域
           href: how-to/region-mappings.md
         - name: 启用
           items:
-            - name: 使用 Azure 资源管理器模板启用“更新管理”
-              href: update-management/update-mgmt-enable-template.md
-            - name: 从 Azure 门户启用“更新管理”
-              href: update-management/update-mgmt-enable-portal.md
-            - name: 从 Azure VM 启用“更新管理”
-              href: update-management/update-mgmt-enable-vm.md
-            - name: 从自动化帐户启用更新管理
-              href: update-management/update-mgmt-enable-automation-account.md
-            - name: 从 runbook 启用“更新管理”
-              href: update-management/update-mgmt-enable-runbook.md
+            - name: 使用 Azure 资源管理器模板启用
+              href: update-management/enable-from-template.md
+            - name: 从 Azure 门户启用
+              href: update-management/enable-from-portal.md
+            - name: 从 Azure VM 启用
+              href: update-management/enable-from-vm.md
+            - name: 从自动化帐户启用
+              href: update-management/enable-from-automation-account.md
+            - name: 从 runbook 启用
+              href: update-management/enable-from-runbook.md
         - name: 管理 VM 的更新
           items:
             - name: 入门
-              href: update-management/update-mgmt-manage-updates-for-vm.md
+              href: update-management/manage-updates-for-vm.md
             - name: 评估符合性
-              href: update-management/update-mgmt-view-update-assessments.md
+              href: update-management/view-update-assessments.md
             - name: 部署更新并检查状态
-              href: update-management/update-mgmt-deploy-updates.md
+              href: update-management/deploy-updates.md
             - name: 使用前脚本和后脚本
-              href: update-management/update-mgmt-pre-post-scripts.md
+              href: update-management/pre-post-scripts.md
             - name: 配置警报
-              href: update-management/update-mgmt-configure-alerts.md
+              href: update-management/configure-alerts.md
         - name: 与 Configuration Manager 集成
-          href: update-management/update-mgmt-mecmintegration.md
+          href: update-management/mecmintegration.md
         - name: 配置 Windows 更新客户端
-          href: update-management/update-mgmt-configure-wuagent.md
+          href: update-management/configure-wuagent.md
         - name: 使用动态组
-          href: update-management/update-mgmt-groups.md
+          href: update-management/configure-groups.md
         - name: 查询更新管理日志
-          href: update-management/update-mgmt-query-logs.md
+          href: update-management/query-logs.md
         - name: 使用作用域配置
-          href: update-management/update-mgmt-scope-configuration.md
+          href: update-management/scope-configuration.md
         - name: 禁用
           items:
             - name: 删除更新管理
-              href: update-management/update-mgmt-remove-feature.md
+              href: update-management/remove-feature.md
             - name: 从“更新管理”中删除 VM
-              href: update-management/update-mgmt-remove-vms.md
+              href: update-management/remove-vms.md
         - name: 疑难解答
           items:
             - name: 排查功能部署问题
@@ -325,6 +340,9 @@
       href: /dotnet/api/microsoft.azure.management.automation
     - name: REST
       href: /rest/api/automation
+    - name: Azure Policy 内置策略定义
+      displayName: 'samples, policies, definitions'
+      href: ./policy-reference.md
 - name: 资源
   items:
     - name: 自动化简介视频

@@ -1,6 +1,6 @@
 ---
-title: 在 Azure 安全中心提供安全联系人详细信息 | Microsoft 文档
-description: 本文档演示如何在 Azure 安全中心中提供安全联系人详细信息。
+title: 针对 Azure 安全中心警报配置电子邮件通知
+description: 了解如何针对安全警报微调 Azure 安全中心发送的电子邮件类型。
 services: security-center
 documentationcenter: na
 author: memildin
@@ -8,61 +8,84 @@ manager: rkarlin
 ms.assetid: 26b5dcb4-ce3f-4f22-8d56-d2bf743cfc90
 ms.service: security-center
 ms.devlang: na
-ms.topic: conceptual
+ms.topic: quickstart
 ms.tgt_pltfrm: na
 ms.workload: na
-ms.date: 06/11/2020
+ms.date: 02/09/2021
 ms.author: memildin
-ms.openlocfilehash: dda61b81ee2c357ddac29701832fe4780ea06859
-ms.sourcegitcommit: 023d10b4127f50f301995d44f2b4499cbcffb8fc
-ms.translationtype: MT
+ms.openlocfilehash: 4dc9855afe7ed53db120f4dbc6c09ac4db0f58d9
+ms.sourcegitcommit: 7e117cfec95a7e61f4720db3c36c4fa35021846b
+ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/18/2020
-ms.locfileid: "88516293"
+ms.lasthandoff: 02/09/2021
+ms.locfileid: "99988573"
 ---
-# <a name="set-up-email-notifications-for-security-alerts"></a>为安全警报设置电子邮件通知 
+# <a name="configure-email-notifications-for-security-alerts"></a>针对安全警报配置电子邮件通知 
 
-若要确保你的组织中的适当人员收到有关环境中的安全警报的通知，请在 " **电子邮件通知** 设置" 页中输入其电子邮件地址。
+安全警报需要传达至组织中适当的人员。 默认情况下，只要触发针对其订阅的高严重性警报，安全中心就会向订阅所有者发送电子邮件。 本页说明了如何自定义这些通知。
 
-设置通知时，可以将电子邮件配置为发送给特定个人，或者配置为具有订阅的特定 Azure 角色的任何人。 
+若要定义你自己的通知电子邮件首选项，Azure 安全中心的“电子邮件通知”设置页允许你选择：
 
-为了避免警报疲劳，安全中心会限制传出邮件的数量。 对于每个订阅，安全中心将发送：
+- 应通知的人员 - 可将电子邮件发送给选定的个人或任何具有指定 Azure 订阅角色的人。 
+- 他们应得到通知的内容 - 修改安全中心应发出通知的严重性级别。
 
-- 对于**高严重性**警报，每天最多**四**个电子邮件
-- 对于**中等严重性**警报，每天最多发送**两**封电子邮件
-- 对于**低严重性**警报，每天最多发送**一**封电子邮件
+为了避免警报疲劳，安全中心限制了外发邮件的数量。 对于每个订阅，安全中心都会发送以下数量的电子邮件：
 
+- 对于“严重级别高”的警报，每 6 小时最多发送 1 封电子邮件（每天 4 封） 
+- 对于“严重级别中等”的警报，每 12 小时最多发送 1 封电子邮件（每天 2 封） 
+- 对于“严重级别低”的警报，每 24 小时最多发送 1 封电子邮件 
 
 :::image type="content" source="./media/security-center-provide-security-contacts/email-notification-settings.png" alt-text="配置将接收有关安全警报的电子邮件的联系人的详细信息。" :::
-
+ 
 ## <a name="availability"></a>可用性
 
 |方面|详细信息|
 |----|:----|
-|发布状态：|正式版|
-|计价|免费层|
-|必需的角色和权限：|**安全管理员**<br>**订阅所有者** |
-|云：|![是](./media/icons/yes-icon.png) 商业云<br>![是](./media/icons/yes-icon.png)  (部分) US Gov<br>![否](./media/icons/no-icon.png) 中国 Gov，其他 Gov|
+|发布状态：|正式发布版 (GA)|
+|定价：|免费|
+|所需角色和权限：|**安全管理员**<br>**订阅所有者** |
+|云：|![是](./media/icons/yes-icon.png) 商业云<br>![是](./media/icons/yes-icon.png) 国家/主权（US Gov、中国 Gov、其他 Gov）|
 |||
 
 
-## <a name="set-up-email-notifications-for-alerts"></a>为警报设置电子邮件通知 <a name="email"></a>
+## <a name="customize-the-security-alerts-email-notifications-via-the-portal"></a>通过门户自定义安全警报电子邮件通知<a name="email"></a>
+可以将电子邮件通知发送给具有特定 Azure 角色的个人或所有用户。
 
-你可以向具有特定 Azure 角色的个人或所有用户发送电子邮件通知。
+1. 从安全中心的“定价和设置”区域中选择相关订阅，然后选择“电子邮件通知” 。
 
-1. 从安全中心的 **定价 & 设置** "区域、相关订阅，并选择" **电子邮件通知**"。
+1. 使用以下一个或两个选项定义通知的收件人：
 
-1. 定义通知的收件人：
-
-    - 从下拉列表中，从可用角色中进行选择。
-    - 和/或输入用逗号分隔的特定电子邮件地址。 可输入的电子邮件地址数量无限制。
+    - 从下拉列表中，选择某个可用角色。
+    - 输入用逗号分隔的特定电子邮件地址。 输入的电子邮件地址数量无限制。
 
 1. 若要将安全联系人信息应用到订阅，请选择“保存”。
 
+## <a name="customize-the-alerts-email-notifications-through-the-api"></a>通过 API 自定义安全警报电子邮件通知
+还可以通过提供的 REST API 来管理电子邮件通知。 有关完整详细信息，请参阅 [SecurityContacts API 文档](https://docs.microsoft.com/rest/api/securitycenter/securitycontacts)。
+
+这是创建安全联系人配置时 PUT 请求的请求正文示例：
+
+```json
+{
+    "properties": {
+        "emails": admin@contoso.com;admin2@contoso.com,
+        "notificationsByRole": {
+            "state": "On",
+            "roles": ["AccountAdmin", "Owner"]
+        },
+        "alertNotifications": {
+            "state": "On",
+            "minimalSeverity": "High"
+        },
+        "phone": ""
+    }
+}
+```
+
 
 ## <a name="see-also"></a>另请参阅
-若要了解有关安全警报的详细信息，请参阅以下内容：
+若要了解有关安全警报的详细信息，请参阅以下页面：
 
-* [安全警报-参考指南](alerts-reference.md) --了解你可能在 Azure 安全中心的威胁防护模块中看到的安全警报
-* [管理和响应 Azure 安全中心的安全警报](security-center-managing-and-responding-alerts.md) -了解如何管理和响应安全警报
-* [工作流自动化](workflow-automation.md) --通过自定义通知逻辑自动响应警报
+- [安全警报 - 参考指南](alerts-reference.md) -- 了解 Azure 安全中心的威胁防护模块中可能会显示的安全警报
+- [管理和响应 Azure 安全中心的安全警报](security-center-managing-and-responding-alerts.md) -- 了解如何管理和响应安全警报
+- [工作流自动化](workflow-automation.md) -- 通过自定义通知逻辑自动响应警报

@@ -5,21 +5,22 @@ services: cognitive-services
 author: aahill
 manager: nitinme
 ms.service: cognitive-services
+ms.subservice: text-analytics
 ms.topic: include
 ms.date: 04/29/2020
 ms.author: aahi
-ms.openlocfilehash: 6271cb449b6bbc80269dd325bd5acd7edd2e0a6d
-ms.sourcegitcommit: 25bb515efe62bfb8a8377293b56c3163f46122bf
+ms.openlocfilehash: 49a2b285d9494dfc5ca0863c021733b4bc874efa
+ms.sourcegitcommit: 829d951d5c90442a38012daaf77e86046018e5b9
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/07/2020
-ms.locfileid: "88011055"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "91779333"
 ---
 此实体类别包括财务信息和官方形式的标识。 从模型版本开始可用 `2019-10-01` 。 下面列出了子类型。 
 
 ### <a name="financial-account-identification"></a>财务帐户标识
 
-| 子类型名称               | 描述                                                                |
+| 子类型名称               | 说明                                                                |
 |----------------------------|----------------------------------------------------------------------------|
 | ABA 路由号码        | 美国银行家协会 (ABA) 传输路由号。                  |
 | SWIFT 代码                 | 付款说明信息的 SWIFT 代码。                           |
@@ -27,7 +28,7 @@ ms.locfileid: "88011055"
 | 国际银行帐号 (IBAN)                  | 付款说明信息的 IBAN 编码。                            |
 
 
-### <a name="government-and-countryregion-specific-identification"></a>政府和国家/地区特定标识
+### <a name="government-and-countryregion-specific-identification"></a>政府和国家/地区特定的标识
 
 > [!NOTE]
 > 以下财务和国家/地区特定的实体不随参数一起返回 `domain=phi` ：
@@ -116,7 +117,7 @@ ms.locfileid: "88011055"
 * 法国国内 ID 卡 (CNI) 
 * 法国 Passport 号码
 * 法国社会保障号 (INSEE) 
-* 法国纳税标识号 (numéro SPI. ) 
+* 法国纳税标识号 (Numéro SPI) 
 * 法国值加税号
 
 德国

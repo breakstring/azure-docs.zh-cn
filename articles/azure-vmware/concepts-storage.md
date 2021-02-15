@@ -1,16 +1,16 @@
 ---
 title: 概念-存储
-description: 了解 Azure VMware 解决方案预览私有云中的主要存储功能。
+description: 了解 Azure VMware 解决方案私有云中的主要存储功能。
 ms.topic: conceptual
-ms.date: 05/04/2020
-ms.openlocfilehash: 91484c1baae9801684bc49b931fa2080db676a00
-ms.sourcegitcommit: 62717591c3ab871365a783b7221851758f4ec9a4
+ms.date: 02/02/2021
+ms.openlocfilehash: 522e4f651b36532ac0c144b3889b2b67c91dc77b
+ms.sourcegitcommit: 44188608edfdff861cc7e8f611694dec79b9ac7d
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/22/2020
-ms.locfileid: "88752213"
+ms.lasthandoff: 02/04/2021
+ms.locfileid: "99536944"
 ---
-# <a name="azure-vmware-solution-preview-storage-concepts"></a>Azure VMware 解决方案预览存储概念
+#  <a name="azure-vmware-solution-storage-concepts"></a>Azure VMware 解决方案存储概念
 
 Azure VMware 解决方案私有云提供了本机的群集范围内的群集存储。 群集中每个主机的所有本地存储都用于 vSAN 数据存储，并且默认情况下，静态数据加密是可用的。 可以使用 Azure 存储资源扩展私有云的存储功能。
 
@@ -28,19 +28,23 @@ Azure VMware 解决方案私有云提供了本机的群集范围内的群集存�
 
 ## <a name="data-at-rest-encryption"></a>静态数据加密
 
-默认情况下，vSAN 数据存储使用静态数据加密。 加密解决方案基于 KMS，并支持用于密钥管理的 vCenter 操作。 密钥以加密方式存储，并由基于 HSM 的 Azure Key Vault 主密钥包装。 出于任何原因从群集中删除主机时，Ssd 上的数据会立即失效。
+默认情况下，vSAN 数据存储使用静态数据加密。 加密解决方案基于 KMS，并支持用于密钥管理的 vCenter 操作。 密钥以加密方式存储，由 Azure Key Vault 主密钥包装。 出于任何原因从群集中删除主机时，Ssd 上的数据会立即失效。
 
-## <a name="scaling"></a>扩展
+## <a name="scaling"></a>缩放
 
-通过将主机添加到群集来扩展本机群集存储容量。 对于使用他的主机的群集，每个额外主机的原始群集范围容量增加了 15.4 TB。 使用 GP 主机构建的群集的原始容量增加了 7.7 TB，每增加一台主机。 在这两种类型的群集中，主机需要大约10分钟才能添加到群集。 有关缩放群集的说明，请参阅 [扩展私有云教程][tutorial-scale-private-cloud] 。
+通过将主机添加到群集来扩展本机群集存储容量。 对于使用其主机的群集，每个添加的主机的原始群集范围容量增加了 15.4 TB。 使用 GP 主机构建的群集的原始容量增加了 7.7 TB，每个添加的主机。 在这两种类型的群集中，主机需要大约10分钟才能添加到群集。 有关缩放群集的说明，请参阅 [扩展私有云教程][tutorial-scale-private-cloud]。
 
 ## <a name="azure-storage-integration"></a>Azure 存储集成
 
-可以在私有云中运行的工作负荷上使用 Azure 存储服务。 Azure 存储服务包括存储帐户、表存储和 Blob 存储。 工作负荷到 Azure 存储服务的连接不会遍历 internet。 此连接提供额外的安全性，并使你能够在私有云工作负荷中使用基于 SLA 的 Azure 存储服务。
+可以在私有云中运行的工作负荷上使用 Azure 存储服务。 Azure 存储服务包括存储帐户、表存储和 Blob 存储。 工作负荷到 Azure 存储服务的连接不会遍历 internet。 此连接提供更高的安全性，并使你能够在私有云工作负荷中使用基于 SLA 的 Azure 存储服务。
 
 ## <a name="next-steps"></a>后续步骤
 
-下一步是了解 [私有云标识概念][concepts-identity]。
+现在，你已介绍 Azure VMware 解决方案存储概念，你可能想要了解：
+
+- [私有云标识概念](concepts-identity.md)。
+- [针对 Azure VMware 解决方案的基于角色的访问控制 vSphere](concepts-role-based-access-control.md)。
+- [如何启用 Azure VMware 解决方案资源](enable-azure-vmware-solution.md)。
 
 <!-- LINKS - external-->
 

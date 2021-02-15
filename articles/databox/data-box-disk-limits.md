@@ -8,12 +8,12 @@ ms.subservice: disk
 ms.topic: article
 ms.date: 11/05/2019
 ms.author: alkohli
-ms.openlocfilehash: cb2654c2854692d120cf6dea7fa8fb901e14688e
-ms.sourcegitcommit: 3541c9cae8a12bdf457f1383e3557eb85a9b3187
+ms.openlocfilehash: 9975533e00b0ca184e7cc16c5d8ea51d4eafa0a8
+ms.sourcegitcommit: d4734bc680ea221ea80fdea67859d6d32241aefc
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/09/2020
-ms.locfileid: "86203515"
+ms.lasthandoff: 02/14/2021
+ms.locfileid: "100361700"
 ---
 # <a name="azure-data-box-disk-limits"></a>Azure Data Box 磁盘限制
 
@@ -35,9 +35,9 @@ ms.locfileid: "86203515"
 
 有关 Azure 存储服务限制的最新信息以及对共享、容器和文件进行命名的最佳做法，请转到：
 
-- [命名和引用容器](https://docs.microsoft.com/rest/api/storageservices/naming-and-referencing-containers--blobs--and-metadata)
-- [命名和引用共享](https://docs.microsoft.com/rest/api/storageservices/naming-and-referencing-shares--directories--files--and-metadata)
-- [块 blob 和页 blob 约定](https://docs.microsoft.com/rest/api/storageservices/understanding-block-blobs--append-blobs--and-page-blobs)
+- [命名和引用容器](/rest/api/storageservices/naming-and-referencing-containers--blobs--and-metadata)
+- [命名和引用共享](/rest/api/storageservices/naming-and-referencing-shares--directories--files--and-metadata)
+- [块 blob 和页 blob 约定](/rest/api/storageservices/understanding-block-blobs--append-blobs--and-page-blobs)
 
 > [!IMPORTANT]
 > 如果有任何文件或目录超出了 Azure 存储服务限制，或者不符合 Azure 文件/Blob 命名约定，则这些文件或目录不会通过 Data Box 服务引入到 Azure 存储中。
@@ -56,15 +56,15 @@ ms.locfileid: "86203515"
     - 在所有预先创建的文件夹和所有 Data Box Disk 中，一个资源组只能包含一个具有给定名称的托管磁盘。 这意味着，上传到预先创建的文件夹的 VHD 应具有唯一的名称。 确保给定的名称与资源组中现有的托管磁盘不匹配。 如果 VHD 具有相同的名称，则只有一个 VHD 将转换为具有该名称的托管磁盘。 其他 VHD 作为页 blob 上传到临时存储帐户。
     - 始终将 VHD 复制到某个预先创建的文件夹。 如果将 VHD 复制到这些文件夹以外或者复制到你自己创建的文件夹中，则 VHD 作为页 Blob 而不是托管磁盘上传到 Azure 存储帐户中。
     - 只能上传固定的 VHD 来创建托管磁盘。 不支持动态 VHD、差异 VHD 或 VHDX 文件。
-    - 复制到预创建托管磁盘文件夹的非 VHD 文件不会转换为托管磁盘。
+    - 复制到预创建托管磁盘文件夹中的非 VHD 文件不会转换为托管磁盘。
 
 ## <a name="azure-storage-account-size-limits"></a>Azure 存储帐户大小限制
 
-下面是可以复制到存储帐户中的数据大小限制。 请确保上传的数据符合这些限制。 
+下面是对可以复制到存储帐户的数据的大小限制。 请确保上传的数据符合这些限制。 
 
 | 数据类型             | 默认限制          |
 |--------------------------|------------------------|
-| 块 blob，页 blob    | 有关这些限制的最新信息，请参阅[Azure Blob 存储缩放](https://docs.microsoft.com/azure/storage/blobs/scalability-targets#scale-targets-for-blob-storage)目标、 [azure 标准存储缩放](https://docs.microsoft.com/azure/storage/common/scalability-targets-standard-account#scale-targets-for-standard-storage-accounts)目标和[azure 文件缩放目标](https://docs.microsoft.com/azure/storage/files/storage-files-scale-targets#file-share-and-file-scale-targets)。 <br /><br /> 此限制包括来自所有源的数据，包括 Data Box Disk。|
+| 块 Blob、页 Blob    | 有关这些限制的最新信息，请参阅 [Azure Blob 存储缩放](../storage/blobs/scalability-targets.md#scale-targets-for-blob-storage)目标、 [azure 标准存储缩放](../storage/common/scalability-targets-standard-account.md#scale-targets-for-standard-storage-accounts)目标和 [azure 文件缩放目标](../storage/files/storage-files-scale-targets.md)。 <br /><br /> 这些限制包括来自所有源（包括 Data Box Disk）的数据。|
 
 
 ## <a name="azure-object-size-limits"></a>Azure 对象大小限制
@@ -76,7 +76,7 @@ ms.locfileid: "86203515"
 | 块 blob        | ~ 4.75 TiB                                                 |
 | 页 blob         | 8 TiB <br> （以页 Blob 格式上传的每个文件必须经过 512 字节对齐，否则上传会失败。 <br> VHD 和 VHDX 都已经过 512 字节对齐。） |
 |Azure 文件        | 1 TiB <br> 最大 共享大小为 5 TiB     |
-| 托管磁盘     |4 TiB <br> 有关大小和限制的详细信息，请参阅： <li>[托管磁盘的可伸缩性目标](../virtual-machines/windows/disk-scalability-targets.md#managed-virtual-machine-disks)</li>|
+| 托管磁盘     |4 TiB <br> 有关大小和限制的详细信息，请参阅： <li>[托管磁盘的可伸缩性目标](../virtual-machines/disks-scalability-targets.md#managed-virtual-machine-disks)</li>|
 
 
 ## <a name="azure-block-blob-page-blob-and-file-naming-conventions"></a>Azure 块 blob、页 blob 和文件命名约定

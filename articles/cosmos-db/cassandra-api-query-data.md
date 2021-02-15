@@ -8,14 +8,15 @@ ms.reviewer: sngun
 ms.subservice: cosmosdb-cassandra
 ms.topic: tutorial
 ms.date: 09/24/2018
-ms.openlocfilehash: 28bb69dc21702a7c98755dc07389ea4147848f7a
-ms.sourcegitcommit: c535228f0b77eb7592697556b23c4e436ec29f96
+ms.openlocfilehash: 693984ceaef1a71ebfbe4122c18a45a563c9c101
+ms.sourcegitcommit: 3bdeb546890a740384a8ef383cf915e84bd7e91e
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 05/06/2020
-ms.locfileid: "82853034"
+ms.lasthandoff: 10/30/2020
+ms.locfileid: "93100416"
 ---
 # <a name="tutorial-query-data-from-a-cassandra-api-account-in-azure-cosmos-db"></a>教程：从 Azure Cosmos DB 中的 Cassandra API 帐户查询数据
+[!INCLUDE[appliesto-cassandra-api](includes/appliesto-cassandra-api.md)]
 
 作为开发人员，你可能具有使用键/值对的应用程序。 可以使用 Azure Cosmos DB 中的 Cassandra API 帐户来存储和查询键/值数据。 本教程介绍如何使用 Java 应用程序从 Azure Cosmos DB 中的 Cassandra API 帐户查询用户数据。 Java 应用程序使用 [Java 驱动程序](https://github.com/datastax/java-driver)并查询用户 ID、用户名和用户城市等用户数据。 
 
@@ -23,7 +24,7 @@ ms.locfileid: "82853034"
 
 > [!div class="checklist"]
 > * 从 Cassandra 表查询数据
-> * 运行应用
+> * 运行应用程序
 
 如果还没有 Azure 订阅，可以在开始前创建一个[免费帐户](https://azure.microsoft.com/free/?WT.mc_id=A261C142F)。
 

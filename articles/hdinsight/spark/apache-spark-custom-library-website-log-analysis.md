@@ -1,19 +1,16 @@
 ---
 title: 使用 Spark 中的 Python 库分析网站日志 - Azure
 description: 此笔记本演示如何将自定义库与 Azure HDInsight 上的 Spark 配合使用来分析日志数据。
-author: hrasheed-msft
-ms.author: hrasheed
-ms.reviewer: jasonh
 ms.service: hdinsight
 ms.custom: hdinsightactive
 ms.topic: how-to
 ms.date: 12/27/2019
-ms.openlocfilehash: 1094235f5bc5cc25cf6d8f3762dc242503952de6
-ms.sourcegitcommit: 124f7f699b6a43314e63af0101cd788db995d1cb
+ms.openlocfilehash: 591804a31c100e5c8211ec6d73fc483c9ac85c72
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/08/2020
-ms.locfileid: "86083791"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98940308"
 ---
 # <a name="analyze-website-logs-using-a-custom-python-library-with-apache-spark-cluster-on-hdinsight"></a>将自定义 Python 库与 HDInsight 上的 Apache Spark 群集配合使用来分析网站日志
 
@@ -25,7 +22,7 @@ HDInsight 上的 Apache Spark 群集。 有关说明，请参阅[在 Azure HDIns
 
 ## <a name="save-raw-data-as-an-rdd"></a>将原始数据另存为 RDD
 
-在本部分中，将使用与 HDInsight 中的 Apache Spark 群集关联的 [Jupyter](https://jupyter.org) 笔记本来运行用于处理原始示例数据并将其保存为 Hive 表的作业。 示例数据是所有群集在默认情况下均会提供的 .csv 文件 (hvac.csv)。
+在本部分中，我们将使用与 HDInsight 中的 Apache Spark 群集关联的 [Jupyter](https://jupyter.org) 笔记本来运行用于处理原始示例数据并将其另存为 Hive 表的作业。 示例数据是所有群集在默认情况下均会提供的 .csv 文件 (hvac.csv)。
 
 将数据另存为 Apache Hive 表后，在下一部分中，我们将使用 BI 工具（如 Power BI 和 Tableau）连接到 Hive 表。
 
@@ -33,13 +30,13 @@ HDInsight 上的 Apache Spark 群集。 有关说明，请参阅[在 Azure HDIns
 
 1. 创建新的笔记本。 依次选择“新建”、“PySpark”   。
 
-    ![创建新的 Apache Jupyter 笔记本](./media/apache-spark-custom-library-website-log-analysis/hdinsight-create-jupyter-notebook.png "创建新的 Jupyter 笔记本")
+    ![创建新的 Apache Jupyter Notebook](./media/apache-spark-custom-library-website-log-analysis/hdinsight-create-jupyter-notebook.png "创建新 Jupyter Notebook")
 
 1. 新笔记本随即已创建，并以 Untitled.pynb 名称打开。 选择顶部的笔记本名称，并输入一个友好名称。
 
     ![提供笔记本的名称](./media/apache-spark-custom-library-website-log-analysis/hdinsight-name-jupyter-notebook.png "提供笔记本的名称")
 
-1. 由于已使用 PySpark 内核创建笔记本，因此不需要显式创建任何上下文。 运行第一个代码单元格时，系统会自动创建 Spark 和 Hive 上下文。 首先可以导入此方案所需的类型。 将以下代码片段粘贴到空白单元格中，然后按**Shift + enter**。
+1. 由于已使用 PySpark 内核创建笔记本，因此不需要显式创建任何上下文。 运行第一个代码单元格时，系统会自动创建 Spark 和 Hive 上下文。 首先可以导入此方案所需的类型。 将以下代码片段粘贴到空白单元格中，然后按 **Shift + enter**。
 
     ```pyspark
     from pyspark.sql import Row
@@ -203,5 +200,5 @@ HDInsight 上的 Apache Spark 群集。 有关说明，请参阅[在 Azure HDIns
 请参阅以下文章：
 
 * [概述：Azure HDInsight 上的 Apache Spark](apache-spark-overview.md)
-* [Use external packages with Jupyter notebooks（将外部包与 Jupyter 笔记本配合使用）](apache-spark-jupyter-notebook-use-external-packages.md)
+* [将外部包与 Jupyter 笔记本配合使用](apache-spark-jupyter-notebook-use-external-packages.md)
 * [Install Jupyter on your computer and connect to an HDInsight Spark cluster（在计算机上安装 Jupyter 并连接到 HDInsight Spark 群集）](apache-spark-jupyter-notebook-install-locally.md)

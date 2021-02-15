@@ -3,15 +3,16 @@ title: 使用 REST API 查看 Azure 服务资源使用情况
 description: 了解如何使用 Azure REST API 查看 Azure 服务资源的使用情况。 为特定的资源类型创建成本管理报表和筛选器。
 author: lleonard-msft
 ms.service: cost-management-billing
+ms.subservice: enterprise
 ms.topic: reference
-ms.date: 03/31/2020
+ms.date: 08/20/2020
 ms.author: banders
-ms.openlocfilehash: 89767ff64da0473feef9e1d340ee4046cd4a1373
-ms.sourcegitcommit: f988fc0f13266cea6e86ce618f2b511ce69bbb96
+ms.openlocfilehash: 018e61fbc74091fa25211b8a25ce067862a0cc7d
+ms.sourcegitcommit: 33368ca1684106cb0e215e3280b828b54f7e73e8
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/31/2020
-ms.locfileid: "87461708"
+ms.lasthandoff: 10/16/2020
+ms.locfileid: "92132391"
 ---
 # <a name="review-azure-resource-usage-using-the-rest-api"></a>使用 REST API 查看 Azure 资源使用情况
 
@@ -152,4 +153,4 @@ The
 ```
 
 ## <a name="next-steps"></a>后续步骤
-- [Azure REST API 入门](https://docs.microsoft.com/rest/api/azure/)   
+- [Azure REST API 入门](/rest/api/azure/)

@@ -7,12 +7,12 @@ ms.topic: conceptual
 author: bwren
 ms.author: bwren
 ms.date: 05/05/2020
-ms.openlocfilehash: 294c93242a3fee5db14f5919ebb367aebcca3a80
-ms.sourcegitcommit: a76ff927bd57d2fcc122fa36f7cb21eb22154cfa
+ms.openlocfilehash: 7fb84d544138b771170f95b5df71c33087252564
+ms.sourcegitcommit: b39cf769ce8e2eb7ea74cfdac6759a17a048b331
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/28/2020
-ms.locfileid: "87326182"
+ms.lasthandoff: 01/22/2021
+ms.locfileid: "98679477"
 ---
 # <a name="monitoring-azure-virtual-machines-with-azure-monitor"></a>使用 Azure Monitor 监视 Azure 虚拟机
 本文介绍如何使用 Azure Monitor 从 Azure 虚拟机收集和分析监视数据以维护其运行状况。 可以使用 Azure Monitor 监视虚拟机的可用性和性能，就像监视任何[其他 Azure 资源](monitor-azure-resource.md)一样，但是它们与其他资源不同，因为你还需要监视客户操作和系统以及在其中运行的工作负载。 
@@ -29,7 +29,7 @@ ms.locfileid: "87326182"
 - 可以为虚拟机创建[诊断设置](../platform/diagnostic-settings.md)，以将平台指标发送到其他目标（例如存储和事件中心），但无法在 Azure 门户中配置这些诊断设置。 
 
 ## <a name="monitoring-data"></a>监视数据
-Azure 中的虚拟机生成[日志](../platform/data-platform-logs.md)和[度量值](../platform/data-platform-metrics.md)，如下图所示。
+Azure 中的虚拟机生成 [日志](../platform/data-platform-logs.md) 和 [度量值](../platform/data-platform-metrics.md) ，如下图所示。
 
 ![概述](media/monitor-vm-azure/logs-metrics.png)
 
@@ -59,20 +59,20 @@ Azure 中的虚拟机为虚拟主机生成以下与其他 Azure 资源相同的�
 | [启用用于 VM 的 Azure Monitor](#enable-azure-monitor-for-vms) | - 已安装 Log Analytics 代理。<br>- 已安装 Dependency Agent。<br>- 向日志收集的来宾性能数据。<br>- 向日志收集的进程和依赖项详细信息。 | - 来宾性能数据的性能图表和工作簿。<br>- 来宾性能数据的日志查询。<br>- 来宾性能数据的日志警报。<br>- 依赖项映射。 |
 | [安装诊断扩展和 telegraf 代理](#enable-diagnostics-extension-and-telegraf-agent) | - 向指标收集的来宾性能数据。 | - 来宾的指标资源管理器。<br>- 来宾的指标警报。  |
 | [配置 Log Analytics 工作区](#configure-log-analytics-workspace) | - 从来宾收集的事件。 | - 来宾事件的日志查询。<br>- 来宾事件的日志警报。 |
-| [为虚拟机创建诊断设置](#collect-platform-metrics-and-activity-log) | - 向日志收集的平台指标。<br>- 向日志收集的活动日志。 | - 主机指标的日志查询。<br>- 主机指标的日志警报。<br>- 活动日志的日志查询。
+| [为虚拟机创建诊断设置](#collect-platform-metrics-and-activity-log) | - 向日志收集的平台指标。<br>- 向日志收集的活动日志。 | -记录主机指标的查询。<br>- 主机指标的日志警报。<br>- 活动日志的日志查询。
 
 后续部分将介绍其中每个配置步骤。
 
 ### <a name="enable-azure-monitor-for-vms"></a>启用用于 VM 的 Azure Monitor
-[用于 VM 的 Azure Monitor](vminsights-overview.md) 是 Azure Monitor 中用于监视虚拟机主要工具的[见解](insights-overview.md)。 与标准 Azure Monitor 功能相比，它提供了以下附加价值。
+[用于 VM 的 Azure Monitor](vminsights-overview.md) 是 Azure Monitor 中用于监视虚拟机主要工具的[见解](../monitor-reference.md)。 与标准 Azure Monitor 功能相比，它提供了以下附加价值。
 
 - 简化 Log Analytics 代理和 Dependency Agent 的载入，以启用对虚拟机来宾操作系统和工作负载的监视。 
 - 预定义的趋势性能图表和工作簿，可用于分析虚拟机来宾操作系统中的核心性能指标。
 - 提供了依赖项映射，用于显示在每个虚拟机上运行的进程，以及与其他计算机和外部源关联的组件。
 
-![用于 VM 的 Azure Monitor](media/monitor-vm-azure/vminsights-01.png)
+![用于 VM 的 Azure Monitor 性能视图](media/monitor-vm-azure/vminsights-01.png)
 
-![用于 VM 的 Azure Monitor](media/monitor-vm-azure/vminsights-02.png)
+![用于 VM 的 Azure Monitor 地图视图](media/monitor-vm-azure/vminsights-02.png)
 
 
 在 Azure 门户的“虚拟机”菜单中，从“见解”选项启用用于 VM 的 Azure Monitor。 有关详细信息和其他配置方法，请参阅[启用用于 VM 的 Azure Monitor 概述](vminsights-enable-overview.md)。
@@ -80,7 +80,7 @@ Azure 中的虚拟机为虚拟主机生成以下与其他 Azure 资源相同的�
 ![启用用于 VM 的 Azure Monitor](media/monitor-vm-azure/enable-vminsights.png)
 
 ### <a name="configure-log-analytics-workspace"></a>配置 Log Analytics 工作区
-用于 VM 的 Azure Monitor 使用的 Log Analytics 代理会将数据发送到 [Log Analytics 工作区](../platform/data-platform-logs.md#how-is-data-in-azure-monitor-logs-structured)。 可以通过配置 Log Analytics 工作区，启用从代理中收集其他性能数据、事件及其他监视数据。 只需配置一次，因为任何连接到工作区的代理都将自动下载配置并立即开始收集定义的数据。 
+用于 VM 的 Azure Monitor 使用的 Log Analytics 代理会将数据发送到 [Log Analytics 工作区](../platform/data-platform-logs.md)。 可以通过配置 Log Analytics 工作区，启用从代理中收集其他性能数据、事件及其他监视数据。 只需配置一次，因为任何连接到工作区的代理都将自动下载配置并立即开始收集定义的数据。 
 
 通过从“入门”中选择“工作区配置”，可以直接从用于 VM 的 Azure Monitor 访问工作区配置。 单击工作区名称以打开菜单。
 
@@ -96,7 +96,7 @@ Azure 中的虚拟机为虚拟主机生成以下与其他 Azure 资源相同的�
 
 
 ### <a name="enable-diagnostics-extension-and-telegraf-agent"></a>启用诊断扩展和 Telegraf 代理
-用于 VM 的 Azure Monitor 基于将数据收集到 Log Analytics 工作区的 Log Analytics 代理。 这支持 [Azure Monitor 的多项功能](../platform/data-platform-logs.md#what-can-you-do-with-azure-monitor-logs)，例如[日志查询](../log-query/log-query-overview.md)、[日志警报](../platform/alerts-log.md)和[工作簿](../platform/workbooks-overview.md)。 [诊断扩展](../platform/diagnostics-extension-overview.md)将 Windows 虚拟机来宾操作系统中的性能数据收集到 Azure 存储，并选择性地将性能数据发送到 [Azure Monitor 指标](../platform/data-platform-metrics.md)。 对于 Linux 虚拟机，需要 [Telegraf 代理](../platform/collect-custom-metrics-linux-telegraf.md)才能将数据发送到 Azure 指标。  这将启用 Azure Monitor 的其他功能，如[指标资源管理器](../platform/metrics-getting-started.md)和[指标警报](../platform/alerts-metric.md)。 还可以将诊断扩展配置为使用 Azure 事件中心在 Azure Monitor 之外发送事件和性能数据。
+用于 VM 的 Azure Monitor 基于将数据发送到 Log Analytics 工作区的 Log Analytics 代理。 这支持 Azure Monitor 的多项功能，例如[日志查询](../log-query/log-query-overview.md)、[日志警报](../platform/alerts-log.md)和[工作簿](../platform/workbooks-overview.md)。 [诊断扩展](../platform/diagnostics-extension-overview.md)将 Windows 虚拟机来宾操作系统中的性能数据收集到 Azure 存储，并选择性地将性能数据发送到 [Azure Monitor 指标](../platform/data-platform-metrics.md)。 对于 Linux 虚拟机，需要 [Telegraf 代理](../platform/collect-custom-metrics-linux-telegraf.md)才能将数据发送到 Azure 指标。  这将启用 Azure Monitor 的其他功能，如[指标资源管理器](../platform/metrics-getting-started.md)和[指标警报](../platform/alerts-metric.md)。 还可以将诊断扩展配置为使用 Azure 事件中心在 Azure Monitor 之外发送事件和性能数据。
 
 在 VM 菜单的“诊断设置”选项中，为 Azure 门户中的单个 Windows 虚拟机安装诊断扩展。 选择该选项可在“接收器”选项卡中启用“Azure Monitor”。若要为多个虚拟机启用模板或命令行中的扩展，请参阅[安装和配置](../platform/diagnostics-extension-overview.md#installation-and-configuration)。 与 Log Analytics 代理不同，要收集的数据在每个虚拟机上的扩展配置中定义。
 
@@ -113,7 +113,7 @@ Azure 中的虚拟机为虚拟主机生成以下与其他 Azure 资源相同的�
 Set-AzDiagnosticSetting -Name vm-diagnostics -ResourceId "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/my-resource-group/providers/Microsoft.Compute/virtualMachines/my-vm" -Enabled $true -MetricCategory AllMetrics -workspaceId "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourcegroups/my-resource-group/providers/microsoft.operationalinsights/workspaces/my-workspace"
 ```
 
-```CLI
+```azurecli
 az monitor diagnostic-settings create \
 --name VM-Diagnostics 
 --resource /subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/my-resource-group/providers/Microsoft.Compute/virtualMachines/my-vm \
@@ -139,8 +139,8 @@ az monitor diagnostic-settings create \
 | 指标 | 打开[指标资源管理器](../platform/metrics-getting-started.md)，并将“范围”设置为“当前虚拟机”。 |
 | 诊断设置 | 为当前虚拟机启用和配置[诊断扩展](../platform/diagnostics-extension-overview.md)。 |
 | 顾问建议 | [Azure 顾问](../../advisor/index.yml)就当前虚拟机所提供的建议。 |
-| 日志 | 打开 [Log Analytics](../log-query/log-query-overview.md#what-is-log-analytics)，并将[范围](../log-query/scope.md)设置为“当前虚拟机”。 |
-| 连接监视器 | 打开[网络观察程序连接监视器](../../network-watcher/connection-monitor-preview.md)，以监视当前虚拟机和其他虚拟机之间的连接。 |
+| 日志 | 打开 [Log Analytics](../log-query/log-analytics-overview.md)，并将[范围](../log-query/scope.md)设置为“当前虚拟机”。 |
+| 连接监视器 | 打开[网络观察程序连接监视器](../../network-watcher/connection-monitor-overview.md)，以监视当前虚拟机和其他虚拟机之间的连接。 |
 
 
 ## <a name="analyzing-metric-data"></a>分析指标数据
@@ -154,7 +154,7 @@ az monitor diagnostic-settings create \
 | 来宾(经典) | 一组有限的来宾操作系统和应用程序性能数据。 在指标资源管理器中可用，但不能用于其他 Azure Monitor 功能（如指标警报）。  | 已安装[诊断扩展](../platform/diagnostics-extension-overview.md)。 从 Azure 存储读取数据。  |
 | 虚拟机来宾 | 使用指标的所有 Azure Monitor 功能都可以使用来宾操作系统和应用程序性能数据。 | 对于 Windows，启用与 Azure Monitor 接收器一起安装的[已安装诊断扩展](../platform/diagnostics-extension-overview.md)。 对于 Linux，则启用[已安装的 Telegraf 代理](../platform/collect-custom-metrics-linux-telegraf.md)。 |
 
-![指标](media/monitor-vm-azure/metrics.png)
+![Azure 门户中的指标资源管理器](media/monitor-vm-azure/metrics.png)
 
 ## <a name="analyzing-log-data"></a>分析日志数据
 Azure 虚拟机将收集以下数据到 Azure Monitor 日志。 
@@ -207,39 +207,38 @@ Azure Monitor 中的[警报](../platform/alerts-overview.md)会在监视数据�
 
 ```kusto
 Heartbeat
-| where TimeGenerated < ago(10m)
+| where TimeGenerated > ago(10m)
 | where ResourceGroup == "my-resource-group"
 | summarize max(TimeGenerated) by Computer
 ```
 
-![日志警报](media/monitor-vm-azure/log-alert-01.png)
+![丢失的检测信号的日志警报](media/monitor-vm-azure/log-alert-01.png)
 
 如果订阅中的任何 Windows 虚拟机上出现过多次失败登录，要创建警报，请使用以下查询，该查询将为过去一小时的每个登录失败事件返回一条记录。 使用一个设置为允许的失败登录次数的阈值。 
 
 ```kusto
 Event
-| where TimeGenerated < ago(1hr)
+| where TimeGenerated > ago(1hr)
 | where EventID == 4625
 ```
 
-![日志警报](media/monitor-vm-azure/log-alert-02.png)
+![失败登录的日志警报](media/monitor-vm-azure/log-alert-02.png)
 
 
 ## <a name="system-center-operations-manager"></a>System Center Operations Manager
-System Center Operations Manager (SCOM) 精细监视虚拟机上的工作负载。 请参阅[云监视指南](/azure/cloud-adoption-framework/manage/monitor/)，以比较监视平台和不同策略的实现。
+System Center Operations Manager 提供对虚拟机上的工作负荷的精细监视。 请参阅[云监视指南](/azure/cloud-adoption-framework/manage/monitor/)，以比较监视平台和不同策略的实现。
 
-如果你有打算继续使用的现有 SCOM 环境，则可将其与 Azure Monitor 集成，以提供其他功能。 Azure Monitor 使用的 Log Analytics 代理与 SCOM 使用的代理相同，因此，你已监视虚拟机将数据发送到这两个虚拟机。 你仍需要将代理添加到用于 VM 的 Azure Monitor，并配置工作区以按上面所指定的方式收集额外数据，但虚拟机可以继续在 SCOM 环境中运行其现有管理包，而无需修改。
+如果你有打算继续使用的现有 Operations Manager 环境，则可将其与 Azure Monitor 集成以提供其他功能。 Azure Monitor 使用的 Log Analytics 代理与用于 Operations Manager 的代理相同，因此你已监视虚拟机将数据发送到这两个。 你仍需要将代理添加到用于 VM 的 Azure Monitor 并配置工作区以按上面所指定的方式收集额外数据，但虚拟机可以继续在 Operations Manager 环境中运行其现有管理包，而无需修改。
 
-增强现有 SCOM 功能的 Azure Monitor 功能包括以下内容：
+增强现有 Operations Manager 功能的 Azure Monitor 功能包括：
 
 - 使用 Log Analytics 以交互方式分析日志和性能数据。
-- 使用日志警报定义跨多个虚拟机的警报条件，以及在 SCOM 中无法使用警报的使用长期趋势。   
+- 使用日志警报来定义跨多个虚拟机的警报条件，并使用不能使用 Operations Manager 中的警报的长期趋势。   
 
-有关将现有 SCOM 管理组连接到 Log Analytics 工作区的详细信息，请参阅[将 Operations Manager 连接到 Azure Monitor](../platform/om-agents.md)。
+有关将现有 Operations Manager 管理组连接到 Log Analytics 工作区的详细信息，请参阅 [连接 Operations Manager 到 Azure Monitor](../platform/om-agents.md) 。
 
 
 ## <a name="next-steps"></a>后续步骤
 
 * [了解如何使用日志查询分析 Azure Monitor 日志中的数据。](../log-query/get-started-queries.md)
 * [了解 Azure Monitor 中使用指标和日志的警报。](../platform/alerts-overview.md)
-

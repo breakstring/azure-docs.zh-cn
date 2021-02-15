@@ -1,9 +1,9 @@
 ### YamlMime:Landing
 title: Azure Spring Cloud 文档
-summary: Azure Spring Cloud 提供了一种托管服务，使 Java 开发人员能够在 Azure 上轻松生成和运行基于 Spring Boot 的微服务，而无需进行任何代码更改。
+summary: Azure Spring Cloud 提供了一种托管服务，通过该服务可在 Azure 上使用 Spring-boot 或 Steeltoe（预览）运行微服务，而无需更改代码。
 metadata:
   title: Azure Spring Cloud
-  description: Azure Spring Cloud 提供了一种托管服务，使 Java 开发人员能够在 Azure 上轻松生成和运行基于 Spring Boot 的微服务，而无需进行任何代码更改。
+  description: Azure Spring Cloud 提供了一种托管服务，通过该服务可在 Azure 上使用 Spring-boot 或 Steeltoe（预览）运行微服务，而无需更改代码。
   services: spring-cloud
   ms.service: spring-cloud
   ms.topic: landing-page
@@ -11,18 +11,18 @@ metadata:
   author: bmitchell287
   ms.author: brendm
   ms.date: 09/26/2019
-  ms.openlocfilehash: fd012e58928b7844b122a826769167cb525f5ba1
-  ms.sourcegitcommit: 253d4c7ab41e4eb11cd9995190cd5536fcec5a3c
+  ms.openlocfilehash: 7598345ca1d687b8148b41454077ab5fca91e8f1
+  ms.sourcegitcommit: 80c1056113a9d65b6db69c06ca79fa531b9e3a00
   ms.translationtype: HT
   ms.contentlocale: zh-CN
-  ms.lasthandoff: 03/25/2020
-  ms.locfileid: "77138195"
+  ms.lasthandoff: 12/09/2020
+  ms.locfileid: "96903941"
 landingContent:
 - title: 关于 Azure Spring Cloud
   linkLists:
   - linkListType: overview
     links:
-    - text: Azure Spring Cloud 是什么？
+    - text: 什么是 Azure Spring Cloud？
       url: spring-cloud-overview.md
     - text: 了解 Azure Spring Cloud 配额和限制
       url: spring-cloud-quotas.md
@@ -30,13 +30,13 @@ landingContent:
   linkLists:
   - linkListType: quickstart
     links:
-    - text: 使用门户启动 Java Spring 应用
-      url: spring-cloud-quickstart-launch-app-portal.md
-    - text: 使用 Azure CLI 启动 Java Spring 应用
-      url: spring-cloud-quickstart-launch-app-cli.md
+    - text: 快速入门 - 部署第一个 Azure Spring Cloud 应用程序
+      url: spring-cloud-quickstart.md
+    - text: 介绍 PiggyMetrics 示例应用
+      url: spring-cloud-quickstart-sample-app-introduction.md
   - linkListType: tutorial
     links:
-    - text: 准备 Java Spring 应用以进行部署
+    - text: 准备 Spring 或 Steeltoe 应用以进行部署
       url: spring-cloud-tutorial-prepare-app-deployment.md
 - title: 配置服务
   linkLists:
@@ -81,4 +81,4 @@ landingContent:
   - linkListType: reference
     links:
     - text: REST API 参考
-      url: https://docs.microsoft.com/rest/api/azurespringclould/
+      url: https://docs.microsoft.com/rest/api/azurespringcloud/

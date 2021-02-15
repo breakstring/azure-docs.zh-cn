@@ -9,16 +9,19 @@ manager: diviso
 ms.reviewer: jasonh, kfile
 ms.workload: big-data
 ms.topic: conceptual
-ms.date: 08/12/2020
+ms.date: 09/30/2020
 ms.custom: seodec18
-ms.openlocfilehash: 57e99dfd0cec4ee396cc90173f1f22715c7ba760
-ms.sourcegitcommit: c28fc1ec7d90f7e8b2e8775f5a250dd14a1622a6
+ms.openlocfilehash: d80d97a609aa3a464b9b114439fe7f4058e287c3
+ms.sourcegitcommit: a43a59e44c14d349d597c3d2fd2bc779989c71d7
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/13/2020
-ms.locfileid: "88168178"
+ms.lasthandoff: 11/25/2020
+ms.locfileid: "96001824"
 ---
 # <a name="create-a-reference-data-set-for-your-azure-time-series-insights-gen1-environment-using-the-azure-portal"></a>使用 Azure 门户为 Azure 时序见解 Gen1 环境创建引用数据集
+
+> [!CAUTION]
+> 这是一篇 Gen1 文章。
 
 本文介绍了如何向 Azure 时序见解环境添加引用数据集。 引用数据可用于联接到源数据以增强值。
 
@@ -89,7 +92,7 @@ ms.locfileid: "88168178"
 
     [![为数据集命名。](media/add-reference-data-set/enter-reference-data-set-name.png)](media/add-reference-data-set/enter-reference-data-set-name.png#lightbox)
 
-1. 通过选择数据网格上方的下拉列表，提供数据集中的**主键**列。
+1. 通过选择数据网格上方的下拉列表，提供数据集中的 **主键** 列。
 
     [![选择键列。](media/add-reference-data-set/select-primary-key-column.png)](media/add-reference-data-set/select-primary-key-column.png#lightbox)
 
@@ -118,4 +121,4 @@ ms.locfileid: "88168178"
 
 - 以编程方式[管理引用数据](time-series-insights-manage-reference-data-csharp.md)。
 
-- 有关完整的 API 参考，请阅读[参考数据 API](https://docs.microsoft.com/rest/api/time-series-insights/gen1-reference-data-api) 文档。
+- 有关完整的 API 参考，请阅读[参考数据 API](/rest/api/time-series-insights/gen1-reference-data-api) 文档。

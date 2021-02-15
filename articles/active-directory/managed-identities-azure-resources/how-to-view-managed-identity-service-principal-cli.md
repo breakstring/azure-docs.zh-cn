@@ -3,7 +3,7 @@ title: 查看托管标识的服务主体-Azure CLI-Azure AD
 description: 使用 Azure CLI 查看托管标识的服务主体的分步说明。
 services: active-directory
 documentationcenter: ''
-author: MarkusVi
+author: barclayn
 manager: daveba
 editor: ''
 ms.service: active-directory
@@ -12,16 +12,16 @@ ms.devlang: na
 ms.topic: how-to
 ms.tgt_pltfrm: na
 ms.workload: identity
-ms.date: 11/29/2018
-ms.author: markvi
+ms.date: 09/30/2020
+ms.author: barclayn
 ms.collection: M365-identity-device-management
 ms.custom: devx-track-azurecli
-ms.openlocfilehash: 82529ab954c5474345e2702840daa1c7bca2ff1d
-ms.sourcegitcommit: 11e2521679415f05d3d2c4c49858940677c57900
+ms.openlocfilehash: ce3a35562bdef34f44ef1093a3196ea7afb0bd9b
+ms.sourcegitcommit: 4064234b1b4be79c411ef677569f29ae73e78731
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/31/2020
-ms.locfileid: "87501161"
+ms.lasthandoff: 10/28/2020
+ms.locfileid: "92892037"
 ---
 # <a name="view-the-service-principal-of-a-managed-identity-using-azure-cli"></a>使用 Azure CLI 查看托管标识的服务主体
 
@@ -29,28 +29,24 @@ Azure 资源的托管标识在 Azure Active Directory 中为 Azure 服务提供�
 
 本文将介绍如何使用 Azure CLI 查看托管标识的服务主体。
 
+如果没有 Azure 帐户，请在继续前[注册免费帐户](https://azure.microsoft.com/free/)。
+
 ## <a name="prerequisites"></a>先决条件
 
-- 如果不熟悉 Azure 资源的托管标识，请查阅[概述部分](overview.md)。
-- 如果还没有 Azure 帐户，请[注册免费帐户](https://azure.microsoft.com/free/)。
-- 在[虚拟机](/azure/active-directory/managed-identities-azure-resources/qs-configure-portal-windows-vm#system-assigned-managed-identity)或[应用程序](/azure/app-service/overview-managed-identity#add-a-system-assigned-identity)上启用系统分配的标识。
-- 若要运行 CLI 脚本示例，可以使用下列三种方法：
-    - 在 Azure 门户中使用 [Azure Cloud Shell](../../cloud-shell/overview.md)（见下一部分）。
-    - 单击各代码块右上角的“试运行”按钮，使用嵌入的 Azure Cloud Shell。
-    - 如果喜欢使用本地 CLI 控制台并使用 `az login` 登录 Azure，请[安装最新版的 Azure CLI](https://docs.microsoft.com/cli/azure/install-azure-cli)
- 
-[!INCLUDE [cloud-shell-try-it.md](../../../includes/cloud-shell-try-it.md)]
+- 如果不熟悉 Azure 资源的托管标识，请参阅 [azure 资源的托管标识是什么？](overview.md)。
+
+- 在[虚拟机](./qs-configure-portal-windows-vm.md#system-assigned-managed-identity)或[应用程序](../../app-service/overview-managed-identity.md#add-a-system-assigned-identity)上启用系统分配的标识。
+
+[!INCLUDE [azure-cli-prepare-your-environment-no-header.md](../../../includes/azure-cli-prepare-your-environment-no-header.md)]
 
 ## <a name="view-the-service-principal"></a>查看服务主体
 
-以下命令演示如何查看启用了托管标识的 VM 或应用程序的服务主体。 将 `<VM or application name>` 替换为自己的值。 
+以下命令演示如何查看启用了托管标识的 VM 或应用程序的服务主体。 将 `<Azure resource name>` 替换为自己的值。
 
 ```azurecli-interactive
-az ad sp list --display-name <VM or application name>
+az ad sp list --display-name <Azure resource name>
 ```
 
 ## <a name="next-steps"></a>后续步骤
 
 有关使用 Azure CLI 管理 Azure AD 服务主体的详细信息，请参阅 [az ad sp](/cli/azure/ad/sp)。
-
-

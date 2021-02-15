@@ -1,5 +1,6 @@
 ---
 title: Microsoft 标识平台概述 - Azure
+titleSuffix: Microsoft identity platform
 description: 了解 Microsoft 标识平台的组件以及它们如何帮助你在应用程序中构建标识和访问管理 (IAM) 支持。
 services: active-directory
 author: rwike77
@@ -11,15 +12,15 @@ ms.workload: identity
 ms.date: 07/09/2020
 ms.author: ryanwi
 ms.reviewer: agirling, saeeda, benv
-ms.custom: identityplatformtop40
-ms.openlocfilehash: e34eeeca3b17087fb5bd43ae353e43b5ab355831
-ms.sourcegitcommit: b8702065338fc1ed81bfed082650b5b58234a702
+ms.custom: identityplatformtop40, contperf-fy21q2
+ms.openlocfilehash: 662523b1544fe3ca9e8bda993efa7b578b9f69cc
+ms.sourcegitcommit: 5cdd0b378d6377b98af71ec8e886098a504f7c33
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/11/2020
-ms.locfileid: "88119549"
+ms.lasthandoff: 01/25/2021
+ms.locfileid: "98752578"
 ---
-# <a name="microsoft-identity-platform-overview"></a>Microsoft 标识平台概述
+# <a name="what-is-the-microsoft-identity-platform"></a>什么是 Microsoft 标识平台？
 
 Microsoft 标识平台有助于你构建这样的应用程序，你的用户和客户登录它们来使用其 Microsoft 标识或社交帐户，并提供对你的 API 或 Microsoft API（例如 Microsoft Graph）的授权访问。
 
@@ -73,12 +74,11 @@ Microsoft 标识平台由多个组件组成：
 
 [Azure AD B2B](../external-identities/what-is-b2b.md) - 邀请外部用户加入你的 Azure AD 租户，作为可向其分配权限（用于授权）的“来宾”用户，同时他们可以使用其现有凭据进行身份验证。
 
-> [!TIP]
-> 是否正在寻找 Azure Active Directory 开发人员平台 (v1.0) 文档？ 请参阅[适用于开发人员的 Azure Active Directory (v1.0) 概述](../azuread-dev/v1-overview.md)。
+[面向开发人员的 Azure Active Directory (v1.0)](../azuread-dev/v1-overview.md) - 此处向开发人员显示使用较旧的 v1.0 终结点的现有应用。 对于新项目，请勿使用 v1.0。
 
 ## <a name="next-steps"></a>后续步骤
 
-如果你有一个 Azure 帐户，且有权访问 Azure Active Directory 租户，但大多数 Microsoft 标识平台开发人员在开发应用程序时都需要其自己的 Azure AD 租户，即“开发租户”。
+如果你有一个 Azure 帐户，那么你有权访问 Azure Active Directory 租户，但 Microsoft 标识平台的大多数开发人员在开发应用程序时都需要自己的 Azure AD 租户，也就是“开发租户”。
 
 了解如何在构建应用程序时创建自己的租户：
 

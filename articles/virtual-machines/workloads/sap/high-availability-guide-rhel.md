@@ -9,17 +9,18 @@ editor: ''
 tags: azure-resource-manager
 keywords: ''
 ms.service: virtual-machines-windows
+ms.subservice: workloads
 ms.topic: article
 ms.tgt_pltfrm: vm-windows
 ms.workload: infrastructure-services
-ms.date: 08/04/2020
+ms.date: 01/11/2021
 ms.author: radeltch
-ms.openlocfilehash: 3ea8be2bbf3296f97ca0562a2d8e72bfe7a77d3b
-ms.sourcegitcommit: 5a37753456bc2e152c3cb765b90dc7815c27a0a8
+ms.openlocfilehash: 9c712e1e7536c35a937349aedef3065e1ad34ccc
+ms.sourcegitcommit: 24f30b1e8bb797e1609b1c8300871d2391a59ac2
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/04/2020
-ms.locfileid: "87760475"
+ms.lasthandoff: 02/10/2021
+ms.locfileid: "100097052"
 ---
 # <a name="azure-virtual-machines-high-availability-for-sap-netweaver-on-red-hat-enterprise-linux"></a>Azure 虚拟机在 Red Hat Enterprise Linux 上为 SAP NetWeaver 提供的高可用性
 
@@ -73,7 +74,7 @@ ms.locfileid: "87760475"
   * [High Availability Add-On Administration](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/high_availability_add-on_administration/index)（高可用性附加产品管理）
   * [High Availability Add-On 参考](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/high_availability_add-on_reference/index)
   * [Configuring ASCS/ERS for SAP Netweaver with standalone resources in RHEL 7.5](https://access.redhat.com/articles/3569681)（使用 RHEL 7.5 中的独立资源为 SAP NetWeaver 配置 ASCS/ERS）
-  * [在 RHEL 上，用独立的排队服务器 2 (ENSA2) 配置 SAP S/4HANA ASCS/ERS](https://access.redhat.com/articles/3974941)
+  * [在 RHEL 上，用独立的排队服务器 2 (ENSA2) 配置 SAP S/4HANA ASCS/ERS ](https://access.redhat.com/articles/3974941)
 * Azure 特定的 RHEL 文档：
   * [Support Policies for RHEL High Availability Clusters - Microsoft Azure Virtual Machines as Cluster Members](https://access.redhat.com/articles/3131341)（RHEL 高可用性群集的支持策略 - Microsoft Azure 虚拟机作为群集成员）
   * [Installing and Configuring a Red Hat Enterprise Linux 7.4 (and later) High-Availability Cluster on Microsoft Azure](https://access.redhat.com/articles/3252491)（在 Microsoft Azure 上安装和配置 Red Hat Enterprise Linux 7.4 [及更高版本] 高可用性群集）
@@ -150,7 +151,7 @@ Azure 市场中包含适用于 Red Hat Enterprise Linux 的映像，可以用于
    1. 管理员用户名、管理员密码或 SSH 密钥  
       将创建一个可用于登录计算机的新用户。
    1. 子网 ID  
-   如果要将 VM 部署到现有 VNet 中，并且该 VNet 中已定义了 VM 应分配到的子网，请指定该特定子网的 ID。 ID 通常类似于/subscriptions/** &lt; 订阅 ID &gt; **/ResourceGroups/** &lt; 资源组名称 &gt; **/providers/Microsoft.Network/virtualNetworks/** &lt; 虚拟网络名称 &gt; **/subnets/** &lt; 子网名称 &gt; **
+   如果要将 VM 部署到现有 VNet 中，并且该 VNet 中已定义了 VM 应分配到的子网，请指定该特定子网的 ID。 ID 通常类似于/subscriptions/**&lt; 订阅 ID &gt;**/ResourceGroups/**&lt; 资源组名称 &gt;**/providers/Microsoft.Network/virtualNetworks/**&lt; 虚拟网络名称 &gt;**/subnets/**&lt; 子网名称 &gt;**
 
 ### <a name="deploy-linux-manually-via-azure-portal"></a>通过 Azure 门户手动部署 Linux
 
@@ -176,7 +177,7 @@ Azure 市场中包含适用于 Red Hat Enterprise Linux 的映像，可以用于
          1. 将“分配”设置为“静态”并输入 IP 地址（例如 **10.0.0.7**）
          1. 单击“确定”
       1. ASCS ERS 的 IP 地址 10.0.0.8
-         * 重复上述步骤创建 ERS (的 IP 地址，例如**10.0.0.8**和**nw1**) 
+         * 重复上述步骤创建 ERS (的 IP 地址，例如 **10.0.0.8** 和 **nw1**) 
    1. 创建后端池
       1. 打开负载均衡器，单击后端池，并单击“添加”
       1. 输入新后端池的名称（例如 **nw1-backend**）
@@ -185,23 +186,23 @@ Azure 市场中包含适用于 Red Hat Enterprise Linux 的映像，可以用于
       1. 选择 (A)SCS 群集的虚拟机及其 IP 地址。
       1. 单击“添加”
    1. 创建运行状况探测
-      1. ASCS 的端口 620**00**
+      1. ASCS 的端口 620 **00**
          1. 打开负载均衡器，选择运行状况探测，并单击“添加”
          1. 输入新运行状况探测的名称（例如 **nw1-ascs-hp**）
-         1. 选择 TCP 作为协议，选择端口 620**00**，将“间隔”保留为 5，将“不正常阈值”保留为 2
+         1. 选择 TCP 作为协议，选择端口 620 **00**，将“间隔”保留为 5，将“不正常阈值”保留为 2
          1. 单击“确定”
-      1. ASCS ERS 的端口 621**02**
-         * 重复上述步骤，为 ERS 创建运行状况探测（例如 621**02** 和 **nw1-aers-hp**）
-   1. 负载均衡规则
+      1. ASCS ERS 的端口 621 **02**
+         * 重复上述步骤，为 ERS 创建运行状况探测（例如 621 **02** 和 **nw1-aers-hp**）
+   1. 负载均衡算法
       1. ASCS 的负载均衡规则
          1. 打开负载均衡器，选择 "负载均衡规则"，并单击 "添加"
-         1. 输入新负载均衡器规则的名称 (例如**nw1-ascs**) 
-         1. 选择前面创建的前端 IP 地址、后端池和运行状况探测 (例如**nw1-ascs-前端**、 **nw1**和**nw1-ascs-hp**) 
+         1. 输入新负载均衡器规则的名称 (例如 **nw1-ascs**) 
+         1. 选择前面创建的前端 IP 地址、后端池和运行状况探测 (例如 **nw1-ascs-前端**、 **nw1** 和 **nw1-ascs-hp**) 
          1. 选择“HA 端口”
          1. 将空闲超时增大到 30 分钟
          1. **确保启用浮动 IP**
          1. 单击“确定”
-         * 重复上述步骤以创建 ERS (的负载均衡规则，例如**nw1-ERS**) 
+         * 重复上述步骤以创建 ERS (的负载均衡规则，例如 **nw1-ERS**) 
 1. 或者，如果你的方案需要基本负载均衡器（内部），请执行以下步骤：  
    1. 创建前端 IP 地址
       1. ASCS 的 IP 地址 10.0.0.7
@@ -210,7 +211,7 @@ Azure 市场中包含适用于 Red Hat Enterprise Linux 的映像，可以用于
          1. 将“分配”设置为“静态”并输入 IP 地址（例如 **10.0.0.7**）
          1. 单击“确定”
       1. ASCS ERS 的 IP 地址 10.0.0.8
-         * 重复上述步骤创建 ERS (的 IP 地址，例如**10.0.0.8**和**nw1**) 
+         * 重复上述步骤创建 ERS (的 IP 地址，例如 **10.0.0.8** 和 **nw1**) 
    1. 创建后端池
       1. 打开负载均衡器，单击后端池，并单击“添加”
       1. 输入新后端池的名称（例如 **nw1-backend**）
@@ -219,15 +220,15 @@ Azure 市场中包含适用于 Red Hat Enterprise Linux 的映像，可以用于
       1. 选择 (A)SCS 群集的虚拟机
       1. 单击“确定”
    1. 创建运行状况探测
-      1. ASCS 的端口 620**00**
+      1. ASCS 的端口 620 **00**
          1. 打开负载均衡器，选择运行状况探测，并单击“添加”
          1. 输入新运行状况探测的名称（例如 **nw1-ascs-hp**）
-         1. 选择 TCP 作为协议，选择端口 620**00**，将“间隔”保留为 5，将“不正常阈值”保留为 2
+         1. 选择 TCP 作为协议，选择端口 620 **00**，将“间隔”保留为 5，将“不正常阈值”保留为 2
          1. 单击“确定”
-      1. ASCS ERS 的端口 621**02**
-         * 重复上述步骤，为 ERS 创建运行状况探测（例如 621**02** 和 **nw1-aers-hp**）
+      1. ASCS ERS 的端口 621 **02**
+         * 重复上述步骤，为 ERS 创建运行状况探测（例如 621 **02** 和 **nw1-aers-hp**）
    1. 负载均衡规则
-      1. ASCS 的 32**00** TCP
+      1. ASCS 的 32 **00** TCP
          1. 打开负载均衡器，选择 "负载均衡规则"，并单击 "添加"
          1. 输入新的负载均衡器规则的名称（例如 **nw1-lb-3200**）
          1. 选择前面创建的前端 IP 地址、后端池和运行状况探测（例如 **nw1-ascs-frontend**）
@@ -236,9 +237,12 @@ Azure 市场中包含适用于 Red Hat Enterprise Linux 的映像，可以用于
          1. **确保启用浮动 IP**
          1. 单击“确定”
       1. ASCS 的其他端口
-         * 针对 ASCS 的端口 36**00**、39**00**、81**00**、5**00**13、5**00**14、5**00**16 和 TCP 重复上述步骤
+         * 针对 ASCS 的端口 36 **00**、39 **00**、81 **00**、5 **00** 13、5 **00** 14、5 **00** 16 和 TCP 重复上述步骤
       1. ASCS ERS 的其他端口
-         * 针对 ASCS ERS 的端口 33**02**、5**02**13、5**02**14、5**02**16 和 TCP 重复上述步骤
+         * 针对 ASCS ERS 的端口 33 **02**、5 **02** 13、5 **02** 14、5 **02** 16 和 TCP 重复上述步骤
+
+> [!IMPORTANT]
+> 负载平衡方案中的 NIC 辅助 IP 配置不支持浮动 IP。 有关详细信息，请参阅 [Azure 负载均衡器限制](../../../load-balancer/load-balancer-multivip-overview.md#limitations)。 如果需要 VM 的其他 IP 地址，请部署第二个 NIC。  
 
 > [!Note]
 > 如果没有公共 IP 地址的 VM 被放在内部（无公共 IP 地址）标准 Azure 负载均衡器的后端池中，就不会有出站 Internet 连接，除非执行额外的配置来允许路由到公共终结点。 有关如何实现出站连接的详细信息，请参阅 [SAP 高可用性方案中使用 Azure 标准负载均衡器的虚拟机的公共终结点连接](./high-availability-guide-standard-load-balancer-outbound-connections.md)。  
@@ -403,7 +407,7 @@ Azure 市场中包含适用于 Red Hat Enterprise Linux 的映像，可以用于
    sudo &lt;swpm&gt;/sapinst SAPINST_REMOTE_ACCESS_USER=<b>sapadmin</b>
    </code></pre>
 
-   如果安装过程无法在 /usr/sap/**NW1**/ASCS**00** 中创建子文件夹，请尝试设置 ASCS**00** 文件夹的所有者和组，然后重试。
+   如果安装过程无法在 /usr/sap/**NW1**/ASCS **00** 中创建子文件夹，请尝试设置 ASCS **00** 文件夹的所有者和组，然后重试。
 
    <pre><code>sudo chown nw1adm /usr/sap/<b>NW1</b>/ASCS<b>00</b>
    sudo chgrp sapsys /usr/sap/<b>NW1</b>/ASCS<b>00</b>
@@ -459,7 +463,7 @@ Azure 市场中包含适用于 Red Hat Enterprise Linux 的映像，可以用于
    sudo &lt;swpm&gt;/sapinst SAPINST_REMOTE_ACCESS_USER=<b>sapadmin</b>
    </code></pre>
 
-   如果安装过程无法在 /usr/sap/**NW1**/ERS**02** 中创建子文件夹，请尝试设置 ERS**02** 文件夹的所有者和组，然后重试。
+   如果安装过程无法在 /usr/sap/**NW1**/ERS **02** 中创建子文件夹，请尝试设置 ERS **02** 文件夹的所有者和组，然后重试。
 
    <pre><code>sudo chown nw1adm /usr/sap/<b>NW1</b>/ERS<b>02</b>
    sudo chgrp sapsys /usr/sap/<b>NW1</b>/ERS<b>02</b>
@@ -479,7 +483,7 @@ Azure 市场中包含适用于 Red Hat Enterprise Linux 的映像，可以用于
    enque/encni/set_so_keepalive = true
    </code></pre>
 
-   对于 ENSA1 和 ENSA2，请确保 `keepalive` 按 SAP 说明[1410736](https://launchpad.support.sap.com/#/notes/1410736)中所述设置 OS 参数。    
+   对于 ENSA1 和 ENSA2，请确保 `keepalive` 按 SAP 说明 [1410736](https://launchpad.support.sap.com/#/notes/1410736)中所述设置 OS 参数。    
 
    * ERS 配置文件
 
@@ -496,10 +500,10 @@ Azure 市场中包含适用于 Red Hat Enterprise Linux 的映像，可以用于
 
 1. [A] 配置 Keep Alive
 
-   SAP NetWeaver 应用程序服务器和 ASCS/SCS 之间的通信是通过软件负载均衡器进行路由的。 负载均衡器在可配置的超时之后将断开非活动连接。 若要防止出现这种情况，需要在 SAP NetWeaver ASCS/SCS 配置文件中设置参数并更改 Linux 系统设置。 有关详细信息，请参阅 [SAP 说明 1410736][1410736]。
+   SAP NetWeaver 应用程序服务器和 ASCS/SCS 之间的通信是通过软件负载均衡器进行路由的。 负载均衡器在可配置的超时之后将断开非活动连接。 若要防止出现这种情况，需要在 SAP NetWeaver ASCS/SCS 配置文件中设置一个参数（如果使用 ENSA1），并 `keepalive` 在所有 SAP 服务器上为 ENSA1/ENSA2 更改 Linux 系统设置。 有关详细信息，请参阅 [SAP 说明 1410736][1410736]。
 
    <pre><code># Change the Linux system configuration
-   sudo sysctl net.ipv4.tcp_keepalive_time=120
+   sudo sysctl net.ipv4.tcp_keepalive_time=300
    </code></pre>
 
 1. **[A]** 更新 /usr/sap/sapservices 文件
@@ -538,14 +542,14 @@ Azure 市场中包含适用于 Red Hat Enterprise Linux 的映像，可以用于
       
    sudo pcs constraint colocation add g-<b>NW1</b>_AERS with g-<b>NW1</b>_ASCS -5000
    sudo pcs constraint location rsc_sap_<b>NW1</b>_ASCS<b>00</b> rule score=2000 runs_ers_<b>NW1</b> eq 1
-   sudo pcs constraint order g-<b>NW1</b>_ASCS then g-<b>NW1</b>_AERS kind=Optional symmetrical=false
+   sudo pcs constraint order start g-<b>NW1</b>_ASCS then stop g-<b>NW1</b>_AERS kind=Optional symmetrical=false
    
    sudo pcs node unstandby <b>nw1-cl-0</b>
    sudo pcs property set maintenance-mode=false
    </code></pre>
 
    从 SAP NW 7.52 开始，SAP 引入了对排队服务器 2 的支持，包括复制。 从 ABAP 平台 1809 开始，系统将默认安装排队服务器 2。 有关排队服务器 2 的支持，请参阅 SAP 说明 [2630416](https://launchpad.support.sap.com/#/notes/2630416)。
-   如果使用 ([ENSA2](https://help.sap.com/viewer/cff8531bc1d9416d91bb6781e628d4e0/1709%20001/en-US/6d655c383abf4c129b0e5c8683e7ecd8.html)) 的排队 server 2 体系结构，请安装 resource agent resource-agents-sap-x86_64 4.1.1 或更高版本，并按如下所示定义资源：
+   如果使用 ([ENSA2](https://help.sap.com/viewer/cff8531bc1d9416d91bb6781e628d4e0/1709%20001/en-US/6d655c383abf4c129b0e5c8683e7ecd8.html)) 的排队 server 2 体系结构，安装资源代理资源代理-sap-12.el7.x86_64 4.1.1 或更新版本，并按如下所示定义资源：
 
 <pre><code>sudo pcs property set maintenance-mode=true
    
@@ -565,13 +569,13 @@ Azure 市场中包含适用于 Red Hat Enterprise Linux 的映像，可以用于
       
    sudo pcs constraint colocation add g-<b>NW1</b>_AERS with g-<b>NW1</b>_ASCS -5000
    sudo pcs constraint order g-<b>NW1</b>_ASCS then g-<b>NW1</b>_AERS kind=Optional symmetrical=false
-   sudo pcs constraint order start g-<b>NW1</b>_ASCS then stop g-<b>NW1</b>_AERS symmetrical=false
+   sudo pcs constraint order start g-<b>NW1</b>_ASCS then stop g-<b>NW1</b>_AERS kind=Optional symmetrical=false
    
    sudo pcs node unstandby <b>nw1-cl-0</b>
    sudo pcs property set maintenance-mode=false
    </code></pre>
 
-   如果从较旧版本升级并切换到排队服务器2，请参阅 SAP 说明[2641322](https://launchpad.support.sap.com/#/notes/2641322)。 
+   如果从较旧版本升级并切换到排队服务器2，请参阅 SAP 说明 [2641322](https://launchpad.support.sap.com/#/notes/2641322)。 
 
    > [!NOTE]
    > 上述配置中的超时只是示例，可能需要适应特定的 SAP 设置。 
@@ -619,6 +623,8 @@ Azure 市场中包含适用于 Red Hat Enterprise Linux 的映像，可以用于
    # Probe Port of ERS
    sudo firewall-cmd --zone=public --add-port=621<b>02</b>/tcp --permanent
    sudo firewall-cmd --zone=public --add-port=621<b>02</b>/tcp
+   sudo firewall-cmd --zone=public --add-port=32<b>02</b>/tcp --permanent
+   sudo firewall-cmd --zone=public --add-port=32<b>02</b>/tcp
    sudo firewall-cmd --zone=public --add-port=33<b>02</b>/tcp --permanent
    sudo firewall-cmd --zone=public --add-port=33<b>02</b>/tcp
    sudo firewall-cmd --zone=public --add-port=5<b>02</b>13/tcp --permanent
@@ -758,7 +764,7 @@ Azure 市场中包含适用于 Red Hat Enterprise Linux 的映像，可以用于
      DATABASE: <b>NW1</b>
    </code></pre>
 
-   输出显示，默认条目的 IP 地址正在指向虚拟机而不是负载均衡器的 IP 地址。 需将此条目更改为指向负载均衡器的虚拟主机名。 请确保使用相同端口（上述输出中为“30313”）和数据库名称（上述输出中为“HN1”）********！
+   输出显示，默认条目的 IP 地址正在指向虚拟机而不是负载均衡器的 IP 地址。 需将此条目更改为指向负载均衡器的虚拟主机名。 请确保使用相同端口（上述输出中为“30313”）和数据库名称（上述输出中为“HN1”）！
 
    <pre><code>su - <b>nw1</b>adm
    hdbuserstore SET DEFAULT <b>nw1-db</b>:<b>30313@NW1</b> <b>SAPABAP1</b> <b>&lt;password of ABAP schema&gt;</b>
@@ -892,7 +898,7 @@ Azure 市场中包含适用于 Red Hat Enterprise Linux 的映像，可以用于
 
    运行以下命令作为根，确定消息服务器的进程并将其终止。
 
-   <pre><code>[root@nw1-cl-0 ~]# pgrep ms.sapNW1 | xargs kill -9
+   <pre><code>[root@nw1-cl-0 ~]# pgrep -f ms.sapNW1 | xargs kill -9
    </code></pre>
 
    如果仅终止消息服务器一次，则 `sapstart` 会重启它。 如果经常终止消息服务器，Pacemaker 会最终将 ASCS 实例移动到另一个节点。 运行以下命令作为根，清除测试后的 ASCS 和 ERS 实例的资源状态。
@@ -935,7 +941,11 @@ Azure 市场中包含适用于 Red Hat Enterprise Linux 的映像，可以用于
 
    在运行 ASCS 实例的节点上，运行以下命令作为根，以终止排队服务器。
 
-   <pre><code>[root@nw1-cl-1 ~]# pgrep en.sapNW1 | xargs kill -9
+   <pre><code>
+    #If using ENSA1 
+    [root@nw1-cl-1 ~]# pgrep -f en.sapNW1 | xargs kill -9
+    #If using ENSA2
+    [root@nw1-cl-1 ~]# pgrep -f enq.sapNW1 | xargs kill -9
    </code></pre>
 
    ASCS 实例应会立即故障转移到另一个节点。 ASCS 实例启动后，ERS 实例也会进行故障转移。 运行以下命令作为根，清除测试后的 ASCS 和 ERS 实例的资源状态。
@@ -978,7 +988,11 @@ Azure 市场中包含适用于 Red Hat Enterprise Linux 的映像，可以用于
 
    在运行 ERS 实例的节点上，运行以下命令作为根，以终止排队复制服务器。
 
-   <pre><code>[root@nw1-cl-1 ~]# pgrep er.sapNW1 | xargs kill -9
+   <pre><code>
+    #If using ENSA1
+    [root@nw1-cl-1 ~]# pgrep -f er.sapNW1 | xargs kill -9
+    #If using ENSA2
+    [root@nw1-cl-1 ~]# pgrep -f enqr.sapNW1 | xargs kill -9
    </code></pre>
 
    如果仅运行该命令一次，则 `sapstart` 会重启该进程。 如果经常运行此命令，则 `sapstart` 不会重启该进程，并且资源会处于停止状态。 运行以下命令作为根，清除测试后的 ERS 实例的资源状态。

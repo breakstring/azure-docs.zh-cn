@@ -11,12 +11,12 @@ ms.date: 05/31/2019
 ms.subservice: hybrid
 ms.author: billmath
 ms.collection: M365-identity-device-management
-ms.openlocfilehash: 96846d75111fe11b225704a248baeb006a3df3fb
-ms.sourcegitcommit: 0947111b263015136bca0e6ec5a8c570b3f700ff
+ms.openlocfilehash: f02ec2220827fbec8c981ab3a1859d633675a6f4
+ms.sourcegitcommit: d22a86a1329be8fd1913ce4d1bfbd2a125b2bcae
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/24/2020
-ms.locfileid: "66473011"
+ms.lasthandoff: 11/26/2020
+ms.locfileid: "96176199"
 ---
 # <a name="tutorial--integrate-a-single-ad-forest-using-pass-through-authentication-pta"></a>教程：使用直通身份验证 (PTA) 集成单个 AD 林
 
@@ -26,9 +26,9 @@ ms.locfileid: "66473011"
 
 ## <a name="prerequisites"></a>先决条件
 以下是完成本教程所需的先决条件
-- 安装了 [Hyper-V](https://docs.microsoft.com/windows-server/virtualization/hyper-v/hyper-v-technology-overview) 的计算机。  建议在 [Windows 10](https://docs.microsoft.com/virtualization/hyper-v-on-windows/about/supported-guest-os) 或 [Windows Server 2016](https://docs.microsoft.com/windows-server/virtualization/hyper-v/supported-windows-guest-operating-systems-for-hyper-v-on-windows) 计算机上执行此操作。
+- 安装了 [Hyper-V](/windows-server/virtualization/hyper-v/hyper-v-technology-overview) 的计算机。  建议在 [Windows 10](/virtualization/hyper-v-on-windows/about/supported-guest-os) 或 [Windows Server 2016](/windows-server/virtualization/hyper-v/supported-windows-guest-operating-systems-for-hyper-v-on-windows) 计算机上执行此操作。
 - [Azure 订阅](https://azure.microsoft.com/free)
-- - 允许虚拟机与 Internet 通信的[外部网络适配器](https://docs.microsoft.com/virtualization/hyper-v-on-windows/quick-start/connect-to-network)。
+- - 允许虚拟机与 Internet 通信的[外部网络适配器](/virtualization/hyper-v-on-windows/quick-start/connect-to-network)。
 - Windows Server 2016 的副本
 - 可以验证的[自定义域](../../active-directory/fundamentals/add-custom-domain.md)
 
@@ -188,7 +188,7 @@ Set-ADUser -Identity $Identity -PasswordNeverExpires $true -ChangePasswordAtLogo
 2. 选择加号图标 (+) 并搜索“Azure Active Directory”   。
 3. 在搜索结果中选择“Azure Active Directory”  。
 4. 选择“创建”  。</br>
-![创建](media/tutorial-password-hash-sync/create1.png)</br>
+![演示如何创建 Azure AD 租户的屏幕截图。](media/tutorial-password-hash-sync/create1.png)</br>
 5. 为组织提供名称以及初始域名   。 然后选择“创建”  。 随即创建目录。
 6. 完成此操作后，单击此处链接以管理目录  。
 
@@ -196,10 +196,10 @@ Set-ADUser -Identity $Identity -PasswordNeverExpires $true -ChangePasswordAtLogo
 现在我们有了 Azure AD 租户，我们将创建全局管理员帐户。  此帐户用于在 Azure AD Connect 安装期间创建 Azure AD 连接器帐户。  Azure AD 连接器帐户用于将信息写入 Azure AD。   要创建全局管理员帐户，请执行以下操作。
 
 1.  在“管理”下，选择“用户”   。</br>
-![创建](media/tutorial-password-hash-sync/gadmin1.png)</br>
+![此屏幕截图显示了在“管理”部分选择的“用户”选项，你可以在其中创建 Azure AD 的全局管理员。](media/tutorial-password-hash-sync/gadmin1.png)</br>
 2.  选择“所有用户”，然后选择“+ 新建用户”   。
 3.  为此用户提供名称和用户名。 这将是租户的全局管理员。 还需要将“目录角色”更改为“全局管理员”   。 还可以显示临时密码。 完成后，选择“创建”  。</br>
-![创建](media/tutorial-password-hash-sync/gadmin2.png)</br>
+![此屏幕截图显示了在 Azure AD 中创建全局管理员时选择的“创建”按钮。](media/tutorial-password-hash-sync/gadmin2.png)</br>
 4. 完成此操作后，使用新的全局管理员帐户和临时密码打开新的 Web 浏览器并登录 myapps.microsoft.com。
 5. 将全局管理员的密码更改为你可以记住的密码。
 
@@ -209,18 +209,18 @@ Set-ADUser -Identity $Identity -PasswordNeverExpires $true -ChangePasswordAtLogo
 1. 请务必返回 [ Azure 门户](https://aad.portal.azure.com/#blade/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/Overview)关闭“所有用户”  边栏选项卡。
 2. 在左侧选择“自定义域名”  。
 3. 选择“添加自定义域”  。</br>
-![自定义](media/tutorial-federation/custom1.png)</br>
+![此屏幕截图显示了突出显示的“添加自定义域”按钮。](media/tutorial-federation/custom1.png)</br>
 4. 在“自定义域名”上的框中输入自定义域的名称，然后单击“添加域”   。
 5. 在自定义域名屏幕上，将获得 TXT 或 MX 信息。  必须将此信息添加到你域下域注册机构的 DNS 信息中。  因此，需要转到域注册机构，在域的 DNS 设置中输入 TXT 或 MX 信息。  这将允许 Azure 验证你的域。  Azure 最多可能需要 24 小时才能验证它。  有关详细信息，请参阅[添加自定义域](../../active-directory/fundamentals/add-custom-domain.md)文档。</br>
-![自定义](media/tutorial-federation/custom2.png)</br>
+![此屏幕截图显示了添加 TXT 或 MX 信息的位置。](media/tutorial-federation/custom2.png)</br>
 6. 要确保已验证，请单击“验证”按钮。</br>
-![自定义](media/tutorial-federation/custom3.png)</br>
+![选择“验证”后显示成功验证消息的屏幕截图。](media/tutorial-federation/custom3.png)</br>
 
 ## <a name="download-and-install-azure-ad-connect"></a>下载并安装 Azure AD Connect
 立即下载并安装 Azure AD Connect。  安装完毕后，我们将完成快速安装。  请执行以下操作：
 
 1. 下载 [Azure AD Connect](https://www.microsoft.com/download/details.aspx?id=47594)
-2. 导航到 **AzureADConnect.msi**并双击它。
+2. 导航到 **AzureADConnect.msi** 并双击它。
 3. 在“欢迎”屏幕上，选中对应的框，同意许可条款，并单击“继续”。   
 4. 在“快速设置”屏幕上，单击“自定义”  。  
 5. 在“安装所需组件”屏幕上。 单击“安装”  。  

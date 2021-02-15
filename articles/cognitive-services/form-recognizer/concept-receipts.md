@@ -10,16 +10,16 @@ ms.subservice: forms-recognizer
 ms.topic: conceptual
 ms.date: 08/17/2019
 ms.author: pafarley
-ms.openlocfilehash: fd0a782fc0c54cf14db9cac07712dea6d8f2e523
-ms.sourcegitcommit: 62717591c3ab871365a783b7221851758f4ec9a4
+ms.openlocfilehash: c1ae52b2b92c5c8d5a1a98632e19d3140672d6ea
+ms.sourcegitcommit: 2817d7e0ab8d9354338d860de878dd6024e93c66
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/22/2020
-ms.locfileid: "88751971"
+ms.lasthandoff: 02/05/2021
+ms.locfileid: "99585035"
 ---
-# <a name="receipt-concepts"></a>接收概念
+# <a name="form-recognizer-prebuilt-receipt-model"></a>窗体识别器预生成接收模型
 
-Azure 窗体识别器可以使用它的一个预生成模型分析回执。 接收方 API 从销售收据提取关键信息，如商家名称、交易日期、交易总计、行项等。 
+Azure 窗体识别器可以使用其预生成的接收模型分析和提取销售回执的信息。 它结合了强大的 [光学字符识别功能 (OCR) ](../computer-vision/concept-recognizing-text.md) 功能，并具有接收了解深度学习模型的信息，以从采用英语的收据中提取关键信息。 接收方 API 从销售收据提取关键信息，如商家名称、交易日期、交易总计、行项等。 
 
 ## <a name="understanding-receipts"></a>了解回执 
 
@@ -27,35 +27,49 @@ Azure 窗体识别器可以使用它的一个预生成模型分析回执。 接�
 
 自动从这些收据提取数据可能会很复杂。 收据可能 crumpled、打印或手写部分，收据的智能手机图像可能质量较低。 另外，收据模板和字段在市场、区域和商家上可能会有很大的差异。 数据提取和现场检测中的这些挑战都使接收处理成为一个独特的问题。  
 
-使用光学字符识别 (OCR) 和预生成的接收模型，接收 API 可实现这些接收处理方案，并从收据中提取数据，例如商人名称、提示、总计、行项等等。 使用此 API 时，无需对模型进行定型，只需将收据发送到分析回执 API 并提取数据。
+使用光学字符识别 (OCR) 和预生成的接收模型，接收 API 可实现这些接收处理方案，并从收据中提取数据，例如商人名称、提示、总计、行项等等。 使用此 API 时，无需定型模型，只需将接收图像发送到分析回执 API 并提取数据。
 
-![示例回执](./media/contoso-receipt-small.png)
+![收据示例](./media/receipts-example.jpg)
 
-## <a name="what-does-the-receipt-api-do"></a>回执 API 有什么作用？ 
 
-预生成的回执 API 提取销售回执的内容， &mdash; 即您通常会获得餐馆、零售商或杂货店的收据类型。
+## <a name="what-does-the-receipt-service-do"></a>回执服务有什么作用？ 
+
+预生成的回执服务提取销售回执的内容， &mdash; 即您通常会获得餐馆、零售商或杂货店的收据类型。
 
 ### <a name="fields-extracted"></a>提取的字段
 
-* 商家名称 
-* 商家地址 
-* 商家电话号码 
-* 事务日期 
-* Transaction Time（事务时间） 
-* 小计 
-* 税款 
-* 总计 
-* 提示 
-* 行项提取 (例如，项数量、项价格、项名称) 
+|名称| 类型 | 说明 | 文本 | 值 (标准化输出)  |
+|:-----|:----|:----|:----| :----|
+| ReceiptType | string | 销售收据类型 | 经费 |  |
+| MerchantName | string | 发出收据的商家的名称 | Contoso |  |
+| MerchantPhoneNumber | phoneNumber | 商家列出的电话号码 | 987-654-3210 | + 19876543210 |
+| MerchantAddress | string | 商家的已列出地址 | 123主要 St Redmond WA 98052 |  |
+| TransactionDate | date | 发出回执的日期 | 6月6日，2019 | 2019-06-26  |
+| TransactionTime | time | 发出回执的时间 | 4:49 PM | 16:49:00  |
+| 总计 | number | 全部交易总计（接收） | $14.34 | 14.34 |
+| 小计 | number | 收据小计，通常在应用税款之前 | $12.34 | 12.34 |
+| 税款 | number | 收据上的税金，通常为销售税或等效 | $2.00 | 2.00 |
+| 提示 | number | 买家包含的提示 | $1.00 | 1.00 |
+| 项 | 对象数组 | 提取的行项，其中包含名称、数量、单价和提取的总价格 | |
+| 名称 | 字符串 | 项名称 | Surface Pro 6 | |
+| 数量 | number | 每个项的数量 | 1 | |
+| 价格 | number | 每个物料单位的单独价格 | $999.00 | 999.00 |
+| 总价 | number | 行项总价格 | $999.00 | 999.00 |
 
 ### <a name="additional-features"></a>其他功能
 
 接收 API 还会返回以下信息：
 
-* 收据类型 (如明细化、信用卡等) 
 * 字段置信度 (每个字段都返回关联的置信度值) 
 * OCR raw 文本 (用于整接收的 OCR 提取文本输出) 
 * 每个值、行和字的边界框
+
+## <a name="try-it-out"></a>试试看
+
+若要试用窗体识别器回执服务，请访问联机示例 UI 工具：
+
+> [!div class="nextstepaction"]
+> [试用预生成模型](https://fott-preview.azurewebsites.net/)
 
 ## <a name="input-requirements"></a>输入要求
 
@@ -64,7 +78,7 @@ Azure 窗体识别器可以使用它的一个预生成模型分析回执。 接�
 ## <a name="supported-locales"></a>支持的区域设置 
 
 * **预先构建的接收** V2.0 (GA) 支持 en-us 区域设置中的销售收据
-* **预先生成的收条2.1 版-预览版** (公开预览版) 增加了对以下 EN 收据区域设置的其他支持： 
+* **预先生成的接收方 2.1-预览版** (公开预览版) 增加了对以下 EN 收据区域设置的支持： 
   * EN AU 
   * EN-CA 
   * EN-GB 
@@ -73,15 +87,12 @@ Azure 窗体识别器可以使用它的一个预生成模型分析回执。 接�
   > [!NOTE]
   > 语言输入 
   >
-  > 预生成的收条2.1 版-预览版。1包含一个可选的 request 参数，用于指定来自其他英语市场的回执区域设置。 对于澳大利亚英语 (EN-US) 、加拿大 (EN-CA) 、英国 () 和印度 (EN-US) 中的销售收据，可以指定区域设置以获得改进的结果。 如果未在 v 2.1-preview. 1 中指定区域设置，则模型将默认为 EN-US 模型。
-  
- ### <a name="input-requirements"></a>输入要求 
+  > 预生成的收条2.1 版-预览版。2有一个可选的 request 参数，用于指定其他英语市场的回执区域设置。 对于澳大利亚英语 (EN-US) 、加拿大 (EN-CA) 、英国 () 和印度 (EN-US) 中的销售收据，可以指定区域设置以获得改进的结果。 如果在 v-preview. 2 中未指定任何区域设置，则模型将默认为 EN-US 模型。
 
-[!INCLUDE [input reqs](./includes/input-requirements-receipts.md)]
 
 ## <a name="the-analyze-receipt-operation"></a>分析回执操作
 
-[分析收据](https://westcentralus.dev.cognitive.microsoft.com/docs/services/form-recognizer-api-v2-1-preview-1/operations/AnalyzeReceiptAsync)采用收据的图像或 PDF 作为输入，并提取 intrest 和 text 的值。 调用返回一个名为的响应标头字段 `Operation-Location` 。 `Operation-Location`该值是一个 URL，其中包含要在下一步中使用的结果 ID。
+[分析收据](https://westcentralus.dev.cognitive.microsoft.com/docs/services/form-recognizer-api-v2-1-preview-2/operations/AnalyzeReceiptAsync)采用收据的图像或 PDF 作为输入，并提取相关值和文本。 调用返回一个名为的响应标头字段 `Operation-Location` 。 `Operation-Location`该值是一个 URL，其中包含要在下一步中使用的结果 ID。
 
 |响应标头| 结果 URL |
 |:-----|:----|
@@ -89,11 +100,11 @@ Azure 窗体识别器可以使用它的一个预生成模型分析回执。 接�
 
 ## <a name="the-get-analyze-receipt-result-operation"></a>获取分析回执结果操作
 
-第二步是调用 [Get 分析回执结果](https://westcentralus.dev.cognitive.microsoft.com/docs/services/form-recognizer-api-v2-1-preview-1/operations/GetAnalyzeReceiptResult) 操作。 此操作采用由分析回执操作创建的结果 ID 作为输入。 它将返回一个 JSON 响应，该响应包含具有以下可能值的 **状态** 字段。 此操作以迭代方式调用，直到它返回 **成功** 值。 使用3到5秒的间隔，以避免超出每秒 (RPS) 速率的请求数。
+第二步是调用 [Get 分析回执结果](https://westcentralus.dev.cognitive.microsoft.com/docs/services/form-recognizer-api-v2-1-preview-2/operations/GetAnalyzeReceiptResult) 操作。 此操作采用由分析回执操作创建的结果 ID 作为输入。 它将返回一个 JSON 响应，该响应包含具有以下可能值的 **状态** 字段。 此操作以迭代方式调用，直到它返回 **成功** 值。 使用3到5秒的间隔，以避免超出每秒 (RPS) 速率的请求数。
 
 |字段| 类型 | 可能值 |
 |:-----|:----:|:----|
-|状态 | string | notStarted：分析操作尚未开始。 |
+|status | string | notStarted：分析操作尚未开始。 |
 | |  | 正在运行：分析操作正在进行。 |
 | |  | 失败：分析操作失败。 |
 | |  | succeeded：分析操作成功。 |
@@ -440,7 +451,7 @@ Azure 窗体识别器可以使用它的一个预生成模型分析回执。 接�
 
 通常，归档业务开支需要花费时间从收据的图像中手动输入数据。 使用接收 API，可以使用提取的字段部分自动执行此过程，并快速分析收据。  
 
-由于接收 API 具有简单的 JSON 输出，因此可以通过多种方式使用提取的字段值。 与内部费用应用程序集成，以预填充费用报告。 有关此方案的详细信息，请阅读 Acumatica 如何利用接收 API 来 [使费用报告的过程更少](https://customers.microsoft.com/en-us/story/762684-acumatica-partner-professional-services-azure)。  
+由于接收 API 具有简单的 JSON 输出，因此可以通过多种方式使用提取的字段值。 与内部费用应用程序集成，以预填充费用报告。 有关此方案的详细信息，请阅读 Acumatica 如何利用接收 API 来 [使费用报告的过程更少](https://customers.microsoft.com/story/762684-acumatica-partner-professional-services-azure)。  
 
 ### <a name="auditing-and-accounting"></a>审核和记帐 
 
@@ -452,11 +463,13 @@ Azure 窗体识别器可以使用它的一个预生成模型分析回执。 接�
 
 回执包含有用的数据，可用于分析消费者行为和购物趋势。
 
-回执 API 还支持 [AIBuilder 回执处理功能](https://docs.microsoft.com/ai-builder/prebuilt-receipt-processing)。
+接收 API 还可以为 [AI 生成器回执处理功能](/ai-builder/prebuilt-receipt-processing)。
 
 ## <a name="next-steps"></a>后续步骤
 
-- 请按照快速入门中的步骤开始 [接收 API Python 快速入门](./quickstarts/python-receipts.md)。
-- 了解 [窗体识别器 REST API](https://westcentralus.dev.cognitive.microsoft.com/docs/services/form-recognizer/api)。
-- 详细了解 [窗体识别器](overview.md)。
+- 完成 [表单识别器快速入门](quickstarts/client-library.md) ，开始使用所选的开发语言中的表单识别器编写收据处理应用。
 
+## <a name="see-also"></a>请参阅
+
+* [什么是表单识别器？](./overview.md)
+* [REST API 参考文档](./index.yml)

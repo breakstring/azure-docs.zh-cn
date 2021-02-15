@@ -7,12 +7,42 @@
       href: ../azure-management.md
     - name: 管理组
       href: ./overview.md
+- name: 快速入门
+  expanded: true
+  items:
+    - name: 创建管理组 - 门户
+      displayName: hierarchy
+      href: ./create-management-group-portal.md
+    - name: 创建管理组 - Azure CLI
+      displayName: hierarchy
+      href: ./create-management-group-azure-cli.md
+    - name: 创建管理组 - Azure PowerShell
+      displayName: hierarchy
+      href: ./create-management-group-powershell.md
+    - name: 创建管理组 - .NET
+      displayName: hierarchy
+      href: ./create-management-group-dotnet.md
+    - name: 创建管理组 - Go
+      displayName: hierarchy
+      href: ./create-management-group-go.md
+    - name: 创建管理组 - JavaScript
+      displayName: hierarchy
+      href: ./create-management-group-javascript.md
+    - name: 创建管理组 - Python
+      displayName: hierarchy
+      href: ./create-management-group-python.md
+    - name: 创建管理组 - REST
+      displayName: hierarchy
+      href: ./create-management-group-rest-api.md
+- name: 教程
+  items:
+    - name: Learn：创建订阅治理策略
+      displayName: 'governance, module'
+      href: /learn/modules/build-cloud-governance-strategy-azure/3-create-subscription-governance-strategy
 - name: 操作指南
   expanded: true
   items:
-    - name: 创建管理组
-      href: ./create.md
-    - name: 管理资源
+    - name: 管理资源层次结构
       href: ./manage.md
     - name: 保护资源层次结构
       href: ./how-to/protect-resource-hierarchy.md
@@ -24,8 +54,12 @@
       href: /powershell/module/az.resources/#resources
     - name: 用于 .NET 的 Azure SDK
       href: /dotnet/api/overview/azure/managementgroups
+    - name: Azure SDK for Go
+      href: 'https://pkg.go.dev/github.com/Azure/azure-sdk-for-go/services/preview/resources/mgmt/2018-03-01-preview/managementgroups'
     - name: 用于 JavaScript 的 Azure SDK
       href: /javascript/api/@azure/arm-managementgroups/managementgroups
+    - name: 用于 Python 的 Azure SDK
+      href: /python/api/azure-mgmt-managementgroups/azure.mgmt.managementgroups
     - name: REST
       href: /rest/api/resources/managementgroups
     - name: 资源管理器模板

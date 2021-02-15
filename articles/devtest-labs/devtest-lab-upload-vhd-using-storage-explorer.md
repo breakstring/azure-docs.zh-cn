@@ -3,12 +3,12 @@ title: 使用存储资源管理器将 VHD 文件上传到 Azure 开发测试实�
 description: 使用 Microsoft Azure 存储资源管理器将 VHD 文件上传到实验室的存储帐户
 ms.topic: article
 ms.date: 06/26/2020
-ms.openlocfilehash: 6ed6ace63a135628b6d306b946c0356091bf1bd2
-ms.sourcegitcommit: 271601d3eeeb9422e36353d32d57bd6e331f4d7b
+ms.openlocfilehash: d4e421932ebba5d4f389000c12bcf44ac2f37599
+ms.sourcegitcommit: 829d951d5c90442a38012daaf77e86046018e5b9
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/20/2020
-ms.locfileid: "88654508"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "91282521"
 ---
 # <a name="upload-vhd-file-to-labs-storage-account-using-microsoft-azure-storage-explorer"></a>使用 Microsoft Azure 存储资源管理器将 VHD 文件上传到实验室的存储帐户
 
@@ -90,13 +90,13 @@ ms.locfileid: "88654508"
 
     1. 在存储资源管理器的右窗格中，应看到实验室存储帐户的“上 载”**** blob 容器中的 blob 列表。 在 blob 编辑器工具栏上，选择“上载”**** 
         
-        ![“上传”按钮][6]
+        ![屏幕截图，显示已选中 "上传" 按钮的存储资源管理器右窗格。][6]
     
     1. 在“上载”**** 下拉菜单上，选择“上载文件...”****.
     
     1. 在“上载文件”**** 对话框中，选择省略号。
         
-        ![选择文件][8]  
+        ![显示 "上传文件" 对话框的屏幕截图，其中选择了省略号。][8]  
 
     1. 在“选择要上载的文件”**** 对话框中，浏览到所需的 VHD 文件，选择它，并选择“打开”****。
     

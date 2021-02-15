@@ -1,5 +1,5 @@
 ---
-title: Azure AD B2C (MSAL Android) |Microsoft
+title: Azure AD B2C (MSAL Android) | Azure
 titleSuffix: Microsoft identity platform
 description: 了解将 Azure AD B2C 与适用于 Android 的 Microsoft 身份验证库 (MSAL.Android) 配合使用时的具体注意事项。
 services: active-directory
@@ -13,16 +13,16 @@ ms.date: 9/18/2019
 ms.author: brianmel
 ms.reviewer: rapong
 ms.custom: aaddev
-ms.openlocfilehash: 0ad5fab685757d2efd91cd1df0e48a5f1258d17e
-ms.sourcegitcommit: b8702065338fc1ed81bfed082650b5b58234a702
+ms.openlocfilehash: f87f2e79bd9439fddb52fad82c7ab4712fc68fb9
+ms.sourcegitcommit: b39cf769ce8e2eb7ea74cfdac6759a17a048b331
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/11/2020
-ms.locfileid: "88119872"
+ms.lasthandoff: 01/22/2021
+ms.locfileid: "98680359"
 ---
 # <a name="use-msal-for-android-with-b2c"></a>将适用于 Android 的 MSAL 与 B2C 配合使用
 
-借助 Microsoft 身份验证库 (MSAL)，应用程序开发人员可以使用 [Azure Active Directory B2C (Azure AD B2C)](../../active-directory-b2c/index.yml) 通过社交和本地标识对用户进行身份验证。 Azure AD B2C 是一个标识管理服务。 使用该服务可以在客户使用你的应用程序时，自定义和控制他们的注册和登录方式以及管理其个人资料。
+Microsoft (MSAL) 的 Microsoft 身份验证库使应用程序开发人员能够使用 [Azure Active Directory B2C (Azure AD B2C) ](../../active-directory-b2c/index.yml)来使用社交和本地标识对用户进行身份验证。 Azure AD B2C 是一个标识管理服务。 使用该服务可以在客户使用你的应用程序时，自定义和控制他们的注册和登录方式以及管理其个人资料。
 
 ## <a name="configure-known-authorities-and-redirect-uri"></a>配置已知的颁发机构和重定向 URI
 
@@ -36,11 +36,14 @@ ms.locfileid: "88119872"
 
 应用的配置文件将声明两个 `authorities`。 对每个策略各声明一个。 每个颁发机构的 `type` 属性为 `B2C`。
 
+>注意： `account_mode` 对于 B2C 应用程序，必须设置为 " **多个** "。 有关 [多个帐户公用客户端应用](./single-multi-account.md#multiple-account-public-client-application)的详细信息，请参阅文档。
+
 ### `app/src/main/res/raw/msal_config.json`
 ```json
 {
     "client_id": "<your_client_id_here>",
     "redirect_uri": "<your_redirect_uri_here>",
+    "account_mode" : "MULTIPLE",
     "authorities": [{
             "type": "B2C",
             "authority_url": "https://contoso.b2clogin.com/tfp/contoso.onmicrosoft.com/B2C_1_SISOPolicy/",
@@ -129,7 +132,7 @@ AcquireTokenSilentParameters parameters = new AcquireTokenSilentParameters.Build
 
         @Override
         public void onError(MsalException exception) {
-            // Token request was unsuccesful, inspect the exception
+            // Token request was unsuccessful, inspect the exception
         }
     })
     .build();

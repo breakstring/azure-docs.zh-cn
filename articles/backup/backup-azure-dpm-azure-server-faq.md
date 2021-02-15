@@ -4,12 +4,12 @@ description: 本文解答有关 Microsoft Azure 备份服务器 (MABS) 和 DPM (
 ms.reviewer: srinathv
 ms.topic: conceptual
 ms.date: 07/05/2019
-ms.openlocfilehash: 00eb064aaf549ee0d83d0cf7d9c9b47c2dc5ef78
-ms.sourcegitcommit: ac7ae29773faaa6b1f7836868565517cd48561b2
+ms.openlocfilehash: 1663a842b7e00c611543451d4caef96b5b5a913f
+ms.sourcegitcommit: 19ffdad48bc4caca8f93c3b067d1cf29234fef47
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/25/2020
-ms.locfileid: "88827199"
+ms.lasthandoff: 01/06/2021
+ms.locfileid: "97954985"
 ---
 # <a name="azure-backup-server-and-dpm---faq"></a>Azure 备份服务器和 DPM - 常见问题解答
 
@@ -37,15 +37,15 @@ ms.locfileid: "88827199"
 
 对于通过云对数据源进行保护的 DPM 服务器（使用 Update Rollup 7 之前的更新汇总），必须在安装 UR7 及最新 Azure 备份代理之后等待至少一天，然后才能开始“添加外部 DPM 服务器”  。 需要一天的时间才能将 DPM 保护组的元数据上传到 Azure。 首次上传保护组元数据时通过一个每晚执行的作业实现。
 
-### <a name="are-there-recommendations-for-configuring-exclusions-for-antivirus-software"></a>是否有针对防病毒软件配置排除的建议？
+### <a name="are-there-recommendations-for-configuring-exclusions-for-antivirus-software"></a>是否有针对防病毒软件配置排除项的建议？
 
-是，建议配置防病毒排除。 对于 DPM 排除，请参阅 [在 dpm 服务器上运行防病毒软件](https://docs.microsoft.com/system-center/dpm/run-antivirus-server?view=sc-dpm-2019)。 有关 MABS 的排除项，请参阅为 [MABS 服务器配置防病毒软件](backup-azure-mabs-troubleshoot.md#configure-antivirus-for-mabs-server)。
+是，建议配置防病毒排除项。 如需了解 DPM 排除项，请参阅[在 DPM 服务器上运行防病毒软件](/system-center/dpm/run-antivirus-server)。 如需了解 MABS 的排除项，请参阅[为 MABS 服务器配置防病毒软件](backup-azure-mabs-troubleshoot.md#configure-antivirus-for-mabs-server)。
 
 ## <a name="vmware-and-hyper-v-backup"></a>VMware 和 Hyper-V 备份
 
 ### <a name="can-i-back-up-vmware-vcenter-servers-to-azure"></a>是否可以将 VMware vCenter 服务器备份到 Azure？
 
-是的。 可以使用 Azure 备份服务器将 VMware vCenter Server 和 ESXi 主机备份到 Azure。
+能。 可以使用 Azure 备份服务器将 VMware vCenter Server 和 ESXi 主机备份到 Azure。
 
 - [详细了解](backup-mabs-protection-matrix.md)支持的版本。
 - [请按照下列步骤](backup-azure-backup-server-vmware.md)备份 VMware 服务器。
@@ -56,6 +56,10 @@ ms.locfileid: "88827199"
 
 - 如果你是 System Center 客户，使用 System Center Data Protection Manager (DPM) 来保护 VMware VM。
 - 如果不是 System Center 客户，可以使用 Azure 备份服务器（即用即付）来保护 VMware VM。
+
+### <a name="can-i-restore-a-backup-of-a-hyper-v-or-vmware-vm-stored-in-azure-to-azure-as-an-azure-vm"></a>是否可以将 Azure 中存储的 Hyper-v 或 VMware VM 备份还原为 azure VM？
+
+不可以。当前不可能。 只能还原到本地主机。
 
 ## <a name="sharepoint"></a>SharePoint
 

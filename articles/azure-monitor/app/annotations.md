@@ -3,12 +3,12 @@ title: Application Insights 的版本批注 | Microsoft 文档
 description: 为 Application Insights 中的指标资源管理器图表添加部署或版本标记。
 ms.topic: conceptual
 ms.date: 08/14/2020
-ms.openlocfilehash: e21981f134f6a78109d70b1edf6d61e204b64e12
-ms.sourcegitcommit: ef055468d1cb0de4433e1403d6617fede7f5d00e
+ms.openlocfilehash: c23c973bc02482e7000cfd1d066a322fff93542a
+ms.sourcegitcommit: d4734bc680ea221ea80fdea67859d6d32241aefc
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/16/2020
-ms.locfileid: "88258418"
+ms.lasthandoff: 02/14/2021
+ms.locfileid: "100386027"
 ---
 # <a name="annotations-on-metric-charts-in-application-insights"></a>为 Application Insights 中的指标图表添加批注
 
@@ -24,7 +24,7 @@ ms.locfileid: "88258418"
 
 1. 登录到 [Azure DevOps](https://azure.microsoft.com/services/devops/) 项目。
    
-1. 在 Visual Studio Marketplace 的[版本批注扩展](https://marketplace.visualstudio.com/items/ms-appinsights.appinsightsreleaseannotations)页上选择你的 Azure DevOps 组织，然后选择“安装”将该扩展添加到你的 Azure DevOps 组织。****
+1. 在 Visual Studio Marketplace 的[版本批注扩展](https://marketplace.visualstudio.com/items/ms-appinsights.appinsightsreleaseannotations)页上选择你的 Azure DevOps 组织，然后选择“安装”将该扩展添加到你的 Azure DevOps 组织。
    
    ![选择 Azure DevOps 组织，然后选择“安装”。](./media/annotations/1-install.png)
    
@@ -36,38 +36,38 @@ ms.locfileid: "88258418"
 
 1. 登录到 [Azure 门户](https://portal.azure.com)并打开负责监视应用程序的 Application Insights 资源。 或者，如果你没有，请[创建一个新的 Application Insights 资源](./app-insights-overview.md)。
    
-1. 打开“API 访问”**** 选项卡并复制 **Application Insights ID**。
+1. 打开“API 访问”选项卡并复制 **Application Insights ID**。
    
    ![在“API 访问”下，复制应用程序 ID。](./media/annotations/2-app-id.png)
 
 1. 在另一个浏览器窗口中，打开或创建用于管理 Azure Pipelines 部署的发布模板。
    
-1. 添加“添加任务”，然后从菜单中选择“Application Insights 版本批注”任务。********
+1. 添加“添加任务”，然后从菜单中选择“Application Insights 版本批注”任务。
    
    ![选择“添加任务”，然后选择“Application Insights 版本批注”。](./media/annotations/3-add-task.png)
 
    > [!NOTE]
    > 发布批注任务当前仅支持基于 Windows 的代理;它不会在 Linux、macOS 或其他类型的代理上运行。
    
-1. 在“应用程序 ID”下，粘贴从“API 访问”选项卡复制的 Application Insights ID。********
+1. 在“应用程序 ID”下，粘贴从“API 访问”选项卡复制的 Application Insights ID。
    
    ![粘贴 Application Insights ID](./media/annotations/4-paste-app-id.png)
    
-1. 返回 Application Insights 的“API 访问”窗口，选择“创建 API 密钥”。******** 
+1. 返回 Application Insights 的“API 访问”窗口，选择“创建 API 密钥”。 
    
    ![在“API 访问”选项卡中，选择“创建 API 密钥”。](./media/annotations/5-create-api-key.png)
    
-1. 在“创建 API 密钥”窗口中键入说明，选择“编写批注”，然后选择“生成密钥”。************ 复制新密钥。
+1. 在“创建 API 密钥”窗口中键入说明，选择“编写批注”，然后选择“生成密钥”。 复制新密钥。
    
    ![在“创建 API 密钥”窗口中键入说明，选择“编写批注”，然后选择“生成密钥”。](./media/annotations/6-create-api-key.png)
    
-1. 在“发布模板”窗口中的“变量”选项卡上，选择“添加”以创建新 API 密钥的变量定义。********
+1. 在“发布模板”窗口中的“变量”选项卡上，选择“添加”以创建新 API 密钥的变量定义。
 
-1. 在“名称”下输入 `ApiKey`，然后在“值”下粘贴从“API 访问”选项卡复制的 API 密钥。************
+1. 在“名称”下输入 `ApiKey`，然后在“值”下粘贴从“API 访问”选项卡复制的 API 密钥。
    
    ![在“Azure DevOps 变量”选项卡中选择“添加”，将变量命名为 ApiKey，然后在“值”下面粘贴 API 密钥。](./media/annotations/7-paste-api-key.png)
    
-1. 在“发布模板”主窗口中选择“保存”以保存模板。****
+1. 在“发布模板”主窗口中选择“保存”以保存模板。
 
 
    > [!NOTE]
@@ -81,7 +81,7 @@ ms.locfileid: "88258418"
 
 现在，每当使用发布模板部署新版本时，就会将批注发送到 Application Insights。 可在以下位置查看批注：
 
-使用情况窗格，还可以手动创建版本批注：
+**使用情况** 窗格，还可以手动创建版本批注：
 
 ![显示一段时间内显示的用户访问数的条形图的屏幕截图。 版本批注在图表上方显示为绿色复选标记，指示发布发生的时间](./media/annotations/usage-pane.png)
 
@@ -96,11 +96,11 @@ ms.locfileid: "88258418"
 选择任何批注标记以打开有关版本的详细信息，包括请求者、源代码管理分支、发布管道和环境。
 
 ## <a name="create-custom-annotations-from-powershell"></a>通过 PowerShell 创建自定义批注
-可以使用 GitHub 中的 [CreateReleaseAnnotation](https://github.com/Microsoft/ApplicationInsights-Home/blob/master/API/CreateReleaseAnnotation.ps1) PowerShell 脚本，通过所需的任何流程创建批注，而无需使用 Azure DevOps。 
+可以使用 GitHub 中的 [CreateReleaseAnnotation](https://github.com/MohanGsk/ApplicationInsights-Home/blob/master/API/CreateReleaseAnnotation.ps1) PowerShell 脚本，通过所需的任何流程创建批注，而无需使用 Azure DevOps。 
 
-1. 创建 [CreateReleaseAnnotation.ps1](https://github.com/Microsoft/ApplicationInsights-Home/blob/master/API/CreateReleaseAnnotation.ps1) 的本地副本。
+1. 创建 [CreateReleaseAnnotation.ps1](https://github.com/MohanGsk/ApplicationInsights-Home/blob/master/API/CreateReleaseAnnotation.ps1) 的本地副本。
    
-1. 使用上述过程中的步骤获取 Application Insights ID，并通过 Application Insights 的“API 访问”选项卡创建 API 密钥。****
+1. 使用上述过程中的步骤获取 Application Insights ID，并通过 Application Insights 的“API 访问”选项卡创建 API 密钥。
    
 1. 使用以下代码调用 PowerShell 脚本（请将带尖括号的占位符替换为你自己的值）。 `-releaseProperties` 是可选的。 
    

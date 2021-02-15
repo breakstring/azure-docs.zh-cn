@@ -1,19 +1,16 @@
 ---
 title: 教程：生成 Spark 机器学习应用 - Azure HDInsight
 description: 教程 - 有关如何使用 Jupyter Notebook 在 HDInsight Spark 群集中生成 Apache Spark 机器学习应用程序的分步说明。
-author: hrasheed-msft
-ms.author: hrasheed
-ms.reviewer: jasonh
 ms.service: hdinsight
 ms.topic: tutorial
 ms.custom: hdinsightactive,mvc, devx-track-python
 ms.date: 04/07/2020
-ms.openlocfilehash: 0029761f8a1c48ab595dfa5bc2a87fca12d90e3d
-ms.sourcegitcommit: dea88d5e28bd4bbd55f5303d7d58785fad5a341d
+ms.openlocfilehash: 88a71eb5a8ca9a6f2bf1d17fc4eaf9780527d2cb
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/06/2020
-ms.locfileid: "87873919"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98930538"
 ---
 # <a name="tutorial-build-an-apache-spark-machine-learning-application-in-azure-hdinsight"></a>教程：在 Azure HDInsight 中生成 Apache Spark 机器学习应用程序
 
@@ -41,7 +38,7 @@ ms.locfileid: "87873919"
 
 此应用程序使用 Spark [ML 管道](https://spark.apache.org/docs/2.2.0/ml-pipeline.html)来执行文档分类。 ML 管道提供建立在数据帧基础之上的统一的一组高级 API。 数据帧可帮助用户创建和优化实用的机器学习管道。 在管道中，可将文档分割成单字、将单字转换成数字特征向量，最后使用特征向量和标签创建预测模型。 按下列步骤创建应用程序。
 
-1. 使用 PySpark 内核创建 Jupyter Notebook。 有关说明，请参阅[创建 Jupyter Notebook](./apache-spark-jupyter-spark-sql.md#create-a-jupyter-notebook)。
+1. 使用 PySpark 内核创建 Jupyter Notebook。 有关说明，请参阅[创建 Jupyter Notebook 文件](./apache-spark-jupyter-spark-sql.md#create-a-jupyter-notebook-file)。
 
 1. 导入此方案所需的类型。 将以下代码段粘贴到空白单元格中，然后按 **Shift+Enter**。
 
@@ -186,7 +183,7 @@ ms.locfileid: "87873919"
 
 ## <a name="use-anaconda-scikit-learn-library-for-spark-machine-learning"></a>将 Anaconda scikit-learn 库用于 Spark 机器学习
 
-HDInsight 中的 Apache Spark 群集包含 Anaconda 库。 它还包括适用于机器学习的 scikit-learn 库。 该库还包含用于直接从 Jupyter 笔记本生成示例应用程序的各种数据集。 有关使用 scikit-learn 库的示例，请参阅 [https://scikit-learn.org/stable/auto_examples/index.html](https://scikit-learn.org/stable/auto_examples/index.html)。
+HDInsight 中的 Apache Spark 群集包含 Anaconda 库。 它还包括适用于机器学习的 scikit-learn 库。 该库还包含用于直接从 Jupyter Notebook 生成示例应用程序的各种数据集。 有关使用 scikit-learn 库的示例，请参阅 [https://scikit-learn.org/stable/auto_examples/index.html](https://scikit-learn.org/stable/auto_examples/index.html)。
 
 ## <a name="clean-up-resources"></a>清理资源
 

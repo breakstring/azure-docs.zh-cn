@@ -2,27 +2,27 @@
 title: Desired State Configuration 扩展与 Azure 资源管理器模板
 description: 了解 Azure 中 Desired State Configuration (DSC) 扩展的资源管理器模板定义。
 services: virtual-machines-windows
-author: bobbytreed
-manager: carmonm
+author: mgoedtel
 tags: azure-resource-manager
 keywords: dsc
 ms.assetid: b5402e5a-1768-4075-8c19-b7f7402687af
 ms.service: virtual-machines-windows
+ms.subservice: extensions
 ms.topic: article
 ms.tgt_pltfrm: vm-windows
 ms.workload: na
-ms.date: 10/05/2018
-ms.author: robreed
-ms.openlocfilehash: dc73b5b9f05d24de206b25095ea7eaf93f035298
-ms.sourcegitcommit: 3543d3b4f6c6f496d22ea5f97d8cd2700ac9a481
+ms.date: 02/09/2021
+ms.author: magoedte
+ms.openlocfilehash: 4e9133697cda4a46a895c7e41eff6d17ccd01e4a
+ms.sourcegitcommit: 24f30b1e8bb797e1609b1c8300871d2391a59ac2
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/20/2020
-ms.locfileid: "86511154"
+ms.lasthandoff: 02/10/2021
+ms.locfileid: "100093652"
 ---
 # <a name="desired-state-configuration-extension-with-azure-resource-manager-templates"></a>Desired State Configuration 扩展与 Azure 资源管理器模板
 
-本文介绍 [Desired State Configuration (DSC) 扩展处理程序](dsc-overview.md)的 Azure 资源管理器模板。 很多示例都使用**RegistrationURL** （以字符串形式提供）和**RegistrationKey** （作为[PSCredential](/dotnet/api/system.management.automation.pscredential)提供，以与 Azure 自动化集成。 有关获取这些值的详细信息，请参阅[登记由 Azure 自动化状态配置管理的计算机 - 安全注册](../../automation/automation-dsc-onboarding.md#enable-machines-securely-using-registration)。
+本文介绍 [Desired State Configuration (DSC) 扩展处理程序](dsc-overview.md)的 Azure 资源管理器模板。 许多示例使用 **RegistrationURL**（以字符串形式提供）和 **RegistrationKey**（以 [PSCredential](/dotnet/api/system.management.automation.pscredential) 形式提供）来通过 Azure 自动化进行加入。 有关获取这些值的详细信息，请参阅[登记由 Azure 自动化状态配置管理的计算机 - 安全注册](../../automation/automation-dsc-onboarding.md#enable-machines-securely-using-registration)。
 
 > [!NOTE]
 > 你可能会遇到略有不同的架构示例。 2016 年 10 月发行版中发生了架构更改。 有关详细信息，请参阅[从以前的格式更新](#update-from-a-previous-format)。
@@ -31,13 +31,13 @@ ms.locfileid: "86511154"
 
 将以下代码片段放入模板的 **Resource** 节。
 DSC 扩展继承默认扩展属性。
-有关详细信息，请参阅 [VirtualMachineExtension 类](/dotnet/api/microsoft.azure.management.compute.models.virtualmachineextension?view=azure-dotnet)。
+有关详细信息，请参阅 [VirtualMachineExtension 类](/dotnet/api/microsoft.azure.management.compute.models.virtualmachineextension)。
 
 ```json
 {
   "type": "Microsoft.Compute/virtualMachines/extensions",
-  "name": "Microsoft.Powershell.DSC",
-  "apiVersion": "2018-06-30",
+  "name": "[concat(parameters('VMName'), '/Microsoft.Powershell.DSC')]",
+  "apiVersion": "2018-06-01",
   "location": "[parameters('location')]",
   "dependsOn": [
     "[concat('Microsoft.Compute/virtualMachines/', parameters('VMName'))]"
@@ -84,7 +84,7 @@ DSC 扩展继承默认扩展属性。
 在“扩展”下，添加 DSC 扩展的详细信息。
 
 DSC 扩展继承默认扩展属性。
-有关详细信息，请参阅 [VirtualMachineScaleSetExtension 类](/dotnet/api/microsoft.azure.management.compute.models.virtualmachinescalesetextension?view=azure-dotnet)。
+有关详细信息，请参阅 [VirtualMachineScaleSetExtension 类](/dotnet/api/microsoft.azure.management.compute.models.virtualmachinescalesetextension)。
 
 ```json
 "extensionProfile": {

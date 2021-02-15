@@ -7,12 +7,12 @@ ms.service: site-recovery
 ms.topic: conceptual
 ms.date: 11/14/2019
 ms.author: raynew
-ms.openlocfilehash: d991b38c3f72b54f4564dd4847c8532b507286cc
-ms.sourcegitcommit: e995f770a0182a93c4e664e60c025e5ba66d6a45
+ms.openlocfilehash: 101e42263e46c5a21f26b0fa9cdeed798525fee9
+ms.sourcegitcommit: 829d951d5c90442a38012daaf77e86046018e5b9
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/08/2020
-ms.locfileid: "86131783"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "89047067"
 ---
 # <a name="set-up-disaster-recovery-at-scale-for-vmware-vmsphysical-servers"></a>为 VMware VM/物理服务器设置大规模灾难恢复
 
@@ -205,7 +205,7 @@ ms.locfileid: "86131783"
     - 估算应用的端到端 RTO。
     - 估算工作负荷的端到端 RPO。
     - 识别 IP 地址范围冲突。
-    - 运行演练时，我们建议不要使用生产网络，避免在生产和测试网络中使用相同的子网名称，并在每次演练后清理测试故障转移。
+    - 运行演练时，我们建议不要使用生产网络，并在每次演练后清理测试故障转移。
 
 若要运行大规模故障转移，我们建议：
 

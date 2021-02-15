@@ -11,12 +11,12 @@ author: MicrosoftGuyJFlo
 manager: daveba
 ms.reviewer: sandeo
 ms.collection: M365-identity-device-management
-ms.openlocfilehash: 9cf30324371043d8b702d3e22ec3ecd98e114ba6
-ms.sourcegitcommit: 0b8320ae0d3455344ec8855b5c2d0ab3faa974a3
+ms.openlocfilehash: cc2f7d3ce5f8329038fea4ecbb5242015fb3fd0d
+ms.sourcegitcommit: 21c3363797fb4d008fbd54f25ea0d6b24f88af9c
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/30/2020
-ms.locfileid: "87428584"
+ms.lasthandoff: 12/08/2020
+ms.locfileid: "96860127"
 ---
 # <a name="tutorial-configure-hybrid-azure-active-directory-join-for-federated-domains"></a>教程：为联盟域配置混合 Azure Active Directory 加入
 
@@ -88,7 +88,7 @@ ms.locfileid: "87428584"
 
 如果你的组织需要通过出站代理访问 Internet，Microsoft 建议[实施 Web 代理自动发现 (WPAD)](/previous-versions/tn-archive/cc995261(v%3dtechnet.10))，以使 Windows 10 计算机在 Azure AD 进行设备注册。 如果在配置和管理 WPAD 时遇到问题，请参阅[自动检测故障排除](/previous-versions/tn-archive/cc302643(v=technet.10))。 
 
-如果不使用 WPAD 并希望在计算机上配置代理设置，则可以从 Windows 10 1709 开始。 有关详细信息，请参阅[使用组策略对象 (GPO) 配置 WinHTTP 设置](https://blogs.technet.microsoft.com/netgeeks/2018/06/19/winhttp-proxy-settings-deployed-by-gpo/)。
+如果不使用 WPAD 并希望在计算机上配置代理设置，则可以从 Windows 10 1709 开始。 有关详细信息，请参阅[使用组策略对象 (GPO) 配置 WinHTTP 设置](/archive/blogs/netgeeks/winhttp-proxy-settings-deployed-by-gpo)。
 
 > [!NOTE]
 > 如果使用 WinHTTP 设置在计算机上配置代理设置，则无法连接到所配置的代理的任何计算机将无法连接到 Internet。
@@ -193,17 +193,17 @@ ms.locfileid: "87428584"
 ### <a name="using-the-azure-portal"></a>使用 Azure 门户
 
 1. 使用[直接链接](https://portal.azure.com/#blade/Microsoft_AAD_IAM/DevicesMenuBlade/Devices)进入设备页面。
-2. 有关如何查找设备的信息，请参阅[如何使用 Azure 门户管理设备标识](https://docs.microsoft.com/azure/active-directory/devices/device-management-azure-portal#locate-devices)。
+2. 有关如何查找设备的信息，请参阅[如何使用 Azure 门户管理设备标识](./device-management-azure-portal.md)。
 3. 如果“已注册”列显示“挂起”，则表明混合 Azure AD 联接尚未完成。 在联合环境中，只有当注册失败并且 AAD Connect 配置为同步设备时，才会发生这种情况。
 4. 如果“已注册”列包含日期/时间，则表明混合 Azure AD 联接已完成。
 
 ### <a name="using-powershell"></a>使用 PowerShell
 
-使用 **[Get-MsolDevice](/powershell/module/msonline/get-msoldevice)** 验证 Azure 租户中的设备注册状态。 [Azure Active Directory PowerShell 模块](/powershell/azure/active-directory/install-msonlinev1?view=azureadps-2.0)中包含此 cmdlet。
+使用 **[Get-MsolDevice](/powershell/module/msonline/get-msoldevice)** 验证 Azure 租户中的设备注册状态。 [Azure Active Directory PowerShell 模块](/powershell/azure/active-directory/install-msonlinev1)中包含此 cmdlet。
 
 使用 Get-MSolDevice cmdlet 检查服务详细信息时：
 
-- 必须存在其**设备 ID** 与 Windows 客户端上的 ID 相匹配的对象。
+- 必须存在其 **设备 ID** 与 Windows 客户端上的 ID 相匹配的对象。
 - **DeviceTrustType** 的值为 **Domain Joined**。 此设置相当于 Azure AD 门户中“设备”页上的“已加入混合 Azure AD”状态 。
 - 对于条件访问中使用的设备，**Enabled** 的值为 **True**，**DeviceTrustLevel** 的值为 **Managed**。
 
@@ -243,7 +243,7 @@ Get-MsolDevice -All -IncludeSystemManagedDevices | where {($_.DeviceTrustType -e
 
 如果在完成已加入域的 Windows 设备的混合 Azure AD 加入方面遇到问题，请参阅：
 
-- [使用 dsregcmd 命令排查设备问题](https://docs.microsoft.com/azure/active-directory/devices/troubleshoot-device-dsregcmd)
+- [使用 dsregcmd 命令排查设备问题](./troubleshoot-device-dsregcmd.md)
 - [对 Windows 当前设备的混合 Azure AD 加入进行故障排除](troubleshoot-hybrid-join-windows-current.md)
 - [对 Windows 下层设备的混合 Azure AD 加入进行故障排除](troubleshoot-hybrid-join-windows-legacy.md)
 

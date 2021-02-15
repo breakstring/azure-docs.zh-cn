@@ -1,10 +1,10 @@
 ---
-ms.openlocfilehash: 5350b4a6a505a29be0ea1b5eed76937574b93568
-ms.sourcegitcommit: 3543d3b4f6c6f496d22ea5f97d8cd2700ac9a481
-ms.translationtype: MT
+ms.openlocfilehash: 0ff4d8ec38e3e92de3adf277d8b771a914d0c4c2
+ms.sourcegitcommit: d79513b2589a62c52bddd9c7bd0b4d6498805dbe
+ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/20/2020
-ms.locfileid: "86514708"
+ms.lasthandoff: 12/18/2020
+ms.locfileid: "97674288"
 ---
-<Token>**适用于：** ![是 azure ](../media/applies-to/yes.png) Sql 数据库 ![ 是 azure ](../media/applies-to/yes.png) sql 托管实例 ![ 是 ](../media/applies-to/yes.png) AZURE Synapse Analytics （SQL DW）</Token> 
+<Token>适用于：:::image type="icon" source="../media/applies-to/yes.png" border="false":::Azure SQL 数据库:::image type="icon" source="../media/applies-to/yes.png" border="false":::Azure SQL 托管实例:::image type="icon" source="../media/applies-to/yes.png" border="false":::Azure Synapse Analytics</Token> 
 

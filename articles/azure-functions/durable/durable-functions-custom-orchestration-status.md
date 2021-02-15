@@ -4,12 +4,12 @@ description: 了解如何为 Durable Functions 配置和使用自定义业务流
 ms.topic: conceptual
 ms.date: 07/10/2020
 ms.author: azfuncdf
-ms.openlocfilehash: bb5c6ee15a5a445b4b762bd9eaf8919e1396f8ce
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.openlocfilehash: 4a95e7c74fac7043d0adb5f31d2bdcdd73b9577a
+ms.sourcegitcommit: 489ce69c0ff3f5188889ecfef5ffa76f7121e0d3
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87081825"
+ms.lasthandoff: 12/24/2020
+ms.locfileid: "97766322"
 ---
 # <a name="custom-orchestration-status-in-durable-functions-azure-functions"></a>Durable Functions 中的自定义业务流程状态 (Azure Functions)
 
@@ -82,7 +82,7 @@ module.exports = async function(context, name) {
 ```
 # <a name="python"></a>[Python](#tab/python)
 
-### <a name="e1_hellosequence-orchestrator-function"></a>`E1_HelloSequence`业务流程协调程序函数
+### <a name="e1_hellosequence-orchestrator-function"></a>`E1_HelloSequence` 业务流程协调程序函数
 ```python
 import azure.functions as func
 import azure.durable_functions as df
@@ -102,7 +102,7 @@ def orchestrator_function(context: df.DurableOrchestrationContext):
 main = df.Orchestrator.create(orchestrator_function)
 ```
 
-### <a name="e1_sayhello-activity-function"></a>`E1_SayHello`活动函数
+### <a name="e1_sayhello-activity-function"></a>`E1_SayHello` 活动函数
 ```python
 def main(name: str) -> str:
     return f"Hello {name}!"
@@ -125,7 +125,7 @@ public static async Task<HttpResponseMessage> Run(
 {
     // Function input comes from the request content.
     dynamic eventData = await req.Content.ReadAsAsync<object>();
-    string instanceId = await starter.StartNewAsync(functionName, eventData);
+    string instanceId = await starter.StartNewAsync(functionName, (string)eventData);
 
     log.LogInformation($"Started orchestration with ID = '{instanceId}'.");
 
@@ -249,7 +249,7 @@ public static void Run(
 
 # <a name="javascript"></a>[JavaScript](#tab/javascript)
 
-#### <a name="cityrecommender-orchestrator"></a>`CityRecommender`orchestrator
+#### <a name="cityrecommender-orchestrator"></a>`CityRecommender` 业务流程协调程序
 
 ```javascript
 const df = require("durable-functions");
@@ -284,7 +284,7 @@ module.exports = df.orchestrator(function*(context) {
 
 # <a name="python"></a>[Python](#tab/python)
 
-#### <a name="cityrecommender-orchestrator"></a>`CityRecommender`orchestrator
+#### <a name="cityrecommender-orchestrator"></a>`CityRecommender` 业务流程协调程序
 
 ```python
 import azure.functions as func

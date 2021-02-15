@@ -4,14 +4,6 @@
   items:
     - name: 什么是 Azure 防火墙？
       href: overview.md
-- name: 教程
-  items:
-    - name: 部署和配置
-      href: tutorial-firewall-deploy-portal.md
-    - name: 在混合网络中部署
-      href: tutorial-hybrid-portal.md
-    - name: 使用 DNAT 筛选入站流量
-      href: tutorial-firewall-dnat.md
 - name: 快速入门
   expanded: true
   items:
@@ -24,12 +16,18 @@
     - name: 使用可用性区域进行部署 - ARM 模板
       displayName: Resource Manager
       href: deploy-template.md
+- name: 教程
+  items:
+    - name: 部署和配置
+      href: tutorial-firewall-deploy-portal.md
+    - name: 在混合网络中部署
+      href: tutorial-hybrid-portal.md
+    - name: 使用 DNAT 筛选入站流量
+      href: tutorial-firewall-dnat.md
 - name: 示例
   items:
     - name: Azure PowerShell
       href: sample-powershell.md
-    - name: Azure Monitor 日志
-      href: log-analytics-samples.md
 - name: 概念
   items:
     - name: Azure 防火墙功能
@@ -60,6 +58,8 @@
       href: fqdn-filtering-network-rules.md
     - name: 安全基线
       href: security-baseline.md
+    - name: 主动 FTP 支持
+      href: active-ftp-support.md
 - name: 操作指南
   items:
     - name: 使用 Azure PowerShell 进行部署
@@ -88,6 +88,9 @@
       href: dns-settings.md
     - name: 监视诊断日志
       href: firewall-diagnostics.md
+      displayName: 'Azure CLI, az monitor diagnostic-settings create, monitor diagnostic settings'
+    - name: Azure 防火墙工作簿
+      href: firewall-workbook.md
 - name: 参考
   items:
     - name: Azure CLI
@@ -108,8 +111,8 @@
       href: ../azure-resource-manager/management/overview.md
 - name: 资源
   items:
-    - name: 常见问题解答
-      href: firewall-faq.md
+    - name: 常见问题
+      href: firewall-faq.yml
     - name: 创作模板
       href: ../azure-resource-manager/templates/template-syntax.md
     - name: Azure 路线图

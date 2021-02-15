@@ -4,11 +4,6 @@
   items:
     - name: 什么是资源管理器？
       href: overview.md
-- name: 示例
-  items:
-    - name: Azure Policy 内置策略定义
-      displayName: 'samples, policies, definitions'
-      href: ./policy-samples.md
 - name: 概念
   items:
     - name: 订阅和服务限制
@@ -17,19 +12,23 @@
       href: resource-name-rules.md
     - name: 资源管理器部署和经典部署
       href: deployment-models.md
-    - name: Azure 的常见安全属性
-      href: azure-resource-manager-security-controls.md
     - name: 按服务分类的资源提供程序
       href: azure-services-resource-providers.md
+    - name: 控制平面和数据平面
+      href: control-plane-and-data-plane.md
     - name: 扩展资源类型
       href: extension-resource-types.md
     - name: 资源实例限制
       href: resources-without-resource-group-limit.md
     - name: 安全性
       items:
+        - name: 安全基线
+          href: ./security-baseline.md
         - name: Azure Policy 的安全控件
           displayName: 'regulatory, compliance, standards, domains'
           href: ./security-controls-policy.md
+        - name: Azure 的常见安全属性
+          href: azure-resource-manager-security-controls.md
 - name: 如何
   items:
     - name: 移动 - 资源组/订阅
@@ -58,8 +57,10 @@
               href: ./move-limitations/virtual-machines-move-limitations.md
     - name: 移动 - 区域
       items:
-        - name: 跨区域移动
+        - name: 概述
           href: move-region.md
+        - name: （从资源组）跨区域移动
+          href: ../../resource-mover/move-region-within-resource-group.md?toc=/azure/azure-resource-manager/management/toc.json
         - name: 支持的服务
           href: region-move-support.md
         - name: 服务
@@ -74,30 +75,36 @@
               href: ../../batch/best-practices.md?toc=/azure/azure-resource-manager/management/toc.json#moving-batch-accounts-across-regions
             - name: Azure 认知搜索
               href: ../../search/search-howto-move-across-regions.md?toc=/azure/azure-resource-manager/management/toc.json
+            - name: Azure Cosmos DB
+              href: ../../cosmos-db/how-to-move-regions.md?toc=/azure/azure-resource-manager/management/toc.json
             - name: Azure Dev Spaces
               href: ../../dev-spaces/faq.md?toc=/azure/azure-resource-manager/management/toc.json#can-i-migrate-my-aks-cluster-with-azure-dev-spaces-to-another-region
             - name: Azure 事件中心
               href: ../../event-hubs/move-across-regions.md?toc=/azure/azure-resource-manager/management/toc.json
             - name: Azure IoT 中心
               href: ../../iot-hub/iot-hub-how-to-clone.md?toc=/azure/azure-resource-manager/management/toc.json
-            - name: Azure VM
-              href: ../../site-recovery/azure-to-azure-tutorial-migrate.md?toc=/azure/azure-resource-manager/management/toc.json
+            - name: Azure 资源管理器
+              href: microsoft-resources-move-regions.md
             - name: Azure 存储
               href: ../../storage/common/storage-account-move.md?toc=/azure/azure-resource-manager/management/toc.json
             - name: Azure SQL
               href: ../../azure-sql/database/move-resources-across-regions.md?toc=/azure/azure-resource-manager/management/toc.json
+            - name: Azure VM
+              href: ../../resource-mover/tutorial-move-region-virtual-machines.md?toc=/azure/azure-resource-manager/management/toc.json
             - name: 逻辑应用
               href: ../../logic-apps/move-logic-app-resources.md?toc=/azure/azure-resource-manager/management/toc.json
             - name: 维护控制配置
               href: ../../virtual-machines/move-region-maintenance-configuration.md?toc=/azure/azure-resource-manager/management/toc.json
             - name: 网络安全组 (NSG)
-              href: ../../virtual-network/move-across-regions-nsg-portal.md?toc=/azure/azure-resource-manager/management/toc.json
+              href: ../../resource-mover/tutorial-move-region-virtual-machines.md?toc=/azure/azure-resource-manager/management/toc.json
             - name: 公共 IP 地址
-              href: ../../virtual-network/move-across-regions-publicip-portal.md?toc=/azure/azure-resource-manager/management/toc.json
+              href: ../../resource-mover/tutorial-move-region-virtual-machines.md?toc=/azure/azure-resource-manager/management/toc.json
             - name: Site Recovery（恢复服务保管库）
               href: ../../site-recovery/move-vaults-across-regions.md?toc=/azure/azure-resource-manager/management/toc.json
             - name: 虚拟网络
-              href: ../../virtual-network/move-across-regions-nsg-portal.md?toc=/azure/azure-resource-manager/management/toc.json
+              href: ../../resource-mover/tutorial-move-region-virtual-machines.md?toc=/azure/azure-resource-manager/management/toc.json
+            - name: 网络接口 (NIC)
+              href: ../../resource-mover/tutorial-move-region-virtual-machines.md?toc=/azure/azure-resource-manager/management/toc.json
             - name: Azure Database for PostgreSQL 服务器
               href: ../../postgresql/howto-move-regions-portal.md?toc=/azure/azure-resource-manager/management/toc.json
             - name: Azure Database for MariaDB 服务器
@@ -139,9 +146,9 @@
     - name: EA 订阅
       items:
         - name: 创建
-          href: programmatically-create-subscription.md
+          href: ../../cost-management-billing/manage/programmatically-create-subscription-enterprise-agreement.md?toc=/azure/azure-resource-manager/management/toc.json
         - name: 授予创建权限
-          href: grant-access-to-create-subscription.md
+          href: ../../cost-management-billing/manage/grant-access-to-create-subscription.md?toc=/azure/azure-resource-manager/management/toc.json
     - name: 资源提供程序和类型
       href: resource-providers-and-types.md
     - name: 删除资源组和资源
@@ -170,8 +177,13 @@
       href: /java/api/com.microsoft.azure.management.resources
     - name: Python
       href: /python/api/overview/azure/resources?view=azure-python
+    - name: Azure Policy 内置策略定义
+      displayName: 'samples, policies, definitions'
+      href: ./policy-reference.md
 - name: 资源
   items:
+    - name: 利用 Microsoft Learn 掌握技能
+      href: /learn/browse/?products=azure-resource-manager
     - name: Azure 路线图
       href: 'https://azure.microsoft.com/roadmap/?category=monitoring-management'
     - name: 定价计算器

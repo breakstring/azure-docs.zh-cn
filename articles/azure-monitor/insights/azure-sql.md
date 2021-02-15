@@ -5,14 +5,14 @@ ms.subservice: logs
 ms.topic: conceptual
 author: danimir
 ms.author: danil
-ms.date: 02/21/2020
+ms.date: 09/19/2020
 ms.reviewer: carlrab
-ms.openlocfilehash: c871f5fbbe63747c71e1f6ecf83a47c0cd30970e
-ms.sourcegitcommit: a76ff927bd57d2fcc122fa36f7cb21eb22154cfa
+ms.openlocfilehash: 0015138f4da9f66e2f9148e468dd1b5543ae0c4b
+ms.sourcegitcommit: 829d951d5c90442a38012daaf77e86046018e5b9
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/28/2020
-ms.locfileid: "87318022"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "91397073"
 ---
 # <a name="monitor-azure-sql-database-using-azure-sql-analytics-preview"></a>使用 Azure SQL Analytics（预览版）监视 Azure SQL 数据库
 
@@ -45,24 +45,24 @@ Azure SQL Analytics 是一种仅限云的监视解决方案，支持所有 Azure
 
 | Azure SQL Analytics 选项 | 说明 | SQL Database 支持 | SQL 托管实例支持 |
 | --- | ------- | ----- | ----- |
-| 资源（按类型） | 对监视的所有资源进行计数的透视。 | “是” | 是 |
-| 洞察力 | 提供对性能智能见解的分层向下钻取。 | “是” | 是 |
-| 错误 | 提供对数据库上发生的 SQL 错误的分层向下钻取。 | “是” | 是 |
+| 资源（按类型） | 对监视的所有资源进行计数的透视。 | 是 | 是 |
+| 洞察力 | 提供对性能智能见解的分层向下钻取。 | 是 | 是 |
+| 错误 | 提供对数据库上发生的 SQL 错误的分层向下钻取。 | 是 | 是 |
 | 超时 | 提供对数据库上发生的 SQL 超时的分层向下钻取。 | 是 | 否 |
 | 阻止 | 提供对数据库上发生的 SQL 阻止的分层向下钻取。 | 是 | 否 |
 | 数据库等待 | 提供对数据库级别上的 SQL 等待统计信息的分层向下钻取。 包含总等待时间汇总和每个类型的等待时间。 |是 | 否 |
-| 查询持续时间 | 提供对查询执行统计信息的分层向下钻取，例如查询持续时间、CPU 使用情况、数据 IO 使用情况和日志 IO 使用情况。 | “是” | 是 |
-| 查询等待 | 按等待类型提供对查询等待统计信息的分层向下钻取。 | “是” | 是 |
+| 查询持续时间 | 提供对查询执行统计信息的分层向下钻取，例如查询持续时间、CPU 使用情况、数据 IO 使用情况和日志 IO 使用情况。 | 是 | 是 |
+| 查询等待 | 按等待类型提供对查询等待统计信息的分层向下钻取。 | 是 | 是 |
 
-## <a name="configuration"></a>配置
+## <a name="configuration"></a>Configuration
 
-使用[从解决方案库中添加 Azure Monitor 解决方案](./solutions.md)中所述的过程，将 Azure SQL Analytics （预览版）添加到 Log Analytics 工作区。
+使用 [从解决方案库中添加 Azure Monitor 解决方案](./solutions.md) 中所述的过程，将 Azure SQL Analytics (预览) 添加到 Log Analytics 工作区。
 
 ### <a name="configure-azure-sql-database-to-stream-diagnostics-telemetry"></a>将 Azure SQL 数据库配置为流式传输诊断遥测
 
-在工作区中创建 Azure SQL Analytics 解决方案后，需要配置要监视的**每个**资源，以将其诊断遥测流式传输到 Azure SQL Analytics 中。 请遵循此页面上的详细说明：
+在工作区中创建 Azure SQL Analytics 解决方案后，需要配置要监视的 **每个** 资源，以将其诊断遥测流式传输到 Azure SQL Analytics 中。 请遵循此页面上的详细说明：
 
-- 启用数据库 Azure 诊断，以将[诊断遥测流式传输到 Azure SQL Analytics](../../azure-sql/database/metrics-diagnostic-telemetry-logging-streaming-export-configure.md)。
+- 启用数据库 Azure 诊断，以将 [诊断遥测流式传输到 Azure SQL Analytics](../../azure-sql/database/metrics-diagnostic-telemetry-logging-streaming-export-configure.md)。
 
 上述页面还提供了有关启用通过单个 Azure SQL Analytics 工作区，在单个视图中监视多个 Azure 订阅的支持。
 
@@ -90,11 +90,11 @@ Azure SQL Analytics 提供了两个单独的视图，一个用于监视 SQL 数�
 
 选择数据库的 Azure SQL Analytics 磁贴后，会显示监视仪表板。
 
-![Azure SQL Analytics 概述](./media/azure-sql/azure-sql-sol-overview.png)
+![显示监视仪表板的屏幕截图。](./media/azure-sql/azure-sql-sol-overview.png)
 
 选择任意磁贴，打开特定透视的向下钻取报告。 选择透视后，可看到向下钻取报表。
 
-![Azure SQL Analytics 超时](./media/azure-sql/azure-sql-sol-metrics.png)
+![显示向下钻取报表的屏幕截图。](./media/azure-sql/azure-sql-sol-metrics.png)
 
 此视图中的每个透视都提供了订阅、服务器、弹性池和数据库级别的汇总。 此外，每个透视在右侧都显示了特定于透视的报表。 从列表选择订阅、服务器、池或数据库会继续向下钻取。
 
@@ -231,6 +231,9 @@ AzureMetrics
 
 #### <a name="alert-on-intelligent-insights"></a>Intelligent insights 上的警报
 
+> [!IMPORTANT]
+> 如果数据库正常运行，且未生成智能见解，则此查询将失败并出现错误消息：无法解析名为 "rootCauseAnalysis_s" 的标量表达式。 对于数据库不存在任何智能见解的所有情况，都需要此行为。
+
 ```
 let alert_run_interval = 1h;
 let insights_string = "hitting its CPU limits";
@@ -270,7 +273,7 @@ AzureDiagnostics
 > [!NOTE]
 >
 > - 设置此警报的先决条件是监视的托管实例已启用 ResourceUsageStats 日志流式处理，以 Azure SQL Analytics。
-> - 此查询需要设置警报规则，以便在查询中存在现有结果（> 结果）时发出警报，这表示该条件存在于托管实例上。 输出是托管实例上的存储占用百分比。
+> - 此查询需要设置警报规则，以便在存在结果 ( # A0 0 results) 从查询中发出警报时发出警报，表示该条件存在于托管实例上。 输出是托管实例上的存储占用百分比。
 
 #### <a name="cpu-average-consumption-is-above-95-in-the-last-1-hr"></a>CPU 平均消耗在过去1小时内超过95%
 
@@ -286,11 +289,11 @@ AzureDiagnostics
 > [!NOTE]
 >
 > - 设置此警报的先决条件是监视的托管实例已启用 ResourceUsageStats 日志流式处理，以 Azure SQL Analytics。
-> - 此查询需要设置警报规则，以便在查询中存在现有结果（> 结果）时发出警报，这表示该条件存在于托管实例上。 输出是托管实例上已定义期间内的平均 CPU 使用率百分比消耗。
+> - 此查询需要设置警报规则，以便在存在结果 ( # A0 0 results) 从查询中发出警报时发出警报，表示该条件存在于托管实例上。 输出是托管实例上已定义期间内的平均 CPU 使用率百分比消耗。
 
 ### <a name="pricing"></a>定价
 
-虽然 Azure SQL Analytics 可供使用，但诊断遥测的使用情况高于每个月分配的数据引入的免费单位数，请参阅[Log Analytics 定价](https://azure.microsoft.com/pricing/details/monitor)。 提供的免费数据引入单位每月可免费监控多个数据库。 具有较大工作负荷的活动数据库会引入更多数据与空闲数据库。 通过在 Azure SQL Analytics 的导航菜单上选择 "OMS 工作区"，然后选择 "使用情况和估计成本"，可以轻松监视 Azure SQL Analytics 中的数据引入使用量。
+虽然 Azure SQL Analytics 可供使用，但诊断遥测的使用情况高于每个月分配的数据引入的免费单位数，请参阅 [Log Analytics 定价](https://azure.microsoft.com/pricing/details/monitor)。 提供的免费数据引入单位每月可免费监控多个数据库。 具有较大工作负荷的活动数据库会引入更多数据与空闲数据库。 通过在 Azure SQL Analytics 的导航菜单上选择 "OMS 工作区"，然后选择 "使用情况和估计成本"，可以轻松监视 Azure SQL Analytics 中的数据引入使用量。
 
 ## <a name="next-steps"></a>后续步骤
 

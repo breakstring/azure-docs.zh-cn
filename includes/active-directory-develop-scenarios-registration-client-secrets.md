@@ -5,40 +5,38 @@ services: active-directory
 documentationcenter: dev-center-name
 author: jmprieur
 manager: CelesteDG
-editor: ''
 ms.service: active-directory
 ms.devlang: na
 ms.topic: include
 ms.tgt_pltfrm: na
 ms.workload: identity
-ms.date: 07/15/2020
+ms.date: 08/14/2020
 ms.author: jmprieur
-ms.custom: include file
-ms.openlocfilehash: a3acdbb93dd20f0b89e4f99d64f5f7a30ce40623
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.openlocfilehash: 42102f38959911388cefcc141d949e59f24a2c31
+ms.sourcegitcommit: a43a59e44c14d349d597c3d2fd2bc779989c71d7
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87102480"
+ms.lasthandoff: 11/25/2020
+ms.locfileid: "95995994"
 ---
-## <a name="register-secrets-or-certificates"></a>注册机密或证书
+## <a name="add-a-client-secret-or-certificate"></a>添加客户端机密或证书
 
-与任何机密客户端应用程序一样，你需要注册机密或证书。 可以通过 [Azure 门户](https://portal.azure.com/#blade/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/RegisteredAppsPreview)中的交互体验或使用命令行工具（如 PowerShell）注册应用程序机密。
+与任何机密客户端应用程序一样，你需要添加一个机密或证书来充当该应用程序的 *凭据*，以便它可以自行进行身份验证，而无需用户交互。
 
-### <a name="register-client-secrets-by-using-the-application-registration-portal"></a>使用应用程序注册门户注册客户端机密
+可以使用 [Azure 门户](#add-client-credentials-by-using-the-azure-portal)或使用 [PowerShell](#add-client-credentials-by-using-powershell) 之类的命令行工具向客户端应用的注册添加凭据。
 
-在应用程序的“证书和机密”  页上管理客户端凭据：
+### <a name="add-client-credentials-by-using-the-azure-portal"></a>使用 Azure 门户添加客户端凭据
 
-![“证书和机密”页](../articles/active-directory/develop/media/quickstart-update-azure-ad-app-preview/credentials-certificates-secrets.png)
+若要将凭据添加到机密客户端应用程序的应用注册，请按照[快速入门：将应用程序注册到 Microsoft 标识平台](../articles/active-directory/develop/quickstart-register-app.md)中的步骤针对你要添加的凭据类型进行操作：
 
-- 可以通过在 Azure 门户中的应用注册中选择 "**新建客户端密码**" 来创建*客户端机密*。 创建客户端密码时，_必须_先记录机密的字符串，然后才能在 "**证书 & 机密**" 窗格中导航。 永远不会再次显示该密钥的字符串。
-- 在应用程序注册过程中，请使用“上传证书”**** 按钮来上传证书。 Azure AD 仅支持在应用程序上直接注册的证书，而不遵循证书链。
+* [添加客户端密码](../articles/active-directory/develop/quickstart-register-app.md#add-a-client-secret)
+* [添加证书](../articles/active-directory/develop/quickstart-register-app.md#add-a-certificate)
 
-有关详细信息，请参阅[快速入门：配置客户端应用程序以访问 Web api |向应用程序添加凭据](../articles/active-directory/develop/quickstart-configure-app-access-web-apis.md#add-credentials-to-your-web-application)。
+### <a name="add-client-credentials-by-using-powershell"></a>使用 PowerShell 添加客户端凭据
 
-### <a name="register-client-secrets-by-using-powershell"></a>使用 PowerShell 注册客户端机密
+另外，也可以在使用 PowerShell 将应用程序注册到 Microsoft 标识平台时添加凭据。
 
-或者，可以使用命令行工具向 Azure AD 注册应用程序。 [active-directory-dotnetcore-daemon-v2](https://github.com/Azure-Samples/active-directory-dotnetcore-daemon-v2) 示例显示如何向 Azure AD 应用程序注册应用程序机密或证书：
+GitHub 上的 [active-directory-dotnetcore-daemon-v2](https://github.com/Azure-Samples/active-directory-dotnetcore-daemon-v2) 代码示例显示了如何在注册应用程序时添加应用程序机密或证书：
 
-- 有关如何注册应用程序机密的详细信息，请参阅 [AppCreationScripts/Configure.ps1](https://github.com/Azure-Samples/active-directory-dotnetcore-daemon-v2/blob/5199032b352a912e7cc0fce143f81664ba1a8c26/AppCreationScripts/Configure.ps1#L190)。
-- 有关如何向应用程序注册证书的详细信息，请参阅 [AppCreationScripts-withCert/Configure.ps1](https://github.com/Azure-Samples/active-directory-dotnetcore-daemon-v2/blob/5199032b352a912e7cc0fce143f81664ba1a8c26/AppCreationScripts-withCert/Configure.ps1#L162-L178)。
+- 有关如何使用 PowerShell 添加 **客户端机密** 的详细信息，请参阅 [AppCreationScripts/Configure.ps1](https://github.com/Azure-Samples/active-directory-dotnetcore-daemon-v2/blob/5199032b352a912e7cc0fce143f81664ba1a8c26/AppCreationScripts/Configure.ps1#L190)。
+- 有关如何使用 PowerShell 添加 **证书** 的详细信息，请参阅 [AppCreationScripts-withCert/Configure.ps1](https://github.com/Azure-Samples/active-directory-dotnetcore-daemon-v2/blob/5199032b352a912e7cc0fce143f81664ba1a8c26/AppCreationScripts-withCert/Configure.ps1#L162-L178)。

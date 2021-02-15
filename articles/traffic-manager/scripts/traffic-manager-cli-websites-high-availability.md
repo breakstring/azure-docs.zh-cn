@@ -3,7 +3,7 @@ title: 为实现应用程序的高可用性路由流量 - Azure CLI - 流量管�
 description: Azure CLI 脚本示例 - 为实现应用程序的高可用性路由流量
 services: traffic-manager
 documentationcenter: traffic-manager
-author: rohinkoul
+author: duongau
 manager: twooley
 tags: azure-infrastructure
 ms.assetid: ''
@@ -13,13 +13,13 @@ ms.topic: article
 ms.tgt_pltfrm: na
 ms.workload: traffic-manager
 ms.date: 04/26/2018
-ms.author: rohink
-ms.openlocfilehash: e108fbe54ce67d4eb354319450259fc410462c53
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.author: duau
+ms.openlocfilehash: abac2e5b1fcba65db92edd2bcc2f390ec0114f59
+ms.sourcegitcommit: 0aec60c088f1dcb0f89eaad5faf5f2c815e53bf8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "81460607"
+ms.lasthandoff: 01/14/2021
+ms.locfileid: "98185336"
 ---
 # <a name="route-traffic-for-high-availability-of-applications-using-azure-cli"></a>使用 Azure CLI 为实现应用程序的高可用性路由流量
 
@@ -49,14 +49,14 @@ az group delete --name myResourceGroup2 --yes
 
 | 命令 | 注释 |
 |---|---|
-| [az group create](https://docs.microsoft.com/cli/azure/group) | 创建用于存储所有资源的资源组。 |
-| [az appservice plan create](https://docs.microsoft.com/cli/azure/appservice/plan) | 创建应用服务计划。 这与 Azure Web 应用的服务器场类似。 |
-| [az webapp web create](https://docs.microsoft.com/cli/azure/webapp#az-webapp-create) | 创建应用服务计划中的 Azure Web 应用。 |
-| [az network traffic-manager profile create](https://docs.microsoft.com/cli/azure/network/traffic-manager/profile) | 创建 Azure 流量管理器配置文件。 |
-| [az network traffic-manager endpoint create](https://docs.microsoft.com/cli/azure/network/traffic-manager/endpoint) | 将终结点添加到 Azure 流量管理器配置文件。 |
+| [az group create](/cli/azure/group) | 创建用于存储所有资源的资源组。 |
+| [az appservice plan create](/cli/azure/appservice/plan) | 创建应用服务计划。 这与 Azure Web 应用的服务器场类似。 |
+| [az webapp web create](/cli/azure/webapp#az-webapp-create) | 创建应用服务计划中的 Azure Web 应用。 |
+| [az network traffic-manager profile create](/cli/azure/network/traffic-manager/profile) | 创建 Azure 流量管理器配置文件。 |
+| [az network traffic-manager endpoint create](/cli/azure/network/traffic-manager/endpoint) | 将终结点添加到 Azure 流量管理器配置文件。 |
 
 ## <a name="next-steps"></a>后续步骤
 
-有关 Azure CLI 的详细信息，请参阅 [Azure CLI 文档](https://docs.microsoft.com/cli/azure)。
+有关 Azure CLI 的详细信息，请参阅 [Azure CLI 文档](/cli/azure)。
 
 可在 [Azure 网络文档](../cli-samples.md)中找到其他应用服务 CLI 脚本示例。

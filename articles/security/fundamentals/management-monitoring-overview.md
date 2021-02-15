@@ -13,26 +13,26 @@ ms.devlang: na
 ms.topic: article
 ms.tgt_pltfrm: na
 ms.workload: na
-ms.date: 10/28/2019
+ms.date: 01/24/2021
 ms.author: terrylan
-ms.openlocfilehash: 7e6fe4f0db31687d402f960f2752fe021d3ec9d3
-ms.sourcegitcommit: cee72954f4467096b01ba287d30074751bcb7ff4
+ms.openlocfilehash: d85b1fdd433c372bb41adec6e3d33013f19363f0
+ms.sourcegitcommit: 3c8964a946e3b2343eaf8aba54dee41b89acc123
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/30/2020
-ms.locfileid: "87448354"
+ms.lasthandoff: 01/25/2021
+ms.locfileid: "98747167"
 ---
 # <a name="azure-security-management-and-monitoring-overview"></a>Azure 安全管理和监视概述
 本文概述了 Azure 提供的安全功能和服务，以帮助管理和监视 Azure 云服务和虚拟机。
 
-## <a name="role-based-access-control"></a>基于角色的访问控制
+## <a name="azure-role-based-access-control"></a>Azure 基于角色的访问控制
 
-基于角色的访问控制 (RBAC) 为 Azure 资源提供详细的访问管理。 使用 RBAC，可以仅授予用户执行其作业所需的访问权限。 RBAC 还有助于确保用户离开组织后无法访问云中的资源。
+Azure 基于角色的访问控制 (Azure RBAC) 为 Azure 资源提供详细的访问管理。 使用 Azure RBAC，可以仅授予用户执行其作业所需的访问权限。 Azure RBAC 还有助于确保用户离开组织后无法访问云中的资源。
 
 了解详细信息：
 
-* [有关 RBAC 的 Active Directory 团队博客](https://cloudblogs.microsoft.com/enterprisemobility/?product=azure-active-directory)
-* [Azure 基于角色的访问控制（Azure RBAC）](../../role-based-access-control/role-assignments-portal.md)
+* [有关 Azure RBAC 的 Active Directory 团队博客](https://cloudblogs.microsoft.com/enterprisemobility/?product=azure-active-directory)
+* [Azure 基于角色的访问控制 (Azure RBAC)](../../role-based-access-control/role-assignments-portal.md)
 
 ## <a name="antimalware"></a>反恶意软件
 
@@ -40,7 +40,7 @@ ms.locfileid: "87448354"
 
 适用于 Azure 云服务和虚拟机的 Microsoft 反恶意软件提供了为 PaaS 角色和虚拟机安装反恶意软件代理的能力。 基于 System Center Endpoint Protection，此功能将经验证的本地安全技术引入到了云。
 
-我们还为 Azure 平台中趋势的[深度安全](https://www.trendmicro.com/us/enterprise/cloud-solutions/deep-security/)和[SecureCloud](https://www.trendmicro.com/us/enterprise/cloud-solutions/secure-cloud/)产品提供了深度集成。 DeepSecurity 是一个防病毒解决方案，SecureCloud 是一个加密解决方案。 DeepSecurity 通过扩展模型部署在 VM 内部。 通过 Azure 门户 UI 和 PowerShell，用户可以选择使用即将启动的新 VM 或已部署的现有 VM 内部的 DeepSecurity。
+我们还为 Azure 平台中趋势的 [深度安全](https://www.trendmicro.com/us/enterprise/cloud-solutions/deep-security/) 和 [SecureCloud](https://www.trendmicro.com/us/enterprise/cloud-solutions/secure-cloud/) 产品提供了深度集成。 DeepSecurity 是一个防病毒解决方案，SecureCloud 是一个加密解决方案。 DeepSecurity 通过扩展模型部署在 VM 内部。 通过 Azure 门户 UI 和 PowerShell，用户可以选择使用即将启动的新 VM 或已部署的现有 VM 内部的 DeepSecurity。
 
 在 Azure 上也支持 Symantec Endpoint Protection (SEP)。 通过门户集成，你能够表明想要在 VM 内使用 SEP。 SEP 可以通过 Azure 门户安装在新的 VM 上，也可以通过 PowerShell 安装在现有 VM 上。
 
@@ -48,25 +48,25 @@ ms.locfileid: "87448354"
 
 * [在 Azure 虚拟机上部署反恶意软件解决方案](https://azure.microsoft.com/blog/deploying-antimalware-solutions-on-azure-virtual-machines/)
 * [适用于 Azure 云服务和虚拟机的 Microsoft 反恶意软件](antimalware.md)
-* [如何在 Windows VM 上安装和配置 Trend Micro Deep Security 即服务](/azure/virtual-machines/windows/classic/install-trend)
-* [如何在 Windows VM 上安装和配置 Symantec Endpoint Protection](/azure/virtual-machines/windows/classic/install-symantec)
+* [如何在 Windows VM 上安装和配置 Trend Micro Deep Security 即服务](../../virtual-machines/extensions/trend.md)
+* [如何在 Windows VM 上安装和配置 Symantec Endpoint Protection](../../virtual-machines/extensions/symantec.md)
 * [New Antimalware Options for Protecting Azure Virtual Machines](https://azure.microsoft.com/blog/new-antimalware-options-for-protecting-azure-virtual-machines/)（用于保护 Azure 虚拟机的新反恶意软件选项）
 
 ## <a name="multi-factor-authentication"></a>多重身份验证
 
-Azure 多重身份验证是一种需要使用多种验证方法的身份验证方法。 它为用户登录和事务添加了关键的附加安全层。
+Azure AD 多重身份验证是一种需要使用多种验证方法的身份验证方法。 它为用户登录和事务添加了关键的附加安全层。
 
 多重身份验证可帮助保护对数据和应用程序的访问，同时可以满足用户对简单登录过程的需求。 它通过各种验证选项（例如电话、短信、移动应用通知或验证码）和第三方 OATH 令牌来提供强大的身份验证。
 
 了解详细信息：
 
 * [多重身份验证](https://azure.microsoft.com/documentation/services/multi-factor-authentication/)
-* [什么是 Azure 多重身份验证？](/azure/active-directory/authentication/multi-factor-authentication)
-* [Azure 多重身份验证的工作原理](../../active-directory/authentication/concept-mfa-howitworks.md)
+* [什么是 Azure AD 多重身份验证？](../../active-directory/authentication/concept-mfa-howitworks.md)
+* [Azure AD 多重身份验证的工作原理](../../active-directory/authentication/concept-mfa-howitworks.md)
 
 ## <a name="expressroute"></a>ExpressRoute
 
-可使用 Azure ExpressRoute 通过连接服务提供商所提供的专用连接，将本地网络扩展到 Microsoft 云。 使用 ExpressRoute 可与 Azure、Office 365 和 CRM Online 等 Microsoft 云服务建立连接。 连接可以来自：
+可使用 Azure ExpressRoute 通过连接服务提供商所提供的专用连接，将本地网络扩展到 Microsoft 云。 使用 ExpressRoute 可与 Azure、Microsoft 365 和 CRM Online 等 Microsoft 云服务建立连接。 连接可以来自：
 
 * 任意位置之间的 (IP VPN) 网络。
 * 点到点以太网。
@@ -112,25 +112,28 @@ Azure AD 标识保护提供了可疑登录活动和潜在漏洞的统一视图�
 
 了解详细信息：
 
-* [Azure Active Directory 标识保护](/azure/active-directory/active-directory-identityprotection)
+* [Azure Active Directory 标识保护](../../active-directory/identity-protection/overview-identity-protection.md)
 * [第 9 频道：Azure AD 和标识展示：“标识保护”预览](https://channel9.msdn.com/Series/Azure-AD-Identity/Azure-AD-and-Identity-Show-Identity-Protection-Preview)
 
 ## <a name="security-center"></a>安全中心
 
-Azure 安全中心可帮助防范、检测和应对威胁。 通过安全中心可提高对 Azure 资源安全性的可见性和控制力度。 它为 Azure 订阅提供集成的安全监控和策略管理。 它有助于检测可能会被忽视的威胁，适用于各种安全解决方案生态系统。
+Azure 安全中心可帮助防范、检测和应对威胁。 利用安全中心，你可以更深入地了解 Azure 资源以及混合云环境中的资源的安全性。 
+
+安全中心对已连接的资源执行持续的安全评估，并将其配置和部署与 [Azure 安全基准](../benchmarks/introduction.md) 进行比较，以提供针对你的环境定制的详细安全建议。
 
 安全中心通过以下方式帮助优化和监视 Azure 资源的安全：
 
-* 你可根据以下内容为 Azure 订阅资源定义策略：
-  * 公司的安全需求。
-  * 应用程序的类型或每个订阅中数据的敏感度。
-* 监视 Azure 虚拟机、网络和应用程序的状态。
-* 提供按优先级排列的安全警报列表，包括集成的合作伙伴解决方案中的警报。 它还提供了快速调查攻击所需的信息以及如何修复攻击的建议。
+- 你可根据以下内容为 Azure 订阅资源定义策略：
+    - 组织的安全需求。
+    - 应用程序的类型或每个订阅中数据的敏感度。
+    - 适用于你的订阅的任何行业或法规标准或基准。 
+- 监视 Azure 虚拟机、网络和应用程序的状态。
+- 提供按优先级排列的安全警报列表，包括集成的合作伙伴解决方案中的警报。 它还提供了快速调查攻击所需的信息以及如何修复攻击的建议。
 
 了解详细信息：
 
-* [Azure 安全中心简介](../../security-center/security-center-intro.md)
-* [提高 Azure 安全中心中的安全评分](../../security-center/security-center-secure-score.md)
+* [Azure 安全中心简介](../../security-center/security-center-introduction.md)
+* [提高 Azure 安全中心中的安全评分](../../security-center/secure-score-security-controls.md)
 
 ## <a name="intelligent-security-graph"></a>Intelligent Security Graph
 

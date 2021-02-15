@@ -9,18 +9,18 @@ ms.topic: quickstart
 ms.date: 05/08/2020
 ms.author: chez
 ms.reviewer: mariozi
-ms.openlocfilehash: 9caa4690fa6b9d6c473bb8863acdcbbe15a37fba
-ms.sourcegitcommit: 73ac360f37053a3321e8be23236b32d4f8fb30cf
+ms.openlocfilehash: f1a7bffc05d83b30fe9e5bcd6e17bf6bc0192e1d
+ms.sourcegitcommit: 9eda79ea41c60d58a4ceab63d424d6866b38b82d
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 06/30/2020
-ms.locfileid: "85569339"
+ms.lasthandoff: 11/30/2020
+ms.locfileid: "96348936"
 ---
 # <a name="encrypt-azure-data-factory-with-customer-managed-keys"></a>使用客户管理的密钥加密 Azure 数据工厂
 
 [!INCLUDE[appliesto-adf-xxx-md](includes/appliesto-adf-xxx-md.md)]
 
-Azure 数据工厂对静态数据进行加密，其中包括实体定义、运行期间缓存的所有数据以及用于数据预览的缓存数据。 默认情况下，使用随机生成并由 Microsoft 管理的密钥加密数据，该密钥只会分配到数据工厂。 为了获得额外的安全保证，现在可以通过 Azure 数据工厂客户管理的密钥功能启用“创建自己的密钥”(BYOK)。 指定客户管理的密钥时，数据工厂会使用工厂系统密钥和 CMK 加密客户数据。 缺少两者中的任何一个都会导致拒绝访问数据和工厂。
+Azure 数据工厂对静态数据进行加密，其中包括实体定义和在运行期间缓存的所有数据。 默认情况下，使用随机生成并由 Microsoft 管理的密钥加密数据，该密钥只会分配到数据工厂。 为了获得额外的安全保证，现在可以通过 Azure 数据工厂客户管理的密钥功能启用“创建自己的密钥”(BYOK)。 指定客户管理的密钥时，数据工厂会使用工厂系统密钥和 CMK 加密客户数据。 缺少两者中的任何一个都会导致拒绝访问数据和工厂。
 
 存储客户管理的密钥需要 Azure 密钥保管库。 可以创建自己的密钥并将其存储在密钥保管库中，也可以使用 Azure 密钥保管库 API 来生成密钥。 密钥保管库和数据工厂必须位于同一 Azure Active Directory (Azure AD) 租户和同一区域，但可以位于不同订阅中。 有关 Azure 密钥保管库的详细信息，请参阅[什么是 Azure 密钥保管库？](../key-vault/general/overview.md)
 
@@ -47,8 +47,8 @@ Azure 数据工厂对静态数据进行加密，其中包括实体定义、运�
 
 要在数据工厂中使用客户管理的密钥，需要在密钥保管库上设置两个属性，即“软删除”和“不清除” 。 可以在新的或现有的密钥保管库上使用 PowerShell 或 Azure CLI 启用这些属性。 若要了解如何在现有的密钥保管库上启用这些属性，请参阅下方其中一篇文章中标题为“启用软删除”和“启用清除保护”的部分 ：
 
-- [如何在 PowerShell 中使用软删除](../key-vault/general/soft-delete-powershell.md)
-- [如何在 CLI 中使用软删除](../key-vault/general/soft-delete-cli.md)
+- [如何在 PowerShell 中使用软删除](../key-vault/general/key-vault-recovery.md)
+- [如何在 CLI 中使用软删除](../key-vault/general/key-vault-recovery.md)
 
 如果通过 Azure 门户新建 Azure 密钥保管库，可通过如下方式启用“软删除”和“不清除” ：
 
@@ -76,7 +76,7 @@ Azure 数据工厂对静态数据进行加密，其中包括实体定义、运�
 
     ![屏幕截图：从密钥保管库获取密钥 URI](media/enable-customer-managed-key/04-get-key-identifier.png)
 
-1. 启动 Azure 数据工厂门户，然后使用左侧导航栏跳转到“数据工厂主页”
+1. 启动 Azure 数据工厂门户，然后使用左侧导航栏跳转到数据工厂管理门户
 
 1. 单击“客户管理的密钥”图标
 

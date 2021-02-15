@@ -7,12 +7,12 @@ ms.service: static-web-apps
 ms.topic: tutorial
 ms.date: 06/08/2020
 ms.author: cshoe
-ms.openlocfilehash: c4211f21d78ac0e06743c97f1081804fd641f9d2
-ms.sourcegitcommit: 97a0d868b9d36072ec5e872b3c77fa33b9ce7194
+ms.openlocfilehash: 673852f8f9aa81c838a7c1db68681bb9ee0b7e0b
+ms.sourcegitcommit: aeba98c7b85ad435b631d40cbe1f9419727d5884
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/04/2020
-ms.locfileid: "87563563"
+ms.lasthandoff: 01/04/2021
+ms.locfileid: "97862023"
 ---
 # <a name="tutorial-publish-a-jekyll-site-to-azure-static-web-apps-preview"></a>教程：将 Jekyll 网站发布到 Azure 静态 Web 应用（预览）
 
@@ -146,14 +146,11 @@ Azure 静态 Web 应用使用 GitHub 来发布你的网站。 以下步骤展示
 
 1. 在文本编辑器中打开 Jekyll 应用，然后打开 .github/workflows/azure-pages-<WORKFLOW_NAME>.yml 文件。
 
-1. 将 `- uses: actions/checkout@v2` 块后面的行添加到以下配置块。
+1. 在行 `- uses: actions/checkout@v2` 后，添加以下配置块。
 
     ```yml
-    - uses: actions/checkout@v2
-      with:
-        submodules: true
     - name: Set up Ruby
-      uses: ruby/setup-ruby@ec106b438a1ff6ff109590de34ddc62c540232e0
+      uses: ruby/setup-ruby@v1.59.1
       with:
         ruby-version: 2.6
     - name: Install dependencies

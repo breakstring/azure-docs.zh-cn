@@ -10,12 +10,12 @@ ms.subservice: face-api
 ms.topic: conceptual
 ms.date: 04/23/2019
 ms.author: pafarley
-ms.openlocfilehash: 164e5a8c107f445b376d26f9be7db92a7983b0d3
-ms.sourcegitcommit: 58faa9fcbd62f3ac37ff0a65ab9357a01051a64f
+ms.openlocfilehash: 00dadf8a91b7ed01ab9f91933d296744305a95af
+ms.sourcegitcommit: 59f506857abb1ed3328fda34d37800b55159c91d
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/29/2020
-ms.locfileid: "73743075"
+ms.lasthandoff: 10/24/2020
+ms.locfileid: "92518800"
 ---
 # <a name="face-recognition-concepts"></a>人脸识别的概念
 
@@ -58,7 +58,7 @@ ms.locfileid: "73743075"
 使用以下提示来确保输入的图像提供最准确的识别结果：
 
 * 支持的输入图像格式为 JPEG、PNG、GIF（第一帧）和 BMP。
-* 图像文件不得大于 4 MB。
+* 图像文件大小不应超过 6 MB。
 * 创建 Person 对象时，请使用具有不同类型的角度和照明效果的照片。
 * 某些人脸会因技术难题而识别不到，例如：
   * 具有极端照明（例如严重的背光）的图像。
@@ -69,6 +69,6 @@ ms.locfileid: "73743075"
 
 ## <a name="next-steps"></a>后续步骤
 
-熟悉人脸识别的概念后，接下来请了解如何编写一个可以针对训练的 PersonGroup 识别人脸的脚本。
+现在，你熟悉了人脸识别概念，编写了一个脚本，用于识别训练有素的 Person group 的人脸。
 
-* [识别图像中的人脸](../Face-API-How-to-Topics/HowtoIdentifyFacesinImage.md)
+* [人脸客户端库快速入门](../Quickstarts/client-libraries.md)

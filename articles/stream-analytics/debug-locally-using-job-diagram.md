@@ -3,16 +3,15 @@ title: 在 Visual Studio 中使用作业关系图在本地调试 Azure 流分析
 description: 本文介绍如何在适用于 Visual Studio 的 Azure 流分析工具中使用作业关系图在本地调试查询。
 author: su-jie
 ms.author: sujie
-ms.reviewer: mamccrea
 ms.service: stream-analytics
 ms.topic: how-to
 ms.date: 01/23/2020
-ms.openlocfilehash: 86367f1dce3cc8040555827935e9ca2f9f9fb4c5
-ms.sourcegitcommit: e132633b9c3a53b3ead101ea2711570e60d67b83
+ms.openlocfilehash: d0e94fda1fb21be1a01516f4cecf657426ae867e
+ms.sourcegitcommit: 42a4d0e8fa84609bec0f6c241abe1c20036b9575
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/07/2020
-ms.locfileid: "86045393"
+ms.lasthandoff: 01/08/2021
+ms.locfileid: "98019442"
 ---
 # <a name="debug-azure-stream-analytics-queries-locally-using-job-diagram-in-visual-studio"></a>在 Visual Studio 中使用作业关系图在本地调试 Azure 流分析查询
 
@@ -87,7 +86,7 @@ ms.locfileid: "86045393"
   
 #### <a name="output-sinks-live-output"></a>输出接收器（实时输出）
 
-![作业关系图 - 本地输出接收器](./media/debug-locally-using-job-diagram/live-output.png)
+![显示本地输出接收器的作业关系图。](./media/debug-locally-using-job-diagram/live-output.png)
 
 |指标|说明|
 |-|-|
@@ -119,7 +118,7 @@ ms.locfileid: "86045393"
 
 * 由于身份验证模型的限制，Power BI 和 Azure Data Lake Storage Gen1 输出接收器不受支持。
 
-* 只有云输入选项具有[时间策略](stream-analytics-out-of-order-and-late-events.md)支持，本地输入选项不具备此支持。
+* 只有云输入选项具有[时间策略](./stream-analytics-time-handling.md)支持，本地输入选项不具备此支持。
 
 ## <a name="next-steps"></a>后续步骤
 

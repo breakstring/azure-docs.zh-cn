@@ -7,12 +7,12 @@ ms.service: postgresql
 ms.subservice: hyperscale-citus
 ms.topic: reference
 ms.date: 08/10/2020
-ms.openlocfilehash: c11fd7a9cb6fdd3eb976d0b9e6a91fdc69bf9fba
-ms.sourcegitcommit: 1aef4235aec3fd326ded18df7fdb750883809ae8
+ms.openlocfilehash: 74403365fe48584fa5d1db0e349c9dfc3772d874
+ms.sourcegitcommit: ad677fdb81f1a2a83ce72fa4f8a3a871f712599f
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/12/2020
-ms.locfileid: "88136739"
+ms.lasthandoff: 12/17/2020
+ms.locfileid: "97652839"
 ---
 # <a name="system-tables-and-views"></a>系统表和视图
 
@@ -27,7 +27,7 @@ ms.locfileid: "88136739"
 
 > [!NOTE]
 >
-> 运行较早版本的 Citus 引擎的超大规模服务器组可能不提供以下列出的所有表。
+> 运行旧版 Citus 引擎的超大规模 (Citus) 服务器组可能不提供以下列出的所有表。
 
 ### <a name="partition-table"></a>分区表
 
@@ -160,7 +160,7 @@ Citus.pg \_ dist \_ 对象表包含一个对象列表，这些对象（如类型
 | distribution_argument_index | integer | 仅对分布式函数/过程有效      |
 | colocationid                | integer | 仅对分布式函数/过程有效      |
 
-\"稳定地址 \" 唯一标识独立于特定服务器的对象。 超大规模 (Citus) 使用使用[pg 将 \_ \_ 对象标识 \_ 为 \_ address ( # B3](https://www.postgresql.org/docs/current/functions-info.html#FUNCTIONS-INFO-OBJECT-TABLE)函数创建的稳定地址在 PostgreSQL 升级期间跟踪对象。
+\"稳定地址 \" 唯一标识独立于特定服务器的对象。 超大规模 (Citus) 使用使用 [pg 将 \_ \_ 对象标识 \_ 为 \_ address ( # B3 ](https://www.postgresql.org/docs/current/functions-info.html#FUNCTIONS-INFO-OBJECT-TABLE) 函数创建的稳定地址在 PostgreSQL 升级期间跟踪对象。
 
 下面 \' 是如何 `create_distributed_function()` 向表中添加条目的示例 `citus.pg_dist_object` ：
 
@@ -208,7 +208,7 @@ colocationid                |
 
 ### <a name="colocation-group-table"></a>归置组表
 
-Pg \_ dist \_ 归置表包含有关 \' 应将分片放在一起或定位在一起的[colocated](concepts-hyperscale-colocation.md)表的信息。
+Pg \_ dist \_ 归置表包含有关 \' 应将分片放在一起或定位在一起的[](concepts-hyperscale-colocation.md)表的信息。
 当两个表位于同一个归置组中时，超大规模 (Citus) 确保将具有相同分区值的分片放在同一工作节点上。
 归置支持联接优化、某些分布式汇总和外键支持。 在两个表之间的分片计数、复制因子和分区列类型均匹配时，将推断分片归置;但是，如果需要，可以在创建分布式表时指定自定义归置组。
 
@@ -229,7 +229,7 @@ SELECT * from pg_dist_colocation;
 
 ### <a name="rebalancer-strategy-table"></a>Rebalancer 策略表
 
-此表定义[rebalance_table_shards](reference-hyperscale-functions.md#rebalance_table_shards)可用来确定分片移动位置的策略。
+此表定义 [rebalance_table_shards](reference-hyperscale-functions.md#rebalance_table_shards) 可用来确定分片移动位置的策略。
 
 | 名称                           | 类型    | 说明                                                                                                                                       |
 |--------------------------------|---------|---------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -282,7 +282,7 @@ minimum_threshold               | 0.01
         $$ LANGUAGE sql;
     ```
 
--   按照[citus_stat_statements](reference-hyperscale-metadata.md#query-statistics-table)的度量值，按发送到分片的查询数重新平衡：
+-   按照 [citus_stat_statements](reference-hyperscale-metadata.md#query-statistics-table)的度量值，按发送到分片的查询数重新平衡：
 
     ```postgresql
     -- example of shard_cost_function
@@ -325,7 +325,7 @@ minimum_threshold               | 0.01
 
 ### <a name="query-statistics-table"></a>查询统计信息表
 
-超大规模 (Citus) 提供 `citus_stat_statements` 有关如何执行查询的统计信息。 它与 \' (类似，可以与 PostgreSQL 中的[pg \_ stat \_ 语句](https://www.postgresql.org/docs/current/static/pgstatstatements.html)视图) 联接，后者跟踪有关查询速度的统计信息。
+超大规模 (Citus) 提供 `citus_stat_statements` 有关如何执行查询的统计信息。 它与 \' (类似，可以与 PostgreSQL 中的 [pg \_ stat \_ 语句](https://www.postgresql.org/docs/current/static/pgstatstatements.html) 视图) 联接，后者跟踪有关查询速度的统计信息。
 
 此视图可以跟踪对多租户应用程序中的发起租户的查询，这有助于确定何时进行租户隔离。
 
@@ -398,7 +398,7 @@ calls         | 1
 -   **citus \_ worker \_ stat \_ 活动**：显示针对辅助角色的查询，包括针对单个分片的片段查询。
 -   **citus \_ lock \_ 等待**：整个群集中阻止的查询。
 
-前两个视图包括[pg \_ stat \_ 活动](https://www.postgresql.org/docs/current/static/monitoring-stats.html#PG-STAT-ACTIVITY-VIEW)的所有列，以及启动查询的辅助角色的主机/端口和群集协调器节点的主机/端口。
+前两个视图包括 [pg \_ stat \_ 活动](https://www.postgresql.org/docs/current/static/monitoring-stats.html#PG-STAT-ACTIVITY-VIEW) 的所有列，以及启动查询的辅助角色的主机/端口和群集协调器节点的主机/端口。
 
 例如，请考虑计算分布式表中的行数：
 
@@ -524,5 +524,5 @@ blocking_node_port                    | 5432
 
 ## <a name="next-steps"></a>后续步骤
 
-* 了解某些[超大规模函数](reference-hyperscale-functions.md)如何更改系统表
+* 了解某些 [超大规模 (Citus) 函数](reference-hyperscale-functions.md) 如何更改系统表
 * 查看[节点和表](concepts-hyperscale-nodes.md)的概念

@@ -1,7 +1,7 @@
 ---
-title: JavaScript 单页应用教程 - 授权代码流 | Azure
+title: 教程：创建使用身份验证代码流的 JavaScript 单页应用 | Azure
 titleSuffix: Microsoft identity platform
-description: JavaScript SPA 应用程序如何通过 Azure Active Directory v2.0 终结点使用授权代码流调用需要访问令牌的 API
+description: 在本教程中，你将创建一个 JavaScript SPA，它可以使用户登录，并使用身份验证代码流从 Microsoft 标识平台获取访问令牌，并调用 Microsoft Graph API。
 services: active-directory
 author: hahamil
 manager: CelesteDG
@@ -11,33 +11,37 @@ ms.topic: tutorial
 ms.workload: identity
 ms.date: 07/17/2020
 ms.author: hahamil
-ms.custom: aaddev, devx-track-javascript
-ms.openlocfilehash: 4613e22193de8dc374d1a9e1a293c317fb9c1b9b
-ms.sourcegitcommit: a76ff927bd57d2fcc122fa36f7cb21eb22154cfa
+ms.custom: aaddev, devx-track-js
+ms.openlocfilehash: 1ec046ca6b42a5ca8f33b0347c562c85abd42684
+ms.sourcegitcommit: 5cdd0b378d6377b98af71ec8e886098a504f7c33
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/28/2020
-ms.locfileid: "87311530"
+ms.lasthandoff: 01/25/2021
+ms.locfileid: "98756174"
 ---
 # <a name="tutorial-sign-in-users-and-call-the-microsoft-graph-api-from-a-javascript-single-page-app-spa-using-auth-code-flow"></a>教程：使用授权代码流让用户登录并从 JavaScript 单页应用 (SPA) 调用 Microsoft Graph API
 
-本教程演示如何创建一个 JavaScript 单页应用程序 (SPA)，它使用适用于 JavaScript v2.0 的 Microsoft 身份验证库 (MSAL) 执行以下操作：
+在本教程中，你将生成一个 JavaScript 单页应用程序 (SPA)，其使用 PKCE 的授权代码流来登录用户并调用 Microsoft Graph。 生成的 SPA 使用适用于 JavaScript v2.0 的 Microsoft 身份验证库 (MSAL)。
 
+在本教程中：
 > [!div class="checklist"]
 > * 通过 PKCE 执行 OAuth 2.0 授权代码流
 > * 将个人 Microsoft 帐户以及工作和学校帐户登录
 > * 获取访问令牌
-> * 调用需要从 Microsoft 标识平台终结点获取的访问令牌的 Microsoft Graph 或你自己的 API
+> * 调用需要从 Microsoft 标识平台获取的访问令牌的 Microsoft Graph 或你自己的 API
 
 MSAL.js 2.0 支持浏览器中的授权代码流（而不是隐式授权流），从而在 MSAL.js 1.0 的基础上进行了改进。 MSAL.js 2.0 不支持隐式流。
 
-[!INCLUDE [MSAL.js 2.0 and Azure AD B2C temporary incompatibility notice](../../../includes/msal-b2c-cors-compatibility-notice.md)]
+## <a name="prerequisites"></a>先决条件
+
+* 用于运行本地 Web 服务器的 [Node.js](https://nodejs.org/en/download/)
+* [Visual Studio Code](https://code.visualstudio.com/download) 或其他代码编辑器
 
 ## <a name="how-the-tutorial-app-works"></a>教程应用的工作方式
 
 :::image type="content" source="media/tutorial-v2-javascript-auth-code/diagram-01-auth-code-flow.png" alt-text="展示单页应用程序中的授权代码流的示意图":::
 
-在本教程中创建的应用程序使 JavaScript SPA 可以通过从 Microsoft 标识平台终结点获取安全令牌来查询 Microsoft Graph API。 此方案中，用户登录后请求了访问令牌，并在授权标头将其添加到 HTTP 请求。 令牌获取和更新由适用于 JavaScript 的 Microsoft 身份验证库 (MSAL.js) 处理。
+在本教程中创建的应用程序使 JavaScript SPA 可以通过从 Microsoft 标识平台获取安全令牌来查询 Microsoft Graph API。 此方案中，用户登录后请求了访问令牌，并在授权标头将其添加到 HTTP 请求。 令牌获取和更新由适用于 JavaScript 的 Microsoft 身份验证库 (MSAL.js) 处理。
 
 本教程使用以下库：
 
@@ -52,11 +56,6 @@ MSAL.js 2.0 支持浏览器中的授权代码流（而不是隐式授权流）�
 然后，若要在执行代码示例之前对其进行配置，请跳到[配置步骤](#register-your-application)。
 
 若要继续学习本教程并自行生成应用程序，请前进到下一节[先决条件](#prerequisites)。
-
-## <a name="prerequisites"></a>先决条件
-
-* 用于运行本地 Web 服务器的 [Node.js](https://nodejs.org/en/download/)
-* [Visual Studio Code](https://code.visualstudio.com/download) 或其他代码编辑器
 
 ## <a name="create-your-project"></a>创建项目
 
@@ -120,13 +119,13 @@ MSAL.js 2.0 支持浏览器中的授权代码流（而不是隐式授权流）�
 ```
 msal-spa-tutorial/
 ├── app
-│   ├── authConfig.js
-│   ├── authPopup.js
-│   ├── authRedirect.js
-│   ├── graphConfig.js
-│   ├── graph.js
-│   ├── index.html
-│   └── ui.js
+│   ├── authConfig.js
+│   ├── authPopup.js
+│   ├── authRedirect.js
+│   ├── graphConfig.js
+│   ├── graph.js
+│   ├── index.html
+│   └── ui.js
 └── server.js
 ```
 
@@ -352,7 +351,7 @@ const graphConfig = {
 
 - `Enter_the_Graph_Endpoint_Here` 是应用程序应与之通信的 Microsoft Graph API 实例。
   - 对于全球 Microsoft Graph API 终结点，请将此字符串的两个实例都替换为 `https://graph.microsoft.com`。
-  - 对于国家/地区云部署中的终结点，请参阅 Microsoft Graph 文档中的[国家/地区云部署](https://docs.microsoft.com/graph/deployments)。
+  - 对于国家/地区云部署中的终结点，请参阅 Microsoft Graph 文档中的[国家/地区云部署](/graph/deployments)。
 
 如果使用的是全球终结点，则 graphConfig.js 中的 `graphMeEndpoint` 和 `graphMailEndpoint` 值应类似于：
 
@@ -361,7 +360,7 @@ graphMeEndpoint: "https://graph.microsoft.com/v1.0/me",
 graphMailEndpoint: "https://graph.microsoft.com/v1.0/me/messages"
 ```
 
-## <a name="use-microsoft-authentication-library-msal-to-sign-in-user"></a>使用 Microsoft 身份验证库 (MSAL) 登录用户
+## <a name="use-the-microsoft-authentication-library-msal-to-sign-in-user"></a>使用 Microsoft 身份验证库 (MSAL) 登录用户
 
 ### <a name="pop-up"></a>弹出
 
@@ -551,19 +550,21 @@ function readMail() {
 
 此时，会将受 PKCE 保护的授权代码发送到受 CORS 保护的令牌终结点，并使用该代码来交换令牌。 应用程序将会收到 ID 令牌、访问令牌和刷新令牌，msal.js 将处理这些令牌，令牌中包含的信息将会被缓存。
 
-ID 令牌包含有关用户的基本信息，例如其显示名称。 如果你计划使用 ID 令牌提供的任何数据，则后端服务器必须验证该令牌，以保证该令牌是向应用程序的有效用户颁发的。 刷新令牌的生存期有限，将在 24 小时后过期。 刷新令牌可用于静默获取新的访问令牌。
+ID 令牌包含有关用户的基本信息，例如其显示名称。 如果你计划使用 ID 令牌提供的任何数据，则后端服务器必须验证该令牌，以保证该令牌是向应用程序的有效用户颁发的。
+
+访问令牌的生存期有限，将在 24 小时后过期。 刷新令牌可用于静默获取新的访问令牌。
 
 在本教程中创建的 SPA 调用 `acquireTokenSilent` 和/或 `acquireTokenPopup` 来获取用于查询 Microsoft Graph API 以获取用户配置文件信息的访问令牌。 如需有关如何验证 ID 令牌的示例，请参阅 GitHub 上的 [active-directory-javascript-singlepageapp-dotnet-webapi-v2](https://github.com/Azure-Samples/active-directory-javascript-singlepageapp-dotnet-webapi-v2) 示例应用程序。 该示例使用 ASP.NET Web API 进行令牌验证。
 
 #### <a name="get-a-user-token-interactively"></a>以交互方式获取用户令牌
 
-初次登录后，应用不应要求用户在每次需要访问受保护资源时重新进行身份验证（即请求令牌）。 为了防止此类重新身份验证请求，请调用 `acquireTokenSilent`。 但在某些情况下，可能需要强制用户与 Microsoft 标识平台终结点交互。 例如：
+初次登录后，应用不应要求用户在每次需要访问受保护资源时重新进行身份验证（即请求令牌）。 为了防止此类重新身份验证请求，请调用 `acquireTokenSilent`。 但在某些情况下，可能需要强制用户与 Microsoft 标识平台交互。 例如：
 
 - 由于密码已过期，用户可能需要重新输入其凭据。
 - 应用程序正在请求访问资源，这需要用户的许可。
 - 需要双重身份验证。
 
-调用 `acquireTokenPopup` 会打开一个弹出窗口（或者 `acquireTokenRedirect` 会将用户重定向到 Microsoft 标识平台终结点）。 在该窗口中，为了进行交互，用户需要确认其凭据、为所需的资源提供许可，或者完成双重身份验证。
+调用 `acquireTokenPopup` 会打开一个弹出窗口（也可以调用 `acquireTokenRedirect` 将用户重定向到 Microsoft 标识平台）。 在该窗口中，为了进行交互，用户需要确认其凭据、为所需的资源提供许可，或者完成双重身份验证。
 
 #### <a name="get-a-user-token-silently"></a>以无提示方式获取用户令牌
 
@@ -617,7 +618,7 @@ function callMSGraph(endpoint, token, callback) {
 
 ### <a name="sign-in-to-the-application"></a>登录应用程序
 
-在浏览器加载 index.html 文件后，选择“登录”。 系统将提示你使用 Microsoft 标识平台终结点进行登录：
+在浏览器加载 index.html 文件后，选择“登录”。 系统将提示你使用 Microsoft 标识平台进行登录：
 
 :::image type="content" source="media/tutorial-v2-javascript-auth-code/spa-01-signin-dialog.png" alt-text="显示登录对话框的 Web 浏览器":::
 
@@ -649,14 +650,7 @@ Microsoft Graph API 需要 *user.read* 作用域来读取用户的个人资料�
 
 ## <a name="next-steps"></a>后续步骤
 
-在本教程中，你创建了一个 JavaScript 单页应用程序 (SPA)，它使用适用于 JavaScript v2.0 的 Microsoft 身份验证库 (MSAL) 执行以下操作：
+如果你想要更深入了解 Microsoft 标识平台上的 JavaScript 单页应用程序开发，请参阅由多部分组成的方案系列：
 
-> [!div class="checklist"]
-> * 通过 PKCE 执行 OAuth 2.0 授权代码流
-> * 将个人 Microsoft 帐户以及工作和学校帐户登录
-> * 获取访问令牌
-> * 调用需要从 Microsoft 标识平台终结点获取的访问令牌的 Microsoft Graph 或你自己的 API
-
-若要了解有关授权代码流的详细信息（包括隐式和授权代码流之间的差异），请参阅 [Microsoft 标识平台和 OAuth 2.0 授权代码流](v2-oauth2-auth-code-flow.md)。
-
-如果你想要更深入了解 Microsoft 标识平台上的 JavaScript 单页应用程序开发，由多部分组成的[方案：单页应用程序](scenario-spa-overview.md)系列文章可以帮助你入门。
+> [!div class="nextstepaction"]
+> [方案：单页应用程序](scenario-spa-overview.md)

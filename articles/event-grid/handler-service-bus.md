@@ -2,13 +2,13 @@
 title: 服务总线队列和主题作为 Azure 事件网格事件的事件处理程序
 description: 介绍如何将服务总线队列和主题用作 Azure 事件网格事件的事件处理程序。
 ms.topic: conceptual
-ms.date: 07/07/2020
-ms.openlocfilehash: c573f7ee088fe1d88f832623891377d4fd50bd4b
-ms.sourcegitcommit: d7008edadc9993df960817ad4c5521efa69ffa9f
+ms.date: 09/03/2020
+ms.openlocfilehash: 12b72420e3475b46a4cd61ce5032b478af740dde
+ms.sourcegitcommit: cc13f3fc9b8d309986409276b48ffb77953f4458
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/08/2020
-ms.locfileid: "86105687"
+ms.lasthandoff: 12/14/2020
+ms.locfileid: "97399853"
 ---
 # <a name="service-bus-queues-and-topics-as-event-handlers-for-azure-event-grid-events"></a>服务总线队列和主题作为 Azure 事件网格事件的事件处理程序
 事件处理程序是发送事件的位置。 处理程序将执行一些进一步的操作来处理事件。 几个 Azure 服务已自动配置为处理事件，Azure 服务总线是其中之一。 
@@ -40,7 +40,7 @@ az eventgrid event-subscription create \
 
 ### <a name="using-cli-to-add-a-service-bus-topic-handler"></a>使用 CLI 添加服务总线主题处理程序
 
-在 Azure CLI 中，以下示例可订阅事件网格主题并将其连接到服务总线队列：
+对于 Azure CLI，以下示例将事件网格主题订阅和连接到服务总线主题：
 
 ```azurecli-interactive
 az eventgrid event-subscription create \
@@ -50,21 +50,11 @@ az eventgrid event-subscription create \
     --endpoint /subscriptions/{SubID}/resourceGroups/TestRG/providers/Microsoft.ServiceBus/namespaces/ns1/topics/topic1
 ```
 
-## <a name="message-properties"></a>消息属性
-如果使用服务总线主题或队列作为事件网格事件的事件处理程序，请设置以下消息标头： 
+[!INCLUDE [event-grid-message-headers](../../includes/event-grid-message-headers.md)]
 
-| 属性名称 | 说明 |
-| ------------- | ----------- | 
-| aeg-subscription-name | 事件订阅的名称。 |
-| aeg-delivery-count | <p>针对该事件进行尝试的次数。</p> <p>示例：“1”</p> |
-| aeg-event-type | <p>事件的类型。</p><p> 示例：“Microsoft.Storage.blobCreated”</p> | 
-| aeg-metadata-version | <p>事件的元数据版本。</p> <p>示例：“1”。</p><p> 对于“事件网格事件架构”，此属性表示元数据版本；对于“云事件架构”，此属性表示规范版本。 </p>|
-| aeg-data-version | <p>事件的数据版本。</p><p>示例：“1”。</p><p>对于“事件网格事件架构”，此属性表示数据版本；对于“云事件架构”，此属性不适用。</p> |
+将事件作为中转消息发送到服务总线队列或主题时，中转消息的 `messageid` 是内部系统 ID。
 
-## <a name="message-headers"></a>消息标头
-将事件作为中转消息发送到服务总线队列或主题时，中转消息的 `messageid` 是事件 ID。
-
-事件 ID 会在事件重新传递期间保留，这样就可以在服务总线实体上启用“重复项检测”，避免重复传递。 建议在服务总线实体上启用重复项检测持续时间，并将其设为事件的生存时间 (TTL) 或最大重试持续时间（以较长者为准）。
+消息的内部系统 ID 会在事件重新传递期间保留，因此你可以在服务总线实体上启用“重复项检测”，避免重复传递。 建议在服务总线实体上启用重复项检测持续时间，并将其设为事件的生存时间 (TTL) 或最大重试持续时间（以较长者为准）。
 
 ## <a name="rest-examples-for-put"></a>REST 示例（适用于 PUT）
 

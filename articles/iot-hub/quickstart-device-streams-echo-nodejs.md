@@ -1,20 +1,20 @@
 ---
-title: 通过 Azure IoT 中心设备流使用 Node.js 与设备应用进行通信
+title: 快速入门 - 通过 Azure IoT 中心设备流与采用 Node.js 的设备应用进行通信
 description: 在本快速入门中，你将运行一个 Node.js 服务端应用程序，以便通过设备流与 IoT 设备通信。
 author: robinsh
 ms.service: iot-hub
 services: iot-hub
 ms.devlang: nodejs
 ms.topic: quickstart
-ms.custom: mvc, devx-track-javascript
+ms.custom: mvc, devx-track-js, devx-track-azurecli
 ms.date: 03/14/2019
 ms.author: robinsh
-ms.openlocfilehash: d398e450175c9f97c419b397266cda0a52e7e21c
-ms.sourcegitcommit: e71da24cc108efc2c194007f976f74dd596ab013
+ms.openlocfilehash: 335014f032162866e4780bf1294ddcd108b4fd03
+ms.sourcegitcommit: a0c1d0d0906585f5fdb2aaabe6f202acf2e22cfc
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/29/2020
-ms.locfileid: "87416088"
+ms.lasthandoff: 01/21/2021
+ms.locfileid: "98624382"
 ---
 # <a name="quickstart-communicate-to-a-device-application-in-nodejs-via-iot-hub-device-streams-preview"></a>快速入门：通过 IoT 中心设备流在 Node.js 中与设备应用程序通信（预览）
 
@@ -30,13 +30,17 @@ ms.locfileid: "87416088"
 
 * [Node.js 10+](https://nodejs.org)。
 
+    可以使用以下命令验证开发计算机上 Node.js 当前的版本：
+
+    ```cmd/sh
+    node --version
+    ```
+
 * [一个示例 Node.js 项目](https://github.com/Azure-Samples/azure-iot-samples-node/archive/streams-preview.zip)。
 
-可以使用以下命令验证开发计算机上 Node.js 当前的版本：
+[!INCLUDE [azure-cli-prepare-your-environment.md](../../includes/azure-cli-prepare-your-environment-no-header.md)]
 
-```cmd/sh
-node --version
-```
+[!INCLUDE [iot-hub-cli-version-info](../../includes/iot-hub-cli-version-info.md)]
 
 Microsoft Azure IoT 中心目前支持设备流作为[预览版功能](https://azure.microsoft.com/support/legal/preview-supplemental-terms/)。
 
@@ -47,18 +51,6 @@ Microsoft Azure IoT 中心目前支持设备流作为[预览版功能](https://a
 > * 美国中部 EUAP
 > * 北欧
 > * 东南亚
-
-[!INCLUDE [cloud-shell-try-it.md](../../includes/cloud-shell-try-it.md)]
-
-### <a name="add-azure-iot-extension"></a>添加 Azure IoT 扩展
-
-运行以下命令将用于 Azure CLI 的 Microsoft Azure IoT 扩展添加到 Cloud Shell 实例。 IoT 扩展会将 IoT 中心、IoT Edge 和 IoT 设备预配服务 (DPS) 命令添加到 Azure CLI。
-
-```azurecli-interactive
-az extension add --name azure-iot
-```
-
-[!INCLUDE [iot-hub-cli-version-info](../../includes/iot-hub-cli-version-info.md)]
 
 ## <a name="create-an-iot-hub"></a>创建 IoT 中心
 
@@ -87,7 +79,7 @@ az extension add --name azure-iot
     **YourIoTHubName**：将下面的占位符替换为你为 IoT 中心选择的名称。
 
     ```azurecli-interactive
-    az iot hub show-connection-string --policy-name service --name {YourIoTHubName} --output table
+    az iot hub connection-string show --policy-name service --name {YourIoTHubName} --output table
     ```
 
     请记下返回的服务连接字符串，以便稍后在此快速入门中使用。 如以下示例所示：
@@ -162,4 +154,4 @@ az extension add --name azure-iot
 使用以下链接详细了解设备流：
 
 > [!div class="nextstepaction"]
-> [设备流概述](./iot-hub-device-streams-overview.md) 
+> [设备流概述](./iot-hub-device-streams-overview.md)

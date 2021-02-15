@@ -11,12 +11,12 @@ ms.workload: identity
 ms.topic: tutorial
 ms.date: 10/14/2019
 ms.author: jeedes
-ms.openlocfilehash: 1bdda60d3b6f5e763bd31b25ab0fd8c2783f978d
-ms.sourcegitcommit: 023d10b4127f50f301995d44f2b4499cbcffb8fc
+ms.openlocfilehash: 5fe070bc1abe0592b3082c597c1812781335448a
+ms.sourcegitcommit: d79513b2589a62c52bddd9c7bd0b4d6498805dbe
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/18/2020
-ms.locfileid: "88537863"
+ms.lasthandoff: 12/18/2020
+ms.locfileid: "97673174"
 ---
 # <a name="tutorial-azure-active-directory-single-sign-on-sso-integration-with-acquireio"></a>教程：Azure Active Directory 单一登录 (SSO) 与 AcquireIO 集成
 
@@ -26,7 +26,7 @@ ms.locfileid: "88537863"
 * 让用户使用其 Azure AD 帐户自动登录到 AcquireIO。
 * 在一个中心位置（Azure 门户）管理帐户。
 
-若要了解有关 SaaS 应用与 Azure AD 集成的详细信息，请参阅 [Azure Active Directory 的应用程序访问与单一登录是什么](https://docs.microsoft.com/azure/active-directory/active-directory-appssoaccess-whatis)。
+若要了解有关 SaaS 应用与 Azure AD 集成的详细信息，请参阅 [Azure Active Directory 的应用程序访问与单一登录是什么](../manage-apps/what-is-single-sign-on.md)。
 
 ## <a name="prerequisites"></a>先决条件
 
@@ -73,14 +73,14 @@ ms.locfileid: "88537863"
 1. 在“选择单一登录方法”页上选择“SAML”   。
 1. 在“使用 SAML 设置单一登录”页上，单击“基本 SAML 配置”的编辑/笔形图标以编辑设置   。
 
-   ![编辑基本 SAML 配置](common/edit-urls.png)
+    ![编辑基本 SAML 配置](common/edit-urls.png)
 
 1. 在“基本 SAML 配置”部分，输入以下字段的值  ：
 
     在“回复 URL”文本框中，使用以下模式键入 URL：`https://app.acquire.io/ad/<acquire_account_uid>` 
 
     > [!NOTE]
-    > 此值不是真实值。 本教程稍后的**配置 AcquireIO** 部分将介绍如何获取实际的回复 URL。 还可以参考 Azure 门户中的“基本 SAML 配置”  部分中显示的模式。
+    > 此值不是真实值。 本教程稍后的 **配置 AcquireIO** 部分将介绍如何获取实际的回复 URL。 还可以参考 Azure 门户中的“基本 SAML 配置”  部分中显示的模式。
 
 1. 在“使用 SAML 设置单一登录”页的“SAML 签名证书”部分中，找到“证书(Base64)”，选择“下载”以下载该证书并将其保存到计算机上     。
 
@@ -110,7 +110,7 @@ ms.locfileid: "88537863"
 1. 在应用程序列表中，选择“AcquireIO”  。
 1. 在应用的概述页中，找到“管理”部分，选择“用户和组”   。
 
-   ![“用户和组”链接](common/users-groups-blade.png)
+    ![“用户和组”链接](common/users-groups-blade.png)
 
 1. 选择“添加用户”，然后在“添加分配”对话框中选择“用户和组”。   
 
@@ -134,15 +134,15 @@ ms.locfileid: "88537863"
 
 1. 从菜单的左侧，单击“App Store”  。
 
-     ![AcquireIO 配置](./media/acquireio-tutorial/config01.png)
+    ![突出显示 App Store 的屏幕截图。](./media/acquireio-tutorial/config01.png)
 
 1. 向下滚动到“Active Directory”，然后单击“安装”   。
 
-    ![AcquireIO 配置](./media/acquireio-tutorial/config02.png)
+    ![突出显示“Active Directory”部分和“安装”按钮的屏幕截图。](./media/acquireio-tutorial/config02.png)
 
 1. 在 Active Directory 弹出窗口中执行以下步骤：
 
-    ![AcquireIO 配置](./media/acquireio-tutorial/config03.png)
+    ![显示“Active Directory”屏幕的屏幕截图。](./media/acquireio-tutorial/config03.png)
 
     a. 单击“复制”以复制实例的回复 URL，并将其粘贴到 Azure 门户的“基本 SAML 配置”部分的“回复 URL”文本框中。   
 
@@ -162,7 +162,7 @@ ms.locfileid: "88537863"
 
 1. 在菜单左侧单击“配置文件”，然后导航到“添加配置文件”。  
 
-     ![AcquireIO 配置](./media/acquireio-tutorial/config04.png)
+    ![突出显示屏幕左侧菜单中的“配置文件”以及“添加配置文件”选项的屏幕截图。](./media/acquireio-tutorial/config04.png)
 
 1. 在“添加客户”弹出窗口中执行以下步骤  ：
 
@@ -178,14 +178,14 @@ ms.locfileid: "88537863"
 
 在本部分中，使用访问面板测试 Azure AD 单一登录配置。
 
-在访问面板中单击“AcquireIO”磁贴时，应会自动登录到设置了 SSO 的 AcquireIO。 有关访问面板的详细信息，请参阅 [Introduction to the Access Panel](https://docs.microsoft.com/azure/active-directory/active-directory-saas-access-panel-introduction)（访问面板简介）。
+在访问面板中单击“AcquireIO”磁贴时，应会自动登录到设置了 SSO 的 AcquireIO。 有关访问面板的详细信息，请参阅 [Introduction to the Access Panel](../user-help/my-apps-portal-end-user-access.md)（访问面板简介）。
 
 ## <a name="additional-resources"></a>其他资源
 
-- [有关如何将 SaaS 应用与 Azure Active Directory 集成的教程列表](https://docs.microsoft.com/azure/active-directory/active-directory-saas-tutorial-list)
+- [有关如何将 SaaS 应用与 Azure Active Directory 集成的教程列表](./tutorial-list.md)
 
-- [什么是使用 Azure Active Directory 的应用程序访问和单一登录？](https://docs.microsoft.com/azure/active-directory/active-directory-appssoaccess-whatis)
+- [Azure Active Directory 的应用程序访问与单一登录是什么？](../manage-apps/what-is-single-sign-on.md)
 
-- [什么是 Azure Active Directory 中的条件访问？](https://docs.microsoft.com/azure/active-directory/conditional-access/overview)
+- [什么是 Azure Active Directory 中的条件访问？](../conditional-access/overview.md)
 
 - [通过 Azure AD 试用 AcquireIO](https://aad.portal.azure.com/)

@@ -3,7 +3,7 @@ title: 使用 PowerShell 查看托管标识的服务主体 - Azure AD
 description: 使用 PowerShell 查看托管标识的服务主体的分步说明。
 services: active-directory
 documentationcenter: ''
-author: MarkusVi
+author: barclayn
 manager: daveba
 editor: ''
 ms.service: active-directory
@@ -12,15 +12,16 @@ ms.devlang: na
 ms.topic: how-to
 ms.tgt_pltfrm: na
 ms.workload: identity
-ms.date: 11/29/2018
-ms.author: markvi
+ms.date: 09/30/2020
+ms.author: barclayn
 ms.collection: M365-identity-device-management
-ms.openlocfilehash: 02750fc9f986b486deaf3c0d58ab538f9c634096
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.custom: devx-track-azurepowershell
+ms.openlocfilehash: 15ccc0faa4d74a2ef95aca00a6257f27b9a209c3
+ms.sourcegitcommit: 829d951d5c90442a38012daaf77e86046018e5b9
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "85608324"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "91611939"
 ---
 # <a name="view-the-service-principal-of-a-managed-identity-using-powershell"></a>使用 PowerShell 查看托管标识的服务主体
 
@@ -34,19 +35,19 @@ Azure 资源的托管标识在 Azure Active Directory 中为 Azure 服务提供�
 
 - 如果不熟悉 Azure 资源的托管标识，请查阅[概述部分](overview.md)。
 - 如果还没有 Azure 帐户，请[注册免费帐户](https://azure.microsoft.com/free/)。
-- 在[虚拟机](/azure/active-directory/managed-identities-azure-resources/qs-configure-portal-windows-vm#system-assigned-managed-identity)或[应用程序](/azure/app-service/overview-managed-identity#add-a-system-assigned-identity)上启用系统分配的标识。
-- 安装最新版本的 [Azure PowerShell](/powershell/azure/install-az-ps)
+- 在[虚拟机](./qs-configure-portal-windows-vm.md#system-assigned-managed-identity)或[应用程序](../../app-service/overview-managed-identity.md#add-a-system-assigned-identity)上启用系统分配的标识。
+- 若要运行示例脚本，有两个选项：
+    - 使用 [Azure Cloud Shell](../../cloud-shell/overview.md)，你可使用代码块右上角的“试用”按钮打开它。
+    - 通过安装最新版的 [Azure PowerShell](/powershell/azure/install-az-ps) 在本地运行脚本，然后使用 `Connect-AzAccount` 登录到 Azure。
 
 ## <a name="view-the-service-principal"></a>查看服务主体
 
-以下命令演示了如何查看启用了系统分配的标识的 VM 或应用程序的服务主体。 将 `<VM or application name>` 替换为自己的值。
+以下命令演示了如何查看启用了系统分配的标识的 VM 或应用程序的服务主体。 将 `<Azure resource name>` 替换为自己的值。
 
-```powershell
-Get-AzADServicePrincipal -DisplayName <VM or application name>
+```azurepowershell-interactive
+Get-AzADServicePrincipal -DisplayName <Azure resource name>
 ```
 
 ## <a name="next-steps"></a>后续步骤
 
 有关使用 PowerShell 查看 Azure AD 服务主体的详细信息，请参阅 [Get-AzADServicePrincipal](/powershell/module/az.resources/get-azadserviceprincipal)。
-
-

@@ -6,12 +6,12 @@ ms.topic: conceptual
 author: bwren
 ms.author: bwren
 ms.date: 06/06/2019
-ms.openlocfilehash: 873f6beaa88e1631397827a94161ce4427b5f0bb
-ms.sourcegitcommit: a76ff927bd57d2fcc122fa36f7cb21eb22154cfa
+ms.openlocfilehash: 024fa2f86890c6e8e791b5cf66a4e67328f62f63
+ms.sourcegitcommit: dbe434f45f9d0f9d298076bf8c08672ceca416c6
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/28/2020
-ms.locfileid: "87323377"
+ms.lasthandoff: 10/17/2020
+ms.locfileid: "92143890"
 ---
 # <a name="troubleshooting-the-log-analytics-vm-extension-in-azure-monitor"></a>Azure Monitor 中的 Log Analytics VM 扩展故障排除
 本文可帮助排查使用 Microsoft Azure 上运行的 Windows 和 Linux 虚拟机的 Log Analytics VM 扩展时可能遇到的错误，并建议解决这些问题可能的解决方案。
@@ -52,7 +52,7 @@ ms.locfileid: "87323377"
 
 1. 如果扩展状态为“未知”  ，则查看 VM 代理日志文件 `/var/log/waagent.log`，检查 Azure VM 代理是否已安装且可正常工作
    * 如果此日志不存在，则未安装 VM 代理。
-   * [在 Linux VM 上安装 Azure VM 代理](../learn/quick-collect-azurevm.md#enable-the-log-analytics-vm-extension)
+   * [在 Linux VM 上安装 Azure VM 代理](../../virtual-machines/extensions/agent-linux.md#installation)
 2. 对于其他不正常状态，请查看 `/var/log/azure/Microsoft.EnterpriseCloud.Monitoring.OmsAgentForLinux/*/extension.log` 和 `/var/log/azure/Microsoft.EnterpriseCloud.Monitoring.OmsAgentForLinux/*/CommandExecution.log` 中的 Log Analytics Linux VM 代理扩展日志文件
 3. 如果扩展状态正常，但是未上传数据，则查看 `/var/opt/microsoft/omsagent/log/omsagent.log` 中的 Log Analytics Linux 代理日志文件
 
@@ -60,5 +60,4 @@ ms.locfileid: "87323377"
 
 ## <a name="next-steps"></a>后续步骤
 
-有关与托管在 Azure 外部计算机上的 Log Analytics Linux 代理相关的其他故障排除指南，请参阅 [Azure Log Analytics Linux 代理故障排除](agent-linux-troubleshoot.md)。  
-
+有关与托管在 Azure 外部计算机上的 Log Analytics Linux 代理相关的其他故障排除指南，请参阅 [Azure Log Analytics Linux 代理故障排除](agent-linux-troubleshoot.md)。

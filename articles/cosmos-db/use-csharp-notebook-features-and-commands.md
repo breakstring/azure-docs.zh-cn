@@ -3,18 +3,20 @@ title: 使用 Azure Cosmos DB C# 笔记本中的内置笔记本命令和功能�
 description: 了解如何通过 Azure Cosmos DB 内置 C# 笔记本使用内置命令和功能来执行常见操作。
 author: deborahc
 ms.service: cosmos-db
+ms.subservice: cosmosdb-sql
 ms.topic: how-to
 ms.date: 05/19/2020
 ms.author: dech
-ms.custom: devx-track-python
-ms.openlocfilehash: 6c095083f88c00f706d19d1c652e19da007c6542
-ms.sourcegitcommit: dea88d5e28bd4bbd55f5303d7d58785fad5a341d
+ms.custom: devx-track-python, devx-track-csharp
+ms.openlocfilehash: 67fe71d8e2d6ab239989cb30e9bf5a1b4d731037
+ms.sourcegitcommit: fa90cd55e341c8201e3789df4cd8bd6fe7c809a3
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/06/2020
-ms.locfileid: "87876421"
+ms.lasthandoff: 11/04/2020
+ms.locfileid: "93340464"
 ---
 # <a name="use-built-in-notebook-commands-and-features-in-azure-cosmos-db-c-notebooks-preview"></a>使用 Azure Cosmos DB C# 笔记本中的内置笔记本命令和功能（预览版）
+[!INCLUDE[appliesto-sql-api](includes/appliesto-sql-api.md)]
 
 使用 Azure Cosmos DB 中的内置 Jupyter 笔记本可以从 Azure 门户分析和可视化数据。 本文介绍如何在 C# 笔记本中使用内置笔记本命令和功能执行常见操作。
 

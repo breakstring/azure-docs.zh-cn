@@ -1,19 +1,16 @@
 ---
 title: 使用 Apache Phoenix 在 Azure HDInsight 中运行 Apache Base 查询
 description: 了解如何将 Apache Zeppelin 与 Phoenix 配合使用来运行 Apache Base 查询。
-author: hrasheed-msft
-ms.author: hrasheed
-ms.reviewer: jasonh
 ms.service: hdinsight
 ms.custom: hdinsightactive
 ms.topic: how-to
 ms.date: 10/14/2019
-ms.openlocfilehash: 2a6b324c4caf9619566ba335ab2e5a318ab68bb6
-ms.sourcegitcommit: 124f7f699b6a43314e63af0101cd788db995d1cb
+ms.openlocfilehash: 50a72d0400b23162e05b17b37bdad48783261072
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/08/2020
-ms.locfileid: "86079422"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98944765"
 ---
 # <a name="use-apache-zeppelin-to-run-apache-phoenix-queries-over-apache-hbase-in-azure-hdinsight"></a>使用 Apache Zepperin 在 Azure HDInsight 中的 Apache HBase 上运行 Apache Phoenix 查询
 
@@ -98,5 +95,5 @@ HDInsight 上的 Apache HBase 群集。 请参阅 [Apache HBase 入门](./apache
 
 ## <a name="next-steps"></a>后续步骤
 
-- [Apache Phoenix 现在支持 Azure HDInsight 中的 Zeppelin](https://blogs.msdn.microsoft.com/ashish/2018/08/17/apache-phoenix-now-supports-zeppelin-in-azure-hdinsight/)
+- [Apache Phoenix 现在支持 Azure HDInsight 中的 Zeppelin](/archive/blogs/ashish/apache-phoenix-now-supports-zeppelin-in-azure-hdinsight)
 - [Apache Phoenix 语法](https://phoenix.apache.org/language/index.html)

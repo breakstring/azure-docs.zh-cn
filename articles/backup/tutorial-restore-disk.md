@@ -3,13 +3,13 @@ title: 教程 - 使用 Azure CLI 还原 VM
 description: 了解如何在 Azure 中使用备份和恢复服务还原磁盘并创建恢复的 VM。
 ms.topic: tutorial
 ms.date: 01/31/2019
-ms.custom: mvc
-ms.openlocfilehash: 56ea3de451e625ef5c55f92daa1b86bd34b1c4c4
-ms.sourcegitcommit: a2a7746c858eec0f7e93b50a1758a6278504977e
+ms.custom: mvc, devx-track-azurecli
+ms.openlocfilehash: 999682c9bf4a4d70d886f0e85cede99f215aa046
+ms.sourcegitcommit: b6267bc931ef1a4bd33d67ba76895e14b9d0c661
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/12/2020
-ms.locfileid: "88141340"
+ms.lasthandoff: 12/19/2020
+ms.locfileid: "97694715"
 ---
 # <a name="restore-a-vm-with-azure-cli"></a>使用 Azure CLI 还原 VM
 
@@ -23,13 +23,11 @@ Azure 备份可创建恢复点，这些恢复点存储在异地冗余的恢复�
 
 有关使用 PowerShell 还原磁盘并创建已恢复的 VM 的信息，请参阅[使用 PowerShell 备份和还原 Azure VM](backup-azure-vms-automation.md#restore-an-azure-vm)。
 
-[!INCLUDE [cloud-shell-try-it.md](../../includes/cloud-shell-try-it.md)]
+[!INCLUDE [azure-cli-prepare-your-environment.md](../../includes/azure-cli-prepare-your-environment.md)]
 
-如果选择在本地安装并使用 CLI，本教程要求运行 Azure CLI 2.0.18 或更高版本。 运行 `az --version` 即可查找版本。 如需进行安装或升级，请参阅[安装 Azure CLI]( /cli/azure/install-azure-cli)。
+ - 本教程需要 Azure CLI 版本 2.0.18 或更高版本。 如果使用 Azure Cloud Shell，则最新版本已安装。
 
-## <a name="prerequisites"></a>先决条件
-
-本教程需要使用 Azure 备份所保护的 Linux VM。 若要模拟意外的 VM 删除和恢复过程，请从恢复点中的磁盘创建 VM。 如果需要使用 Azure 备份所保护的 Linux VM，请参阅[在 Azure 中使用 CLI 备份虚拟机](quick-backup-vm-cli.md)。
+ - 本教程需要使用 Azure 备份所保护的 Linux VM。 若要模拟意外的 VM 删除和恢复过程，请从恢复点中的磁盘创建 VM。 如果需要使用 Azure 备份所保护的 Linux VM，请参阅[在 Azure 中使用 CLI 备份虚拟机](quick-backup-vm-cli.md)。
 
 ## <a name="backup-overview"></a>备份概述
 
@@ -43,13 +41,13 @@ Azure 备份可创建恢复点，这些恢复点存储在异地冗余的恢复�
 
 若要还原磁盘，请选择恢复点作为恢复数据的源。 由于默认策略每天创建一个恢复点并保留 30 天，因此，可以保留一组恢复点，以便可以选择一个特定的时点用于恢复。
 
-若要查看可用恢复点的列表，请使用 [az backup recoverypoint list](/cli/azure/backup/recoverypoint?view=azure-cli-latest#az-backup-recoverypoint-list) 命令。 将使用恢复点名称恢复磁盘。 在本教程中，我们希望最近的恢复点可用。 `--query [0].name` 参数可选择最近的恢复点名称，如下所示：
+若要查看可用恢复点的列表，请使用 [az backup recoverypoint list](/cli/azure/backup/recoverypoint#az-backup-recoverypoint-list) 命令。 将使用恢复点名称恢复磁盘。 在本教程中，我们希望最近的恢复点可用。 `--query [0].name` 参数可选择最近的恢复点名称，如下所示：
 
 ```azurecli-interactive
 az backup recoverypoint list \
     --resource-group myResourceGroup \
     --vault-name myRecoveryServicesVault \
-    --backup-management-type AzureIaasVM
+    --backup-management-type AzureIaasVM \
     --container-name myVM \
     --item-name myVM \
     --query [0].name \
@@ -59,13 +57,13 @@ az backup recoverypoint list \
 ## <a name="restore-a-vm-disk"></a>还原 VM 磁盘
 
 > [!IMPORTANT]
-> 强烈建议使用 Az CLI version 2.0.74 或更高版本，以享受快速还原的所有益处，包括托管磁盘还原。 用户最好始终使用最新版本。
+> 强烈建议使用 Az CLI version 2.0.74 或更高版本，以享受快速还原的所有益处，包括托管磁盘还原。 最好始终使用最新版本。
 
 ### <a name="managed-disk-restore"></a>托管磁盘还原
 
 如果备份 VM 具有托管磁盘，并且其目的是从恢复点还原托管磁盘，则首先需提供 Azure 存储帐户。 此存储帐户用于存储 VM 配置和部署模板，这两者稍后可用于从还原的磁盘部署 VM。 然后，还为要还原复到的托管磁盘提供一个目标资源组。
 
-1. 若要创建存储帐户，请使用 [az storage account create](/cli/azure/storage/account?view=azure-cli-latest#az-storage-account-create) 命令。 存储帐户名称必须全部为小写，且全局唯一。 将 mystorageaccount 替换为你自己唯一的名称：
+1. 若要创建存储帐户，请使用 [az storage account create](/cli/azure/storage/account#az-storage-account-create) 命令。 存储帐户名称必须全部为小写，且全局唯一。 将 mystorageaccount 替换为你自己唯一的名称：
 
     ```azurecli-interactive
     az storage account create \
@@ -74,7 +72,7 @@ az backup recoverypoint list \
         --sku Standard_LRS
     ```
 
-2. 使用 [az backup restore restore-disks](/cli/azure/backup/restore?view=azure-cli-latest#az-backup-restore-restore-disks) 从你的恢复点还原磁盘。 将 mystorageaccount 替换为你在前一个命令中创建的存储帐户的名称。 将 myRecoveryPointName 替换为你在前面的 [az backup recoverypoint list](/cli/azure/backup/recoverypoint?view=azure-cli-latest#az-backup-recoverypoint-list) 命令输出中获得的恢复点名称： 还需提供将托管磁盘还原到的目标资源组。
+2. 使用 [az backup restore restore-disks](/cli/azure/backup/restore#az-backup-restore-restore-disks) 从你的恢复点还原磁盘。 将 mystorageaccount 替换为你在前一个命令中创建的存储帐户的名称。 将 myRecoveryPointName 替换为你在前面的 [az backup recoverypoint list](/cli/azure/backup/recoverypoint#az-backup-recoverypoint-list) 命令输出中获得的恢复点名称：还需提供将托管磁盘还原到的目标资源组 *。
 
     ```azurecli-interactive
     az backup restore restore-disks \
@@ -88,7 +86,7 @@ az backup recoverypoint list \
     ```
 
     > [!WARNING]
-    > 如果未提供目标资源组，则托管磁盘将作为非托管磁盘还原到给定的存储帐户。 这会对还原时间产生重大影响，因为还原磁盘所需的时间完全取决于给定的存储帐户。 只有指定了 target-resource-group 参数，客户才能获得即时还原的好处。 如果打算将托管磁盘作为非托管磁盘还原，则不提供 target-resource-group 参数，而是提供 restore-as-unmanaged-disk 参数，如下所示。 此参数从 az 3.4.0 开始提供。
+    > 如果未提供目标资源组，则托管磁盘将作为非托管磁盘还原到给定的存储帐户。 这会对还原时间产生重大影响，因为还原磁盘所需的时间完全取决于给定的存储帐户。 只有指定了 target-resource-group 参数，才能获得即时还原的好处。 如果打算将托管磁盘作为非托管磁盘还原，则不提供 target-resource-group 参数，而是提供 restore-as-unmanaged-disk 参数，如下所示 。 此参数从 az 3.4.0 开始提供。
 
     ```azurecli-interactive
     az backup restore restore-disks \
@@ -101,15 +99,15 @@ az backup recoverypoint list \
     --restore-as-unmanaged-disk
     ```
 
-这会将托管磁盘作为非托管磁盘还原到给定存储帐户，并且不会利用“即时”还原功能。 在将来的 CLI 版本中，必须提供 target-resource-group 参数或 restore-as-unmanaged-disk 参数。
+这会将托管磁盘作为非托管磁盘还原到给定存储帐户，并且不会利用“即时”还原功能。 在将来的 CLI 版本中，必须提供 target-resource-group 参数或 restore-as-unmanaged-disk 参数 。
 
 ### <a name="unmanaged-disks-restore"></a>非托管磁盘还原
 
-如果备份 VM 具有非托管磁盘，并且其目的是从恢复点还原磁盘，则首先需提供 Azure 存储帐户。 此存储帐户用于存储 VM 配置和部署模板，这两者稍后可用于从还原的磁盘部署 VM。 默认情况下，非托管磁盘将还原到其原始存储帐户。 如果用户希望将所有非托管磁盘还原到同一个位置，则还可以将给定的存储帐户也用作这些磁盘的暂存位置。
+如果备份 VM 具有非托管磁盘，并且其目的是从恢复点还原磁盘，则首先需提供 Azure 存储帐户。 此存储帐户用于存储 VM 配置和部署模板，这两者稍后可用于从还原的磁盘部署 VM。 默认情况下，非托管磁盘将还原到其原始存储帐户。 若要将所有非托管磁盘还原到同一个位置，则还可以将给定的存储帐户也用作这些磁盘的暂存位置。
 
 在其他步骤中，将使用还原的磁盘创建 VM。
 
-1. 若要创建存储帐户，请使用 [az storage account create](/cli/azure/storage/account?view=azure-cli-latest#az-storage-account-create) 命令。 存储帐户名称必须全部为小写，且全局唯一。 将 mystorageaccount 替换为你自己唯一的名称：
+1. 若要创建存储帐户，请使用 [az storage account create](/cli/azure/storage/account#az-storage-account-create) 命令。 存储帐户名称必须全部为小写，且全局唯一。 将 mystorageaccount 替换为你自己唯一的名称：
 
     ```azurecli-interactive
     az storage account create \
@@ -118,7 +116,7 @@ az backup recoverypoint list \
         --sku Standard_LRS
     ```
 
-2. 使用 [az backup restore restore-disks](/cli/azure/backup/restore?view=azure-cli-latest#az-backup-restore-restore-disks) 从你的恢复点还原磁盘。 将 mystorageaccount 替换为你在前一个命令中创建的存储帐户的名称。 将 myRecoveryPointName 替换为你在前面的 [az backup recoverypoint list](/cli/azure/backup/recoverypoint?view=azure-cli-latest#az-backup-recoverypoint-list) 命令输出中获得的恢复点名称：
+2. 使用 [az backup restore restore-disks](/cli/azure/backup/restore#az-backup-restore-restore-disks) 从你的恢复点还原磁盘。 将 mystorageaccount 替换为你在前一个命令中创建的存储帐户的名称。 将 myRecoveryPointName 替换为你在前面的 [az backup recoverypoint list](/cli/azure/backup/recoverypoint#az-backup-recoverypoint-list) 命令输出中获得的恢复点名称：
 
     ```azurecli-interactive
     az backup restore restore-disks \
@@ -145,7 +143,7 @@ az backup recoverypoint list \
 
 ## Monitor the restore job
 
-To monitor the status of restore job, use [az backup job list](/cli/azure/backup/job?view=azure-cli-latest#az-backup-job-list):
+To monitor the status of restore job, use [az backup job list](/cli/azure/backup/job#az-backup-job-list):
 
 ```azurecli-interactive
 az backup job list \
@@ -181,7 +179,7 @@ az backup job show \
     -n 1fc2d55d-f0dc-4ca6-ad48-aca0fe5d0414
 ```
 
-此查询的输出将提供所有详细信息，但我们只对存储帐户内容感兴趣。 可以使用 Azure CLI 的[查询功能](/cli/azure/query-azure-cli?view=azure-cli-latest)提取相关详细信息
+此查询的输出将提供所有详细信息，但我们只对存储帐户内容感兴趣。 可以使用 Azure CLI 的[查询功能](/cli/azure/query-azure-cli)提取相关详细信息
 
 ```azurecli-interactive
 az backup job show \
@@ -253,12 +251,12 @@ url=$(az storage blob url \
 现在部署模板来创建 VM，如[此处](../azure-resource-manager/templates/deploy-cli.md)所述。
 
 ```azurecli-interactive
-az group deployment create \
+az deployment group create \
   --resource-group ExampleGroup \
   --template-uri $url?$token
 ```
 
-若要确认已从恢复的磁盘创建了 VM，请使用 [az vm list](/cli/azure/vm?view=azure-cli-latest#az-vm-list) 列出资源组中的 VM，如下所示：
+若要确认已从恢复的磁盘创建了 VM，请使用 [az vm list](/cli/azure/vm#az-vm-list) 列出资源组中的 VM，如下所示：
 
 ```azurecli-interactive
 az vm list --resource-group myResourceGroup --output table

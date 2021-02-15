@@ -2,14 +2,14 @@
 title: 传输项目
 description: 使用 Azure 存储帐户创建传输管道，将映像集合或其他项目从一个容器注册表传输到另一个注册表
 ms.topic: article
-ms.date: 05/08/2020
+ms.date: 10/07/2020
 ms.custom: ''
-ms.openlocfilehash: 0bbdfc8d1586b7d71daf6d4cbfdc4288357aa45b
-ms.sourcegitcommit: 98854e3bd1ab04ce42816cae1892ed0caeedf461
+ms.openlocfilehash: ab6657ecd335a6de8c6c93e3c2ff392ac54c487c
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/07/2020
-ms.locfileid: "88009148"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98935348"
 ---
 # <a name="transfer-artifacts-to-another-registry"></a>将项目传输到另一个注册表
 
@@ -21,7 +21,7 @@ ms.locfileid: "88009148"
 * 将 blob 从源存储帐户复制到目标存储帐户
 * 目标存储帐户中的 blob 作为项目导入到目标注册表。 可以将导入管道设置为在目标存储中更新项目 blob 时触发。
 
-传输非常适合用于在相互独立的云中复制两个 Azure 容器注册表之间的内容，这种方法可按每个云中的存储帐户进行调解。 对于在相互连接的云（包括 Docker Hub 和其他云供应商）中从容器注册表复制映像，建议改为使用[映像导入](container-registry-import-images.md)。
+传输非常适合用于在相互独立的云中复制两个 Azure 容器注册表之间的内容，这种方法可按每个云中的存储帐户进行调解。 如果要改为从连接的云（包括 Docker Hub 和其他云供应商）中的容器注册表复制映像，建议使用[映像导入](container-registry-import-images.md)。
 
 在本文中，我们将使用 Azure 资源管理器模板部署来创建和运行传输管道。 Azure CLI 用于预配关联的资源（例如存储机密）。 建议使用 Azure CLI 2.2.0 或更高版本。 如果需要安装或升级 CLI，请参阅[安装 Azure CLI][azure-cli]。
 
@@ -32,11 +32,18 @@ ms.locfileid: "88009148"
 
 ## <a name="prerequisites"></a>先决条件
 
-* **容器注册表** - 需要具有要传输项目的现有源注册表以及目标注册表。 ACR 传输适用于在相互独立的云之间移动内容。 出于测试目的，源注册表和目标注册表可存在于相同或不同的 Azure 订阅、Active Directory 租户或云中。 如果需要创建注册表，请参阅[快速入门：使用 Azure CLI 创建专用容器注册表](container-registry-get-started-azure-cli.md)。 
-* **存储帐户** - 在选择的订阅和位置中创建源和目标存储帐户。 出于测试目的，可使用与源和目标注册表相同的一个或多个订阅。 对于跨云方案，通常在每个云中创建一个单独的存储帐户。 如果需要，请使用 [Azure CLI](../storage/common/storage-account-create.md?tabs=azure-cli) 或其他工具创建存储帐户。 
+* **容器注册表** - 需要具有要传输项目的现有源注册表以及目标注册表。 ACR 传输适用于在相互独立的云之间移动内容。 出于测试目的，源注册表和目标注册表可存在于相同或不同的 Azure 订阅、Active Directory 租户或云中。 
+
+   如果需要创建注册表，请参阅[快速入门：使用 Azure CLI 创建专用容器注册表](container-registry-get-started-azure-cli.md)。 
+* **存储帐户** - 在选择的订阅和位置中创建源和目标存储帐户。 出于测试目的，可使用与源和目标注册表相同的一个或多个订阅。 对于跨云方案，通常在每个云中创建一个单独的存储帐户。 
+
+  如果需要，请使用 [Azure CLI](../storage/common/storage-account-create.md?tabs=azure-cli) 或其他工具创建存储帐户。 
 
   在每个帐户中创建用于传输项目的 blob 容器。 例如，创建一个名为 transfer 的容器。 两个或多个传输管道可以共享同一个存储帐户，但应使用不同的存储容器作用域。
-* **密钥保管库** - 需要使用密钥保管库来存储用于访问源和目标存储帐户的 SAS 令牌机密。 请在与源和目标注册表相同的一个或多个 Azure 订阅中创建源和目标密钥保管库。 如果需要，请使用 [Azure CLI](../key-vault/secrets/quick-create-cli.md) 或其他工具创建密钥保管库。
+* **密钥保管库** - 需要使用密钥保管库来存储用于访问源和目标存储帐户的 SAS 令牌机密。 请在与源和目标注册表相同的一个或多个 Azure 订阅中创建源和目标密钥保管库。 为便于演示，本文所用的模板和命令还假定源密钥保管库和目标密钥保管库分别与源注册表和目标注册表位于同一资源组。 使用公共资源组并不是必需的，但这样可简化本文所用的模板和命令。
+
+   如果需要，请使用 [Azure CLI](../key-vault/secrets/quick-create-cli.md) 或其他工具创建密钥保管库。
+
 * **环境变量** - 对于本文中的示例命令，可为源和目标环境设置以下环境变量。 所有示例的格式都适用于 Bash shell。
   ```console
   SOURCE_RG="<source-resource-group>"
@@ -58,11 +65,11 @@ ms.locfileid: "88009148"
 * **[PipelineRun](#create-pipelinerun-for-export-with-resource-manager)** - 用于调用 ExportPipeline 或 ImportPipeline 资源的资源。  
   * 创建 PipelineRun 资源并指定要导出的项目可手动运行 ExportPipeline。  
   * 如果启用了导入触发器，ImportPipeline 则会自动运行。 还可以使用 PipelineRun 手动运行。 
-  * 目前，每个 PipelineRun 最多可传输**50 个项目**。
+  * 当前每个 PipelineRun 最多可传输 50 个项目。
 
 ### <a name="things-to-know"></a>使用须知
 * ExportPipeline 和 ImportPipeline 通常位于与源和目标云关联的不同 Active Directory 租户中。 此方案需要单独的托管标识和密钥保管库，以用于导出和导入资源。 出于测试目的，可以将这些资源放在同一个云中，以共享标识。
-* 这些管道示例创建了系统分配的托管标识，以访问密钥保管库机密。 ExportPipelines 和 ImportPipelines 还支持用户分配的标识。 在这种情况下，必须使用标识访问策略来配置密钥保管库。 
+* 默认情况下，ExportPipeline 和 ImportPipeline 模板各自启用系统分配的托管标识来访问密钥保管库机密。 ExportPipeline 和 ImportPipeline 模板还支持你提供的用户分配的标识。 
 
 ## <a name="create-and-store-sas-keys"></a>创建并存储 SAS 密钥
 
@@ -152,7 +159,13 @@ az keyvault secret set \
 
 ### <a name="create-the-resource"></a>创建资源
 
-运行 [az deployment group create][az-deployment-group-create] 以创建资源。 下面的示例将部署命名为 exportPipeline。
+运行 [az deployment group create][az-deployment-group-create]，以创建名为 exportPipeline 的资源，如以下示例所示。 默认情况下，选择第一个选项时，示例模板将在 ExportPipeline 资源中启用系统分配的标识。 
+
+选择第二个选项时，可以为资源提供用户分配的标识。 （未显示用户分配的标识的创建。）
+
+无论选择哪个选项，模板都将配置标识，以访问导出密钥保管库中的 SAS 令牌。 
+
+#### <a name="option-1-create-resource-and-enable-system-assigned-identity"></a>选项 1：创建资源并启用系统分配的标识
 
 ```azurecli
 az deployment group create \
@@ -162,10 +175,23 @@ az deployment group create \
   --parameters azuredeploy.parameters.json
 ```
 
+#### <a name="option-2-create-resource-and-provide-user-assigned-identity"></a>选项 2：创建资源并提供用户分配的标识
+
+在此命令中，输入用户分配的标识的资源 ID 作为附加参数。
+
+```azurecli
+az deployment group create \
+  --resource-group $SOURCE_RG \
+  --template-file azuredeploy.json \
+  --name exportPipeline \
+  --parameters azuredeploy.parameters.json \
+  --parameters userAssignedIdentity="/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourcegroups/myResourceGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myUserAssignedIdentity"
+```
+
 在命令输出中，记下管道的资源 ID (`id`)。 可运行 [az deployment group show][az-deployment-group-show] 将此值存储在环境变量中供将来使用。 例如：
 
 ```azurecli
-EXPORT_RES_ID=$(az group deployment show \
+EXPORT_RES_ID=$(az deployment group show \
   --resource-group $SOURCE_RG \
   --name exportPipeline \
   --query 'properties.outputResources[1].id' \
@@ -198,20 +224,39 @@ EXPORT_RES_ID=$(az group deployment show \
 
 ### <a name="create-the-resource"></a>创建资源
 
-运行 [az deployment group create][az-deployment-group-create] 以创建资源。
+运行 [az deployment group create][az-deployment-group-create]，以创建名为 importPipeline 的资源，如以下示例所示。 默认情况下，选择第一个选项时，示例模板将在 ImportPipeline 资源中启用系统分配的标识。 
+
+选择第二个选项时，可以为资源提供用户分配的标识。 （未显示用户分配的标识的创建。）
+
+无论选择哪个选项，模板都将配置标识，以访问导入密钥保管库中的 SAS 令牌。 
+
+#### <a name="option-1-create-resource-and-enable-system-assigned-identity"></a>选项 1：创建资源并启用系统分配的标识
 
 ```azurecli
 az deployment group create \
   --resource-group $TARGET_RG \
   --template-file azuredeploy.json \
-  --parameters azuredeploy.parameters.json \
-  --name importPipeline
+  --name importPipeline \
+  --parameters azuredeploy.parameters.json 
 ```
 
-如果计划手动运行导入，请记下管道的资源 ID (`id`)。 可运行 [az deployment group show][az-deployment-group-show] 将此值存储在环境变量中供将来使用。 例如：
+#### <a name="option-2-create-resource-and-provide-user-assigned-identity"></a>选项 2：创建资源并提供用户分配的标识
+
+在此命令中，输入用户分配的标识的资源 ID 作为附加参数。
 
 ```azurecli
-IMPORT_RES_ID=$(az group deployment show \
+az deployment group create \
+  --resource-group $TARGET_RG \
+  --template-file azuredeploy.json \
+  --name importPipeline \
+  --parameters azuredeploy.parameters.json \
+  --parameters userAssignedIdentity="/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourcegroups/myResourceGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myUserAssignedIdentity"
+```
+
+如果计划手动运行导入，请记下管道的资源 ID (`id`)。 可运行 [az deployment group show][az-deployment-group-show] 命令将此值存储在环境变量中供将来使用。 例如：
+
+```azurecli
+IMPORT_RES_ID=$(az deployment group show \
   --resource-group $TARGET_RG \
   --name importPipeline \
   --query 'properties.outputResources[1].id' \
@@ -234,7 +279,7 @@ IMPORT_RES_ID=$(az group deployment show \
 |targetName     |  为导出到源存储帐户的项目 blob 选择的名称，如 myblob
 |项目 | 要传输的源项目的数组，作为标记或清单摘要<br/>示例： `[samples/hello-world:v1", "samples/nginx:v1" , "myrepository@sha256:0a2e01852872..."]` |
 
-如果重新部署具有相同属性的 PipelineRun 资源，则还必须使用[forceUpdateTag](#redeploy-pipelinerun-resource)属性。
+如果重新部署具有相同属性的 PipelineRun 资源，则还必须使用 [forceUpdateTag](#redeploy-pipelinerun-resource) 属性。
 
 运行 [az deployment group create][az-deployment-group-create] 以创建 PipelineRun 资源。 下面的示例将部署命名为 exportPipelineRun。
 
@@ -246,18 +291,28 @@ az deployment group create \
   --parameters azuredeploy.parameters.json
 ```
 
+为供后续使用，请将管道运行的资源 ID 存储到环境变量中：
+
+```azurecli
+EXPORT_RUN_RES_ID=$(az deployment group show \
+  --resource-group $SOURCE_RG \
+  --name exportPipelineRun \
+  --query 'properties.outputResources[0].id' \
+  --output tsv)
+```
+
 导出项目可能需要几分钟。 部署成功完成后，请在源存储帐户的 transfer 容器中列出导出的 blob，以验证项目导出。 例如，运行 [az storage blob list][az-storage-blob-list] 命令：
 
 ```azurecli
 az storage blob list \
-  --account-name $SA_SOURCE
-  --container transfer
+  --account-name $SOURCE_SA \
+  --container transfer \
   --output table
 ```
 
 ## <a name="transfer-blob-optional"></a>传输 blob（可选） 
 
-使用 AzCopy 工具或其他方法将 [blob 数据](../storage/common/storage-use-azcopy-blobs.md#copy-blobs-between-storage-accounts)从源存储帐户传输到目标存储帐户。
+使用 AzCopy 工具或其他方法将 [blob 数据](../storage/common/storage-use-azcopy-v10.md#transfer-data)从源存储帐户传输到目标存储帐户。
 
 例如，以下 [`azcopy copy`](../storage/common/storage-ref-azcopy-copy.md) 命令会将源帐户下 transfer 容器中的 myblob 复制到目标帐户下的 transfer 容器 。 如果该 blob 存在于目标帐户中，则会被覆盖。 身份验证使用对源和目标容器具有相应权限的 SAS 令牌。 （未显示用于创建令牌的步骤。）
 
@@ -293,18 +348,28 @@ az acr repository list --name <target-registry-name>
 |pipelineResourceId     |  导入管道的资源 ID。<br/>示例： `/subscriptions/<subscriptionID>/resourceGroups/<resourceGroupName>/providers/Microsoft.ContainerRegistry/registries/<sourceRegistryName>/importPipelines/myImportPipeline`       |
 |sourceName     |  存储帐户中已导出项目的现有 blob 名称，如 myblob
 
-如果重新部署具有相同属性的 PipelineRun 资源，则还必须使用[forceUpdateTag](#redeploy-pipelinerun-resource)属性。
+如果重新部署具有相同属性的 PipelineRun 资源，则还必须使用 [forceUpdateTag](#redeploy-pipelinerun-resource) 属性。
 
 运行 [az deployment group create][az-deployment-group-create] 以运行资源。
 
 ```azurecli
 az deployment group create \
   --resource-group $TARGET_RG \
+  --name importPipelineRun \
   --template-file azuredeploy.json \
   --parameters azuredeploy.parameters.json
 ```
 
-部署成功完成后，请在目标容器注册表中列出存储库，以验证项目导入。 例如，运行 [az acr repository list][az-acr-repository-list]：
+为供后续使用，请将管道运行的资源 ID 存储到环境变量中：
+
+```azurecli
+IMPORT_RUN_RES_ID=$(az deployment group show \
+  --resource-group $TARGET_RG \
+  --name importPipelineRun \
+  --query 'properties.outputResources[0].id' \
+  --output tsv)
+
+When deployment completes successfully, verify artifact import by listing the repositories in the target container registry. For example, run [az acr repository list][az-acr-repository-list]:
 
 ```azurecli
 az acr repository list --name <target-registry-name>
@@ -312,7 +377,7 @@ az acr repository list --name <target-registry-name>
 
 ## <a name="redeploy-pipelinerun-resource"></a>重新部署 PipelineRun 资源
 
-如果重新部署具有*相同属性*的 PipelineRun 资源，则必须利用**forceUpdateTag**属性。 此属性指示应重新创建 PipelineRun 资源，即使配置尚未更改也是如此。 请确保每次重新部署 PipelineRun 资源时 forceUpdateTag 是不同的。 下面的示例重新创建用于导出的 PipelineRun。 当前日期时间用于设置 forceUpdateTag，从而确保此属性始终唯一。
+如果重新部署具有相同属性的 PipelineRun 资源，则必须利用 forceUpdateTag 属性。 此属性指示应重新创建 PipelineRun 资源，即使配置未更改也是如此。 请确保 forceUpdateTag 在每次重新部署 PipelineRun 资源时都不同。 下面的示例重新创建 PipelineRun 以用于导出。 当前日期/时间用于设置 forceUpdateTag，从而确保此属性始终唯一。
 
 ```console
 CURRENT_DATETIME=`date +"%Y-%m-%d:%T"`
@@ -329,20 +394,20 @@ az deployment group create \
 
 ## <a name="delete-pipeline-resources"></a>删除管道资源
 
-要删除管道资源，请使用 [az deployment group delete][az-deployment-group-delete] 命令删除其资源管理器部署。 下面的示例将删除本文中创建的管道资源：
+以下示例命令使用 [az resource delete][az-resource-delete] 删除本文中创建的管道资源。 资源 ID 以前存储在环境变量中。
 
-```azurecli
-az deployment group delete \
-  --resource-group $SOURCE_RG \
-  --name exportPipeline
+```
+# Delete export resources
+az resource delete \
+--resource-group $SOURCE_RG \
+--ids $EXPORT_RES_ID $EXPORT_RUN_RES_ID \
+--api-version 2019-12-01-preview
 
-az deployment group delete \
-  --resource-group $SOURCE_RG \
-  --name exportPipelineRun
-
-az deployment group delete \
-  --resource-group $TARGET_RG \
-  --name importPipeline  
+# Delete import resources
+az resource delete \
+--resource-group $TARGET_RG \
+--ids $IMPORT_RES_ID $IMPORT_RUN_RES_ID \
+--api-version 2019-12-01-preview
 ```
 
 ## <a name="troubleshooting"></a>故障排除
@@ -358,7 +423,7 @@ az deployment group delete \
 * **AzCopy 问题**
   * 请参阅 [AzCopy 问题疑难解答](../storage/common/storage-use-azcopy-configure.md#troubleshoot-issues)。  
 * **项目传输问题**
-  * 并未传输所有项目或者根本未传输任何项目。 确认导出运行中的项目拼写，以及导出和导入运行中的 blob 名称。 确认正在传输的项目最多为50。
+  * 并未传输所有项目或者根本未传输任何项目。 确认导出运行中的项目拼写，以及导出和导入运行中的 blob 名称。 确认最多传输 50 个项目。
   * 管道运行可能未完成。 导出或导入运行可能需要一些时间。 
   * 对于其他管道问题，请向 Azure 容器注册表团队提供导出运行或导入运行的部署[相关 ID](../azure-resource-manager/templates/deployment-history.md)。
 
@@ -374,8 +439,6 @@ az deployment group delete \
 
 <!-- LINKS - Internal -->
 [azure-cli]: /cli/azure/install-azure-cli
-[az-identity-create]: /cli/azure/identity#az-identity-create
-[az-identity-show]: /cli/azure/identity#az-identity-show
 [az-login]: /cli/azure/reference-index#az-login
 [az-keyvault-secret-set]: /cli/azure/keyvault/secret#az-keyvault-secret-set
 [az-keyvault-secret-show]: /cli/azure/keyvault/secret#az-keyvault-secret-show
@@ -387,3 +450,4 @@ az deployment group delete \
 [az-deployment-group-show]: /cli/azure/deployment/group#az-deployment-group-show
 [az-acr-repository-list]: /cli/azure/acr/repository#az-acr-repository-list
 [az-acr-import]: /cli/azure/acr#az-acr-import
+[az-resource-delete]: /cli/azure/resource#az-resource-delete

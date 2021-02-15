@@ -5,12 +5,12 @@ author: christophermanthei
 ms.author: chmant
 ms.date: 03/20/2020
 ms.topic: quickstart
-ms.openlocfilehash: 6e1a6cb583c0d310cc7ce73995224c42bb84784d
-ms.sourcegitcommit: 37afde27ac137ab2e675b2b0492559287822fded
+ms.openlocfilehash: 26531e80292a53400671ac3507b47371c1fbbcad
+ms.sourcegitcommit: eb6bef1274b9e6390c7a77ff69bf6a3b94e827fc
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/18/2020
-ms.locfileid: "88566159"
+ms.lasthandoff: 10/05/2020
+ms.locfileid: "88796810"
 ---
 # <a name="quickstart-deploy-unity-sample-to-desktop"></a>快速入门：将 Unity 示例部署到桌面
 
@@ -38,7 +38,7 @@ ms.locfileid: "88566159"
 1. 在左侧选择“播放器”。
 1. 选择“通用 Windows 平台设置”选项卡。
 1. 展开“XR 设置”。
-1. 禁用“支持虚拟现实”。
+1. 禁用“支持虚拟现实”。\
     ![播放器设置](./media/unity-disable-xr.png)
 1. 在“XR 设置”上方，展开“发布设置”。
 1. 在“支持的设备系列”中，确保已选中“台式机”。 
@@ -49,15 +49,15 @@ ms.locfileid: "88566159"
 1. 将“平台”更改为“通用 Windows 平台”（也支持“电脑独立”，但此处不使用该平台，请参阅[平台限制](../reference/limits.md#platform-limitations)） 。
 1. 将“目标设备”设置为“电脑”。
 1. 将“体系结构”设置为“x86”。
-1. 将“生成类型”设置为“D3D 项目”。
+1. 将“生成类型”设置为“D3D 项目”。\
   ![生成设置](./media/unity-build-settings-pc.png)
 1. 选择“切换到平台”。
 1. 按下“生成”（或“生成并运行”）时，系统会要求你选择应在其中存储解决方案的某个文件夹。
 1. 使用 Visual Studio 打开生成的 Quickstart.sln。
 1. 将配置更改为“发布”和“x86”。 
-1. 将调试模式切换为“本地计算机”。
+1. 将调试模式切换为“本地计算机”。\
   ![解决方案配置](./media/unity-deploy-config-pc.png)
-1. 生成解决方案 (F7)。
+1. 生成解决方案。
 
 ## <a name="launch-the-sample-project"></a>启动示例项目
 

@@ -2,20 +2,21 @@
 title: include 文件
 description: include 文件
 services: cognitive-services
-author: roy-har
-manager: diberry
+author: aahill
+manager: nitinme
 ms.service: cognitive-services
 ms.date: 06/04/2020
 ms.subservice: language-understanding
 ms.topic: include
 ms.custom: include file
-ms.author: roy-har
-ms.openlocfilehash: 9965e4c856fdef2af17b116264ad5344ebc97eb2
-ms.sourcegitcommit: 0a5bb9622ee6a20d96db07cc6dd45d8e23d5554a
+ms.author: aahi
+ms.reviewer: roy-har
+ms.openlocfilehash: a021b7c5b26e1bca1e3f623ad762c2f3ee8d6020
+ms.sourcegitcommit: 1140ff2b0424633e6e10797f6654359947038b8d
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 06/05/2020
-ms.locfileid: "84466910"
+ms.lasthandoff: 12/30/2020
+ms.locfileid: "97820568"
 ---
 创建披萨应用。
 
@@ -59,7 +60,7 @@ Pizza 应用中应会显示“意向”页面，其中显示了一个意向列�
 
 ## <a name="record-the-access-values-for-your-pizza-app"></a>记录 Pizza 应用的访问值
 
-若要使用新的披萨应用，你需要该披萨应用的应用 ID、授权密钥和授权终结点。
+若要使用新的披萨应用，你需要该披萨应用的应用 ID、授权密钥和授权终结点。 若要获取预测，需要单独的预测终结点和预测密钥。
 
 若要查找这些值：
 
@@ -67,5 +68,5 @@ Pizza 应用中应会显示“意向”页面，其中显示了一个意向列�
 1. 在“应用程序设置”页面，记录“应用 ID” 。
 1. 选择“Azure 资源”。
 1. 选择“创作资源”。
-1. 从“创作资源”选项卡上，记录主密钥。 此值是你的创作密钥。
+1. 从“创作资源”和“预测资源”选项卡，记录“主键”  。 此值是你的创作密钥。
 1. 记录“终结点 URL”。 此值是你的创作终结点。

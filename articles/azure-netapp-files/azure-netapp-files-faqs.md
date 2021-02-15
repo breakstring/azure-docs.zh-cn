@@ -12,14 +12,14 @@ ms.workload: storage
 ms.tgt_pltfrm: na
 ms.devlang: na
 ms.topic: conceptual
-ms.date: 08/18/2020
+ms.date: 01/21/2021
 ms.author: b-juche
-ms.openlocfilehash: eeb22672829dca9ba342079183dcc5ed7c35393c
-ms.sourcegitcommit: 02ca0f340a44b7e18acca1351c8e81f3cca4a370
+ms.openlocfilehash: ec6a03673112dfb5397f6fae947f1fbf65fd6791
+ms.sourcegitcommit: aaa65bd769eb2e234e42cfb07d7d459a2cc273ab
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/19/2020
-ms.locfileid: "88590364"
+ms.lasthandoff: 01/27/2021
+ms.locfileid: "98881412"
 ---
 # <a name="faqs-about-azure-netapp-files"></a>有关 Azure NetApp 文件的常见问题解答
 
@@ -31,13 +31,13 @@ ms.locfileid: "88590364"
 
 否。 NFS 数据路径不通过 Internet。 Azure NetApp 文件是一个 Azure 本机服务，该服务部署到 Azure 虚拟网络 (VNet) 服务可用。 Azure NetApp 文件使用委托子网，并直接在 VNet 中预配网络接口。 
 
-有关详细信息，请参阅 [Azure NetApp 文件的准则网络规划](https://docs.microsoft.com/azure/azure-netapp-files/azure-netapp-files-network-topologies) 。  
+有关详细信息，请参阅 [Azure NetApp 文件的准则网络规划](./azure-netapp-files-network-topologies.md) 。  
 
 ### <a name="can-i-connect-a-vnet-that-i-already-created-to-the-azure-netapp-files-service"></a>是否可以将已创建的 VNet 连接到 Azure NetApp 文件服务？
 
 是的，可以将创建的 Vnet 连接到服务。 
 
-有关详细信息，请参阅 [Azure NetApp 文件的准则网络规划](https://docs.microsoft.com/azure/azure-netapp-files/azure-netapp-files-network-topologies) 。  
+有关详细信息，请参阅 [Azure NetApp 文件的准则网络规划](./azure-netapp-files-network-topologies.md) 。  
 
 ### <a name="can-i-mount-an-nfs-volume-of-azure-netapp-files-using-dns-fqdn-name"></a>是否可以使用 DNS FQDN 名称装载 Azure NetApp 文件的 NFS 卷？
 
@@ -49,6 +49,10 @@ ms.locfileid: "88590364"
 ### <a name="can-i-set-or-select-my-own-ip-address-for-an-azure-netapp-files-volume"></a>能否为 Azure NetApp 文件卷设置或选择自己的 IP 地址？  
 
 否。 IP 分配给 Azure NetApp 文件卷是动态的。 不支持静态 IP 分配。 
+
+### <a name="does-azure-netapp-files-support-dual-stack-ipv4-and-ipv6-vnet"></a>Azure NetApp 文件是否支持双堆栈 (IPv4 和 IPv6) VNet？
+
+不能，Azure NetApp 文件当前不支持 (IPv4 和 IPv6) VNet 的双堆栈。  
  
 ## <a name="security-faqs"></a>安全常见问题
 
@@ -56,7 +60,7 @@ ms.locfileid: "88590364"
 
 可以使用 Kerberos 和 AES-256 加密在 NFSv 4.1 客户端和 Azure NetApp 文件卷之间进行数据通信。 有关详细信息，请参阅 [Configure nfsv 4.1 Kerberos encryption For Azure NetApp 文件](configure-kerberos-encryption.md) 。   
 
-NFSv3 或 SMBv3 客户端与 Azure NetApp 文件卷之间的数据流量未加密。 但是，与任何其他 Azure VM 到 VM 的流量一样，Azure VM (运行 NFS 或 SMB 客户端) Azure NetApp 文件的流量。 此流量是 Azure 数据中心网络的本地流量。 
+NFSv3 或 SMB3 客户端与 Azure NetApp 文件卷之间的数据流量未加密。 但是，与任何其他 Azure VM 到 VM 的流量一样，Azure VM (运行 NFS 或 SMB 客户端) Azure NetApp 文件的流量。 此流量是 Azure 数据中心网络的本地流量。 
 
 ### <a name="can-the-storage-be-encrypted-at-rest"></a>是否可以静态加密存储？
 
@@ -66,10 +70,9 @@ NFSv3 或 SMBv3 客户端与 Azure NetApp 文件卷之间的数据流量未加�
 
 Azure NetApp 文件的密钥管理由服务处理。 为每个卷生成唯一的 XTS-256 数据加密密钥。 加密密钥层次结构用于加密和保护所有卷密钥。 这些加密密钥永远不会以未加密的格式显示或报告。 删除卷时，会立即删除加密密钥。
 
-使用 Azure 专用 HSM) 的用户管理密钥支持 (自带密钥，可在美国东部、美国 West2 和美国中南部区域提供控制。  您可以在上请求访问 **anffeedback@microsoft.com** 。 容量可用时，将批准请求。
+在美国东部、美国中南部、美国西部2和 US Gov 弗吉尼亚州地区，使用 Azure 专用 HSM (创建自己的密钥) 支持客户管理的密钥。 您可以在上请求访问 [anffeedback@microsoft.com](mailto:anffeedback@microsoft.com) 。 容量可用时，将批准请求。
 
 ### <a name="can-i-configure-the-nfs-export-policy-rules-to-control-access-to-the-azure-netapp-files-service-mount-target"></a>能否配置 NFS 导出策略规则来控制对 Azure NetApp 文件服务装载目标的访问？
-
 
 是的，你可以在单个 NFS 导出策略中配置最多五个规则。
 
@@ -77,9 +80,9 @@ Azure NetApp 文件的密钥管理由服务处理。 为每个卷生成唯一的
 
 不可以，当前无法将网络安全组应用于 Azure NetApp 文件的委托子网或服务创建的网络接口。
 
-### <a name="can-i-use-azure-iam-with-azure-netapp-files"></a>能否在 Azure NetApp 文件中使用 Azure IAM？
+### <a name="can-i-use-azure-rbac-with-azure-netapp-files"></a>能否在 Azure NetApp 文件中使用 Azure RBAC？
 
-是的，Azure NetApp 文件支持通过 Azure IAM 提供 RBAC 功能。
+是的，Azure NetApp 文件支持 Azure RBAC 功能。
 
 ## <a name="performance-faqs"></a>性能常见问题解答
 
@@ -129,6 +132,22 @@ Azure NetApp 文件支持 NFSv3 和 NFSv 4.1。 可以使用任一 NFS 版本 [�
 
 你可以使用卷的导出策略指定根帐户是否可以访问该卷。 有关详细信息，请参阅 [配置 NFS 卷的导出策略](azure-netapp-files-configure-export-policy.md) 。
 
+### <a name="can-i-use-the-same-file-path-volume-creation-token-for-multiple-volumes"></a>能否为多个卷 (卷创建令牌) 使用相同的文件路径？
+
+可以。 但是，文件路径必须在不同的订阅或不同的区域中使用。   
+
+例如，创建一个名为的卷 `vol1` 。 然后，在同一订阅和区域中创建另一个也被称为 `vol1` 不同容量池中的卷。 在这种情况下，使用相同的卷名称 `vol1` 将导致错误。 若要使用相同的文件路径，名称必须在不同的区域或订阅中。
+
+### <a name="when-i-try-to-access-nfs-volumes-through-a-windows-client-why-does-the-client-take-a-long-time-to-search-folders-and-subfolders"></a>尝试通过 Windows 客户端访问 NFS 卷时，为什么客户端需要很长时间才能搜索文件夹和子文件夹？
+
+请确保在 `CaseSensitiveLookup` Windows 客户端上启用以加速文件夹和子文件夹的查找：
+
+1. 使用以下 PowerShell 命令来启用 CaseSensitiveLookup：   
+    `Set-NfsClientConfiguration -CaseSensitiveLookup 1`    
+2. 在 Windows server 上装载卷。   
+    示例：   
+    `Mount -o rsize=1024 -o wsize=1024 -o mtype=hard \\10.x.x.x\testvol X:*`
+
 ## <a name="smb-faqs"></a>SMB 常见问题解答
 
 ### <a name="which-smb-versions-are-supported-by-azure-netapp-files"></a>Azure NetApp 文件支持哪些 SMB 版本？
@@ -137,17 +156,17 @@ Azure NetApp 文件支持 SMB 2.1 和 SMB 3.1 (，其中包括对 SMB 3.0) 的�
 
 ### <a name="is-an-active-directory-connection-required-for-smb-access"></a>SMB 访问是否需要 Active Directory 连接？ 
 
-是的，你必须在部署 SMB 卷之前创建 Active Directory 连接。 若要成功连接，Azure NetApp 文件的委托子网必须可以访问指定的域控制器。  有关详细信息，请参阅 [创建 SMB 卷](https://docs.microsoft.com/azure/azure-netapp-files/azure-netapp-files-create-volumes-smb) 。 
+是的，你必须在部署 SMB 卷之前创建 Active Directory 连接。 若要成功连接，Azure NetApp 文件的委托子网必须可以访问指定的域控制器。  有关详细信息，请参阅 [创建 SMB 卷](./azure-netapp-files-create-volumes-smb.md) 。 
 
 ### <a name="how-many-active-directory-connections-are-supported"></a>支持多少个 Active Directory 连接？
 
-即使 AD 连接在不同的 NetApp 帐户中，Azure NetApp 文件也不支持单个 *区域*中 (ad) 连接的多个 Active Directory。 但是，只要 AD 连接位于不同的区域，就可以在单个 *订阅*中拥有多个 ad 连接。 如果在单个区域中需要多个 AD 连接，则可以使用单独的订阅来执行此操作。 
+即使 AD 连接在不同的 NetApp 帐户中，Azure NetApp 文件也不支持单个 *区域* 中 (ad) 连接的多个 Active Directory。 但是，只要 AD 连接位于不同的区域，就可以在单个 *订阅* 中拥有多个 ad 连接。 如果在单个区域中需要多个 AD 连接，则可以使用单独的订阅来执行此操作。 
 
 AD 连接是按 NetApp 帐户配置的;AD 连接仅在创建它的 NetApp 帐户中可见。
 
 ### <a name="does-azure-netapp-files-support-azure-active-directory"></a>Azure NetApp 文件是否支持 Azure Active Directory？ 
 
-支持 [Azure Active Directory (AD) 域服务](https://docs.microsoft.com/azure/active-directory-domain-services/overview) 和 [Active Directory 域服务 (](https://docs.microsoft.com/windows-server/identity/ad-ds/get-started/virtual-dc/active-directory-domain-services-overview) AD DS) 。 可以将现有 Active Directory 域控制器与 Azure NetApp 文件一起使用。 域控制器可以作为虚拟机或本地通过 ExpressRoute 或 S2S VPN 驻留在 Azure 中。 目前，Azure NetApp 文件不支持 [Azure Active Directory](https://azure.microsoft.com/resources/videos/azure-active-directory-overview/) 的 AD join。
+支持 [Azure Active Directory (AD) 域服务](../active-directory-domain-services/overview.md) 和 [Active Directory 域服务 (](/windows-server/identity/ad-ds/get-started/virtual-dc/active-directory-domain-services-overview) AD DS) 。 可以将现有 Active Directory 域控制器与 Azure NetApp 文件一起使用。 域控制器可以作为虚拟机或本地通过 ExpressRoute 或 S2S VPN 驻留在 Azure 中。 目前，Azure NetApp 文件不支持 [Azure Active Directory](https://azure.microsoft.com/resources/videos/azure-active-directory-overview/) 的 AD join。
 
 如果将 Azure NetApp 文件与 Azure Active Directory 域服务一起使用，则在为 NetApp 帐户配置 Active Directory 时，组织单位路径为 `OU=AADDC Computers`。
 
@@ -159,31 +178,15 @@ Azure NetApp 文件支持 Windows Server 2008r2SP1-2019 版本的 Active Directo
 
 SMB 客户端报告的卷大小是 Azure NetApp 文件量可以增长到的最大大小。 SMB 客户端上显示的 Azure NetApp 文件卷的大小不会反映卷的配额或大小。 可以通过 Azure 门户或 API 获取 Azure NetApp 文件的容量或配额。
 
-<!--
-### Does Azure NetApp Files support Kerberos encryption?
+### <a name="im-having-issues-connecting-to-my-smb-share-what-should-i-do"></a>连接到 SMB 共享时遇到问题。 应采取何种操作？
 
-Yes, by default, Azure NetApp Files supports both AES-128 and AES-256 encryption for traffic between the service and the targeted Active Directory domain controllers. See [Create an SMB volume for Azure NetApp Files](azure-netapp-files-create-volumes-smb.md) for requirements. 
--->
+最佳做法是将计算机时钟同步的最大容差设置为5分钟。 有关详细信息，请参阅 [计算机时钟同步的最大容差](/previous-versions/windows/it-pro/windows-server-2012-r2-and-2012/jj852172(v=ws.11))。 
 
 <!--
 ### Does Azure NetApp Files support LDAP signing? 
 
-Yes, Azure NetApp Files supports LDAP signing by default. This functionality enables secure LDAP lookups between the Azure NetApp Files service and the user-specified [Active Directory Domain Services domain controllers](https://docs.microsoft.com/windows/win32/ad/active-directory-domain-services). For more information, see [ADV190023 | Microsoft Guidance for Enabling LDAP Channel Binding and LDAP Signing](https://portal.msrc.microsoft.com/en-us/security-guidance/advisory/ADV190023).
+Yes, Azure NetApp Files supports LDAP signing by default. This functionality enables secure LDAP lookups between the Azure NetApp Files service and the user-specified [Active Directory Domain Services domain controllers](/windows/win32/ad/active-directory-domain-services). For more information, see [ADV190023 | Microsoft Guidance for Enabling LDAP Channel Binding and LDAP Signing](https://portal.msrc.microsoft.com/en-us/security-guidance/advisory/ADV190023).
 --> 
-
-## <a name="dual-protocol-faqs"></a>双重协议常见问题
-
-### <a name="i-tried-to-use-the-root-and-local-users-to-access-a-dual-protocol-volume-with-the-ntfs-security-style-on-a-unix-system-why-did-i-encounter-a-permission-denied-error"></a>我尝试使用 "root" 和本地用户访问 UNIX 系统上具有 NTFS 安全样式的双协议卷。 为什么会出现 "权限被拒绝" 错误？   
-
-双协议卷支持 NFS 协议和 SMB 协议。  当你尝试访问 UNIX 系统上装入的卷时，系统将尝试将你使用的 UNIX 用户映射到 Windows 用户。 如果未找到映射，则会发生 "权限被拒绝" 错误。  当你使用 "root" 用户进行访问时，这种情况也适用。    
-
-若要避免 "权限被拒绝" 问题，请确保在 `pcuser` 访问装入点之前 Windows Active Directory 包含。 如果在 `pcuser` 遇到 "权限被拒绝" 问题后添加，请等待24小时，以便在再次尝试访问之前清除缓存条目。
-
-### <a name="when-i-try-to-create-a-dual-protocol-volume-why-does-the-creation-process-fail-with-the-error-failed-to-validate-ldap-configuration-try-again-after-correcting-ldap-configuration"></a>尝试创建双重协议卷时，为什么创建过程失败，并出现错误 "无法验证 LDAP 配置，更正 LDAP 配置后重试"？  
-
-DNS 服务器上可能缺少 AD 主机计算机 (PTR) 记录的指针。 需要在 DNS 服务器上创建反向查找区域，然后在该反向查找区域中添加 AD 主机计算机的 PTR 记录。
-
-例如，假设 AD 计算机的 IP 地址为 `1.1.1.1` ，使用命令)  (找到的 ad 计算机的主机名 `hostname` `AD1` ，并且域名为 `myDomain.com` 。  添加到反向查找区域中的 PTR 记录应该是 `1.1.1.1`  ->  `AD1.myDomain.com` 。
 
 ## <a name="capacity-management-faqs"></a>容量管理常见问题
 
@@ -201,7 +204,7 @@ Azure NetApp 文件提供容量池和卷使用情况指标。 你还可以使用
 
 对于 320 MB 的目录，块数为655360，每个块的大小为512个字节。   (，即 320x1024x1024/512 )   
 
-示例：
+示例:
 
 ```console
 [makam@cycrh6rtp07 ~]$ stat bin
@@ -225,7 +228,7 @@ Azure NetApp 文件提供 NFS 和 SMB 卷。  你可以使用任何基于文件�
 
 NetApp 提供基于 SaaS 的解决方案，即 [Netapp 云同步](https://cloud.netapp.com/cloud-sync-service)。 解决方案使你能够将 NFS 或 SMB 数据复制到 Azure NetApp 文件 NFS 导出或 SMB 共享。 
 
-你还可以使用广泛的免费工具来复制数据。 对于 NFS，可以使用工作负荷工具（如 [rsync](https://rsync.samba.org/examples.html) ）将源数据复制和同步到 Azure NetApp 文件量。 对于 SMB，可以采用相同的方式使用工作负荷 [robocopy](https://docs.microsoft.com/windows-server/administration/windows-commands/robocopy) 。  这些工具还可以复制文件或文件夹的权限。 
+你还可以使用广泛的免费工具来复制数据。 对于 NFS，可以使用工作负荷工具（如 [rsync](https://rsync.samba.org/examples.html) ）将源数据复制和同步到 Azure NetApp 文件量。 对于 SMB，可以采用相同的方式使用工作负荷 [robocopy](/windows-server/administration/windows-commands/robocopy) 。  这些工具还可以复制文件或文件夹的权限。 
 
 从本地到 Azure NetApp 文件的数据迁移要求如下所示： 
 
@@ -240,7 +243,7 @@ Azure NetApp 文件提供 NFS 和 SMB 卷。  可以使用任何基于文件的�
 
 NetApp 提供基于 SaaS 的解决方案，即 [Netapp 云同步](https://cloud.netapp.com/cloud-sync-service)。 解决方案使你能够将 NFS 或 SMB 数据复制到 Azure NetApp 文件 NFS 导出或 SMB 共享。 
 
-你还可以使用广泛的免费工具来复制数据。 对于 NFS，可以使用工作负荷工具（如 [rsync](https://rsync.samba.org/examples.html) ）将源数据复制和同步到 Azure NetApp 文件量。 对于 SMB，可以采用相同的方式使用工作负荷 [robocopy](https://docs.microsoft.com/windows-server/administration/windows-commands/robocopy) 。  这些工具还可以复制文件或文件夹的权限。 
+你还可以使用广泛的免费工具来复制数据。 对于 NFS，可以使用工作负荷工具（如 [rsync](https://rsync.samba.org/examples.html) ）将源数据复制和同步到 Azure NetApp 文件量。 对于 SMB，可以采用相同的方式使用工作负荷 [robocopy](/windows-server/administration/windows-commands/robocopy) 。  这些工具还可以复制文件或文件夹的权限。 
 
 将 Azure NetApp 文件卷复制到其他 Azure 区域的要求如下： 
 - 确保 Azure NetApp 文件在目标 Azure 区域中可用。
@@ -256,10 +259,20 @@ NetApp 提供基于 SaaS 的解决方案，即 [Netapp 云同步](https://cloud.
 
 否。 Azure 导入/导出服务目前不支持 Azure NetApp 文件。
 
+## <a name="product-faqs"></a>产品常见问题
+
+### <a name="can-i-use-azure-netapp-files-nfs-or-smb-volumes-with-azure-vmware-solution-avs"></a>能否在 Azure VMware 解决方案 (AVS) 上使用 Azure NetApp 文件 NFS 或 SMB 卷？
+
+可以在 AVS Windows Vm 或 Linux Vm 上装载 Azure NetApp 文件 NFS 卷。 可以将 Azure NetApp 文件的 SMB 共享映射到 AVS Windows Vm。 有关更多详细信息，请参阅 azure [NetApp 文件与 Azure VMware 解决方案]( ../azure-vmware/netapp-files-with-azure-vmware-solution.md)。  
+
+### <a name="what-regions-are-supported-for-using-azure-netapp-files-nfs-or-smb-volumes-with-azure-vmware-solution-avs"></a>使用 azure NetApp 文件 NFS 或 SMB 卷和 Azure VMware 解决方案 (AVS) 支持哪些区域？
+
+以下区域（美国东部、美国西部、西欧和澳大利亚东部）支持使用 Azure NetApp 文件 NFS 或包含 AVS 的 SMB 卷。
+
 ## <a name="next-steps"></a>后续步骤  
 
-- [Microsoft Azure ExpressRoute 常见问题](https://docs.microsoft.com/azure/expressroute/expressroute-faqs)
-- [Microsoft Azure 虚拟网络常见问题](https://docs.microsoft.com/azure/virtual-network/virtual-networks-faq)
-- [如何创建 Azure 支持请求](https://docs.microsoft.com/azure/azure-portal/supportability/how-to-create-azure-support-request)
-- [Azure Data Box](https://docs.microsoft.com/azure/databox)
+- [Microsoft Azure ExpressRoute 常见问题](../expressroute/expressroute-faqs.md)
+- [Microsoft Azure 虚拟网络常见问题](../virtual-network/virtual-networks-faq.md)
+- [如何创建 Azure 支持请求](../azure-portal/supportability/how-to-create-azure-support-request.md)
+- [Azure Data Box](../databox/index.yml)
 - [有关 Azure NetApp 文件的 SMB 性能的常见问题解答](azure-netapp-files-smb-performance.md)

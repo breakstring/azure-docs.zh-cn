@@ -1,6 +1,6 @@
 ---
-title: 从 Azure IoT 中心同步设备状态 | Microsoft Docs
-description: 了解如何使用设备孪生从云中配置设备，并从设备接收状态和符合性数据。
+title: 教程 - 从 Azure IoT 中心同步设备状态 | Microsoft Docs
+description: 教程 - 了解如何使用设备孪生从云中配置设备，并从设备接收状态和合规性数据。
 services: iot-hub
 author: wesmc7777
 ms.author: wesmc
@@ -13,13 +13,14 @@ ms.custom:
 - mqtt
 - 'Role: Cloud Development'
 - 'Role: IoT Device'
-- devx-track-javascript
-ms.openlocfilehash: f3dad81a5cba9dd817e0d4e75590d374fe059358
-ms.sourcegitcommit: e71da24cc108efc2c194007f976f74dd596ab013
+- devx-track-js
+- devx-track-azurecli
+ms.openlocfilehash: 7dbc0404679927bcef1647dfdf46ce3360216a79
+ms.sourcegitcommit: 78ecfbc831405e8d0f932c9aafcdf59589f81978
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/29/2020
-ms.locfileid: "87424097"
+ms.lasthandoff: 01/23/2021
+ms.locfileid: "98733294"
 ---
 <!-- **TODO** Update publish config with repo paths before publishing! -->
 
@@ -38,11 +39,9 @@ ms.locfileid: "87424097"
 > * 使用所需属性将状态信息发送到模拟设备。
 > * 使用报告属性从模拟设备接收状态信息。
 
-[!INCLUDE [cloud-shell-try-it.md](../../includes/cloud-shell-try-it.md)]
-
 如果没有 Azure 订阅，请在开始之前创建一个[免费帐户](https://azure.microsoft.com/free/?WT.mc_id=A261C142F)。
 
-## <a name="prerequisites"></a>先决条件
+[!INCLUDE [azure-cli-prepare-your-environment.md](../../includes/azure-cli-prepare-your-environment.md)]
 
 本快速入门中运行的两个示例应用程序是使用 Node.js 编写的。 开发计算机上需要有 Node.js v10.x.x 或更高版本。
 
@@ -74,11 +73,11 @@ az extension add --name azure-iot
 # Create a resource group:
 az group create --name tutorial-iot-hub-rg --location $location
 
-# Create your free-tier IoT Hub. You can only have one free IoT Hub per subscription:
-az iot hub create --name $hubname --location $location --resource-group tutorial-iot-hub-rg --sku F1
+# Create your free-tier IoT Hub. You can only have one free IoT Hub per subscription.
+az iot hub create --name $hubname --location $location --resource-group tutorial-iot-hub-rg --partition-count 2 --sku F1
 
 # Make a note of the service connection string, you need it later:
-az iot hub show-connection-string --name $hubname --policy-name service -o table
+az iot hub connection-string show --name $hubname --policy-name service -o table
 
 ```
 
@@ -92,7 +91,7 @@ hubname=tutorial-iot-hub
 az iot hub device-identity create --device-id MyTwinDevice --hub-name $hubname --resource-group tutorial-iot-hub-rg
 
 # Retrieve the device connection string, you need this later:
-az iot hub device-identity show-connection-string --device-id MyTwinDevice --hub-name $hubname --resource-group tutorial-iot-hub-rg -o table
+az iot hub device-identity connection-string show --device-id MyTwinDevice --hub-name $hubname --resource-group tutorial-iot-hub-rg -o table
 
 ```
 
@@ -119,7 +118,7 @@ az iot hub device-identity show-connection-string --device-id MyTwinDevice --hub
 
 ### <a name="sample-desired-properties"></a>所需属性示例
 
-可以使用对应用程序有利的任何方式来构建所需属性。 本示例使用一个名为 **fanOn** 的顶级属性，并将剩余的属性分组到单独的**组件**中。 以下 JSON 片段显示了本教程所用的所需属性的结构：
+可以使用对应用程序有利的任何方式来构建所需属性。 本示例使用一个名为 **fanOn** 的顶级属性，并将剩余的属性分组到单独的 **组件** 中。 以下 JSON 片段显示了本教程所用的所需属性的结构。 JSON 位于 desired.json 文件中。
 
 [!code[Sample desired properties](~/iot-samples-node/iot-hub/Tutorials/DeviceTwins/desired.json "Sample desired properties")]
 
@@ -147,7 +146,7 @@ az iot hub device-identity show-connection-string --device-id MyTwinDevice --hub
 
 从后端发送的所需属性并不会指示当前正在对特定的所需属性执行哪个操作。 代码需要根据当前存储在本地的所需属性集，以及中心发送的更改来推断操作。
 
-以下片段演示模拟设备如何处理针对所需属性中的**组件**列表执行的插入、更新和删除操作。 可以查看如何使用 **null** 值来指示应删除某个组件：
+以下片段演示模拟设备如何处理针对所需属性中的 **组件** 列表执行的插入、更新和删除操作。 可以查看如何使用 **null** 值来指示应删除某个组件：
 
 [!code-javascript[Handle components](~/iot-samples-node/iot-hub/Tutorials/DeviceTwins/SimulatedDevice.js?name=components&highlight=2,6,13 "Handle components")]
 
@@ -191,11 +190,11 @@ node ServiceClient.js "{your service connection string}"
 
 以下屏幕截图显示模拟设备应用程序的输出，并突出显示它如何处理对 **maxTemperature** 所需属性做出的更新。 可以看到顶级处理程序和气候组件处理程序的运行方式：
 
-![模拟设备](./media/tutorial-device-twins/SimulatedDevice1.png)
+![屏幕截图显示了顶级处理程序和气候组件处理程序的运行方式。](./media/tutorial-device-twins/SimulatedDevice1.png)
 
 以下屏幕截图显示后端应用程序的输出，并突出显示它如何发送对 **maxTemperature** 所需属性做出的更新：
 
-![后端应用程序](./media/tutorial-device-twins/BackEnd1.png)
+![屏幕截图显示了后端应用程序的输出，并突出显示了它如何发送更新。](./media/tutorial-device-twins/BackEnd1.png)
 
 ## <a name="receive-state-information"></a>接收状态信息
 

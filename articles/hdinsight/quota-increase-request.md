@@ -1,25 +1,22 @@
 ---
 title: 请求增加 CPU 内核配额 - Azure HDInsight
 description: 了解请求增加分配给订阅的 CPU 内核的过程。
-author: hrasheed-msft
-ms.author: hrasheed
-ms.reviewer: jasonh
 ms.service: hdinsight
 ms.topic: how-to
 ms.custom: hdinsightactive
 ms.date: 05/07/2020
-ms.openlocfilehash: 4de32bad763c0bbf0e143a7ce639efec8c9c41ae
-ms.sourcegitcommit: 124f7f699b6a43314e63af0101cd788db995d1cb
+ms.openlocfilehash: a539acc423feeab500830fb33262d1b824101072
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/08/2020
-ms.locfileid: "86079609"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98935835"
 ---
 # <a name="requesting-quota-increases-for-azure-hdinsight"></a>请求增加 Azure HDInsight 的配额
 
 CPU 内核配额有助于确保资源使用在特定 Azure 区域的所有客户之间得到公平分配。 但是，在某些情况下，业务要求需要的群集资源量可能会超出当前配额的允许值。 在这种情况下，你可以请求增加 CPU 内核配额，以便能够部署符合你数据处理要求的群集数。
 
-达到配额限制时，则无法部署新群集，也无法通过添加更多工作节点来横向扩展现有群集。 唯一存在配额限制的是每个订阅的区域级别的 CPU 核心配额。 例如，订阅在美国东部地区的 CPU 内核限制可能是 30 个，而在美国东部 2 中允许的内核数又增加了 30 个。
+达到配额限制时，则无法部署新群集，也无法通过添加更多工作节点来横向扩展现有群集。 唯一存在配额限制的是每个订阅的区域级别的 CPU 核心配额。 例如，在美国东部地区，你的订阅可能会有30个 CPU 核心限制，而美国东部仍允许使用另外30个 CPU 核心。
 
 ## <a name="gather-required-information"></a>收集所需信息
 
@@ -65,11 +62,11 @@ CPU 内核配额有助于确保资源使用在特定 Azure 区域的所有客户
 1. 在“查看 + 创建”选项卡上，选择“创建”。 
 
 > [!NOTE]  
-> 如果需要增加专用区域中的 HDInsight 核心配额，请[提交允许列表请求](https://aka.ms/canaryintwhitelist)。
+> 如果需要增加专用区域中的 HDInsight 核心配额，请[提交已批准列表请求](https://aka.ms/canaryintwhitelist)。
 
-可以[联系支持部门来请求提高配额](https://docs.microsoft.com/azure/azure-portal/supportability/resource-manager-core-quotas-request)。
+可以[联系支持部门来请求提高配额](../azure-portal/supportability/resource-manager-core-quotas-request.md)。
 
-有一些配额限制是固定的。 例如，单个 Azure 订阅最多可以有 10,000 个内核。 有关这些限制的详细信息，请参阅 [Azure 订阅和服务限制、配额与约束](https://docs.microsoft.com/azure/azure-resource-manager/management/azure-subscription-service-limits)。
+有一些配额限制是固定的。 例如，单个 Azure 订阅最多可以有 10,000 个内核。 有关这些限制的详细信息，请参阅 [Azure 订阅和服务限制、配额与约束](../azure-resource-manager/management/azure-subscription-service-limits.md)。
 
 ## <a name="next-steps"></a>后续步骤
 

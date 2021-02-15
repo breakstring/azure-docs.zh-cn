@@ -3,15 +3,20 @@ title: 在 Java Web 应用中筛选 Azure Application Insights 遥测
 description: 筛选出无需监视的事件，减少遥测流量。
 ms.topic: conceptual
 ms.date: 3/14/2019
+author: MS-jgol
 ms.custom: devx-track-java
-ms.openlocfilehash: 825c807d9af542e8776e3b6361b8f6b6dd08f164
-ms.sourcegitcommit: f353fe5acd9698aa31631f38dd32790d889b4dbb
+ms.author: jgol
+ms.openlocfilehash: 71858be97404344bad88ea20e31b17fa44f669a2
+ms.sourcegitcommit: 431bf5709b433bb12ab1f2e591f1f61f6d87f66c
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/29/2020
-ms.locfileid: "87372172"
+ms.lasthandoff: 01/12/2021
+ms.locfileid: "98131179"
 ---
 # <a name="filter-telemetry-in-your-java-web-app"></a>在 Java Web 应用中筛选遥测
+
+> [!IMPORTANT]
+> 监视 Java 应用程序的建议方法是在不更改代码的情况下使用自动检测。 请按照 [Application Insights Java 3.0 代理](./java-in-process-agent.md)指南进行操作。
 
 可通过筛选器选择 [Java Web 应用发送到 Application Insights](java-get-started.md) 的遥测。 可使用现成的筛选器，也可编写自己的自定义筛选器。
 
@@ -78,10 +83,7 @@ ms.locfileid: "87372172"
 
 ```
 
-
-
-
-[检查整套内置处理器](https://github.com/Microsoft/ApplicationInsights-Java/tree/master/core/src/main/java/com/microsoft/applicationinsights/internal/processor)。
+[检查整套内置处理器](https://github.com/microsoft/ApplicationInsights-Java/tree/master/core/src/main/java/com/microsoft/applicationinsights/internal)。
 
 ## <a name="built-in-filters"></a>内置筛选器
 
@@ -201,32 +203,31 @@ ms.locfileid: "87372172"
 
     public class SuccessFilter implements TelemetryProcessor {
 
-       /* Any parameters that are required to support the filter.*/
-       private final String successful;
+        /* Any parameters that are required to support the filter.*/
+        private final String successful;
 
-       /* Initializers for the parameters, named "setParameterName" */
-       public void setNotNeeded(String successful)
-       {
-          this.successful = successful;
-       }
-
-       /* This method is called for each item of telemetry to be sent.
-          Return false to discard it.
-          Return true to allow other processors to inspect it. */
-       @Override
-       public boolean process(Telemetry telemetry) {
-        if (telemetry == null) { return true; }
-        if (telemetry instanceof RequestTelemetry)
+        /* Initializers for the parameters, named "setParameterName" */
+        public void setNotNeeded(String successful)
         {
-            RequestTelemetry requestTelemetry = (RequestTelemetry)telemetry;
-            return request.getSuccess() == successful;
+            this.successful = successful;
         }
-        return true;
-       }
+
+        /* This method is called for each item of telemetry to be sent.
+           Return false to discard it.
+           Return true to allow other processors to inspect it. */
+        @Override
+        public boolean process(Telemetry telemetry) {
+            if (telemetry == null) { return true; }
+            if (telemetry instanceof RequestTelemetry)
+            {
+                RequestTelemetry requestTelemetry = (RequestTelemetry)    telemetry;
+                return request.getSuccess() == successful;
+            }
+            return true;
+        }
     }
 
 ```
-
 
 ### <a name="2-invoke-your-filter-in-the-configuration-file"></a>2.在配置文件中调用筛选器
 
@@ -261,9 +262,9 @@ public TelemetryProcessor successFilter() {
 你将需要在 `application.properties` 中创建自己的筛选器参数，并利用 Spring Boot 的外部化配置框架将这些参数传递到自定义筛选器。 
 
 
-## <a name="troubleshooting"></a>故障排除
+## <a name="troubleshooting"></a>疑难解答
 
-我的筛选器不能正常工作  。
+我的筛选器不能正常工作。
 
 * 请检查提供的参数值是否有效。 例如，持续时间应为整数。 无效值将导致筛选器被忽略。 如果自定义筛选器从构造函数或 set 方法中引发异常，它会被忽略。
 

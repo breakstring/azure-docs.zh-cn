@@ -3,12 +3,12 @@ title: 检测运动，将视频录制到 Azure 媒体服务
 description: 本快速入门演示如何使用 IoT Edge 上的实时视频分析功能来检测实时视频流中的运动，并将视频剪辑录制到 Azure 媒体服务。
 ms.topic: quickstart
 ms.date: 04/27/2020
-ms.openlocfilehash: 972b85c00aa29cc39dafd03b9945e489680dd9a5
-ms.sourcegitcommit: d8b8768d62672e9c287a04f2578383d0eb857950
+ms.openlocfilehash: 15a9def78c7dddda7e63db66d2b21794506f6a92
+ms.sourcegitcommit: 484f510bbb093e9cfca694b56622b5860ca317f7
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/11/2020
-ms.locfileid: "88067641"
+ms.lasthandoff: 01/21/2021
+ms.locfileid: "98632718"
 ---
 # <a name="quickstart-detect-motion-record-video-to-media-services"></a>快速入门：检测运动，将视频录制到媒体服务
 
@@ -19,25 +19,40 @@ ms.locfileid: "88067641"
 ## <a name="prerequisites"></a>先决条件
 
 * 具有活动订阅的 Azure 帐户。 [免费创建帐户](https://azure.microsoft.com/free/?WT.mc_id=A261C142F)。
+  > [!NOTE]
+  > 你将需要一个具有服务主体创建权限（所有者角色提供此权限）的 Azure 订阅。 如果没有正确的权限，请联系帐户管理员，让其授予适当的权限。 
 * 计算机上的 [Visual Studio Code](https://code.visualstudio.com/) 有 [Azure IoT Tools 扩展](https://marketplace.visualstudio.com/items?itemName=vsciot-vscode.azure-iot-tools)。
 * 如果之前尚未完成[快速入门](get-started-detect-motion-emit-events-quickstart.md)，请完成以下步骤：
     * [设置 Azure 资源](get-started-detect-motion-emit-events-quickstart.md#set-up-azure-resources)
     * [部署模块](get-started-detect-motion-emit-events-quickstart.md#deploy-modules-on-your-edge-device)
     * [配置 Visual Studio Code](get-started-detect-motion-emit-events-quickstart.md#configure-the-azure-iot-tools-extension)
-
+    > [!TIP]
+    > 如果在创建 Azure 资源时遇到问题，请查看[故障排除指南](troubleshoot-how-to.md#common-error-resolutions)来解决一些常见问题。
 ## <a name="review-the-sample-video"></a>观看示例视频
 
 作为上述 Azure 资源设置步骤的一部分，一个停车场（短）视频将被复制到 Azure 中用作 IoT Edge 设备的 Linux VM 上。 本教程将使用此视频文件模拟实时流。
 
 可以使用 [VLC Player](https://www.videolan.org/vlc/) 等应用程序，启动它，按 `Ctrl+N`，然后粘贴[停车场视频示例](https://lvamedia.blob.core.windows.net/public/lots_015.mkv)链接以开始播放。 大约在 5 秒的时候，一辆白色汽车在停车场间移动。
+> [!VIDEO https://www.microsoft.com/en-us/videoplayer/embed/RE4LUbN]
 
 完成以下步骤时，会使用 IoT Edge 上的实时视频分析功能检测汽车的运动，并从大约第 5 秒的标记处开始录制视频剪辑。 下图直观呈现了整个过程。
 
-![根据运动事件将基于事件的视频录制到资产](./media/quickstarts/topology.png)
+> [!div class="mx-imgBorder"]
+> :::image type="content" source="./media/quickstarts/topology.svg" alt-text="根据运动事件将基于事件的视频录制到资产":::
 
 ## <a name="use-direct-method-calls"></a>使用直接方法调用
 
 可以通过调用直接方法来使用该模块分析实时视频流。 阅读 [IoT Edge 上的实时视频分析的直接方法](direct-methods.md)，了解模块提供的所有直接方法。 
+
+1. 在 Visual Studio Code 中，打开“扩展”选项卡（或按 Ctrl+Shift+X），然后搜索“Azure IoT 中心”。
+1. 右键单击并选择“扩展设置”。
+
+    > [!div class="mx-imgBorder"]
+    > :::image type="content" source="./media/run-program/extensions-tab.png" alt-text="扩展设置":::
+1. 搜索并启用“显示详细消息”。
+
+    > [!div class="mx-imgBorder"]
+    > :::image type="content" source="./media/run-program/show-verbose-message.png" alt-text="显示详细消息":::
 
 ### <a name="invoke-graphtopologylist"></a>调用 GraphTopologyList
 此步骤会枚举模块中的所有[图形拓扑](media-graph-concept.md#media-graph-topologies-and-instances)。
@@ -48,7 +63,7 @@ ms.locfileid: "88067641"
     
 ```
 {
-    "@apiVersion" : "1.0"
+    "@apiVersion" : "2.0"
 }
 ```
 
@@ -73,7 +88,7 @@ ms.locfileid: "88067641"
 
 ```
 {
-    "@apiVersion": "1.0",
+    "@apiVersion": "2.0",
     "name": "EVRtoAssetsOnMotionDetection",
     "properties": {
       "description": "Event-based video recording to Assets based on motion events",
@@ -320,7 +335,7 @@ ms.locfileid: "88067641"
 ```
 
 {
-    "@apiVersion" : "1.0",
+    "@apiVersion" : "2.0",
     "name" : "EVRtoAssetsOnMotionDetection"
 }
 ```
@@ -463,7 +478,7 @@ ms.locfileid: "88067641"
 
 ```
 {
-    "@apiVersion" : "1.0",
+    "@apiVersion" : "2.0",
     "name" : "Sample-Graph-2",
     "properties" : {
         "topologyName" : "EVRtoAssetsOnMotionDetection",
@@ -545,7 +560,7 @@ ms.locfileid: "88067641"
 
 ```
 {
-    "@apiVersion" : "1.0",
+    "@apiVersion" : "2.0",
     "name" : "Sample-Graph-2"
 }
 ```
@@ -569,7 +584,7 @@ ms.locfileid: "88067641"
 
 ```
 {
-    "@apiVersion" : "1.0",
+    "@apiVersion" : "2.0",
     "name" : "Sample-Graph-2"
 }
 ```
@@ -748,7 +763,7 @@ ms.locfileid: "88067641"
 
 ```
 {
-    "@apiVersion" : "1.0",
+    "@apiVersion" : "2.0",
     "name" : "Sample-Graph-2"
 }
 ```
@@ -776,7 +791,7 @@ ms.locfileid: "88067641"
 
 ```
 {
-    "@apiVersion" : "1.0",
+    "@apiVersion" : "2.0",
     "name" : "Sample-Graph-2"
 }
 ```
@@ -800,7 +815,7 @@ ms.locfileid: "88067641"
 
 ```
 {
-    "@apiVersion" : "1.0",
+    "@apiVersion" : "2.0",
     "name" : "EVRtoAssetsOnMotionDetection"
 }
 ```

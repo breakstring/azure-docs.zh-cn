@@ -8,13 +8,13 @@ services: iot-hub
 ms.topic: conceptual
 ms.date: 08/20/2019
 ms.author: robinsh
-ms.custom: mqtt
-ms.openlocfilehash: 4c71a108d1967027465d127db50737119af3e2c1
-ms.sourcegitcommit: 849bb1729b89d075eed579aa36395bf4d29f3bd9
+ms.custom: mqtt, devx-track-csharp
+ms.openlocfilehash: 0391afe5562238f488fde7e50d914c46a5c32944
+ms.sourcegitcommit: dbe434f45f9d0f9d298076bf8c08672ceca416c6
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/28/2020
-ms.locfileid: "81733367"
+ms.lasthandoff: 10/17/2020
+ms.locfileid: "92142454"
 ---
 # <a name="schedule-and-broadcast-jobs-net"></a>计划和广播作业 (.NET)
 
@@ -261,7 +261,7 @@ ms.locfileid: "81733367"
     ```
 
     > [!NOTE]
-    > 有关查询语法的详细信息，请参阅 [IoT 中心查询语言](https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-query-language)。
+    > 有关查询语法的详细信息，请参阅 [IoT 中心查询语言](./iot-hub-devguide-query-language.md)。
     >
 
 1. 最后，在 **Main** 方法中添加以下行：
@@ -311,4 +311,4 @@ ms.locfileid: "81733367"
 
 * 若要继续完成 IoT 中心和设备管理模式（如远程无线固件更新）的入门内容，请阅读[教程：如何进行固件更新](tutorial-firmware-update.md)。
 
-* 若要了解如何将 AI 部署到具有 Azure IoT Edge 的边缘设备，请参阅 [IoT Edge 入门](../iot-edge/tutorial-simulate-device-linux.md)。
+* 若要了解如何将 AI 部署到具有 Azure IoT Edge 的边缘设备，请参阅 [IoT Edge 入门](../iot-edge/quickstart-linux.md)。

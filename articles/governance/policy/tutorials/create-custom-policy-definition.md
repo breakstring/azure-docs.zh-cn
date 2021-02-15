@@ -1,14 +1,14 @@
 ---
 title: 教程：创建自定义策略定义
 description: 本教程介绍如何创建 Azure Policy 的自定义策略定义以在 Azure 资源上强制实施自定义业务规则。
-ms.date: 06/16/2020
+ms.date: 10/05/2020
 ms.topic: tutorial
-ms.openlocfilehash: 5eee969257f5cf640ce82fbda9877974207c87af
-ms.sourcegitcommit: e132633b9c3a53b3ead101ea2711570e60d67b83
+ms.openlocfilehash: 817e6f494b024b9a789f39a4101236f64d8fa0cd
+ms.sourcegitcommit: 6d6030de2d776f3d5fb89f68aaead148c05837e2
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/07/2020
-ms.locfileid: "86044611"
+ms.lasthandoff: 01/05/2021
+ms.locfileid: "97882885"
 ---
 # <a name="tutorial-create-a-custom-policy-definition"></a>教程：创建自定义策略定义
 
@@ -66,14 +66,17 @@ ms.locfileid: "86044611"
 
 ### <a name="arm-templates"></a>ARM 模板
 
-可通过多种方式查找包含所要管理的属性的[资源管理器模板](../../../azure-resource-manager/templates/template-tutorial-use-template-reference.md)。
+可通过多种方式查看包含要管理的属性的 [ARM](../../../azure-resource-manager/templates/template-tutorial-use-template-reference.md)。
 
 #### <a name="existing-resource-in-the-portal"></a>门户中的现有资源
 
 查找属性的最简单方法是查找相同类型的现有资源。 已使用所要强制实施的设置配置的资源也会提供用于比较的值。
 在 Azure 门户中，找到该特定资源的“导出模板”页（在“设置”下） 。
 
-:::image type="content" source="../media/create-custom-policy-definition/export-template.png" alt-text="现有资源上的“导出模板”页" border="false":::
+> [!WARNING]
+> Azure 门户导出的 ARM 模板无法直接插入到 [deployIfNotExists](../concepts/effects.md#deployifnotexists) 策略定义中 ARM 模板的 `deployment` 属性。
+
+:::image type="content" source="../media/create-custom-policy-definition/export-template.png" alt-text="Azure 门户中现有资源上的“导出模板”页的屏幕截图。" border="false":::
 
 针对存储帐户执行此操作会显示以下示例所示的模板：
 
@@ -119,7 +122,7 @@ ms.locfileid: "86044611"
 ...
 ```
 
-“属性”下面提供了名为 **supportsHttpsTrafficOnly**、设置为 **false** 的值。 此属性似乎是我们所要查找的属性。 此外，该资源的**类型**为 **Microsoft.Storage/storageAccounts**。 该类型告知我们，要将策略限定于此类型的资源。
+“属性”下面提供了名为 **supportsHttpsTrafficOnly**、设置为 **false** 的值。 此属性似乎是我们所要查找的属性。 此外，该资源的 **类型** 为 **Microsoft.Storage/storageAccounts**。 该类型告知我们，要将策略限定于此类型的资源。
 
 #### <a name="create-a-resource-in-the-portal"></a>在门户中创建资源
 
@@ -165,7 +168,6 @@ GitHub 上的 [Azure 快速启动模板](https://github.com/Azure/azure-quicksta
 - 适用于 VS Code 的 Azure Policy 扩展
 - Azure CLI
 - Azure PowerShell
-- Azure Resource Graph
 
 ### <a name="get-aliases-in-vs-code-extension"></a>在 VS Code 扩展中获取别名
 
@@ -199,125 +201,6 @@ az provider show --namespace Microsoft.Storage --expand "resourceTypes/aliases" 
 ```
 
 与在 Azure CLI 中一样，结果会显示名为 **supportsHttpsTrafficOnly** 的存储帐户支持的别名。
-
-### <a name="azure-resource-graph"></a>Azure Resource Graph
-
-[Azure Resource Graph](../../resource-graph/overview.md) 是一项服务，它提供了另一种方法来查找 Azure 资源的属性。 下面是使用 Resource Graph 查找单个存储帐户的示例查询：
-
-```kusto
-Resources
-| where type=~'microsoft.storage/storageaccounts'
-| limit 1
-```
-
-```azurecli-interactive
-az graph query -q "Resources | where type=~'microsoft.storage/storageaccounts' | limit 1"
-```
-
-```azurepowershell-interactive
-Search-AzGraph -Query "Resources | where type=~'microsoft.storage/storageaccounts' | limit 1"
-```
-
-结果类似于在 ARM 模板中和通过 Azure 资源浏览器查找后获得的结果。 但是，Azure Resource Graph 结果还可通过_投影_ _别名_数组来包含[别名](../concepts/definition-structure.md#aliases)详细信息：
-
-```kusto
-Resources
-| where type=~'microsoft.storage/storageaccounts'
-| limit 1
-| project aliases
-```
-
-```azurecli-interactive
-az graph query -q "Resources | where type=~'microsoft.storage/storageaccounts' | limit 1 | project aliases"
-```
-
-```azurepowershell-interactive
-Search-AzGraph -Query "Resources | where type=~'microsoft.storage/storageaccounts' | limit 1 | project aliases"
-```
-
-下面是存储帐户别名的示例输出：
-
-```json
-"aliases": {
-    "Microsoft.Storage/storageAccounts/accessTier": null,
-    "Microsoft.Storage/storageAccounts/accountType": "Standard_LRS",
-    "Microsoft.Storage/storageAccounts/enableBlobEncryption": true,
-    "Microsoft.Storage/storageAccounts/enableFileEncryption": true,
-    "Microsoft.Storage/storageAccounts/encryption": {
-        "keySource": "Microsoft.Storage",
-        "services": {
-            "blob": {
-                "enabled": true,
-                "lastEnabledTime": "2018-06-04T17:59:14.4970000Z"
-            },
-            "file": {
-                "enabled": true,
-                "lastEnabledTime": "2018-06-04T17:59:14.4970000Z"
-            }
-        }
-    },
-    "Microsoft.Storage/storageAccounts/encryption.keySource": "Microsoft.Storage",
-    "Microsoft.Storage/storageAccounts/encryption.keyvaultproperties.keyname": null,
-    "Microsoft.Storage/storageAccounts/encryption.keyvaultproperties.keyvaulturi": null,
-    "Microsoft.Storage/storageAccounts/encryption.keyvaultproperties.keyversion": null,
-    "Microsoft.Storage/storageAccounts/encryption.services": {
-        "blob": {
-            "enabled": true,
-            "lastEnabledTime": "2018-06-04T17:59:14.4970000Z"
-        },
-        "file": {
-            "enabled": true,
-            "lastEnabledTime": "2018-06-04T17:59:14.4970000Z"
-        }
-    },
-    "Microsoft.Storage/storageAccounts/encryption.services.blob": {
-        "enabled": true,
-        "lastEnabledTime": "2018-06-04T17:59:14.4970000Z"
-    },
-    "Microsoft.Storage/storageAccounts/encryption.services.blob.enabled": true,
-    "Microsoft.Storage/storageAccounts/encryption.services.file": {
-        "enabled": true,
-        "lastEnabledTime": "2018-06-04T17:59:14.4970000Z"
-    },
-    "Microsoft.Storage/storageAccounts/encryption.services.file.enabled": true,
-    "Microsoft.Storage/storageAccounts/networkAcls": {
-        "bypass": "AzureServices",
-        "defaultAction": "Allow",
-        "ipRules": [],
-        "virtualNetworkRules": []
-    },
-    "Microsoft.Storage/storageAccounts/networkAcls.bypass": "AzureServices",
-    "Microsoft.Storage/storageAccounts/networkAcls.defaultAction": "Allow",
-    "Microsoft.Storage/storageAccounts/networkAcls.ipRules": [],
-    "Microsoft.Storage/storageAccounts/networkAcls.ipRules[*]": [],
-    "Microsoft.Storage/storageAccounts/networkAcls.ipRules[*].action": [],
-    "Microsoft.Storage/storageAccounts/networkAcls.ipRules[*].value": [],
-    "Microsoft.Storage/storageAccounts/networkAcls.virtualNetworkRules": [],
-    "Microsoft.Storage/storageAccounts/networkAcls.virtualNetworkRules[*]": [],
-    "Microsoft.Storage/storageAccounts/networkAcls.virtualNetworkRules[*].action": [],
-    "Microsoft.Storage/storageAccounts/networkAcls.virtualNetworkRules[*].id": [],
-    "Microsoft.Storage/storageAccounts/networkAcls.virtualNetworkRules[*].state": [],
-    "Microsoft.Storage/storageAccounts/primaryEndpoints": {
-        "blob": "https://mystorageaccount.blob.core.windows.net/",
-        "file": "https://mystorageaccount.file.core.windows.net/",
-        "queue": "https://mystorageaccount.queue.core.windows.net/",
-        "table": "https://mystorageaccount.table.core.windows.net/"
-    },
-    "Microsoft.Storage/storageAccounts/primaryEndpoints.blob": "https://mystorageaccount.blob.core.windows.net/",
-    "Microsoft.Storage/storageAccounts/primaryEndpoints.file": "https://mystorageaccount.file.core.windows.net/",
-    "Microsoft.Storage/storageAccounts/primaryEndpoints.queue": "https://mystorageaccount.queue.core.windows.net/",
-    "Microsoft.Storage/storageAccounts/primaryEndpoints.table": "https://mystorageaccount.table.core.windows.net/",
-    "Microsoft.Storage/storageAccounts/primaryEndpoints.web": null,
-    "Microsoft.Storage/storageAccounts/primaryLocation": "eastus2",
-    "Microsoft.Storage/storageAccounts/provisioningState": "Succeeded",
-    "Microsoft.Storage/storageAccounts/sku.name": "Standard_LRS",
-    "Microsoft.Storage/storageAccounts/sku.tier": "Standard",
-    "Microsoft.Storage/storageAccounts/statusOfPrimary": "available",
-    "Microsoft.Storage/storageAccounts/supportsHttpsTrafficOnly": false
-}
-```
-
-可以通过 [Cloud Shell](https://shell.azure.com) 使用 Azure Resource Graph，快速轻松地浏览资源的属性。
 
 ## <a name="determine-the-effect-to-use"></a>确定要使用的效果
 
@@ -362,7 +245,7 @@ Search-AzGraph -Query "Resources | where type=~'microsoft.storage/storageaccount
 
 ### <a name="parameters"></a>参数
 
-尽管我们未使用参数来更改评估，但确实需要使用一个参数来允许更改**效果**以进行故障排除。 定义 **effectType** 参数，并将其值限制为 **Deny** 和 **Disabled**。 这两个选项与我们的业务要求相符。 完成的参数块如以下示例所示：
+尽管我们未使用参数来更改评估，但确实需要使用一个参数来允许更改 **效果** 以进行故障排除。 定义 **effectType** 参数，并将其值限制为 **Deny** 和 **Disabled**。 这两个选项与我们的业务要求相符。 完成的参数块如以下示例所示：
 
 ```json
 "parameters": {
@@ -385,7 +268,7 @@ Search-AzGraph -Query "Resources | where type=~'microsoft.storage/storageaccount
 
 撰写[策略规则](../concepts/definition-structure.md#policy-rule)是生成自定义策略定义的最后一步。 我们已指定两条语句用于测试：
 
-- 存储帐户的**类型**是否为 **Microsoft.Storage/storageAccounts**
+- 存储帐户的 **类型** 是否为 **Microsoft.Storage/storageAccounts**
 - 存储帐户的 **supportsHttpsTrafficOnly** 不为 **true**
 
 由于这两条语句都需要为 true，因此将使用 **allOf** [逻辑运算符](../concepts/definition-structure.md#logical-operators)。 将 **effectType** 参数传递给效果，而不是进行静态声明。 完成的规则如以下示例所示：

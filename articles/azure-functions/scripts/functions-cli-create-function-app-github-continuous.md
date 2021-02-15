@@ -4,16 +4,16 @@ description: 使用 Azure Functions 创建函数应用并从 GitHub 存储库部
 ms.date: 07/03/2018
 ms.topic: sample
 ms.custom: mvc, devx-track-azurecli
-ms.openlocfilehash: 7f7c272fa95d2697d41cb751e39ef72b0da86a12
-ms.sourcegitcommit: 11e2521679415f05d3d2c4c49858940677c57900
+ms.openlocfilehash: 219e993ad7132c90de6db680facc9b8f815947cc
+ms.sourcegitcommit: 2aa52d30e7b733616d6d92633436e499fbe8b069
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/31/2020
-ms.locfileid: "87498508"
+ms.lasthandoff: 01/06/2021
+ms.locfileid: "97934377"
 ---
 # <a name="create-a-function-app-in-azure-that-is-deployed-from-github"></a>在 Azure 中创建从 GitHub 部署的函数应用
 
-此 Azure Functions 示例脚本使用[消耗计划](../functions-scale.md#consumption-plan)和其他相关资源创建函数应用。 此脚本还配置函数代码，以便持续地从 GitHub 存储库进行部署。 
+此 Azure Functions 示例脚本使用[消耗计划](../consumption-plan.md)和其他相关资源创建函数应用。 此脚本还配置函数代码，以便持续地从 GitHub 存储库进行部署。 
 
 在此示例中，需要以下项：
 
@@ -22,9 +22,9 @@ ms.locfileid: "87498508"
 
 [!INCLUDE [quickstarts-free-trial-note](../../../includes/quickstarts-free-trial-note.md)]
 
-[!INCLUDE [cloud-shell-try-it.md](../../../includes/cloud-shell-try-it.md)]
+[!INCLUDE [azure-cli-prepare-your-environment.md](../../../includes/azure-cli-prepare-your-environment.md)]
 
-如果想要在本地使用 Azure CLI，必须安装和使用版本 2.0 或更高版本。 若要确定 Azure CLI 版本，请运行 `az --version`。 如需进行安装或升级，请参阅[安装 Azure CLI]( /cli/azure/install-azure-cli)。 
+ - 本教程需要 Azure CLI 版本 2.0 或更高版本。 如果使用 Azure Cloud Shell，则最新版本已安装。 
 
 ## <a name="sample-script"></a>示例脚本
 
@@ -42,7 +42,7 @@ ms.locfileid: "87498508"
 |---|---|
 | [az group create](/cli/azure/group#az-group-create) | 创建用于存储所有资源的资源组。 |
 | [az storage account create](/cli/azure/storage/account#az-storage-account-create) | 创建函数应用所需的存储帐户。 |
-| [az functionapp create](/cli/azure/functionapp#az-functionapp-create) | 在无服务器[消耗计划](../functions-scale.md#consumption-plan)中创建一个函数应用并将其与一个 Git 或 Mercurial 存储库相关联。 |
+| [az functionapp create](/cli/azure/functionapp#az-functionapp-create) | 在无服务器[消耗计划](../consumption-plan.md)中创建一个函数应用并将其与一个 Git 或 Mercurial 存储库相关联。 |
 
 ## <a name="next-steps"></a>后续步骤
 

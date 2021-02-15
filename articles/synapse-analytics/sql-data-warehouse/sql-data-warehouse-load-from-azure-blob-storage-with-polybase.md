@@ -1,26 +1,26 @@
 ---
-title: 将 Contoso 零售数据加载到 Synapse SQL 数据仓库
-description: 使用 PolyBase 和 T-SQL 命令可将两张表从 Contoso 零售数据加载到 Synapse SQL。
+title: 将 Contoso 零售数据加载到专用 SQL 池
+description: 使用 PolyBase 和 T-SQL 命令可将两张表从 Contoso 零售数据加载到专用 SQL 池。
 services: synapse-analytics
 author: kevinvngo
 manager: craigg
 ms.service: synapse-analytics
 ms.topic: conceptual
 ms.subservice: sql-dw
-ms.date: 04/17/2018
+ms.date: 11/20/2020
 ms.author: kevin
 ms.reviewer: igorstan
 ms.custom: seo-lt-2019
-ms.openlocfilehash: 90da35b76bbe6ec933b3a1fd200f0f5bad643759
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: aac0d8b923dc87f8be59cb594b155aafcf25fd0e
+ms.sourcegitcommit: b39cf769ce8e2eb7ea74cfdac6759a17a048b331
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "85213306"
+ms.lasthandoff: 01/22/2021
+ms.locfileid: "98677148"
 ---
-# <a name="load-contoso-retail-data-to-synapse-sql"></a>将 Contoso 零售数据加载到 Synapse SQL 
+# <a name="load-contoso-retail-data-into-dedicated-sql-pools-in-azure-synapse-analytics"></a>将 Contoso 零售数据加载到 Azure Synapse Analytics 中的专用 SQL 池中
 
-本教程介绍如何使用 PolyBase 和 T-SQL 命令将两个表从 Contoso 零售数据载入 Synapse SQL 数据仓库。
+本教程介绍如何使用 PolyBase 和 T-SQL 命令将两个表从 Contoso 零售数据加载到专用 SQL 池。
 
 在本教程中，你会：
 
@@ -30,17 +30,17 @@ ms.locfileid: "85213306"
 
 ## <a name="before-you-begin"></a>准备阶段
 
-若要运行本教程，需要一个已包含 Synapse SQL 数据仓库的 Azure 帐户。 如果尚未预配数据仓库，请参阅[创建数据仓库并设置服务器级防火墙规则](create-data-warehouse-portal.md)。
+若要运行本教程，需要一个已经具有专用 SQL 池的 Azure 帐户。 如果尚未预配数据仓库，请参阅[创建数据仓库并设置服务器级防火墙规则](create-data-warehouse-portal.md)。
 
 ## <a name="configure-the-data-source"></a>配置数据源
 
-PolyBase 使用 T-SQL 外部对象，定义外部数据的位置和属性。 外部对象定义存储在 Synapse SQL 数据仓库中。 数据存储在外部。
+PolyBase 使用 T-SQL 外部对象，定义外部数据的位置和属性。 外部对象定义存储在专用 SQL 池中。 数据存储在外部。
 
 ## <a name="create-a-credential"></a>创建凭据
 
-如果要加载 Contoso 公共数据，请**跳过此步骤**。 不需要以安全方式访问公共数据，因为它已经可供任何人访问。
+如果要加载 Contoso 公共数据，请 **跳过此步骤**。 不需要以安全方式访问公共数据，因为它已经可供任何人访问。
 
-如果使用本教程作为加载自己数据的模板，请**不要跳过此步骤**。 若要通过凭据访问数据，请使用以下脚本创建数据库范围的凭据， 并在定义数据源位置时使用该凭据。
+如果使用本教程作为加载自己数据的模板，请 **不要跳过此步骤**。 若要通过凭据访问数据，请使用以下脚本创建数据库范围的凭据， 并在定义数据源位置时使用该凭据。
 
 ```sql
 -- A: Create a master key.
@@ -77,7 +77,7 @@ WITH (
 
 ## <a name="create-the-external-data-source"></a>创建外部数据源
 
-使用此 [CREATE EXTERNAL DATA SOURCE](/sql/t-sql/statements/create-external-data-source-transact-sql?toc=/azure/synapse-analytics/sql-data-warehouse/toc.json&bc=/azure/synapse-analytics/sql-data-warehouse/breadcrumb/toc.json&view=azure-sqldw-latest) 命令存储数据的位置和数据类型。
+使用此 [CREATE EXTERNAL DATA SOURCE](/sql/t-sql/statements/create-external-data-source-transact-sql?toc=/azure/synapse-analytics/sql-data-warehouse/toc.json&bc=/azure/synapse-analytics/sql-data-warehouse/breadcrumb/toc.json&view=azure-sqldw-latest&preserve-view=true) 命令存储数据的位置和数据类型。
 
 ```sql
 CREATE EXTERNAL DATA SOURCE AzureStorage_west_public
@@ -221,7 +221,7 @@ GO
 
 ### <a name="load-the-data-into-new-tables"></a>将数据加载到新表
 
-若要将 Azure Blob 存储中的数据载入数据仓库表，请使用 [CREATE TABLE AS SELECT (Transact-SQL)](/sql/t-sql/statements/create-table-as-select-azure-sql-data-warehouse?toc=/azure/synapse-analytics/sql-data-warehouse/toc.json&bc=/azure/synapse-analytics/sql-data-warehouse/breadcrumb/toc.json&view=azure-sqldw-latest) 语句。 使用 [CTAS](../sql-data-warehouse/sql-data-warehouse-develop-ctas.md?toc=/azure/synapse-analytics/toc.json&bc=/azure/synapse-analytics/breadcrumb/toc.json) 加载会使用已创建的强类型外部表。 若要将数据载入新表，请对每个表使用一个 CTAS 语句。
+若要将 Azure Blob 存储中的数据载入数据仓库表，请使用 [CREATE TABLE AS SELECT (Transact-SQL)](/sql/t-sql/statements/create-table-as-select-azure-sql-data-warehouse?toc=/azure/synapse-analytics/sql-data-warehouse/toc.json&bc=/azure/synapse-analytics/sql-data-warehouse/breadcrumb/toc.json&view=azure-sqldw-latest&preserve-view=true) 语句。 使用 [CTAS](../sql-data-warehouse/sql-data-warehouse-develop-ctas.md?toc=/azure/synapse-analytics/toc.json&bc=/azure/synapse-analytics/breadcrumb/toc.json) 加载会使用已创建的强类型外部表。 若要将数据载入新表，请对每个表使用一个 CTAS 语句。
 
 CTAS 会创建新表，并在该表中填充 select 语句的结果。 CTAS 将新表定义为包含与 select 语句结果相同的列和数据类型。 如果选择了外部表中的所有列，新表将是外部表中的列和数据类型的副本。
 
@@ -274,7 +274,7 @@ ORDER BY
 
 ## <a name="optimize-columnstore-compression"></a>优化列存储压缩
 
-默认情况下，Synapse SQL 数据仓库以聚集列存储索引形式存储表。 加载完成后，某些数据行可能未压缩到列存储中。  有不同的原因会导致发生此问题： 若要了解详细信息，请参阅[管理列存储索引](sql-data-warehouse-tables-index.md)。
+默认情况下，专用 SQL 池将表存储为聚集列存储索引。 加载完成后，某些数据行可能未压缩到列存储中。  有不同的原因会导致发生此问题： 若要了解详细信息，请参阅[管理列存储索引](sql-data-warehouse-tables-index.md)。
 
 若要在加载后优化查询性能和列存储压缩，请重新生成表，以强制列存储索引压缩所有行。
 

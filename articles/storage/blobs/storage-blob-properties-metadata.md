@@ -4,20 +4,21 @@ description: 了解如何使用 .NET 客户端库设置和检索系统属性并�
 services: storage
 author: mhopkins-msft
 ms.author: mhopkins
-ms.date: 08/12/2020
+ms.date: 09/25/2020
 ms.service: storage
 ms.subservice: blobs
 ms.topic: how-to
-ms.openlocfilehash: 29fae4ffb08aba6a45a3879ffe28bf6b90f28a0e
-ms.sourcegitcommit: faeabfc2fffc33be7de6e1e93271ae214099517f
+ms.custom: devx-track-csharp
+ms.openlocfilehash: 984fb00e163a090534da1fb41850dcfef6c5d516
+ms.sourcegitcommit: c95e2d89a5a3cf5e2983ffcc206f056a7992df7d
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/13/2020
-ms.locfileid: "88182385"
+ms.lasthandoff: 11/24/2020
+ms.locfileid: "95521523"
 ---
 # <a name="manage-blob-properties-and-metadata-with-net"></a>使用 .NET 管理 blob 属性和元数据
 
-除 Blob 包含的数据外，它们还支持系统属性和用户定义的元数据。 本文介绍如何使用[用于 .NET 的 Azure 存储客户端库](/dotnet/api/overview/azure/storage?view=azure-dotnet)管理系统属性和用户定义元数据。
+除 Blob 包含的数据外，它们还支持系统属性和用户定义的元数据。 本文介绍如何使用[用于 .NET 的 Azure 存储客户端库](/dotnet/api/overview/azure/storage)管理系统属性和用户定义元数据。
 
 ## <a name="about-properties-and-metadata"></a>关于属性和元数据
 
@@ -28,7 +29,7 @@ ms.locfileid: "88182385"
 > [!NOTE]
 > 使用 Blob 索引标记，还可以将任意用户定义的键/值属性与 Azure Blob 存储资源一起存储。 与元数据类似，只会自动为 blob 索引标记编制索引，并使本机 blob 服务可对其进行搜索。 除非使用了单独的服务（如 Azure 搜索），否则无法对元数据进行索引和查询。
 >
-> 若要了解有关此功能的详细信息，请参阅[在 Azure blob 存储中管理和查找数据 (预览) ](storage-manage-find-blobs.md)。
+> 若要了解有关此功能的详细信息，请参阅 [在 Azure blob 存储中管理和查找数据 (预览) ](storage-manage-find-blobs.md)。
 
 ## <a name="set-and-retrieve-properties"></a>设置和检索属性
 
@@ -36,7 +37,7 @@ ms.locfileid: "88182385"
 
 # <a name="net-v12"></a>[.NET v12](#tab/dotnet)
 
-若要在 blob 上设置属性，请调用[SetHttpHeaders](/dotnet/api/azure.storage.blobs.specialized.blobbaseclient.sethttpheaders)或[SetHttpHeadersAsync](/dotnet/api/azure.storage.blobs.specialized.blobbaseclient.sethttpheadersasync)。 未显式设置的任何属性都将被清除。 下面的代码示例首先获取 blob 上的现有属性，然后使用这些属性填充未更新的标头。
+若要在 Blob 上设置属性，请调用 [SetHttpHeaders](/dotnet/api/azure.storage.blobs.specialized.blobbaseclient.sethttpheaders) 或 [SetHttpHeadersAsync](/dotnet/api/azure.storage.blobs.specialized.blobbaseclient.sethttpheadersasync)。 清除未显式设置的任何属性。 下面的代码示例首先获取 Blob 上的现有属性，然后使用它们填充未更新的标头。
 
 :::code language="csharp" source="~/azure-storage-snippets/blobs/howto/dotnet/dotnet-v12/Metadata.cs" id="Snippet_SetBlobProperties":::
 
@@ -69,7 +70,7 @@ public static async Task SetBlobPropertiesAsync(CloudBlob blob)
 ```
 ---
 
-下面的代码示例获取 blob 的系统属性，并显示某些值。
+以下代码示例获取 blob 的系统属性并显示一些值。
 
 # <a name="net-v12"></a>[.NET v12](#tab/dotnet)
 
@@ -125,7 +126,7 @@ private static async Task GetBlobPropertiesAsync(CloudBlob blob)
 - [SetMetadataAsync](/dotnet/api/microsoft.azure.storage.blob.cloudblob.setmetadataasync)
 ---
 
-元数据名称/值对是有效的 HTTP 标头，因此应当遵循所有控制 HTTP 标头的限制。 元数据名称必须是有效的 HTTP 标头名称和有效的 C# 标识符，只能包含 ASCII 字符，并且应当区分大小写。 包含非 ASCII 字符的 [Base64 编码](https://docs.microsoft.com/dotnet/api/system.convert.tobase64string)或 [URL 编码](https://docs.microsoft.com/dotnet/api/system.web.httputility.urlencode)的元数据值。
+元数据名称/值对是有效的 HTTP 标头，因此应当遵循所有控制 HTTP 标头的限制。 元数据名称必须是有效的 HTTP 标头名称和有效的 C# 标识符，只能包含 ASCII 字符，并且应当区分大小写。 包含非 ASCII 字符的 [Base64 编码](/dotnet/api/system.convert.tobase64string)或 [URL 编码](/dotnet/api/system.web.httputility.urlencode)的元数据值。
 
 元数据的名称必须符合 C# 标识符命名约定。 元数据名称保留创建时使用的大小写，但在设置或读取时不区分大小写。 如果为资源提交了两个或更多个名称相同的元数据标头，Azure Blob 存储会返回 HTTP 错误代码“400 (请求错误)”。
 
@@ -163,11 +164,11 @@ public static async Task AddBlobMetadataAsync(CloudBlob blob)
 ```
 ---
 
-下面的代码示例读取 blob 上的元数据。
+以下代码示例在 Blob 上读取元数据。
 
 # <a name="net-v12"></a>[.NET v12](#tab/dotnet)
 
-若要检索元数据，请对 blob 或容器调用[GetProperties](/dotnet/api/azure.storage.blobs.specialized.blobbaseclient.getproperties)或[GetPropertiesAsync](/dotnet/api/azure.storage.blobs.specialized.blobbaseclient.getpropertiesasync)方法来填充[元数据](/dotnet/api/azure.storage.blobs.models.blobproperties.metadata)集合，然后读取值，如下面的示例中所示。
+要检索元数据，请对 blob 或容器调用 [GetProperties](/dotnet/api/azure.storage.blobs.specialized.blobbaseclient.getproperties) 或 [GetPropertiesAsync](/dotnet/api/azure.storage.blobs.specialized.blobbaseclient.getpropertiesasync) 方法以填充 [Metadata](/dotnet/api/azure.storage.blobs.models.blobproperties.metadata) 集合，然后读取值，如下面的示例所示。 **GetProperties** 方法在一次调用中检索 blob 属性和元数据。 这不同于 REST Api，后者需要单独调用来 [获取 Blob 属性](/rest/api/storageservices/get-blob-properties) 和 [获取 blob 元数据](/rest/api/storageservices/get-blob-metadata)。
 
 :::code language="csharp" source="~/azure-storage-snippets/blobs/howto/dotnet/dotnet-v12/Metadata.cs" id="Snippet_ReadBlobMetadata":::
 

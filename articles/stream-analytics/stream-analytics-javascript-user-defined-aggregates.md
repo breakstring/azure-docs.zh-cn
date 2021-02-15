@@ -3,17 +3,16 @@ title: Azure 流分析中 JavaScript 用户定义的聚合
 description: 本文介绍如何在 Azure 流分析中通过 JavaScript 用户定义的聚合执行高级查询机制。
 author: rodrigoaatmicrosoft
 ms.author: rodrigoa
-ms.reviewer: mamccrea
 ms.service: stream-analytics
 ms.topic: conceptual
 ms.date: 10/28/2017
-ms.custom: devx-track-javascript
-ms.openlocfilehash: 433b9ad0f86b84538163b142d762d4e2fb7e8159
-ms.sourcegitcommit: 0b8320ae0d3455344ec8855b5c2d0ab3faa974a3
+ms.custom: devx-track-js
+ms.openlocfilehash: e9695a268d1c6ec43a737afd36536e4ec2a41a41
+ms.sourcegitcommit: 42a4d0e8fa84609bec0f6c241abe1c20036b9575
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/30/2020
-ms.locfileid: "87430835"
+ms.lasthandoff: 01/08/2021
+ms.locfileid: "98012472"
 ---
 # <a name="azure-stream-analytics-javascript-user-defined-aggregates"></a>Azure 流分析 JavaScript 用户定义的聚合
  
@@ -114,7 +113,7 @@ deaccumulateState() 方法基于前一状态和跃点状态重新计算状态。
 computeResult() 方法基于当前状态返回聚合结果。 在时间窗口（TUMBLINGWINDOW、HOPPINGWINDOW、SLIDINGWINDOW 或 SESSIONWINDOW）结束时调用此方法。
 
 ## <a name="javascript-uda-supported-input-and-output-data-types"></a>JavaScript UDA 支持的输入和输出数据类型
-有关 JavaScript UDA 数据类型，请参阅[集成 JavaScript UDF](stream-analytics-javascript-user-defined-functions.md) 的**流分析和 JavaScript 类型转换**部分。
+有关 JavaScript UDA 数据类型，请参阅 [集成 JavaScript UDF](stream-analytics-javascript-user-defined-functions.md) 的 **流分析和 JavaScript 类型转换** 部分。
 
 ## <a name="adding-a-javascript-uda-from-the-azure-portal"></a>通过 Azure 门户添加 JavaScript UDA
 
@@ -226,12 +225,12 @@ GROUP BY TumblingWindow(minute, 5)
 
 ## <a name="get-help"></a>获取帮助
 
-如需更多帮助，请访问[有关 Azure 流分析的 Microsoft 问答页](https://docs.microsoft.com/answers/topics/azure-stream-analytics.html)。
+如需更多帮助，请访问[有关 Azure 流分析的 Microsoft 问答页](/answers/topics/azure-stream-analytics.html)。
 
 ## <a name="next-steps"></a>后续步骤
 
 * [Azure 流分析简介](stream-analytics-introduction.md)
 * [Azure 流分析入门](stream-analytics-real-time-fraud-detection.md)
 * [缩放 Azure 流分析作业](stream-analytics-scale-jobs.md)
-* [Azure 流分析查询语言参考](https://docs.microsoft.com/stream-analytics-query/stream-analytics-query-language-reference)
-* [Azure 流分析管理 REST API 参考](https://msdn.microsoft.com/library/azure/dn835031.aspx)
+* [Azure 流分析查询语言参考](/stream-analytics-query/stream-analytics-query-language-reference)
+* [Azure 流分析管理 REST API 参考](/rest/api/streamanalytics/)

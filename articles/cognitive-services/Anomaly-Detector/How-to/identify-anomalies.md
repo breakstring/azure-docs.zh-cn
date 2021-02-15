@@ -3,19 +3,19 @@ title: 如何在时序数据中使用异常探测器 API
 titleSuffix: Azure Cognitive Services
 description: 了解如何以批处理或流式处理数据的方式检测数据中的异常。
 services: cognitive-services
-author: aahill
+author: mrbullwinkle
 manager: nitinme
 ms.service: cognitive-services
 ms.subservice: anomaly-detector
 ms.topic: conceptual
 ms.date: 10/01/2019
-ms.author: aahi
-ms.openlocfilehash: ca93de71f64efaf21c78b37b9c9aee193d13b28d
-ms.sourcegitcommit: 58faa9fcbd62f3ac37ff0a65ab9357a01051a64f
+ms.author: mbullwin
+ms.openlocfilehash: 74f891ba7f5b400b5782565e670539167f4e2464
+ms.sourcegitcommit: e7152996ee917505c7aba707d214b2b520348302
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/29/2020
-ms.locfileid: "71840226"
+ms.lasthandoff: 12/20/2020
+ms.locfileid: "97703426"
 ---
 # <a name="how-to-use-the-anomaly-detector-api-on-your-time-series-data"></a>如何：在时序数据中使用异常探测器 API  
 
@@ -26,7 +26,7 @@ ms.locfileid: "71840226"
 异常探测器 API 提供检测模式：批处理和流式处理。
 
 > [!NOTE]
-> 以下请求 Url 必须与你的订阅的相应终结点结合。 例如：`https://<your-custom-subdomain>.api.cognitive.microsoft.com/anomalydetector/v1.0/timeseries/entire/detect`
+> 以下请求 Url 必须与你的订阅的相应终结点结合。 例如： `https://<your-custom-subdomain>.api.cognitive.microsoft.com/anomalydetector/v1.0/timeseries/entire/detect`
 
 
 ### <a name="batch-detection"></a>批量检测
@@ -47,7 +47,7 @@ ms.locfileid: "71840226"
 
 ## <a name="adjusting-lower-and-upper-anomaly-detection-boundaries"></a>调整较低和较高异常情况检测边界
 
-默认情况下，使用`expectedValue`、 `upperMargin`和`lowerMargin`计算异常情况检测的上限和下限。 如果需要不同的边界，则建议`marginScale`将应用到`upperMargin`或`lowerMargin`。 将按如下所示计算边界：
+默认情况下，使用、和计算异常情况检测的上限和 `expectedValue` 下限 `upperMargin` `lowerMargin` 。 如果需要不同的边界，则建议将应用 `marginScale` 到 `upperMargin` 或 `lowerMargin` 。 将按如下所示计算边界：
 
 |边界  |计算  |
 |---------|---------|
@@ -71,4 +71,4 @@ ms.locfileid: "71840226"
 ## <a name="next-steps"></a>后续步骤
 
 * [什么是异常检测器 API？](../overview.md)
-* [快速入门：使用异常探测器检测时序数据中的异常 REST API](../quickstarts/detect-data-anomalies-csharp.md)
+* [快速入门：使用异常探测器检测时序数据中的异常](../quickstarts/client-libraries.md)

@@ -3,18 +3,18 @@ title: 使用 Azure 资源管理器模板部署服务
 titleSuffix: Azure Cognitive Search
 description: 可以使用 Azure 资源管理器模板快速部署 Azure 认知搜索服务实例。
 manager: nitinme
-author: tchristiani
-ms.author: terrychr
+author: HeidiSteen
+ms.author: heidist
 ms.service: cognitive-search
 ms.topic: quickstart
 ms.custom: subject-armqs
-ms.date: 07/15/2020
-ms.openlocfilehash: 192673ab2e21046f7af75887ffe13f47420dfbf3
-ms.sourcegitcommit: 3543d3b4f6c6f496d22ea5f97d8cd2700ac9a481
+ms.date: 11/17/2020
+ms.openlocfilehash: 12aa7f123ec5e417d710636f2afb4c60231cefc1
+ms.sourcegitcommit: c2dd51aeaec24cd18f2e4e77d268de5bcc89e4a7
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/20/2020
-ms.locfileid: "86496768"
+ms.lasthandoff: 11/18/2020
+ms.locfileid: "94746544"
 ---
 # <a name="quickstart-deploy-cognitive-search-using-an-arm-template"></a>快速入门：使用 ARM 模板部署认知搜索
 
@@ -34,7 +34,7 @@ ms.locfileid: "86496768"
 
 本快速入门中使用的模板来自 [Azure 快速启动模板](https://azure.microsoft.com/resources/templates/101-azure-search-create/)。
 
-:::code language="json"source="~/quickstart-templates/101-azure-search-create/azuredeploy.json" range="1-86" highlight="4-50,70-85":::
+:::code language="json"source="~/quickstart-templates/101-azure-search-create/azuredeploy.json":::
 
 此模板中定义的 Azure 资源：
 

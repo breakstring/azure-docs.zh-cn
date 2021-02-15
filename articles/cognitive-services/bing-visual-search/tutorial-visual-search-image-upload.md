@@ -10,15 +10,20 @@ ms.subservice: bing-visual-search
 ms.topic: tutorial
 ms.date: 03/31/2020
 ms.author: scottwhi
-ms.custom: devx-track-javascript
-ms.openlocfilehash: c2e0e907734f30010690817ddb7bb15527c93bbf
-ms.sourcegitcommit: 42107c62f721da8550621a4651b3ef6c68704cd3
+ms.custom: devx-track-js
+ms.openlocfilehash: 96a4b13d11e40e24e78d3aed8dfebcc88b41c525
+ms.sourcegitcommit: d60976768dec91724d94430fb6fc9498fdc1db37
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/29/2020
-ms.locfileid: "87404005"
+ms.lasthandoff: 12/02/2020
+ms.locfileid: "96486872"
 ---
 # <a name="tutorial-upload-images-to-the-bing-visual-search-api"></a>教程：将图像上传到必应视觉搜索 API
+
+> [!WARNING]
+> 必应搜索 API 将从认知服务迁移到必应搜索服务。 从 2020 年 10 月 30 日开始，必应搜索的任何新实例都需按照[此处](/bing/search-apis/bing-web-search/create-bing-search-service-resource)所述的过程进行预配。
+> 使用认知服务进行预配的必应搜索 API 将在未来三年或在企业协议结束前（以先发生者为准）得到支持。
+> 有关迁移说明，请参阅[必应搜索服务](/bing/search-apis/bing-web-search/create-bing-search-service-resource)。
 
 使用必应视觉搜索 API 可在 Web 中搜索类似于所上传图像的图像。 本教程介绍如何创建一个可向该 API 发送图像并在网页中显示该 API 返回的见解的 Web 应用程序。 请注意，此应用程序并不遵守有关使用该 API 的所有[必应用法和显示要求](../bing-web-search/use-display-requirements.md)。
 
@@ -472,7 +477,7 @@ function addDivContent(div, tag, json) {
 
 ## <a name="display-insights-for-different-actions"></a>显示不同操作的见解
 
-以下函数显示不同操作的见解。 函数将提供可单击的图像或可单击的链接，单击该图像或链接会向你发送一个网页，其中包含有关该图像的详细信息。 此页面由 Bing.com 或图像的原始网站托管。 并非所有见解数据都会显示在此应用程序中。 若要查看某项见解的所有可用字段，请参阅[图像 - 视觉搜索](https://aka.ms/bingvisualsearchreferencedoc)参考。
+以下函数显示不同操作的见解。 函数将提供可单击的图像或可单击的链接，单击该图像或链接会向你发送一个网页，其中包含有关该图像的详细信息。 此页面由 Bing.com 或图像的原始网站托管。 并非所有见解数据都会显示在此应用程序中。 若要查看某项见解的所有可用字段，请参阅[图像 - 视觉搜索](/rest/api/cognitiveservices/bingvisualsearch/images/visualsearch)参考。
 
 > [!NOTE]
 > 必须在页面中显示最少量的见解信息。 有关详细信息，请参阅[必应搜索 API 的使用和显示要求](../bing-web-search/use-display-requirements.md)。

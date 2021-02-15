@@ -13,12 +13,12 @@ ms.date: 09/14/2019
 ms.author: shoatman
 ms.custom: aaddev, devx-track-java
 ms.reviewer: shoatman
-ms.openlocfilehash: 404ffbc09a69b623a421bd0c01550d72e5c03158
-ms.sourcegitcommit: b8702065338fc1ed81bfed082650b5b58234a702
+ms.openlocfilehash: fac66e8f82ea4c04e866b28fed5f8d0860ab81ef
+ms.sourcegitcommit: 5cdd0b378d6377b98af71ec8e886098a504f7c33
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/11/2020
-ms.locfileid: "88115979"
+ms.lasthandoff: 01/25/2021
+ms.locfileid: "98755971"
 ---
 # <a name="accounts--tenant-profiles-android"></a>帐户和租户配置文件 (Android)
 
@@ -73,7 +73,7 @@ Microsoft 标识平台中的帐户包括：
 
 ## <a name="accounts-and-single-sign-on-sso"></a>帐户和单一登录 (SSO)
 
-MSAL 令牌缓存为每个帐户存储单个刷新令牌。** 该刷新令牌可用于以静默方式从多个 Microsoft 标识平台租户请求访问令牌。 在设备上安装中介后，帐户将由该中介管理，并可能会实现设备范围的单一登录。
+MSAL 令牌缓存为每个帐户存储单个刷新令牌。 该刷新令牌可用于以静默方式从多个 Microsoft 标识平台租户请求访问令牌。 在设备上安装中介后，帐户将由该中介管理，并可能会实现设备范围的单一登录。
 
 > [!IMPORTANT]
 > 企业到消费者 (B2C) 帐户和刷新令牌的行为与 Microsoft 标识平台中其他帐户和令牌不同。 有关详细信息，请参阅 [B2C 策略和帐户](#b2c-policies--accounts)。
@@ -121,7 +121,7 @@ String issuer = account.getClaims().get("iss"); // The tenant specific authority
 > 若要查看帐户对象中提供的声明列表，请参阅 [id_token 中的声明](./id-tokens.md#claims-in-an-id_token)
 
 > [!TIP]
-> 若要在 id_token 中包括其他声明，请参阅[如何：向 Azure AD 应用提供可选声明](./active-directory-optional-claims.md)中的可选声明文档
+> 若要在 id_token 中包含其他声明，请参阅可选声明文档：[如何：向 Azure AD 应用提供可选声明](./active-directory-optional-claims.md)
 
 ### <a name="access-tenant-profile-claims"></a>访问租户配置文件声明
 

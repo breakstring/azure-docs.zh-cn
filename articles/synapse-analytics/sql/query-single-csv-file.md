@@ -1,24 +1,24 @@
 ---
-title: 使用 SQL 按需版本（预览版）查询 CSV 文件
-description: 本文介绍如何使用 SQL 按需版本（预览版）查询不同文件格式的单个 CSV 文件。
+title: 使用无服务器 SQL 池查询 CSV 文件
+description: 本文介绍如何使用无服务器 SQL 池查询具有不同文件格式的单个 CSV 文件。
 services: synapse analytics
 author: azaricstefan
 ms.service: synapse-analytics
 ms.topic: how-to
 ms.subservice: sql
 ms.date: 05/20/2020
-ms.author: v-stazar
-ms.reviewer: jrasnick, carlrab
-ms.openlocfilehash: 63755616bb524226d3c40d32b9695f4b787860d9
-ms.sourcegitcommit: 11e2521679415f05d3d2c4c49858940677c57900
+ms.author: stefanazaric
+ms.reviewer: jrasnick
+ms.openlocfilehash: f2f0cdf307e91fb40c55d4a98139bad1a5eca886
+ms.sourcegitcommit: 6a350f39e2f04500ecb7235f5d88682eb4910ae8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/31/2020
-ms.locfileid: "87489701"
+ms.lasthandoff: 12/01/2020
+ms.locfileid: "96462590"
 ---
 # <a name="query-csv-files"></a>查询 CSV 文件
 
-在本文中，你将了解如何在 Azure Synapse Analytics 中使用 SQL 按需版本（预览版）查询单个 CSV 文件。 CSV 文件可有多种不同的格式： 
+本文介绍如何在 Azure Synapse Analytics 中使用无服务器 SQL 池查询单个 CSV 文件。 CSV 文件可有多种不同的格式： 
 
 - 带有或不带标题行
 - 逗号和制表符分隔的值
@@ -29,7 +29,7 @@ ms.locfileid: "87489701"
 
 ## <a name="quickstart-example"></a>快速入门示例
 
-`OPENROWSET`函数可以通过提供文件的 URL 来读取 CSV 文件的内容。
+`OPENROWSET` 函数可以通过提供文件的 URL 来读取 CSV 文件的内容。
 
 ### <a name="read-a-csv-file"></a>读取 csv 文件
 
@@ -44,7 +44,12 @@ from openrowset(
     firstrow = 2 ) as rows
 ```
 
-选项 `firstrow` 用于跳过在这种情况下表示标头的 CSV 文件中的第一行。 请确保可以访问此文件。 如果文件受到 SAS 密钥或自定义标识的保护，则需要为[sql 登录设置服务器级别凭据](develop-storage-files-storage-access-control.md?tabs=shared-access-signature#server-scoped-credential)。
+选项 `firstrow` 用于跳过在这种情况下表示标头的 CSV 文件中的第一行。 请确保可以访问此文件。 如果文件受到 SAS 密钥或自定义标识的保护，则需要为 [sql 登录设置服务器级别凭据](develop-storage-files-storage-access-control.md?tabs=shared-access-signature#server-scoped-credential)。
+
+> [!IMPORTANT]
+> 如果 CSV 文件包含 UTF-8 字符，请确保使用 UTF-8 数据库排序规则 (例如 `Latin1_General_100_CI_AS_SC_UTF8`) 。
+> 文件中的文本编码与排序规则不匹配可能会导致意外的转换错误。
+> 您可以使用以下 T-sql 语句轻松更改当前数据库的默认排序规则： `alter database current collate Latin1_General_100_CI_AI_SC_UTF8`
 
 ### <a name="data-source-usage"></a>数据源使用情况
 
@@ -68,11 +73,11 @@ from openrowset(
     ) as rows
 ```
 
-如果使用 SAS 密钥或自定义标识来保护数据源，则可以[使用数据库范围凭据配置数据源](develop-storage-files-storage-access-control.md?tabs=shared-access-signature#database-scoped-credential)。
+如果使用 SAS 密钥或自定义标识来保护数据源，则可以 [使用数据库范围凭据配置数据源](develop-storage-files-storage-access-control.md?tabs=shared-access-signature#database-scoped-credential)。
 
 ### <a name="explicitly-specify-schema"></a>显式指定架构
 
-`OPENROWSET`使您能够使用子句显式指定要读取的列 `WITH` ：
+`OPENROWSET` 使您能够使用子句显式指定要读取的列 `WITH` ：
 
 ```sql
 select top 10 *
@@ -90,6 +95,12 @@ from openrowset(
 ```
 
 子句中的数据类型后面的数字 `WITH` 表示 CSV 文件中的列索引。
+
+> [!IMPORTANT]
+> 如果 CSV 文件包含 UTF-8 字符，请确保 explicilty 指定某些 UTF-8 排序规则 (例如， `Latin1_General_100_CI_AS_SC_UTF8`) 对于子句中的所有列， `WITH` 或在数据库级别设置某些 utf-8 排序规则。
+> 文件中的文本编码与排序规则不匹配可能会导致意外的转换错误。
+> 您可以使用以下 T-sql 语句轻松更改当前数据库的默认排序规则： `alter database current collate Latin1_General_100_CI_AI_SC_UTF8`
+> 可以使用以下定义轻松地对双列类型设置排序规则： `geo_id varchar(6) collate Latin1_General_100_CI_AI_SC_UTF8 8`
 
 在以下部分中，可以了解如何查询各种类型的 CSV 文件。
 

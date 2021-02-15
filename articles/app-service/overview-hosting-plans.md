@@ -4,50 +4,50 @@ description: 了解应用服务计划在 Azure 应用服务中的工作方式，
 keywords: 应用服务, azure 应用服务, 缩放, 可缩放, 可伸缩性, 应用服务计划, 应用服务成本
 ms.assetid: dea3f41e-cf35-481b-a6bc-33d7fc9d01b1
 ms.topic: article
-ms.date: 08/12/2020
+ms.date: 10/01/2020
 ms.custom: seodec18
-ms.openlocfilehash: 3b339b359ddbaf105b95bdf5d94ee0f66f339a82
-ms.sourcegitcommit: cd0a1ae644b95dbd3aac4be295eb4ef811be9aaa
+ms.openlocfilehash: a29d81be9b750d89230a180b8a7c786466d99bb8
+ms.sourcegitcommit: 2aa52d30e7b733616d6d92633436e499fbe8b069
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/19/2020
-ms.locfileid: "88611443"
+ms.lasthandoff: 01/06/2021
+ms.locfileid: "97936424"
 ---
 # <a name="azure-app-service-plan-overview"></a>Azure 应用服务计划概述
 
-在应用服务中 (Web 应用、API 应用或移动应用) ，应用始终在 _应用服务计划_中运行。 此外， [Azure Functions](../azure-functions/functions-scale.md#app-service-plan) 还可以选择在 _应用服务计划_中运行。 应用服务计划为要运行的 Web 应用定义一组计算资源。 这些计算资源类似于传统 web 承载中的 [_服务器场_](https://wikipedia.org/wiki/Server_farm) 。 可将一个或多个应用配置为在相同的计算资源中（或相同的应用服务计划中）运行。
+在应用服务（Web 应用、API 应用或移动应用）中，应用始终在应用服务计划中运行。 此外，[Azure Functions](../azure-functions/dedicated-plan.md) 也可选择在应用服务计划中运行。 应用服务计划为要运行的 Web 应用定义一组计算资源。 这些计算资源类似于传统 web 承载中的 [_服务器场_](https://wikipedia.org/wiki/Server_farm) 。 可将一个或多个应用配置为在相同的计算资源中（或相同的应用服务计划中）运行。
 
 在特定的区域（例如“西欧”）中创建应用服务计划时，将在该区域中为该计划创建一组计算资源。 放入此应用服务计划的任何应用都在应用服务计划定义的这些计算资源中运行。 每个应用服务计划定义：
 
 - 区域（美国西部、美国东部，等等）
 - VM 实例数
 - VM 实例大小（“小型”、“中型”、“大型”）
-- 定价层（免费、共享、基本、标准、高级、高级 V2、独立）
+- 定价层 (免费、共享、基本、标准、高级、PremiumV2、PremiumV3、隔离) 
 
 应用服务计划的定价层确定了所提供的应用服务功能和计划费用。  定价层有以下几个类别：
 
 - **共享计算**：“免费”和“共享”，这两个基本层在其他应用服务应用（包括其他客户的应用）所在的同一个 Azure VM 上运行应用。   这些层为共享资源中运行的每个应用分配 CPU 配额，且资源不可横向扩展。
-- **专用计算**：“基本”、“标准”、“高级”和“高级 V2”层在专用的 Azure VM 上运行应用。     只有同一应用服务计划中的应用可以共享相同的计算资源。 层越高，可用于横向扩展的 VM 实例就越多。
+- **专用计算**： " **基本**"、" **标准**"、" **高级**"、" **PremiumV2**" 和 " **PremiumV3** " 层在专用 Azure vm 上运行应用。 只有同一应用服务计划中的应用可以共享相同的计算资源。 层越高，可用于横向扩展的 VM 实例就越多。
 - **隔离**：此层级在专用 Azure 虚拟网络上运行专用 Azure VM。 它在计算隔离的基础上为应用提供了网络隔离。 此层提供最大的横向扩展能力。
 
 [!INCLUDE [app-service-dev-test-note](../../includes/app-service-dev-test-note.md)]
 
-每个层还提供应用服务功能的特定子集。 这些功能包括自定义域和 TLS/SSL 证书、自动缩放、部署槽位、备份、流量管理器集成等。 层越高，可用的功能越多。 若要了解每个定价层支持的功能，请参阅[应用服务计划详细信息](https://azure.microsoft.com/pricing/details/app-service/plans/)。
+每个层还提供应用服务功能的特定子集。 这些功能包括自定义域和 TLS/SSL 证书、自动缩放、部署槽位、备份、流量管理器集成，等等。 层越高，可用的功能越多。 若要了解每个定价层支持的功能，请参阅[应用服务计划详细信息](https://azure.microsoft.com/pricing/details/app-service/plans/)。
 
-<a name="new-pricing-tier-premiumv2"></a>
+<a name="new-pricing-tier-premiumv3"></a>
 
 > [!NOTE]
-> 与“标准”层相比，新的“高级 V2”层提供 [Dv2 系列 VM](../virtual-machines/dv2-dsv2-series.md)，此系列 VM 配备更快的处理器、SSD 存储以及双倍的内存核心比。   **高级 V2** 还支持通过增加实例数扩大规模，同时仍提供标准计划中的所有高级功能。 **高级 V2** 中包含现有“高级”  层中提供的所有功能。
+> 与 **标准** 层相比，新的 **PremiumV3** 定价层保证具有更快处理器的计算机 (最小 195 [ACU](../virtual-machines/acu.md)每个虚拟 CPU) 、SSD 存储以及四个内存与内核的比率。 **PremiumV3** 还支持更高的规模，通过增加的实例计数，同时仍然提供 **标准** 层中的所有高级功能。 现有 **PremiumV2** 层中提供的所有功能都包含在 **PremiumV3** 中。
 >
 > 类似于其他专用层，以下三种 VM 大小可用于此层：
 >
-> - 小型（一个 CPU 核心，3.5 GiB 内存） 
-> - 中型（两个 CPU 核心，7 GiB 内存） 
-> - 大型（四个 CPU 核心，14 GiB 内存）  
+> - 小型（2 个 CPU 核心，8 GiB 内存） 
+> - 中型（4 个 CPU 核心，16 GiB 内存） 
+> - 大型（8 个 CPU 核心，32 GiB 内存）  
 >
-> 有关**高级 V2** 定价信息，请参阅[应用服务定价](https://azure.microsoft.com/pricing/details/app-service/)。
+> 有关 **PremiumV3** 定价信息，请参阅 [应用服务定价](https://azure.microsoft.com/pricing/details/app-service/)。
 >
-> 若要开始使用新的“高级 V2”  定价层，请参阅[为应用服务配置“高级 V2”层](app-service-configure-premium-tier.md)。
+> 若要开始学习新的 **PremiumV3** 定价层，请参阅为 [应用服务配置 PremiumV3 层](app-service-configure-premium-tier.md)。
 
 ## <a name="how-does-my-app-run-and-scale"></a>应用如何运行和缩放？
 
@@ -57,7 +57,7 @@ ms.locfileid: "88611443"
 
 于是，应用服务计划便成了应用服务应用的缩放单元。 如果将计划配置为运行五个 VM 实例，该计划中的所有应用将在所有五个实例上运行。 如果为计划配置了自动缩放，该计划中的所有应用将会根据自动缩放设置一起横向扩展。
 
-有关横向扩展应用的信息，请参阅[手动或自动缩放实例计数](../monitoring-and-diagnostics/insights-how-to-scale.md)。
+有关横向扩展应用的信息，请参阅[手动或自动缩放实例计数](../azure-monitor/platform/autoscale-get-started.md)。
 
 <a name="cost"></a>
 
@@ -65,17 +65,17 @@ ms.locfileid: "88611443"
 
 本部分介绍应用服务应用的计费方式。 有关区域特定的详细定价信息，请参阅[应用服务定价](https://azure.microsoft.com/pricing/details/app-service/)。
 
-除了 **免费** 层外，应用服务计划还会对其使用的计算资源收费。
+除“免费”层外，应用服务计划会根据所用的计算资源量产生费用。
 
-- 在 **共享** 层中，每个应用都接收 cpu 分钟的配额，因此 _每个应用_ 都按 cpu 配额收费。
-- 在专用计算层 (" **基本**"、" **标准**"、" **高级**"、" **PremiumV2** ") ，"应用服务计划" 定义应用扩展到的 vm 实例数，因此，应用服务计划中的 _每个 vm 实例_ 都收费。 不管这些 VM 实例上运行了多少个应用，其计费方式都是相同的。 为了避免意外的费用，请参阅[清理应用服务计划](app-service-plan-manage.md#delete)。
-- 在 **隔离** 层中，应用服务环境定义运行应用的独立辅助角色的数目，并对 _每个工作线程_ 收费。 此外，还会为运行应用服务环境本身提供一项固定的戳记。
+- 在“共享”层中，每个应用遵循 CPU 分钟数配额，因此每个应用会根据 CPU 配额产生费用。
+- 在专用计算层中 (" **基本**"、" **标准**"、" **高级**"、" **PremiumV2**" **PremiumV3**) ，"应用服务计划" 定义应用缩放到的 vm 实例数，因此，应用服务计划中的 _每个 vm 实例_ 都是计费的。 不管这些 VM 实例上运行了多少个应用，其计费方式都是相同的。 为了避免意外的费用，请参阅[清理应用服务计划](app-service-plan-manage.md#delete)。
+- 在“隔离”层中，应用服务环境定义了运行应用的隔离辅助角色数目，每个辅助角色都会产生费用。 此外，运行应用服务环境本身也会产生一笔固定印花费。
 
-使用可用的应用服务功能时， (配置自定义域、TLS/SSL 证书、部署槽位、备份等 ) ，则不会向你收费。 例外情况包括：
+使用提供的应用服务功能（配置自定义域、TLS/SSL 证书、部署槽位、备份等）不会产生费用。 例外情况包括：
 
 - 应用服务域 - 在 Azure 中购买以及每年续订时付费。
 - 应用服务证书 - 在 Azure 中购买以及每年续订时付费。
-- 基于 IP 的 TLS 连接-每个基于 IP 的 TLS 连接都有小时收费，但某些 **标准** 层或更高版本提供了一个免费的基于 IP 的 tls 连接。 基于 SNI 的 TLS 连接是免费的。
+- 基于 IP 的 TLS 连接 - 每个基于 IP 的 TLS 连接都会产生小时费用，但某个“标准”层或更高级别的层免费提供了一个基于 IP 的 TLS 连接。 基于 SNI 的 TLS 连接免费。
 
 > [!NOTE]
 > 如果将应用服务与其他 Azure 服务集成，可能需要考虑这些服务的费用。 例如，如果使用 Azure 流量管理器在特定的地理位置缩放应用，则 Azure 流量管理器也会根据用量收取费用。 若要估算 Azure 中的跨服务费用，请参阅[定价计算器](https://azure.microsoft.com/pricing/calculator/)。 
@@ -88,7 +88,7 @@ ms.locfileid: "88611443"
 
 随时可以提高和降低应用服务计划。 只需更改计划的定价层即可。 一开始可以选择一个较低的定价层，以后需要更多的应用服务功能时，可以提高层。
 
-例如，可以在“免费”应用服务计划中开始免费测试 Web 应用。  想要将[自定义 DNS 名称](app-service-web-tutorial-custom-domain.md)添加到 Web 应用时，只需将计划提高到“共享”层。  稍后，当你想要 [创建 TLS 绑定](configure-ssl-bindings.md)时，请将你的计划缩放到 **基本** 层。 想要部署[过渡环境](deploy-staging-slots.md)时，可提高到“标准”层。  需要更多的核心、内存或存储时，可提高到同一层中的更大 VM 大小。
+例如，可以在“免费”应用服务计划中开始免费测试 Web 应用。  想要将[自定义 DNS 名称](app-service-web-tutorial-custom-domain.md)添加到 Web 应用时，只需将计划提高到“共享”层。  以后想要[创建 TLS 绑定](configure-ssl-bindings.md)时，可将计划纵向扩展到“基本”层。 想要部署[过渡环境](deploy-staging-slots.md)时，可提高到“标准”层。  需要更多的核心、内存或存储时，可提高到同一层中的更大 VM 大小。
 
 反之亦然。 如果觉得自己不再需要较高层的功能，可以纵向缩减到更低的层，从而节省资金。
 

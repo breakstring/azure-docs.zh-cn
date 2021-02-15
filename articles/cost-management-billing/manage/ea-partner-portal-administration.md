@@ -4,15 +4,16 @@ description: 介绍与合作伙伴相关的门户管理主题
 author: bandersmsft
 ms.reviewer: baolcsva
 ms.service: cost-management-billing
+ms.subservice: enterprise
 ms.topic: conceptual
-ms.date: 08/14/2020
+ms.date: 11/10/2020
 ms.author: banders
-ms.openlocfilehash: ef6405ffa72028cfde0445ad40bfd628eaa24573
-ms.sourcegitcommit: c293217e2d829b752771dab52b96529a5442a190
+ms.openlocfilehash: 0b500d76adfc81cc336d30bdc7dc3a931a684bae
+ms.sourcegitcommit: 295db318df10f20ae4aa71b5b03f7fb6cba15fc3
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/15/2020
-ms.locfileid: "88245795"
+ms.lasthandoff: 11/15/2020
+ms.locfileid: "94636548"
 ---
 # <a name="azure-ea-portal-administration-for-partners"></a>面向合作伙伴的 Azure EA 门户管理
 

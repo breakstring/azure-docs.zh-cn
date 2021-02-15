@@ -7,13 +7,13 @@ ms.service: static-web-apps
 ms.topic: conceptual
 ms.date: 05/08/2020
 ms.author: cshoe
-ms.custom: devx-track-javascript
-ms.openlocfilehash: 7e1f56fc4601b271bf4a0718a944741016509ce4
-ms.sourcegitcommit: 0b8320ae0d3455344ec8855b5c2d0ab3faa974a3
+ms.custom: devx-track-js
+ms.openlocfilehash: d5a1d810c357aa83b8069023b00d76352da124df
+ms.sourcegitcommit: 0a9df8ec14ab332d939b49f7b72dea217c8b3e1e
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/30/2020
-ms.locfileid: "87430515"
+ms.lasthandoff: 11/18/2020
+ms.locfileid: "94844789"
 ---
 # <a name="accessing-user-information-in-azure-static-web-apps-preview"></a>访问 Azure 静态 Web 应用预览版的用户信息
 
@@ -64,6 +64,10 @@ console.log(getUserInfo());
 
 ## <a name="api-functions"></a>API 函数
 
+静态 Web 应用中的 API 函数通过 Azure Functions 后端可以访问客户端应用程序的相同用户信息。 尽管 API 收到用户身份信息，但如果用户经过身份验证或符合所需角色，则不会执行其自己的检查。 访问控制规则是在文件中定义的 [`routes.json`](routes.md) 。
+
+# <a name="javascript"></a>[JavaScript](#tab/javascript)
+
 客户端主体数据会被传递到 `x-ms-client-principal` 请求标头中的 API 函数。 客户端主体数据以 [Base64](https://www.wikipedia.org/wiki/Base64) 编码字符串的形式发送，其中包含一个序列化的 JSON 对象。
 
 下面的示例函数显示了如何读取和返回用户信息。
@@ -92,8 +96,54 @@ async function getUser() {
   return clientPrincipal;
 }
 
-console.log(getUser());
+console.log(await getUser());
 ```
+
+# <a name="c"></a>[C#](#tab/csharp)
+
+在 c # 函数中， `x-ms-client-principal` 可以从可以反序列化到对象中的标头 `ClaimsPrincipal` 或您自己的自定义类型中获取用户信息。 下面的代码演示如何将标头解包到中间类型， `ClientPrincipal` 然后将该类型转换为 `ClaimsPrincipal` 实例。
+
+```csharp
+  public static class StaticWebAppsAuth
+  {
+    private class ClientPrincipal
+    {
+        public string IdentityProvider { get; set; }
+        public string UserId { get; set; }
+        public string UserDetails { get; set; }
+        public IEnumerable<string> UserRoles { get; set; }
+    }
+
+    public static ClaimsPrincipal Parse(HttpRequest req)
+    {
+        var principal = new ClientPrincipal();
+
+        if (req.Headers.TryGetValue("x-ms-client-principal", out var header))
+        {
+            var data = header[0];
+            var decoded = Convert.FromBase64String(data);
+            var json = Encoding.ASCII.GetString(decoded);
+            principal = JsonSerializer.Deserialize<ClientPrincipal>(json, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+        }
+
+        principal.UserRoles = principal.UserRoles?.Except(new string[] { "anonymous" }, StringComparer.CurrentCultureIgnoreCase);
+
+        if (!principal.UserRoles?.Any() ?? true)
+        {
+            return new ClaimsPrincipal();
+        }
+
+        var identity = new ClaimsIdentity(principal.IdentityProvider);
+        identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, principal.UserId));
+        identity.AddClaim(new Claim(ClaimTypes.Name, principal.UserDetails));
+        identity.AddClaims(principal.UserRoles.Select(r => new Claim(ClaimTypes.Role, r)));
+
+        return new ClaimsPrincipal(identity);
+    }
+  }
+```
+
+---
 
 <sup>1</sup>[fetch](https://caniuse.com/#feat=fetch) API 和 [await](https://caniuse.com/#feat=mdn-javascript_operators_await) 运算符在 Internet Explorer 中不支持。
 

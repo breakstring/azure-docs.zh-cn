@@ -4,12 +4,12 @@ description: 快速了解如何通过 Azure 门户创建专用 Azure 容器注�
 ms.topic: quickstart
 ms.date: 08/04/2020
 ms.custom: seodec18, mvc
-ms.openlocfilehash: ace1030923ea226376369941badafafa662d25ce
-ms.sourcegitcommit: bfeae16fa5db56c1ec1fe75e0597d8194522b396
+ms.openlocfilehash: ff74232edf5c96f091082f8486c44fed6125b0b1
+ms.sourcegitcommit: e7179fa4708c3af01f9246b5c99ab87a6f0df11c
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/10/2020
-ms.locfileid: "88031762"
+ms.lasthandoff: 12/30/2020
+ms.locfileid: "97825835"
 ---
 # <a name="quickstart-create-an-azure-container-registry-using-the-azure-portal"></a>快速入门：通过 Azure 门户创建 Azure 容器注册表
 
@@ -45,7 +45,7 @@ Azure 容器注册表是 Azure 中的专用 Docker 注册表，你可在其中�
 
 ## <a name="log-in-to-registry"></a>登录到注册表
 
-必须登录到注册表实例才可推送和拉取容器映像。 在本地计算机上[登录到 Azure CLI][get-started-with-azure-cli]，然后运行 [az acr login][az-acr-login] 命令。 （使用 Azure CLI 登录时仅指定注册表名称。 不要包含“azurecr.io”域后缀。）
+必须登录到注册表实例才可推送和拉取容器映像。 在本地计算机上[登录到 Azure CLI][get-started-with-azure-cli]，然后运行 [az acr login][az-acr-login] 命令。 使用 Azure CLI 登录时仅指定注册表名称。 不要使用登录服务器名称，其中包括类似 `azurecr.io` 的域后缀。
 
 ```azurecli
 az acr login --name <registry-name>

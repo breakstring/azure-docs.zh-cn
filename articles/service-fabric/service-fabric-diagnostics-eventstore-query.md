@@ -5,12 +5,13 @@ author: srrengar
 ms.topic: conceptual
 ms.date: 02/25/2019
 ms.author: srrengar
-ms.openlocfilehash: 2d66248797d577d6894d1125188735ecf71029b0
-ms.sourcegitcommit: dabd9eb9925308d3c2404c3957e5c921408089da
+ms.custom: devx-track-csharp
+ms.openlocfilehash: 6bed26227542cbf3ffc13ecc018aef9e659d026e
+ms.sourcegitcommit: a055089dd6195fde2555b27a84ae052b668a18c7
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/11/2020
-ms.locfileid: "86258882"
+ms.lasthandoff: 01/26/2021
+ms.locfileid: "98791622"
 ---
 # <a name="query-eventstore-apis-for-cluster-events"></a>查询群集事件的 EventStore API
 
@@ -110,7 +111,7 @@ Body:
 
 ## <a name="query-the-eventstore-programmatically"></a>以编程方式查询 EventStore
 
-还可以通过 [Service Fabric 客户端库](/dotnet/api/overview/azure/service-fabric?view=azure-dotnet#client-library)以编程方式查询 EventStore。
+还可以通过 [Service Fabric 客户端库](/dotnet/api/overview/azure/service-fabric#client-library)以编程方式查询 EventStore。
 
 设置好 Service Fabric 客户端后，可以通过访问 EventStore（如 `sfhttpClient.EventStore.<request>`）来查询事件
 
@@ -191,7 +192,7 @@ var clstrEvents = sfhttpClient.EventsStore.GetClusterEventListAsync(
 
 “myApp”中所有服务的历史记录运行状况： 
 
-目前，服务的运行状况报告事件在相应的应用程序实体下方显示为 `DeployedServicePackageNewHealthReport` 事件。 若要查看服务如何对“App1”执行操作，请使用以下查询：`https://winlrc-staging-10.southcentralus.cloudapp.azure.com:19080/EventsStore/Applications/myapp/$/Events?api-version=6.4&starttimeutc=2017-04-22T17:01:51Z&endtimeutc=2018-04-29T17:02:51Z&EventsTypesFilter=DeployedServicePackageNewHealthReport`
+目前，服务的运行状况报告事件在相应的应用程序实体下方显示为 `DeployedServicePackageNewHealthReport` 事件。 若要查看服务如何对“App1”执行操作，请使用以下查询：`https://mycluster.cloudapp.azure.com:19080/EventsStore/Applications/myapp/$/Events?api-version=6.4&starttimeutc=2017-04-22T17:01:51Z&endtimeutc=2018-04-29T17:02:51Z&EventsTypesFilter=DeployedServicePackageNewHealthReport`
 
 分区重新配置： 
 

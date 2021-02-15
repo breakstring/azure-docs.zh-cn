@@ -1,23 +1,23 @@
 ---
-title: 使用 Azure 门户对 Azure Stack Edge 进行故障排除 |Microsoft Docs
-description: 了解如何对 Azure Stack 边缘的问题进行故障排除。 您可以运行诊断、收集支持信息并使用日志进行故障排除。
+title: 使用 Azure 门户解决 Azure Stack Edge Pro 的问题 |Microsoft Docs
+description: 了解如何排查 Azure Stack Edge Pro 上的问题。 您可以运行诊断、收集支持信息并使用日志进行故障排除。
 services: databox
 author: alkohli
 ms.service: databox
 ms.subservice: edge
 ms.topic: troubleshooting
-ms.date: 08/11/2020
+ms.date: 02/05/2021
 ms.author: alkohli
-ms.openlocfilehash: f9dabdfd9df77822f06c41fa4355a1657bceb76c
-ms.sourcegitcommit: 1aef4235aec3fd326ded18df7fdb750883809ae8
+ms.openlocfilehash: ff6d1f46299875354a72a6a93a828df7960169ad
+ms.sourcegitcommit: d1b0cf715a34dd9d89d3b72bb71815d5202d5b3a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/12/2020
-ms.locfileid: "88134558"
+ms.lasthandoff: 02/08/2021
+ms.locfileid: "99831530"
 ---
-# <a name="troubleshoot-your-azure-stack-edge-issues"></a>排查 Azure Stack 边缘问题
+# <a name="troubleshoot-your-azure-stack-edge-pro-issues"></a>排查 Azure Stack Edge Pro 问题
 
-本文介绍如何解决 Azure Stack 边缘上的问题。 
+本文介绍如何解决 Azure Stack Edge Pro 上的问题。 
 
 在本文中，学习如何：
 
@@ -26,12 +26,13 @@ ms.locfileid: "88134558"
 > * 运行诊断
 > * 收集支持包
 > * 使用日志进行故障排除
+> * 排查 IoT Edge 错误
 
 ## <a name="run-diagnostics"></a>运行诊断
 
 若要诊断和排查任何设备错误，可以运行诊断测试。 在设备的本地 Web UI 中执行以下步骤，以运行诊断测试。
 
-1. 在本地 Web UI 中，转到“故障排除”>“诊断测试”。**** 选择要运行的测试，然后选择 "**运行测试**"。 这会运行测试来诊断网络、设备、Web 代理、时间或云设置可能存在的任何问题。 系统会通知你设备正在运行测试。
+1. 在本地 Web UI 中，转到“故障排除”>“诊断测试”。 选择要运行的测试，然后选择 " **运行测试**"。 这会运行测试来诊断网络、设备、Web 代理、时间或云设置可能存在的任何问题。 系统会通知你设备正在运行测试。
 
     ![选择测试](media/azure-stack-edge-troubleshoot/run-diag-1.png)
 
@@ -49,13 +50,13 @@ ms.locfileid: "88134558"
 
 执行以下步骤收集支持包。
 
-1. 在本地 Web UI 中，转到“故障排除”>“支持”。**** 选择 "**创建支持包**"。 系统随即开始收集支持包。 收集包可能需要几分钟时间。
+1. 在本地 Web UI 中，转到“故障排除”>“支持”。 选择 " **创建支持包**"。 系统随即开始收集支持包。 收集包可能需要几分钟时间。
 
     ![单击“添加用户”](media/azure-stack-edge-troubleshoot/collect-logs-1.png)
 
-2. 创建支持包后，选择 "**下载支持包**"。 压缩包将下载到所选的路径。 可以解压缩该包并查看系统日志文件。
+2. 创建支持包后，选择 " **下载支持包**"。 压缩包将下载到所选的路径。 可以解压缩该包并查看系统日志文件。
 
-    ![单击“添加用户”](media/azure-stack-edge-troubleshoot/collect-logs-2.png)
+    ![单击 "添加用户 2"](media/azure-stack-edge-troubleshoot/collect-logs-2.png)
 
 ## <a name="use-logs-to-troubleshoot"></a>使用日志进行故障排除
 
@@ -65,7 +66,7 @@ ms.locfileid: "88134558"
 
       ![连接到共享内容并查看](media/azure-stack-edge-troubleshoot/troubleshoot-logs-1.png)
 
-2. 选择_Microsoft Azure Stack Edge 文件夹_。 此文件夹包含两个子文件夹：
+2. 选择 _Microsoft Azure Stack Edge Pro 文件夹_。 此文件夹包含两个子文件夹：
 
     * Upload 文件夹：包含上传错误的日志文件。
     * Refresh 文件夹：包含刷新期间发生的错误。
@@ -82,6 +83,10 @@ ms.locfileid: "88134558"
 
     [!INCLUDE [data-box-edge-edge-upload-error-reference](../../includes/data-box-edge-gateway-upload-error-reference.md)]
 
+## <a name="troubleshoot-iot-edge-errors"></a>排查 IoT Edge 错误
+
+[!INCLUDE [Troubleshoot IoT Edge runtime](../../includes/azure-stack-edge-iot-troubleshoot-compute.md)]
+
 ## <a name="next-steps"></a>后续步骤
 
-* 详细了解[此版本中的已知问题](data-box-gateway-release-notes.md)。
+* 详细了解[此版本中的已知问题](../databox-gateway/data-box-gateway-release-notes.md)。

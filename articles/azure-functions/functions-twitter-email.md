@@ -7,12 +7,12 @@ ms.topic: tutorial
 ms.date: 04/27/2020
 ms.author: cshoe
 ms.custom: devx-track-csharp, mvc, cc996988-fb4f-47
-ms.openlocfilehash: 29b35493342b92813aa808069ebdd7ca8a7bbc56
-ms.sourcegitcommit: 4913da04fd0f3cf7710ec08d0c1867b62c2effe7
+ms.openlocfilehash: 5750597d7d4d372be975aa64ce8db11859791da2
+ms.sourcegitcommit: b39cf769ce8e2eb7ea74cfdac6759a17a048b331
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/14/2020
-ms.locfileid: "88208554"
+ms.lasthandoff: 01/22/2021
+ms.locfileid: "98674312"
 ---
 # <a name="create-a-function-that-integrates-with-azure-logic-apps"></a>创建与 Azure 逻辑应用集成的函数
 
@@ -40,7 +40,7 @@ Azure Functions 在逻辑应用设计器中与 Azure 逻辑应用集成。 借�
 > [!NOTE]
 > 如果要使用 Gmail 连接器，则只有 G-Suite 商业帐户可以在逻辑应用中不受限制地使用此连接器。 如果有 Gmail 用户帐户，则只能将 Gmail 连接器与 Google 批准的特定应用和服务一起使用，也可以[创建用于通过 Gmail 连接器进行身份验证的 Google 客户端应用](/connectors/gmail/#authentication-and-bring-your-own-application)。 有关详细信息，请参阅 [Azure 逻辑应用中 Google 连接器的数据安全和隐私策略](../connectors/connectors-google-data-security-privacy-policy.md)。
 
-+ 本文以在[从 Azure 门户创建第一个函数](functions-create-first-azure-function.md)主题中创建的资源为基础。
++ 本文以在[从 Azure 门户创建第一个函数](./functions-get-started.md)主题中创建的资源为基础。
 现在请完成以下步骤创建 Function App（如果尚未这样做）。
 
 ## <a name="create-a-cognitive-services-resource"></a>创建认知服务资源
@@ -138,7 +138,7 @@ Azure Functions 可让你方便地卸载逻辑应用工作流中的处理任务�
 
 2. 单击“Web” > “逻辑应用”。
  
-3. 然后，键入一个值（例如 `TweetSentiment`）作为**名称**，并使用表中指定的设置。
+3. 然后，键入一个值（例如 `TweetSentiment`）作为 **名称**，并使用表中指定的设置。
 
     ![在 Azure 门户创建逻辑应用](./media/functions-twitter-email/08-logic-app-create.png)
 
@@ -182,7 +182,7 @@ Azure Functions 可让你方便地卸载逻辑应用工作流中的处理任务�
 
 2. 在“选择操作”中键入“文本分析”，然后单击“检测情感”操作。  
     
-    ![选择“新建步骤”，并选择“添加操作”](media/functions-twitter-email/11-detect-sentiment.png)
+    ![显示“选择操作”部分的屏幕截图，在搜索框中包含“文本分析”并已选择“检测情绪”操作。 ](media/functions-twitter-email/11-detect-sentiment.png)
 
 3. 键入连接名称（例如 `MyCognitiveServicesConnection`），粘贴在文本编辑器中留存的认知服务 API 和认知服务终结点的密钥，然后单击“创建”。
 
@@ -202,7 +202,7 @@ Azure Functions 可让你方便地卸载逻辑应用工作流中的处理任务�
   
 4. 选择前面创建的函数应用。
 
-    ![选择函数](media/functions-twitter-email/15-select-function.png)
+    ![屏幕截图，显示选择了函数应用的“选择操作”部分。](media/functions-twitter-email/15-select-function.png)
 
 5. 选择为本教程创建的函数。
 
@@ -228,7 +228,7 @@ Azure Functions 可让你方便地卸载逻辑应用工作流中的处理任务�
 
 3. 在“如果是”中单击“添加操作”，搜索 `outlook.com`，单击“发送电子邮件”，并登录到 Outlook.com 帐户。  
 
-    ![为“发送电子邮件”操作配置电子邮件。](media/functions-twitter-email/20-add-outlook.png)
+    ![显示“IF TRUE”部分的屏幕截图，其中在搜索框中输入了“outlook.com”，并且已选择“发送电子邮件”操作。](media/functions-twitter-email/20-add-outlook.png)
 
     > [!NOTE]
     > 如果没有 Outlook.com 帐户，可以选择另一个连接器，例如 Gmail 或 Office 365 Outlook

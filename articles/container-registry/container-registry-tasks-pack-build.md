@@ -3,13 +3,13 @@ title: 使用 Cloud Native Buildpack 生成映像
 description: 在不使用 Dockerfile 的情况下，使用 az acr pack build 命令从应用生成容器映像并将其推送到 Azure 容器注册表。
 ms.topic: article
 ms.date: 10/24/2019
-ms.custom: devx-track-javascript
-ms.openlocfilehash: f99175165e01a9287a66c59957fc7a239b00393a
-ms.sourcegitcommit: 2ffa5bae1545c660d6f3b62f31c4efa69c1e957f
+ms.custom: devx-track-js, devx-track-azurecli
+ms.openlocfilehash: 264fc7314c78088ebfefb9ddb8edbe38fa16581a
+ms.sourcegitcommit: 8c7f47cc301ca07e7901d95b5fb81f08e6577550
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/11/2020
-ms.locfileid: "88077214"
+ms.lasthandoff: 10/27/2020
+ms.locfileid: "92736625"
 ---
 # <a name="build-and-push-an-image-from-an-app-using-a-cloud-native-buildpack"></a>使用 Cloud Native Buildpack 从应用生成映像并推送该映像
 
@@ -96,7 +96,7 @@ docker run --rm -p 8080:8080 myregistry.azurecr.io/java-app:runid
 
 ## <a name="next-steps"></a>后续步骤
 
-使用 `az acr pack build` 生成并推送容器映像后，可以像部署任何其他映像一样将其部署到所选目标。 Azure 部署选项包括在[应用服务](../app-service/tutorial-custom-container.md)或[azure Kubernetes 服务](../aks/tutorial-kubernetes-deploy-cluster.md)中运行它，等等。
+使用 `az acr pack build` 生成并推送容器映像后，可以像部署任何其他映像一样将其部署到所选目标。 Azure 部署选项包括在 [应用服务](../app-service/tutorial-custom-container.md) 或 [azure Kubernetes 服务](../aks/tutorial-kubernetes-deploy-cluster.md)中运行它，等等。
 
 有关 ACR 任务功能的详细信息，请参阅[使用 ACR 任务自动执行容器映像的生成和维护](container-registry-tasks-overview.md)。
 

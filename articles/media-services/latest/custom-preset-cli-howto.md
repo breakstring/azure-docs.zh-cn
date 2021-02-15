@@ -1,25 +1,27 @@
 ---
-title: 使用媒体服务 v3 对自定义转换进行编码 - Azure CLI | Microsoft Docs
+title: 编码自定义转换 CLI
 description: 本主题介绍如何使用 Azure CLI 通过 Azure 媒体服务 v3 对自定义转换进行编码。
 services: media-services
 documentationcenter: ''
-author: Juliako
+author: IngridAtMicrosoft
 manager: femila
 editor: ''
 ms.service: media-services
 ms.workload: ''
-ms.topic: article
+ms.topic: how-to
 ms.custom: devx-track-azurecli
-ms.date: 05/14/2019
-ms.author: juliako
-ms.openlocfilehash: 4ea328cc21d849367d36342ed1b0953a7eb26c77
-ms.sourcegitcommit: 11e2521679415f05d3d2c4c49858940677c57900
+ms.date: 08/31/2020
+ms.author: inhenkel
+ms.openlocfilehash: 91ee605035dbc81c2302aa0350763e68dc73ecb3
+ms.sourcegitcommit: 4e70fd4028ff44a676f698229cb6a3d555439014
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/31/2020
-ms.locfileid: "87503882"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98956100"
 ---
 # <a name="how-to-encode-with-a-custom-transform---azure-cli"></a>如何对自定义转换进行编码 - Azure CLI
+
+[!INCLUDE [media services api v3 logo](./includes/v3-hr.md)]
 
 使用 Azure 媒体服务进行编码时，可以根据[流式传输文件](stream-files-cli-quickstart.md#create-a-transform-for-adaptive-bitrate-encoding)快速入门中演示的行业最佳做法，使用推荐的内置预设之一快速入门。 也可以构建自定义预设以针对特定方案或设备要求。
 
@@ -126,7 +128,7 @@ ms.locfileid: "87503882"
 
 ## <a name="create-a-new-transform"></a>创建新转换  
 
-在此示例中，我们基于前面定义的自定义预设创建**转换**。 创建转换时，应首先检查是否已存在转换。 如果存在转换，请重新使用它。 以下 `show` 命令返回 `customTransformName` 转换（如果存在）：
+在此示例中，我们基于前面定义的自定义预设创建 **转换**。 创建转换时，应首先检查是否已存在转换。 如果存在转换，请重新使用它。 以下 `show` 命令返回 `customTransformName` 转换（如果存在）：
 
 ```azurecli-interactive
 az ams transform show -a amsaccount -g amsResourceGroup -n customTransformName

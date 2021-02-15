@@ -1,20 +1,20 @@
 ---
 title: 快速入门：使用资源管理器模板定向 Web 流量
 titleSuffix: Azure Application Gateway
-description: 了解如何使用资源管理器模板创建 Azure 应用程序网关，以便将 Web 流量定向到后端池中的虚拟机。
+description: 本快速入门介绍如何使用资源管理器模板创建 Azure 应用程序网关，以便将 Web 流量定向到后端池中的虚拟机。
 services: application-gateway
 author: vhorne
 ms.service: application-gateway
 ms.topic: quickstart
-ms.date: 05/28/2020
+ms.date: 01/20/2021
 ms.author: victorh
-ms.custom: mvc
-ms.openlocfilehash: 963f728db55f587f7ae72aec702a099882cf401a
-ms.sourcegitcommit: dabd9eb9925308d3c2404c3957e5c921408089da
+ms.custom: mvc, subject-armqs
+ms.openlocfilehash: 05e7cd8d7018759a3c8670a610b4c98ac0a86a7a
+ms.sourcegitcommit: 52e3d220565c4059176742fcacc17e857c9cdd02
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/11/2020
-ms.locfileid: "86249353"
+ms.lasthandoff: 01/21/2021
+ms.locfileid: "98660049"
 ---
 # <a name="quickstart-direct-web-traffic-with-azure-application-gateway---arm-template"></a>快速入门：使用 Azure 应用程序网关定向 Web 流量 - ARM 模板
 
@@ -28,7 +28,7 @@ ms.locfileid: "86249353"
 
 如果你的环境满足先决条件，并且你熟悉如何使用 ARM 模板，请选择“部署到 Azure”按钮。 Azure 门户中会打开模板。
 
-[![部署到 Azure](../media/template-deployments/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fag-docs-qs%2Fazuredeploy.json)
+[![“部署到 Azure”](../media/template-deployments/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fag-docs-qs%2Fazuredeploy.json)
 
 ## <a name="prerequisites"></a>先决条件
 
@@ -40,7 +40,7 @@ ms.locfileid: "86249353"
 
 本快速入门中使用的模板来自 [Azure 快速入门模板](https://azure.microsoft.com/resources/templates/ag-docs-qs/)
 
-:::code language="json" source="~/quickstart-templates/ag-docs-qs/azuredeploy.json" range="001-343" highlight="197-297":::
+:::code language="json" source="~/quickstart-templates/ag-docs-qs/azuredeploy.json":::
 
 模板中定义了多个 Azure 资源：
 
@@ -58,7 +58,7 @@ ms.locfileid: "86249353"
 
 1. 选择“部署到 Azure”，登录到 Azure 并打开模板。 该模板在运行 IIS 的后端池中创建应用程序网关、网络基础结构和两个虚拟机。
 
-   [![部署到 Azure](../media/template-deployments/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fag-docs-qs%2Fazuredeploy.json)
+   [![“部署到 Azure”](../media/template-deployments/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fag-docs-qs%2Fazuredeploy.json)
 
 2. 选择或创建资源组，键入虚拟机管理员用户名和密码。
 3. 选择“查看 + 创建”，然后选择“创建”。 

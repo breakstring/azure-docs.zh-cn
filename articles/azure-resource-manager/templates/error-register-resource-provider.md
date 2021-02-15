@@ -3,13 +3,13 @@ title: 资源提供程序注册错误
 description: 说明在使用 Azure 资源管理器部署资源时如何解决 Azure 资源提供程序注册错误。
 ms.topic: troubleshooting
 ms.date: 02/15/2019
-ms.custom: devx-track-azurecli
-ms.openlocfilehash: 19b3fa661f25f72e80b4ecc5b8423d1931ce5e5c
-ms.sourcegitcommit: 11e2521679415f05d3d2c4c49858940677c57900
+ms.custom: devx-track-azurecli, devx-track-azurepowershell
+ms.openlocfilehash: 143cf03a33739f43a29af94fc2f8a336fb3aef8f
+ms.sourcegitcommit: 829d951d5c90442a38012daaf77e86046018e5b9
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/31/2020
-ms.locfileid: "87499919"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "89076661"
 ---
 # <a name="resolve-errors-for-resource-provider-registration"></a>解决资源提供程序注册的错误
 

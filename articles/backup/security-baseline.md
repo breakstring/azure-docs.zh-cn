@@ -6,13 +6,13 @@ ms.service: security
 ms.topic: conceptual
 ms.date: 04/23/2020
 ms.author: mbaldwin
-ms.custom: security-benchmark
-ms.openlocfilehash: 2951d0ee8719ec3b0f195a9abcd1af6f65f2c141
-ms.sourcegitcommit: f1b18ade73082f12fa8f62f913255a7d3a7e42d6
+ms.custom: subject-security-benchmark
+ms.openlocfilehash: 77af95f2decbfb81ed930591b03f71fb71780def
+ms.sourcegitcommit: 8245325f9170371e08bbc66da7a6c292bbbd94cc
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/24/2020
-ms.locfileid: "88761808"
+ms.lasthandoff: 02/07/2021
+ms.locfileid: "99805241"
 ---
 # <a name="azure-security-baseline-for-backup"></a>备份的 Azure 安全基线
 
@@ -44,7 +44,7 @@ ms.locfileid: "88761808"
 
 ### <a name="13-protect-critical-web-applications"></a>1.3：保护关键 Web 应用程序
 
-**指南**：不适用；此建议适用于 Azure 应用服务或计算资源上运行的 Web 应用程序。
+**指导**：不适用；此建议适用于 Azure 应用服务或计算资源上运行的 Web 应用程序。
 
 **Azure 安全中心监视**：不适用
 
@@ -80,7 +80,7 @@ ms.locfileid: "88761808"
 
 ### <a name="17-manage-traffic-to-web-applications"></a>1.7：管理发往 Web 应用程序的流量
 
-**指南**：不适用；此建议适用于 Azure 应用服务或计算资源上运行的 Web 应用程序。
+**指导**：不适用；此建议适用于 Azure 应用服务或计算资源上运行的 Web 应用程序。
 
 **Azure 安全中心监视**：不适用
 
@@ -252,9 +252,9 @@ ms.locfileid: "88761808"
 
 支持性文档：
 
-- [如何使用 PowerShell 获取 Azure AD 中的目录角色](/powershell/module/azuread/get-azureaddirectoryrole?view=azureadps-2.0)
+- [如何使用 PowerShell 获取 Azure AD 中的目录角色](/powershell/module/azuread/get-azureaddirectoryrole)
 
-- [如何使用 PowerShell 获取 Azure AD 中目录角色的成员](/powershell/module/azuread/get-azureaddirectoryrolemember?view=azureadps-2.0)
+- [如何使用 PowerShell 获取 Azure AD 中目录角色的成员](/powershell/module/azuread/get-azureaddirectoryrolemember)
 
 **Azure 安全中心监视**：是
 
@@ -298,11 +298,11 @@ ms.locfileid: "88761808"
 
 ### <a name="35-use-multi-factor-authentication-for-all-azure-active-directory-based-access"></a>3.5：对所有基于 Azure Active Directory 的访问使用多重身份验证
 
-**指导**：在 Azure 备份中执行关键操作时，必须输入 Azure 门户中提供的安全 PIN。 启用 Azure 多重身份验证相当于增加了一个安全层。 只有获得授权、具有有效 Azure 凭据且通过第二台设备进行身份验证的用户能够访问 Azure 门户。
+**指导**：在 Azure 备份中执行关键操作时，必须输入 Azure 门户中提供的安全 PIN。 启用 Azure AD 多重身份验证相当于增加了一个安全层。 只有获得授权、具有有效 Azure 凭据且通过第二台设备进行身份验证的用户能够访问 Azure 门户。
 
 - [Azure 备份中的多重身份验证](./backup-azure-security-feature.md)
 
-- [规划基于云的 Azure 多重身份验证部署](../active-directory/authentication/howto-mfa-getstarted.md)
+- [规划基于云的 Azure AD 多重身份验证部署](../active-directory/authentication/howto-mfa-getstarted.md)
 
 **Azure 安全中心监视**：是
 
@@ -310,11 +310,11 @@ ms.locfileid: "88761808"
 
 ### <a name="36-use-dedicated-machines-privileged-access-workstations-for-all-administrative-tasks"></a>3.6：对所有管理任务使用专用计算机（特权访问工作站）
 
-**指导**：使用配置了 Azure 多重身份验证 (MFA) 的特权访问工作站 (PAW) 来登录和配置启用了 Azure 备份的资源。
+**指导**：使用配置了 Azure AD 多重身份验证 (MFA) 的特权访问工作站 (PAW) 来登录和配置启用了 Azure 备份的资源。
 
-- [特权访问工作站](/windows-server/identity/securing-privileged-access/privileged-access-workstations)
+- [特权访问工作站](https://4sysops.com/archives/understand-the-microsoft-privileged-access-workstation-paw-security-model/)
 
-- [规划基于云的 Azure 多重身份验证部署](../active-directory/authentication/howto-mfa-getstarted.md)
+- [规划基于云的 Azure AD 多重身份验证部署](../active-directory/authentication/howto-mfa-getstarted.md)
 
 **Azure 安全中心监视**：不适用
 
@@ -416,7 +416,7 @@ ms.locfileid: "88761808"
 
 ### <a name="41-maintain-an-inventory-of-sensitive-information"></a>4.1：维护敏感信息的清单
 
-**指南**：使用标记可以帮助跟踪存储或处理敏感信息的 Azure 资源。
+**指导**：使用标记可以帮助跟踪存储或处理敏感信息的 Azure 资源。
 
 - [如何创建和使用标记](../azure-resource-manager/management/tag-resources.md)
 
@@ -436,7 +436,7 @@ ms.locfileid: "88761808"
 
 - [如何创建其他 Azure 订阅](../cost-management-billing/manage/create-subscription.md)
 
-- [如何创建管理组](../governance/management-groups/create.md)
+- [如何创建管理组](../governance/management-groups/create-management-group-portal.md)
 
 - [如何创建和使用标记](../azure-resource-manager/management/tag-resources.md)
 
@@ -480,13 +480,13 @@ Microsoft 管理 Azure 备份的底层基础结构，并实施了严格的控制
 
 ### <a name="46-use-azure-rbac-to-control-access-to-resources"></a>4.6：使用 Azure RBAC 控制对资源的访问
 
-**指南**： azure RBAC) 的 azure 基于角色的访问控制支持对 azure 进行细致的访问管理 (。 使用 RBAC，可以在团队中对职责进行分配，仅向用户授予执行作业所需的访问权限。
+**指导**：Azure 基于角色的访问控制 (Azure RBAC) 可用于对 Azure 进行细致的访问管理。 使用 Azure RBAC，可以在团队中实现职责分离，仅向用户授予他们执行作业所需的访问权限。
 
 Azure 备份提供三个用于控制备份管理操作的内置角色：备份参与者、备份操作员和备份读取者。 可以将备份内置角色映射到各种备份管理操作。
 
-- [如何在 Azure 中配置 RBAC](../role-based-access-control/role-assignments-portal.md)
+- [如何配置 Azure RBAC](../role-based-access-control/role-assignments-portal.md)
 
-- [使用基于角色的访问控制管理 Azure 备份恢复点](./backup-rbac-rs-vault.md)
+- [使用 Azure 基于角色的访问控制管理 Azure 备份恢复点](./backup-rbac-rs-vault.md)
 
 **Azure 安全中心监视**：目前不可用
 
@@ -534,7 +534,7 @@ Azure 备份提供三个用于控制备份管理操作的内置角色：备份�
 
 Microsoft 对基础平台进行了扫描和修补。 查看 Microsoft Azure 备份可用的安全控制，以减少与服务配置相关的漏洞。
 
-- [了解 Azure 备份可用的安全控制](./backup-security-controls.md)
+- [了解 Azure 备份可用的安全控制]()
 
 **Azure 安全中心监视**：目前不可用
 
@@ -580,7 +580,7 @@ Microsoft 对基础平台进行了扫描和修补。 查看 Microsoft Azure 备�
 
 ### <a name="61-use-azure-asset-discovery"></a>6.1：使用 Azure 资产发现
 
-**指导**：使用 Azure Resource Graph 查询/发现订阅中的所有资源（例如计算、存储、网络、端口和协议等）。  确保租户中具有适当的（读取）权限，并枚举所有 Azure 订阅以及订阅中的资源。
+**指导**：使用 Azure Resource Graph 查询/发现订阅中的所有资源（例如计算、存储、网络、端口和协议）。  确保租户中具有适当的（读取）权限，并枚举所有 Azure 订阅以及订阅中的资源。
 
 尽管可以通过 Resource Graph 发现经典 Azure 资源，但我们强烈建议你今后还是创建并使用 Azure 资源管理器资源。
 
@@ -612,7 +612,7 @@ Microsoft 对基础平台进行了扫描和修补。 查看 Microsoft Azure 备�
 
 - [如何创建其他 Azure 订阅](../cost-management-billing/manage/create-subscription.md)
 
-- [如何创建管理组](../governance/management-groups/create.md)
+- [如何创建管理组](../governance/management-groups/create-management-group-portal.md)
 
 - [如何创建和使用标记](../azure-resource-manager/management/tag-resources.md)
 
@@ -706,7 +706,7 @@ Microsoft 对基础平台进行了扫描和修补。 查看 Microsoft Azure 备�
 
 ### <a name="613-physically-or-logically-segregate-high-risk-applications"></a>6.13：以物理或逻辑方式隔离高风险应用程序
 
-**指南**：不适用；此建议适用于 Azure 应用服务或计算资源上运行的 Web 应用程序。
+**指导**：不适用；此建议适用于 Azure 应用服务或计算资源上运行的 Web 应用程序。
 
 **Azure 安全中心监视**：不适用
 
@@ -760,9 +760,9 @@ Microsoft 对基础平台进行了扫描和修补。 查看 Microsoft Azure 备�
 
 **指导**：如果使用自定义的 Azure Policy 定义，请使用 Azure DevOps 或 Azure Repos 安全地存储和管理代码。
 
-- [如何在 Azure DevOps 中存储代码](/azure/devops/repos/git/gitworkflow?view=azure-devops)
+- [如何在 Azure DevOps 中存储代码](/azure/devops/repos/git/gitworkflow)
 
-- [Azure Repos 文档](/azure/devops/repos/index?view=azure-devops)
+- [Azure Repos 文档](/azure/devops/repos/index)
 
 **Azure 安全中心监视**：不适用
 
@@ -818,7 +818,9 @@ Microsoft 对基础平台进行了扫描和修补。 查看 Microsoft Azure 备�
 
 - [如何创建 Key Vault](../key-vault/secrets/quick-create-portal.md)
 
-- [如何使用托管标识提供 Key Vault 身份验证](../key-vault/general/managed-identity.md)
+* [如何向 Key Vault 进行身份验证](../key-vault/general/authentication.md)
+
+* [如何分配 Key Vault 访问策略](../key-vault/general/assign-access-policy-portal.md)
 
 **Azure 安全中心监视**：不适用
 
@@ -860,13 +862,13 @@ Microsoft 对基础平台进行了扫描和修补。 查看 Microsoft Azure 备�
 
 **指导**：在支持 Azure 服务（例如 Azure 备份）的底层主机上已启用 Microsoft Antimalware，但是，该软件不会针对你的内容运行。
 
-预扫描任何上传到非计算 Azure 资源（例如应用服务、Data Lake Storage、Blob 存储等）的文件。
+预扫描任何要上传到非计算 Azure 资源（例如应用服务、Data Lake Storage 和 Blob 存储）的文件。
 
 使用 Azure 安全中心的数据服务威胁检测来检测上传到存储帐户的恶意软件。
 
 - [了解适用于 Azure 云服务和虚拟机的 Microsoft Antimalware](../security/fundamentals/antimalware.md)
 
-- [了解 Azure 安全中心的数据服务威胁检测](../security-center/threat-protection.md)
+- [了解 Azure 安全中心的数据服务威胁检测](../security-center/azure-defender.md)
 
 **Azure 安全中心监视**：不适用
 
@@ -912,7 +914,7 @@ Microsoft 对基础平台进行了扫描和修补。 查看 Microsoft Azure 备�
 
 **指导**：测试已备份客户托管密钥的还原。
 
-- [如何在 Azure 中还原密钥保管库密钥](/powershell/module/azurerm.keyvault/restore-azurekeyvaultkey?view=azurermps-6.13.0)
+- [如何在 Azure 中还原密钥保管库密钥](/powershell/module/azurerm.keyvault/restore-azurekeyvaultkey)
 
 **Azure 安全中心监视**：不适用
 
@@ -922,7 +924,7 @@ Microsoft 对基础平台进行了扫描和修补。 查看 Microsoft Azure 备�
 
 **指导**：对于本地备份，使用在备份到 Azure 时提供的密码提供静态加密。 对于 Azure VM，使用存储服务加密 (SSE) 对数据进行静态加密。 可以在密钥保管库中启用软删除，以防止意外删除或恶意删除密钥。
 
-- [如何在密钥保管库中启用软删除](../storage/blobs/soft-delete-overview.md?tabs=azure-portal)
+- [如何在密钥保管库中启用软删除](../storage/blobs/soft-delete-blob-overview.md?tabs=azure-portal)
 
 **Azure 安全中心监视**：是
 
@@ -950,7 +952,7 @@ Microsoft 对基础平台进行了扫描和修补。 查看 Microsoft Azure 备�
 
 ### <a name="102-create-an-incident-scoring-and-prioritization-procedure"></a>10.2：创建事件评分和优先级设定过程
 
-**指南**：安全中心向每个警报分配一个严重性，帮助你优先处理应首先调查的警报。 严重性取决于安全中心在发出警报时所依据的检测结果和分析结果的置信度，以及导致发出警报的活动的恶意企图的置信度。
+**指导**：安全中心为每条警报分配严重性，以帮助你优先处理应该最先调查的警报。 严重性取决于安全中心在发出警报时所依据的检测结果和分析结果的置信度，以及导致发出警报的活动的恶意企图的置信度。
 
 此外，请明确标记订阅（例如 生产、非生产），并创建命名系统来对 Azure 资源进行明确标识和分类。
 
@@ -960,7 +962,7 @@ Microsoft 对基础平台进行了扫描和修补。 查看 Microsoft Azure 备�
 
 ### <a name="103-test-security-response-procedures"></a>10.3：测试安全响应过程
 
-**指导**：定期练习以测试系统的事件响应能力。 识别弱点和差距，并根据需要修改计划。
+**指导**：定期执行演练来测试系统的事件响应功能。 识别弱点和差距，并根据需要修改计划。
 
 - [请参阅 NIST 的刊物：Guide to Test, Training, and Exercise Programs for IT Plans and Capabilities](https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-84.pdf)（IT 规划和功能的测试、培训与演练计划指南）
 
@@ -980,7 +982,7 @@ Microsoft 对基础平台进行了扫描和修补。 查看 Microsoft Azure 备�
 
 ### <a name="105-incorporate-security-alerts-into-your-incident-response-system"></a>10.5：将安全警报整合到事件响应系统中
 
-**指导**：使用连续导出功能导出 Azure 安全中心警报和建议。 使用连续导出可以手动导出或者持续导出警报和建议。 可以使用 Azure 安全中心数据连接器将警报流式传输到 Sentinel。
+**指导**：使用连续导出功能导出 Azure 安全中心警报和建议。 使用连续导出可以手动导出或者持续导出警报和建议。 可以使用 Azure 安全中心数据连接器将警报流式传输到 Azure Sentinel。
 
 - [如何配置连续导出](../security-center/continuous-export.md)
 

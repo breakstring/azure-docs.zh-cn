@@ -4,15 +4,15 @@ description: 了解如何在 .NET 函数中使用依赖项注入来注册和使�
 author: ggailey777
 ms.topic: conceptual
 ms.custom: devx-track-csharp
-ms.date: 08/15/2020
+ms.date: 01/27/2021
 ms.author: glenga
 ms.reviewer: jehollan
-ms.openlocfilehash: 6fe6079ca4cdf76757088cbdc00dd1af3c2225ea
-ms.sourcegitcommit: 628be49d29421a638c8a479452d78ba1c9f7c8e4
+ms.openlocfilehash: 66e2cd22f4bcb95be65d6d04345dcac622436a04
+ms.sourcegitcommit: 4e70fd4028ff44a676f698229cb6a3d555439014
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/20/2020
-ms.locfileid: "88642361"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98955082"
 ---
 # <a name="use-dependency-injection-in-net-azure-functions"></a>在 .NET Azure Functions 中使用依赖项注入
 
@@ -29,6 +29,8 @@ Azure Functions 支持依赖项注入 (DI) 软件设计模式，这是一种在�
 - [Microsoft.Azure.Functions.Extensions](https://www.nuget.org/packages/Microsoft.Azure.Functions.Extensions/)
 
 - [Microsoft.NET.Sdk.Functions](https://www.nuget.org/packages/Microsoft.NET.Sdk.Functions/) 包版本 1.0.28 或更高版本
+
+- [Microsoft.Extensions.DependencyInjection](https://www.nuget.org/packages/Microsoft.Extensions.DependencyInjection/)（当前仅支持 3.x 版及更低版本）
 
 ## <a name="register-services"></a>注册服务
 
@@ -92,7 +94,7 @@ namespace MyNamespace
         private readonly HttpClient _client;
         private readonly IMyService _service;
 
-        public MyHttpTrigger(HttpClient httpClient, MyService service)
+        public MyHttpTrigger(HttpClient httpClient, IMyService service)
         {
             this._client = httpClient;
             this._service = service;
@@ -118,27 +120,27 @@ namespace MyNamespace
 
 Azure Functions 应用提供与 [ASP.NET 依赖项注入](/aspnet/core/fundamentals/dependency-injection#service-lifetimes)相同的服务生存期。 就 Functions 应用来说，不同的服务生存期表现如下：
 
-- **暂时性**：每次请求此服务时，都会创建暂时性服务。
-- **限定范围**：限定范围的服务的生存期与函数执行生存期相匹配。 作用域服务在每次执行时创建一次。 在执行期间对该服务的后续请求会重复使用现有服务实例。
+- **暂时性**：每次解析此服务时，都会创建暂时性服务。
+- **限定范围**：限定范围的服务的生存期与函数执行生存期相匹配。 每次执行函数后，都会创建设有范围的服务。 在执行期间对该服务的后续请求会重复使用现有服务实例。
 - **单一实例**：单一实例服务生存期与主机生存期相匹配，并且在该实例上的各个函数执行之间重用。 对于连接和客户端（例如 `DocumentClient` 或 `HttpClient` 实例），建议使用单一实例生存期服务。
 
 在 GitHub 上查看或下载[不同服务生存期的示例](https://github.com/Azure/azure-functions-dotnet-extensions/tree/main/src/samples/DependencyInjection/Scopes)。
 
 ## <a name="logging-services"></a>日志记录服务
 
-如果需要自己的日志记录提供程序，请将自定义类型注册为的实例 [`ILoggerProvider`](/dotnet/api/microsoft.extensions.logging.iloggerfactory) ，该实例可[Microsoft.Extensions.Logging.Abstractions](https://www.nuget.org/packages/Microsoft.Extensions.Logging.Abstractions/)通过使用
+如果需要自己的日志记录提供程序，请将自定义类型注册为 [`ILoggerProvider`](/dotnet/api/microsoft.extensions.logging.iloggerfactory)（可通过 [Microsoft.Extensions.Logging.Abstractions](https://www.nuget.org/packages/Microsoft.Extensions.Logging.Abstractions/) NuGet 包获取）的实例。
 
 Azure Functions 会自动添加 Application Insights。
 
 > [!WARNING]
 > - 请勿将 `AddApplicationInsightsTelemetry()` 添加到服务集合，因为它注册的服务与环境提供的服务发生冲突。
-> - 如果使用内置 Application Insights 功能，请勿注册自己的 `TelemetryConfiguration` 或 `TelemetryClient`。 如果需要配置自己的 `TelemetryClient` 实例，请通过插入的 `TelemetryConfiguration` 创建一个实例，如[监视 Azure Functions](./functions-monitoring.md#version-2x-and-later-2) 中所示。
+> - 如果使用内置 Application Insights 功能，请勿注册自己的 `TelemetryConfiguration` 或 `TelemetryClient`。 如果需要配置自己的 `TelemetryClient` 实例，请通过插入的 `TelemetryConfiguration` 创建一个实例，如[在 C# 函数中记录自定义遥测](functions-dotnet-class-library.md?tabs=v2%2Ccmd#log-custom-telemetry-in-c-functions)中所示。
 
 ### <a name="iloggert-and-iloggerfactory"></a>ILogger<T> 和 ILoggerFactory
 
-主机会将 `ILogger<T>` 和 `ILoggerFactory` 服务注入构造函数中。  但是，默认情况下，将筛选出函数日志中的新的日志记录筛选器。  你需要修改该 `host.json` 文件以选择加入其他筛选器和类别。
+主机会将 `ILogger<T>` 和 `ILoggerFactory` 服务注入构造函数中。  但是在默认情况下，会从函数日志中筛选出新日志记录筛选器。  需要修改 `host.json` 文件，以选择加入其他筛选器和类别。
 
-下面的示例演示如何 `ILogger<HttpTrigger>` 使用向主机公开的日志添加。
+下面的示例演示如何添加包含向主机公开的日志的 `ILogger<HttpTrigger>`。
 
 ```csharp
 namespace MyNamespace
@@ -163,16 +165,16 @@ namespace MyNamespace
 }
 ```
 
-下面的示例 `host.json` 文件添加了日志筛选器。
+下面的示例 `host.json` 文件添加日志筛选器。
 
 ```json
 {
     "version": "2.0",
     "logging": {
         "applicationInsights": {
-            "samplingExcludedTypes": "Request",
             "samplingSettings": {
-                "isEnabled": true
+                "isEnabled": true,
+                "excludedTypes": "Request"
             }
         },
         "logLevel": {
@@ -181,6 +183,8 @@ namespace MyNamespace
     }
 }
 ```
+
+若要详细了解日志级别，请参阅[配置日志级别](configure-monitoring.md#configure-log-levels)。
 
 ## <a name="function-app-provided-services"></a>函数应用提供的服务
 
@@ -253,14 +257,32 @@ public class HttpTrigger
 
 有关使用选项的更多详细信息，请参阅 [ASP.NET Core 中的选项模式](/aspnet/core/fundamentals/configuration/options)。
 
-### <a name="customizing-configuration-sources"></a>自定义配置源
+## <a name="using-aspnet-core-user-secrets"></a>使用 ASP.NET Core 用户机密
+
+在本地开发时，ASP.NET Core 提供了一个 [机密管理器工具](/aspnet/core/security/app-secrets#secret-manager) ，可用于将机密信息存储在项目根目录之外。 这使得机密意外提交到源代码管理的可能性更小。 Azure Functions Core Tools (版本3.0.3233 或更高版本) 会自动读取 ASP.NET Core 机密管理器创建的机密。
+
+若要将 .NET Azure Functions 项目配置为使用用户机密，请在项目根目录中运行以下命令。
+
+```bash
+dotnet user-secrets init
+```
+
+然后，使用 `dotnet user-secrets set` 命令创建或更新密码。
+
+```bash
+dotnet user-secrets set MySecret "my secret value"
+```
+
+若要在 function app 代码中访问用户机密值，请使用 `IConfiguration` 或 `IOptions` 。
+
+## <a name="customizing-configuration-sources"></a>自定义配置源
 
 > [!NOTE]
-> Azure Functions 主机版本2.0.14192.0 和3.0.14191.0 开始提供配置源自定义。
+> 从 Azure Functions 主机版本 2.0.14192.0 和 3.0.14191.0 开始，可以使用配置源自定义。
 
-若要指定其他配置源，请 `ConfigureAppConfiguration` 在函数应用的类中重写方法 `StartUp` 。
+若要指定其他配置源，请替代函数应用的 `StartUp` 类中的 `ConfigureAppConfiguration` 方法。
 
-下面的示例从基本和特定于环境的应用程序设置文件添加配置值。
+以下示例从基础映像和可选的特定于环境的应用设置文件中添加配置值。
 
 ```csharp
 using System.IO;
@@ -280,17 +302,18 @@ namespace MyNamespace
 
             builder.ConfigurationBuilder
                 .AddJsonFile(Path.Combine(context.ApplicationRootPath, "appsettings.json"), optional: true, reloadOnChange: false)
-                .AddJsonFile(Path.Combine(context.ApplicationRootPath, $"appsettings.{context.EnvironmentName}.json"), optional: true, reloadOnChange: false);
+                .AddJsonFile(Path.Combine(context.ApplicationRootPath, $"appsettings.{context.EnvironmentName}.json"), optional: true, reloadOnChange: false)
+                .AddEnvironmentVariables();
         }
     }
 }
 ```
 
-将配置提供程序添加到的 `ConfigurationBuilder` 属性 `IFunctionsConfigurationBuilder` 。 有关使用配置提供程序的详细信息，请参阅 [ASP.NET Core 中的配置](/aspnet/core/fundamentals/configuration/?view=aspnetcore-3.1#configuration-providers)。
+将配置提供程序添加到 `IFunctionsConfigurationBuilder` 的 `ConfigurationBuilder` 属性。 有关使用配置提供程序的详细信息，请参阅 [ASP.NET Core 中的配置](/aspnet/core/fundamentals/configuration/#configuration-providers)。
 
-`FunctionsHostBuilderContext`是从获取的 `IFunctionsConfigurationBuilder.GetContext()` 。 使用此上下文检索当前环境名称，并解析函数应用文件夹中配置文件的位置。
+`FunctionsHostBuilderContext` 是从 `IFunctionsConfigurationBuilder.GetContext()` 中获取的。 使用此上下文检索当前环境名称，并解析函数应用文件夹中配置文件的位置。
 
-默认情况下，上的配置文件（如 *appsettings.js* ）不会自动复制到 function app 的 output 文件夹中。 更新 *.csproj* 文件，使其与以下示例匹配以确保复制文件。
+默认情况下，不会自动将配置文件（如 appsettings.json）复制到函数应用的输出文件夹。 更新 .csproj 文件以匹配以下示例，从而确保文件已复制。
 
 ```xml
 <None Update="appsettings.json">
@@ -303,7 +326,7 @@ namespace MyNamespace
 ```
 
 > [!IMPORTANT]
-> 对于在使用或高级计划中运行的函数应用，对触发器中使用的配置值的修改可能导致缩放错误。 类对这些属性所做的任何更改都会 `FunctionsStartup` 导致函数应用启动错误。
+> 对于在消耗计划或高级计划中运行的函数应用，对在触发器中使用的配置值所做的修改可能导致缩放错误。 由 `FunctionsStartup` 类对这些属性所做的任何更改都会导致函数应用启动错误。
 
 ## <a name="next-steps"></a>后续步骤
 

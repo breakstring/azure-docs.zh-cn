@@ -1,26 +1,23 @@
 ---
-title: 无法在 Azure HDInsight 中创建 Jupyter 笔记本
-description: 介绍了与 Azure HDInsight 群集交互时出现的问题的故障排除步骤和可能的解决方法。
-author: hrasheed-msft
-ms.author: hrasheed
-ms.reviewer: jasonh
+title: 无法在 Azure HDInsight 中创建 Jupyter Notebook
+description: 了解与 Azure HDInsight 群集交互时遇到的问题的故障排除步骤和可能的解决方法。
 ms.service: hdinsight
 ms.topic: troubleshooting
 ms.date: 02/11/2020
-ms.openlocfilehash: 61e7cd8d37108b8f4eea88c4f6b6b2a8cdbfd605
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: d5f6612e22522452efb5eecd14c6c825bf29e6d5
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "77186802"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98938670"
 ---
-# <a name="unable-to-create-jupyter-notebook-in-azure-hdinsight"></a>无法在 Azure HDInsight 中创建 Jupyter 笔记本
+# <a name="unable-to-create-jupyter-notebook-in-azure-hdinsight"></a>无法在 Azure HDInsight 中创建 Jupyter Notebook
 
 本文介绍在与 Azure HDInsight 群集交互时出现的问题的故障排除步骤和可能的解决方案。
 
 ## <a name="issue"></a>问题
 
-启动 Jupyter 笔记本时，会收到一条错误消息，其中包含：
+启动 Jupyter Notebook 时，会收到一条错误消息，其中包含：
 
 ```error
 Cannot convert notebook to v5 because that version doesn't exist
@@ -64,4 +61,4 @@ Cannot convert notebook to v5 because that version doesn't exist
 
 * 联系 [@AzureSupport](https://twitter.com/azuresupport)，这是用于改进客户体验的官方 Microsoft Azure 帐户。 它可以将 Azure 社区成员连接到适当的资源，为他们提供解答、支持和专家建议。
 
-* 如果需要更多帮助，可以从 [Azure 门户](https://portal.azure.com/?#blade/Microsoft_Azure_Support/HelpAndSupportBlade/)提交支持请求。 从菜单栏中选择“支持”****，或打开“帮助 + 支持”**** 中心。 有关更多详细信息，请参阅[如何创建 Azure 支持请求](https://docs.microsoft.com/azure/azure-supportability/how-to-create-azure-support-request)。 Microsoft Azure 订阅包含对订阅管理和计费支持的访问权限，并且通过 [Azure 支持计划](https://azure.microsoft.com/support/plans/)之一提供技术支持。
+* 如果需要更多帮助，可以从 [Azure 门户](https://portal.azure.com/?#blade/Microsoft_Azure_Support/HelpAndSupportBlade/)提交支持请求。 从菜单栏中选择“支持”  ，或打开“帮助 + 支持”  中心。 有关更多详细信息，请参阅[如何创建 Azure 支持请求](../../azure-portal/supportability/how-to-create-azure-support-request.md)。 Microsoft Azure 订阅中带有对订阅管理和计费支持的访问权限，技术支持通过 [Azure 支持计划](https://azure.microsoft.com/support/plans/)之一提供。

@@ -10,12 +10,12 @@ ms.topic: conceptual
 ms.date: 06/29/2020
 ms.author: pdecarlo
 ms.custom: devx-track-azurecli
-ms.openlocfilehash: e70b22b3edaae96e00306d5d0a93d229e11aac41
-ms.sourcegitcommit: 11e2521679415f05d3d2c4c49858940677c57900
+ms.openlocfilehash: 0e044e8102308fce4145d4aa6c887cefaa99be34
+ms.sourcegitcommit: 484f510bbb093e9cfca694b56622b5860ca317f7
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/31/2020
-ms.locfileid: "87494071"
+ms.lasthandoff: 01/21/2021
+ms.locfileid: "98629956"
 ---
 # <a name="run-azure-iot-edge-on-ubuntu-virtual-machines"></a>在 Ubuntu 虚拟机上运行 Azure IoT Edge
 
@@ -50,13 +50,13 @@ ms.locfileid: "87494071"
 
     **管理员用户名**：一个用户名，将为其提供对部署的 root 特权。
 
-    **设备连接字符串**：在所需 [IoT 中心](../iot-hub/about-iot-hub.md)内创建的设备的[设备连接字符串](how-to-register-device.md)。
+    **设备连接字符串**：在预期 [IoT 中心](../iot-hub/about-iot-hub.md)内创建的设备的 [设备连接字符串](./how-to-register-device.md)。
 
-    **VM 大小**：要部署的虚拟机的[大小](../cloud-services/cloud-services-sizes-specs.md)
+    **VM 大小**：要部署的虚拟机的 [大小](../cloud-services/cloud-services-sizes-specs.md)
 
     **Ubuntu OS 版本**：要在基础虚拟机上安装的 Ubuntu OS 版本。
 
-    **位置**：要将虚拟机部署到的[地理区域](https://azure.microsoft.com/global-infrastructure/locations/)，此值默认为所选资源组的位置。
+    **位置**：要将虚拟机部署到的 [地理区域](https://azure.microsoft.com/global-infrastructure/locations/)，此值默认为所选资源组的位置。
 
     **身份验证类型**：根据偏好选择“sshPublicKey”或“password”。  
 
@@ -117,7 +117,7 @@ ms.locfileid: "87494071"
    --template-uri "https://aka.ms/iotedge-vm-deploy" \
    --parameters dnsLabelPrefix='my-edge-vm1' \
    --parameters adminUsername='<REPLACE_WITH_USERNAME>' \
-   --parameters deviceConnectionString=$(az iot hub device-identity show-connection-string --device-id <REPLACE_WITH_DEVICE-NAME> --hub-name <REPLACE-WITH-HUB-NAME> -o tsv) \
+   --parameters deviceConnectionString=$(az iot hub device-identity connection-string show --device-id <REPLACE_WITH_DEVICE-NAME> --hub-name <REPLACE-WITH-HUB-NAME> -o tsv) \
    --parameters authenticationType='password' \
    --parameters adminPasswordOrKey="<REPLACE_WITH_SECRET_PASSWORD>"
    ```
@@ -134,7 +134,7 @@ ms.locfileid: "87494071"
     --template-uri "https://aka.ms/iotedge-vm-deploy" \
     --parameters dnsLabelPrefix='my-edge-vm1' \
     --parameters adminUsername='<REPLACE_WITH_USERNAME>' \
-    --parameters deviceConnectionString=$(az iot hub device-identity show-connection-string --device-id <REPLACE_WITH_DEVICE-NAME> --hub-name <REPLACE-WITH-HUB-NAME> -o tsv) \
+    --parameters deviceConnectionString=$(az iot hub device-identity connection-string show --device-id <REPLACE_WITH_DEVICE-NAME> --hub-name <REPLACE-WITH-HUB-NAME> -o tsv) \
     --parameters authenticationType='sshPublicKey' \
     --parameters adminPasswordOrKey="$(< ~/.ssh/iotedge-vm-key.pub)"
     ```

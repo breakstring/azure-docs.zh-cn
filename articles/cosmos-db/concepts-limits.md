@@ -5,21 +5,23 @@ author: abhijitpai
 ms.author: abpai
 ms.service: cosmos-db
 ms.topic: conceptual
-ms.date: 08/19/2020
-ms.openlocfilehash: 0ebd3d97c3d7a2218bcfd821e1cc81c6bd74adf6
-ms.sourcegitcommit: d661149f8db075800242bef070ea30f82448981e
+ms.date: 01/19/2021
+ms.openlocfilehash: 007bf845bab6f493fae91debefde27a4929d9f95
+ms.sourcegitcommit: 8a74ab1beba4522367aef8cb39c92c1147d5ec13
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/19/2020
-ms.locfileid: "88605773"
+ms.lasthandoff: 01/20/2021
+ms.locfileid: "98611026"
 ---
 # <a name="azure-cosmos-db-service-quotas"></a>Azure Cosmos DB 服务配额
+
+[!INCLUDE[appliesto-all-apis](includes/appliesto-all-apis.md)]
 
 本文概述了 Azure Cosmos DB 中提供给不同资源的默认配额。
 
 ## <a name="storage-and-database-operations"></a>存储和数据库操作
 
-在订阅下创建 Azure Cosmos 帐户后，可以通过[创建数据库、容器和项](databases-containers-items.md)来管理帐户中的数据。
+在订阅下创建 Azure Cosmos 帐户后，可以通过[创建数据库、容器和项](account-databases-containers-items.md)来管理帐户中的数据。
 
 ### <a name="provisioned-throughput"></a>预配的吞吐量
 
@@ -27,49 +29,70 @@ ms.locfileid: "88605773"
 
 | 资源 | 默认限制 |
 | --- | --- |
-| 每个容器的最大 RU 数（[专用吞吐量预配模式](databases-containers-items.md#azure-cosmos-containers)） | 默认为 1,000,000。 可以通过[开具 Azure 支持票证](https://docs.microsoft.com/azure/azure-portal/supportability/how-to-create-azure-support-request)来提高此限制 |
-| 每个数据库的最大 RU 数（[共享吞吐量预配模式](databases-containers-items.md#azure-cosmos-containers)） | 默认为 1,000,000。 可以通过[开具 Azure 支持票证](https://docs.microsoft.com/azure/azure-portal/supportability/how-to-create-azure-support-request)来提高此限制 |
-| 每 (逻辑) 分区的最大 ru 数 | 10,000 |
-| 每个 (逻辑) 分区的所有项的最大存储空间 | 20 GB |
+| 每个容器的最大 RU 数（[专用吞吐量预配模式](account-databases-containers-items.md#azure-cosmos-containers)） | 默认为 1,000,000。 可以通过[开具 Azure 支持票证](create-support-request-quota-increase.md)来提高此限制 |
+| 每个数据库的最大 RU 数（[共享吞吐量预配模式](account-databases-containers-items.md#azure-cosmos-containers)） | 默认为 1,000,000。 可以通过[开具 Azure 支持票证](create-support-request-quota-increase.md)来提高此限制 |
+| 每个（逻辑）分区的最大 RU 数 | 10,000 |
+| 每个（逻辑）分区的所有项的最大存储 | 20 GB |
 | 不同（逻辑）分区键的最大数目 | 无限制 |
 | 每个容器的最大存储 | 无限制 |
 | 每个数据库的最大存储 | 无限制 |
-| 正在弃用 (附件功能的每个帐户的最大附件大小)  | 2 GB |
-| 每 1 GB 需要的最小 RU 数 | 10 RU/秒 |
+| 每个帐户的最大附件大小（附件功能即将弃用） | 2 GB |
+| 每 1 GB 需要的最小 RU 数 | 10 RU/秒<br>**注意：** 如果你的帐户符合我们的 ["高存储/低吞吐量" 计划](set-throughput.md#high-storage-low-throughput-program)，则此最小值可降低 |
 
 > [!NOTE]
 > 若要了解有关管理其分区键需要更高存储或吞吐量限制的工作负荷的最佳做法，请参阅[创建合成分区键](synthetic-partition-keys.md)。
 
-Cosmos 容器（或共享吞吐量数据库）的最小吞吐量必须为 400 RU/秒。 随着容器的扩展，支持的最小吞吐量还取决于以下因素：
+### <a name="minimum-throughput-limits"></a>最小吞吐量限制
 
-* 曾经为容器预配的最大吞吐量。 例如，如果吞吐量已增加到 50000 RU/秒，则可能的最低预配吞吐量为 500 RU/秒
-* 容器中的当前存储大小 (GB)。 例如，如果容器有 100 GB 的存储空间，则可能的最低预配吞吐量为 1000 RU/秒
-* 共享吞吐量数据库上的最小吞吐量还取决于曾在共享吞吐量数据库中创建的容器总数，按每个容器 100 RU 来度量。 例如，如果在共享吞吐量数据库中创建了五个容器，则吞吐量必须至少为 500 RU/秒
+Cosmos 容器（或共享吞吐量数据库）的最小吞吐量必须为 400 RU/秒。 随着容器的增长，Cosmos DB 需要一个最小吞吐量，以确保数据库或容器有足够的资源用于其运行。
 
 可以从 Azure 门户或 SDK 检索容器或数据库的当前和最小吞吐量。 有关详细信息，请参阅[对容器和数据库预配吞吐量](set-throughput.md)。 
 
-> [!NOTE]
-> 在某些情况下，可将吞吐量降到 10% 以下。 使用 API 获取每个容器的确切最小 RU 数。
+实际的最小 RU/s 可能因帐户配置而异。 可以使用 [Azure Monitor 指标](monitor-cosmos-db.md#view-operation-level-metrics-for-azure-cosmos-db)来查看资源上预配吞吐量 (RU/s) 和存储的历史记录。 
+
+#### <a name="minimum-throughput-on-container"></a>容器最小吞吐量 
+
+若要估算具有手动吞吐量的容器所需的最小吞吐量，请找到以下项的最大值：
+
+* 400 RU/s 
+* 当前存储空间 (GB) * 10 RU/s
+* 容器中预配的最高 RU/s / 100
+
+示例：假设你有一个预配了 400 RU/s 和 0 GB 存储的容器。 你将吞吐量提高到 50,000 RU/s，并导入 20 GB 数据。 现在，最小 RU/s 为 `MAX(400, 20 * 10 RU/s per GB, 50,000 RU/s / 100)` = 500 RU/s。 随着时间的推移，存储会增长到 200 GB。 现在，最小 RU/s 为 `MAX(400, 200 * 10 RU/s per GB, 50,000 / 100)` = 2000 RU/s。 
+
+**注意：** 如果你的帐户符合我们的 ["高存储/低吞吐量" 计划](set-throughput.md#high-storage-low-throughput-program)，则每 GB 存储的最小吞吐量为 10 RU/秒。
+
+#### <a name="minimum-throughput-on-shared-throughput-database"></a>共享吞吐量数据库的最小吞吐量 
+若要估算具有手动吞吐量的共享吞吐量数据库所需的最小吞吐量，请找到以下项的最大值：
+
+* 400 RU/s 
+* 当前存储空间 (GB) * 10 RU/s
+* 数据库上预配的最高 RU/s / 100
+* 400 + MAX(容器计数 - 25, 0) * 100 RU/s
+
+示例：假设你有一个预配了 400 RU/s、15 GB 存储和 10 个容器的数据库。 最小 RU/s 为 `MAX(400, 15 * 10 RU/s per GB, 400 / 100, 400 + 0 )` = 400 RU/s。 如果数据库中有 30 个容器，则最小 RU/s 将为 `400 + MAX(30 - 25, 0) * 100 RU/s` = 900 RU/s。 
+
+**注意：** 如果你的帐户符合我们的 ["高存储/低吞吐量" 计划](set-throughput.md#high-storage-low-throughput-program)，则每 GB 存储的最小吞吐量为 10 RU/秒。
 
 总之，最小预配 RU 限制如下所示。 
 
 | 资源 | 默认限制 |
 | --- | --- |
-| 每个容器的最小 RU 数（[专用吞吐量预配模式](databases-containers-items.md#azure-cosmos-containers)） | 400 |
-| 每个数据库的最小 RU 数（[共享吞吐量预配模式](databases-containers-items.md#azure-cosmos-containers)） | 400 |
-| 共享吞吐量数据库中每个容器的最小 RU 数 | 100 |
+| 每个容器的最小 RU 数（[专用吞吐量预配模式](./account-databases-containers-items.md#azure-cosmos-containers)） | 400 |
+| 每个数据库的最小 RU 数（[共享吞吐量预配模式](./account-databases-containers-items.md#azure-cosmos-containers)） | 前 25 个容器为 400 RU/s。 此后的每个容器增加 100 RU/s。 |
 
-Cosmos DB 支持通过 SDK 或门户对每个容器或数据库的吞吐量 (RU) 进行弹性缩放。 可以同步方式或立即缩放每个容器，缩放范围为最小值和最大值之间的 10 到 100 倍。 如果请求的吞吐量值超出范围，将以异步方式执行缩放。 完成异步缩放所需的时间为数分钟到数小时不等，具体取决于请求的吞吐量和容器中的数据存储大小。  
+Cosmos DB 支持通过 SDK 或门户以编程方式缩放每个容器或数据库的吞吐量 (RU/s)。    
+
+根据当前的已预配 RU/s 和资源设置，每个资源可以立即以同步方式在最小 RU/s 到最小 RU/s 的 100 倍之间进行缩放。 如果请求的吞吐量值超出范围，将以异步方式执行缩放。 完成异步缩放所需的时间为数分钟到数小时不等，具体取决于请求的吞吐量和容器中的数据存储大小。  
 
 ### <a name="serverless"></a>无服务器
 
-[无服务器](serverless.md) 使你可以使用基于使用情况的 Azure Cosmos DB 资源。 下表列出了每个容器/数据库的存储和吞吐量 burstability 限制。
+[无服务器](serverless.md)可让你以基于消耗的方式使用 Azure Cosmos DB 资源。 下表列出了每个容器/数据库的存储和吞吐量可突发性限制。
 
 | 资源 | 限制 |
 | --- | --- |
-| 每个容器最大 RU/秒 | 5,000 |
-| 每 (逻辑) 分区的最大 RU/秒 | 5,000 |
-| 每个 (逻辑) 分区的所有项的最大存储空间 | 20 GB |
+| 每个（逻辑）分区的最大 RU/秒 | 5,000 |
+| 每个（逻辑）分区的所有项的最大存储 | 20 GB |
 | 不同（逻辑）分区键的最大数目 | 无限制 |
 | 每个容器的最大存储 | 50 GB |
 
@@ -79,8 +102,8 @@ Cosmos DB 支持通过 SDK 或门户对每个容器或数据库的吞吐量 (RU)
 
 | 资源 | 默认限制 |
 | --- | --- |
-| 每个订阅的最大数据库帐户数 | 默认值为 50。 可以通过[开具 Azure 支持票证](https://docs.microsoft.com/azure/azure-portal/supportability/how-to-create-azure-support-request)来提高此限制|
-| 最大区域故障转移数 | 默认值为 1/小时。 可以通过[开具 Azure 支持票证](https://docs.microsoft.com/azure/azure-portal/supportability/how-to-create-azure-support-request)来提高此限制|
+| 每个订阅的最大数据库帐户数 | 默认值为 50。 可以通过[开具 Azure 支持票证](create-support-request-quota-increase.md)来提高此限制|
+| 最大区域故障转移数 | 默认值为 1/小时。 可以通过[开具 Azure 支持票证](create-support-request-quota-increase.md)来提高此限制|
 
 > [!NOTE]
 > 区域故障转移仅适用于单个区域写入帐户。 多区域写入帐户不需要，也不会对更改写入区域施加任何限制。
@@ -103,8 +126,8 @@ Cosmos DB 会定期自动备份数据。 有关备份保留时间间隔和窗口
 | 资源 | 限制 |
 | --- | --- |
 | 数据库的最小数目 | 无限制 |
-| 每个帐户的容器的最大数目  | 100 |
-| 最大区域数 | 1 (任何 Azure 区域)  |
+| 每个帐户的最大容器数  | 100 |
+| 最大区域数 | 1（任何 Azure 区域） |
 
 ## <a name="per-container-limits"></a>每个容器的限制
 
@@ -118,8 +141,9 @@ Cosmos DB 会定期自动备份数据。 有关备份保留时间间隔和窗口
 | 索引策略中的最大路径数| 100 <sup>*</sup>|
 | 每个容器的最大唯一键数|10 <sup>*</sup>|
 | 每个唯一键约束的最大路径数|16 <sup>*</sup>|
+| 最大 TTL 值 |2147483647|
 
-<sup>*</sup> 可以联系 Azure 支持人员来提高上述每个容器的限制。
+<sup>*</sup> 可以通过创建 [Azure 支持请求](create-support-request-quota-increase.md)来增加上述每个容器的限制。
 
 ## <a name="per-item-limits"></a>每项的限制
 
@@ -131,17 +155,18 @@ Cosmos DB 会定期自动备份数据。 有关备份保留时间间隔和窗口
 | 分区键值的最大长度 | 2048 个字节 |
 | ID 值的最大长度 | 1023 个字节 |
 | 每项的最大属性数 | 无实际限制 |
-| 最大嵌套深度 | 无实际限制 |
 | 属性名称的最大长度 | 无实际限制 |
 | 属性值的最大长度 | 无实际限制 |
 | 字符串属性值的最大长度 | 无实际限制 |
 | 数字属性值的最大长度 | IEEE754 双精度 64 位 |
+| 嵌入对象/数组的最大嵌套级别 | 128 |
+| 最大 TTL 值 |2147483647|
 
 除了对分区键和 ID 值的长度限制以及 2 MB 的总大小限制外，对项负载没有任何限制，如属性数量和嵌套深度。 可能需要为具有大型或复杂项结构的容器配置索引策略，以减少 RU 消耗。 [为 Cosmos DB 中的项建模](how-to-model-partition-example.md)中提供了一个真实示例，以及用于管理大项的模式。
 
 ## <a name="per-request-limits"></a>每个请求限制
 
-Azure Cosmos DB 支持对容器、项和数据库等资源执行 [CRUD 和查询操作](/rest/api/cosmos-db/)。 它还支持针对容器中具有相同分区键的多个项的[事务性批处理请求](https://docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.transactionalbatch)。
+Azure Cosmos DB 支持对容器、项和数据库等资源执行 [CRUD 和查询操作](/rest/api/cosmos-db/)。 它还支持针对容器中具有相同分区键的多个项的[事务性批处理请求](/dotnet/api/microsoft.azure.cosmos.transactionalbatch)。
 
 | 资源 | 默认限制 |
 | --- | --- |
@@ -158,10 +183,20 @@ Cosmos DB 使用 HMAC 进行授权。 可以使用主密钥或[资源令牌](sec
 | --- | --- |
 | 主令牌最长过期时间 | 15 分钟  |
 | 资源令牌最短过期时间 | 10 分钟  |
-| 资源令牌最长过期时间 | 默认为 24 小时。 可以通过[开具 Azure 支持票证](https://docs.microsoft.com/azure/azure-portal/supportability/how-to-create-azure-support-request)来提高此限制|
+| 资源令牌最长过期时间 | 默认为 24 小时。 可以通过[开具 Azure 支持票证](create-support-request-quota-increase.md)来提高此限制|
 | 令牌授权的最大时钟偏差| 15 分钟 |
 
-Cosmos DB 支持在写入期间执行触发器。 对于每个写入操作，该服务最多支持一个预先触发器和一个后期触发器。 
+Cosmos DB 支持在写入期间执行触发器。 对于每个写入操作，该服务最多支持一个预先触发器和一个后期触发器。
+
+## <a name="metadata-request-limits"></a>元数据请求限制
+
+Azure Cosmos DB 为每个帐户维护系统元数据。 此元数据可用于免费枚举集合、数据库、其他 Azure Cosmos DB 资源及其配置。
+
+| 资源 | 默认限制 |
+| --- | --- |
+|每分钟最大集合创建速率|    100|
+|每分钟最大数据库创建速率|    100|
+|每分钟最大预配吞吐量更新速率|    5|
 
 ## <a name="limits-for-autoscale-provisioned-throughput"></a>自动缩放预配吞吐量限制
 
@@ -178,7 +213,7 @@ Cosmos DB 支持在写入期间执行触发器。 对于每个写入操作，该
 
 ## <a name="sql-query-limits"></a>SQL 查询限制
 
-Cosmos DB 支持使用 [SQL](how-to-sql-query.md) 查询项。 下表描述了查询语句的限制，例如子句数目或查询长度方面的限制。
+Cosmos DB 支持使用 [SQL](./sql-query-getting-started.md) 查询项。 下表描述了查询语句的限制，例如子句数目或查询长度方面的限制。
 
 | 资源 | 默认限制 |
 | --- | --- |
@@ -190,7 +225,7 @@ Cosmos DB 支持使用 [SQL](how-to-sql-query.md) 查询项。 下表描述了�
 | 每个容器的最大排除路径数| 500 |
 | 组合索引中的最大属性数| 8 |
 
-<sup>*</sup> 可以联系 Azure 支持来提高上述 SQL 查询限制。
+<sup>*</sup> 可以通过创建 [Azure 支持请求](create-support-request-quota-increase.md)来增加上述任一 SQL 查询限制。
 
 ## <a name="mongodb-api-specific-limits"></a>MongoDB API 特定限制
 
@@ -201,10 +236,11 @@ Cosmos DB 支持针为 MongoDB 编写的应用程序使用 MongoDB 线路协议�
 | 资源 | 默认限制 |
 | --- | --- |
 | 最大 MongoDB 查询内存大小（此限制仅适用于 3.2 服务器版本） | 40 MB |
-| MongoDB 操作的最长执行时间| 30 秒 |
+|3.2 服务器版本)  (MongoDB 操作的最长执行时间| 15 秒|
+|3.6 服务器版本)  (MongoDB 操作的最长执行时间| 60 秒|
 | 导致服务器端连接关闭的空闲连接超时值* | 30 分钟 |
 
-\* 我们建议客户端应用程序将驱动程序设置中的空闲连接超时值设为 2-3 分钟，因为 [Azure LoadBalancer 的默认超时值为 4 分钟](../load-balancer/load-balancer-tcp-idle-timeout.md#tcp-idle-timeout)。  此超时将确保客户端计算机与 Azure Cosmos DB 之间的中间负载均衡器不会关闭空闲连接。
+\* 我们建议客户端应用程序将驱动程序设置中的空闲连接超时值设为 2-3 分钟，因为 [Azure LoadBalancer 的默认超时值为 4 分钟](../load-balancer/load-balancer-tcp-idle-timeout.md)。  此超时将确保客户端计算机与 Azure Cosmos DB 之间的中间负载均衡器不会关闭空闲连接。
 
 ## <a name="try-cosmos-db-free-limits"></a>免费试用 Cosmos DB 限制
 
@@ -221,7 +257,8 @@ Cosmos DB 支持针为 MongoDB 编写的应用程序使用 MongoDB 线路协议�
 
 试用 Cosmos DB 仅支持美国中部、北欧和东南亚地区的全局分发。 无法为 Azure Cosmos DB 试用帐户创建 Azure 支持票证。 但是，为参与现有支持计划的订阅者提供了支持。
 
-## <a name="free-tier-account-limits"></a>免费层帐户限制
+## <a name="azure-cosmos-db-free-tier-account-limits"></a>Azure Cosmos DB 免费层帐户限制
+
 下表列出了 [Azure Cosmos DB 免费层帐户](optimize-dev-test.md#azure-cosmos-db-free-tier)的限制。
 
 | 资源 | 默认限制 |
@@ -233,7 +270,10 @@ Cosmos DB 支持针为 MongoDB 编写的应用程序使用 MongoDB 线路协议�
 | 最大共享吞吐量数据库数 | 5 |
 | 共享吞吐量数据库中的最大容器数 | 25 <br>在免费层帐户中，最多包含 25 个容器的共享吞吐量数据库的最小 RU/s 为 400 RU/s。 |
 
-  除上述限制外，[每个帐户的限制](#per-account-limits)也适用于免费层帐户。
+除上述限制外，[每个帐户的限制](#per-account-limits)也适用于免费层帐户。
+
+> [!NOTE]
+> Azure Cosmos DB 免费级别不同于 Azure 免费帐户。 在有限的时间里，Azure 免费帐户免费提供 Azure 信用额度和资源。 当使用 Azure Cosmos DB 作为此免费帐户的一部分时，将获得 10 GB 的存储和 400 RU/秒的预配吞吐量12个月。
 
 ## <a name="next-steps"></a>后续步骤
 

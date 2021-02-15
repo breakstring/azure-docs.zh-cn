@@ -2,20 +2,24 @@
 title: 快速入门：使用 Azure Application Insights 进行 Java Web 应用分析
 description: '使用 Application Insights 监视 Java Web 应用的应用程序性能。 '
 ms.topic: conceptual
-author: lgayhardt
+ms.date: 11/22/2020
+author: MS-jgol
 ms.custom: devx-track-java
-ms.author: lagayhar
-ms.date: 05/24/2019
-ms.openlocfilehash: 464bf650cbcaa99e947a21f5a87a5872f7b11178
-ms.sourcegitcommit: a76ff927bd57d2fcc122fa36f7cb21eb22154cfa
+ms.author: jgol
+ms.openlocfilehash: 115e1ec347cdcd80904b47a0c8798206360d0dad
+ms.sourcegitcommit: 431bf5709b433bb12ab1f2e591f1f61f6d87f66c
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/28/2020
-ms.locfileid: "87326913"
+ms.lasthandoff: 01/12/2021
+ms.locfileid: "98131774"
 ---
 # <a name="quickstart-get-started-with-application-insights-in-a-java-web-project"></a>快速入门：Java Web 项目中的 Application Insights 入门
 
-在本快速入门中，你将使用 Application Insights 自动检测请求，跟踪依赖项并收集性能计数器、诊断性能问题和异常，并编写代码以跟踪用户对应用执行的操作。
+
+> [!CAUTION]
+> 从2020年11月起，对于监视 Java 应用程序，我们建议使用 Azure Monitor Application Insights Java 3.0 代理进行自动检测。 有关如何入门的详细信息，请参阅 [Application Insights Java 3.0 代理](./java-in-process-agent.md)。
+
+在本快速入门中，你将使用 Application Insights SDK 检测请求、跟踪依赖项、收集性能计数器、诊断性能问题和异常，并编写代码以跟踪用户对应用执行的操作。
 
 Application Insights 是面向 Web 开发人员的可扩展分析服务，可帮助你了解实时应用程序的性能和使用情况。 Application Insights 支持 Linux、Unix 或 Windows 上运行的 Java 应用。
 
@@ -26,6 +30,8 @@ Application Insights 是面向 Web 开发人员的可扩展分析服务，可帮
 
 ## <a name="get-an-application-insights-instrumentation-key"></a>获取 Application Insights 检测密钥
 
+> [!IMPORTANT]
+> 新的 Azure 区域 **要求** 使用连接字符串而不是检测密钥。 [连接字符串](./sdk-connection-string.md?tabs=java) 标识您要与遥测数据关联的资源。 它还允许你修改可供你的资源将其用作遥测目标的终结点。 你需要复制连接字符串，并将其添加到应用程序的代码或环境变量中。
 1. 登录到 [Azure 门户](https://portal.azure.com/)。
 2. 在 Azure 门户中，创建 Application Insights 资源。 将应用程序类型设置为 Java Web 应用程序。
 
@@ -50,7 +56,7 @@ Application Insights 是面向 Web 开发人员的可扩展分析服务，可帮
         <artifactId>applicationinsights-web-auto</artifactId>
         <!-- or applicationinsights-web for manual web filter registration -->
         <!-- or applicationinsights-core for bare API -->
-        <version>2.5.0</version>
+        <version>2.6.2</version>
       </dependency>
     </dependencies>
 ```
@@ -63,15 +69,11 @@ Application Insights 是面向 Web 开发人员的可扩展分析服务，可帮
 
 ```gradle
     dependencies {
-      compile group: 'com.microsoft.azure', name: 'applicationinsights-web-auto', version: '2.5.0'
+      compile group: 'com.microsoft.azure', name: 'applicationinsights-web-auto', version: '2.6.2'
       // or applicationinsights-web for manual web filter registration
       // or applicationinsights-core for bare API
     }
 ```
-
-# <a name="other-types"></a>[其他类型](#tab/other)
-
-请下载[最新版本](https://github.com/Microsoft/ApplicationInsights-Java/releases/latest)，将所需文件复制到项目中，替换以前的版本。
 
 ---
 
@@ -82,10 +84,7 @@ Application Insights 是面向 Web 开发人员的可扩展分析服务，可帮
   * 例如，如果应用程序不是基于 servlet 的应用程序，则 `applicationinsights-core` 仅提供单纯的 API。
   
 * 应怎样将 SDK 更新到最新版本？
-  * 如果使用的是 Gradle 或 Maven...
-    * 更新生成文件以指定最新版本。
-  * 如果是手动管理依赖项...
-    * 下载最新的 [用于 Java 的 Application Insights SDK](https://github.com/Microsoft/ApplicationInsights-Java/releases/latest) 并替换旧版本。 [SDK release notes](https://github.com/Microsoft/ApplicationInsights-Java#release-notes)（SDK 发行说明）中描述了更改。
+  * 从2020年11月起，对于监视 Java 应用程序，我们建议使用 Azure Monitor Application Insights Java 3.0 代理进行自动检测。 有关如何入门的详细信息，请参阅 [Application Insights Java 3.0 代理](./java-in-process-agent.md)。
 
 ## <a name="add-an-applicationinsightsxml-file"></a>添加 ApplicationInsights.xml 文件
 在项目的 resources 文件夹中添加 ApplicationInsights.xml，或确保将其添加到项目的部署类路径。 将以下 XML 复制到其中。
@@ -163,10 +162,6 @@ Application Insights SDK 按以下顺序查找密钥：
 
 ![带有图表的“Application Insights 故障”窗格](./media/java-get-started/006-barcharts.png)
 
-<!--
-[TODO update image with 2.5.0 operation naming provided by agent]
--->
-
 ### <a name="instance-data"></a>实例数据
 单击特定的请求类型可查看各个实例。
 
@@ -193,22 +188,10 @@ Application Insights SDK 按以下顺序查找密钥：
 
     （此组件启用性能计数器。）
 
-## <a name="azure-app-service-config-spring-boot"></a>Azure 应用服务配置 (Spring Boot)
+## <a name="azure-app-service-aks-vms-config"></a>Azure 应用服务、AKS、VM 配置
 
-在 Windows 上运行的 Spring Boot 应用需要额外的配置才能在 Azure 应用服务上运行。 修改 **web.config** 并添加以下配置：
+若要监视在任何 Azure 资源提供程序上运行的应用程序，最佳、最简单的方法是通过 [Java 3.0 代理](./java-in-process-agent.md)使用 Application Insights 自动检测。
 
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<configuration>
-    <system.webServer>
-        <handlers>
-            <add name="httpPlatformHandler" path="*" verb="*" modules="httpPlatformHandler" resourceType="Unspecified"/>
-        </handlers>
-        <httpPlatform processPath="%JAVA_HOME%\bin\java.exe" arguments="-Djava.net.preferIPv4Stack=true -Dserver.port=%HTTP_PLATFORM_PORT% -jar &quot;%HOME%\site\wwwroot\AzureWebAppExample-0.0.1-SNAPSHOT.jar&quot;">
-        </httpPlatform>
-    </system.webServer>
-</configuration>
-```
 
 ## <a name="exceptions-and-request-failures"></a>异常和请求失败
 Application Insights Web 筛选器会自动收集未经处理的异常和请求失败。
@@ -321,4 +304,3 @@ Application Insights 可以定期测试网站，检查网站是否正常运行�
 [javalogs]: java-trace-logs.md
 [metrics]: ../platform/metrics-charts.md
 [usage]: javascript.md
-

@@ -1,18 +1,18 @@
 ---
 title: 使用以前版本的 Azure Migrate
 description: 描述如何使用以前版本的 Azure Migrate。
-author: rayne-wiselman
-ms.service: azure-migrate
-ms.topic: overview
+author: ms-psharma
+ms.author: panshar
+ms.manager: abhemraj
+ms.topic: conceptual
 ms.date: 11/19/2019
-ms.author: raynew
 ms.custom: mvc
-ms.openlocfilehash: bb4cfcd48608f90898648450a20d246f9fde002b
-ms.sourcegitcommit: 2ff0d073607bc746ffc638a84bb026d1705e543e
+ms.openlocfilehash: 4fda6c51121838bfa1f3624759b1230d8554d573
+ms.sourcegitcommit: ea551dad8d870ddcc0fee4423026f51bf4532e19
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/06/2020
-ms.locfileid: "87835997"
+ms.lasthandoff: 12/07/2020
+ms.locfileid: "96753937"
 ---
 # <a name="work-with-the-previous-version-of-azure-migrate"></a>使用以前版本的 Azure Migrate
 
@@ -31,7 +31,7 @@ ms.locfileid: "87835997"
 
 ## <a name="upgrade-between-versions"></a>进行版本之间的升级
 
-无法将以前版本中的项目或组件升级到新版本。 需要[创建新的 Azure Migrate 项目](create-manage-projects.md)并向其[添加评估和迁移工具](how-to-add-tool-first-time.md)。 学习教程，了解如何使用可用的评估和迁移工具。 如果已将 Log Analytics 工作区附加到了经典项目，则可以在删除经典项目后将其附加到当前版本的项目。
+无法将以前版本中的项目或组件升级到新版本。 需要[创建新的 Azure Migrate 项目](create-manage-projects.md)并向其[添加评估和迁移工具](./create-manage-projects.md)。 学习教程，了解如何使用可用的评估和迁移工具。 如果已将 Log Analytics 工作区附加到了经典项目，则可以在删除经典项目后将其附加到当前版本的项目。
 
 ## <a name="find-projects-from-previous-version"></a>从以前的版本中查找项目
 
@@ -121,7 +121,7 @@ Windows Server 2012 R2 和所有 SP | Azure 提供完全支持。 | 已做好 Az
 Windows Server 2012 和所有 SP | Azure 提供完全支持。 | 已做好 Azure 迁移准备
 Windows Server 2008 R2 和所有 SP | Azure 提供完全支持。| 已做好 Azure 迁移准备
 Windows Server 2008（32 位和 64 位） | Azure 提供完全支持。 | 已做好 Azure 迁移准备
-Windows Server 2003、2003 R2 | 不支持，需要[自定义支持协议 (CSA)](https://aka.ms/WSosstatement) 才可获取 Azure 支持。 | Azure 有条件的就绪，请考虑在迁移到 Azure 前升级 OS。
+Windows Server 2003、2003 R2 | 不支持，需要[自定义支持协议 (CSA)](/troubleshoot/azure/virtual-machines/server-software-support) 才可获取 Azure 支持。 | Azure 有条件的就绪，请考虑在迁移到 Azure 前升级 OS。
 Windows 2000、98、95、NT、3.1、MS-DOS | 不支持。 计算机可能在 Azure 中启动，但 Azure 不提供 OS 支持。 | Azure 有条件的就绪，建议在迁移到 Azure 前升级 OS。
 Windows Client 7、8 和 10 | Azure 仅支持 [Visual Studio 订阅。](../virtual-machines/windows/client-images.md) | 已做好特定条件下的 Azure 迁移准备
 Windows 10 专业版桌面 | Azure 提供了对[多租户托管权限](../virtual-machines/windows/windows-desktop-multitenant-hosting-deployment.md)的支持。 | 已做好特定条件下的 Azure 迁移准备
@@ -238,7 +238,7 @@ vCenter Server 中指定为“其他”的 OS | 在此情况下，Azure Migrate 
 4. 在“代理安装选项”中，选择“Azure Log Analytics” > “下一步”。
 5. 单击“添加”以添加 Log Analytics 工作区。 粘贴从门户复制的工作区 ID 和密钥。 单击“下一步”。
 
-可以从命令行或使用自动化方法（如 Configuration Manager）安装代理。 [详细了解](../azure-monitor/platform/log-analytics-agent.md#installation-and-configuration)如何使用这些方法安装 MMA 代理。
+可以从命令行或使用自动化方法（如 Configuration Manager）安装代理。 [详细了解](../azure-monitor/platform/log-analytics-agent.md#installation-options)如何使用这些方法安装 MMA 代理。
 
 #### <a name="install-the-mma-agent-on-a-linux-machine"></a>在 Linux 计算机上安装 MMA 代理
 
@@ -249,7 +249,7 @@ vCenter Server 中指定为“其他”的 OS | 在此情况下，Azure Migrate 
 
     ```sudo sh ./omsagent-<version>.universal.x64.sh --install -w <workspace id> -s <workspace key>```
 
-[详细了解 MMA 支持的 Linux 操作系统的列表](../azure-monitor/platform/log-analytics-agent.md#supported-linux-operating-systems)。
+[详细了解 MMA 支持的 Linux 操作系统的列表](../azure-monitor/platform/agents-overview.md#supported-operating-systems)。
 
 ### <a name="install-the-mma-agent-on-a-machine-monitored-by-operations-manager"></a>在受 Operations Manager 监视的计算机上安装 MMA 代理
 
@@ -308,7 +308,7 @@ vCenter Server 中指定为“其他”的 OS | 在此情况下，Azure Migrate 
 4. 编写查询以使用 Azure Monitor 日志收集依赖项数据。 在下一部分查找示例查询。
 5. 通过单击“运行”，运行查询。 
 
-[详细了解](../azure-monitor/log-query/get-started-portal.md)如何编写 Kusto 查询。 
+[详细了解](../azure-monitor/log-query/log-analytics-tutorial.md)如何编写 Kusto 查询。 
 
 ### <a name="sample-azure-monitor-logs-queries"></a>Azure Monitor 日志示例查询
 

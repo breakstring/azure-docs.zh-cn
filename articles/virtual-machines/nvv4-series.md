@@ -6,30 +6,30 @@ ms.subservice: sizes
 author: vikancha-MSFT
 ms.service: virtual-machines
 ms.topic: conceptual
-ms.date: 02/03/2020
-ms.author: jushiman
-ms.openlocfilehash: 9b841b6422a4314b43a594cb0b22040f884228eb
-ms.sourcegitcommit: 8def3249f2c216d7b9d96b154eb096640221b6b9
+ms.date: 01/12/2020
+ms.author: vikancha
+ms.openlocfilehash: c751f67e9f442669ff3f6828de0a5b350d1706fa
+ms.sourcegitcommit: b4e6b2627842a1183fce78bce6c6c7e088d6157b
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/03/2020
-ms.locfileid: "87543888"
+ms.lasthandoff: 01/30/2021
+ms.locfileid: "99097701"
 ---
 # <a name="nvv4-series"></a>NVv4 系列 
 
-NVv4 系列虚拟机由[Amd Radeon INSTINCT MI25](https://www.amd.com/en/products/professional-graphics/instinct-mi25) GPU 和 AMD EPYC 7V12 （罗马） cpu 提供支持。 借助 NVv4 系列，Azure 引入了包含部分 Gpu 的虚拟机。 从 GPU 的 1/8 开始，为 GPU 加速图形应用程序和虚拟桌面选取适当大小的虚拟机，并将 2 GiB 帧缓冲到带有 16 GiB 帧缓冲区的完整 GPU。 NVv4 虚拟机当前仅支持 Windows 来宾操作系统。
+NVv4 系列虚拟机由 [Amd Radeon INSTINCT MI25](https://www.amd.com/en/products/professional-graphics/instinct-mi25) GPU 和 Amd EPYC 7V12 （ (罗马) cpu）提供支持。 Azure 通过 NVv4 系列引入使用部分 GPU 的虚拟机。 从 GPU 的 1/8 开始，为 GPU 加速图形应用程序和虚拟桌面选取适当大小的虚拟机，并将 2 GiB 帧缓冲到带有 16 GiB 帧缓冲区的完整 GPU。 NVv4 虚拟机目前只支持 Windows 来宾操作系统。
 
 <br>
 
-ACU：230-260
-
-高级存储：支持
-
-高级存储缓存：支持
-
-实时迁移：不支持
-
-内存保留更新：不支持
+[ACU](acu.md)：230-260<br>
+[高级存储](premium-storage-performance.md)：支持<br>
+[高级存储缓存](premium-storage-performance.md)：支持<br>
+[实时迁移](maintenance-and-updates.md)：不支持<br>
+[内存保留更新](maintenance-and-updates.md)：不支持<br>
+[VM 代系支持](generation-2.md)：第 1 代和第 2 代<br>
+[加速网络](../virtual-network/create-vm-accelerated-networking-cli.md)：支持<br>
+[临时 OS 磁盘](ephemeral-os-disks.md)：不支持 <br>
+<br>
 
 | 大小 | vCPU | 内存:GiB | 临时存储 (SSD) GiB | GPU | GPU 内存：GiB | 最大数据磁盘数 | 最大 NIC 数/预期网络带宽 (MBps) |
 | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -46,7 +46,7 @@ ACU：230-260
 
 若要利用运行 Windows 的 Azure NVv4 系列 Vm 的 GPU 功能，必须安装 AMD GPU 驱动程序。
 
-若要手动安装 AMD GPU 驱动程序，请参阅适用于[Windows 的 N 系列 AMD gpu 驱动程序设置](./windows/n-series-amd-driver-setup.md)以获取支持的操作系统、驱动程序、安装和验证步骤。
+若要手动安装 AMD GPU 驱动程序，请参阅适用于 [Windows 的 N 系列 AMD gpu 驱动程序设置](./windows/n-series-amd-driver-setup.md) 以获取支持的操作系统、驱动程序、安装和验证步骤。
 
 ## <a name="other-sizes"></a>其他大小
 

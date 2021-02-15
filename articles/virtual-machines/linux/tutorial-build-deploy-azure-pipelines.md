@@ -10,13 +10,13 @@ ms.tgt_pltfrm: azure-pipelines
 ms.workload: infrastructure
 ms.date: 1/3/2020
 ms.author: ushan
-ms.custom: devops, devx-track-javascript
-ms.openlocfilehash: 140365abad266617443d58b7ed59f05a27009f59
-ms.sourcegitcommit: 0b8320ae0d3455344ec8855b5c2d0ab3faa974a3
+ms.custom: devops, devx-track-js
+ms.openlocfilehash: 4ca431290fe168f8fc073908bb3735ecb5992562
+ms.sourcegitcommit: 78ecfbc831405e8d0f932c9aafcdf59589f81978
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/30/2020
-ms.locfileid: "87433061"
+ms.lasthandoff: 01/23/2021
+ms.locfileid: "98731245"
 ---
 # <a name="tutorial-deploy-your-app-to-linux-virtual-machines-in-azure-using-azure-devops-services-and-azure-pipelines"></a>教程：使用 Azure DevOps Services 和 Azure Pipelines 将应用部署到 Azure 中的 Linux 虚拟机
 
@@ -24,7 +24,7 @@ ms.locfileid: "87433061"
 
 Azure Pipelines 提供了一组完整且功能完备的 CI/CD 自动化工具，以部署本地或任何云上的虚拟机。
 
-在本教程中，你将设置基于 YAML 的 CI/CD 管道，以便将应用部署到 Linux 虚拟机作为资源的 Azure Pipelines [环境](/azure/devops/pipelines/process/environments?view=azure-devops)中，其中每个虚拟机都充当 Web 服务器来运行应用。
+在本教程中，你将设置基于 YAML 的 CI/CD 管道，以便将应用部署到 Linux 虚拟机作为资源的 Azure Pipelines [环境](/azure/devops/pipelines/process/environments)中，其中每个虚拟机都充当 Web 服务器来运行应用。
 
 学习如何：
 
@@ -41,7 +41,7 @@ Azure Pipelines 提供了一组完整且功能完备的 CI/CD 自动化工具，
   你可以获取[免费 Azure DevOps Services 组织](https://go.microsoft.com/fwlink/?LinkId=307137&clcid=0x409&wt.mc_id=o~msft~vscom~home-vsts-hero~27308&campaign=o~msft~vscom~home-vsts-hero~27308)。
 
   > [!NOTE]
-  > 有关详细信息，请参阅[连接到 Azure DevOps Services](/azure/devops/organizations/projects/connect-to-projects?view=vsts)。
+  > 有关详细信息，请参阅[连接到 Azure DevOps Services](/azure/devops/organizations/projects/connect-to-projects)。
 
 *  部署目标需用到 Linux 虚拟机。  有关详细信息，请参阅[使用 Azure CLI 创建和管理 Linux VM](./tutorial-manage-vm.md)。
 
@@ -84,13 +84,14 @@ https://github.com/azure-devops/fabrikam-node
 
 #### <a name="java"></a>[Java](#tab/java)
 
-- 若要部署基于 Java Spring Boot 和基于 Spring Cloud 的应用，请使用[此](https://azuremarketplace.microsoft.com/marketplace/apps/azul.azul-zulu8-ubuntu-1804)模板在 Azure 中创建 Linux VM，此模板可提供完全受支持的基于 OpenJDK 的运行时。
-- 若要在 Tomcat 服务器上部署 Java servlet，请使用[此](https://azuremarketplace.microsoft.com/marketplace/apps/azul.azul-zulu8-ubuntu-1804) Azure 模板通过 Java 8 创建 Linux VM，并[将 Tomcat 9.x 配置为服务](https://tomcat.apache.org/tomcat-9.0-doc/setup.html)。
-- 若要部署基于 Java EE 的应用，请使用 Azure 模板创建 [Linux VM + Java + WebSphere 9.x](https://azuremarketplace.microsoft.com/marketplace/apps/midvision.websphere-application-server-nde-90) 或 [Linux VM + Java + WebLogic 12.x](https://azuremarketplace.microsoft.com/marketplace/apps/oracle.20191009-arm-oraclelinux-wls-admin) 或 [Linux VM + Java](https://azuremarketplace.microsoft.com/marketplace/apps/azul.azul-zulu8-ubuntu-1804) + WildFly/JBoss 14 
+- 若要部署基于 Java Spring Boot 和基于 Spring Cloud 的应用，请使用[此](https://azuremarketplace.microsoft.com/marketplace/apps/azul.azul-zulu13-ubuntu-2004)模板在 Azure 中创建 Linux VM，此模板可提供完全受支持的基于 OpenJDK 的运行时。
+- 若要在 Tomcat 服务器上部署 Java servlet，请使用[此](https://azuremarketplace.microsoft.com/marketplace/apps/azul.azul-zulu13-ubuntu-2004) Azure 模板通过 Java 8 创建 Linux VM，并[将 Tomcat 9.x 配置为服务](https://tomcat.apache.org/tomcat-9.0-doc/setup.html)。
+- 若要部署基于 Java EE 的应用，请使用 Azure 模板创建 [Linux VM + Java + WebSphere 9.x](https://azuremarketplace.microsoft.com/marketplace/apps/midvision.websphere-application-server-nde-90) 或 [Linux VM + Java + WebLogic 12.x](https://azuremarketplace.microsoft.com/marketplace/apps/oracle.20191009-arm-oraclelinux-wls-admin) 或 [Linux VM + Java](https://azuremarketplace.microsoft.com/marketplace/apps/azul.azul-zulu13-ubuntu-2004) + WildFly/JBoss 14 
+
 
 #### <a name="javascript"></a>[JavaScript](#tab/java-script)
 
-若要安装 javascript 应用或 Node.js 应用，需要使用包含 Nginx Web 服务器的 Linux VM 来部署应用。
+若要安装 JavaScript 应用或 Node.js 应用，需要使用包含 Nginx Web 服务器的 Linux VM 来部署应用。
 如果你没有包含 Nginx 的 Linux VM，请使用[此示例](./quick-create-cli.md)中的步骤在 Azure 中创建一个。
 
 * * * 
@@ -117,7 +118,7 @@ https://github.com/azure-devops/fabrikam-node
 
     ![VMresource_view](media/tutorial-deploy-vms-azure-pipelines/vm-resourceview.png)
 
-9. 可以在交互式 PS 注册脚本中将标记添加到 VM，（或者）也可以单击“资源”视图中每个 VM 资源末尾的三个点，在资源视图中添加/删除相同的标记。
+9. 可以在交互式 PowerShell 注册脚本中将标记添加到 VM，（或者）也可以单击“资源”视图中每个 VM 资源末尾的三个点，在资源视图中添加/删除相同的标记。
 
    借助分配的标记，可在部署作业中使用环境时限制特定虚拟机的部署。 每个标记最多为 256 个字符，但你可以使用的标记数量没有限制。
 
@@ -146,6 +147,7 @@ https://github.com/azure-devops/fabrikam-node
 选择“入门”模板，并复制下面的 YAML 代码片段，该代码片段可生成 Java 项目并使用 Apache Maven 运行测试  ：
 
 ```YAML
+jobs:
 - job: Build
   displayName: Build Maven Project
   steps:
@@ -200,7 +202,7 @@ https://github.com/azure-devops/fabrikam-node
 
 - 查看管道以了解其功能。 请确保所有默认输入都适用于你的代码。
 
-- 选择“保存并运行”，再选择“直接提交到主分支”，然后再次选择“保存并运行”    。
+- 选择“保存并运行”，再选择“直接提交到主分支”，然后再次选择“保存并运行”  。
 
 - 开始新运行。 请等待运行完成。
 
@@ -208,7 +210,7 @@ https://github.com/azure-devops/fabrikam-node
 
 ## <a name="define-cd-steps-to-deploy-to-the-linux-vm"></a>定义要部署到 Linux VM 的 CD 步骤
 
-1. 编辑上面的管道，并使用以下 YAML 语法引用之前获取的环境和 VM 资源来包含[部署作业](/azure/devops/pipelines/process/deployment-jobs)：
+1. 更改上述管道的 YAML 文件，使用以下 YAML 语法引用之前获取的环境和 VM 资源来包含[部署作业](/azure/devops/pipelines/process/deployment-jobs)：
 
    ```YAML
    jobs:  
@@ -217,13 +219,12 @@ https://github.com/azure-devops/fabrikam-node
      environment:
        name:  <environment name>
        resourceType: VirtualMachine
-       tags: web1
-     strategy:
+       tags: web
    ```
 2. 可以从环境中选择特定的虚拟机集来接收部署，方法是指定为环境中的每个虚拟机定义的“标记”  。
-[此处](/azure/devops/pipelines/yaml-schema?view=azure-devops&tabs=schema#deployment-job) 是部署作业的完整 YAML 架构。
+[此处](/azure/devops/pipelines/yaml-schema?tabs=schema#deployment-job) 是部署作业的完整 YAML 架构。
 
-3. 可以指定`runOnce` 或 `rolling` 作为部署策略。 
+3. 可以指定 `runOnce` 或 `rolling` 作为部署策略。 
 
    `runOnce` 是最简单的部署策略，其中所有生命周期挂钩（即 `preDeploy` `deploy`、`routeTraffic` 和 `postRouteTraffic`）都执行一次。 然后，执行 `on:` `success` 或 `on:` `failure`。
 

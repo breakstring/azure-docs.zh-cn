@@ -6,17 +6,17 @@ ms.service: active-directory
 ms.subservice: authentication
 ms.topic: how-to
 ms.date: 03/09/2020
-ms.author: iainfou
-author: iainfoulds
+ms.author: justinha
+author: justinha
 manager: daveba
 ms.reviewer: librown, aakapo
 ms.collection: M365-identity-device-management
-ms.openlocfilehash: 9f20da2d2ecb4426c0deb1c01591ead5933090f6
-ms.sourcegitcommit: 6fc156ceedd0fbbb2eec1e9f5e3c6d0915f65b8e
+ms.openlocfilehash: e1459442f7d99d1de88a685eed34493da530c1a4
+ms.sourcegitcommit: ad83be10e9e910fd4853965661c5edc7bb7b1f7c
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/21/2020
-ms.locfileid: "88716990"
+ms.lasthandoff: 12/06/2020
+ms.locfileid: "96743473"
 ---
 # <a name="enable-passwordless-security-key-sign-in-to-on-premises-resources-with-azure-active-directory-preview"></a>使用 Azure Active Directory (预览版启用无密码安全密钥登录到本地资源) 
 
@@ -46,7 +46,7 @@ Azure AD Kerberos Server 对象在本地 Active Directory 中创建，然后安�
 
 组织还必须满足以下软件要求。
 
-- 设备必须运行 Windows 10 内部版本18945或更高版本。
+- 设备必须运行 Windows 10 版本2004或更高版本。
 - 您必须具有 [Azure AD Connect](../hybrid/how-to-connect-install-roadmap.md#install-azure-ad-connect)版本的1.4.32.0 或更高版本。
   - 有关可用 Azure AD 混合身份验证选项的详细信息，请参阅 [为 Azure Active Directory 混合标识解决方案选择正确的身份验证方法](../hybrid/choose-ad-authn.md) ，并 [选择要用于 Azure AD Connect 的安装类型](../hybrid/how-to-connect-install-select-installation.md)。
 - Windows Server 域控制器必须安装下列修补程序：
@@ -57,8 +57,8 @@ Azure AD Kerberos Server 对象在本地 Active Directory 中创建，然后安�
 
 此方案支持以下两种方案中的单一登录 (SSO) ：
 
-- 适用于 Office 365 和其他启用 SAML 的应用程序的云资源。
-- 对于本地资源和对网站的 Windows 集成身份验证。 这些资源可能包括需要 IIS 身份验证的网站和 SharePoint 站点，以及使用 NTLM 身份验证的资源。
+- 适用于云资源，如 Microsoft 365 和其他启用 SAML 的应用程序。
+- 对于本地资源，Windows-Integrated 网站身份验证。 这些资源可能包括需要 IIS 身份验证的网站和 SharePoint 站点，以及使用 NTLM 身份验证的资源。
 
 ### <a name="unsupported-scenarios"></a>不支持的方案
 

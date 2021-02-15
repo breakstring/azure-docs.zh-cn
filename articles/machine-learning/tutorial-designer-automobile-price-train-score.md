@@ -1,24 +1,24 @@
 ---
-title: 教程：使用设计器预测汽车价格（预览）
+title: 教程：使用设计器预测汽车价格
 titleSuffix: Azure Machine Learning
-description: 了解如何使用拖放式界面来训练、评分和部署机器学习模型。 本教程是有关使用线性回归预测汽车价格的、由两个部分构成的教程系列的第一部分。
+description: 训练机器学习模型，使用线性回归预测汽车价格。 本教程是由两个部分构成的系列教程的第一部分。
 author: peterclu
 ms.author: peterlu
 services: machine-learning
 ms.service: machine-learning
 ms.subservice: core
 ms.topic: tutorial
-ms.date: 06/28/2020
+ms.date: 09/28/2020
 ms.custom: designer
-ms.openlocfilehash: 4a925fb4352ac81e5879bb925ee1d743a77ffd5c
-ms.sourcegitcommit: dccb85aed33d9251048024faf7ef23c94d695145
+ms.openlocfilehash: 46098b2b7ebbf219a3c17b4fa40e1fd52344f683
+ms.sourcegitcommit: aaa65bd769eb2e234e42cfb07d7d459a2cc273ab
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/28/2020
-ms.locfileid: "87290279"
+ms.lasthandoff: 01/27/2021
+ms.locfileid: "98879791"
 ---
-# <a name="tutorial-predict-automobile-price-with-the-designer-preview"></a>教程：使用设计器预测汽车价格（预览）
-[!INCLUDE [applies-to-skus](../../includes/aml-applies-to-enterprise-sku.md)]
+# <a name="tutorial-predict-automobile-price-with-the-designer"></a>教程：使用设计器预测汽车价格
+
 
 本教程分为两部分，介绍如何使用 Azure 机器学习设计器来训练并部署一个可预测汽车价格的机器学习模型。 该设计器是一个拖放式的工具，在其中可以创建机器学习模型，而无需编写任何代码。
 
@@ -48,11 +48,10 @@ Azure 机器学习管道可将多个机器学习和数据处理步骤组织成�
 
 ### <a name="create-a-new-workspace"></a>创建新的工作区
 
-若要使用设计器，首先需要一个 Azure 机器学习工作区。 工作区是 Azure 机器学习的顶级资源，提供一个中心位置用于处理 Azure 机器学习中创建的所有项目。
+需要一个 Azure 机器学习工作区来使用设计器。 工作区是 Azure 机器学习的顶级资源，提供一个中心位置用于处理 Azure 机器学习中创建的所有项目。 有关创建工作区的说明，请参阅[创建和管理 Azure 机器学习工作区](how-to-manage-workspace.md)。
 
-如果你已使用企业版创建了一个 Azure 机器学习工作区，请[跳到下一部分](#create-the-pipeline)。
-
-[!INCLUDE [aml-create-portal](../../includes/aml-create-in-portal-enterprise.md)]
+> [!NOTE]
+> 如果工作区使用虚拟网络，则必须执行其他配置步骤才能使用设计器。 有关详细信息，请参阅[在 Azure 虚拟网络中使用 Azure 机器学习工作室](how-to-enable-studio-virtual-network.md)
 
 ### <a name="create-the-pipeline"></a>创建管道
 
@@ -70,16 +69,16 @@ Azure 机器学习管道可将多个机器学习和数据处理步骤组织成�
 
 管道在计算目标上运行，该目标是附加到工作区的计算资源。 创建计算目标后，就可以在以后的运行中重用它。
 
-可为整个管道设置**默认计算目标**，告知每个模块要默认使用同一个计算目标。 但是，可以基于每个模块指定计算目标。
+可为整个管道设置 **默认计算目标**，告知每个模块要默认使用同一个计算目标。 但是，可以基于每个模块指定计算目标。
 
-1. 在管道名称旁边，选择画布顶部的**齿轮图标** ![齿轮图标的屏幕截图](./media/tutorial-designer-automobile-price-train-score/gear-icon.png) 打开“设置”窗格。
+1. 在管道名称旁边，选择画布顶部的 **齿轮图标** ![齿轮图标的屏幕截图](./media/tutorial-designer-automobile-price-train-score/gear-icon.png) 打开“设置”窗格。
 
 1. 在画布右侧的“设置”窗格中，选择“选择计算目标”。 
 
     如果已有可用的计算目标，则可以选择它来运行此管道。
 
     > [!NOTE]
-    > 设计器只能在 Azure 机器学习计算目标和 Azure 机器学习计算实例目标上运行训练试验，但其他计算目标不会显示。
+    > 此设计器只能在 Azure 机器学习计算目标上运行训练试验，而不会显示其他计算目标。
 
 1. 输入计算资源的名称。
 
@@ -94,7 +93,7 @@ Azure 机器学习管道可将多个机器学习和数据处理步骤组织成�
 
 此设计器中包含多个示例数据集供你进行试验。 本教程使用“汽车价格数据(原始)”。 
 
-1. 管道画布左侧是数据集和模块的控制板。 选择“数据集”，然后查看“示例”部分以查看可用的示例数据集 。
+1. 管道画布左侧是数据集和模块的控制板。 选择“示例数据集”以查看可用的示例数据集。
 
 1. 选择数据集“汽车价格数据(原始)”，然后将其拖到画布上。
 
@@ -104,13 +103,7 @@ Azure 机器学习管道可将多个机器学习和数据处理步骤组织成�
 
 可将数据可视化以了解要使用的数据集。
 
-1. 选择“汽车价格数据(原始)”模块。
-
-1. 在画布右侧的模块详细信息窗格中，选择“输出 + 日志”。
-
-1. 选择图形图标以可视化数据。
-    
-    :::image type="content" source="./media/tutorial-designer-automobile-price-train-score/visualize-data.png"alt-text="此处为替换文字。":::
+1. 右键单击“汽车价格数据(原始)”并选择“可视化” > “数据集输出”  。
 
 1. 选择数据窗口中的不同列，查看有关每个列的信息。
 
@@ -233,7 +226,7 @@ Azure 机器学习管道可将多个机器学习和数据处理步骤组织成�
 
     :::image type="content" source="./media/tutorial-designer-automobile-price-train-score/pipeline-train-model.png"alt-text="显示“训练模型”模块的正确配置的屏幕截图。“线性回归”模块将连接到“训练模型”模块的左端口，“拆分数据”模块将连接到“训练模型”的右端口。":::
 
-1. 选择**训练模型**模块。
+1. 选择 **训练模型** 模块。
 
 1. 在画布右侧的模块详细信息窗格中，选择“编辑列”选择器。
 
@@ -279,21 +272,19 @@ Azure 机器学习管道可将多个机器学习和数据处理步骤组织成�
     > [!NOTE]
     > 试验将相似的管道运行组合在一起。 如果多次运行管道，则可以选择相同的试验进行连续运行。
 
-    1. 为“新试验名称”输入一个描述性名称。
+    1. 对于“新试验名称”，输入“Tutorial-CarPrices” 。
 
-    1. 选择“提交”。
+    1. 选择“提交”。 
     
     可以在画布的右上角查看运行状态和详细信息。
     
-    如果是第一次运行，则管道可能需要长达 20 分钟的时间才能完成运行。 默认计算设置中的最小节点大小为 0，这意味着设计器必须在空闲后分配资源。 由于计算资源已分配，因此，重复的管道运行花费的时间会更少。 此外，设计器还对每个模块使用缓存的结果，以便进一步提高效率。
+    如果这是第一次运行，则管道可能需要长达 20 分钟的时间才能完成运行。 默认计算设置中的最小节点大小为 0，这意味着设计器必须在空闲后分配资源。 由于计算资源已分配，因此，重复的管道运行花费的时间会更少。 此外，设计器还对每个模块使用缓存的结果，以便进一步提高效率。
 
 ### <a name="view-scored-labels"></a>查看评分标签
 
 运行完成后，可以查看管道运行的结果。 首先查看回归模型生成的预测。
 
-1. 选择“评分模型”模块以查看其输出。
-
-1. 在画布右侧的模块详细信息窗格中，选择“输出 + 日志”> 图形图标 ![可视化图标](./media/tutorial-designer-automobile-price-train-score/visualize-icon.png) 查看结果。
+1. 右键单击“评分模型”模块，选择“可视化” > “评分数据集”以查看其输出  。
 
     在此处可以看到从测试数据预测的价格和实际价格。
 
@@ -303,9 +294,7 @@ Azure 机器学习管道可将多个机器学习和数据处理步骤组织成�
 
 使用“评估模型”来确定已训练的模型处理测试数据集时的表现。
 
-1. 选择“评估模型”模块以查看其输出。
-
-1. 在画布右侧的模块详细信息窗格中，选择“输出 + 日志”> 图形图标 ![可视化图标](./media/tutorial-designer-automobile-price-train-score/visualize-icon.png) 查看结果。
+1. 右键单击“评估模型”模块，选择“可视化” > “评估结果”以查看其输出  。
 
 针对模型显示了以下统计信息：
 

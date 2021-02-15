@@ -16,12 +16,13 @@ ms.date: 07/07/2020
 ms.author: sethm
 ms.reviewer: thsomasu
 ms.lastreviewed: 04/08/2019
-ms.openlocfilehash: f1b1cf72a75349c420e2d789b435e049ab824446
-ms.sourcegitcommit: bcb962e74ee5302d0b9242b1ee006f769a94cfb8
+ms.custom: devx-track-csharp
+ms.openlocfilehash: 7807d28da459656938acb399eb8c621e4c292372
+ms.sourcegitcommit: 829d951d5c90442a38012daaf77e86046018e5b9
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/07/2020
-ms.locfileid: "86054400"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "89001563"
 ---
 # <a name="registration-management"></a>注册管理
 

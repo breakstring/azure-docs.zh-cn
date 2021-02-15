@@ -1,17 +1,15 @@
 ---
 title: 在 Java 中创建第一个可靠服务
-description: 介绍如何创建具有无状态服务和有状态服务的 Microsoft Azure Service Fabric 应用程序。
-author: suhuruli
+description: 介绍如何在 Java 中使用无状态服务和有状态服务创建 Microsoft Azure Service Fabric 应用程序。
 ms.topic: conceptual
 ms.date: 11/02/2017
-ms.custom: devx-track-java
-ms.author: suhuruli
-ms.openlocfilehash: 30797e68081e346ee0f31f77da15f820776337a0
-ms.sourcegitcommit: a76ff927bd57d2fcc122fa36f7cb21eb22154cfa
+ms.custom: devx-track-javai
+ms.openlocfilehash: f67957d711958febdb01dfad0b3c44a92cb0bcfa
+ms.sourcegitcommit: 829d951d5c90442a38012daaf77e86046018e5b9
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/28/2020
-ms.locfileid: "87324499"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "91535230"
 ---
 # <a name="get-started-with-reliable-services-in-java"></a>Java 中的 Reliable Services 入门
 > [!div class="op_single_selector"]

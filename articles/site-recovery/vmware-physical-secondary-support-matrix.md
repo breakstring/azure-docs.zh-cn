@@ -1,19 +1,19 @@
 ---
-title: 支持使用 Azure Site Recovery 的 VMware/物理灾难恢复到辅助站点
+title: 支持使用 Azure Site Recovery 将 VMware/物理灾难恢复到辅助站点
 description: 总结了对使用 Azure Site Recovery 将 VMware VM 或物理服务器灾难恢复到辅助站点的支持。
 author: rayne-wiselman
 manager: carmonm
 ms.service: site-recovery
 services: site-recovery
-ms.topic: article
+ms.topic: conceptual
 ms.date: 11/14/2019
 ms.author: raynew
-ms.openlocfilehash: c6f0f48df32db0beb9c0a57982d9bc87b26538d8
-ms.sourcegitcommit: e995f770a0182a93c4e664e60c025e5ba66d6a45
+ms.openlocfilehash: ac67e3cf8f057738b76b0de7cbcb821ef290e0cb
+ms.sourcegitcommit: 5cdd0b378d6377b98af71ec8e886098a504f7c33
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/08/2020
-ms.locfileid: "86135144"
+ms.lasthandoff: 01/25/2021
+ms.locfileid: "98757570"
 ---
 # <a name="support-matrix-for-disaster-recovery-of-vmware-vms-and-physical-servers-to-a-secondary-site"></a>将 VMware VM 和物理服务器灾难恢复到辅助站点时的支持矩阵
 
@@ -26,7 +26,7 @@ ms.locfileid: "86135144"
 > 复制本地 VMware VM 和物理服务器的功能由 InMage Scout 提供。 InMage Scout 随附在 Azure Site Recovery 服务订阅中。
 
 ## <a name="end-of-support-announcement"></a>结束支持公告
-在本地 VMware 或物理数据中心之间进行复制的 Site Recovery 方案将达到支持终止。
+Site Recovery 方案（在本地 VMware 或物理数据中心之间进行复制）即将结束支持。
 
 - 从8月2018开始，无法在恢复服务保管库中配置该方案，并且无法从保管库下载 InMage Scout 软件。 现有部署仍受支持。
 - - 从 2020 年 12 月 31 日起，该方案将不受支持。

@@ -1,25 +1,25 @@
 ---
-title: 使用 Azure 门户解决 Azure Stack Edge 排序问题 |Microsoft Docs
-description: 介绍如何对 Azure Stack 边缘排序问题进行故障排除。
+title: 使用 Azure 门户解决 Azure Stack Edge Pro 排序问题 |Microsoft Docs
+description: 介绍如何对 Azure Stack Edge Pro 排序问题进行故障排除。
 services: databox
-author: twooley
+author: alkohli
 ms.service: databox
 ms.subservice: edge
 ms.topic: troubleshooting
 ms.date: 08/11/2020
-ms.author: twooley
-ms.openlocfilehash: 226274c52610e24c305400d77dc7737d32c2b722
-ms.sourcegitcommit: 9c3cfbe2bee467d0e6966c2bfdeddbe039cad029
+ms.author: alkohli
+ms.openlocfilehash: be7d477d08b025fd450bfa859e8eb677ba680143
+ms.sourcegitcommit: 6a350f39e2f04500ecb7235f5d88682eb4910ae8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/24/2020
-ms.locfileid: "88783988"
+ms.lasthandoff: 12/01/2020
+ms.locfileid: "96446371"
 ---
-# <a name="troubleshoot-your-azure-stack-edge-ordering-issues"></a>排查 Azure Stack 边缘排序问题
+# <a name="troubleshoot-your-azure-stack-edge-pro-ordering-issues"></a>排查 Azure Stack Edge Pro 排序问题
 
-本文介绍如何解决 Azure Stack 边缘排序问题。
+本文介绍如何解决 Azure Stack Edge Pro 排序问题。
 
-本教程介绍如何执行下列操作：
+在本教程中，你将了解如何执行以下操作：
 
 > [!div class="checklist"]
 >
@@ -33,7 +33,7 @@ ms.locfileid: "88783988"
 
 ![不支持的订阅或区域](media/azure-stack-edge-troubleshoot-ordering/azure-stack-edge-troubleshoot-ordering-01.png)
 
-**建议的解决方案：**  请确保使用受支持的订阅，例如 [Microsoft 企业协议 (EA) ](https://azure.microsoft.com/overview/sales-number/)、 [云解决方案提供商 (CSP) ](https://docs.microsoft.com/partner-center/azure-plan-lp)或 [Microsoft Azure 赞助](https://azure.microsoft.com/offers/ms-azr-0036p/)。 不支持即用即付订阅。 有关详细信息，请参阅 [Azure Stack Edge 资源先决条件](azure-stack-edge-deploy-prep.md#prerequisites)。
+**建议的解决方案：**  请确保使用受支持的订阅，例如 [Microsoft 企业协议 (EA)](https://azure.microsoft.com/overview/sales-number/)、 [云解决方案提供商 (CSP)](/partner-center/azure-plan-lp)或 [Microsoft Azure 赞助](https://azure.microsoft.com/offers/ms-azr-0036p/)。 不支持即用即付订阅。 有关详细信息，请参阅 [Azure Stack Edge 资源先决条件](azure-stack-edge-deploy-prep.md#prerequisites)。
 
 Microsoft 可能会根据具体情况，允许订阅类型的升级。 请与 [Microsoft 支持](https://azure.microsoft.com/support/options/) 部门联系，以便他们能够了解你的需求并相应地调整这些限制。
 
@@ -45,7 +45,7 @@ Microsoft 可能会根据具体情况，允许订阅类型的升级。 请与 [M
 
 **建议的解决方案：** 请按照以下步骤注册 Azure Stack Edge 资源提供程序：
 
-1. 在 Azure 门户中，请参阅**Home**  >  **订阅**。
+1. 在 Azure 门户中，请参阅 **Home**  >  **订阅**。
 
 2. 选择用于订购设备的订阅。
 
@@ -59,7 +59,7 @@ Microsoft 可能会根据具体情况，允许订阅类型的升级。 请与 [M
 
 ## <a name="microsoftdataboxedge-not-registered-for-subscription"></a>DataBoxEdge 未注册订阅
 
-**错误：** 在 Azure 门户中，选择要用于 Azure Stack 边缘或 Data Box Gateway 的订阅，并收到以下错误：
+**错误：** 在 Azure 门户中，选择要用于 Azure Stack Edge Pro 或 Data Box Gateway 的订阅，并收到以下错误：
 
 *资源提供程序 () ： DataBoxEdge 未注册订阅 &lt; 订阅名称 &gt; ，并且您没有为订阅 &lt; 订阅名称 &gt; 注册资源提供程序的权限*。
 
@@ -75,4 +75,4 @@ Microsoft 可能会根据具体情况，允许订阅类型的升级。 请与 [M
 
 ## <a name="next-steps"></a>后续步骤
 
-* 了解有关如何 [排查 Azure Stack 边缘问题](azure-stack-edge-troubleshoot.md)的详细信息。
+* 了解有关如何 [排查 Azure Stack Edge Pro 问题](azure-stack-edge-troubleshoot.md)的详细信息。

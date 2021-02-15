@@ -1,24 +1,24 @@
 ---
 title: 快速入门：使用 Node.js 连接到 Azure Database for PostgreSQL - 单一服务器
 description: 本快速入门提供了可用于从 Azure Database for PostgreSQL - 单一服务器连接和查询数据的 Node.js 代码示例。
-author: rachel-msft
-ms.author: raagyema
+author: mksuni
+ms.author: sumuth
 ms.service: postgresql
 ms.custom:
 - mvc
 - devcenter
 - seo-javascript-september2019
 - seo-javascript-october2019
-- devx-track-javascript
+- devx-track-js
 ms.devlang: nodejs
 ms.topic: quickstart
 ms.date: 5/6/2019
-ms.openlocfilehash: 10c7abf7349a3b2419e81459866920f20c3af6f7
-ms.sourcegitcommit: faeabfc2fffc33be7de6e1e93271ae214099517f
+ms.openlocfilehash: 7569606429740de23b56767d490b9bb14283d468
+ms.sourcegitcommit: fa90cd55e341c8201e3789df4cd8bd6fe7c809a3
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/13/2020
-ms.locfileid: "88182725"
+ms.lasthandoff: 11/04/2020
+ms.locfileid: "93331686"
 ---
 # <a name="quickstart-use-nodejs-to-connect-and-query-data-in-azure-database-for-postgresql---single-server"></a>快速入门：使用 Node.js 连接到 Azure Database for PostgreSQL 并查询其中的数据 - 单一服务器
 
@@ -48,11 +48,11 @@ npm list
 ## <a name="get-connection-information"></a>获取连接信息
 获取连接到 Azure Database for PostgreSQL 所需的连接信息。 需要完全限定的服务器名称和登录凭据。
 
-1. 在 [Azure 门户](https://portal.azure.com/)中，搜索并选择已创建的服务器（例如 **mydemoserver**）。
+1. 在 [Azure 门户](https://portal.azure.com/)中，搜索并选择已创建的服务器（例如 **mydemoserver** ）。
 
 1. 从服务器的“概览”面板中记下“服务器名称”和“管理员用户名”。 如果忘记了密码，也可通过此面板来重置密码。
 
-   ![Azure Database for PostgreSQL 连接字符串](./media/connect-nodejs/server-details-azure-database-postgresql.png)
+   :::image type="content" source="./media/connect-nodejs/server-details-azure-database-postgresql.png" alt-text="Azure Database for PostgreSQL 连接字符串":::
 
 ## <a name="running-the-javascript-code-in-nodejs"></a>在 Node.js 中运行 JavaScript 代码
 可以通过键入 `node` 从 bash shell、终端或 Windows 命令提示符启动 Node.js，然后以交互方式运行示例 JavaScript 代码（只需将其复制并粘贴到提示符处即可）。 也可将 JavaScript 代码保存到文本文件中，然后以文件名作为运行所需的参数来启动 `node filename.js`。
@@ -250,6 +250,16 @@ function queryDatabase() {
             throw err;
         });
 }
+```
+
+## <a name="clean-up-resources"></a>清理资源
+
+若要清理本快速入门中使用的所有资源，请使用以下命令删除该资源组：
+
+```azurecli
+az group delete \
+    --name $AZ_RESOURCE_GROUP \
+    --yes
 ```
 
 ## <a name="next-steps"></a>后续步骤

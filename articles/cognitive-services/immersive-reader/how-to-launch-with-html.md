@@ -8,14 +8,14 @@ ms.service: cognitive-services
 ms.subservice: immersive-reader
 ms.topic: conceptual
 ms.date: 01/14/2020
-ms.author: metan
-ms.custom: devx-track-javascript
-ms.openlocfilehash: fbe54b3bd6e0fc8c42b4dfc7401be74ae65ce6cd
-ms.sourcegitcommit: 42107c62f721da8550621a4651b3ef6c68704cd3
+ms.author: metang
+ms.custom: devx-track-js
+ms.openlocfilehash: d028e9ef2087b866b3c168483d55556e38f9a7cd
+ms.sourcegitcommit: fb3c846de147cc2e3515cd8219d8c84790e3a442
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/29/2020
-ms.locfileid: "87406922"
+ms.lasthandoff: 10/27/2020
+ms.locfileid: "92636555"
 ---
 # <a name="how-to-launch-the-immersive-reader-with-html-content"></a>如何用 HTML 内容启动沉浸式阅读器
 
@@ -23,7 +23,7 @@ ms.locfileid: "87406922"
 
 ## <a name="prepare-the-html-content"></a>准备 HTML 内容
 
-将想要呈现的内容置于容器元素内的沉浸式读取器中。 确保容器元素具有唯一的 `id` 。 沉浸式读取器提供对基本 HTML 元素的支持，有关详细信息，请参阅[参考](./reference.md#html-support)。
+将想要呈现的内容置于容器元素内的沉浸式读取器中。 确保容器元素具有唯一的 `id` 。 沉浸式读取器提供对基本 HTML 元素的支持，有关详细信息，请参阅 [参考](./reference.md#html-support) 。
 
 ```html
 <div id='immersive-reader-content'>

@@ -9,7 +9,7 @@
   items:
     - name: 启用自助式密码重置
       href: tutorial-enable-sspr.md
-    - name: 启用 Azure 多重身份验证
+    - name: 启用 Azure AD 多重身份验证
       href: tutorial-enable-azure-mfa.md
     - name: 启用向本地进行密码写回
       href: tutorial-enable-sspr-writeback.md
@@ -21,7 +21,19 @@
   expanded: true
   items:
     - name: 身份验证方法
-      href: concept-authentication-methods.md
+      items:
+        - name: 概述
+          href: concept-authentication-methods.md
+        - name: Microsoft Authenticator 应用
+          href: concept-authentication-authenticator-app.md
+        - name: OATH 令牌
+          href: concept-authentication-oath-tokens.md
+        - name: 无密码
+          href: concept-authentication-passwordless.md
+        - name: 电话选项
+          href: concept-authentication-phone-options.md
+        - name: 安全性问题
+          href: concept-authentication-security-questions.md
     - name: 自助式密码重置
       items:
         - name: 密码重置工作原理
@@ -46,8 +58,6 @@
           href: /office365/admin/security-and-compliance/set-up-multi-factor-authentication?view=o365-worldwide
         - name: 常见问题解答
           href: multi-factor-authentication-faq.md
-    - name: 无密码身份验证
-      href: concept-authentication-passwordless.md
     - name: 密码保护
       items:
         - name: 在云中消除弱密码
@@ -70,7 +80,7 @@
           href: howto-sspr-authenticationdata.md
         - name: 用于 Windows 客户端的 SSPR
           href: howto-sspr-windows.md
-    - name: Azure 多重身份验证
+    - name: Azure AD 多重身份验证
       items:
         - name: 部署指南
           href: howto-mfa-getstarted.md
@@ -98,7 +108,7 @@
               href: howto-mfa-nps-extension.md
             - name: NPS 扩展的高级配置
               href: howto-mfa-nps-extension-advanced.md
-            - name: Azure VPN 与 Azure MFA
+            - name: Azure VPN 和 Azure AD MFA
               href: ../../vpn-gateway/vpn-gateway-radius-mfa-nsp.md
             - name: 远程桌面网关
               href: howto-mfa-nps-extension-rdg.md
@@ -116,6 +126,10 @@
               href: howto-authentication-passwordless-security-key-windows.md
             - name: SSO 到本地资源
               href: howto-authentication-passwordless-security-key-on-premises.md
+            - name: 混合方案常见问题解答
+              href: howto-authentication-passwordless-faqs.md
+            - name: 排查混合方案问题
+              href: howto-authentication-passwordless-troubleshoot.md
         - name: 无密码的手机登录
           href: howto-authentication-passwordless-phone.md
         - name: Windows Hello for Business
@@ -140,9 +154,9 @@
           href: howto-password-ban-bad-on-premises-faq.md
         - name: 代理版本历史记录
           href: howto-password-ban-bad-on-premises-agent-versions.md
-    - name: 使用基于 SMS 的身份验证（预览版）
+    - name: 使用基于短信的身份验证
       href: howto-authentication-sms-signin.md
-    - name: 使用电子邮件地址登录（预览版）
+    - name: 使用电子邮件地址登录
       href: howto-authentication-use-email-signin.md
     - name: Azure AD 智能锁定
       href: howto-password-smart-lockout.md
@@ -209,8 +223,10 @@
               href: howto-mfa-nps-extension-errors.md
     - name: 疑难解答
       items:
-        - name: 对 SSPR 进行故障排除
-          href: active-directory-passwords-troubleshoot.md
+        - name: 自助式密码重置 (SSPR)
+          href: troubleshoot-sspr.md
+        - name: SSPR 写回
+          href: troubleshoot-sspr-writeback.md
         - name: SSPR 常见问题解答
           href: active-directory-passwords-faq.md
         - name: MFA 常见问题解答
@@ -228,7 +244,7 @@
     - name: Microsoft Graph REST API beta 版本
       href: /graph/api/resources/authenticationmethods-overview?view=graph-rest-beta
     - name: 服务限制和局限性
-      href: ../users-groups-roles/directory-service-limits-restrictions.md
+      href: ../enterprise-users/directory-service-limits-restrictions.md
 - name: 资源
   items:
     - name: Azure 反馈论坛

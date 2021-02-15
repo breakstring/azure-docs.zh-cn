@@ -5,12 +5,13 @@ author: jakrams
 ms.author: jakras
 ms.date: 02/21/2020
 ms.topic: conceptual
-ms.openlocfilehash: a74fae74a2d0ebbb71d65420475e5772e44a8d84
-ms.sourcegitcommit: 54d8052c09e847a6565ec978f352769e8955aead
+ms.custom: devx-track-csharp
+ms.openlocfilehash: 321d73c78d0192dcb7a303f4aa70a4ff0f18ecea
+ms.sourcegitcommit: f377ba5ebd431e8c3579445ff588da664b00b36b
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/18/2020
-ms.locfileid: "88507087"
+ms.lasthandoff: 02/05/2021
+ms.locfileid: "99593699"
 ---
 # <a name="remote-rendering-sessions"></a>远程渲染会话
 
@@ -24,13 +25,13 @@ Azure 远程渲染的工作原理是，将复杂的渲染任务卸载到云中�
 
 ## <a name="managing-sessions"></a>管理会话
 
-可以通过多种方式来管理会话以及与会话交互。 与语言无关的创建、更新和关闭会话的方法是通过[会话管理 REST API](../how-tos/session-rest-api.md)。 在 C# 和 C++ 中，这些操作通过 `AzureFrontend` 和 `AzureSession` 类来公开。 对于 Unity 应用程序，`ARRServiceUnity` 组件提供了更多实用工具函数。
+可以通过多种方式来管理会话以及与会话交互。 与语言无关的创建、更新和关闭会话的方法是通过[会话管理 REST API](../how-tos/session-rest-api.md)。 在 C# 和 C++ 中，这些操作通过 `RemoteRenderingClient` 和 `RenderingSession` 类来公开。 对于 Unity 应用程序，`ARRServiceUnity` 组件提供了更多实用工具函数。
 
-连接到活动会话后，[加载模型](models.md)以及与场景交互的操作将通过 `AzureSession` 类来公开。
+连接到活动会话后，[加载模型](models.md)以及与场景交互的操作将通过 `RenderingSession` 类来公开。
 
 ### <a name="managing-multiple-sessions-simultaneously"></a>同时管理多个会话
 
-无法从一个设备完全连接到多个会话。 不过，可以从单个应用程序创建、观察和关闭任意数量的会话。 只要该应用不是要连接到某个会话，就不需要在诸如 HoloLens 2 的设备上运行。 如果希望通过中心机制来控制会话，则可使用此类实现的用例。 例如，可构建一个 Web 应用，多个平板电脑和 HoloLenses 都可以登录该应用。 然后，该应用可以在平板电脑上显示选项，例如要显示的 CAD 模型。 如果用户进行了选择，则会将此信息传达给所有 HoloLenses 以创造共享体验。
+无法从一个设备完全连接到多个会话。 不过，可以从单个应用程序创建、观察和关闭任意数量的会话。 只要该应用不是要连接到某个会话，就不需要在诸如 HoloLens 2 的设备上运行。 如果希望通过中心机制来控制会话，则可使用此类实现的用例。 例如，可能会构建一个 web 应用，其中多个平板电脑和 HoloLens 设备可以登录。 然后，该应用可以在平板电脑上显示选项，例如要显示的 CAD 模型。 如果用户进行了选择，则会将此信息传递给所有 HoloLens 设备，以创建共享体验。
 
 ## <a name="session-phases"></a>会话阶段
 
@@ -72,11 +73,11 @@ Azure 远程渲染的工作原理是，将复杂的渲染任务卸载到云中�
 在所有情况下，会话停止后不会再继续计费。
 
 > [!WARNING]
-> 是否连接到会话以及连接多长时间不会影响计费。 你为服务支付的费用取决于 *会话持续*时间，这意味着为你专门保留服务器的时间，以及所请求的硬件功能 ([分配的大小](../reference/vm-sizes.md)) 。 如果启动一个会话，连接 5 分钟，然后不停止该会话，以便在其租用过期之前保持运行状态，将按完整会话租用时间进行计费。 相反，最大租用时间主要起到一个安全网的作用。 如果请求了一个租用时间为 8 小时的会话，仅使用了 5 分钟，此后便手动停止了该会话，也没有关系。
+> 是否连接到会话以及连接多长时间不会影响计费。 你为服务支付的费用取决于 *会话持续* 时间，这意味着为你专门保留服务器的时间，以及所请求的硬件功能 ([分配的大小](../reference/vm-sizes.md)) 。 如果启动一个会话，连接 5 分钟，然后不停止该会话，以便在其租用过期之前保持运行状态，将按完整会话租用时间进行计费。 相反，最大租用时间主要起到一个安全网的作用。 如果请求了一个租用时间为 8 小时的会话，仅使用了 5 分钟，此后便手动停止了该会话，也没有关系。
 
 #### <a name="extend-a-sessions-lease-time"></a>延长会话的租用时间
 
-如果需要使用更长时间，可以[延长活动会话的租用时间](../how-tos/session-rest-api.md#update-a-session)。
+如果需要使用更长时间，可以[延长活动会话的租用时间](../how-tos/session-rest-api.md#modify-and-query-session-properties)。
 
 ## <a name="example-code"></a>示例代码
 
@@ -88,25 +89,29 @@ RemoteRenderingInitialization init = new RemoteRenderingInitialization();
 
 RemoteManagerStatic.StartupRemoteRendering(init);
 
-AzureFrontendAccountInfo accountInfo = new AzureFrontendAccountInfo();
-// fill out accountInfo details...
+SessionConfiguration sessionConfig = new SessionConfiguration();
+// fill out sessionConfig details...
 
-AzureFrontend frontend = new AzureFrontend(accountInfo);
+RemoteRenderingClient client = new RemoteRenderingClient(sessionConfig);
 
-RenderingSessionCreationParams sessionCreationParams = new RenderingSessionCreationParams();
-// fill out sessionCreationParams...
+RenderingSessionCreationOptions rendererOptions = new RenderingSessionCreationOptions();
+// fill out rendererOptions...
 
-AzureSession session = await frontend.CreateNewRenderingSessionAsync(sessionCreationParams).AsTask();
+CreateRenderingSessionResult result = await client.CreateNewRenderingSessionAsync(rendererOptions);
 
+RenderingSession session = result.Session;
 RenderingSessionProperties sessionProperties;
 while (true)
 {
-    sessionProperties = await session.GetPropertiesAsync().AsTask();
+    var propertiesResult = await session.GetPropertiesAsync();
+    sessionProperties = propertiesResult.SessionProperties;
     if (sessionProperties.Status != RenderingSessionStatus.Starting &&
         sessionProperties.Status != RenderingSessionStatus.Unknown)
     {
         break;
     }
+    // REST calls must not be issued too frequently, otherwise the server returns failure code 429 ("too many requests"). So we insert the recommended delay of 10s
+    await Task.Delay(TimeSpan.FromSeconds(10));
 }
 
 if (sessionProperties.Status != RenderingSessionStatus.Ready)
@@ -115,34 +120,43 @@ if (sessionProperties.Status != RenderingSessionStatus.Ready)
 }
 
 // Connect to server
-Result connectResult = await session.ConnectToRuntime(new ConnectToRuntimeParams()).AsTask();
+ConnectionStatus connectStatus = await session.ConnectAsync(new RendererInitOptions());
 
 // Connected!
 
-while(...)
+while (...)
 {
     // per frame update
 
-    session.Actions.Update();
+    session.Connection.Update();
 }
 
 // Disconnect
-session.DisconnectFromRuntime();
+session.Disconnect();
 
 // stop the session
-await session.StopAsync().AsTask();
+await session.StopAsync();
 
 // shut down the remote rendering SDK
 RemoteManagerStatic.ShutdownRemoteRendering();
 ```
 
-可以在代码中维护、操作和查询多个 `AzureFrontend` 和 `AzureSession` 实例。 但一次只有一个设备可以连接到 `AzureSession`。
+可以在代码中维护、操作和查询多个 `RemoteRenderingClient` 和 `RenderingSession` 实例。 但一次只有一个设备可以连接到 `RenderingSession`。
 
-虚拟机的生存期与 `AzureFrontend` 实例或 `AzureSession` 实例无关。 必须调用 `AzureSession.StopAsync` 才能停止会话。
+虚拟机的生存期与 `RemoteRenderingClient` 实例或 `RenderingSession` 实例无关。 必须调用 `RenderingSession.StopAsync` 才能停止会话。
 
-可以通过 `AzureSession.SessionUUID()` 查询持久会话 ID 并在本地进行缓存。 使用此 ID，应用程序可以调用 `AzureFrontend.OpenSession` 以绑定到该会话。
+可以通过 `RenderingSession.SessionUuid()` 查询持久会话 ID 并在本地进行缓存。 使用此 ID，应用程序可以调用 `RemoteRenderingClient.OpenRenderingSessionAsync` 以绑定到该会话。
 
-如果 `AzureSession.IsConnected` 为 true，则 `AzureSession.Actions` 将返回 `RemoteManager` 的实例，该实例包含的函数用于[加载模型](models.md)、操作[实体](entities.md)以及[查询](../overview/features/spatial-queries.md)所渲染的场景的相关信息。
+如果 `RenderingSession.IsConnected` 为 true，则 `RenderingSession.Connection` 将返回 `RenderingConnection` 的实例，该实例包含的函数用于[加载模型](models.md)、操作[实体](entities.md)以及[查询](../overview/features/spatial-queries.md)所渲染的场景的相关信息。
+
+## <a name="api-documentation"></a>API 文档
+
+* [C # RenderingSession 类](/dotnet/api/microsoft.azure.remoterendering.renderingsession)
+* [C # RemoteRenderingClient CreateNewRenderingSessionAsync ( # B1 ](/dotnet/api/microsoft.azure.remoterendering.remoterenderingclient.createnewrenderingsessionasync)
+* [C # RemoteRenderingClient OpenRenderingSessionAsync ( # B1 ](/dotnet/api/microsoft.azure.remoterendering.remoterenderingclient.openrenderingsessionasync)
+* [C + + RenderingSession 类](/cpp/api/remote-rendering/renderingsession)
+* [C + + RemoteRenderingClient：： CreateNewRenderingSessionAsync](/cpp/api/remote-rendering/remoterenderingclient#createnewrenderingsessionasync)
+* [C + + RemoteRenderingClient：： OpenRenderingSession](/cpp/api/remote-rendering/remoterenderingclient#openrenderingsession)
 
 ## <a name="next-steps"></a>后续步骤
 

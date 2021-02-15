@@ -6,15 +6,16 @@ author: genlin
 ms.reviewer: dcscontentpm
 tags: billing
 ms.service: cost-management-billing
-ms.topic: conceptual
-ms.date: 02/12/2020
+ms.subservice: billing
+ms.topic: how-to
+ms.date: 10/28/2020
 ms.author: banders
-ms.openlocfilehash: 629ab8a0f2af789501e6365c94f4ce7f3fd3649c
-ms.sourcegitcommit: 537c539344ee44b07862f317d453267f2b7b2ca6
+ms.openlocfilehash: e380aa1f4d50e6ced34254ceca9d899022142f6d
+ms.sourcegitcommit: d76108b476259fe3f5f20a91ed2c237c1577df14
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 06/11/2020
-ms.locfileid: "84693188"
+ms.lasthandoff: 10/29/2020
+ms.locfileid: "92911284"
 ---
 # <a name="download-or-view-your-azure-billing-invoice-and-daily-usage-data"></a>下载或查看 Azure 帐单发票和每日使用数据
 
@@ -48,7 +49,7 @@ ms.locfileid: "84693188"
 
     ![显示“下载发票和使用情况”页的屏幕截图](./media/download-azure-invoice-daily-usage-date/usageandinvoice.png)
 
-有关发票的详细信息，请参阅[了解 Microsoft Azure 帐单](../understand/review-individual-bill.md)。 如需有关管理成本的帮助，请参阅[通过 Azure 计费和成本管理来防止意外成本](getting-started.md)。
+有关发票的详细信息，请参阅[了解 Microsoft Azure 帐单](../understand/review-individual-bill.md)。 若要在成本管理方面需要帮助，请参阅[分析意外费用](../understand/analyze-unexpected-charges.md)。
 
 ### <a name="download-invoices-for-a-microsoft-customer-agreement"></a>下载适用于 Microsoft 客户协议的发票
 
@@ -135,9 +136,7 @@ ms.locfileid: "84693188"
 
 1. 登录 [Azure 门户](https://portal.azure.com)。
 1. 搜索“成本管理 + 计费”。 
-
-    ![显示了 Azure 门户搜索的屏幕截图](./media/download-azure-invoice-daily-usage-date/portal-cm-billing-search.png)
-
+1. 如果有权访问多个计费帐户，请为 EA 计费帐户选择计费范围。
 1. 选择“使用情况 + 费用”。 
 1. 针对要下载的月份，选择“下载”。 
 
@@ -164,10 +163,6 @@ ms.locfileid: "84693188"
 
 ## <a name="check-access-to-a-microsoft-customer-agreement"></a>检查对 Microsoft 客户协议的访问权限
 [!INCLUDE [billing-check-mca](../../../includes/billing-check-mca.md)]
-
-## <a name="need-help-contact-us"></a>需要帮助？ 联系我们
-
-如有任何疑问或需要帮助，请[创建支持请求](https://go.microsoft.com/fwlink/?linkid=2083458)。
 
 ## <a name="next-steps"></a>后续步骤
 

@@ -1,19 +1,16 @@
 ---
 title: 使用 Livy Spark 向 Azure HDInsight 上的 Spark 群集提交作业
 description: 了解如何使用 Apache Spark REST API 将 Spark 作业远程提交到 Azure HDInsight 群集。
-author: hrasheed-msft
-ms.author: hrasheed
-ms.reviewer: jasonh
 ms.service: hdinsight
 ms.topic: how-to
 ms.custom: hdinsightactive,hdiseo17may2017
 ms.date: 02/28/2020
-ms.openlocfilehash: e5ed8fd2eba175a170c12c032e7c6ecf6a926b64
-ms.sourcegitcommit: 124f7f699b6a43314e63af0101cd788db995d1cb
+ms.openlocfilehash: ff63f4fbadd7cb9e7584e2aa045583a35e0363fd
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/08/2020
-ms.locfileid: "86084607"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98930115"
 ---
 # <a name="use-apache-spark-rest-api-to-submit-remote-jobs-to-an-hdinsight-spark-cluster"></a>使用 Apache Spark REST API 将远程作业提交到 HDInsight Spark 群集
 
@@ -27,7 +24,7 @@ HDInsight 上的 Apache Spark 群集。 有关说明，请参阅[在 Azure HDIns
 
 ## <a name="submit-an-apache-livy-spark-batch-job"></a>提交 Apache Livy Spark 批处理作业
 
-在提交批处理作业之前，必须将应用程序 jar 上传到与群集关联的群集存储。 可以使用命令行实用工具 [AzCopy](../../storage/common/storage-use-azcopy.md) 来执行此操作。 可以使用其他各种客户端来上传数据。 有关详细信息，请参阅[在 HDInsight 中上传 Apache Hadoop 作业的数据](../hdinsight-upload-data.md)。
+在提交批处理作业之前，必须将应用程序 jar 上传到与群集关联的群集存储。 可以使用命令行实用工具 [AzCopy](../../storage/common/storage-use-azcopy-v10.md) 来执行此操作。 可以使用其他各种客户端来上传数据。 有关详细信息，请参阅[在 HDInsight 中上传 Apache Hadoop 作业的数据](../hdinsight-upload-data.md)。
 
 ```cmd
 curl -k --user "admin:password" -v -H "Content-Type: application/json" -X POST -d '{ "file":"<path to application jar>", "className":"<classname in jar>" }' 'https://<spark_cluster_name>.azurehdinsight.net/livy/batches' -H "X-Requested-By: admin"
@@ -88,7 +85,7 @@ curl -k --user "admin:mypassword1!" -v -X DELETE "https://mysparkcluster.azurehd
 Livy 可为群集上运行的 Spark 作业提供高可用性。 下面是几个示例。
 
 * 如果在将作业远程提交到 Spark 群集之后，Livy 服务出现故障，则该作业将继续在后台运行。 当 Livy 恢复运行时，将还原并报告作业的状态。
-* 适用于 HDInsight 的 Jupyter 笔记本由后端中的 Livy 提供支持。 如果在 Notebook 运行 Spark 作业时重启 Livy 服务，Notebook 会继续运行代码单元。
+* HDInsight 的 Jupyter 笔记本由后端中的 Livy 提供支持。 如果在 Notebook 运行 Spark 作业时重启 Livy 服务，Notebook 会继续运行代码单元。
 
 ## <a name="show-me-an-example"></a>举个例子
 

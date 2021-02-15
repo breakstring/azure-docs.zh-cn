@@ -5,12 +5,12 @@ author: florianborn71
 ms.author: flborn
 ms.date: 02/25/2020
 ms.topic: troubleshooting
-ms.openlocfilehash: f2c5b6ef0792e418d873d84341a0fffc356c799e
-ms.sourcegitcommit: 54d8052c09e847a6565ec978f352769e8955aead
+ms.openlocfilehash: 4990f0d0a10709f2c1c5a17806020cd685f999fc
+ms.sourcegitcommit: f377ba5ebd431e8c3579445ff588da664b00b36b
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/18/2020
-ms.locfileid: "88509274"
+ms.lasthandoff: 02/05/2021
+ms.locfileid: "99593327"
 ---
 # <a name="troubleshoot"></a>疑难解答
 
@@ -23,17 +23,21 @@ ms.locfileid: "88509274"
 
 ## <a name="client-cant-connect-to-server"></a>客户端无法连接到服务器
 
-确保防火墙（在设备上、路由器内部等）未阻止以下端口：
-
-* 50051 (TCP) - 初始连接（HTTP 握手）需要
-* 8266 (TCP+UDP) - 数据传输需要
-* 5000 (TCP)、5433 (TCP)、8443 (TCP) - [ArrInspector](tools/arr-inspector.md) 需要
+请确保你的防火墙 (在设备上、在路由器内部，等等 ) 不会阻止 [系统要求](../overview/system-requirements.md#network-firewall)中提到的端口。
 
 ## <a name="error-disconnected-videoformatnotavailable"></a>错误 " `Disconnected: VideoFormatNotAvailable` "
 
 检查 GPU 是否支持硬件视频解码。 请参阅[开发电脑](../overview/system-requirements.md#development-pc)。
 
 如果在具有两个 GPU 的笔记本电脑上工作，则默认情况下运行的 GPU 可能不提供硬件视频解码功能。 如果是这样，请尝试强制应用使用另一个 GPU。 通常可以在 GPU 驱动程序设置中执行此操作。
+
+## <a name="retrieve-sessionconversion-status-fails"></a>检索会话/转换状态失败
+
+发送 REST API 命令过于频繁会导致服务器中止并最终返回故障。 限制情况下的 http 状态代码为 429 ( "请求太多" ) 。 根据经验法则，后续调用之间应有 5-10 秒的延迟。
+
+请注意，此限制不仅影响直接调用时的 REST API 调用，还会影响其 c #/C + + 对应项，例如 `Session.GetPropertiesAsync` 、 `Session.RenewAsync` 或 `Frontend.GetAssetConversionStatusAsync` 。
+
+如果你遇到服务器端限制，请更改代码以降低调用次数。 服务器每分钟会重置限制状态，因此在一分钟后重新运行代码是安全的。
 
 ## <a name="h265-codec-not-available"></a>H265 编解码器不可用
 
@@ -84,7 +88,7 @@ H265 编解码器未安装：
 
 ## <a name="video-recorded-with-mrc-does-not-reflect-the-quality-of-the-live-experience"></a>使用 MRC 录制的视频未反映实时体验的质量
 
-可以通过[混合现实捕捉 (MRC)](https://docs.microsoft.com/windows/mixed-reality/mixed-reality-capture-for-developers) 在 Hololens 上录制视频。 但是，由于以下两个原因，所生成视频的质量不如实时体验：
+可以通过 [混合现实捕获 (MRC) ](/windows/mixed-reality/mixed-reality-capture-for-developers)在 HoloLens 上记录视频。 但是，由于以下两个原因，所生成视频的质量不如实时体验：
 * 视频帧速率上限为 30 Hz，而不是 60 Hz。
 * 视频图像未经历[后期阶段重新投影](../overview/features/late-stage-reprojection.md)处理步骤，因此视频显得断断续续。
 
@@ -144,11 +148,12 @@ Unity 渲染管道不包含渲染挂钩：
 
 Azure 远程渲染挂钩到 Unity 渲染管道中，以通过视频进行帧合成，并执行重新投影。 若要验证这些挂钩是否存在，请打开菜单 *:::no-loc text="Window > Analysis > Frame debugger":::* 。 启用它并确保管道中的 `HolographicRemotingCallbackPass` 有两个条目：
 
-![Unity 帧调试器](./media/troubleshoot-unity-pipeline.png)
+![Unity 呈现管道](./media/troubleshoot-unity-pipeline.png)
 
 ## <a name="checkerboard-pattern-is-rendered-after-model-loading"></a>在模型加载后呈现棋盘模式
 
-如果呈现的图像如下所示： ![ 棋盘 ](../reference/media/checkerboard.png) ，呈现器将达到 [标准配置大小的多边形限制](../reference/vm-sizes.md)。 若要缓解这种情况，请切换到 **高级** 配置大小或减少可见多边形的数目。
+如果呈现的图像如下所示： ![ 屏幕截图显示带有 "工具" 菜单的黑色和白色方块网格。](../reference/media/checkerboard.png)
+然后，呈现器将达到 [标准配置大小的多边形限制](../reference/vm-sizes.md)。 若要缓解这种情况，请切换到 **高级** 配置大小或减少可见多边形的数目。
 
 ## <a name="the-rendered-image-in-unity-is-upside-down"></a>Unity 中呈现的图像颠倒
 
@@ -174,15 +179,21 @@ Azure 远程渲染挂钩到 Unity 渲染管道中，以通过视频进行帧合�
     
 ### <a name="arm64-builds-for-unity-projects-fail-because-audiopluginmshrtfdll-is-missing"></a>由于缺少 AudioPluginMsHRTF.dll，Unity 项目的 Arm64 生成失败
 
-`AudioPluginMsHRTF.dll`已将 Arm64 的添加到*Windows Mixed Reality* (包 *) *版本3.0.1 中的 windowsmr。 确保已通过 Unity 包管理器安装了版本3.0.1 或更高版本。 从 Unity 菜单栏中，导航到 " *窗口 >" 包管理器* "，并查找" *Windows Mixed Reality* "包。
+`AudioPluginMsHRTF.dll`已将 Arm64 的添加到 *Windows Mixed Reality* (包 *)* 版本3.0.1 中的 windowsmr。 确保已通过 Unity 包管理器安装了版本3.0.1 或更高版本。 从 Unity 菜单栏中，导航到 " *窗口 >" 包管理器* "，并查找" *Windows Mixed Reality* "包。
+
+## <a name="native-c-based-application-does-not-compile"></a>基于本机 c + + 的应用程序不编译
+
+### <a name="library-not-found-error-for-uwp-application-or-dll"></a>UWP 应用程序或 Dll 的 "找不到库" 错误
+
+在 c + + NuGet 包中，有 `microsoft.azure.remoterendering.Cpp.targets` 一个文件文件用于定义要使用的二进制口味。 若要确定 `UWP` ，文件中检查的条件 `ApplicationType == 'Windows Store'` 。 因此，需要确保在项目中设置此类型。 这应该是通过 Visual Studio 的项目向导创建 UWP 应用程序或 Dll 时的情况。
 
 ## <a name="unstable-holograms"></a>不稳定全息影像
 
 如果渲染的对象看起来像是随着头部移动而移动，则可能会遇到后期阶段重新投影 (LSR) 问题。 有关如何解决此类情况的指南，请参阅有关[后期阶段重新投影](../overview/features/late-stage-reprojection.md)的部分。
 
-不稳定全息影像（晃动、弯曲、抖动或跳转全息影像）的另一个原因可能是网络连接不佳，尤其是网络带宽不足或延迟过高。 网络连接质量的一个良好指示器是[性能统计信息](../overview/features/performance-queries.md)值 `ARRServiceStats.VideoFramesReused`。 重复使用的帧表示因为没有新视频帧可用，而需要在客户端上重复使用旧视频帧的情况（例如，由于数据包丢失或网络延迟变化）。 如果 `ARRServiceStats.VideoFramesReused` 经常大于零，则表示存在网络问题。
+不稳定全息影像（晃动、弯曲、抖动或跳转全息影像）的另一个原因可能是网络连接不佳，尤其是网络带宽不足或延迟过高。 网络连接质量的一个良好指示器是[性能统计信息](../overview/features/performance-queries.md)值 `ServiceStatistics.VideoFramesReused`。 重复使用的帧表示因为没有新视频帧可用，而需要在客户端上重复使用旧视频帧的情况（例如，由于数据包丢失或网络延迟变化）。 如果 `ServiceStatistics.VideoFramesReused` 经常大于零，则表示存在网络问题。
 
-另一个要查看的值是 `ARRServiceStats.LatencyPoseToReceiveAvg`。 它应始终低于 100 毫秒。 如果出现较高值，则表示连接到的数据中心太远。
+另一个要查看的值是 `ServiceStatistics.LatencyPoseToReceiveAvg`。 它应始终低于 100 毫秒。 查看较高的值可能表明您连接到的数据中心太远。
 
 有关可能的缓解措施的列表，请参阅[网络连接指导原则](../reference/network-requirements.md#guidelines-for-network-connectivity)。
 
@@ -208,7 +219,7 @@ Azure 远程渲染挂钩到 Unity 渲染管道中，以通过视频进行帧合�
 
 ARR 具有一项功能，用于确定表面是否可以进行 z 抵抗： [棋盘突出显示](../overview/features/z-fighting-mitigation.md)。 您还可以直观地确定导致 z 反击的原因。 下面的第一个动画显示距离中的深度精度丢失示例，第二个动画显示将近共面图面的示例：
 
-![深度-精度-z-反击](./media/depth-precision-z-fighting.gif)  ![共面-z-反击](./media/coplanar-z-fighting.gif)
+![动画显示了距离中的深度精度丢失示例。](./media/depth-precision-z-fighting.gif)  ![动画显示将近共面图面的示例。](./media/coplanar-z-fighting.gif)
 
 将这些示例与 z 进行比较，以确定原因或按顺序执行以下分步工作流：
 
@@ -234,7 +245,9 @@ ARR 具有一项功能，用于确定表面是否可以进行 z 抵抗： [棋�
 
 * 表面是有意的，如 decals 或墙壁上的文本。
 
+## <a name="graphics-artifacts-using-multi-pass-stereo-rendering-in-native-c-apps"></a>在本机 c + + 应用中使用多路立体声呈现的图形项目
 
+在某些情况下，自定义本机 c + + 应用程序将多路立体声呈现模式用于本地内容 (在调用 [**BlitRemoteFrame**](../concepts/graphics-bindings.md#render-remote-image) 后，在单独的) 中向左和向右眼呈现会触发驱动程序 bug。 Bug 会导致不确定的光栅化问题，导致本地内容的各个三角形或部分三角形随机消失。 出于性能原因，建议你始终使用更新式的单传递立体声呈现技术（例如，使用 **SV_RenderTargetArrayIndex**）来呈现本地内容。
 
 ## <a name="next-steps"></a>后续步骤
 

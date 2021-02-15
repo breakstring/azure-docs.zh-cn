@@ -4,12 +4,12 @@ description: 了解如何在使用 X.509 证书保护的 Service Fabric 群集�
 ms.topic: conceptual
 ms.date: 04/10/2020
 ms.custom: sfrev
-ms.openlocfilehash: aba681157d71f94914462b8d9fc13b90d4d6b153
-ms.sourcegitcommit: 271601d3eeeb9422e36353d32d57bd6e331f4d7b
+ms.openlocfilehash: a8a7e8954f3c9d5b54c2e1ed9caa330ef92d4512
+ms.sourcegitcommit: 24f30b1e8bb797e1609b1c8300871d2391a59ac2
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/20/2020
-ms.locfileid: "88653658"
+ms.lasthandoff: 02/10/2021
+ms.locfileid: "100099500"
 ---
 # <a name="certificate-management-in-service-fabric-clusters"></a>Service Fabric 群集中的证书管理
 
@@ -82,8 +82,8 @@ Service Fabric 自身将承担以下职责：
     - 颁发者（证书颁发机构）使用签名证书进行答复后，系统会将结果合并到保管库中，然后证书即可用于以下操作：
       - 在 {vaultUri}/certificates/{name} 下：包含公钥和元数据的证书
       - 在 {vaultUri}/keys/{name} 下：证书的私钥，可用于加密操作（包装/解包、签名/验证）
-      - {vaultUri}/secrets/{name}：包含其私钥的证书，可作为不受保护的 pfx 或 pem 文件下载  
-    回忆一下，保管库证书实际上是证书实例的按时间顺序排列的行，共享策略。 证书版本将根据策略的生存期和续订属性创建。 强烈建议不要让保管库证书共享使用者或域/DNS 名称；在一个群集中，若要从不同的保管库证书预配证书实例，并且这些证书的使用者相同，但其他属性（例如颁发者、密钥用法等）却存在实质性的差异，则可能会造成中断。
+      - 在 {vaultUri}/secrets/{name} 下：包含私钥的证书，可作为不受保护的 pfx 或 pem 文件下载  
+    请回想一下，保管库证书实际上是一系列按时间排序的共享某个策略的证书实例。 证书版本将根据策略的生存期和续订属性创建。 强烈建议不要让保管库证书共享使用者或域/DNS 名称；在一个群集中，若要从不同的保管库证书预配证书实例，并且这些证书的使用者相同，但其他属性（例如颁发者、密钥用法等）却存在实质性的差异，则可能会造成中断。
 
 此时，保管库中存在一个可供使用的证书。 接下来讲述：
 
@@ -109,9 +109,12 @@ Service Fabric 自身将承担以下职责：
 
 之前我们曾见到 Azure Key Vault 支持自动证书轮换：关联的证书策略定义在保管库中轮换证书的时间点，不管在表示时采用的是过期前的天数还是总生存期的百分比。 必须在此时间点之后（现在的旧证书过期之前）调用预配代理，然后才能将此新证书分发到群集的所有节点。 如果证书的到期日期（当前在群集中使用）早于预先确定的时间间隔，Service Fabric 会协助发出运行状况警告。 配置为观察保管库证书的自动预配代理（即 KeyVault VM 扩展）会定期轮询保管库、检测轮换情况，以及检索并安装新证书。 通过 VM/VMSS 的“机密”功能进行预配时，需要一位经授权的操作员使用与新证书相对应的进行了版本控制的 KeyVault URI 来更新 VM/VMSS。
 
-不管什么情况，轮换的证书现在都已预配到了所有节点，而我们也介绍了 Service Fabric 采用的用于检测轮换情况的机制；接下来，让我们看看会发生什么 - 假设轮换适用于通过使用者公用名称声明的群集证书（在撰写本文时全都适用，Service Fabric 的运行时版本为 7.1.409）：
-  - 对于群集内部的新连接以及要发到群集中的新连接，Service Fabric 运行时都会找到并选择具有最远到期日期（证书的“NotAfter”属性，通常缩写为“na”）的匹配证书。
+不管什么情况，轮换的证书现在都已预配到了所有节点，而我们也介绍了 Service Fabric 采用的用于检测轮换情况的机制；接下来，让我们看看会发生什么 - 假设轮换适用于通过使用者公用名称声明的群集证书
+  - 对于群集内部以及与群集之间的新连接，Service Fabric 运行时将查找并选择最近颁发的匹配证书（“NotBefore”属性的最大值）。 请注意，这是对以前版本的 Service Fabric 运行时的更改。
   - 现有连接将保持活动状态，或者获允以自然方式过期或终止；系统会通知内部处理程序：存在新的匹配项
+
+> [!NOTE] 
+> 在版本 7.2.445 (7.2 CU4) 之前，Service Fabric 选择了最远的即将到期的证书（具有最远“NotAfter”属性的证书）
 
 这将转换为以下重要观察结果：
   - 如果续订证书的到期日期早于当前使用的证书的到期日期，系统会忽略续订证书。
@@ -134,8 +137,11 @@ Service Fabric 自身将承担以下职责：
 
 此序列可以完全脚本化/自动化，可以在不让用户接触的情况下对某个已配置为证书自动滚动更新的群集进行初始部署。 下面提供了详细步骤。 我们将混合使用 PowerShell cmdlet 和 json 模板片段。 可以使用与 Azure 交互时所有支持的方法来实现相同的功能。
 
-[!NOTE] 此示例假设保管库中已经存在一个证书；注册和续订 KeyVault 托管证书需要完成充当先决条件的手动步骤，如本文前面所述。 对于生产环境，请使用 KeyVault 托管证书 - 下面提供了特定于 Microsoft 内部 PKI 的示例脚本。
-证书自动滚动更新仅适用于 CA 颁发的证书；使用自签名证书（包括在 Azure 门户中部署 Service Fabric 群集时生成的证书）是不合理的，但自签名证书仍可用于本地/开发人员托管的部署，方法是将颁发者指纹声明为与叶证书的相同。
+> [!NOTE]
+> 此示例假设保管库中已经存在一个证书；注册和续订 KeyVault 托管证书需要完成充当先决条件的手动步骤，如本文前面所述。 对于生产环境，请使用 KeyVault 托管证书 - 下面提供了特定于 Microsoft 内部 PKI 的示例脚本。
+
+> [!NOTE]
+> 证书自动滚动更新仅适用于 CA 颁发的证书；使用自签名证书（包括在 Azure 门户中部署 Service Fabric 群集时生成的证书）是不合理的，但自签名证书仍可用于本地/开发人员托管的部署，方法是将颁发者指纹声明为与叶证书的相同。
 
 ### <a name="starting-point"></a>起点
 为了简单起见，我们将假定采用以下开始状态：
@@ -421,6 +427,7 @@ Service Fabric 自身将承担以下职责：
 你可能已注意到 KVVM 扩展的“linkOnRenewal”标志，以及它已设置为 false 这一事实。 在这里，我们将深入探讨此标志控制的行为及其对群集功能的影响。 请注意，此行为特定于 Windows。
 
 根据其[定义](../virtual-machines/extensions/key-vault-windows.md#extension-schema)：
+
 ```json
 "linkOnRenewal": <Only Windows. This feature enables auto-rotation of SSL certificates, without necessitating a re-deployment or binding.  e.g.: false>,
 ```
@@ -450,7 +457,7 @@ A 的 SAN 列表已完全包含在 C 的中，因此续订 = c. 指纹;B 的 SAN
 
 若要释放托管标识的创建操作或将其分配给其他资源，部署操作员必须具有订阅或资源组中的必需角色 (ManagedIdentityOperator)，以及管理模板中引用的其他资源所需的角色。 
 
-请回想一下，从安全角度来看，可以将虚拟机（规模集）视为与其 Azure 标识相关的安全边界。 这意味着，在 VM 上托管的任何应用程序原则上都可以获取一个表示 VM 的访问令牌 - 托管标识访问令牌是从未经身份验证的 IMDS 终结点获取的。 如果将 VM 视为共享的或多租户的环境，则可能不会指示此检索群集证书的方法。 不过，它是适用于证书自动滚动更新的唯一预配机制。
+从安全角度来看，请记住， (规模集) 的虚拟机被视为与其 Azure 标识有关的安全边界。 这意味着，在 VM 上托管的任何应用程序原则上都可以获取一个表示 VM 的访问令牌 - 托管标识访问令牌是从未经身份验证的 IMDS 终结点获取的。 如果将 VM 视为共享的或多租户的环境，则可能不会指示此检索群集证书的方法。 不过，它是适用于证书自动滚动更新的唯一预配机制。
 
 ## <a name="troubleshooting-and-frequently-asked-questions"></a>故障排除和常见问题解答
 

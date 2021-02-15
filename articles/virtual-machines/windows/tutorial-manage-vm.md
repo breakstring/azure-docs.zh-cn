@@ -7,13 +7,13 @@ ms.topic: tutorial
 ms.workload: infrastructure
 ms.date: 06/06/2019
 ms.author: cynthn
-ms.custom: mvc
-ms.openlocfilehash: b89b3e2cf799e1aa182f7005d92e2c91ce4b76ce
-ms.sourcegitcommit: 64ad2c8effa70506591b88abaa8836d64621e166
+ms.custom: mvc, devx-track-azurepowershell
+ms.openlocfilehash: 3e52a808b187e3823acfee2c260986518f2f6f49
+ms.sourcegitcommit: d103a93e7ef2dde1298f04e307920378a87e982a
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/17/2020
-ms.locfileid: "88263072"
+ms.lasthandoff: 10/13/2020
+ms.locfileid: "91977997"
 ---
 # <a name="tutorial-create-and-manage-windows-vms-with-azure-powershell"></a>教程：使用 Azure PowerShell 创建和管理 Windows VM
 
@@ -30,7 +30,7 @@ Azure 虚拟机提供完全可配置的灵活计算环境。 本教程介绍 Azu
 
 Azure Cloud Shell 是免费的交互式 shell，可以使用它运行本文中的步骤。 它预安装有常用 Azure 工具并将其配置与帐户一起使用。 
 
-若要打开 Cloud Shell，只需要从代码块的右上角选择“试一试”。 也可以通过转到 [https://shell.azure.com/powershell](https://shell.azure.com/powershell) 在单独的浏览器标签页中启动 Cloud Shell。 选择“复制”以复制代码块，将其粘贴到 Cloud Shell 中，然后按 Enter 来运行它。
+若要打开 Cloud Shell，只需要从代码块的右上角选择“试一试”。  也可以通过转到 [https://shell.azure.com/powershell](https://shell.azure.com/powershell) 在单独的浏览器标签页中启动 Cloud Shell。 选择“复制”以复制代码块，将其粘贴到 Cloud Shell 中，然后按 Enter 来运行它。
 
 ## <a name="create-resource-group"></a>创建资源组
 
@@ -87,7 +87,7 @@ Get-AzPublicIpAddress `
 mstsc /v:<publicIpAddress>
 ```
 
-在“Windows 安全性”窗口中，依次选择“更多选择”、“使用其他帐户”。 键入针对 VM 创建的用户名和密码，然后单击“确定”。
+在“Windows 安全性”  窗口中，依次选择“更多选择”  、“使用其他帐户”  。 键入针对 VM 创建的用户名和密码，然后单击“确定”。
 
 ## <a name="understand-marketplace-images"></a>了解市场映像
 
@@ -262,7 +262,7 @@ Status
 PowerState/running
 ```
 
-若要检索订阅中所有 VM 的电源状态，请使用[虚拟机 - 列出所有 API](https://docs.microsoft.com/rest/api/compute/virtualmachines/listall)，并将参数 statusOnly 设置为 true。
+若要检索订阅中所有 VM 的电源状态，请使用[虚拟机 - 列出所有 API](/rest/api/compute/virtualmachines/listall)，并将参数 statusOnly 设置为 true。
 
 ## <a name="management-tasks"></a>管理任务
 

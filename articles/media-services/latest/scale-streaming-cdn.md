@@ -1,25 +1,12 @@
 ---
-title: 通过 CDN 集成流式传输内容
-titleSuffix: Azure Media Services
-description: 了解如何通过 CDN 集成流式传输内容，以及预提取和源-协助 CDN 预提取。
-services: media-services
-documentationcenter: ''
-author: Juliako
-manager: femila
-editor: ''
-ms.service: media-services
-ms.workload: ''
-ms.topic: article
-ms.date: 02/13/2020
-ms.author: juliako
-ms.openlocfilehash: b60a86d09e5d6f7d1108595253349bbd0784e4d3
-ms.sourcegitcommit: c5021f2095e25750eb34fd0b866adf5d81d56c3a
-ms.translationtype: MT
-ms.contentlocale: zh-CN
-ms.lasthandoff: 08/25/2020
-ms.locfileid: "88799343"
+# <a name="mandatory-fields-see-more-on-akamsskyeyemeta"></a>必填字段。 有关详细信息，请参阅 aka.ms/skyeye/meta。
+标题：通过 CDN 集成流式传输内容： Azure 媒体服务说明：了解如何通过 CDN 集成流式传输内容，以及预提取和 Origin-Assist CDN 预提取。
+服务：媒体服务 documentationcenter： ' ' author： IngridAtMicrosoft manager： femila editor： ' ' ms. service： media-服务毫秒：：08/31/2020：： inhenkel
 ---
+
 # <a name="stream-content-with-cdn-integration"></a>通过 CDN 集成流式传输内容
+
+[!INCLUDE [media services api v3 logo](./includes/v3-hr.md)]
 
 Azure 内容分发网络 (CDN) 为开发人员提供了一个全局解决方案，通过在世界各地按特定策略放置的物理节点缓存内容来快速分发高带宽内容。  
 
@@ -29,14 +16,19 @@ CDN 缓存从媒体服务 [流式处理终结点流式处理终结点 (源) ](st
 
 还需要考虑自适应流式处理的工作原理。 每个单独的视频片段缓存为其自己的实体。 例如，假设您首次监视某个视频。 如果查看器仅在此处显示了几秒钟的时间，并且在那里只显示与所监视人员关联的视频碎片，则会在 CDN 中缓存。 使用自适应流式处理，你通常会有 5 到 7 种不同的视频比特率。 如果一个人在观看一个比特率，而另一个用户正在观看不同的比特率，则它们分别在 CDN 中进行缓存。 即使两个用户观察到相同的比特率，也可以通过不同的协议进行流式处理。 每个协议（HLS、MPEG-DASH、平滑流式处理）都是单独缓存的。 因此，会单独缓存每个比特率和协议，并且仅缓存已请求的视频片段。
 
-在决定是否在媒体服务 [流式处理终结点](streaming-endpoint-concept.md)上启用 CDN 时，请考虑预期的查看者数量。 仅当你希望为内容提供许多查看器时，CDN 才会有所帮助。 如果查看器的最大并发度低于500，则建议禁用 CDN，因为 CDN 会使用并发度进行缩放。
+建议为标准和高级流式处理终结点启用 CDN，但测试环境除外。 每种类型的流式处理终结点都有不同的受支持吞吐量限制。
+很难准确计算流式处理终结点支持的最大并发流数，因为需要考虑各种因素。 其中包括：
+
+- 用于流式处理的最大比特率
+- 播放器预缓冲和切换行为。 播放机尝试从原点突发段并使用加载速度来计算自适应比特率切换。 如果流式处理终结点接近饱和，响应时间可能会有所不同，并且玩家会开始切换到较低质量。 因为这会减少流式处理终结点播放机上的负载，所以，请返回到较高质量，创建不需要的切换触发器。
+总体而言，使用最大的流式处理终结点吞吐量来估算最大并发流并将其除以最大比特率 (（假定所有播放机使用高比特率），这是安全的。 ) 例如，你可以拥有一个限制为 600 Mbps 的标准流式处理终结点和3Mbp 的最高比特率。 在这种情况下，最高比特率支持大约200个并发流。 还应考虑音频带宽要求。 尽管音频流只能在 128 kps 进行流式传输，但在将其与并发流的数量相乘后，总流会迅速增加。
 
 本主题讨论如何启用 [CDN 集成](#enable-azure-cdn-integration)。 它还说明了预提取 (主动缓存) 和 [源协助 CDN 预提取](#origin-assist-cdn-prefetch) 概念。
 
 ## <a name="considerations"></a>注意事项
 
-* 无论是否启用 CDN， [流式处理终结点](streaming-endpoint-concept.md) `hostname` 和流 URL 都是相同的。
-* 如果你需要能够通过或不通过 CDN 来测试你的内容，请创建另一个不启用 CDN 的流式处理终结点。
+- 无论是否启用 CDN， [流式处理终结点](streaming-endpoint-concept.md) `hostname` 和流 URL 都是相同的。
+- 如果你需要能够通过或不通过 CDN 来测试你的内容，请创建另一个不启用 CDN 的流式处理终结点。
 
 ## <a name="enable-azure-cdn-integration"></a>启用 Azure CDN 集成
 
@@ -47,11 +39,11 @@ CDN 缓存从媒体服务 [流式处理终结点流式处理终结点 (源) ](st
 
 启用 CDN 后，在设置了一个流式处理终结点后，在完成 DNS 更新以将流式处理终结点映射到 CDN 终结点之前，媒体服务会有一个定义的等待时间。
 
-如果以后想要禁用/启用 CDN，流式处理终结点必须处于“已停止”**** 状态。 启动流式处理终结点后，最多可能需要两个小时才能启用 Azure CDN 集成，并使更改在所有 CDN Pop 中处于活动状态。 但是，可以启动流式处理终结点和流，而不会中断流式处理终结点。 集成完成后，将从 CDN 传送流。 在设置期间，流式处理终结点将处于 " **正在启动** " 状态，你可能会看到性能下降。
+如果以后想要禁用/启用 CDN，流式处理终结点必须处于“已停止”状态。 启动流式处理终结点后，最多可能需要四个小时才能启用 Azure CDN 集成，并使更改在所有 CDN Pop 中处于活动状态。 但是，可以启动流式处理终结点和流，而不会中断流式处理终结点。 集成完成后，将从 CDN 传送流。 在设置期间，流式处理终结点将处于 " **正在启动** " 状态，你可能会看到性能下降。
 
 创建标准流式处理终结点时，默认情况下，它是使用标准 Verizon 进行配置的。 可以使用 REST Api 配置高级 Verizon 或标准 Akamai 提供程序。
 
-标准流式处理终结点可在 **Verizon 提供的 Azure CDN** 上实现 Azure 媒体服务与 Azure CDN 的集成。 可以使用所有 **Azure CDN 定价层和提供程序**配置高级流式处理终结点。
+标准流式处理终结点可在 **Verizon 提供的 Azure CDN** 上实现 Azure 媒体服务与 Azure CDN 的集成。 可以使用所有 **Azure CDN 定价层和提供程序** 配置高级流式处理终结点。
 
 > [!NOTE]
 > 有关 Azure CDN 的详细信息，请参阅 [CDN 概述](../../cdn/cdn-overview.md)。
@@ -60,7 +52,7 @@ CDN 缓存从媒体服务 [流式处理终结点流式处理终结点 (源) ](st
 
 可以通过使用将流量定向到 Azure CDN) ，确定是否已在流式处理终结 (点上进行 DNS 更改 <https://www.digwebinterface.com> 。 如果在结果中看到 azureedge.net 的域名，则流量现在指向 CDN。
 
-## <a name="origin-assist-cdn-prefetch"></a>源-协助 CDN-预提取
+## <a name="origin-assist-cdn-prefetch"></a>Origin-Assist CDN-Prefetch
 
 CDN 缓存是一种反应过程。 如果 CDN 能预测下一个对象将被请求，CDN 可以主动请求并缓存下一个对象。 使用此过程，可以为所有 (或大多数对象) 实现缓存命中，从而提高性能。
 
@@ -73,7 +65,7 @@ CDN 缓存是一种反应过程。 如果 CDN 能预测下一个对象将被请�
 
 ### <a name="benefits"></a>优点
 
-*源协助 CDN 预提取*功能的优点包括：
+*源协助 CDN 预提取* 功能的优点包括：
 
 - 通过在播放期间将预期的视频段预定位到边缘，缩短了查看器的延迟，缩短了视频分段的下载时间，预提取提高了视频播放质量。 这会缩短视频启动时间，减少 rebuffering 的发生次数。
 - 此概念适用于常规的 CDN 源方案，但不限于媒体。
@@ -118,11 +110,11 @@ CDN 缓存是一种反应过程。 如果 CDN 能预测下一个对象将被请�
 
     不能，CDN 预提取仅在客户端启动的请求/响应之后完成。 预提取不会触发 CDN 预提取，以避免预提取循环。
 
-* 是否为源-协助 CDN-预提取功能始终打开？ 如何打开/关闭它？
+* Origin-Assist CDN-Prefetch 功能是否始终打开？ 如何打开/关闭它？
 
     默认情况下此功能处于关闭状态。 客户需要通过 Akamai API 打开它。
 
-* 对于实时流式处理，会发生什么情况—协助下一段或片段是否尚不可用？
+* 对于实时流式处理，如果下一个段或片段尚不可用，Origin-Assist 会发生什么情况呢？
 
     在这种情况下，媒体服务源不会提供 `CDN-Origin-Assist-Prefetch-Path` 标头，且不会进行 CDN 预提取。
 

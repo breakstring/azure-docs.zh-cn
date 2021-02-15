@@ -1,19 +1,19 @@
 ---
-title: 使用 PowerShell 部署 & 在混合网络中配置 Azure 防火墙
+title: 使用 PowerShell 在混合网络中部署和配置 Azure 防火墙
 description: 本文介绍如何使用 Azure PowerShell 部署和配置 Azure 防火墙。
 services: firewall
 author: vhorne
 ms.service: firewall
 ms.topic: how-to
-ms.date: 01/08/2020
+ms.date: 08/28/2020
 ms.author: victorh
 customer intent: As an administrator, I want to control network access from an on-premises network to an Azure virtual network.
-ms.openlocfilehash: 802df45e7434fd0cb425137964880a281f885ad8
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: e60c829831bde3b454ab180d1a39ec46cb346963
+ms.sourcegitcommit: 8e7316bd4c4991de62ea485adca30065e5b86c67
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "85611163"
+ms.lasthandoff: 11/17/2020
+ms.locfileid: "94658630"
 ---
 # <a name="deploy-and-configure-azure-firewall-in-a-hybrid-network-using-azure-powershell"></a>使用 Azure PowerShell 在混合网络中部署和配置 Azure 防火墙
 
@@ -31,17 +31,16 @@ ms.locfileid: "85611163"
 
 在本文中，学习如何：
 
-> [!div class="checklist"]
-> * 声明变量
-> * 创建防火墙中心虚拟网络
-> * 创建分支虚拟网络
-> * 创建本地虚拟网络
-> * 配置和部署防火墙
-> * 创建并连接 VPN 网关
-> * 将中心和分支虚拟网络对等互连
-> * 创建路由
-> * 创建虚拟机
-> * 测试防火墙
+* 声明变量
+* 创建防火墙中心虚拟网络
+* 创建分支虚拟网络
+* 创建本地虚拟网络
+* 配置和部署防火墙
+* 创建并连接 VPN 网关
+* 将中心和分支虚拟网络对等互连
+* 创建路由
+* 创建虚拟机
+* 测试防火墙
 
 如果想改用 Azure 门户来完成本教程，请参阅[教程：使用 Azure 门户在混合网络中部署和配置 Azure 防火墙](tutorial-hybrid-portal.md)。
 
@@ -49,11 +48,11 @@ ms.locfileid: "85611163"
 
 ## <a name="prerequisites"></a>先决条件
 
-本文要求在本地运行 PowerShell。 必须安装 Azure PowerShell 模块。 运行 `Get-Module -ListAvailable Az` 即可查找版本。 如果需要进行升级，请参阅 [Install Azure PowerShell module](https://docs.microsoft.com/powershell/azure/install-Az-ps)（安装 Azure PowerShell 模块）。 验证 PowerShell 版本以后，请运行 `Login-AzAccount`，以便创建与 Azure 的连接。
+本文要求在本地运行 PowerShell。 必须安装 Azure PowerShell 模块。 运行 `Get-Module -ListAvailable Az` 即可查找版本。 如果需要进行升级，请参阅 [Install Azure PowerShell module](/powershell/azure/install-Az-ps)（安装 Azure PowerShell 模块）。 验证 PowerShell 版本以后，请运行 `Login-AzAccount`，以便创建与 Azure 的连接。
 
 若要正常开展此方案，必须符合三项关键要求：
 
-- 分支子网中有一个指向 Azure 防火墙 IP 地址（用作默认网关）的用户定义的路由 (UDR)。 必须在此路由表上**禁用**虚拟网络网关路由传播。
+- 分支子网中有一个指向 Azure 防火墙 IP 地址（用作默认网关）的用户定义的路由 (UDR)。 必须在此路由表上 **禁用** 虚拟网络网关路由传播。
 - 中心网关子网中的 UDR 必须指向用作分支网络下一跃点的防火墙 IP 地址。
 
    无需在 Azure 防火墙子网中创建 UDR，因为它会从 BGP 探测路由。
@@ -69,9 +68,9 @@ ms.locfileid: "85611163"
 >[!NOTE]
 >即使 UDR 指向作为默认网关的 Azure 防火墙，也会直接路由直接对等互连 VNet 之间的流量。 若要在此方案中将子网到子网流量发送到防火墙，UDR 必须在这两个子网上显式地包含目标子网网络前缀。
 
-若要查看相关的 Azure PowerShell 参考文档，请访问 [Azure PowerShell 参考](https://docs.microsoft.com/powershell/module/az.network/new-azfirewall)。
+若要查看相关的 Azure PowerShell 参考文档，请访问 [Azure PowerShell 参考](/powershell/module/az.network/new-azfirewall)。
 
-如果没有 Azure 订阅，请在开始之前创建一个[免费帐户](https://azure.microsoft.com/free/?WT.mc_id=A261C142F)。
+如果没有 Azure 订阅，请在开始之前先创建一个[免费帐户](https://azure.microsoft.com/free/?WT.mc_id=A261C142F)。
 
 ## <a name="declare-the-variables"></a>声明变量
 
@@ -497,4 +496,4 @@ Set-AzFirewall -AzureFirewall $azfw
 
 接下来，可以监视 Azure 防火墙日志。
 
-[教程：监视 Azure 防火墙日志](./tutorial-diagnostics.md)
+[教程：监视 Azure 防火墙日志](./firewall-diagnostics.md)

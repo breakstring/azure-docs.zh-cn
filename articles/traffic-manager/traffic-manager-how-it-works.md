@@ -3,7 +3,7 @@ title: Azure 流量管理器的工作原理 | Microsoft Docs
 description: 本文将帮助你了解流量管理器如何路由流量以确保 Web 应用程序的高性能和可用性
 services: traffic-manager
 documentationcenter: ''
-author: rohinkoul
+author: duongau
 manager: twooley
 ms.service: traffic-manager
 ms.devlang: na
@@ -11,13 +11,13 @@ ms.topic: article
 ms.tgt_pltfrm: na
 ms.workload: infrastructure-services
 ms.date: 03/05/2019
-ms.author: rohink
-ms.openlocfilehash: 4863ffd383cfcd46bad462156e26293d145fd418
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.author: duau
+ms.openlocfilehash: a1e1bd107e8b3b9209f99d1abfc4d7e391c3c4a6
+ms.sourcegitcommit: 0aec60c088f1dcb0f89eaad5faf5f2c815e53bf8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "80294859"
+ms.lasthandoff: 01/14/2021
+ms.locfileid: "98184333"
 ---
 # <a name="how-traffic-manager-works"></a>流量管理器的工作原理
 
@@ -30,7 +30,7 @@ ms.locfileid: "80294859"
 
 当客户端尝试连接到某个服务时，必须先将该服务的 DNS 名称解析成 IP 地址。 然后，客户端就可以连接到该 IP 地址以访问相关服务。
 
-**需要了解的最重要一点是，流量管理器在 DNS 级别工作。**  流量管理器根据流量路由方法的规则，使用 DNS 将客户端导向到特定的服务终结点。 客户端**直接**连接到选定的终结点。 流量管理器不是代理或网关。 流量管理器看不到流量在客户端与服务之间传递。
+**需要了解的最重要一点是，流量管理器在 DNS 级别工作。**  流量管理器根据流量路由方法的规则，使用 DNS 将客户端导向到特定的服务终结点。 客户端 **直接** 连接到选定的终结点。 流量管理器不是代理或网关。 流量管理器看不到流量在客户端与服务之间传递。
 
 ## <a name="traffic-manager-example"></a>流量管理器示例
 
@@ -62,8 +62,8 @@ Contoso Corp 开发了一个新的合作伙伴门户。 此门户的 URL 为 `ht
     - 每个终结点的当前运行状况，可通过流量管理器运行状况检查来确定。 有关详细信息，请参阅[流量管理器终结点监视](traffic-manager-monitoring.md)。
     - 所选的流量路由方法。 有关详细信息，请参阅[流量管理器路由方法](traffic-manager-routing-methods.md)。
 
-5. 选择的终结点以另一个 DNS CNAME 记录的形式返回。 在本例中，假设返回的是 contoso-us.cloudapp.net。
-6. 接下来，递归 DNS 服务将查找“cloudapp.net”域的名称服务器。 它会联系这些名称服务器以请求“contoso-us.cloudapp.net”DNS 记录。 返回的 DNS“A”记录包含位于美国的服务终结点的 IP 地址。
+5. 选择的终结点以另一个 DNS CNAME 记录的形式返回。 在这种情况下，我们假设返回了 contoso-eu.cloudapp.net。
+6. 接下来，递归 DNS 服务将查找“cloudapp.net”域的名称服务器。 它会联系这些名称服务器以请求 "contoso-eu.cloudapp.net" DNS 记录。 返回一个 DNS "A" 记录，其中包含基于欧盟的服务终结点的 IP 地址。
 7. 递归 DNS 服务将结果合并，向客户端返回单个 DNS 响应。
 8. 客户端接收 DNS 结果，并连接到给定的 IP 地址。 客户端直接连接到应用程序服务终结点，而不是通过流量管理器连接。 由于这是一个 HTTPS 终结点，客户端将执行必要的 SSL/TLS 握手，然后针对“/login.aspx”页面发出 HTTP GET 请求。
 
@@ -71,27 +71,27 @@ Contoso Corp 开发了一个新的合作伙伴门户。 此门户的 URL 为 `ht
 
 ## <a name="faqs"></a>常见问题解答
 
-* [流量管理器使用什么 IP 地址？](https://docs.microsoft.com/azure/traffic-manager/traffic-manager-faqs#what-ip-address-does-traffic-manager-use)
+* [流量管理器使用什么 IP 地址？](./traffic-manager-faqs.md#what-ip-address-does-traffic-manager-use)
 
-* [可以使用流量管理器路由什么类型的流量？](https://docs.microsoft.com/azure/traffic-manager/traffic-manager-faqs#what-types-of-traffic-can-be-routed-using-traffic-manager)
+* [可以使用流量管理器路由什么类型的流量？](./traffic-manager-faqs.md#what-types-of-traffic-can-be-routed-using-traffic-manager)
 
-* [流量管理器是否支持“粘滞”会话？](https://docs.microsoft.com/azure/traffic-manager/traffic-manager-faqs#does-traffic-manager-support-sticky-sessions)
+* [流量管理器是否支持“粘滞”会话？](./traffic-manager-faqs.md#does-traffic-manager-support-sticky-sessions)
 
-* [使用流量管理器时为何出现 HTTP 错误？](https://docs.microsoft.com/azure/traffic-manager/traffic-manager-faqs#why-am-i-seeing-an-http-error-when-using-traffic-manager)
+* [使用流量管理器时为何出现 HTTP 错误？](./traffic-manager-faqs.md#why-am-i-seeing-an-http-error-when-using-traffic-manager)
 
-* [使用流量管理器对性能有什么影响？](https://docs.microsoft.com/azure/traffic-manager/traffic-manager-faqs#what-is-the-performance-impact-of-using-traffic-manager)
+* [使用流量管理器对性能有什么影响？](./traffic-manager-faqs.md#what-is-the-performance-impact-of-using-traffic-manager)
 
-* [流量管理器允许使用什么应用程序协议？](https://docs.microsoft.com/azure/traffic-manager/traffic-manager-faqs#what-application-protocols-can-i-use-with-traffic-manager)
+* [流量管理器允许使用什么应用程序协议？](./traffic-manager-faqs.md#what-application-protocols-can-i-use-with-traffic-manager)
 
-* [是否可以对“裸”域名使用流量管理器？](https://docs.microsoft.com/azure/traffic-manager/traffic-manager-faqs#can-i-use-traffic-manager-with-a-naked-domain-name)
+* [是否可以对“裸”域名使用流量管理器？](./traffic-manager-faqs.md#can-i-use-traffic-manager-with-a-naked-domain-name)
 
-* [处理 DNS 查询时流量管理器是否会考虑客户端子网地址？](https://docs.microsoft.com/azure/traffic-manager/traffic-manager-faqs#does-traffic-manager-consider-the-client-subnet-address-when-handling-dns-queries)
+* [处理 DNS 查询时流量管理器是否会考虑客户端子网地址？](./traffic-manager-faqs.md#does-traffic-manager-consider-the-client-subnet-address-when-handling-dns-queries)
 
-* [什么是 DNS TTL，它如何影响我的用户？](https://docs.microsoft.com/azure/traffic-manager/traffic-manager-faqs#what-is-dns-ttl-and-how-does-it-impact-my-users)
+* [什么是 DNS TTL，它如何影响我的用户？](./traffic-manager-faqs.md#what-is-dns-ttl-and-how-does-it-impact-my-users)
 
-* [可将流量管理器响应的 TTL 设置为多高或多低？](https://docs.microsoft.com/azure/traffic-manager/traffic-manager-faqs#how-high-or-low-can-i-set-the-ttl-for-traffic-manager-responses)
+* [可将流量管理器响应的 TTL 设置为多高或多低？](./traffic-manager-faqs.md#how-high-or-low-can-i-set-the-ttl-for-traffic-manager-responses)
 
-* [如何了解传入到我的配置文件的查询数量？](https://docs.microsoft.com/azure/traffic-manager/traffic-manager-faqs#how-can-i-understand-the-volume-of-queries-coming-to-my-profile)
+* [如何了解传入到我的配置文件的查询数量？](./traffic-manager-faqs.md#how-can-i-understand-the-volume-of-queries-coming-to-my-profile)
 
 ## <a name="next-steps"></a>后续步骤
 
@@ -102,4 +102,3 @@ Contoso Corp 开发了一个新的合作伙伴门户。 此门户的 URL 为 `ht
 <!--Image references-->
 [1]: ./media/traffic-manager-how-traffic-manager-works/dns-configuration.png
 [2]: ./media/traffic-manager-how-traffic-manager-works/flow.png
-

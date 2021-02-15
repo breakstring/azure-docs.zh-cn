@@ -7,13 +7,13 @@ ms.service: static-web-apps
 ms.topic: tutorial
 ms.date: 05/08/2020
 ms.author: aapowell
-ms.custom: devx-track-javascript
-ms.openlocfilehash: 6f5e05e9bfea6b14e46bbde8d17fba2d2a3b7b07
-ms.sourcegitcommit: 0b8320ae0d3455344ec8855b5c2d0ab3faa974a3
+ms.custom: devx-track-js
+ms.openlocfilehash: 72b1bd4d46b0b04364b25a8460361d6a008d42a6
+ms.sourcegitcommit: 829d951d5c90442a38012daaf77e86046018e5b9
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/30/2020
-ms.locfileid: "87429505"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "91250124"
 ---
 # <a name="tutorial-publish-a-vuepress-site-to-azure-static-web-apps-preview"></a>教程：将 VuePress 站点发布到 Azure 静态 Web 应用（预览）
 
@@ -127,7 +127,7 @@ ms.locfileid: "87429505"
 
 1. 对于“SKU”，选择“免费”。
 
-   :::image type="content" source="./media/publish-vuepress/basic-app-details.png" alt-text="已填写的详细信息":::
+   :::image type="content" source="./media/publish-vuepress/basic-app-details.png" alt-text="在门户中创建静态 Web 应用（预览）":::
 
 1. 单击“使用 GitHub 登录”按钮。
 
@@ -137,7 +137,7 @@ ms.locfileid: "87429505"
 
 1. 对于“分支”，选择“主”。
 
-   :::image type="content" source="./media/publish-vuepress/completed-github-info.png" alt-text="已完成的 GitHub 信息":::
+   :::image type="content" source="./media/publish-vuepress/completed-github-info.png" alt-text="在门户中创建静态 Web 应用（预览）":::
 
 ### <a name="build"></a>构建
 
@@ -151,7 +151,7 @@ ms.locfileid: "87429505"
 
 “API 位置”的值不是必需的，因为目前不会部署 API。
 
-   :::image type="content" source="./media/publish-vuepress/build-details.png" alt-text="生成设置":::
+   :::image type="content" source="./media/publish-vuepress/build-details.png" alt-text="在门户中创建静态 Web 应用（预览）":::
 
 ### <a name="review-and-create"></a>查看并创建
 
@@ -163,7 +163,7 @@ ms.locfileid: "87429505"
 
 1. 在资源屏幕中，单击 URL 链接，打开已部署的应用程序。 可能需要等待一两分钟，GitHub 操作才能完成。
 
-   :::image type="content" source="./media/publish-vuepress/deployed-app.png" alt-text="已部署的应用程序":::
+   :::image type="content" source="./media/publish-vuepress/deployed-app.png" alt-text="在门户中创建静态 Web 应用（预览）":::
 
 ### <a name="clean-up-resources"></a>清理资源
 

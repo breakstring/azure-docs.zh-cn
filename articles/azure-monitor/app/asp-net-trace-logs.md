@@ -2,13 +2,14 @@
 title: 在 Application Insights 中浏览 .NET 跟踪日志
 description: 由 Trace、NLog 或 Log4Net 生成的搜索日志。
 ms.topic: conceptual
+ms.custom: devx-track-csharp
 ms.date: 05/08/2019
-ms.openlocfilehash: c192ae8fad6cf463af892018fcac385b3bdcd345
-ms.sourcegitcommit: a76ff927bd57d2fcc122fa36f7cb21eb22154cfa
+ms.openlocfilehash: 083ddbd06561550f89e414d6c679cdc6433fa338
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/28/2020
-ms.locfileid: "87321320"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98937554"
 ---
 # <a name="explore-netnet-core-and-python-trace-logs-in-application-insights"></a>在 Application Insights 中浏览 .NET/.NET Core 和 Python 跟踪日志
 
@@ -50,19 +51,19 @@ ms.locfileid: "87321320"
 4. 选择以下包之一：
 
    - 对于 ILogger：[Microsoft.Extensions.Logging.ApplicationInsights](https://www.nuget.org/packages/Microsoft.Extensions.Logging.ApplicationInsights/)
-[![NuGet](https://img.shields.io/nuget/vpre/Microsoft.Extensions.Logging.ApplicationInsights.svg)](https://www.nuget.org/packages/Microsoft.Extensions.Logging.ApplicationInsights/)
+[![NuGet iLogger 横幅](https://img.shields.io/nuget/vpre/Microsoft.Extensions.Logging.ApplicationInsights.svg)](https://www.nuget.org/packages/Microsoft.Extensions.Logging.ApplicationInsights/)
    - 对于 NLog：[Microsoft.ApplicationInsights.NLogTarget](https://www.nuget.org/packages/Microsoft.ApplicationInsights.NLogTarget/)
-[![NuGet](https://img.shields.io/nuget/vpre/Microsoft.ApplicationInsights.NLogTarget.svg)](https://www.nuget.org/packages/Microsoft.ApplicationInsights.NLogTarget/)
+[![NuGet NLog 横幅](https://img.shields.io/nuget/vpre/Microsoft.ApplicationInsights.NLogTarget.svg)](https://www.nuget.org/packages/Microsoft.ApplicationInsights.NLogTarget/)
    - 对于 Log4Net：[Microsoft.ApplicationInsights.Log4NetAppender](https://www.nuget.org/packages/Microsoft.ApplicationInsights.Log4NetAppender/)
-[![NuGet](https://img.shields.io/nuget/vpre/Microsoft.ApplicationInsights.Log4NetAppender.svg)](https://www.nuget.org/packages/Microsoft.ApplicationInsights.Log4NetAppender/)
+[![NuGet Log4Net 横幅](https://img.shields.io/nuget/vpre/Microsoft.ApplicationInsights.Log4NetAppender.svg)](https://www.nuget.org/packages/Microsoft.ApplicationInsights.Log4NetAppender/)
    - 对于 System.Diagnostics：[Microsoft.ApplicationInsights.TraceListener](https://www.nuget.org/packages/Microsoft.ApplicationInsights.TraceListener/)
-[![NuGet](https://img.shields.io/nuget/vpre/Microsoft.ApplicationInsights.TraceListener.svg)](https://www.nuget.org/packages/Microsoft.ApplicationInsights.TraceListener/)
+[![NuGet System.Diagnostics 横幅](https://img.shields.io/nuget/vpre/Microsoft.ApplicationInsights.TraceListener.svg)](https://www.nuget.org/packages/Microsoft.ApplicationInsights.TraceListener/)
    - [Microsoft.ApplicationInsights.DiagnosticSourceListener](https://www.nuget.org/packages/Microsoft.ApplicationInsights.DiagnosticSourceListener/)
-[![NuGet](https://img.shields.io/nuget/vpre/Microsoft.ApplicationInsights.DiagnosticSourceListener.svg)](https://www.nuget.org/packages/Microsoft.ApplicationInsights.DiagnosticSourceListener/)
+[![NuGet Diagnostic Source Listener 横幅](https://img.shields.io/nuget/vpre/Microsoft.ApplicationInsights.DiagnosticSourceListener.svg)](https://www.nuget.org/packages/Microsoft.ApplicationInsights.DiagnosticSourceListener/)
    - [Microsoft.ApplicationInsights.EtwCollector](https://www.nuget.org/packages/Microsoft.ApplicationInsights.EtwCollector/)
-[![NuGet](https://img.shields.io/nuget/vpre/Microsoft.ApplicationInsights.EtwCollector.svg)](https://www.nuget.org/packages/Microsoft.ApplicationInsights.EtwCollector/)
+[![NuGet Etw Collector 横幅](https://img.shields.io/nuget/vpre/Microsoft.ApplicationInsights.EtwCollector.svg)](https://www.nuget.org/packages/Microsoft.ApplicationInsights.EtwCollector/)
    - [Microsoft.ApplicationInsights.EventSourceListener](https://www.nuget.org/packages/Microsoft.ApplicationInsights.EventSourceListener/)
-[![Nuget](https://img.shields.io/nuget/vpre/Microsoft.ApplicationInsights.EventSourceListener.svg)](https://www.nuget.org/packages/Microsoft.ApplicationInsights.EventSourceListener/)
+[![NuGet Event Source Listener 横幅](https://img.shields.io/nuget/vpre/Microsoft.ApplicationInsights.EventSourceListener.svg)](https://www.nuget.org/packages/Microsoft.ApplicationInsights.EventSourceListener/)
 
 NuGet 包安装必要的程序集，并在适用情况下修改 web.config 或 app.config。
 
@@ -84,7 +85,7 @@ System.Diagnostics.Trace.TraceWarning("Slow response - database01");
 ```
 
 ## <a name="use-eventsource-events"></a>使用 EventSource 事件
-可配置要作为跟踪发送到 Application Insights 的 [System.Diagnostics.Tracing.EventSource](/dotnet/api/system.diagnostics.tracing.eventsource?view=netcore-3.1) 事件。 首先，安装 `Microsoft.ApplicationInsights.EventSourceListener` NuGet 包。 然后编辑 [ApplicationInsights.config](./configuration-with-applicationinsights-config.md) 文件的 `TelemetryModules` 部分。
+可配置要作为跟踪发送到 Application Insights 的 [System.Diagnostics.Tracing.EventSource](/dotnet/api/system.diagnostics.tracing.eventsource) 事件。 首先，安装 `Microsoft.ApplicationInsights.EventSourceListener` NuGet 包。 然后编辑 [ApplicationInsights.config](./configuration-with-applicationinsights-config.md) 文件的 `TelemetryModules` 部分。
 
 ```xml
     <Add Type="Microsoft.ApplicationInsights.EventSourceListener.EventSourceTelemetryModule, Microsoft.ApplicationInsights.EventSourceListener">
@@ -138,7 +139,8 @@ System.Diagnostics.Trace.TraceWarning("Slow response - database01");
 例如：
 
 ```csharp
-var telemetry = new Microsoft.ApplicationInsights.TelemetryClient();
+TelemetryConfiguration configuration = TelemetryConfiguration.CreateDefault();
+var telemetryClient = new TelemetryClient(configuration);
 telemetry.TrackTrace("Slow response - database01");
 ```
 
@@ -147,10 +149,11 @@ TrackTrace 的一个优势是可将相对较长的数据放置在消息中。 �
 还可向消息添加严重性级别。 并像其他遥测一样，可以添加属性值以帮助筛选或搜索不同跟踪集。 例如：
 
   ```csharp
-  var telemetry = new Microsoft.ApplicationInsights.TelemetryClient();
-  telemetry.TrackTrace("Slow database response",
-                 SeverityLevel.Warning,
-                 new Dictionary<string,string> { {"database", db.ID} });
+  TelemetryConfiguration configuration = TelemetryConfiguration.CreateDefault();
+  var telemetryClient = new TelemetryClient(configuration);
+  telemetryClient.TrackTrace("Slow database response",
+                              SeverityLevel.Warning,
+                              new Dictionary<string, string> { { "database", "db.ID" } });
   ```
 
 这样便可以在[搜索][diagnostic]中轻松筛选出与特定数据库相关的所有特定严重性级别的消息。
@@ -185,7 +188,7 @@ logger.warning('Hello, World!')
 * 将页面的配置另存为收藏夹。
 
 > [!NOTE]
->如果应用程序发送大量数据，并且使用的是用于 ASP.NET 的 Application Insights SDK 2.0.0-beta3 或更高版本，则*自适应采样*功能可以正常运行，只发送一部分遥测数据。 [了解有关采样的详细信息。](./sampling.md)
+>如果应用程序发送大量数据，并且使用的是用于 ASP.NET 的 Application Insights SDK 2.0.0-beta3 或更高版本，则 *自适应采样* 功能可以正常运行，只发送一部分遥测数据。 [了解有关采样的详细信息。](./sampling.md)
 >
 
 ## <a name="troubleshooting"></a>疑难解答
@@ -200,11 +203,11 @@ logger.warning('Hello, World!')
 
 ### <a name="theres-no-log-adapter-option-in-the-configuration-tool"></a>配置工具中没有日志适配器选项
 * 首先安装记录框架。
-* 如果使用的是 System.Diagnostics.Trace，请确保已[在 web.config 中对其进行配置](/dotnet/api/system.diagnostics.eventlogtracelistener?view=dotnet-plat-ext-3.1)。
+* 如果使用的是 System.Diagnostics.Trace，请确保已[在 web.config 中对其进行配置](/dotnet/api/system.diagnostics.eventlogtracelistener)。
 * 确保已安装最新版本的 Application Insights。 在 Visual Studio中，转到“工具” > “扩展和更新”，并打开“更新”选项卡  。如果“Developer Analytics Tools”在此处，请选择以更新它。
 
 ### <a name="i-get-the-instrumentation-key-cannot-be-empty-error-message"></a><a name="emptykey"></a>遇到“检测密钥不能为空”错误消息
-可能在未安装 Application Insights 的情况下安装了日志记录适配器 Nuget 包。 在解决方案资源管理器中，右键单击“ApplicationInsights.config”，然后选择“更新 Application Insights”。 系统将提示你登录到 Azure 并创建 Application Insights 资源或重复使用现有资源。 这会解决此问题。
+你可能在未安装 Application Insights 的情况下安装了日志记录适配器 NuGet 包。 在解决方案资源管理器中，右键单击“ApplicationInsights.config”，然后选择“更新 Application Insights”。 系统将提示你登录到 Azure 并创建 Application Insights 资源或重复使用现有资源。 这会解决此问题。
 
 ### <a name="i-can-see-traces-but-not-other-events-in-diagnostic-search"></a>我可以在诊断搜索中看到跟踪，但看不到其他事件
 所有事件和请求都通过管道可能需要一些时间。

@@ -1,24 +1,24 @@
 ---
-title: 使用按需 SQL（预览版）访问存储上的文件
-description: 介绍如何使用 SQL 按需版本（预览版）资源在 Synapse SQL 中查询存储文件。
+title: 在无服务器 SQL 池中访问存储中的文件
+description: 介绍如何在 Azure Synapse Analytics 中使用无服务器 SQL 池查询存储文件。
 services: synapse-analytics
 author: azaricstefan
 ms.service: synapse-analytics
 ms.topic: overview
 ms.subservice: sql
 ms.date: 04/19/2020
-ms.author: v-stazar
-ms.reviewer: jrasnick, carlrab
-ms.openlocfilehash: 2a0751f12f33a36d9e0003977bcf40b66d715615
-ms.sourcegitcommit: 25bb515efe62bfb8a8377293b56c3163f46122bf
+ms.author: stefanazaric
+ms.reviewer: jrasnick
+ms.openlocfilehash: f398f80e4e283f971e0d947d0dda131e12fe88a7
+ms.sourcegitcommit: aacbf77e4e40266e497b6073679642d97d110cda
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/07/2020
-ms.locfileid: "87986944"
+ms.lasthandoff: 01/12/2021
+ms.locfileid: "98120387"
 ---
-# <a name="access-external-storage-in-synapse-sql-on-demand"></a>访问 Synapse SQL 中的外部存储（按需版本）
+# <a name="access-external-storage-using-serverless-sql-pool-in-azure-synapse-analytics"></a>在 Azure Synapse Analytics 中使用无服务器 SQL 池访问外部存储
 
-本文档介绍用户如何从 Synapse SQL（按需版本）中 Azure 存储中存储的文件读取数据。 用户具有以下用于访问存储的选项：
+本文档介绍用户如何从无服务器 SQL 池的 Azure 存储中存储的文件读取数据。 用户具有以下用于访问存储的选项：
 
 - [OPENROWSET](develop-openrowset.md) 函数，可对 Azure 存储中的文件进行即席查询。
 - [外部表](develop-tables-external-tables.md)，它是基于一组外部文件生成的预定义数据结构。
@@ -27,7 +27,7 @@ ms.locfileid: "87986944"
 
 ## <a name="query-files-using-openrowset"></a>使用 OPENROWSET 查询文件
 
-借助 OPENROWSET，用户可以查询 Azure 存储上的外部文件，前提是他们具有对存储的访问权限。 连接到 Synapse SQL 按需版本终结点的用户应使用以下查询来读取 Azure 存储中文件的内容：
+借助 OPENROWSET，用户可以查询 Azure 存储中的外部文件，前提是他们有权访问该存储。 连接到无服务器 SQL 池的用户应使用以下查询来读取 Azure 存储中文件的内容：
 
 ```sql
 SELECT * FROM
@@ -52,7 +52,7 @@ CREATE CREDENTIAL [https://<storage_account>.dfs.core.windows.net/<container>]
 GRANT REFERENCES CREDENTIAL::[https://<storage_account>.dfs.core.windows.net/<container>] TO sqluser
 ```
 
-如果没有与 URL 匹配的服务器级凭据或 SQL 用户没有此凭据的引用权限，则将返回错误。 SQL 主体无法使用某些 Azure AD 标识进行模拟。
+如果没有与 URL 匹配的服务器级凭据，或 SQL 用户没有此凭据的引用权限，则会返回错误。 SQL 主体无法使用某个 Azure AD 标识进行模拟。
 
 ### <a name="direct-access"></a>[直接访问](#tab/direct-access)
 
@@ -75,7 +75,7 @@ SELECT * FROM
  FORMAT= 'parquet') as rows
 ```
 
-执行此查询的用户必须能够访问文件。 如果用户无法使用其 [Azure AD 标识](develop-storage-files-storage-access-control.md?tabs=user-identity)或通过[匿名访问](develop-storage-files-storage-access-control.md?tabs=public-access)来直接访问文件，则必须使用 [SAS 令牌](develop-storage-files-storage-access-control.md?tabs=shared-access-signature)或[工作区的托管标识](develop-storage-files-storage-access-control.md?tabs=managed-identity)来模拟用户。
+执行此查询的用户必须能够访问文件。 如果用户无法通过其 [Azure AD 标识](develop-storage-files-storage-access-control.md?tabs=user-identity)或[匿名访问](develop-storage-files-storage-access-control.md?tabs=public-access)来直接访问文件，则必须使用 [SAS 令牌](develop-storage-files-storage-access-control.md?tabs=shared-access-signature)或[工作区的托管标识](develop-storage-files-storage-access-control.md?tabs=managed-identity)来模拟用户。
 
 ### <a name="impersonation"></a>[模拟](#tab/impersonation)
 
@@ -116,7 +116,7 @@ CREATE EXTERNAL DATA SOURCE MyAzureInvoices
 
 具有读取表权限的用户可以使用基于一组 Azure 存储文件夹和文件创建的 EXTERNAL TABLE 来访问外部文件。
 
-[具有创建外部表权限](https://docs.microsoft.com/sql/t-sql/statements/create-external-table-transact-sql?view=sql-server-ver15#permissions)（例如 CREATE TABLE 和 ALTER ANY CREDENTIAL 或 REFERENCES DATABASE SCOPED CREDENTIAL）的用户可以使用以下脚本基于 Azure 存储数据源创建表：
+[具有创建外部表权限](/sql/t-sql/statements/create-external-table-transact-sql?preserve-view=true&view=sql-server-ver15#permissions)（例如 CREATE TABLE 和 ALTER ANY CREDENTIAL 或 REFERENCES DATABASE SCOPED CREDENTIAL）的用户可以使用以下脚本基于 Azure 存储数据源创建表：
 
 ```sql
 CREATE EXTERNAL TABLE [dbo].[DimProductexternal]

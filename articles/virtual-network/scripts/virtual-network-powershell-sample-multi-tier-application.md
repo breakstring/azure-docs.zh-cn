@@ -1,6 +1,6 @@
 ---
 title: 为多层应用程序创建 VNet - Azure PowerShell 脚本示例
-description: Azure PowerShell 脚本示例 - 为多层应用程序创建虚拟网络。
+description: 为多层应用程序创建虚拟网络 - Azure PowerShell 脚本示例。
 services: virtual-network
 documentationcenter: virtual-network
 author: KumudD
@@ -15,12 +15,13 @@ ms.tgt_pltfrm: ''
 ms.workload: infrastructure
 ms.date: 12/13/2018
 ms.author: kumud
-ms.openlocfilehash: 773a7d6b12cc515a7525808068080f46d9f79799
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.custom: devx-track-azurepowershell
+ms.openlocfilehash: 51cafb0a344c5b6226b3b033d8c60327eaf2c05f
+ms.sourcegitcommit: 32c521a2ef396d121e71ba682e098092ac673b30
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87068702"
+ms.lasthandoff: 09/25/2020
+ms.locfileid: "91267935"
 ---
 # <a name="create-a-network-for-multi-tier-applications-script-sample"></a>为多层应用程序创建网络脚本示例
 

@@ -6,15 +6,15 @@ ms.topic: conceptual
 author: bwren
 ms.author: bwren
 ms.date: 03/30/2019
-ms.openlocfilehash: ec5717135ec7bbf2236b5f5672dbf0b5d1413b44
-ms.sourcegitcommit: 37afde27ac137ab2e675b2b0492559287822fded
+ms.openlocfilehash: a817c12a367d7c14f693389920e49b368a35cc06
+ms.sourcegitcommit: c95e2d89a5a3cf5e2983ffcc206f056a7992df7d
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/18/2020
-ms.locfileid: "88565717"
+ms.lasthandoff: 11/24/2020
+ms.locfileid: "95522866"
 ---
 # <a name="optimize-log-queries-in-azure-monitor"></a>优化 Azure Monitor 中的日志查询
-Azure Monitor 日志使用 [Azure 数据资源管理器 (ADX)](/azure/data-explorer/) 来存储日志数据，并运行查询来分析这些数据。 它为你创建、管理和维护 ADX 群集，并针对你的日志分析工作负荷优化它们。 运行查询时，将对其进行优化，并将其路由到存储着工作区数据的相应 ADX 群集。 Azure Monitor 日志和 Azure 数据资源管理器都使用许多自动查询优化机制。 虽然自动优化已提供了显著的性能提升，但在某些情况下，你还可以显著提高查询性能。 本文介绍了性能注意事项和解决相关问题的几种方法。
+Azure Monitor 日志使用 [Azure 数据资源管理器 (ADX)](/azure/data-explorer/) 来存储日志数据，并运行查询来分析这些数据。 它为你创建、管理和维护 ADX 群集，并针对你的日志分析工作负荷优化它们。 运行查询时，将对其进行优化，并将其路由到存储着工作区数据的相应 ADX 群集。 Azure Monitor 日志和 Azure 数据资源管理器都使用许多自动查询优化机制。 虽然自动优化可显著提高性能，但在某些情况下，你可以极大地提高查询性能。 本文介绍了性能注意事项和解决相关问题的几种方法。
 
 大多数方法对于直接在 Azure 数据资源管理器和 Azure Monitor 日志上运行的查询是通用的，但我们在这里讨论的是几个独特的 Azure Monitor 日志注意事项。 如需更多的 Azure 数据资源管理器优化技巧，请参阅[查询最佳做法](/azure/kusto/query/best-practices)。
 
@@ -52,6 +52,8 @@ Azure Monitor 日志使用 [Azure 数据资源管理器 (ADX)](/azure/data-explo
 
 ## <a name="total-cpu"></a>总 CPU 时间
 在所有查询处理节点中处理此查询而投入的实际计算 CPU。 由于大多数查询是在大量节点上执行的，因此此时间通常会比查询实际执行的持续时间长得多。 
+
+使用超过 100 秒 CPU 的查询被视为消耗过多资源的查询。 使用超过 1,000 秒 CPU 的查询被视为滥用查询，可能会受到限制。
 
 查询处理时间花费在：
 - 数据检索–旧数据的检索时间比检索最新数据所用时间更长。
@@ -96,18 +98,34 @@ SecurityEvent
 
 ```Kusto
 //less efficient
-Heartbeat 
-| extend IPRegion = iif(RemoteIPLongitude  < -94,"WestCoast","EastCoast")
-| where IPRegion == "WestCoast"
-| summarize count(), make_set(IPRegion) by Computer
+Syslog
+| extend Msg = strcat("Syslog: ",SyslogMessage)
+| where  Msg  has "Error"
+| count 
 ```
 ```Kusto
 //more efficient
-Heartbeat 
-| where RemoteIPLongitude  < -94
-| extend IPRegion = iif(RemoteIPLongitude  < -94,"WestCoast","EastCoast")
-| summarize count(), make_set(IPRegion) by Computer
+Syslog
+| where  SyslogMessage  has "Error"
+| count 
 ```
+
+在某些情况下，计算列由查询处理引擎隐式创建，因为筛选不只是在字段上完成的：
+```Kusto
+//less efficient
+SecurityEvent
+| where tolower(Process) == "conhost.exe"
+| count 
+```
+```Kusto
+//more efficient
+SecurityEvent
+| where Process =~ "conhost.exe"
+| count 
+```
+
+
+
 
 ### <a name="use-effective-aggregation-commands-and-dimensions-in-summarize-and-join"></a>在汇总和联接中使用高效的聚合命令和维度
 
@@ -177,6 +195,8 @@ SecurityEvent
 
 在处理查询的过程中，一个重要因素是经扫描后用于查询处理的数据量。 与其他数据平台相比，Azure 数据资源管理器使用严格的优化，大大减少了数据量。 尽管如此，查询中也存在一些重要因素，这些因素可能会影响所使用的数据量。
 
+处理超过 2,000KB 数据的查询被视为消耗过多资源的查询。 处理超过 20,000KB 数据的查询被视为滥用查询，可能会受到限制。
+
 在 Azure Monitor 日志中，**TimeGenerated** 列用作为数据编制索引的方式。 将 **TimeGenerated** 值限制在尽可能窄的范围内会显著限制必须处理的数据量，从而显著提高查询性能。
 
 ### <a name="avoid-unnecessary-use-of-search-and-union-operators"></a>避免不必要地使用 search 和 union 运算符
@@ -221,12 +241,12 @@ SecurityEvent
 | summarize LoginSessions = dcount(LogonGuid) by Account
 ```
 
-### <a name="avoid-multiple-scans-of-same-source-data-using-conditional-aggregation-functions-and-materialize-function"></a>避免使用条件聚合函数和具体化函数对相同源数据进行多次扫描
-如果查询包含多个使用联接运算符或联合运算符合并的子查询，则每个子查询将单独扫描整个源，然后合并结果。 这会将数据扫描的次数与非常大的数据集中的关键因素进行了乘积。
+### <a name="avoid-multiple-scans-of-same-source-data-using-conditional-aggregation-functions-and-materialize-function"></a>使用条件聚合函数和 materialize 函数避免多次扫描相同源数据
+如果查询包含多个使用 join 或 union 运算符合并的子查询，则每个子查询会分别扫描整个源，然后合并结果。 这样就会导致扫描数据的次数倍增，这对于大型数据集是个至关重要的因素。
 
-避免这种情况的一种方法是使用条件聚合函数。 在 summary 运算符中使用的大多数 [聚合函数](/azure/data-explorer/kusto/query/summarizeoperator#list-of-aggregation-functions) 都有一个有条件的版本，允许您对多个条件使用单个 summary 运算符。 
+避免这种情况的一种方法是使用条件聚合函数。 在 summarize 运算符中使用的大多数[聚合函数](/azure/data-explorer/kusto/query/summarizeoperator#list-of-aggregation-functions)都有一个带条件的版本，该版本允许配合多个条件使用一个 summarize 运算符。 
 
-例如，下面的查询显示了登录事件的数目以及每个帐户的进程执行事件数。 它们返回相同的结果，但第一次扫描数据两次，第二次只扫描一次数据：
+例如，下面的查询显示了每个帐户的登录事件数以及进程执行事件数。 它们返回相同的结果，但第一个扫描两次数据，第二个只扫描一次数据：
 
 ```Kusto
 //Scans the SecurityEvent table twice and perform expensive join
@@ -248,7 +268,7 @@ SecurityEvent
 | summarize LoginCount = countif(EventID == 4624), ExecutionCount = countif(EventID == 4688), ExecutedProcesses = make_set_if(Process,EventID == 4688)  by Account
 ```
 
-无需子查询的另一种情况是对 [分析运算符](/azure/data-explorer/kusto/query/parseoperator?pivots=azuremonitor) 进行预筛选，以确保它仅处理与特定模式匹配的记录。 这是不必要的，因为分析运算符和其他类似的运算符在模式不匹配时返回空结果。 下面是两个查询，在第二次查询仅扫描数据一次时返回的结果完全相同。 在第二个查询中，每个 parse 命令仅适用于其事件。 扩展运算符随后显示了如何引用空的数据情况。
+另一种不必使用子查询的情况是，对 [parse 运算符](/azure/data-explorer/kusto/query/parseoperator?pivots=azuremonitor)进行预筛选以确保它只处理符合特定模式的记录。 这样做是不必要的，因为 parse 运算符和其他类似的运算符在模式不匹配时会返回空结果。 下面两个查询返回完全相同的结果，但第二个查询只扫描一次数据。 在第二个查询中，每个 parse 命令只与其事件相关。 之后，extend 运算符会显示如何引用空数据情况。
 
 ```Kusto
 //Scan SecurityEvent table twice
@@ -275,7 +295,7 @@ SecurityEvent
 | distinct FilePath, CallerProcessName1
 ```
 
-当上述不允许使用子查询时，另一种方法是提示查询引擎，其中每个源数据都使用 [具体化 ( # A1 函数](/azure/data-explorer/kusto/query/materializefunction?pivots=azuremonitor)使用。 当源数据来自在查询中多次使用的函数时，这将非常有用。
+当上述情况不允许避免使用子查询时，另一种方法是使用 [materialize() 函数](/azure/data-explorer/kusto/query/materializefunction?pivots=azuremonitor)来提示查询引擎：有一个在这些子查询中的每一个都用到的源数据。 当源数据来自在查询中多次用到的某个函数时，适合使用这种方法。 当子查询的输出比输入小得多时，具体化是有效的。 查询引擎将在所有匹配项中缓存和重用输出。
 
 
 
@@ -299,6 +319,8 @@ SecurityEvent
 ## <a name="time-span-of-the-processed-query"></a>已处理查询的时间跨度
 
 Azure Monitor 日志中的所有日志都根据 **TimeGenerated** 列进行分区。 访问的分区数与时间跨度直接相关。 减小时间范围是确保快速执行查询的最有效方法。
+
+时间跨度超过 15 天的查询被视为消耗过多资源的查询。 时间跨度超过 90 天的查询被视为滥用查询，可能会受到限制。
 
 可以使用 Log Analytics 屏幕中的时间范围选择器设置时间范围，如 [Azure Monitor Log Analytics 中的日志查询范围和时间范围](scope.md#time-range)中所述。 这是推荐使用的方法，因为选定的时间范围将使用查询元数据传递到后端。 
 
@@ -389,6 +411,9 @@ Heartbeat
 ## <a name="age-of-processed-data"></a>已处理数据的年限
 Azure 数据资源管理器使用多个存储层：内存中、本地 SSD 磁盘，以及速度慢得多的 Azure Blob。 数据越新，越有可能存储在性能更高且延迟更小的层中，从而减少查询持续时间和 CPU 占用。 除了数据本身以外，系统还有元数据的缓存。 数据越旧，其元数据在缓存中的可能性就越小。
 
+处理超过 14 天的数据的查询将被视为消耗过多资源的查询。
+
+
 虽然有些查询需要使用旧数据，但也有误用旧数据的情况。 执行查询时，如果没有在其元数据中提供时间范围并且不是所有表引用都包含针对 **TimeGenerated** 列的筛选器，则会发生这种情况。 在这些情况下，系统将扫描该表中存储的所有数据。 当数据保留时间较长时，它可能会涵盖较长的时间范围，因此会涵盖在时间上与数据保留期一样长的数据。
 
 下面是这种情况的示例：
@@ -408,6 +433,8 @@ Azure 数据资源管理器使用多个存储层：内存中、本地 SSD 磁盘
 跨区域执行查询要求系统在后端序列化和传输通常比查询最终结果大得多的大块中间数据。 它还限制了系统执行优化和试探法以及使用缓存的能力。
 如果没有真正的理由要扫描所有这些区域，则应调整范围，使其涵盖较少的区域。 如果资源范围已最小化，但仍使用了许多区域，则可能是因配置错误而导致的。 例如，审核日志和诊断设置发送到不同区域中的不同工作区，或者存在多个诊断设置配置。 
 
+跨超过 3 个区域的查询被视为消耗过多资源的查询。 跨超过 6 个区域的查询被视为滥用查询，可能会受到限制。
+
 > [!IMPORTANT]
 > 当查询跨多个区域运行时，CPU 和数据度量将不准确，并且将仅显示其中一个区域上的度量。
 
@@ -420,6 +447,8 @@ Azure 数据资源管理器使用多个存储层：内存中、本地 SSD 磁盘
 - 范围为资源的查询提取数据并且数据存储在多个工作区中。
  
 跨区域和跨群集执行查询要求系统在后端序列化和传输通常比查询最终结果大得多的大块中间数据。 它还限制了系统执行优化和试探法以及使用缓存的能力。
+
+跨超过 5 个工作区的查询被视为消耗过多资源的查询。 查询不能跨超过 100 个工作区。
 
 > [!IMPORTANT]
 > 在某些多工作区方案中，CPU 和数据度量会不准确，并且只会显示几个工作区的度量。
@@ -434,7 +463,7 @@ Azure Monitor 日志使用 Azure 数据资源管理器的大型群集来运行�
 - 使用序列化和窗口函数，例如 [serialize 运算符](/azure/kusto/query/serializeoperator)、[next()](/azure/kusto/query/nextfunction)、[prev()](/azure/kusto/query/prevfunction) 和 [row](/azure/kusto/query/rowcumsumfunction) 函数。 在这些情况下，有时候可能会使用时序和用户分析功能。 如果在非查询末尾的位置使用了以下运算符，则可能会导致序列化低效：[range](/azure/kusto/query/rangeoperator)、[sort](/azure/kusto/query/sortoperator)、[order](/azure/kusto/query/orderoperator)、[top](/azure/kusto/query/topoperator)、[top-hitters](/azure/kusto/query/tophittersoperator)、[getschema](/azure/kusto/query/getschemaoperator)。
 -    使用 [dcount()](/azure/kusto/query/dcount-aggfunction) 聚合函数会强制系统将非重复值存储在中心副本中。 当数据规模较大时，请考虑使用 dcount 函数可选参数来降低精度。
 -    在许多情况下，[join](/azure/kusto/query/joinoperator?pivots=azuremonitor) 运算符会降低整体并行度。 当性能有问题时，看是否可以使用 shuffle join 作为替代方法。
--    在资源范围内的查询中，在有大量 Azure 角色分配的情况下，执行前 RBAC 检查可能会逗留。 这可能会导致检查时间延长，并且会导致并行度降低。 例如，查询在有数千个资源的订阅上执行，每个资源在资源级别（而不是在订阅或资源组上）有许多角色分配。
+-    在资源范围内的查询中，在有大量 Azure 角色分配的情况下，预执行 Kubernetes RBAC 或 Azure RBAC 检查可能会逗留。 这可能会导致检查时间延长，并且会导致并行度降低。 例如，查询在有数千个资源的订阅上执行，每个资源在资源级别（而不是在订阅或资源组上）有许多角色分配。
 -    如果查询处理的是小块数据，那么它的并行度将很低，因为系统不会将它分布到许多计算节点上。
 
 

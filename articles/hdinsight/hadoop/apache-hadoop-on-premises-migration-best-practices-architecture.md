@@ -1,19 +1,17 @@
 ---
 title: 体系结构：本地 Apache Hadoop 到 Azure HDInsight
 description: 了解有关将本地 Hadoop 群集迁移到 Azure HDInsight 的体系结构最佳做法。
-author: hrasheed-msft
-ms.author: hrasheed
 ms.reviewer: ashishth
 ms.service: hdinsight
 ms.topic: how-to
 ms.custom: hdinsightactive
 ms.date: 12/06/2019
-ms.openlocfilehash: 7a76ac3bbe62d48de67815d09e1c8d75f03caa36
-ms.sourcegitcommit: 124f7f699b6a43314e63af0101cd788db995d1cb
+ms.openlocfilehash: eb01f2fabb89c6928dc4919987efa27df36a8a7a
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/08/2020
-ms.locfileid: "86077892"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98946440"
 ---
 # <a name="migrate-on-premises-apache-hadoop-clusters-to-azure-hdinsight---architecture-best-practices"></a>将本地 Apache Hadoop 群集迁移到 Azure HDInsight - 体系结构最佳做法
 
@@ -43,9 +41,9 @@ Azure HDInsight 群集是针对特定类型的计算用途设计的。 由于可
 |[Azure CLI（版本 1.0）](../hdinsight-hadoop-create-linux-clusters-azure-cli.md)||X|||
 |[Azure PowerShell](../hdinsight-hadoop-create-linux-clusters-azure-powershell.md)||X|||
 |[cURL](../hdinsight-hadoop-create-linux-clusters-curl-rest.md)||X|X||
-|[.NET SDK](https://docs.microsoft.com/dotnet/api/overview/azure/hdinsight?view=azure-dotnet)||||X|
-|[Python SDK](https://docs.microsoft.com/python/api/overview/azure/hdinsight?view=azure-python)||||X|
-|[Java SDK](https://docs.microsoft.com/java/api/overview/azure/hdinsight?view=azure-java-stable)||||X|
+|[.NET SDK](/dotnet/api/overview/azure/hdinsight?view=azure-dotnet&preserve-view=true)||||X|
+|[Python SDK](/python/api/overview/azure/hdinsight)||||X|
+|[Java SDK](/java/api/overview/azure/hdinsight)||||X|
 |[Azure Resource Manager 模板](../hdinsight-hadoop-create-linux-clusters-arm-templates.md)||X|||
 
 有关详细信息，请参阅 [HDInsight 中的群集类型](../hadoop/apache-hadoop-introduction.md)一文。
@@ -107,7 +105,7 @@ HDInsight 对 Hive 和 Oozie 元存储使用 Azure SQL 数据库。 可通过两
 
 ## <a name="best-practices-for-different-workloads"></a>不同工作负荷的最佳做法
 
-- 考虑对交互式 Hive 查询使用可改善响应时间的 LLAP 群集。[LLAP](https://cwiki.apache.org/confluence/display/Hive/LLAP)  是 Hive 2.0 中的一项新功能，可用于在内存中缓存查询。 LLAP 能够大幅加快 Hive 查询的速度， [在某些情况下，速度比 Hive 1.x 要快 26 倍](https://hortonworks.com/blog/announcing-apache-hive-2-1-25x-faster-queries-much/)。
+- 考虑对交互式 Hive 查询使用可改善响应时间的 LLAP 群集。[LLAP](https://cwiki.apache.org/confluence/display/Hive/LLAP) 是 Hive 2.0 中的一项新功能，可用于在内存中缓存查询。 LLAP 能够大幅加快 Hive 查询的速度，[在某些情况下，速度比 Hive 1.x 要快 2.6 倍](https://hortonworks.com/blog/announcing-apache-hive-2-1-25x-faster-queries-much/)。
 - 考虑使用 Spark 作业取代 Hive 作业。
 - 考虑使用 LLAP 查询取代基于 impala 的查询。
 - 考虑使用 Spark 作业取代 MapReduce 作业。

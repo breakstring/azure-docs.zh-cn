@@ -2,25 +2,27 @@
 title: 使用 Apache Kafka MirrorMaker - Azure 事件中心 | Microsoft Docs
 description: 本文介绍如何使用 Kafka MirrorMaker 来创建 Azure 事件中心中 Kafka 群集的镜像。
 ms.topic: how-to
-ms.date: 06/23/2020
-ms.openlocfilehash: aea8ebcfa65d5f4c90aa1908d03f0fcde8906bba
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.date: 01/04/2021
+ms.openlocfilehash: 654e9e19dfde0d0c58d00e41cf8ab0ba8e1484d7
+ms.sourcegitcommit: aeba98c7b85ad435b631d40cbe1f9419727d5884
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "85320184"
+ms.lasthandoff: 01/04/2021
+ms.locfileid: "97861001"
 ---
-# <a name="use-kafka-mirrormaker-with-event-hubs-for-apache-kafka"></a>将 Kafka MirrorMaker 与适用于 Apache Kafka 的事件中心配合使用
+# <a name="use-apache-kafka-mirrormaker-with-event-hubs"></a>将 Apache Kafka MirrorMaker 与事件中心配合使用
 
-本教程介绍如何使用 Kafka MirrorMaker 在事件中心镜像 Kafka 中转站。
+本教程介绍如何使用 Kafka MirrorMaker 将 Kafka broker 镜像到 Azure 事件中心。 如果使用 CNCF Strimzi 运算符在 Kubernetes 上托管 Apache Kafka，则可以参阅 [此博客文章](https://strimzi.io/blog/2020/06/09/mirror-maker-2-eventhub/) 中的教程，了解如何使用 Strimzi 和 Mirror Maker 2 设置 Kafka。 
 
    ![事件中心的 Kafka MirrorMaker](./media/event-hubs-kafka-mirror-maker-tutorial/evnent-hubs-mirror-maker1.png)
 
 > [!NOTE]
 > [GitHub](https://github.com/Azure/azure-event-hubs-for-kafka/tree/master/tutorials/mirror-maker) 上提供了此示例
 
+> [!NOTE]
+> 本文包含对术语“白名单”的引用，Microsoft 不再使用该术语。 在从软件中删除该术语后，我们会将其从本文中删除。
 
-本教程介绍如何执行下列操作：
+在本教程中，你将了解如何执行以下操作：
 > [!div class="checklist"]
 > * 创建事件中心命名空间
 > * 克隆示例项目
@@ -29,9 +31,11 @@ ms.locfileid: "85320184"
 > * 运行 Kafka MirrorMaker
 
 ## <a name="introduction"></a>简介
-新式云缩放应用的一个主要考虑因素是能够在不中断服务的情况下更新、改进和更改基础结构。 本教程介绍事件中心和 Kafka MirrorMaker 如何通过在事件中心服务中“镜像”Kafka 输入流将现有 Kafka 管道集成到 Azure 中。 
+本教程介绍事件中心和 Kafka MirrorMaker 如何在事件中心服务中通过 "镜像" Kafka 输入流将现有 Kafka 管道集成到 Azure 中，这允许使用多个 [联合模式](event-hubs-federation-overview.md)集成 Apache Kafka 流。 
 
-通过 Azure 事件中心 Kafka 终结点，用户可以使用 Kafka 协议（即 Kafka 客户端）连接到 Azure 事件中心。 通过对 Kafka 应用程序进行少量更改，可以连接到 Azure 事件中心并利用 Azure 生态系统的好处。 事件中心当前支持 Kafka 1.0 及更高版本。
+通过 Azure 事件中心 Kafka 终结点，用户可以使用 Kafka 协议（即 Kafka 客户端）连接到 Azure 事件中心。 通过对 Kafka 应用程序进行少量更改，可以连接到 Azure 事件中心并利用 Azure 生态系统的好处。 事件中心目前支持 Apache Kafka 版本1.0 及更高版本的协议。
+
+可以使用 Apache Kafka 的 MirrorMaker 1 unidirectionally 从 Apache Kafka 到事件中心。 MirrorMaker 2 可在两个方向上使用，但可[ `MirrorCheckpointConnector` `MirrorHeartbeatConnector` 在 MirrorMaker 2 中配置的和](https://cwiki.apache.org/confluence/display/KAFKA/KIP-382%3A+MirrorMaker+2.0)都必须配置为指向 Apache Kafka broker，而不是事件中心。 本教程演示如何配置 MirrorMaker 1。
 
 ## <a name="prerequisites"></a>先决条件
 
@@ -39,7 +43,7 @@ ms.locfileid: "85320184"
 
 * 通读[用于 Apache Kafka 的事件中心](event-hubs-for-kafka-ecosystem-overview.md)一文。 
 * Azure 订阅。 如果还没有该订阅，可以在开始前创建一个[免费帐户](https://azure.microsoft.com/free/?ref=microsoft.com&utm_source=microsoft.com&utm_medium=docs&utm_campaign=visualstudio)。
-* [Java 开发工具包 (JDK) 1.7+](https://aka.ms/azure-jdks)
+* [Java 开发工具包 (JDK) 1.7+](/azure/developer/java/fundamentals/java-jdk-long-term-support)
     * 在 Ubuntu 上运行 `apt-get install default-jdk`，以便安装 JDK。
     * 请确保设置 JAVA_HOME 环境变量，使之指向在其中安装了 JDK 的文件夹。
 * [下载](https://maven.apache.org/download.cgi)和[安装](https://maven.apache.org/install.html) Maven 二进制存档
@@ -100,6 +104,9 @@ sasl.mechanism=PLAIN
 security.protocol=SASL_SSL
 sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username="$ConnectionString" password="{YOUR.EVENTHUBS.CONNECTION.STRING}";
 ```
+
+> [!IMPORTANT]
+> 将 `{YOUR.EVENTHUBS.CONNECTION.STRING}` 替换为事件中心命名空间的连接字符串。 有关获取连接字符串的说明，请参阅[获取事件中心连接字符串](event-hubs-get-connection-string.md)。 下面是一个配置示例：`sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username="$ConnectionString" password="Endpoint=sb://mynamespace.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=XXXXXXXXXXXXXXXX";`
 
 ## <a name="run-kafka-mirrormaker"></a>运行 Kafka MirrorMaker
 

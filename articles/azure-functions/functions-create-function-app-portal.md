@@ -1,46 +1,84 @@
 ---
-title: 通过 Azure 门户创建 Function App
-description: 通过门户在 Azure 中创建新的函数应用。
+title: 在 Azure 门户中创建第一个函数
+description: 了解如何使用 Azure 门户创建第一个可无服务器执行的 Azure Function。
 ms.topic: how-to
-ms.date: 08/29/2019
-ms.custom: mvc
-ms.openlocfilehash: 001b4e4f0ea7fbacd232b2a87abfe353f34919bd
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.date: 03/26/2020
+ms.custom: devx-track-csharp, mvc, devcenter, cc996988-fb4f-47
+ms.openlocfilehash: 63e9c87d1d94d6b803c27862bc9f2755e02f3111
+ms.sourcegitcommit: 706e7d3eaa27f242312d3d8e3ff072d2ae685956
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "80985008"
+ms.lasthandoff: 02/09/2021
+ms.locfileid: "99980928"
 ---
-# <a name="create-a-function-app-from-the-azure-portal"></a>通过 Azure 门户创建 Function App
+# <a name="create-your-first-function-in-the-azure-portal"></a>在 Azure 门户中创建第一个函数
 
-本主题演示如何使用 Azure Functions 在 Azure 门户中创建函数应用。 Function App 是托管各个函数执行的容器。 
+Azure Functions 用于在无服务器环境中运行代码，无需先创建虚拟机 (VM) 或发布 Web 应用程序。 本文介绍如何使用 Azure Functions 在 Azure 门户中创建 HTTP 触发器函数“hello world”。
+
+>[!NOTE]
+>仅 JavaScript、PowerShell、TypeScript 和 c # 脚本函数支持门户中编辑。<br><br>对于 c # 类库、Java 和 Python 函数，你可以在门户中创建 function app，但你还必须在本地创建函数，然后将其发布到 Azure。 
+
+建议你在 [本地开发函数](functions-develop-local.md) 并发布到 Azure 中的函数应用。  
+通过以下链接之一开始使用所选的本地开发环境和语言：
+
+| Visual Studio Code | 终端/命令提示符 | Visual Studio |
+| --- | --- | --- |
+|  &bull;&nbsp;[C# 入门](./create-first-function-vs-code-csharp.md)<br/>&bull;&nbsp;[Java 入门](./create-first-function-vs-code-java.md)<br/>&bull;&nbsp;[JavaScript 入门](./create-first-function-vs-code-node.md)<br/>&bull;&nbsp;[PowerShell 入门](./create-first-function-vs-code-powershell.md)<br/>&bull;&nbsp;[Python 入门](./create-first-function-vs-code-python.md) |&bull;&nbsp;[C# 入门](./create-first-function-cli-csharp.md)<br/>&bull;&nbsp;[Java 入门](./create-first-function-cli-java.md)<br/>&bull;&nbsp;[JavaScript 入门](./create-first-function-cli-node.md)<br/>&bull;&nbsp;[PowerShell 入门](./create-first-function-cli-powershell.md)<br/>&bull;&nbsp;[Python 入门](./create-first-function-cli-python.md) | [C# 入门](functions-create-your-first-function-visual-studio.md) |
+
+[!INCLUDE [quickstarts-free-trial-note](../../includes/quickstarts-free-trial-note.md)]
+
+## <a name="sign-in-to-azure"></a>登录 Azure
+
+使用 Azure 帐户登录到 [Azure 门户](https://portal.azure.com)。
 
 ## <a name="create-a-function-app"></a>创建函数应用
 
-[!INCLUDE [functions-create-function-app-portal](../../includes/functions-create-function-app-portal.md)]
+必须使用 Function App 托管函数的执行。 函数应用可将函数分组为逻辑单元，以便更轻松地管理、部署、缩放和共享资源。
 
-创建 Function App 后，可以使用一种或多种不同的语言创建各个函数。 [通过使用门户](functions-create-first-azure-function.md#create-function)、[连续部署](functions-continuous-deployment.md)，或通过[使用 FTP 上传](https://github.com/projectkudu/kudu/wiki/Accessing-files-via-ftp)来创建函数。
+[!INCLUDE [Create function app Azure portal](../../includes/functions-create-function-app-portal.md)]
 
-## <a name="service-plans"></a>服务计划
+接下来，在新的函数应用中创建一个函数。
 
-Azure Functions 有三个不同的服务计划： "消耗计划"、"高级计划" 和 "专用（应用服务）" 计划。 必须在创建函数应用时选择服务计划，并且随后无法更改。 有关详细信息，请参阅[选择 Azure Functions 托管计划](functions-scale.md)。
+## <a name="create-an-http-trigger-function"></a><a name="create-function"></a>创建 HTTP 触发器函数
 
-如果计划在专用（应用服务）计划上运行 JavaScript 函数，则应选择具有较少核心的计划。 有关详细信息，请参阅[函数的 JavaScript 参考](functions-reference-node.md#choose-single-vcpu-app-service-plans)。
+1. 从“Functions”窗口的左侧菜单中选择“Functions”，然后从顶部菜单中选择“添加”。 
+ 
+1. 在“新建函数”窗口中，选择“Http 触发器”。
 
-<a name="storage-account-requirements"></a>
+    ![选择 HTTP 触发器函数](./media/functions-create-first-azure-function/function-app-select-http-trigger.png)
 
-## <a name="storage-account-requirements"></a>存储帐户要求
+1. 在“新建函数”窗口中，接受新函数的默认名称，或输入新名称。 
 
-创建函数应用时，必须创建或链接到支持 Blob、队列和表存储的常规用途的 Azure 存储帐户。 Azure Functions 内部使用存储以进行管理触发器和记录函数执行等操作。 某些存储帐户不支持队列和表，例如仅限 blob 的存储帐户、Azure 高级存储和使用 ZRS 复制的常规用途的存储帐户。 创建 Function App 时，将从“存储帐户”边栏选项卡中筛选出这些帐户。
+1. 从“授权级别”下拉列表中选择“匿名”，然后选择“创建函数”。
 
->[!NOTE]
->使用消耗托管计划时，函数代码和绑定配置文件存储在主存储帐户的 Azure 文件存储中。 删除主存储帐户时，此内容将随之删除且无法恢复。
+    Azure 会创建该 HTTP 触发器函数。 现在，可以通过发送 HTTP 请求来运行新函数了。
 
-若要了解有关存储帐户类型的详细信息，请参阅 [Azure 存储服务简介](../storage/common/storage-introduction.md#core-storage-services)。 
+## <a name="test-the-function"></a>测试函数
+
+1. 在新的 HTTP 触发器函数中，从左侧菜单中选择“代码 + 测试”"，然后从顶部菜单中选择“获取函数 URL”。
+
+    ![选择“获取函数 URL”](./media/functions-create-first-azure-function/function-app-select-get-function-url.png)
+
+1. 在“获取函数 URL”对话框的下拉列表中选择“默认值”，然后选择“复制到剪贴板”图标。 
+
+    ![从 Azure 门户复制函数 URL](./media/functions-create-first-azure-function/function-app-develop-tab-testing.png)
+
+1. 将函数 URL 粘贴到浏览器的地址栏中。 将查询字符串值 `?name=<your_name>` 添加到该 URL 尾部，然后按 Enter 来运行请求。 
+
+    以下示例显示了浏览器中的响应：
+
+    ![浏览器中的函数响应。](./media/functions-create-first-azure-function/function-app-browser-testing.png)
+
+    如果请求 URL 包含[访问密钥](functions-bindings-http-webhook-trigger.md#authorization-keys) (`?code=...`)，则意味着在创建函数时选择“Function”而不是“Anonymous”访问级别。 在这种情况下，应改为追加 `&name=<your_name>`。
+
+1. 运行函数时，会在日志中写入跟踪信息。 若要查看跟踪输出，请返回到门户中的“代码 + 测试”页，并展开页面底部的“日志”箭头。
+
+   ![Azure 门户中的“函数日志”查看器。](./media/functions-create-first-azure-function/function-view-logs.png)
+
+## <a name="clean-up-resources"></a>清理资源
+
+[!INCLUDE [Clean-up resources](../../includes/functions-quickstart-cleanup.md)]
 
 ## <a name="next-steps"></a>后续步骤
 
-虽然 Azure 门户可以轻松创建和试用 Functions，但我们建议[本地开发](functions-develop-local.md)。 在门户中创建函数应用后，仍然需要添加一个函数。 
-
-> [!div class="nextstepaction"]
-> [添加 HTTP 触发的函数](functions-create-first-azure-function.md#create-function)
+[!INCLUDE [Next steps note](../../includes/functions-quickstart-next-steps.md)]

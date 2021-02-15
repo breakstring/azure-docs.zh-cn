@@ -1,20 +1,20 @@
 ---
-title: 适用于 SSH 和 RDP 的 Azure IoT 中心设备流 C# 快速入门
+title: 快速入门 - 适用于 SSH 和 RDP 的 Azure IoT 中心设备流 C# 快速入门
 description: 在本快速入门中，我们将运行两个示例 C# 应用程序，以通过 IoT 中心设备流实现 SSH 和 RDP 方案。
 author: robinsh
 ms.service: iot-hub
 services: iot-hub
 ms.devlang: csharp
 ms.topic: quickstart
-ms.custom: mvc
+ms.custom: references_regions
 ms.date: 03/14/2019
 ms.author: robinsh
-ms.openlocfilehash: 97551ac63066f7064c16a001d9ce1f6bc31465ec
-ms.sourcegitcommit: 58faa9fcbd62f3ac37ff0a65ab9357a01051a64f
+ms.openlocfilehash: 12e26818f86fc4abdc1873d031182fd994c04687
+ms.sourcegitcommit: a0c1d0d0906585f5fdb2aaabe6f202acf2e22cfc
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/29/2020
-ms.locfileid: "80586589"
+ms.lasthandoff: 01/21/2021
+ms.locfileid: "98624365"
 ---
 # <a name="quickstart-enable-ssh-and-rdp-over-an-iot-hub-device-stream-by-using-a-c-proxy-application-preview"></a>快速入门：使用 C# 代理应用程序通过 IoT 中心设备流实现 SSH 和 RDP 方案（预览）
 
@@ -25,6 +25,33 @@ Microsoft Azure IoT 中心目前支持设备流作为[预览版功能](https://a
 服务和设备应用程序可以使用 [IoT 中心设备流](iot-hub-device-streams-overview.md)以安全且防火墙友好的方式进行通信。 本快速入门指南涉及两个 C# 应用程序，在其中，可以使用通过 IoT 中心建立的设备流发送客户端-服务器应用程序流量（例如安全外壳 [SSH] 和远程桌面协议 [RDP]）。 有关设置概述，请参阅[适用于 SSH 或 RDP 的本地代理应用程序示例](iot-hub-device-streams-overview.md#local-proxy-sample-for-ssh-or-rdp)。
 
 本文先介绍 SSH 的设置（使用端口 22），然后介绍如何修改 RDP 的设置端口。 由于设备流不区分应用程序和协议，因此，可以修改同一示例来适应其他类型的应用程序流量。 这种修改通常只涉及到将通信端口更改为目标应用程序所用的端口。
+
+## <a name="prerequisites"></a>先决条件
+
+* 目前仅以下区域中创建的 IoT 中心支持设备流预览：
+
+  * 美国中部
+  * 美国中部 EUAP
+  * Southeast Asia
+  * 北欧
+
+* 本快速入门中运行的两个示例应用程序是使用 C# 编写的。 开发计算机上需要有 .NET Core SDK 2.1.0 或更高版本。
+
+    可以[从 .NET 下载适用于多个平台的 .NET Core SDK](https://www.microsoft.com/net/download/all)。
+
+    使用以下命令验证开发计算机上 C# 的当前版本：
+
+    ```
+    dotnet --version
+    ```
+
+* [下载 Azure IoT C# 示例](https://github.com/Azure-Samples/azure-iot-samples-csharp/archive/master.zip)，并提取 ZIP 存档。
+
+* 设备（Windows 或 Linux）上用于对用户进行身份验证的有效用户帐户和凭据。
+
+[!INCLUDE [azure-cli-prepare-your-environment.md](../../includes/azure-cli-prepare-your-environment-no-header.md)]
+
+[!INCLUDE [iot-hub-cli-version-info](../../includes/iot-hub-cli-version-info.md)]
 
 ## <a name="how-it-works"></a>工作原理
 
@@ -43,43 +70,7 @@ Microsoft Azure IoT 中心目前支持设备流作为[预览版功能](https://a
 > [!NOTE]
 > 通过设备流发送的 SSH 流量将通过 IoT 中心的流式处理终结点以隧道方式进行传输，而不是直接在服务与设备之间发送。 有关详细信息，请参阅[使用 IoT 中心设备流的好处](iot-hub-device-streams-overview.md#benefits)。
 
-[!INCLUDE [cloud-shell-try-it.md](../../includes/cloud-shell-try-it.md)]
-
-如果没有 Azure 订阅，请在开始之前创建一个[免费帐户](https://azure.microsoft.com/free/?WT.mc_id=A261C142F)。
-
-## <a name="prerequisites"></a>先决条件
-
-* 目前仅以下区域中创建的 IoT 中心支持设备流预览：
-
-  * 美国中部
-  * 美国中部 EUAP
-  * 东南亚
-  * 北欧
-
-* 本快速入门中运行的两个示例应用程序是使用 C# 编写的。 开发计算机上需要有 .NET Core SDK 2.1.0 或更高版本。
-
-  可以[从 .NET 下载适用于多个平台的 .NET Core SDK](https://www.microsoft.com/net/download/all)。
-
-* 使用以下命令验证开发计算机上 C# 的当前版本：
-
-    ```
-    dotnet --version
-    ```
-
-* 运行以下命令将用于 Azure CLI 的 Azure IoT 扩展添加到 Cloud Shell 实例。 IOT 扩展会将 IoT 中心、IoT Edge 和 IoT 设备预配服务 (DPS) 特定的命令添加到 Azure CLI。
-
-   ```azurecli-interactive
-   az extension add --name azure-iot
-   ```
-
-   ```azurecli-interactive
-   az extension add --name azure-iot
-   ```
-[!INCLUDE [iot-hub-cli-version-info](../../includes/iot-hub-cli-version-info.md)]
-
-* [下载 Azure IoT C# 示例](https://github.com/Azure-Samples/azure-iot-samples-csharp/archive/master.zip)，并提取 ZIP 存档。
-
-* 设备（Windows 或 Linux）上用于对用户进行身份验证的有效用户帐户和凭据。
+[!INCLUDE [quickstarts-free-trial-note](../../includes/quickstarts-free-trial-note.md)]
 
 ## <a name="create-an-iot-hub"></a>创建 IoT 中心
 
@@ -99,20 +90,20 @@ Microsoft Azure IoT 中心目前支持设备流作为[预览版功能](https://a
     az iot hub device-identity create --hub-name {YourIoTHubName} --device-id MyDevice
     ```
 
-1. 若要获取刚刚注册的设备的*设备连接字符串*，请在 Cloud Shell 中运行以下命令：
+1. 若要获取刚刚注册的设备的 *设备连接字符串*，请在 Cloud Shell 中运行以下命令：
 
    > [!NOTE]
    > 请将 *YourIoTHubName* 占位符替换为你为 IoT 中心选择的名称。
 
     ```azurecli-interactive
-    az iot hub device-identity show-connection-string --hub-name {YourIoTHubName} --device-id MyDevice --output table
+    az iot hub device-identity connection-string show --hub-name {YourIoTHubName} --device-id MyDevice --output table
     ```
 
     请记下返回的设备连接字符串，以便稍后在此快速入门中使用。 如以下示例所示：
 
    `HostName={YourIoTHubName}.azure-devices.net;DeviceId=MyDevice;SharedAccessKey={YourSharedAccessKey}`
 
-1. 为了连接到 IoT 中心并建立设备流，还需要使用 IoT 中心的服务连接字符串启用服务端应用程序。  以下命令检索 IoT 中心的此值：
+1. 为了连接到 IoT 中心并建立设备流，还需要使用 IoT 中心的服务连接字符串启用服务端应用程序。 以下命令检索 IoT 中心的此值：
 
    > [!NOTE]
    > 请将 *YourIoTHubName* 占位符替换为你为 IoT 中心选择的名称。

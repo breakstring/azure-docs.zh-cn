@@ -1,19 +1,17 @@
 ---
 title: 缩放群集大小 - Azure HDInsight
 description: 弹性缩放 Apache Hadoop 群集，使其与 Azure HDInsight 中的工作负荷匹配
-author: ashishthaps
 ms.author: ashish
-ms.reviewer: jasonh
 ms.service: hdinsight
 ms.topic: how-to
 ms.custom: seoapr2020
 ms.date: 04/29/2020
-ms.openlocfilehash: a9d419052f000b220c993109e45d371398607275
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.openlocfilehash: 3524b5d2274c52aa94fa1c3420fb0d3245d9b730
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87006444"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98932061"
 ---
 # <a name="scale-azure-hdinsight-clusters"></a>缩放 Azure HDInsight 群集
 
@@ -21,7 +19,7 @@ HDInsight 提供弹性，可让你选择纵向扩展和纵向缩减群集中的�
 
 在定期批处理之前纵向扩展群集，使群集拥有足够的资源。   在完成处理并且用量下降后，可将 HDInsight 群集纵向缩减为使用更少的工作器节点。
 
-可以使用下述方法之一手动缩放群集。 你还可以使用自动[缩放](hdinsight-autoscale-clusters.md)选项来自动增加和减少以响应某些指标。
+可以使用下述方法之一手动缩放群集。 也可使用[自动缩放](hdinsight-autoscale-clusters.md)选项来自动纵向缩放以响应某些指标。
 
 > [!NOTE]  
 > 只支持使用 HDInsight 3.1.3 或更高版本的群集。 如果不确定群集的版本，可以查看“属性”页面。
@@ -32,25 +30,25 @@ Microsoft 提供以下实用程序来缩放群集：
 
 |实用程序 | 说明|
 |---|---|
-|[PowerShell Az](https://docs.microsoft.com/powershell/azure)|[`Set-AzHDInsightClusterSize`](https://docs.microsoft.com/powershell/module/az.hdinsight/set-azhdinsightclustersize) `-ClusterName CLUSTERNAME -TargetInstanceCount NEWSIZE`|
-|[PowerShell AzureRM](https://docs.microsoft.com/powershell/azure/azurerm) |[`Set-AzureRmHDInsightClusterSize`](https://docs.microsoft.com/powershell/module/azurerm.hdinsight/set-azurermhdinsightclustersize) `-ClusterName CLUSTERNAME -TargetInstanceCount NEWSIZE`|
-|[Azure CLI](https://docs.microsoft.com/cli/azure/?view=azure-cli-latest) | [`az hdinsight resize`](https://docs.microsoft.com/cli/azure/hdinsight?view=azure-cli-latest#az-hdinsight-resize) `--resource-group RESOURCEGROUP --name CLUSTERNAME --workernode-count NEWSIZE`|
+|[PowerShell Az](/powershell/azure)|[`Set-AzHDInsightClusterSize`](/powershell/module/az.hdinsight/set-azhdinsightclustersize) `-ClusterName CLUSTERNAME -TargetInstanceCount NEWSIZE`|
+|[PowerShell AzureRM](/powershell/azure/azurerm) |[`Set-AzureRmHDInsightClusterSize`](/powershell/module/azurerm.hdinsight/set-azurermhdinsightclustersize) `-ClusterName CLUSTERNAME -TargetInstanceCount NEWSIZE`|
+|[Azure CLI](/cli/azure/) | [`az hdinsight resize`](/cli/azure/hdinsight#az-hdinsight-resize) `--resource-group RESOURCEGROUP --name CLUSTERNAME --workernode-count NEWSIZE`|
 |[Azure 经典 CLI](hdinsight-administer-use-command-line.md)|`azure hdinsight cluster resize CLUSTERNAME NEWSIZE` |
-|[Azure 门户](https://portal.azure.com)|打开 HDInsight 群集的窗格，在左侧菜单中选择“群集大小”，然后在“群集大小”窗格中键入工作节点数并选择“保存”。****|  
+|[Azure 门户](https://portal.azure.com)|打开 HDInsight 群集的窗格，在左侧菜单中选择“群集大小”，然后在“群集大小”窗格中键入工作节点数并选择“保存”。|  
 
 ![Azure 门户缩放群集选项](./media/hdinsight-scaling-best-practices/azure-portal-settings-nodes.png)
 
 使用以下任一方法可在几分钟之内扩展或缩放 HDInsight 群集。
 
 > [!IMPORTANT]  
-> * Azure 经典 CLI 已弃用，只应与经典部署模型配合使用。 进行所有其他的部署时，请使用 [Azure CLI](https://docs.microsoft.com/cli/azure/?view=azure-cli-latest)。
-> * PowerShell AzureRM 模块已弃用。  请尽可能使用 [Az 模块](https://docs.microsoft.com/powershell/azure/new-azureps-module-az?view=azps-1.4.0)。
+> * Azure 经典 CLI 已弃用，只应与经典部署模型配合使用。 进行所有其他的部署时，请使用 [Azure CLI](/cli/azure/)。
+> * PowerShell AzureRM 模块已弃用。  请尽可能使用 [Az 模块](/powershell/azure/new-azureps-module-az)。
 
 ## <a name="impact-of-scaling-operations"></a>缩放操作的影响
 
-将节点添加**** 到正在运行的 HDInsight 群集时（纵向扩展）时，作业不受影响。 在运行缩放过程时，可以安全提交新作业。 如果缩放操作失败，此类失败会让群集保持正常运行状态。
+将节点添加到正在运行的 HDInsight 群集时（纵向扩展）时，作业不受影响。 在运行缩放过程时，可以安全提交新作业。 如果缩放操作失败，此类失败会让群集保持正常运行状态。
 
-如果删除**** 节点（纵向缩减），则在缩放操作完成时，挂起的或正在运行的作业将会失败。 此失败的原因是某些服务在缩放过程中重启。 在手动缩放操作过程中，群集可能会停滞在安全模式。
+如果删除节点（纵向缩减），则在缩放操作完成时，挂起的或正在运行的作业将会失败。 此失败的原因是某些服务在缩放过程中重启。 在手动缩放操作过程中，群集可能会停滞在安全模式。
 
 对于 HDInsight 支持的每种类型的群集，更改数据节点数的影响有所不同：
 
@@ -82,7 +80,7 @@ Microsoft 提供以下实用程序来缩放群集：
 
     1. 在 Web 浏览器中打开 `https://CLUSTERNAME.azurehdinsight.net/stormui`，其中 `CLUSTERNAME` 是 Storm 群集的名称。 如果出现提示，请输入在创建 HDInsight 群集时指定的群集管理员用户名和密码。
 
-    1. 选择要重新平衡的拓扑，并选择“重新平衡”**** 按钮。 输入执行重新平衡操作前的延迟。
+    1. 选择要重新平衡的拓扑，并选择“重新平衡”按钮。 输入执行重新平衡操作前的延迟。
 
         ![HDInsight Storm 缩放重新平衡](./media/hdinsight-scaling-best-practices/hdinsight-portal-scale-cluster-storm-rebalance.png)
 
@@ -109,11 +107,11 @@ Microsoft 提供以下实用程序来缩放群集：
 
 * Apache Hive LLAP
 
-    缩放到 `N` 辅助角色节点后，HDInsight 会自动设置以下配置并重新启动 Hive。
+    缩放到 `N` 个工作器节点后，HDInsight 将自动设置以下配置并重启 Hive。
 
-  * 最大并发查询总数：`hive.server2.tez.sessions.per.default.queue = min(N, 32)`
+  * 最大总并发查询数：`hive.server2.tez.sessions.per.default.queue = min(N, 32)`
   * Hive 的 LLAP 使用的节点数：`num_llap_nodes  = N`
-  * 用于运行 Hive LLAP 守护程序的节点数：`num_llap_nodes_for_llap_daemons = N`
+  * 运行 Hive LLAP 守护程序的节点数：`num_llap_nodes_for_llap_daemons = N`
 
 ## <a name="how-to-safely-scale-down-a-cluster"></a>如何安全地纵向缩减群集
 
@@ -125,12 +123,12 @@ Microsoft 提供以下实用程序来缩放群集：
 1. 手动结束作业。
 1. 在缩放操作完成后重新提交这些作业。
 
-若要查看挂起和正在运行的作业的列表，可以使用 YARN**资源管理器 UI**，操作步骤如下：
+若要查看挂起和正在运行的作业的列表，可以使用 YARN **资源管理器 UI**，操作步骤如下：
 
-1. 从 [Azure 门户](https://portal.azure.com/)中，选择群集。  群集会在新的门户页中打开。
-2. 在主视图中，导航到“群集仪表板”**** > ****“Ambari 主页”。 输入群集凭据。
-3. 在 Ambari UI 的左侧菜单中的服务列表内选择“YARN”。****  
-4. 从 "YARN" 页上，选择 "**快速链接**" 并将鼠标悬停在活动头节点上，然后选择 "**资源管理器 UI**"。
+1. 在 [Azure 门户](https://portal.azure.com/)中，选择群集。  群集会在新的门户页中打开。
+2. 在主视图中，导航到“群集仪表板” > “Ambari 主页”。 输入群集凭据。
+3. 在 Ambari UI 的左侧菜单中的服务列表内选择“YARN”。  
+4. 从 "YARN" 页上，选择 " **快速链接** " 并将鼠标悬停在活动头节点上，然后选择 " **资源管理器 UI**"。
 
     ![Apache Ambari 快速链接资源管理器 UI](./media/hdinsight-scaling-best-practices/resource-manager-ui1.png)
 

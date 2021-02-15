@@ -8,16 +8,16 @@ ms.service: active-directory
 ms.subservice: user-help
 ms.workload: identity
 ms.topic: end-user-help
-ms.date: 02/03/2020
+ms.date: 01/19/2021
 ms.author: curtand
 ms.reviewer: kasimpso
 ms.custom: user-help, seo-update-azuread-jan
-ms.openlocfilehash: dbe05f264b0fca6c1a5e8e7d944d94a6bed55392
-ms.sourcegitcommit: c5021f2095e25750eb34fd0b866adf5d81d56c3a
+ms.openlocfilehash: 34885e2a364778a2f81f4920aa26aa3bb5f40320
+ms.sourcegitcommit: 24f30b1e8bb797e1609b1c8300871d2391a59ac2
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/25/2020
-ms.locfileid: "88798017"
+ms.lasthandoff: 02/10/2021
+ms.locfileid: "100095012"
 ---
 # <a name="perform-an-access-review-from-the-my-apps-portal"></a>在“我的应用”门户中执行访问评审
 
@@ -29,6 +29,11 @@ ms.locfileid: "88798017"
 
 >[!Important]
 >此内容适用于“我的应用”用户。 如果你是管理员，可以在[应用程序管理文档](../manage-apps/index.yml)中查找有关如何设置和管理基于云的应用的详细信息。
+>
+> 如果在使用个人 Microsoft 帐户登录时出现错误，你仍可以使用组织的域名 (例如，你可以通过以下 Url 之一中的管理员使用你的组织的域名例如 contoso.com) 或你的组织的 **租户 ID** ：
+>
+>   - https://myapplications.microsoft.com?tenantId=*your_domain_name*
+>   - https://myapplications.microsoft.com?tenant=*your_tenant_ID*
 
 ## <a name="manage-access-reviews"></a>管理访问评审
 
@@ -41,17 +46,17 @@ ms.locfileid: "88798017"
 
 1. 登录到工作或学校帐户。
 
-2. 打开 Web 浏览器并转到 https://myapps.microsoft.com ，或使用组织提供的链接。 例如，你可能会被定向到组织的自定义页面，如 https://myapps.microsoft.com/contoso.com 。
+1. 打开 Web 浏览器并转到 https://myapps.microsoft.com ，或使用组织提供的链接。 例如，你可能会被定向到组织的自定义页面，如 https://myapps.microsoft.com/contoso.com 。
 
     此时将显示“应用”页面，其中显示组织拥有并可供你使用的所有基于云的应用。
 
-    ![“我的应用”门户中的“应用”页](media/my-apps-portal/my-apps-portal-apps-page-access-review-tile.png)
+    ![“我的应用”门户中的“应用”页](media/my-apps-portal/my-apps-home.png)
 
-3. 选择“访问评审”磁贴，查看等待批准的访问评审列表。
+1. 选择“访问评审”磁贴，查看等待批准的访问评审列表。
 
     ![“访问评审”页，其中显示了组织的待定访问评审](media/my-apps-portal/my-apps-portal-access-reviews-page.png)
 
-4. 选择“开始评审”以开始访问评审。
+1. 选择“开始评审”以开始访问评审。
 
 5. 查看访问权限并确定该权限是否仍是必需的。
 
@@ -76,5 +81,5 @@ ms.locfileid: "88798017"
 ## <a name="next-steps"></a>后续步骤
 
 - [访问并使用“我的应用”门户上的应用](my-apps-portal-end-user-access.md)
-- [更改个人资料信息](my-apps-portal-end-user-update-profile.md)
+- [更改个人资料信息](./my-account-portal-settings.md)
 - [查看和更新与组相关的信息](my-apps-portal-end-user-groups.md)

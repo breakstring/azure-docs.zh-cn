@@ -5,12 +5,12 @@ author: eamono
 ms.topic: conceptual
 ms.date: 04/26/2020
 ms.author: eamono
-ms.openlocfilehash: 6034d1327d263eda49881af5eedf94ae06495128
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 5e01ffd8e17fda9113c7ec0fdb2c7f436b39c810
+ms.sourcegitcommit: 2aa52d30e7b733616d6d92633436e499fbe8b069
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "83122086"
+ms.lasthandoff: 01/06/2021
+ms.locfileid: "97936900"
 ---
 # <a name="managing-hybrid-environments-with-powershell-in-azure-functions-and-app-service-hybrid-connections"></a>在 Azure Functions 和应用服务混合连接中使用 PowerShell 管理混合环境
 
@@ -72,7 +72,7 @@ cmd.exe /C $Cmd
 
     | 设置      | 建议的值  | 说明 |
     | ------------ | ---------------- | ----------- |
-    | [存储帐户](../storage/common/storage-account-create.md) |  全局唯一名称 |  创建函数应用使用的存储帐户。 存储帐户名称必须为 3 到 24 个字符，并且只能包含数字和小写字母。 也可使用现有帐户，但该帐户必须符合[存储帐户要求](../azure-functions/functions-scale.md#storage-account-requirements)。 |
+    | [存储帐户](../storage/common/storage-account-create.md) |  全局唯一名称 |  创建函数应用使用的存储帐户。 存储帐户名称必须为 3 到 24 个字符，并且只能包含数字和小写字母。 也可使用现有帐户，但该帐户必须符合[存储帐户要求](../azure-functions/storage-considerations.md#storage-account-requirements)。 |
     |**操作系统**| 首选操作系统 | 系统会根据你的运行时堆栈选择为你预先选择一个操作系统，但你可以根据需要更改该设置。 |
     | **[计划类型](../azure-functions/functions-scale.md)** | **应用服务计划** | 选择“应用服务计划”。 按应用服务计划运行时，必须管理[函数应用的缩放](../azure-functions/functions-scale.md)。  |
 
@@ -296,7 +296,7 @@ Invoke-Command -ComputerName $HybridEndpoint `
 
 在上面的两个方案中，可以在 Azure Functions 和混合连接中使用 PowerShell 连接和管理本地环境。 建议[在函数中](./functions-reference-powershell.md)详细了解[混合连接](../app-service/app-service-hybrid-connections.md)和 PowerShell。
 
-还可以通过 Azure Functions 使用 Azure[虚拟网络](./functions-create-vnet.md)连接到本地环境。
+还可以通过 Azure Functions 使用 Azure [虚拟网络](./functions-create-vnet.md) 连接到本地环境。
 
 ## <a name="next-steps"></a>后续步骤
 

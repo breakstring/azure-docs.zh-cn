@@ -4,19 +4,19 @@ description: 使用 Azure Key Vault 来存储和访问 Azure Cosmos DB 连接字
 author: markjbrown
 ms.author: mjbrown
 ms.service: cosmos-db
-ms.subservice: cosmosdb-sql
 ms.devlang: dotnet
 ms.topic: how-to
 ms.date: 05/23/2019
 ms.reviewer: sngun
-ms.openlocfilehash: 50a9d5e3d3bbb608160ee160c5f1aede8f70e530
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: a9bea0664f99a21ac734de666c802e9875ff00b5
+ms.sourcegitcommit: dfc4e6b57b2cb87dbcce5562945678e76d3ac7b6
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "85262661"
+ms.lasthandoff: 12/12/2020
+ms.locfileid: "97359313"
 ---
 # <a name="secure-azure-cosmos-keys-using-azure-key-vault"></a>使用 Azure Key Vault 保护 Azure Cosmos 密钥 
+[!INCLUDE[appliesto-all-apis](includes/appliesto-all-apis.md)]
 
 >[!IMPORTANT]
 > 访问 Azure Cosmos DB 密钥的建议解决方案是使用[系统分配的托管标识](managed-identity-based-authentication.md)。 如果服务无法利用托管标识，则使用[基于证书的解决方案](certificate-based-authentication.md)。 如果托管标识解决方案和基于证书的解决方案都不能满足你的需求，请使用下面的密钥保管库解决方案。
@@ -48,7 +48,7 @@ ms.locfileid: "85262661"
 2. 选择“+生成/导入”。  
 
    * 为“上传选项”选择“手动”。  
-   * 提供机密的**名称**。
+   * 提供机密的 **名称**。
    * 在“值”字段中提供 Cosmos DB 帐户的连接字符串。  然后选择“创建”  。
 
    :::image type="content" source="./media/access-secrets-from-keyvault/create-a-secret.png" alt-text="创建机密":::
@@ -59,13 +59,13 @@ ms.locfileid: "85262661"
 
 ## <a name="create-an-azure-web-application"></a>创建 Azure Web 应用程序
 
-1. 创建 Azure Web 应用程序，或者从 [GitHub 存储库](https://github.com/Azure/azure-cosmosdb-dotnet/tree/master/Demo/keyvaultdemo)下载应用。 它是一个简单的 MVC 应用程序。  
+1. 创建 Azure Web 应用程序，或者从 [GitHub 存储库](https://github.com/Azure/azure-cosmos-dotnet-v2/tree/master/Demo/keyvaultdemo)下载应用。 它是一个简单的 MVC 应用程序。  
 
 2. 解压缩已下载的应用程序，并打开 **HomeController.cs** 文件。 更新以下行中的机密 ID：
 
    `var secret = await keyVaultClient.GetSecretAsync("<Your Key Vault’s secret identifier>")`
 
-3. **保存**文件并**生成**解决方案。  
+3. **保存** 文件并 **生成** 解决方案。  
 4. 接下来，将应用程序部署到 Azure。 右键单击项目并选择“发布”。  创建新的应用服务配置文件（可将应用命名为 WebAppKeyVault1），然后选择“发布”。    
 
 5. 部署应用程序后， 在 Azure 门户中导航到已部署的 Web 应用程序，并启用此应用程序的“托管服务标识”。   
@@ -94,5 +94,5 @@ ms.locfileid: "85262661"
 
 ## <a name="next-steps"></a>后续步骤
 
-* 若要为 Azure Cosmos DB 配置防火墙，请参阅[防火墙支持](firewall-support.md)一文。
-* 若要配置虚拟网络服务终结点，请参阅[使用 VNet 服务终结点保护访问](vnet-service-endpoint.md)一文。
+* 若要为 Azure Cosmos DB 配置防火墙，请参阅[防火墙支持](how-to-configure-firewall.md)一文。
+* 若要配置虚拟网络服务终结点，请参阅[使用 VNet 服务终结点保护访问](how-to-configure-vnet-service-endpoint.md)一文。

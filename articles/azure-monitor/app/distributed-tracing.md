@@ -2,16 +2,17 @@
 title: Azure Application Insights 中的分布式跟踪 | Microsoft Docs
 description: 提供有关 Microsoft 通过我们的合作关系在 OpenCensus 项目中的分布式跟踪支持的信息
 ms.topic: conceptual
+ms.custom: devx-track-dotnet
 author: nikmd23
 ms.author: nimolnar
 ms.date: 09/17/2018
 ms.reviewer: mbullwin
-ms.openlocfilehash: 142daec93724fe4c25fd5c65dd387856dfb582c3
-ms.sourcegitcommit: a76ff927bd57d2fcc122fa36f7cb21eb22154cfa
+ms.openlocfilehash: 2ee41fc9066aa4cf4775d4998b7e809e45519512
+ms.sourcegitcommit: 80c1056113a9d65b6db69c06ca79fa531b9e3a00
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/28/2020
-ms.locfileid: "87324431"
+ms.lasthandoff: 12/09/2020
+ms.locfileid: "96904306"
 ---
 # <a name="what-is-distributed-tracing"></a>什么是分布式跟踪？
 
@@ -33,8 +34,8 @@ Azure Monitor 还提供[应用程序映射](./app-map.md)视图，该视图聚�
 
 适用于 .NET、.NET Core、Java、Node.js 和 JavaScript 的 Application Insights 代理和/或 SDK 都以原生方式支持分布式跟踪。 每个 Application Insights SDK 的安装和配置说明见下：
 
-* [.NET](../learn/quick-monitor-portal.md)
-* [.NET Core](../learn/dotnetcore-quick-start.md)
+* [.NET](asp-net.md)
+* [.NET Core](asp-net-core.md)
 * [Java](./java-in-process-agent.md)
 * [Node.js](../learn/nodejs-quick-start.md)
 * [JavaScript](./javascript.md)

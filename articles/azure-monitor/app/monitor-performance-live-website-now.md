@@ -3,17 +3,18 @@ title: 使用 Azure Application Insights 监视实时 ASP.NET Web 应用 | Micro
 description: 在不重新部署网站的情况下监视网站性能。 使用托管在本地或 VM 中的 ASP.NET Web 应用。
 ms.topic: conceptual
 ms.date: 08/26/2019
-ms.openlocfilehash: 70a405d2c32641be2ed4038fbffebce0e1340f83
-ms.sourcegitcommit: a76ff927bd57d2fcc122fa36f7cb21eb22154cfa
+ms.custom: devx-track-dotnet
+ms.openlocfilehash: 53dbcc341fdd4bc194d34d40cdd2a975df496376
+ms.sourcegitcommit: d22a86a1329be8fd1913ce4d1bfbd2a125b2bcae
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/28/2020
-ms.locfileid: "87310440"
+ms.lasthandoff: 11/26/2020
+ms.locfileid: "96186297"
 ---
 # <a name="instrument-web-apps-at-runtime-with-application-insights-codeless-attach"></a>在运行时使用 Application Insights 无代码附加检测 Web 应用
 
 > [!IMPORTANT]
-> 不再建议使用状态监视器，并**从六月6月 2021 1 日开始**，将不支持此版本的状态监视器。 它已被 Azure Monitor Application Insights 代理（以前称为状态监视器 v2）取代。 若要了解[本地服务器部署](./status-monitor-v2-overview.md)或 [Azure 虚拟机和虚拟机规模集部署](./azure-vm-vmss-apps.md)，请参阅我们的文档。
+> 不再建议使用状态监视器，并且从 2021 年 6 月 1 日起将不再支持这个版本的状态监视器。 它已被 Azure Monitor Application Insights 代理（以前称为状态监视器 v2）取代。 若要了解[本地服务器部署](./status-monitor-v2-overview.md)或 [Azure 虚拟机和虚拟机规模集部署](./azure-vm-vmss-apps.md)，请参阅我们的文档。
 
 无需修改或重新部署代码，即可使用 Azure Application Insights 检测实时 Web 应用。 需要 [Microsoft Azure](https://azure.com) 订阅。
 
@@ -39,7 +40,7 @@ ms.locfileid: "87310440"
 
 |  | 构建时 | 运行时 |
 | --- | --- | --- |
-| **请求 & 异常** |是 |是 |
+| **请求和异常** |是 |是 |
 | **[更详细异常](./asp-net-exceptions.md)** | |是 |
 | **[依赖项诊断](./asp-net-dependencies.md)** |在 NET 4.6+ 上，但更少详细信息 |是，完整的详细信息：结果代码、SQL 命令文本、HTTP 谓词|
 | **[系统性能计数器](./performance-counters.md)** |是 |是 |
@@ -92,12 +93,12 @@ ms.locfileid: "87310440"
 
 - 确认 applicationInsights.config 文件在目标应用目录中并且包含 ikey。
 
-- 如果怀疑缺少数据，可以在[分析](../log-query/get-started-portal.md)中运行查询，以列出当前发送遥测数据的所有云角色。
+- 如果怀疑缺失数据，可在 [Analytics](../log-query/log-analytics-tutorial.md) 中运行查询，列出目前正在发送遥测数据的所有云角色。
   ```Kusto
   union * | summarize count() by cloud_RoleName, cloud_RoleInstance
   ```
 
-- 如果需要确认已成功附加 Application Insights，可以在命令窗口中运行[Sysinternals 句柄](/sysinternals/downloads/handle)以确认 applicationinsights.dll 是否已由 IIS 加载。
+- 如果需要确认 Application Insights 已成功附加，可在命令窗口中运行 [Sysinternals Handle](/sysinternals/downloads/handle)，确认 IIS 已加载该 applicationinsights.dll。
 
   ```console
   handle.exe /p w3wp.exe
@@ -129,7 +130,7 @@ Start-ApplicationInsightsMonitoring -Name appName -InstrumentationKey 00000000-0
 </dependentAssembly>
 ```
 
-我们将在[此处](https://github.com/Microsoft/ApplicationInsights-Home/issues/301)跟踪此问题。
+我们将在[此处](https://github.com/MohanGsk/ApplicationInsights-Home)跟踪此问题。
 
 
 ### <a name="application-diagnostic-messages"></a>应用程序诊断消息
@@ -339,4 +340,3 @@ Application Insights SDK 版本 2.4 是[支持 .NET 4.0 的最新版本](https:/
 [qna]: ../faq.md
 [roles]: ./resources-roles-access-control.md
 [usage]: ./javascript.md
-

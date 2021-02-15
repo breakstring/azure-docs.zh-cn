@@ -13,12 +13,12 @@ ms.date: 04/14/2020
 ms.author: curtand
 ms.reviewer: sahenry
 ms.custom: oldportal;it-pro;
-ms.openlocfilehash: d692302df1f5c03a7dce60858b31e0ca66de4c80
-ms.sourcegitcommit: 493b27fbfd7917c3823a1e4c313d07331d1b732f
+ms.openlocfilehash: 56ee7df52abf97c920dfe2fa4ba5d1d858975f7d
+ms.sourcegitcommit: 829d951d5c90442a38012daaf77e86046018e5b9
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 05/21/2020
-ms.locfileid: "83744540"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "91537084"
 ---
 # <a name="delegate-user-management-with-my-staff-preview"></a>通过“我的员工”委托用户管理（预览）
 
@@ -104,7 +104,7 @@ ms.locfileid: "83744540"
 
 1. 完成后，请选择“确定”。
 
-    ![在“我的员工”中删除员工电话号码](media/my-staff-team-manager/enableforms2.png)
+    ![显示 "为登录启用电话号码" 的屏幕截图 选中 "确定" 按钮的窗口。](media/my-staff-team-manager/enableforms2.png)
 
 ### <a name="remove-a-phone-number"></a>删除电话号码
 

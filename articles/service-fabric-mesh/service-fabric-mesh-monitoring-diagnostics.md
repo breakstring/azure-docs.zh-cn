@@ -5,15 +5,21 @@ author: srrengar
 ms.topic: conceptual
 ms.date: 03/19/2019
 ms.author: srrengar
-ms.custom: mvc, devcenter
-ms.openlocfilehash: e940f0cf0d1547b317cd9e7bd15ac5486d5e70b2
-ms.sourcegitcommit: dabd9eb9925308d3c2404c3957e5c921408089da
+ms.custom: mvc, devcenter, devx-track-azurecli
+ms.openlocfilehash: 02de8ea5dd5c53192d2b8c7beba8bc36143beac6
+ms.sourcegitcommit: 59cfed657839f41c36ccdf7dc2bee4535c920dd4
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/11/2020
-ms.locfileid: "86248401"
+ms.lasthandoff: 02/06/2021
+ms.locfileid: "99626988"
 ---
 # <a name="monitoring-and-diagnostics"></a>监视和诊断
+
+> [!IMPORTANT]
+> Azure Service Fabric 网格的预览已停用。 不允许再通过 Service Fabric 的网格 API 来进行新的部署。 对现有部署的支持将持续到2021年4月28日。
+> 
+> 有关详细信息，请参阅 [Azure Service Fabric 网格预览停](https://azure.microsoft.com/updates/azure-service-fabric-mesh-preview-retirement/)用。
+
 Azure Service Fabric 网格是一个完全托管的服务，由此开发者可部署微服务应用程序，而无需管理虚拟机、存储或网络。 Service Fabric 网格的监控和诊断分为三大类型诊断数据：
 
 - 应用程序日志 - 这是基于应用程序检测方式的容器化应用程序的日志（如 docker 日志）
@@ -26,7 +32,7 @@ Azure Service Fabric 网格是一个完全托管的服务，由此开发者可�
 
 可基于每个容器，从已部署的容器查看 docker 日志。 在 Service Fabric 网格应用程序模型中，每个容器是应用程序中的代码包。 要查看代码包的相关日志，请使用以下命令：
 
-```cli
+```azurecli
 az mesh code-package-log get --resource-group <nameOfRG> --app-name <nameOfApp> --service-name <nameOfService> --replica-name <nameOfReplica> --code-package-name <nameOfCodePackage>
 ```
 
@@ -35,7 +41,7 @@ az mesh code-package-log get --resource-group <nameOfRG> --app-name <nameOfApp> 
 
 以下是用于查看投票应用程序中 VotingWeb.Code 容器的日志的示例：
 
-```cli
+```azurecli
 az mesh code-package-log get --resource-group <nameOfRG> --application-name SbzVoting --service-name VotingWeb --replica-name 0 --code-package-name VotingWeb.Code
 ```
 
@@ -58,7 +64,7 @@ az mesh code-package-log get --resource-group <nameOfRG> --application-name SbzV
 | RestartCount | 容器重启次数 | 不适用 |
 
 > [!NOTE]
-> ServiceStatus 和 ServiceReplicaStatus 值与 Service Fabric 中的[HealthState](/dotnet/api/system.fabric.health.healthstate?view=azure-dotnet)相同。 
+> ServiceStatus 和 ServiceReplicaStatus 值与 Service Fabric 中的 [HealthState](/dotnet/api/system.fabric.health.healthstate) 相同。
 
 每个指标都可以在不同的维度上使用，因此可以在不同级别查看聚合。 维度的当前列表如下所示：
 
@@ -74,7 +80,7 @@ az mesh code-package-log get --resource-group <nameOfRG> --application-name SbzV
 
 ### <a name="azure-monitor-cli"></a>Azure Monitor CLI
 
-[AZURE MONITOR CLI 文档](/cli/azure/monitor/metrics?view=azure-cli-latest#az-monitor-metrics-list)中提供了完整命令列表，但我们提供了以下几个有用的示例 
+[AZURE MONITOR CLI 文档](/cli/azure/monitor/metrics#az-monitor-metrics-list)中提供了完整命令列表，但我们提供了以下几个有用的示例 
 
 在每个示例中，资源 ID 遵循此模式
 
@@ -83,21 +89,21 @@ az mesh code-package-log get --resource-group <nameOfRG> --application-name SbzV
 
 * 应用程序中容器的 CPU 利用率
 
-```cli
+```azurecli
     az monitor metrics list --resource <resourceId> --metric "CpuUtilization"
 ```
 * 每个服务副本的内存使用率
-```cli
+```azurecli
     az monitor metrics list --resource <resourceId> --metric "MemoryUtilization" --dimension "ServiceReplicaName"
 ``` 
 
 * 在1小时内为每个容器重启 
-```cli
+```azurecli
     az monitor metrics list --resource <resourceId> --metric "RestartCount" --start-time 2019-02-01T00:00:00Z --end-time 2019-02-01T01:00:00Z
 ``` 
 
 * 1小时窗口内名为 "VotingWeb" 的服务的平均 CPU 使用率
-```cli
+```azurecli
     az monitor metrics list --resource <resourceId> --metric "CpuUtilization" --start-time 2019-02-01T00:00:00Z --end-time 2019-02-01T01:00:00Z --aggregation "Average" --filter "ServiceName eq 'VotingWeb'"
 ``` 
 
@@ -118,4 +124,4 @@ In addition to the metrics explorer, we also have a dashboard available out of t
 
 ## <a name="next-steps"></a>后续步骤
 * 若要详细了解 Service Fabric 网格，请阅读 [Service Fabric 网格概述](service-fabric-mesh-overview.md)。
-* 若要详细了解 Azure Monitor 指标命令，请查看[AZURE MONITOR CLI 文档](/cli/azure/monitor/metrics?view=azure-cli-latest#az-monitor-metrics-list)。
+* 若要详细了解 Azure Monitor 指标命令，请查看 [AZURE MONITOR CLI 文档](/cli/azure/monitor/metrics#az-monitor-metrics-list)。

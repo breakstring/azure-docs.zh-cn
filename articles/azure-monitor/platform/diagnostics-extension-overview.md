@@ -6,12 +6,12 @@ ms.topic: conceptual
 author: bwren
 ms.author: bwren
 ms.date: 02/14/2020
-ms.openlocfilehash: 6201a4e0551f0f75dde65b2bc4b8b560a0f5ea20
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.openlocfilehash: 4d424a22a26119dcb3ef6a0e5c4f3dc0c13b1aa4
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87007990"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98927574"
 ---
 # <a name="azure-diagnostics-extension-overview"></a>Azure 诊断扩展概述
 Azure 诊断扩展是 [Azure Monitor 中的代理](agents-overview.md)，可从 Azure 计算资源（包括虚拟机）的来宾操作系统中收集监视数据。 本文概述了 Azure 诊断扩展，其中包括它支持的具体功能以及用于安装和配置的选项。 
@@ -44,13 +44,13 @@ Azure 诊断扩展不会产生费用，但可能会产生数据引入费用。 �
 
 ### <a name="windows-diagnostics-extension-wad"></a>Windows 诊断扩展 (WAD)
 
-| 数据源 | 描述 |
+| 数据源 | 说明 |
 | --- | --- |
 | Windows 事件日志   | Windows 事件日志中的事件。 |
 | 性能计数器 | 数值，用于度量操作系统和工作负载的不同方面的性能。 |
 | IIS 日志             | 在来宾操作系统上运行的 IIS 网站的使用情况信息。 |
 | 应用程序日志     | 应用程序写入的跟踪消息。 |
-| .NET EventSource 日志 |使用 .NET [EventSource](/dotnet/api/system.diagnostics.tracing.eventsource?view=netcore-3.1) 类的代码编写事件 |
+| .NET EventSource 日志 |使用 .NET [EventSource](/dotnet/api/system.diagnostics.tracing.eventsource) 类的代码编写事件 |
 | [基于清单的 ETW 日志](/windows/desktop/etw/about-event-tracing) |由任何进程生成的 Windows 事件的事件跟踪。 |
 | 故障转储（日志）   | 有关应用程序崩溃时的进程状态的信息。 |
 | 基于文件的日志    | 应用程序或服务创建的日志。 |
@@ -59,7 +59,7 @@ Azure 诊断扩展不会产生费用，但可能会产生数据引入费用。 �
 
 ### <a name="linux-diagnostics-extension-lad"></a>Linux 诊断扩展 (LAD)
 
-| 数据源 | 描述 |
+| 数据源 | 说明 |
 | --- | --- |
 | Syslog | 发送到 Linux 事件日志记录系统的事件。   |
 | 性能计数器  | 数值，用于度量操作系统和工作负载的不同方面的性能。 |

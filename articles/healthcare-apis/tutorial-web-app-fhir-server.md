@@ -9,13 +9,13 @@ ms.reviewer: matjazl
 ms.author: cavoeg
 author: caitlinv39
 ms.date: 01/03/2020
-ms.custom: devx-track-javascript
-ms.openlocfilehash: 4b39c32da04efa3782cb2166c8e1137029b21258
-ms.sourcegitcommit: 7fe8df79526a0067be4651ce6fa96fa9d4f21355
+ms.custom: devx-track-js
+ms.openlocfilehash: cb183b5c8aff018d4dc73819b938b24ad0daa934
+ms.sourcegitcommit: d103a93e7ef2dde1298f04e307920378a87e982a
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/06/2020
-ms.locfileid: "87852950"
+ms.lasthandoff: 10/13/2020
+ms.locfileid: "91975784"
 ---
 # <a name="deploy-javascript-app-to-read-data-from-fhir-service"></a>部署用于从 FHIR 服务读取数据的 JavaScript 应用
 在本教程中，你将部署一个用于从 FHIR 服务读取数据的小型 JavaScript 应用。 本教程中的步骤包括：
@@ -36,7 +36,7 @@ ms.locfileid: "87852950"
 ## <a name="deploy-azure-api-for-fhir"></a>部署 Azure API for FHIR
 本教程的第一个步骤是正确设置 Azure API for FHIR。
 
-1. 部署 [Azure API for FHIR](fhir-paas-portal-quickstart.md)
+1. 如果尚未这样做，请部署 [Azure API for FHIR](fhir-paas-portal-quickstart.md)。
 1. 部署 Azure API for FHIR 后，请转到 Azure API for FHIR 并选择“CORS”，以配置 [CORS](configure-cross-origin-resource-sharing.md) 设置。 
     1. 将“源”设置为 * 
     1. 将“标头”设置为 * 

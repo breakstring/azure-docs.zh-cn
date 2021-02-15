@@ -14,16 +14,14 @@ ms.devlang: na
 ms.topic: article
 ms.date: 07/15/2020
 ms.author: damaerte
-ms.openlocfilehash: 1cb5716e2f02a99e4d39a4041a2e54e87cf43568
-ms.sourcegitcommit: b8702065338fc1ed81bfed082650b5b58234a702
+ms.openlocfilehash: 58f6c7a3b5d68d2825cead545ba1b683d1faf1af
+ms.sourcegitcommit: d59abc5bfad604909a107d05c5dc1b9a193214a8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/11/2020
-ms.locfileid: "88114653"
+ms.lasthandoff: 01/14/2021
+ms.locfileid: "98222796"
 ---
 # <a name="deploy-cloud-shell-into-an-azure-virtual-network"></a>将 Cloud Shell 部署到 Azure 虚拟网络
-> [!NOTE]
-> 此功能处于公共预览版中。
 
 常规 Cloud Shell 会话在独立于资源的 Microsoft 网络中的容器中运行。 这意味着，在容器内运行的命令无法访问只能从特定虚拟网络访问的资源。 例如，不能使用 SSH 从 Cloud Shell 连接到只有专用 IP 地址的虚拟机，或者使用 kubectl 连接到已锁定访问权限的 Kubernetes 群集。 
 
@@ -52,7 +50,7 @@ ms.locfileid: "88114653"
 网络配置文件是用于指定资源的某些网络属性的 Azure 资源的网络配置模板。
 
 ### <a name="azure-relay"></a>Azure 中继
-[Azure 中继](https://docs.microsoft.com/azure/azure-relay/relay-what-is-it)允许无法直接访问的两个终结点进行通信。 在这种情况下，它用于允许管理员浏览器与专用网络中的容器进行通信。
+[Azure 中继](../azure-relay/relay-what-is-it.md)允许无法直接访问的两个终结点进行通信。 在这种情况下，它用于允许管理员浏览器与专用网络中的容器进行通信。
 
 用于 Cloud Shell 的 Azure 中继实例可以配置为控制哪些网络可以访问容器资源： 
 - 可从公共 internet 进行访问：在此配置中，Cloud Shell 提供了一种方法，用于从外部访问内部资源。 
@@ -64,9 +62,9 @@ ms.locfileid: "88114653"
 ## <a name="virtual-network-deployment-limitations"></a>虚拟网络部署限制
 * 由于涉及到额外的网络资源，在虚拟网络中开始 Cloud Shell 通常比标准 Cloud Shell 会话要慢。
 
-* 在预览期间，虚拟网络中的 Cloud Shell 支持的区域更少。 当前限制为： WestUS 和 WestCentralUS。
+* 当前支持除印度中部的所有 Cloud Shell 区域。 
 
-* [Azure 中继](https://docs.microsoft.com/azure/azure-relay/relay-what-is-it)不是免费服务，请查看其[定价](https://azure.microsoft.com/pricing/details/service-bus/)。 在 Cloud Shell 方案中，每个管理员使用 Cloud Shell 时，会使用一个混合连接。 Cloud Shell 会话完成后，连接将自动关闭。
+* [Azure 中继](../azure-relay/relay-what-is-it.md) 不是免费服务，请查看其 [定价](https://azure.microsoft.com/pricing/details/service-bus/)。 在 Cloud Shell 方案中，每个管理员使用 Cloud Shell 时，会使用一个混合连接。 Cloud Shell 会话完成后，连接将自动关闭。
 
 ## <a name="register-the-resource-provider"></a>注册资源提供程序
 
@@ -81,20 +79,17 @@ ResourceTypes                             RegistrationState
 ...
 ```
 
-如果**RegistrationState**为 `Registered` ，则无需执行任何操作。 如果已 `NotRegistered` 运行，则运行 `Register-AzResourceProvider -ProviderNamespace Microsoft.ContainerInstance` 。 
+如果 **RegistrationState** 为 `Registered` ，则无需执行任何操作。 如果已 `NotRegistered` 运行，则运行 `Register-AzResourceProvider -ProviderNamespace Microsoft.ContainerInstance` 。 
 
 ## <a name="deploy-network-resources"></a>部署网络资源
  
 ### <a name="create-a-resource-group-and-virtual-network"></a>创建资源组和虚拟网络
 如果你已有希望连接到的所需 VNET，请跳过此部分。
 
-在 Azure 门户中，或使用 Azure CLI、Azure PowerShell 等，在新资源组中创建资源组和虚拟网络，**资源组和虚拟网络必须位于同一区域**。
-
-> [!NOTE]
-> 在公共预览版中，资源组和虚拟网络必须位于 "WestCentralUS" 或 "WestUS"。
+在 Azure 门户中，或使用 Azure CLI、Azure PowerShell 等，在新资源组中创建资源组和虚拟网络， **资源组和虚拟网络必须位于同一区域**。
 
 ### <a name="arm-templates"></a>ARM 模板
-使用[Azure 快速入门模板](https://aka.ms/cloudshell/docs/vnet/template)在虚拟网络中创建 Cloud Shell 资源，并使用[Azure 快速入门模板](https://aka.ms/cloudshell/docs/vnet/template/storage)创建必要的存储。 记下资源名称，主要是文件共享名称。
+使用 [Azure 快速入门模板](https://aka.ms/cloudshell/docs/vnet/template) 在虚拟网络中创建 Cloud Shell 资源，并使用 [Azure 快速入门模板](https://aka.ms/cloudshell/docs/vnet/template/storage) 创建必要的存储。 记下资源名称，主要是文件共享名称。
 
 ### <a name="open-relay-firewall"></a>打开中继防火墙
 导航到使用上述模板创建的中继，在 "设置" 中选择 "网络"，允许从浏览器网络访问中继。 默认情况下，中继只能从在其中创建它的虚拟网络进行访问。 
@@ -114,4 +109,4 @@ ResourceTypes                             RegistrationState
 ![说明 Cloud Shell 隔离 VNET 首次体验设置。](media/private-vnet/vnet-settings.png)
 
 ## <a name="next-steps"></a>后续步骤
-[了解 Azure 虚拟网络](https://docs.microsoft.com/azure/virtual-network/virtual-networks-overview)
+[了解 Azure 虚拟网络](../virtual-network/virtual-networks-overview.md)

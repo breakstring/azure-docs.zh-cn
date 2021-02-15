@@ -1,19 +1,16 @@
 ---
 title: 迁移到适用于 HDInsight 的 Azure 资源管理器工具
 description: 如何迁移到适用于 HDInsight 群集的 Azure Resource Manager 开发工具
-ms.reviewer: jasonh
-author: hrasheed-msft
 ms.service: hdinsight
 ms.custom: hdinsightactive, devx-track-azurecli
 ms.topic: how-to
 ms.date: 02/21/2018
-ms.author: hrasheed
-ms.openlocfilehash: faf13f580f6600e761cdaa9927fee4efa2b5995f
-ms.sourcegitcommit: 11e2521679415f05d3d2c4c49858940677c57900
+ms.openlocfilehash: 2ff62f4feba44a1c706ab85db1be3f7f654e6135
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/31/2020
-ms.locfileid: "87500174"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98945762"
 ---
 # <a name="migrating-to-azure-resource-manager-based-development-tools-for-hdinsight-clusters"></a>迁移到适用于 HDInsight 群集的基于 Azure Resource Manager 的开发工具
 
@@ -54,7 +51,7 @@ HDInsight 即将淘汰适用于 HDInsight 的基于 Azure 服务管理器 (ASM) 
 * [使用 cURL 在 HDInsight 上通过 Apache Hadoop 运行 Apache Hive 查询](hadoop/apache-hadoop-use-hive-curl.md)
 
 
-有关以其他交互方式运行 Apache Hadoop MapReduce、Apache Hive 和 Apache Pig 的信息，请参阅[将 MapReduce 与 HDInsight 上的 Hadoop 配合使用](hadoop/hdinsight-use-mapreduce.md)、[将 Apache Hive 与 HDInsight 上的 Apache Hadoop 配合使用](hadoop/hdinsight-use-hive.md)和[将 Apache Pig 与 HDInsight 上的 Apache Hadoop 配合使用](hadoop/hdinsight-use-pig.md)。
+有关以其他交互方式运行 Apache Hadoop MapReduce、Apache Hive 和 Apache Pig 的信息，请参阅[将 MapReduce 与 HDInsight 上的 Hadoop 配合使用](hadoop/hdinsight-use-mapreduce.md)、[将 Apache Hive 与 HDInsight 上的 Apache Hadoop 配合使用](hadoop/hdinsight-use-hive.md)和[将 Apache Pig 与 HDInsight 上的 Apache Hadoop 配合使用](./index.yml)。
 
 ### <a name="examples"></a>示例
 创建群集 
@@ -81,14 +78,14 @@ HDInsight 即将淘汰适用于 HDInsight 的基于 Azure 服务管理器 (ASM) 
 * 新命令 - `azure hdinsight cluster show myhdicluster -g myresourcegroup`
 
 ## <a name="migrating-azure-powershell-to-azure-resource-manager"></a>将 Azure PowerShell 迁移到 Azure Resource Manager
-有关处于 Azure 资源管理器模式的 Azure PowerShell 的一般信息，请参阅[将 Azure PowerShell 与 Azure 资源管理器配合使用](../powershell-azure-resource-manager.md)。
+有关处于 Azure 资源管理器模式的 Azure PowerShell 的一般信息，请参阅[将 Azure PowerShell 与 Azure 资源管理器配合使用](../azure-resource-manager/management/manage-resources-powershell.md)。
 
-Azure PowerShell 资源管理器 cmdlet 可与 ASM cmdlet 一同安装。 两种模式下的 cmdlet 可按其名称来区分。  资源管理器模式下的 cmdlet 名称中包含 AzHDInsight，而在 ASM 模式下则包含 AzureHDInsight   。  例如，前者为 New-AzHDInsightCluster  ，后者为New-AzureHDInsightCluster  。 某些参数和开关可能有新名称，并且在使用资源管理器时，有许多新参数可供使用。  例如，多个 cmdlet 需要名为 -ResourceGroupName 的新开关  。 
+Azure PowerShell 资源管理器 cmdlet 可与 ASM cmdlet 一同安装。 两种模式下的 cmdlet 可按其名称来区分。  资源管理器模式在 cmdlet 名称中包含“AzHDInsight”，而在较旧的 Azure 服务管理模式下则包含“AzureHDInsight” 。  例如，前者为 New-AzHDInsightCluster  ，后者为New-AzureHDInsightCluster  。 某些参数和开关可能有新名称，并且在使用资源管理器时，有许多新参数可供使用。  例如，多个 cmdlet 需要名为 -ResourceGroupName 的新开关  。
 
 在使用这些 HDInsight cmdlet 之前，必须先连接到 Azure 帐户并创建新资源组：
 
 * [Connect-AzAccount](/powershell/module/az.accounts/connect-azaccount)
-* [New-AzResourceGroup](https://msdn.microsoft.com/library/mt603739.aspx)
+* [New-AzResourceGroup](/powershell/module/az.resources/new-azresourcegroup)
 
 ### <a name="renamed-cmdlets"></a>已重命名的 cmdlet
 在 Windows PowerShell 控制台中列出 HDInsight ASM cmdlet：
@@ -101,33 +98,33 @@ help *azurehdinsight*
 
 | ASM cmdlet | 资源管理器 cmdlet |
 | --- | --- |
-| Add-AzureHDInsightConfigValue |[Add-AzHDInsightConfigValue](https://docs.microsoft.com/powershell/module/az.hdinsight/add-azhdinsightconfigvalue) |
-| Add-AzureHDInsightMetastore |[Add-AzHDInsightMetastore](https://docs.microsoft.com/powershell/module/az.hdinsight/add-azhdinsightmetastore) |
-| Add-AzureHDInsightScriptAction |[Add-AzHDInsightScriptAction](https://docs.microsoft.com/powershell/module/az.hdinsight/add-azhdinsightscriptaction) |
-| Add-AzureHDInsightStorage |[Add-AzHDInsightStorage](https://docs.microsoft.com/powershell/module/az.hdinsight/add-azhdinsightstorage) |
-| Get-AzureHDInsightCluster |[Get-AzHDInsightCluster](https://docs.microsoft.com/powershell/module/az.hdinsight/get-azhdinsightcluster) |
-| Get-AzureHDInsightJob |[Get-AzHDInsightJob](https://docs.microsoft.com/powershell/module/az.hdinsight/get-azhdinsightjob) |
-| Get-AzureHDInsightJobOutput |[Get-AzHDInsightJobOutput](https://docs.microsoft.com/powershell/module/az.hdinsight/get-azhdinsightjoboutput) |
-| Get-AzureHDInsightProperty |[Get-AzHDInsightProperty](https://docs.microsoft.com/powershell/module/az.hdinsight/get-azhdinsightproperty) |
-| Grant-AzureHDInsightHttpServicesAccess |[Grant-AzureRmHDInsightHttpServicesAccess](https://docs.microsoft.com/powershell/module/azurerm.hdinsight/grant-azurermhdinsighthttpservicesaccess) |
-| Grant-AzureHdinsightRdpAccess |[Grant-AzHDInsightRdpServicesAccess](https://docs.microsoft.com/powershell/module/az.hdinsight/grant-azhdinsightrdpservicesaccess) |
-| Invoke-AzureHDInsightHiveJob |[Invoke-AzHDInsightHiveJob](https://docs.microsoft.com/powershell/module/az.hdinsight/invoke-azhdinsighthivejob) |
-| New-AzureHDInsightCluster |[New-AzHDInsightCluster](https://docs.microsoft.com/powershell/module/az.hdinsight/new-azhdinsightcluster) |
-| New-AzureHDInsightClusterConfig |[New-AzHDInsightClusterConfig](https://docs.microsoft.com/powershell/module/az.hdinsight/new-azhdinsightclusterconfig) |
-| New-AzureHDInsightHiveJobDefinition |[New-AzHDInsightHiveJobDefinition](https://docs.microsoft.com/powershell/module/az.hdinsight/new-azhdinsighthivejobdefinition) |
-| New-AzureHDInsightMapReduceJobDefinition |[New-AzHDInsightMapReduceJobDefinition](https://docs.microsoft.com/powershell/module/az.hdinsight/new-azhdinsightmapreducejobdefinition) |
-| New-AzureHDInsightPigJobDefinition |[New-AzHDInsightPigJobDefinition](https://docs.microsoft.com/powershell/module/az.hdinsight/new-azhdinsightpigjobdefinition) |
-| New-AzureHDInsightSqoopJobDefinition |[New-AzHDInsightSqoopJobDefinition](https://docs.microsoft.com/powershell/module/az.hdinsight/new-azhdinsightsqoopjobdefinition) |
-| New-AzureHDInsightStreamingMapReduceJobDefinition |[New-AzHDInsightStreamingMapReduceJobDefinition](https://docs.microsoft.com/powershell/module/az.hdinsight/new-azhdinsightstreamingmapreducejobdefinition) |
-| Remove-AzureHDInsightCluster |[Remove-AzHDInsightCluster](https://docs.microsoft.com/powershell/module/az.hdinsight/remove-azhdinsightcluster) |
-| Revoke-AzureHDInsightHttpServicesAccess |[Revoke-AzHDInsightHttpServicesAccess](https://docs.microsoft.com/powershell/module/azurerm.hdinsight/revoke-azurermhdinsighthttpservicesaccess) |
-| Revoke-AzureHdinsightRdpAccess |[Revoke-AzHDInsightRdpServicesAccess](https://docs.microsoft.com/powershell/module/az.hdinsight/revoke-azhdinsightrdpservicesaccess) |
-| Set-AzureHDInsightClusterSize |[Set-AzHDInsightClusterSize](https://docs.microsoft.com/powershell/module/az.hdinsight/set-azhdinsightclustersize) |
-| Set-AzureHDInsightDefaultStorage |[Set-AzHDInsightDefaultStorage](https://docs.microsoft.com/powershell/module/az.hdinsight/set-azhdinsightdefaultstorage) |
-| Start-AzureHDInsightJob |[Start-AzHDInsightJob](https://docs.microsoft.com/powershell/module/az.hdinsight/start-azhdinsightjob) |
-| Stop-AzureHDInsightJob |[Stop-AzHDInsightJob](https://docs.microsoft.com/powershell/module/az.hdinsight/stop-azhdinsightjob) |
-| Use-AzureHDInsightCluster |[Use-AzHDInsightCluster](https://docs.microsoft.com/powershell/module/az.hdinsight/use-azhdinsightcluster) |
-| Wait-AzureHDInsightJob |[Wait-AzHDInsightJob](https://docs.microsoft.com/powershell/module/az.hdinsight/wait-azhdinsightjob) |
+| Add-AzureHDInsightConfigValue |[Add-AzHDInsightConfigValue](/powershell/module/az.hdinsight/add-azhdinsightconfigvalue) |
+| Add-AzureHDInsightMetastore |[Add-AzHDInsightMetastore](/powershell/module/az.hdinsight/add-azhdinsightmetastore) |
+| Add-AzureHDInsightScriptAction |[Add-AzHDInsightScriptAction](/powershell/module/az.hdinsight/add-azhdinsightscriptaction) |
+| Add-AzureHDInsightStorage |[Add-AzHDInsightStorage](/powershell/module/az.hdinsight/add-azhdinsightstorage) |
+| Get-AzureHDInsightCluster |[Get-AzHDInsightCluster](/powershell/module/az.hdinsight/get-azhdinsightcluster) |
+| Get-AzureHDInsightJob |[Get-AzHDInsightJob](/powershell/module/az.hdinsight/get-azhdinsightjob) |
+| Get-AzureHDInsightJobOutput |[Get-AzHDInsightJobOutput](/powershell/module/az.hdinsight/get-azhdinsightjoboutput) |
+| Get-AzureHDInsightProperty |[Get-AzHDInsightProperty](/powershell/module/az.hdinsight/get-azhdinsightproperty) |
+| Grant-AzureHDInsightHttpServicesAccess |[Grant-AzureRmHDInsightHttpServicesAccess](/powershell/module/azurerm.hdinsight/grant-azurermhdinsighthttpservicesaccess) |
+| Grant-AzureHdinsightRdpAccess |[Grant-AzHDInsightRdpServicesAccess](/powershell/module/az.hdinsight/grant-azhdinsightrdpservicesaccess) |
+| Invoke-AzureHDInsightHiveJob |[Invoke-AzHDInsightHiveJob](/powershell/module/az.hdinsight/invoke-azhdinsighthivejob) |
+| New-AzureHDInsightCluster |[New-AzHDInsightCluster](/powershell/module/az.hdinsight/new-azhdinsightcluster) |
+| New-AzureHDInsightClusterConfig |[New-AzHDInsightClusterConfig](/powershell/module/az.hdinsight/new-azhdinsightclusterconfig) |
+| New-AzureHDInsightHiveJobDefinition |[New-AzHDInsightHiveJobDefinition](/powershell/module/az.hdinsight/new-azhdinsighthivejobdefinition) |
+| New-AzureHDInsightMapReduceJobDefinition |[New-AzHDInsightMapReduceJobDefinition](/powershell/module/az.hdinsight/new-azhdinsightmapreducejobdefinition) |
+| New-AzureHDInsightPigJobDefinition |[New-AzHDInsightPigJobDefinition](/powershell/module/az.hdinsight/new-azhdinsightpigjobdefinition) |
+| New-AzureHDInsightSqoopJobDefinition |[New-AzHDInsightSqoopJobDefinition](/powershell/module/az.hdinsight/new-azhdinsightsqoopjobdefinition) |
+| New-AzureHDInsightStreamingMapReduceJobDefinition |[New-AzHDInsightStreamingMapReduceJobDefinition](/powershell/module/az.hdinsight/new-azhdinsightstreamingmapreducejobdefinition) |
+| Remove-AzureHDInsightCluster |[Remove-AzHDInsightCluster](/powershell/module/az.hdinsight/remove-azhdinsightcluster) |
+| Revoke-AzureHDInsightHttpServicesAccess |[Revoke-AzHDInsightHttpServicesAccess](/powershell/module/azurerm.hdinsight/revoke-azurermhdinsighthttpservicesaccess) |
+| Revoke-AzureHdinsightRdpAccess |[Revoke-AzHDInsightRdpServicesAccess](/powershell/module/az.hdinsight/revoke-azhdinsightrdpservicesaccess) |
+| Set-AzureHDInsightClusterSize |[Set-AzHDInsightClusterSize](/powershell/module/az.hdinsight/set-azhdinsightclustersize) |
+| Set-AzureHDInsightDefaultStorage |[Set-AzHDInsightDefaultStorage](/powershell/module/az.hdinsight/set-azhdinsightdefaultstorage) |
+| Start-AzureHDInsightJob |[Start-AzHDInsightJob](/powershell/module/az.hdinsight/start-azhdinsightjob) |
+| Stop-AzureHDInsightJob |[Stop-AzHDInsightJob](/powershell/module/az.hdinsight/stop-azhdinsightjob) |
+| Use-AzureHDInsightCluster |[Use-AzHDInsightCluster](/powershell/module/az.hdinsight/use-azhdinsightcluster) |
+| Wait-AzureHDInsightJob |[Wait-AzHDInsightJob](/powershell/module/az.hdinsight/wait-azhdinsightjob) |
 
 ### <a name="new-cmdlets"></a>新 cmdlet
 以下是只能在资源管理器模式下使用的新 cmdlet。 
@@ -147,7 +144,7 @@ help *azurehdinsight*
 * **AzHDInsightClusterIdentity**：将群集标识添加到群集配置对象，以便 HDInsight 群集可以访问 Azure Data Lake Storage。 请参阅[使用 Azure PowerShell 创建包含 Data Lake Storage 的 HDInsight 群集](../data-lake-store/data-lake-store-hdinsight-hadoop-use-powershell.md)。
 
 ### <a name="examples"></a>示例
-**创建群集**
+创建群集 
 
 旧命令 (ASM)： 
 
@@ -184,7 +181,7 @@ New-AzHDInsightCluster `
     -SshCredential $sshCredentials
 ```
 
-**删除群集**
+删除群集 
 
 旧命令 (ASM)：
 
@@ -198,7 +195,7 @@ Remove-AzureHDInsightCluster -name $clusterName
 Remove-AzHDInsightCluster -ResourceGroupName $resourceGroupName -ClusterName $clusterName
 ```
 
-**列出群集**
+列出群集 
 
 旧命令 (ASM)：
 
@@ -212,7 +209,7 @@ Get-AzureHDInsightCluster
 Get-AzHDInsightCluster
 ```
 
-**显示群集**
+显示群集 
 
 旧命令 (ASM)：
 
@@ -232,7 +229,7 @@ Get-AzHDInsightCluster -ResourceGroupName $resourceGroupName -clusterName $clust
 * [提交 Apache Sqoop 作业](hadoop/apache-hadoop-use-sqoop-powershell.md)
 
 ## <a name="migrating-to-the-new-hdinsight-net-sdk"></a>迁移到新的 HDInsight .NET SDK
-基于 Azure 服务管理 (ASM) 的 [HDInsight.NET SDK](https://msdn.microsoft.com/library/azure/mt416619.aspx) 现已弃用。 建议使用基于 Azure 资源管理器的 [基于资源管理器的 HDInsight .NET SDK](https://docs.microsoft.com/dotnet/api/overview/azure/hdinsight)。 以下基于 ASM 的 HDInsight 包即将过时。
+基于 Azure 服务管理 (ASM) 的 [HDInsight.NET SDK](/previous-versions/azure/reference/mt416619(v=azure.100)) 现已弃用。 建议使用基于 Azure 资源管理器的 [基于资源管理器的 HDInsight .NET SDK](/dotnet/api/overview/azure/hdinsight)。 以下基于 ASM 的 HDInsight 包即将弃用。
 
 * `Microsoft.WindowsAzure.Management.HDInsight`
 * `Microsoft.Hadoop.Client`
@@ -241,8 +238,8 @@ Get-AzHDInsightCluster -ResourceGroupName $resourceGroupName -clusterName $clust
 
 | 如何...使用基于资源管理器的 HDInsight SDK | 链接 |
 | --- | --- |
-| 用于 .NET 的 Azure HDInsight SDK|请参阅[Azure HDINSIGHT SDK for .net](https://docs.microsoft.com/dotnet/api/overview/azure/hdinsight?view=azure-dotnet) |
-| 配合使用 Azure Active Directory 与 .NET SDK 以交互方式对应用程序进行身份验证 |请参阅[使用 .NET SDK 运行 Apache Hive 查询](hadoop/apache-hadoop-use-hive-dotnet-sdk.md)。 本文中的代码段使用交互式身份验证方法。 |
+| 用于 .NET 的 Azure HDInsight SDK|请参阅[用于 .NET 的 Azure HDInsight SDK](/dotnet/api/overview/azure/hdinsight?view=azure-dotnet&preserve-view=true) |
+| 配合使用 Azure Active Directory 与 .NET SDK 以交互方式对应用程序进行身份验证 |请参阅[使用 .NET SDK 运行 Apache Hive 查询](hadoop/apache-hadoop-use-hive-dotnet-sdk.md)。 本文中的代码片段使用交互式身份验证方法。 |
 | 配合使用 Azure Active Directory 与 .NET SDK 以非交互方式对应用程序进行身份验证 |请参阅[为 HDInsight 创建非交互式应用程序](hdinsight-create-non-interactive-authentication-dotnet-applications.md) |
 | 使用 .NET SDK 提交 Apache Hive 作业 |请参阅[提交 Apache Hive 作业](hadoop/apache-hadoop-use-hive-dotnet-sdk.md) |
 | 使用 .NET SDK 提交 Apache Sqoop 作业 |请参阅[提交 Apache Sqoop 作业](hadoop/apache-hadoop-use-sqoop-dotnet-sdk.md) |
@@ -256,7 +253,7 @@ Get-AzHDInsightCluster -ResourceGroupName $resourceGroupName -clusterName $clust
 ### <a name="examples"></a>示例
 以下是有关如何使用基于 ASM 的 SDK 和基于资源管理器的 SDK 的等效代码段来执行操作的一些示例。
 
-**创建群集 CRUD 客户端**
+创建群集 CRUD 客户端 
 
 * 旧命令 (ASM)
 
@@ -309,7 +306,7 @@ Get-AzHDInsightCluster -ResourceGroupName $resourceGroupName -clusterName $clust
   _hdiManagementClient = new HDInsightManagementClient(creds);
   ```
 
-**创建群集**
+创建群集 
 
 * 旧命令 (ASM)
 
@@ -356,7 +353,7 @@ Get-AzHDInsightCluster -ResourceGroupName $resourceGroupName -clusterName $clust
   clusterCreateParameters.Configurations.Add(ConfigurationKey.CoreSite, coreConfigs);
   ```
 
-**启用 HTTP 访问**
+启用 HTTP 访问 
 
 * 旧命令 (ASM)
 
@@ -376,7 +373,7 @@ Get-AzHDInsightCluster -ResourceGroupName $resourceGroupName -clusterName $clust
   client.Clusters.ConfigureHttpSettings(resourceGroup, dnsname, httpParams);
   ```
 
-**删除群集**
+删除群集 
 
 * 旧命令 (ASM)
 

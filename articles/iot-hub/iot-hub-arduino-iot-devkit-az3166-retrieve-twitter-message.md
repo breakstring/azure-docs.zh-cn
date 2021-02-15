@@ -9,20 +9,21 @@ ms.topic: conceptual
 ms.tgt_pltfrm: arduino
 ms.date: 03/07/2018
 ms.author: liydu
-ms.openlocfilehash: 464e2c14fa238160ca198b9f1c8a9808e70933f9
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.custom: devx-track-csharp
+ms.openlocfilehash: af1685f6455c0642800cba7dd604fcc836bcd7a4
+ms.sourcegitcommit: dbe434f45f9d0f9d298076bf8c08672ceca416c6
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "85560977"
+ms.lasthandoff: 10/17/2020
+ms.locfileid: "92147893"
 ---
 # <a name="shake-shake-for-a-tweet----retrieve-a-twitter-message-with-azure-functions"></a>摇一摇，摇一条推文 - 使用 Azure Functions 检索 Twitter 消息
 
 此项目演示如何 Azure Functions 通过动作传感器触发事件。 该应用会检索包含 Arduino 草图中配置的 # 井号标签的随机推文。 该推文显示在 DevKit 屏幕上。
 
-## <a name="what-you-need"></a>所需条件
+## <a name="what-you-need"></a>需要什么
 
-完成[入门指南](https://docs.microsoft.com/azure/iot-hub/iot-hub-arduino-iot-devkit-az3166-get-started)来实现以下目的：
+完成[入门指南](./iot-hub-arduino-iot-devkit-az3166-get-started.md)来实现以下目的：
 
 * 将 DevKit 连接到 Wi-Fi。
 * 准备开发环境。
@@ -60,7 +61,7 @@ ms.locfileid: "85560977"
 
 在 VS Code 终端中，交互式命令行指导你预配所需的 Azure 服务：
 
-![cloud-provision](media/iot-hub-arduino-iot-devkit-az3166-retrieve-twitter-message/cloud-provision.png)
+![屏幕截图显示 Visual Studio Code 终端交互命令行。](media/iot-hub-arduino-iot-devkit-az3166-retrieve-twitter-message/cloud-provision.png)
 
 > [!NOTE]
 > 如果在尝试登录 Azure 时页面挂起处于加载状态，请参阅 [IoT DevKit FAQ 中的“登录页面挂起”](https://microsoft.github.io/azure-iot-developer-kit/docs/faq/#page-hangs-when-log-in-azure)。
@@ -79,7 +80,7 @@ static const char* iot_event = "{\"topic\":\"iot\"}";
 
 使用 `Ctrl+P`（macOS：`Cmd+P`）运行 `task cloud-deploy`，开始部署 Azure Functions 代码：
 
-![cloud-deploy](media/iot-hub-arduino-iot-devkit-az3166-retrieve-twitter-message/cloud-deploy.png)
+![屏幕截图显示 Visual Studio Code 你可以在其中运行任务 cloud-部署来部署 Azure Functions 代码。](media/iot-hub-arduino-iot-devkit-az3166-retrieve-twitter-message/cloud-deploy.png)
 
 > [!NOTE]
 > Azure 函数偶尔无法正常工作。 要在问题发生时解决此问题，请查看 [IoT DevKit 常见问题解答中的“compilation error”（编译错误）部分](https://microsoft.github.io/azure-iot-developer-kit/docs/faq/#compilation-error-for-azure-function)。
@@ -114,7 +115,7 @@ static const char* iot_event = "{\"topic\":\"iot\"}";
 
 1. VS Code 将开始验证并将 Arduino 草图上传到 DevKit：
 
-   ![设备上传](media/iot-hub-arduino-iot-devkit-az3166-retrieve-twitter-message/device-upload.png)
+   ![屏幕截图显示 Visual Studio Code 验证和上传 Arduino 草图。](media/iot-hub-arduino-iot-devkit-az3166-retrieve-twitter-message/device-upload.png)
 
 2. DevKit 将重新启动并开始运行代码。
 
@@ -153,7 +154,7 @@ static const char* iot_event = "{\"topic\":\"iot\"}";
 
 ## <a name="how-it-works"></a>工作原理
 
-![示意图](media/iot-hub-arduino-iot-devkit-az3166-retrieve-twitter-message/diagram.png)
+![关系图显示了向 Azure I o T 集线器发送事件的移动设备，该设备会触发 Azure Function app 请求推文，并将其发送回应用并转发到中心和移动设备。](media/iot-hub-arduino-iot-devkit-az3166-retrieve-twitter-message/diagram.png)
 
 Arduino 草图将事件发送到 Azure IoT 中心。 此事件触发 Azure Functions 应用。 Azure Functions 应用包含用于连接 Twitter 的 API 和检索推文的逻辑。 然后，它将推文包装成 C2D（云到设备）消息，并将其发回到设备。
 
@@ -169,7 +170,7 @@ Arduino 草图将事件发送到 Azure IoT 中心。 此事件触发 Azure Funct
 
 4. 在 [Azure 门户](https://portal.azure.com/){:target="_blank"} 中，转到“资源组”并找到“Shake, Shake”项目的 Azure 函数（类型：应用服务）。**** 名称始终包含“shake...”字符串。
 
-   ![azure-function](media/iot-hub-arduino-iot-devkit-az3166-retrieve-twitter-message/azure-function.png)
+   ![Azure 门户屏幕截图显示项目的应用服务。](media/iot-hub-arduino-iot-devkit-az3166-retrieve-twitter-message/azure-function.png)
 
 5. 使用自己的令牌更新 **Functions > shakeshake-cs** 中 `run.csx` 的代码：
 
@@ -177,7 +178,7 @@ Arduino 草图将事件发送到 Azure IoT 中心。 此事件触发 Azure Funct
    string authHeader = "Bearer " + "[your own token]";
    ```
   
-   ![twitter-token](media/iot-hub-arduino-iot-devkit-az3166-retrieve-twitter-message/twitter-token.png)
+   ![屏幕截图显示了可在其中输入令牌的函数的 c # 代码。](media/iot-hub-arduino-iot-devkit-az3166-retrieve-twitter-message/twitter-token.png)
 
 6. 保存文件并单击“运行”。****
 
@@ -195,7 +196,7 @@ Arduino 草图将事件发送到 Azure IoT 中心。 此事件触发 Azure Funct
 
 2. 在 [Azure 门户](https://portal.azure.com/)中，找到创建的 Azure Functions 应用并将其重启：
 
-   ![azure-function-restart](media/iot-hub-arduino-iot-devkit-az3166-retrieve-twitter-message/azure-function-restart.png)
+   ![屏幕截图显示了使用 Azure Functions 应用和 "重新启动" 按钮的 Azure 门户。](media/iot-hub-arduino-iot-devkit-az3166-retrieve-twitter-message/azure-function-restart.png)
 
 如果遇到其他问题，请参阅 [IoT DevKit 常见问题解答](https://microsoft.github.io/azure-iot-developer-kit/docs/faq/)，或通过以下渠道联系我们：
 
@@ -206,4 +207,4 @@ Arduino 草图将事件发送到 Azure IoT 中心。 此事件触发 Azure Funct
 
 了解如何将 DevKit 设备连接到 Azure IoT 远程监视解决方案加速器和检索推文后，我们建议接下来学习以下教程：
 
-* [Azure IoT 远程监视解决方案加速器概述](https://docs.microsoft.com/azure/iot-suite/)
+* [Azure IoT 远程监视解决方案加速器概述](/azure/iot-suite/)

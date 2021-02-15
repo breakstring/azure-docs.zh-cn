@@ -8,16 +8,16 @@ ms.date: 4/3/2020
 ms.topic: conceptual
 ms.service: iot-edge
 services: iot-edge
-ms.openlocfilehash: 8278d9f2129ab8b213cf1b561f4b82b56dffc8da
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 56696f138fbf58993e990e263d2fa8e490672bb6
+ms.sourcegitcommit: ae6e7057a00d95ed7b828fc8846e3a6281859d40
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "82131040"
+ms.lasthandoff: 10/16/2020
+ms.locfileid: "92106291"
 ---
 # <a name="create-and-provision-a-simulated-iot-edge-device-with-a-virtual-tpm-on-windows"></a>在 Windows 上使用虚拟 TPM 创建和预配模拟 IoT Edge 设备
 
-可以使用[设备预配服务](../iot-dps/index.yml)自动预配 Azure IoT Edge 设备，就像预配未启用 Edge 的设备一样。 如果你不熟悉自动预配过程，请在继续操作之前查看[自动预配的概念](../iot-dps/concepts-auto-provisioning.md)。
+可以使用[设备预配服务](../iot-dps/index.yml)自动预配 Azure IoT Edge 设备，就像预配未启用 Edge 的设备一样。 如果你不熟悉自动预配过程，请在继续操作之前查看[预配](../iot-dps/about-iot-dps.md#provisioning-process)概述。
 
 DPS 在个人注册和组注册中都支持 IoT Edge 设备的对称密钥证明。 对于组注册，如果在对称密钥证明中将“是 IoT Edge 设备”选项选为 TRUE，则在该注册组下注册的所有设备都将标记为 IoT Edge 设备。
 
@@ -61,7 +61,7 @@ DPS 在个人注册和组注册中都支持 IoT Edge 设备的对称密钥证明
 创建个人注册时，请选择“True”  ，将 Windows 开发计算机上的模拟 TPM 设备声明为“IoT Edge设备”  。
 
 > [!TIP]
-> 在 Azure CLI 中，可以创建[注册](https://docs.microsoft.com/cli/azure/ext/azure-iot/iot/dps/enrollment)或[注册组](https://docs.microsoft.com/cli/azure/ext/azure-iot/iot/dps/enrollment-group)，并使用“支持 Edge”  标志来指定某个设备或设备组是 IoT Edge 设备。
+> 在 Azure CLI 中，可以创建[注册](/cli/azure/ext/azure-iot/iot/dps/enrollment)或[注册组](/cli/azure/ext/azure-iot/iot/dps/enrollment-group)，并使用“支持 Edge”  标志来指定某个设备或设备组是 IoT Edge 设备。
 
 模拟设备和个人注册指南：
 
@@ -75,19 +75,18 @@ DPS 在个人注册和组注册中都支持 IoT Edge 设备的对称密钥证明
 
 ## <a name="install-the-iot-edge-runtime"></a>安装 IoT Edge 运行时
 
-IoT Edge 运行时部署在所有 IoT Edge 设备上。 该运行时的组件在容器中运行，允许你将其他容器部署到设备，以便在边缘上运行代码。
+IoT Edge 运行时部署在所有 IoT Edge 设备上。 该运行时的组件在容器中运行，允许你将其他容器部署到设备，以便在边缘上运行代码。 在运行模拟 TPM 的设备上安装 IoT Edge 运行时。
 
-预配设备时需要以下信息：
-
-* DPS 的“ID 范围”值 
-* 为设备创建的“注册 ID” 
-
-在运行模拟 TPM 的设备上安装 IoT Edge 运行时。 将 IoT Edge 运行时配置为自动预配而不是手动预配。
+按照 [安装 Azure IoT Edge 运行时](how-to-install-iot-edge.md)中的步骤操作，然后返回到本文来预配设备。
 
 > [!TIP]
 > 在安装和测试期间，确保运行 TPM 模拟器的窗口处于打开状态。
 
-有关在 Windows 上安装 IoT Edge 的更多详细信息，包括管理容器和更新 IoT Edge 等任务的先决条件和说明，请参阅[在 Windows 上安装 Azure IoT Edge 运行时](how-to-install-iot-edge-windows.md)。
+## <a name="configure-the-device-with-provisioning-information"></a>用预配信息配置设备
+
+在设备上安装运行时后，请使用它连接到设备预配服务和 IoT 中心所用的信息来配置设备。
+
+1. 了解前面部分中收集的 DPS **Id 范围** 和设备 **注册 id** 。
 
 1. 在管理员模式下打开 PowerShell 窗口。 在安装 IoT Edge 而不是 PowerShell (x86) 时，请确保使用 PowerShell 的 AMD64 会话。
 
@@ -98,7 +97,7 @@ IoT Edge 运行时部署在所有 IoT Edge 设备上。 该运行时的组件在
    Deploy-IoTEdge
    ```
 
-1. 此时，IoT Core 设备可能会自动重启。 其他 Windows 10 或 Windows Server 设备可能会提示你重启。 如果是这样，请立即重启设备。 设备准备就绪后，再次以管理员身份运行 PowerShell。
+1. 此时，IoT Core 设备可能会自动重启。 Windows 10 或 Windows Server 设备可能会提示您重新启动。 如果是这样，请立即重启设备。 设备准备就绪后，再次以管理员身份运行 PowerShell。
 
 1. Initialize-IoTEdge 命令在计算机上配置 IoT Edge 运行时  。 该命令默认为使用 Windows 容器手动预配。 通过 `-Dps` 标志使用设备预配服务，而不是手动预配。
 

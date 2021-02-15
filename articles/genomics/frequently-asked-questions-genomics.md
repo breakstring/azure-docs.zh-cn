@@ -10,22 +10,22 @@ ms.service: genomics
 ms.topic: troubleshooting
 ms.date: 12/07/2017
 ms.openlocfilehash: e8806bc4f761214e6740a22093b7e18030fdf881
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.sourcegitcommit: a43a59e44c14d349d597c3d2fd2bc779989c71d7
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "76986030"
+ms.lasthandoff: 11/25/2020
+ms.locfileid: "96018318"
 ---
 # <a name="microsoft-genomics-common-questions"></a>Microsoft 基因组学：常见问题
 
-本文列出了用户可能会遇到的与 Microsoft 基因组学相关的几大疑问。 有关 Microsoft 基因组学服务的详细信息，请参阅[什么是 Microsoft 基因组学？](overview-what-is-genomics.md)。 有关故障排除的详细信息，请参阅我们的[故障排除指南](troubleshooting-guide-genomics.md)。 
+本文列出了用户可能会遇到的与 Microsoft 基因组学相关的几大疑问。 有关 Microsoft 基因组学服务的详细信息，请参阅 [什么是 Microsoft 基因组学？](overview-what-is-genomics.md)。 有关故障排除的详细信息，请参阅我们的[故障排除指南](troubleshooting-guide-genomics.md)。 
 
 
 ## <a name="how-do-i-run-gatk4-workflows-on-microsoft-genomics"></a>如何实现在 Microsoft 基因组学上运行 GATK4 工作流？
 在 Microsoft 基因组学服务的 config.txt 文件中，指定 process_name `gatk4` 。 请注意，将按定期计费费率计费。
 
 ## <a name="how-do-i-enable-output-compression"></a>如何实现启用输出压缩？
-可以使用可选的输出压缩参数压缩输出的 .vcf 或 gvcf。 这等效于 `-bgzip` `-tabix` 在 .vcf 或 gvcf 输出上运行并使用，以生成 `.gz` （bgzip 输出）和 `.tbi` （tabix 输出）文件。 `bgzip`压缩 .vcf 或 gvcf 文件，并 `tabix` 为压缩文件创建索引。 参数是一个布尔值，默认情况下，此值设置为，默认情况下为 `false` " `true` gcvf 输出"。 若要在命令行上使用，请将 `-bz` 或指定 `--bgzip-output` 为 `true` （运行 bgzip 和 tabix）或 `false` 。 若要在 config.txt 文件中使用此参数，请将 `bgzip_output: true` 或添加 `bgzip_output: false` 到文件中。
+可以使用可选的输出压缩参数压缩输出的 .vcf 或 gvcf。 这等效于 `-bgzip` `-tabix` 在 .vcf 或 gvcf 输出上运行后跟，以生成 `.gz` (bgzip 输出) 并 `.tbi` (tabix 输出) 文件。 `bgzip` 压缩 .vcf 或 gvcf 文件，并 `tabix` 为压缩文件创建索引。 参数是一个布尔值，默认情况下，此值设置为，默认情况下为 `false` " `true` gcvf 输出"。 若要在命令行中使用它，请将 `-bz` 或 `--bgzip-output` 指定为 `true`（运行 bgzip 和 tabix）或 `false`。 若要在 config.txt 文件中使用此参数，请将 `bgzip_output: true` 或添加 `bgzip_output: false` 到文件中。
 
 ## <a name="what-is-the-sla-for-microsoft-genomics"></a>什么是 Microsoft 基因组学的 SLA？
 我们保证 Microsoft 基因组学服务 99.9% 的时间均可用于接收工作流 API 请求。 有关详细信息，请参阅 [SLA](https://azure.microsoft.com/support/legal/sla/genomics/v1_0/)。
@@ -48,10 +48,10 @@ Microsoft 基因组学将按每个工作流处理的千兆碱基数计费。 有
  |`cancel`             |发送请求来取消由 `--workflow-id` 指定的工作流进程。 另请参阅 `msgen help cancel`。 |
 
 ## <a name="where-do-i-get-the-value-for---api-url-base"></a>在何处获取 `--api-url-base` 的值？
-请转到 Azure 门户并打开基因组学帐户页。 在“管理”标题下方，选择“访问密钥”********。 可在此处找到 API URL 和访问密钥。
+请转到 Azure 门户并打开基因组学帐户页。 在“管理”标题下方，选择“访问密钥”。 可在此处找到 API URL 和访问密钥。
 
 ## <a name="where-do-i-get-the-value-for---access-key"></a>在何处获取 `--access-key` 的值？
-请转到 Azure 门户并打开基因组学帐户页。 在“管理”标题下方，选择“访问密钥”********。 可在此处找到 API URL 和访问密钥。
+请转到 Azure 门户并打开基因组学帐户页。 在“管理”标题下方，选择“访问密钥”。 可在此处找到 API URL 和访问密钥。
 
 ## <a name="why-do-i-need-two-access-keys"></a>为什么需要两个访问密钥？
 如果想更新（重新生成）密钥而不中断对服务的使用，则需要两个访问密钥。 例如，若要更新第一个密钥，则应该让所有新工作流使用第二个密钥。 等待使用第一个密钥的所有工作流完成，然后再更新第一个密钥。
@@ -80,9 +80,9 @@ msgen 可识别采用以下格式的配置文件：
 
   |命令行参数            | 配置文件行 |
   |:-------------                   |:-------------                 |
-  |`-u/--api-url-base https://url`  | api_url_base:https://url**    |
-  |`-k/--access-key KEY`            | access_key:KEY**              |      
-  |`-pa/--process-args R=B37m1`     | process_args:R-b37m1**        |  
+  |`-u/--api-url-base https://url`  | api_url_base:https://url    |
+  |`-k/--access-key KEY`            | access_key:KEY              |      
+  |`-pa/--process-args R=B37m1`     | process_args:R-b37m1        |  
 
 ## <a name="next-steps"></a>后续步骤
 

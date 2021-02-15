@@ -13,12 +13,12 @@ ms.date: 11/23/2019
 ms.author: abpati
 ms.reviewer: nacanuma
 ms.custom: aaddev, devx-track-python
-ms.openlocfilehash: ad874a4b117b7a7ccecea0e1800ca18c6fce8aaa
-ms.sourcegitcommit: 7fe8df79526a0067be4651ce6fa96fa9d4f21355
+ms.openlocfilehash: d847e38a6114b0e5f8d56f6e994aa47dfbe929e7
+ms.sourcegitcommit: 2817d7e0ab8d9354338d860de878dd6024e93c66
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/06/2020
-ms.locfileid: "87846201"
+ms.lasthandoff: 02/05/2021
+ms.locfileid: "99583699"
 ---
 # <a name="active-directory-federation-services-support-in-msal-for-python"></a>适用于 Python 的 MSAL 中的 Active Directory 联合身份验证服务支持
 
@@ -57,7 +57,7 @@ ms.locfileid: "87846201"
 
 MSAL Python 支持 ADFS 2019。
 
-它不支持直接与 ADFS 2016 或 ADFS v2 建立连接。 如果你的方案需要直接连接到 ADFS 2016，请使用最新版本的 ADAL Python。 将本地系统升级到 ADFS 2019 后，即可使用 MSAL Python。
+它不支持直接与 ADFS 2016 或 ADFS v2 建立连接。 若要支持要求直接连接到 ADFS 2016 的方案，请使用最新版本的 ADAL Python。 将本地系统升级到 ADFS 2019 后，即可使用 MSAL Python。
 
 ## <a name="next-steps"></a>后续步骤
 

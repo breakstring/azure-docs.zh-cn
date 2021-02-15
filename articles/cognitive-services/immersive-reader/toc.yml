@@ -1,14 +1,9 @@
 - name: 沉浸式阅读器文档
   href: index.yml
-- name: 概述
-  items:
-    - name: 什么是沉浸式阅读器？
-      href: Overview.md
+- name: 什么是沉浸式阅读器？
+  href: Overview.md
 - name: 快速入门
-  expanded: true
-  items:
-    - name: 使用客户端库
-      href: ./quickstarts/client-libraries.md
+  href: ./quickstarts/client-libraries.md
 - name: 教程
   items:
     - name: 启动沉浸式阅读器 (Android)
@@ -29,7 +24,7 @@
       href: how-to/display-math.md
     - name: 启动沉浸式阅读器以显示 HTML 内容
       href: how-to-launch-with-html.md
-    - name: 自定义沉浸式阅读器按钮
+    - name: 自定义“沉浸式阅读器”按钮
       href: how-to-customize-launch-button.md
     - name: 缓存身份验证令牌
       href: how-to-cache-token.md
@@ -43,8 +38,12 @@
   items:
     - name: JavaScript SDK
       href: reference.md
+    - name: 发行说明
+      href: release-notes.md
 - name: 资源
   items:
+    - name: 支持和帮助选项
+      href: ../cognitive-services-support-options.md?context=/azure/cognitive-services/immersive-reader/context/context
     - name: Azure 路线图
       href: 'https://azure.microsoft.com/updates/?product=cognitive-services'
     - name: 语言支持

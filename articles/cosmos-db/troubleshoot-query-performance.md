@@ -4,44 +4,44 @@ description: 了解如何识别、诊断和排查 Azure Cosmos DB SQL 查询问�
 author: timsander1
 ms.service: cosmos-db
 ms.topic: troubleshooting
-ms.date: 04/22/2020
+ms.date: 02/02/2021
 ms.author: tisande
 ms.subservice: cosmosdb-sql
 ms.reviewer: sngun
-ms.openlocfilehash: 80e966bf190dcbe4490269ef28a95babadda68d8
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 6875fc53a651b89fcfe88d3217ff86bd21204f6c
+ms.sourcegitcommit: ea822acf5b7141d26a3776d7ed59630bf7ac9532
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "85117907"
+ms.lasthandoff: 02/03/2021
+ms.locfileid: "99524277"
 ---
 # <a name="troubleshoot-query-issues-when-using-azure-cosmos-db"></a>排查使用 Azure Cosmos DB 时遇到的查询问题
+[!INCLUDE[appliesto-sql-api](includes/appliesto-sql-api.md)]
 
-本文逐步说明排查 Azure Cosmos DB 中的查询问题的一般建议方法。 虽然不应将本文中所述的步骤视为针对潜在查询问题的完全防御方法，但我们在其中包含了最常见的性能提示。 应将本文用作起点，以排查 Azure Cosmos DB 核心 (SQL) API 中查询速度缓慢或费用较高的问题。 还可以使用[诊断日志](cosmosdb-monitor-resource-logs.md)来识别速度缓慢或消耗大量吞吐量的查询。
+本文逐步说明排查 Azure Cosmos DB 中的查询问题的一般建议方法。 虽然不应将本文中所述的步骤视为针对潜在查询问题的完全防御方法，但我们在其中包含了最常见的性能提示。 应将本文用作起点，以排查 Azure Cosmos DB 核心 (SQL) API 中查询速度缓慢或费用较高的问题。 还可以使用[诊断日志](cosmosdb-monitor-resource-logs.md)来识别速度缓慢或消耗大量吞吐量的查询。 如果使用的是 Azure Cosmos DB API for MongoDB，则应使用 [Azure Cosmos DB API for MongoDB 查询故障排除指南](mongodb-troubleshoot-query.md)
 
-可对 Azure Cosmos DB 中的查询优化进行广泛分类：
+Azure Cosmos DB 中的查询优化大致分为以下类别：
 
 - 可降低查询请求单位 (RU) 费用的优化
 - 仅降低延迟的优化
 
-几乎可以肯定，降低查询的 RU 费用还将降低延迟。
+如果降低查询的 RU 费用，通常还会降低延迟。
 
-本文提供可使用 [nutrition](https://github.com/CosmosDB/labs/blob/master/dotnet/setup/NutritionData.json) 数据集重新创建的示例。
+本文提供可使用 [nutrition 数据集](https://github.com/CosmosDB/labs/blob/master/dotnet/setup/NutritionData.json)重新创建的示例。
 
 ## <a name="common-sdk-issues"></a>常见 SDK 问题
 
 阅读本指南之前，考虑与查询引擎无关的常见 SDK 问题将很有帮助。
 
-- 为获得最佳性能，请遵循以下[性能提示](performance-tips.md)。
-    > [!NOTE]
-    > 为获得提升的性能，建议使用 Windows 64 位主机处理。 SQL SDK 包含一个本机 ServiceInterop.dll，用于在本地分析和优化查询。 仅 Windows x64 平台支持 ServiceInterop.dll。 对于 ServiceInterop.dll 在其中不可用的 Linux 平台及其他不受支持的平台，将对网关进行额外的网络调用以获取优化的查询。
+- 按照这些 [SDK 性能提示](performance-tips.md)进行操作。
+    - [.NET SDK 故障排除指南](troubleshoot-dot-net-sdk.md)
+    - [Java SDK 故障排除指南](troubleshoot-java-sdk-v4-sql.md)
 - SDK 允许为查询设置 `MaxItemCount`，但不能指定最小项计数。
     - 代码应处理从零到 `MaxItemCount` 的任意页大小。
-    - 页中的项数将始终小于或等于指定的 `MaxItemCount`。 但 `MaxItemCount` 只是严格意义上的最大值，结果数可能少于此数目。
 - 有时，即使未来页上包含结果，查询也可能包含空页， 其原因可能包括：
     - SDK 可能正在执行多个网络调用。
     - 查询检索文档所花费的时间可能很长。
-- 所有查询都包含一个继续标记，该标记将允许查询继续进行。 请确保完全耗尽查询。 查看 SDK 示例，并在 `FeedIterator.HasMoreResults` 上使用 `while` 循环来耗尽整个查询。
+- 所有查询都包含一个继续标记，该标记将允许查询继续进行。 请确保完全耗尽查询。 详细了解如何[处理多页结果](sql-query-pagination.md#handling-multiple-pages-of-results)
 
 ## <a name="get-query-metrics"></a>获取查询指标
 
@@ -62,6 +62,8 @@ ms.locfileid: "85117907"
 - [在索引策略中包含所需的路径。](#include-necessary-paths-in-the-indexing-policy)
 
 - [了解哪些系统函数使用索引。](#understand-which-system-functions-use-the-index)
+
+- [改进字符串系统函数执行。](#improve-string-system-function-execution)
 
 - [了解哪些聚合查询使用索引。](#understand-which-aggregate-queries-use-the-index)
 
@@ -192,29 +194,79 @@ RU 费用：409.51 RU
 
 RU 费用：2.98 RU
 
-可以随时将属性添加到索引策略，而不会影响写入可用性或性能。 如果将新属性添加到索引，则使用此属性的查询将立即使用新的可用索引。 查询将在生成新索引时使用该索引。 因此，在重新生成索引时，查询结果可能会不一致。 如果为新属性编制索引，则在重新生成索引期间，仅使用现有索引的查询将不受影响。 你可以[跟踪索引转换进度](https://docs.microsoft.com/azure/cosmos-db/how-to-manage-indexing-policy#use-the-net-sdk-v3)。
+可以随时将属性添加到索引策略，而不会影响写入或读取可用性。 你可以[跟踪索引转换进度](./how-to-manage-indexing-policy.md#dotnet-sdk)。
 
 ### <a name="understand-which-system-functions-use-the-index"></a>了解哪些系统函数使用索引
 
-如果表达式可以被转换为一系列字符串值，则该表达式可以使用索引， 否则不可使用索引。
+大多数系统函数都使用索引。 下面列出了一些使用索引的常用字符串函数：
 
-下面是一些可使用索引的常用字符串函数的列表：
+- -StartsWith
+- 包含
+- RegexMatch
+- 左
+- Substring-但仅当第一个 num_expr 为0时
 
-- STARTSWITH(str_expr1, str_expr2, bool_expr)  
-- CONTAINS(str_expr, str_expr, bool_expr)
-- LEFT(str_expr, num_expr) = str_expr
-- SUBSTRING(str_expr, num_expr, num_expr) = str_expr，但前提是第一个 num_expr 为 0
-
-下面是一些不使用索引且必须加载每个文档的常用系统函数：
+下面是一些常见的系统函数，它们不使用索引，并且必须在子句中使用时加载每个文档 `WHERE` ：
 
 | 系统函数                     | 优化意见             |
 | --------------------------------------- |------------------------------------------------------------ |
-| UPPER/LOWER                             | 不要使用系统函数来规范化数据以进行比较，而是在插入时规范化大小写。 诸如 ```SELECT * FROM c WHERE UPPER(c.name) = 'BOB'``` 的查询将变成 ```SELECT * FROM c WHERE c.name = 'BOB'```。 |
+| 上限/下限                         | 不要使用系统函数来规范化数据以进行比较，而是在插入时规范化大小写。 诸如 ```SELECT * FROM c WHERE UPPER(c.name) = 'BOB'``` 的查询将变成 ```SELECT * FROM c WHERE c.name = 'BOB'```。 |
+| GetCurrentDateTime/GetCurrentTimestamp/GetCurrentTicks | 计算查询执行前的当前时间并在子句中使用该字符串值 `WHERE` 。 |
 | 数学函数（非聚合） | 如果需要频繁计算查询中的某个值，请考虑在 JSON 文档中将此值存储为属性。 |
 
-------
+在子句中使用时 `SELECT` ，低效的系统函数不会影响查询使用索引的方式。
 
-即使系统函数不使用索引，查询的其他部分也仍可以使用索引。
+### <a name="improve-string-system-function-execution"></a>改进字符串系统函数执行
+
+对于某些使用索引的系统函数，可以通过将子句添加到查询来改善查询执行 `ORDER BY` 。 
+
+更具体地说，在查询中进行查询时，RU 费用增加的任何系统函数都将增加 `ORDER BY` 。 这些查询进行索引扫描，因此，对查询结果进行排序可以使查询更有效。
+
+此优化可改善以下系统函数的执行：
+
+- StartsWith (，其中不区分大小写 = true) 
+- StringEquals (，其中不区分大小写 = true) 
+- 包含
+- RegexMatch
+- EndsWith
+
+例如，考虑下面带有 `CONTAINS` 的查询。 `CONTAINS` 将使用索引，但有时，即使在添加相关索引之后，在运行以下查询时，您仍可能会观察到非常高的 RU 费用。
+
+原始查询：
+
+```sql
+SELECT *
+FROM c
+WHERE CONTAINS(c.town, "Sea")
+```
+
+可以通过添加以下内容来改善查询执行 `ORDER BY` ：
+
+```sql
+SELECT *
+FROM c
+WHERE CONTAINS(c.town, "Sea")
+ORDER BY c.town
+```
+
+相同的优化可帮助对其他筛选器进行查询。 在这种情况下，最好还向子句添加具有相等筛选器的属性 `ORDER BY` 。
+
+原始查询：
+
+```sql
+SELECT *
+FROM c
+WHERE c.name = "Samer" AND CONTAINS(c.town, "Sea")
+```
+
+可以通过 `ORDER BY` 为 (c.name，c.) 添加和 [组合索引](index-policy.md#composite-indexes) 来改善查询执行：
+
+```sql
+SELECT *
+FROM c
+WHERE c.name = "Samer" AND CONTAINS(c.town, "Sea")
+ORDER BY c.name, c.town
+```
 
 ### <a name="understand-which-aggregate-queries-use-the-index"></a>了解哪些聚合查询使用索引
 
@@ -470,13 +522,13 @@ WHERE c.foodGroup = "Vegetables and Vegetable Products" AND c._ts > 1575503264
 
 ## <a name="optimizations-that-reduce-query-latency"></a>可降低查询延迟的优化
 
-在许多情况下，当查询延迟仍然过高时，RU 费用是可接受的。 以下部分概述了降低查询延迟的提示。 如果对同一数据集多次运行同一查询，则该查询每次都会产生相同的 RU 费用。 但是，每次执行查询时，查询延迟可能各不相同。
+在许多情况下，当查询延迟仍然过高时，RU 费用是可接受的。 以下部分概述了降低查询延迟的提示。 如果对同一个数据集多次运行同一个查询，该查询通常每次都会产生相同的 RU 开销。 但是，每次执行查询时，查询延迟可能各不相同。
 
 ### <a name="improve-proximity"></a>提高邻近度
 
 在非 Azure Cosmos DB 帐户的区域中运行的查询，比在同一区域中运行的查询的延迟更高。 例如，如果在台式机上运行代码，则延迟比从 Azure Cosmos DB 所在的同一 Azure 区域中的某个虚拟机上运行查询要高出几十或几百毫秒（或更高）。 可以轻松[在 Azure Cosmos DB 中全局分发数据](distribute-data-globally.md)，以确保将数据置于更靠近应用的位置。
 
-### <a name="increase-provisioned-throughput"></a>增大预配吞吐量
+### <a name="increase-provisioned-throughput"></a>增加预配的吞吐量
 
 在 Azure Cosmos DB 中，预配的吞吐量以请求单位 (RU) 计量。 假设某个查询消耗 5 RU 吞吐量。 如果预配 1000 RU，则每秒可以运行该查询 200 次。 如果在没有足够可用吞吐量的情况下尝试运行查询，Azure Cosmos DB 将返回 HTTP 429 错误。 任何当前核心 (SQL) API SDK 在等待一小段时间后，都将自动重试该查询。 受限制的请求需要花费更长的时间，因此增加预配的吞吐量可以改进查询延迟。 可以在 Azure 门户的“指标”边栏选项卡上观察[受限制的请求总数](use-metrics.md#understand-how-many-requests-are-succeeding-or-causing-errors)。
 
@@ -492,5 +544,6 @@ WHERE c.foodGroup = "Vegetables and Vegetable Products" AND c._ts > 1575503264
 参阅以下文章，了解有关如何按查询度量 RU、获取执行统计信息以优化查询等信息：
 
 * [使用 .NET SDK 获取 SQL 查询执行指标](profile-sql-api-query.md)
-* [优化 Azure Cosmos DB 的查询性能](sql-api-sql-query-metrics.md)
+* [优化 Azure Cosmos DB 的查询性能](./sql-api-query-metrics.md)
 * [.NET SDK 性能提示](performance-tips.md)
+* [适用于 Java v4 SDK 的性能提示](performance-tips-java-sdk-v4-sql.md)

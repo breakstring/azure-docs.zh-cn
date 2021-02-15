@@ -2,18 +2,15 @@
 title: 教程：从 HDInsight Apache Storm 写入到存储 - Azure/Data Lake
 description: 教程 - 了解如何使用 Apache Storm 将数据写入到与 HDFS 兼容的 Azure HDInsight 存储。
 ms.service: hdinsight
-author: hrasheed-msft
-ms.author: hrasheed
-ms.reviewer: jasonh
 ms.custom: hdinsightactive
 ms.topic: tutorial
 ms.date: 06/24/2019
-ms.openlocfilehash: 579163180f6c7ba19927ca66d20bd92d1b2de52e
-ms.sourcegitcommit: 0947111b263015136bca0e6ec5a8c570b3f700ff
+ms.openlocfilehash: 4e648c57be699620e669ce7db0845dad2b876095
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/24/2020
-ms.locfileid: "73241209"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98932553"
 ---
 # <a name="tutorial-write-to-apache-hadoop-hdfs-from-apache-storm-on-azure-hdinsight"></a>教程：从 Apache Storm on Azure HDInsight 写入到 Apache Hadoop HDFS
 
@@ -32,7 +29,7 @@ ms.locfileid: "73241209"
 
 ## <a name="prerequisites"></a>先决条件
 
-* [Java 开发人员工具包 (JDK) 版本 8](https://aka.ms/azure-jdks)
+* [Java 开发人员工具包 (JDK) 版本 8](/azure/developer/java/fundamentals/java-jdk-long-term-support)
 
 * 根据 Apache 要求正确[安装](https://maven.apache.org/install.html)的 [Apache Maven](https://maven.apache.org/download.cgi)。  Maven 是 Java 项目的项目生成系统。
 

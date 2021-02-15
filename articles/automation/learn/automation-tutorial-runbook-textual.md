@@ -5,12 +5,12 @@ services: automation
 ms.subservice: process-automation
 ms.date: 04/19/2020
 ms.topic: tutorial
-ms.openlocfilehash: dd9aee01edf45f89feb6a6010c8d958511bc3904
-ms.sourcegitcommit: ec682dcc0a67eabe4bfe242fce4a7019f0a8c405
+ms.openlocfilehash: e822e17f154b72854c5150e071301d7bbd53072e
+ms.sourcegitcommit: 100390fefd8f1c48173c51b71650c8ca1b26f711
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/09/2020
-ms.locfileid: "86185392"
+ms.lasthandoff: 01/27/2021
+ms.locfileid: "98890809"
 ---
 # <a name="tutorial-create-a-powershell-workflow-runbook"></a>教程：创建 PowerShell 工作流 Runbook
 
@@ -109,17 +109,17 @@ ms.locfileid: "86185392"
 
 6. 请注意，作业状态显示在“作业摘要”中。 此状态与测试 Runbook 时看到的状态相符。
 
-   ![作业摘要](../media/automation-tutorial-runbook-textual/job-pane-status-blade-jobsummary.png)
+   :::image type="content" source="../media/automation-tutorial-runbook-textual/job-pane-status-blade-jobsummary.png" alt-text="Runbook 作业窗格的屏幕截图，其中突出显示了“作业摘要”部分。":::
 
 7. 在 Runbook 状态显示为“已完成”后，单击“输出”。 此时会打开“输出”页，可以在其中看到 `Hello World` 消息。
 
-   ![作业摘要](../media/automation-tutorial-runbook-textual/job-pane-status-blade-outputtile.png)
+   :::image type="content" source="../media/automation-tutorial-runbook-textual/job-pane-status-blade-outputtile.png" alt-text="Runbook 作业窗格的屏幕截图，其中突出显示了“输出”按钮。":::
 
 8. 关闭“输出”页。
 
 9. 单击“所有日志”打开 Runbook 作业的“流”窗格。 在输出流中应该只会看到 `Hello World`。 请注意，“流”窗格可以显示 Runbook 作业的其他流，例如，详细流和错误流（如果 Runbook 向其写入内容）。
 
-   ![作业摘要](../media/automation-tutorial-runbook-textual/job-pane-status-blade-alllogstile.png)
+   :::image type="content" source="../media/automation-tutorial-runbook-textual/job-pane-status-blade-alllogstile.png" alt-text="Runbook 作业窗格的屏幕截图，其中突出显示了“所有日志”按钮。":::
 
 10. 关闭“流”窗格和“作业”窗格以返回到 MyFirstRunbook 页。
 
@@ -131,7 +131,7 @@ ms.locfileid: "86185392"
 
 ## <a name="step-5---add-authentication-to-manage-azure-resources"></a>步骤 5 - 添加身份验证来管理 Azure 资源
 
-已经测试并发布 Runbook，但到目前为止它不执行任何有用的操作。 需要让其管理 Azure 资源。 除非它使用该订阅的凭据进行身份验证，否则它不能执行该操作。 身份验证使用 [Connect-AzAccount](/powershell/module/az.accounts/connect-azaccount?view=azps-3.7.0) cmdlet。
+已经测试并发布 Runbook，但到目前为止它不执行任何有用的操作。 需要让其管理 Azure 资源。 除非它使用该订阅的凭据进行身份验证，否则它不能执行该操作。 身份验证使用 [Connect-AzAccount](/powershell/module/az.accounts/connect-azaccount) cmdlet。
 
 >[!NOTE]
 >对于 PowerShell Runbook，`Add-AzAccount` 和 `Add-AzureRMAccount` 是 `Connect-AzAccount` 的别名。 可以使用这些 cmdlet，也可以在自动化帐户中[将模块更新](../automation-update-azure-modules.md)为最新版本。 即使刚刚创建了一个新的自动化帐户，也可能需要更新你的模块。
@@ -165,7 +165,7 @@ ms.locfileid: "86185392"
 
 现在，你的 Runbook 向 Azure 订阅进行身份验证，你可以管理资源。 让我们添加一项命令，用于启动虚拟机。 你可以选取你的 Azure 订阅中的任何 VM，但现在，你将在 Runbook 中将该名称硬编码。 如果要跨多个订阅管理资源，需要将 `AzContext` 参数和 [Get-AzContext](/powershell/module/az.accounts/get-azcontext) cmdlet 配合使用。
 
-1. 提供要启动的 VM 的名称和其资源组名称，方法是输入对 [Start-AzVM](/powershell/module/Az.Compute/Start-AzVM?view=azps-3.5.0) cmdlet 的调用，如下所示。 
+1. 提供要启动的 VM 的名称和其资源组名称，方法是输入对 [Start-AzVM](/powershell/module/Az.Compute/Start-AzVM) cmdlet 的调用，如下所示。 
 
    ```powershell-interactive
    workflow MyFirstRunbook-Workflow
@@ -227,7 +227,7 @@ Runbook 当前启动的是你在 Runbook 中硬编码的 VM。 如果可以在�
 ## <a name="next-steps"></a>后续步骤
 
 * 有关 PowerShell 的详细信息，包括语言参考和学习模块，请参阅 [PowerShell 文档](/powershell/scripting/overview)。
-* 有关 PowerShell cmdlet 参考，请参阅 [Az.Automation](/powershell/module/az.automation/?view=azps-3.7.0#automation)。
+* 有关 PowerShell cmdlet 参考，请参阅 [Az.Automation](/powershell/module/az.automation)。
 * 若要开始使用图形 Runbook，请参阅[创建图形 Runbook](automation-tutorial-runbook-graphical.md)。
 * 若要开始使用 PowerShell Runbook，请参阅[创建 PowerShell Runbook](automation-tutorial-runbook-textual-powershell.md)。
 * 若要了解有关 Runbook 类型、其优点和限制的详细信息，请参阅 [Azure 自动化 Runbook 类型](../automation-runbook-types.md)。

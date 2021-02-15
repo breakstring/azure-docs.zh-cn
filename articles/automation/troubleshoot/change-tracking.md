@@ -2,23 +2,19 @@
 title: 排查 Azure 自动化更改跟踪和库存的问题
 description: 本文介绍了如何排查和解决 Azure 自动化更改跟踪和库存功能的问题。
 services: automation
-ms.service: automation
 ms.subservice: change-inventory-management
-author: mgoedtel
-ms.author: magoedte
 ms.date: 01/31/2019
-ms.topic: conceptual
-manager: carmonm
-ms.openlocfilehash: ddd41756f0e373e3bf627a88f441512fe0db91b7
-ms.sourcegitcommit: ec682dcc0a67eabe4bfe242fce4a7019f0a8c405
+ms.topic: troubleshooting
+ms.openlocfilehash: 516f1a4e5e7c677b17a2941ee3c300db44d49a3b
+ms.sourcegitcommit: 100390fefd8f1c48173c51b71650c8ca1b26f711
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/09/2020
-ms.locfileid: "86187228"
+ms.lasthandoff: 01/27/2021
+ms.locfileid: "98896539"
 ---
 # <a name="troubleshoot-change-tracking-and-inventory-issues"></a>排查更改跟踪和库存问题
 
-本文介绍了如何排查和解决 Azure 自动化更改跟踪和库存的问题。 有关更改跟踪和库存的一般信息，请参阅[更改跟踪和库存概述](../change-tracking.md)。
+本文介绍了如何排查和解决 Azure 自动化更改跟踪和库存的问题。 有关更改跟踪和库存的一般信息，请参阅[更改跟踪和库存概述](../change-tracking/overview.md)。
 
 ## <a name="windows"></a>Windows
 
@@ -37,7 +33,7 @@ ms.locfileid: "86187228"
 * 未下载更改跟踪和库存管理包。
 * 要启用的 VM 可能来自某台克隆的计算机，但尚未通过系统准备工具 (sysprep) 准备该计算机以使其安装有适用于 Windows 的 Log Analytics 代理。
 
-#### <a name="resolution"></a>解决方案
+#### <a name="resolution"></a>解决方法
 
 在 Log Analytics 代理计算机上，转到 **C:\Program Files\Microsoft Monitoring Agent\Agent\Tools** 并运行以下命令：
 
@@ -108,15 +104,15 @@ Heartbeat
 
 ##### <a name="log-analytics-agent-for-linux-not-configured-correctly"></a>适用于 Linux 的 Log Analytics 代理未正确配置
 
-适用于 Linux 的 Log Analytics 代理可能未正确配置，因此无法使用 OMS 日志收集器工具来收集日志和命令行输出。 请参阅[更改跟踪和库存概述](../change-tracking.md)。
+适用于 Linux 的 Log Analytics 代理可能未正确配置，因此无法使用 OMS 日志收集器工具来收集日志和命令行输出。 请参阅[更改跟踪和库存概述](../change-tracking/overview.md)。
 
 ##### <a name="fim-conflicts"></a>FIM 冲突
 
-Azure 安全中心的 FIM 功能可能错误地验证了 Linux 文件的完整性。 请验证 FIM 是否正常运行，以及是否针对 Linux 文件监视进行了正确配置。 请参阅[更改跟踪和库存概述](../change-tracking.md)。
+Azure 安全中心的 FIM 功能可能错误地验证了 Linux 文件的完整性。 请验证 FIM 是否正常运行，以及是否针对 Linux 文件监视进行了正确配置。 请参阅[更改跟踪和库存概述](../change-tracking/overview.md)。
 
 ## <a name="next-steps"></a>后续步骤
 
-如果未在此处看到你遇到的问题，或者无法解决你遇到的问题，请尝试以下途径之一以获取其他支持：
+如果你的问题未在本文中列出，或者无法解决问题，请尝试通过以下渠道之一获取更多支持：
 
 * 通过 [Azure 论坛](https://azure.microsoft.com/support/forums/)获取 Azure 专家的解答。
 * 连接到 [@AzureSupport](https://twitter.com/azuresupport)，这是用于改进客户体验的官方 Microsoft Azure 帐户。 Azure 支持人员会将你连接到 Azure 社区，从中可以获得解答、支持和专家建议。

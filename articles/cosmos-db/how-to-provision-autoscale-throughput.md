@@ -1,21 +1,26 @@
 ---
-title: 在 Azure Cosmos DB 中预配自动缩放吞吐量
-description: 了解如何使用 Azure 门户、CLI、PowerShell 以及其他各种 SDK 在 Azure Cosmos DB 中的容器和数据库级别预配自动缩放吞吐量。
+title: 在 Azure Cosmos DB SQL API 中预配自动缩放吞吐量
+description: 了解如何使用 Azure 门户、CLI、PowerShell 和各种其他 SDK 在 Azure Cosmos DB SQL API 中预配容器和数据库级别的自动缩放吞吐量。
 author: deborahc
 ms.author: dech
 ms.service: cosmos-db
+ms.subservice: cosmosdb-sql
 ms.topic: how-to
-ms.date: 07/30/2020
-ms.openlocfilehash: dba0fccaa3eb79ad297ce80462efea5b69a4a009
-ms.sourcegitcommit: 11e2521679415f05d3d2c4c49858940677c57900
+ms.date: 10/15/2020
+ms.custom: devx-track-csharp, devx-track-azurecli
+ms.openlocfilehash: 52904296df77d9097a6180345388e8e702e2bca0
+ms.sourcegitcommit: dfc4e6b57b2cb87dbcce5562945678e76d3ac7b6
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/31/2020
-ms.locfileid: "87497046"
+ms.lasthandoff: 12/12/2020
+ms.locfileid: "97357613"
 ---
-# <a name="provision-autoscale-throughput-on-database-or-container-in-azure-cosmos-db"></a>在 Azure Cosmos DB 中的数据库或容器上预配自动缩放吞吐量
+# <a name="provision-autoscale-throughput-on-database-or-container-in-azure-cosmos-db---sql-api"></a>在 Azure Cosmos DB SQL API 中的数据库或容器上预配自动缩放吞吐量
+[!INCLUDE[appliesto-sql-api](includes/appliesto-sql-api.md)]
 
-本文介绍了如何为 Azure Cosmos DB 中的数据库或容器（集合、图形或表）预配自动缩放吞吐量。 可以为单个容器启用自动缩放，也可以为某个数据库预配自动缩放吞吐量，然后在该数据库中的所有容器之间共享此吞吐量。
+本文介绍如何在 Azure Cosmos DB SQL API 中的数据库或容器（集合、图或表）上预配自动缩放吞吐量。 可以为单个容器启用自动缩放，也可以为某个数据库预配自动缩放吞吐量，然后在该数据库中的所有容器之间共享此吞吐量。
+
+如果你使用其他 API，请参阅[用于 MongoDB 的 API](how-to-provision-throughput-mongodb.md)、[Cassandra API](how-to-provision-throughput-cassandra.md)、[Gremlin API](how-to-provision-throughput-gremlin.md) 文章来预配吞吐量。
 
 ## <a name="azure-portal"></a>Azure 门户
 
@@ -51,7 +56,7 @@ ms.locfileid: "87497046"
 > [!NOTE]
 > 在现有数据库或容器上启用自动缩放时，最大 RU/秒的起始值由系统根据当前手动预配的吞吐量设置和存储确定。 在操作完成后，你可以根据需要更改最大 RU/秒。 [了解详细信息。](autoscale-faq.md#how-does-the-migration-between-autoscale-and-standard-manual-provisioned-throughput-work) 
 
-## <a name="azure-cosmos-db-net-v3-sdk-for-sql-api"></a>适用于 SQL API 的 Azure Cosmos DB .NET V3 SDK
+## <a name="azure-cosmos-db-net-v3-sdk"></a>Azure Cosmos DB .NET V3 SDK
 
 可以使用适用于 SQL API 的 Azure Cosmos DB .NET SDK [3.9 或更高版本](https://www.nuget.org/packages/Microsoft.Azure.Cosmos)来管理自动缩放资源。 
 
@@ -108,7 +113,7 @@ int? currentThroughput = autoscaleContainerThroughput.Throughput;
 await container.ReplaceThroughputAsync(ThroughputProperties.CreateAutoscaleThroughput(newAutoscaleMaxThroughput));
 ```
 
-## <a name="azure-cosmos-db-java-v4-sdk-for-sql-api"></a>适用于 SQL API 的 Azure Cosmos DB Java V4 SDK
+## <a name="azure-cosmos-db-java-v4-sdk"></a>Azure Cosmos DB Java V4 SDK
 
 可以使用适用于 SQL API 的 Azure Cosmos DB Java SDK [4.0 或更高版本](https://mvnrepository.com/artifact/com.azure/azure-cosmos)来管理自动缩放资源。
 
@@ -123,7 +128,7 @@ await container.ReplaceThroughputAsync(ThroughputProperties.CreateAutoscaleThrou
 // Create instance of CosmosClient
 CosmosAsyncClient client = new CosmosClientBuilder()
     .setEndpoint(HOST)
-    .setKey(MASTER)
+    .setKey(PRIMARYKEY)
     .setConnectionPolicy(CONNECTIONPOLICY)
     .buildAsyncClient();
 
@@ -140,7 +145,7 @@ CosmosAsyncDatabase database = client.createDatabase(databaseName, autoscaleThro
 // Create instance of CosmosClient
 CosmosClient client = new CosmosClientBuilder()
     .setEndpoint(HOST)
-    .setKey(MASTER)
+    .setKey(PRIMARYKEY)
     .setConnectionPolicy(CONNECTIONPOLICY)
     .buildClient();
 
@@ -242,25 +247,17 @@ container.replaceThroughput(ThroughputProperties.createAutoscaledThroughput(newA
 
 ---
 
-## <a name="cassandra-api"></a>Cassandra API
-
-可以使用[CQL 命令](manage-scale-cassandra.md#use-autoscale)、 [Azure CLI](cli-samples.md)、 [Azure PowerShell](powershell-samples.md)或[Azure 资源管理器模板](resource-manager-samples.md)来预配 Cassandra API Azure Cosmos DB 帐户。
-
-## <a name="azure-cosmos-db-api-for-mongodb"></a>用于 MongoDB 的 Azure Cosmos DB API
-
-可以使用[mongodb 扩展命令](mongodb-custom-commands.md)、 [Azure CLI](cli-samples.md)、 [Azure PowerShell](powershell-samples.md)或[Azure 资源管理器模板](resource-manager-samples.md)为 mongodb API Azure Cosmos DB 帐户设置自动缩放。
-
 ## <a name="azure-resource-manager"></a>Azure 资源管理器
 
-可以使用 Azure 资源管理器模板为所有 Azure Cosmos DB Api 预配数据库或容器级别资源的自动缩放吞吐量。 有关示例，请参阅[Azure 资源管理器模板 Azure Cosmos DB](resource-manager-samples.md) 。
+Azure 资源管理器模板可用于在数据库或容器级资源上为所有 Azure Cosmos DB API 预配自动缩放吞吐量。 有关示例，请参阅 [Azure Cosmos DB 的 Azure 资源管理器模板](./templates-samples-sql.md)。
 
 ## <a name="azure-cli"></a>Azure CLI
 
-Azure CLI 可用于为所有 Azure Cosmos DB Api 预配数据库或容器级别资源的自动缩放吞吐量。 有关示例，请参阅[Azure Cosmos DB Azure CLI 示例](cli-samples.md)。
+Azure CLI 可用于在数据库或容器级资源上为所有 Azure Cosmos DB API 预配自动缩放吞吐量。 有关示例，请参阅[用于 Azure Cosmos DB 的 Azure CLI 示例](cli-samples.md)。
 
 ## <a name="azure-powershell"></a>Azure PowerShell
 
-Azure PowerShell 可用于为所有 Azure Cosmos DB Api 预配数据库或容器级别资源的自动缩放吞吐量。 有关示例，请参阅[Azure Cosmos DB Azure PowerShell 示例](powershell-samples.md)。
+Azure PowerShell 可用于在数据库或容器级资源上为所有 Azure Cosmos DB API 预配自动缩放吞吐量。 有关示例，请参阅[适用于 Azure Cosmos DB 的 Azure PowerShell 示例](powershell-samples.md)。
 
 ## <a name="next-steps"></a>后续步骤
 

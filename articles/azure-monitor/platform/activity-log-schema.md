@@ -4,15 +4,15 @@ description: 介绍 Azure 活动日志中每个类别的事件架构。
 author: bwren
 services: azure-monitor
 ms.topic: reference
-ms.date: 06/09/2020
+ms.date: 09/30/2020
 ms.author: bwren
 ms.subservice: logs
-ms.openlocfilehash: 656161849ce8d48fb15cfac4024ec5b77adb5fee
-ms.sourcegitcommit: 2ff0d073607bc746ffc638a84bb026d1705e543e
+ms.openlocfilehash: 9bda92667cfc3afb44a55adf3f3c12798a734ddc
+ms.sourcegitcommit: c95e2d89a5a3cf5e2983ffcc206f056a7992df7d
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/06/2020
-ms.locfileid: "87829503"
+ms.lasthandoff: 11/24/2020
+ms.locfileid: "95522713"
 ---
 # <a name="azure-activity-log-event-schema"></a>Azure 活动日志事件架构
 [Azure 活动日志](platform-logs-overview.md)可以方便用户深入了解 Azure 中发生的任何订阅级别事件。 本文介绍活动日志类别以及每个类别的架构。 
@@ -23,13 +23,24 @@ ms.locfileid: "87829503"
 - 对于使用[诊断设置](diagnostic-settings.md)将活动日志发送到 Azure 存储或 Azure 事件中心时的架构，请参阅最后一节[来自存储帐户和事件中心的架构](#schema-from-storage-account-and-event-hubs)。
 - 对于使用[诊断设置](diagnostic-settings.md)将活动日志发送到 Log Analytics 工作区时的架构，请参阅[Azure Monitor 数据参考](/azure/azure-monitor/reference/)。
 
+## <a name="severity-level"></a>严重级别
+活动日志中的每个条目都有严重性级别。 严重性级别可以具有以下值之一：  
+
+| severity | 说明 |
+|:---|:---|
+| 严重 | 需要系统管理员立即关注的事件。 可能指示应用程序或系统失败或已停止响应。
+| 错误 | 指示存在问题的事件，但这些事件无需立即关注。
+| 警告 | 提供潜在问题而不是实际错误的预警的事件。 指示资源未处于理想状态，以后可能降级为显示错误或严重事件。  
+| 信息 | 向管理员传递非关键信息的事件。 类似于这样一个备注：“仅供参考”。 
+
+每个资源提供程序的开发人员都会选择其资源条目的严重性级别。 因此，根据应用程序的生成方式，实际的严重性可能会有所不同。 例如，对于单独获取的特定资源来说，“关键”项可能不如对 Azure 应用程序极为重要的资源类型中的“错误”那么重要。 确定要针对其发出警报的事件时，请务必考虑这一事实。  
 
 ## <a name="categories"></a>Categories
 活动日志中的每个事件都有特定的类别，该类别在下表中进行了描述。 请参阅以下各部分，了解从门户、PowerShell、CLI 和 REST API 访问活动日志时，每个类别及其架构的详细信息。 [将活动日志流式传输到存储或事件中心](./resource-logs.md#send-to-azure-event-hubs)时，架构是不同的。 本文最后一个部分提供了这些属性到[资源日志架构](./resource-logs-schema.md)的映射。
 
 | 类别 | 说明 |
 |:---|:---|
-| [管理](#administrative-category) | 包含对通过资源管理器执行的所有创建、更新、删除和操作的记录。 管理事件示例包括创建虚拟机和删除网络安全组。<br><br>使用资源管理器的用户或应用程序执行的每个操作都作为对特定资源类型的操作进行建模。 如果操作类型为写入、删除或操作，则会在“管理”类别中记录该操作的启动和成功或失败记录。 管理事件还包括对订阅中基于角色的访问控制进行的任何更改。 |
+| [管理](#administrative-category) | 包含对通过资源管理器执行的所有创建、更新、删除和操作的记录。 管理事件示例包括创建虚拟机和删除网络安全组。<br><br>使用资源管理器的用户或应用程序执行的每个操作都作为对特定资源类型的操作进行建模。 如果操作类型为写入、删除或操作，则会在“管理”类别中记录该操作的启动和成功或失败记录。 管理事件还包括对订阅中 Azure 基于角色的访问控制的任何更改。 |
 | [服务运行状况](#service-health-category) | 包含对任何发生在 Azure 中的服务运行状况事件的记录。 SQL Azure 在美国东部的一个服务运行状况事件示例是遭遇停机。 <br><br>服务运行状况事件分 6 种：需要操作、协助恢复、事件、维护、信息或安全性。 仅当订阅中有某个资源受事件影响时，才会创建这些事件。
 | [资源运行状况](#resource-health-category) | 包含对 Azure 资源发生的任何资源运行状况事件的记录。 资源运行状况事件的一个示例是，虚拟机运行状况状态更改为“不可用”。<br><br>资源运行状况事件可以表现出以下四种运行状况状态之一：“Available”、“Unavailable”、“Degraded”和“Unknown”   。 此外，资源运行状况事件可以分为“平台启动”或“用户启动” 。 |
 | [Alert](#alert-category) | 包含 Azure 警报的激活记录。 警报事件的一个示例是，在过去 5 分钟内，我的 VM 上的 CPU % 始终超过 80。|
@@ -39,7 +50,7 @@ ms.locfileid: "87829503"
 | [策略](#policy-category) | 包含 Azure Policy 执行的所有效果操作的记录。 Policy 事件的示例包括审核和拒绝。 Policy 执行的每个操作建模为对资源执行的操作。 |
 
 ## <a name="administrative-category"></a>管理类别
-此类别包含对通过资源管理器执行的所有创建、更新、删除和操作的记录。 此类别中的事件类型的示例包括“创建虚拟机”和“删除网络安全组”。用户或应用程序通过资源管理器所进行的每一个操作都会作为特定资源类型上的操作建模。 如果操作类型为“写入”、“删除”或“操作”，则该操作的开始、成功或失败记录都会记录在管理类别中。 管理类别还包括任何对订阅中基于角色的访问控制进行的更改。
+此类别包含对通过资源管理器执行的所有创建、更新、删除和操作的记录。 此类别中的事件类型的示例包括“创建虚拟机”和“删除网络安全组”。用户或应用程序通过资源管理器所进行的每一个操作都会作为特定资源类型上的操作建模。 如果操作类型为“写入”、“删除”或“操作”，则该操作的开始、成功或失败记录都会记录在管理类别中。 管理类别还包括对订阅中 Azure 基于角色的访问控制的任何更改。
 
 ### <a name="sample-event"></a>示例事件
 ```json
@@ -132,7 +143,7 @@ ms.locfileid: "87829503"
 ### <a name="property-descriptions"></a>属性说明
 | 元素名称 | 说明 |
 | --- | --- |
-| authorization |包含事件的 RBAC 属性的 Blob。 通常包括“action”、“role”和“scope”属性。 |
+| authorization |事件的 Azure RBAC 属性的 Blob。 通常包括“action”、“role”和“scope”属性。 |
 | caller |执行操作（UPN 声明或 SPN 声明，具体取决于可用性）的用户的电子邮件地址。 |
 | channels |以下值之一：“Admin”、“Operation” |
 | 声明 |Active Directory 使用 JWT 令牌来验证用户或应用程序，以在资源管理器中执行此操作。 |
@@ -763,7 +774,7 @@ ms.locfileid: "87829503"
 
 | 元素名称 | 说明 |
 | --- | --- |
-| authorization | 事件的 RBAC 属性数组。 对于新资源，这是触发评估的请求的操作和范围。 对于现有资源，操作是“Microsoft.Resources/checkPolicyCompliance/read”。 |
+| authorization | 事件的 Azure RBAC 属性的数组。 对于新资源，这是触发评估的请求的操作和范围。 对于现有资源，操作是“Microsoft.Resources/checkPolicyCompliance/read”。 |
 | caller | 对于新资源，为启动部署的标识。 对于现有资源，为 Microsoft Azure Policy Insights RP 的 GUID。 |
 | channels | Policy 事件仅使用“操作”通道。 |
 | 声明 | Active Directory 使用 JWT 令牌来验证用户或应用程序，以在资源管理器中执行此操作。 |

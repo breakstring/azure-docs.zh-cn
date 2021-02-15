@@ -5,14 +5,14 @@ services: vpn-gateway
 author: yushwang
 ms.service: vpn-gateway
 ms.topic: how-to
-ms.date: 06/20/2017
+ms.date: 09/02/2020
 ms.author: yushwang
-ms.openlocfilehash: 00291373ae1e30eca2fdf5f9435fc2201a492e40
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 484dad65310efaa60e8744b2f122b5e44ae13565
+ms.sourcegitcommit: aaa65bd769eb2e234e42cfb07d7d459a2cc273ab
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "84988061"
+ms.lasthandoff: 01/27/2021
+ms.locfileid: "98880146"
 ---
 # <a name="overview-of-partner-vpn-device-configurations"></a>合作伙伴 VPN 设备配置概述
 本文提供有关配置用于连接到 Azure VPN 网关的本地 VPN 设备的概述。 示例 Azure 虚拟网络和 VPN 网关设置用于演示如何使用相同参数连接到不同的本地 VPN 设备配置。
@@ -27,7 +27,7 @@ Azure VPN 网关使用标准 IPsec/IKE 协议套件建立站点到站点 (S2S) V
 
 ![单一 S2S VPN 隧道图示](./media/vpn-gateway-3rdparty-device-config-overview/singletunnel.png)
 
-有关设置单一 VPN 隧道的分布说明，请参阅[配置站点到站点连接](vpn-gateway-howto-site-to-site-resource-manager-portal.md)。 以下部分指定示例配置的连接参数，并提供 PowerShell 脚本来帮助读者入门。
+有关设置单一 VPN 隧道的分布说明，请参阅[配置站点到站点连接](./tutorial-site-to-site-portal.md)。 以下部分指定示例配置的连接参数，并提供 PowerShell 脚本来帮助读者入门。
 
 ### <a name="connection-parameters"></a>连接参数
 本部分列出了前几部分中示例中所用的参数。
@@ -150,4 +150,3 @@ New-AzVirtualNetworkGatewayConnection -Name $Connection15 -ResourceGroupName $RG
 
 ## <a name="next-steps"></a>后续步骤
 有关设置主动 - 主动 VPN 网关的分布说明，请参阅[为跨界连接和 VNet 到 VNet 连接配置主动 - 主动 VPN 网关](vpn-gateway-activeactive-rm-powershell.md)。
-

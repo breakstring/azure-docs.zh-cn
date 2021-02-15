@@ -3,12 +3,12 @@ title: 将视频连续录制到云中并从云中播放教程 - Azure
 description: 在本教程中，你将了解如何使用 Azure IoT Edge 上的 Azure 实时视频分析将视频连续录制到云中并使用 Azure 媒体服务流式传输该视频的任何部分。
 ms.topic: tutorial
 ms.date: 05/27/2020
-ms.openlocfilehash: 60b93aac3a0da4bbc49f83c5cbd43191693cae50
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.openlocfilehash: 8659bd2e029da13870b50dd6535e959bc90c81a7
+ms.sourcegitcommit: 5b926f173fe52f92fcd882d86707df8315b28667
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87043473"
+ms.lasthandoff: 02/04/2021
+ms.locfileid: "99551054"
 ---
 # <a name="tutorial-continuous-video-recording-to-the-cloud-and-playback-from-the-cloud"></a>教程：将视频连续录制到云中并从云中播放
 
@@ -49,7 +49,10 @@ ms.locfileid: "87043473"
 * Azure IoT 中心
 * Azure 存储帐户
 * Azure 媒体服务帐户
-* Azure 中的 Linux VM，已安装 [IoT Edge 运行时](../../iot-edge/how-to-install-iot-edge-linux.md)
+* Azure 中的 Linux VM，已安装 [IoT Edge 运行时](../../iot-edge/how-to-install-iot-edge.md)
+
+> [!TIP]
+> 如果在创建 Azure 资源时遇到问题，请查看[故障排除指南](troubleshoot-how-to.md#common-error-resolutions)来解决一些常见问题。
 
 ## <a name="concepts"></a>概念
 
@@ -61,9 +64,12 @@ ms.locfileid: "87043473"
  
  若要完成 CVR，需要从支持 RTSP 的相机中捕获视频，并将其连续记录到 [Azure 媒体服务资产](terminology.md#asset)。 下图显示了该媒体图的图形表示形式。
 
-![媒体图](./media/continuous-video-recording-tutorial/continuous-video-recording-overview.png)
+> [!div class="mx-imgBorder"]
+> :::image type="content" source="./media/continuous-video-recording-tutorial/continuous-video-recording-overview.svg" alt-text="媒体图":::
 
-在本教程中，你将通过使用 [Live555 Media Server](https://github.com/Azure/live-video-analytics/tree/master/utilities/rtspsim-live555) 生成的一个 Edge 模块来模拟 RTSP 相机。 在媒体图中，你将使用 [RTSP 源](media-graph-concept.md#rtsp-source)节点获取实时源，并将该视频发送到[资产接收器节点](media-graph-concept.md#asset-sink)，后者会将视频记录到资产中。
+在本教程中，你将通过使用 [Live555 Media Server](https://github.com/Azure/live-video-analytics/tree/master/utilities/rtspsim-live555) 生成的一个 Edge 模块来模拟 RTSP 相机。 在媒体图中，你将使用 [RTSP 源](media-graph-concept.md#rtsp-source)节点获取实时源，并将该视频发送到[资产接收器节点](media-graph-concept.md#asset-sink)，后者会将视频记录到资产中。 本教程中将使用的视频是[公路交叉口示例视频](https://lvamedia.blob.core.windows.net/public/camera-300s.mkv)。
+<iframe src="https://www.microsoft.com/en-us/videoplayer/embed/RE4LTY4" width="640" height="320" allowFullScreen="true" frameBorder="0"></iframe>
+> [!VIDEO https://www.microsoft.com/en-us/videoplayer/embed/RE4LTY4]
 
 ## <a name="set-up-your-development-environment"></a>设置开发环境
 
@@ -92,7 +98,7 @@ ms.locfileid: "87043473"
     借助 IoT 中心连接字符串，可以使用 Visual Studio Code 通过 Azure IoT 中心将命令发送到 Edge 模块。
     
 1. 接下来，浏览到 src/edge 文件夹并创建一个名为 .env 的文件。
-1. 复制 ~/clouddrive/lva-sample/.env 文件中的内容。 文本应如下所示：
+1. 复制 ~/clouddrive/lva-sample/edge-deployment/.env 文件中的内容。 文本应如下所示：
 
     ```
     SUBSCRIPTION_ID="<Subscription ID>"  
@@ -102,8 +108,8 @@ ms.locfileid: "87043473"
     AAD_TENANT_ID="<AAD Tenant ID>"  
     AAD_SERVICE_PRINCIPAL_ID="<AAD SERVICE_PRINCIPAL ID>"  
     AAD_SERVICE_PRINCIPAL_SECRET="<AAD SERVICE_PRINCIPAL ID>"  
-    INPUT_VIDEO_FOLDER_ON_DEVICE="/home/lvaadmin/samples/input"  
-    OUTPUT_VIDEO_FOLDER_ON_DEVICE="/home/lvaadmin/samples/output"  
+    VIDEO_INPUT_FOLDER_ON_DEVICE="/home/lvaadmin/samples/input"  
+    VIDEO_OUTPUT_FOLDER_ON_DEVICE="/home/lvaadmin/samples/output"  
     APPDATA_FOLDER_ON_DEVICE="/var/local/mediaservices"
     CONTAINER_REGISTRY_USERNAME_myacr="<your container registry username>"  
     CONTAINER_REGISTRY_PASSWORD_myacr="<your container registry username>"      
@@ -134,6 +140,12 @@ ms.locfileid: "87043473"
 1. 选择左下角“AZURE IOT 中心”窗格旁边的“更多操作”图标，设置 IoT 中心连接字符串 。 从 src/cloud-to-device-console-app/appsettings.json 文件复制该字符串。 
 
     ![设置 IoT 中心连接字符串](./media/quickstarts/set-iotconnection-string.png)
+    > [!NOTE]
+    > 系统可能会要求你提供 IoT 中心的内置终结点信息。 若要获取此信息，请在 Azure 门户中导航到 IoT 中心，然后在左侧导航窗格中查找“内置终结点”选项。 单击此处，在“与事件中心兼容的终结点”部分下查找“与事件中心兼容的终结点” 。 复制并使用框中的文本。 终结点将如下所示：  
+        ```
+        Endpoint=sb://iothub-ns-xxx.servicebus.windows.net/;SharedAccessKeyName=iothubowner;SharedAccessKey=XXX;EntityPath=<IoT Hub name>
+        ```
+
 1. 右键单击“src/edge/deployment.template.json”文件，然后选择“生成 IoT Edge 部署清单”。 Visual Studio Code 使用 .env 文件中的值来替换在部署模板文件中找到的变量。 此操作在 src/edge/config 文件夹中创建一个名为 deployment.amd64.json 的清单文件。
 
    ![生成 IoT Edge 部署清单](./media/quickstarts/generate-iot-edge-deployment-manifest.png)
@@ -157,16 +169,31 @@ ms.locfileid: "87043473"
 
     ![开始监视内置事件终结点](./media/quickstarts/start-monitoring-iothub-events.png)
 
+    > [!NOTE]
+    > 系统可能会要求你提供 IoT 中心的内置终结点信息。 若要获取此信息，请在 Azure 门户中导航到 IoT 中心，然后在左侧导航窗格中查找“内置终结点”选项。 单击此处，在“与事件中心兼容的终结点”部分下查找“与事件中心兼容的终结点” 。 复制并使用框中的文本。 终结点将如下所示：  
+        ```
+        Endpoint=sb://iothub-ns-xxx.servicebus.windows.net/;SharedAccessKeyName=iothubowner;SharedAccessKey=XXX;EntityPath=<IoT Hub name>
+        ```
+
 ## <a name="run-the-program"></a>运行程序 
 
-1. 在 Visual Studio Code 中，转到 src/cloud-to-device-console-app/operations.json。
+1. 在 Visual Studio Code 中，打开“扩展”选项卡（或按 Ctrl+Shift+X），然后搜索“Azure IoT 中心”。
+1. 右键单击并选择“扩展设置”。
+
+    > [!div class="mx-imgBorder"]
+    > :::image type="content" source="./media/run-program/extensions-tab.png" alt-text="扩展设置":::
+1. 搜索并启用“显示详细消息”。
+
+    > [!div class="mx-imgBorder"]
+    > :::image type="content" source="./media/run-program/show-verbose-message.png" alt-text="显示详细消息":::
+1. 转到 src/cloud-to-device-console-app/operations.json。
 1. 在 GraphTopologySet 节点下，编辑以下内容：
 
-    `"topologyUrl" : "https://raw.githubusercontent.com/Azure/live-video-analytics/master/MediaGraph/topologies/cvr-asset/topology.json" `
+    `"topologyUrl" : "https://raw.githubusercontent.com/Azure/live-video-analytics/master/MediaGraph/topologies/cvr-asset/2.0/topology.json" `
 1. 接下来，在 GraphInstanceSet 和 GraphTopologyDelete 节点下，确保 topologyName 的值与前面图形拓扑中的 name 属性的值匹配   ：
 
     `"topologyName" : "CVRToAMSAsset"`  
-1. 在浏览器中打开[拓扑](https://raw.githubusercontent.com/Azure/live-video-analytics/master/MediaGraph/topologies/cvr-asset/topology.json)，并查看 assetNamePattern。 为了确保资产具有唯一名称，可能需要在 operations.json 文件中更改图形实例的名称（默认值为 Sample-Graph-1）。
+1. 在浏览器中打开[拓扑](https://raw.githubusercontent.com/Azure/live-video-analytics/master/MediaGraph/topologies/cvr-asset/2.0/topology.json)，并查看 assetNamePattern。 为了确保资产具有唯一名称，可能需要在 operations.json 文件中更改图形实例的名称（默认值为 Sample-Graph-1）。
 
     `"assetNamePattern": "sampleAsset-${System.GraphTopologyName}-${System.GraphInstanceName}"`    
 1. 选择 F5 以启动调试会话。 在“终端”窗口中，你将看到一些输出的消息。
@@ -177,7 +204,7 @@ ms.locfileid: "87043473"
     Executing operation GraphTopologyList
     -----------------------  Request: GraphTopologyList  --------------------------------------------------
     {
-      "@apiVersion": "1.0"
+      "@apiVersion": "2.0"
     }
     ---------------  Response: GraphTopologyList - Status: 200  ---------------
     {
@@ -194,7 +221,7 @@ ms.locfileid: "87043473"
      
      ```
      {
-       "@apiVersion": "1.0",
+       "@apiVersion": "2.0",
        "name": "Sample-Graph-1",
        "properties": {
          "topologyName": "CVRToAMSAsset",
@@ -352,7 +379,7 @@ applicationProperties 中的 subject 部分引用图形中的 AssetSink 节点�
 1. 在订阅中的资源中找到媒体服务帐户，并打开“帐户”窗格。
 1. 选择“媒体服务”列表中的“资产” 。
 
-    ![资产](./media/continuous-video-recording-tutorial/assets.png)
+    ![媒体服务资产](./media/continuous-video-recording-tutorial/assets.png)
 1. 将找到以名称 sampleAsset-CVRToAMSAsset-Sample-Graph-1 列出的资产。 这是在图形拓扑文件中选择的命名模式。
 1. 选择资产。
 1. 在“资产详细信息”页上，选择“流式处理 URL”文本框下的“新建” 。
@@ -375,4 +402,4 @@ applicationProperties 中的 subject 部分引用图形中的 AssetSink 节点�
 ## <a name="next-steps"></a>后续步骤
 
 * 使用支持 RTSP 的 [IP 相机](https://en.wikipedia.org/wiki/IP_camera)，而不是使用 RTSP 模拟器。 可以在 [ONVIF 一致性产品页](https://www.onvif.org/conformant-products/)上查找符合配置文件 G、S 或 T 的设备来搜索支持 RTSP 的 IP 照相机。
-* 使用 AMD64 或 X64 Linux 设备（与使用 Azure Linux VM 相比）。 此设备必须与 IP 相机位于同一网络中。 按照[在 Linux 上安装 Azure IoT Edge 运行时](../../iot-edge/how-to-install-iot-edge-linux.md)中的说明进行操作。 然后按照[将首个 IoT Edge 模块部署到虚拟 Linux 设备](../../iot-edge/quickstart-linux.md)快速入门中的说明进行操作，将设备注册到 Azure IoT 中心。
+* 使用 AMD64 或 X64 Linux 设备（与使用 Azure Linux VM 相比）。 此设备必须与 IP 相机位于同一网络中。 按照[在 Linux 上安装 Azure IoT Edge 运行时](../../iot-edge/how-to-install-iot-edge.md)中的说明进行操作。 然后按照[将首个 IoT Edge 模块部署到虚拟 Linux 设备](../../iot-edge/quickstart-linux.md)快速入门中的说明进行操作，将设备注册到 Azure IoT 中心。

@@ -8,26 +8,26 @@ ms.author: brjohnst
 tags: complex data types; compound data types; aggregate data types
 ms.service: cognitive-search
 ms.topic: conceptual
-ms.date: 07/12/2020
-ms.openlocfilehash: 0fd7ba1723da77313407725ec676e69b0ef3bca1
-ms.sourcegitcommit: 3543d3b4f6c6f496d22ea5f97d8cd2700ac9a481
+ms.date: 11/27/2020
+ms.openlocfilehash: b0b2dd9904682121c83b22b9029097e7ee57fb11
+ms.sourcegitcommit: 6b16e7cc62b29968ad9f3a58f1ea5f0baa568f02
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/20/2020
-ms.locfileid: "86496666"
+ms.lasthandoff: 11/28/2020
+ms.locfileid: "96303757"
 ---
 # <a name="how-to-model-complex-data-types-in-azure-cognitive-search"></a>如何在 Azure 认知搜索中为复杂数据类型建模
 
-用于填充 Azure 认知搜索索引的外部数据集可以采用多种形状。 有时它们包含分层或嵌套的子结构。 示例包括单个客户的多个地址、单个 SKU 的多个颜色和大小、一本书籍的多位作者等等。 在建模术语中，这些结构可能称作复杂、组合、复合或聚合数据类型。     Azure 认知搜索对此概念使用的术语是“复杂类型”。  在 Azure 认知搜索中，复杂类型是使用**复杂字段**建模的。 复杂字段是包含子级（子字段）的字段，这些子级可以是任何数据类型（包括其他复杂类型）。 其工作原理类似于编程语言中的结构化数据类型。
+用于填充 Azure 认知搜索索引的外部数据集可以采用多种形状。 有时它们包含分层或嵌套的子结构。 示例包括单个客户的多个地址、单个 SKU 的多个颜色和大小、一本书籍的多位作者等等。 在建模术语中，这些结构可能称作复杂、组合、复合或聚合数据类型。 Azure 认知搜索对此概念使用的术语是“复杂类型”。 在 Azure 认知搜索中，复杂类型是使用 **复杂字段** 建模的。 复杂字段是包含子级（子字段）的字段，这些子级可以是任何数据类型（包括其他复杂类型）。 其工作原理类似于编程语言中的结构化数据类型。
 
 复杂字段表示文档中的单个对象，或对象的数组，具体取决于数据类型。 `Edm.ComplexType` 类型的字段表示单个对象，而 `Collection(Edm.ComplexType)` 类型的字段表示对象的数组。
 
 Azure 认知搜索原生支持复杂类型和集合。 使用这些类型几乎可为 Azure 认知搜索索引中的任何 JSON 结构建模。 在旧版的 Azure 认知搜索 API 中，只能导入平展的行集。 在最新版本中，索引可以更密切地对应于源数据。 换言之，如果源数据使用复杂类型，则索引也可以使用复杂类型。
 
-若要开始，我们建议使用 [Hotels 数据集](https://github.com/Azure-Samples/azure-search-sample-data/blob/master/README.md)，可以在 Azure 门户上“导入数据”向导中加载该数据集。  该向导会检测源中的复杂类型，并根据检测到的结构建议一个索引架构。
+若要开始，我们建议使用 [Hotels 数据集](https://github.com/Azure-Samples/azure-search-sample-data/blob/master/README.md)，可以在 Azure 门户上“导入数据”向导中加载该数据集。 该向导会检测源中的复杂类型，并根据检测到的结构建议一个索引架构。
 
 > [!Note]
-> 从开始，对复杂类型的支持已正式发布 `api-version=2019-05-06` 。 
+> 从 `api-version=2019-05-06` 开始正式提供对复杂类型的支持。 
 >
 > 如果你的搜索解决方案是基于以前的解决方法（集合中的平展数据集）生成的，应更改索引，使之包含最新 API 版本支持的复杂类型。 有关升级的 API 版本的详细信息，请参阅[升级到最新的 REST API 版本](search-api-migration.md)或[升级到最新的 .NET SDK 版本](search-dotnet-sdk-migration-version-9.md)。
 
@@ -35,11 +35,13 @@ Azure 认知搜索原生支持复杂类型和集合。 使用这些类型几乎�
 
 以下 JSON 文档由简单字段和复杂字段构成。 复杂字段（例如 `Address` 和 `Rooms`）包含子字段。 `Address` 包含这些子字段的单个值集，因为它是文档中的单个对象。 相反，`Rooms` 包含其子字段的多个值集，集合中的每个对象各有一个值集。
 
+
 ```json
 {
   "HotelId": "1",
   "HotelName": "Secret Point Motel",
   "Description": "Ideally located on the main commercial artery of the city in the heart of New York.",
+  "Tags": ["Free wifi", "on-site parking", "indoor pool", "continental breakfast"]
   "Address": {
     "StreetAddress": "677 5th Ave",
     "City": "New York",
@@ -48,21 +50,28 @@ Azure 认知搜索原生支持复杂类型和集合。 使用这些类型几乎�
   "Rooms": [
     {
       "Description": "Budget Room, 1 Queen Bed (Cityside)",
-      "Type": "Budget Room",
-      "BaseRate": 96.99
+      "RoomNumber": 1105,
+      "BaseRate": 96.99,
     },
     {
       "Description": "Deluxe Room, 2 Double Beds (City View)",
       "Type": "Deluxe Room",
-      "BaseRate": 150.99
-    },
+      "BaseRate": 150.99,
+    }
+    . . .
   ]
 }
 ```
 
+## <a name="indexing-complex-types"></a>为复杂类型编制索引
+
+在编制索引期间，单个文档中的所有复杂集合最多可以有3000个元素。 复杂集合的某个元素是该集合的成员，因此，对于会议室 (宾馆示例中唯一的复杂集合) ，每个房间都是一个元素。 在上面的示例中，如果 "机密点 Motel" 有500个房间，旅馆记录将包含500个房间元素。 对于嵌套的复杂集合，还会计算每个嵌套元素，同时还会计算外部 (父) 元素的计数。
+
+此限制仅适用于复杂集合，而不是复杂类型 (如地址) 或字符串集合 (如标记) 。
+
 ## <a name="creating-complex-fields"></a>创建复杂字段
 
-与处理任何索引定义时一样，可以使用门户、[REST API](https://docs.microsoft.com/rest/api/searchservice/create-index) 或 [.NET SDK](https://docs.microsoft.com/dotnet/api/microsoft.azure.search.models.index?view=azure-dotnet) 创建包含复杂类型的架构。 
+与处理任何索引定义时一样，可以使用门户、[REST API](/rest/api/searchservice/create-index) 或 [.NET SDK](/dotnet/api/azure.search.documents.indexes.models.searchindex) 创建包含复杂类型的架构。 
 
 以下示例演示了包含简单字段、集合与复杂类型的 JSON 索引架构。 请注意，在复杂类型中，与顶级字段一样，每个子字段包含一个类型，有时还包含属性。 架构对应于以上示例数据。 `Address` 是一个非集合的复杂字段（一家酒店只有一个地址）。 `Rooms` 是复杂集合字段（一家酒店有多间客房）。
 
@@ -93,7 +102,7 @@ Azure 认知搜索原生支持复杂类型和集合。 使用这些类型几乎�
 
 ## <a name="updating-complex-fields"></a>更新复杂字段
 
-一般情况下，应用于字段的所有[重建索引规则](search-howto-reindex.md)仍会应用于复杂字段。 在此处重述一些主要规则以及添加字段并不需要重建索引，但大多数修改操作需要重建索引。
+一般情况下，应用于字段的所有[重建索引规则](search-howto-reindex.md)仍会应用于复杂字段。 在这里，重述几个主要规则，将字段添加到复杂类型不需要重新生成索引，但大多数修改都是如此。
 
 ### <a name="structural-updates-to-the-definition"></a>对定义的结构更新
 
@@ -113,7 +122,7 @@ Azure 认知搜索原生支持复杂类型和集合。 使用这些类型几乎�
 
 > `search=Address/City:Portland AND Address/State:OR`
 
-此类查询对于全文搜索是不相关联的，这与筛选器不同。  在筛选器中，基于复杂集合子字段的查询将通过 [`any` 或 `all`](search-query-odata-collection-operators.md) 中的范围变量相关联。 上述 Lucene 查询返回包含“Portland, Maine”和“Portland, Oregon”以及 Oregon 中其他城市的文档。 之所以返回此结果，是因为每个子句将应用到其在整个文档中的字段的所有值，因此没有“当前子文档”的概念。 有关此方面内容的详细信息，请参阅[了解 Azure 认知搜索中的 OData 集合筛选器](search-query-understand-collection-filters.md)。
+此类查询对于全文搜索是不相关联的，这与筛选器不同。 在筛选器中，基于复杂集合子字段的查询将通过 [`any` 或 `all`](search-query-odata-collection-operators.md) 中的范围变量相关联。 上述 Lucene 查询返回包含“Portland, Maine”和“Portland, Oregon”以及 Oregon 中其他城市的文档。 之所以返回此结果，是因为每个子句将应用到其在整个文档中的字段的所有值，因此没有“当前子文档”的概念。 有关此方面内容的详细信息，请参阅[了解 Azure 认知搜索中的 OData 集合筛选器](search-query-understand-collection-filters.md)。
 
 ## <a name="selecting-complex-fields"></a>选择复杂字段
 
@@ -145,7 +154,7 @@ Azure 认知搜索原生支持复杂类型和集合。 使用这些类型几乎�
 
 > `$filter=Address/Country eq 'Canada'`
 
-若要根据复杂集合字段进行筛选，可以结合 [`any` 和 `all` 运算符](search-query-odata-collection-operators.md)使用 **Lambda 表达式**。 在这种情况下，Lambda 表达式的**范围变量**是包含子字段的对象。 可以使用标准 OData 路径语法来引用这些子字段。 例如，以下筛选器将返回至少提供一间豪华客房，且所有客房都禁止吸烟的所有酒店：
+若要根据复杂集合字段进行筛选，可以结合 [`any` 和 `all` 运算符](search-query-odata-collection-operators.md)使用 **Lambda 表达式**。 在这种情况下，Lambda 表达式的 **范围变量** 是包含子字段的对象。 可以使用标准 OData 路径语法来引用这些子字段。 例如，以下筛选器将返回至少提供一间豪华客房，且所有客房都禁止吸烟的所有酒店：
 
 > `$filter=Rooms/any(room: room/Type eq 'Deluxe Room') and Rooms/all(room: not room/SmokingAllowed)`
 
@@ -153,7 +162,7 @@ Azure 认知搜索原生支持复杂类型和集合。 使用这些类型几乎�
 
 ## <a name="next-steps"></a>后续步骤
 
-尝试在“导入数据”向导中练习 [Hotels 数据集](https://github.com/Azure-Samples/azure-search-sample-data/blob/master/README.md)。  需要使用自述文件中提供的 Cosmos DB 连接信息来访问这些数据。
+尝试在“导入数据”向导中练习 [Hotels 数据集](https://github.com/Azure-Samples/azure-search-sample-data/blob/master/README.md)。 需要使用自述文件中提供的 Cosmos DB 连接信息来访问这些数据。
 
 获取该信息后，向导中的第一步是创建新的 Azure Cosmos DB 数据源。 然后，在向导中进入目标索引页后，会看到使用复杂类型的索引。 请创建并加载此索引，然后执行查询来了解新结构。
 

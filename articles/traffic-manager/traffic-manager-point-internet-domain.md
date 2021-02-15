@@ -2,20 +2,20 @@
 title: 将 Internet 域指向流量管理器 - Azure 流量管理器
 description: 本文将帮助将公司域名指向流量管理器域名。
 services: traffic-manager
-author: rohinkoul
+author: duongau
 ms.service: traffic-manager
 ms.devlang: na
 ms.topic: article
 ms.tgt_pltfrm: na
 ms.workload: infrastructure-services
 ms.date: 10/11/2016
-ms.author: rohink
-ms.openlocfilehash: 69bdf9a0e04b4d9c2a55f1c0f346d601830ded09
-ms.sourcegitcommit: 269da970ef8d6fab1e0a5c1a781e4e550ffd2c55
+ms.author: duau
+ms.openlocfilehash: e0e2acfb0ec0068dcd08ae660e397f65e039a665
+ms.sourcegitcommit: 0aec60c088f1dcb0f89eaad5faf5f2c815e53bf8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/10/2020
-ms.locfileid: "88053059"
+ms.lasthandoff: 01/14/2021
+ms.locfileid: "98183738"
 ---
 # <a name="point-a-company-internet-domain-to-an-azure-traffic-manager-domain"></a>将公司 Internet 域指向 Azure 流量管理器域
 
@@ -25,7 +25,7 @@ ms.locfileid: "88053059"
 
 `www.contoso.com IN CNAME contoso.trafficmanager.net.`
 
-向*www \. contoso.com*发出的所有流量请求都将定向到*contoso.trafficmanager.net*。
+向 *www \. contoso.com* 发出的所有流量请求都将定向到 *contoso.trafficmanager.net*。
 
 > [!IMPORTANT]
 > 无法将第二级域（例如 *contoso.com*）指向流量管理器域。 DNS 协议标准不允许对二级域名使用 CNAME 记录。
@@ -33,5 +33,5 @@ ms.locfileid: "88053059"
 ## <a name="next-steps"></a>后续步骤
 
 * [流量管理器路由方法](traffic-manager-routing-methods.md)
-* [流量管理器 - 禁用、启用或删除配置文件](disable-enable-or-delete-a-profile.md)
-* [流量管理器 - 禁用或启用终结点](disable-or-enable-an-endpoint.md)
+* [流量管理器 - 禁用、启用或删除配置文件](./traffic-manager-manage-profiles.md)
+* [流量管理器 - 禁用或启用终结点](./traffic-manager-manage-endpoints.md)

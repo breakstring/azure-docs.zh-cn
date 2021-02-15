@@ -1,6 +1,6 @@
 ---
 title: Azure 中网络虚拟设备问题故障排除 | Microsoft Docs
-description: 排查 Azure 中的网络虚拟设备（NVA）问题并验证 NVA 配置的基本 Azure 平台要求。
+description: 对 Azure 中的网络虚拟设备 (NVA) 问题进行故障排除并验证 NVA 配置的基本 Azure 平台要求。
 services: virtual-network
 documentationcenter: na
 author: genlin
@@ -14,12 +14,12 @@ ms.tgt_pltfrm: na
 ms.workload: infrastructure-services
 ms.date: 10/26/2018
 ms.author: genli
-ms.openlocfilehash: 112792d4ccee2be7f85e6a5a6c0caf64df9a019e
-ms.sourcegitcommit: dccb85aed33d9251048024faf7ef23c94d695145
+ms.openlocfilehash: fe4c17b74cd786d03bd19257dea190a21ecaa9f5
+ms.sourcegitcommit: b4e6b2627842a1183fce78bce6c6c7e088d6157b
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/28/2020
-ms.locfileid: "87286064"
+ms.lasthandoff: 01/30/2021
+ms.locfileid: "99095635"
 ---
 # <a name="network-virtual-appliance-issues-in-azure"></a>Azure 中的网络虚拟设备问题
 
@@ -30,7 +30,7 @@ ms.locfileid: "87286064"
 NVA 供应商提供了对第三方 NVA 及其与 Azure 平台集成的技术支持。
 
 > [!NOTE]
-> 如果遇到涉及 NVA 的连接或路由问题，则应直接[联系 NVA 的供应商](https://support.microsoft.com/help/2984655/support-for-azure-market-place-for-virtual-machines)。
+> 如果遇到涉及 NVA 的连接或路由问题，则应直接[联系 NVA 的供应商](https://mskb.pkisolutions.com/kb/2984655)。
 
 [!INCLUDE [support-disclaimer](../../includes/support-disclaimer.md)]
 
@@ -52,7 +52,7 @@ NVA 供应商提供了对第三方 NVA 及其与 Azure 平台集成的技术支�
 
 ## <a name="check-the-minimum-configuration-requirements-for-nvas-on-azure"></a>检查 Azure 上 NVA 的最低配置要求
 
-每个 NVA 都满足在 Azure 上正常运行的基本配置要求。 以下部分提供了验证这些基本配置的步骤。 有关详细信息，请[联系 NVA 的供应商](https://support.microsoft.com/help/2984655/support-for-azure-market-place-for-virtual-machines)。
+每个 NVA 都满足在 Azure 上正常运行的基本配置要求。 以下部分提供了验证这些基本配置的步骤。 有关详细信息，请[联系 NVA 的供应商](https://mskb.pkisolutions.com/kb/2984655)。
 
 **检查 NVA 是否启用了 IP 转发**
 
@@ -112,22 +112,22 @@ NVA 供应商提供了对第三方 NVA 及其与 Azure 平台集成的技术支�
     ```console
    netstat -an | grep -i listen
     ```
-2. 如果未看到结果中列出的 NVA 软件使用的 TCP 端口，则必须在 NVA 和 VM 上配置应用程序，以侦听并响应到达这些端口的流量。 [如有需要，请联系 NVA 供应商以获取帮助](https://support.microsoft.com/help/2984655/support-for-azure-market-place-for-virtual-machines)。
+2. 如果未看到结果中列出的 NVA 软件使用的 TCP 端口，则必须在 NVA 和 VM 上配置应用程序，以侦听并响应到达这些端口的流量。 [如有需要，请联系 NVA 供应商以获取帮助](https://mskb.pkisolutions.com/kb/2984655)。
 
 ## <a name="check-nva-performance"></a>检查 NVA 性能
 
 ### <a name="validate-vm-cpu"></a>验证 VM CPU
 
-如果 CPU 使用率接近 100%，则可能会遇到造成网络数据包丢失的问题。 VM 报告 Azure 门户中特定时间跨度的平均 CPU。 在 CPU 峰值期间，调查来宾 VM 上的哪个进程导致高 CPU 使用率，并在可能的情况下缓解该问题。 可能还必须将 VM 大小调整为更大的 SKU 大小；或者，对于虚拟机规模集，可增加实例数或设置为自动调整 CPU 使用率。 对于上述任意问题，如有需要，[请联系 NVA 供应商以获取帮助](https://support.microsoft.com/help/2984655/support-for-azure-market-place-for-virtual-machines)。
+如果 CPU 使用率接近 100%，则可能会遇到造成网络数据包丢失的问题。 VM 报告 Azure 门户中特定时间跨度的平均 CPU。 在 CPU 峰值期间，调查来宾 VM 上的哪个进程导致高 CPU 使用率，并在可能的情况下缓解该问题。 可能还必须将 VM 大小调整为更大的 SKU 大小；或者，对于虚拟机规模集，可增加实例数或设置为自动调整 CPU 使用率。 对于上述任意问题，如有需要，[请联系 NVA 供应商以获取帮助](https://mskb.pkisolutions.com/kb/2984655)。
 
 ### <a name="validate-vm-network-statistics"></a>验证 VM 网络统计信息
 
-如果遇到 VM 网络使用高峰或显示高使用率的时段，可能还必须增加 VM 的 SKU 大小以获得更高的吞吐量容量。 还可以通过启用加速网络来重新部署 VM。 若要验证 NVA 是否支持加速网络功能，如有需要，[请联系 NVA 供应商以获取帮助](https://support.microsoft.com/help/2984655/support-for-azure-market-place-for-virtual-machines)。
+如果遇到 VM 网络使用高峰或显示高使用率的时段，可能还必须增加 VM 的 SKU 大小以获得更高的吞吐量容量。 还可以通过启用加速网络来重新部署 VM。 若要验证 NVA 是否支持加速网络功能，如有需要，[请联系 NVA 供应商以获取帮助](https://mskb.pkisolutions.com/kb/2984655)。
 
 ## <a name="advanced-network-administrator-troubleshooting"></a>高级网络管理员故障排除
 
 ### <a name="capture-network-trace"></a>捕获网络跟踪
-运行 [PsPing](https://docs.microsoft.com/sysinternals/downloads/psping) 或 Nmap 时，请在源 VM、NVA 和目标 VM 上捕获同步网络跟踪，并停止跟踪。
+运行 [PsPing](/sysinternals/downloads/psping) 或 Nmap 时，请在源 VM、NVA 和目标 VM 上捕获同步网络跟踪，并停止跟踪。
 
 1. 若要捕获同步网络跟踪，请运行以下命令：
 
@@ -139,11 +139,11 @@ NVA 供应商提供了对第三方 NVA 及其与 Azure 平台集成的技术支�
 
    sudo tcpdump-eth0-X-w vmtrace.cap
 
-2. 使用从源 VM 到目标 VM 的 PsPing 或 Nmap（例如：`PsPing 10.0.0.4:80` 或 `Nmap -p 80 10.0.0.4`）********。
-3. 使用[网络监视器](https://www.microsoft.com/download/details.aspx?id=4865)或 tcpdump 从目标 VM 打开网络跟踪。 为运行 PsPing 或 Nmap 的源 VM 的 IP 应用显示筛选器，例如 `IPv4.address==10.0.0.4 (Windows netmon)` 或 `tcpdump -nn -r vmtrace.cap src or dst host 10.0.0.4` (Linux)********。
+2. 使用从源 VM 到目标 VM 的 PsPing 或 Nmap（例如：`PsPing 10.0.0.4:80` 或 `Nmap -p 80 10.0.0.4`）。
+3. 使用[网络监视器](https://download.cnet.com/s/network-monitor)或 tcpdump 从目标 VM 打开网络跟踪。 为运行 PsPing 或 Nmap 的源 VM 的 IP 应用显示筛选器，例如 `IPv4.address==10.0.0.4 (Windows netmon)` 或 `tcpdump -nn -r vmtrace.cap src or dst host 10.0.0.4` (Linux)。
 
 ### <a name="analyze-traces"></a>分析跟踪
 
 如果无法看到数据包传入到后端 VM 跟踪，原因很可能是存在 NSG 或 UDR 干扰或是 NVA 路由表不正确。
 
-如果看到数据包传入但没有响应，则可能需要解决 VM 应用程序或防火墙问题。 对于上述任意问题，如有需要[请联系 NVA 供应商以获取帮助](https://support.microsoft.com/help/2984655/support-for-azure-market-place-for-virtual-machines)。
+如果看到数据包传入但没有响应，则可能需要解决 VM 应用程序或防火墙问题。 对于上述任意问题，如有需要[请联系 NVA 供应商以获取帮助](https://mskb.pkisolutions.com/kb/2984655)。

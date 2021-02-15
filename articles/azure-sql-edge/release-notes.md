@@ -1,7 +1,7 @@
 ---
 title: Azure SQL Edge 发行说明
-description: 详细说明了 Azure SQL Edge 映像中新功能或更改内容的发行说明
-keywords: 发行说明 SQL 边缘
+description: 发行说明详细介绍了 Azure SQL Edge 映像中的新增功能或已更改的内容。
+keywords: 发行说明 SQL Edge
 services: sql-edge
 ms.service: sql-edge
 ms.topic: conceptual
@@ -9,112 +9,180 @@ ms.subservice: ''
 author: VasiyaKrishnan
 ms.author: vakrishn
 ms.reviewer: sstein
-ms.date: 07/27/2020
-ms.openlocfilehash: 74e9772ada010d79e81ef36cae89ba586db73077
-ms.sourcegitcommit: 1b2d1755b2bf85f97b27e8fbec2ffc2fcd345120
+ms.date: 11/24/2020
+ms.openlocfilehash: e078fb91b3279b6f4321cd51dfb094f82bbe5f14
+ms.sourcegitcommit: 77afc94755db65a3ec107640069067172f55da67
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/04/2020
-ms.locfileid: "87553404"
+ms.lasthandoff: 01/22/2021
+ms.locfileid: "98696373"
 ---
 # <a name="azure-sql-edge-release-notes"></a>Azure SQL Edge 发行说明 
 
-本文介绍 Azure SQL Edge 的每个新版本的新增功能和变化。
+本文介绍每个新的 Azure SQL Edge 内部版本中的新增功能或已更改的内容。
+
+## <a name="azure-sql-edge-102"></a>Azure SQL Edge 1.0。2
+
+SQL 引擎生成15.0.2000.1554
+
+### <a name="fixes"></a>修复项
+
+- T-sql 流式处理  
+   - 对流式处理对象的所有权和权限进行修复
+   - 日志轮换和日志前缀的日志记录改进
+   - Azure 流分析：日志记录改进，改进适配器中的错误代码/错误消息 
+
+- ONNX
+    - 并行查询方案和模型清理失败的 Bug 修复
+    - 已将 ONNX 运行时升级到1.5。1
+
+## <a name="azure-sql-edge-101"></a>Azure SQL Edge 1.0.1
+
+SQL 引擎内部版本 15.0.2000.1553
+
+### <a name="whats-new"></a>新增功能
+
+- 允许在计算列中定义 Date_Bucket 表达式。
+
+### <a name="fixes"></a>修复项
+
+- 保留策略修补程序，用于删除启用了保留策略且具有无限超时的表
+- DacFx 部署支持流式传输和保留策略功能 
+- DacFx 部署修补程序，可启用从 SAS URL 中的嵌套文件夹进行部署的功能 
+- 预测修补程序，用于支持错误消息中的长列名
+
+## <a name="azure-sql-edge-100-rtm"></a>Azure SQL Edge 1.0.0 (RTM)
+
+SQL 引擎内部版本 15.0.2000.1552
+
+### <a name="whats-new"></a>新增功能
+- 基于 Ubuntu 18.04 的容器映像 
+- 支持包含 `LAST_VALUE()` 和 `FIRST_VALUE()` 函数的 `IGNORE NULL` 和 `RESPECT NULL` 语法 
+- 针对 PREDICT with ONNX 的可靠性改进
+- 支持基于数据保留策略的清理：
+   - 环形缓冲区支持用于故障排除的保留清理任务
+- 新功能支持： 
+   - 快速恢复
+   - 自动优化查询
+   - 并行执行方案
+- 针对低功耗模式的节能改进
+- 流式处理新功能支持： 
+   - [快照窗口](/stream-analytics-query/snapshot-window-azure-stream-analytics)：新的窗口类型允许你对同时到达的事件进行分组。
+   - [TopOne](/stream-analytics-query/topone-azure-stream-analytics) 和 [CollectTop](/stream-analytics-query/collecttop-azure-stream-analytics) 可作为分析函数启用。 可以返回按你选择的列排序的记录。 它们不一定要是窗口的一部分。 
+   - 对 [MATCH_RECOGNIZE](/stream-analytics-query/match-recognize-stream-analytics) 的改进。 
+
+### <a name="fixes"></a>修复项
+- 用于排查 T-SQL 流式处理操作问题的附加错误消息和详细信息 
+- 为了在空闲模式下维持电池寿命进行的改进 
+- T-SQL 流式处理引擎修复： 
+   - 清理了已停止的流式处理作业 
+   - 本地化修复项 
+   - 改进了 Unicode 处理 
+   - 提高了 SQL Edge T-SQL 流式处理的可调试性，允许用户从 get_streaming_job 查询作业失败错误
+- 基于数据保留策略的清理： 
+    - 修复了保留策略创建和清理方案
+- 修复了后台计时器任务，以提高低功耗模式下的节能能力
+
+### <a name="known-issues"></a>已知问题 
+- 无法在计算列中使用 Date_Bucket T-SQL 函数。
+
+
+## <a name="ctp-23"></a>CTP 2.3
+SQL 引擎内部版本 15.0.2000.1549
+### <a name="whats-new"></a>新增功能
+- 支持在 Date_Bucket() 函数中自定义原点 
+- 在 SQL 部署中支持 BACPAC 文件
+- 支持基于数据保留策略的清理：      
+   - DDL 支持启用保留策略 
+   - 清理存储过程和后台清理任务
+   - 用于监视清理任务的扩展事件
+
+### <a name="fixes"></a>修复项
+- 用于排查 T-SQL 流式处理操作问题的附加错误消息和详细信息 
+- 为了在空闲模式下维持电池寿命进行的改进 
+- T-SQL 流式处理引擎： 
+   - 修复了子流跳跃窗口的卡水印问题 
+   - 修复了框架异常处理，以确保将其收集为用户可操作的错误
+
 
 ## <a name="ctp-22"></a>CTP 2.2
-### <a name="sql-engine-build-number---15020001546"></a>SQL 引擎内部版本号-15.0.2000.1546
+SQL 引擎内部版本 15.0.2000.1546
+### <a name="whats-new"></a>新增功能
+- 支持非根容器 
+- 支持使用情况和诊断数据收集 
+- T-SQL 流式处理更新：
+   - 支持流对象名称的 Unicode 字符
+
 ### <a name="fixes"></a>修复项
-1. 支持非根容器 
-2. 支持使用情况和诊断数据收集 
-3. T-sql 流式处理更新
-   - 支持对流对象名称的 Unicode 字符
+- T-SQL 流式处理更新：
    - 进程清理改进
    - 日志记录和诊断改进
-4. 数据引入性能改进
+- 针对数据引入的性能改进
 
 ## <a name="ctp-21"></a>CTP 2.1 
-### <a name="sql-engine-build-number---15020001545"></a>SQL 引擎内部版本号-15.0.2000.1545
+SQL 引擎内部版本 15.0.2000.1545
 ### <a name="fixes"></a>修复项
-1. 修复 with ONNX 模型以处理 ARM 中的 CPUID 问题 
-2. 解决此问题，以便在启动 TSQL 流式处理时改进失败路径的处理 
-3. 当没有任何数据时，修复作业指标中水印延迟的错误值。 
-4. 当适配器在批处理之间具有可变架构时，请解决输出适配器问题。  
+- 允许 PREDICT-with-ONNX 模型处理 ARM 中的 CPUID 问题 
+- 改进了 T-SQL 流式处理启动时对故障路径的处理
+- 更正了没有数据时作业指标中水印延迟的值。
+- 修复了输出适配器在批之间具有可变架构时出现的问题  
 
 ## <a name="ctp-20"></a>CTP 2.0 
-### <a name="sql-engine-build-number---15020001401"></a>SQL 引擎内部版本号-15.0.2000.1401
+SQL 引擎内部版本 15.0.2000.1401
 ### <a name="whats-new"></a>新增功能
-1.  产品名称已更新为 "Azure SQL Edge"
-1.  Date_bucket 函数
-
-    i.  支持日期、时间、日期时间类型
-3.  用 ONNX 进行预测
-    
-    i.  ONNX 所需的运行时参数 
-    
-4.  TSQL 流式处理支持 (有限预览)  
+-   产品名称更新为 Azure SQL Edge
+-  Date_bucket 函数：
+    - 支持日期、时间和日期/时间类型
+- PREDICT with ONNX：
+    - RUNTIME 参数的 ONNX 要求  
+- T-SQL 流式处理支持（受限预览版） 
  
 ### <a name="known-issues"></a>已知问题
 
-1. <b>问题：</b>由于计时问题而导致在启动时应用 dacpac 的潜在故障。
+- 问题：如果在启动时应用 DACPAC，可能会因计时问题而出现故障。
+- 解决方法：请重新启动 SQL Server。 否则，容器将重试应用 DACPAC。
 
-    <b>解决方法：</b>重新启动 SQL Server 或容器将重试应用 dacpac，并应修复问题
 ### <a name="request-support"></a>请求支持
-1. 可以在[支持页](https://ms.portal.azure.com/#blade/Microsoft_Azure_Support/HelpAndSupportBlade/newsupportrequest)中请求支持。
+可以在[支持页面](https://ms.portal.azure.com/#blade/Microsoft_Azure_Support/HelpAndSupportBlade/newsupportrequest)上请求支持。 选择以下字段： 
+- **问题类型**：*技术* 
+- **服务**：*IoT Edge*
+- 问题类型：我的问题与 IoT Edge 模块相关
+- 问题子类型：*Azure SQL Edge*
 
-4. 确保选择以下字段： 
-    * 问题类型-技术 
-    * 服务-IoT Edge
-    * 问题类型-我的问题与 IoT Edge 模块相关
-    * 问题子类型-Azure SQL Edge
+:::image type="content" source="media/get-support/support-ticket.png" alt-text="显示示例支持票证的屏幕截图。":::
 
-   ![示例支持票证](media/get-support/support-ticket.png)
-
-## <a name="ctp-15"></a>CTP 1。5
-### <a name="sql-engine-build-number---15020001331"></a>SQL 引擎内部版本号-15.0.2000.1331
+## <a name="ctp-15"></a>CTP 1.5
+SQL 引擎内部版本 15.0.2000.1331
 ### <a name="whats-new"></a>新增功能
-1. Date_bucket 函数
-    
-    i. 对 DateTimeOffset 类型的支持
-2. 通过 ONNX 模型进行预测
-
-    i. nvarchar 支持
+- Date_bucket 函数：
+    - 支持 DateTimeOffset 类型
+- PREDICT with ONNX 模型：
+  - NVARCHAR 支持
  
-## <a name="ctp-14"></a>CTP 1。4
-### <a name="sql-engine-build-number---15020001247"></a>SQL 引擎内部版本号-15.0.2000.1247
+## <a name="ctp-14"></a>CTP 1.4
+SQL 引擎内部版本 15.0.2000.1247
 ### <a name="whats-new"></a>新增功能
-1.  通过 ONNX 模型进行预测
+-   PREDICT with ONNX 模型：
+    - VARCHAR 支持
+    - 迁移到 ONNX 运行时版本 1.0 
+
+- 启用了以下功能：
+  - CDC 支持
+  - 带压缩功能的历史记录表
+  - 提高预读日志的比例因子
+  - 批处理模式 ES 筛选器下推
+  - 预读优化
  
-    i.  Varchar 支持
-    
-    ii. 迁移到 ONNX 运行时版本1。0 
-2.  功能支持-启用了以下功能：
-
-    i.   CDC 支持
-
-    ii.  带压缩的历史记录表
-
-    iii. 更高的日志读取比例
-
-    iv.  批处理模式 ES 筛选器下推
-
-    v.   预读优化
- 
-## <a name="ctp-13"></a>CTP 1。3
-### <a name="sql-engine-build-number---15020001147"></a>SQL 引擎内部版本号-15.0.2000.1147
+## <a name="ctp-13"></a>CTP 1.3
+SQL 引擎内部版本 15.0.2000.1147
 ### <a name="whats-new"></a>新增功能
-1. Azure IOT 门户部署 
-
-    i.   支持部署 AMD64 和 ARM 映像
-
-    ii.  支持流式作业创建
-
-    iii. Dacpac 部署
-2. 通过 ONNX 模型进行预测
-
-    i. 数值类型支持
-3. 功能支持-启用了以下功能：
-
-    i.  向下推聚合到列存储扫描
-
-    ii. 快乐的循环扫描
-4. 占用空间和内存消耗缩减工作
+- Azure IOT 门户部署： 
+    - 支持部署 AMD64 和 ARM 映像
+    - 支持创建流式处理作业
+    - DACPAC 部署
+- PREDICT with ONNX 模型：
+    - 数值类型支持
+- 启用了以下功能：
+    - 将聚合下推到列存储扫描
+    - 旋转木马式扫描
+- 占用空间和内存消耗缩减工作

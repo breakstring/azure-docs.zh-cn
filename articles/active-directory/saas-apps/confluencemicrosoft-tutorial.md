@@ -9,14 +9,14 @@ ms.service: active-directory
 ms.subservice: saas-app-tutorial
 ms.workload: identity
 ms.topic: tutorial
-ms.date: 09/05/2019
+ms.date: 12/25/2020
 ms.author: jeedes
-ms.openlocfilehash: 9238a65643c9ff24166e9a9b9a05e8c924abfb37
-ms.sourcegitcommit: 023d10b4127f50f301995d44f2b4499cbcffb8fc
+ms.openlocfilehash: 34365a8bd7a15f502aa89a966adb14807e802cc4
+ms.sourcegitcommit: 78ecfbc831405e8d0f932c9aafcdf59589f81978
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/18/2020
-ms.locfileid: "88544466"
+ms.lasthandoff: 01/23/2021
+ms.locfileid: "98736992"
 ---
 # <a name="tutorial-azure-active-directory-single-sign-on-sso-integration-with-confluence-saml-sso-by-microsoft"></a>教程：Azure Active Directory 单一登录 (SSO) 与 Confluence SAML SSO by Microsoft 集成
 
@@ -26,7 +26,6 @@ ms.locfileid: "88544466"
 * 让用户使用其 Azure AD 帐户自动登录 Confluence SAML SSO by Microsoft。
 * 在一个中心位置（Azure 门户）管理帐户。
 
-若要了解有关 SaaS 应用与 Azure AD 集成的详细信息，请参阅 [Azure Active Directory 的应用程序访问与单一登录是什么](https://docs.microsoft.com/azure/active-directory/active-directory-appssoaccess-whatis)。
 
 ## <a name="description"></a>说明:
 
@@ -63,7 +62,7 @@ ms.locfileid: "88544466"
 
 - Confluence：5.0 到 5.10
 - Confluence：6.0.1 到 6.15.9
-- Confluence：7.0.1 到 7.6.1
+- Confluence：7.0.1 到 7.9.3
 
 > [!NOTE]
 > 请注意，Confluence 插件还适用于 Ubuntu 版本 16.04
@@ -78,18 +77,18 @@ ms.locfileid: "88544466"
 
 若要配置 Confluence SAML SSO by Microsoft 与 Azure AD 的集成，需要从库中将 Confluence SAML SSO by Microsoft 添加到托管 SaaS 应用列表。
 
-1. 使用工作或学校帐户或个人 Microsoft 帐户登录到 [Azure 门户](https://portal.azure.com)。
-1. 在左侧导航窗格中，选择“Azure Active Directory”服务。
-1. 导航到“企业应用程序”，选择“所有应用程序” 。
+1. 使用工作或学校帐户或个人 Microsoft 帐户登录到 Azure 门户。
+1. 在左侧导航窗格中，选择“Azure Active Directory”服务  。
+1. 导航到“企业应用程序”，选择“所有应用程序”   。
 1. 若要添加新的应用程序，请选择“新建应用程序”。
 1. 在“从库中添加”部分的搜索框中，键入“Confluence SAML SSO by Microsoft” 。
 1. 从结果面板中选择“Confluence SAML SSO by Microsoft”，然后添加应用。 在该应用添加到租户时等待几秒钟。
 
-## <a name="configure-and-test-azure-ad-single-sign-on-for-confluence-saml-sso-by-microsoft"></a>配置和测试 Confluence SAML SSO by Microsoft 的 Azure AD 单一登录
+## <a name="configure-and-test-azure-ad-sso-for-confluence-saml-sso-by-microsoft"></a>配置和测试 Confluence SAML SSO by Microsoft 的 Azure AD SSO
 
 使用名为 B.Simon 的测试用户配置和测试 Confluence SAML SSO by Microsoft 的 Azure AD SSO。 若要运行 SSO，需要在 Azure AD 用户与 Confluence SAML SSO by Microsoft 相关用户之间建立链接关系。
 
-若要配置和测试 Confluence SAML SSO by Microsoft 的 Azure AD SSO，请完成以下构建基块：
+若要配置并测试 Confluence SAML SSO by Microsoft 的 Azure AD SSO，请执行以下步骤：
 
 1. **[配置 Azure AD SSO](#configure-azure-ad-sso)** - 使用户能够使用此功能。
     1. **[创建 Azure AD 测试用户](#create-an-azure-ad-test-user)** - 使用 B. Simon 测试 Azure AD 单一登录。
@@ -102,15 +101,15 @@ ms.locfileid: "88544466"
 
 按照下列步骤在 Azure 门户中启用 Azure AD SSO。
 
-1. 在 [Azure 门户](https://portal.azure.com/)的“Confluence SAML SSO by Microsoft”应用程序集成页上，找到“管理”部分，然后选择“单一登录”  。
+1. 在 Azure 门户的“Confluence SAML SSO by Microsoft”应用程序集成页上，找到“管理”部分，然后选择“单一登录”  。
 1. 在“选择单一登录方法”页上选择“SAML” 。
-1. 在“使用 SAML 设置单一登录”页上，单击“基本 SAML 配置”的编辑/笔形图标以编辑设置 。
+1. 在“设置 SAML 单一登录”页面上，单击“基本 SAML 配置”旁边的铅笔图标以编辑设置 。
 
    ![编辑基本 SAML 配置](common/edit-urls.png)
 
 1. 在“基本 SAML 配置”部分，输入以下字段的值：
 
-    a. 在“登录 URL”文本框中，使用以下模式键入 URL：`https://<domain:port>/plugins/servlet/saml/auth`。
+    a. 在“登录 URL”  文本框中，使用以下模式键入 URL：`https://<domain:port>/plugins/servlet/saml/auth`。
 
     b. 在“标识符”框中，使用以下模式键入 URL：`https://<domain:port>/`
 
@@ -139,18 +138,12 @@ ms.locfileid: "88544466"
 
 在本部分中，通过授予 B.Simon 访问 Confluence SAML SSO by Microsoft 的权限，允许其使用 Azure 单一登录。
 
-1. 在 Azure 门户中，依次选择“企业应用程序”、“所有应用程序”。
+1. 在 Azure 门户中，依次选择“企业应用程序”、“所有应用程序”。 
 1. 在应用程序列表中，选择“Confluence SAML SSO by Microsoft”。
 1. 在应用的概述页中，找到“管理”部分，选择“用户和组” 。
-
-   ![“用户和组”链接](common/users-groups-blade.png)
-
 1. 选择“添加用户”，然后在“添加分配”对话框中选择“用户和组”。
-
-    ![“添加用户”链接](common/add-assign-user.png)
-
 1. 在“用户和组”对话框中，从“用户”列表中选择“B.Simon”，然后单击屏幕底部的“选择”按钮。
-1. 如果在 SAML 断言中需要任何角色值，请在“选择角色”对话框的列表中为用户选择合适的角色，然后单击屏幕底部的“选择”按钮。
+1. 如果你希望将某角色分配给用户，可以从“选择角色”下拉列表中选择该角色。 如果尚未为此应用设置任何角色，你将看到选择了“默认访问权限”角色。
 1. 在“添加分配”对话框中，单击“分配”按钮。
 
 ## <a name="configure-confluence-saml-sso-by-microsoft-sso"></a>配置 Confluence SAML SSO by Microsoft SSO
@@ -159,45 +152,45 @@ ms.locfileid: "88544466"
 
 1. 将鼠标悬停在小齿轮上，并单击“外接程序”。
 
-    ![配置单一登录](./media/confluencemicrosoft-tutorial/addon1.png)
+    ![显示已选择“小齿轮”图标的屏幕截图，其中下拉菜单中突出显示了“加载项”。](./media/confluencemicrosoft-tutorial/addon1.png)
 
 1. 从 [Microsoft 下载中心](https://www.microsoft.com/download/details.aspx?id=56503)下载插件。 使用“上传加载项”菜单手动上传由 Microsoft 提供的插件。 [Microsoft 服务协议](https://www.microsoft.com/servicesagreement/)涵盖了插件下载。
 
-    ![配置单一登录](./media/confluencemicrosoft-tutorial/addon12.png)
+    ![显示“管理加载项”页的屏幕截图，其中已选择“上传加载项”操作。](./media/confluencemicrosoft-tutorial/addon12.png)
 
 1. 要运行 Confluence 反向代理方案或负载均衡器方案，请执行以下步骤：
 
     > [!NOTE]
     > 应先按照以下说明配置服务器，然后安装插件。
 
-    a. 在 JIRA 服务器应用程序的 **server.xml** 文件中的**连接器**端口中添加以下属性。
+    a. 在 JIRA 服务器应用程序的 **server.xml** 文件中的 **连接器** 端口中添加以下属性。
 
     `scheme="https" proxyName="<subdomain.domain.com>" proxyPort="<proxy_port>" secure="true"`
 
-    ![配置单一登录](./media/confluencemicrosoft-tutorial/reverseproxy1.png)
+    ![显示“server.xml”文件的屏幕截图，其中属性已添加到“连接器”端口。](./media/confluencemicrosoft-tutorial/reverseproxy1.png)
 
-    b. 根据代理/负载均衡器，在**系统设置**中更改**基本 URL**。
+    b. 根据代理/负载均衡器，在 **系统设置** 中更改 **基本 URL**。
 
-    ![配置单一登录](./media/confluencemicrosoft-tutorial/reverseproxy2.png)
+    ![显示“管理 -设置”页的屏幕截图，其中突出显示了“基本 URL”。](./media/confluencemicrosoft-tutorial/reverseproxy2.png)
 
 1. 插件安装后，它会显示在“管理加载项”部分的“用户已安装”加载项部分 。 单击“配置”配置新的插件。
 
-    ![配置单一登录](./media/confluencemicrosoft-tutorial/addon15.png)
+    ![显示“用户已安装”部分的屏幕截图，其中突出显示了“配置”按钮。](./media/confluencemicrosoft-tutorial/addon15.png)
 
 1. 在配置页上执行下列步骤：
 
-    ![配置单一登录](./media/confluencemicrosoft-tutorial/addon54.png)
+    ![显示单一登录配置页的屏幕截图。](./media/confluencemicrosoft-tutorial/addon54.png)
 
     > [!TIP]
     > 请确保一个应用仅映射一个证书，以免在解析元数据时出错。 如果有多个证书，则管理员会在解析元数据时收到错误。
 
-    1. 在“元数据 URL”文本框中，粘贴从 Azure 门户复制的**应用联合元数据 URL**值，然后单击“解析”按钮。 它将读取 IdP 元数据 URL，并填充所有字段信息。
+    1. 在“元数据 URL”文本框中，粘贴从 Azure 门户复制的 **应用联合元数据 URL** 值，然后单击“解析”按钮。 它将读取 IdP 元数据 URL，并填充所有字段信息。
 
     1. 复制“标识符”、“回复 URL”和“登录 URL”值，并将其分别粘贴到 Azure 门户中“基本 SAML 配置”部分下的“标识符”、“回复 URL”和“登录 URL”文本框中  。
 
     1. 在“登录按钮名”中键入组织希望用户在登录屏幕上看到的按钮名称。
-    
-    1. 在**登录按钮说明**中，键入你的组织希望用户在登录屏幕上看到的按钮的说明。
+
+    1. 在 **登录按钮说明** 中，键入你的组织希望用户在登录屏幕上看到的按钮的说明。
 
     1. 在“SAML 用户 ID 位置”中，选择“用户 ID 位于 Subject 语句的 NameIdentifier 元素之中”或“用户 ID 位于 Attribute 元素之中”  。  此 ID 必须是 Confluence 用户 ID。 如果用户 ID 不匹配，系统将不允许用户登录。 
 
@@ -221,7 +214,7 @@ ms.locfileid: "88544466"
     1. 单击“保存”按钮保存设置。
 
        > [!NOTE]
-       > 有关安装和故障排除的详细信息，请访问 [MS Confluence SSO 连接器管理员指南](../ms-confluence-jira-plugin-adminguide.md)， 还可以参阅[常见问题解答](../ms-confluence-jira-plugin-faq.md)以获得帮助。
+       > 有关安装和故障排除的详细信息，请访问 [MS Confluence SSO 连接器管理员指南](./ms-confluence-jira-plugin-adminguide.md)， 还可以参阅[常见问题解答](./ms-confluence-jira-plugin-adminguide.md)以获得帮助。
 
 ### <a name="create-confluence-saml-sso-by-microsoft-test-user"></a>创建 Confluence SAML SSO by Microsoft 测试用户
 
@@ -237,7 +230,7 @@ ms.locfileid: "88544466"
 
 1. 在“用户”部分，单击“添加用户”选项卡。在“添加用户”对话框页上，执行以下步骤：
 
-    ![添加员工](./media/confluencemicrosoft-tutorial/user2.png)
+    ![显示“Confluence 管理”的屏幕截图，其中已选择“添加用户”选项卡并已输入“添加用户”信息。](./media/confluencemicrosoft-tutorial/user2.png)
 
     a. 在“用户名”文本框中，键入用户的电子邮件（例如 B.Simon）。
 
@@ -251,18 +244,17 @@ ms.locfileid: "88544466"
 
     f. 单击“添加”按钮。
 
-## <a name="test-sso"></a>测试 SSO
+## <a name="test-sso"></a>测试 SSO 
 
-在本部分中，使用访问面板测试 Azure AD 单一登录配置。
+在本部分，你将使用以下选项测试 Azure AD 单一登录配置。 
 
-单击访问面板中的“Confluence SAML SSO by Microsoft”磁贴时，应当会自动登录到已为其设置了 SSO 的 Confluence SAML SSO by Microsoft。 有关访问面板的详细信息，请参阅 [Introduction to the Access Panel](https://docs.microsoft.com/azure/active-directory/active-directory-saas-access-panel-introduction)（访问面板简介）。
+* 在 Azure 门户中单击“测试此应用程序”。 这样将会重定向到 Confluence SAML SSO by Microsoft 登录 URL，可以从那里启动登录流。 
 
-## <a name="additional-resources"></a>其他资源
+* 直接转到 Confluence SAML SSO by Microsoft 登录 URL，并从那里启动登录流。
 
-- [有关如何将 SaaS 应用与 Azure Active Directory 集成的教程列表](https://docs.microsoft.com/azure/active-directory/active-directory-saas-tutorial-list)
+* 你可使用 Microsoft 的“我的应用”。 当单击“我的应用”中 Confluence SAML SSO by Microsoft 磁贴时，这将通过 Microsoft 登录 URL 重定向到 Confluence SAML SSO。 有关“我的应用”的详细信息，请参阅[“我的应用”简介](../user-help/my-apps-portal-end-user-access.md)。
 
-- [什么是使用 Azure Active Directory 的应用程序访问和单一登录？](https://docs.microsoft.com/azure/active-directory/active-directory-appssoaccess-whatis)
 
-- [什么是 Azure Active Directory 中的条件访问？](https://docs.microsoft.com/azure/active-directory/conditional-access/overview)
+## <a name="next-steps"></a>后续步骤
 
-- [尝试将 Confluence SAML SSO by Microsoft 与 Azure AD 集成](https://aad.portal.azure.com/)
+配置 Confluence SAML SSO by Microsoft 后，就可以强制实施会话控制，实时防止组织的敏感数据外泄和渗透。 会话控制从条件访问扩展而来。 [了解如何通过 Microsoft Cloud App Security 强制实施会话控制](/cloud-app-security/proxy-deployment-aad)

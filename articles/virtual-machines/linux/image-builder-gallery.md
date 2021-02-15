@@ -1,6 +1,6 @@
 ---
-title: 使用 Azure 映像生成器 & 适用于 Linux Vm 的共享映像库（预览版）
-description: 使用 Azure 映像生成器和共享映像库创建 Linux 虚拟机映像。
+title: '使用 Azure 映像生成器 & 适用于 Linux Vm (预览版的共享映像库) '
+description: 了解如何使用 Azure 映像生成器和 Azure CLI 来创建共享映像库中的映像版本，然后全局分布该图像。
 author: cynthn
 ms.author: cynthn
 ms.date: 05/05/2019
@@ -8,16 +8,16 @@ ms.topic: how-to
 ms.service: virtual-machines-linux
 ms.subservice: imaging
 ms.reviewer: danis
-ms.openlocfilehash: 1eeb8df2605bbe63fe72c5bd451b43111322a7f6
-ms.sourcegitcommit: 11e2521679415f05d3d2c4c49858940677c57900
+ms.openlocfilehash: 0cf081fb7723972013d61f385c823a3b0c4d2aee
+ms.sourcegitcommit: b39cf769ce8e2eb7ea74cfdac6759a17a048b331
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/31/2020
-ms.locfileid: "87500906"
+ms.lasthandoff: 01/22/2021
+ms.locfileid: "98679511"
 ---
 # <a name="preview-create-a-linux-image-and-distribute-it-to-a-shared-image-gallery"></a>预览版：创建 Linux 映像并将其分发到共享映像库 
 
-本文介绍如何使用 Azure 映像生成器和 Azure CLI，在[共享映像库](../windows/shared-image-galleries.md)中创建映像版本，然后全局分发此映像。 还可以使用 [Azure PowerShell](../windows/image-builder-gallery.md).来实现此目的。
+本文介绍如何使用 Azure 映像生成器和 Azure CLI，在[共享映像库](../shared-image-galleries.md)中创建映像版本，然后全局分发此映像。 还可以使用 [Azure PowerShell](../windows/image-builder-gallery.md).来实现此目的。
 
 
 我们将使用一个示例 .json 模板来配置映像。 我们将使用的 .json 文件位于：[helloImageTemplateforSIG.json](https://github.com/danielsollondon/azvmimagebuilder/blob/master/quickquickstarts/1_Creating_a_Custom_Linux_Shared_Image_Gallery_Image/helloImageTemplateforSIG.json)。 
@@ -298,4 +298,4 @@ az group delete -n $sigResourceGroup -y
 
 ## <a name="next-steps"></a>后续步骤
 
-详细了解 [Azure 共享映像库](shared-image-galleries.md)。
+详细了解 [Azure 共享映像库](../shared-image-galleries.md)。

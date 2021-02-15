@@ -10,15 +10,16 @@ ms.author: sgilley
 author: sdgilley
 ms.reviewer: ranku
 ms.date: 04/09/2020
-ms.openlocfilehash: 60dd9631df0b997ce39134002bdb6ed9f69336ed
-ms.sourcegitcommit: a76ff927bd57d2fcc122fa36f7cb21eb22154cfa
+ms.custom: data4ml
+ms.openlocfilehash: 238801171d19191bcac505f0c95395320f96d75c
+ms.sourcegitcommit: 6d6030de2d776f3d5fb89f68aaead148c05837e2
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/28/2020
-ms.locfileid: "87319263"
+ms.lasthandoff: 01/05/2021
+ms.locfileid: "97882460"
 ---
 # <a name="tutorial-create-a-labeling-project-for-multi-class-image-classification"></a>教程：创建用于多类图像分类的标记项目 
-[!INCLUDE [applies-to-skus](../../includes/aml-applies-to-basic-enterprise-sku.md)]
+
 
 本教程介绍如何管理在构建机器学习模型时用作数据的图像的标记过程。 Azure 机器学习中的数据标记功能目前为公共预览版。
 
@@ -42,7 +43,7 @@ ms.locfileid: "87319263"
 
 Azure 机器学习工作区是云中的基础资源，用于试验、训练和部署机器学习模型。 它将 Azure 订阅和资源组关联到服务中一个易于使用的对象。
 
-通过 Azure 门户创建工作区，该门户是用于管理 Azure 资源的基于 Web 的控制台。
+可以通过许多[方法来创建工作区](how-to-manage-workspace.md)。 本教程将通过 Azure 门户创建工作区，该门户是用于管理 Azure 资源的基于 Web 的控制台。
 
 [!INCLUDE [aml-create-portal](../../includes/aml-create-in-portal.md)]
 
@@ -103,7 +104,8 @@ Azure 机器学习数据存储用于存储连接信息，例如订阅 ID 和令�
 1. 在“从数据存储创建数据集”窗体中使用以下输入：
 
     1. 在“基本信息”窗体中添加一个名称，此处我们使用 images-for-tutorial。  添加说明（如果需要）。  然后，选择“下一步”。
-    1. 在“选择数据存储”窗体中，使用下拉列表选择以前创建的数据存储，例如“tutorial_images (Azure Blob 存储)”
+    1. 在“数据存储选择”窗体上，选择“以前创建的数据存储”，然后单击数据存储名称并选中“选择数据存储”  。
+    1. 在下一页上，验证当前选定的数据存储是否正确。 如果不正确，请选择“以前创建的数据存储”并重复上一步。
     1. 接下来，仍在“选择数据存储”窗体中，依次选择“浏览”、“MultiClass - DogsCats”。  选择“保存”并使用“/MultiClass - DogsCats”作为路径。
     1. 选择“下一步”来确认详细信息，然后选择“创建”以创建数据集。
     1. 在列表中选择数据集名称（例如“images-for-tutorial”）旁边的圆圈。
@@ -130,9 +132,9 @@ Azure 机器学习数据存储用于存储连接信息，例如订阅 ID 和令�
 
 1. 选择“**下一步**”。
 
-1. 如果使用的是企业版工作区，会看到“ML 辅助标记”部分。  将该复选框保留为未选中状态。 ML 辅助标记所需的数据比在本教程中使用的数据更多。
+1. 在“ML 辅助标记”部分中，让复选框保留未选中状态。 ML 辅助标记所需的数据比在本教程中使用的数据更多。
 
-1. 选择“创建项目”。
+1. 选择“创建项目”。 
 
 此页面不会自动刷新。 片刻之后，请手动刷新页面，直到项目状态更改为“已创建”。
 

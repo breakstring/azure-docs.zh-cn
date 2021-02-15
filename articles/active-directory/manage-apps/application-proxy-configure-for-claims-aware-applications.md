@@ -4,7 +4,7 @@ description: 如何发布接受 ADFS 声明允许用户进行安全远程访问�
 services: active-directory
 documentationcenter: ''
 author: kenwith
-manager: celestedg
+manager: daveba
 ms.service: active-directory
 ms.subservice: app-mgmt
 ms.workload: identity
@@ -15,24 +15,24 @@ ms.date: 11/08/2018
 ms.author: kenwith
 ms.reviewer: japere
 ms.collection: M365-identity-device-management
-ms.openlocfilehash: 97def0608251f65aa222e13760877d4287135d08
-ms.sourcegitcommit: 5b8fb60a5ded05c5b7281094d18cf8ae15cb1d55
+ms.openlocfilehash: b90c2d47e70a4f7595ac535d5f8ba9506087eb72
+ms.sourcegitcommit: d49bd223e44ade094264b4c58f7192a57729bada
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/29/2020
-ms.locfileid: "87386973"
+ms.lasthandoff: 02/02/2021
+ms.locfileid: "99258518"
 ---
 # <a name="working-with-claims-aware-apps-in-application-proxy"></a>在应用程序代理中使用声明感知应用
-[声明感知应用](https://msdn.microsoft.com/library/windows/desktop/bb736227.aspx)对安全令牌服务 (STS) 执行重定向。 STS 请求用来自用户的凭据交换令牌，然后将用户重定向到应用程序。 使应用程序代理使用这些重定向有几种方式。 使用本文配置声明感知应用的部署。 
+[声明感知应用](/previous-versions/windows/desktop/legacy/bb736227(v=vs.85))对安全令牌服务 (STS) 执行重定向。 STS 请求用来自用户的凭据交换令牌，然后将用户重定向到应用程序。 使应用程序代理使用这些重定向有几种方式。 使用本文配置声明感知应用的部署。 
 
-## <a name="prerequisites"></a>先决条件
+## <a name="prerequisites"></a>必备条件
 确保充当声明感知应用重定向目标的 STS 在本地网络之外可用。 将 STS 通过代理公开或允许外部连接，可以使其可用。 
 
 ## <a name="publish-your-application"></a>发布应用程序
 
 1. 根据[使用应用程序代理发布应用程序](application-proxy-add-on-premises-application.md)中的说明发布应用程序。
-2. 导航到门户中的应用程序页，选择“单一登录”****。
-3. 如果选择“Azure Active Directory”作为“预身份验证方法”，请选择“已禁用 Azure AD 单一登录”作为“身份验证方法”。**************** 如果选择“传递”作为“预身份验证方法”，则无需更改任何内容。********
+2. 导航到门户中的应用程序页，选择“单一登录”。
+3. 如果选择“Azure Active Directory”作为“预身份验证方法”，请选择“已禁用 Azure AD 单一登录”作为“身份验证方法”。 如果选择“传递”作为“预身份验证方法”，则无需更改任何内容。
 
 ## <a name="configure-adfs"></a>配置 ADFS
 
@@ -45,16 +45,14 @@ ms.locfileid: "87386973"
 ### <a name="option-2-ws-federation"></a>方法 2：WS 联合身份验证
 
 1. 打开“ADFS 管理”。
-2. 转到“信赖方信任”，右键单击要使用应用程序代理进行发布的应用，并选择“属性”。********  
+2. 转到“信赖方信任”，右键单击要使用应用程序代理进行发布的应用，并选择“属性”。  
 
    ![信赖方信任右键单击应用名称 - 屏幕截图](./media/application-proxy-configure-for-claims-aware-applications/appproxyrelyingpartytrust.png)  
 
-3. 在“终结点”选项卡的“终结点类型”下，选择“WS-Federation”。************
-4. 在“受信任的 URL”下输入 URL（曾在应用程序代理的“外部 URL”下输入过），并单击“确定”。************  
+3. 在“终结点”选项卡的“终结点类型”下，选择“WS-Federation”。
+4. 在“受信任的 URL”下输入 URL（曾在应用程序代理的“外部 URL”下输入过），并单击“确定”。  
 
    ![添加终结点 - 设置受信任的 URL 值 - 屏幕截图](./media/application-proxy-configure-for-claims-aware-applications/appproxyendpointtrustedurl.png)  
 
 ## <a name="next-steps"></a>后续步骤
 * [允许本地客户端应用与代理应用程序交互](application-proxy-configure-native-client-application.md)
-
-

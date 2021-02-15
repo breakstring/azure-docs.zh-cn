@@ -5,19 +5,19 @@ author: cynthn
 ms.service: virtual-machines-windows
 ms.topic: how-to
 ms.workload: infrastructure
-ms.date: 08/01/2019
+ms.date: 11/12/2020
 ms.author: cynthn
 ms.reviewer: zivr
-ms.openlocfilehash: 599d13daac2e062c8f71f5f7d7133646a1447123
-ms.sourcegitcommit: dccb85aed33d9251048024faf7ef23c94d695145
+ms.openlocfilehash: 2f8f2d9eb14e1272af126c9a6d6663f41aaee33f
+ms.sourcegitcommit: 273c04022b0145aeab68eb6695b99944ac923465
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/28/2020
-ms.locfileid: "87266582"
+ms.lasthandoff: 12/10/2020
+ms.locfileid: "97005080"
 ---
 # <a name="deploy-vms-to-dedicated-hosts-using-the-azure-powershell"></a>使用 Azure PowerShell 将 VM 部署到专用主机
 
-本文介绍了如何创建 Azure [专用主机](dedicated-hosts.md)来托管虚拟机 (VM)。 
+本文介绍了如何创建 Azure [专用主机](../dedicated-hosts.md)来托管虚拟机 (VM)。 
 
 确保已安装 Azure PowerShell 2.8.0 或更高版本，并已使用 `Connect-AzAccount` 登录到 Azure 帐户。 
 
@@ -49,6 +49,10 @@ $hostGroup = New-AzHostGroup `
    -ResourceGroupName $rgName `
    -Zone 1
 ```
+
+
+添加 `-SupportAutomaticPlacement true` 参数，将 VM 和规模集实例自动放置在主机组中的主机上。 如需了解详情，请参阅[手动放置与自动放置](../dedicated-hosts.md#manual-vs-automatic-placement)。
+
 
 ## <a name="create-a-host"></a>创建主机
 
@@ -165,6 +169,27 @@ Location               : eastus
 Tags                   : {}
 ```
 
+## <a name="create-a-scale-set"></a>创建规模集 
+
+部署规模集时，需要指定主机组。
+
+```azurepowershell-interactive
+New-AzVmss `
+  -ResourceGroupName "myResourceGroup" `
+  -Location "EastUS" `
+  -VMScaleSetName "myDHScaleSet" `
+  -VirtualNetworkName "myVnet" `
+  -SubnetName "mySubnet" `
+  -PublicIpAddressName "myPublicIPAddress" `
+  -LoadBalancerName "myLoadBalancer" `
+  -UpgradePolicyMode "Automatic"`
+  -HostGroupId $hostGroup.Id
+```
+
+如果要手动选择要将规模集部署到哪个主机，请添加 `--host` 和主机名称。
+
+
+
 ## <a name="add-an-existing-vm"></a>添加现有 VM 
 
 可将现有 VM 添加到专用主机，但必须先停止/解除分配该 VM。 在将 VM 移动到专用主机之前，请确保 VM 配置受支持：
@@ -244,4 +269,4 @@ Remove-AzResourceGroup -Name $rgName
 
 - [此处](https://github.com/Azure/azure-quickstart-templates/blob/master/201-vm-dedicated-hosts/README.md)有一个示例模板，该模板使用区域和容错域来最大限度地提高在某个地区的复原能力。
 
-- 也可以使用 [Azure 门户](dedicated-hosts-portal.md)专用主机。
+- 也可以使用 [Azure 门户](../dedicated-hosts-portal.md)专用主机。

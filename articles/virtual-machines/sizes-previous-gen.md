@@ -6,14 +6,14 @@ ms.subservice: sizes
 author: mimckitt
 ms.topic: conceptual
 ms.workload: infrastructure-services
-ms.date: 02/20/2020
-ms.author: jushiman
-ms.openlocfilehash: 37a687a17df266fe0589c24b392c0527e001f976
-ms.sourcegitcommit: 56cbd6d97cb52e61ceb6d3894abe1977713354d9
+ms.date: 11/01/2020
+ms.author: mimckitt
+ms.openlocfilehash: 90bc98d63b45e43c9325eed4fe019b18f52d0de8
+ms.sourcegitcommit: d60976768dec91724d94430fb6fc9498fdc1db37
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/20/2020
-ms.locfileid: "88683889"
+ms.lasthandoff: 12/02/2020
+ms.locfileid: "96500285"
 ---
 # <a name="previous-generations-of-virtual-machine-sizes"></a>前几代虚拟机大小
 
@@ -59,7 +59,7 @@ ACU：210 - 250
 
 Mbps = 每秒 10^6 字节，GiB = 1024^3 字节。
 
-<sup>1</sup> Fs 系列 VM 可能的最大磁盘吞吐量（IOPS 或 Mbps）可能受限于附加磁盘的数量、大小和条带化。  有关详细信息，请参阅 [高性能 ( 的设计) 。
+<sup>1</sup> Fs 系列 VM 可能的最大磁盘吞吐量（IOPS 或 Mbps）可能受限于附加磁盘的数量、大小和条带化。  有关详细信息，请参阅[高性能设计](premium-storage-performance.md)。
 
 
 ## <a name="nvv2-series"></a>NVv2 系列
@@ -76,11 +76,9 @@ NVv2 实例中的每个 GPU 都带有 GRID 许可证。 使用此许可证，可
 | Standard_NV12s_v2 | 12 | 224 | 640  | 2 | 16 | 24 | 8 | 2 | 50  |
 | Standard_NV24s_v2 | 24 | 448 | 1280 | 4 | 32 | 32 | 8 | 4 | 100 |
 
-[!INCLUDE [virtual-machines-common-sizes-table-defs](../../includes/virtual-machines-common-sizes-table-defs.md)]
-
 ## <a name="older-generations-of-virtual-machine-sizes"></a>前几代虚拟机大小
 
-本部分提供了有关先前几代虚拟机大小的信息。 这些大小仍受支持，但无法接收更多的容量。 有更新的或备用的大小，这些大小已公开发布。 请参阅 [Azure 中 Linux 虚拟机的大小](./sizes.md)，选择最适合自己需求的 VM 大小。  
+本部分提供了有关先前几代虚拟机大小的信息。 这些大小仍受支持，但无法接收更多的容量。 有更新的或备用的大小，这些大小已公开发布。 请参阅 [调整 Azure 中虚拟机的大小](./sizes.md) ，以选择最适合需要的 VM 大小。  
 
 有关如何调整 Linux VM 的大小的详细信息，请参阅[调整 Linux VM 的大小](linux/change-vm-size.md)。  
 
@@ -163,7 +161,7 @@ A8-A11 和 H 系列大小也称为 *计算密集型实例*。 运行这些大小
 <sup>1</sup>对于 MPI 应用程序来说，专用 RDMA 后端网络是通过 FDR InfiniBand 网络启用的，后者可以提供相当低的延迟和高带宽。  
 
 > [!NOTE]
-> A8 – A11 VM 计划于 2021 年 3 月停用。 有关详细信息，请参阅 [HPC 迁移指南](https://azure.microsoft.com/resources/hpc-migration-guide/)。
+> [A8 – A11 vm 计划于3/2021 停](https://azure.microsoft.com/updates/a8-a11-azure-virtual-machine-sizes-will-be-retired-on-march-1-2021/)用。 强烈建议不要创建任何新的 A8 – A11 Vm。 请将任何现有的 A8 – A11 Vm 迁移到新的、功能强大的高性能计算 VM 大小（如 H、HB-ACCT-WC、HC、HBv2）以及常规用途计算 VM 大小（如 D、E 和 F），以获得更好的性价比。 有关详细信息，请参阅 [HPC 迁移指南](https://azure.microsoft.com/resources/hpc-migration-guide/)。
 
 <br>
 
@@ -209,7 +207,7 @@ ACU：160-250 <sup>1</sup>
 
 <br>
 
-## <a name="preview-dc-series"></a>预览： DC 系列
+### <a name="preview-dc-series"></a>预览： DC 系列
 
 **较新的大小建议**： [DCsv2 系列](dcv2-series.md)
 
@@ -226,7 +224,7 @@ DC 系列使用最新版本的 3.7 GHz Intel 至强 E-2176G 处理器和 SGX 技
 
 > [!IMPORTANT]
 >
-> DC 系列 Vm 是 [第2代 vm](./linux/generation-2.md#creating-a-generation-2-vm) ，仅支持 `Gen2` 映像。
+> DC 系列 Vm 是 [第2代 vm](./generation-2.md#creating-a-generation-2-vm) ，仅支持 `Gen2` 映像。
 
 
 ### <a name="ds-series"></a>DS 系列  
@@ -267,7 +265,7 @@ ACU：160-250 <sup>1,2</sup>
 | Standard_DS13 | 8  | 56  | 112 | 32 | 32000/256 (288) | 25600/256 | 8/4000 |
 | Standard_DS14 | 16 | 112 | 224 | 64 | 64000/512 (576) | 51200/512 | 8/8000 |
 
-<sup>1</sup> DS 系列 VM 可能的最大磁盘吞吐量（IOPS 或 MBps）可能受限于附加磁盘的数量、大小和条带化。  有关详细信息，请参阅 [高性能 ( 的设计) 。
+<sup>1</sup> DS 系列 VM 可能的最大磁盘吞吐量（IOPS 或 MBps）可能受限于附加磁盘的数量、大小和条带化。  有关详细信息，请参阅[高性能设计](premium-storage-performance.md)。
 <sup>2</sup> VM 系列可以在下述 CPU 之一上运行：2.2 GHz Intel Xeon® E5-2660 v2、2.4 GHz Intel Xeon® E5-2673 v3 (Haswell) 或 2.3 GHz Intel XEON® E5-2673 v4 (Broadwell)  
 
 <br>
@@ -293,7 +291,7 @@ ACU：180-240
 | Standard_L16s  | 16 | 128 | 2807 | 64 | 80000/800 | 20000/500 | 8/16000 |
 | Standard_L32s &nbsp; <sup>1</sup> | 32 | 256 | 5630 | 64 | 160000/1600 | 40000/1000 | 8/20000 |
 
-Ls 系列 VM 可能的最大磁盘吞吐量可能受限于任何附加磁盘的数量、大小和条带化。 有关详细信息，请参阅 [高性能 ( 的设计) 。
+Ls 系列 VM 可能的最大磁盘吞吐量可能受限于任何附加磁盘的数量、大小和条带化。 有关详细信息，请参阅[高性能设计](premium-storage-performance.md)。
 
 <sup>1</sup> 实例对于专用于单个客户的硬件独立。
 
@@ -315,7 +313,7 @@ ACU：180 - 240 <sup>1</sup>
 | Standard_GS4&nbsp;<sup>3</sup> | 16 | 224 | 448 | 64 | 80000/800 (2112)  | 40000/1000 | 8/16000 |
 | Standard_GS5&nbsp;<sup>2,&nbsp;3</sup> | 32 | 448 |896 | 64 |160000/1600 (4224)  | 80000/2000 | 8/20000 |
 
-<sup>1</sup> GS 系列 VM 可能的最大磁盘吞吐量（IOPS 或 MBps）可能受限于附加磁盘的数量、大小和条带化。 有关详细信息，请参阅 [高性能 ( 的设计) 。
+<sup>1</sup> GS 系列 VM 可能的最大磁盘吞吐量（IOPS 或 MBps）可能受限于附加磁盘的数量、大小和条带化。 有关详细信息，请参阅[高性能设计](premium-storage-performance.md)。
 
 <sup>2</sup> 实例对于专用于单个客户的硬件独立。
 
@@ -344,7 +342,7 @@ ACU：180 - 240
 <sup>1</sup> 实例对于专用于单个客户的硬件独立。
 <br>
 
-## <a name="nv-series"></a>NV 系列
+### <a name="nv-series"></a>NV 系列
 **较新的大小建议**： [NVv3 系列](nvv3-series.md) 和 [NVv4 系列](nvv4-series.md)
 
 NV 系列虚拟机采用 [NVIDIA Tesla M60 ](https://images.nvidia.com/content/tesla/pdf/188417-Tesla-M60-DS-A4-fnl-Web.pdf) GPU 和 NVIDIA GRID 技术，适用于桌面加速型应用程序和虚拟桌面，方便客户将其数据或模拟可视化。 用户可以在 NV 实例上直观显示其图形密集型工作流以获取高级图形功能，并可额外运行单精度工作负荷，例如编码和渲染。 NV 系列 Vm 还由 Intel 强 2690 v3 (Haswell) Cpu 提供支持。
@@ -368,14 +366,86 @@ NV 实例中的每个 GPU 都带有 GRID 许可证。 使用此许可证，可�
 1 GPU = 半块 M60 卡。
 <br>
 
-## <a name="other-sizes"></a>其他大小
+### <a name="nc-series"></a>NC 系列
+**较新的大小建议**： [NC T4 v3 系列](nct4-v3-series.md)
 
-* [常规用途](sizes-general.md)
-* [计算优化](sizes-compute.md)
-* [内存优化](sizes-memory.md)
-* [存储优化](sizes-storage.md)
-* [GPU](sizes-gpu.md)
-* [高性能计算](sizes-hpc.md)
+NC 系列 Vm 由 [NVIDIA Tesla K80](https://www.nvidia.com/content/dam/en-zz/Solutions/Data-Center/tesla-product-literature/Tesla-K80-BoardSpec-07317-001-v05.pdf) 卡和 Intel 2690 E5-V3 (Haswell) 处理器提供支持。 通过将 CUDA 用于能源勘探应用、碰撞模拟、光纤跟踪渲染、深度学习等领域，用户可以更快地分析数据。 NC24r 配置提供了针对紧密耦合的并行计算工作负荷优化的低延迟、高吞吐量网络接口。
+
+[高级存储](premium-storage-performance.md)：不支持<br>
+[高级存储缓存](premium-storage-performance.md)：不支持<br>
+[实时迁移](maintenance-and-updates.md)：不支持<br>
+[内存保留更新](maintenance-and-updates.md)：不支持<br>
+[VM 代系支持](generation-2.md)：第 1 代<br>
+<br>
+
+| 大小 | vCPU | 内存:GiB | 临时存储 (SSD) GiB | GPU | GPU 内存：GiB | 最大数据磁盘数 | 最大 NIC 数 |
+|---|---|---|---|---|---|---|---|
+| Standard_NC6    | 6  | 56  | 340  | 1 | 12 | 24 | 1 |
+| Standard_NC12   | 12 | 112 | 680  | 2 | 24 | 48 | 2 |
+| Standard_NC24   | 24 | 224 | 1440 | 4 | 48 | 64 | 4 |
+| Standard_NC24r* | 24 | 224 | 1440 | 4 | 48 | 64 | 4 |
+
+1 GPU = 半块 K80 卡。
+
+*支持 RDMA
+
+
+<br>
+
+
+### <a name="ncv2-series"></a>NCv2 系列
+**较新的大小建议**： [NC T4 V3 系列](nct4-v3-series.md) 和 [nc V100 v3 系列](ncv3-series.md)
+
+NCv2 系列 VM 采用 NVIDIA Tesla P100 GPU。 这些 GPU 可提供比 NC 系列高 2 倍以上的计算性能。 客户可将这些更新的 GPU 用于传统的 HPC 工作负荷，例如油藏模拟、DNA 测序、蛋白质分析、Monte Carlo 模拟和其他工作负荷。 除了 Gpu 以外，NCv2 系列 Vm 还由 Intel Broadwell E5-2690 v4 提供支持 () Cpu。
+
+NC24rs v2 配置提供了针对紧密耦合的并行计算工作负荷优化的低延迟、高吞吐量网络接口。
+
+[高级存储](premium-storage-performance.md)：支持<br>
+[高级存储缓存](premium-storage-performance.md)：支持<br>
+[实时迁移](maintenance-and-updates.md)：不支持<br>
+[内存保留更新](maintenance-and-updates.md)：不支持<br>
+[VM 代系支持](generation-2.md)：第 1 代和第 2 代<br>
+
+> 对于此 VM 系列，订阅中的 vCPU（核心）配额最初在每个区域中设置为 0。 在[可用区域](https://azure.microsoft.com/regions/services/)中为此系列[请求 vCPU 配额增加](../azure-portal/supportability/resource-manager-core-quotas-request.md)。
+>
+| 大小 | vCPU | 内存:GiB | 临时存储 (SSD) GiB | GPU | GPU 内存：GiB | 最大数据磁盘数 | 最大非缓存磁盘吞吐量：IOPS/MBps | 最大 NIC 数 |
+|---|---|---|---|---|---|---|---|---|
+| Standard_NC6s_v2    | 6  | 112 | 736  | 1 | 16 | 12 | 20000/200 | 4 |
+| Standard_NC12s_v2   | 12 | 224 | 1474 | 2 | 32 | 24 | 40000/400 | 8 |
+| Standard_NC24s_v2   | 24 | 448 | 2948 | 4 | 64 | 32 | 80000/800 | 8 |
+| Standard_NC24rs_v2* | 24 | 448 | 2948 | 4 | 64 | 32 | 80000/800 | 8 |
+
+1 GPU = 一个 P100 卡。
+
+*支持 RDMA
+
+<br>
+
+### <a name="nd-series"></a>ND 系列
+**较新的大小建议**： [NDv2 系列](ndv2-series.md) 和 [NC V100 v3 系列](ncv3-series.md)
+
+ND 系列虚拟机是针对 AI 和深度学习工作负荷设计的 GPU 系列的新成员。 它们在训练和推理方面性能卓越。 ND 实例由 [NVIDIA Tesla P40](https://images.nvidia.com/content/pdf/tesla/184427-Tesla-P40-Datasheet-NV-Final-Letter-Web.pdf) gpu 和 2690 (Broadwell) cpu 提供支持。 这些实例可以针对单精度浮点运算和利用 Microsoft 认知工具包、TensorFlow、Caffe 及其他框架的 AI 工作负荷提供卓越的性能。 ND 系列还提供了更大的 GPU 内存大小（24 GB），能够适应更大的神经网络模型。 与 NC 系列一样，ND 系列可通过 RDMA 和 InfiniBand 连接提供含辅助型低延迟、高吞吐量网络的配置，以便可运行跨多个 GPU 的大规模训练作业。
+
+[高级存储](premium-storage-performance.md)：支持<br>
+[高级存储缓存](premium-storage-performance.md)：支持<br>
+[实时迁移](maintenance-and-updates.md)：不支持<br>
+[内存保留更新](maintenance-and-updates.md)：不支持<br>
+[VM 代系支持](generation-2.md)：第 1 代和第 2 代<br>
+
+> 对于此 VM 系列，订阅中每个区域的 vCPU (核心) 配额最初设置为0。 在[可用区域](https://azure.microsoft.com/regions/services/)中为此系列[请求 vCPU 配额增加](../azure-portal/supportability/resource-manager-core-quotas-request.md)。
+>
+| 大小 | vCPU | 内存:GiB | 临时存储 (SSD) GiB | GPU | GPU 内存：GiB | 最大数据磁盘数 | 最大非缓存磁盘吞吐量：IOPS/MBps | 最大 NIC 数 |
+|---|---|---|---|---|---|---|---|---|
+| Standard_ND6s    | 6  | 112 | 736  | 1 | 24 | 12 | 20000/200 | 4 |
+| Standard_ND12s   | 12 | 224 | 1474 | 2 | 48 | 24 | 40000/400 | 8 |
+| Standard_ND24s   | 24 | 448 | 2948 | 4 | 24 | 32 | 80000/800 | 8 |
+| Standard_ND24rs* | 24 | 448 | 2948 | 4 | 96 | 32 | 80000/800 | 8 |
+
+1 GPU = 一个 P40 卡。
+
+*支持 RDMA
+
+<br>
 
 ## <a name="next-steps"></a>后续步骤
 

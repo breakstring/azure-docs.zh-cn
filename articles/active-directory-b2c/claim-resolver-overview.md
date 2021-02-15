@@ -8,15 +8,15 @@ manager: celestedg
 ms.service: active-directory
 ms.workload: identity
 ms.topic: reference
-ms.date: 04/21/2020
+ms.date: 10/28/2020
 ms.author: mimart
 ms.subservice: B2C
-ms.openlocfilehash: 8e575cf9bba02a59179cc70870fb680a27648963
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 682b83d7016a89b27b5c936853abda1438f59c28
+ms.sourcegitcommit: 63d0621404375d4ac64055f1df4177dfad3d6de6
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "85201169"
+ms.lasthandoff: 12/15/2020
+ms.locfileid: "97508010"
 ---
 # <a name="about-claim-resolvers-in-azure-active-directory-b2c-custom-policies"></a>关于 Azure Active Directory B2C 自定义策略中的声明解析程序
 
@@ -70,13 +70,13 @@ Azure Active Directory B2C (Azure AD B2C) [自定义策略](custom-policy-overvi
 | {OIDC:ClientId} |`client_id` 查询字符串参数。 | 00000000-0000-0000-0000-000000000000 |
 | {OIDC:DomainHint} |`domain_hint` 查询字符串参数。 | facebook.com |
 | {OIDC:LoginHint} |  `login_hint` 查询字符串参数。 | someone@contoso.com |
-| {OIDC:MaxAge} | `max_age`。 | 不适用 |
+| {OIDC:MaxAge} | `max_age`。 | 空值 |
 | {OIDC:Nonce} |`Nonce` 查询字符串参数。 | defaultNonce |
 | {OIDC:Password}| [资源所有者密码凭据流](ropc-custom.md)用户的密码。| password1| 
 | {OIDC:Prompt} | `prompt` 查询字符串参数。 | 登录 |
 | {OIDC:RedirectUri} |`redirect_uri` 查询字符串参数。 | https://jwt.ms |
-| {OIDC:Resource} |`resource` 查询字符串参数。 | 不适用 |
-| {OIDC： Scope} |`scope` 查询字符串参数。 | openid |
+| {OIDC:Resource} |`resource` 查询字符串参数。 | 空值 |
+| {OIDC:Scope} |`scope` 查询字符串参数。 | openid |
 | {OIDC:Username}| [资源所有者密码凭据流](ropc-custom.md)用户的用户名。| emily@contoso.com| 
 
 ### <a name="context"></a>上下文
@@ -88,7 +88,7 @@ Azure Active Directory B2C (Azure AD B2C) [自定义策略](custom-policy-overvi
 | {Context:DateTimeInUtc} |UTC 格式的日期时间。  | 2018/10/10 中午 12:00 |
 | {Context:DeploymentMode} |策略部署模式。  | 生产 |
 | {Context:IPAddress} | 用户 IP 地址。 | 11.111.111.11 |
-| {Context:KMSI} | 指示是否选中["使我保持登录状态"](custom-policy-keep-me-signed-in.md)复选框。 |  是 |
+| {Context:KMSI} | 指示是否选中 ["使我保持登录状态"](session-behavior.md?pivots=b2c-custom-policy#enable-keep-me-signed-in-kmsi) 复选框。 |  是 |
 
 ### <a name="claims"></a>声明 
 
@@ -106,13 +106,14 @@ Azure Active Directory B2C (Azure AD B2C) [自定义策略](custom-policy-overvi
 | {OAUTH-KV:campaignId} | 查询字符串参数。 | Hawaii |
 | {OAUTH-KV:app_session} | 查询字符串参数。 | A3C5R |
 | {OAUTH-KV:loyalty_number} | 查询字符串参数。 | 1234 |
-| {OAUTH-KV:any custom query string} | 查询字符串参数。 | 不适用 |
+| {OAUTH-KV:any custom query string} | 查询字符串参数。 | 空值 |
 
 ### <a name="oauth2"></a>OAuth2
 
 | 声明 | 说明 | 示例 |
 | ----- | ----------------------- | --------|
 | {oauth2:access_token} | 访问令牌。 | 空值 |
+| {oauth2:refresh_token} | 刷新令牌。 | 空值 |
 
 
 ### <a name="saml"></a>SAML
@@ -126,6 +127,7 @@ Azure Active Directory B2C (Azure AD B2C) [自定义策略](custom-policy-overvi
 | {SAML:ForceAuthn} | SAML 请求的 `AuthnRequest` 元素中的 `ForceAuthN` 特性值。 | True |
 | {SAML:ProviderName} | SAML 请求的 `AuthnRequest` 元素中的 `ProviderName` 特性值。| Contoso.com |
 | {SAML:RelayState} | `RelayState` 查询字符串参数。| 
+| {SAML:Subject} | 来自 SAML AuthN 请求的 NameId 元素的 `Subject`。| 
 
 ## <a name="using-claim-resolvers"></a>使用声明解析程序
 
@@ -135,9 +137,9 @@ Azure Active Directory B2C (Azure AD B2C) [自定义策略](custom-policy-overvi
 | ----- | ----------------------- | --------|
 |Application Insights 技术配置文件 |`InputClaim` | |
 |[Azure Active Directory](active-directory-technical-profile.md) 技术配置文件| `InputClaim`, `OutputClaim`| 1, 2|
-|[OAuth2](oauth2-technical-profile.md)技术配置文件| `InputClaim`, `OutputClaim`| 1, 2|
+|[OAuth2](oauth2-technical-profile.md) 技术配置文件| `InputClaim`, `OutputClaim`| 1, 2|
 |[OpenID Connect](openid-connect-technical-profile.md) 技术配置文件| `InputClaim`, `OutputClaim`| 1, 2|
-|[索赔转换](claims-transformation-technical-profile.md)技术配置文件| `InputClaim`, `OutputClaim`| 1, 2|
+|[索赔转换](claims-transformation-technical-profile.md) 技术配置文件| `InputClaim`, `OutputClaim`| 1, 2|
 |[RESTful 提供程序](restful-technical-profile.md)技术配置文件| `InputClaim`| 1, 2|
 |[SAML 标识提供程序](saml-identity-provider-technical-profile.md)技术配置文件| `OutputClaim`| 1, 2|
 |[自断言](self-asserted-technical-profile.md)技术配置文件| `InputClaim`, `OutputClaim`| 1, 2|
@@ -183,7 +185,7 @@ Azure Active Directory B2C (Azure AD B2C) [自定义策略](custom-policy-overvi
 
 ### <a name="dynamic-ui-customization"></a>动态 UI 自定义
 
-通过 Azue AD B2C，可将查询字符串参数传递给 HTML 内容定义终结点，以便动态呈现页面内容。 例如，此功能允许基于从 Web 或移动应用程序传递的自定义参数，更改 Azure AD B2C 注册或登录页面上的背景图像。 有关详细信息，请参阅[使用 Azure Active Directory B2C 中的自定义策略动态配置 UI](custom-policy-ui-customization.md#configure-dynamic-custom-page-content-uri)。 此外，还可以根据语言参数本地化 HTML 页，或者根据客户端 ID 更改内容。
+通过 Azue AD B2C，可将查询字符串参数传递给 HTML 内容定义终结点，以便动态呈现页面内容。 例如，此功能允许基于从 Web 或移动应用程序传递的自定义参数，更改 Azure AD B2C 注册或登录页面上的背景图像。 有关详细信息，请参阅[使用 Azure Active Directory B2C 中的自定义策略动态配置 UI](customize-ui-with-html.md#configure-dynamic-custom-page-content-uri)。 此外，还可以根据语言参数本地化 HTML 页，或者根据客户端 ID 更改内容。
 
 以下示例传入了名为 **campaignId** 且值为 `Hawaii` 的查询字符串参数、**language** 代码 `en-US` 以及表示客户端 ID 的 **app**：
 

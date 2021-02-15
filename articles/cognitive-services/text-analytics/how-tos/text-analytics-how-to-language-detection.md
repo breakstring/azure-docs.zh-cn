@@ -8,14 +8,14 @@ manager: nitinme
 ms.service: cognitive-services
 ms.subservice: text-analytics
 ms.topic: sample
-ms.date: 05/13/2020
+ms.date: 12/17/2020
 ms.author: aahi
-ms.openlocfilehash: 5b3893dce2d20b1de0a78f11263d880e262098d2
-ms.sourcegitcommit: f0b206a6c6d51af096a4dc6887553d3de908abf3
+ms.openlocfilehash: ef40201a13412cc735a5e15bf468e2c934ec81ab
+ms.sourcegitcommit: ad677fdb81f1a2a83ce72fa4f8a3a871f712599f
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 05/28/2020
-ms.locfileid: "84142378"
+ms.lasthandoff: 12/17/2020
+ms.locfileid: "97656795"
 ---
 # <a name="example-detect-language-with-text-analytics"></a>示例：通过文本分析检测语言
 
@@ -37,30 +37,30 @@ Azure 文本分析 REST API 的[语言检测](https://westus2.dev.cognitive.micr
 每个文档的大小必须少于 5,120 个字符， 每个集合最多可包含 1,000 个项目 (ID)。 集合在请求正文中提交。 以下示例是可能提交用于语言检测的内容示例：
 
 ```json
-    {
-        "documents": [
-            {
-                "id": "1",
-                "text": "This document is in English."
-            },
-            {
-                "id": "2",
-                "text": "Este documento está en inglés."
-            },
-            {
-                "id": "3",
-                "text": "Ce document est en anglais."
-            },
-            {
-                "id": "4",
-                "text": "本文件为英文"
-            },
-            {
-                "id": "5",
-                "text": "Этот документ на английском языке."
-            }
-        ]
-    }
+{
+    "documents": [
+        {
+            "id": "1",
+            "text": "This document is in English."
+        },
+        {
+            "id": "2",
+            "text": "Este documento está en inglés."
+        },
+        {
+            "id": "3",
+            "text": "Ce document est en anglais."
+        },
+        {
+            "id": "4",
+            "text": "本文件为英文"
+        },
+        {
+            "id": "5",
+            "text": "Этот документ на английском языке."
+        }
+    ]
+}
 ```
 
 ## <a name="step-1-structure-the-request"></a>步骤 1：构造请求
@@ -97,55 +97,67 @@ Azure 文本分析 REST API 的[语言检测](https://westus2.dev.cognitive.micr
 
 ```json
 {
-    "documents": [
+    "documents":[
         {
-            "id": "1",
-            "detectedLanguage": {
-                "name": "English",
-                "iso6391Name": "en",
-                "confidenceScore": 1.0
+            "detectedLanguage":{
+                "confidenceScore":0.99,
+                "iso6391Name":"en",
+                "name":"English"
             },
-            "warnings": []
+            "id":"1",
+            "warnings":[
+                
+            ]
         },
         {
-            "id": "2",
-            "detectedLanguage": {
-                "name": "Spanish",
-                "iso6391Name": "es",
-                "confidenceScore": 1.0
+            "detectedLanguage":{
+                "confidenceScore":1.0,
+                "iso6391Name":"es",
+                "name":"Spanish"
             },
-            "warnings": []
+            "id":"2",
+            "warnings":[
+                
+            ]
         },
         {
-            "id": "3",
-            "detectedLanguage": {
-                "name": "French",
-                "iso6391Name": "fr",
-                "confidenceScore": 1.0
+            "detectedLanguage":{
+                "confidenceScore":1.0,
+                "iso6391Name":"fr",
+                "name":"French"
             },
-            "warnings": []
+            "id":"3",
+            "warnings":[
+                
+            ]
         },
         {
-            "id": "4",
-            "detectedLanguage": {
-                "name": "Chinese_Simplified",
-                "iso6391Name": "zh_chs",
-                "confidenceScore": 1.0
+            "detectedLanguage":{
+                "confidenceScore":1.0,
+                "iso6391Name":"zh_chs",
+                "name":"Chinese_Simplified"
             },
-            "warnings": []
+            "id":"4",
+            "warnings":[
+                
+            ]
         },
         {
-            "id": "5",
-            "detectedLanguage": {
-                "name": "Russian",
-                "iso6391Name": "ru",
-                "confidenceScore": 1.0
+            "detectedLanguage":{
+                "confidenceScore":1.0,
+                "iso6391Name":"ru",
+                "name":"Russian"
             },
-            "warnings": []
+            "id":"5",
+            "warnings":[
+                
+            ]
         }
     ],
-    "errors": [],
-    "modelVersion": "2019-10-01"
+    "errors":[
+        
+    ],
+    "modelVersion":"2020-09-01"
 }
 ```
 
@@ -158,19 +170,19 @@ Azure 文本分析 REST API 的[语言检测](https://westus2.dev.cognitive.micr
 **输入**
 
 ```json
-    {
-        "documents": [
-            {
-                "id": "1",
-                "text": "impossible"
-            },
-            {
-                "id": "2",
-                "text": "impossible",
-                "countryHint": "fr"
-            }
-        ]
-    }
+{
+    "documents": [
+        {
+            "id": "1",
+            "text": "impossible"
+        },
+        {
+            "id": "2",
+            "text": "impossible",
+            "countryHint": "fr"
+        }
+    ]
+}
 ```
 
 现在，该服务提供了其他上下文来帮助做出更好的判断： 
@@ -178,46 +190,60 @@ Azure 文本分析 REST API 的[语言检测](https://westus2.dev.cognitive.micr
 **输出**
 
 ```json
-    {
-        "documents": [
-            {
-                "id": "1",
-                "detectedLanguages": [
-                    {
-                        "name": "English",
-                        "iso6391Name": "en",
-                        "confidenceScore": 1
-                    }
-                ]
+{
+    "documents":[
+        {
+            "detectedLanguage":{
+                "confidenceScore":0.62,
+                "iso6391Name":"en",
+                "name":"English"
             },
-            {
-                "id": "2",
-                "detectedLanguages": [
-                    {
-                        "name": "French",
-                        "iso6391Name": "fr",
-                        "confidenceScore": 1
-                    }
-                ]
-            }
-        ],
-        "errors": []
-    }
+            "id":"1",
+            "warnings":[
+                
+            ]
+        },
+        {
+            "detectedLanguage":{
+                "confidenceScore":1.0,
+                "iso6391Name":"fr",
+                "name":"French"
+            },
+            "id":"2",
+            "warnings":[
+                
+            ]
+        }
+    ],
+    "errors":[
+        
+    ],
+    "modelVersion":"2020-09-01"
+}
 ```
 
 如果分析器无法分析输入，则会返回 `(Unknown)`。 例如，如果提交的文本块仅包含阿拉伯数字，则会出现这种情况。
 
 ```json
-    {
-        "id": "5",
-        "detectedLanguages": [
-            {
-                "name": "(Unknown)",
-                "iso6391Name": "(Unknown)",
-                "confidenceScore": "NaN"
-            }
-        ]
-    }
+{
+    "documents":[
+        {
+            "detectedLanguage":{
+                "confidenceScore":0.0,
+                "iso6391Name":"(Unknown)",
+                "name":"(Unknown)"
+            },
+            "id":"1",
+            "warnings":[
+                
+            ]
+        }
+    ],
+    "errors":[
+        
+    ],
+    "modelVersion":"2020-09-01"
+}
 ```
 
 ### <a name="mixed-language-content"></a>混合语言内容
@@ -227,14 +253,14 @@ Azure 文本分析 REST API 的[语言检测](https://westus2.dev.cognitive.micr
 **输入**
 
 ```json
-    {
-      "documents": [
+{
+    "documents": [
         {
-          "id": "1",
-          "text": "Hello, I would like to take a class at your University. ¿Se ofrecen clases en español? Es mi primera lengua y más fácil para escribir. Que diriez-vous des cours en français?"
+            "id": "1",
+            "text": "Hello, I would like to take a class at your University. ¿Se ofrecen clases en español? Es mi primera lengua y más fácil para escribir. Que diriez-vous des cours en français?"
         }
-      ]
-    }
+    ]
+}
 ```
 
 **输出**
@@ -242,21 +268,25 @@ Azure 文本分析 REST API 的[语言检测](https://westus2.dev.cognitive.micr
 生成的输出包含主要语言，分数低于 1.0，表示可信度较低。
 
 ```json
-    {
-      "documents": [
+{
+    "documents":[
         {
-          "id": "1",
-          "detectedLanguages": [
-            {
-              "name": "Spanish",
-              "iso6391Name": "es",
-              "confidencescore": 0.94
-            }
-          ]
+            "detectedLanguage":{
+                "confidenceScore":0.94,
+                "iso6391Name":"es",
+                "name":"Spanish"
+            },
+            "id":"1",
+            "warnings":[
+                
+            ]
         }
-      ],
-      "errors": []
-    }
+    ],
+    "errors":[
+        
+    ],
+    "modelVersion":"2020-09-01"
+}
 ```
 
 ## <a name="summary"></a>总结
@@ -271,5 +301,5 @@ Azure 文本分析 REST API 的[语言检测](https://westus2.dev.cognitive.micr
 ## <a name="see-also"></a>另请参阅
 
 * [文本分析概述](../overview.md)
-* [使用文本分析客户端库](../quickstarts/text-analytics-sdk.md)
+* [使用文本分析客户端库](../quickstarts/client-libraries-rest-api.md)
 * [新增功能](../whats-new.md)

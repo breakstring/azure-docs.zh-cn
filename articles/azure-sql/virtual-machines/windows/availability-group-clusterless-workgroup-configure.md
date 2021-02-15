@@ -8,17 +8,18 @@ editor: ''
 tags: azure-service-management
 ms.assetid: 53981f7e-8370-4979-b26a-93a5988d905f
 ms.service: virtual-machines-sql
-ms.topic: article
+ms.subservice: hadr
+ms.topic: how-to
 ms.tgt_pltfrm: vm-windows-sql-server
 ms.workload: iaas-sql-server
 ms.date: 01/29/2020
 ms.author: mathoma
-ms.openlocfilehash: 93819332def05022272eabc130e0f2240938f244
-ms.sourcegitcommit: 845a55e6c391c79d2c1585ac1625ea7dc953ea89
+ms.openlocfilehash: 0f194101720481f71434709c467d0e3130a0f1f9
+ms.sourcegitcommit: dfc4e6b57b2cb87dbcce5562945678e76d3ac7b6
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/05/2020
-ms.locfileid: "85955499"
+ms.lasthandoff: 12/12/2020
+ms.locfileid: "97359449"
 ---
 # <a name="configure-a-workgroup-availability-group"></a>配置工作组可用性组 
 [!INCLUDE[appliesto-sqlvm](../../includes/appliesto-sqlvm.md)]
@@ -62,11 +63,11 @@ ms.locfileid: "85955499"
 1. 选择“更多…”以打开“DNS 后缀和 NetBIOS 计算机名”对话框 。 
 1. 在“此计算机的主 DNS 后缀”下键入 DNS 后缀的名称，例如 `ag.wgcluster.example.com`，然后选择“确定” ： 
 
-   ![添加 DNS 后缀](./media/availability-group-clusterless-workgroup-configure/2-add-dns-suffix.png)
+   ![屏幕截图显示了 "D N S 后缀和 NetBIOS 计算机名" 对话框，你可以在其中输入值。](./media/availability-group-clusterless-workgroup-configure/2-add-dns-suffix.png)
 
 1. 确认“完整计算机名”现在已显示 DNS 后缀，然后选择“确定”保存更改 ： 
 
-   ![添加 DNS 后缀](./media/availability-group-clusterless-workgroup-configure/3-confirm-full-computer-name.png)
+   ![屏幕截图显示了在何处查看完整的计算机名称。](./media/availability-group-clusterless-workgroup-configure/3-confirm-full-computer-name.png)
 
 1. 当系统提示重启服务器时，请进行重启。 
 1. 在要用于可用性组的任何其他节点上重复这些步骤。 
@@ -130,7 +131,7 @@ new-itemproperty -path HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\
 
 ## <a name="create-a-cloud-witness"></a>创建云见证 
 
-在此步骤中，配置云共享见证。 如果你不熟悉这些步骤，请参阅[为故障转移群集部署云见证](/windows-server/failover-clustering/deploy-cloud-witness)。 
+在此步骤中，配置云共享见证。 如果你不熟悉这些步骤，请参阅 [为故障转移群集部署云见证](/windows-server/failover-clustering/deploy-cloud-witness)。 
 
 ## <a name="enable-the-availability-group-feature"></a>启用可用性组功能 
 
@@ -286,11 +287,9 @@ GO
 
 ## <a name="configure-a-load-balancer"></a>配置负载均衡器
 
-在最后一步中，使用[Azure 门户](availability-group-load-balancer-portal-configure.md)或[PowerShell](availability-group-listener-powershell-configure.md)配置负载均衡器。
+在最后一步中，使用 [Azure 门户](availability-group-load-balancer-portal-configure.md) 或 [PowerShell](availability-group-listener-powershell-configure.md)配置负载均衡器。
 
 
 ## <a name="next-steps"></a>后续步骤
 
-还可以使用 [Az SQL VM CLI](availability-group-az-cli-configure.md) 配置可用性组。 
-
-
+还可以使用 [Az SQL VM CLI](./availability-group-az-commandline-configure.md) 配置可用性组。

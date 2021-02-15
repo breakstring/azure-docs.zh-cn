@@ -1,21 +1,21 @@
 ---
 author: sethmanheim
-ms.service: service-bus
+ms.service: notification-hubs
 ms.topic: include
-ms.date: 11/09/2018
+ms.date: 09/14/2020
 ms.author: sethm
-ms.openlocfilehash: 7fd161c90234d45a6751f173ba3685ee8c392c87
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: fb3c95b74128f1da7b29a290e17fefe21987dd76
+ms.sourcegitcommit: a43a59e44c14d349d597c3d2fd2bc779989c71d7
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "74260660"
+ms.lasthandoff: 11/25/2020
+ms.locfileid: "96019407"
 ---
 ## <a name="webapi-project"></a>WebAPI 项目
 
-1. 在 Visual Studio 中，打开在**通知用户**教程中创建的 **AppBackend** 项目。
-2. 在 Notifications.cs 中，将整个 Notifications 类替换为以下代码  。 请确保将占位符替换为通知中心的连接字符串（具有完全访问权限）和中心名称。 可以从 [Azure 门户](https://portal.azure.com)获取这些值。 现在，该模块表示要发送的其他安全通知。 在完整的实现中，通知将存储在数据库中；为简单起见，在此示例中我们将它们存储在内存中。
-   
+1. 在 Visual Studio 中，打开在 **通知用户** 教程中创建的 **AppBackend** 项目。
+2. 在 Notifications.cs 中，将整个 **通知** 类替换为以下代码。 请确保将占位符替换为通知中心的连接字符串（具有完全访问权限）和中心名称。 可以从 [Azure 门户](https://portal.azure.com)获取这些值。 现在，该模块表示要发送的其他安全通知。 在完整的实现中，通知将存储在数据库中；为简单起见，在此示例中我们将它们存储在内存中。
+
    ```csharp
     public class Notification
     {
@@ -56,8 +56,8 @@ ms.locfileid: "74260660"
     }
     ```
 
-1. 在 NotificationsController.cs 中，将 NotificationsController 类定义中的代码替换为以下代码  。 该组件为设备实现了一种安全检索通知的方法，还提供了一种方法来触发到设备的安全推送（用于本教程的教学目的）。 请注意，在向通知中心发送通知时，我们将只发送一个包含通知 ID（且没有实际的消息内容）的原始通知：
-   
+3. 在 NotificationsController.cs 中，将 NotificationsController 类定义中的代码替换为以下代码  。 该组件为设备实现了一种安全检索通知的方法，还提供了一种方法来触发到设备的安全推送（用于本教程的教学目的）。 请注意，在向通知中心发送通知时，我们将只发送一个包含通知 ID（且没有实际的消息内容）的原始通知：
+
    ```csharp
     public NotificationsController()
     {
@@ -95,4 +95,4 @@ ms.locfileid: "74260660"
 请注意，`Post` 方法现在不发送 toast 通知。 它将发送只包含通知 ID 且没有任何敏感内容的原始通知。 另外，请确保注释针对某些平台（未在通知中心上配置其凭据）的发送操作，因为它们会导致错误。
 
 1. 现在，我们将此应用重新部署到 Azure 网站，以便可以从所有设备对其进行访问。 右键单击 AppBackend 项目，然后选择“发布”   。
-2. 选择 Azure 网站作为发布目标。 使用 Azure 帐户登录，选择现有网站或新网站，并记下“连接”  选项卡中的“目标 URL”  属性。在本教程后面的部分中，我们将此 URL 称为*后端终结点* 。 单击“发布”。 
+2. 选择 Azure 网站作为发布目标。 使用 Azure 帐户登录，选择现有网站或新网站，并记下“连接”  选项卡中的“目标 URL”  属性。在本教程后面的部分中，我们将此 URL 称为 *后端终结点* 。 单击“发布”。 

@@ -5,12 +5,12 @@ ms.date: 3/5/2020
 ms.topic: quickstart
 ms.service: azure-functions
 ms.custom: subject-armqs
-ms.openlocfilehash: e409b3b64ac6bc39ba4cb58397506723a67a0de2
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.openlocfilehash: 1e623405faa89ff41eccdaa57578bc8ac94cd78c
+ms.sourcegitcommit: 7cc10b9c3c12c97a2903d01293e42e442f8ac751
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87081706"
+ms.lasthandoff: 11/06/2020
+ms.locfileid: "93422818"
 ---
 # <a name="quickstart-create-and-deploy-azure-functions-resources-from-an-arm-template"></a>快速入门：使用 ARM 模板创建和部署 Azure Functions 资源
 
@@ -38,7 +38,14 @@ ms.locfileid: "87081706"
 
 # <a name="visual-studio-code"></a>[Visual Studio Code](#tab/visual-studio-code)
 
-[在 Visual Studio Code 中创建本地函数项目](functions-create-first-function-vs-code.md#create-an-azure-functions-project)
+在 Visual Studio Code 中以所选语言创建本地函数项目：  
+
++ [C#](create-first-function-vs-code-csharp.md)
++ [Java](create-first-function-vs-code-java.md)
++ [JavaScript](create-first-function-vs-code-node.md)
++ [PowerShell](create-first-function-vs-code-powershell.md)
++ [Python](create-first-function-vs-code-python.md)
++ [TypeScript](create-first-function-vs-code-typescript.md)
 
 # <a name="visual-studio"></a>[Visual Studio](#tab/visual-studio)
 
@@ -46,7 +53,14 @@ ms.locfileid: "87081706"
 
 # <a name="command-line"></a>[命令行](#tab/command-line)
 
-[从命令行创建本地函数项目](functions-create-first-azure-function-azure-cli.md#create-a-local-function-project)
+从命令行以所选语言创建本地函数项目：
+
++ [C#](create-first-function-cli-csharp.md)
++ [Java](create-first-function-cli-java.md)
++ [JavaScript](create-first-function-cli-node.md)
++ [PowerShell](create-first-function-cli-powershell.md)
++ [Python](create-first-function-cli-python.md)
++ [TypeScript](create-first-function-cli-typescript.md)
 
 ---
 
@@ -56,7 +70,7 @@ ms.locfileid: "87081706"
 
 本快速入门中使用的模板来自 [Azure 快速启动模板](https://azure.microsoft.com/resources/templates/101-function-app-create-dynamic/)。
 
-:::code language="json" source="~/quickstart-templates/101-function-app-create-dynamic/azuredeploy.json" range="1-140" highlight="55-136":::
+:::code language="json" source="~/quickstart-templates/101-function-app-create-dynamic/azuredeploy.json":::
 
 此模板会创建下面 4 个 Azure 资源：
 

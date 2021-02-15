@@ -10,13 +10,13 @@ metadata:
   ms.collection: collection
   author: KumudD
   ms.author: kumud
-  ms.date: 08/28/2019
-  ms.openlocfilehash: a6c0bee32fbeb50c1eef0a9625706bcee9e1ae17
-  ms.sourcegitcommit: 09a124d851fbbab7bc0b14efd6ef4e0275c7ee88
+  ms.date: 01/28/2021
+  ms.openlocfilehash: 11e3de57bdf2853e94ec61a21ab54ae085f4f6b1
+  ms.sourcegitcommit: 1a98b3f91663484920a747d75500f6d70a6cb2ba
   ms.translationtype: HT
   ms.contentlocale: zh-CN
-  ms.lasthandoff: 04/23/2020
-  ms.locfileid: "82086464"
+  ms.lasthandoff: 01/29/2021
+  ms.locfileid: "99062140"
 landingContent:
 - title: 关于虚拟网络
   linkLists:
@@ -27,7 +27,7 @@ landingContent:
   - linkListType: concept
     links:
     - text: 虚拟网络常见问题解答
-      url: virtual-networks-overview.md
+      url: virtual-networks-faq.md
 - title: 入门
   linkLists:
   - linkListType: quickstart
@@ -40,14 +40,14 @@ landingContent:
       url: manage-virtual-network.md
     - text: 添加、更改或删除子网
       url: virtual-network-manage-subnet.md
-- title: 保护网络流量的安全
+- title: 安全的网络流量
   linkLists:
   - linkListType: concept
     links:
     - text: 网络安全组
-      url: security-overview.md
+      url: ./network-security-groups-overview.md
     - text: 应用程序安全组
-      url: security-overview.md#application-security-groups
+      url: ./network-security-groups-overview.md#application-security-groups
     - text: 虚拟网络服务终结点
       url: virtual-network-service-endpoints-overview.md
     - text: 虚拟网络安全常见问题解答
@@ -63,7 +63,7 @@ landingContent:
   - linkListType: learn
     links:
     - text: 保护和隔离对 Azure 资源的访问
-      url: https://docs.microsoft.com/learn/modules/secure-and-isolate-with-nsg-and-service-endpoints
+      url: /learn/modules/secure-and-isolate-with-nsg-and-service-endpoints
   - linkListType: video
     links:
     - text: 使用 Azure 专用链接安全访问 Azure PaaS 资源
@@ -93,7 +93,7 @@ landingContent:
   - linkListType: learn
     links:
     - text: 通过对等互连跨虚拟网络通信
-      url: https://docs.microsoft.com/learn/modules/integrate-vnets-with-vnet-peering
+      url: /learn/modules/integrate-vnets-with-vnet-peering
 - title: 路由网络流量
   linkLists:
   - linkListType: concept
@@ -109,7 +109,7 @@ landingContent:
   - linkListType: concept
     links:
     - text: IP 地址类型和分配方法
-      url: virtual-network-ip-addresses-overview-arm.md
+      url: ./public-ip-addresses.md
   - linkListType: how-to-guide
     links:
     - text: 创建、更改或删除公共 IP 地址
@@ -151,7 +151,7 @@ landingContent:
   - linkListType: concept
     links:
     - text: IP 地址类型和分配方法
-      url: virtual-network-ip-addresses-overview-arm.md
+      url: ./public-ip-addresses.md
     - text: Azure 虚拟网络的 IPv6 是什么？
       url: ipv6-overview.md
     - text: 公共 IP 地址前缀

@@ -7,18 +7,95 @@ ms.topic: how-to
 ms.date: 10/06/2019
 ms.author: brendm
 ms.custom: devx-track-java
-ms.openlocfilehash: 1e3579f79f9daa80c3d3f2206be7a76cc5505e80
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
-ms.translationtype: HT
+zone_pivot_groups: programming-languages-spring-cloud
+ms.openlocfilehash: a78aec8c18f3b89629bbf696de3a097397ac59bc
+ms.sourcegitcommit: 2a8a53e5438596f99537f7279619258e9ecb357a
+ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87037013"
+ms.lasthandoff: 11/06/2020
+ms.locfileid: "94337910"
 ---
 # <a name="use-distributed-tracing-with-azure-spring-cloud"></a>将分布式跟踪与 Azure Spring Cloud 配合使用
 
-使用 Azure Spring Cloud 中的分布式跟踪工具，可以轻松地调试和监视复杂问题。 Azure Spring Cloud 将 [Spring Cloud Sleuth](https://spring.io/projects/spring-cloud-sleuth) 与 Azure 的 [Application Insights](https://docs.microsoft.com/azure/azure-monitor/app/app-insights-overview) 集成。 这种集成可以通过 Azure 门户提供强大的分布式跟踪功能。
+使用 Azure Spring Cloud 中的分布式跟踪工具，可以轻松地调试和监视复杂问题。 Azure Spring Cloud 将 [Spring Cloud Sleuth](https://spring.io/projects/spring-cloud-sleuth) 与 Azure 的 [Application Insights](../azure-monitor/app/app-insights-overview.md) 集成。 这种集成可以通过 Azure 门户提供强大的分布式跟踪功能。
 
-本文介绍如何执行以下操作：
+::: zone pivot="programming-language-csharp"
+本文介绍如何使 .NET Core Steeltoe 应用程序使用分布式跟踪。
+
+## <a name="prerequisites"></a>先决条件
+
+若要执行这些过程，需要一个已 [准备好部署到 Azure 春季云](spring-cloud-tutorial-prepare-app-deployment.md)的 Steeltoe 应用。
+
+## <a name="dependencies"></a>依赖项
+
+对于 Steeltoe 2.4.4，请添加以下 NuGet 包：
+
+* [Steeltoe. TracingCore](https://www.nuget.org/packages/Steeltoe.Management.TracingCore/)
+* [Steeltoe. ExporterCore](https://www.nuget.org/packages/Microsoft.Azure.SpringCloud.Client/)
+
+对于 Steeltoe 3.0.0，请添加以下 NuGet 包：
+
+* [Steeltoe. TracingCore](https://www.nuget.org/packages/Steeltoe.Management.TracingCore/)
+
+## <a name="update-startupcs"></a>更新 Startup.cs
+
+1. 对于 Steeltoe 2.4.4，请 `AddDistributedTracing` `AddZipkinExporter` 在方法中调用和 `ConfigureServices` 。
+
+   ```csharp
+   public void ConfigureServices(IServiceCollection services)
+   {
+       services.AddDistributedTracing(Configuration);
+       services.AddZipkinExporter(Configuration);
+   }
+   ```
+
+   对于 Steeltoe 3.0.0，请 `AddDistributedTracing` 在方法中调用 `ConfigureServices` 。
+
+   ```csharp
+   public void ConfigureServices(IServiceCollection services)
+   {
+       services.AddDistributedTracing(Configuration, builder => builder.UseZipkinWithTraceOptions(services));
+   }
+   ```
+
+1. 对于 Steeltoe 2.4.4，请 `UseTracingExporter` 在方法中调用 `Configure` 。
+
+   ```csharp
+   public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+   {
+        app.UseEndpoints(endpoints =>
+        {
+            endpoints.MapControllers();
+        });
+        app.UseTracingExporter();
+   }
+   ```
+
+   对于 Steeltoe 3.0.0，方法中不需要进行任何更改 `Configure` 。
+
+## <a name="update-configuration"></a>更新配置
+
+将以下设置添加到在 Azure 春季云中运行应用时将使用的配置源：
+
+1. 将 `management.tracing.alwaysSample` 设置为 true。
+
+2. 如果要查看在 Eureka 服务器、配置服务器和用户应用之间发送的跟踪跨越，请将设置 `management.tracing.egressIgnorePattern` 为 "/api/v2/spans |/v2/apps/. */permissions |/eureka/.* |/oauth/.*".
+
+例如， *上的appsettings.js* 将包括以下属性：
+ 
+```json
+"management": {
+    "tracing": {
+      "alwaysSample": true,
+      "egressIgnorePattern": "/api/v2/spans|/v2/apps/.*/permissions|/eureka/.*|/oauth/.*"
+    }
+  }
+```
+
+有关 .NET Core Steeltoe apps 中的分布式跟踪的详细信息，请参阅 Steeltoe 文档中的 [分布式跟踪](https://steeltoe.io/docs/3/tracing/distributed-tracing) 。
+::: zone-end
+::: zone pivot="programming-language-java"
+在本文中，学习如何：
 
 > [!div class="checklist"]
 > * 在 Azure 门户中启用分布式跟踪。
@@ -28,8 +105,8 @@ ms.locfileid: "87037013"
 
 ## <a name="prerequisites"></a>先决条件
 
-若要完成这些过程，需要一个已预配且正在运行的 Azure Spring Cloud 服务。 完成[有关如何通过 Azure CLI 来部署应用的快速入门](spring-cloud-quickstart-launch-app-cli.md)，了解如何预配并运行 Azure Spring Cloud 服务。
-    
+若要完成这些过程，需要一个已预配且正在运行的 Azure Spring Cloud 服务。 完成 [部署第一个 Azure 春季 cloud 应用程序](spring-cloud-quickstart.md) 快速入门，预配和运行 Azure 春季云服务。
+
 ## <a name="add-dependencies"></a>添加依赖项
 
 1. 将以下行添加到 application.properties 文件：
@@ -73,6 +150,7 @@ spring.sleuth.sampler.probability=0.5
 ```
 
 如果已生成并部署应用程序，则可修改采样率。 为此，可在 Azure CLI 或 Azure 门户中添加上一行作为环境变量。
+::: zone-end
 
 ## <a name="enable-application-insights"></a>启用 Application Insights
 
@@ -85,15 +163,15 @@ spring.sleuth.sampler.probability=0.5
 
 ## <a name="view-the-application-map"></a>查看应用程序映射
 
-返回到“分布式跟踪”页面，选择“查看应用程序映射”。  查看应用程序和监视设置的视觉表现形式。 若要了解如何使用应用程序，请参阅[应用程序映射：会审分布式应用程序](https://docs.microsoft.com/azure/azure-monitor/app/app-map)。
+返回到“分布式跟踪”页面，选择“查看应用程序映射”。  查看应用程序和监视设置的视觉表现形式。 若要了解如何使用应用程序，请参阅[应用程序映射：会审分布式应用程序](../azure-monitor/app/app-map.md)。
 
 ## <a name="use-search"></a>使用搜索
 
-使用搜索函数查询其他特定的遥测项。 在“分布式跟踪”页面上，选择“搜索”。  有关如何使用搜索函数的详细信息，请参阅[在 Application Insights 中使用搜索](https://docs.microsoft.com/azure/azure-monitor/app/diagnostic-search)。
+使用搜索函数查询其他特定的遥测项。 在“分布式跟踪”页面上，选择“搜索”。  有关如何使用搜索函数的详细信息，请参阅[在 Application Insights 中使用搜索](../azure-monitor/app/diagnostic-search.md)。
 
 ## <a name="use-application-insights"></a>使用 Application Insights
 
-除了应用程序映射和搜索功能，Application Insights 还提供监视功能。 在 Azure 门户中搜索应用程序的名称，然后打开 Application Insights 页面来查找监视信息。 有关如何使用这些工具的更多指南，请查看 [Azure Monitor 日志查询](https://docs.microsoft.com/azure/azure-monitor/log-query/query-language)。
+除了应用程序映射和搜索功能，Application Insights 还提供监视功能。 在 Azure 门户中搜索应用程序的名称，然后打开 Application Insights 页面来查找监视信息。 有关如何使用这些工具的更多指南，请查看 [Azure Monitor 日志查询](/azure/data-explorer/kusto/query/)。
 
 ## <a name="disable-application-insights"></a>禁用 Application Insights
 

@@ -5,15 +5,16 @@ author: yashesvi
 ms.reviewer: yashar
 tags: billing
 ms.service: cost-management-billing
+ms.subservice: reservations
 ms.topic: conceptual
-ms.date: 02/13/2020
+ms.date: 01/28/2021
 ms.author: banders
-ms.openlocfilehash: 3480f60b354de94f604dab1ea1f16d3b0ad59379
-ms.sourcegitcommit: 0947111b263015136bca0e6ec5a8c570b3f700ff
+ms.openlocfilehash: 464e129314a369c14dcc6bc6c16eadf5f8bcf01f
+ms.sourcegitcommit: d1e56036f3ecb79bfbdb2d6a84e6932ee6a0830e
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/24/2020
-ms.locfileid: "77199341"
+ms.lasthandoff: 01/29/2021
+ms.locfileid: "99052983"
 ---
 # <a name="software-costs-not-included-with-azure-reserved-vm-instances"></a>Azure 虚拟机预留实例未包含的软件成本
 
@@ -60,13 +61,13 @@ ms.locfileid: "77199341"
 
 ## <a name="get-rates-for-azure-meters"></a>获取 Azure 计量的费率
 
-可以通过 Azure RateCard API 来获取上述每个计量的成本。 有关如何获取 azure 计量的费率的信息，请参阅[获取 Azure 订阅中使用的资源的价格和元数据信息](/previous-versions/azure/reference/mt219004(v=azure.100))。
+可使用 Azure 零售价格 API 获取每个计量的成本。 若要了解如何获取 Azure 计量的费率，请参阅 [Azure 零售价格概述](/rest/api/cost-management/retail-prices/azure-retail-prices)。
 
 ## <a name="next-steps"></a>后续步骤
 若要详细了解 Azure 预留，请参阅以下文章：
 
 - [什么是 Azure 预留？](save-compute-costs-reservations.md)
-- [通过 Azure 虚拟机预留实例为虚拟机预付费](../../virtual-machines/windows/prepay-reserved-vm-instances.md)
+- [通过 Azure 虚拟机预留实例为虚拟机预付费](../../virtual-machines/prepay-reserved-vm-instances.md)
 - [管理 Azure 预留](manage-reserved-vm-instance.md)
 - [了解预留折扣的应用方式](../manage/understand-vm-reservation-charges.md)
 - [了解即用即付订阅的预留使用情况](understand-reserved-instance-usage.md)

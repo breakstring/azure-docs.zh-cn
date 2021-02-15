@@ -3,12 +3,12 @@ title: Azure 事件中心 - 将实时事件中的数据异常可视化
 description: 教程：将发送到 Microsoft Azure 事件中心的实时事件中的数据异常可视化
 ms.topic: tutorial
 ms.date: 06/23/2020
-ms.openlocfilehash: 595c0e06750171c844249a77ecef16c84dc8ada5
-ms.sourcegitcommit: 62717591c3ab871365a783b7221851758f4ec9a4
+ms.openlocfilehash: bd08d611761e125fdd03173ce6027c60e82baed6
+ms.sourcegitcommit: a0c1d0d0906585f5fdb2aaabe6f202acf2e22cfc
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/22/2020
-ms.locfileid: "85315613"
+ms.lasthandoff: 01/21/2021
+ms.locfileid: "98623453"
 ---
 # <a name="tutorial-visualize-data-anomalies-in-real-time-events-sent-to-azure-event-hubs"></a>教程：将发送到 Azure 事件中心的实时事件中的数据异常可视化
 
@@ -26,14 +26,12 @@ ms.locfileid: "85315613"
 
 需要一个 Azure 订阅才能完成此教程。 如果没有订阅，请在开始之前[创建一个免费帐户][]。
 
-## <a name="prerequisites"></a>先决条件
-
-[!INCLUDE [updated-for-az](../../includes/updated-for-az.md)]
-
-[!INCLUDE [cloud-shell-try-it.md](../../includes/cloud-shell-try-it.md)]
+[!INCLUDE [azure-cli-prepare-your-environment.md](../../includes/azure-cli-prepare-your-environment.md)]
 
 - 安装 [Visual Studio](https://www.visualstudio.com/)。 
 - 需要使用一个 Power BI 帐户来分析流分析作业的输出。 可以[免费试用 Power BI](https://app.powerbi.com/signupredirect?pbi_source=web)。
+
+[!INCLUDE [updated-for-az](../../includes/updated-for-az.md)]
 
 ## <a name="set-up-resources"></a>设置资源
 
@@ -308,7 +306,7 @@ Write-Host "Connection string is " $eventHubKey.PrimaryConnectionString
 
    ![指定数据集的屏幕截图。](./media/event-hubs-tutorial-visualize-anomalies/power-bi-dashboard-select-dataset.png)
 
-9. 选择“卡”作为可视化效果类型。  在“字段”下单击“添加值”，并选择“fraudulentuses”。   
+9. 选择“卡”作为可视化效果类型。  在“字段”下单击“添加值”，然后选择 `fraudulentuses`。
 
    ![指定可视化效果类型和字段的屏幕截图。](./media/event-hubs-tutorial-visualize-anomalies/power-bi-add-card-tile.png)
 
@@ -329,9 +327,9 @@ Write-Host "Connection string is " $eventHubKey.PrimaryConnectionString
 
 12. 在“可视化效果类型”下面，选择“折线图”。  
 
-13. 在“轴”下面，单击“添加值”并选择“windowend”。    
+13. 在“轴”下单击“添加值”，然后选择 `windowend`。 
 
-14. 在“值”下面，单击“添加值”并选择“fraudulentuses”。   
+14. 在“值”下单击“添加值”，然后选择 `fraudulentuses`。
 
 15. 在“要显示的时间窗口”下面，选择“过去 5 分钟”  。 单击“下一步”。 
 
@@ -351,7 +349,7 @@ Write-Host "Connection string is " $eventHubKey.PrimaryConnectionString
 
 ### <a name="clean-up-resources-using-azure-cli"></a>使用 Azure CLI 清理资源
 
-若要删除资源组，请使用 [az group delete](/cli/azure/group?view=azure-cli-latest#az-group-delete) 命令。
+若要删除资源组，请使用 [az group delete](/cli/azure/group#az-group-delete) 命令。
 
 ```azurecli-interactive
 az group delete --name $resourceGroup
@@ -378,6 +376,6 @@ Remove-AzResourceGroup -Name $resourceGroup
 请继续学习下一篇文章，以详细了解 Azure 事件中心。
 
 > [!div class="nextstepaction"]
-> [在 .NET Standard 中开始将消息发送到 Azure 事件中心](get-started-dotnet-standard-send-v2.md)
+> [在 .NET Standard 中开始将消息发送到 Azure 事件中心](event-hubs-dotnet-standard-getstarted-send.md)
 
 [创建一个免费帐户]: https://azure.microsoft.com/free/?ref=microsoft.com&utm_source=microsoft.com&utm_medium=docs&utm_campaign=visualstudio

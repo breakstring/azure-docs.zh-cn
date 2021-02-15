@@ -1,17 +1,17 @@
 ---
 title: 配置错误代码 - Azure 流分析
 description: 通过配置错误代码对 Azure 流分析进行故障排除。
-ms.author: mamccrea
-author: mamccrea
+ms.author: sidram
+author: sidramadoss
 ms.topic: troubleshooting
 ms.date: 05/07/2020
 ms.service: stream-analytics
-ms.openlocfilehash: de8eefd099f3691ae5e5eb5234ae8f76015dd68f
-ms.sourcegitcommit: e132633b9c3a53b3ead101ea2711570e60d67b83
+ms.openlocfilehash: 6137ceeb0d86b1531adab910175ddbc4722ef858
+ms.sourcegitcommit: 42a4d0e8fa84609bec0f6c241abe1c20036b9575
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/07/2020
-ms.locfileid: "86041109"
+ms.lasthandoff: 01/08/2021
+ms.locfileid: "98019510"
 ---
 # <a name="azure-stream-analytics-configuration-error-codes"></a>Azure 流分析配置错误代码
 
@@ -94,7 +94,7 @@ ms.locfileid: "86041109"
 ## <a name="sqldwoutputinvalidserviceedition"></a>SQLDWOutputInvalidServiceEdition
 
 * **原因**：不支持 SQL 数据库。
-* **建议**：使用 Synapse SQL 池。
+* **建议**：使用专用 SQL 池。
 
 ## <a name="next-steps"></a>后续步骤
 

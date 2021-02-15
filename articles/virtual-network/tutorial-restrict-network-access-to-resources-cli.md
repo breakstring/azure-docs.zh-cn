@@ -17,12 +17,12 @@ ms.workload: infrastructure-services
 ms.date: 03/14/2018
 ms.author: kumud
 ms.custom: devx-track-azurecli
-ms.openlocfilehash: 2be9b5e6fd489b331982d31693bf810d488d92b1
-ms.sourcegitcommit: 11e2521679415f05d3d2c4c49858940677c57900
+ms.openlocfilehash: 5c23259a9cb1f3c409ad437a1e91151b5f401129
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/31/2020
-ms.locfileid: "87484141"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98946295"
 ---
 # <a name="restrict-network-access-to-paas-resources-with-virtual-network-service-endpoints-using-the-azure-cli"></a>使用 Azure CLI 通过虚拟网络服务终结点限制对 PaaS 资源的网络访问
 
@@ -35,11 +35,11 @@ ms.locfileid: "87484141"
 * 确认从某个子网对资源的访问
 * 确认已拒绝从某个子网和 Internet 来访问资源
 
-如果没有 Azure 订阅，请在开始之前创建一个[免费帐户](https://azure.microsoft.com/free/?WT.mc_id=A261C142F)。
+[!INCLUDE [quickstarts-free-trial-note](../../includes/quickstarts-free-trial-note.md)]
 
-[!INCLUDE [cloud-shell-try-it.md](../../includes/cloud-shell-try-it.md)]
+[!INCLUDE [azure-cli-prepare-your-environment.md](../../includes/azure-cli-prepare-your-environment.md)]
 
-如果选择在本地安装并使用 CLI，本快速入门要求运行 Azure CLI 2.0.28 或更高版本。 若要查找版本，请运行 `az --version`。 如果需要进行安装或升级，请参阅[安装 Azure CLI]( /cli/azure/install-azure-cli)。 
+- 本文需要 Azure CLI 2.0.28 或更高版本。 如果使用 Azure Cloud Shell，则最新版本已安装。
 
 ## <a name="create-a-virtual-network"></a>创建虚拟网络
 
@@ -120,7 +120,7 @@ az network nsg rule create \
   --destination-port-range "*"
 ```
 
-每个网络安全组包含多个[默认安全规则](security-overview.md#default-security-rules)。 以下规则将替代允许对所有公共 IP 地址进行出站访问的默认安全规则。 `destination-address-prefix "Internet"` 选项拒绝对所有公共 IP 地址进行出站访问。 上一个规则将替代此规则，因为它的优先级更高，上一个规则允许对 Azure 存储的公共 IP 地址进行访问。
+每个网络安全组包含多个[默认安全规则](./network-security-groups-overview.md#default-security-rules)。 以下规则将替代允许对所有公共 IP 地址进行出站访问的默认安全规则。 `destination-address-prefix "Internet"` 选项拒绝对所有公共 IP 地址进行出站访问。 上一个规则将替代此规则，因为它的优先级更高，上一个规则允许对 Azure 存储的公共 IP 地址进行访问。
 
 ```azurecli-interactive
 az network nsg rule create \
@@ -326,7 +326,7 @@ sudo mount --types cifs //storage-account-name>.file.core.windows.net/my-file-sh
 
 退出与 *myVmPublic* VM 建立的 SSH 会话。
 
-从计算机中，尝试使用 [az storage share list](/cli/azure/storage/share?view=azure-cli-latest) 查看存储帐户中的共享。 将 `<account-name>` 和 `<account-key>` 替换为在[创建存储帐户](#create-a-storage-account)中获得的存储帐户名称和密钥：
+从计算机中，尝试使用 [az storage share list](/cli/azure/storage/share) 查看存储帐户中的共享。 将 `<account-name>` 和 `<account-key>` 替换为在[创建存储帐户](#create-a-storage-account)中获得的存储帐户名称和密钥：
 
 ```azurecli-interactive
 az storage share list \

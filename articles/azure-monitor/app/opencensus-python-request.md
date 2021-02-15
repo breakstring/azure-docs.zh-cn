@@ -6,12 +6,12 @@ author: lzchen
 ms.author: lechen
 ms.date: 10/15/2019
 ms.custom: devx-track-python
-ms.openlocfilehash: c94bc949f13ee19a9d2150c9d3c1b6a2bdb959b2
-ms.sourcegitcommit: 7fe8df79526a0067be4651ce6fa96fa9d4f21355
+ms.openlocfilehash: 4abb795335bfcb2c9b335d4fb09ddc9fdb2476b4
+ms.sourcegitcommit: 4d48a54d0a3f772c01171719a9b80ee9c41c0c5d
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/06/2020
-ms.locfileid: "87850060"
+ms.lasthandoff: 01/24/2021
+ms.locfileid: "98746571"
 ---
 # <a name="track-incoming-requests-with-opencensus-python"></a>使用 OpenCensus Python 跟踪传入请求
 
@@ -33,7 +33,7 @@ ms.locfileid: "87850060"
     )
     ```
 
-3. 确保 AzureExporter 已在 `settings.py` 中的 `OPENCENSUS` 下正确配置。 对于来自不想跟踪的 URL 的请求，请将其添加到 `BLACKLIST_PATHS` 中。
+3. 确保 AzureExporter 已在 `settings.py` 中的 `OPENCENSUS` 下正确配置。 对于来自不想跟踪的 URL 的请求，请将其添加到 `EXCLUDELIST_PATHS` 中。
 
     ```python
     OPENCENSUS = {
@@ -42,7 +42,7 @@ ms.locfileid: "87850060"
             'EXPORTER': '''opencensus.ext.azure.trace_exporter.AzureExporter(
                 connection_string="InstrumentationKey=<your-ikey-here>"
             )''',
-            'BLACKLIST_PATHS': ['https://example.com'],  <--- These sites will not be traced if a request is sent to it.
+            'EXCLUDELIST_PATHS': ['https://example.com'],  <--- These sites will not be traced if a request is sent to it.
         }
     }
     ```
@@ -74,7 +74,7 @@ ms.locfileid: "87850060"
     
     ```
 
-2. 你也可通过 `app.config` 配置 `flask` 应用程序。 对于来自不想跟踪的 URL 的请求，请将其添加到 `BLACKLIST_PATHS` 中。
+2. 你也可通过 `app.config` 配置 `flask` 应用程序。 对于来自不想跟踪的 URL 的请求，请将其添加到 `EXCLUDELIST_PATHS` 中。
 
     ```python
     app.config['OPENCENSUS'] = {
@@ -83,7 +83,7 @@ ms.locfileid: "87850060"
             'EXPORTER': '''opencensus.ext.azure.trace_exporter.AzureExporter(
                 connection_string="InstrumentationKey=<your-ikey-here>",
             )''',
-            'BLACKLIST_PATHS': ['https://example.com'],  <--- These sites will not be traced if a request is sent to it.
+            'EXCLUDELIST_PATHS': ['https://example.com'],  <--- These sites will not be traced if a request is sent to it.
         }
     }
     ```
@@ -100,7 +100,7 @@ ms.locfileid: "87850060"
                          '.pyramid_middleware.OpenCensusTweenFactory')
     ```
 
-2. 可以直接在代码中配置 `pyramid` 中间件。 对于来自不想跟踪的 URL 的请求，请将其添加到 `BLACKLIST_PATHS` 中。
+2. 可以直接在代码中配置 `pyramid` 中间件。 对于来自不想跟踪的 URL 的请求，请将其添加到 `EXCLUDELIST_PATHS` 中。
 
     ```python
     settings = {
@@ -110,11 +110,66 @@ ms.locfileid: "87850060"
                 'EXPORTER': '''opencensus.ext.azure.trace_exporter.AzureExporter(
                     connection_string="InstrumentationKey=<your-ikey-here>",
                 )''',
-                'BLACKLIST_PATHS': ['https://example.com'],  <--- These sites will not be traced if a request is sent to it.
+                'EXCLUDELIST_PATHS': ['https://example.com'],  <--- These sites will not be traced if a request is sent to it.
             }
         }
     }
     config = Configurator(settings=settings)
+    ```
+
+## <a name="tracking-fastapi-applications"></a>跟踪 FastAPI 应用程序
+
+OpenCensus 没有 FastAPI 的扩展。 若要编写自己的 FastAPI 中间件，请完成以下步骤：
+
+1. 需要以下依赖项： 
+    - [fastapi](https://pypi.org/project/fastapi/)
+    - [uvicorn](https://pypi.org/project/uvicorn/)
+
+2. 添加 [FastAPI 中间件](https://fastapi.tiangolo.com/tutorial/middleware/)。 确保设置了 span 类型服务器：`span.span_kind = SpanKind.SERVER`。
+
+3. 运行应用程序。 应自动跟踪对 FastAPI 应用程序的调用，遥测应直接记录到 Azure Monitor。
+
+    ```python 
+    # Opencensus imports
+    from opencensus.ext.azure.trace_exporter import AzureExporter
+    from opencensus.trace.samplers import ProbabilitySampler
+    from opencensus.trace.tracer import Tracer
+    from opencensus.trace.span import SpanKind
+    from opencensus.trace.attributes_helper import COMMON_ATTRIBUTES
+    # FastAPI imports
+    from fastapi import FastAPI, Request
+    # uvicorn
+    import uvicorn
+
+    app = FastAPI()
+
+    HTTP_URL = COMMON_ATTRIBUTES['HTTP_URL']
+    HTTP_STATUS_CODE = COMMON_ATTRIBUTES['HTTP_STATUS_CODE']
+
+    # fastapi middleware for opencensus
+    @app.middleware("http")
+    async def middlewareOpencensus(request: Request, call_next):
+        tracer = Tracer(exporter=AzureExporter(connection_string=f'InstrumentationKey={APPINSIGHTS_INSTRUMENTATIONKEY}'),sampler=ProbabilitySampler(1.0))
+        with tracer.span("main") as span:
+            span.span_kind = SpanKind.SERVER
+
+            response = await call_next(request)
+
+            tracer.add_attribute_to_current_span(
+                attribute_key=HTTP_STATUS_CODE,
+                attribute_value=response.status_code)
+            tracer.add_attribute_to_current_span(
+                attribute_key=HTTP_URL,
+                attribute_value=str(request.url))
+
+        return response
+
+    @app.get("/")
+    async def root():
+        return "Hello World!"
+
+    if __name__ == '__main__':
+        uvicorn.run("example:app", host="127.0.0.1", port=5000, log_level="info")
     ```
 
 ## <a name="next-steps"></a>后续步骤

@@ -2,19 +2,19 @@
 title: 清除标记和清单
 description: 使用清除命令根据年龄和标记筛选器从 Azure 容器注册表中删除多个标记和清单，并选择性地安排清除操作计划。
 ms.topic: article
-ms.date: 05/14/2020
-ms.openlocfilehash: ab6794648babd2bd491ded5788455b75c10d675a
-ms.sourcegitcommit: fdec8e8bdbddcce5b7a0c4ffc6842154220c8b90
+ms.date: 01/27/2021
+ms.openlocfilehash: 11750965ac563d1d5b7ad5ac7b52cf996e791e56
+ms.sourcegitcommit: 4e70fd4028ff44a676f698229cb6a3d555439014
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 05/19/2020
-ms.locfileid: "83652641"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98954032"
 ---
 # <a name="automatically-purge-images-from-an-azure-container-registry"></a>自动清除 Azure 容器注册表中的映像
 
 在开发工作流中使用 Azure 容器注册表时，注册表中可能很快会填满在一小段时间后不需要的映像或其他项目。 你可能会想删除早于某一特定持续时间或与指定名称筛选器匹配的所有标记。 为帮助你快速删除多个项目，本文介绍了 `acr purge` 命令，可以将其作为按需或[计划的](container-registry-tasks-scheduled.md) ACR 任务来运行。 
 
-`acr purge` 命令当前在公共容器映像 (`mcr.microsoft.com/acr/acr-cli:0.2`) 中分发，该映像通过 GitHub 中 [acr-cli](https://github.com/Azure/acr-cli) 存储库中的源代码生成。
+`acr purge` 命令当前在公共容器映像 (`mcr.microsoft.com/acr/acr-cli:0.3`) 中分发，该映像通过 GitHub 中 [acr-cli](https://github.com/Azure/acr-cli) 存储库中的源代码生成。
 
 可以使用 Azure Cloud Shell 或 Azure CLI 的本地安装来运行本文中的 ACR 任务示例。 如果想要在本地使用它，则需要使用 2.0.76 版或更高版本。 运行 `az --version` 即可查找版本。 如果需要进行安装或升级，请参阅[安装 Azure CLI][azure-cli-install]。 
 
@@ -44,6 +44,7 @@ ms.locfileid: "83652641"
 
 * `--untagged` - 指定删除没有相关标记的清单（未标记的清单）。
 * `--dry-run` - 指定不删除任何数据，但其输出与在没有此标志的情况下运行此命令时的输出相同。 此参数有助于测试清除命令，确保它不会无意中删除要保留的数据。
+* `--keep` - 指定保留最新的 x 个待删除标记。
 
 对于其他参数，请运行 `acr purge --help`。 
 

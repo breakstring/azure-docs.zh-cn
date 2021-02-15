@@ -4,20 +4,19 @@ description: 了解如何使用 IoT Central 中的结账应用程序模板构建
 author: avneets
 ms.author: avneets
 ms.date: 10/13/2019
-ms.topic: overview
+ms.topic: conceptual
 ms.service: iot-central
 ms.subservice: iot-central-retail
 services: iot-central
 manager: eliotgra
-ms.openlocfilehash: f1f83fdd73816e6e30c5cac7d193719591bb8dc1
-ms.sourcegitcommit: 58faa9fcbd62f3ac37ff0a65ab9357a01051a64f
+ms.openlocfilehash: 972ab8eaaf7c0b9fe8beb446d74bc8d2e89bbc55
+ms.sourcegitcommit: d1b0cf715a34dd9d89d3b72bb71815d5202d5b3a
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/29/2020
-ms.locfileid: "80999026"
+ms.lasthandoff: 02/08/2021
+ms.locfileid: "99832192"
 ---
 # <a name="in-store-analytics-architecture"></a>店内分析体系结构
-
 
 
 店内分析解决方案使你能够监视零售商店环境中的各种情况。 可以使用 IoT Central 中的某个应用程序模板和下面的体系结构作为指导来构建这些解决方案。

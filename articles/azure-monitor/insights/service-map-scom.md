@@ -6,12 +6,12 @@ ms.topic: conceptual
 author: bwren
 ms.author: bwren
 ms.date: 07/12/2019
-ms.openlocfilehash: 049c30613c358bf22616eaa2042a7fd6e42b9f61
-ms.sourcegitcommit: a76ff927bd57d2fcc122fa36f7cb21eb22154cfa
+ms.openlocfilehash: 288e3f0c048bddb3f3378226889dc519de27764b
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/28/2020
-ms.locfileid: "87326029"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98927889"
 ---
 # <a name="integrate-system-center-operations-manager-with-azure-monitor-for-vms-map-feature"></a>将 System Center Operations Manager 与用于 VM 的 Azure Monitor 的映射功能集成
 
@@ -73,11 +73,11 @@ ms.locfileid: "87326029"
 
 6. 可选：选择要与 Log Analytics 通信的所有管理服务器资源池，然后单击“添加工作区”。
 
-    ![Operations Manager 配置资源池](media/service-map-scom/scom-config-pool.png)
+    ![已选择 "所有管理服务器" 资源池的 "添加 Microsoft Operations Management Suite" 工作区中的 "服务器池" 屏幕屏幕截图。](media/service-map-scom/scom-config-pool.png)
 
     配置和注册 Log Analytics 工作区可能需要一分钟时间。 完成配置后，Operations Manager 将启动首次映射同步。
 
-    ![Operations Manager 配置资源池](media/service-map-scom/scom-config-success.png)
+    ![用于确认是否已添加工作区的 "添加 Microsoft Operations Management Suite" 工作区中的完成屏幕屏幕截图。](media/service-map-scom/scom-config-success.png)
 
 ## <a name="monitor-integration"></a>监视集成
 
@@ -98,11 +98,11 @@ ms.locfileid: "87326029"
 
 * **计算机组依赖项视图**：列出从映射功能同步的所有计算机组。 可以单击任意组来查看其分布式应用程序关系图。
 
-    ![Operations Manager 分布式应用程序关系图](media/service-map-scom/scom-group-dad.png)
+    ![服务映射中的屏幕截图显示一个图表，其中包含每个计算机组的图像，以及指示它们之间的依赖关系的行。](media/service-map-scom/scom-group-dad.png)
 
 * **服务器依赖项视图**：列出从映射功能同步的所有服务器。 可以单击任一服务器来查看其分布式应用程序关系图。
 
-    ![Operations Manager 分布式应用程序关系图](media/service-map-scom/scom-dad.png)
+    ![服务映射中的屏幕截图显示一个图表，其中包含每个服务器的图像，以及指示它们之间的依赖关系的行。](media/service-map-scom/scom-dad.png)
 
 ## <a name="edit-or-delete-the-workspace"></a>编辑或删除工作区
 
@@ -139,7 +139,7 @@ ms.locfileid: "87326029"
 有关创建服务主体的 Azure 正式文档，请参阅：
 
 * [使用 PowerShell 创建服务主体](../../active-directory/develop/howto-authenticate-service-principal-powershell.md)
-* [使用 Azure CLI 创建服务主体](/cli/azure/create-an-azure-service-principal-azure-cli?view=azure-cli-latest)
+* [使用 Azure CLI 创建服务主体](/cli/azure/create-an-azure-service-principal-azure-cli)
 * [使用 Azure 门户创建服务主体](../../active-directory/develop/howto-create-service-principal-portal.md)
 
 ### <a name="suggestions"></a>建议

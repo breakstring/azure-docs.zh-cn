@@ -15,25 +15,39 @@ ms.tgt_pltfrm: na
 ms.workload: na
 ms.date: 02/03/2018
 ms.author: apimpm
-ms.openlocfilehash: 7ef1c09b12d3c7e365f090391aa3fa8afa03749b
-ms.sourcegitcommit: 4913da04fd0f3cf7710ec08d0c1867b62c2effe7
+ms.openlocfilehash: 36b21196207f65975dae950f43ec0c7094991dad
+ms.sourcegitcommit: d4734bc680ea221ea80fdea67859d6d32241aefc
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/14/2020
-ms.locfileid: "88213992"
+ms.lasthandoff: 02/14/2021
+ms.locfileid: "100362023"
 ---
 # <a name="advanced-request-throttling-with-azure-api-management"></a>使用 Azure API 管理进行高级请求限制
 限制传入请求是 Azure API 管理的重要功能。 通过控制请求的速率或传输的请求/数据总量，API 管理让 API 提供程序能够保护其 API 不被滥用，为不同的 API 产品层创造价值。
 
+## <a name="rate-limits-and-quotas"></a>速率限制和配额
+速率限制和配额用于不同目的。
+
+### <a name="rate-limits"></a>速率限制
+速率限制通常用于防止短暂而密集的数据量突发。 例如，如果你知道后端服务的数据库在调用量大的情况下存在瓶颈，则可使用此设置将 `rate-limit-by-key` 策略设置为不允许大调用量。
+
+### <a name="quotas"></a>配额
+配额通常用于控制较长一段时间的调用率。 例如，可以设置特定订阅者在给定月份内能够发出的调用总数。 为了通过 API 获利，还可以为基于层级的订阅设置不同的配额。 例如，基本层订阅每月最多可以进行 10,000 次调用，而高级层订阅每月最多可以进行 100,000,000 次调用。
+
+在 Azure API 管理中，速率限制在节点间的传播速度通常更快，以防出现峰值。 相对而言，使用配额信息会在较长的时间内使用，因此其实现有所不同。
+
+> [!CAUTION]
+> 由于限制体系结构的分布式性质，速率限制永远不可能完全准确。 允许的请求的配置数字和实际数字之间的差异因请求量和速度、后端延迟以及其他因素而异。
+
 ## <a name="product-based-throttling"></a>基于产品的限制
-到目前为止，速率限制功能局限于特定产品订阅的限定范围，在 Azure 门户中定义。 API 提供程序可以使用它将限制应用到注册使用其 API 的开发人员，但是，举例而言，它无法帮助限制 API 的每个最终用户。 想让开发人员的应用程序的单个用户使用整个配额，并让开发人员的其他客户无法使用应用程序，是有可能的。 此外，生成大量请求的多个客户可能限制临时用户的访问权限。
+作用域为特定订阅的速率限制功能适用于 API 提供程序对已注册使用其 API 的开发人员应用限制。 但这并不是一种帮助，例如，在限制单个 API 的最终用户的情况下。 开发人员的应用程序的单个用户可以使用整个配额，并使开发人员的其他客户无法使用该应用程序。 此外，生成大量请求的多个客户可能限制临时用户的访问权限。
 
 ## <a name="custom-key-based-throttling"></a>基于自定义密钥的限制
 
 > [!NOTE]
-> `rate-limit-by-key` `quota-by-key` 当在 Azure API 管理的消耗层中时，和策略不可用。 
+> `rate-limit-by-key` 和 `quota-by-key` 策略在 Azure API 管理的消耗层中不可用。 
 
-新的[基于密钥的速率限制](./api-management-access-restriction-policies.md#LimitCallRateByKey)和[基于密钥的配额](./api-management-access-restriction-policies.md#SetUsageQuotaByKey)策略提供更灵活的流量控制解决方案。 使用这些新策略可以定义表达式，识别用于跟踪流量使用的密钥。 最好是举一个例子来演示其工作原理。 
+" [速率限制](./api-management-access-restriction-policies.md#LimitCallRateByKey) " 和 " [按密钥配额](./api-management-access-restriction-policies.md#SetUsageQuotaByKey) " 策略为流量控制提供更灵活的解决方案。 这些策略允许您定义表达式来识别用于跟踪流量使用情况的键。 最好是举一个例子来演示其工作原理。 
 
 ## <a name="ip-address-throttling"></a>IP 地址限制
 以下策略限制单个客户端 IP 地址每一分钟只有 10 个调用，等于每个月总数为 1,000,000 个调用和 10,000 KB 带宽。 
@@ -63,7 +77,7 @@ ms.locfileid: "88213992"
 本示例展示了如何提取授权标头，将它转换为 `JWT` 对象，然后使用令牌的使用者来识别用户，并将它用作速率限制密钥。 如果用户标识作为声明之一存储在 `JWT` 中，可以改用该值。
 
 ## <a name="combined-policies"></a>组合策略
-尽管新限制策略比现有限制策略提供更大的控制度，但仍有组合两种功能的值。 基于产品订阅密钥的限制（[按订阅限制调用率](./api-management-access-restriction-policies.md#LimitCallRate)和[按订阅设置使用量配额](./api-management-access-restriction-policies.md#SetUsageQuota)）根据使用级别收费，是让 API 赚钱的最好方法。 更精细的按用户控制限制与其互补，防止一个用户的行为降低另一个用户的体验。 
+尽管基于用户的限制策略比基于订阅的限制策略提供更多控制，但仍存在同时组合这两种功能的价值。 基于产品订阅密钥的限制（[按订阅限制调用率](./api-management-access-restriction-policies.md#LimitCallRate)和[按订阅设置使用量配额](./api-management-access-restriction-policies.md#SetUsageQuota)）根据使用级别收费，是让 API 赚钱的最好方法。 更精细的按用户控制限制与其互补，防止一个用户的行为降低另一个用户的体验。 
 
 ## <a name="client-driven-throttling"></a>客户端驱动的限制
 使用[策略表达式](./api-management-policy-expressions.md)定义限制密钥时，API 提供程序将选择如何设置限制范围。 但是，开发人员可以控制自己客户的速率限制。 API 提供程序可以通过导入自定义标头来做到这一点，允许开发人员的客户端应用程序向 API 传递密钥。

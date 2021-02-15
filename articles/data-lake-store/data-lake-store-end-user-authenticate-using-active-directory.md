@@ -7,12 +7,12 @@ ms.topic: how-to
 ms.date: 05/29/2018
 ms.author: twooley
 ms.custom: has-adal-ref
-ms.openlocfilehash: ac585f1c215e5eb7ad5a6628ac85b70e7c76b14e
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: a5272f7d580a3f8a68afda9150a1e95c1807eba6
+ms.sourcegitcommit: ae6e7057a00d95ed7b828fc8846e3a6281859d40
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "85511301"
+ms.lasthandoff: 10/16/2020
+ms.locfileid: "92103775"
 ---
 # <a name="end-user-authentication-with-azure-data-lake-storage-gen1-using-azure-active-directory"></a>使用 Azure Active Directory 进行 Azure Data Lake Storage Gen1 最终身份验证
 > [!div class="op_single_selector"]
@@ -28,9 +28,9 @@ Azure Data Lake Storage Gen1 使用 Azure Active Directory 进行身份验证。
 
 这两个选项都会将 OAuth 2.0 令牌提供给应用程序，此令牌会附加到对 Data Lake Storage Gen1 或 Azure Data Lake Analytics 作出的每个请求。
 
-本文讨论如何创建 Azure AD 本机应用程序以进行最终用户身份验****。 有关服务到服务身份验证的 Azure AD 应用程序配置的说明，请参阅[使用 Azure Active Directory 进行 Data Lake Storage Gen1 服务到服务身份验证](data-lake-store-authenticate-using-active-directory.md)。
+本文讨论如何创建 Azure AD 本机应用程序以进行最终用户身份验****。 有关服务到服务身份验证的 Azure AD 应用程序配置的说明，请参阅[使用 Azure Active Directory 进行 Data Lake Storage Gen1 服务到服务身份验证](./data-lake-store-service-to-service-authenticate-using-active-directory.md)。
 
-## <a name="prerequisites"></a>先决条件
+## <a name="prerequisites"></a>必备条件
 * Azure 订阅。 请参阅[获取 Azure 免费试用版](https://azure.microsoft.com/pricing/free-trial/)。
 
 * 订阅 ID。 可从 Azure 门户进行检索。 例如，Data Lake Storage Gen1 帐户边栏选项卡中提供有此 ID。
@@ -97,17 +97,17 @@ Azure Data Lake Storage Gen1 使用 Azure Active Directory 进行身份验证。
 
 2. 在应用程序的“设置”边栏选项卡上，单击“所需权限”，并单击“添加”************。
 
-    ![客户端 ID](./media/data-lake-store-end-user-authenticate-using-active-directory/aad-end-user-auth-set-permission-1.png)
+    !["设置" 边栏选项卡的屏幕截图，其中包含 "重定向" U R I 选项和 "重定向 U r i" 边栏选项卡，其中包含实际的 U R I I。](./media/data-lake-store-end-user-authenticate-using-active-directory/aad-end-user-auth-set-permission-1.png)
 
 3. 在“添加 API 访问”边栏选项卡上，依次单击“选择 API”、“Azure Data Lake”和“选择”****************。
 
-    ![客户端 ID](./media/data-lake-store-end-user-authenticate-using-active-directory/aad-end-user-auth-set-permission-2.png)
+    !["添加 API 访问" 边栏选项卡的屏幕截图，其中包含 "选择一个 API" 选项和 "Azure Data Lake" 选项的 "选择 API" 边栏选项卡和 "选择" 选项（称为 out）。](./media/data-lake-store-end-user-authenticate-using-active-directory/aad-end-user-auth-set-permission-2.png)
 
 4.  在“添加 API 访问”边栏选项卡上，单击“选择权限”，选中复选框以给予“Data Lake Store 的完全访问权限”，并单击“选择”****************。
 
-    ![客户端 ID](./media/data-lake-store-end-user-authenticate-using-active-directory/aad-end-user-auth-set-permission-3.png)
+    !["添加 API 访问" 边栏选项卡的屏幕截图，其中包含 "选择权限" 选项，并具有 "对 Azure Data Lake 服务进行完全访问" 选项和 "选择" 选项。](./media/data-lake-store-end-user-authenticate-using-active-directory/aad-end-user-auth-set-permission-3.png)
 
-    单击“完成”。
+    单击“完成”  。
 
 5. 重复最后两步，同时为 Windows Azure 服务管理 API 授予权限****。
 

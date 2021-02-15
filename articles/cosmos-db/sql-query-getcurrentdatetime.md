@@ -1,20 +1,22 @@
 ---
 title: Azure Cosmos DB 查询语言中的 GetCurrentDateTime
 description: 了解 Azure Cosmos DB 中的 SQL 系统函数 GetCurrentDateTime。
-author: ginamr
+author: timsander1
 ms.service: cosmos-db
+ms.subservice: cosmosdb-sql
 ms.topic: conceptual
-ms.date: 08/18/2020
-ms.author: girobins
+ms.date: 02/03/2021
+ms.author: tisande
 ms.custom: query-reference
-ms.openlocfilehash: ec0b8ccaceed4abe3dd2784463f507f3bc76d890
-ms.sourcegitcommit: d661149f8db075800242bef070ea30f82448981e
+ms.openlocfilehash: b48237b5a7eb836c495612758eeb9eaa45029b26
+ms.sourcegitcommit: ea822acf5b7141d26a3776d7ed59630bf7ac9532
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/19/2020
-ms.locfileid: "88606965"
+ms.lasthandoff: 02/03/2021
+ms.locfileid: "99526579"
 ---
 # <a name="getcurrentdatetime-azure-cosmos-db"></a>GetCurrentDateTime (Azure Cosmos DB)
+[!INCLUDE[appliesto-sql-api](includes/appliesto-sql-api.md)]
 
 以 ISO 8601 字符串形式返回当前 UTC（协调世界时）日期和时间。
   
@@ -28,7 +30,7 @@ GetCurrentDateTime ()
   
   以 `YYYY-MM-DDThh:mm:ss.fffffffZ` 格式返回当前 UTC 日期和时间 ISO 8601 字符串值，其中：
   
-  |格式|说明|
+  |格式|描述|
   |-|-|
   |YYYY|四位数的年份|
   |MM|两位数的月份（01 = 1 月，依此类推。）|
@@ -46,7 +48,8 @@ GetCurrentDateTime ()
 
 GetCurrentDateTime() 是非确定性的函数。 返回的结果为 UTC。 精度为 7 位，准确度为 100 纳秒。
 
-此系统函数不会使用索引。
+> [!NOTE]
+> 此系统函数不会使用索引。 如果需要将值与当前时间进行比较，请在执行查询之前获取当前时间，并在子句中使用该常量字符串值 `WHERE` 。
 
 ## <a name="examples"></a>示例
   

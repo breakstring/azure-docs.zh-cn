@@ -14,22 +14,26 @@ ms.devlang: na
 ms.topic: article
 ms.date: 04/01/2019
 ms.author: juliako
-ms.openlocfilehash: 143583cf11da7687ae99121a2893be1c54810add
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.custom: devx-track-csharp
+ms.openlocfilehash: 91ed9482903d66ffcf1283c4024f89fc461bab1b
+ms.sourcegitcommit: 77afc94755db65a3ec107640069067172f55da67
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87087341"
+ms.lasthandoff: 01/22/2021
+ms.locfileid: "98695063"
 ---
 # <a name="use-aes-128-dynamic-encryption-and-the-key-delivery-service"></a>使用 AES-128 动态加密和密钥传递服务
+
+[!INCLUDE [media services api v2 logo](./includes/v2-hr.md)]
+
 > [!div class="op_single_selector"]
 > * [.NET](media-services-protect-with-aes128.md)
-> * [Java](https://github.com/southworkscom/azure-sdk-for-media-services-java-samples)
+> * [Java](https://github.com/rnrneverdies/azure-sdk-for-media-services-java-samples)
 > * [PHP](https://github.com/Azure/azure-sdk-for-php/tree/master/examples/MediaServices)
 >  
 
 > [!NOTE]
-> 不会向媒体服务 v2 添加任何新特性或新功能。 <br/>查看最新版本：[媒体服务 v3](../latest/index.yml)。 另请参阅[从 v2 到 v3 的迁移指南](../latest/migrate-from-v2-to-v3.md)
+> 不会向媒体服务 v2 添加任何新特性或新功能。 <br/>查看最新版本：[媒体服务 v3](../latest/index.yml)。 另请参阅[从 v2 到 v3 的迁移指南](../latest/migrate-v-2-v-3-migration-introduction.md)
 
 借助媒体服务，可以传送使用 AES 加密的 HTTP Live Streaming (HLS) 和平滑流（使用 128 位加密密钥）。 媒体服务还提供密钥传送服务，将加密密钥传送给已授权的用户。 如果需要媒体服务来加密资产，则需要将加密密钥与资产相关联，并配置密钥的授权策略。 当播放器请求流时，媒体服务将使用指定的密钥通过 AES 加密来动态加密内容。 为了解密流，播放器将从密钥传送服务请求密钥。 为了确定用户是否被授权获取密钥，服务将评估你为密钥指定的授权策略。
 
@@ -55,15 +59,15 @@ ms.locfileid: "87087341"
 
 4. [配置内容密钥的授权策略](media-services-protect-with-aes128.md#configure_key_auth_policy)。 必须配置内容密钥授权策略。 客户端必须符合该策略才能将内容密钥传送到客户端。
 
-5. [为资产配置传送策略](media-services-protect-with-aes128.md#configure_asset_delivery_policy)。 传送策略配置包括密钥获取 URL 和初始化矢量 (IV)。 （AES-128 需要相同的 IV 进行加密和解密。）此配置还包括传送协议（例如，MPEG-短线、HLS、平滑流式处理或全部）和动态加密类型（例如信封或无动态加密）。
+5. [为资产配置传送策略](media-services-protect-with-aes128.md#configure_asset_delivery_policy)。 传送策略配置包括密钥获取 URL 和初始化矢量 (IV)。  (AES-128 需要相同的 IV 进行加密和解密。 ) 配置还包括传递协议 (例如，MPEG-短线、HLS、平滑流式处理或所有) 和动态加密的类型 (例如，信封或无动态加密) 。
 
-    可以对同一资产上的不同协议应用不同的策略。 例如，可以将 PlayReady 加密应用到平滑流/DASH，将 AES 信封应用到 HLS。 将阻止流式处理传送策略中未定义的任何协议。 （例如，如果添加一个仅将 HLS 指定为协议的策略，则为。）如果根本没有定义任何资产传送策略，则例外。 此时，允许所有明文形式的协议。
+    可以对同一资产上的不同协议应用不同的策略。 例如，可以将 PlayReady 加密应用到平滑流/DASH，将 AES 信封应用到 HLS。 将阻止流式处理传送策略中未定义的任何协议。 例如，如果添加了一个仅将 HLS 指定为协议的策略，则 (。如果根本没有定义任何资产传送策略，则 ) 例外。 此时，允许所有明文形式的协议。
 
-6. [创建 OnDemand 定位符](media-services-protect-with-aes128.md#create_locator)以获取流式处理 URL。
+6. [创建 OnDemand 定位符](media-services-protect-with-aes128.md#create_locator) 以获取流 URL。
 
 本文还说明了[客户端应用程序如何从密钥传送服务请求密钥](media-services-protect-with-aes128.md#client_request)。
 
-可以在文章末尾找到完整的 [.NET 示例](media-services-protect-with-aes128.md#example)。
+可以在文章末尾找到完整的 [.net 示例](media-services-protect-with-aes128.md#example) 。
 
 下图演示了上述工作流。 在图中，使用令牌进行了身份验证。
 
@@ -94,7 +98,7 @@ ms.locfileid: "87087341"
 
 有关详细信息，请参阅[创建内容密钥](media-services-dotnet-create-contentkey.md)。
 
-## <a name="configure-the-content-keys-authorization-policy"></a><a id="configure_key_auth_policy"></a>配置内容密钥的授权策略
+## <a name="configure-the-content-keys-authorization-policy"></a><a id="configure_key_auth_policy"></a>配置内容密钥授权策略
 媒体服务支持通过多种方式对发出密钥请求的用户进行身份验证。 必须配置内容密钥授权策略。 客户端（播放器）必须符合该策略才能将密钥传送到客户端。 内容密钥授权策略可能受到一种或多种授权限制：开放、令牌限制或 IP 限制。
 
 有关详细信息，请参阅[配置内容密钥授权策略](media-services-dotnet-configure-content-key-auth-policy.md)。
@@ -159,7 +163,7 @@ ms.locfileid: "87087341"
 
 对于 HLS，根清单将划分成段文件。 
 
-例如，根清单是： http： \/ /test001.origin.mediaservices.windows.net/8bfe7d6f-34e3-4d1a-b289-3e48a8762490/BigBuckBunny.ism/manifest （format = m3u8-aapl-v3-流式处理 m3u8-aapl-v3）。 它包含段文件名的列表。
+例如，根清单是： http： \/ /test001.origin.mediaservices.windows.net/8bfe7d6f-34e3-4d1a-b289-3e48a8762490/BigBuckBunny.ism/manifest (format = m3u8-aapl-v3-流式处理 m3u8-aapl-v3) 。 它包含段文件名的列表。
 
 ```text
 . . . 
@@ -170,7 +174,7 @@ QualityLevels(842459)/Manifest(video,format=m3u8-aapl)
 …
 ```
 
-如果在文本编辑器中打开某个段文件（例如，http： \/ /test001.origin.mediaservices.windows.net/8bfe7d6f-34e3-4d1a-b289-3e48a8762490/BigBuckBunny.ism/QualityLevels （514369）/Manifest （视频，格式 = m3u8-aapl-v3-流式处理 m3u8-aapl-v3），则它将包含 #EXT X 键，这表示该文件已加密。
+如果在文本编辑器中打开某个段文件 (例如，http： \/ /test001.origin.mediaservices.windows.net/8bfe7d6f-34e3-4d1a-b289-3e48a8762490/BigBuckBunny.ism/QualityLevels (514369) /Manifest (视频，格式 = m3u8-aapl-v3-流式处理 m3u8-aapl-v3) ，则它包含 #EXT X 键，这表示该文件已加密。
 
 ```text
 #EXTM3U

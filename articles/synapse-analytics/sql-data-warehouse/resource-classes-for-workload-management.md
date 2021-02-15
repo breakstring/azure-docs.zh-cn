@@ -11,12 +11,12 @@ ms.date: 02/04/2020
 ms.author: rortloff
 ms.reviewer: jrasnick
 ms.custom: azure-synapse
-ms.openlocfilehash: 1dc9c39192dc478a4ffeba64983a498191417ed4
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 7714ce748eb172565357723924ab2212e9559e1f
+ms.sourcegitcommit: b39cf769ce8e2eb7ea74cfdac6759a17a048b331
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "85213578"
+ms.lasthandoff: 01/22/2021
+ms.locfileid: "98685321"
 ---
 # <a name="workload-management-with-resource-classes-in-azure-synapse-analytics"></a>使用 Azure Synapse Analytics 中的资源类管理工作负载
 
@@ -133,7 +133,7 @@ ms.locfileid: "85213578"
 - DBCC
 
 <!--
-Removed as these two are not confirmed / supported under SQL DW
+Removed as these two are not confirmed / supported under Azure Synapse Analytics
 - CREATE REMOTE TABLE AS SELECT
 - CREATE EXTERNAL TABLE AS SELECT
 - REDISTRIBUTE
@@ -162,13 +162,13 @@ WHERE  name LIKE '%rc%' AND type_desc = 'DATABASE_ROLE';
 
 资源类是通过将用户分配到数据库角色来实现的。 当用户运行查询时，该查询将使用该用户的资源类来运行。 例如，如果某个用户是 staticrc10 数据库角色的成员，则其查询将使用较小的内存量来运行。 如果某个数据库用户是 xlargerc 或 staticrc80 数据库角色的成员，则其查询将使用较大的内存量来运行。
 
-若要提高用户的资源类，请使用 [sp_addrolemember](/sql/relational-databases/system-stored-procedures/sp-addrolemember-transact-sql?toc=/azure/synapse-analytics/sql-data-warehouse/toc.json&bc=/azure/synapse-analytics/sql-data-warehouse/breadcrumb/toc.json&view=azure-sqldw-latest) 将用户添加到大型资源类的数据库角色。  以下代码将用户添加到 largerc 数据库角色。  每个请求获取 22% 的系统内存。
+若要提高用户的资源类，请使用 [sp_addrolemember](/sql/relational-databases/system-stored-procedures/sp-addrolemember-transact-sql?toc=/azure/synapse-analytics/sql-data-warehouse/toc.json&bc=/azure/synapse-analytics/sql-data-warehouse/breadcrumb/toc.json&view=azure-sqldw-latest&preserve-view=true) 将用户添加到大型资源类的数据库角色。  以下代码将用户添加到 largerc 数据库角色。  每个请求获取 22% 的系统内存。
 
 ```sql
 EXEC sp_addrolemember 'largerc', 'loaduser';
 ```
 
-若要降低资源类，可使用 [sp_droprolemember](/sql/relational-databases/system-stored-procedures/sp-droprolemember-transact-sql?toc=/azure/synapse-analytics/sql-data-warehouse/toc.json&bc=/azure/synapse-analytics/sql-data-warehouse/breadcrumb/toc.json&view=azure-sqldw-latest)。  如果“loaduser”不是成员或任何其他资源类，则会转到具有 3% 内存授予的默认 smallrc 资源类。  
+若要降低资源类，可使用 [sp_droprolemember](/sql/relational-databases/system-stored-procedures/sp-droprolemember-transact-sql?toc=/azure/synapse-analytics/sql-data-warehouse/toc.json&bc=/azure/synapse-analytics/sql-data-warehouse/breadcrumb/toc.json&view=azure-sqldw-latest&preserve-view=true)。  如果“loaduser”不是成员或任何其他资源类，则会转到具有 3% 内存授予的默认 smallrc 资源类。  
 
 ```sql
 EXEC sp_droprolemember 'largerc', 'loaduser';
@@ -273,7 +273,7 @@ GO
 -- Creating prc_workload_management_by_DWU.
 -------------------------------------------------------------------------------
 CREATE PROCEDURE dbo.prc_workload_management_by_DWU
-(@DWU VARCHAR(7),
+(@DWU VARCHAR(8),
  @SCHEMA_NAME VARCHAR(128),
  @TABLE_NAME VARCHAR(128)
 )

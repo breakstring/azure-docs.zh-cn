@@ -13,20 +13,20 @@ metadata:
   author: msmbaldwin
   ms.author: mbaldwin
   ms.date: 04/07/2020
-  ms.openlocfilehash: 549309a01602206b85a54b47df297735dfc5e709
-  ms.sourcegitcommit: 64ad2c8effa70506591b88abaa8836d64621e166
+  ms.openlocfilehash: cf53b3165863c6f22ce4c9a74d002eafd2dcc329
+  ms.sourcegitcommit: 400f473e8aa6301539179d4b320ffbe7dfae42fe
   ms.translationtype: HT
   ms.contentlocale: zh-CN
-  ms.lasthandoff: 08/17/2020
-  ms.locfileid: "88262596"
+  ms.lasthandoff: 10/28/2020
+  ms.locfileid: "92792338"
 highlightedContent:
   items:
   - title: Azure Key Vault 简介
     itemType: overview
     url: ./general/overview.md
-  - title: 对软删除的重要更改
+  - title: 服务的重要更新
     itemType: whats-new
-    url: ./general/soft-delete-change.md
+    url: ./general/whats-new.md
   - title: 身份验证
     itemType: overview
     url: ./general/authentication.md
@@ -89,6 +89,20 @@ conceptualContent:
     footerLink:
       url: ./secrets/index.yml
       text: 查看详细信息
+  - title: 托管 HSM（预览版）
+    links:
+    - url: ./managed-hsm/overview.md
+      itemType: overview
+      text: 什么是托管 HSM？
+    - url: ./managed-hsm/best-practices.md
+      itemType: overview
+      text: 最佳做法
+    - url: ./managed-hsm/quick-create-cli.md
+      itemType: quickstart
+      text: 预配和激活托管 HSM
+    footerLink:
+      text: 查看详细信息
+      url: ./managed-hsm/index.yml
   - title: 客户端库
     links:
     - url: ./general/client-libraries.md
@@ -139,7 +153,7 @@ conceptualContent:
       text: 将 Key Vault 与虚拟机规模集配合使用
   - title: Key Vault 集成
     links:
-    - url: https://docs.microsoft.com/azure/devops/pipelines/library/variable-groups?view=azure-devops&tabs=yaml#link-secrets-from-an-azure-key-vault
+    - url: /azure/devops/pipelines/library/variable-groups?tabs=yaml&view=azure-devops#link-secrets-from-an-azure-key-vault
       itemType: overview
       text: Azure Dev Ops - 在 Azure Pipelines 中引用 Key Vault 机密
     - url: ../app-service/app-service-key-vault-references.md
@@ -151,6 +165,6 @@ conceptualContent:
     - url: ../aks/developer-best-practices-pod-security.md#use-azure-key-vault-with-secrets-store-csi-driver
       itemType: overview
       text: Azure Kubernetes 服务 - 在 AKS 中使用 Key Vault 机密、证书和密钥
-    - url: https://docs.microsoft.com/azure/databricks/security/secrets/secret-scopes
+    - url: /azure/databricks/security/secrets/secret-scopes
       itemType: overview
       text: Azure Databricks - 使用 Key Vault 实现机密管理

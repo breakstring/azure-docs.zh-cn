@@ -1,38 +1,37 @@
 ---
-title: 什么是“翻译”？ - 翻译
+title: Microsoft Translator 服务
 titlesuffix: Azure Cognitive Services
 description: 将“翻译”集成到应用程序、网站、工具和其他解决方案中，提供多语言用户体验。
 services: cognitive-services
-author: swmachan
+author: laujan
 manager: nitinme
 ms.service: cognitive-services
 ms.subservice: translator-text
 ms.topic: overview
-ms.date: 05/26/2020
-ms.author: swmachan
-ms.custom: seodec18
-ms.openlocfilehash: 5da9e5b38b88a5a148bd3d85664daa523153086b
-ms.sourcegitcommit: 02ca0f340a44b7e18acca1351c8e81f3cca4a370
+ms.date: 09/11/2020
+ms.author: lajanuar
+ms.custom: cog-serv-seo-aug-2020
+keywords: translator, 文本翻译, 机器翻译, 翻译服务
+ms.openlocfilehash: 37f0d64879493abcf3e5b9448068b86b7a36dccb
+ms.sourcegitcommit: 100390fefd8f1c48173c51b71650c8ca1b26f711
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/19/2020
-ms.locfileid: "88589445"
+ms.lasthandoff: 01/27/2021
+ms.locfileid: "98896691"
 ---
-# <a name="what-is-the-translator"></a>什么是“翻译”？
+# <a name="what-is-the-translator-service"></a>什么是 Translator 服务？
 
-“翻译”可以轻松地集成到应用程序、网站、工具和解决方案中。 通过它，你可以添加[超过 70 种语言](languages.md)的多语言用户体验，并且可以在具有任何操作系统的任何硬件平台上将其应用于文本到文本语言翻译。
-
-“翻译”是云中机器学习和 AI 算法的 [Azure 认知服务](https://docs.microsoft.com/azure/?pivot=products&panel=ai) 集合的一部分，可随时在开发项目中使用。
+Translator 是一种基于云的机器翻译服务，是用于构建智能应用的 [Azure 认知服务](../../index.yml?panel=ai&pivot=products)系列认知 API 的一部分。 “翻译”可以轻松地集成到应用程序、网站、工具和解决方案中。 通过它，你可以添加[超过 70 种语言](./language-support.md)的多语言用户体验，并且可以在具有任何操作系统的任何硬件平台上将其应用于文本翻译。
 
 ## <a name="about-microsoft-translator"></a>关于 Microsoft Translator
 
-“翻译”是基于云的机器翻译服务。 核心服务是“翻译”，其为各种 Microsoft 产品和服务提供支持，并已在全球数千家企业的应用程序和工作流中使用，使他们的内容可传播到全球的受众。
+“翻译”为各种 Microsoft 产品和服务提供支持，并已在全球数千家企业的应用程序和工作流中使用，使其内容可传播到全球的受众。
 
-语音翻译由“翻译”提供支持，也通过 [Microsoft 语音服务](https://docs.microsoft.com/azure/cognitive-services/speech-service/)提供。 它将语音翻译 API 和自定义语音服务的功能组合成了一项统一的可完全自定义的服务。 语音服务将替换语音翻译 API，后者自 2019 年 10 月 15 日起停用。
+由 Translator 提供支持的语音翻译也可通过 [Azure 语音服务](../speech-service/index.yml)获取。 它将语音翻译 API 和自定义语音服务的功能组合成了一项统一的可完全自定义的服务。 
 
 ## <a name="language-support"></a>语言支持
 
-Microsoft Translator 为翻译、直译、语言检测和字典提供多语言支持。 请参阅[语言支持](language-support.md)以获取完整的列表，或者通过 [REST API](https://docs.microsoft.com/azure/cognitive-services/translator/reference/v3-0-languages) 以编程方式访问列表。  
+Translator 为文本翻译、音译、语言检测和字典提供多语言支持。 请参阅[语言支持](language-support.md)以获取完整的列表，或者通过 [REST API](./reference/v3-0-languages.md) 以编程方式访问列表。  
 
 ## <a name="microsoft-translator-neural-machine-translation"></a>Microsoft Translator 神经机器翻译
 
@@ -42,18 +41,19 @@ Microsoft Translator 为翻译、直译、语言检测和字典提供多语言�
 
 NMT 模型是该 API 的核心，对最终用户不可见。 唯一明显的区别是改进的翻译质量，尤其是针对中文、日语和阿拉伯语等语言。
 
-详细了解 [NMT 的工作原理](https://www.microsoft.com/en-us/translator/mt.aspx#nnt)
+详细了解 [NMT 的工作原理](https://www.microsoft.com/en-us/translator/mt.aspx#nnt)。
 
-## <a name="language-customization"></a>语言自定义
+## <a name="improve-translations-with-custom-translator"></a>通过自定义翻译器改进翻译
 
-自定义翻译器是核心 Microsoft Translator 服务的扩展，可以与“翻译”配合用于自定义神经翻译系统，并改进特定术语和样式的翻译。
+自定义翻译器是翻译服务的扩展，可以与“翻译”配合用于自定义神经翻译系统，并改进特定术语和样式的翻译。
 
 使用自定义翻译，可以构建翻译系统来处理自己的业务或行业中使用的术语。 然后，就可以使用类别参数通过常规的翻译将自定义翻译系统轻松集成到现有的应用程序、工作流和网站中，而且可以跨多种类型的设备。
 
-了解有关[语言自定义](customization.md)的详细信息
+详细了解[自定义翻译器](customization.md)。
 
 ## <a name="next-steps"></a>后续步骤
 
-- [注册](translator-text-how-to-signup.md)访问密钥。
-- [API 参考](https://docs.microsoft.com/azure/cognitive-services/Translator/reference/v3-0-reference)提供了 API 的技术文档。
+- [注册](./translator-how-to-signup.md)访问密钥。
+- 请试用[快速入门](quickstart-translator.md)以快速调用 Translator 服务。
+- [API 参考](./reference/v3-0-reference.md)提供了 API 的技术文档。
 - [定价详细信息](https://azure.microsoft.com/pricing/details/cognitive-services/translator-text-api/)

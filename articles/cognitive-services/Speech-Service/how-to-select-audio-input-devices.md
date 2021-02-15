@@ -10,13 +10,13 @@ ms.subservice: speech-service
 ms.topic: conceptual
 ms.date: 07/05/2019
 ms.author: chlandsi
-ms.custom: devx-track-javascript
-ms.openlocfilehash: 80671a40b5933a89962fa07b267d7e99e475657f
-ms.sourcegitcommit: 42107c62f721da8550621a4651b3ef6c68704cd3
+ms.custom: devx-track-js
+ms.openlocfilehash: 48316d571eac835dd5d4ec7d225048f4fdcdf237
+ms.sourcegitcommit: 10d00006fec1f4b69289ce18fdd0452c3458eca5
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/29/2020
-ms.locfileid: "87406684"
+ms.lasthandoff: 11/21/2020
+ms.locfileid: "95026601"
 ---
 # <a name="how-to-select-an-audio-input-device-with-the-speech-sdk"></a>如何：使用语音 SDK 选择音频输入设备
 
@@ -135,6 +135,10 @@ void ListEndpoints()
 
         // Print endpoint friendly name and endpoint ID.
         printf("Endpoint %d: \"%S\" (%S)\n", i, varName.pwszVal, pwszID);
+
+        CoTaskMemFree(pwszID);
+        pwszID = NULL;
+        PropVariantClear(&varName);
     }
 
 Exit:
@@ -388,5 +392,5 @@ iOS 不支持通过语音 SDK 来选择音频设备。 但是，使用 SDK 的�
 
 ## <a name="see-also"></a>另请参阅
 
-- [自定义声学模型](how-to-customize-acoustic-models.md)
-- [自定义语言模型](how-to-customize-language-model.md)
+- [自定义声学模型](./how-to-custom-speech-train-model.md)
+- [自定义语言模型](./how-to-custom-speech-train-model.md)

@@ -9,15 +9,15 @@ ms.service: active-directory
 ms.subservice: develop
 ms.topic: conceptual
 ms.workload: identity
-ms.date: 05/18/2020
+ms.date: 01/06/2021
 ms.author: jmprieur
 ms.custom: aaddev, devx-track-python
-ms.openlocfilehash: 300bc6acbe7821841b578dcc2166ecfc498ad750
-ms.sourcegitcommit: a2a7746c858eec0f7e93b50a1758a6278504977e
+ms.openlocfilehash: 4a244c543aa83ae84891e3f942995dc340a7209d
+ms.sourcegitcommit: 2817d7e0ab8d9354338d860de878dd6024e93c66
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/12/2020
-ms.locfileid: "88141289"
+ms.lasthandoff: 02/05/2021
+ms.locfileid: "99582649"
 ---
 # <a name="desktop-app-that-calls-web-apis-acquire-a-token"></a>用于调用 Web API 的桌面应用：获取令牌
 
@@ -38,7 +38,7 @@ Web API 由其 `scopes` 定义。 无论在应用程序中提供哪种体验，�
 AuthenticationResult result;
 var accounts = await app.GetAccountsAsync();
 IAccount account = ChooseAccount(accounts); // for instance accounts.FirstOrDefault
-                                            // if the app manages is at most one account  
+                                            // if the app manages is at most one account
 try
 {
  result = await app.AcquireTokenSilent(scopes, account)
@@ -183,7 +183,7 @@ catch(MsalUiRequiredException)
 
 #### <a name="withparentactivityorwindow"></a>WithParentActivityOrWindow
 
-UI 非常重要，因为它是交互式的。 `AcquireTokenInteractive` 提供一个特定的可选参数，该参数可为支持它的平台指定父 UI。 在桌面应用程序中使用时，`.WithParentActivityOrWindow` 根据具体的平台采用不同的类型。
+UI 非常重要，因为它是交互式的。 `AcquireTokenInteractive` 提供一个特定的可选参数，该参数可为支持它的平台指定父 UI。 在桌面应用程序中使用时，`.WithParentActivityOrWindow` 根据具体的平台采用不同的类型。 或者，如果你不想控制登录对话框在屏幕上的显示位置，则可以省略可选的父窗口参数来创建窗口。 这适用于基于命令行、用于将调用传递到任何其他后端服务且不需要任何用于用户交互的窗口的应用程序。
 
 ```csharp
 // net45
@@ -213,7 +213,7 @@ WithParentActivityOrWindow(object parent).
 
 `WithPrompt()` 用于通过指定提示来控制与用户的交互。
 
-![显示提示结构中的字段的图像。 这些常量值通过定义 WithPrompt ( # A1 方法显示的提示类型来控制与用户的交互。](https://user-images.githubusercontent.com/13203188/53438042-3fb85700-39ff-11e9-9a9e-1ff9874197b3.png)
+![显示“提示”结构中的字段的图像。 这些常量值通过定义由 WithPrompt() 方法显示的提示的类型来控制与用户的交互。](https://user-images.githubusercontent.com/13203188/53438042-3fb85700-39ff-11e9-9a9e-1ff9874197b3.png)
 
 类定义以下常量：
 
@@ -278,7 +278,7 @@ MSAL.NET 团队已重新编写 UI 测试，以使用此扩展性机制。 如果
 
 ##### <a name="provide-a-great-experience-with-systemwebviewoptions"></a>通过 SystemWebViewOptions 提供极佳体验
 
-在 MSAL.NET 4.1 [`SystemWebViewOptions`](/dotnet/api/microsoft.identity.client.systemwebviewoptions?view=azure-dotnet) 中，可以指定：
+在 MSAL.NET 4.1 [`SystemWebViewOptions`](/dotnet/api/microsoft.identity.client.systemwebviewoptions) 中，可以指定：
 
 - 在系统 Web 浏览器中出现登录或许可错误时，要转到的 URI (`BrowserRedirectError`) 或需要显示的 HTML 片段 (`HtmlMessageError`)。
 - 在成功完成登录或许可时，要转到的 URI (`BrowserRedirectSuccess`) 或需要显示的 HTML 片段 (`HtmlMessageSuccess`)。
@@ -304,7 +304,7 @@ var result = app.AcquireTokenInteractive(scopes)
 
 #### <a name="other-optional-parameters"></a>其他可选参数
 
-若要详细了解 `AcquireTokenInteractive` 的所有其他可选参数，请参阅 [AcquireTokenInteractiveParameterBuilder](/dotnet/api/microsoft.identity.client.acquiretokeninteractiveparameterbuilder?view=azure-dotnet-preview#methods)。
+若要详细了解 `AcquireTokenInteractive` 的所有其他可选参数，请参阅 [AcquireTokenInteractiveParameterBuilder](/dotnet/api/microsoft.identity.client.acquiretokeninteractiveparameterbuilder#methods)。
 
 # <a name="java"></a>[Java](#tab/java)
 
@@ -370,7 +370,7 @@ if accounts:
 if not result:
     result = app.acquire_token_by_authorization_code(
          request.args['code'],
-         scopes=config["scope"])    
+         scopes=config["scope"])
 
 ```
 
@@ -420,8 +420,8 @@ application.acquireToken(with: interactiveParameters, completionBlock: { (result
 - Windows 集成身份验证仅适用于“联合+”用户，即，在 Active Directory 中创建的、由 Azure AD 支持的用户。 直接在 Azure AD 中创建的但不是由 Active Directory 支持的用户（称为“托管用户”）不能使用此身份验证流。 此项限制不影响用户名和密码流。
 - IWA 适用于针对 .NET Framework、.NET Core 和通用 Windows 平台 (UWP) 等平台编写的应用。
 - IWA 不会绕过[多重身份验证 (MFA)](../authentication/concept-mfa-howitworks.md)。 如果已配置 MFA，则在需要 MFA 质询的情况下，IWA 可能失败，因为 MFA 需要用户交互。
-  > [!NOTE]
-  > 这一点较为棘手。 IWA 是非交互式的，但 MFA 需要用户交互。 标识提供者何时请求执行 MFA 并不由你控制，而是由租户管理员控制。 根据观察，在以下情况下需要 MFA：当你从不同国家/地区登录时；未通过 VPN 连接到公司网络时；有时甚至通过 VPN 连接也需要 MFA。 规则并不确定。 Azure AD 使用 AI 来持续判断是否需要执行 MFA。 如果 IWA 失败，则回退到用户提示，例如交互式身份验证或设备代码流。
+  
+    IWA 是非交互式的，但 MFA 需要用户交互。 标识提供者何时请求执行 MFA 并不由你控制，而是由租户管理员控制。 根据观察，在以下情况下需要 MFA：当你从不同国家/地区登录时；未通过 VPN 连接到公司网络时；有时甚至通过 VPN 连接也需要 MFA。 规则并不确定。 Azure AD 使用 AI 来持续判断是否需要执行 MFA。 如果 IWA 失败，则回退到用户提示，例如交互式身份验证或设备代码流。
 
 - 在 `PublicClientApplicationBuilder` 中传入的颁发机构需要：
   - 租户化（采用 `https://login.microsoftonline.com/{tenant}/` 格式，其中，`tenant` 是表示租户 ID 或者与该租户关联的域的 GUID）。
@@ -433,25 +433,25 @@ application.acquireToken(with: interactiveParameters, completionBlock: { (result
   - 或者，租户管理员必须已事先许可租户中的所有用户使用该应用程序。
   - 换句话说：
     - 开发人员已在 Azure 门户中自行选择“授予”按钮。
-    - 或者，租户管理员已在应用程序注册的“API 权限”选项卡中选择“授予/撤销 {租户域} 的管理员许可”按钮。  有关详细信息，请参阅[添加用于访问 Web API 的权限](./quickstart-configure-app-access-web-apis.md#add-permissions-to-access-web-apis)。
+    - 或者，租户管理员已在应用程序注册的“API 权限”选项卡中选择“授予/撤销 {租户域} 的管理员许可”按钮。  有关详细信息，请参阅[添加访问 Web API 的权限](quickstart-configure-app-access-web-apis.md#add-permissions-to-access-your-web-api)。
     - 或者，你已提供某种方式让用户许可应用程序。 有关详细信息，请参阅[请求单个用户的许可](./v2-permissions-and-consent.md#requesting-individual-user-consent)。
     - 或者，你已提供某种方式让租户管理员许可应用程序。 有关详细信息，请参阅[管理员许可](./v2-permissions-and-consent.md#requesting-consent-for-an-entire-tenant)。
 
 - 已针对 .NET Desktop、.NET Core 和 UWP 应用启用此流。
 
-有关许可的详细信息，请参阅 [Microsoft 标识平台的权限和许可](./v2-permissions-and-consent.md)。
+有关许可的详细信息，请参阅 [Microsoft 标识平台权限和许可](./v2-permissions-and-consent.md)。
 
 ### <a name="learn-how-to-use-it"></a>了解其用法
 
 # <a name="net"></a>[.NET](#tab/dotnet)
 
-在 MSAL.NET 中，需要使用：
+在 MSAL.NET 中，使用：
 
 ```csharp
 AcquireTokenByIntegratedWindowsAuth(IEnumerable<string> scopes)
 ```
 
-通常只需要一个参数 (`scopes`)。 根据 Windows 管理员设置策略的方式，有可能不允许 Windows 计算机上的应用程序查找已登录的用户。 在这种情况下，请使用另一个方法 `.WithUsername()`，并以 UPN 格式（例如 `joe@contoso.com`）传入已登录用户的用户名。 在 .NET Core 上，只有采用用户名的重载可用，因为 .NET Core 平台无法请求用于登录 OS 的用户名。
+通常只需要一个参数 (`scopes`)。 根据 Windows 管理员设置策略的方式，有可能不允许 Windows 计算机上的应用程序查找已登录的用户。 在这种情况下，请使用另一个方法 `.WithUsername()`，并以 UPN 格式（例如 `joe@contoso.com`）传入已登录用户的用户名。
 
 下面的示例展示了最新的情况，并说明了可获取的异常类型以及缓解措施。
 
@@ -532,7 +532,7 @@ static async Task GetATokenForGraph()
 }
 ```
 
-有关 AcquireTokenByIntegratedWindowsAuthentication 上可能的修饰符列表，请参阅 [AcquireTokenByIntegratedWindowsAuthParameterBuilder](/dotnet/api/microsoft.identity.client.acquiretokenbyintegratedwindowsauthparameterbuilder?view=azure-dotnet-preview#methods)。
+有关 AcquireTokenByIntegratedWindowsAuthentication 上可能的修饰符列表，请参阅 [AcquireTokenByIntegratedWindowsAuthParameterBuilder](/dotnet/api/microsoft.identity.client.acquiretokenbyintegratedwindowsauthparameterbuilder#methods)。
 
 # <a name="java"></a>[Java](#tab/java)
 
@@ -602,14 +602,13 @@ MSAL Python 中尚不支持此流。
 
 ### <a name="this-flow-isnt-recommended"></a>不建议使用此流
 
-不建议使用此流，因为要求用户提供其密码的应用程序是不安全的。 有关详细信息，请参阅[如何解决不断增多的密码问题？](https://news.microsoft.com/features/whats-solution-growing-problem-passwords-says-microsoft/)。 在已加入 Windows 域的计算机上以无提示方式获取令牌的首选流程是[集成 Windows 身份验证](https://github.com/AzureAD/microsoft-authentication-library-for-dotnet/wiki/Integrated-Windows-Authentication)。 你还可以使用[设备代码流](https://aka.ms/msal-net-device-code-flow)。
+*不建议使用* 用户名和密码流，因为应用程序要求用户提供其密码并不安全。 有关详细信息，请参阅 [不断增长的密码问题的解决方案是什么？](https://news.microsoft.com/features/whats-solution-growing-problem-passwords-says-microsoft/) 在已加入 Windows 域的计算机上以无提示方式获取令牌的首选流程是[集成 Windows 身份验证](https://github.com/AzureAD/microsoft-authentication-library-for-dotnet/wiki/Integrated-Windows-Authentication)。 你还可以使用[设备代码流](https://aka.ms/msal-net-device-code-flow)。
 
-> [!NOTE]
-> 在某些情况下，使用用户名和密码非常有用，例如 DevOps 方案。 但是，如果你想在自行提供 UI 的交互式方案中使用用户名和密码，建议打消这个念头。 使用用户名和密码意味着会丧失许多功能：
->
-> - 新式标识的核心原则。 密码可能被窃取和重放，因为共享机密可能会被截获。 此流与无密码登录是不兼容的。
-> - 需要执行 MFA 的用户将无法登录，因为没有交互。
-> - 用户无法执行单一登录 (SSO)。
+在某些情况下，使用用户名和密码非常有用，例如 DevOps 方案。 但是，如果你想在自行提供 UI 的交互式方案中使用用户名和密码，建议打消这个念头。 使用用户名和密码意味着会丧失许多功能：
+
+- 新式标识的核心原则。 密码可能被窃取和重放，因为共享机密可能会被截获。 此流与无密码登录是不兼容的。
+- 需要执行 MFA 的用户将无法登录，因为没有交互。
+- 用户无法执行单一登录 (SSO)。
 
 ### <a name="constraints"></a>约束
 
@@ -687,7 +686,7 @@ static async Task GetATokenForGraph()
  if (accounts.Any())
  {
   result = await app.AcquireTokenSilent(scopes, accounts.FirstOrDefault())
-                    .ExecuteAync();
+                    .ExecuteAsync();
  }
  else
  {
@@ -832,7 +831,7 @@ static async Task GetATokenForGraph()
 }
 ```
 
-有关可应用到 `AcquireTokenByUsernamePassword` 的所有修饰符的详细信息，请参阅 [AcquireTokenByUsernamePasswordParameterBuilder](/dotnet/api/microsoft.identity.client.acquiretokenbyusernamepasswordparameterbuilder?view=azure-dotnet-preview#methods)。
+有关可应用到 `AcquireTokenByUsernamePassword` 的所有修饰符的详细信息，请参阅 [AcquireTokenByUsernamePasswordParameterBuilder](/dotnet/api/microsoft.identity.client.acquiretokenbyusernamepasswordparameterbuilder#methods)。
 
 # <a name="java"></a>[Java](#tab/java)
 
@@ -923,9 +922,9 @@ if not result:
 
 ### <a name="device-code-flow"></a>设备代码流
 
-如果你正在编写一个不包含 Web 控件的命令行工具，并且无法或者不想要使用前面所述的流，则需要使用设备代码流。
+如果你正在编写的命令行工具没有 web 控件，并且你不能或不想使用以前的流，请使用设备代码流。
 
-使用 Azure AD 的交互式身份验证需要 Web 浏览器。 有关详细信息，请参阅 [Web 浏览器的用法](https://aka.ms/msal-net-uses-web-browser)。 为了对不提供 Web 浏览器的设备或操作系统上的用户进行身份验证，设备代码流可让用户使用另一台设备（例如某台计算机或手机）以交互方式登录。 应用程序使用设备代码流通过为这些设备或 OS 设计的双步过程获取令牌。 此类应用程序的例子包括 iOT 上运行的应用程序或命令行工具 (CLI)。 其思路是：
+使用 Azure AD 的交互式身份验证需要 Web 浏览器。 有关详细信息，请参阅 [Web 浏览器的用法](https://aka.ms/msal-net-uses-web-browser)。 为了对不提供 Web 浏览器的设备或操作系统上的用户进行身份验证，设备代码流可让用户使用另一台设备（例如某台计算机或手机）以交互方式登录。 通过使用设备代码流，应用程序将通过专为这些设备或操作系统设计的两步过程获取令牌。 此类应用程序的例子包括 iOT 上运行的应用程序或命令行工具 (CLI)。 其思路是：
 
 1. 每当需要用户身份验证时，应用就会为用户提供一个代码。 系统要求用户使用另一台设备（例如，已连接到 Internet 的智能手机）转到某个 URL（例如 `https://microsoft.com/devicelogin`）。 然后系统会提示用户输入代码。 完成此操作后，网页将引导用户进行常规的身份验证操作，其中包括同意提示和多重身份验证（如有必要）。
 
@@ -949,12 +948,12 @@ if not result:
 
   ![DeviceCodeResult 属性](https://user-images.githubusercontent.com/13203188/56024968-7af1b980-5d11-11e9-84c2-5be2ef306dc5.png)
 
-以下示例代码演示了最新的用例，并解释了可能出现的各种异常及其缓解措施。
+以下示例代码显示了最新事例的概要，并解释了可能出现的各种异常及其缓解措施。 有关完整的功能代码示例，请参阅 GitHub 上的 [active-directory-dotnetcore-devicecodeflow-v2](https://github.com/azure-samples/active-directory-dotnetcore-devicecodeflow-v2)。
 
 ```csharp
 private const string ClientId = "<client_guid>";
 private const string Authority = "https://login.microsoftonline.com/contoso.com";
-private readonly string[] Scopes = new string[] { "user.read" };
+private readonly string[] scopes = new string[] { "user.read" };
 
 static async Task<AuthenticationResult> GetATokenForGraph()
 {
@@ -969,7 +968,7 @@ static async Task<AuthenticationResult> GetATokenForGraph()
     // All AcquireToken* methods store the tokens in the cache, so check the cache first
     try
     {
-        return await pca.AcquireTokenSilent(Scopes, accounts.FirstOrDefault())
+        return await pca.AcquireTokenSilent(scopes, accounts.FirstOrDefault())
             .ExecuteAsync();
     }
     catch (MsalUiRequiredException ex)
@@ -978,10 +977,10 @@ static async Task<AuthenticationResult> GetATokenForGraph()
         // If you want to provide a more complex user experience, check out ex.Classification
 
         return await AcquireByDeviceCodeAsync(pca);
-    }         
+    }
 }
 
-private async Task<AuthenticationResult> AcquireByDeviceCodeAsync(IPublicClientApplication pca)
+private static async Task<AuthenticationResult> AcquireByDeviceCodeAsync(IPublicClientApplication pca)
 {
     try
     {
@@ -1005,6 +1004,7 @@ private async Task<AuthenticationResult> AcquireByDeviceCodeAsync(IPublicClientA
         Console.WriteLine(result.Account.Username);
         return result;
     }
+
     // TODO: handle or throw all these exceptions depending on your app
     catch (MsalServiceException ex)
     {
@@ -1038,6 +1038,7 @@ private async Task<AuthenticationResult> AcquireByDeviceCodeAsync(IPublicClientA
     }
 }
 ```
+
 # <a name="java"></a>[Java](#tab/java)
 
 此代码摘录自 [MSAL Java 开发示例](https://github.com/AzureAD/microsoft-authentication-library-for-java/blob/dev/src/samples/public-client/)。
@@ -1180,7 +1181,7 @@ if not result:
 
 ### <a name="simple-token-cache-serialization-msal-only"></a>简单令牌缓存序列化（仅限 MSAL）
 
-下面是适用于桌面应用程序的令牌缓存的自定义序列化的简单实现示例。 此处，用户令牌缓存是应用程序所在的同一文件夹中的某个文件。
+下面是适用于桌面应用程序的令牌缓存的自定义序列化的简单实现示例。 此处，用户令牌缓存位于与应用程序相同的文件夹中的文件中，或者，在应用是[打包的桌面应用程序](/windows/msix/desktop/desktop-to-uwp-behind-the-scenes)的情况下，位于每个用户每个应用程序文件夹中的文件中。 有关完整的代码，请参阅以下示例：[active-directory-dotnet-desktop-msgraph-v2](https://github.com/Azure-Samples/active-directory-dotnet-desktop-msgraph-v2)。
 
 生成应用程序后，通过调用 ``TokenCacheHelper.EnableSerialization()`` 并传递应用程序 `UserTokenCache` 来启用序列化。
 
@@ -1199,15 +1200,27 @@ static class TokenCacheHelper
   {
    tokenCache.SetBeforeAccess(BeforeAccessNotification);
    tokenCache.SetAfterAccess(AfterAccessNotification);
+   try
+   {
+    // For packaged desktop apps (MSIX packages) the executing assembly folder is read-only. 
+    // In that case we need to use Windows.Storage.ApplicationData.Current.LocalCacheFolder.Path + "\msalcache.bin" 
+    // which is a per-app read/write folder for packaged apps.
+    // See https://docs.microsoft.com/windows/msix/desktop/desktop-to-uwp-behind-the-scenes
+    CacheFilePath = System.IO.Path.Combine(Windows.Storage.ApplicationData.Current.LocalCacheFolder.Path, "msalcache.bin3");
+   }
+   catch (System.InvalidOperationException)
+   {
+    // Fall back for an un-packaged desktop app
+    CacheFilePath = System.Reflection.Assembly.GetExecutingAssembly().Location + ".msalcache.bin";
+   }
   }
 
   /// <summary>
   /// Path to the token cache
   /// </summary>
-  public static readonly string CacheFilePath = System.Reflection.Assembly.GetExecutingAssembly().Location + ".msalcache.bin3";
+  public static string CacheFilePath { get; private set; }
 
   private static readonly object FileLock = new object();
-
 
   private static void BeforeAccessNotification(TokenCacheNotificationArgs args)
   {
@@ -1388,7 +1401,10 @@ namespace CommonCacheMsalV3
 }
 ```
 
+## <a name="advanced-accessing-the-users-cached-tokens-in-background-apps-and-services"></a>（高级）在后台应用和服务中访问用户的缓存令牌
+
+[!INCLUDE [advanced-token-caching](../../../includes/advanced-token-cache.md)]
+
 ## <a name="next-steps"></a>后续步骤
 
-> [!div class="nextstepaction"]
-> [从桌面应用调用 Web API](scenario-desktop-call-api.md)
+转到此方案中的下一篇文章：[从桌面应用调用 Web API](scenario-desktop-call-api.md)。

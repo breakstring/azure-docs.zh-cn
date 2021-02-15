@@ -7,22 +7,22 @@ ms.date: 05/05/2020
 ms.topic: how-to
 ms.service: virtual-machines-windows
 ms.subservice: imaging
-ms.openlocfilehash: 07b9e3e7529aa867a4baf51ffe5c4bbf23599d32
-ms.sourcegitcommit: 2ff0d073607bc746ffc638a84bb026d1705e543e
+ms.openlocfilehash: e3a7ea2cd696f54b032a3f17eceff466a6201436
+ms.sourcegitcommit: aaa65bd769eb2e234e42cfb07d7d459a2cc273ab
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/06/2020
-ms.locfileid: "87836184"
+ms.lasthandoff: 01/27/2021
+ms.locfileid: "98878674"
 ---
 # <a name="preview-create-a-windows-image-and-distribute-it-to-a-shared-image-gallery"></a>预览版：创建 Windows 映像并将其分发到共享映像库 
 
-本文介绍如何使用 Azure 映像生成器和 Azure PowerShell，来在[共享映像库](shared-image-galleries.md)中创建映像版本，然后全局分发此映像。 也可以使用 [Azure CLI](../linux/image-builder-gallery.md) 来实现此目的。
+本文介绍如何使用 Azure 映像生成器和 Azure PowerShell，来在[共享映像库](../shared-image-galleries.md)中创建映像版本，然后全局分发此映像。 也可以使用 [Azure CLI](../linux/image-builder-gallery.md) 来实现此目的。
 
 我们将使用一个 .json 模板来配置映像。 我们将使用的 .json 文件位于：[armTemplateWinSIG](https://raw.githubusercontent.com/danielsollondon/azvmimagebuilder/master/quickquickstarts/1_Creating_a_Custom_Win_Shared_Image_Gallery_Image/armTemplateWinSIG.json)。 我们将下载并编辑此模板的本地版本，因此本文是使用本地 PowerShell 会话撰写的。
 
-此模板使用 [sharedImage](../linux/image-builder-json.md?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json#distribute-sharedimage) 作为模板的 `distribute` 部分的值，以便将映像分发到共享映像库。
+此模板使用 [sharedImage](../linux/image-builder-json.md#distribute-sharedimage) 作为模板的 `distribute` 部分的值，以便将映像分发到共享映像库。
 
-Azure 映像生成器会自动运行 sysprep 来将映像通用化，这是一个通用的 sysprep 命令，如有必要你可以[重写](https://github.com/danielsollondon/azvmimagebuilder/blob/master/troubleshootingaib.md#vms-created-from-aib-images-do-not-create-successfully)它。 
+Azure 映像生成器会自动运行 sysprep 来将映像通用化，这是一个通用的 sysprep 命令，如有必要你可以[重写](../linux/image-builder-troubleshoot.md#vms-created-from-aib-images-do-not-create-successfully)它。 
 
 请注意层自定义的次数。 最多可以对单个 Windows 映像运行 Sysprep 命令 8 次。 运行 Sysprep 8 次后，必须重新创建 Windows 映像。 有关详细信息，请参阅[有关 Sysprep 可运行次数的限制](/windows-hardware/manufacture/desktop/sysprep--generalize--a-windows-installation#limits-on-how-many-times-you-can-run-sysprep)。 
 

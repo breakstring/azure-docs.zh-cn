@@ -8,20 +8,20 @@ ms.author: luisca
 ms.service: cognitive-search
 ms.topic: conceptual
 ms.date: 11/04/2019
-ms.openlocfilehash: 779aa96fcf58d45bb53757f7fe974a0fe4c61ffa
-ms.sourcegitcommit: 4913da04fd0f3cf7710ec08d0c1867b62c2effe7
+ms.openlocfilehash: 39a7c92ca6c83684658cf767722698806ed994ec
+ms.sourcegitcommit: 829d951d5c90442a38012daaf77e86046018e5b9
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/14/2020
-ms.locfileid: "88214091"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "88935443"
 ---
 # <a name="how-to-create-a-skillset-in-an-ai-enrichment-pipeline-in-azure-cognitive-search"></a>如何在 Azure 认知搜索中的 AI 扩充管道中创建技能组 
 
 ![索引器阶段](media/cognitive-search-defining-skillset/indexer-stages-skillset.png "索引器阶段")
 
-技能组合定义了提取和扩充数据以使其可搜索的操作。 在从源文档中提取文本和图像内容后，技能组合会在源文档中的任何字段 (选择性地) 映射到索引或知识存储中的目标字段之后执行。
+技能组定义提取和扩充数据以使其可搜索的操作。 从源文档提取文本和图像内容后，以及在将源文档中的任何字段（可选）映射到索引或知识存储中的目标字段后，技能组都会执行。
 
-技能组合包含一项或多项 *认知技能* ，这些技能代表特定扩充操作，例如翻译文本、提取关键短语或从映像文件执行光学字符识别。 若要创建技能组合，可以使用 Microsoft 提供的 [内置技能](cognitive-search-predefined-skills.md) 或包含所提供模型或处理逻辑的自定义技能 (参阅 [示例：在 AI 扩充管道中创建自定义技能](cognitive-search-create-custom-skill-example.md) ，了解详细信息) 。
+技能组包含一个或多个表示特定扩充操作的认知技能，如翻译文本、提取关键短语或从图像文件执行光学字符识别。 若要创建技能组，可以使用 Microsoft 提供的[内置技能](cognitive-search-predefined-skills.md)，或包含你提供的模型或处理逻辑的自定义技能（请参阅[示例：在 AI 扩充管道中创建自定义技能](cognitive-search-create-custom-skill-example.md)来了解详细信息）。
 
 本文介绍如何对想要使用的技能创建扩充管道。 技能组将附加到 Azure 认知搜索[索引器](search-indexer-overview.md)。 本文介绍的管道设计的一个部分是构造技能集本身。 
 
@@ -49,14 +49,14 @@ ms.locfileid: "88214091"
 ![假设的扩充管道](media/cognitive-search-defining-skillset/sample-skillset.png "假设的扩充管道")
 
 
-对管道包含的内容进行适当的构思后，可以表达用于提供这些步骤的技能集。 在功能上，在将索引器定义上传到 Azure 认知搜索时，即会表达该技能组。 若要详细了解如何上传索引器，请参阅[索引器文档](https://docs.microsoft.com/rest/api/searchservice/create-indexer)。
+对管道包含的内容进行适当的构思后，可以表达用于提供这些步骤的技能集。 在功能上，在将索引器定义上传到 Azure 认知搜索时，即会表达该技能组。 若要详细了解如何上传索引器，请参阅[索引器文档](/rest/api/searchservice/create-indexer)。
 
 
 在图中，文档破解步骤会自动发生。 实质上，Azure 认知搜索知道如何打开已知的文件，并创建一个内容字段，其中包含从每个文档中提取的文本。 白框是内置的扩充器，“必应实体搜索”虚线框表示要创建的自定义扩充器。 如图所示，该技能集包含三个技能。
 
 ## <a name="skillset-definition-in-rest"></a>REST 中的技能集定义
 
-技能定义为技能数组。 每个技能定义其输入的源，以及生成的输出的名称。 使用[创建技能 REST API](https://docs.microsoft.com/rest/api/searchservice/create-skillset) 可以定义对应于上图的技能集： 
+技能定义为技能数组。 每个技能定义其输入的源，以及生成的输出的名称。 使用[创建技能 REST API](/rest/api/searchservice/create-skillset) 可以定义对应于上图的技能集： 
 
 ```http
 PUT https://[servicename].search.windows.net/skillsets/[skillset name]?api-version=2020-06-30
@@ -281,4 +281,4 @@ Content-Type: application/json
 
 ## <a name="next-steps"></a>后续步骤
 
-熟悉扩充管道和技能集后，请继续阅读[如何在技能集中引用注释](cognitive-search-concept-annotations-syntax.md)或[如何将输出映射到索引中的字段](cognitive-search-output-field-mapping.md)。 
+熟悉扩充管道和技能集后，请继续阅读[如何在技能集中引用注释](cognitive-search-concept-annotations-syntax.md)或[如何将输出映射到索引中的字段](cognitive-search-output-field-mapping.md)。

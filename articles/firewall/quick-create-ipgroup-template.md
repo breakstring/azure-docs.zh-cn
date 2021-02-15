@@ -1,19 +1,19 @@
 ---
 title: 快速入门：创建 Azure 防火墙和 IP 组 - 资源管理器模板
-description: 了解如何使用 Azure 资源管理器模板（ARM 模板）创建 Azure 防火墙和 IP 组。
+description: 本快速入门介绍如何使用 Azure 资源管理器模板（ARM 模板）创建 Azure 防火墙和 IP 组。
 services: firewall
 author: vhorne
 ms.service: firewall
 ms.topic: quickstart
 ms.custom: subject-armqs
-ms.date: 04/06/2020
+ms.date: 08/28/2020
 ms.author: victorh
-ms.openlocfilehash: 5ac1248ddcdf8c0eef68b7c32e322398fa01a6f2
-ms.sourcegitcommit: dabd9eb9925308d3c2404c3957e5c921408089da
+ms.openlocfilehash: 7966cbe44fc8984cf3c3d9e2d08a11bf599ff158
+ms.sourcegitcommit: eb6bef1274b9e6390c7a77ff69bf6a3b94e827fc
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/11/2020
-ms.locfileid: "86260583"
+ms.lasthandoff: 10/05/2020
+ms.locfileid: "89079126"
 ---
 # <a name="quickstart-create-an-azure-firewall-and-ip-groups---arm-template"></a>快速入门：创建 Azure 防火墙和 IP 组 - ARM 模板
 
@@ -35,7 +35,7 @@ ms.locfileid: "86260583"
 
 本快速入门中使用的模板来自 [Azure 快速启动模板](https://azure.microsoft.com/resources/templates/101-azurefirewall-create-with-ipgroups-and-linux-jumpbox)。
 
-:::code language="json" source="~/quickstart-templates/101-azurefirewall-create-with-ipgroups-and-linux-jumpbox/azuredeploy.json" range="001-512" highlight="118-141":::
+:::code language="json" source="~/quickstart-templates/101-azurefirewall-create-with-ipgroups-and-linux-jumpbox/azuredeploy.json":::
 
 模板中定义了多个 Azure 资源：
 
@@ -76,7 +76,7 @@ ms.locfileid: "86260583"
 
 :::image type="content" source="media/quick-create-ipgroup-template/ipgroups.png" alt-text="IP 组。":::
 
-:::image type="content" source="media/quick-create-ipgroup-template/network-rule.png" alt-text="网络规则。":::
+:::image type="content" source="media/quick-create-ipgroup-template/network-rule.png" alt-text="IP 组。":::
 
 若要了解模板中防火墙的 JSON 语法和属性，请参阅 [Microsoft.Network azureFirewalls template reference](/azure/templates/Microsoft.Network/2019-11-01/azureFirewalls)（Microsoft.Network azureFirewalls 模板参考）。
 

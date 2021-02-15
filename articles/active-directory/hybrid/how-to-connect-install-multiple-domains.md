@@ -1,6 +1,6 @@
 ---
 title: Azure AD Connect 中的多个域
-description: 本文档介绍如何使用 O365 与 Azure AD 来设置和配置多个顶级域。
+description: 本文档介绍如何为 Microsoft 365 与 Azure AD 设置和配置多个顶级域。
 services: active-directory
 documentationcenter: ''
 author: billmath
@@ -16,15 +16,15 @@ ms.date: 05/31/2017
 ms.subservice: hybrid
 ms.author: billmath
 ms.collection: M365-identity-device-management
-ms.openlocfilehash: 7a49abdea9d5b80687c53fbaa3d41480825ed504
-ms.sourcegitcommit: cec9676ec235ff798d2a5cad6ee45f98a421837b
+ms.openlocfilehash: 53a0da5b5db21c9a543d39d1b252b0b4c64e2a56
+ms.sourcegitcommit: 829d951d5c90442a38012daaf77e86046018e5b9
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "85849945"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "91306355"
 ---
 # <a name="multiple-domain-support-for-federating-with-azure-ad"></a>与 Azure AD 联合的多域支持
-以下文档提供了有关与 Office 365 或 Azure AD 域联合时如何使用多个顶级域和子域的指导。
+以下文档提供了有关与 Microsoft 365 或 Azure AD 域联合时如何使用多个顶级域和子域的指导。
 
 ## <a name="multiple-top-level-domain-support"></a>多个顶级域支持
 若要让多个顶级域与 Azure AD 联合，需要一些让单个顶级域联合时不需要的额外配置。
@@ -38,15 +38,15 @@ ms.locfileid: "85849945"
 
 可以使用 PowerShell 命令 `Get-MsolDomainFederationSettings -DomainName <your domain>` 查看 IssuerUri。
 
-![Get-MsolDomainFederationSettings](./media/how-to-connect-install-multiple-domains/MsolDomainFederationSettings.png)
+![在 PowerShell 中输入 "Set-msoldomainfederationsettings" 命令后显示结果的屏幕截图。](./media/how-to-connect-install-multiple-domains/MsolDomainFederationSettings.png)
 
 当添加多个顶级域时，会出现问题。  例如，假设已设置了 Azure AD 和本地环境之间的联合。  本文档中使用的是域 bmcontoso.com。  现在，已添加了第二个顶级域 bmfabrikam.com。
 
-![域](./media/how-to-connect-install-multiple-domains/domains.png)
+![显示多个顶级域的屏幕截图](./media/how-to-connect-install-multiple-domains/domains.png)
 
 当尝试将 bmfabrikam.com 域转换为联合域时，发生错误。  原因在于，Azure AD 有一项限制，此限制不允许多个域的 IssuerUri 属性拥有相同的值。  
 
-![联合错误](./media/how-to-connect-install-multiple-domains/error.png)
+![显示 PowerShell 中的联合错误的屏幕截图。](./media/how-to-connect-install-multiple-domains/error.png)
 
 ### <a name="supportmultipledomain-parameter"></a>SupportMultipleDomain 参数
 若要避免此约束，需要添加一个不同的 IssuerUri，可以使用 `-SupportMultipleDomain` 参数来实现此目的。  此参数可配合以下 cmdlet 使用：
@@ -57,17 +57,17 @@ ms.locfileid: "85849945"
 
 此参数可让 Azure AD 根据域名称设置 IssuerUri。  IssuerUri 在 Azure AD 中的所有目录中将是唯一的。  使用参数可让 PowerShell 命令成功完成。
 
-![联合错误](./media/how-to-connect-install-multiple-domains/convert.png)
+![显示 PowerShell 命令成功完成的屏幕截图。](./media/how-to-connect-install-multiple-domains/convert.png)
 
 检查 bmfabrikam.com 域的设置，可以看到以下内容：
 
-![联合错误](./media/how-to-connect-install-multiple-domains/settings.png)
+![显示 "bmfabrikam.com" 域设置的屏幕截图。](./media/how-to-connect-install-multiple-domains/settings.png)
 
 `-SupportMultipleDomain` 不会更改其他终结点，它们仍然配置为指向 adfs.bmcontoso.com 上的联合身份验证服务。
 
 `-SupportMultipleDomain` 的另一个功用是确保 AD FS 系统在颁发给 Azure AD 的令牌中包含正确的颁发者值。 此值是通过获取用户 UPN 的域部分并将其设置为 IssuerUri 中的域（即 https://{upn suffix}/adfs/services/trust）来设置的。
 
-因此，在 Azure AD 或 Office 365 上进行身份验证期间，会使用用户令牌中的 IssuerUri 元素来查找 Azure AD 中的域。  如果找不到匹配项，身份验证将会失败。
+因此，在 Azure AD 或 Microsoft 365 上进行身份验证期间，将使用用户令牌中的 IssuerUri 元素来查找 Azure AD 中的域。 如果找不到匹配项，身份验证将会失败。
 
 例如，如果用户的 UPN 是 bsimon@bmcontoso.com，则 AD FS 颁发的令牌中的 IssuerUri 元素将设置为 `http://bmcontoso.com/adfs/services/trust`。 此元素将匹配 Azure AD 配置，并且身份验证会成功。
 
@@ -88,11 +88,11 @@ c:[Type == "http://schemas.xmlsoap.org/claims/UPN"] => issue(Type = "http://sche
 
 如果已成功在 Azure AD 门户中添加了新域，然后尝试使用 `Convert-MsolDomaintoFederated -DomainName <your domain>` 对其进行转换，则会收到以下错误。
 
-![联合错误](./media/how-to-connect-install-multiple-domains/trust1.png)
+![在尝试使用 "Convert-msoldomaintofederated" 命令转换新域后，在 PowerShell 中显示联合错误的屏幕截图。](./media/how-to-connect-install-multiple-domains/trust1.png)
 
 如果尝试添加 `-SupportMultipleDomain` 开关，将会收到以下错误：
 
-![联合错误](./media/how-to-connect-install-multiple-domains/trust2.png)
+![显示联合身份验证错误的屏幕截图添加了 "-SupportMultipleDomain" 开关。](./media/how-to-connect-install-multiple-domains/trust2.png)
 
 只是尝试针对原始域运行 `Update-MsolFederatedDomain -DomainName <your domain> -SupportMultipleDomain` 也会导致错误。
 
@@ -106,14 +106,14 @@ c:[Type == "http://schemas.xmlsoap.org/claims/UPN"] => issue(Type = "http://sche
 2. 展开左侧的“信任关系”和“信赖方信任” 
 3. 删除右侧的“Microsoft Office 365 标识平台”项。
    ![删除 Microsoft Online](./media/how-to-connect-install-multiple-domains/trust4.png)
-4. 在已安装[适用于 Windows PowerShell 的 Azure Active Directory 模块](https://msdn.microsoft.com/library/azure/jj151815.aspx)的计算机上运行以下命令：`$cred=Get-Credential`。  
+4. 在已安装[适用于 Windows PowerShell 的 Azure Active Directory 模块](/previous-versions/azure/jj151815(v=azure.100))的计算机上运行以下命令：`$cred=Get-Credential`。  
 5. 输入要联合的 Azure AD 域的全局管理员用户名和密码。
 6. 在 PowerShell 中，输入 `Connect-MsolService -Credential $cred`
 7. 在 PowerShell 中，输入 `Update-MSOLFederatedDomain -DomainName <Federated Domain Name> -SupportMultipleDomain`。  此更新是针对原始域的。  因此，使用上述域后，命令将是：`Update-MsolFederatedDomain -DomainName bmcontoso.com -SupportMultipleDomain`
 
 使用以下步骤通过 PowerShell 添加新的顶级域
 
-1. 在已安装[适用于 Windows PowerShell 的 Azure Active Directory 模块](https://msdn.microsoft.com/library/azure/jj151815.aspx)的计算机上运行以下命令：`$cred=Get-Credential`。  
+1. 在已安装[适用于 Windows PowerShell 的 Azure Active Directory 模块](/previous-versions/azure/jj151815(v=azure.100))的计算机上运行以下命令：`$cred=Get-Credential`。  
 2. 输入要联合的 Azure AD 域的全局管理员用户名和密码
 3. 在 PowerShell 中，输入 `Connect-MsolService -Credential $cred`
 4. 在 PowerShell 中，输入 `New-MsolFederatedDomain –SupportMultipleDomain –DomainName`
@@ -121,7 +121,7 @@ c:[Type == "http://schemas.xmlsoap.org/claims/UPN"] => issue(Type = "http://sche
 使用以下步骤通过 Azure AD Connect 添加新的顶级域
 
 1. 从桌面或开始菜单启动 Azure AD Connect
-2. 选择“添加其他 Azure AD 域”![添加其他 Azure AD 域](./media/how-to-connect-install-multiple-domains/add1.png)
+2. 选择 "添加其他 Azure AD 域" ![ 屏幕截图，其中显示 "其他任务" 页面并选中 "添加额外 Azure AD 域"。](./media/how-to-connect-install-multiple-domains/add1.png)
 3. 输入 Azure AD 和 Active Directory 凭据
 4. 选择要配置联合的第二个域。
    ![添加其他 Azure AD 域](./media/how-to-connect-install-multiple-domains/add2.png)
@@ -130,7 +130,7 @@ c:[Type == "http://schemas.xmlsoap.org/claims/UPN"] => issue(Type = "http://sche
 ### <a name="verify-the-new-top-level-domain"></a>验证新的顶级域
 使用 PowerShell 命令 `Get-MsolDomainFederationSettings -DomainName <your domain>`可以查看更新的 IssuerUri。  下面的屏幕截图显示原始域 `http://bmcontoso.com/adfs/services/trust` 上的联合设置已更新
 
-![Get-MsolDomainFederationSettings](./media/how-to-connect-install-multiple-domains/MsolDomainFederationSettings.png)
+![显示在原始域上更新的联合身份验证设置的屏幕截图。](./media/how-to-connect-install-multiple-domains/MsolDomainFederationSettings.png)
 
 新域上的 IssuerUri 已设置为 `https://bmfabrikam.com/adfs/services/trust`
 
@@ -180,4 +180,4 @@ c:[Type == "http://schemas.xmlsoap.org/claims/UPN"] => issue(Type = "http://sche
 
 若要了解有关这些常见主题的详细信息，请参阅[计划程序以及如何触发同步](how-to-connect-sync-feature-scheduler.md)。
 
-了解有关 [将本地标识与 Azure Active Directory 集成](whatis-hybrid-identity.md)的详细信息。
+了解有关[将本地标识与 Azure Active Directory 集成](whatis-hybrid-identity.md)的详细信息。

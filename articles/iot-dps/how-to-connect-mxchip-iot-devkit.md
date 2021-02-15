@@ -1,23 +1,23 @@
 ---
 title: 如何使用 Azure IoT 中心设备预配服务的自动预配功能将 MXChip IoT DevKit 注册到 IoT 中心 | Microsoft Docs
 description: 如何使用 Azure IoT 中心设备预配服务 (DPS) 的自动预配功能将 MXChip IoT DevKit 注册到 IoT 中心。
-author: liydu
-ms.author: liydu
+author: wesmc7777
+ms.author: wesmc
 ms.date: 06/25/2019
 ms.topic: conceptual
 ms.service: iot-dps
 services: iot-dps
-manager: jeffya
-ms.openlocfilehash: f05e92f0452b1cfff23e2094354203fd7eaea48b
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+manager: eliotgra
+ms.openlocfilehash: d6b6649d03da319171b24baa24983972bf270679
+ms.sourcegitcommit: cd9754373576d6767c06baccfd500ae88ea733e4
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "74975646"
+ms.lasthandoff: 11/20/2020
+ms.locfileid: "94954539"
 ---
 # <a name="use-azure-iot-hub-device-provisioning-service-auto-provisioning-to-register-the-mxchip-iot-devkit-with-iot-hub"></a>使用 Azure IoT 中心设备预配服务的自动预配功能将 MXChip IoT DevKit 注册到 IoT 中心
 
-本文介绍如何使用 Azure IoT 中心设备预配服务的[自动预配](concepts-auto-provisioning.md)功能将 MXChip IoT DevKit 注册到 Azure IoT 中心 本教程介绍如何执行下列操作：
+本文介绍如何使用 Azure IoT 中心设备预配服务将 MXChip IoT DevKit [预配](about-iot-dps.md#provisioning-process)到 Azure IoT 中心。 本教程介绍如何执行下列操作：
 
 * 在设备上配置设备预配服务的全局终结点。
 * 使用唯一设备机密 (UDS) 生成 X.509 证书。
@@ -30,13 +30,13 @@ ms.locfileid: "74975646"
 
 若要完成本教程中的步骤，请先执行以下任务：
 
-* 按照[将 IoT DevKit AZ3166 连接到云中的 Azure IoT 中心](/azure/iot-hub/iot-hub-arduino-iot-devkit-az3166-get-started#prepare-the-development-environment)的“准备开发环境”部分中的步骤配置 DevKit 的 Wi-Fi 并准备开发环境。
+* 按照[将 IoT DevKit AZ3166 连接到云中的 Azure IoT 中心](../iot-hub/iot-hub-arduino-iot-devkit-az3166-get-started.md#prepare-the-development-environment)的“准备开发环境”部分中的步骤配置 DevKit 的 Wi-Fi 并准备开发环境。
 * 参考[更新 DevKit 固件](https://microsoft.github.io/azure-iot-developer-kit/docs/firmware-upgrading/)教程升级到最新固件（1.3.0 或以上）。
-* 按照[使用 Azure 门户设置 IoT 中心设备预配服务](/azure/iot-dps/quick-setup-auto-provision)中的步骤，创建 IoT 中心并将其链接到设备预配服务实例。
+* 按照[使用 Azure 门户设置 IoT 中心设备预配服务](./quick-setup-auto-provision.md)中的步骤，创建 IoT 中心并将其链接到设备预配服务实例。
 
 ## <a name="open-sample-project"></a>打开示例项目
 
-1. 确保 IoT DevKit **未连接**到计算机。 先启动 VS Code，然后将 DevKit 连接到计算机。
+1. 确保 IoT DevKit **未连接** 到计算机。 先启动 VS Code，然后将 DevKit 连接到计算机。
 
 1. 单击 `F1` 以打开命令面板，键入并选择“Azure IoT Device Workbench:  Open Examples...”。然后选择“IoT DevKit”作为开发板。 
 
@@ -45,7 +45,7 @@ ms.locfileid: "74975646"
 
 ## <a name="save-a-unique-device-secret-on-device-security-storage"></a>将唯一设备机密保存在设备安全存储上
 
-可以根据设备的[证明机制](concepts-security.md#attestation-mechanism)在设备上配置自动预配。 MXChip IoT DevKit 使用[受信任计算组](https://trustedcomputinggroup.org)提供的[设备标识组合引擎](https://trustedcomputinggroup.org/wp-content/uploads/Foundational-Trust-for-IOT-and-Resource-Constrained-Devices.pdf)。 保存在 DevKit 上 STSAFE 安全芯片 ([STSAFE-A100](https://microsoft.github.io/azure-iot-developer-kit/docs/understand-security-chip/)) 中的唯一设备机密 (UDS) 用于生成设备的唯一 [X.509 证书](concepts-security.md#x509-certificates)  。 稍后在设备预配服务中和运行时的注册过程中，可以使用该证书完成注册过程。
+可以根据设备的[证明机制](concepts-service.md#attestation-mechanism)在设备上配置自动预配。 MXChip IoT DevKit 使用[受信任计算组](https://trustedcomputinggroup.org)提供的[设备标识组合引擎](https://trustedcomputinggroup.org/wp-content/uploads/Foundational-Trust-for-IOT-and-Resource-Constrained-Devices.pdf)。 保存在 DevKit 上 STSAFE 安全芯片 ([STSAFE-A100](https://microsoft.github.io/azure-iot-developer-kit/docs/understand-security-chip/)) 中的唯一设备机密 (UDS) 用于生成设备的唯一 [X.509 证书](concepts-x509-attestation.md)  。 稍后在设备预配服务中和运行时的注册过程中，可以使用该证书完成注册过程。
 
 典型的 UDS 是长度为 64 个字符的字符串，如以下示例所示：
 
@@ -58,7 +58,7 @@ ms.locfileid: "74975646"
 1. 在 VS Code 中，单击状态栏以选择 DevKit 的 COM 端口。
   ![选择 COM 端口](media/how-to-connect-mxchip-iot-devkit/select-com.png)
 
-1. 在 DevKit 上，按住**按钮 A** 不放，按下再松开**重置**按钮，然后松开**按钮 A**。DevKit 将进入配置模式。
+1. 在 DevKit 上，按住 **按钮 A** 不放，按下再松开 **重置** 按钮，然后松开 **按钮 A**。DevKit 将进入配置模式。
 
 1. 单击 `F1` 以打开命令面板，键入并选择“Azure IoT Device Workbench:**配置设备设置...”>“配置唯一设备字符串 (UDS)”** 。
   ![配置 UDS](media/how-to-connect-mxchip-iot-devkit/config-uds.png)
@@ -74,7 +74,7 @@ ms.locfileid: "74975646"
 
 ## <a name="update-the-global-device-endpoint-and-id-scope"></a>更新全局设备终结点和 ID 范围
 
-在设备代码中，需要指定[设备预配终结点](/azure/iot-dps/concepts-service#device-provisioning-endpoint)和 ID 范围以确保租户隔离。
+在设备代码中，需要指定[设备预配终结点](./concepts-service.md#device-provisioning-endpoint)和 ID 范围以确保租户隔离。
 
 1. 在 Azure 门户中，选择设备预配服务的“概述”窗格，记下“全局设备终结点”和“ID 范围”的值    。
   ![设备预配服务全局终结点和 ID 范围](media/how-to-connect-mxchip-iot-devkit/dps-global-endpoint.png)
@@ -90,7 +90,7 @@ ms.locfileid: "74975646"
 
 ## <a name="generate-x509-certificate"></a>生成 X.509 证书
 
-此示例使用的[证明机制](/azure/iot-dps/concepts-device#attestation-mechanism)是 X.509 证书。 需要使用实用程序来生成它。
+此示例使用的[证明机制](./concepts-service.md#attestation-mechanism)是 X.509 证书。 需要使用实用程序来生成它。
 
 1. 在 VS Code 中，单击 `F1`，键入并选择“打开新终端”以打开终端窗口  。
 
@@ -141,4 +141,3 @@ ms.locfileid: "74975646"
 > * 验证设备是否已注册。
 
 了解如何[创建和预配模拟设备](./quick-create-simulated-device.md)。
-

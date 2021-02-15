@@ -2,13 +2,13 @@
 title: Azure Lighthouse 示例和模板
 description: 这些示例和 Azure 资源管理器模板说明了如何载入客户以进行 Azure 委托资源管理，以及如何支持 Azure Lighthouse 方案。
 ms.topic: sample
-ms.date: 07/07/2020
-ms.openlocfilehash: 9a90923b43fa5afe59f6385e3f227cdc722b27f5
-ms.sourcegitcommit: d7008edadc9993df960817ad4c5521efa69ffa9f
+ms.date: 12/11/2020
+ms.openlocfilehash: c91f79f50b03142a4be935eac6409e0a07371a54
+ms.sourcegitcommit: dfc4e6b57b2cb87dbcce5562945678e76d3ac7b6
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/08/2020
-ms.locfileid: "86111641"
+ms.lasthandoff: 12/12/2020
+ms.locfileid: "97356254"
 ---
 # <a name="azure-lighthouse-samples"></a>Azure Lighthouse 示例
 

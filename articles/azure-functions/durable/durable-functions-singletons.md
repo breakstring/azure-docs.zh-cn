@@ -3,14 +3,14 @@ title: Durable Functions 的单一实例 - Azure
 description: 如何使用 Azure Functions 的 Durable Functions 扩展中的单一实例。
 author: cgillum
 ms.topic: conceptual
-ms.date: 07/14/2020
+ms.date: 09/10/2020
 ms.author: azfuncdf
-ms.openlocfilehash: deb64cf8128fd548cb74c064ab9fd6f169db5300
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.openlocfilehash: 50ed473d61dff19f41f77a79513c0ddab521e56f
+ms.sourcegitcommit: 829d951d5c90442a38012daaf77e86046018e5b9
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87041925"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "91325736"
 ---
 # <a name="singleton-orchestrators-in-durable-functions-azure-functions"></a>Durable Functions 中的单一实例业务流程协调程序 (Azure Functions)
 
@@ -31,11 +31,14 @@ public static async Task<HttpResponseMessage> RunSingle(
     string instanceId,
     ILogger log)
 {
-    // Check if an instance with the specified ID already exists.
+    // Check if an instance with the specified ID already exists or an existing one stopped running(completed/failed/terminated).
     var existingInstance = await starter.GetStatusAsync(instanceId);
-    if (existingInstance == null)
+    if (existingInstance == null 
+    || existingInstance.RuntimeStatus == OrchestrationRuntimeStatus.Completed 
+    || existingInstance.RuntimeStatus == OrchestrationRuntimeStatus.Failed 
+    || existingInstance.RuntimeStatus == OrchestrationRuntimeStatus.Terminated)
     {
-        // An instance with the specified ID doesn't exist, create one.
+        // An instance with the specified ID doesn't exist or an existing one stopped running, create one.
         dynamic eventData = await req.Content.ReadAsAsync<object>();
         await starter.StartNewAsync(functionName, instanceId, eventData);
         log.LogInformation($"Started orchestration with ID = '{instanceId}'.");
@@ -43,10 +46,11 @@ public static async Task<HttpResponseMessage> RunSingle(
     }
     else
     {
-        // An instance with the specified ID exists, don't create one.
-        return req.CreateErrorResponse(
-            HttpStatusCode.Conflict,
-            $"An instance with ID '{instanceId}' already exists.");
+        // An instance with the specified ID exists or an existing one still running, don't create one.
+        return new HttpResponseMessage(HttpStatusCode.Conflict)
+        {
+            Content = new StringContent($"An instance with ID '{instanceId}' already exists."),
+        };
     }
 }
 ```
@@ -94,16 +98,19 @@ module.exports = async function(context, req) {
     const instanceId = req.params.instanceId;
     const functionName = req.params.functionName;
 
-    // Check if an instance with the specified ID already exists.
+    // Check if an instance with the specified ID already exists or an existing one stopped running(completed/failed/terminated).
     const existingInstance = await client.getStatus(instanceId);
-    if (!existingInstance) {
-        // An instance with the specified ID doesn't exist, create one.
+    if (!existingInstance 
+        || existingInstance.runtimeStatus == "Completed" 
+        || existingInstance.runtimeStatus == "Failed" 
+        || existingInstance.runtimeStatus == "Terminated") {
+        // An instance with the specified ID doesn't exist or an existing one stopped running, create one.
         const eventData = req.body;
         await client.startNew(functionName, instanceId, eventData);
         context.log(`Started orchestration with ID = '${instanceId}'.`);
         return client.createCheckStatusResponse(req, instanceId);
     } else {
-        // An instance with the specified ID exists, don't create one.
+        // An instance with the specified ID exists or an existing one still running, don't create one.
         return {
             status: 409,
             body: `An instance with ID '${instanceId}' already exists.`,
@@ -141,7 +148,7 @@ module.exports = async function(context, req) {
 }
 ```
 
-**__init__py**
+**__init__.py**
 
 ```python
 import logging
@@ -155,7 +162,7 @@ async def main(req: func.HttpRequest, starter: str) -> func.HttpResponse:
 
     existing_instance = await client.get_status(instance_id)
 
-    if existing_instance != None:
+    if existing_instance != None or existing_instance.runtime_status in ["Completed", "Failed", "Terminated"]:
         event_data = req.get_body()
         instance_id = await client.start_new(function_name, instance_id, event_data)
         logging.info(f"Started orchestration with ID = '{instance_id}'.")
@@ -170,7 +177,7 @@ async def main(req: func.HttpRequest, starter: str) -> func.HttpResponse:
 
 ---
 
-默认情况下，实例 ID 是随机生成的 GUID。 但是，在前面的示例中，实例 ID 通过 URL 在路由数据中传递。 代码调用 `GetStatusAsync` （c #）、 `getStatus` （JavaScript）或 `get_status` （Python）以检查具有指定 ID 的实例是否已在运行。 如果没有此类实例正在运行，将使用该 ID 创建一个新实例。
+默认情况下，实例 ID 是随机生成的 GUID。 但是，在前面的示例中，实例 ID 通过 URL 在路由数据中传递。 代码调用 `GetStatusAsync` (c # ) 、 `getStatus` (JavaScript) 或 `get_status` (Python) 来检查具有指定 ID 的实例是否已在运行。 如果没有此类实例正在运行，将使用该 ID 创建一个新实例。
 
 > [!NOTE]
 > 在此示例中有潜在的争用条件。 如果 **HttpStartSingle** 的两个实例同时执行，则两个函数调用都将报告成功，但实际上只会启动一个业务流程实例。 根据你的要求，这可能会产生不良副作用。 因此，必须确保没有两个请求可以同时执行此触发器函数。

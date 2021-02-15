@@ -1,6 +1,6 @@
 ---
 title: 外部标识的标识提供者 - Azure AD
-description: Azure Active Directory B2B 协作支持多重身份验证 (MFA)，以便对公司应用程序进行选择性访问
+description: 了解如何使用 Azure AD 作为默认标识提供者与外部用户共享。
 services: active-directory
 ms.service: active-directory
 ms.subservice: B2B
@@ -11,12 +11,12 @@ author: msmimart
 manager: celestedg
 ms.reviewer: elisolMS
 ms.collection: M365-identity-device-management
-ms.openlocfilehash: 2284d015b451872753dd0855cac42e6f1926545c
-ms.sourcegitcommit: 4e5560887b8f10539d7564eedaff4316adb27e2c
+ms.openlocfilehash: 8ead05598c6ca4d096e1a68c8d640938ecd771c2
+ms.sourcegitcommit: dfc4e6b57b2cb87dbcce5562945678e76d3ac7b6
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/06/2020
-ms.locfileid: "87908251"
+ms.lasthandoff: 12/12/2020
+ms.locfileid: "97355505"
 ---
 # <a name="identity-providers-for-external-identities"></a>外部标识的标识提供者
 
@@ -25,6 +25,9 @@ ms.locfileid: "87908251"
 但是，你可以允许用户使用各种标识提供者登录。
 
 - **Google**：通过 Google 联合身份验证，外部用户可以使用他们自己的 Gmail 帐户登录你的应用，来兑换你发出的邀请。 Google 联合身份验证还可以用于自助注册用户流。
+   > [!IMPORTANT]
+   > **从2021年1月4日开始**，Google 是 [弃用 web 视图登录支持](https://developers.googleblog.com/2020/08/guidance-for-our-effort-to-block-less-secure-browser-and-apps.html)。 如果你使用 Google federation 或使用 Gmail 进行自助注册，则应 [测试业务线本机应用程序的兼容性](google-federation.md#deprecation-of-webview-sign-in-support)。
+
    > [!NOTE]
    > 在当前的自助注册预览版中，如果用户流已与某个应用关联，而你向某位用户发送了该应用的邀请，那么该用户将无法使用 Gmail 帐户兑换该邀请。 解决方法是，用户可以执行自助注册流程。 此外，用户可以通过访问其他应用或使用“我的应用”门户（位于 https://myapps.microsoft.com ）来兑换邀请。
 

@@ -15,12 +15,12 @@ ms.date: 01/31/2019
 ms.subservice: hybrid
 ms.author: billmath
 ms.collection: M365-identity-device-management
-ms.openlocfilehash: 0a16e989a6da8daa4a290c7eaa4363eef09c9749
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: a6df1347eab57a6971fe2e39c0a55869c8f23939
+ms.sourcegitcommit: 829d951d5c90442a38012daaf77e86046018e5b9
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "85356332"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "91317481"
 ---
 # <a name="troubleshoot-an-attribute-not-synchronizing-in-azure-ad-connect"></a>对 Azure AD Connect 中未同步的属性排除故障
 
@@ -67,7 +67,7 @@ ms.locfileid: "85356332"
 
 * 双击“Active Directory 连接器”  以查看连接器空间  属性。 单击“预览”  按钮，在后续对话框中单击“生成预览”  按钮。
 
-  ![连接器空间属性](media/tshoot-connect-attribute-not-syncing/tshoot-connect-attribute-not-syncing/csattributes.png)
+  ![显示 "连接器空间对象属性" 屏幕并突出显示 "预览" 按钮的屏幕截图。](media/tshoot-connect-attribute-not-syncing/tshoot-connect-attribute-not-syncing/csattributes.png)
 
 * 现在单击“导入属性流”  ，这会显示从 Active Directory 连接器空间  到 Metaverse  的属性流。 “同步规则”  列显示影响该属性的同步规则  。 “数据源”  列显示来自连接器空间  的属性。 “Metaverse 属性”  列显示 Metaverse  中的属性。 可以此处查找未同步的属性。 如果在此处找不到属性，则此属性未映射，必须创建新的自定义同步规则  以映射属性。
 
@@ -75,18 +75,18 @@ ms.locfileid: "85356332"
 
 * 单击左窗格中的“导出属性流”  以查看使用出站同步规则  从 Metaverse  回到 Active Directory 连接器空间  的属性流。
 
-  ![连接器空间属性](media/tshoot-connect-attribute-not-syncing/tshoot-connect-attribute-not-syncing/mvtocsattributeflow.png)
+  ![屏幕截图显示了使用出站同步规则从元节返回到 Active Directory 连接器空间的属性流。](media/tshoot-connect-attribute-not-syncing/tshoot-connect-attribute-not-syncing/mvtocsattributeflow.png)
 
 * 同样，可以查看 Azure Active Directory 连接器空间  对象，并且可以生成预览  以查看从 Metaverse  到连接器空间  及相反方向的属性流，这样便可以调查属性为何未同步。
 
 ## <a name="recommended-documents"></a>**建议的文档**
-* [Azure AD Connect 同步：技术概念](https://docs.microsoft.com/azure/active-directory/hybrid/how-to-connect-sync-technical-concepts)
-* [Azure AD Connect 同步：了解体系结构](https://docs.microsoft.com/azure/active-directory/hybrid/concept-azure-ad-connect-sync-architecture)
-* [Azure AD Connect 同步：了解声明性预配](https://docs.microsoft.com/azure/active-directory/hybrid/concept-azure-ad-connect-sync-declarative-provisioning)
-* [Azure AD Connect 同步：了解声明性设置表达式](https://docs.microsoft.com/azure/active-directory/hybrid/concept-azure-ad-connect-sync-declarative-provisioning-expressions)
-* [Azure AD Connect 同步：了解默认配置](https://docs.microsoft.com/azure/active-directory/hybrid/concept-azure-ad-connect-sync-default-configuration)
-* [Azure AD Connect 同步：了解用户、组和联系人](https://docs.microsoft.com/azure/active-directory/hybrid/concept-azure-ad-connect-sync-user-and-contacts)
-* [Azure AD Connect 同步：影子属性](https://docs.microsoft.com/azure/active-directory/hybrid/how-to-connect-syncservice-shadow-attributes)
+* [Azure AD Connect 同步：技术概念](./how-to-connect-sync-technical-concepts.md)
+* [Azure AD Connect 同步：了解体系结构](./concept-azure-ad-connect-sync-architecture.md)
+* [Azure AD Connect 同步：了解声明性预配](./concept-azure-ad-connect-sync-declarative-provisioning.md)
+* [Azure AD Connect 同步：了解声明性设置表达式](./concept-azure-ad-connect-sync-declarative-provisioning-expressions.md)
+* [Azure AD Connect 同步：了解默认配置](./concept-azure-ad-connect-sync-default-configuration.md)
+* [Azure AD Connect 同步：了解用户、组和联系人](./concept-azure-ad-connect-sync-user-and-contacts.md)
+* [Azure AD Connect 同步：影子属性](./how-to-connect-syncservice-shadow-attributes.md)
 
 ## <a name="next-steps"></a>后续步骤
 

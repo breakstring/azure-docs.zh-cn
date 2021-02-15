@@ -11,12 +11,12 @@ ms.workload: identity
 ms.topic: tutorial
 ms.date: 01/21/2020
 ms.author: jeedes
-ms.openlocfilehash: 53a224f53f0270166ce75e718e670780730a10c8
-ms.sourcegitcommit: 023d10b4127f50f301995d44f2b4499cbcffb8fc
+ms.openlocfilehash: 59c01d5d8589b61ff0aaacb81d12fed8fba4f842
+ms.sourcegitcommit: 2ba6303e1ac24287762caea9cd1603848331dd7a
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/18/2020
-ms.locfileid: "88543646"
+ms.lasthandoff: 12/15/2020
+ms.locfileid: "97505505"
 ---
 # <a name="tutorial-azure-active-directory-single-sign-on-sso-integration-with-paylocity"></a>教程：Azure Active Directory 单一登录 (SSO) 与 Paylocity 集成
 
@@ -26,7 +26,7 @@ ms.locfileid: "88543646"
 * 让用户使用其 Azure AD 帐户自动登录到 Paylocity。
 * 在一个中心位置（Azure 门户）管理帐户。
 
-若要了解有关 SaaS 应用与 Azure AD 集成的详细信息，请参阅 [Azure Active Directory 的应用程序访问与单一登录是什么](https://docs.microsoft.com/azure/active-directory/active-directory-appssoaccess-whatis)。
+若要了解有关 SaaS 应用与 Azure AD 集成的详细信息，请参阅 [Azure Active Directory 的应用程序访问与单一登录是什么](../manage-apps/what-is-single-sign-on.md)。
 
 ## <a name="prerequisites"></a>先决条件
 
@@ -41,7 +41,7 @@ ms.locfileid: "88543646"
 
 * Paylocity 支持 SP 和 IDP 发起的 SSO 
 
-* 配置 Paylocity 后，就可以强制实施会话控制，从而实时保护组织的敏感数据，使其免遭外泄和渗透。 会话控制从条件访问扩展而来。 [了解如何通过 Microsoft Cloud App Security 强制实施会话控制](https://docs.microsoft.com/cloud-app-security/proxy-deployment-aad)。
+* 配置 Paylocity 后，就可以强制实施会话控制，从而实时保护组织的敏感数据，使其免遭外泄和渗透。 会话控制从条件访问扩展而来。 [了解如何通过 Microsoft Cloud App Security 强制实施会话控制](/cloud-app-security/proxy-deployment-aad)。
 
 ## <a name="adding-paylocity-from-the-gallery"></a>从库中添加 Paylocity
 
@@ -106,7 +106,7 @@ ms.locfileid: "88543646"
 
 1. 在“设置 SAML 单一登录”页的“SAML 签名证书”部分，单击“编辑”图标。   
 
-    ![SAML 签名证书编辑](./media/paylocity-tutorial/edit-samlassertion.png)
+    ![屏幕截图显示选择了“联合元数据 XML”的“下载”操作的“SAML 签名证书”。](./media/paylocity-tutorial/edit-samlassertion.png)
 
 1. 对于“签名选项”，请选择“签名 SAML 响应和断言”，然后单击“保存”   。 
 
@@ -148,28 +148,36 @@ ms.locfileid: "88543646"
 
 ## <a name="configure-paylocity-sso"></a>配置 Paylocity SSO
 
-若要在 Paylocity 端配置单一登录，需要将下载的“联合元数据 XML”以及从 Azure 门户复制的相应 URL 发送给[支持团队](mailto:service@paylocity.com)   。 他们会对此进行设置，使两端的 SAML SSO 连接均正确设置。
+若要在 Paylocity 端配置单一登录，
+
+1. 请下载“联合元数据 XML”。
+1. 在 Paylocity 中，导航到“HR 与薪资” > “用户访问权限” > “SSO 配置”  。
+1. 选择“SSO 集成”下的“添加 SSO 集成” 。 此时将打开新的拖放工具。
+1. 从下拉列表中选择“Microsoft Azure”作为 SSO 提供程序。
+1. 从下拉列表中选择“状态”。
+1. 将元数据文件拖放到拖放区域中。 Paylocity 尝试分析“颁发者”、“发布重定向和绑定 URL”以及“安全证书”。
+1. 选择“保存”以确认更改。 集成应显示在“SSO 集成”下方。
 
 ### <a name="create-paylocity-test-user"></a>创建 Paylocity 测试用户
 
-在本部分，将在 Paylocity 中创建名为 B.Simon 的用户。 与  [Paylocity 支持团队](mailto:service@paylocity.com)合作，将用户添加到 Paylocity 平台。 使用单一登录前，必须先创建并激活用户。
+在本部分，将在 Paylocity 中创建名为 B.Simon 的用户。 请与 [Paylocity 支持团队](mailto:service@paylocity.com)协作，将用户添加到 Paylocity 平台。 使用单一登录前，必须先创建并激活用户。
 
 ## <a name="test-sso"></a>测试 SSO
 
 在本部分中，使用访问面板测试 Azure AD 单一登录配置。
 
-单击访问面板中的 Paylocity 磁贴时，应当会自动登录到为其设置了 SSO 的 Paylocity。 有关访问面板的详细信息，请参阅 [Introduction to the Access Panel](https://docs.microsoft.com/azure/active-directory/active-directory-saas-access-panel-introduction)（访问面板简介）。
+单击访问面板中的 Paylocity 磁贴时，应当会自动登录到为其设置了 SSO 的 Paylocity。 有关访问面板的详细信息，请参阅 [Introduction to the Access Panel](../user-help/my-apps-portal-end-user-access.md)（访问面板简介）。
 
 ## <a name="additional-resources"></a>其他资源
 
-- [有关如何将 SaaS 应用与 Azure Active Directory 集成的教程列表](https://docs.microsoft.com/azure/active-directory/active-directory-saas-tutorial-list)
+- [有关如何将 SaaS 应用与 Azure Active Directory 集成的教程列表](./tutorial-list.md)
 
-- [什么是使用 Azure Active Directory 的应用程序访问和单一登录？](https://docs.microsoft.com/azure/active-directory/active-directory-appssoaccess-whatis)
+- [什么是使用 Azure Active Directory 的应用程序访问和单一登录？](../manage-apps/what-is-single-sign-on.md)
 
-- [什么是 Azure Active Directory 中的条件访问？](https://docs.microsoft.com/azure/active-directory/conditional-access/overview)
+- [什么是 Azure Active Directory 中的条件访问？](../conditional-access/overview.md)
 
 - [使用 Azure AD 试用 Paylocity](https://aad.portal.azure.com/)
 
-* [Microsoft Cloud App Security 中的会话控制是什么？](https://docs.microsoft.com/cloud-app-security/proxy-intro-aad)
+* [Microsoft Cloud App Security 中的会话控制是什么？](/cloud-app-security/proxy-intro-aad)
 
-* [如何通过高级可见性和控制保护 Paylocity](https://docs.microsoft.com/cloud-app-security/proxy-intro-aad)
+* [如何通过高级可见性和控制保护 Paylocity](/cloud-app-security/proxy-intro-aad)

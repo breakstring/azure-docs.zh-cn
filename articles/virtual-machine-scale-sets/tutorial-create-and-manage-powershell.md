@@ -8,13 +8,13 @@ ms.service: virtual-machine-scale-sets
 ms.subservice: management
 ms.date: 05/18/2018
 ms.reviewer: mimckitt
-ms.custom: mimckitt
-ms.openlocfilehash: a657f8a4fd7b92aeb858b919052ca732bf630ae9
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.custom: mimckitt, devx-track-azurepowershell
+ms.openlocfilehash: 1ab52c197ee57351a53919291f1c2e41108396ec
+ms.sourcegitcommit: 829d951d5c90442a38012daaf77e86046018e5b9
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87091328"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "89078514"
 ---
 # <a name="tutorial-create-and-manage-a-virtual-machine-scale-set-with-azure-powershell"></a>教程：使用 Azure PowerShell 创建和管理虚拟机规模集
 
@@ -312,7 +312,7 @@ Restart-AzVmss -ResourceGroupName "myResourceGroup" -VMScaleSetName "myScaleSet"
 
 
 ## <a name="clean-up-resources"></a>清理资源
-删除资源组时，也会删除其中包含的所有资源，例如 VM 实例、虚拟网络和磁盘。 `-Force` 参数将确认是否希望删除资源，不会显示询问是否删除的额外提示。 `-AsJob` 参数会使光标返回提示符处，不会等待操作完成。
+删除资源组时，也会删除其中包含的所有资源，例如 VM 实例、虚拟网络和磁盘。 `-Force` 参数将确认是否希望删除资源，而不会有额外提示。 `-AsJob` 参数会使光标返回提示符处，不会等待操作完成。
 
 ```azurepowershell-interactive
 Remove-AzResourceGroup -Name "myResourceGroup" -Force -AsJob

@@ -1,14 +1,14 @@
 ---
 title: 快速入门：使用 Azure CLI 创建蓝图
 description: 在本快速入门中，通过 Azure CLI 使用 Azure 蓝图创建、定义和部署项目。
-ms.date: 06/02/2020
+ms.date: 01/27/2021
 ms.topic: quickstart
-ms.openlocfilehash: 30a450fc7eab55424da7ce971ad234cbf2248b30
-ms.sourcegitcommit: f684589322633f1a0fafb627a03498b148b0d521
+ms.openlocfilehash: 6ce3031c93f973c2efb251fad371a6f3750ae0fd
+ms.sourcegitcommit: 436518116963bd7e81e0217e246c80a9808dc88c
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/06/2020
-ms.locfileid: "85969654"
+ms.lasthandoff: 01/27/2021
+ms.locfileid: "98920234"
 ---
 # <a name="quickstart-define-and-assign-an-azure-blueprint-with-azure-cli"></a>快速入门：使用 Azure CLI 定义和分配 Azure 蓝图
 
@@ -16,16 +16,17 @@ ms.locfileid: "85969654"
 
 ## <a name="prerequisites"></a>先决条件
 
-如果没有 Azure 订阅，请在开始之前创建一个[免费帐户](https://azure.microsoft.com/free)。
+- 如果没有 Azure 订阅，请在开始之前创建一个[免费帐户](https://azure.microsoft.com/free)。
+- 如果你之前未用过 Azure 蓝图，请通过 Azure CLI 使用 `az provider register --namespace Microsoft.Blueprint` 注册资源提供程序。
 
 [!INCLUDE [cloud-shell-try-it.md](../../../includes/cloud-shell-try-it.md)]
 
 ## <a name="add-the-blueprint-extension"></a>添加蓝图扩展
 
 若要使 Azure CLI 能够管理蓝图定义和分配，则必须添加该扩展。
-此扩展适用于可以使用 Azure CLI 的任何位置，包括 [Windows 10 上的 bash](/windows/wsl/install-win10)、[Cloud Shell](https://shell.azure.com)（独立的或位于门户内的）、[Azure CLI Docker 映像](https://hub.docker.com/r/microsoft/azure-cli/)，也适用于在本地安装了 Azure CLI 的任何位置。
+此扩展适用于可以使用 Azure CLI 的任何位置，包括 [Windows 10 上的 bash](/windows/wsl/install-win10)、[Cloud Shell](https://shell.azure.com)（独立的或位于门户内的）、[Azure CLI Docker 映像](https://hub.docker.com/_/microsoft-azure-cli)，也适用于在本地安装了 Azure CLI 的任何位置。
 
-1. 请确保安装最新的 Azure CLI（至少为 2.0.76）。 若尚未安装，请遵循[这些说明](/cli/azure/install-azure-cli-windows?view=azure-cli-latest)。
+1. 请确保安装最新的 Azure CLI（至少为 2.0.76）。 若尚未安装，请遵循[这些说明](/cli/azure/install-azure-cli-windows)。
 
 1. 在所选的 Azure CLI 环境中，使用以下命令导入该扩展：
 
@@ -116,7 +117,7 @@ ms.locfileid: "85969654"
 
      > [!NOTE]
      > 导入蓝图定义时，请使用文件名 blueprint.json。
-     > 调用 [az blueprint import](/cli/azure/ext/blueprint/blueprint#ext-blueprint-az-blueprint-import) 时使用此文件名。
+     > 调用 [az blueprint import](/cli/azure/ext/blueprint/blueprint#ext_blueprint_az_blueprint_import) 时使用此文件名。
 
      默认情况下，会在默认订阅中创建蓝图对象。 若要指定管理组，请使用参数 managementgroup。 若要指定订阅，请使用参数 subscription。
 
@@ -166,6 +167,9 @@ ms.locfileid: "85969654"
         --parameters artifacts\policyTags.json
      ```
 
+     > [!NOTE]
+     > 在 Mac 上使用 `az blueprint` 时，对于包含路径的参数值，请将 `\` 替换为 `/`。 在此情况下，参数的值为 `artifacts/policyTags.json`。
+
 1. 在订阅中为存储标记（重复使用 storageAccountType 参数）添加其他策略分配。 此附加的策略分配项目演示了蓝图上定义的参数可由多个项目使用。 在示例中，storageAccountType 用于在资源组上设置一个标记。 此值提供有关下一步骤中创建的存储帐户的信息。 此示例使用 GUID 为 `49c88fc8-6fd1-46fd-a676-f12d1d3a4c71` 的“将标记及其默认值应用于资源组”内置策略。
 
    - JSON 文件 - artifacts\policyStorageTags.json
@@ -192,6 +196,9 @@ ms.locfileid: "85969654"
         --description 'Apply storage tag and the parameter also used by the template to resource groups' \
         --parameters artifacts\policyStorageTags.json
      ```
+
+     > [!NOTE]
+     > 在 Mac 上使用 `az blueprint` 时，对于包含路径的参数值，请将 `\` 替换为 `/`。 在此情况下，参数的值为 `artifacts/policyStorageTags.json`。
 
 1. 在资源组下添加模板。 ARM 模板的 template 参数包含模板的标准 JSON 组件。 系统会向模板一一传递 **storageAccountType**、**tagName** 和 **tagValue** 蓝图参数，让模板重复使用这些参数。 通过使用参数 parameters 和在使用键-值对的模板 JSON 中注入值，模板可以使用蓝图参数。 蓝图和模板参数名称可以相同。
 
@@ -276,6 +283,9 @@ ms.locfileid: "85969654"
         --resource-group-art 'storageRG'
      ```
 
+     > [!NOTE]
+     > 在 Mac 上使用 `az blueprint` 时，对于包含路径的参数值，请将 `\` 替换为 `/`。 在此情况下，模板的值为 `artifacts/templateStorage.json`，参数的值为 `artifacts/templateStorageParams.json` 。
+
 1. 在资源组下添加角色分配。 与上一角色分配项类似，以下示例对“所有者”角色使用定义标识符，并向其提供不同于蓝图参数的另一参数。 此示例使用 GUID 为 `8e3af657-a8ff-443c-a75c-2fe8c4bcb635` 的“所有者”内置角色。
 
    ```azurecli-interactive
@@ -356,7 +366,7 @@ az blueprint publish --blueprint-name 'MyBlueprint' --version '{BlueprintVersion
         --parameters blueprintAssignment.json
      ```
 
-     **用户分配的托管标识**可以位于任何订阅和资源组中，只要分配蓝图的用户有权访问它即可。
+     **用户分配的托管标识** 可以位于任何订阅和资源组中，只要分配蓝图的用户有权访问它即可。
 
      > [!IMPORTANT]
      > Azure 蓝图不管理用户分配的托管标识。 用户负责分配足够的角色和权限，否则蓝图分配会失败。

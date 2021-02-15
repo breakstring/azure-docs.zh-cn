@@ -1,18 +1,18 @@
 ---
 title: 教程：在 Azure 门户中管理查询
 description: 在本教程中，你会在 Azure 门户中创建 Resource Graph 查询并将这个新查询与其他人共享。
-ms.date: 06/29/2020
+ms.date: 01/27/2021
 ms.topic: tutorial
-ms.openlocfilehash: f602a6ed26f467f2d3395bdf5e3346c83684b108
-ms.sourcegitcommit: 98854e3bd1ab04ce42816cae1892ed0caeedf461
+ms.openlocfilehash: 7240a843cfa041137b28284e396c8a4b62a81926
+ms.sourcegitcommit: 436518116963bd7e81e0217e246c80a9808dc88c
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/07/2020
-ms.locfileid: "88005176"
+ms.lasthandoff: 01/27/2021
+ms.locfileid: "98916673"
 ---
 # <a name="tutorial-create-and-share-an-azure-resource-graph-query-in-the-azure-portal"></a>教程：在 Azure 门户中创建和共享 Azure Resource Graph 查询
 
-使用 Azure Resource Graph 资源管理器可以直接在 Azure 门户中保存 Resource Graph 查询。 查询有两种：_专用_和_共享_。 专用查询保存在 Azure 门户设置中。 而共享查询是 Azure 资源管理器资源，可以使用 Azure 基于角色的访问控制 (Azure RBAC) 进行管理，并使用资源锁进行保护。 这两种类型的查询都是静态加密的。
+使用 Azure Resource Graph 资源管理器可以直接在 Azure 门户中保存 Resource Graph 查询。 查询有两种：_专用_ 和 _共享_。 专用查询保存在 Azure 门户设置中。 而“共享查询”是 Azure 资源管理器资源，可以使用 Azure 基于角色的访问控制 (Azure RBAC) 进行管理，并使用资源锁进行保护。 这两种类型的查询都是静态加密的。
 
 通过将查询保存在 Azure 门户中，可以在查找收藏夹查询或常用查询时节省时间。 共享查询时，可以通过重复操作来帮助你的团队实现一致性和高效的目标。
 
@@ -60,8 +60,7 @@ ms.locfileid: "88005176"
 
 ## <a name="create-a-shared-query"></a>创建共享查询
 
-与专用查询不同，共享查询是资源管理器资源。 这种情况意味着，这些查询保存到资源组，可以使用 RBAC 进行管理和控制，甚至可以使用资源锁进行保护。 作为资源，具有相应权限的任何人都可以查看和使用该资源。
-若要创建新的共享查询，请执行以下步骤：
+与专用查询不同，共享查询是资源管理器资源。 这种情况意味着，这些查询保存到资源组，可以使用 RBAC 进行管理和控制，甚至可以使用资源锁进行保护。 作为资源，具有相应权限的任何人都可以查看和使用该资源。 若要创建新的共享查询，请执行以下步骤：
 
 1. 从门户菜单中，选择“所有服务”或使用所有页面顶部的 Azure 搜索框搜索并选择“Resource Graph 资源管理器”。
 
@@ -107,7 +106,7 @@ ms.locfileid: "88005176"
 
 由于共享查询是资源管理器资源，因此有多种方法可进行查找：
 
-- 从 Resource Graph 资源管理器中，选择“打开查询”并将类型设置为“共享查询” 。
+- 从 Resource Graph 资源管理器， 选择“打开查询”，并将类型设置为“共享查询” 。
 - 通过 Resource Graph 查询门户页。
 - 通过保存共享查询的资源组。
 - 通过查询 Resource Graph。

@@ -3,24 +3,24 @@ title: Azure 前端-路由规则匹配监视 |Microsoft Docs
 description: 本文可帮助你了解 Azure 前门如何匹配用于传入请求的路由规则
 services: front-door
 documentationcenter: ''
-author: sharad4u
+author: duongau
 ms.service: frontdoor
 ms.devlang: na
 ms.topic: article
 ms.tgt_pltfrm: na
 ms.workload: infrastructure-services
-ms.date: 09/10/2018
-ms.author: sharadag
-ms.openlocfilehash: 420aa52293da14a0dfe8fbdfe681440ee4309e6b
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.date: 09/28/2020
+ms.author: duau
+ms.openlocfilehash: 67940db973f494cd4a12c2f16db528e0b113d656
+ms.sourcegitcommit: 829d951d5c90442a38012daaf77e86046018e5b9
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "80878589"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "91449207"
 ---
-# <a name="how-front-door-matches-requests-to-a-routing-rule"></a>Front Door 如何匹配请求与传递规则
+# <a name="how-requests-are-matched-to-a-routing-rule"></a>如何将请求匹配到路由规则
 
-建立连接并执行 TLS 握手后，当请求落在前门环境中时，前门所要做的第一件事情就是从所有配置中确定，将请求与进行匹配，然后采用定义的操作。 以下文档介绍了 Front Door 如何确定在处理 HTTP 请求时要使用的路由配置。
+建立连接并完成 TLS 握手后，当请求落在前门环境中时，前一种情况下，首先需要确定要将请求与哪个特定路由规则进行匹配，然后在配置中采用定义的操作。 以下文档介绍了 Front Door 如何确定在处理 HTTP 请求时要使用的路由配置。
 
 ## <a name="structure-of-a-front-door-route-configuration"></a>Front Door 路由配置结构
 Front Door 传递规则配置由两个主要部分组成：“左侧”和“右侧”。 我们将传入的请求与路由的左侧相匹配，而右侧则定义我们处理请求的方式。
@@ -29,7 +29,7 @@ Front Door 传递规则配置由两个主要部分组成：“左侧”和“右
 以下属性确定传入的请求是否与传递规则（或左侧）匹配：
 
 * **** HTTP 协议 (HTTP/HTTPS)
-* **主机**（例如 www \. foo.com、 \* . bar.com）
+* **宿主** (例如 www \. foo.com \* bar.com) 
 * **** 路径（例如，/\*、/users/\*/file.gif）
 
 这些属性会在内部扩展，因此协议/主机/路径的每种组合都是潜在的匹配集。
@@ -41,7 +41,7 @@ Front Door 传递规则配置由两个主要部分组成：“左侧”和“右
 本节将重点介绍我们如何匹配给定的 Front Door 传递规则。 基本概念是始终优先匹配最具体的匹配项，仅查看“左侧”****。  首先基于 HTTP 协议匹配，接下来是前端主机，然后是路径。
 
 ### <a name="frontend-host-matching"></a>前端主机匹配
-在匹配前端主机时，使用如下逻辑：
+匹配前端主机时，使用以下定义的逻辑：
 
 1. 查找主机上具有完全匹配项的任何路由。
 2. 如果没有精确的前端主机匹配项，则拒绝该请求并发送“400 错误请求”错误。

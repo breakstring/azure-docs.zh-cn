@@ -5,12 +5,13 @@ author: florianborn71
 ms.author: flborn
 ms.date: 02/06/2020
 ms.topic: article
-ms.openlocfilehash: f4c49be5f5a0f2c89831891dc2640b64fee9fc44
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.custom: devx-track-csharp
+ms.openlocfilehash: a399565d62b20f62b72257bcb9f3beb2c910ac98
+ms.sourcegitcommit: f377ba5ebd431e8c3579445ff588da664b00b36b
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "84022412"
+ms.lasthandoff: 02/05/2021
+ms.locfileid: "99594055"
 ---
 # <a name="z-fighting-mitigation"></a>Z 冲突缓解
 
@@ -20,16 +21,16 @@ ms.locfileid: "84022412"
 
 |情形                        | 结果                               |
 |---------------------------------|:-------------------------------------|
-|常规 z 冲突               |![Z 冲突](./media/zfighting-0.png)|
-|已启用 Z 冲突缓解    |![Z 冲突](./media/zfighting-1.png)|
-|已启用棋盘格突出显示|![Z 冲突](./media/zfighting-2.png)|
+|常规 z 冲突               |![红色和绿色四边形之间没有确定性的优先级](./media/zfighting-0.png)|
+|已启用 Z 冲突缓解    |![红色四个优先顺序](./media/zfighting-1.png)|
+|已启用棋盘格突出显示|![棋盘模式的红色和绿色四核切换首选项](./media/zfighting-2.png)|
 
 以下代码启用 z 冲突缓解：
 
 ```cs
-void EnableZFightingMitigation(AzureSession session, bool highlight)
+void EnableZFightingMitigation(RenderingSession session, bool highlight)
 {
-    ZFightingMitigationSettings settings = session.Actions.ZFightingMitigationSettings;
+    ZFightingMitigationSettings settings = session.Connection.ZFightingMitigationSettings;
 
     // enabling z-fighting mitigation
     settings.Enabled = true;
@@ -40,18 +41,17 @@ void EnableZFightingMitigation(AzureSession session, bool highlight)
 ```
 
 ```cpp
-void EnableZFightingMitigation(ApiHandle<AzureSession> session, bool highlight)
+void EnableZFightingMitigation(ApiHandle<RenderingSession> session, bool highlight)
 {
-    ApiHandle<ZFightingMitigationSettings> settings = *session->Actions()->ZFightingMitigationSettings();
+    ApiHandle<ZFightingMitigationSettings> settings = session->Connection()->GetZFightingMitigationSettings();
 
     // enabling z-fighting mitigation
-    settings->Enabled(true);
+    settings->SetEnabled(true);
 
     // enabling checkerboard highlighting of z-fighting potential
-    settings->Highlighting(highlight);
+    settings->SetHighlighting(highlight);
 }
 ```
-
 
 > [!NOTE]
 > Z 冲突缓解是一个全局设置，会影响渲染的所有网格。
@@ -75,6 +75,11 @@ void EnableZFightingMitigation(ApiHandle<AzureSession> session, bool highlight)
 
 * 启用 z 冲突缓解几乎不会产生任何性能开销。
 * 此外，启用 z 冲突覆盖会产生相当高的性能开销，不过，具体的开销因场景而异。
+
+## <a name="api-documentation"></a>API 文档
+
+* [C # RenderingConnection ZFightingMitigationSettings 属性](/dotnet/api/microsoft.azure.remoterendering.renderingconnection.zfightingmitigationsettings)
+* [C + + RenderingConnection：： ZFightingMitigationSettings ( # B1 ](/cpp/api/remote-rendering/renderingconnection#zfightingmitigationsettings)
 
 ## <a name="next-steps"></a>后续步骤
 

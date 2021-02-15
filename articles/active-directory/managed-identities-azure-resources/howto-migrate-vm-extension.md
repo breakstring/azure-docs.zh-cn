@@ -3,7 +3,7 @@ title: 停止使用托管标识 VM 扩展 - Azure AD
 description: 有关停止使用 VM 扩展并开始使用 Azure 实例元数据服务 (IMDS) 进行身份验证的分步说明。
 services: active-directory
 documentationcenter: ''
-author: MarkusVi
+author: barclayn
 manager: daveba
 editor: ''
 ms.service: active-directory
@@ -12,14 +12,15 @@ ms.devlang: na
 ms.topic: how-to
 ms.tgt_pltfrm: na
 ms.workload: identity
-ms.date: 02/25/2018
-ms.author: markvi
-ms.openlocfilehash: afcbf5187a3b5ef3f44aebda22d376e9b796bf59
-ms.sourcegitcommit: cec9676ec235ff798d2a5cad6ee45f98a421837b
+ms.date: 02/03/2020
+ms.author: barclayn
+ROBOTS: NOINDEX
+ms.openlocfilehash: dca5f9ed2911ae3042fb9871f849212ec18b1b58
+ms.sourcegitcommit: 44188608edfdff861cc7e8f611694dec79b9ac7d
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "85848384"
+ms.lasthandoff: 02/04/2021
+ms.locfileid: "99539377"
 ---
 # <a name="how-to-stop-using-the-virtual-machine-managed-identities-extension-and-start-using-the-azure-instance-metadata-service"></a>如何停止使用虚拟机托管标识扩展并开始使用 Azure 实例元数据服务
 
@@ -35,10 +36,10 @@ ms.locfileid: "85848384"
 
 ### <a name="provision-the-extension"></a>预配扩展 
 
-将虚拟机或虚拟机规模集配置为使用托管标识时，可以选择性地在 [Set-AzVMExtension](https://docs.microsoft.com/powershell/module/az.compute/set-azvmextension) cmdlet 中使用 `-Type` 参数，来预配 Azure 资源托管标识 VM 扩展。 可以传递 `ManagedIdentityExtensionForWindows` 或 `ManagedIdentityExtensionForLinux`（取决于虚拟机的类型），并使用 `-Name` 参数将其命名。 `-Settings` 参数指定 OAuth 令牌终结点用于令牌获取的端口：
+将虚拟机或虚拟机规模集配置为使用托管标识时，可以选择性地在 [Set-AzVMExtension](/powershell/module/az.compute/set-azvmextension) cmdlet 中使用 `-Type` 参数，来预配 Azure 资源托管标识 VM 扩展。 可以传递 `ManagedIdentityExtensionForWindows` 或 `ManagedIdentityExtensionForLinux`（取决于虚拟机的类型），并使用 `-Name` 参数将其命名。 `-Settings` 参数指定 OAuth 令牌终结点用于令牌获取的端口：
 
-```powershell
-   $settings = @{ "port" = 50342 }
+```azurepowershell-interactive
+$settings = @{ "port" = 50342 }
    Set-AzVMExtension -ResourceGroupName myResourceGroup -Location WestUS -VMName myVM -Name "ManagedIdentityExtensionForWindows" -Type "ManagedIdentityExtensionForWindows" -Publisher "Microsoft.ManagedIdentity" -TypeHandlerVersion "1.0" -Settings $settings 
 ```
 
@@ -68,10 +69,10 @@ ms.locfileid: "85848384"
     
 如果使用虚拟机规模集，则还可以使用 [Add-AzVmssExtension](/powershell/module/az.compute/add-azvmssextension) cmdlet 来预配 Azure 资源托管标识虚拟机规模集扩展。 可以传递 `ManagedIdentityExtensionForWindows` 或 `ManagedIdentityExtensionForLinux`（取决于虚拟机规模集的类型），并使用 `-Name` 参数将其命名。 `-Settings` 参数指定 OAuth 令牌终结点用于令牌获取的端口：
 
-   ```powershell
+   ```azurepowershell-interactive
    $setting = @{ "port" = 50342 }
    $vmss = Get-AzVmss
-   Add-AzVmssExtension -VirtualMachineScaleSet $vmss -Name "ManagedIdentityExtensionForWindows" -Type "ManagedIdentityExtensionForWindows" -Publisher "Microsoft.ManagedIdentity" -TypeHandlerVersion "1.0" -Setting $settings 
+   Add-AzVmssExtension -VirtualMachineScaleSet $vmss -Name "ManagedIdentityExtensionForWindows" -Type "ManagedIdentityExtensionForWindows" -Publisher "Microsoft.ManagedIdentity" -TypeHandlerVersion "1.0" -Setting $settings 
    ```
 若要使用 Azure 资源管理器部署模板预配虚拟机规模集扩展，请将以下 JSON 添加到模板中的 `extensionpProfile` 节（使用 `ManagedIdentityExtensionForLinux` 指定名称，使用 type 元素指定 Linux 版本）。
 
@@ -96,7 +97,7 @@ ms.locfileid: "85848384"
 由于 DNS 查找失败，虚拟机扩展的预配可能会失败。 如果发生这种情况，请重启虚拟机，然后重试。 
 
 ### <a name="remove-the-extension"></a>删除扩展 
-若要删除扩展，请在 Azure CLI 中结合 [az vm extension delete](https://docs.microsoft.com/cli/azure/vm/) 或 [az vmss extension delete](https://docs.microsoft.com/cli/azure/vmss)（针对虚拟机规模集）使用 `-n ManagedIdentityExtensionForWindows` 或 `-n ManagedIdentityExtensionForLinux` 开关，或者在 Powershell 中使用 `Remove-AzVMExtension`：
+若要删除扩展，请在 Azure CLI 中结合 [az vm extension delete](/cli/azure/vm/) 或 [az vmss extension delete](/cli/azure/vmss)（针对虚拟机规模集）使用 `-n ManagedIdentityExtensionForWindows` 或 `-n ManagedIdentityExtensionForLinux` 开关（具体取决于虚拟机的类型），或者在 PowerShell 中使用 `Remove-AzVMExtension`：
 
 ```azurecli-interactive
 az vm identity --resource-group myResourceGroup --vm-name myVm -n ManagedIdentityExtensionForWindows
@@ -106,7 +107,7 @@ az vm identity --resource-group myResourceGroup --vm-name myVm -n ManagedIdentit
 az vmss extension delete -n ManagedIdentityExtensionForWindows -g myResourceGroup -vmss-name myVMSS
 ```
 
-```powershell
+```azurepowershell-interactive
 Remove-AzVMExtension -ResourceGroupName myResourceGroup -Name "ManagedIdentityExtensionForWindows" -VMName myVM
 ```
 
@@ -162,7 +163,7 @@ Content-Type: application/json
 
 在 Windows 和某些 Linux 版本中，如果该扩展停止，可使用以下 cmdlet 手动重启该扩展：
 
-```powershell
+```azurepowershell-interactive
 Set-AzVMExtension -Name <extension name>  -Type <extension Type>  -Location <location> -Publisher Microsoft.ManagedIdentity -VMName <vm name> -ResourceGroupName <resource group name> -ForceRerun <Any string different from any last value used>
 ```
 
@@ -196,7 +197,7 @@ Azure 资源托管标识虚拟机扩展当前不支持将其架构导出到资�
 
 ## <a name="azure-instance-metadata-service"></a>Azure 实例元数据服务
 
-[Azure 实例元数据服务 (IMDS)](/azure/virtual-machines/windows/instance-metadata-service) 是一个 REST 终结点，提供有关可用于管理和配置虚拟机的正在运行的虚拟机实例的信息。 该终结点位于已知不可路由的 IP 地址 (`169.254.169.254`)，该地址只能从虚拟机中访问。
+[Azure 实例元数据服务 (IMDS)](../../virtual-machines/windows/instance-metadata-service.md) 是一个 REST 终结点，提供有关可用于管理和配置虚拟机的正在运行的虚拟机实例的信息。 该终结点位于已知不可路由的 IP 地址 (`169.254.169.254`)，该地址只能从虚拟机中访问。
 
 使用 Azure IMDS 请求令牌可获得多种优势。 
 
@@ -212,4 +213,4 @@ Azure 资源托管标识虚拟机扩展当前不支持将其架构导出到资�
 ## <a name="next-steps"></a>后续步骤
 
 * [如何在 Azure 虚拟机上使用 Azure 资源的托管标识获取访问令牌](how-to-use-vm-token.md)
-* [Azure 实例元数据服务](https://docs.microsoft.com/azure/virtual-machines/windows/instance-metadata-service)
+* [Azure 实例元数据服务](../../virtual-machines/windows/instance-metadata-service.md)

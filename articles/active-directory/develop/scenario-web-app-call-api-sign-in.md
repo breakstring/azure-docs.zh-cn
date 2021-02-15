@@ -1,5 +1,6 @@
 ---
-title: 注销时从令牌缓存中删除帐户 - Microsoft 标识平台 | Azure
+title: 注销时从令牌缓存中删除帐户 |Microsoft
+titleSuffix: Microsoft identity platform
 description: 了解如何在注销时从令牌缓存中删除帐户
 services: active-directory
 author: jmprieur
@@ -11,12 +12,12 @@ ms.workload: identity
 ms.date: 07/14/2019
 ms.author: jmprieur
 ms.custom: aaddev
-ms.openlocfilehash: 5246100815fde569c55027a555464c44a240d4b3
-ms.sourcegitcommit: b8702065338fc1ed81bfed082650b5b58234a702
+ms.openlocfilehash: 9fc271dfa9edbedac8527009dd2b2180b7c5e7cd
+ms.sourcegitcommit: 5cdd0b378d6377b98af71ec8e886098a504f7c33
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/11/2020
-ms.locfileid: "88119991"
+ms.lasthandoff: 01/25/2021
+ms.locfileid: "98756261"
 ---
 # <a name="a-web-app-that-calls-web-apis-remove-accounts-from-the-token-cache-on-global-sign-out"></a>调用 Web API 的 Web 应用：在全局注销时从令牌缓存中删除帐户
 
@@ -30,7 +31,7 @@ ms.locfileid: "88119991"
 
 # <a name="aspnet-core"></a>[ASP.NET Core](#tab/aspnetcore)
 
-Microsoft.Identity.Web 负责为你实现注销。 有关详细信息[，请参阅](https://github.com/AzureAD/microsoft-identity-web/blob/c29f1a7950b940208440bebf0bcb524a7d6bee22/src/Microsoft.Identity.Web/WebAppExtensions/WebAppCallsWebApiAuthenticationBuilderExtensions.cs#L168-L176)
+Microsoft.Identity.Web 负责为你实现注销。 有关详细信息，请参阅 [Microsoft.Identity.Web 源代码](https://github.com/AzureAD/microsoft-identity-web/blob/c29f1a7950b940208440bebf0bcb524a7d6bee22/src/Microsoft.Identity.Web/WebAppExtensions/WebAppCallsWebApiAuthenticationBuilderExtensions.cs#L168-L176)
 
 # <a name="aspnet"></a>[ASP.NET](#tab/aspnet)
 
@@ -50,22 +51,18 @@ Python 示例不会在全局注销时删除缓存中的帐户。
 
 # <a name="aspnet-core"></a>[ASP.NET Core](#tab/aspnetcore)
 
-> [!div class="nextstepaction"]
-> [获取 Web 应用的令牌](./scenario-web-app-call-api-acquire-token.md?tabs=aspnetcore)
+转到此方案中的下一篇文章：[获取 Web 应用的令牌](./scenario-web-app-call-api-acquire-token.md?tabs=aspnetcore)。
 
 # <a name="aspnet"></a>[ASP.NET](#tab/aspnet)
 
-> [!div class="nextstepaction"]
-> [获取 Web 应用的令牌](./scenario-web-app-call-api-acquire-token.md?tabs=aspnet)
+转到此方案中的下一篇文章：[获取 Web 应用的令牌](./scenario-web-app-call-api-acquire-token.md?tabs=aspnet)。
 
 # <a name="java"></a>[Java](#tab/java)
 
-> [!div class="nextstepaction"]
-> [获取 Web 应用的令牌](./scenario-web-app-call-api-acquire-token.md?tabs=java)
+转到此方案中的下一篇文章：[获取 Web 应用的令牌](./scenario-web-app-call-api-acquire-token.md?tabs=java)。
 
 # <a name="python"></a>[Python](#tab/python)
 
-> [!div class="nextstepaction"]
-> [获取 Web 应用的令牌](./scenario-web-app-call-api-acquire-token.md?tabs=python)
+转到此方案中的下一篇文章：[获取 Web 应用的令牌](./scenario-web-app-call-api-acquire-token.md?tabs=python)。
 
 ---

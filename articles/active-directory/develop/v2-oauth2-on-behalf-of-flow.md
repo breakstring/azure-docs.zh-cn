@@ -13,12 +13,12 @@ ms.date: 08/7/2020
 ms.author: hirsin
 ms.reviewer: hirsin
 ms.custom: aaddev
-ms.openlocfilehash: 3abef3324bee61f2d7eb96c80750ad589b15f342
-ms.sourcegitcommit: 25bb515efe62bfb8a8377293b56c3163f46122bf
+ms.openlocfilehash: ff8e03b813e2cb890192667e3466d920eaabc72c
+ms.sourcegitcommit: 5cdd0b378d6377b98af71ec8e886098a504f7c33
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/07/2020
-ms.locfileid: "87987029"
+ms.lasthandoff: 01/25/2021
+ms.locfileid: "98756080"
 ---
 # <a name="microsoft-identity-platform-and-oauth-20-on-behalf-of-flow"></a>Microsoft 标识平台和 OAuth 2.0 代理流
 
@@ -27,8 +27,8 @@ OAuth 2.0 代理流 (OBO) 适用于这样的用例：应用程序调用某个服
 
 本文介绍如何在应用程序中直接针对协议进行编程。  如果可能，建议你改用受支持的 Microsoft 身份验证库 (MSAL) 来[获取令牌并调用受保护的 Web API](authentication-flows-app-scenarios.md#scenarios-and-supported-authentication-flows)。  另请参阅[使用 MSAL 的示例应用](sample-v2-code.md)。
 
-> [!NOTE]
-> 自 2018 年 5 月起，派生 `id_token` 的某些隐式流不能用于 OBO 流。 单页应用 (SPA) 应改为将**访问**令牌传递给中间层机密客户端，才能执行 OBO 流。 有关哪些客户端可以执行 OBO 调用的详细信息，请参阅[限制](#client-limitations)。
+
+自 2018 年 5 月起，派生 `id_token` 的某些隐式流不能用于 OBO 流。 单页应用 (SPA) 应改为将 **访问** 令牌传递给中间层机密客户端，才能执行 OBO 流。 有关哪些客户端可以执行 OBO 调用的详细信息，请参阅[限制](#client-limitations)。
 
 ## <a name="protocol-diagram"></a>协议图
 
@@ -42,10 +42,9 @@ OAuth 2.0 代理流 (OBO) 适用于这样的用例：应用程序调用某个服
 1. API A 向 Microsoft 标识平台令牌颁发终结点进行身份验证并请求访问 API B 的令牌。
 1. Microsoft 标识平台令牌颁发终结点使用令牌 A 验证 API A 的凭据，并颁发供 API B（令牌 B）访问 API A 的访问令牌。
 1. 令牌 B 由 API A 在向 API B 发出的请求的 authorization 标头中设置。
-1. 受保护资源中的数据通过 API B 返回到 API A，并从那返回到客户端。
+1. 受保护资源中的数据由 API B 返回到 API A，然后返回到客户端。
 
-> [!NOTE]
-> 在此方案中，中间层服务无需用户干预，就要获取用户对访问下游 API 的许可。 因此，在身份验证过程的同意步骤中会提前显示授权访问下游 API 的选项。 若要了解如何为应用设置此选项，请参阅[为中间层应用程序获得同意](#gaining-consent-for-the-middle-tier-application)。
+在此方案中，中间层服务无用户交互，使用户获得访问下游 API 的许可。 因此，在身份验证过程的同意步骤中会提前显示授权访问下游 API 的选项。 若要了解如何为应用设置此选项，请参阅[为中间层应用程序获得同意](#gaining-consent-for-the-middle-tier-application)。
 
 ## <a name="middle-tier-access-token-request"></a>中间层访问令牌请求
 
@@ -66,7 +65,7 @@ https://login.microsoftonline.com/<tenant>/oauth2/v2.0/token
 | `grant_type` | 必须 | 令牌请求的类型。 对于使用 JWT 的请求，该值必须为 `urn:ietf:params:oauth:grant-type:jwt-bearer`。 |
 | `client_id` | 必须 | [Azure 门户 - 应用注册](https://go.microsoft.com/fwlink/?linkid=2083908)页分配给应用的应用程序（客户端）ID。 |
 | `client_secret` | 必须 | 在“Azure 门户 - 应用注册”页中为应用生成的客户端机密。 |
-| `assertion` | 必须 | 发送到中间层 API 的访问令牌。  此令牌必须使受众 (`aud`) 声明，使此 OBO 请求 (由字段) 表示的应用程序 `client-id` 。 应用程序不能兑换不同应用程序的令牌 (因此，例如，如果客户端发送一个用于 MS Graph 的令牌，则 API 无法使用 OBO 兑换该令牌。  它应改为拒绝令牌) 。  |
+| `assertion` | 必须 | 已发送到中间层 API 的访问令牌。  此令牌必须包含发出此 OBO 请求的应用（由 `client-id` 字段表示的应用）的受众 (`aud`) 声明。 应用程序无法兑换其他应用的令牌（例如，如果客户端向 API 发送用于 MS Graph 的令牌，则该 API 无法使用 OBO 兑换该令牌。  它应该改为拒绝该令牌）。  |
 | `scope` | 必选 | 空格分隔的令牌请求作用域的列表。 有关详细信息，请参阅[作用域](v2-permissions-and-consent.md)。 |
 | `requested_token_use` | 必选 | 指定应如何处理请求。 在 OBO 流中，该值必须设置为 `on_behalf_of`。 |
 
@@ -93,13 +92,13 @@ grant_type=urn:ietf:params:oauth:grant-type:jwt-bearer
 
 使用证书的服务到服务访问令牌请求包含以下参数：
 
-| 参数 | 类型 | 描述 |
+| 参数 | 类型 | 说明 |
 | --- | --- | --- |
 | `grant_type` | 必选 | 令牌请求的类型。 对于使用 JWT 的请求，该值必须为 `urn:ietf:params:oauth:grant-type:jwt-bearer`。 |
 | `client_id` | 必须 |  [Azure 门户 - 应用注册](https://go.microsoft.com/fwlink/?linkid=2083908)页分配给应用的应用程序（客户端）ID。 |
 | `client_assertion_type` | 必须 | 值必须是 `urn:ietf:params:oauth:client-assertion-type:jwt-bearer`。 |
 | `client_assertion` | 必选 | 断言（JSON Web 令牌），需使用作为凭据向应用程序注册的证书进行创建和签名。 若要了解如何注册证书以及断言的格式，请参阅[证书凭据](active-directory-certificate-credentials.md)。 |
-| `assertion` | 必须 |  发送到中间层 API 的访问令牌。  此令牌必须使受众 (`aud`) 声明，使此 OBO 请求 (由字段) 表示的应用程序 `client-id` 。 应用程序不能兑换不同应用程序的令牌 (因此，例如，如果客户端发送一个用于 MS Graph 的令牌，则 API 无法使用 OBO 兑换该令牌。  它应改为拒绝令牌) 。  |
+| `assertion` | 必须 |  已发送到中间层 API 的访问令牌。  此令牌必须包含发出此 OBO 请求的应用（由 `client-id` 字段表示的应用）的受众 (`aud`) 声明。 应用程序无法兑换其他应用的令牌（例如，如果客户端向 API 发送用于 MS Graph 的令牌，则该 API 无法使用 OBO 兑换该令牌。  它应该改为拒绝该令牌）。  |
 | `requested_token_use` | 必选 | 指定应如何处理请求。 在 OBO 流中，该值必须设置为 `on_behalf_of`。 |
 | `scope` | 必选 | 空格分隔的令牌请求范围的列表。 有关详细信息，请参阅[作用域](v2-permissions-and-consent.md)。|
 
@@ -131,7 +130,7 @@ grant_type=urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Ajwt-bearer
 
 | 参数 | 说明 |
 | --- | --- |
-| `token_type` | 指示令牌类型值。 Microsoft 标识平台支持的唯一类型是 `Bearer`。 有关持有者令牌的详细信息，请参阅 [OAuth 2.0 授权框架：持有者令牌用法 (RFC 6750)](https://www.rfc-editor.org/rfc/rfc6750.txt)。 |
+| `token_type` | 指示令牌类型值。 Microsoft 标识平台支持的唯一类型是 `Bearer` 。 有关持有者令牌的详细信息，请参阅 [OAuth 2.0 授权框架：持有者令牌用法 (RFC 6750)](https://www.rfc-editor.org/rfc/rfc6750.txt)。 |
 | `scope` | 令牌中授予的访问权限的范围。 |
 | `expires_in` | 访问令牌有效的时间长度（以秒为单位）。 |
 | `access_token` | 请求的访问令牌。 调用方服务可以使用此令牌向接收方服务进行身份验证。 |
@@ -152,10 +151,9 @@ grant_type=urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Ajwt-bearer
 }
 ```
 
-> [!NOTE]
-> 上面的访问令牌是 Microosft 图形的1.0 版格式的令牌。 这是因为令牌格式基于所访问的**资源**，并且与用于请求它的终结点无关。 Microsoft Graph 设置为接受 v1.0 令牌，因此当客户端请求 Microsoft Graph 的令牌时，Microsoft 标识平台会生成 v1.0 访问令牌。 其他应用可能表示它们需要 v2.0 格式令牌、1.0 格式令牌，甚至是专用或加密的令牌格式。  V1.0 和 v2.0 终结点都可以发出令牌的格式，这种方式使得资源始终可以获得正确的令牌格式，而不考虑客户端请求令牌的方式或位置。 
->
-> 只有应用程序才能查看访问令牌。 客户端**不得**检查它们。 在代码中检查其他应用的访问令牌将导致应用在应用更改其令牌的格式或开始对其进行加密时意外中断。 
+上述访问令牌是 v1.0 格式的 Microsoft Graph 令牌。 这是因为令牌格式基于所访问的资源，而与请求它时使用的终结点无关。 设置 Microsoft Graph 以接受1.0 版令牌，因此，当客户端请求 Microsoft Graph 的令牌时，Microsoft 标识平台会生成1.0 版的访问令牌。 其他应用可能指示它们需要 v2.0 格式的令牌、1.0 格式的令牌甚至专用或加密格式的令牌。  v1.0 和 v2.0 终结点都可以发出任意一种令牌格式，这样资源就可以始终获得正确的令牌格式，而不管客户端如何或在何处请求令牌。 
+
+只有应用程序才能查看访问令牌。 客户端 **不得** 检查它们。 在代码中检查其他应用的访问令牌会导致应用在该应用更改其令牌的格式或开始对令牌进行加密时意外中断。 
 
 ### <a name="error-response-example"></a>错误响应示例
 
@@ -189,22 +187,21 @@ Authorization: Bearer eyJ0eXAiO ... 0X2tnSQLEANnSPHY0gKcgw
 
 某些基于 OAuth 的 Web 服务需要访问在非交互式流中接受 SAML 断言的其他 Web 服务 API。 Azure Active Directory 可以提供 SAML 断言，以响应将基于 SAML 的 Web 服务用作目标资源的代理流。
 
->[!NOTE]
->这是非标准的 OAuth 2.0 代理流扩展，它允许基于 OAuth2 的应用程序访问使用 SAML 令牌的 Web 服务 API 终结点。
+这是非标准的 OAuth 2.0 代理流扩展，它允许基于 OAuth2 的应用程序访问使用 SAML 令牌的 Web 服务 API 终结点。
 
 > [!TIP]
 > 当从前端 Web 应用程序调用受 SAML 保护的 Web 服务时，只需调用 API 并使用用户的现有会话启动正常的交互式身份验证流。 当服务到服务调用需要 SAML 令牌来提供用户上下文时，只需使用 OBO 流。
 
 ## <a name="gaining-consent-for-the-middle-tier-application"></a>为中间层应用程序获得同意
 
-根据应用程序的体系结构或使用情况，可以考虑使用不同的策略来确保 OBO 流的成功。 在所有情况下，最终目标都是确保获得相应许可，以便客户端应用可以调用中间层应用，并且中间层应用有权调用后端资源。
+根据应用程序的体系结构或使用情况，可以考虑使用不同的策略来确保 OBO 流的成功。 在所有情况下，最终目标都是确保给予适当的许可，使客户端应用可以调用中间层应用，中间层应用有权调用后端资源。
 
 > [!NOTE]
 > 以前，Microsoft 帐户系统（个人帐户）不支持“已知客户端应用程序”字段，也无法显示组合同意。  添加此项后，Microsoft 标识平台中的所有应用都可以使用已知客户端应用程序方法获取 OBO 调用的许可。
 
 ### <a name="default-and-combined-consent"></a>/.default 和组合同意
 
-中间层应用程序将客户端添加到其清单中的已知客户端应用程序列表中，然后，客户端可以为自身和中间层应用程序触发组合同意流。 在 Microsoft 标识平台终结点上，可以使用 [`/.default` 范围](v2-permissions-and-consent.md#the-default-scope)来完成此操作。 当使用已知的客户端应用程序和 `/.default` 触发同意屏幕时，同意屏幕将显示客户端到中间层 API 的权限，同时还会请求中间层 API 所需的任何权限。 用户同意这两个应用程序，接着 OBO 流便开始工作。
+中间层应用程序将客户端添加到其清单中的已知客户端应用程序列表中，然后，客户端可以为自身和中间层应用程序触发组合同意流。 在 Microsoft 标识平台上，使用[ `/.default` 范围](v2-permissions-and-consent.md#the-default-scope)来完成此操作。 当使用已知的客户端应用程序和 `/.default` 触发同意屏幕时，同意屏幕将显示客户端到中间层 API 的权限，同时还会请求中间层 API 所需的任何权限。 用户同意这两个应用程序，接着 OBO 流便开始工作。
 
 ### <a name="pre-authorized-applications"></a>预授权应用程序
 

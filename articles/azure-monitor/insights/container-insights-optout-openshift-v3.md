@@ -3,16 +3,25 @@ title: 如何停止监视 Azure Red Hat OpenShift v3 群集 |Microsoft Docs
 description: 本文介绍如何通过 Azure Monitor 容器来停止监视 Azure Red Hat OpenShift 群集。
 ms.topic: conceptual
 ms.date: 04/24/2020
-ms.openlocfilehash: 6ed92cd4cda1f3b5d43cc605d7224236528b94bf
-ms.sourcegitcommit: d39f2cd3e0b917b351046112ef1b8dc240a47a4f
+ms.openlocfilehash: 7e6ab46940ed29a98b3988c00c92d6c691d6e0f0
+ms.sourcegitcommit: b6267bc931ef1a4bd33d67ba76895e14b9d0c661
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/25/2020
-ms.locfileid: "88815430"
+ms.lasthandoff: 12/19/2020
+ms.locfileid: "97695617"
 ---
-# <a name="how-to-stop-monitoring-your-azure-red-hat-openshift-v3-cluster"></a>如何停止监视 Azure Red Hat OpenShift v3 群集 
+# <a name="how-to-stop-monitoring-your-azure-red-hat-openshift-v3-cluster"></a>如何停止监视 Azure Red Hat OpenShift v3 群集
 
-启用 Azure Red Hat OpenShift 版本3.x 群集的监视后，如果你决定不再想要对其进行监视，则可以使用容器 Azure Monitor 停止监视群集。 本文介绍如何使用提供的 Azure 资源管理器模板来完成此操作。 
+>[!IMPORTANT]
+> Azure Red Hat OpenShift 3.11 6 2022 月将停用。
+>
+> 从10月2020起，你将无法再创建新的3.11 群集。
+> 现有3.11 群集将继续运行，直到6月2022，但在该日期之后将不再受支持。
+>
+> 按照本指南 [创建 Azure Red Hat OpenShift 4 群集](../../openshift/tutorial-create-cluster.md)。
+> 如果有特定问题， [请](mailto:aro-feedback@microsoft.com)联系我们。
+
+启用 Azure Red Hat OpenShift 版本3.x 群集的监视后，如果你决定不再想要对其进行监视，则可以使用容器 Azure Monitor 停止监视群集。 本文介绍如何使用提供的 Azure 资源管理器模板来完成此操作。  
 
 ## <a name="azure-resource-manager-template"></a>Azure 资源管理器模板
 
@@ -26,7 +35,7 @@ ms.locfileid: "88815430"
 
 ### <a name="create-template"></a>创建模板
 
-1. 将以下 JSON 语法复制并粘贴到该文件中：
+1. 将以下 JSON 语法复制并粘贴到文件中：
 
     ```json
     {
@@ -65,7 +74,7 @@ ms.locfileid: "88815430"
     }
     ```
 
-2. 将此文件以“OptOutTemplate.json”文件名保存到本地文件夹****。
+2. 将此文件以“OptOutTemplate.json”文件名保存到本地文件夹  。
 
 3. 将以下 JSON 语法粘贴到文件中：
 
@@ -88,7 +97,7 @@ ms.locfileid: "88815430"
 
     ![容器属性页面](media/container-insights-optout-openshift/cluster-properties-page.png)
 
-5. 将此文件以“OptOutParam.json”文件名保存到本地文件夹****。
+5. 将此文件以“OptOutParam.json”文件名保存到本地文件夹  。
 
 6. 已做好部署此模板的准备。
 
@@ -99,7 +108,7 @@ ms.locfileid: "88815430"
 ```azurecli
 az login   
 az account set --subscription "Subscription Name"
-az group deployment create --resource-group <ResourceGroupName> --template-file ./OptOutTemplate.json --parameters @./OptOutParam.json  
+az deployment group create --resource-group <ResourceGroupName> --template-file ./OptOutTemplate.json --parameters @./OptOutParam.json  
 ```
 
 配置更改可能需要几分钟才能完成。 完成后，系统会返回包含结果的消息，如下所示：

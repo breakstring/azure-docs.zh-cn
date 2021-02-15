@@ -1,18 +1,15 @@
 ---
 title: Azure HDInsight 中的身份验证问题
 description: Azure HDInsight 中的身份验证问题
-author: hrasheed-msft
-ms.author: hrasheed
-ms.reviewer: jasonh
 ms.service: hdinsight
 ms.topic: troubleshooting
 ms.date: 08/24/2020
-ms.openlocfilehash: 6473b6b69ba45138c30e4f2c8a7f1ba1a7f2ae7e
-ms.sourcegitcommit: d39f2cd3e0b917b351046112ef1b8dc240a47a4f
+ms.openlocfilehash: b5a55b3b5f9affcd9f34e1c0d4c439a7ada8c0b9
+ms.sourcegitcommit: b4e6b2627842a1183fce78bce6c6c7e088d6157b
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/25/2020
-ms.locfileid: "88816841"
+ms.lasthandoff: 01/30/2021
+ms.locfileid: "99095118"
 ---
 # <a name="authentication-issues-in-azure-hdinsight"></a>Azure HDInsight 中的身份验证问题
 
@@ -38,7 +35,7 @@ Azure AD 错误代码 50126 表示租户尚未设置 `AllowCloudPasswordValidati
 
 ### <a name="resolution"></a>解决方法
 
-Azure AD 租户的公司管理员应该允许 Azure AD 为 ADFS 支持的用户使用密码哈希。  应用 `AllowCloudPasswordValidationPolicy`，如[在 HDInsight 中使用企业安全性套餐](../domain-joined/apache-domain-joined-architecture.md)一文所示。
+Azure AD 租户的全局管理员应该允许 Azure AD 为支持 ADFS 的用户使用密码哈希。  应用 `AllowCloudPasswordValidationPolicy`，如[在 HDInsight 中使用企业安全性套餐](../domain-joined/apache-domain-joined-architecture.md)一文所示。
 
 ---
 
@@ -82,7 +79,7 @@ Azure AD 租户的公司管理员应该允许 Azure AD 为 ADFS 支持的用户�
 
 ---
 
-## <a name="invalid_grant-or-unauthorized_client-50053-2"></a>invalid_grant 或 unauthorized_client，50053 ( # 2) 
+## <a name="invalid_grant-or-unauthorized_client-50053-2"></a>invalid_grant 或 unauthorized_client，50053 (#2)
 
 ### <a name="issue"></a>问题
 
@@ -154,7 +151,7 @@ Kinit 失败。
 
 * 如果可以使用本地 Ambari 管理员登录到 Ambari，请查看用户列表。
 
-* 如果你有[已加入域的 Windows 计算机](../../active-directory-domain-services/manage-domain.md)，则可以使用标准 Windows AD 工具进行浏览。 这需要一个在域中正常工作的帐户。
+* 如果你有[已加入域的 Windows 计算机](../../active-directory-domain-services/tutorial-create-management-vm.md)，则可以使用标准 Windows AD 工具进行浏览。 这需要一个在域中正常工作的帐户。
 
 * 在头节点中，你可以使用 SAMBA 命令进行搜索。 这需要一个有效的 Kerberos 会话（成功的 kinit）。 net ads search "(userPrincipalName=bob*)"
 
@@ -214,10 +211,4 @@ Kinit 失败，`Preauthentication` 失败。
 
 ## <a name="next-steps"></a>后续步骤
 
-如果你的问题未在本文中列出，或者无法解决问题，请访问以下渠道之一获取更多支持：
-
-* 通过 [Azure 社区支持](https://azure.microsoft.com/support/community/)获取 Azure 专家的解答。
-
-* 联系 [@AzureSupport](https://twitter.com/azuresupport)，这是用于改进客户体验的官方 Microsoft Azure 帐户。 它可以将 Azure 社区成员连接到适当的资源，为他们提供解答、支持和专家建议。
-
-* 如果需要更多帮助，可以从 [Azure 门户](https://portal.azure.com/?#blade/Microsoft_Azure_Support/HelpAndSupportBlade/)提交支持请求。 从菜单栏中选择“支持”，或打开“帮助 + 支持”中心。 有关更多详细信息，请参阅[如何创建 Azure 支持请求](https://docs.microsoft.com/azure/azure-portal/supportability/how-to-create-azure-support-request)。 Microsoft Azure 订阅包含对订阅管理和计费支持的访问权限，并且通过 [Azure 支持计划](https://azure.microsoft.com/support/plans/)之一提供技术支持。
+[!INCLUDE [troubleshooting next steps](../../../includes/hdinsight-troubleshooting-next-steps.md)]

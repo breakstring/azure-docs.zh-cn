@@ -14,24 +14,24 @@ ms.devlang: na
 ms.topic: article
 ms.date: 07/24/2018
 ms.author: damaerte
-ms.openlocfilehash: 7f597bb5cba1a12bdb93325fe2b877ffc644e3e4
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 1e3ea9222b0f231250bde43fb86c07847ca4835e
+ms.sourcegitcommit: d1b0cf715a34dd9d89d3b72bb71815d5202d5b3a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "60199184"
+ms.lasthandoff: 02/08/2021
+ms.locfileid: "99832329"
 ---
 # <a name="using-the-azure-cloud-shell-editor"></a>使用 Azure Cloud Shell 编辑器
 
-Azure Cloud Shell 包括从开源 [Monaco 编辑器](https://github.com/Microsoft/monaco-editor)生成的集成文件编辑器。 Cloud Shell 编辑器支持语言突出显示等功能、命令面板和文件资源管理器。
+Azure Cloud Shell 包括从开源 [Monaco 编辑器](https://github.com/Microsoft/monaco-editor)生成的集成文件编辑器。 Cloud Shell 编辑器支持语言突出显示、命令面板和文件资源管理器等功能。
 
 ![Cloud Shell 编辑器](media/using-cloud-shell-editor/open-editor.png)
 
 ## <a name="opening-the-editor"></a>打开编辑器
 
-对于简单的文件创建和编辑，请通过在 Cloud Shell 终端运行 `code .` 启动编辑器。 此操作通过终端中设置的活动工作目录打开编辑器。
+若要创建和编辑简单文件，可在 Cloud Shell 终端中运行 `code .` 来启动编辑器。 利用终端中设置的活动工作目录，该操作会打开编辑器。
 
-若要直接打开文件进行快速编辑，请运行 `code <filename>` 打开编辑器，无需文件资源管理器。
+若要直接打开文件以进行快速编辑，请运行 `code <filename>` 以便在不使用文件资源管理器的情况下打开编辑器。
 
 若要通过 UI 按钮打开编辑器，请从工具栏单击 `{}` 编辑器图标。 这将打开编辑器，并将文件资源管理器默认到 `/home/<user>` 目录。
 
@@ -52,5 +52,6 @@ Azure Cloud Shell 包括从开源 [Monaco 编辑器](https://github.com/Microsof
 通过 [Monaco 编辑器](https://github.com/Microsoft/monaco-editor)使用 Monarch 语法定义中的上游功能支持 Cloud Shell 编辑器中的语言突出显示支持。 若要了解如何做出贡献，请阅读 [Monaco 参与者指南](https://github.com/Microsoft/monaco-editor/blob/master/CONTRIBUTING.md)。
 
 ## <a name="next-steps"></a>后续步骤
-[试用 Cloud Shell](quickstart.md) 
- 上的 Bash 快速入门[查看集成 Cloud Shell 工具的完整列表](features.md)
+
+- [试用 Cloud Shell 上的 Bash 快速入门](quickstart.md)
+- [查看集成 Cloud Shell 工具的完整列表](features.md)

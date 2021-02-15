@@ -1,6 +1,6 @@
 ---
-title: 检查设备到 Azure IoT 中心的连接性
-description: 在开发期间使用 IoT 中心工具排查设备连接到 IoT 中心的问题。
+title: 教程 - 检查设备到 Azure IoT 中心的连接性
+description: 教程 - 在开发期间使用 IoT 中心工具排查设备与 IoT 中心的连接问题。
 services: iot-hub
 author: wesmc7777
 manager: philmea
@@ -11,17 +11,17 @@ ms.custom:
 - mqtt
 - 'Role: Cloud Development'
 - 'Role: IoT Device'
-- devx-track-javascript
+- devx-track-js
 - devx-track-azurecli
 ms.date: 02/22/2019
 ms.topic: tutorial
 ms.service: iot-hub
-ms.openlocfilehash: f6ac83a0fc32b426a914b76d27c2920ff8ce6731
-ms.sourcegitcommit: 11e2521679415f05d3d2c4c49858940677c57900
+ms.openlocfilehash: 253ec23a421415c11e4b47670dca870ebc463256
+ms.sourcegitcommit: 44188608edfdff861cc7e8f611694dec79b9ac7d
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/31/2020
-ms.locfileid: "87500242"
+ms.lasthandoff: 02/04/2021
+ms.locfileid: "99538667"
 ---
 # <a name="tutorial-use-a-simulated-device-to-test-connectivity-with-your-iot-hub"></a>教程：使用模拟设备测试与 IoT 中心的连接
 
@@ -36,15 +36,7 @@ ms.locfileid: "87500242"
 > * 检查云到设备的连接性
 > * 检查设备孪生同步
 
-[!INCLUDE [cloud-shell-try-it.md](../../includes/cloud-shell-try-it.md)]
-
-## <a name="prerequisites"></a>先决条件
-
-本教程中运行的 CLI 脚本使用[适用于 Azure CLI 的 Microsoft Azure IoT 扩展](https://github.com/Azure/azure-iot-cli-extension/blob/master/README.md)。 若要安装此扩展，请运行以下 CLI 命令：
-
-```azurecli-interactive
-az extension add --name azure-iot
-```
+[!INCLUDE [azure-cli-prepare-your-environment.md](../../includes/azure-cli-prepare-your-environment.md)]
 
 [!INCLUDE [iot-hub-cli-version-info](../../includes/iot-hub-cli-version-info.md)]
 
@@ -70,19 +62,19 @@ node --version
 
 ## <a name="check-device-authentication"></a>检查设备身份验证
 
-设备在与中心交换数据之前，必须通过中心进行身份验证。 可以使用门户的“设备管理”部分的 **IoT 设备**工具来管理设备并检查其使用的身份验证密钥。 在教程的此部分，请添加一个新的测试设备，检索其密钥，并检查此测试设备能否连接到中心。 稍后请重置身份验证密钥，观察在设备尝试使用过期密钥时会发生什么情况。 教程的此部分使用 Azure 门户来创建、管理和监视设备以及示例 Node.js 设备模拟器。
+设备在与中心交换数据之前，必须通过中心进行身份验证。 可以使用门户的“设备管理”部分的 **IoT 设备** 工具来管理设备并检查其使用的身份验证密钥。 在教程的此部分，请添加一个新的测试设备，检索其密钥，并检查此测试设备能否连接到中心。 稍后请重置身份验证密钥，观察在设备尝试使用过期密钥时会发生什么情况。 教程的此部分使用 Azure 门户来创建、管理和监视设备以及示例 Node.js 设备模拟器。
 
 登录门户，导航到 IoT 中心。 然后导航到“IoT 设备”工具：
 
-![“IoT 设备”工具](media/tutorial-connectivity/iot-devices-tool.png)
+:::image type="content" source="media/tutorial-connectivity/iot-devices-tool.png" alt-text="“IoT 设备”工具":::
 
-若要注册新设备，请单击“+ 添加”，将“设备 ID”设置为 **MyTestDevice**，然后单击“保存”：  
+若要注册新设备，请单击“+ 新建”，将“设备 ID”设置为 MyTestDevice，然后单击“保存”   。
 
-![添加新设备](media/tutorial-connectivity/add-device.png)
+:::image type="content" source="media/tutorial-connectivity/add-device.png" alt-text="添加新设备":::
 
-若要检索 **MyTestDevice** 的连接字符串，请在设备列表中单击它，然后复制“连接字符串-主键”的值。 连接字符串包含设备的共享访问密钥。
+若要检索 MyTestDevice 的连接字符串，请在设备列表中单击它，然后复制“主连接字符串”值 。 连接字符串包含设备的共享访问密钥。
 
-![检索设备连接字符串](media/tutorial-connectivity/copy-connection-string.png)
+:::image type="content" source="media/tutorial-connectivity/copy-connection-string.png" alt-text="检索设备连接字符串}":::
 
 若要模拟 **MyTestDevice** 将遥测数据发送到 IoT 中心，请运行以前下载的 Node.js 模拟设备应用程序。
 
@@ -184,7 +176,7 @@ node SimulatedDevice-2.js "{Your SAS token}"
 首先，请使用以下命令检索模拟设备的当前连接字符串：
 
 ```azurecli-interactive
-az iot hub device-identity show-connection-string --device-id MyTestDevice --output table --hub-name {YourIoTHubName}
+az iot hub device-identity connection-string show --device-id MyTestDevice --output table --hub-name {YourIoTHubName}
 ```
 
 若要运行可发送消息的模拟设备，请导航到已下载代码中的 **iot-hub\Tutorials\ConnectivityTests** 文件夹。
@@ -273,4 +265,4 @@ az iot hub device-twin update --set properties.desired='{"mydesiredproperty":"pr
 本教程介绍了如何检查设备密钥、如何检查设备到云的连接性、如何检查云到设备的连接性，以及如何检查设备孪生同步。 若要详细了解如何监视 IoT 中心，请访问有关 IoT 中心监视的操作方法文章。
 
 > [!div class="nextstepaction"]
-> [使用诊断进行监视](iot-hub-monitor-resource-health.md)
+> [监视 IoT 中心](monitor-iot-hub.md)

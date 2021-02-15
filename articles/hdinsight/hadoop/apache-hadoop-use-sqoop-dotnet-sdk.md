@@ -1,19 +1,16 @@
 ---
 title: 使用 .NET 和 HDInsight 运行 Apache Sqoop 作业 - Azure
 description: 了解如何使用 HDInsight .NET SDK 在 Apache Hadoop 群集和 Azure SQL 数据库之间运行 Apache Sqoop 导入和导出。
-author: hrasheed-msft
-ms.author: hrasheed
-ms.reviewer: jasonh
 ms.service: hdinsight
 ms.topic: how-to
-ms.custom: hdinsightactive,hdiseo17may2017
+ms.custom: hdinsightactive, hdiseo17may2017, devx-track-csharp
 ms.date: 01/14/2020
-ms.openlocfilehash: 5faa3d7bf048eee622ddd5a46082bb2432d84871
-ms.sourcegitcommit: 124f7f699b6a43314e63af0101cd788db995d1cb
+ms.openlocfilehash: a06326f5b4cf34a06475c10e368c6dcbb49ca9e4
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/08/2020
-ms.locfileid: "86076243"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98928353"
 ---
 # <a name="run-apache-sqoop-jobs-by-using-net-sdk-for-apache-hadoop-in-hdinsight"></a>使用 HDInsight 中用于 Apache Hadoop 的 .NET SDK 运行 Apache Sqoop 作业
 
@@ -23,7 +20,7 @@ ms.locfileid: "86076243"
 
 ## <a name="prerequisites"></a>先决条件
 
-* 已完成[在 HDInsight 中将 Apache Sqoop 与 Hadoop 配合使用](./hdinsight-use-sqoop.md)一文中的[设置测试环境](./hdinsight-use-sqoop.md#create-cluster-and-sql-database)步骤。
+* 从[在 HDInsight 中将 Apache Sqoop 与 Hadoop 配合使用](./hdinsight-use-sqoop.md)中完成[设置测试环境](./hdinsight-use-sqoop.md#create-cluster-and-sql-database)。
 
 * [Visual Studio](https://visualstudio.microsoft.com/vs/community/)。
 
@@ -111,7 +108,7 @@ HDInsight .NET SDK 提供 .NET 客户端库，以便可轻易从 .NET 中使用 
     }
     ```
 
-1. 若要运行程序，请选择 F5 键****。
+1. 若要运行程序，请选择 F5 键。
 
 ## <a name="sqoop-import"></a>Sqoop 导入
 
@@ -129,7 +126,7 @@ HDInsight .NET SDK 提供 .NET 客户端库，以便可轻易从 .NET 中使用 
     };
     ```
 
-1. 若要运行程序，请选择 F5 键****。
+1. 若要运行程序，请选择 F5 键。
 
 ## <a name="limitations"></a>限制
 

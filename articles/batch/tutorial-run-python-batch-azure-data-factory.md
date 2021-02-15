@@ -1,22 +1,22 @@
 ---
-title: 通过数据工厂运行 Python 脚本
-description: 教程 - 了解如何使用 Azure Batch 通过 Azure 数据工厂将 Python 脚本作为管道的一部分运行。
-author: mammask
+title: 教程 - 通过数据工厂运行 Python 脚本
+description: 了解如何使用 Azure Batch 通过 Azure 数据工厂将 Python 脚本作为管道的一部分运行。
+author: pkshultz
 ms.devlang: python
 ms.topic: tutorial
 ms.date: 08/12/2020
-ms.author: komammas
+ms.author: peshultz
 ms.custom: mvc, devx-track-python
-ms.openlocfilehash: f4c71cffe00faa6dd8cc440c59f94b8c2d60f712
-ms.sourcegitcommit: faeabfc2fffc33be7de6e1e93271ae214099517f
+ms.openlocfilehash: 6cc6e6a9739b8b06ab3c48dd3fd75f19de8d0787
+ms.sourcegitcommit: 6172a6ae13d7062a0a5e00ff411fd363b5c38597
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/13/2020
-ms.locfileid: "88185105"
+ms.lasthandoff: 12/11/2020
+ms.locfileid: "97106268"
 ---
 # <a name="tutorial-run-python-scripts-through-azure-data-factory-using-azure-batch"></a>教程：使用 Azure Batch 通过 Azure 数据工厂运行 Python 脚本
 
-本教程介绍以下操作：
+在本教程中，你将了解如何执行以下操作：
 
 > [!div class="checklist"]
 > * 通过 Batch 和存储帐户进行身份验证
@@ -33,7 +33,7 @@ ms.locfileid: "88185105"
 ## <a name="prerequisites"></a>先决条件
 
 * 已安装一个 [Python](https://www.python.org/downloads/) 分发版用于本地测试。
-* [Azure](https://pypi.org/project/azure/) `pip` 包。
+* [azure-storage-blob](https://pypi.org/project/azure-storage-blob/) `pip` 包。
 * [iris.csv 数据集](https://www.kaggle.com/uciml/iris/version/2#Iris.csv)
 * Azure Batch 帐户和关联的 Azure 存储帐户。 有关如何创建 Batch 帐户并将其链接到存储帐户的详细信息，请参阅[创建 Batch 帐户](quick-create-portal.md#create-a-batch-account)。
 * 一个 Azure 数据工厂帐户。 有关如何通过 Azure 门户创建数据工厂的详细信息，请参阅[创建数据工厂](../data-factory/quickstart-create-data-factory-portal.md#create-a-data-factory)。
@@ -57,7 +57,7 @@ ms.locfileid: "88185105"
     1. 将规模类型为“固定大小”，将专用节点计数设置为 2。
     1. 在“数据科学”下，选择“Dsvm Windows”作为操作系统。 
     1. 选择 `Standard_f2s_v2` 作为虚拟机大小。
-    1. 启用启动任务，并添加命令 `cmd /c "pip install pandas"`。 用户标识可以保留为默认的“池用户”。
+    1. 启用启动任务，并添加命令 `cmd /c "pip install azure-storage-blob pandas"`。 用户标识可以保留为默认的“池用户”。
     1. 选择“确定”。
 
 ## <a name="create-blob-containers"></a>创建 Blob 容器
@@ -75,17 +75,17 @@ ms.locfileid: "88185105"
 
 ``` python
 # Load libraries
-from azure.storage.blob import BlockBlobService
+from azure.storage.blob import BlobServiceClient
 import pandas as pd
 
 # Define parameters
-storageAccountName = "<storage-account-name>"
+storageAccountURL = "<storage-account-url>"
 storageKey         = "<storage-account-key>"
 containerName      = "output"
 
 # Establish connection with the blob storage account
-blobService = BlockBlobService(account_name=storageAccountName,
-                               account_key=storageKey
+blob_service_client = BlockBlobService(account_url=storageAccountURL,
+                               credential=storageKey
                                )
 
 # Load iris dataset from the task node
@@ -98,10 +98,12 @@ df = df[df['Species'] == "setosa"]
 df.to_csv("iris_setosa.csv", index = False)
 
 # Upload iris dataset
-blobService.create_blob_from_path(containerName, "iris_setosa.csv", "iris_setosa.csv")
+container_client = blob_service_client.get_container_client(containerName)
+with open("iris_setosa.csv", "rb") as data:
+    blob_client = container_client.upload_blob(name="iris_setosa.csv", data=data)
 ```
 
-将脚本另存为 `main.py`，然后将其上传到“Azure 存储”容器。 在将其上传到 Blob 容器之前，请务必在本地测试并验证其功能：
+将脚本另存为 `main.py`，然后将其上传到 Azure 存储的 `input` 容器。 在将其上传到 Blob 容器之前，请务必在本地测试并验证其功能：
 
 ``` bash
 python main.py
@@ -146,13 +148,23 @@ python main.py
 1. 单击具有失败退出代码的任务。
 1. 查看 `stdout.txt` 和 `stderr.txt` 以调查和诊断问题。
 
+## <a name="clean-up-resources"></a>清理资源
+
+虽然作业和任务本身不收费，但计算节点收费。 因此，建议只在需要的时候分配池。 删除池时会删除节点上的所有任务输出。 但是，输入和输出文件保留在存储帐户中。 当不再需要时，还可以删除 Batch 帐户和存储帐户。
+
 ## <a name="next-steps"></a>后续步骤
 
-本教程探讨的示例演示了如何使用 Azure Batch 通过 Azure 数据工厂将 Python 脚本作为管道的一部分运行。
+在本教程中，你了解了如何执行以下操作：
+
+> [!div class="checklist"]
+> * 通过 Batch 和存储帐户进行身份验证
+> * 在 Python 中开发和运行脚本
+> * 创建运行应用程序所需的计算节点池
+> * 计划 Python 工作负荷
+> * 监视分析管道
+> * 访问日志文件
 
 若要详细了解 Azure 数据工厂，请参阅：
 
 > [!div class="nextstepaction"]
-> [Azure 数据工厂](../data-factory/introduction.md)
-> [管道和活动](../data-factory/concepts-pipelines-activities.md)
-> [自定义活动](../data-factory/transform-data-using-dotnet-custom-activity.md)
+> [Azure 数据工厂概述](../data-factory/introduction.md)

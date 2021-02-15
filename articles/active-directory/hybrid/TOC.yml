@@ -31,7 +31,7 @@
         - name: 什么是 Azure AD Connect 和 Connect Health？
           href: whatis-azure-ad-connect.md
         - name: 选择正确的身份验证
-          href: 'https://docs.microsoft.com/azure/security/fundamentals/choose-ad-authn'
+          href: ./choose-ad-authn.md
         - name: 标识同步和重复属性复原
           href: how-to-connect-syncservice-duplicate-attribute-resiliency.md
     - name: 密码哈希同步
@@ -132,6 +132,8 @@
           href: how-to-connect-install-existing-tenant.md
         - name: 安装后任务
           href: how-to-connect-post-installation.md
+        - name: 卸载 Azure AD Connect
+          href: how-to-connect-uninstall.md
     - name: 规划和设计
       items:
         - name: 设计概念
@@ -262,6 +264,8 @@
           href: how-to-connect-health-diagnose-sync-errors.md
         - name: Azure AD Connect Health 警报目录
           href: how-to-connect-health-alert-catalog.md
+        - name: Azure AD Connect Health 数据检索
+          href: how-to-connect-health-data-retrieval.md
     - name: 管理 Azure AD Connect Sync
       items:
         - name: 暂存服务器和灾难恢复
@@ -339,7 +343,7 @@
     - name: Azure AD 直通身份验证代理版本历史记录
       href: reference-connect-pta-version-history.md
     - name: 连接器版本历史记录
-      href: reference-connect-sync-connector-version-history.md
+      href: /microsoft-identity-manager/reference/microsoft-identity-manager-2016-connector-version-history
     - name: 帐户和权限
       href: reference-connect-accounts-permissions.md
     - name: Azure AD Connect 常见问题

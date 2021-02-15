@@ -7,23 +7,36 @@ ms.workload: infrastructure-services
 ms.topic: how-to
 ms.date: 11/19/2019
 ms.author: shants
-ms.openlocfilehash: 633708219adaba2fb4c4889754b2112fbf3c4180
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.openlocfilehash: 4bd5c8ae7b4f2ba2d057f61712ce799814e19050
+ms.sourcegitcommit: 2bd0a039be8126c969a795cea3b60ce8e4ce64fc
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87069350"
+ms.lasthandoff: 01/14/2021
+ms.locfileid: "98202141"
 ---
 # <a name="handling-planned-maintenance-notifications-using-the-azure-cli"></a>使用 Azure CLI 处理计划内维护通知
 
 **本文适用于同时运行 Linux 和 Windows 的虚拟机。**
 
-可以使用 CLI 查看何时安排 VM 进行[维护](maintenance-notifications.md)。 可通过 [az vm get-instance-view](/cli/azure/vm?view=azure-cli-latest#az-vm-get-instance-view) 获得计划内维护信息。
+可以使用 CLI 查看何时安排 VM 进行[维护](maintenance-notifications.md)。 可通过 [az vm get-instance-view](/cli/azure/vm#az-vm-get-instance-view) 获得计划内维护信息。
  
 仅当有计划内维护时，才会返回维护信息。 
 
 ```azurecli-interactive
 az vm get-instance-view -n myVM -g myResourceGroup --query instanceView.maintenanceRedeployStatus
+```
+
+输出
+```
+      "maintenanceRedeployStatus": {
+      "additionalProperties": {},
+      "isCustomerInitiatedMaintenanceAllowed": true,
+      "lastOperationMessage": null,
+      "lastOperationResultCode": "None",
+      "maintenanceWindowEndTime": "2018-06-04T16:30:00+00:00",
+      "maintenanceWindowStartTime": "2018-05-21T16:30:00+00:00",
+      "preMaintenanceWindowEndTime": "2018-05-19T12:30:00+00:00",
+      "preMaintenanceWindowStartTime": "2018-05-14T12:30:00+00:00"
 ```
 
 ## <a name="start-maintenance"></a>启动维护

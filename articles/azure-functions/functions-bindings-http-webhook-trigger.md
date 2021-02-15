@@ -6,12 +6,12 @@ ms.topic: reference
 ms.date: 02/21/2020
 ms.author: cshoe
 ms.custom: devx-track-csharp, devx-track-python
-ms.openlocfilehash: 29ec547a6033b77d92ad7949df286dc94e3243a2
-ms.sourcegitcommit: 4913da04fd0f3cf7710ec08d0c1867b62c2effe7
+ms.openlocfilehash: e64f8cded851427636a19e16cccd78932dd6baac
+ms.sourcegitcommit: d1e56036f3ecb79bfbdb2d6a84e6932ee6a0830e
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/14/2020
-ms.locfileid: "88213926"
+ms.lasthandoff: 01/29/2021
+ms.locfileid: "99054951"
 ---
 # <a name="azure-functions-http-trigger"></a>Azure Functions HTTP 触发器
 
@@ -37,17 +37,21 @@ HTTP 触发函数的默认返回值如下：
 ```cs
 [FunctionName("HttpTriggerCSharp")]
 public static async Task<IActionResult> Run(
-    [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] 
+    [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)]
     HttpRequest req, ILogger log)
 {
     log.LogInformation("C# HTTP trigger function processed a request.");
 
     string name = req.Query["name"];
-
-    string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+    
+    string requestBody = String.Empty;
+    using (StreamReader streamReader =  new  StreamReader(req.Body))
+    {
+        requestBody = await streamReader.ReadToEndAsync();
+    }
     dynamic data = JsonConvert.DeserializeObject(requestBody);
     name = name ?? data?.name;
-
+    
     return name != null
         ? (ActionResult)new OkObjectResult($"Hello, {name}")
         : new BadRequestObjectResult("Please pass a name on the query string or in the request body");
@@ -100,11 +104,15 @@ public static async Task<IActionResult> Run(HttpRequest req, ILogger log)
     log.LogInformation("C# HTTP trigger function processed a request.");
 
     string name = req.Query["name"];
-
-    string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+    
+    string requestBody = String.Empty;
+    using (StreamReader streamReader =  new  StreamReader(req.Body))
+    {
+        requestBody = await streamReader.ReadToEndAsync();
+    }
     dynamic data = JsonConvert.DeserializeObject(requestBody);
     name = name ?? data?.name;
-
+    
     return name != null
         ? (ActionResult)new OkObjectResult($"Hello, {name}")
         : new BadRequestObjectResult("Please pass a name on the query string or in the request body");
@@ -128,111 +136,6 @@ public static string Run(Person person, ILogger log)
 public class Person {
      public string Name {get; set;}
 }
-```
-
-# <a name="javascript"></a>[JavaScript](#tab/javascript)
-
-以下示例演示 function.json 文件中的一个触发器绑定以及使用该绑定的 [JavaScript 函数](functions-reference-node.md)。 该函数在查询字符串或 HTTP 请求的正文中查找 `name` 参数。
-
-function.json 文件如下所示：
-
-```json
-{
-    "disabled": false,    
-    "bindings": [
-        {
-            "authLevel": "function",
-            "type": "httpTrigger",
-            "direction": "in",
-            "name": "req"
-        },
-        {
-            "type": "http",
-            "direction": "out",
-            "name": "res"
-        }
-    ]
-}
-```
-
-[配置](#configuration)部分解释了这些属性。
-
-JavaScript 代码如下所示：
-
-```javascript
-module.exports = function(context, req) {
-    context.log('Node.js HTTP trigger function processed a request. RequestUri=%s', req.originalUrl);
-
-    if (req.query.name || (req.body && req.body.name)) {
-        context.res = {
-            // status defaults to 200 */
-            body: "Hello " + (req.query.name || req.body.name)
-        };
-    }
-    else {
-        context.res = {
-            status: 400,
-            body: "Please pass a name on the query string or in the request body"
-        };
-    }
-    context.done();
-};
-```
-
-# <a name="python"></a>[Python](#tab/python)
-
-以下示例演示 function.json 文件中的一个触发器绑定以及使用该绑定的 [Python 函数](functions-reference-python.md)。 该函数在查询字符串或 HTTP 请求的正文中查找 `name` 参数。
-
-function.json 文件如下所示：
-
-```json
-{
-    "scriptFile": "__init__.py",
-    "disabled": false,    
-    "bindings": [
-        {
-            "authLevel": "function",
-            "type": "httpTrigger",
-            "direction": "in",
-            "name": "req"
-        },
-        {
-            "type": "http",
-            "direction": "out",
-            "name": "res"
-        }
-    ]
-}
-```
-
-[配置](#configuration)部分解释了这些属性。
-
-下面是 Python 代码：
-
-```python
-import logging
-import azure.functions as func
-
-
-def main(req: func.HttpRequest) -> func.HttpResponse:
-    logging.info('Python HTTP trigger function processed a request.')
-
-    name = req.params.get('name')
-    if not name:
-        try:
-            req_body = req.get_json()
-        except ValueError:
-            pass
-        else:
-            name = req_body.get('name')
-
-    if name:
-        return func.HttpResponse(f"Hello {name}!")
-    else:
-        return func.HttpResponse(
-            "Please pass a name on the query string or in the request body",
-            status_code=400
-        )
 ```
 
 # <a name="java"></a>[Java](#tab/java)
@@ -421,6 +324,166 @@ public HttpResponseMessage run(
 }
 ```
 
+# <a name="javascript"></a>[JavaScript](#tab/javascript)
+
+以下示例演示 function.json 文件中的一个触发器绑定以及使用该绑定的 [JavaScript 函数](functions-reference-node.md)。 该函数在查询字符串或 HTTP 请求的正文中查找 `name` 参数。
+
+function.json 文件如下所示：
+
+```json
+{
+    "disabled": false,    
+    "bindings": [
+        {
+            "authLevel": "function",
+            "type": "httpTrigger",
+            "direction": "in",
+            "name": "req"
+        },
+        {
+            "type": "http",
+            "direction": "out",
+            "name": "res"
+        }
+    ]
+}
+```
+
+[配置](#configuration)部分解释了这些属性。
+
+JavaScript 代码如下所示：
+
+```javascript
+module.exports = function(context, req) {
+    context.log('Node.js HTTP trigger function processed a request. RequestUri=%s', req.originalUrl);
+
+    if (req.query.name || (req.body && req.body.name)) {
+        context.res = {
+            // status defaults to 200 */
+            body: "Hello " + (req.query.name || req.body.name)
+        };
+    }
+    else {
+        context.res = {
+            status: 400,
+            body: "Please pass a name on the query string or in the request body"
+        };
+    }
+    context.done();
+};
+```
+
+# <a name="powershell"></a>[PowerShell](#tab/powershell)
+
+以下示例演示 function.json 文件中的一个触发器绑定和一个 [PowerShell 函数](functions-reference-node.md)。 该函数在查询字符串或 HTTP 请求的正文中查找 `name` 参数。
+
+```json
+{
+  "bindings": [
+    {
+      "authLevel": "function",
+      "type": "httpTrigger",
+      "direction": "in",
+      "name": "Request",
+      "methods": [
+        "get",
+        "post"
+      ]
+    },
+    {
+      "type": "http",
+      "direction": "out",
+      "name": "Response"
+    }
+  ]
+}
+```
+
+```powershell
+using namespace System.Net
+
+# Input bindings are passed in via param block.
+param($Request, $TriggerMetadata)
+
+# Write to the Azure Functions log stream.
+Write-Host "PowerShell HTTP trigger function processed a request."
+
+# Interact with query parameters or the body of the request.
+$name = $Request.Query.Name
+if (-not $name) {
+    $name = $Request.Body.Name
+}
+
+$body = "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response."
+
+if ($name) {
+    $body = "Hello, $name. This HTTP triggered function executed successfully."
+}
+
+# Associate values to output bindings by calling 'Push-OutputBinding'.
+Push-OutputBinding -Name Response -Value ([HttpResponseContext]@{
+    StatusCode = [HttpStatusCode]::OK
+    Body       = $body
+})
+```
+
+
+# <a name="python"></a>[Python](#tab/python)
+
+以下示例演示 function.json 文件中的一个触发器绑定以及使用该绑定的 [Python 函数](functions-reference-python.md)。 该函数在查询字符串或 HTTP 请求的正文中查找 `name` 参数。
+
+function.json 文件如下所示：
+
+```json
+{
+    "scriptFile": "__init__.py",
+    "disabled": false,    
+    "bindings": [
+        {
+            "authLevel": "function",
+            "type": "httpTrigger",
+            "direction": "in",
+            "name": "req"
+        },
+        {
+            "type": "http",
+            "direction": "out",
+            "name": "$return"
+        }
+    ]
+}
+```
+
+[配置](#configuration)部分解释了这些属性。
+
+下面是 Python 代码：
+
+```python
+import logging
+import azure.functions as func
+
+
+def main(req: func.HttpRequest) -> func.HttpResponse:
+    logging.info('Python HTTP trigger function processed a request.')
+
+    name = req.params.get('name')
+    if not name:
+        try:
+            req_body = req.get_json()
+        except ValueError:
+            pass
+        else:
+            name = req_body.get('name')
+
+    if name:
+        return func.HttpResponse(f"Hello {name}!")
+    else:
+        return func.HttpResponse(
+            "Please pass a name on the query string or in the request body",
+            status_code=400
+        )
+```
+
 ---
 
 ## <a name="attributes-and-annotations"></a>特性和注释
@@ -448,14 +511,6 @@ public static Task<IActionResult> Run(
 
 C# 脚本不支持特性。
 
-# <a name="javascript"></a>[JavaScript](#tab/javascript)
-
-JavaScript 不支持特性。
-
-# <a name="python"></a>[Python](#tab/python)
-
-Python 不支持特性。
-
 # <a name="java"></a>[Java](#tab/java)
 
 此示例演示如何使用 [HttpTrigger](https://github.com/Azure/azure-functions-java-library/blob/dev/src/main/java/com/microsoft/azure/functions/annotation/HttpTrigger.java) 特性。
@@ -474,15 +529,27 @@ public HttpResponseMessage<String> HttpTrigger(
 
 有关完整示例，请参阅[触发器示例](#example)。
 
+# <a name="javascript"></a>[JavaScript](#tab/javascript)
+
+JavaScript 不支持特性。
+
+# <a name="powershell"></a>[PowerShell](#tab/powershell)
+
+PowerShell 不支持特性。
+
+# <a name="python"></a>[Python](#tab/python)
+
+Python 不支持特性。
+
 ---
 
 ## <a name="configuration"></a>配置
 
-下表解释了在 function.json 文件和 `HttpTrigger` 特性中设置的绑定配置属性。
+下表解释了在 function.json  文件和 `HttpTrigger` 特性中设置的绑定配置属性。
 
 |function.json 属性 | Attribute 属性 |说明|
 |---------|---------|----------------------|
-| type | 不适用| 必需 - 必须设置为 `httpTrigger`。 |
+| type  | 不适用| 必需 - 必须设置为 `httpTrigger`。 |
 | **direction** | 不适用| 必需 - 必须设置为 `in`。 |
 | **name** | 不适用| 必需 - 在请求或请求正文的函数代码中使用的变量名称。 |
 | <a name="http-auth"></a>**authLevel** |  AuthLevel |确定请求中需要提供的密钥（如果有），以便调用此函数。 授权级别可以是以下值之一： <ul><li><code>anonymous</code>&mdash;无需 API 密钥。</li><li><code>function</code>&mdash;特定于函数的 API 密钥是必需的。 如果未提供任何值，该值为默认值。</li><li><code>admin</code>&mdash;无需主密钥。</li></ul> 有关详细信息，请参阅有关[授权密钥](#authorization-keys)的部分。 |
@@ -565,47 +632,6 @@ public static IActionResult Run(HttpRequest req, string category, int? id, ILogg
 }
 ```
 
-# <a name="javascript"></a>[JavaScript](#tab/javascript)
-
-在 Node 中，Functions 运行时提供来自 `context` 对象的请求正文。 有关详细信息，请参阅 [JavaScript 触发器示例](#example)。
-
-以下示例显示了如何从 `context.bindingData` 读取路由参数。
-
-```javascript
-module.exports = function (context, req) {
-
-    var category = context.bindingData.category;
-    var id = context.bindingData.id;
-    var message = `Category: ${category}, ID: ${id}`;
-
-    context.res = {
-        body: message;
-    }
-
-    context.done();
-}
-```
-
-# <a name="python"></a>[Python](#tab/python)
-
-函数执行上下文是通过声明为 `func.HttpRequest` 的参数公开的。 此实例允许函数访问数据路由参数、查询字符串值和允许返回 HTTP 响应的方法。
-
-定义后，可以通过调用 `route_params` 方法将路由参数提供给函数。
-
-```python
-import logging
-
-import azure.functions as func
-
-def main(req: func.HttpRequest) -> func.HttpResponse:
-
-    category = req.route_params.get('category')
-    id = req.route_params.get('id')
-    message = f"Category: {category}, ID: {id}"
-
-    return func.HttpResponse(message)
-```
-
 # <a name="java"></a>[Java](#tab/java)
 
 函数执行上下文是 `HttpTrigger` 特性中声明的属性。 使用特性可以定义路由参数、授权级别、HTTP 谓词和传入请求实例。
@@ -633,6 +659,63 @@ public class HttpTriggerJava {
         return request.createResponseBuilder(HttpStatus.OK).body(message).build();
     }
 }
+```
+
+# <a name="javascript"></a>[JavaScript](#tab/javascript)
+
+在 Node 中，Functions 运行时提供来自 `context` 对象的请求正文。 有关详细信息，请参阅 [JavaScript 触发器示例](#example)。
+
+以下示例显示如何从 `context.bindingData` 读取路由参数。
+
+```javascript
+module.exports = function (context, req) {
+
+    var category = context.bindingData.category;
+    var id = context.bindingData.id;
+    var message = `Category: ${category}, ID: ${id}`;
+
+    context.res = {
+        body: message;
+    }
+
+    context.done();
+}
+```
+
+# <a name="powershell"></a>[PowerShell](#tab/powershell)
+
+可将 function.json 文件中声明的路由参数作为 `$Request.Params` 对象的属性进行访问。
+
+```powershell
+$Category = $Request.Params.category
+$Id = $Request.Params.id
+
+$Message = "Category:" + $Category + ", ID: " + $Id
+
+Push-OutputBinding -Name Response -Value ([HttpResponseContext]@{
+    StatusCode = [HttpStatusCode]::OK
+    Body = $Message
+})
+```
+
+# <a name="python"></a>[Python](#tab/python)
+
+函数执行上下文是通过声明为 `func.HttpRequest` 的参数公开的。 此实例允许函数访问数据路由参数、查询字符串值和允许返回 HTTP 响应的方法。
+
+定义后，可以通过调用 `route_params` 方法将路由参数提供给函数。
+
+```python
+import logging
+
+import azure.functions as func
+
+def main(req: func.HttpRequest) -> func.HttpResponse:
+
+    category = req.route_params.get('category')
+    id = req.route_params.get('id')
+    message = f"Category: {category}, ID: {id}"
+
+    return func.HttpResponse(message)
 ```
 
 ---
@@ -666,9 +749,13 @@ public class HttpTriggerJava {
 }
 ```
 
+使用路由参数时，会 `invoke_URL_template` 自动为函数创建。 你的客户端可以使用 URL 模板来了解在使用 url 调用函数时需要在 URL 中传递的参数。 在 [Azure 门户](https://portal.azure.com) 中导航到某个 HTTP 触发的函数，然后选择 " **获取函数 URL**"。
+
+可以 `invoke_URL_template` 使用 Azure 资源管理器 api For [List](https://docs.microsoft.com/rest/api/appservice/webapps/listfunctions) [Function 或 Get Function](https://docs.microsoft.com/rest/api/appservice/webapps/getfunction)以编程方式访问。
+
 ## <a name="working-with-client-identities"></a>使用客户端标识
 
-如果函数应用使用[应用服务身份验证/授权](../app-service/overview-authentication-authorization.md)，则可通过代码查看有关已验证身份的客户端的信息。 此信息以[平台注入的请求标头](../app-service/app-service-authentication-how-to.md#access-user-claims)的形式提供。 
+如果函数应用使用[应用服务身份验证/授权](../app-service/overview-authentication-authorization.md)，则可通过代码查看有关已验证身份的客户端的信息。 此信息以[平台注入的请求标头](../app-service/app-service-authentication-how-to.md#access-user-claims)的形式提供。
 
 还可从绑定数据中读取此信息。 此功能仅适用于 2.x 及更高版本的 Functions 运行时。 而且它目前仅可用于 .NET 语言。
 
@@ -738,7 +825,15 @@ public static void Run(JObject input, ClaimsPrincipal principal, ILogger log)
 }
 ```
 
+# <a name="java"></a>[Java](#tab/java)
+
+经过身份验证的用户通过 [HTTP 标头](../app-service/app-service-authentication-how-to.md#access-user-claims)提供。
+
 # <a name="javascript"></a>[JavaScript](#tab/javascript)
+
+经过身份验证的用户通过 [HTTP 标头](../app-service/app-service-authentication-how-to.md#access-user-claims)提供。
+
+# <a name="powershell"></a>[PowerShell](#tab/powershell)
 
 经过身份验证的用户通过 [HTTP 标头](../app-service/app-service-authentication-how-to.md#access-user-claims)提供。
 
@@ -746,9 +841,6 @@ public static void Run(JObject input, ClaimsPrincipal principal, ILogger log)
 
 经过身份验证的用户通过 [HTTP 标头](../app-service/app-service-authentication-how-to.md#access-user-claims)提供。
 
-# <a name="java"></a>[Java](#tab/java)
-
-经过身份验证的用户通过 [HTTP 标头](../app-service/app-service-authentication-how-to.md#access-user-claims)提供。
 
 ---
 
@@ -758,11 +850,17 @@ public static void Run(JObject input, ClaimsPrincipal principal, ILogger log)
 
 ## <a name="obtaining-keys"></a>获取密钥
 
-密钥作为 Function App 的一部分存储在 Azure 中，并进行了静态加密。 若要查看密钥，请创建新的密钥或将密钥滚动到新值，在 [Azure 门户](https://portal.azure.com)中导航到某个 HTTP 触发的函数，然后选择“管理”。
+密钥作为 Function App 的一部分存储在 Azure 中，并进行了静态加密。 若要查看你的密钥、创建新的密钥或将密钥滚动到新值，请导航到 [Azure 门户](https://portal.azure.com) 中某个 HTTP 触发的函数，然后选择 " **功能键**"。
 
-![在门户中管理函数密钥。](./media/functions-bindings-http-webhook/manage-function-keys.png)
+你还可以管理主机密钥。 导航到 [Azure 门户](https://portal.azure.com) 中的函数应用，然后选择 " **应用密钥**"。
 
-可以使用[密钥管理 API](https://github.com/Azure/azure-functions-host/wiki/Key-management-API) 以编程方式获取函数密钥。
+可以使用 Azure 资源管理器 Api 以编程方式获取函数和主机密钥。 存在用于 [列出功能键](/rest/api/appservice/webapps/listfunctionkeys) 和 [列出主机密钥](/rest/api/appservice/webapps/listhostkeys)的 api，并且在使用部署槽位时，等效的 Api 为 [列出功能键槽](/rest/api/appservice/webapps/listfunctionkeysslot) 和 [列表主机密钥槽](/rest/api/appservice/webapps/listhostkeysslot)。
+
+你还可以使用 [Create 或 Update 函数机密](/rest/api/appservice/webapps/createorupdatefunctionsecret)、创建或更新 [函数机密槽](/rest/api/appservice/webapps/createorupdatefunctionsecretslot)、创建或更新 [主机密钥](/rest/api/appservice/webapps/createorupdatehostsecret) 以及 [创建或更新主机机密槽](/rest/api/appservice/webapps/createorupdatehostsecretslot) api，以编程方式创建新的函数和主机密钥。
+
+可以通过使用 [删除功能机密](/rest/api/appservice/webapps/deletefunctionsecret)、 [删除函数机密槽](/rest/api/appservice/webapps/deletefunctionsecretslot)、 [删除主机密钥](/rest/api/appservice/webapps/deletehostsecret)和 [删除主机机密槽](/rest/api/appservice/webapps/deletehostsecretslot) api，以编程方式删除函数和主机密钥。
+
+你还可以使用 [旧密钥管理 api 获取功能密钥](https://github.com/Azure/azure-functions-host/wiki/Key-management-API)，但建议改为使用 Azure 资源管理器 api。
 
 ## <a name="api-key-authorization"></a>API 密钥的授权
 
@@ -801,7 +899,7 @@ https://<APP_NAME>.azurewebsites.net/api/<FUNCTION_NAME>?code=<API_KEY>
 
 要响应 GitHub webhook，首先请创建包含 HTTP 触发器的函数，并将 webHookType 属性设置为 `github`。 然后将其 URL 和 API 密钥复制到 GitHub 存储库的“添加 Webhook”页。 
 
-![显示如何为函数添加 webhook 的屏幕截图。](./media/functions-bindings-http-webhook/github-add-webhook.png)
+![显示如何添加函数的 Webhook 的屏幕截图。](./media/functions-bindings-http-webhook/github-add-webhook.png)
 
 ### <a name="slack-webhooks"></a>Slack Webhook
 

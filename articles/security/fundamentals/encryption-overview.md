@@ -1,6 +1,6 @@
 ---
 title: Azure 加密概述 | Microsoft Docs
-description: 了解 Azure 中的加密选项。 查看静态加密、传输中的加密信息和 Azure Key Vault 的密钥管理的信息。
+description: 了解 Azure 中的加密选项。 了解 Azure Key Vault 的静态加密、动态加密以及密钥管理。
 services: security
 author: msmbaldwin
 ms.assetid: ''
@@ -9,12 +9,12 @@ ms.subservice: security-fundamentals
 ms.topic: article
 ms.date: 07/20/2020
 ms.author: mbaldwin
-ms.openlocfilehash: 5189270a7b9de9ff5a222ad76ce46254ae5d2ee3
-ms.sourcegitcommit: 8def3249f2c216d7b9d96b154eb096640221b6b9
+ms.openlocfilehash: d7d438b369c863660a032f101e466b6fadf639fa
+ms.sourcegitcommit: aaa65bd769eb2e234e42cfb07d7d459a2cc273ab
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/03/2020
-ms.locfileid: "87542953"
+ms.lasthandoff: 01/27/2021
+ms.locfileid: "98879708"
 ---
 # <a name="azure-encryption-overview"></a>Azure 加密概述
 
@@ -53,7 +53,7 @@ Azure 支持各种加密模型，包括使用服务托管密钥、Key Vault 中�
 
 ### <a name="azure-disk-encryption"></a>Azure 磁盘加密
 
-可使用 [Azure 磁盘加密](/azure/security/fundamentals/azure-disk-encryption-vms-vmss)保护 Windows 和 Linux 虚拟机，它采用 [Windows BitLocker](https://technet.microsoft.com/library/cc766295(v=ws.10).aspx) 技术和 Linux [DM-Crypt](https://en.wikipedia.org/wiki/Dm-crypt)通过全卷加密来保护操作系统磁盘和数据磁盘。
+可使用 [Azure 磁盘加密](./azure-disk-encryption-vms-vmss.md)保护 Windows 和 Linux 虚拟机，它采用 [Windows BitLocker](/previous-versions/windows/it-pro/windows-vista/cc766295(v=ws.10)) 技术和 Linux [DM-Crypt](https://en.wikipedia.org/wiki/Dm-crypt)通过全卷加密来保护操作系统磁盘和数据磁盘。
 
 [Azure Key Vault 订阅](../../key-vault/general/overview.md)中的加密密钥和机密会得到保护。 使用 Azure 备份服务，可备份和还原使用密钥加密密钥 (KEK) 配置的加密虚拟机 (VM)。
 
@@ -83,13 +83,13 @@ Azure Blob 存储和 Azure 文件共享中的静态数据都可以在服务器�
 
 #### <a name="transparent-data-encryption"></a>透明数据加密
 
-[TDE](https://docs.microsoft.com/sql/relational-databases/security/encryption/transparent-data-encryption-tde) 可通过数据库加密密钥 (DEK) 实时加密 [SQL Server](https://www.microsoft.com/sql-server/sql-server-2016)、[Azure SQL 数据库](../../azure-sql/database/sql-database-paas-overview.md)和 [Azure SQL 数据仓库](../../synapse-analytics/sql-data-warehouse/sql-data-warehouse-overview-what-is.md)数据文件，该加密密钥存储在数据库启动记录中，可在恢复期间使用。
+[TDE](/sql/relational-databases/security/encryption/transparent-data-encryption-tde) 可通过数据库加密密钥 (DEK) 实时加密 [SQL Server](https://www.microsoft.com/sql-server/sql-server-2016)、[Azure SQL 数据库](../../azure-sql/database/sql-database-paas-overview.md)和 [Azure Synapse Analytics](../../synapse-analytics/sql-data-warehouse/sql-data-warehouse-overview-what-is.md) 数据文件，该加密密钥存储在数据库启动记录中，可在恢复期间使用。
 
 TDE 使用 AES 和三重数据加密标准 (3DES) 加密算法保护数据和日志文件。 数据库文件加密在页面级执行。 加密数据库中的页面在写入磁盘之前被加密，在读入内存后被解密。 默认情况下，新创建的 Azure SQL 数据库启用 TDE。
 
 #### <a name="always-encrypted-feature"></a>Always Encrypted 功能
 
-借助 Azure SQL 中的 [Always Encrypted](https://docs.microsoft.com/sql/relational-databases/security/encryption/always-encrypted-database-engine) 功能，可在客户端应用程序中加密数据，之后再将其存储在 Azure SQL 数据库中。 还可将本地数据库管理工作委派给第三方，并将数据拥有者和可查看数据的人员，以及管理数据但无权访问数据的人员分开。
+借助 Azure SQL 中的 [Always Encrypted](/sql/relational-databases/security/encryption/always-encrypted-database-engine) 功能，可在客户端应用程序中加密数据，之后再将其存储在 Azure SQL 数据库中。 还可将本地数据库管理工作委派给第三方，并将数据拥有者和可查看数据的人员，以及管理数据但无权访问数据的人员分开。
 
 #### <a name="cell-level-or-column-level-encryption"></a>单元级加密或列级加密
 
@@ -113,11 +113,11 @@ Azure 提供了许多机制，用于在迁移数据时保持数据的私密性�
 
 ### <a name="data-link-layer-encryption-in-azure"></a>Azure 中的数据链路层加密
 
-每当 Azure 客户流量在数据中心之间移动时（不是由 Microsoft （或代表 Microsoft）控制），使用[IEEE 802.1 AE MAC 安全标准](https://1.ieee802.org/security/802-1ae/)（也称为 MACsec）的数据链路层加密方法将在基础网络硬件之间通过点到点应用。 数据包会在发送之前在设备上加密和解密，从而阻止物理 "中间人" 或侦听/wiretapping 攻击。 由于此技术在网络硬件本身上集成，因此它在网络硬件上提供线路速率加密，而不会增加可度量的链接延迟。 默认情况下，此 MACsec 加密对于某个区域内或各区域之间的所有 Azure 流量都处于启用状态，并且在要启用的客户部件上无需执行任何操作。 
+每当 Azure 客户流量在数据中心之间（在不受 Microsoft 或代表 Microsoft 的某方控制的物理边界之外）移动时，都会在底层网络硬件上点对点应用使用 [IEEE 802.1AE MAC 安全标准](https://1.ieee802.org/security/802-1ae/)（也称 MACsec）的数据链路层加密方法。 数据包会在发送之前在设备上进行加密和解密，以防止物理上的“中间人”攻击或窥探/窃听攻击。 由于此技术在网络硬件本身上集成，因此它会在网络硬件上提供线路速率加密，而不会增加可度量的链路延迟。 对于在区域内或区域之间传输的所有 Azure 流量，会默认启用此 MACsec 加密，客户无需执行任何操作。 
 
 ### <a name="tls-encryption-in-azure"></a>Azure 中的 TLS 加密
 
-Microsoft 使客户能够使用[传输层安全性](https://en.wikipedia.org/wiki/Transport_Layer_Security)（TLS）协议在云服务和客户之间传输数据时保护数据。 Microsoft 的数据中心与连接到 Azure 服务的客户端系统协商建立 TLS 连接。 TLS 提供严格的身份验证，消息隐私性和完整性强（允许检测消息篡改、拦截和伪造），具有良好的互操作性，算法灵活，易于部署和使用。
+Microsoft 让客户能够使用[传输层安全性](https://en.wikipedia.org/wiki/Transport_Layer_Security) (TLS) 协议来保护在云服务和客户之间传输的数据。 Microsoft 的数据中心与连接到 Azure 服务的客户端系统协商建立 TLS 连接。 TLS 提供严格的身份验证，消息隐私性和完整性强（允许检测消息篡改、拦截和伪造），具有良好的互操作性，算法灵活，易于部署和使用。
 
 [完美正向保密](https://en.wikipedia.org/wiki/Forward_secrecy) (PFS) 通过唯一密钥保护客户的客户端系统与 Microsoft 云服务间的连接。 连接还使用基于 RSA 的 2,048 位加密密钥长度。 此组合使得别人难以拦截和访问传输中的数据。
 
@@ -125,9 +125,9 @@ Microsoft 使客户能够使用[传输层安全性](https://en.wikipedia.org/wik
 
 当通过 Azure 门户与 Azure 存储交互时，所有事务都通过 HTTPS 发生。 也可根据 HTTPS 使用存储 REST API 与 Azure 存储交互。 在调用 REST API 来访问存储帐户中的对象时，可通过启用存储帐户所需的安全传输来强制使用 HTTPS。
 
-使用共享访问签名 ([SAS](../../storage/common/storage-dotnet-shared-access-signature-part-1.md)) 除了能委派对 Azure 存储对象的访问权限，还能包含一个选项，指定在使用共享访问签名时只能使用 HTTPS 协议。 通过此方法，可确保只能使用正确的协议发送有 SAS 令牌的链接。
+使用共享访问签名 ([SAS](../../storage/common/storage-sas-overview.md)) 除了能委派对 Azure 存储对象的访问权限，还能包含一个选项，指定在使用共享访问签名时只能使用 HTTPS 协议。 通过此方法，可确保只能使用正确的协议发送有 SAS 令牌的链接。
 
-用于访问 Azure 文件共享的 [SMB 3.0](https://technet.microsoft.com/library/dn551363(v=ws.11).aspx#BKMK_SMBEncryption) 支持加密，并且可以在 Windows Server 2012 R2、Windows 8、Windows 8.1 和 Windows 10 中使用。 它允许跨区域访问，甚至在桌面上访问。
+用于访问 Azure 文件共享的 [SMB 3.0](/previous-versions/windows/it-pro/windows-server-2012-R2-and-2012/dn551363(v=ws.11)#BKMK_SMBEncryption) 支持加密，并且可以在 Windows Server 2012 R2、Windows 8、Windows 8.1 和 Windows 10 中使用。 它允许跨区域访问，甚至在桌面上访问。
 
 在将数据发送到 Azure 存储实例前，客户端加密会对数据加密，所以在通过网络传输时数据是加密的。
 
@@ -139,11 +139,11 @@ Microsoft 使客户能够使用[传输层安全性](https://en.wikipedia.org/wik
 
 ## <a name="in-transit-encryption-in-vms"></a>VM 中的传输中加密
 
-可以通过多种方式对运行 Windows 的 Vm 的传输中的数据进行加密，具体取决于连接的性质。
+根据连接的性质，可通过多种方式对在运行 Windows 的 VM 间传输的数据进行加密。
 
 ### <a name="rdp-sessions"></a>RDP 会话
 
-可以使用 Windows 客户端计算机或者安装了 RDP 客户端的 Mac 上的[远程桌面协议 (RDP)](https://msdn.microsoft.com/library/aa383015(v=vs.85).aspx) 连接并登录 VM。 在 RDP 会话中通过网络传输的数据可以受到 TLS 的保护。
+可以使用 Windows 客户端计算机或者安装了 RDP 客户端的 Mac 上的[远程桌面协议 (RDP)](/windows/win32/termserv/remote-desktop-protocol) 连接并登录 VM。 在 RDP 会话中通过网络传输的数据可以受到 TLS 的保护。
 
 还可使用远程桌面连接到 Azure 中的 Linux VM。
 
@@ -163,7 +163,7 @@ Microsoft 使客户能够使用[传输层安全性](https://en.wikipedia.org/wik
 
 ### <a name="point-to-site-vpns"></a>点到站点 VPN
 
-点到站点 VPN 允许单个客户端计算机访问 Azure 虚拟网络。 [安全套接字隧道协议 (SSTP)](https://technet.microsoft.com/library/2007.06.cableguy.aspx) 可用于创建 VPN 隧道。 它可遍历防火墙（隧道显示为 HTTPS 连接）。 你可使用自己的内部公钥基础结构 (PKI) 根证书颁发机构 (CA) 实现点到站点的连接。
+点到站点 VPN 允许单个客户端计算机访问 Azure 虚拟网络。 [安全套接字隧道协议 (SSTP)](/previous-versions/technet-magazine/cc162322(v=msdn.10)) 可用于创建 VPN 隧道。 它可遍历防火墙（隧道显示为 HTTPS 连接）。 你可使用自己的内部公钥基础结构 (PKI) 根证书颁发机构 (CA) 实现点到站点的连接。
 
 可以使用具有证书身份验证或 PowerShell 的 Azure 门户，将点到站点 VPN 连接配置到虚拟网络。
 
@@ -181,7 +181,7 @@ Microsoft 使客户能够使用[传输层安全性](https://en.wikipedia.org/wik
 
 有关详细信息，请参阅：
 
-[在 Azure 门户中创建站点到站点连接](../../vpn-gateway/vpn-gateway-howto-site-to-site-resource-manager-portal.md)
+[在 Azure 门户中创建站点到站点连接](../../vpn-gateway/tutorial-site-to-site-portal.md)
 
 [在 PowerShell 门户中创建站点到站点连接](../../vpn-gateway/vpn-gateway-create-site-to-site-rm-powershell.md)
 
@@ -201,9 +201,9 @@ Key Vault 可帮助组织减少对配置、修补以及维护硬件安全模块 
 
 ## <a name="next-steps"></a>后续步骤
 
-- [Azure 安全概述](get-started-overview.md)
+- [Azure 安全概述](./overview.md)
 - [Azure 网络安全概述](network-overview.md)
-- [Azure 数据库安全性概述](database-security-overview.md)
+- [Azure 数据库安全性概述](../../azure-sql/database/security-overview.md)
 - [Azure 虚拟机安全概述](virtual-machines-overview.md)
 - [静态数据加密](encryption-atrest.md)
 - [数据安全与加密最佳做法](data-encryption-best-practices.md)

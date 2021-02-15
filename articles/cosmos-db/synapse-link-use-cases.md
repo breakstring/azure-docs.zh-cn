@@ -6,14 +6,15 @@ ms.service: cosmos-db
 ms.topic: conceptual
 ms.date: 05/19/2020
 ms.author: ramkris
-ms.openlocfilehash: 3a522a5a5945fe7a4b63dc759077d744f951a76f
-ms.sourcegitcommit: d39f2cd3e0b917b351046112ef1b8dc240a47a4f
+ms.openlocfilehash: 9855a53ebdf7501907b3e1e63d59823d3a0b0209
+ms.sourcegitcommit: 6a350f39e2f04500ecb7235f5d88682eb4910ae8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/25/2020
-ms.locfileid: "88814410"
+ms.lasthandoff: 12/01/2020
+ms.locfileid: "96463124"
 ---
 # <a name="azure-synapse-link-for-azure-cosmos-db-near-real-time-analytics-use-cases"></a>Azure Synapse Link for Azure Cosmos DB：准实时分析用例
+[!INCLUDE[appliesto-sql-mongodb-api](includes/appliesto-sql-mongodb-api.md)]
 
 适用于 Azure Cosmos DB 的 [Azure Synapse Link](synapse-link.md) 是一种云原生混合事务和分析处理 (HTAP) 功能，可用于对操作数据运行准实时分析。 Synapse Link 在 Azure Cosmos DB 和 Azure Synapse Analytics 之间建立紧密的无缝集成。
 
@@ -52,9 +53,9 @@ ms.locfileid: "88814410"
 
   Synapse Link for Azure Cosmos DB 支持丰富的商业智能 (BI)/报告方案：
 
-  * 通过使用与 Synapse SQL 无服务器的本机集成和 T-sql 语言的完整表现力，从 Azure Cosmos DB 分析存储中查询操作数据。
+  * 通过使用与无服务器 SQL 池的本机集成和 T-sql 语言的完整表现力，从 Azure Cosmos DB 分析存储中查询操作数据。
 
-  * 通过 Synapse SQL 无服务器支持对熟悉的 BI 工具进行建模和发布自动刷新 BI Azure Cosmos DB 面板。 例如，Azure Analysis Services、Power BI Premium 等。
+  * 通过对熟悉的 BI 工具的无服务器 SQL 池支持，通过 Azure Cosmos DB 对 BI 仪表板进行建模和发布。 例如，Azure Analysis Services、Power BI Premium 等。
 
 下面是将批处理数据和流式处理数据集成到 Azure Cosmos DB 的一些指南：
 
@@ -92,7 +93,7 @@ Synapse Link for Azure Cosmos DB 用例：
 
 ## <a name="sample-scenario-htap-for-azure-cosmos-db"></a>示例方案：适用于 Azure Cosmos DB 的 HTAP
 
-近十年，大量客户都在使用 Azure Cosmos DB，将其用于需要弹性缩放、统包全球分发、多主数据库复制的任务关键型应用程序，以实现事务工作负荷中读写操作的低延迟和高可用性。
+对于将近十年，Azure Cosmos DB 已由成千上万的客户用于需要弹性缩放的任务关键型应用程序，这些应用程序需要弹性缩放、全包式全局分发、多区域写入复制，以实现较低的延迟和高可用性，读取操作在其事务工作负荷中 & 写入。
  
 以下列表概述了操作数据支持的使用 Azure Cosmos DB 的各种工作负荷模式：
 
@@ -110,15 +111,15 @@ Synapse Link for Azure Cosmos DB 用例：
 
 * CompanyXYZ 的核心业务依赖于库存管理系统 – 因此可用性和可靠性是核心支柱要求。 使用 Azure Cosmos DB 的好处：
 
-  * 凭借与 Azure 基础结构和透明多主数据库全局复制的深度集成，Azure Cosmos DB 可针对区域性服务中断提供行业领先的 [99.999% 的高可用性](high-availability.md)。
+  * 由于与 Azure 基础结构的深度集成以及透明的多区域写入、全局复制，Azure Cosmos DB 提供行业领先的 [99.999% 的高可用性](high-availability.md) ，以应对地区性中断。
 
 * CompanyXYZ 的供应链合作伙伴可能位于不同的地理位置，但他们可能需要查看世界各地的产品库存的单一视图，以支持其本地操作。 这包括需要能够实时读取其他供应链合作伙伴所做的更新。 还能够进行更新，而无需担心与其他合作伙伴在高吞吐量方面发生冲突。 使用 Azure Cosmos DB 的好处：
 
-  * 凭借其独特的多主数据库复制协议和免闩锁且优化了写入的数据库引擎，Azure Cosmos DB 可保证全球任意位置第 99 个百分位的已编入索引的读取和写入延迟均低于 10 毫秒。
+  * 通过其唯一的多区域写入复制协议和无闩锁的写入优化事务存储，Azure Cosmos DB 确保在全局位置，为索引的读取和写入操作提供小于10毫秒的延迟。
 
   * 通过事务存储中的[实时索引](index-policy.md)，高吞吐量引入批处理和流式处理数据馈送。
 
-  * Azure Cosmos DB 事务存储提供了另外三个选项，而不会走非常一致性和最终一致性这两种极端，从而实现最接近近业务需求的[可用性和性能权衡](consistency-levels-tradeoffs.md)。
+  * Azure Cosmos DB 事务存储提供了另外三个选项，而不会走非常一致性和最终一致性这两种极端，从而实现最接近近业务需求的[可用性和性能权衡](./consistency-levels.md)。
 
 * CompanyXYZ 的供应链合作伙伴具有较大变动的流量模式，范围从数百到数百万个请求，因此库存管理平台需要处理流量中的意外情况。  使用 Azure Cosmos DB 的好处：
 
@@ -142,4 +143,4 @@ Synapse Link for Azure Cosmos DB 用例：
 
 * [Azure Synapse Analytics 中的 Apache Spark](../synapse-analytics/spark/apache-spark-concepts.md)
 
-* [Azure Synapse Analytics 中的 SQL 无服务器/按需版本](../synapse-analytics/sql/on-demand-workspace-overview.md)
+* [Azure Synapse 分析中的无服务器 SQL 池运行时支持](../synapse-analytics/sql/on-demand-workspace-overview.md)

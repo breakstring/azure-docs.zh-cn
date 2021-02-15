@@ -14,14 +14,17 @@ ms.devlang: na
 ms.topic: conceptual
 ms.date: 04/01/2019
 ms.author: juliako
-ms.openlocfilehash: 51d3d859bbd176a6e1fac92b75c6120301a5066f
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.openlocfilehash: 08d1e9cd281cf41a79d1b30d709062c01abbab33
+ms.sourcegitcommit: 77afc94755db65a3ec107640069067172f55da67
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87084511"
+ms.lasthandoff: 01/22/2021
+ms.locfileid: "98695435"
 ---
 # <a name="perform-live-streaming-with-on-premises-encoders-using-azure-portal"></a>在 Azure 门户中使用本地编码器实时传送流
+
+[!INCLUDE [media services api v2 logo](./includes/v2-hr.md)]
+
 > [!div class="op_single_selector"]
 > * [Portal](media-services-portal-live-passthrough-get-started.md)
 > * [.NET](media-services-dotnet-live-encode-with-onpremises-encoders.md)
@@ -30,7 +33,7 @@ ms.locfileid: "87084511"
 > 
 
 > [!NOTE]
-> 不会向媒体服务 v2 添加任何新特性或新功能。 <br/>查看最新版本：[媒体服务 v3](../latest/index.yml)。 另请参阅[从 v2 到 v3 的迁移指南](../latest/migrate-from-v2-to-v3.md)
+> 不会向媒体服务 v2 添加任何新特性或新功能。 <br/>查看最新版本：[媒体服务 v3](../latest/index.yml)。 另请参阅[从 v2 到 v3 的迁移指南](../latest/migrate-v-2-v-3-migration-introduction.md)
 
 本教程指导你完成相关步骤，使用 Azure 门户创建经配置后可直通传递的“通道”  。 
 
@@ -130,7 +133,7 @@ ms.locfileid: "87084511"
 ## <a name="get-ingest-urls"></a>获取引入 URL
 创建通道后，可以获得要提供给实时编码器的引入 URL。 编码器使用这些 URL 来输入实时流。
 
-![已创建](./media/media-services-portal-passthrough-get-started/media-services-channel-created.png)
+![此屏幕截图显示了“实时传送视频流”页，其中选择了一个频道并显示了频道窗格。](./media/media-services-portal-passthrough-get-started/media-services-channel-created.png)
 
 ## <a name="watch-the-event"></a>观看事件
 如果要观看事件，请在 Azure 门户中单击“观看”  ，或者先复制流式处理 URL，然后使用所选播放器进行播放。 

@@ -8,16 +8,16 @@ ms.topic: article
 ms.date: 11/09/2017
 ms.author: msangapu
 ms.custom: seodec18
-ms.openlocfilehash: 3fd9a013eb3318abc48745e163d9ee0118b52b1d
-ms.sourcegitcommit: 2ffa5bae1545c660d6f3b62f31c4efa69c1e957f
+ms.openlocfilehash: 9763835142e66bbbce51cd5c863dff87f261c270
+ms.sourcegitcommit: 31cfd3782a448068c0ff1105abe06035ee7b672a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/11/2020
-ms.locfileid: "88077469"
+ms.lasthandoff: 01/10/2021
+ms.locfileid: "98060154"
 ---
 # <a name="best-practices-and-troubleshooting-guide-for-node-applications-on-azure-app-service-windows"></a>Azure 应用服务 Windows 版上节点应用程序的最佳做法和故障排除指南
 
-本文介绍有关在 Azure App Service (上运行的[Windows Node.js 应用程序](quickstart-nodejs.md?pivots=platform-windows)的最佳做法和故障排除步骤[，) 。](https://github.com/azure/iisnode)
+本文介绍 Azure 应用服务上运行的 [Windows Node.js 应用程序](quickstart-nodejs.md?pivots=platform-windows)的最佳做法和故障排除步骤（使用 [iisnode](https://github.com/azure/iisnode)）。
 
 > [!WARNING]
 > 在生产站点上使用故障排除步骤时，请格外小心。 建议在非生产安装（例如过渡槽）上排查应用问题，问题修复后，请交换过渡槽与生产槽。
@@ -121,13 +121,13 @@ IIS 的默认行为是在刷新之前或直到响应结束时（以较早出现�
 
 许多应用程序想要在其定期操作中进行出站连接。 例如，请求传入时，节点应用程序会想连接别处的 REST API，并获取一些信息来处理请求。 建议在进行 http 或 https 调用时使用保持连接代理。 可在进行这些出站调用时，使用 agentkeepalive 模块作为保持连接代理。
 
-agentkeepalive 模块确保在 Azure Web 应用 VM 上重复使用套接字。 在每个出站请求中创建新套接字会增大应用程序的开销。 让应用程序对出站请求重复使用套接字可确保应用程序不会超过为每个 VM 分配的 maxSockets。 对于 Azure 应用服务的建议是将 agentKeepAlive maxSockets 值设置为每个 VM 总共 160 个套接字（4 个 node.exe 实例 \* 每个实例 40 个 maxSockets）。
+agentkeepalive 模块确保在 Azure Web 应用 VM 上重复使用套接字。 在每个出站请求中创建新套接字会增大应用程序的开销。 让应用程序对出站请求重复使用套接字可确保应用程序不会超过为每个 VM 分配的 maxSockets。 对于 Azure 应用服务的建议是将 agentKeepAlive maxSockets 值设置为每个 VM 总共 128 个套接字（4 个 node.exe 实例 \* 每个实例 32 个 maxSockets）。
 
 [agentKeepALive 配置](https://www.npmjs.com/package/agentkeepalive)示例：
 
 ```nodejs
 let keepaliveAgent = new Agent({
-    maxSockets: 40,
+    maxSockets: 32,
     maxFreeSockets: 10,
     timeout: 60000,
     keepAliveTimeout: 300000
@@ -140,7 +140,7 @@ let keepaliveAgent = new Agent({
 
 #### <a name="my-node-application-is-consuming-too-much-cpu"></a>节点应用程序消耗过多的 CPU
 
-门户上可能会显示 Azure 应用服务针对高 CPU 消耗量提供的建议。 也可将监视器设置为监视某些[指标](web-sites-monitor.md)。 在 [Azure 门户仪表板](../azure-monitor/app/web-monitor-performance.md)上检查 CPU 使用率时，请检查 CPU 的最大值，这样才不会错过峰值。
+门户上可能会显示 Azure 应用服务针对高 CPU 消耗量提供的建议。 也可将监视器设置为监视某些[指标](web-sites-monitor.md)。 在 [Azure 门户仪表板](../azure-monitor/platform/metrics-charts.md)上检查 cpu 使用率时，请检查 CPU 的最大值，以便不会错过峰值值。
 如果你认为应用程序消耗了过多的 CPU，但又无法做出解释，可以分析 Node 应用程序来找出原因。
 
 #### <a name="profiling-your-node-application-on-azure-app-service-with-v8-profiler"></a>在 Azure 应用服务中使用 V8 探查器分析 node 应用程序
@@ -205,7 +205,7 @@ http.createServer(function (req, res) {
 
 ![显示 profile.cpuprofile 文件的屏幕截图。](./media/app-service-web-nodejs-best-practices-and-troubleshoot-guide/scm_profile.cpuprofile.png)
 
-请下载此文件，并使用 Chrome F12 工具将其打开。 在 Chrome 上按 F12，然后选择 "**配置文件**" 选项卡。选择 "**加载**" 按钮。 选择下载的 profile.cpuprofile 文件。 单击刚加载的配置文件。
+请下载此文件，并使用 Chrome F12 工具将其打开。 在 Chrome 中按 F12，并选择“配置文件”选项卡。单击“加载”按钮。 选择下载的 profile.cpuprofile 文件。 单击刚加载的配置文件。
 
 ![显示已加载的 profile.cpuprofile 文件的屏幕截图。](./media/app-service-web-nodejs-best-practices-and-troubleshoot-guide/chrome_tools_view.png)
 
@@ -213,7 +213,7 @@ http.createServer(function (req, res) {
 
 ### <a name="my-node-application-is-consuming-too-much-memory"></a>node 应用程序消耗过多的内存
 
-如果应用程序消耗过多的内存，门户中会显示 Azure 应用服务针对高内存消耗量提供的建议。 可将监视器设置为监视某些[指标](web-sites-monitor.md)。 在 [Azure 门户仪表板](../azure-monitor/app/web-monitor-performance.md)上检查内存使用率时，请务必检查内存的最大值，这样才不会错过峰值。
+如果应用程序消耗过多的内存，门户中会显示 Azure 应用服务针对高内存消耗量提供的建议。 可将监视器设置为监视某些[指标](web-sites-monitor.md)。 在 [Azure 门户仪表板](../azure-monitor/platform/metrics-charts.md)上检查内存使用率时，请务必检查内存的最大值，这样就不会错过峰值值。
 
 #### <a name="leak-detection-and-heap-diff-for-nodejs"></a>node.js 的泄漏检测和堆区分
 
@@ -245,9 +245,8 @@ node.exe 随机关闭的原因有多种：
 应用程序启动时间过长的最常见原因是 node\_modules 中有大量文件。 应用程序在启动时会尝试加载其中的大多数文件。 默认情况下，由于文件存储在 Azure 应用服务的网络共享上，因此加载过多的文件可能需要一段时间。
 加速此过程的某些解决方法包括：
 
-1. 使用 npm3 来安装模块，确保采用平面依赖关系结构，并且没有重复的依赖项。
-2. 尝试延迟加载 node\_modules，而不要在应用程序启动时加载所有模块。 若要延迟加载模块，应在首次执行模块代码之前，在函数中真正需要该模块时调用 require('module')。
-3. Azure 应用服务提供一项称为本地缓存的功能。 此功能会将内容从网络共享复制到 VM 上的本地磁盘。 由于文件位于本地，因此，node\_modules 的加载时间快很多。
+1. 尝试延迟加载 node\_modules，而不要在应用程序启动时加载所有模块。 若要延迟加载模块，应在首次执行模块代码之前，在函数中真正需要该模块时调用 require('module')。
+2. Azure 应用服务提供一项称为本地缓存的功能。 此功能会将内容从网络共享复制到 VM 上的本地磁盘。 由于文件位于本地，因此，node\_modules 的加载时间快很多。
 
 ## <a name="iisnode-http-status-and-substatus"></a>IISNODE http 状态和子状态
 
@@ -274,8 +273,8 @@ NODE.exe 具有名为 `NODE_PENDING_PIPE_INSTANCES` 的设置。 在 Azure 应�
 请访问以下链接，了解有关 Azure 应用服务上的 node.js 应用程序的详细信息。
 
 * [Azure 应用服务中的 Node.js Web 应用入门](quickstart-nodejs.md)
-* [如何在 Azure 应用服务中调试 Node.js Web 应用](https://blogs.msdn.microsoft.com/azureossds/2018/08/03/debugging-node-js-apps-on-azure-app-services/)
+* [如何在 Azure 应用服务中调试 Node.js Web 应用](/archive/blogs/azureossds/debugging-node-js-apps-on-azure-app-services)
 * [将 Node.js 模块与 Azure 应用程序一起使用](../nodejs-use-node-modules-azure-apps.md)
-* [Azure 应用服务 Web 应用：Node.js](https://blogs.msdn.microsoft.com/silverlining/2012/06/14/windows-azure-websites-node-js/)
+* [Azure 应用服务 Web 应用：Node.js](/archive/blogs/silverlining/windows-azure-websites-node-js)
 * [Node.js 开发人员中心](../nodejs-use-node-modules-azure-apps.md)
 * [Kudu 调试控制台探秘](https://azure.microsoft.com/documentation/videos/super-secret-kudu-debug-console-for-azure-web-sites/)

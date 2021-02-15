@@ -2,18 +2,18 @@
 title: include 文件
 description: include 文件
 services: expressroute
-author: cherylmc
+author: duongau
 ms.service: expressroute
 ms.topic: include
-ms.date: 07/25/2019
-ms.author: cherylmc
+ms.date: 01/12/2021
+ms.author: duau
 ms.custom: include file
-ms.openlocfilehash: d1402bcc0c46003429e1809e8d09e9662218cd82
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
-ms.translationtype: MT
+ms.openlocfilehash: 6f8ed3381f056238bdbb24fe52c5f859afef7d03
+ms.sourcegitcommit: 02b1179dff399c1aa3210b5b73bf805791d45ca2
+ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "80335105"
+ms.lasthandoff: 01/12/2021
+ms.locfileid: "98147461"
 ---
 | 资源 | 限制 |
 | --- | --- |
@@ -31,18 +31,18 @@ ms.locfileid: "80335105"
 #### <a name="number-of-virtual-networks-per-expressroute-circuit"></a><a name="vnetpercircuit"></a> 每个 ExpressRoute 线路的虚拟网络数
 |  线路大小 |  标准版的虚拟网络链接数 |  高级版附加设备的虚拟网络链接数 |
 | --- | --- | --- |
-| 50 Mbps |10 个 |20 个 |
-| 100 Mbps |10 个 |25 |
-| 200 Mbps |10 个 |25 |
-| 500 Mbps |10 个 |40 |
-| 1 Gbps |10 个 |50 |
-| 2 Gbps |10 个 |60 |
+| 50 Mbps |10 |20 |
+| 100 Mbps |10 |25 |
+| 200 Mbps |10 |25 |
+| 500 Mbps |10 |40 |
+| 1 Gbps |10 |50 |
+| 2 Gbps |10 |60 |
 | 5 Gbps |10 |75 |
-| 10 Gbps |10 个 |100 |
-| 40 Gbps* |10 个 |100 |
-| 100 Gbps* |10 个 |100 |
+| 10 Gbps |10 |100 |
+| 40 Gbps* |10 |100 |
+| 100 Gbps* |10 |100 |
 
-**100 Gbps ExpressRoute 直接*
+**100 Gbps，仅限 ExpressRoute Direct*
 
 > [!NOTE]
-> Global Reach 连接数与每个 ExpressRoute 线路的虚拟网络连接数的限制。 例如，一条 10 Gbps 高级线路允许 5 Global Reach 连接，95连接到 ExpressRoute 网关或 95 Global Reach 连接，5次连接到 ExpressRoute 网关，或将5个连接设置为线路的100连接限制。
+> Global Reach 连接计数与每条 ExpressRoute 线路的虚拟网络连接数限制。 例如，一条 10 Gbps 的高级线路允许有 5 个 Global Reach 连接和 95 个到 ExpressRoute 网关的连接、95 个 Global Reach 连接和 5 个到 ExpressRoute 网关的连接，或者不超过该线路 100 个连接限制的其他任何组合。

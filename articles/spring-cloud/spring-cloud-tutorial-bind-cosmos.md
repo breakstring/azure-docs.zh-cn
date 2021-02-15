@@ -7,27 +7,29 @@ ms.topic: how-to
 ms.date: 10/06/2019
 ms.author: brendm
 ms.custom: devx-track-java
-ms.openlocfilehash: 881005c2597eadc3b3b0be9a01fbf9d82d35d050
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
-ms.translationtype: HT
+ms.openlocfilehash: 20926988d554d562f36587734bd99c34b4731e69
+ms.sourcegitcommit: 30505c01d43ef71dac08138a960903c2b53f2499
+ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87070787"
+ms.lasthandoff: 10/15/2020
+ms.locfileid: "92088714"
 ---
 # <a name="bind-an-azure-cosmos-db-database-to-your-azure-spring-cloud-application"></a>将 Azure Cosmos DB 数据库绑定到 Azure Spring Cloud 应用程序
+
+本文适用于：✔️ Java
 
 可以通过 Azure Spring Cloud 将所选 Azure 服务自动绑定到应用程序，而不必手动配置 Spring Boot 应用程序。 本文演示如何将应用程序绑定到 Azure Cosmos DB 数据库。
 
 先决条件：
 
-* 部署的 Azure Spring Cloud 实例。 按[有关如何通过 Azure CLI 进行部署的快速入门](spring-cloud-quickstart-launch-app-cli.md)操作即可入门。
+* 部署的 Azure Spring Cloud 实例。 按[有关如何通过 Azure CLI 进行部署的快速入门](spring-cloud-quickstart.md)操作即可入门。
 * 最低权限级别为“参与者”的 Azure Cosmos DB 帐户。
 
 ## <a name="bind-azure-cosmos-db"></a>绑定 Azure Cosmos DB
 
 Azure Cosmos DB 具有五种支持绑定的不同 API 类型。 以下过程演示如何使用它们：
 
-1. 创建 Azure Cosmos DB 数据库。 如需帮助，请参阅有关如何[创建数据库](https://docs.microsoft.com/azure/cosmos-db/create-cosmosdb-resources-portal)的快速入门。 
+1. 创建 Azure Cosmos DB 数据库。 如需帮助，请参阅有关如何[创建数据库](../cosmos-db/create-cosmosdb-resources-portal.md)的快速入门。 
 
 1. 记录数据库名称。 对于此过程，数据库名称是 **testdb**。
 

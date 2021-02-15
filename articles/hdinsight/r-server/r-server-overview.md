@@ -1,19 +1,16 @@
 ---
 title: Azure HDInsight 上的 ML Services 简介
 description: 了解如何使用 HDInsight 上的 ML Services 创建用于大数据分析的应用程序。
-author: hrasheed-msft
-ms.author: hrasheed
-ms.reviewer: jasonh
 ms.service: hdinsight
 ms.topic: overview
 ms.custom: hdinsightactive,seoapr2020
 ms.date: 04/20/2020
-ms.openlocfilehash: a8d164dd50ac190d2bc14fea70cde20bfdb89361
-ms.sourcegitcommit: cec9676ec235ff798d2a5cad6ee45f98a421837b
+ms.openlocfilehash: 87f4181e820b1c6ecdeb0fda85a88e80db248dd2
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "85849920"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98943927"
 ---
 # <a name="what-is-ml-services-in-azure-hdinsight"></a>什么是 Azure HDInsight 中的 ML 服务
 
@@ -23,7 +20,7 @@ HDInsight 上的 ML 服务提供最新的功能，以用于针对几乎任何大
 
 边缘节点为连接到群集和运行 R 脚本提供了便捷的位置。 边缘节点允许跨服务器的核心运行 ScaleR 并行化分布式函数。 还可以通过使用 ScaleR 的 Hadoop Map Reduce 跨群集的各个节点运行这些函数。 此外，还可以使用 Apache Spark 计算上下文。
 
-可以下载分析后生成的模型或预测，以便在本地使用。 也可在 Azure 中的其他位置对其进行`operationalized`。 具体而言，可以通过 [Azure 机器学习工作室（经典版）](https://studio.azureml.net)和 [Web 服务](../../machine-learning/studio/deploy-a-machine-learning-web-service.md)将其操作化。
+可以下载分析后生成的模型或预测，以便在本地使用。 也可在 Azure 中的其他位置对其进行`operationalized`。 具体而言，可以通过 [Azure 机器学习工作室（经典版）](https://studio.azureml.net)和 [Web 服务](../../machine-learning/classic/deploy-a-machine-learning-web-service.md)将其操作化。
 
 ## <a name="get-started-with-ml-services-on-hdinsight"></a>HDInsight 上的 ML Services 入门
 
@@ -35,7 +32,7 @@ HDInsight 中的 ML Services 具有下述优势：
 
 ### <a name="ai-innovation-from-microsoft-and-open-source"></a>通过 Microsoft 和开放源代码获得 AI 创新
 
-  ML 服务包含高度自适应性的分布式算法集，例如 [RevoscaleR](https://docs.microsoft.com/machine-learning-server/r-reference/revoscaler/revoscaler)、[revoscalepy](https://docs.microsoft.com/machine-learning-server/python-reference/revoscalepy/revoscalepy-package) 和 [microsoftML](https://docs.microsoft.com/machine-learning-server/python-reference/microsoftml/microsoftml-package)。 这些算法可以处理超出物理内存大小的数据。 它们还能以分散的方式在各种平台上运行。 详细了解产品随附的 Microsoft 自定义 [R 包](https://docs.microsoft.com/machine-learning-server/r-reference/introducing-r-server-r-package-reference)和 [Python 包](https://docs.microsoft.com/machine-learning-server/python-reference/introducing-python-package-reference)集合。
+  ML 服务包含高度自适应性的分布式算法集，例如 [RevoscaleR](/machine-learning-server/r-reference/revoscaler/revoscaler)、[revoscalepy](/machine-learning-server/python-reference/revoscalepy/revoscalepy-package) 和 [microsoftML](/machine-learning-server/python-reference/microsoftml/microsoftml-package)。 这些算法可以处理超出物理内存大小的数据。 它们还能以分散的方式在各种平台上运行。 详细了解产品随附的 Microsoft 自定义 [R 包](/machine-learning-server/r-reference/introducing-r-server-r-package-reference)和 [Python 包](/machine-learning-server/python-reference/introducing-python-package-reference)集合。
   
   ML 服务将这些 Microsoft 创新和来自开源社区的贡献（R、Python 和 AI 工具包）联系在一起。 所有这些都在单个企业级平台上。 任何 R 或 Python 开放源代码机器学习包都可与来自 Microsoft 的任何专属创新配合运行。
 
@@ -43,7 +40,7 @@ HDInsight 中的 ML Services 具有下述优势：
 
   依赖于传统模式和环境的企业在操作化方面投入了许多时间和精力。 此措施会导致成本和延迟增大，因为这涉及到模型转换时间、让它们保持有效及最新状态的迭代工作、法规审批，以及管理权限。
 
-  ML 服务提供企业级[操作化](https://docs.microsoft.com/machine-learning-server/what-is-operationalization)。 在完成机器学习模型后，只需单击几下鼠标就能生成 Web 服务 API。 这些 [Web 服务](https://docs.microsoft.com/machine-learning-server/operationalize/concept-what-are-web-services)托管在服务器网格或云中，并且可与业务线应用程序集成。 部署到弹性网格的能力可让你根据业务需求，针对批处理和实时评分无缝缩放。 有关说明，请参阅[使 HDInsight 上的 ML Services 可操作](r-server-operationalize.md)。
+  ML 服务提供企业级[操作化](/machine-learning-server/what-is-operationalization)。 在完成机器学习模型后，只需单击几下鼠标就能生成 Web 服务 API。 这些 [Web 服务](/machine-learning-server/operationalize/concept-what-are-web-services)托管在服务器网格或云中，并且可与业务线应用程序集成。 部署到弹性网格的能力可让你根据业务需求，针对批处理和实时评分无缝缩放。 有关说明，请参阅[使 HDInsight 上的 ML Services 可操作](r-server-operationalize.md)。
 
 <!---
 * **Deep ecosystem engagements to deliver customer success with optimal total cost of ownership**
@@ -60,9 +57,9 @@ HDInsight 上的 ML Services 包含以下功能。
 
 | 功能类别 | 说明 |
 |------------------|-------------|
-| 支持 R | 适用于以 R 编写的解决方案的 [R 包](https://docs.microsoft.com/machine-learning-server/r-reference/introducing-r-server-r-package-reference)，其中包含 R 的开源分发版和用于执行脚本的运行时基础结构。 |
-| 支持 Python | 适用于以 Python 编写的解决方案的 [Python 模块](https://docs.microsoft.com/machine-learning-server/python-reference/introducing-python-package-reference)，其中包含 Python 的开源分发版和用于执行脚本的运行时基础结构。
-| [预先训练的模型](https://docs.microsoft.com/machine-learning-server/install/microsoftml-install-pretrained-models) | 适用于可视化分析和文本情绪分析，随时可用于对提供的数据进行评分。 |
+| 支持 R | 适用于以 R 编写的解决方案的 [R 包](/machine-learning-server/r-reference/introducing-r-server-r-package-reference)，其中包含 R 的开源分发版和用于执行脚本的运行时基础结构。 |
+| 支持 Python | 适用于以 Python 编写的解决方案的 [Python 模块](/machine-learning-server/python-reference/introducing-python-package-reference)，其中包含 Python 的开源分发版和用于执行脚本的运行时基础结构。
+| [预先训练的模型](/machine-learning-server/install/microsoftml-install-pretrained-models) | 适用于可视化分析和文本情绪分析，随时可用于对提供的数据进行评分。 |
 | [部署和使用](r-server-operationalize.md) | `Operationalize`你的服务器，将解决方案部署为 Web 服务。 |
 | [远程执行](r-server-hdinsight-manage.md#connect-remotely-to-microsoft-ml-services) | 在客户端工作站中，通过网络在 ML Services 群集 上启动远程会话。 |
 
@@ -96,7 +93,7 @@ R 脚本可以使用 8000 多个开源 R 包中的任何一个。 你还可以�
 
 ### <a name="score-on-premises"></a>本地评分
 
-若要在创建模型后进行本地评分，请使用 R 来序列化模型，将其下载，将其反序列化，然后使用它来为新数据评分。 可以使用前面“在 HDInsight 中评分”中所述的方法，或使用 [Web 服务](https://docs.microsoft.com/machine-learning-server/operationalize/concept-what-are-web-services)对新数据进行评分。
+若要在创建模型后进行本地评分，请使用 R 来序列化模型，将其下载，将其反序列化，然后使用它来为新数据评分。 可以使用前面“在 HDInsight 中评分”中所述的方法，或使用 [Web 服务](/machine-learning-server/operationalize/concept-what-are-web-services)对新数据进行评分。
 
 ## <a name="maintain-the-cluster"></a>维护群集
 

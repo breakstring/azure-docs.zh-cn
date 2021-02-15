@@ -4,11 +4,11 @@ description: 快速入门：使用 Azure 事件网格和 Azure 门户发布自�
 ms.date: 07/07/2020
 ms.topic: quickstart
 ms.openlocfilehash: 592e2d6b7393da8cb55a457b022d6c2358048cfe
-ms.sourcegitcommit: e71da24cc108efc2c194007f976f74dd596ab013
+ms.sourcegitcommit: a43a59e44c14d349d597c3d2fd2bc779989c71d7
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/29/2020
-ms.locfileid: "87421036"
+ms.lasthandoff: 11/25/2020
+ms.locfileid: "96013660"
 ---
 # <a name="quickstart-route-custom-events-to-web-endpoint-with-the-azure-portal-and-event-grid"></a>快速入门：使用 Azure 门户和事件网格将自定义事件路由到 Web 终结点
 
@@ -32,9 +32,9 @@ Azure 事件网格是针对云的事件处理服务。 在本文中，将使用 
     :::image type="content" source="./media/custom-event-quickstart-portal/add-event-grid-topic-button.png" alt-text="“添加事件网格主题”按钮":::
 4. 在“创建主题”页上执行以下步骤：
     1. 选择 **Azure 订阅**。
-    2. 选择现有的资源组，或者选择“新建”并输入**资源组**的**名称**。
-    3. 为自定义主题提供唯一的**名称**。 主题名称必须唯一，因为它由 DNS 条目表示。 请不要使用图中所示的名称。 而是创建自己的名称 - 它必须介于 3 到 50 个字符之间，并且只包含值 a-z、A-Z、0-9 和“-”。
-    4. 选择事件网格主题的**位置**。
+    2. 选择现有的资源组，或者选择“新建”并输入 **资源组** 的 **名称**。
+    3. 为自定义主题提供唯一的 **名称**。 主题名称必须唯一，因为它由 DNS 条目表示。 请不要使用图中所示的名称。 而是创建自己的名称 - 它必须介于 3 到 50 个字符之间，并且只包含值 a-z、A-Z、0-9 和“-”。
+    4. 选择事件网格主题的 **位置**。
     5. 在页面底部选择“查看 + 创建”。 
 
         :::image type="content" source="./media/custom-event-quickstart-portal/create-custom-topic.png" alt-text="“创建主题”页":::
@@ -71,7 +71,7 @@ Azure 事件网格是针对云的事件处理服务。 在本文中，将使用 
 
     :::image type="content" source="./media/custom-event-quickstart-portal/new-event-subscription.png" alt-text="添加“事件订阅”按钮":::
 2. 在“创建事件订阅”页上执行以下步骤：
-    1. 输入事件订阅的“名称”。
+    1. 输入事件订阅的“名称”  。
     3. 对于“终结点类型”，请选择“Web Hook”。  
     4. 选择“选择终结点”。 
 
@@ -99,12 +99,12 @@ Azure 事件网格是针对云的事件处理服务。 在本文中，将使用 
 1. 在 Cloud Shell 窗口的左上角选择“Bash”。 
 
     ![Cloud Shell - Bash](./media/custom-event-quickstart-portal/cloud-shell-bash.png)
-1. 运行以下命令以获取主题的**终结点**：复制并粘贴该命令后，更新**主题名称**和**资源组名称**，然后运行该命令。 将把示例事件发布到此主题终结点。 
+1. 运行以下命令以获取主题的 **终结点**：复制并粘贴该命令后，更新 **主题名称** 和 **资源组名称**，然后运行该命令。 将把示例事件发布到此主题终结点。 
 
     ```azurecli
     endpoint=$(az eventgrid topic show --name <topic name> -g <resource group name> --query "endpoint" --output tsv)
     ```
-2. 运行以下命令以获取自定义主题的**密钥**：复制并粘贴该命令后，更新**主题名称**和**资源组名称**，然后运行该命令。 这是事件网格主题的主密钥。 要从 Azure 门户获取此密钥，请切换到“事件网格主题”页的“访问密钥”选项卡 。 要将事件发布到自定义主题，需要访问密钥。 
+2. 运行以下命令以获取自定义主题的 **密钥**：复制并粘贴该命令后，更新 **主题名称** 和 **资源组名称**，然后运行该命令。 这是事件网格主题的主密钥。 要从 Azure 门户获取此密钥，请切换到“事件网格主题”页的“访问密钥”选项卡 。 要将事件发布到自定义主题，需要访问密钥。 
 
     ```azurecli
     key=$(az eventgrid topic key list --name <topic name> -g <resource group name> --query "key1" --output tsv)
@@ -127,7 +127,7 @@ Azure 事件网格是针对云的事件处理服务。 在本文中，将使用 
 
     :::image type="content" source="./media/custom-event-quickstart-portal/select-cloud-shell.png" alt-text="选择 Cloud Shell 图标":::
 1. 在 Cloud Shell 中，选择 Cloud Shell 窗口的左上角的“PowerShell” 。 参阅“Azure CLI”部分的示例 **Cloud Shell** 窗口图像。
-2. 设置以下变量。 复制并粘贴每个命令后，更新**主题名称**和**资源组名称**，然后运行该命令：
+2. 设置以下变量。 复制并粘贴每个命令后，更新 **主题名称** 和 **资源组名称**，然后运行该命令：
 
     资源组：
     ```powershell
@@ -138,7 +138,7 @@ Azure 事件网格是针对云的事件处理服务。 在本文中，将使用 
     ```powershell
     $topicName = "<topic name>"
     ```
-3. 运行以下命令以获取主题的**终结点**和**密钥**：
+3. 运行以下命令以获取主题的 **终结点** 和 **密钥**：
 
     ```powershell
     $endpoint = (Get-AzEventGridTopic -ResourceGroupName $resourceGroupName -Name $topicName).Endpoint

@@ -11,17 +11,17 @@ ms.topic: how-to
 ms.workload: identity
 ms.date: 07/17/2020
 ms.author: hahamil
-ms.custom: aaddev
-ms.openlocfilehash: b7316756aab7875dce50a3783cb95ca42676b970
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
-ms.translationtype: HT
+ms.custom: aaddev, devx-track-js
+ms.openlocfilehash: 3c11334fe1b4d77be6e64febfc1d3de6efa302c3
+ms.sourcegitcommit: d4734bc680ea221ea80fdea67859d6d32241aefc
+ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87027081"
+ms.lasthandoff: 02/14/2021
+ms.locfileid: "100365934"
 ---
 # <a name="migrate-a-javascript-single-page-app-from-implicit-grant-to-auth-code-flow"></a>将 JavaScript 单页应用从隐式授权迁移到授权代码流
 
-适用于 JavaScript (MSAL.js) v2.0 的 Microsoft 身份验证库为 Microsoft 标识平台上的单页面应用程序提供了对具有 PKCE 和 CORS 的授权代码流的支持。 按照以下部分中的步骤，将使用隐式授权的 MSAL.js 1.x 迁移到 MSAL.js 2.0+（以下称为 2.x）和授权代码流。
+适用于 JavaScript (MSAL.js) v2.0 的 Microsoft 身份验证库为 Microsoft 标识平台上的单页应用程序提供了对具有 PKCE 和 CORS 的授权代码流的支持。 按照以下部分中的步骤，将使用隐式授权的 MSAL.js 1.x 迁移到 MSAL.js 2.0+（以下称为 2.x）和授权代码流。
 
 MSAL.js 2.x 支持浏览器中的授权代码流（而不是隐式授权流），从而在 MSAL.js 1.x 的基础上进行了改进。 MSAL.js 2.x 不支持隐式流。
 
@@ -41,7 +41,7 @@ MSAL.js 2.x 支持浏览器中的授权代码流（而不是隐式授权流）�
 
 对于当前配置了 Web 平台重定向 URI 的应用注册，请按照以下步骤进行操作：
 
-1. 登录到 [Azure 门户](https://portal.azure.com)，然后选择“Azure Active Directory”租户。
+1. 登录到 <a href="https://portal.azure.com/" target="_blank">Azure 门户</a>，然后选择“Azure Active Directory”租户。
 1. 在“应用注册”中，选择应用程序，然后选择“身份验证” 。
 1. 在 Web 平台磁贴下的“重定向 URI”中，选择指示“应该迁移 URI”的警告横幅 。
 
@@ -95,5 +95,5 @@ const msalInstance = new msal.PublicClientApplication(config);
 如果你想要更深入了解 Microsoft 标识平台上的 JavaScript 单页应用程序开发，由多部分组成的[方案：单页应用程序](scenario-spa-overview.md)系列文章可以帮助你入门。
 
 <!-- LINKS - external -->
-[msal-js-useragentapplication]: https://azuread.github.io/microsoft-authentication-library-for-js/ref/msal-core/modules/_useragentapplication_.html
-[msal-js-publicclientapplication]: https://azuread.github.io/microsoft-authentication-library-for-js/ref/msal-browser/classes/_src_app_publicclientapplication_.publicclientapplication.html
+[msal-js-useragentapplication]: https://azuread.github.io/microsoft-authentication-library-for-js/ref/classes/_azure_msal.useragentapplication.html
+[msal-js-publicclientapplication]: https://azuread.github.io/microsoft-authentication-library-for-js/ref/classes/_azure_msal_browser.publicclientapplication.html

@@ -1,53 +1,47 @@
 ---
 title: 关于在 Windows 上创建 Azure IoT Edge 设备的快速入门 | Microsoft Docs
 description: 本快速入门介绍如何创建 IoT Edge 设备，然后从 Azure 门户远程部署预生成的代码。
-author: kgremban
-manager: philmea
-ms.author: kgremban
-ms.date: 06/30/2020
+author: rsameser
+manager: kgremban
+ms.author: riameser
+ms.date: 01/20/2021
 ms.topic: quickstart
 ms.service: iot-edge
 services: iot-edge
-ms.custom: mvc
-ms.openlocfilehash: 73d9eed757acb4c58052a34811c490a70d306995
-ms.sourcegitcommit: 269da970ef8d6fab1e0a5c1a781e4e550ffd2c55
+ms.custom: mvc, devx-track-azurecli
+monikerRange: =iotedge-2018-06
+ms.openlocfilehash: 71e38059aceb7da63f3545610b9acfe48c5d3150
+ms.sourcegitcommit: 52e3d220565c4059176742fcacc17e857c9cdd02
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/11/2020
-ms.locfileid: "88061483"
+ms.lasthandoff: 01/21/2021
+ms.locfileid: "98663207"
 ---
-# <a name="quickstart-deploy-your-first-iot-edge-module-to-a-virtual-windows-device"></a>快速入门：将第一个 IoT Edge 模块部署到虚拟 Windows 设备
+# <a name="quickstart-deploy-your-first-iot-edge-module-to-a-windows-device-preview"></a>快速入门：将第一个 IoT Edge 模块部署到 Windows 设备（预览版）
 
-在本快速入门中通过将容器化代码部署到虚拟 Windows IoT Edge 设备来试用 Azure IoT Edge。 IoT Edge 允许你远程管理设备上的代码，这样你就可以将更多工作负荷发送到 Edge。 对于本快速入门，我们建议使用 Azure 虚拟机作为 IoT Edge 设备。 使用虚拟机可以快速创建测试计算机，安装必备组件，并在完成后将其删除。
+在本快速入门中通过将容器化代码部署到 Linux on Windows IoT Edge 设备来试用 Azure IoT Edge。 IoT Edge 允许你远程管理设备上的代码，这样你就可以将更多工作负荷发送到 Edge。 对于本快速入门，我们建议你使用自己的设备，看看使用 Azure IoT Edge for Linux on Windows 有多么简单。
 
 此快速入门介绍如何：
 
-> [!div class="checklist"]
->
-> * 创建 IoT 中心。
-> * 将 IoT Edge 设备注册到 IoT 中心。
-> * 在虚拟设备上安装并启动 IoT Edge 运行时。
-> * 以远程方式将模块部署到 IoT Edge 设备并将遥测数据发送到 IoT 中心。
+* 创建 IoT 中心。
+* 将 IoT Edge 设备注册到 IoT 中心。
+* 在设备上安装并运行 IoT Edge for Linux on Windows 运行时。
+* 以远程方式将模块部署到 IoT Edge 设备并发送遥测数据。
 
 ![关系图 - 设备和云架构的快速入门](./media/quickstart/install-edge-full.png)
 
-本快速入门将指导你创建 Windows 虚拟机并将其配置为 IoT Edge 设备。 然后，将模块从 Azure 门户部署到设备。 在本快速入门中所使用的模块为模拟传感器，可以生成温度、湿度和压强数据。 其他 Azure IoT Edge 教程均以本教程中通过部署额外模块（这些模块通过分析模拟数据来获得业务见解）所执行的操作为基础。
+本快速入门将逐步介绍如何设置 Azure IoT Edge for Linux on Windows 设备。 然后，将模块从 Azure 门户部署到设备。 在本快速入门中所使用的模块为模拟传感器，可以生成温度、湿度和压强数据。 其他 Azure IoT Edge 教程均以本教程中通过部署额外模块（这些模块通过分析模拟数据来获得业务见解）所执行的操作为基础。
 
 如果没有可用的 Azure 订阅，可以在开始前创建一个[免费帐户](https://azure.microsoft.com/free)。
 
-[!INCLUDE [cloud-shell-try-it.md](../../includes/cloud-shell-try-it.md)]
-
-你将使用 Azure CLI 完成本快速入门中的许多步骤。 Azure IoT 具有启用附加功能的扩展。
-
-将 Azure IoT 扩展添加到 Cloud Shell 实例。
-
-   ```azurecli-interactive
-   az extension add --name azure-iot
-   ```
-
-[!INCLUDE [iot-hub-cli-version-info](../../includes/iot-hub-cli-version-info.md)]
+>[!NOTE]
+>IoT Edge for Linux on Windows 现提供[公共预览版](https://azure.microsoft.com/support/legal/preview-supplemental-terms/)。
 
 ## <a name="prerequisites"></a>先决条件
+
+为 Azure CLI 准备环境。
+
+[!INCLUDE [azure-cli-prepare-your-environment-no-header.md](../../includes/azure-cli-prepare-your-environment-no-header.md)]
 
 云资源：
 
@@ -59,28 +53,9 @@ ms.locfileid: "88061483"
 
 IoT Edge 设备：
 
-* 充当 IoT Edge 设备的 Windows 虚拟机。 你可通过使用以下命令并将 `{password}` 替换为安全密码来创建此虚拟机：
-
-  ```azurecli-interactive
-  az vm create --resource-group IoTEdgeResources --name EdgeVM --image MicrosoftWindowsDesktop:Windows-10:rs5-pro:latest --admin-username azureuser --admin-password {password} --size Standard_DS1_v2
-  ```
-
-  可能需要几分钟才能创建并启动新的虚拟机。
-
-  虚拟机启动后，可以在连接到虚拟机时下载 RDP 文件以供使用：
-
-  1. 导航到 Azure 门户中新的 Windows 虚拟机。
-  1. 选择“连接”。
-  1. 在“RDP”选项卡上，选择“下载 RDP 文件” 。
-
-  使用远程桌面连接打开此文件，以通过用 `az vm create` 指定的管理员姓名和密码连接到 Windows 虚拟机。
-
-> [!NOTE]
-> 你的 Windows 虚拟机的最低版本为 Windows 版本 1809（内部版本 17763），这是最新的 [Windows 长期支持的内部版本](https://docs.microsoft.com/windows/release-information/)。 默认情况下，Windows 每 22 小时自动检查一次更新。 检查虚拟机后，Windows 将推送与 Windows 版 IoT Edge 不兼容的版本更新，从而阻止进一步使用 Windows 版 IoT Edge 功能。 建议将虚拟机的使用时长限制在 22 小时内，或[暂停 Windows 更新](https://support.microsoft.com/help/4028233/windows-10-manage-updates)。
->
-> 为简单起见，本快速入门使用 Windows 桌面虚拟机。 要了解哪些 Windows 操作系统针对生产环境公开发布，请参阅 [Azure IoT Edge 支持的系统](support.md)。
->
-> 如果你已准备好为 IoT Edge 配置自己的 Windows 设备，包括运行 IoT Core 的设备，请按照[在 Windows 上安装 Azure IoT Edge 运行时](how-to-install-iot-edge-windows.md)中的步骤进行操作。
+* 设备需要是 1809 或更高版本的 Windows 电脑或服务器
+* 至少 4 GB 内存，建议 8 GB 内存
+* 10 GB 可用磁盘空间
 
 ## <a name="create-an-iot-hub"></a>创建 IoT 中心
 
@@ -101,6 +76,7 @@ IoT Edge 设备：
 ## <a name="register-an-iot-edge-device"></a>注册 IoT Edge 设备
 
 使用新创建的 IoT 中心注册 IoT Edge 设备。
+
 ![关系图 - 使用 IoT 中心标识注册设备](./media/quickstart/register-device.png)
 
 为模拟设备创建设备标识，以便它可以与 IoT 中心通信。 设备标识存在于云中，而将物理设备关联到设备标识时，则使用唯一的设备连接字符串。
@@ -118,7 +94,7 @@ IoT Edge 设备：
 2. 查看设备的连接字符串，该字符串将物理设备与其在 IoT 中心的标识链接在一起。 它包含 IoT 中心名称、设备名称，以及用于对这两者之间的连接进行身份验证的共享密钥。
 
    ```azurecli-interactive
-   az iot hub device-identity show-connection-string --device-id myEdgeDevice --hub-name {hub_name}
+   az iot hub device-identity connection-string show --device-id myEdgeDevice --hub-name {hub_name}
    ```
 
 3. 复制 JSON 输出中 `connectionString` 键的值并保存。 该值为设备连接字符串。 在下一部分配置 IoT Edge 运行时中，将用到此连接字符串。
@@ -127,77 +103,74 @@ IoT Edge 设备：
 
 ## <a name="install-and-start-the-iot-edge-runtime"></a>安装和启动 IoT Edge 运行时
 
-在 IoT Edge 设备上安装 Azure IoT Edge 运行时，并使用设备连接字符串对其进行配置。
-![关系图 - 在设备上启动运行时](./media/quickstart/start-runtime.png)
+在设备上安装 IoT Edge for Linux on Windows，并使用设备连接字符串对其进行配置。
 
-IoT Edge 运行时部署在所有 IoT Edge 设备上。 它有三个组件。 每次 IoT Edge 设备启动并通过启动 IoT Edge 代理启动设备时，*IoT Edge 安全守护程序*就会启动。 *IoT Edge 代理*管理 IoT Edge 设备上模块（包括 IoT Edge 中心）的部署和监视。 *IoT Edge 中心*处理 IoT Edge 设备模块之间以及设备和 IoT 中心之间的通信。
+![关系图 - 在设备上启动 IoT Edge 运行时](./media/quickstart/start-runtime.png)
 
-安装脚本还包含一个名为 Moby 的容器引擎，用于管理 IoT Edge 设备上的容器映像。
+1. [下载 Windows Admin Center](https://aka.ms/WACDownloadEFLOW)。
 
-在运行时安装期间，系统会要求你提供设备连接字符串。 请使用从 Azure CLI 检索的字符串。 此字符串将物理设备与 Azure 中的 IoT Edge 设备标识关联在一起。
+1. 按照安装向导在设备上设置 Windows Admin Center。
 
-### <a name="connect-to-your-iot-edge-device"></a>连接到 IoT Edge 设备
+1. 进入 Windows Admin Center 后，在屏幕的右上方，选择“设置”齿轮图标
 
-本部分中的步骤均在 IoT Edge 设备上执行，因此需要立即通过远程桌面连接到此虚拟机。
+1. 从“设置”菜单的“网关”下，选择“扩展”
 
-### <a name="install-and-configure-the-iot-edge-service"></a>安装并配置 IoT Edge 服务
+1. 选择“源”选项卡，然后选择“添加” 。
 
-使用 PowerShell 下载并安装 IoT Edge 运行时。 使用从 IoT 中心检索的设备连接字符串来配置设备。
+1. 在文本框中输入 https://aka.ms/wac-insiders-feed ，然后选择“添加”。
 
-1. 如果还没有，请按照[注册新的 Azure IoT Edge 设备](how-to-register-device.md)中的步骤注册设备并检索设备连接字符串。
+1. 添加源后，导航到“可用扩展”选项卡。系统可能需要一段时间来更新扩展列表。
 
-2. 在虚拟机中，以管理员身份运行 PowerShell。
+1. 从“可用扩展”列表中选择“Azure IoT Edge” 
 
-   >[!NOTE]
-   >使用 PowerShell 的 AMD64 会话安装 IoT Edge，不要使用 PowerShell (x86)。 如果不确定您使用的是什么会话类型，请运行以下命令：
-   >
-   >```powershell
-   >(Get-Process -Id $PID).StartInfo.EnvironmentVariables["PROCESSOR_ARCHITECTURE"]
-   >```
+1. 安装该扩展
 
-3. Deploy-IoTEdge 命令执行以下检查：Windows 计算机使用受支持版本、启用容器功能、下载 Moby 运行时并下载 IoT Edge 运行时。
+1. 安装扩展后，在屏幕的左上角选择“Windows Admin Center”，导航到主仪表板页面。
 
-   ```powershell
-   . {Invoke-WebRequest -useb aka.ms/iotedge-win} | Invoke-Expression; `
-   Deploy-IoTEdge -ContainerOs Windows
-   ```
+1. 你将看到代表正在运行 Windows Admin Center 的电脑的本地主机连接。
 
-4. 计算机可能会自动重新启动。 如果 Deploy-IoTEdge 命令提示你重启，请重启。
+   :::image type="content" source="media/quickstart/windows-admin-center-start-page.png" alt-text="屏幕截图 - Windows Admin 起始页":::
 
-5. 再次以管理员身份运行 PowerShell。
+1. 选择 **添加** 。
 
-6. Initialize-IoTEdge 命令在计算机上配置 IoT Edge 运行时。 该命令默认为使用 Windows 容器手动预配。
+   :::image type="content" source="media/quickstart/windows-admin-center-start-page-add.png" alt-text="屏幕截图 - Windows Admin 起始页的“添加”按钮":::
 
-   ```powershell
-   . {Invoke-WebRequest -useb aka.ms/iotedge-win} | Invoke-Expression; `
-   Initialize-IoTEdge -ContainerOs Windows
-   ```
+1. 找到 Azure IoT Edge 磁贴，然后选择“新建”。 随即将启动安装向导。
 
-7. 当系统提示输入 **DeviceConnectionString** 时，请提供在上一部分复制的字符串。 请勿对连接字符串使用引号。
+    :::image type="content" source="media/quickstart/select-tile-screen.png" alt-text="屏幕截图 - Azure IoT Edge For Linux on Windows 磁贴":::
 
-### <a name="view-the-iot-edge-runtime-status"></a>查看 IoT Edge 运行时状态
+1. 继续完成安装向导，接受 EULA，然后选择“下一步”
 
-验证是否已成功安装并配置运行时。 可能需要几分钟才能完成安装并启动 IoT Edge 代理模块。
+    :::image type="content" source="media/quickstart/wizard-welcome-screen.png" alt-text="屏幕截图 - 向导中的“欢迎使用”":::
 
-1. 检查 IoT Edge 服务的状态。
+1. 选择“可选的诊断数据”以提供扩展诊断数据，帮助 Microsoft 监视和维护服务质量，然后单击“下一步: 部署”
 
-   ```powershell
-   Get-Service iotedge
-   ```
+    :::image type="content" source="media/quickstart/diagnostic-data-screen.png" alt-text="屏幕截图 - 诊断数据":::
 
-2. 若需排查服务问题，请检索服务日志。
+1. 在“选择目标设备”屏幕中，选择所需的目标设备，验证它是否满足最低要求。 在本快速入门中，我们要将 IoT Edge 安装在本地设备上，因此选择 localhost 连接。 确认后，选择“下一步”继续
 
-   ```powershell
-   . {Invoke-WebRequest -useb aka.ms/iotedge-win} | Invoke-Expression; Get-IoTEdgeLog
-   ```
+    :::image type="content" source="media/quickstart/wizard-select-target-device-screen.png" alt-text="屏幕截图 - 选择目标设备":::
 
-3. 查看在 IoT Edge 设备上运行的所有模块。 由于此服务是第一次运行，因此只会看到 **edgeAgent** 模块在运行。 edgeAgent 模块会默认运行，用于安装并启动部署到设备的任何其他模块。
+1. 通过选择“下一步”，接受默认设置。
 
-    ```powershell
-    iotedge list
-    ```
+1. 部署屏幕显示下载包、安装包、配置主机和最终设置 Linux VM 的进程。  如果部署成功，将看到以下内容：
 
-   ![查看设备上的一个模块](./media/quickstart/iotedge-list-1.png)
+    :::image type="content" source="media/quickstart/wizard-deploy-success-screen.png" alt-text="屏幕截图 - 向导中的“部署成功”":::
+
+1. 单击“下一步:连接”，继续执行最后一个步骤 - 使用 IoT 中心实例中的设备 ID 预配 Azure IoT Edge 设备。
+
+1. 从 Azure IoT 中心内的设备复制连接字符串，将其粘贴到设备连接字符串字段中。 然后选择“使用所选方法进行预配”。
+
+    > [!NOTE]
+    > 请参阅上一部分中的步骤 3“[注册 IoT Edge 设备](#register-an-iot-edge-device)”来检索连接字符串。
+
+    :::image type="content" source="media/quickstart/wizard-provision.png" alt-text="屏幕截图 - 向导中的“预配”":::
+
+1. 完成预配后，选择“完成”，即可完成并返回到 Windows Admin Center 起始屏幕。 你现在应该可以看到你的设备被列为 IoT Edge 设备。
+
+    :::image type="content" source="media/quickstart/windows-admin-center-device-screen.png" alt-text="屏幕截图 - Windows Admin Center Azure IoT Edge 设备":::
+
+1. 选择你的 Azure IoT Edge 设备，可查看其仪表板。 你应该会看到 Azure IoT 中心内设备孪生的工作负载已经部署。 “IoT Edge 模块列表”应显示一个正在运行的模块 edgeAgent，而“IoT Edge 状态”应显示“活动(正在运行)”   。
 
 IoT Edge 设备现在已配置好。 它可以运行云部署型模块了。
 
@@ -215,24 +188,36 @@ IoT Edge 设备现在已配置好。 它可以运行云部署型模块了。
 
 在这种情况下，推送的模块会生成示例环境数据，你可以在稍后使用该数据进行测试。 模拟传感器正在监视一台计算机和该计算机周围的环境。 例如，该传感器可能位于服务器机房中、工厂地板上或风力涡轮机上。 该消息包括环境温度和湿度、机器温度和压力以及时间戳。 IoT Edge 教程使用此模块创建的数据作为测试数据进行分析。
 
-确认从云中部署的模块正在 IoT Edge 设备上运行。
+导航到 Windows Admin Center 中的命令外壳，确认从云中部署的模块正在 IoT Edge 设备上运行。
 
-```powershell
-iotedge list
-```
+1. 连接到新建的 IoT Edge 设备
 
-   ![查看设备上的三个模块](./media/quickstart/iotedge-list-2.png)
+   :::image type="content" source="media/quickstart/connect-edge-screen.png" alt-text="屏幕截图 - 连接设备":::
 
-查看从温度传感器模块发送到云的消息。
+2. 在“概述”页，你将看到“IoT Edge 模块列表”和“IoT Edge 状态”，你可以在此处查看已部署的各种模块以及设备状态  。  
 
-```powershell
-iotedge logs SimulatedTemperatureSensor -f
-```
+3. 在“工具”下，选择“命令外壳” 。 命令外壳是一种 PowerShell 终端，它自动使用 ssh（安全外壳）连接到 Windows 电脑上 Azure IoT Edge 设备的 Linux VM。
+
+   :::image type="content" source="media/quickstart/command-shell-screen.png" alt-text="屏幕截图 - 命令外壳":::
+
+4. 若要在设备上验证这三个模块，请运行以下 bash 命令：
+
+   ```bash
+   sudo iotedge list
+   ```
+
+   :::image type="content" source="media/quickstart/iotedge-list-screen.png" alt-text="屏幕截图 - 命令外壳列表":::
+
+5. 查看从温度传感器模块发送到云的消息。
+
+   ```bash
+   iotedge logs SimulatedTemperatureSensor -f
+   ```
 
    >[!TIP]
    >引用模块名称时，IoT Edge 命令区分大小写。
 
-   ![查看模块中的数据](./media/quickstart/iotedge-logs.png)
+   :::image type="content" source="media/quickstart/temperature-sensor-screen.png" alt-text="屏幕截图 - 温度传感器":::
 
 也可使用 [Visual Studio Code 的 Azure IoT 中心扩展](https://marketplace.visualstudio.com/items?itemName=vsciot-vscode.azure-iot-toolkit)查看到达 IoT 中心的消息。
 
@@ -257,6 +242,15 @@ az group delete --name IoTEdgeResources
 az group list
 ```
 
+### <a name="clean-removal-of-azure-iot-edge-for-linux-on-windows"></a>干净清除 Azure IoT Edge for Linux on Windows
+
+你可以通过 Windows Admin Center 中的仪表板扩展从 IoT Edge 设备上卸载 Azure IoT Edge for Linux on Windows。
+
+1. 在 Windows Admin Center 中连接到 Azure IoT Edge for Linux on Windows 设备连接。 此时将加载 Azure 仪表板工具扩展。
+2. 选择“卸载”。 删除 Azure IoT Edge for Linux on Windows 后，Windows Admin Center 将导航到起始页，并从列表中删除 Azure IoT Edge 设备连接项。
+
+从 Windows 系统中删除 Azure IoT Edge 的另一种方法是：在 IoT Edge 设备上，转到“开始” > “设置” > “应用” > “Azure IoT Edge” > “卸载”    。 这样将从 IoT Edge 设备中删除 Azure IoT Edge，但会保留 Windows Admin Center 中的连接。 也可从“设置”菜单卸载 Windows Admin Center。
+
 ## <a name="next-steps"></a>后续步骤
 
 在本快速入门中，你创建了一个 IoT Edge 设备并使用 Azure IoT Edge 云接口将代码部署到该设备上。 现在，你有了一个可以生成其环境的原始数据的测试设备。
@@ -264,4 +258,4 @@ az group list
 下一步是设置本地开发环境，使你可以开始创建运行业务逻辑的 IoT Edge 模块。
 
 > [!div class="nextstepaction"]
-> [开始为 Windows 设备开发 IoT Edge 模块](tutorial-develop-for-windows.md)
+> [开始开发 IoT Edge 模块](tutorial-develop-for-linux.md)

@@ -1,23 +1,18 @@
 ---
 title: 向/从 Azure 数据资源管理器复制数据
 description: 了解如何通过在 Azure 数据工厂管道中使用复制活动来向/从 Azure 数据资源管理器复制数据。
-services: data-factory
 ms.author: orspodek
 author: linda33wj
-manager: shwang
-ms.reviewer: douglasl
 ms.service: data-factory
-ms.workload: data-services
-ms.devlang: na
 ms.topic: conceptual
 ms.custom: seo-lt-2019
 ms.date: 02/18/2020
-ms.openlocfilehash: ba8c35fc1802f7ef3ac54c693c8106bbc40cc185
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 16126e8b9e5c34529016018273edcf65a31e2280
+ms.sourcegitcommit: d4734bc680ea221ea80fdea67859d6d32241aefc
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "82560158"
+ms.lasthandoff: 02/14/2021
+ms.locfileid: "100379975"
 ---
 # <a name="copy-data-to-or-from-azure-data-explorer-by-using-azure-data-factory"></a>使用 Azure 数据工厂向/从 Azure 数据资源管理器复制数据
 
@@ -42,7 +37,7 @@ ms.locfileid: "82560158"
 
 使用 Azure 数据资源管理器连接器可执行以下操作：
 
-* 将 Azure Active Directory (Azure AD) 应用程序令牌身份验证与**服务主体**配合使用来复制数据。
+* 将 Azure Active Directory (Azure AD) 应用程序令牌身份验证与 **服务主体** 配合使用来复制数据。
 * 作为源时，请使用 KQL (Kusto) 查询来检索数据。
 * 作为接收器时，请将数据追加到目标表。
 
@@ -80,9 +75,9 @@ Azure 数据资源管理器链接服务支持以下属性：
 | type | **type** 属性必须设置为 **AzureDataExplorer**。 | 是 |
 | endpoint | Azure 数据资源管理器群集的终结点 URL，格式为 `https://<clusterName>.<regionName>.kusto.windows.net`。 | 是 |
 | database | 数据库的名称。 | 是 |
-| tenant | 指定应用程序的租户信息（域名或租户 ID）。 此 ID 在 [Kusto 连接字符串](https://docs.microsoft.com/azure/kusto/api/connection-strings/kusto#application-authentication-properties)中称为“颁发机构 ID”。 将鼠标指针悬停在 Azure 门户右上角进行检索。 | 是 |
-| servicePrincipalId | 指定应用程序的客户端 ID。 此 ID 在[Kusto 连接字符串](https://docs.microsoft.com/azure/kusto/api/connection-strings/kusto#application-authentication-properties)中称为“AAD 应用程序客户端 ID”。 | 是 |
-| servicePrincipalKey | 指定应用程序的密钥。 此密钥在[Kusto 连接字符串](https://docs.microsoft.com/azure/kusto/api/connection-strings/kusto#application-authentication-properties)中称为“AAD 应用程序密钥”。 将此字段标记为 **SecureString** 以安全地将其存储在数据工厂中，或[引用存储在 Azure Key Vault 中的安全数据](store-credentials-in-key-vault.md)。 | 是 |
+| tenant | 指定应用程序的租户信息（域名或租户 ID）。 此 ID 在 [Kusto 连接字符串](/azure/kusto/api/connection-strings/kusto#application-authentication-properties)中称为“颁发机构 ID”。 将鼠标指针悬停在 Azure 门户右上角进行检索。 | 是 |
+| servicePrincipalId | 指定应用程序的客户端 ID。 此 ID 在[Kusto 连接字符串](/azure/kusto/api/connection-strings/kusto#application-authentication-properties)中称为“AAD 应用程序客户端 ID”。 | 是 |
+| servicePrincipalKey | 指定应用程序的密钥。 此密钥在[Kusto 连接字符串](/azure/kusto/api/connection-strings/kusto#application-authentication-properties)中称为“AAD 应用程序密钥”。 将此字段标记为 **SecureString** 以安全地将其存储在数据工厂中，或 [引用存储在 Azure Key Vault 中的安全数据](store-credentials-in-key-vault.md)。 | 是 |
 
 **链接服务属性示例：**
 
@@ -143,7 +138,7 @@ Azure 数据资源管理器链接服务支持以下属性：
 
 ### <a name="azure-data-explorer-as-source"></a>Azure 数据资源管理器作为源
 
-若要从 Azure 数据资源管理器复制数据，请将复制活动源中的 **type** 属性设置为 **AzureDataExplorerSource**。 复制活动**source**部分支持以下属性：
+若要从 Azure 数据资源管理器复制数据，请将复制活动源中的 **type** 属性设置为 **AzureDataExplorerSource**。 复制活动 **source** 部分支持以下属性：
 
 | 属性 | 说明 | 必须 |
 |:--- |:--- |:--- |
@@ -153,7 +148,7 @@ Azure 数据资源管理器链接服务支持以下属性：
 | noTruncation | 指示是否截断返回的结果集。 默认情况下，结果在出现 500,000 条记录或达到 64 MB 之后将被截断。 强烈建议将其截断，以确保活动的正确行为。 |否 |
 
 >[!NOTE]
->默认情况下，Azure 数据资源管理器源的大小限制为 500,000 条记录或 64 MB。 若要检索所有记录而不截断，可以在查询的开头指定 `set notruncation;`。 有关详细信息，请参阅[查询限制](https://docs.microsoft.com/azure/kusto/concepts/querylimits)。
+>默认情况下，Azure 数据资源管理器源的大小限制为 500,000 条记录或 64 MB。 若要检索所有记录而不截断，可以在查询的开头指定 `set notruncation;`。 有关详细信息，请参阅[查询限制](/azure/kusto/concepts/querylimits)。
 
 **示例：**
 
@@ -196,7 +191,7 @@ Azure 数据资源管理器链接服务支持以下属性：
 |:--- |:--- |:--- |
 | type | 复制活动接收器的 **type** 属性必须设置为：**AzureDataExplorerSink**。 | 是 |
 | ingestionMappingName | 基于 Kusto 表预先创建的[映射](/azure/kusto/management/mappings#csv-mapping)的名称。 若要将源中的列映射到 Azure 数据资源管理器（适用于[所有支持的源存储和格式](copy-activity-overview.md#supported-data-stores-and-formats)，包括 CSV/JSON/Avro 格式），可以使用复制活动[列映射](copy-activity-schema-and-type-mapping.md)（按名称隐式映射或按配置显式映射）和/或 Azure 数据资源管理器映射。 | 否 |
-| additionalProperties | 一个属性包，可用于指定 Azure 数据资源管理器接收器尚未设置的任何引入属性。 具体来说，它可用于指定引入标记。 从 [Azure 数据资源管理器数据引入文档](https://docs.microsoft.com/azure/data-explorer/ingestion-properties)了解更多信息。 | 否 |
+| additionalProperties | 一个属性包，可用于指定 Azure 数据资源管理器接收器尚未设置的任何引入属性。 具体来说，它可用于指定引入标记。 从 [Azure 数据资源管理器数据引入文档](/azure/data-explorer/ingestion-properties)了解更多信息。 | 否 |
 
 **示例：**
 

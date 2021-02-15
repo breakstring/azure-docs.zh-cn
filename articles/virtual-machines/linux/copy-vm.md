@@ -6,19 +6,19 @@ ms.service: virtual-machines-linux
 ms.topic: how-to
 ms.date: 10/17/2018
 ms.author: cynthn
-ms.custom: legacy
-ms.openlocfilehash: c7d93ee928653cc1656e3e9a7cdb0d2fd6d7094b
-ms.sourcegitcommit: 271601d3eeeb9422e36353d32d57bd6e331f4d7b
+ms.custom: legacy, devx-track-azurecli
+ms.openlocfilehash: 7f9ac0ab9eacb90bde70c85ea06bc19a18aa0c05
+ms.sourcegitcommit: 2bd0a039be8126c969a795cea3b60ce8e4ce64fc
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/20/2020
-ms.locfileid: "88654406"
+ms.lasthandoff: 01/14/2021
+ms.locfileid: "98201138"
 ---
 # <a name="create-a-copy-of-a-linux-vm-by-using-azure-cli-and-managed-disks"></a>使用 Azure CLI 和托管磁盘创建 Azure Linux VM 的副本
 
 本文说明如何使用 Azure CLI 创建运行 Linux 的 Azure 虚拟机 (VM) 副本。 若要大规模复制、创建、存储和共享 VM 映像，请参阅[共享映像库](../shared-images-cli.md)。
 
-还可以[上传 VHD 并从中创建 VM](upload-vhd.md?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json)。
+还可以[上传 VHD 并从中创建 VM](upload-vhd.md)。
 
 ## <a name="prerequisites"></a>先决条件
 
@@ -31,7 +31,7 @@ ms.locfileid: "88654406"
 ## <a name="stop-the-source-vm"></a>停止源 VM
 
 使用 [az vm deallocate](/cli/azure/vm#az-vm-deallocate) 解除分配源 VM。
-以下示例解除分配资源组*myResourceGroup* 中名为 *myVM* 的 VM：
+以下示例解除分配资源组 *myResourceGroup* 中名为 *myVM* 的 VM：
 
 ```azurecli
 az vm deallocate \

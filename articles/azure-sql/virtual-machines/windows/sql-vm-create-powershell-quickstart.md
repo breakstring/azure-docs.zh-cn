@@ -6,18 +6,20 @@ documentationcenter: na
 author: MashaMSFT
 tags: azure-resource-manager
 ms.service: virtual-machines-sql
+ms.subservice: deployment
 ms.topic: quickstart
 ms.tgt_pltfrm: vm-windows-sql-server
 ms.workload: infrastructure-services
 ms.date: 12/21/2018
 ms.author: mathoma
 ms.reviewer: jroth
-ms.openlocfilehash: eafbf102c092b180a1f3c882f5ae626e60b80f30
-ms.sourcegitcommit: 3543d3b4f6c6f496d22ea5f97d8cd2700ac9a481
+ms.custom: devx-track-azurepowershell
+ms.openlocfilehash: 350df1aede076120fd14dc46da351835c894c5b4
+ms.sourcegitcommit: dfc4e6b57b2cb87dbcce5562945678e76d3ac7b6
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/20/2020
-ms.locfileid: "86514605"
+ms.lasthandoff: 12/12/2020
+ms.locfileid: "97356814"
 ---
 # <a name="quickstart-create-sql-server-on-a-windows-virtual-machine-with-azure-powershell"></a>快速入门：使用 Azure PowerShell 在 Windows 虚拟机上创建 SQL Server
 
@@ -149,9 +151,9 @@ ms.locfileid: "86514605"
 
 ## <a name="register-with-sql-vm-rp"></a>注册 SQL VM RP 
 
-若要获取门户集成和 SQL VM 功能，必须注册 [SQL VM 资源提供程序](sql-vm-resource-provider-register.md)。
+若要获取门户集成和 SQL VM 功能，必须向 [SQL IaaS 代理扩展](sql-agent-extension-manually-register-single-vm.md)注册。
 
-若要获取完整的功能，需要在完整模式下注册资源提供程序。 不过，这样做会重新启动 SQL Server 服务，因此建议的方法是在轻型模式下注册，然后在维护时段内升级到完整模式。 
+若要获取完整的功能，需要在完整模式下注册扩展。 不过，这样做会重新启动 SQL Server 服务，因此建议的方法是在轻型模式下注册，然后在维护时段内升级到完整模式。 
 
 首先，在轻型模式下注册 SQL Server VM： 
 
@@ -170,8 +172,8 @@ New-AzSqlVM -Name $vm.Name -ResourceGroupName $vm.ResourceGroupName -Location $v
 # Get the existing Compute VM
 $vm = Get-AzVM -Name <vm_name> -ResourceGroupName <resource_group_name>
       
-# Register with SQL VM resource provider in full mode
-New-AzSqlVM -Name $vm.Name -ResourceGroupName $vm.ResourceGroupName -SqlManagementType Full
+# Register with SQL IaaS Agent extension in full mode
+Update-AzSqlVM -Name $vm.Name -ResourceGroupName $vm.ResourceGroupName -SqlManagementType Full
 ```
 
 

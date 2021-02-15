@@ -3,12 +3,12 @@ title: 通过 Azure 资源运行状况支持的资源类型 | Microsoft Docs
 description: 通过 Azure 资源运行状况支持的资源类型
 ms.topic: conceptual
 ms.date: 01/29/2019
-ms.openlocfilehash: 2c002ab89b1cae4db6d3337908bb401039cb2295
-ms.sourcegitcommit: cd0a1ae644b95dbd3aac4be295eb4ef811be9aaa
+ms.openlocfilehash: 1b0958732a96786b2fb86b2b145f5cb8d36c0c5a
+ms.sourcegitcommit: 6d6030de2d776f3d5fb89f68aaead148c05837e2
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/19/2020
-ms.locfileid: "88611936"
+ms.lasthandoff: 01/05/2021
+ms.locfileid: "97883361"
 ---
 # <a name="resource-types-and-health-checks-in-azure-resource-health"></a>Azure 资源运行状况中的资源类型和运行状况检查
 下面是通过资源运行状况执行的所有检查（按资源类型）的完整列表。
@@ -22,6 +22,11 @@ ms.locfileid: "88611936"
 |执行的检查|
 |---|
 |<ul><li>API 管理服务是否已启动并运行？</li></ul>|
+
+## <a name="microsoftappplatformspring"></a>Microsoft.AppPlatform/Spring
+|执行的检查|
+|---|
+|<ul><li>Azure Spring Cloud 实例可用吗？</li></ul>|
 
 ## <a name="microsoftbatchbatchaccounts"></a>Microsoft.Batch/batchAccounts
 |执行的检查|
@@ -46,7 +51,7 @@ ms.locfileid: "88611936"
 ## <a name="microsoftclassiccomputedomainnames"></a>Microsoft.classiccompute/domainnames
 |执行的检查|
 |---|
-|<ul><li>生产槽部署在所有角色实例中是否正常？</li><li>角色在所有 VM 实例中是否正常？</li><li>云服务的角色内每个 VM 的运行状况如何？</li><li>VM 状态是否因平台或客户发起的操作而发生变化？</li><li>来宾 OS 启动是否已完成？</li><li>是否存在持续的计划内维护？</li><li>主机硬件是否已降级并预计很快会发生故障？</li></ul>|
+|<ul><li>所有角色实例的生产槽部署是否正常运行？</li><li>所有角色的 VM 实例上的角色是否正常运行？</li><li>云服务角色中每个 VM 的运行状况如何？</li><li>VM 状态是否因平台或客户发起的操作而改变？</li><li>来宾 OS 启动是否已完成？</li><li>是否存在持续的计划内维护？</li><li>主机硬件是否已降级并预计很快会发生故障？</li><li>[详细了解](../cloud-services/resource-health-for-cloud-services.md)有关执行的检查的信息</li></ul>|
 
 ## <a name="microsoftcognitiveservicesaccounts"></a>Microsoft.cognitiveservices/accounts
 |执行的检查|
@@ -62,6 +67,11 @@ ms.locfileid: "88611936"
 |执行的检查|
 |---|
 |<ul><li>托管此虚拟机的服务器是否已启动并运行？</li><li>主机 OS 启动是否已完成？</li><li>是否已配置并启动虚拟机容器？</li><li>主机和存储帐户之间是否有网络连接？</li><li>来宾 OS 启动是否已完成？</li><li>是否存在持续的计划内维护？</li><li>主机硬件是否已降级并预计很快会发生故障？</li></ul>|
+
+## <a name="microsoftcontainerservicemanagedclusters"></a>Microsoft.ContainerService/managedClusters
+|执行的检查|
+|---|
+|<ul><li>群集是否已启动并正在运行？</li><li>群集上是否提供核心服务？</li><li>所有群集节点是否都准备就绪？</li><li>服务主体当前是否有效？</li></ul>|
 
 ## <a name="microsoftdatafactoryfactories"></a>Microsoft.datafactory/factories
 |执行的检查|
@@ -109,6 +119,11 @@ ms.locfileid: "88611936"
 |---|
 |<ul><li>IoT 中心在正常运行吗？</li></ul>|
 
+## <a name="microsoftdigitaltwinsdigitaltwinsinstances"></a>Microsoft.DigitalTwins/DigitalTwinsInstances
+|执行的检查|
+|---|
+|<ul><li>Azure 数字孪生实例是否已启动并正在运行？</li></ul>|
+
 ## <a name="microsoftdocumentdbdatabaseaccounts"></a>Microsoft.documentdb/databaseAccounts
 |执行的检查|
 |---|
@@ -124,10 +139,20 @@ ms.locfileid: "88611936"
 |---|
 |<ul><li>HDInsight 群集上是否提供核心服务？</li><li>HDInsight 群集是否可以访问用于 BYOK 静态加密的密钥？</li></ul>|
 
+## <a name="microsoftiotcentraliotapps"></a>Microsoft.IoTCentral/IoTApps
+|执行的检查|
+|---|
+|<ul><li>IoT Central 应用程序是否可用？</li></ul>|
+
 ## <a name="microsoftkeyvaultvaults"></a>Microsoft.KeyVault/vaults
 |执行的检查|
 |---|
 |<ul><li>向 Key Vault 发出的请求是否因 Azure KeyVault 平台问题而失败？</li><li>向 Key Vault 发出的请求是否因客户发出的请求过多而受限制？</li></ul>|
+
+## <a name="microsoftkustoclusters"></a>Microsoft.Kusto/clusters
+|执行的检查|
+|---|
+|<ul><li>群集的引入成功率低吗？</li><li>群集是否遇到高引入延迟？</li><li>群集是否遇到大量查询失败？</li></ul>|
 
 ## <a name="microsoftmachinelearningwebservices"></a>Microsoft.MachineLearning/webServices
 |执行的检查|
@@ -143,6 +168,11 @@ ms.locfileid: "88611936"
 |执行的检查|
 |---|
 |<ul><li>应用程序网关的性能是否下降了？</li><li>应用程序网关是否可用？</li></ul>|
+
+## <a name="microsoftnetworkbastionhosts"></a>Bastionhosts/网络
+|执行的检查|
+|---|
+|<ul><li>堡垒主机是否已启动并正在运行？</li></ul>|
 
 ## <a name="microsoftnetworkconnections"></a>Microsoft.network/connections
 |执行的检查|
@@ -164,6 +194,11 @@ ms.locfileid: "88611936"
 |---|
 |<ul><li>负载均衡终结点是否可用？</li></ul>|
 
+## <a name="microsoftnetworktrafficmanagerprofiles"></a>Microsoft.network/trafficmanagerprofiles
+|执行的检查|
+|---|
+|<ul><li>是否存在影响流量管理器配置文件的问题？</li></ul>|
+
 ## <a name="microsoftnetworkvirtualnetworkgateways"></a>Microsoft.network/virtualNetworkGateways
 |执行的检查|
 |---|
@@ -182,12 +217,7 @@ ms.locfileid: "88611936"
 ## <a name="microsoftpowerbidedicatedcapacities"></a>Microsoft.PowerBIDedicated/Capacities
 |执行的检查|
 |---|
-|<ul><li>容量资源是否已启动且正在运行？</li><li>所有工作负荷是否都已启动且正在运行？</li></ul>|
-
-## <a name="microsoftpowerbiworkspacecollections"></a>Microsoft.PowerBI/workspaceCollections
-|执行的检查|
-|---|
-|<ul><li>主机 OS 是否已启动并正在运行？</li><li>是否可从数据中心外部访问 workspaceCollection？</li><li>Power BI 资源提供程序是否可用？</li><li>Power BI 服务在相应区域中是否可用？</li></ul>|
+|<ul><li>容量资源是否已启动且正在运行？</li><li>所有工作负荷是否都已启动且正在运行？</li></ul>
 
 ## <a name="microsoftsearchsearchservices"></a>Microsoft.search/searchServices
 |执行的检查|
@@ -237,4 +267,4 @@ ms.locfileid: "88611936"
 ## <a name="next-steps"></a>后续步骤
 -  请参阅 [Azure 服务运行状况仪表板简介](service-health-overview.md)和 [Azure 资源运行状况简介](resource-health-overview.md)，了解更多相关信息。 
 -  [有关 Azure 资源运行状况的常见问题解答](resource-health-faq.md)
-- 设置警报，以便收到运行状况问题的通知。 有关详细信息，请参阅[配置服务运行状况事件的警报](./alerts-activity-log-service-notifications-portal.md)。 
+- 设置警报，以便收到运行状况问题的通知。 有关详细信息，请参阅[配置服务运行状况事件的警报](./alerts-activity-log-service-notifications-portal.md)。

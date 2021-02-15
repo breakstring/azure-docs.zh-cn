@@ -4,20 +4,20 @@ description: 了解如何使用托管标识让数据库连接更安全，以及�
 ms.devlang: dotnet
 ms.topic: tutorial
 ms.date: 04/27/2020
-ms.custom: devx-track-csharp, mvc, cli-validate
-ms.openlocfilehash: bb1c947a388811efb5d161b7739664bea9fc85c8
-ms.sourcegitcommit: 4913da04fd0f3cf7710ec08d0c1867b62c2effe7
+ms.custom: devx-track-csharp, mvc, cli-validate, devx-track-azurecli
+ms.openlocfilehash: 2c19ee2b8e7ec3c695b2c76c46402c118c559b40
+ms.sourcegitcommit: 78ecfbc831405e8d0f932c9aafcdf59589f81978
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/14/2020
-ms.locfileid: "88213708"
+ms.lasthandoff: 01/23/2021
+ms.locfileid: "98736232"
 ---
 # <a name="tutorial-secure-azure-sql-database-connection-from-app-service-using-a-managed-identity"></a>教程：使用托管标识确保从应用服务进行的 Azure SQL 数据库连接安全
 
 [应用服务](overview.md)在 Azure 中提供高度可缩放、自修补的 Web 托管服务。 它还为应用提供[托管标识](overview-managed-identity.md)，这是一项统包解决方案，可以确保安全地访问 [Azure SQL 数据库](/azure/sql-database/)和其他 Azure 服务。 应用服务中的托管标识可以让应用更安全，因为不需在应用中存储机密，例如连接字符串中的凭据。 在本教程中，你要将托管标识添加到在以下教程之一中生成的示例 Web 应用： 
 
-- [教程：使用 SQL 数据库在 Azure 中生成 ASP.NET 应用](app-service-web-tutorial-dotnet-sqldatabase.md)
-- [教程：在 Azure 应用服务中生成 ASP.NET Core 和 SQL 数据库应用](tutorial-dotnetcore-sqldb-app.md)
+- [教程：使用 Azure SQL 数据库在 Azure 中生成 ASP.NET 应用](app-service-web-tutorial-dotnet-sqldatabase.md)
+- [教程：在 Azure 应用服务中生成 ASP.NET Core 和 Azure SQL 数据库应用](tutorial-dotnetcore-sqldb-app.md)
 
 完成后，示例应用就可以安全地连接到 SQL 数据库，不需用户名和密码。
 
@@ -37,7 +37,7 @@ ms.locfileid: "88213708"
 > * 使用 Azure AD 身份验证从 Visual Studio 连接到 SQL 数据库
 
 > [!NOTE]
->在本地 Active Directory 域服务 (AD DS) 中，Azure AD 身份验证不同于[集成式 Windows 身份验证](/previous-versions/windows/it-pro/windows-server-2003/cc758557(v=ws.10))。 AD DS 和 Azure AD 使用的身份验证协议完全不相同。 有关详细信息，请参阅 [Azure AD 域服务文档](https://docs.microsoft.com/azure/active-directory-domain-services/)。
+>在本地 Active Directory 域服务 (AD DS) 中，Azure AD 身份验证不同于[集成式 Windows 身份验证](/previous-versions/windows/it-pro/windows-server-2003/cc758557(v=ws.10))。 AD DS 和 Azure AD 使用的身份验证协议完全不相同。 有关详细信息，请参阅 [Azure AD 域服务文档](../active-directory-domain-services/index.yml)。
 
 [!INCLUDE [quickstarts-free-trial-note](../../includes/quickstarts-free-trial-note.md)]
 
@@ -47,7 +47,9 @@ ms.locfileid: "88213708"
 
 若要使用 SQL 数据库作为后端调试应用程序，请确保已经允许从计算机连接客户端。 否则，请遵循[使用 Azure 门户管理服务器级 IP 防火墙规则](../azure-sql/database/firewall-configure.md#use-the-azure-portal-to-manage-server-level-ip-firewall-rules)中的步骤添加客户端 IP。
 
-[!INCLUDE [cloud-shell-try-it.md](../../includes/cloud-shell-try-it.md)]
+为 Azure CLI 准备环境。
+
+[!INCLUDE [azure-cli-prepare-your-environment-no-header.md](../../includes/azure-cli-prepare-your-environment-no-header.md)]
 
 ## <a name="grant-database-access-to-azure-ad-user"></a>向 Azure AD 用户授予数据库访问权限
 
@@ -55,7 +57,7 @@ ms.locfileid: "88213708"
 
 如果 Azure AD 租户还没有用户，请按照[使用 Azure Active Directory 添加或删除用户](../active-directory/fundamentals/add-users-azure-active-directory.md)中的步骤创建一个用户。
 
-使用 [`az ad user list`](/cli/azure/ad/user?view=azure-cli-latest#az-ad-user-list) 查找 Azure AD 用户的对象 ID，并替换 \<user-principal-name>。 结果会保存到变量中。
+使用 [`az ad user list`](/cli/azure/ad/user#az-ad-user-list) 查找 Azure AD 用户的对象 ID，并替换 \<user-principal-name>。 结果会保存到变量中。
 
 ```azurecli-interactive
 azureaduser=$(az ad user list --filter "userPrincipalName eq '<user-principal-name>'" --query [].objectId --output tsv)
@@ -64,7 +66,7 @@ azureaduser=$(az ad user list --filter "userPrincipalName eq '<user-principal-na
 > 若要查看 Azure AD 中所有用户主体名称的列表，请运行 `az ad user list --query [].userPrincipalName`。
 >
 
-使用 Cloud Shell 中的 [`az sql server ad-admin create`](/cli/azure/sql/server/ad-admin?view=azure-cli-latest#az-sql-server-ad-admin-create) 命令，将此 Azure AD 用户添加为 Active Directory 管理员。 在以下命令中，将 \<server-name> 替换为服务器名称（不带 `.database.windows.net` 后缀）。
+使用 Cloud Shell 中的 [`az sql server ad-admin create`](/cli/azure/sql/server/ad-admin#az-sql-server-ad-admin-create) 命令，将此 Azure AD 用户添加为 Active Directory 管理员。 在以下命令中，将 \<server-name> 替换为服务器名称（不带 `.database.windows.net` 后缀）。
 
 ```azurecli-interactive
 az sql server ad-admin create --resource-group myResourceGroup --server-name <server-name> --display-name ADMIN --object-id $azureaduser
@@ -83,11 +85,11 @@ Visual Studio for Windows 集成了 Azure AD 身份验证。 若要在 Visual St
 
 ### <a name="macos-client"></a>macOS 客户端
 
-Visual Studio for Mac 未集成 Azure AD 身份验证。 不过，稍后将使用的 [Microsoft.Azure.Services.AppAuthentication](https://www.nuget.org/packages/Microsoft.Azure.Services.AppAuthentication) 库可以使用 Azure CLI 中的令牌。 若要在 Visual Studio 中启用开发和调试，首先需要在本地计算机上[安装 Azure CLI](https://docs.microsoft.com/cli/azure/install-azure-cli)。
+Visual Studio for Mac 未集成 Azure AD 身份验证。 不过，稍后将使用的 [Microsoft.Azure.Services.AppAuthentication](https://www.nuget.org/packages/Microsoft.Azure.Services.AppAuthentication) 库可以使用 Azure CLI 中的令牌。 若要在 Visual Studio 中启用开发和调试，首先需要在本地计算机上[安装 Azure CLI](/cli/azure/install-azure-cli)。
 
 在本地计算机上安装 Azure CLI 后，请使用 Azure AD 用户通过以下命令登录 Azure CLI：
 
-```bash
+```azurecli
 az login --allow-no-subscriptions
 ```
 现已准备好将 SQL 数据库作为后端，使用 Azure AD 身份验证来开发和调试应用程序。
@@ -128,7 +130,7 @@ Install-Package Microsoft.Azure.Services.AppAuthentication -Version 1.4.0
 - 找到名为 `MyDbConnection` 的连接字符串，并将其 `connectionString` 值替换为 `"server=tcp:<server-name>.database.windows.net;database=<db-name>;UID=AnyString;Authentication=Active Directory Interactive"`。 将 \<server-name> 和 \<db-name> 替换为你的服务器名称和数据库名称 。
 
 > [!NOTE]
-> 刚注册的 SqlAuthenticationProvider 基于之前安装的 AppAuthentication 库。 默认情况下，它使用系统分配的标识。 若要利用用户分配的标识，需提供其他配置。 请参阅针对 AppAuthentication 库的[连接字符串支持](../key-vault/general/service-to-service-authentication.md#connection-string-support)。
+> 刚注册的 SqlAuthenticationProvider 基于之前安装的 AppAuthentication 库。 默认情况下，它使用系统分配的标识。 若要利用用户分配的标识，需提供其他配置。 请参阅针对 AppAuthentication 库的[连接字符串支持](/dotnet/api/overview/azure/service-to-service-authentication#connection-string-support)。
 
 这就是连接到 SQL 数据库所要完成的所有准备工作。 在 Visual Studio 中调试时，代码将使用[设置 Visual Studio](#set-up-visual-studio) 中配置的 Azure AD 用户。 稍后你将设置 SQL 数据库，以允许“应用服务”应用的托管标识建立连接。
 
@@ -151,8 +153,8 @@ Install-Package Microsoft.Azure.Services.AppAuthentication -Version 1.4.0
 接下来，使用 SQL 数据库的访问令牌提供实体框架数据库上下文。 在 *Data\MyDatabaseContext.cs* 中，将以下代码添加到空的 `MyDatabaseContext (DbContextOptions<MyDatabaseContext> options)` 构造函数的大括号中：
 
 ```csharp
-var conn = (Microsoft.Data.SqlClient.SqlConnection)Database.GetDbConnection();
-conn.AccessToken = (new Microsoft.Azure.Services.AppAuthentication.AzureServiceTokenProvider()).GetAccessTokenAsync("https://database.windows.net/").Result;
+var connection = (SqlConnection)Database.GetDbConnection();
+connection.AccessToken = (new Microsoft.Azure.Services.AppAuthentication.AzureServiceTokenProvider()).GetAccessTokenAsync("https://database.windows.net/").Result;
 ```
 
 > [!NOTE]
@@ -174,7 +176,7 @@ conn.AccessToken = (new Microsoft.Azure.Services.AppAuthentication.AzureServiceT
 
 ### <a name="enable-managed-identity-on-app"></a>在应用上启用托管标识
 
-若要为 Azure 应用启用托管标识，请在 Cloud Shell 中使用 [az webapp identity assign](/cli/azure/webapp/identity?view=azure-cli-latest#az-webapp-identity-assign) 命令。 在以下命令中，替换 \<app-name>。
+若要为 Azure 应用启用托管标识，请在 Cloud Shell 中使用 [az webapp identity assign](/cli/azure/webapp/identity#az-webapp-identity-assign) 命令。 在以下命令中，替换 \<app-name>。
 
 ```azurecli-interactive
 az webapp identity assign --resource-group myResourceGroup --name <app-name>
@@ -206,7 +208,7 @@ az webapp identity assign --resource-group myResourceGroup --name <app-name>
 
 在 Cloud Shell 中，使用 SQLCMD 命令登录到 SQL 数据库。 将 \<server-name> 替换为你的服务器名称，将 \<db-name> 替换为应用使用的数据库的名称，并将 \<aad-user-name> 和 \<aad-password> 替换为 Azure AD 用户的凭据   。
 
-```azurecli-interactive
+```bash
 sqlcmd -S <server-name>.database.windows.net -d <db-name> -U <aad-user-name> -P "<aad-password>" -G -l 30
 ```
 
@@ -227,6 +229,9 @@ GO
 > [!NOTE]
 > 托管标识的后端服务还[保留一个令牌缓存](overview-managed-identity.md#obtain-tokens-for-azure-resources)，只有在过期的情况下才更新目标资源的令牌。 如果在配置 SQL 数据库权限时出错，并尝试在使用应用获取令牌后修改权限，则在缓存的令牌过期之前，实际上不会获得具有更新权限的新令牌。
 
+> [!NOTE]
+> 本地 SQL Server 不支持 AAD，这包括 MSI。 
+
 ### <a name="modify-connection-string"></a>修改连接字符串
 
 请记住，在 *Web.config* 或 *appsettings.json* 中所做的相同更改适用于托管标识，因此只需删除应用服务中的现有连接字符串，该字符串由 Visual Studio 在首次部署应用时创建。 使用以下命令，但将 \<app-name> 替换为应用的名称。
@@ -239,17 +244,17 @@ az webapp config connection-string delete --resource-group myResourceGroup --nam
 
 现在，剩下的操作是将更改发布到 Azure。
 
-**如果你是在学完[教程：使用 SQL 数据库在 Azure 中生成 ASP.NET 应用](app-service-web-tutorial-dotnet-sqldatabase.md)** 后转到本教程，请在 Visual Studio 中发布更改。 在“解决方案资源管理器”中，右键单击 “DotNetAppSqlDb”项目，然后选择“发布”。
+**如果你是在学完 [教程：使用 SQL 数据库在 Azure 中生成 ASP.NET 应用](app-service-web-tutorial-dotnet-sqldatabase.md)** 后转到本教程，请在 Visual Studio 中发布更改。 在“解决方案资源管理器”中，右键单击 “DotNetAppSqlDb”项目，然后选择“发布”。
 
 ![从解决方案资源管理器发布](./media/app-service-web-tutorial-dotnet-sqldatabase/solution-explorer-publish.png)
 
 在发布页中单击“发布”。 
 
-**如果你是在学完[教程：在 Azure 应用服务中生成 ASP.NET Core 和 SQL 数据库应用](tutorial-dotnetcore-sqldb-app.md)** 后转到本教程，请运行以下命令使用 Git 发布更改：
+**如果你是在学完 [教程：在 Azure 应用服务中生成 ASP.NET Core 和 SQL 数据库应用](tutorial-dotnetcore-sqldb-app.md)** 后转到本教程，请运行以下命令使用 Git 发布更改：
 
 ```bash
 git commit -am "configure managed identity"
-git push azure master
+git push azure main
 ```
 
 当新网页显示待办事项列表时，表明应用使用了托管标识连接到数据库。

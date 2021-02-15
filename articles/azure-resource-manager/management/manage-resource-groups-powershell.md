@@ -3,14 +3,14 @@ title: 管理资源组 - Azure PowerShell
 description: 使用 Azure PowerShell 通过 Azure 资源管理器管理资源组。 说明如何创建、列出和删除资源组。
 author: mumian
 ms.topic: conceptual
-ms.date: 02/11/2019
+ms.date: 09/01/2020
 ms.author: jgao
-ms.openlocfilehash: 8457925479e3c28e062f87dbb830969d66523ec7
-ms.sourcegitcommit: 2ff0d073607bc746ffc638a84bb026d1705e543e
+ms.openlocfilehash: fb8cd45842e2f9b64048aa939f7b6adc9b0e6e0a
+ms.sourcegitcommit: 75041f1bce98b1d20cd93945a7b3bd875e6999d0
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/06/2020
-ms.locfileid: "87827070"
+ms.lasthandoff: 01/22/2021
+ms.locfileid: "98703676"
 ---
 # <a name="manage-azure-resource-manager-resource-groups-by-using-azure-powershell"></a>使用 Azure PowerShell 管理 Azure 资源管理器资源组
 
@@ -31,15 +31,10 @@ ms.locfileid: "87827070"
 
 ## <a name="create-resource-groups"></a>创建资源组
 
-以下 PowerShell 脚本将创建一个资源组，然后显示该资源组。
+以下 PowerShell 脚本将创建一个资源组。
 
 ```azurepowershell-interactive
-$resourceGroupName = Read-Host -Prompt "Enter the Resource Group name"
-$location = Read-Host -Prompt "Enter the location (i.e. centralus)"
-
-New-AzResourceGroup -Name $resourceGroupName -Location $location
-
-Get-AzResourceGroup -Name $resourceGroupName
+New-AzResourceGroup -Name demoResourceGroup -Location westus
 ```
 
 ## <a name="list-resource-groups"></a>列出资源组
@@ -68,13 +63,13 @@ $resourceGroupName = Read-Host -Prompt "Enter the Resource Group name"
 Remove-AzResourceGroup -Name $resourceGroupName
 ```
 
-若要详细了解 Azure 资源管理器如何控制资源的删除，请参阅 [Azure 资源管理器资源组的删除](delete-resource-group.md)。
+若要详细了解 Azure 资源管理器如何管理资源的删除，请参阅 [Azure 资源管理器资源组的删除](delete-resource-group.md)。
 
 ## <a name="deploy-resources-to-an-existing-resource-group"></a>将资源部署到现有的资源组
 
 请参阅[将资源部署到现有的资源组](manage-resources-powershell.md#deploy-resources-to-an-existing-resource-group)。
 
-若要验证资源组部署，请参阅 [Test-AzResourceGroupDeployment](/powershell/module/Az.Resources/Test-AzResourceGroupDeployment?view=azps-1.3.0)。
+若要验证资源组部署，请参阅 [Test-AzResourceGroupDeployment](/powershell/module/Az.Resources/Test-AzResourceGroupDeployment)。
 
 ## <a name="deploy-a-resource-group-and-resources"></a>部署资源组和资源
 
@@ -82,7 +77,7 @@ Remove-AzResourceGroup -Name $resourceGroupName
 
 ## <a name="redeploy-when-deployment-fails"></a>部署失败时，重新部署
 
-此功能也称为“出错时回滚”**。 有关详细信息，请参阅[在部署失败时重新部署](../templates/rollback-on-error.md)。
+此功能也称为“出错时回滚”  。 有关详细信息，请参阅[在部署失败时重新部署](../templates/rollback-on-error.md)。
 
 ## <a name="move-to-another-resource-group-or-subscription"></a>移到另一个资源组或订阅
 
@@ -108,7 +103,7 @@ $resourceGroupName = Read-Host -Prompt "Enter the Resource Group name"
 Get-AzResourceLock -ResourceGroupName $resourceGroupName 
 ```
 
-更多信息请参阅 [使用 Azure Resource Manager 锁定资源](lock-resources.md)。
+有关详细信息，请参阅 [使用 Azure 资源管理器锁定资源](lock-resources.md)。
 
 ## <a name="tag-resource-groups"></a>标记资源组
 
@@ -209,15 +204,15 @@ Export-AzResourceGroup `
 ]
 ```
 
-导出模板功能不支持导出 Azure 数据工厂资源。 若要了解如何导出数据工厂资源，请参阅[在 Azure 数据工厂中复制或克隆数据工厂](https://aka.ms/exportTemplateViaAdf)。
+导出模板功能不支持导出 Azure 数据工厂资源。 若要了解如何导出数据工厂资源，请参阅[在 Azure 数据工厂中复制或克隆数据工厂](../../data-factory/copy-clone-data-factory.md)。
 
-若要导出通过经典部署模型创建的资源，必须[将其迁移到资源管理器部署模型](https://aka.ms/migrateclassicresourcetoarm)。
+若要导出通过经典部署模型创建的资源，必须[将其迁移到资源管理器部署模型](../../virtual-machines/migration-classic-resource-manager-overview.md)。
 
 有关详细信息，请参阅[将 Azure 门户中的单资源和多资源导出到模板](../templates/export-template-portal.md)。
 
 ## <a name="manage-access-to-resource-groups"></a>管理对资源组的访问
 
-Azure [RBAC) 的 azure 基于角色的访问控制 (](../../role-based-access-control/overview.md)是管理 azure 中资源访问权限的方式。 有关详细信息，请参阅[使用 RBAC 和 Azure PowerShell 管理访问权限](../../role-based-access-control/role-assignments-powershell.md)。
+可以通过 [Azure 基于角色的访问控制 (Azure RBAC)](../../role-based-access-control/overview.md) 管理对 Azure 中资源的访问权限。 有关详细信息，请参阅[使用 Azure PowerShell 添加或删除 Azure 角色分配](../../role-based-access-control/role-assignments-powershell.md)。
 
 ## <a name="next-steps"></a>后续步骤
 

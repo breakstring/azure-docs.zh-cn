@@ -1,9 +1,9 @@
 ---
-title: 使用 SDK 可在 VM 上配置托管标识-Azure AD
+title: 使用 SDK 在 VM 上配置托管标识 - Azure AD
 description: 分步说明如何使用 Azure SDK 在 Azure VM 上配置和使用 Azure 资源托管标识。
 services: active-directory
 documentationcenter: ''
-author: MarkusVi
+author: barclayn
 manager: daveba
 editor: ''
 ms.service: active-directory
@@ -12,15 +12,15 @@ ms.devlang: na
 ms.topic: quickstart
 ms.tgt_pltfrm: na
 ms.workload: identity
-ms.date: 09/28/2017
-ms.author: markvi
+ms.date: 11/03/2020
+ms.author: barclayn
 ms.collection: M365-identity-device-management
-ms.openlocfilehash: 9472f9fa2084a1665b4a103df359fd3b4f19d6ad
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 41d1be35d2add24cbbc171c3da3bd4d06bce4337
+ms.sourcegitcommit: 6a902230296a78da21fbc68c365698709c579093
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "85609038"
+ms.lasthandoff: 11/05/2020
+ms.locfileid: "93359657"
 ---
 # <a name="configure-a-vm-with-managed-identities-for-azure-resources-using-an-azure-sdk"></a>使用 Azure SDK 为 VM 配置具有 Azure 资源托管标识
 

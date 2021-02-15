@@ -3,32 +3,33 @@ title: 使用 Power BI 应用分析 Azure 成本
 description: 本文介绍如何安装和使用 Azure 成本管理 Power BI 应用。
 author: bandersmsft
 ms.author: banders
-ms.date: 07/24/2020
+ms.date: 1/29/2021
 ms.topic: how-to
 ms.service: cost-management-billing
+ms.subservice: cost-management
 ms.reviewer: benshy
-ms.openlocfilehash: 388fbcf8dde2e01bf7f4e6c8b4ecbe344fd036d2
-ms.sourcegitcommit: dccb85aed33d9251048024faf7ef23c94d695145
+ms.openlocfilehash: d3439f5a86c445898d95191a32496b5f0c86be0b
+ms.sourcegitcommit: dd24c3f35e286c5b7f6c3467a256ff85343826ad
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/28/2020
-ms.locfileid: "87290899"
+ms.lasthandoff: 01/29/2021
+ms.locfileid: "99070151"
 ---
 # <a name="analyze-cost-with-the-azure-cost-management-power-bi-app-for-enterprise-agreements-ea"></a>使用适用于企业协议 (EA) 的 Azure 成本管理 Power BI 应用分析成本
 
 本文介绍如何安装和使用 Azure 成本管理 Power BI 应用。 该应用可帮助你在 Power BI 中分析和管理 Azure 成本。 可以使用该应用来监视成本和使用趋势，并确定可用于减少支出的成本优化选项。
 
-可以按原样使用该应用，或者对其进行修改，以根据自己的自定义需求扩展默认筛选器、视图和可视化效果。 然后，使用该应用联接更多的数据，以创建自定义报表，获取总体业务成本的全方位视图。
-
 Azure 成本管理 Power BI 应用目前仅支持已签署[企业协议](https://azure.microsoft.com/pricing/enterprise-agreement/)的客户。
+
+该应用在可自定义方面存在限制。 如果要修改和扩展默认的筛选器、视图和可视化效果来根据需要进行自定义，请改用 [Power BI Desktop 中的 Azure 成本管理连接器](/power-bi/connect-data/desktop-connect-azure-cost-management)。 借助 Azure 成本管理连接器，可联接来自其他源的其他数据以创建自定义报表，从而全面了解整体业务成本。 该连接器还支持 Microsoft 客户协议。
 
 > [!NOTE]
 > Power BI 模板应用不支持下载 PBIX 文件。
 
 ## <a name="prerequisites"></a>先决条件
 
-- 用于安装和使用该应用的 [Power BI Pro 许可证](/power-bi/service-self-service-signup-for-power-bi)
-- 若要连接数据，必须使用[企业管理员](../manage/understand-ea-roles.md)帐户
+- 需要一个 [Power BI Pro 许可证](/power-bi/service-self-service-signup-for-power-bi)才能安装和使用该应用。
+- 若要连接数据，必须使用[企业管理员](../manage/understand-ea-roles.md)帐户。 支持企业管理员（只读）角色。
 
 ## <a name="installation-steps"></a>安装步骤
 
@@ -46,7 +47,7 @@ Azure 成本管理 Power BI 应用目前仅支持已签署[企业协议](https:/
 9. 在出现的对话框中，为“BillingProfileIdOrEnrollmentNumber”输入 EA 注册编号。 指定要获取的数据的月数。 保留“注册编号”的默认“范围”值，然后选择“下一步”。  
   ![输入 EA 注册信息](./media/analyze-cost-data-azure-cost-management-power-bi-template-app/ea-number.png)  
 10. 在下一个对话框中连接到 Azure，并获取所需的数据来显示预留实例建议。 保留配置的默认值，并选择“登录”。  
-  ![连接到 Azure](./media/analyze-cost-data-azure-cost-management-power-bi-template-app/autofit.png)  
+  ![屏幕截图显示了带有默认值的“连接到 Azure 成本管理应用”对话框。](./media/analyze-cost-data-azure-cost-management-power-bi-template-app/autofit.png)  
 11. 最后一个安装步骤连接到 EA 注册，并要求使用[企业管理员](../manage/understand-ea-roles.md)帐户。 选择“登录”以便对 EA 注册进行身份验证。 此步骤还会在 Power BI 中启动数据刷新操作。  
   ![连接到 EA 注册](./media/analyze-cost-data-azure-cost-management-power-bi-template-app/ea-auth.png)  
     > [!NOTE]
@@ -79,7 +80,7 @@ Azure 成本管理 Power BI 应用目前仅支持已签署[企业协议](https:/
 
 ![Azure 混合权益完整报表](./media/analyze-cost-data-azure-cost-management-power-bi-template-app/ahb-report-full.png)
 
-该报表还会列出**已启用**混合权益，但使用的 vCPU 数少于 8 个的 Windows VM。 它还显示哪些 VM **未启用**混合权益，且使用的 vCPU 数至少有 8 个。 此信息可帮助你充分利用混合权益。 将权益应用到开销最高的虚拟机能够最大程度地实现潜在成本节省。
+该报表还会列出 **已启用** 混合权益，但使用的 vCPU 数少于 8 个的 Windows VM。 它还显示哪些 VM **未启用** 混合权益，且使用的 vCPU 数至少有 8 个。 此信息可帮助你充分利用混合权益。 将权益应用到开销最高的虚拟机能够最大程度地实现潜在成本节省。
 
 ![Azure 混合权益 – 少于 8 个 vCPU 和未启用 vCPU](./media/analyze-cost-data-azure-cost-management-power-bi-template-app/ahb-report.png)
 
@@ -87,7 +88,7 @@ Azure 成本管理 Power BI 应用目前仅支持已签署[企业协议](https:/
 
 可对“费用类型”应用筛选器，以查看 RI 利用不足数据。
 
-有关分摊数据的详细信息，请参阅[获取企业协议预留成本和使用情况](/azure/cost-management-billing/reservations/understand-reserved-instance-usage-ea)。
+有关分摊数据的详细信息，请参阅[获取企业协议预留成本和使用情况](../reservations/understand-reserved-instance-usage-ea.md)。
 
 **RI 节省** - 该报表显示订阅、资源组和资源级别的预留项的累积节省额。 其中显示：
 
@@ -188,7 +189,7 @@ Failed to update data source credentials: The credentials provided for the Azure
 
 1. 连接到数据。
 1. 输入 EA 注册和月数后，请务必保留“匿名”作为“身份验证方法”的默认值，并保留“无”作为隐私级别设置。  
-  ![连接到 Azure](./media/analyze-cost-data-azure-cost-management-power-bi-template-app/autofit-troubleshoot.png)  
+  ![屏幕截图显示了已输入“匿名”和“无”这两个值的“连接到 Azure 成本管理应用”对话框。](./media/analyze-cost-data-azure-cost-management-power-bi-template-app/autofit-troubleshoot.png)  
 1. 在下一页上，设置 **OAuth2** 作为“身份验证方法”，设置“无”作为“隐私级别”。 然后登录，以便对注册进行身份验证。 此步骤还启动 Power BI 数据刷新。
 
 
@@ -203,8 +204,8 @@ Failed to update data source credentials: The credentials provided for the Azure
 | [**预算**](/rest/api/consumption/budgets/get#definitions) | 预算详细信息，用于查看实际成本或用量，并将其与现有预算目标进行比较。 |
 | [**价目表**](/rest/api/billing/enterprise/billing-enterprise-api-pricesheet#see-also) | 所提供计费配置文件或 EA 注册的适用计量费率。 |
 | [**RI 费用**](/rest/api/billing/enterprise/billing-enterprise-api-reserved-instance-charges#response) | 与过去 24 个月的预留实例相关的费用。 |
-| [**RI 建议(共享)** ](/rest/api/billing/enterprise/billing-enterprise-api-reserved-instance-recommendation#response) | 根据过去 7 天、30 天或 60 天的所有订阅使用趋势提供的预留实例购买建议。 |
-| [**RI 建议(单个)** ](/rest/api/billing/enterprise/billing-enterprise-api-reserved-instance-recommendation#response-1) | 根据过去 7 天、30 天或 60 天的单个订阅使用趋势提供的预留实例购买建议。 |
+| [**RI 建议(共享)**](/rest/api/billing/enterprise/billing-enterprise-api-reserved-instance-recommendation#response) | 根据过去 7 天的所有订阅使用趋势提供的预留实例购买建议。 |
+| [**RI 建议(单个)**](/rest/api/billing/enterprise/billing-enterprise-api-reserved-instance-recommendation#response-1) | 根据过去 7 天的单个订阅使用趋势提供的预留实例购买建议。 |
 | [**RI 使用情况详细信息**](/rest/api/billing/enterprise/billing-enterprise-api-reserved-instance-usage#response) | 现有预留实例在过去一个月的消耗详细信息。 |
 | [**RI 使用情况摘要**](/rest/api/consumption/reservationssummaries/list) | 每日 Azure 预留使用百分比。 |
 | [**使用情况详细信息**](/rest/api/billing/enterprise/billing-enterprise-api-usage-detail#usage-details-field-definitions) | EA 注册中给定计费配置文件的已用数量和估算费用的细目。 |

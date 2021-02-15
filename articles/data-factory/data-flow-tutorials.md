@@ -1,17 +1,17 @@
 ---
 title: 映射数据流视频教程
 description: 介绍映射数据流概念的视频教程列表
-author: djpmsft
-ms.author: daperlov
+author: kromerm
+ms.author: makromer
 ms.service: data-factory
 ms.topic: tutorial
-ms.date: 08/11/2020
-ms.openlocfilehash: 809011df3c8cd6dbc1ee2a2129a261102adb43c0
-ms.sourcegitcommit: d8b8768d62672e9c287a04f2578383d0eb857950
+ms.date: 12/14/2020
+ms.openlocfilehash: 289f22230a38ef8dd6e369573091c5b30dd4a5c7
+ms.sourcegitcommit: 0830e02635d2f240aae2667b947487db01f5fdef
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/11/2020
-ms.locfileid: "88067845"
+ms.lasthandoff: 12/21/2020
+ms.locfileid: "97706994"
 ---
 # <a name="mapping-data-flow-video-tutorials"></a>映射数据流视频教程
 
@@ -83,6 +83,14 @@ ms.locfileid: "88067845"
 
 [平展转换](https://youtu.be/VY2tFQJoAXE)
 
+[转换层次结构数据](https://youtu.be/oAEh21NFgWQ)
+
+[排名转换](https://youtu.be/6XvgkbMtws0)
+
+[缓存查找](https://www.youtube.com/watch?v=HqCn42FaRJs)
+
+[通过窗口转换提供行上下文](http://youtu.be/jqt1gmX2XUg)
+
 ## <a name="source-and-sink"></a>源和接收器
 
 [读取和写入 JSON](https://www.youtube.com/watch?v=yY5aB7Kdhjg)
@@ -107,8 +115,6 @@ ms.locfileid: "88067845"
 
 [数据世系](https://www.youtube.com/watch?v=5KvqYF-y93s)
 
-[优化提示](https://www.youtube.com/watch?v=a2KtwUJngHo)
-
 [使用参数循环访问文件](http://youtu.be/uEgz0ptYRDM?hd=1)
 
 [缩短启动时间](https://youtu.be/FFCbU4ujCiY?t=528)
@@ -121,7 +127,7 @@ ms.locfileid: "88067845"
 
 [优化数据流启动时间](https://www.youtube.com/watch?v=VT_2ZV3a7Fc)
 
-[Azure Integration Runtime 的数据流](https://mssqldude.wordpress.com/)
+[Azure Integration Runtime 的数据流](https://www.youtube.com/watch?v=VT_2ZV3a7Fc)
 
 ## <a name="mapping-data-flow-scenarios"></a>映射数据流方案
 
@@ -131,7 +137,7 @@ ms.locfileid: "88067845"
 
 [清理地址模式](https://youtu.be/axEYbuU3lmw)
 
-[重复数据删除](https://www.youtube.com/watch?v=OLenvYwg__I)
+[重复数据删除](https://youtu.be/QOi26ETtPTw)
 
 [合并文件](http://youtu.be/WbDTBAyYte8)
 
@@ -172,3 +178,7 @@ ms.locfileid: "88067845"
 [数据质量表达式](https://www.youtube.com/watch?v=O8gmv5-lXhs)
 
 [收集聚合函数](https://www.youtube.com/watch?v=zneE18EHJSE)
+
+## <a name="metadata"></a>Metadata
+
+[元数据验证规则](https://www.youtube.com/watch?v=E_UD3R-VpYE)

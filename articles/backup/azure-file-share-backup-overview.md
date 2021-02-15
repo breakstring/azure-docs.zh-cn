@@ -3,16 +3,16 @@ title: 关于 Azure 文件共享备份
 description: 了解如何在恢复服务保管库中备份 Azure 文件共享
 ms.topic: conceptual
 ms.date: 03/05/2020
-ms.openlocfilehash: 1c44d406519c8c0d9fb71b5e94bcb6bcaa1a7253
-ms.sourcegitcommit: ac7ae29773faaa6b1f7836868565517cd48561b2
+ms.openlocfilehash: e955df7662bd18ed1d1d4ec1f0aa6c9474c5386f
+ms.sourcegitcommit: 829d951d5c90442a38012daaf77e86046018e5b9
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/25/2020
-ms.locfileid: "88823874"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "89378077"
 ---
 # <a name="about-azure-file-share-backup"></a>关于 Azure 文件共享备份
 
-Azure 文件共享备份是一种基于云的本机备份解决方案，用于保护云中的数据，并消除了本地备份解决方案所涉及的额外维护开销。 Azure 备份服务与 Azure 文件同步的集成顺畅，并使你能够集中处理文件共享数据以及备份。 这种简单、可靠和安全的解决方案使你可以通过几个简单的步骤来配置企业文件共享的保护，并且可以在发生任何灾难情况时恢复数据。
+Azure 文件共享备份是一种基于云的本机备份解决方案，用于保护云中的数据，并消除了本地备份解决方案所涉及的额外维护开销。 Azure 备份服务与 Azure 文件同步的集成顺畅，并使你能够集中处理文件共享数据以及备份。 这种简单、可靠和安全的解决方案使你可以通过几个简单的步骤来配置企业文件共享的保护，并且可以在任何灾难方案中恢复数据。
 
 ## <a name="key-benefits-of-azure-file-share-backup"></a>Azure 文件共享备份的主要优点
 
@@ -50,7 +50,13 @@ Azure 文件共享备份是一种基于云的本机备份解决方案，用于�
 
 ## <a name="backup-costs"></a>备份成本
 
-目前，你只需要为快照付费，因为 Azure 文件共享备份是基于快照的解决方案。 根据 [此处](https://azure.microsoft.com/pricing/details/storage/files/)所述的定价详细信息，按 Azure 文件使用情况对快照产生的存储费用进行计费。
+Azure 文件共享备份解决方案有两种成本：
+
+1. **快照存储成本**：根据[此处](https://azure.microsoft.com/pricing/details/storage/files/)所述的定价详细信息，按 Azure 文件使用情况对快照产生的存储费用进行计费
+
+2. **受保护实例费用**：从2020年9月1日开始，将根据 [此处](https://azure.microsoft.com/pricing/details/backup/)所述的定价详细信息向客户收取受保护的实例费用。受保护实例的费用取决于存储帐户中受保护文件共享的总大小。
+
+若要获取有关备份 Azure 文件共享的详细估计，可下载详细的 [Azure 备份定价估计器](https://aka.ms/AzureBackupCostEstimates)。  
 
 ## <a name="next-steps"></a>后续步骤
 

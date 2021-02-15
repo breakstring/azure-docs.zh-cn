@@ -1,25 +1,27 @@
 ---
-title: 语音 CLI 基础知识
+title: 语音 CLI 快速入门 - 语音服务
 titleSuffix: Azure Cognitive Services
-description: 了解如何使用语音 CLI 命令工具在不编写代码以及进行最少设置的情况下使用语音服务。
+description: 开始使用 Azure 语音 CLI。 无需编写代码，即可与语音转文本、文本转语音和语音翻译等语音服务进行交互。
 services: cognitive-services
 author: trevorbye
 manager: nitinme
 ms.service: cognitive-services
 ms.subservice: speech-service
 ms.topic: quickstart
-ms.date: 04/04/2020
+ms.date: 01/13/2021
 ms.author: trbye
-ms.openlocfilehash: 2f5a1d190c6e63056c2377641446f617edaa1bd3
-ms.sourcegitcommit: 02ca0f340a44b7e18acca1351c8e81f3cca4a370
+ms.openlocfilehash: 4a6c7b36665c7a38534ce8e470bc8b327c274d95
+ms.sourcegitcommit: fc23b4c625f0b26d14a5a6433e8b7b6fb42d868b
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/19/2020
-ms.locfileid: "88590211"
+ms.lasthandoff: 01/17/2021
+ms.locfileid: "99095168"
 ---
-# <a name="learn-the-basics-of-the-speech-cli"></a>了解语音 CLI 的基础知识
+# <a name="get-started-with-the-azure-speech-cli"></a>开始使用 Azure 语音 CLI
 
-本文介绍了语音 CLI 的基本用法模式，这是一种无需编写代码即可使用语音服务的命令行工具。 无需创建开发环境或编写任何代码，你可以快速测试语音服务的主要功能，以了解它能否充分满足你的用例的要求。 此外，语音 CLI 随时可投入生产，可用通过 `.bat` 或 shell 脚本，使用它自动化语音服务中的简单工作流。
+在本文中，学习如何使用语音 CLI（一个命令行接口）访问语音转文本、文本转语音和语音翻译等语音服务，而无需编写代码。 语音 CLI 随时可投入生产，可用通过 `.bat` 或 shell 脚本，使用它自动化语音服务中的简单工作流。
+
+本文假定你具备命令提示符、终端或 PowerShell 的相关工作知识。
 
 [!INCLUDE [](includes/spx-setup.md)]
 
@@ -27,105 +29,114 @@ ms.locfileid: "88590211"
 
 本部分介绍了一些基本的 SPX 命令，这些命令对于首次测试和试验通常非常有用。 首先，运行以下命令，查看内置于该工具的帮助。
 
-```shell
+```console
 spx
 ```
 
-注意，另请参阅命令参数右侧列出的帮助主题。 你也可以按关键字搜索主题。 例如，输入以下命令，查看有关语音 CLI 示例的帮助主题列表：
+可按关键字搜索帮助主题。 例如，输入以下命令，查看语音 CLI 用法示例列表：
 
-```shell
+```console
 spx help find --topics "examples"
 ```
 
-现在，通过运行以下命令，使用语音服务通过默认麦克风执行一些语音识别。
+输入以下命令，查看用于识别命令的选项：
 
-```shell
+```console
+spx help recognize
+```
+
+右侧列中列出了其他帮助命令。 可输入这些命令以获取有关子命令的详细帮助。
+
+## <a name="speech-to-text-speech-recognition"></a>语音转文本（语音识别）
+
+利用语音 CLI，使用系统的默认麦克风将语音转换为文本（语音识别）。 SPX 将在输入命令后开始侦听当前活动输入设备上的音频，并在你按下 ENTER 时停止。 然后，识别所录制的语音，并将其转换为控制台输出中的文本。
+
+>[!IMPORTANT]
+> 如果使用的是 Docker 容器，则 `--microphone` 不起作用。
+
+运行以下命令：
+
+```console
 spx recognize --microphone
 ```
 
-SPX 将在输入命令后开始侦听当前活动输入设备上的音频，并在你按下 `ENTER` 后停止。 然后，识别所录制的语音，并将其转换为控制台输出中的文本。 使用语音 CLI，还可以轻松地进行文本转语音合成。 
+使用语音 CLI，你还可以识别音频文件中的语音。
 
-运行以下命令会将已输入的文本作为输入，并将合成的语音输出到当前活动的输出设备。
+```console
+spx recognize --file /path/to/file.wav
+```
 
-```shell
+> [!TIP]
+> 如果要识别 Docker 容器中音频文件的语音，请确保音频文件位于上一步中安装的目录中。
+
+记住，若你遇到问题或者想要详细了解语音 CLI 的识别选项，只需键入：
+
+```console
+spx help recognize
+```
+
+## <a name="text-to-speech-speech-synthesis"></a>文本转语音（语音合成）
+
+运行以下命令会将文本作为输入，并将合成的语音输出到当前活动的输出设备（例如计算机扬声器）。
+
+```console
 spx synthesize --text "Testing synthesis using the Speech CLI" --speakers
 ```
 
-除了语音识别和合成外，还可以通过语音 CLI 进行语音翻译。 与上面的语音识别命令类似，运行以下命令以从默认麦克风中捕获音频，并在目标语言中将其转换为文本。
+你还可将合成的输出保存到文件中。 在此示例中，我们在运行该命令的目录中创建一个名为 `my-sample.wav` 的文件。
 
-```shell
-spx translate --microphone --source en-US --target ru-RU --output file C:\some\file\path\russian_translation.txt
+```console
+spx synthesize --text "We hope that you enjoy using the Speech CLI." --audio output my-sample.wav
 ```
 
-在此命令中，你既指定了源语言（要翻译的语言），又指定了目标语言（翻译成的语言） 。 使用 `--microphone` 参数将侦听当前活动输入设备上的音频，并在你按 `ENTER` 后停止。 输出即将文本翻译为目标语言，写入到文本文件。
+这些示例假定你是以英语进行测试的。 但我们支持多种语言的语音合成。 你可使用此命令或通过访问[语言支持页面](./language-support.md)来拉取完整的语音列表。
+
+```console
+spx synthesize --voices
+```
+
+下面介绍如何使用发现的一种语音。
+
+```console
+spx synthesize --text "Bienvenue chez moi." --voice fr-CA-Caroline --speakers
+```
+
+记住，若你遇到问题或者想要详细了解语音 CLI 的合成选项，只需键入：
+
+```console
+spx help synthesize
+```
+
+## <a name="speech-to-text-translation"></a>语音到文本的转换
+
+借助语音 CLI，你还可以执行语音到文本的转换。 运行此命令，可从默认的麦克风捕获音频，并以文本形式输出转换。 记住，你需要通过 `translate` 命令提供 `source` 和 `target` 语言。
+
+```console
+spx translate --microphone --source en-US --target ru-RU
+```
+
+转换成多种语言时，请用 `;` 分隔语言代码。
+
+```console
+spx translate --microphone --source en-US --target ru-RU;fr-FR;es-ES
+```
+
+如果要保存转换的输出，请使用 `--output` 标志。 在此示例中，你还将从一个文件中读取内容。
+
+```console
+spx translate --file /some/file/path/input.wav --source en-US --target ru-RU --output file /some/file/path/russian_translation.txt
+```
 
 > [!NOTE]
 > 有关所有受支持的语言及其相应的区域设置代码列表，请参阅[语言和区域设置文章](language-support.md)。
 
-## <a name="batch-operations"></a>批处理操作
+记住，若你遇到问题或者想要详细了解语音 CLI 的转换选项，只需键入：
 
-上一部分中的命令非常适合用于快速查看语音服务的工作方式。 在评估是否可以满足用例时，你可能需要对已有的输入范围执行批处理操作，以查看服务如何处理各种情况。 本节介绍如何完成下列操作：
-
-* 在音频文件目录上运行批处理语音识别
-* 循环访问 `.tsv` 文件并运行批处理文本转语音合成
-
-## <a name="batch-speech-recognition"></a>批处理语音识别
-
-如果有音频文件的目录，则通过语音 CLI 可以轻松地快速运行批处理语音识别。 只需运行以下命令，即可使用 `--files` 命令指向目录。 在此示例中，将 `\*.wav` 追加到目录，以识别目录中存在的所有 `.wav` 文件。 此外，指定 `--threads` 参数以在 10 个并行线程上运行识别。
-
-> [!NOTE]
-> `--threads` 参数也可以在下一部分中用于 `spx synthesize` 命令，可用线程将取决于 CPU 及其当前负载百分比。
-
-```shell
-spx recognize --files C:\your_wav_file_dir\*.wav --output file C:\output_dir\speech_output.tsv --threads 10
-```
-
-使用 `--output file` 参数将识别的语音输出写入到 `speech_output.tsv`。 下面是输出文件结构的示例。
-
-```output
-audio.input.id    recognizer.session.started.sessionid    recognizer.recognized.result.text
-sample_1    07baa2f8d9fd4fbcb9faea451ce05475    A sample wave file.
-sample_2    8f9b378f6d0b42f99522f1173492f013    Sample text synthesized.
-```
-
-## <a name="batch-text-to-speech-synthesis"></a>批处理文本转语音合成
-
-运行批处理文本转语音的最简单方法是创建一个新的 `.tsv`（制表符分隔值）文件，并利用语音 CLI 中的 `--foreach` 命令。 请考虑以下文件 `text_synthesis.tsv`：
-
-```output
-audio.output    text
-C:\batch_wav_output\wav_1.wav    Sample text to synthesize.
-C:\batch_wav_output\wav_2.wav    Using the Speech CLI to run batch-synthesis.
-C:\batch_wav_output\wav_3.wav    Some more text to test capabilities.
-```
-
- 接下来，运行命令以指向 `text_synthesis.tsv`，对每个 `text` 字段执行合成，然后将结果作为 `.wav` 文件写入相应的 `audio.output` 路径中。 
-
-```shell
-spx synthesize --foreach in @C:\your\path\to\text_synthesis.tsv
-```
-
-此命令等效于对 `.tsv` 文件中的每个记录运行 `spx synthesize --text Sample text to synthesize --audio output C:\batch_wav_output\wav_1.wav`。 请注意以下几点：
-
-* 列标题 `audio.output` 和 `text` 分别对应于命令行参数 `--audio output` 和 `--text`。 多部分命令行参数（如 `--audio output`）应在文件中格式化，无空格，无前导短划线，使用句点分隔字符串，例如 `audio.output`。 使用此模式，可以将任何其他现有命令行参数作为其他列添加到文件中。
-* 以这种方式格式化文件时，不需要将其他参数传递给 `--foreach`。
-* 请确保通过选项卡将 `.tsv` 中的每个值分隔开。
-
-但是，如果你具有如下面示例的 `.tsv` 文件（其列标头不匹配命令行参数）：
-
-```output
-wav_path    str_text
-C:\batch_wav_output\wav_1.wav    Sample text to synthesize.
-C:\batch_wav_output\wav_2.wav    Using the Speech CLI to run batch-synthesis.
-C:\batch_wav_output\wav_3.wav    Some more text to test capabilities.
-```
-
-可以在 `--foreach` 调用中使用以下语法将这些字段名称替代为正确的参数。 此调用与上面相同。
-
-```shell
-spx synthesize --foreach audio.output;text in @C:\your\path\to\text_synthesis.tsv
+```console
+spx help translate
 ```
 
 ## <a name="next-steps"></a>后续步骤
 
-* 使用 SDK 完成[语音识别](./quickstarts/speech-to-text-from-microphone.md)或[语音合成](./quickstarts/text-to-speech.md)快速入门。
+* [语音 CLI 配置选项](./spx-data-store-configuration.md)
+* [使用语音 CLI 的批处理操作](./spx-batch-operations.md)

@@ -1,27 +1,23 @@
 ---
 title: Azure 数据工厂中的 If Condition 活动
 description: If Condition 活动允许你控制基于条件的处理流。
-services: data-factory
-documentationcenter: ''
-author: djpmsft
-ms.author: daperlov
-manager: jroth
+author: dcstwh
+ms.author: weetok
 ms.reviewer: maghan
 ms.service: data-factory
-ms.workload: data-services
 ms.topic: conceptual
 ms.date: 01/10/2018
-ms.openlocfilehash: 9f65ffc9ef24b18ce0f18571c1f3fc91e7ca7fdf
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: c0dbda298cf808dd3caa7a767e0ec5e847c92108
+ms.sourcegitcommit: d4734bc680ea221ea80fdea67859d6d32241aefc
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "85414600"
+ms.lasthandoff: 02/14/2021
+ms.locfileid: "100385517"
 ---
 # <a name="if-condition-activity-in-azure-data-factory"></a>Azure 数据工厂中的 If Condition 活动
 [!INCLUDE[appliesto-adf-asa-md](includes/appliesto-adf-asa-md.md)]
 
-If Condition 活动可提供 if 语句在编程语言中提供相同的功能。 当条件计算结果为时，它将执行一组活动 `true` ，而当条件计算结果为时，还会执行另一组活动 `false` 。 
+If Condition 活动可提供 if 语句在编程语言中提供相同的功能。 当条件计算结果为 `true` 时，它会执行一组活动；当条件计算结果为 `false` 时，它会执行另一组活动。 
 
 ## <a name="syntax"></a>语法
 
@@ -68,7 +64,7 @@ If Condition 活动可提供 if 语句在编程语言中提供相同的功能。
 properties | 说明 | 允许的值 | 必选
 -------- | ----------- | -------------- | --------
 name | if-condition 活动名称。 | String | 是
-type | 必须设置为“IfCondition”  | String | 是
+type | 必须设置为“IfCondition” | String | 是
 表达式 | 计算结果必须为 true 或 false 的表达式 | 具有结果类型布尔的表达式 | 是
 ifTrueActivities | 表达式计算结果为 `true` 时将执行的活动集。 | Array | 是
 ifFalseActivities | 表达式计算结果为 `false` 时将执行的活动集。 | Array | 是

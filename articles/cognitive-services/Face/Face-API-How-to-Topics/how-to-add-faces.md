@@ -10,12 +10,13 @@ ms.subservice: face-api
 ms.topic: sample
 ms.date: 04/10/2019
 ms.author: sbowles
-ms.openlocfilehash: 240905d538afc5c0f4b7f0e0bf400fac23c3183f
-ms.sourcegitcommit: 34a6fa5fc66b1cfdfbf8178ef5cdb151c97c721c
+ms.custom: devx-track-csharp
+ms.openlocfilehash: 3643fad1c9e821a78df6d78edeede2341ec79ea8
+ms.sourcegitcommit: 829d951d5c90442a38012daaf77e86046018e5b9
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/28/2020
-ms.locfileid: "76169829"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "91303755"
 ---
 # <a name="add-faces-to-a-persongroup"></a>将人脸添加到 PersonGroup
 
@@ -137,6 +138,5 @@ Parallel.For(0, PersonCount, async i =>
 
 ## <a name="related-topics"></a>相关主题
 
-- [识别图像中的人脸](HowtoIdentifyFacesinImage.md)
 - [检测图像中的人脸](HowtoDetectFacesinImage.md)
 - [使用大规模功能](how-to-use-large-scale.md)

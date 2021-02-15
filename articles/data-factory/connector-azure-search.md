@@ -1,22 +1,18 @@
 ---
 title: 将数据复制到搜索索引
 description: 了解如何使用 Azure 数据工厂管道中的复制活动将数据推送或复制到 Azure 搜索索引。
-services: data-factory
 ms.author: jingwang
 author: linda33wj
-manager: shwang
-ms.reviewer: douglasl
 ms.service: data-factory
-ms.workload: data-services
 ms.topic: conceptual
 ms.custom: seo-lt-2019
 ms.date: 09/13/2019
-ms.openlocfilehash: dfa1ad318ccc9e891b646ec050f6a0776e108206
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 8c0fe30961e8ca0f31374bfdb5c5f17d58cb7673
+ms.sourcegitcommit: d4734bc680ea221ea80fdea67859d6d32241aefc
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "81418229"
+ms.lasthandoff: 02/14/2021
+ms.locfileid: "100385789"
 ---
 # <a name="copy-data-to-an-azure-cognitive-search-index-using-azure-data-factory"></a>使用 Azure 数据工厂将数据复制到 Azure 认知搜索索引
 
@@ -44,7 +40,7 @@ Azure 认知搜索链接服务支持以下属性：
 
 | properties | 说明 | 必须 |
 |:--- |:--- |:--- |
-| type | type 属性必须设置为：AzureSearch**** | 是 |
+| type | type 属性必须设置为：AzureSearch | 是 |
 | url | 搜索服务的 URL。 | 是 |
 | key | 搜索服务的管理密钥。 将此字段标记为 SecureString 以安全地将其存储在数据工厂中或[引用存储在 Azure Key Vault 中的机密](store-credentials-in-key-vault.md)。 | 是 |
 | connectVia | 用于连接到数据存储的[集成运行时](concepts-integration-runtime.md)。 如果数据存储位于专用网络，则可以使用 Azure Integration Runtime 或自承载集成运行时。 如果未指定，则使用默认 Azure Integration Runtime。 |否 |
@@ -82,7 +78,7 @@ Azure 认知搜索链接服务支持以下属性：
 
 | properties | 说明 | 必须 |
 |:--- |:--- |:--- |
-| type | 数据集的 type 属性必须设置为：AzureSearchIndex**** | 是 |
+| type | 数据集的 type 属性必须设置为：AzureSearchIndex | 是 |
 | indexName | 搜索索引的名称。 数据工厂不创建索引。 索引必须存在于 Azure 认知搜索中。 | 是 |
 
 **示例：**
@@ -114,8 +110,8 @@ Azure 认知搜索链接服务支持以下属性：
 
 | properties | 说明 | 必须 |
 |:--- |:--- |:--- |
-| type | 复制活动源的 type 属性必须设置为：AzureSearchIndexSink**** | 是 |
-| writeBehavior | 指定索引中已存在文档时要合并还是替换该文档。 请参阅 [WriteBehavior 属性](#writebehavior-property)。<br/><br/>允许的值为：**Merge**（默认）和**Upload**。 | 否 |
+| type | 复制活动源的 type 属性必须设置为：AzureSearchIndexSink | 是 |
+| writeBehavior | 指定索引中已存在文档时要合并还是替换该文档。 请参阅 [WriteBehavior 属性](#writebehavior-property)。<br/><br/>允许的值为：**Merge**（默认）和 **Upload**。 | 否 |
 | writeBatchSize | 当缓冲区大小达到 writeBatchSize 时，将数据上传到搜索索引。 有关详细信息，请参阅 [WriteBatchSize 属性](#writebatchsize-property)。<br/><br/>允许的值为：整数 1 到 1,000；默认值为 1000。 | 否 |
 
 ### <a name="writebehavior-property"></a>WriteBehavior 属性
@@ -127,7 +123,7 @@ AzureSearchSink（通过使用 AzureSearch SDK）提供以下两种 upsert 行�
 - **合并**：合并新文档和现有文档中的所有列。 对于新文档中具有 null 值的列，会在现有文档列中保留该值。
 - **上传**：新文档替换现有文档。 对于未在新文档中指定的列，无论现有文档中是否存在非 null 值，均将该值设置为 null。
 
-默认行为是**合并**。
+默认行为是 **合并**。
 
 ### <a name="writebatchsize-property"></a>WriteBatchSize 属性
 
@@ -175,12 +171,12 @@ Azure 认知搜索服务支持以批处理形式写入文档。 每批次可包�
 | Int32 | Y |
 | Int64 | Y |
 | Double | Y |
-| 布尔 | Y |
+| Boolean | Y |
 | DataTimeOffset | Y |
 | String Array | N |
 | GeographyPoint | N |
 
-当前不支持其他数据类型，例如 ComplexType。 有关 Azure 认知搜索支持的数据类型的完整列表，请参阅[支持的数据类型（Azure 认知搜索）](https://docs.microsoft.com/rest/api/searchservice/supported-data-types)。
+当前不支持其他数据类型，例如 ComplexType。 有关 Azure 认知搜索支持的数据类型的完整列表，请参阅 [azure 认知搜索)  (支持的数据类型 ](/rest/api/searchservice/supported-data-types)。
 
 ## <a name="next-steps"></a>后续步骤
 有关 Azure 数据工厂中复制活动支持作为源和接收器的数据存储的列表，请参阅[支持的数据存储](copy-activity-overview.md#supported-data-stores-and-formats)。

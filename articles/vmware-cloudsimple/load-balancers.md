@@ -1,19 +1,19 @@
 ---
 title: Azure VMware 解决方案（按 CloudSimple）-为 CloudSimple 私有云选择负载平衡解决方案
 description: 描述在私有云中部署应用程序的负载平衡选项
-author: sharaths-cs
-ms.author: b-shsury
+author: Ajayan1008
+ms.author: v-hborys
 ms.date: 08/20/2019
 ms.topic: article
 ms.service: azure-vmware-cloudsimple
 ms.reviewer: cynthn
 manager: dikamath
-ms.openlocfilehash: 2fec54c19b9040e7cb44f1a5d2b7909510ab7313
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 06d2305c209011e4fb1b8ee05a016d2e15a49833
+ms.sourcegitcommit: d7d5f0da1dda786bda0260cf43bd4716e5bda08b
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "82734597"
+ms.lasthandoff: 01/05/2021
+ms.locfileid: "97898022"
 ---
 # <a name="choose-a-load-balancing-solution-for-cloudsimple-private-clouds"></a>为 CloudSimple 私有云选择负载平衡解决方案
 
@@ -25,7 +25,7 @@ ms.locfileid: "82734597"
 
 可以通过 vCenter 接口在 VMware 环境中部署虚拟负载均衡器设备，并将其配置为前端应用程序流量。
 
-一些热门供应商： NginX： http://nginx.org/en/docs/http/load_balancing.html F5-BigIP-流量管理器： https://www.f5.com/products/big-ip-services/virtual-editions Citrix ADC：https://www.citrix.com/products/citrix-adc/
+一些热门供应商： NginX： http://nginx.org/en/docs/http/load_balancing.html F5-BigIP-流量管理器： https://www.f5.com/products/big-ip-services/virtual-editions Citrix ADC： https://www.citrix.com/products/citrix-adc/
 
 ## <a name="azure-l7-load-balancer"></a>Azure L7 负载均衡器
 
@@ -35,12 +35,12 @@ ms.locfileid: "82734597"
 
 ## <a name="azure-internal-load-balancer"></a>Azure 内部负载均衡器
 
-如果你选择在混合部署中运行你的应用程序，其中 web 前端层在 Azure 订阅中的 Azure vNet 中运行，并且该应用程序的数据库层在 CloudSimple 私有云的 VMware Vm 中运行，则可以使用 Azure 内部负载均衡器（L4 负载均衡器），并将其存储在数据库层 Vm 的前面以实现流量管理。
+如果你选择在混合部署中运行你的应用程序，其中 web 前端层在 Azure 订阅中的 Azure vNet 中运行，并且应用程序的数据库层在 CloudSimple 私有云的 VMware Vm 中运行，则可以使用 Azure 内部负载均衡器 (L4 负载均衡器在数据库层 Vm 前面) ，以实现流量管理。
 
-若要了解详细信息，请参阅 Azure[内部负载均衡器](../load-balancer/components.md#frontend-ip-configurations)文档。
+若要了解详细信息，请参阅 Azure [内部负载均衡器](../load-balancer/components.md#frontend-ip-configurations) 文档。
 
 ## <a name="global-server-load-balancer"></a>全局服务器负载均衡器
 
 如果你正在寻找基于 DNS 的负载均衡器，则可以使用 Azure Marketplace 中提供的第三方解决方案，也可以使用本机 Azure 解决方案。
 
-Azure 流量管理器是一种基于 DNS 的流量负载均衡器，可让你以最佳方式将流量分配到全球 Azure 区域和本地的服务，同时提供高可用性和响应能力。 若要了解详细信息，请参阅 Azure[流量管理器](../traffic-manager/traffic-manager-configure-geographic-routing-method.md)文档。
+Azure 流量管理器是一种基于 DNS 的流量负载均衡器，可让你以最佳方式将流量分配到全球 Azure 区域和本地的服务，同时提供高可用性和响应能力。 若要了解详细信息，请参阅 Azure [流量管理器](../traffic-manager/traffic-manager-configure-geographic-routing-method.md) 文档。

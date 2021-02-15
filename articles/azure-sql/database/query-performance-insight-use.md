@@ -6,17 +6,17 @@ ms.service: sql-database
 ms.subservice: performance
 ms.custom: sqldbrb=1
 ms.devlang: ''
-ms.topic: conceptual
+ms.topic: how-to
 author: danimir
 ms.author: danil
-ms.reviewer: jrasnik, carlrab
-ms.date: 03/10/2020
-ms.openlocfilehash: 76be966d8202bb56a6762a261be5adeaf2d58d6b
-ms.sourcegitcommit: 4f1c7df04a03856a756856a75e033d90757bb635
+ms.reviewer: wiassaf, sstein
+ms.date: 1/14/2021
+ms.openlocfilehash: db24f280f66e567572821297cfc9bb9b1e19743b
+ms.sourcegitcommit: d59abc5bfad604909a107d05c5dc1b9a193214a8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/07/2020
-ms.locfileid: "87926393"
+ms.lasthandoff: 01/14/2021
+ms.locfileid: "98222320"
 ---
 # <a name="query-performance-insight-for-azure-sql-database"></a>适用于 Azure SQL 数据库的 Query Performance Insight
 [!INCLUDE[appliesto-sqldb](../includes/appliesto-sqldb.md)]
@@ -32,17 +32,17 @@ Query Performance Insight 为单一数据库和共用数据库提供了智能查
 
 ## <a name="prerequisites"></a>先决条件
 
-查询性能见解要求已在数据库上启用 [Query Store](https://msdn.microsoft.com/library/dn817826.aspx)。 默认情况下，会自动为 Azure SQL 数据库中的所有数据库启用该功能。 如果查询存储未运行，Azure 门户将提示你启用它。
+查询性能见解要求已在数据库上启用 [Query Store](/sql/relational-databases/performance/monitoring-performance-by-using-the-query-store)。 默认情况下，会自动为 Azure SQL 数据库中的所有数据库启用查询存储。 如果查询存储未运行，Azure 门户将提示你启用它。
 
 > [!NOTE]
 > 如果门户中显示“未在此数据库中正确配置查询存储”消息，请参阅[优化查询存储的配置](#optimize-the-query-store-configuration)。
 
 ## <a name="permissions"></a>权限
 
-需要以下[基于角色的 azure 访问控制 (AZURE RBAC) ](../../role-based-access-control/overview.md)使用 Query Performance Insight 的权限：
+需要拥有以下 [Azure 基于角色的访问控制 (Azure RBAC)](../../role-based-access-control/overview.md) 权限才能使用 Query Performance Insight：
 
 * 需要拥有“读取者”、“所有者”、“参与者”、“SQL DB 参与者”或“SQL Server 参与者”权限才能查看资源消耗量靠前的查询和图表。    
-* 需要具备**所有者**、**参与者**、**SQL DB 参与者**或 **SQL Server 参与者**权限才能查看查询文本。
+* 需要具备 **所有者**、**参与者**、**SQL DB 参与者** 或 **SQL Server 参与者** 权限才能查看查询文本。
 
 ## <a name="use-query-performance-insight"></a>使用 Query Performance Insight
 
@@ -61,7 +61,7 @@ Query Performance Insight 很容易使用：
    ![性能仪表板](./media/query-performance-insight-use/performance.png)
 
 > [!NOTE]
-> 要使 Azure SQL 数据库在 Query Performance Insight 中呈现信息，查询存储需要捕获几个小时的数据。 如果在某段时间内数据库不活动或查询存储不活动，则 Query Performance Insight 在显示该时间范围时，图表将是空的。 如果查询存储未运行，随时可以启用它。 有关详细信息，请参阅[有关查询存储的最佳做法](https://docs.microsoft.com/sql/relational-databases/performance/best-practice-with-the-query-store)。
+> 要使 Azure SQL 数据库在 Query Performance Insight 中呈现信息，查询存储需要捕获几个小时的数据。 如果在某段时间内数据库不活动或查询存储不活动，则 Query Performance Insight 在显示该时间范围时，图表将是空的。 如果查询存储未运行，随时可以启用它。 有关详细信息，请参阅[有关查询存储的最佳做法](/sql/relational-databases/performance/best-practice-with-the-query-store)。
 >
 
 若要查看数据库性能建议，请在 Query Performance Insight 导航边栏选项卡上选择“[建议](database-advisor-implement-performance-recommendations.md)”。
@@ -155,7 +155,7 @@ Query Performance Insight 很容易使用：
 
 Query Performance Insight 中的两个指标可帮助你查找潜在的瓶颈：持续时间和执行计数。
 
-长时间运行的查询长时间锁定资源、阻止其他用户和限制可伸缩性的可能性最大。 它们也非常适合进行优化。
+长时间运行的查询长时间锁定资源、阻止其他用户和限制可伸缩性的可能性最大。 它们也非常适合进行优化。 有关详细信息，请参阅 [了解和解决 AZURE SQL 阻止问题](understand-resolve-blocking.md)。
 
 识别长时间运行的查询：
 
@@ -232,7 +232,7 @@ Query Performance Insight 中的两个指标可帮助你查找潜在的瓶颈：
 
    ![查询存储详细信息](./media/query-performance-insight-use/qds-off.png)
 
-查询存储未启用，或者未以最佳方式设置参数时，会发生第二种情况。 可以通过运行 [SQL Server Management Studio (SSMS)](https://docs.microsoft.com/sql/ssms/download-sql-server-management-studio-ssms) 或 Azure 门户中提供的以下命令，来更改保留和捕获策略，同时启用查询存储。
+查询存储未启用，或者未以最佳方式设置参数时，会发生第二种情况。 可以通过运行 [SQL Server Management Studio (SSMS)](/sql/ssms/download-sql-server-management-studio-ssms) 或 Azure 门户中提供的以下命令，来更改保留和捕获策略，同时启用查询存储。
 
 ### <a name="recommended-retention-and-capture-policy"></a>建议的保留和捕获策略
 
@@ -247,7 +247,7 @@ Query Performance Insight 中的两个指标可帮助你查找潜在的瓶颈：
 * **自动**：查询存储将忽略不频繁的查询以及编译和执行持续时间很短的查询。 执行计数、编译持续时间和运行时持续时间的阈值在内部确定。 这是默认选项。
 * **无**：查询存储将停止捕获新查询，但仍会收集已捕获的查询的运行时统计信息。
 
-我们建议通过执行 [SSMS](https://docs.microsoft.com/sql/ssms/download-sql-server-management-studio-ssms) 或 Azure 门户中的以下命令，将所有策略设置为“自动”，将清理策略设置为 30 天。 （请将 `YourDB` 替换为数据库名称。）
+我们建议通过执行 [SSMS](/sql/ssms/download-sql-server-management-studio-ssms) 或 Azure 门户中的以下命令，将所有策略设置为“自动”，将清理策略设置为 30 天。 （请将 `YourDB` 替换为数据库名称。）
 
 ```sql
     ALTER DATABASE [YourDB]
@@ -260,7 +260,7 @@ Query Performance Insight 中的两个指标可帮助你查找潜在的瓶颈：
     SET QUERY_STORE (QUERY_CAPTURE_MODE = AUTO);
 ```
 
-通过 [SSMS](https://docs.microsoft.com/sql/ssms/download-sql-server-management-studio-ssms) 或 Azure 门户连接到数据库并运行以下查询，以增加查询存储的大小。 （请将 `YourDB` 替换为数据库名称。）
+通过 [SSMS](/sql/ssms/download-sql-server-management-studio-ssms) 或 Azure 门户连接到数据库并运行以下查询，以增加查询存储的大小。 （请将 `YourDB` 替换为数据库名称。）
 
 ```SQL
     ALTER DATABASE [YourDB]
@@ -278,4 +278,4 @@ Query Performance Insight 中的两个指标可帮助你查找潜在的瓶颈：
 
 ## <a name="next-steps"></a>后续步骤
 
-请考虑使用[Azure SQL Analytics](../../azure-monitor/insights/azure-sql.md)对大量的单一数据库和池数据库、弹性池、托管实例和实例数据库进行高级性能监视。
+请考虑使用 [Azure SQL Analytics](../../azure-monitor/insights/azure-sql.md) 对大量的单一数据库和池数据库、弹性池、托管实例和实例数据库进行高级性能监视。

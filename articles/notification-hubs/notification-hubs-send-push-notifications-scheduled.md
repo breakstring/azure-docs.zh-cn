@@ -17,12 +17,13 @@ ms.date: 01/04/2019
 ms.author: sethm
 ms.reviewer: jowargo
 ms.lastreviewed: 01/04/2019
-ms.openlocfilehash: d91b7816ee05d4b5ef5266b4c2556abdc1175b87
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.custom: devx-track-csharp
+ms.openlocfilehash: 56eedda7f79fedce1e34ad837c92006e5cd8f191
+ms.sourcegitcommit: 829d951d5c90442a38012daaf77e86046018e5b9
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87084256"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "88998265"
 ---
 # <a name="how-to-send-scheduled-notifications"></a>如何：发送预定通知
 

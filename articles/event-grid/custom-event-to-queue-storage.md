@@ -1,15 +1,15 @@
 ---
 title: 快速入门：将自定义事件发送到存储队列 - 事件网格、Azure CLI
 description: 快速入门：使用 Azure 事件网格和 Azure CLI 发布一个主题，然后订阅该事件。 存储队列用于终结点。
-ms.date: 07/07/2020
+ms.date: 02/02/2021
 ms.topic: quickstart
 ms.custom: devx-track-azurecli
-ms.openlocfilehash: e2c017b95493000b3c206aa7b2398bbf7ef464ee
-ms.sourcegitcommit: 11e2521679415f05d3d2c4c49858940677c57900
+ms.openlocfilehash: 00808e7eca13824833673ef820d39b70bf618dd2
+ms.sourcegitcommit: 740698a63c485390ebdd5e58bc41929ec0e4ed2d
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/31/2020
-ms.locfileid: "87497335"
+ms.lasthandoff: 02/03/2021
+ms.locfileid: "99493254"
 ---
 # <a name="quickstart-route-custom-events-to-azure-queue-storage-with-azure-cli-and-event-grid"></a>快速入门：使用 Azure CLI 和事件网格将自定义事件路由到 Azure 队列存储
 
@@ -17,12 +17,11 @@ Azure 事件网格是针对云的事件处理服务。 Azure 队列存储是受�
 
 [!INCLUDE [quickstarts-free-trial-note.md](../../includes/quickstarts-free-trial-note.md)]
 
-[!INCLUDE [cloud-shell-try-it.md](../../includes/cloud-shell-try-it.md)]
+[!INCLUDE [azure-cli-prepare-your-environment.md](../../includes/azure-cli-prepare-your-environment.md)]
 
-如果使用本地计算机上的 Azure CLI 或 Azure PowerShell 而非使用 Azure 门户中的 Cloud Shell，请确保具有以下版本的 Azure CLI 和 Azure PowerShell。 
+- 本文需要 Azure CLI 版本 2.0.56 或更高版本。 如果使用 Azure Cloud Shell，则最新版本已安装。
 
-- Azure CLI 2.0.56 或更高版本。 有关安装 Azure CLI 的最新版本的说明，请参阅[安装 Azure CLI](/cli/azure/install-azure-cli)。 
-- Azure PowerShell 1.1.0 或更高版本。 从 [Azure 下载 - 命令行工具](https://azure.microsoft.com/downloads/)在 Windows 计算机上下载 Azure PowerShell 的最新版本。 
+- 如果使用本地计算机上的 Azure PowerShell 而非使用 Azure 门户中的 Cloud Shell，请确保具有 Azure PowerShell 版本 1.1.0 或更高版本。 从 [Azure 下载 - 命令行工具](https://azure.microsoft.com/downloads/)在 Windows 计算机上下载 Azure PowerShell 的最新版本。 
 
 本文提供了用于使用 Azure CLI 的命令。 
 
@@ -32,7 +31,7 @@ Azure 事件网格是针对云的事件处理服务。 Azure 队列存储是受�
 
 使用“[az group create](/cli/azure/group#az-group-create)”命令创建资源组。 
 
-以下示例在“westus2”  位置创建名为“gridResourceGroup”  的资源组。
+以下示例在“westus2”位置创建名为“gridResourceGroup”的资源组。
 
 ```azurecli-interactive
 az group create --name gridResourceGroup --location westus2
@@ -117,6 +116,11 @@ done
 导航到门户中的队列存储，请注意，事件网格会将这三个事件发送到队列。
 
 ![显示消息](./media/custom-event-to-queue-storage/messages.png)
+
+> [!NOTE]
+> 如果对从事件网格接收消息的队列使用 [Azure Functions 的 Azure 队列存储触发器](../azure-functions/functions-bindings-storage-queue-trigger.md)，那么在执行函数时，你可能会看到以下错误消息：`The input is not a valid Base-64 string as it contains a non-base 64 character, more than two padding characters, or an illegal character among the padding characters.`
+> 
+> 原因是当你使用 [Azure 队列存储触发器](../azure-functions/functions-bindings-storage-queue-trigger.md)时，Azure Functions 需要使用 base64 编码的字符串，但事件网格以纯文本格式将消息发送到存储队列。 目前，无法将 Azure Functions 的队列触发器配置为接受纯文本。 
 
 
 ## <a name="clean-up-resources"></a>清理资源

@@ -1,28 +1,28 @@
 ---
 title: 将客户加入 Azure Lighthouse
 description: 了解如何将客户加入 Azure Lighthouse，从而允许使用 Azure 委派的资源管理通过自己的租户访问和管理其资源。
-ms.date: 08/20/2020
+ms.date: 02/08/2021
 ms.topic: how-to
-ms.openlocfilehash: db6a819c72f1ef46f542ed47cad6caae23c0d191
-ms.sourcegitcommit: 6fc156ceedd0fbbb2eec1e9f5e3c6d0915f65b8e
+ms.openlocfilehash: c0a886b692b99156cbd53e5f0f5953047560c5b9
+ms.sourcegitcommit: d4734bc680ea221ea80fdea67859d6d32241aefc
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/21/2020
-ms.locfileid: "88719047"
+ms.lasthandoff: 02/14/2021
+ms.locfileid: "100372138"
 ---
 # <a name="onboard-a-customer-to-azure-lighthouse"></a>将客户加入 Azure Lighthouse
 
-本文介绍你作为服务提供商如何将客户加入 Azure Lighthouse。 当你执行此操作时，可以使用 [Azure 委派的资源管理](../concepts/azure-delegated-resource-management.md)通过你自己的 Azure Active Directory (Azure AD) 租户来访问和管理客户的委托资源 (订阅和/或资源组) 。
+本文介绍你作为服务提供商如何将客户加入 Azure Lighthouse。 当你执行此操作时，可以使用 Azure 委派的资源管理，通过你自己 Azure AD (Azure Active Directory 的租户，使用 [Azure 委派的资源管理](../concepts/azure-delegated-resource-management.md)，通过你自己的租户管理 (的订阅和/或资源组) 中的委派资源。
 
 > [!TIP]
 > 尽管我们指的是本主题中的服务提供商和客户，但 [管理多个租户的企业](../concepts/enterprise.md) 可以使用相同的过程来设置 Azure Lighthouse 并合并其管理体验。
 
 你可以为多个客户重复执行载入过程。 当具有适当权限的用户登录到你的管理租户时，该用户可以在客户租户范围内获得授权，以执行管理操作，而无需登录到每个单独的客户租户。
 
-若要跟踪你对客户互动的影响并获得认可，请将你的 Microsoft 合作伙伴网络 (MPN) ID 与至少一个有权访问你加入的每个订阅的用户帐户相关联。 需要在服务提供商租户中执行此关联。 简单起见，我们建议在租户中创建一个与你的 MPN ID 相关联的服务主体帐户，并向其授予对你加入的每个客户的“读取者”访问权限。 有关详细信息，请参阅[将合作伙伴 ID 链接到 Azure 帐户](../../cost-management-billing/manage/link-partner-id.md)。
+若要跟踪你对客户互动的影响并获得认可，请将你的 Microsoft 合作伙伴网络 (MPN) ID 与至少一个有权访问你加入的每个订阅的用户帐户相关联。 需要在服务提供商租户中执行此关联。 建议在租户中创建一个与你的 MPN ID 相关联的服务主体帐户，并在每次加入客户时包含该服务主体。 有关详细信息，请参阅将 [合作伙伴 ID 链接到委托资源的合作伙伴获得的信用额度](partner-earned-credit.md)。
 
 > [!NOTE]
-> 当客户购买托管服务产品) /服务时，也可以载入 Azure Lighthouse， (公开 [发布到 Azure Marketplace](publish-managed-services-offers.md)。 你还可以在发布到 Azure Marketplace 的产品/服务中使用此处所述的载入过程。
+> 当客户购买托管服务产品) /服务时，客户可以载入到 Azure Lighthouse， (公开 [发布到 Azure Marketplace](publish-managed-services-offers.md)。 你还可以使用此处所述的载入流程以及发布到 Azure Marketplace 的产品/服务。
 
 载入过程要求从服务提供商的租户和客户的租户中执行操作。 上述所有步骤均可参见本文。
 
@@ -33,9 +33,6 @@ ms.locfileid: "88719047"
 - 服务提供商租户的租户 ID（要在其中管理客户的资源）
 - 客户租户的租户 ID（具有由服务提供商管理的资源）
 - 客户租户中由服务提供商管理的每个特定订阅的订阅 ID（或包含将由服务提供商管理的资源组的订阅 ID）。
-
-> [!NOTE]
-> 即使你只希望加入订阅中的一个或多个资源组，也必须在订阅级别执行部署，因此你将需要使用订阅 ID。
 
 如果尚未准备好这些 ID 值，可通过以下方式之一进行检索。 确保在部署中使用这些确切的值。
 
@@ -65,14 +62,17 @@ az account show
 
 ## <a name="define-roles-and-permissions"></a>定义角色和权限
 
-作为服务提供商，你可能想要为单个客户执行多个任务，这需要针对不同范围的不同访问权限。 你可以根据需要定义任意数量的授权，以便为租户中的用户分配适当的 [基于角色的访问控制 (RBAC) 内置角色](../../role-based-access-control/built-in-roles.md) 。
+作为服务提供商，你可能想要为单个客户执行多个任务，这需要针对不同范围的不同访问权限。 你可以根据需要定义任意数量的授权，以便分配适当的 [Azure 内置角色](../../role-based-access-control/built-in-roles.md)。 每个授权都包含一个 **principalId** ，它引用管理租户中的 Azure AD 用户、组或服务主体。
 
-为了更轻松地进行管理，我们建议为每个角色使用 Azure AD 用户组。 这样，你可以灵活地在组中添加或删除单个用户，这样就无需重复载入过程来进行用户更改。 可以将角色分配给服务主体，这对于自动化方案非常有用。
+> [!NOTE]
+> 除非显式指定，否则 Azure Lighthouse 文档中的 "用户" 引用将应用于授权中 Azure AD 的用户、组或服务主体。
 
-定义授权时，请确保遵循最低权限原则，使用户仅具有完成工作所需的权限。 有关支持的角色的指导和信息，请参阅 [Azure Lighthouse 方案中的租户、用户和角色](../concepts/tenants-users-roles.md)。
+为了更轻松地进行管理，我们建议尽可能使用每个角色 Azure AD 用户组，而不是单个用户。 这样，你可以灵活地在组中添加或删除单个用户，这样就无需重复载入过程来进行用户更改。 你还可以将角色分配给服务主体，这对于自动化方案非常有用。
 
 > [!IMPORTANT]
-> 若要为 Azure AD 组添加权限，“组类型”必须是“安全性”而不是“Office 365”  。 此选项是在创建组时选择的。 有关详细信息，请参阅[使用 Azure Active Directory 创建基本组并添加成员](../../active-directory/fundamentals/active-directory-groups-create-azure-portal.md)。
+> 若要为 Azure AD 组添加权限，则必须将 " **组类型** " 设置为 " **安全**"。 此选项是在创建组时选择的。 有关详细信息，请参阅[使用 Azure Active Directory 创建基本组并添加成员](../../active-directory/fundamentals/active-directory-groups-create-azure-portal.md)。
+
+定义授权时，请确保遵循最低权限原则，使用户仅具有完成工作所需的权限。 有关支持的角色和最佳做法的信息，请参阅 [Azure Lighthouse 方案中的租户、用户和角色](../concepts/tenants-users-roles.md)。
 
 若要定义授权，需要知道要向其授予访问权限的服务提供商租户中的每个用户、用户组或服务主体的 ID 值。 还需知道要分配的每个内置角色的角色定义 ID。 如果尚未获得这些 ID，可以从服务提供商租户内运行以下命令来检索它们。
 
@@ -117,7 +117,7 @@ az role definition list --name "<roleName>" | grep name
 
 ## <a name="create-an-azure-resource-manager-template"></a>创建 Azure 资源管理器模板
 
-若要加入客户，需要使用以下信息为你的产品/服务创建 [Azure 资源管理器](../../azure-resource-manager/index.yml)模板。 **MspOfferName**和**mspOfferDescription**值将在 Azure 门户的 "[服务提供商" 页](view-manage-service-providers.md)中对客户可见。
+若要加入客户，需要使用以下信息为你的产品/服务创建 [Azure 资源管理器](../../azure-resource-manager/index.yml)模板。 **MspOfferName** 和 **mspOfferDescription** 值将在 Azure 门户的 "[服务提供商" 页](view-manage-service-providers.md)中对客户可见。
 
 |字段  |定义  |
 |---------|---------|
@@ -128,6 +128,11 @@ az role definition list --name "<roleName>" | grep name
 
 加入过程需要 Azure 资源管理器模板（在[示例存储库](https://github.com/Azure/Azure-Lighthouse-samples/)中提供）以及相应的参数文件（可修改此文件，使其与你的配置匹配并定义你的授权）。
 
+> [!IMPORTANT]
+> 此处所述的过程需要对每个要载入的订阅进行单独部署，即使你是在同一客户租户中加入订阅。 如果要在同一客户租户中加入不同订阅中的多个资源组，也需要单独部署。 但是，可在一个部署中载入单个订阅中的多个资源组。
+>
+> 对于应用于同一订阅（或订阅内的资源组）的多个产品/服务，还需要单独部署。 所应用的每个产品/服务必须使用不同的 **mspOfferName**。
+
 所选的模板取决于你是要加入整个订阅，还是要加入订阅中的一个资源组或多个资源组。 我们还提供了一个模板，可供购买了你发布 Azure 市场的托管服务产品/服务的客户使用；如果你偏向于按此方式载入其资源，则可使用它。
 
 |加入此内容  |使用此 Azure 资源管理器模板  |修改此参数文件 |
@@ -137,10 +142,8 @@ az role definition list --name "<roleName>" | grep name
 |订阅内的多个资源组   |[multipleRgDelegatedResourceManagement.json](https://github.com/Azure/Azure-Lighthouse-samples/blob/master/templates/rg-delegated-resource-management/multipleRgDelegatedResourceManagement.json)  |[multipleRgDelegatedResourceManagement.parameters.json](https://github.com/Azure/Azure-Lighthouse-samples/blob/master/templates/rg-delegated-resource-management/multipleRgDelegatedResourceManagement.parameters.json)    |
 |订阅（使用发布到 Azure 市场的产品/服务时）   |[marketplaceDelegatedResourceManagement.json](https://github.com/Azure/Azure-Lighthouse-samples/blob/master/templates/marketplace-delegated-resource-management/marketplaceDelegatedResourceManagement.json)  |[marketplaceDelegatedResourceManagement.parameters.json](https://github.com/Azure/Azure-Lighthouse-samples/blob/master/templates/marketplace-delegated-resource-management/marketplaceDelegatedResourceManagement.parameters.json)    |
 
-> [!IMPORTANT]
-> 此处所述的过程需要对每个要载入的订阅进行单独部署，即使你是在同一客户租户中加入订阅。 如果要在同一客户租户中加入不同订阅中的多个资源组，也需要单独部署。 但是，可在一个部署中载入单个订阅中的多个资源组。
->
-> 对于应用于同一订阅（或订阅内的资源组）的多个产品/服务，还需要单独部署。 所应用的每个产品/服务必须使用不同的 **mspOfferName**。
+> [!TIP]
+> 虽然无法在一个部署中载入整个管理组，但可以 [在管理组级别部署策略](https://github.com/Azure/Azure-Lighthouse-samples/tree/master/templates/policy-delegate-management-groups)。 此策略将检查管理组中的每个订阅是否已委派给指定的管理租户，如果不是，则将基于你提供的值创建分配。
 
 以下示例显示了一个修改后的 **delegatedResourceManagement.parameters.json** 文件，该文件可用于加入订阅。 资源组参数文件（位于 [rg-delegated-resource-management](https://github.com/Azure/Azure-Lighthouse-samples/tree/master/templates/rg-delegated-resource-management) 文件夹）很类似，但还带有一个 rgName 参数，它用于标识要载入的特定资源组。
 
@@ -195,7 +198,7 @@ az role definition list --name "<roleName>" | grep name
 }
 ```
 
-上面示例中的最后一个授权添加了具有用户访问管理员角色 (18d7d88d-d35e-4fb5-a5c3-7773c20a72d9) 的 principalId。 分配此角色时，必须包含 delegatedRoleDefinitionIds 属性和一个/多个内置角色。 在此授权中创建的用户能够将这些内置角色分配到客户租户中的 [托管标识](../../active-directory/managed-identities-azure-resources/overview.md) ，这是 [部署可修正的策略](deploy-policy-remediation.md)所必需的。  用户还可以创建支持事件。  通常与用户访问管理员角色关联的其他权限均不适用于此用户。
+上面示例中的最后一个授权添加了具有用户访问管理员角色 (18d7d88d-d35e-4fb5-a5c3-7773c20a72d9) 的 principalId。 分配此角色时，必须包含 **delegatedRoleDefinitionIds** 属性和一个或多个受支持的 Azure 内置角色。 在此授权中创建的用户能够将这些角色分配到客户租户中的 [托管标识](../../active-directory/managed-identities-azure-resources/overview.md) ，这是 [部署可修正的策略](deploy-policy-remediation.md)所必需的。  用户还可以创建支持事件。 通常，不会将任何其他与用户访问管理员角色关联的权限应用于此 **principalId**。
 
 ## <a name="deploy-the-azure-resource-manager-templates"></a>部署 Azure 资源管理器模板
 
@@ -211,7 +214,7 @@ az role definition list --name "<roleName>" | grep name
 ### <a name="azure-portal"></a>Azure 门户
 
 1. 在 [GitHub](https://github.com/Azure/Azure-Lighthouse-samples/)存储库中，选择要使用的模板旁边的 " **部署到 Azure** " 按钮。 Azure 门户中会打开模板。
-1. 输入 **Msp 产品名称**、 **msp 提议说明**、 **租户 Id 管理**和 **授权**的值。 如果需要，可以选择 " **编辑参数** " `mspOfferName` ，以 `mspOfferDescription` `managedbyTenantId` `authorizations` 在参数文件中直接输入、、和的值。 请确保更新这些值，而不是使用模板中的默认值。
+1. 输入 **Msp 产品名称**、 **msp 提议说明**、 **租户 Id 管理** 和 **授权** 的值。 如果需要，可以选择 " **编辑参数** " `mspOfferName` ，以 `mspOfferDescription` `managedbyTenantId` `authorizations` 在参数文件中直接输入、、和的值。 请确保更新这些值，而不是使用模板中的默认值。
 1. 依次选择 " **查看" 和 "创建**"，然后选择 " **创建**"。
 
 几分钟后，你会看到部署已完成的通知。
@@ -242,18 +245,18 @@ New-AzSubscriptionDeployment -Name <deploymentName> `
 # Log in first with az login if you're not using Cloud Shell
 
 # Deploy Azure Resource Manager template using template and parameter file locally
-az deployment create --name <deploymentName> \
-                     --location <AzureRegion> \
-                     --template-file <pathToTemplateFile> \
-                     --parameters <parameters/parameterFile> \
-                     --verbose
+az deployment sub create --name <deploymentName> \
+                         --location <AzureRegion> \
+                         --template-file <pathToTemplateFile> \
+                         --parameters <parameters/parameterFile> \
+                         --verbose
 
 # Deploy external Azure Resource Manager template, with local parameter file
-az deployment create --name <deploymentName> \
-                     --location <AzureRegion> \
-                     --template-uri <templateUri> \
-                     --parameters <parameterFile> \
-                     --verbose
+az deployment sub create --name <deploymentName> \
+                         --location <AzureRegion> \
+                         --template-uri <templateUri> \
+                         --parameters <parameterFile> \
+                         --verbose
 ```
 
 ## <a name="confirm-successful-onboarding"></a>确认成功载入
@@ -278,7 +281,7 @@ az deployment create --name <deploymentName> \
 3. 确认可使用在资源管理器模板中提供的产品/服务名称查看订阅。
 
 > [!NOTE]
-> 部署完成后，可能需要几分钟时间才能在 Azure 门户中显示更新。
+> 完成部署后，可能需要长达15分钟的时间才能在 Azure 门户中反映更新。 如果通过刷新浏览器、登录和注销或请求新令牌来更新 Azure 资源管理器令牌，则可以更快地查看更新。
 
 ### <a name="powershell"></a>PowerShell
 
@@ -286,6 +289,11 @@ az deployment create --name <deploymentName> \
 # Log in first with Connect-AzAccount if you're not using Cloud Shell
 
 Get-AzContext
+
+# Confirm successful onboarding for Azure Lighthouse
+
+Get-AzManagedServicesDefinition
+Get-AzManagedServicesAssignment
 ```
 
 ### <a name="azure-cli"></a>Azure CLI
@@ -296,8 +304,23 @@ Get-AzContext
 az account list
 ```
 
+如果在载入客户后需要进行更改，则可以 [更新委派](update-delegation.md)。 你还可以完全 [删除对委派的访问权限](remove-delegation.md) 。
+
+## <a name="troubleshooting"></a>疑难解答
+
+如果无法成功加入你的客户，或者如果你的用户访问委派的资源时遇到问题，请查看以下提示和要求，然后重试。
+
+- `managedbyTenantId`该值不能与正在载入的订阅的租户 ID 相同。
+- 在同一范围内，不能具有相同的多个分配 `mspOfferName` 。
+- 必须为委派的订阅注册 **ManagedServices** 资源提供程序。 这应该在部署期间自动发生，但如果不是，则可以 [手动注册](../../azure-resource-manager/management/resource-providers-and-types.md#register-resource-provider)。
+- 授权不得包含具有 [所有者](../../role-based-access-control/built-in-roles.md#owner) 内置角色的任何用户或具有 [DataActions](../../role-based-access-control/role-definitions.md#dataactions)的任何内置角色。
+- 必须创建组，将 [**组类型**](../../active-directory/fundamentals/active-directory-groups-create-azure-portal.md#group-types) 设置为 **安全** 组，而不是 **Microsoft 365**。
+- 在对 [嵌套组](../..//active-directory/fundamentals/active-directory-groups-membership-azure-portal.md)启用访问权限之前，可能会有额外的延迟。
+- 需要在 Azure 门户中查看资源的用户必须具有 (的 " [读取](../../role-based-access-control/built-in-roles.md#reader) 者" 角色或其他包含读者访问) 的内置角色。
+- 在授权中包含的 [Azure 内置角色](../../role-based-access-control/built-in-roles.md) 不得包含任何弃用的角色。 如果已弃用 Azure 内置角色，则任何与该角色载入的用户将失去访问权限，并且你将无法加入其他委派。 若要解决此问题，请将模板更新为仅使用受支持的内置角色，然后执行新的部署。
+
 ## <a name="next-steps"></a>后续步骤
 
 - 了解[跨租户管理体验](../concepts/cross-tenant-management-experience.md)。
 - 在 Microsoft Azure 门户中转到“我的客户”，以[查看和管理客户](view-manage-customers.md)。
-- 了解如何[删除对以前加入的委托的访问权限](remove-delegation.md)。
+- 了解如何 [更新](update-delegation.md) 或 [删除](remove-delegation.md) 委派。

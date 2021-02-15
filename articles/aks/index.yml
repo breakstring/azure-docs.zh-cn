@@ -9,12 +9,12 @@ metadata:
   author: laurenhughes
   ms.author: lahugh
   ms.date: 07/21/2020
-  ms.openlocfilehash: 35138e4e5569ddfa46cb60c742e7ae0b3868c8cd
-  ms.sourcegitcommit: 97a0d868b9d36072ec5e872b3c77fa33b9ce7194
+  ms.openlocfilehash: 84d02dba9bc1d45205bc610dc1d155a80179e93e
+  ms.sourcegitcommit: 273c04022b0145aeab68eb6695b99944ac923465
   ms.translationtype: HT
   ms.contentlocale: zh-CN
-  ms.lasthandoff: 08/04/2020
-  ms.locfileid: "87563324"
+  ms.lasthandoff: 12/10/2020
+  ms.locfileid: "97007647"
 landingContent:
 - title: 关于 Azure Kubernetes 服务 (AKS)
   linkLists:
@@ -26,8 +26,6 @@ landingContent:
     links:
     - text: AKS 的 Kubernetes 核心概念
       url: concepts-clusters-workloads.md
-    - text: AKS 群集的基线体系结构
-      url: /azure/architecture/reference-architectures/containers/aks/secure-baseline-aks/
     - text: 群集和工作负荷
       url: concepts-clusters-workloads.md
     - text: 访问和标识
@@ -50,14 +48,14 @@ landingContent:
       url: kubernetes-walkthrough-portal.md
     - text: 资源管理器模板
       url: kubernetes-walkthrough-rm-template.md
-- title: 使用 Kubernetes 本地进程开发和调试应用程序
+- title: 利用 Bridge to Kubernetes 开发和调试应用程序
   linkLists:
   - linkListType: how-to-guide
     links:
-    - text: 在 Visual Studio Code 中使用 Local Process with Kubernetes（预览版）
-      url: https://code.visualstudio.com/docs/containers/local-process-kubernetes
-    - text: 在 Visual Studio 中使用 Local Process with Kubernetes（预览版）
-      url: /visualstudio/containers/local-process-kubernetes
+    - text: 将 Kubernetes 桥接用于 Visual Studio Code
+      url: https://code.visualstudio.com/docs/containers/bridge-to-kubernetes
+    - text: 将 Kubernetes 桥接用于 Visual Studio
+      url: /visualstudio/containers/bridge-to-kubernetes
 - title: 部署、管理和更新应用程序
   linkLists:
   - linkListType: tutorial
@@ -76,6 +74,20 @@ landingContent:
       url: tutorial-kubernetes-app-update.md
     - text: 7. 升级 AKS 中的 Kubernetes
       url: tutorial-kubernetes-upgrade-cluster.md
+- title: 体系结构指南
+  linkLists:
+  - linkListType: architecture
+    links:
+    - text: AKS 群集的基线体系结构
+      url: /azure/architecture/reference-architectures/containers/aks/secure-baseline-aks?WT.mc_id=AKSDOCSPAGE
+    - text: AKS 解决方案
+      url: /azure/architecture/reference-architectures/containers/aks-start-here?WT.mc_id=AKSDOCSPAGE
+    - text: Day-2 操作指南
+      url: /azure/architecture/operator-guides/aks/aks-triage-practices?WT.mc_id=AKSDOCSPAGE
+    - text: 面向群集操作员和开发人员的最佳做法
+      url: best-practices.md
+    - text: 查找最佳实践
+      url: kube-advisor-tool.md
 - title: 利用 Microsoft Learn 掌握技能
   linkLists:
   - linkListType: learn

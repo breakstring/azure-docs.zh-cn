@@ -1,27 +1,29 @@
 ---
-title: 通过 CLI 使用 Azure 媒体服务创建筛选器 | Microsoft Docs
-description: 本文介绍如何使用 CLI 通过 Azure 媒体服务 v3 创建筛选器。
+title: 使用 CLI 通过 Azure 媒体服务创建筛选器
+description: 本文介绍如何通过 CLI 使用 Azure 媒体服务 v3 创建筛选器。
 services: media-services
 documentationcenter: ''
-author: juliako
+author: IngridAtMicrosoft
 manager: femila
 editor: ''
 ms.service: media-services
 ms.workload: media
 ms.tgt_pltfrm: na
 ms.devlang: na
-ms.topic: article
-ms.date: 06/13/2019
-ms.author: juliako
-ms.custom: seodec18
-ms.openlocfilehash: 2385171a501d00f91c58f3fde9b487505ec21c60
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.topic: how-to
+ms.date: 08/31/2020
+ms.author: inhenkel
+ms.custom: seodec18, devx-track-azurecli
+ms.openlocfilehash: 75df01ff65a0910dab140942b520978cd7728775
+ms.sourcegitcommit: 100390fefd8f1c48173c51b71650c8ca1b26f711
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87023205"
+ms.lasthandoff: 01/27/2021
+ms.locfileid: "98897571"
 ---
-# <a name="creating-filters-with-cli"></a>使用 CLI 创建筛选器 
+# <a name="creating-filters-with-cli"></a>使用 CLI 创建筛选器
+
+[!INCLUDE [media services api v3 logo](./includes/v3-hr.md)]
 
 将内容传送到客户（直播流活动或点播视频）时，客户端所需的灵活性可能比默认资产的清单文件中描述的灵活性更高。 使用 Azure 媒体服务可为内容定义帐户筛选器和资产筛选器。 
 
@@ -43,7 +45,7 @@ ms.locfileid: "87023205"
 以下示例定义添加到最终清单的曲目择条件。 此筛选器包括属于 EC-3 的任何音频曲目和比特率在 0-1000000 范围内的任何视频曲目。
 
 > [!TIP]
-> 如果计划在 REST 中定义**筛选器**，请注意需要包括“Properties”包装器 JSON 对象。  
+> 如果计划在 REST 中定义 **筛选器**，请注意需要包括“Properties”包装器 JSON 对象。  
 
 ```json
 [
@@ -126,7 +128,7 @@ az ams streaming-locator create -a amsAccount -g resourceGroup -n streamingLocat
 |MPEG DASH|`https://amsv3account-usw22.streaming.media.azure.net/fecebb23-46f6-490d-8b70-203e86b0df58/bigbuckbunny.ism/manifest(format=mpd-time-csf,filter=myAssetFilter)`|
 |平滑流|`https://amsv3account-usw22.streaming.media.azure.net/fecebb23-46f6-490d-8b70-203e86b0df58/bigbuckbunny.ism/manifest(filter=myAssetFilter)`|
 
-## <a name="next-step"></a>下一步
+## <a name="next-step"></a>后续步骤
 
 [流视频](stream-files-tutorial-with-api.md) 
 

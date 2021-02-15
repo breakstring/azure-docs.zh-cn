@@ -7,13 +7,13 @@ author: derek1ee
 ms.author: deli
 ms.reviewer: jonfan, estfan, logicappspm
 ms.topic: article
-ms.date: 01/13/2019
-ms.openlocfilehash: 1e6abeff8998e55eb7cbf450d1c3cc32f233e382
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.date: 10/08/2020
+ms.openlocfilehash: 4715d7173dd959d12350229e457717c908a83756
+ms.sourcegitcommit: fbb620e0c47f49a8cf0a568ba704edefd0e30f81
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87065976"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "91873228"
 ---
 # <a name="connect-to-on-premises-file-systems-with-azure-logic-apps"></a>使用 Azure 逻辑应用连接到本地文件系统
 
@@ -22,6 +22,9 @@ ms.locfileid: "87065976"
 - 创建、获取、追加、更新和删除文件。
 - 列出文件夹或根文件夹中的文件。
 - 获取文件内容和元数据。
+
+  > [!IMPORTANT]
+  > 文件系统连接器目前仅支持 Windows 操作系统上的 Windows 文件系统。  
 
 本文介绍如何根据本示例方案所述连接到本地文件系统：将上传至 Dropbox 的文件复制到文件共享，然后发送一封电子邮件。 为了安全连接和访问本地系统，逻辑应用将使用[本地数据网关](../logic-apps/logic-apps-gateway-connection.md)。 如果你不熟悉逻辑应用，请查看[什么是 Azure 逻辑应用？](../logic-apps/logic-apps-overview.md)。 如需特定于连接器的技术信息，请参阅[文件系统连接器参考](/connectors/filesystem/)。
 
@@ -35,7 +38,7 @@ ms.locfileid: "87065976"
 
 * 访问特定的计算机，其中的文件系统是你需要使用的。 例如，如果在与文件系统相同的计算机上安装数据网关，则需要该计算机的帐户凭据。
 
-* 逻辑应用支持的提供商（例如 Office 365 Outlook、Outlook.com 或 Gmail）提供的电子邮件帐户。 至于其他提供商，请[查看此处的连接器列表](/connectors/)。 此逻辑应用使用 Office 365 Outlook 帐户。 如果使用其他电子邮件帐户，整个步骤仍然是相同的，但 UI 可能稍有不同。
+* 逻辑应用支持的提供商（例如 Office 365 Outlook、Outlook.com 或 Gmail）提供的电子邮件帐户。 至于其他提供商，请[查看此处的连接器列表](/connectors/)。 此逻辑应用使用工作或学校帐户。 如果使用其他电子邮件帐户，整个步骤仍然是相同的，但 UI 可能稍有不同。
 
   > [!IMPORTANT]
   > 如果要使用 Gmail 连接器，则只有 G-Suite 商业帐户可以在逻辑应用中不受限制地使用此连接器。 如果有 Gmail 用户帐户，则只能将此连接器与 Google 批准的特定服务一起使用，也可以[创建用于通过 Gmail 连接器进行身份验证的 Google 客户端应用](/connectors/gmail/#authentication-and-bring-your-own-application)。 有关详细信息，请参阅 [Azure 逻辑应用中 Google 连接器的数据安全和隐私策略](../connectors/connectors-google-data-security-privacy-policy.md)。
@@ -60,7 +63,7 @@ ms.locfileid: "87065976"
 
 ## <a name="add-actions"></a>添加操作
 
-1. 在触发器下，选择“下一步”。  在搜索框中，输入“文件系统”作为筛选器。 在操作列表中选择此操作：**创建文件**
+1. 在触发器下，选择“下一步”。 在搜索框中，输入“文件系统”作为筛选器。 在操作列表中选择此操作：**创建文件**
 
    ![查找文件系统连接器](media/logic-apps-using-file-connector/find-file-system-action.png)
 
@@ -73,16 +76,16 @@ ms.locfileid: "87065976"
    | **连接名称** | 是 | <*connection-name*> | 连接使用的名称 |
    | **根文件夹** | 是 | <*root-folder-name*> | 文件系统的根文件夹，例如，如果安装了本地数据网关，比如安装了本地数据网关的计算机上的本地文件夹，或者计算机可以访问的网络共享文件夹。 <p>例如： `\\PublicShare\\DropboxFiles` <p>根文件夹是主要的父文件夹，用作所有与文件有关的操作的相对路径。 |
    | **身份验证类型** | 否 | <*auth-type*> | 文件系统使用的身份验证类型：**Windows** |
-   | **用户名** | 是 | <*domain*>\\<*username*> <p>- 或 - <p><*本地* > \\ 计算机 <*用户名*> | 具有文件系统文件夹的计算机的用户名。 <p>如果文件系统文件夹与本地数据网关在同一台计算机上，则可以使用 <*本地计算机* > \\ < *用户名*>。 |
+   | **用户名** | 是 | <*domain*>\\<*username*> <p>-或- <p><*local-computer*>\\<*username*> | 具有文件系统文件夹的计算机的用户名。 <p>如果文件系统文件夹与本地数据网关在同一台计算机上，则可使用 <*local-computer*>\\<*username*>。 |
    | **密码** | 是 | <*your-password*> | 拥有文件系统的计算机密码 |
    | **gateway** | 是 | <*installed-gateway-name*> | 以前安装的网关的名称 |
    |||||
 
-1. 完成后，选择“创建”  。
+1. 完成后，选择“创建”。
 
    逻辑应用会配置和测试连接，以确保连接正常运行。 如果正确建立连接，会显示用于之前所选操作的选项。
 
-1. 在“创建文件”操作中，提供用于将文件从 Dropbox 复制到本地文件共享中的根文件夹的详细信息  。 若要添加前面步骤的输出，请在框中单击，然后在显示动态内容列表时从可用字段中进行选择。
+1. 在“创建文件”操作中，提供用于将文件从 Dropbox 复制到本地文件共享中的根文件夹的详细信息。 若要添加前面步骤的输出，请在框中单击，然后在显示动态内容列表时从可用字段中进行选择。
 
    ![创建文件操作](media/logic-apps-using-file-connector/create-file-filled.png)
 
@@ -99,7 +102,7 @@ ms.locfileid: "87065976"
 有关此连接器的更多技术详细信息，例如触发器、操作和限制（如此连接器的 Swagger 文件所述），请参阅[连接器的参考页](/connectors/fileconnector/)。
 
 > [!NOTE]
-> 对于[integration service 环境（ISE）](../logic-apps/connect-virtual-network-vnet-isolated-environment-overview.md)中的逻辑应用，此连接器的 ise 标记版本会改用[ise 消息限制](../logic-apps/logic-apps-limits-and-config.md#message-size-limits)。
+> 对于 [integration service 环境 ](../logic-apps/connect-virtual-network-vnet-isolated-environment-overview.md)中的逻辑应用 (ISE) ，此连接器的基于 ise 标记的版本改为使用 [ise 消息限制](../logic-apps/logic-apps-limits-and-config.md#message-size-limits) 。
 
 ## <a name="next-steps"></a>后续步骤
 

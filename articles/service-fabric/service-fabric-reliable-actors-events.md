@@ -1,16 +1,15 @@
 ---
 title: 基于执行组件的 Azure Service Fabric 执行组件中的事件
 description: 了解 Service Fabric Reliable Actors 的事件，这些事件提供了执行组件与客户端之间进行通信的有效方法。
-author: vturecek
 ms.topic: conceptual
 ms.date: 10/06/2017
-ms.author: amanbha
-ms.openlocfilehash: b17befcd86cd56eb5eb385ddc5196cbfce73003c
-ms.sourcegitcommit: dabd9eb9925308d3c2404c3957e5c921408089da
+ms.custom: devx-track-csharp
+ms.openlocfilehash: 591e3539715ba0873e44f56a93d05df6552bb1ef
+ms.sourcegitcommit: 16c7fd8fe944ece07b6cf42a9c0e82b057900662
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/11/2020
-ms.locfileid: "86260426"
+ms.lasthandoff: 12/03/2020
+ms.locfileid: "96571362"
 ---
 # <a name="actor-events"></a>执行组件事件
 执行组件事件提供了一种尽最大努力将通知从执行组件发送到客户端的方法。 执行组件事件设计用于从执行组件到客户端的通信，而不应用于从执行组件到执行组件的通信。

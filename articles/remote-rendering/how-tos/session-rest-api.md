@@ -5,18 +5,18 @@ author: florianborn71
 ms.author: flborn
 ms.date: 02/11/2020
 ms.topic: article
-ms.openlocfilehash: 4e65655f1809c6badc50e39a2a5e932516ef99d2
-ms.sourcegitcommit: 54d8052c09e847a6565ec978f352769e8955aead
+ms.openlocfilehash: d957c5d6521010c7393e2297be16cd7bef41c35f
+ms.sourcegitcommit: a4533b9d3d4cd6bb6faf92dd91c2c3e1f98ab86a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/18/2020
-ms.locfileid: "88509835"
+ms.lasthandoff: 12/22/2020
+ms.locfileid: "97724062"
 ---
 # <a name="use-the-session-management-rest-api"></a>使用会话管理 REST API
 
 若要使用 Azure 远程呈现功能，需要创建一个 *会话*。 每个会话都对应于要在 Azure 中分配的虚拟机 (VM) 正在等待客户端设备连接。 当设备连接时，VM 将呈现请求的数据，并将结果作为视频流提供。 在会话创建过程中，您选择了要在哪种服务器上运行，这会确定定价。 不再需要会话时，应停止此会话。 如果未手动停止，它将在会话的 *租约时间* 到期时自动关闭。
 
-我们在 "*脚本*" 文件夹（称为*RenderingSession.ps1*）中的 " [ARR 示例" 存储库](https://github.com/Azure/azure-remote-rendering)中提供了一个 PowerShell 脚本，它演示了如何使用我们的服务。 此脚本及其配置如下所述： [PowerShell 脚本示例](../samples/powershell-example-scripts.md)
+我们在 "*脚本*" 文件夹（称为 *RenderingSession.ps1*）中的 " [ARR 示例" 存储库](https://github.com/Azure/azure-remote-rendering)中提供了一个 PowerShell 脚本，它演示了如何使用我们的服务。 此脚本及其配置如下所述： [PowerShell 脚本示例](../samples/powershell-example-scripts.md)
 
 > [!TIP]
 > 此页上列出的 PowerShell 命令旨在互相补充。 如果在同一个 PowerShell 命令提示符中按顺序运行所有脚本，则这些脚本将在彼此之上进行构建。
@@ -35,24 +35,27 @@ $endPoint = "https://remoterendering.westus2.mixedreality.azure.com"
 
 ## <a name="accounts"></a>帐户
 
-如果没有远程呈现帐户，请 [创建一个](create-an-account.md)。 每个资源都由 AccountId 标识，该 *accountId*在整个会话 api 中使用。
+如果没有远程呈现帐户，请 [创建一个](create-an-account.md)。 每个资源都由 AccountId 标识，该 *accountId* 在整个会话 api 中使用。
 
-### <a name="example-script-set-accountid-and-accountkey"></a>示例脚本： Set accountId 和 accountKey
+### <a name="example-script-set-accountid-accountkey-and-account-domain"></a>示例脚本：设置 accountId、accountKey 和帐户域
+
+帐户域是远程呈现帐户的位置。 在此示例中，帐户的位置是区域 *eastus*。
 
 ```PowerShell
 $accountId = "********-****-****-****-************"
 $accountKey = "*******************************************="
+$accountDomain = "eastus.mixedreality.azure.com"
 ```
 
 ## <a name="common-request-headers"></a>常见请求标头
 
-* *授权*标头的值必须为 " `Bearer TOKEN` "，其中 " `TOKEN` " 是[安全令牌服务返回](tokens.md)的身份验证令牌。
+* *授权* 标头的值必须为 " `Bearer TOKEN` "，其中 " `TOKEN` " 是 [安全令牌服务返回](tokens.md)的身份验证令牌。
 
 ### <a name="example-script-request-a-token"></a>示例脚本：请求令牌
 
 ```PowerShell
 [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12
-$webResponse = Invoke-WebRequest -Uri "https://sts.mixedreality.azure.com/accounts/$accountId/token" -Method Get -ContentType "application/json" -Headers @{ Authorization = "Bearer ${accountId}:$accountKey" }
+$webResponse = Invoke-WebRequest -Uri "https://sts.$accountDomain/accounts/$accountId/token" -Method Get -ContentType "application/json" -Headers @{ Authorization = "Bearer ${accountId}:$accountKey" }
 $response = ConvertFrom-Json -InputObject $webResponse.Content
 $token = $response.AccessToken;
 ```
@@ -75,11 +78,11 @@ $token = $response.AccessToken;
 *  (数组) 模型：要预加载的资产容器 Url
 * size (字符串) ：要配置的服务器大小 ([**"标准"**](../reference/vm-sizes.md) 或 [**"高级"**](../reference/vm-sizes.md)) 。 请参阅特定 [大小限制](../reference/limits.md#overall-number-of-polygons)。
 
-**响应**
+**响应：**
 
 | 状态代码 | JSON 有效负载 | 注释 |
 |-----------|:-----------|:-----------|
-| 202 | -sessionId： GUID | Success |
+| 202 | -sessionId： GUID | 成功 |
 
 ### <a name="example-script-create-a-session"></a>示例脚本：创建会话
 
@@ -117,7 +120,14 @@ RawContentLength  : 52
 $sessionId = "d31bddca-dab7-498e-9bc9-7594bc12862f"
 ```
 
-## <a name="update-a-session"></a>更新会话
+## <a name="modify-and-query-session-properties"></a>修改和查询会话属性
+
+有几个命令可用于查询或修改现有会话的参数。
+
+> [!CAUTION]
+> 对于所有 REST 调用，通常情况下，发送这些命令会导致服务器中止并返回故障。 在本例中，状态代码为 429 ( "请求太多" ) 。 根据经验法则，后续调用之间应有 5-10 秒的延迟。
+
+### <a name="update-session-parameters"></a>更新会话参数
 
 此命令将更新会话的参数。 目前只能延长会话的租约时间。
 
@@ -132,13 +142,13 @@ $sessionId = "d31bddca-dab7-498e-9bc9-7594bc12862f"
 
 * maxLeaseTime (timespan) ：会话将自动解除授权时的超时值
 
-**响应**
+**响应：**
 
 | 状态代码 | JSON 有效负载 | 注释 |
 |-----------|:-----------|:-----------|
 | 200 | | Success |
 
-### <a name="example-script-update-a-session"></a>示例脚本：更新会话
+#### <a name="example-script-update-a-session"></a>示例脚本：更新会话
 
 ```PowerShell
 Invoke-WebRequest -Uri "$endPoint/v1/accounts/$accountId/sessions/$sessionId" -Method Patch -ContentType "application/json" -Body "{ 'maxLeaseTime': '5:0:0' }" -Headers @{ Authorization = "Bearer $token" }
@@ -160,7 +170,7 @@ Headers           : {[MS-CV, Fe+yXCJumky82wuoedzDTA.0], [Content-Length, 0], [Da
 RawContentLength  : 0
 ```
 
-## <a name="get-active-sessions"></a>获取活动会话
+### <a name="get-active-sessions"></a>获取活动会话
 
 此命令返回活动会话的列表。
 
@@ -168,13 +178,13 @@ RawContentLength  : 0
 |-----------|:-----------|
 | /v1/accounts/*accountId*/sessions | GET |
 
-**响应**
+**响应：**
 
 | 状态代码 | JSON 有效负载 | 注释 |
 |-----------|:-----------|:-----------|
 | 200 | -会话：会话属性的数组 | 有关会话属性的说明，请参阅 "获取会话属性" 部分 |
 
-### <a name="example-script-query-active-sessions"></a>示例脚本：查询活动会话
+#### <a name="example-script-query-active-sessions"></a>示例脚本：查询活动会话
 
 ```PowerShell
 Invoke-WebRequest -Uri "$endPoint/v1/accounts/$accountId/sessions" -Method Get -Headers @{ Authorization = "Bearer $token" }
@@ -203,7 +213,7 @@ ParsedHtml        : mshtml.HTMLDocumentClass
 RawContentLength  : 2
 ```
 
-## <a name="get-sessions-properties"></a>获取会话属性
+### <a name="get-sessions-properties"></a>获取会话属性
 
 此命令返回有关会话的信息，如会话的 VM 主机名。
 
@@ -211,13 +221,13 @@ RawContentLength  : 2
 |-----------|:-----------|
 | /v1/accounts/*accountId*/sessions/*sessionId*/properties | GET |
 
-**响应**
+**响应：**
 
 | 状态代码 | JSON 有效负载 | 注释 |
 |-----------|:-----------|:-----------|
 | 200 | -message： string<br/>-sessionElapsedTime： timespan<br/>-sessionHostname： string<br/>-sessionId： string<br/>-sessionMaxLeaseTime： timespan<br/>-sessionSize： enum<br/>-sessionStatus： enum | 枚举 sessionStatus {启动、准备、停止、停止、过期、出错}<br/>如果状态为 "错误" 或 "已过期"，则该消息将包含详细信息 |
 
-### <a name="example-script-get-session-properties"></a>示例脚本：获取会话属性
+#### <a name="example-script-get-session-properties"></a>示例脚本：获取会话属性
 
 ```PowerShell
 Invoke-WebRequest -Uri "$endPoint/v1/accounts/$accountId/sessions/$sessionId/properties" -Method Get -Headers @{ Authorization = "Bearer $token" }
@@ -254,11 +264,11 @@ RawContentLength  : 60
 |-----------|:-----------|
 | /v1/accounts/*accountId*/sessions/*sessionId* | 删除 |
 
-**响应**
+**响应：**
 
 | 状态代码 | JSON 有效负载 | 注释 |
 |-----------|:-----------|:-----------|
-| 204 | | Success |
+| 204 | | 成功 |
 
 ### <a name="example-script-stop-a-session"></a>示例脚本：停止会话
 

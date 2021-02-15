@@ -8,12 +8,12 @@ ms.author: jlembicz
 ms.service: cognitive-search
 ms.topic: conceptual
 ms.date: 11/04/2019
-ms.openlocfilehash: 8bb10c8e0e1f62e72d48d80014d75dd656490889
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 50a1656fcb92d9777d4a9476ef2a4c1fd2f2efc6
+ms.sourcegitcommit: a43a59e44c14d349d597c3d2fd2bc779989c71d7
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "85565916"
+ms.lasthandoff: 11/25/2020
+ms.locfileid: "96002742"
 ---
 # <a name="full-text-search-in-azure-cognitive-search"></a>Azure 认知搜索中的全文搜索
 
@@ -49,9 +49,9 @@ ms.locfileid: "85565916"
 
 搜索请求是一个完整的规范，描述了应在结果集中返回哪些内容。 最简单的搜索请求形式是不包含任何类型的条件的空查询。 比较现实的搜索请求示例包含参数、多个查询词，其范围可能限定为某些字段，另外，可能还包含筛选表达式和排序规则。  
 
-以下示例是可以使用 [REST API](https://docs.microsoft.com/rest/api/searchservice/search-documents) 发送到 Azure 认知搜索的一个搜索请求。  
+以下示例是可以使用 [REST API](/rest/api/searchservice/search-documents) 发送到 Azure 认知搜索的一个搜索请求。  
 
-~~~~
+```
 POST /indexes/hotels/docs/search?api-version=2020-06-30
 {
     "search": "Spacious, air-condition* +\"Ocean view\"",
@@ -61,7 +61,7 @@ POST /indexes/hotels/docs/search?api-version=2020-06-30
     "orderby": "geo.distance(location, geography'POINT(-159.476235 22.227659)')", 
     "queryType": "full" 
 }
-~~~~
+```
 
 对于此请求，搜索引擎将执行以下操作：
 
@@ -69,34 +69,34 @@ POST /indexes/hotels/docs/search?api-version=2020-06-30
 2. 执行查询。 在此示例中，搜索查询包括短语和字词：`"Spacious, air-condition* +\"Ocean view\""`（用户通常不会输入标点，但此示例中包含标点，目的是为了方便解释分析器如何处理标点）。 对于此查询，搜索引擎将在 `searchFields` 指定的说明和标题字段中扫描包含“Ocean view”的文档，此外，还会根据字词“spacious”或者以前缀“air-condition”开头的字词执行搜索。 `searchMode` 参数用于匹配任一字词（默认）；如果未明确指定字词 (`+`)，则匹配所有字词。
 3. 根据与给定地理位置的距离将酒店结果集排序，然后将其返回到调用方应用程序。 
 
-本文的大部分内容介绍如何处理*搜索查询*：`"Spacious, air-condition* +\"Ocean view\""`。 筛选和排序不属于本文的介绍范畴。 有关详细信息，请参阅[搜索 API 参考文档](https://docs.microsoft.com/rest/api/searchservice/search-documents)。
+本文的大部分内容介绍如何处理 *搜索查询*：`"Spacious, air-condition* +\"Ocean view\""`。 筛选和排序不属于本文的介绍范畴。 有关详细信息，请参阅[搜索 API 参考文档](/rest/api/searchservice/search-documents)。
 
 <a name="stage1"></a>
 ## <a name="stage-1-query-parsing"></a>第 1 阶段：查询分析 
 
 如前所述，查询字符串是请求的第一行： 
 
-~~~~
+```
  "search": "Spacious, air-condition* +\"Ocean view\"", 
-~~~~
+```
 
-查询分析器会将运算符（例如本示例中的 `*` 和 `+`）与搜索词区分开来，并将搜索查询解构成受支持类型的*子查询*： 
+查询分析器会将运算符（例如本示例中的 `*` 和 `+`）与搜索词区分开来，并将搜索查询解构成受支持类型的 *子查询*： 
 
-+ 针对独立字词（例如 spacious）的*字词查询*
-+ 针对带引号字词（例如 ocean view）的*短语查询*
-+ 针对字词后接前缀运算符 `*`（例如 air-condition）的*前缀查询*
++ 针对独立字词（例如 spacious）的 *字词查询*
++ 针对带引号字词（例如 ocean view）的 *短语查询*
++ 针对字词后接前缀运算符 `*`（例如 air-condition）的 *前缀查询*
 
-有关支持的查询类型的完整列表，请参阅 [Lucene 查询语法](https://docs.microsoft.com/rest/api/searchservice/lucene-query-syntax-in-azure-search)
+有关支持的查询类型的完整列表，请参阅 [Lucene 查询语法](/rest/api/searchservice/lucene-query-syntax-in-azure-search)
 
 与子查询关联的运算符确定是“必须”还是“应该”满足该查询，才将某个文档视为匹配项。 例如，由于使用了 `+` 运算符，`+"Ocean view"` 表示“必须”满足查询。 
 
-查询分析器将传递给搜索引擎的子查询重新构造成*查询树*（表示查询的内部结构）。 在查询分析的第一个阶段，查询树如下所示。  
+查询分析器将传递给搜索引擎的子查询重新构造成 *查询树*（表示查询的内部结构）。 在查询分析的第一个阶段，查询树如下所示。  
 
  ![searchmode 设置为 any 的布尔查询][2]
 
 ### <a name="supported-parsers-simple-and-full-lucene"></a>支持的分析器：简单和完整 Lucene 
 
- Azure 认知搜索公开两种不同的查询语言：`simple`（默认）和 `full`。 通过使用搜索请求设置 `queryType` 参数，可让查询分析器知道你选择的查询语言，这样，它就知道如何解释运算符和语法。 [简单查询语言](https://docs.microsoft.com/rest/api/searchservice/simple-query-syntax-in-azure-search)比较直观而且可靠，通常适合用于按原样解释用户输入，而无需客户端的处理。 它支持 Web 搜索引擎中常见的查询运算符。 [完整 Lucene 查询语言](https://docs.microsoft.com/rest/api/searchservice/lucene-query-syntax-in-azure-search)：可通过设置 `queryType=full` 获取该语言。它添加了对更多运算符和查询类型（例如通配符、模糊查询、正则表达式和限定字段的查询）的支持，从而扩展了默认的简单查询语言。 例如，在简单查询语法中发送的正则表达式将解释为查询字符串而不是表达式。 本文中的示例请求使用完整 Lucene 查询语言。
+ Azure 认知搜索公开两种不同的查询语言：`simple`（默认）和 `full`。 通过使用搜索请求设置 `queryType` 参数，可让查询分析器知道你选择的查询语言，这样，它就知道如何解释运算符和语法。 [简单查询语言](/rest/api/searchservice/simple-query-syntax-in-azure-search)比较直观而且可靠，通常适合用于按原样解释用户输入，而无需客户端的处理。 它支持 Web 搜索引擎中常见的查询运算符。 [完整 Lucene 查询语言](/rest/api/searchservice/lucene-query-syntax-in-azure-search)：可通过设置 `queryType=full` 获取该语言。它添加了对更多运算符和查询类型（例如通配符、模糊查询、正则表达式和限定字段的查询）的支持，从而扩展了默认的简单查询语言。 例如，在简单查询语法中发送的正则表达式将解释为查询字符串而不是表达式。 本文中的示例请求使用完整 Lucene 查询语言。
 
 ### <a name="impact-of-searchmode-on-the-parser"></a>searchMode 对分析器的影响 
 
@@ -104,43 +104,43 @@ POST /indexes/hotels/docs/search?api-version=2020-06-30
 
 如果 `searchMode=any`（默认设置），则 spacious 与 air-condition 之间的空间分隔符为 OR (`||`)，因此，示例查询文本等效于： 
 
-~~~~
+```
 Spacious,||air-condition*+"Ocean view" 
-~~~~
+```
 
-显式运算符（例如 `+"Ocean view"` 中的 `+`）在布尔查询构造中没有歧义（*必须*匹配字词）。 剩余字词的解释方式不太明确：spacious 和 air-condition。 搜索引擎是否应该根据 ocean view *和* spacious *和* air-condition 查找匹配项？ 或者，是否应该查找 ocean view 加上*任何一个*剩余的字词？ 
+显式运算符（例如 `+"Ocean view"` 中的 `+`）在布尔查询构造中没有歧义（*必须* 匹配字词）。 剩余字词的解释方式不太明确：spacious 和 air-condition。 搜索引擎是否应该根据 ocean view *和* spacious *和* air-condition 查找匹配项？ 或者，是否应该查找 ocean view 加上 *任何一个* 剩余的字词？ 
 
-默认情况下 (`searchMode=any`)，搜索引擎采用更广泛的解释。 *应该*匹配任一字段，反映“or”的语义。 上面所示的初始查询树包含两个“should”运算符，显示了默认行为。  
+默认情况下 (`searchMode=any`)，搜索引擎采用更广泛的解释。 *应该* 匹配任一字段，反映“or”的语义。 上面所示的初始查询树包含两个“should”运算符，显示了默认行为。  
 
 假设我们现在设置为 `searchMode=all`。 在这种情况下，空格被解释为“and”运算。 文档中必须包含每个剩余的字词，才能将该文档视为匹配项。 生成的示例查询将按以下方式解释： 
 
-~~~~
+```
 +Spacious,+air-condition*+"Ocean view"
-~~~~
+```
 
 此查询的修改查询树如下所示，其中的匹配文档是所有三个子查询的交集： 
 
  ![searchmode 设置为 all 的布尔查询][3]
 
 > [!Note] 
-> 运行代表性查询时，选择 `searchMode=any` 而不选择 `searchMode=all` 是最明智的决定。 经常使用运算符（搜索文档存储时就经常这样做）的用户可能会发现，如果 `searchMode=all` 能够告知布尔查询构造，则结果会更直观。 有关 `searchMode` 与运算符之间的交互作用的详细信息，请参阅[简单查询语法](https://docs.microsoft.com/rest/api/searchservice/simple-query-syntax-in-azure-search)。
+> 运行代表性查询时，选择 `searchMode=any` 而不选择 `searchMode=all` 是最明智的决定。 经常使用运算符（搜索文档存储时就经常这样做）的用户可能会发现，如果 `searchMode=all` 能够告知布尔查询构造，则结果会更直观。 有关 `searchMode` 与运算符之间的交互作用的详细信息，请参阅[简单查询语法](/rest/api/searchservice/simple-query-syntax-in-azure-search)。
 
 <a name="stage2"></a>
 ## <a name="stage-2-lexical-analysis"></a>第 2 阶段：词法分析 
 
-构造查询树之后，词法分析器将处理*字词查询*和*短语查询*。 分析器接受分析器提供给它的文本输入，处理文本，并发回标记化的字词，以便在查询树中整合。 
+构造查询树之后，词法分析器将处理 *字词查询* 和 *短语查询*。 分析器接受分析器提供给它的文本输入，处理文本，并发回标记化的字词，以便在查询树中整合。 
 
-词法分析的最常见形式是*语言分析*，这种分析可以根据给定语言特定的规则转换查询词： 
+词法分析的最常见形式是 *语言分析*，这种分析可以根据给定语言特定的规则转换查询词： 
 
 * 将查询词化简为单词的词根形式 
 * 删除不必要的单词（非索引字，例如英语中的“the”或“and”） 
 * 将复合词分解为不同的组成部分 
 * 转换单词的大小写 
 
-所有这些操作往往会消除用户提供的文本输入与存储在索引中的字词之间的差异。 此类操作超出了文本处理的范围，需要精通语言本身。 为了添加这一层语言认知力，Azure 认知搜索支持 Lucene 和 Microsoft 提供的众多[语言分析器](https://docs.microsoft.com/rest/api/searchservice/language-support)。
+所有这些操作往往会消除用户提供的文本输入与存储在索引中的字词之间的差异。 此类操作超出了文本处理的范围，需要精通语言本身。 为了添加这一层语言认知力，Azure 认知搜索支持 Lucene 和 Microsoft 提供的众多[语言分析器](/rest/api/searchservice/language-support)。
 
 > [!Note]
-> 根据具体的情景，分析要求时而简单，时而繁琐。 可以通过选择某个预定义的分析器或者创建自己的[自定义分析器](https://docs.microsoft.com/rest/api/searchservice/Custom-analyzers-in-Azure-Search)来控制词法分析的复杂性。 可将分析器的分析范围限定为可搜索的字段，并且可将分析器指定为字段定义的一部分。 这样，便可以根据每个字段运行不同的词法分析。 如果未指定分析器，将使用*标准* Lucene 分析器。
+> 根据具体的情景，分析要求时而简单，时而繁琐。 可以通过选择某个预定义的分析器或者创建自己的[自定义分析器](/rest/api/searchservice/Custom-analyzers-in-Azure-Search)来控制词法分析的复杂性。 可将分析器的分析范围限定为可搜索的字段，并且可将分析器指定为字段定义的一部分。 这样，便可以根据每个字段运行不同的词法分析。 如果未指定分析器，将使用 *标准* Lucene 分析器。
 
 在本示例中，分析之前的初始查询树包含字词“Spacious,”，其中使用了大写的 S 以及一个逗号。查询分析器会将逗号解释为查询字词的一部分（逗号不被视为查询语言运算符）。  
 
@@ -150,18 +150,18 @@ Spacious,||air-condition*+"Ocean view"
 
 ### <a name="testing-analyzer-behaviors"></a>测试分析器的行为 
 
-可以使用[分析 API](https://docs.microsoft.com/rest/api/searchservice/test-analyzer) 测试分析器的行为。 提供要分析的文本，查看给定的分析器会生成哪些字词。 例如，若要查看标准分析器如何处理文本“air-condition”，可以发出以下请求：
+可以使用[分析 API](/rest/api/searchservice/test-analyzer) 测试分析器的行为。 提供要分析的文本，查看给定的分析器会生成哪些字词。 例如，若要查看标准分析器如何处理文本“air-condition”，可以发出以下请求：
 
-~~~~
+```json
 {
     "text": "air-condition",
     "analyzer": "standard"
 }
-~~~~
+```
 
 标准分析器会将输入文本分解成以下两个标记，使用起始和结束偏移（用于命中项突出显示）以及文本的位置（用于短语匹配）等属性来批注输入文本：
 
-~~~~
+```json
 {
   "tokens": [
     {
@@ -178,7 +178,7 @@ Spacious,||air-condition*+"Ocean view"
     }
   ]
 }
-~~~~
+```
 
 <a name="exceptions"></a>
 
@@ -192,7 +192,7 @@ Spacious,||air-condition*+"Ocean view"
 
 文档检索是否在索引中查找包含匹配词的文档。 最好是通过一个示例来理解此阶段。 我们从一个采用以下简单架构的酒店索引着手： 
 
-~~~~
+```json
 {
     "name": "hotels",
     "fields": [
@@ -201,11 +201,11 @@ Spacious,||air-condition*+"Ocean view"
         { "name": "description", "type": "Edm.String", "searchable": true }
     ] 
 } 
-~~~~
+```
 
 进一步假设此索引包含以下四个文档： 
 
-~~~~
+```json
 {
     "value": [
         {
@@ -230,7 +230,7 @@ Spacious,||air-condition*+"Ocean view"
         }
     ]
 }
-~~~~
+```
 
 **字词的索引编制方式**
 
@@ -238,9 +238,9 @@ Spacious,||air-condition*+"Ocean view"
 
 要在倒排索引中生成字词，搜索引擎将针对文档内容执行词法分析，这类似于查询处理期间执行的操作：
 
-1. 根据分析器的配置，执行将文本输入传递给分析器、转换为小写、去除标点等操作  。 
-2. *标记*是词法分析的输出。
-3. 将词语添加到索引  。
+1. 根据分析器的配置，执行将文本输入传递给分析器、转换为小写、去除标点等操作。 
+2. 令牌是词法分析的输出。
+3. 将词语添加到索引。
 
 我们经常（但不是非要这样做）使用相同的分析器来执行搜索和索引编制操作，使查询词看上去更像是索引中的字词。
 
@@ -249,7 +249,7 @@ Spacious,||air-condition*+"Ocean view"
 
 **示例文档的倒排索引**
 
-继续使用前面的示例，对于**标题**字段，倒排索引如下所示：
+继续使用前面的示例，对于 **标题** 字段，倒排索引如下所示：
 
 | 术语 | 文档列表 |
 |------|---------------|
@@ -261,9 +261,9 @@ Spacious,||air-condition*+"Ocean view"
 | resort | 3 |
 | retreat | 4 |
 
-在标题字段中，只有“酒店”显示在以下两个文档中  ：1、3。
+在标题字段中，只有“酒店”显示在以下两个文档中：1、3。
 
-对于**说明**字段，索引如下所示：
+对于 **说明** 字段，索引如下所示：
 
 | 术语 | 文档列表 |
 |------|---------------|
@@ -315,16 +315,18 @@ Spacious,||air-condition*+"Ocean view"
 
 ## <a name="stage-4-scoring"></a>阶段 4：计分  
 
-将为搜索结果集中的每个文档分配一个相关性评分。 相关性评分的作用是提高能够为搜索查询所表示的用户问题提供最佳答案的文档的排名。 评分是根据匹配的字词的统计属性计算的。 评分公式的核心是[TF/IDF （术语 frequency-反转文档频率）](https://en.wikipedia.org/wiki/Tf%E2%80%93idf)。 在包含不常见和常见字词的查询中，TF/IDF 会提升包含不常见字词的结果。 例如，在包含所有 Wikipedia 文章的假想索引中，对于匹配查询 *the president* 的文档，匹配 *president* 的文档的相关性被视为高于匹配 *the* 的文档。
+将为搜索结果集中的每个文档分配一个相关性评分。 相关性评分的作用是提高能够为搜索查询所表示的用户问题提供最佳答案的文档的排名。 评分是根据匹配的字词的统计属性计算的。 评分公式的核心是 [TF/IDF (术语频率-) 反转文档频率 ](https://en.wikipedia.org/wiki/Tf%E2%80%93idf)。 在包含不常见和常见字词的查询中，TF/IDF 会提升包含不常见字词的结果。 例如，在包含所有 Wikipedia 文章的假想索引中，对于匹配查询 *the president* 的文档，匹配 *president* 的文档的相关性被视为高于匹配 *the* 的文档。
 
 
 ### <a name="scoring-example"></a>评分示例
 
 回想一下与示例查询匹配的三个文档：
-~~~~
+
+```
 search=Spacious, air-condition* +"Ocean view"  
-~~~~
-~~~~
+```
+
+```json
 {
   "value": [
     {
@@ -347,7 +349,7 @@ search=Spacious, air-condition* +"Ocean view"
     }
   ]
 }
-~~~~
+```
 
 文档 1 与查询的匹配程度最高，因为其说明字段中同时出现了字词 *spacious* 和所需的短语 *ocean view*。 后面的两个文档仅匹配短语 *ocean view*。 你可能会感到惊讶，尽管文档 2 和 3 都匹配相同的查询短语，但它们的相关性评分却不相同。 这是因为，评分公式除了包含 TF/IDF 以外，还包含其他组成部分。 在本例中，为文档 3 分配的评分略高，因为其说明更短。 请学习 [Lucene 的实际评分公式](https://lucene.apache.org/core/6_6_1/core/org/apache/lucene/search/similarities/TFIDFSimilarity.html)，了解字段长度和其他因素如何影响相关性评分。
 
@@ -359,15 +361,15 @@ search=Spacious, air-condition* +"Ocean view"
 
 在 Azure 认知搜索中，可以使用两种方法优化相关性评分：
 
-1. **评分配置文件**可以根据一组规则提升结果排名列表中的文档。 在本示例中，我们可以认为标题字段中匹配的文档的相关性高于说明字段中匹配的文档。 此外，如果索引包含每家酒店的价格字段，我们可以根据较低的价格提升文档。 详细了解如何[将评分配置文件添加到搜索索引](https://docs.microsoft.com/rest/api/searchservice/add-scoring-profiles-to-a-search-index)。
-2. **字词提升**（只能在完整 Lucene 查询语法中使用）提供可应用到查询树任何部分的提升运算符 `^`。 在本示例中，我们可以不搜索前缀 *air-condition*\*，而是搜索确切的字词 *air-condition* 或前缀，但是，由于在字词查询中应用了提升运算符，与该确切字词匹配的文档会获得更高的排名：*air-condition^2||air-condition*\*。 详细了解[字词提升](https://docs.microsoft.com/rest/api/searchservice/lucene-query-syntax-in-azure-search#bkmk_termboost)。
+1. **评分配置文件** 可以根据一组规则提升结果排名列表中的文档。 在本示例中，我们可以认为标题字段中匹配的文档的相关性高于说明字段中匹配的文档。 此外，如果索引包含每家酒店的价格字段，我们可以根据较低的价格提升文档。 详细了解如何[将评分配置文件添加到搜索索引](/rest/api/searchservice/add-scoring-profiles-to-a-search-index)。
+2. **字词提升**（只能在完整 Lucene 查询语法中使用）提供可应用到查询树任何部分的提升运算符 `^`。 在本示例中，我们可以不搜索前缀 *air-condition*\*，而是搜索确切的字词 *air-condition* 或前缀，但是，由于在字词查询中应用了提升运算符，与该确切字词匹配的文档会获得更高的排名：*air-condition^2||air-condition*\*。 详细了解[字词提升](/rest/api/searchservice/lucene-query-syntax-in-azure-search#bkmk_termboost)。
 
 
 ### <a name="scoring-in-a-distributed-index"></a>在分布式索引评分
 
 Azure 认知搜索中的所有索引会自动拆分成多个分片，使我们能够在服务扩展或缩减期间，快速地在多个节点之间分配索引。 发出某个搜索请求时，会单独针对每个分片发出该请求。 然后，来自每个分片的结果会合并，并按评分排序（如果未定义其他排序）。 必须知道，评分函数根据分片中所有文档内的字词反向文档频率为查询字词频率加权，而不是根据所有分片加权！
 
-这意味着，如果相同的文档驻留在不同的分片中，其相关性评分*可能*不同。 幸运的是，随着索引中的文档数由于字词分布越来越均匀而不断增多，这种差异往往会消失。 无法预料任意给定文档会放置在哪个分片上。 但是，假设文档键不会更改，该文档始终会分配到同一个分片。
+这意味着，如果相同的文档驻留在不同的分片中，其相关性评分 *可能* 不同。 幸运的是，随着索引中的文档数由于字词分布越来越均匀而不断增多，这种差异往往会消失。 无法预料任意给定文档会放置在哪个分片上。 但是，假设文档键不会更改，该文档始终会分配到同一个分片。
 
 一般而言，如果顺序稳定性非常重要，则文档评分并不是用于文档排序的最佳属性。 例如，假设两个文档具有相同的评分，则无法保证以后运行同一个查询时，会先显示哪个文档。 文档评分只能让你大致了解某个文档的相关性相对于结果集中其他文档的高低程度。
 
@@ -383,23 +385,23 @@ Internet 搜索引擎取得的成功提高了人们对私有数据运行全文�
 
 + 生成示例索引，尝试不同的查询并查看结果。 有关说明，请参阅[在门户中生成和查询索引](search-get-started-portal.md#query-index)。
 
-+ 通过[搜索文档](https://docs.microsoft.com/rest/api/searchservice/search-documents#bkmk_examples)示例部分或者通过门户中“搜索资源管理器”的[简单查询语法](https://docs.microsoft.com/rest/api/searchservice/simple-query-syntax-in-azure-search)尝试其他查询语法。
++ 通过[搜索文档](/rest/api/searchservice/search-documents#bkmk_examples)示例部分或者通过门户中“搜索资源管理器”的[简单查询语法](/rest/api/searchservice/simple-query-syntax-in-azure-search)尝试其他查询语法。
 
-+ 如果想要在搜索应用程序中优化排名，请查看[评分配置文件](https://docs.microsoft.com/rest/api/searchservice/add-scoring-profiles-to-a-search-index)。
++ 如果想要在搜索应用程序中优化排名，请查看[评分配置文件](/rest/api/searchservice/add-scoring-profiles-to-a-search-index)。
 
-+ 了解如何应用[语言特定的词法分析器](https://docs.microsoft.com/rest/api/searchservice/language-support)。
++ 了解如何应用[语言特定的词法分析器](/rest/api/searchservice/language-support)。
 
-+ [配置自定义分析器](https://docs.microsoft.com/rest/api/searchservice/custom-analyzers-in-azure-search)，针对特定的字段尽量简化处理或者进行专门处理。
++ [配置自定义分析器](/rest/api/searchservice/custom-analyzers-in-azure-search)，针对特定的字段尽量简化处理或者进行专门处理。
 
 ## <a name="see-also"></a>另请参阅
 
-[搜索文档 REST API](https://docs.microsoft.com/rest/api/searchservice/search-documents) 
+[搜索文档 REST API](/rest/api/searchservice/search-documents) 
 
-[简单的查询语法](https://docs.microsoft.com/rest/api/searchservice/simple-query-syntax-in-azure-search) 
+[简单的查询语法](/rest/api/searchservice/simple-query-syntax-in-azure-search) 
 
-[完整 Lucene 查询语法](https://docs.microsoft.com/rest/api/searchservice/lucene-query-syntax-in-azure-search) 
+[完整 Lucene 查询语法](/rest/api/searchservice/lucene-query-syntax-in-azure-search) 
 
-[处理搜索结果](https://docs.microsoft.com/azure/search/search-pagination-page-layout)
+[处理搜索结果](./search-pagination-page-layout.md)
 
 <!--Image references-->
 [1]: ./media/search-lucene-query-architecture/architecture-diagram2.png

@@ -8,15 +8,16 @@ ms.devlang: nodejs
 ms.topic: reference
 ms.date: 08/12/2020
 ms.author: anfeldma
-ms.custom: devx-track-javascript
-ms.openlocfilehash: 76671ba2dec2590baf4f3df38325b4cfb0129e8d
-ms.sourcegitcommit: 02ca0f340a44b7e18acca1351c8e81f3cca4a370
+ms.custom: devx-track-js
+ms.openlocfilehash: 7f101097945e5f345bae351ef5ca2a23a3e14be6
+ms.sourcegitcommit: 3bdeb546890a740384a8ef383cf915e84bd7e91e
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/19/2020
-ms.locfileid: "88586097"
+ms.lasthandoff: 10/30/2020
+ms.locfileid: "93091151"
 ---
 # <a name="azure-cosmos-db-nodejs-sdk-for-sql-api-release-notes-and-resources"></a>适用于 SQL API 的 Azure Cosmos DB Node.js SDK：发行说明和资源
+[!INCLUDE[appliesto-sql-api](includes/appliesto-sql-api.md)]
 > [!div class="op_single_selector"]
 > * [.NET SDK v3](sql-api-sdk-dotnet-standard.md)
 > * [.NET SDK v2](sql-api-sdk-dotnet.md)
@@ -26,20 +27,20 @@ ms.locfileid: "88586097"
 > * [Java SDK v4](sql-api-sdk-java-v4.md)
 > * [Async Java SDK v2](sql-api-sdk-async-java.md)
 > * [Sync Java SDK v2](sql-api-sdk-java.md)
-> * [弹簧数据 v2](sql-api-sdk-java-spring-v2.md)
-> * [弹簧数据 v3](sql-api-sdk-java-spring-v3.md)
+> * [Spring Data v2](sql-api-sdk-java-spring-v2.md)
+> * [Spring Data v3](sql-api-sdk-java-spring-v3.md)
 > * [Spark 连接器](sql-api-sdk-java-spark.md)
 > * [Python](sql-api-sdk-python.md)
 > * [REST](/rest/api/cosmos-db/)
 > * [REST 资源提供程序](/rest/api/cosmos-db-resource-provider/)
-> * [SQL](sql-api-query-reference.md)
+> * [SQL](./sql-query-getting-started.md)
 > * [批量执行工具 - .NET v2](sql-api-sdk-bulk-executor-dot-net.md)
 > * [批量执行程序 - Java](sql-api-sdk-bulk-executor-java.md)
 
 |资源  |链接  |
 |---------|---------|
 |下载 SDK  |   [NPM](https://www.npmjs.com/package/@azure/cosmos) 
-|API 文档  |  [JavaScript SDK 参考文档](https://docs.microsoft.com/javascript/api/%40azure/cosmos/?view=azure-node-latest)
+|API 文档  |  [JavaScript SDK 参考文档](/javascript/api/%40azure/cosmos/?preserve-view=true&view=azure-node-latest)
 |SDK 安装说明  |  [安装说明](https://github.com/Azure/azure-sdk-for-js)
 |参与 SDK | [GitHub](https://github.com/Azure/azure-cosmos-js/tree/master)
 | 示例 | [Node.js 代码示例](sql-api-nodejs-samples.md)
@@ -60,7 +61,7 @@ ms.locfileid: "88586097"
 * 修复了用户提供部分重试选项时遇到的 bug
 
 ### <a name="303"></a><a name="3.0.3"></a>3.0.3
-* 阻止 webpack 解析调用的模块时需要
+* 阻止 webpack 解析要求调用的模块
 
 ### <a name="302"></a><a name="3.0.2"></a>3.0.2
 * 修复了在聚合查询中 RU 总是被报告为 0 的长期未解决的 bug
@@ -186,7 +187,7 @@ Add DISTINCT and LIMIT/OFFSET queries (#306)
 ```
 
 #### <a name="improved-browser-experience"></a>改进了浏览器体验
-尽管可以在浏览器中使用 v2 SDK，但这并不是理想体验。 需要填充代码多个 node.js 内置库并使用 webpack 或包裹等捆绑程序。 v3 SDK 为浏览器用户提供了更好的全新体验。
+尽管可以在浏览器中使用 v2 SDK，但这并不是理想体验。 需要对多个 node.js 内置库填充代码，并使用 webpack 或 Parcel 之类的捆绑程序。 v3 SDK 为浏览器用户提供了更好的全新体验。
 
 * 将内部请求替换为 fetch (#245)
 * 不使用缓冲区 (#330)
@@ -353,7 +354,7 @@ Add DISTINCT and LIMIT/OFFSET queries (#306)
 * 添加了对文档生存时间 (TTL) 功能的支持。
 
 ### <a name="160"></a><a name="1.6.0"></a>1.6.0
-* 实现了[分区集合](partition-data.md)和[用户定义的性能级别](performance-levels.md)。
+* 实现了[分区集合](partitioning-overview.md)和[用户定义的性能级别](performance-levels.md)。
 
 ### <a name="156"></a><a name="1.5.6"></a>1.5.6
 * 修复了 RangePartitionResolver.resolveForRead Bug，其会由于结果的错误 concat，它不返回链接。
@@ -471,9 +472,8 @@ Microsoft 至少会在停用 SDK 前提前 12 个月发出通知，以便顺利�
 | [1.0.1](#1.0.1) |2015年 5 月 15日 |2020 年 8 月 30 日 |
 | [1.0.0](#1.0.0) |2015 年 4 月 8 日 |2020 年 8 月 30 日 |
 
-## <a name="faq"></a>常见问题
+## <a name="faq"></a>常见问题解答
 [!INCLUDE [cosmos-db-sdk-faq](../../includes/cosmos-db-sdk-faq.md)]
 
 ## <a name="see-also"></a>另请参阅
 若要了解有关 Cosmos DB 的详细信息，请参阅 [Microsoft Azure Cosmos DB](https://azure.microsoft.com/services/cosmos-db/) 服务页。
-

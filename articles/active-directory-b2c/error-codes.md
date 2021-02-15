@@ -1,22 +1,22 @@
 ---
 title: 错误代码参考
 titleSuffix: Azure AD B2C
-description: Azure Active Directory B2C 服务可能返回的错误代码列表。
+description: Azure Active Directory B2C 服务可返回的错误代码的列表。
 services: B2C
 author: msmimart
 manager: celestedg
 ms.service: active-directory
 ms.workload: identity
 ms.topic: reference
-ms.date: 01/10/2020
+ms.date: 10/02/2020
 ms.author: mimart
 ms.subservice: B2C
-ms.openlocfilehash: 9d205998ad5710ecad346db4d7be18a68747c087
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: f6ae806b7666d83652e6b82bac16d89f2f9ce7aa
+ms.sourcegitcommit: 8d8deb9a406165de5050522681b782fb2917762d
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "85388521"
+ms.lasthandoff: 10/20/2020
+ms.locfileid: "92215427"
 ---
 # <a name="error-codes-azure-active-directory-b2c"></a>错误代码：Azure Active Directory B2C
 
@@ -61,7 +61,8 @@ Azure Active Directory B2C 服务可能返回以下错误。
 | `AADB2C90055` | 请求中提供的范围“{0}”必须指定资源，例如“https://example.com/calendar.read ”。 |
 | `AADB2C90057` | 未将提供的应用程序配置为允许 OAuth 隐式流。 |
 | `AADB2C90058` | 未将提供的应用程序配置为允许公共客户端。 |
-| `AADB2C90067` | 注销后重定向 URI“{0}”的格式无效。 指定基于 HTTPS 的 URL (例如“https://example.com/return ”)；对于本机客户端，请使用 IETF native 客户端 URI 'urn:ietf:wg:oauth:2.0:oob'。 |
+| `AADB2C99059` | 提供的请求必须提供 code_challenge。 对于使用授权代码流的单页面应用程序是必需的。| 
+| `AADB2C90067` | 注销后重定向 URI“{0}”的格式无效。 指定基于 HTTPS 的 URL (例如“https://example.com/return”)；对于本机客户端，请使用 IETF native 客户端 URI 'urn:ietf:wg:oauth:2.0:oob'。 |
 | `AADB2C90068` | 提供的 ID 为“{0}”的应用程序对此服务无效。 请使用通过 B2C 门户创建的应用程序，然后重试。 |
 | `AADB2C90075` | 步骤“{1}”中指定的声明交换“{0}”返回了 HTTP 错误响应，代码为“{2}”，原因为“{3}”。 |
 | `AADB2C90077` | 用户没有现有会话且请求提示参数有一个值“{0}”。 |
@@ -74,12 +75,13 @@ Azure Active Directory B2C 服务可能返回以下错误。
 | `AADB2C90086` | 提供的 grant_type [{0}] 不受支持。 |
 | `AADB2C90087` | 提供的授予尚未对此版本的协议终结点颁发。 |
 | `AADB2C90088` | 尚未为此终结点颁发提供的授予。 实际值: {0}，预期值: {1} |
+| `AADB2C90091` | 用户取消。 |
 | `AADB2C90092` | 对租户“{1}”禁用了提供的 ID 为“{0}”的应用程序。 请启用该应用程序，然后重试。 |
 | `AADB2C90107` | ID 为“{0}”的应用程序无法获取 ID 令牌，可能是请求中未提供 openid 范围，也可能是未授权该应用程序进行此操作。 |
 | `AADB2C90108` | 业务流程步骤“{0}”未按预期指定 CpimIssuerTechnicalProfileReferenceId。 |
 | `AADB2C90110` | 范围参数在请求包括 "id_token" 的 response_type 时必须包括 "openid"。 |
 | `AADB2C90111` | 帐户已锁定。 请联系支持人员解除锁定，然后重试。 |
-| `AADB2C90114` | 帐户暂时锁定以防止未经授权的使用。 请稍后重试。 |
+| `AADB2C90114` | 帐户暂时锁定以防止未经授权的使用。 请稍后再试。 |
 | `AADB2C90115` | 请求 'code' response_type 时，范围参数必须包含访问令牌的资源或客户端 ID，以及 ID 令牌的 'openid'。 此外，必须包含刷新令牌的 'offline_access'。 |
 | `AADB2C90117` | 请求中提供的范围“{0}”不受支持。 |
 | `AADB2C90118` | 用户忘记了密码。 |
@@ -142,10 +144,10 @@ Azure Active Directory B2C 服务可能返回以下错误。
 | `AADB2C90284` | 标识符为“{0}”的应用程序尚未获授权，无法用于本地帐户。 |
 | `AADB2C90285` | 找不到标识为“{0}”的应用程序。 |
 | `AADB2C90288` | 在 TechnicalProfile“{1}”中引用了 ID“{0}”并用于租户“{2}”的刷新令牌兑换的 UserJourney 不存在于策略“{3}”或其任何基本策略中。 |
-| `AADB2C90289` | 连接到标识提供者时遇到错误。 请稍后重试。 |
+| `AADB2C90289` | 连接到标识提供者时遇到错误。 请稍后再试。 |
 | `AADB2C90296` | 应用程序配置错误。 请与你尝试访问的站点的管理员联系。 |
 | `AADB2C99005` | 请求包含无效的范围参数，此范围参数包含非法字符“{0}”。 |
-| `AADB2C99006` | Azure AD B2C 找不到应用 ID 为“{0}”的扩展应用。 有关详细信息，请访问 https://go.microsoft.com/fwlink/?linkid=851224 。 |
+| `AADB2C99006` | Azure AD B2C 找不到应用 ID 为“{0}”的扩展应用。 有关详细信息，请访问 https://go.microsoft.com/fwlink/?linkid=851224。 |
 | `AADB2C99011` | 尚未在策略“{2}”的 TechnicalProfile“{1}”中指定元数据值“{0}”。 |
 | `AADB2C99013` | 提供的 grant_type [{0}] 和 token_type [{1}] 组合不受支持。 |
 | `AADB2C99015` | 租户“{2}”中策略“{1}”的配置文件“{0}”缺少资源所有者密码凭据流所需的所有 InputClaim。 |

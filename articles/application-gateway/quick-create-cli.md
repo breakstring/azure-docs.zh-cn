@@ -1,35 +1,34 @@
 ---
 title: 快速入门：使用 CLI 定向 Web 流量
 titleSuffix: Azure Application Gateway
-description: 了解如何使用 Azure CLI 创建 Azure 应用程序网关，用以将 Web 流量定向到后端池中的虚拟机。
+description: 本快速入门介绍如何使用 Azure CLI 创建 Azure 应用程序网关，用以将 Web 流量定向到后端池中的虚拟机。
 services: application-gateway
 author: vhorne
 ms.service: application-gateway
 ms.topic: quickstart
-ms.date: 03/05/2020
+ms.date: 01/19/2021
 ms.author: victorh
-ms.custom: mvc, devx-track-javascript, devx-track-azurecli
-ms.openlocfilehash: d79f51e32fa62527140ccf19cfc3573339d22fab
-ms.sourcegitcommit: 11e2521679415f05d3d2c4c49858940677c57900
+ms.custom: mvc, devx-track-js, devx-track-azurecli
+ms.openlocfilehash: 1a691d8ab212dd436b0dc9f7aafbc19a406b12b7
+ms.sourcegitcommit: fc401c220eaa40f6b3c8344db84b801aa9ff7185
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/31/2020
-ms.locfileid: "87499120"
+ms.lasthandoff: 01/20/2021
+ms.locfileid: "98601778"
 ---
 # <a name="quickstart-direct-web-traffic-with-azure-application-gateway---azure-cli"></a>快速入门：使用 Azure 应用程序网关定向 Web 流量 - Azure CLI
 
 在本快速入门中，你将使用 Azure CLI 创建一个应用程序网关。 然后对其进行测试以确保其正常运行。 
 
-该应用程序网关将应用程序 Web 流量定向到后端池中的特定资源。 你将向端口分配侦听器，创建规则，并向后端池中添加资源。 为简单起见，本文使用了带有公共前端 IP 的简单设置、一个在应用程序网关上托管单个站点的基本侦听器、一个基本的请求路由规则，以及后端池中的两台虚拟机。
+该应用程序网关将应用程序 Web 流量定向到后端池中的特定资源。 你将向端口分配侦听器，创建规则，并向后端池中添加资源。 为简单起见，本文使用带有公共前端 IP 地址的简单设置、一个在应用程序网关上托管单个站点的基本侦听器、一个基本请求路由规则，以及后端池中的两台虚拟机。
 
 还可以使用 [Azure PowerShell](quick-create-powershell.md) 或 [Azure 门户](quick-create-portal.md)完成本快速入门。
 
-[!INCLUDE [cloud-shell-try-it.md](../../includes/cloud-shell-try-it.md)]
+[!INCLUDE [quickstarts-free-trial-note](../../includes/quickstarts-free-trial-note.md)]
 
-## <a name="prerequisites"></a>先决条件
+[!INCLUDE [azure-cli-prepare-your-environment.md](../../includes/azure-cli-prepare-your-environment.md)]
 
-- 具有活动订阅的 Azure 帐户。 [免费创建帐户](https://azure.microsoft.com/free/?WT.mc_id=A261C142F)。
-- [Azure CLI 2.0.4 或更高版本](/cli/azure/install-azure-cli)（如果在本地运行 Azure CLI）。
+- 本文需要 Azure CLI 版本 2.0.4 或更高版本。 如果使用 Azure Cloud Shell，则最新版本已安装。
 
 ## <a name="create-resource-group"></a>创建资源组
 
@@ -69,7 +68,7 @@ az network public-ip create \
 
 ## <a name="create-the-backend-servers"></a>创建后端服务器
 
-后端可以具有 NIC、虚拟机规模集、公共 IP、内部 IP、完全限定的域名 (FQDN) 和多租户后端（例如 Azure 应用服务）。 在此示例中，你将创建用作应用程序网关的后端服务器的两个虚拟机。 还会在虚拟机上安装 IIS 以测试应用程序网关。
+后端可以具有 NIC、虚拟机规模集、公共 IP 地址、内部 IP 地址、完全限定的域名 (FQDN) 和多租户后端（例如 Azure 应用服务）。 在此示例中，你将创建用作应用程序网关的后端服务器的两个虚拟机。 还会在虚拟机上安装 IIS 以测试应用程序网关。
 
 #### <a name="create-two-virtual-machines"></a>创建两个虚拟机
 

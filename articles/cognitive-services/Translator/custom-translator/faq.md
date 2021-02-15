@@ -2,19 +2,19 @@
 title: 常见问题-自定义转换器
 titleSuffix: Azure Cognitive Services
 description: 本文包含有关 Azure 认知服务自定义转换器的常见问题的解答。
-author: swmachan
+author: laujan
 manager: nitinme
 ms.service: cognitive-services
 ms.subservice: translator-text
 ms.date: 08/17/2020
-ms.author: swmachan
+ms.author: lajanuar
 ms.topic: reference
-ms.openlocfilehash: 06caafe75682a2375a8023787f9905ca1e8117c9
-ms.sourcegitcommit: 54d8052c09e847a6565ec978f352769e8955aead
+ms.openlocfilehash: 001314817b0c18a8023258d01bcfb02eaaffe79b
+ms.sourcegitcommit: 100390fefd8f1c48173c51b71650c8ca1b26f711
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/18/2020
-ms.locfileid: "88507223"
+ms.lasthandoff: 01/27/2021
+ms.locfileid: "98895826"
 ---
 # <a name="custom-translator-frequently-asked-questions"></a>自定义翻译人员常见问题
 
@@ -41,7 +41,7 @@ ms.locfileid: "88507223"
 
 ## <a name="how-do-you-access-a-deployed-system"></a>如何访问已部署的系统？
 
-可以使用 Microsoft 文本翻译 API V3 并指定 CategoryID 来访问已部署的系统。 在 [API 参考](https://docs.microsoft.com/azure/cognitive-services/translator/reference/v3-0-reference)网页中可以找到有关文本翻译 API 的详细信息。
+可以使用 Microsoft 文本翻译 API V3 并指定 CategoryID 来访问已部署的系统。 在 [API 参考](../reference/v3-0-reference.md)网页中可以找到有关文本翻译 API 的详细信息。
 
 ## <a name="how-do-i-skip-alignment-and-sentence-breaking-if-my-data-is-already-sentence-aligned"></a>如果我的数据已进行句子对齐，如何跳过对齐和断句？
 

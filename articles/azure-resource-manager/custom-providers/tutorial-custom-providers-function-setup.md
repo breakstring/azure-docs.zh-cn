@@ -5,12 +5,12 @@ author: jjbfour
 ms.topic: tutorial
 ms.date: 06/19/2019
 ms.author: jobreen
-ms.openlocfilehash: b6984bfdf7ec078d02999bccf77f3592cfbcab27
-ms.sourcegitcommit: 0947111b263015136bca0e6ec5a8c570b3f700ff
+ms.openlocfilehash: 55554678047faeedd16b78dea61a42d50fd59491
+ms.sourcegitcommit: 78ecfbc831405e8d0f932c9aafcdf59589f81978
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/24/2020
-ms.locfileid: "75648674"
+ms.lasthandoff: 01/23/2021
+ms.locfileid: "98737314"
 ---
 # <a name="set-up-azure-functions-for-azure-custom-providers"></a>设置用于 Azure 自定义提供程序的 Azure Functions
 
@@ -21,7 +21,7 @@ ms.locfileid: "75648674"
 > [!NOTE]
 > 在本教程中，我们创建一个简单的使用 Azure 函数应用的服务终结点。 但是，自定义提供程序可以使用任何可公开访问的终结点。 备用选项包括 Azure 逻辑应用、Azure API 管理，以及 Azure 应用服务的 Web 应用功能。
 
-若要开始本教程，首先应该按[在 Azure 门户中创建第一个 Azure 函数应用](../../azure-functions/functions-create-first-azure-function.md)教程中的说明操作。 该教程创建一个 .NET Core Webhook 函数，该函数可以在 Azure 门户中修改。 它也是当前教程的基础。
+若要开始本教程，首先应该按[在 Azure 门户中创建第一个 Azure 函数应用](../../azure-functions/functions-get-started.md)教程中的说明操作。 该教程创建一个 .NET Core Webhook 函数，该函数可以在 Azure 门户中修改。 它也是当前教程的基础。
 
 ## <a name="install-azure-table-storage-bindings"></a>安装 Azure 表存储绑定
 
@@ -51,7 +51,7 @@ ms.locfileid: "75648674"
 > [!NOTE]
 > 如果 C# 项目文件在项目目录中缺失，可以手动添加它。 或者，它会在 Microsoft.Azure.WebJobs.Extensions.Storage 扩展安装到函数应用上以后出现。
 
-接下来，请更新 C# 项目文件，使之包含有用的 NuGet 库。 有了这些库，就可以更方便地分析自定义提供程序的传入请求。 按步骤[从门户添加扩展](../../azure-functions/install-update-binding-extensions-manual.md)，更新 C# 项目文件，使之包含以下包引用：
+接下来，请更新 C# 项目文件，使之包含有用的 NuGet 库。 有了这些库，就可以更方便地分析自定义提供程序的传入请求。 按步骤[从门户添加扩展](../../azure-functions/functions-bindings-register.md)，更新 C# 项目文件，使之包含以下包引用：
 
 ```xml
 <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.Storage" Version="3.0.4" />
@@ -80,4 +80,3 @@ ms.locfileid: "75648674"
 本教程介绍如何设置 Azure 函数应用，将其用作 Azure 自定义提供程序终结点。
 
 若要了解如何创作 RESTful 自定义提供程序，请参阅[教程：创作 RESTful 自定义提供程序终结点](./tutorial-custom-providers-function-authoring.md)。
-

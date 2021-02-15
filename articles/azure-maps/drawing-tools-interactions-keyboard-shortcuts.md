@@ -8,12 +8,12 @@ ms.topic: conceptual
 ms.service: azure-maps
 services: azure-maps
 manager: cpendle
-ms.openlocfilehash: fb8a1e1a8c29086553500bdad2e4604d1e1ef471
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: b609a21348222150faf5fb828f2cc38ca6658f5d
+ms.sourcegitcommit: 4064234b1b4be79c411ef677569f29ae73e78731
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "77198286"
+ms.lasthandoff: 10/28/2020
+ms.locfileid: "92895811"
 ---
 # <a name="interaction-types-and-keyboard-shortcuts-in-the-drawing-tools-module"></a>绘图工具模块中的交互类型和键盘快捷方式
 
@@ -21,9 +21,9 @@ ms.locfileid: "77198286"
 
 绘图管理器支持通过三种不同的方式与地图进行交互，以便绘制形状。
 
-* `click`-在单击鼠标或触摸时添加坐标。
-* `freehand `-在将鼠标或触摸拖动到地图上时添加坐标。
-* `hybrid`-在单击或拖动鼠标或触摸时添加坐标。
+* `click` -在单击鼠标或触摸时添加坐标。
+* `freehand ` -在将鼠标或触摸拖动到地图上时添加坐标。
+* `hybrid` -在单击或拖动鼠标或触摸时添加坐标。
 
 ## <a name="how-to-draw-shapes"></a>如何绘制形状
 
@@ -103,7 +103,7 @@ ms.locfileid: "77198286"
 
 ### <a name="how-to-draw-a-rectangle"></a>如何绘制矩形
 
-当绘图管理器处于 `draw-rectangle` 模式时，可以执行下列操作来根据交互模式在地图上绘制点。 生成的形状将遵循[矩形的扩展 GeoJSON 规范](extend-geojson.md#rectangle)。
+当绘图管理器处于 `draw-rectangle` 模式时，可以执行下列操作来根据交互模式在地图上绘制点。 生成的形状将遵循 [矩形的扩展 GeoJSON 规范](extend-geojson.md#rectangle)。
 
 **开始绘制**
  - 按下鼠标左键，或在地图上向下轻按，以添加矩形的第一个角并拖动以创建矩形。 
@@ -118,7 +118,7 @@ ms.locfileid: "77198286"
 
 ### <a name="how-to-draw-a-circle"></a>如何绘制圆形
 
-当绘图管理器处于 `draw-circle` 模式时，可以执行下列操作来根据交互模式在地图上绘制点。 生成的形状将遵循[圆圈的扩展 GeoJSON 规范](extend-geojson.md#circle)。
+当绘图管理器处于 `draw-circle` 模式时，可以执行下列操作来根据交互模式在地图上绘制点。 生成的形状将遵循 [圆圈的扩展 GeoJSON 规范](extend-geojson.md#circle)。
 
 **开始绘制**
  - 按下鼠标左键，或在地图上向下轻按，以添加圆形的中心，并拖动使圆圈成为半径。 
@@ -146,7 +146,7 @@ ms.locfileid: "77198286"
 详细了解 "绘图工具" 模块中的类：
 
 > [!div class="nextstepaction"]
-> [绘图管理器](https://docs.microsoft.com/javascript/api/azure-maps-drawing-tools/atlas.drawing.drawingmanager?view=azure-node-latest)
+> [绘图管理器](/javascript/api/azure-maps-drawing-tools/atlas.drawing.drawingmanager)
 
 > [!div class="nextstepaction"]
-> [绘图工具栏](https://docs.microsoft.com/javascript/api/azure-maps-drawing-tools/atlas.control.drawingtoolbar?view=azure-node-latest)
+> [绘图工具栏](/javascript/api/azure-maps-drawing-tools/atlas.control.drawingtoolbar)

@@ -1,5 +1,6 @@
 ---
-title: 将调用 Web API 的 Web 应用移到生产环境 - Microsoft 标识平台 | Azure
+title: 转到生产调用 web Api 的 web 应用 |Microsoft
+titleSuffix: Microsoft identity platform
 description: 了解如何将调用 Web API 的 Web 应用移到生产环境。
 services: active-directory
 author: jmprieur
@@ -11,12 +12,12 @@ ms.workload: identity
 ms.date: 05/07/2019
 ms.author: jmprieur
 ms.custom: aaddev
-ms.openlocfilehash: 6404d00b87b9ee745b9e3a92c646404e574417c1
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 6252e33631fb07a61ed3c1ac2be65762b290600b
+ms.sourcegitcommit: 5cdd0b378d6377b98af71ec8e886098a504f7c33
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "80881655"
+ms.lasthandoff: 01/25/2021
+ms.locfileid: "98753217"
 ---
 # <a name="a-web-app-that-calls-web-apis-move-to-production"></a>调用 Web API 的 Web 应用：移到生产环境
 
@@ -34,8 +35,7 @@ ms.locfileid: "80881655"
 - 处理增量同意。
 - 调用自己的 Web API。
 
-> [!div class="nextstepaction"]
-> [ASP.NET Core Web 应用教程](https://github.com/Azure-Samples/ms-identity-aspnetcore-webapp-tutorial#scope-of-this-tutorial)
+[ASP.NET Core Web 应用教程](https://github.com/Azure-Samples/ms-identity-aspnetcore-webapp-tutorial#scope-of-this-tutorial)
 
 <!--- Removing this diagram as it's already shown from the next step linked tutorial
 

@@ -8,14 +8,14 @@ tags: azure-resource-manager
 ms.service: key-vault
 ms.subservice: keys
 ms.topic: tutorial
-ms.date: 05/29/2020
+ms.date: 02/04/2021
 ms.author: ambapat
-ms.openlocfilehash: 1869ec9b617a7451ec42fa9d092ea3bb5834f9e8
-ms.sourcegitcommit: 02ca0f340a44b7e18acca1351c8e81f3cca4a370
+ms.openlocfilehash: 51ba981dcc6f36df3bfaacebb503782faed5c91f
+ms.sourcegitcommit: 2817d7e0ab8d9354338d860de878dd6024e93c66
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/19/2020
-ms.locfileid: "88585468"
+ms.lasthandoff: 02/05/2021
+ms.locfileid: "99581000"
 ---
 # <a name="import-hsm-protected-keys-to-key-vault-byok"></a>将受 HSM 保护的密钥导入 Key Vault (BYOK)
 
@@ -63,15 +63,21 @@ ms.locfileid: "88585468"
 |Fortanix|制造商，<br/>HSM 即服务|<ul><li>自防御密钥管理服务 (SDKMS)</li><li>Equinix SmartKey</li></ul>|[将 SDKMS 密钥导出到 BYOK 的云提供程序 - Azure Key Vault](https://support.fortanix.com/hc/en-us/articles/360040071192-Exporting-SDKMS-keys-to-Cloud-Providers-for-BYOK-Azure-Key-Vault)|
 |Marvell|制造商|所有具有以下固件版本的 LiquidSecurity HSM<ul><li>固件版本 2.0.4 或更高版本</li><li>固件版本 3.2 或更高版本</li></ul>|[Marvell BYOK 工具和文档](https://www.marvell.com/products/security-solutions/nitrox-hs-adapters/exporting-marvell-hsm-keys-to-cloud-azure-key-vault.html)|
 |Cryptomathic|ISV（企业密钥管理系统）|多个 HSM 品牌和型号，包括<ul><li>nCipher</li><li>Thales</li><li>Utimaco</li></ul>有关详细信息，请参阅 [Cryptomathic 站点](https://www.cryptomathic.com/azurebyok)|[Cryptomathic BYOK 工具和文档](https://www.cryptomathic.com/azurebyok)|
-
+|Securosys SA|制造商，HSM 即服务|Primus HSM 系列，Securosys Clouds HSM|[Primus BYOK 工具和文档](https://www.securosys.com/primus-azure-byok)|
+|StorMagic|ISV（企业密钥管理系统）|多个 HSM 品牌和型号，包括<ul><li>Utimaco</li><li>Thales</li><li>nCipher</li></ul>请参阅 [StorMagic 站点](https://stormagic.com/doc/svkms/Content/Integrations/Azure_KeyVault_BYOK.htm)以了解详细信息|[SvKMS 和 Azure Key Vault BYOK](https://stormagic.com/doc/svkms/Content/Integrations/Azure_KeyVault_BYOK.htm)|
+|IBM|制造商|IBM 476x, CryptoExpress|[IBM Enterprise Key Management Foundation](https://www.ibm.com/security/key-management/ekmf-bring-your-own-key-azure)|
+||||
 
 
 ## <a name="supported-key-types"></a>支持的密钥类型
 
-|项名|密钥类型|密钥大小|源|说明|
+|项名|密钥类型|密钥大小/曲线|源|说明|
 |---|---|---|---|---|
 |密钥交换密钥 (KEK)|RSA| 2,048 位<br />3,072 位<br />4,096 位|Azure Key Vault HSM|在 Azure Key Vault 中生成的由 HSM 支持的 RSA 密钥对|
-|目标密钥|RSA|2,048 位<br />3,072 位<br />4,096 位|供应商 HSM|要传输到 Azure Key Vault HSM 的密钥|
+|目标密钥|
+||RSA|2,048 位<br />3,072 位<br />4,096 位|供应商 HSM|要传输到 Azure Key Vault HSM 的密钥|
+||EC|P-256<br />P-384<br />P-521|供应商 HSM|要传输到 Azure Key Vault HSM 的密钥|
+||||
 
 ## <a name="generate-and-transfer-your-key-to-the-key-vault-hsm"></a>生成密钥并将其传输到 Key Vault HSM
 
@@ -117,7 +123,7 @@ az keyvault key download --name KEKforBYOK --vault-name ContosoKeyVaultHSM --fil
 将 BYOK 文件传输到连接的计算机。
 
 > [!NOTE] 
-> 不支持导入 RSA 1,024 位密钥。 当前不支持导入椭圆曲线 (EC) 密钥。
+> 不支持导入 RSA 1,024 位密钥。 不支持导入带有曲线 P-256K 的椭圆曲线密钥。
 > 
 > 已知问题：仅固件版本 7.4.0 或更高版本支持从 Luna HSM 导入 RSA 4K 目标密钥。
 
@@ -125,8 +131,15 @@ az keyvault key download --name KEKforBYOK --vault-name ContosoKeyVaultHSM --fil
 
 若要完成密钥导入，请将密钥传输包（BYOK 文件）从断开连接的计算机传输到连接到 Internet 的计算机。 使用 [az keyvault key import](/cli/azure/keyvault/key?view=azure-cli-latest#az-keyvault-key-import) 命令将 BYOK 文件上传到 Key Vault HSM。
 
+若要导入 RSA 密钥，请使用以下命令。 --kty 参数可选，默认值为“RSA-HSM”。
 ```azurecli
 az keyvault key import --vault-name ContosoKeyVaultHSM --name ContosoFirstHSMkey --byok-file KeyTransferPackage-ContosoFirstHSMkey.byok
+```
+
+若要导入 EC 密钥，必须指定密钥类型和曲线名称。
+
+```azurecli
+az keyvault key import --vault-name ContosoKeyVaultHSM --name ContosoFirstHSMkey --byok-file --kty EC-HSM --curve-name "P-256" KeyTransferPackage-ContosoFirstHSMkey.byok
 ```
 
 如果上传成功，Azure CLI 将显示导入密钥的属性。

@@ -8,12 +8,12 @@ ms.topic: conceptual
 ms.date: 04/11/2019
 ms.author: asrastog
 ms.custom: devx-track-azurecli
-ms.openlocfilehash: af8bd9a0420c90df4dea16fa8ebacbf4ea6494db
-ms.sourcegitcommit: 11e2521679415f05d3d2c4c49858940677c57900
+ms.openlocfilehash: 90b7b6aebfce1c37bef76d371d829048d755e39e
+ms.sourcegitcommit: dbe434f45f9d0f9d298076bf8c08672ceca416c6
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/31/2020
-ms.locfileid: "87488122"
+ms.lasthandoff: 10/17/2020
+ms.locfileid: "92147275"
 ---
 # <a name="order-device-connection-events-from-azure-iot-hub-using-azure-cosmos-db"></a>使用 Azure Cosmos DB 将来自 Azure IoT 中心的设备连接事件排序
 
@@ -29,7 +29,7 @@ ms.locfileid: "87488122"
 
 * 数据库中的集合。 请参阅[添加集合](../cosmos-db/create-sql-api-java.md#add-a-container)中的演练。 创建集合时，请对分区键使用 `/id`。
 
-* Azure 中的 IoT 中心。 如果尚未创建 Iot 中心，请参阅 [IoT 中心入门](iot-hub-csharp-csharp-getstarted.md)中的演练。
+* Azure 中的 IoT 中心。 如果尚未创建 Iot 中心，请参阅 [IoT 中心入门](./quickstart-send-telemetry-dotnet.md)中的演练。
 
 ## <a name="create-a-stored-procedure"></a>创建存储过程
 
@@ -227,11 +227,11 @@ ms.locfileid: "87488122"
 
 5. 选择“添加新参数”。 在显示的下拉列表中，选中“分区键”和“存储过程的参数”旁边的框，然后单击屏幕上的其他任何位置；此时将为分区键值添加一个字段，并为存储过程的参数添加一个字段。 
 
-   ![填充逻辑应用操作](./media/iot-hub-how-to-order-connection-state-events/logicapp-stored-procedure.png)
+   ![屏幕截图显示 "执行存储过程" 项，其中选择了 "添加新参数"。](./media/iot-hub-how-to-order-connection-state-events/logicapp-stored-procedure.png)
 
 6. 现在，如下所示输入分区键值和参数。 请务必如图中所示添加方括号和双引号。 你可能必须单击“添加动态内容”来获取可在此处使用的有效值。
 
-   ![填充逻辑应用操作](./media/iot-hub-how-to-order-connection-state-events/logicapp-stored-procedure-2.png)
+   ![屏幕截图显示具有输入参数的执行存储过程项。](./media/iot-hub-how-to-order-connection-state-events/logicapp-stored-procedure-2.png)
 
 7. 在显示了“For Each”的窗格顶部，在“选择前面步骤的输出”下，确保“正文”已选中。  
 
@@ -335,7 +335,7 @@ ms.locfileid: "87488122"
 
 ## <a name="use-the-azure-cli"></a>使用 Azure CLI
 
-如果不使用 [Azure 门户](https://portal.azure.com)，也可以使用 Azure CLI 来完成 IoT 中心相关的步骤。 有关详细信息，请参阅有关使用 Azure CLI [创建事件订阅](https://docs.microsoft.com/cli/azure/eventgrid/event-subscription)和[创建 IoT 设备](/cli/azure/ext/azure-iot/iot/hub/device-identity#ext-azure-iot-az-iot-hub-device-identity-create)的网页。
+如果不使用 [Azure 门户](https://portal.azure.com)，也可以使用 Azure CLI 来完成 IoT 中心相关的步骤。 有关详细信息，请参阅有关使用 Azure CLI [创建事件订阅](/cli/azure/eventgrid/event-subscription)和[创建 IoT 设备](/cli/azure/ext/azure-iot/iot/hub/device-identity#ext-azure-iot-az-iot-hub-device-identity-create)的网页。
 
 ## <a name="clean-up-resources"></a>清理资源
 
@@ -361,7 +361,7 @@ ms.locfileid: "87488122"
 
 7. 选择“删除”。
 
-若要在 Azure 门户中删除 Azure Cosmos DB 帐户，请右键单击该帐户名，然后单击“删除帐户”。 参阅有关[删除 Azure Cosmos DB 帐户](https://docs.microsoft.com/azure/cosmos-db/manage-account)的详细说明。
+若要在 Azure 门户中删除 Azure Cosmos DB 帐户，请右键单击该帐户名，然后单击“删除帐户”。 参阅有关[删除 Azure Cosmos DB 帐户](../cosmos-db/how-to-manage-database-account.md)的详细说明。
 
 ## <a name="next-steps"></a>后续步骤
 

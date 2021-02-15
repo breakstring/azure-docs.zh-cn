@@ -1,7 +1,7 @@
 ---
-title: 媒体服务和 Apple FairPlay 许可证支持 - Azure | Microsoft Docs
+title: 媒体服务 Apple FairPlay 许可证支持
 description: 本主题概述 Apple FairPlay 许可证要求和配置。
-author: juliako
+author: IngridAtMicrosoft
 manager: femila
 editor: ''
 services: media-services
@@ -10,18 +10,20 @@ ms.service: media-services
 ms.workload: media
 ms.tgt_pltfrm: na
 ms.devlang: na
-ms.topic: article
-ms.date: 12/08/2018
-ms.author: juliako
-ms.custom: seodec18
-ms.openlocfilehash: 433768ddea6e250c66483ec3da4c7737b3538a1d
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.topic: conceptual
+ms.date: 08/31/2020
+ms.author: inhenkel
+ms.custom: seodec18, devx-track-csharp
+ms.openlocfilehash: 5a00ba8000f33e8e50b1a5d01f40a68a7fe2442d
+ms.sourcegitcommit: 4e70fd4028ff44a676f698229cb6a3d555439014
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87092042"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98956185"
 ---
-# <a name="apple-fairplay-license-requirements-and-configuration"></a>Apple FairPlay 许可要求和配置 
+# <a name="apple-fairplay-license-requirements-and-configuration"></a>Apple FairPlay 许可要求和配置
+
+[!INCLUDE [media services api v3 logo](./includes/v3-hr.md)]
 
 使用 Azure 媒体服务可通过 Apple FairPlay (AES-128 CBC) 加密 HLS 内容  。 媒体服务还提供用于交付 FairPlay 许可证的服务。 当播放器尝试播放受 FairPlay 保护的内容时，将向许可证交付服务发送请求以获取许可证。 如果许可证服务批准了该请求，则会颁发该许可证，该许可证将发送到客户端，并用来解密和播放指定的内容。
 
@@ -63,11 +65,11 @@ ms.locfileid: "87092042"
   * .pfx 的密码
   
 > [!NOTE]
-> Azure 媒体服务不会在打包或密钥传递过程中检查证书的过期日期。 证书过期后，它将继续工作。
+> 在打包或密钥交付期间，Azure 媒体服务不会检查证书的到期日期。 证书到期后，它将继续工作。
 
 ## <a name="fairplay-and-player-apps"></a>FairPlay 和播放器应用
 
-使用 Apple FairPlay 对内容进行加密时，各视频和音频示例都使用 AES-128 CBC 模式进行加密********。 **FairPlay 流式处理** (FPS) 集成到设备操作系统，iOS 和 Apple TV 本身支持这项功能。 OS X 上的 Safari 使用加密媒体扩展 (EME) 接口支持启用 FPS。
+使用 Apple FairPlay 对内容进行加密时，各视频和音频示例都使用 AES-128 CBC 模式进行加密。 **FairPlay 流式处理** (FPS) 集成到设备操作系统，iOS 和 Apple TV 本身支持这项功能。 OS X 上的 Safari 使用加密媒体扩展 (EME) 接口支持启用 FPS。
 
 Azure Media Player 还支持 FairPlay 播放。 有关详细信息，请参阅 [Azure Media Player 文档](https://amp.azure.net/libs/amp/latest/docs/index.html)。
 

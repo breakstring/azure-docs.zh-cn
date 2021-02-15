@@ -1,33 +1,36 @@
 ---
 title: Azure 空间锚定 Unity 概述
 description: 了解如何在 Unity 应用内使用 Azure 空间锚。 查看适用于 HoloLens 的 Unity 快速入门、适用于 Android 的 unity 和适用于 iOS 的 Unity。
-author: rgarcia
-ms.author: rgarcia
-manager: vriveras
+author: msftradford
+ms.author: parkerra
+manager: MehranAzimi-msft
 services: azure-spatial-anchors
 ms.service: azure-spatial-anchors
-ms.date: 02/26/2020
+ms.date: 2/4/2021
 ms.topic: conceptual
-ms.openlocfilehash: d76207d9991d496c36fa8f9db3911a62d003fafe
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: f9d64f4a23bf340f857d5aee8a3e0c99e1859091
+ms.sourcegitcommit: 1f1d29378424057338b246af1975643c2875e64d
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "83006129"
+ms.lasthandoff: 02/05/2021
+ms.locfileid: "99575393"
 ---
 # <a name="building-in-unity-with-azure-spatial-anchors"></a>在 Unity 中生成 Azure 空间定位点
 
 开发人员可以选择 Unity 来创建和部署使用 Azure 空间锚点的混合现实应用程序。
-支持以下平台：
 
-**适用于 HoloLens 的 Unity**
+[!INCLUDE [Unity Project Requirements](../../includes/spatial-anchors-unity-project-requirements.md)]
 
-[快速入门：使用 Azure 空间定位点创建 Unity HoloLens 应用](https://docs.microsoft.com/azure/spatial-anchors/quickstarts/get-started-unity-hololens)
+支持的平台如下：
 
-**适用于 Android 的 Unity**
+**Unity for HoloLens**
 
-[快速入门：创建使用 Azure 空间锚点的 Unity Android 应用](https://docs.microsoft.com/azure/spatial-anchors/quickstarts/get-started-unity-android)
+[快速入门：使用 Azure 空间定位点创建 Unity HoloLens 应用](./quickstarts/get-started-unity-hololens.md)
 
-**适用于 iOS 的 Unity**
+**Unity for Android**
 
-[快速入门：创建使用 Azure 空间锚点的 Unity iOS 应用](https://docs.microsoft.com/azure/spatial-anchors/quickstarts/get-started-unity-ios)
+[快速入门：创建使用 Azure 空间锚点的 Unity Android 应用](./quickstarts/get-started-unity-android.md)
+
+**Unity for iOS**
+
+[快速入门：创建使用 Azure 空间锚点的 Unity iOS 应用](./quickstarts/get-started-unity-ios.md)

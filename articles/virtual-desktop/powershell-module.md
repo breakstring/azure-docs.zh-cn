@@ -6,12 +6,12 @@ ms.topic: how-to
 ms.date: 04/30/2020
 ms.author: helohr
 manager: lizross
-ms.openlocfilehash: 11742b00b62437b3acd6fa804a668cf83c2860f6
-ms.sourcegitcommit: 98854e3bd1ab04ce42816cae1892ed0caeedf461
+ms.openlocfilehash: f2f01e2b58c997db08ad4427de7eef1ee3760c4a
+ms.sourcegitcommit: a43a59e44c14d349d597c3d2fd2bc779989c71d7
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/07/2020
-ms.locfileid: "88007252"
+ms.lasthandoff: 11/25/2020
+ms.locfileid: "96016805"
 ---
 # <a name="set-up-the-powershell-module-for-windows-virtual-desktop"></a>设置适用于 Windows 虚拟桌面的 PowerShell 模块
 
@@ -41,6 +41,13 @@ Install-Module -Name Az.DesktopVirtualization
 Connect-AzAccount
 ```
 
+>[!IMPORTANT]
+>如果正在连接到 US Gov 门户，请改为运行此 cmdlet：
+> 
+> ```powershell
+> Connect-AzAccount -EnvironmentName AzureUSGovernment
+> ```
+
 登录到 Azure 帐户的操作需要在运行 Connect cmdlet 时生成的代码。 若要登录，请访问 <https://microsoft.com/devicelogin>，输入代码，然后使用 Azure 管理员凭据登录。
 
 ```powershell
@@ -61,7 +68,7 @@ Youradminupn subscriptionname AzureADTenantID AzureCloud
 Select-AzSubscription -Subscription <preferredsubscriptionname>
 ```
 
-你还可以使用 Out GridView cmdlet 从列表中选择一个：
+你还可以使用 Out-GridView cmdlet 从列表中选择一个：
 
 ```powershell
 Get-AzSubscription | Out-GridView -PassThru | Select-AzSubscription

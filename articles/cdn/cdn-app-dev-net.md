@@ -14,13 +14,13 @@ ms.devlang: na
 ms.topic: how-to
 ms.date: 01/23/2017
 ms.author: mazha
-ms.custom: has-adal-ref
-ms.openlocfilehash: 9f891327a60d5438369c56dd858bfcefff182cdf
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.custom: has-adal-ref, devx-track-csharp
+ms.openlocfilehash: a812704c42a4da5ddf89fe6c5ba0c9a684047f75
+ms.sourcegitcommit: 829d951d5c90442a38012daaf77e86046018e5b9
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87049336"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "88919482"
 ---
 # <a name="get-started-with-the-azure-cdn-library-for-net"></a>适用于 .NET 的 Azure CDN 库入门
 > [!div class="op_single_selector"]

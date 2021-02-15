@@ -1,6 +1,6 @@
 ---
-title: 创建和配置用于 Azure 磁盘加密的密钥保管库
-description: 本文介绍创建和配置用于 Azure 磁盘加密的密钥保管库的步骤
+title: 为 Windows VM 上的 Azure 磁盘加密创建和配置密钥保管库
+description: 本文介绍创建和配置用于 Windows VM 上的 Azure 磁盘加密的密钥保管库的步骤。
 ms.service: virtual-machines
 ms.subservice: security
 ms.topic: how-to
@@ -8,14 +8,14 @@ author: msmbaldwin
 ms.author: mbaldwin
 ms.date: 08/06/2019
 ms.custom: seodec18
-ms.openlocfilehash: 0779cad02f266d49be055ea485e87c9c8075b7b3
-ms.sourcegitcommit: dccb85aed33d9251048024faf7ef23c94d695145
+ms.openlocfilehash: c1fcd639eb55f61c215742d0eec7821e282010a2
+ms.sourcegitcommit: 8245325f9170371e08bbc66da7a6c292bbbd94cc
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/28/2020
-ms.locfileid: "87284517"
+ms.lasthandoff: 02/07/2021
+ms.locfileid: "99807507"
 ---
-# <a name="creating-and-configuring-a-key-vault-for-azure-disk-encryption"></a>创建和配置用于 Azure 磁盘加密的密钥保管库
+# <a name="create-and-configure-a-key-vault-for-azure-disk-encryption"></a>为 Azure 磁盘加密创建和配置密钥保管库
 
 Azure Disk Encryption 使用 Azure Key Vault 来控制和管理磁盘加密密钥和机密。  有关 Key Vault 的详细信息，请参阅 [Azure Key Vault 入门](../../key-vault/general/overview.md)和[保护 Key Vault](../../key-vault/general/secure-your-key-vault.md)。 
 
@@ -25,7 +25,7 @@ Azure Disk Encryption 使用 Azure Key Vault 来控制和管理磁盘加密密�
 创建和配置用于 Azure 磁盘加密的 Key Vault 需要三个步骤：
 
 > [!Note]
-> 你必须在 "Azure Key Vault 访问策略" 设置中选择该选项，以便能够访问 Azure 磁盘加密以进行卷加密。 如果在密钥保管库上启用了防火墙，则必须访问密钥保管库中的 "网络" 选项卡，并启用对 Microsoft 受信任服务的访问权限。 
+> 必须在 Azure Key Vault 访问策略设置中选择该选项，才能为卷加密启用对 Azure 磁盘加密的访问。 如果在密钥保管库上启用了防火墙，则必须访问密钥保管库中的 "网络" 选项卡，并启用对 Microsoft 受信任服务的访问权限。 
 
 1. 创建资源组（如果需要）。
 2. 创建密钥保管库。 
@@ -49,7 +49,7 @@ Azure Disk Encryption 使用 Azure Key Vault 来控制和管理磁盘加密密�
 
 ### <a name="connect-to-your-azure-account"></a>连接到 Azure 帐户
 
-使用 Azure CLI 或 Azure PowerShell 之前，必须先连接到 Azure 订阅。 为此，可以[使用 Azure CLI 登录](/cli/azure/authenticate-azure-cli?view=azure-cli-latest)、[使用 Azure Powershell 登录](/powershell/azure/authenticate-azureps?view=azps-2.5.0)，或在出现提示时向 Azure 门户提供凭据。
+使用 Azure CLI 或 Azure PowerShell 之前，必须先连接到 Azure 订阅。 为此，可以[使用 Azure CLI 登录](/cli/azure/authenticate-azure-cli)、[使用 Azure Powershell 登录](/powershell/azure/authenticate-azureps)，或在出现提示时向 Azure 门户提供凭据。
 
 ```azurecli-interactive
 az login

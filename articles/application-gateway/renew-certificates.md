@@ -5,14 +5,14 @@ services: application-gateway
 author: vhorne
 ms.service: application-gateway
 ms.topic: how-to
-ms.date: 8/15/2018
+ms.date: 01/20/2021
 ms.author: victorh
-ms.openlocfilehash: de57a58f7c891009d2e0cc43b351c2cad42a2766
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: f0c06a94498f4d2481a6e953b959d766c60415fb
+ms.sourcegitcommit: a0c1d0d0906585f5fdb2aaabe6f202acf2e22cfc
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "84807876"
+ms.lasthandoff: 01/21/2021
+ms.locfileid: "98622174"
 ---
 # <a name="renew-application-gateway-certificates"></a>续订应用程序网关证书
 
@@ -22,11 +22,11 @@ ms.locfileid: "84807876"
 
 ## <a name="azure-portal"></a>Azure 门户
 
-若要从门户续订侦听器证书，请导航到应用程序网关侦听器。 单击具有需要续订的证书的侦听器，然后单击“续订或编辑所选证书”  。
+若要从门户续订侦听器证书，请导航到应用程序网关侦听器。 选择具有需要续订的证书的侦听器，然后选择 " **续订或编辑所选证书**"。
 
-![续订证书](media/renew-certificate/ssl-cert.png)
+:::image type="content" source="media/renew-certificate/ssl-cert.png" alt-text="续订证书":::
 
-上传新的 PFX 证书，为其命名，输入密码，然后单击“保存”  。
+上传新的 PFX 证书，为其命名，键入密码，然后选择 " **保存**"。
 
 ## <a name="azure-powershell"></a>Azure PowerShell
 
@@ -62,4 +62,4 @@ az network application-gateway ssl-cert update \
 
 ## <a name="next-steps"></a>后续步骤
 
-若要了解如何使用 Azure 应用程序网关配置 TLS 卸载，请参阅[配置 TLS 卸载](application-gateway-ssl-portal.md)
+若要了解如何使用 Azure 应用程序网关配置 TLS 卸载，请参阅[配置 TLS 卸载](./create-ssl-portal.md)

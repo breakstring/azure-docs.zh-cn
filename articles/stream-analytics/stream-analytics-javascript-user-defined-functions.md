@@ -5,15 +5,14 @@ author: rodrigoaatmicrosoft
 ms.author: rodrigoa
 ms.service: stream-analytics
 ms.topic: tutorial
-ms.reviewer: mamccrea
-ms.custom: mvc, devx-track-javascript
-ms.date: 06/16/2020
-ms.openlocfilehash: 6540b35925a92ebd6a8bcced427b5457785603db
-ms.sourcegitcommit: 269da970ef8d6fab1e0a5c1a781e4e550ffd2c55
+ms.custom: mvc, devx-track-js
+ms.date: 12/15/2020
+ms.openlocfilehash: 70015ef24039694789ce96a6c4853221fe2377c3
+ms.sourcegitcommit: 42a4d0e8fa84609bec0f6c241abe1c20036b9575
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/10/2020
-ms.locfileid: "88056901"
+ms.lasthandoff: 01/08/2021
+ms.locfileid: "98020377"
 ---
 # <a name="javascript-user-defined-functions-in-azure-stream-analytics"></a>Azure 流分析中 JavaScript 用户定义的函数
  
@@ -26,7 +25,7 @@ JavaScript 用户定义的函数支持仅用于计算的且不需要外部连接
 下面是 JavaScript 用户定义的函数可派上用场的一些情景：
 * 使用 **Regexp_Replace()** 和 **Regexp_Extract()** 等正则表达式函数分析和处理字符串
 * 解码和编码数据，例如，二进制到十六进制的转换
-* 使用 JavaScript **数学**函数进行数学计算
+* 使用 JavaScript **数学** 函数进行数学计算
 * 执行排序、联接、查找和填充等数组操作
 
 使用流分析中的 JavaScript 用户定义的函数无法实现以下目的：
@@ -34,7 +33,7 @@ JavaScript 用户定义的函数支持仅用于计算的且不需要外部连接
 * 针对输入/输出执行自定义事件格式序列化或反序列化
 * 创建自定义聚合
 
-尽管函数定义中并不禁止 **Date.GetDate()** 或 **Math.random()** 等函数，但应该避免使用这些函数。 这些函数在每次被调用时**不会**返回相同的结果，并且 Azure 流分析服务不会保留函数调用和返回结果的日记。 当你或流分析服务重新启动某个作业时，如果某个函数针对相同的事件返回不同的结果，将无法保证可重复性。
+尽管函数定义中并不禁止 **Date.GetDate()** 或 **Math.random()** 等函数，但应该避免使用这些函数。 这些函数在每次被调用时 **不会** 返回相同的结果，并且 Azure 流分析服务不会保留函数调用和返回结果的日记。 当你或流分析服务重新启动某个作业时，如果某个函数针对相同的事件返回不同的结果，将无法保证可重复性。
 
 ## <a name="add-a-javascript-user-defined-function-to-your-job"></a>向作业中添加 JavaScript 用户定义的函数
 
@@ -55,7 +54,7 @@ JavaScript 用户定义的函数支持仅用于计算的且不需要外部连接
 
 ## <a name="test-and-troubleshoot-javascript-udfs"></a>对 JavaScript UDF 进行测试和故障排除 
 
-可在任何浏览器中测试和调试 JavaScript UDF 逻辑。 流分析门户目前不支持调试和测试这些用户定义函数的逻辑。 函数按预期方式运行后，可以将其添加到流分析作业（如上所述），然后直接从查询调用它。 还可以使用[适用于 Visual Studio 的流分析工具](https://docs.microsoft.com/azure/stream-analytics/stream-analytics-tools-for-visual-studio-install)测试包含 JavaScript UDF 的查询逻辑。
+可在任何浏览器中测试和调试 JavaScript UDF 逻辑。 流分析门户目前不支持调试和测试这些用户定义函数的逻辑。 函数按预期方式运行后，可以将其添加到流分析作业（如上所述），然后直接从查询调用它。 还可以使用[适用于 Visual Studio 的流分析工具](./stream-analytics-tools-for-visual-studio-install.md)测试包含 JavaScript UDF 的查询逻辑。
 
 JavaScript 运行时错误被视为严重错误，可通过活动日志查看。 如果要检索日志，请在 Azure 门户中转到用户的作业，并选择“活动日志”。
 
@@ -186,7 +185,44 @@ FROM
     input A
 ```
 
+### <a name="tolocalestring"></a>toLocaleString()
+JavaScript 中的 toLocaleString 方法可用于返回一个区分语言的字符串，该字符串表示调用此方法的日期时间数据。
+尽管 Azure 流分析只接受 UTC 日期时间作为系统时间戳，但此方法可用于将系统时间戳转换为其他区域设置和时区。
+此方法遵循的实现行为与 Internet Explorer 中提供的行为相同。
+
+**JavaScript 用户定义的函数定义：**
+
+```javascript
+function main(datetime){
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    return event.toLocaleDateString('de-DE', options);
+}
+```
+
+示例查询：将日期/时间作为输入值传递
+```SQL
+SELECT
+    udf.toLocaleString(input.datetime) as localeString
+INTO
+    output
+FROM
+    input
+```
+
+此查询的输出将是 de-DE 中的输入日期时间，其中包含提供的选项。
+```
+Samstag, 28. Dezember 2019
+```
+
+## <a name="user-logging"></a>用户日志记录
+使用日志记录机制，可以在作业运行时捕获自定义信息。 可以使用日志数据实时调试或评估自定义代码的正确性。 此机制通过 Console.Log() 方法提供。
+
+```javascript
+console.log('my error message');
+```
+
+可以通过[诊断日志](data-errors.md)访问日志消息。
 ## <a name="next-steps"></a>后续步骤
 
-* [机器学习 UDF](https://docs.microsoft.com/azure/stream-analytics/machine-learning-udf)
-* [C# UDF](https://docs.microsoft.com/azure/stream-analytics/stream-analytics-edge-csharp-udf-methods)
+* [机器学习 UDF](./machine-learning-udf.md)
+* [C# UDF](./stream-analytics-edge-csharp-udf-methods.md)

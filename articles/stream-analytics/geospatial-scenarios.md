@@ -1,17 +1,17 @@
 ---
 title: 使用 Azure 流分析的地理围栏和地理空间聚合
 description: 本文介绍如何将 Azure 流分析用于地理围栏和地理空间聚合。
-author: mamccrea
-ms.author: mamccrea
+author: krishna0815
+ms.author: krishmam
 ms.service: stream-analytics
 ms.topic: how-to
 ms.date: 04/02/2019
-ms.openlocfilehash: 9792641da4b3aebad047179e2c02dad757027801
-ms.sourcegitcommit: e132633b9c3a53b3ead101ea2711570e60d67b83
+ms.openlocfilehash: 7f83fe3a8443ac1b9339a0ddb91ee95414eef437
+ms.sourcegitcommit: 42a4d0e8fa84609bec0f6c241abe1c20036b9575
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/07/2020
-ms.locfileid: "86045257"
+ms.lasthandoff: 01/08/2021
+ms.locfileid: "98016297"
 ---
 # <a name="geofencing-and-geospatial-aggregation-scenarios-with-azure-stream-analytics"></a>使用 Azure 流分析的地理围栏和地理空间聚合方案
 
@@ -125,4 +125,4 @@ GROUP BY RegionsRefDataInput.RegionName, hoppingwindow(minute, 1, 15)
 ## <a name="next-steps"></a>后续步骤
 
 * [流分析地理空间函数的简介](stream-analytics-geospatial-functions.md)
-* [地理空间函数（Azure 流分析）](https://docs.microsoft.com/stream-analytics-query/geospatial-functions)
+* [地理空间函数（Azure 流分析）](/stream-analytics-query/geospatial-functions)

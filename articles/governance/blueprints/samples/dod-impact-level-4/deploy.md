@@ -1,14 +1,14 @@
 ---
 title: DoD 影响级别 4 蓝图示例
 description: DoD 影响级别 4 蓝图示例的部署步骤，包括蓝图项目参数详细信息。
-ms.date: 06/30/2020
+ms.date: 01/08/2021
 ms.topic: sample
-ms.openlocfilehash: bb2599399284b2be5a9a7f88ef1d0244812ec4b2
-ms.sourcegitcommit: e132633b9c3a53b3ead101ea2711570e60d67b83
+ms.openlocfilehash: 40f45d1194ae089010edf308c3b110bc97591613
+ms.sourcegitcommit: c4c554db636f829d7abe70e2c433d27281b35183
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/07/2020
-ms.locfileid: "86044968"
+ms.lasthandoff: 01/08/2021
+ms.locfileid: "98033755"
 ---
 # <a name="deploy-the-dod-impact-level-4-blueprint-sample"></a>部署 DoD 影响级别 4 蓝图示例
 
@@ -42,17 +42,17 @@ ms.locfileid: "86044968"
 
 ## <a name="publish-the-sample-copy"></a>发布示例副本
 
-现已在环境中创建蓝图示例的副本。 该副本在创建后处于“草稿”模式，必须先将其**发布**，然后才能分配和部署它。 可根据环境和需求自定义蓝图示例的副本，但这种修改可能不符合 DoD 影响级别 4 控制要求。
+现已在环境中创建蓝图示例的副本。 该副本在创建后处于“草稿”模式，必须先将其 **发布**，然后才能分配和部署它。 可根据环境和需求自定义蓝图示例的副本，但这种修改可能不符合 DoD 影响级别 4 控制要求。
 
 1. 在左侧窗格中，选择“所有服务”。 搜索并选择“蓝图”。
 
 1. 在左侧选择“蓝图定义”页。 使用筛选器找到蓝图示例的副本，然后选择它。
 
-1. 选择页面顶部的“发布蓝图”。 在右侧的新窗格中，提供蓝图示例副本的**版本**。 以后做出修改时，此属性非常有用。 提供**更改注释**，例如，“基于 DoD 影响级别 4 蓝图示例发布的第一个版本”。 然后选择页面底部的“发布”。
+1. 选择页面顶部的“发布蓝图”。 在右侧的新窗格中，提供蓝图示例副本的 **版本**。 以后做出修改时，此属性非常有用。 提供 **更改注释**，例如，“基于 DoD 影响级别 4 蓝图示例发布的第一个版本”。 然后选择页面底部的“发布”。
 
 ## <a name="assign-the-sample-copy"></a>分配示例副本
 
-成功**发布**蓝图示例的副本后，可将它分配到它所在的管理组中的某个订阅。 在此步骤中，需提供参数来使蓝图示例副本的每个部署保持唯一。
+成功 **发布** 蓝图示例的副本后，可将它分配到它所在的管理组中的某个订阅。 在此步骤中，需提供参数来使蓝图示例副本的每个部署保持唯一。
 
 1. 在左侧窗格中，选择“所有服务”。 搜索并选择“蓝图”。
 
@@ -68,7 +68,7 @@ ms.locfileid: "86044968"
      - **分配名称**：系统会根据蓝图的名称预先填充该名称。
        请根据需要更改该名称，或保留原样。
      - 位置：选择要在其中创建托管标识的区域。 Azure 蓝图使用此托管标识在分配的蓝图中部署所有项目。 若要了解详细信息，请参阅 [Azure 资源的托管标识](../../../../active-directory/managed-identities-azure-resources/overview.md)。
-     - **蓝图定义版本**：选择蓝图示例副本的**已发布**版本。
+     - **蓝图定义版本**：选择蓝图示例副本的 **已发布** 版本。
 
    - 锁分配
 
@@ -85,7 +85,7 @@ ms.locfileid: "86044968"
 1. 输入所有参数后，选择页面底部的“分配”。 随后将创建蓝图分配，并开始部署项目。 部署过程大约需要一小时。 若要检查部署状态，请打开蓝图分配。
 
 > [!WARNING]
-> Azure 蓝图服务和内置蓝图示例是**免费的**。 Azure 资源[按产品定价](https://azure.microsoft.com/pricing/) 。 使用[定价计算器](https://azure.microsoft.com/pricing/calculator/) 可以估算运行此蓝图示例部署的资源所需的成本。
+> Azure 蓝图服务和内置蓝图示例是 **免费的**。 Azure 资源[按产品定价](https://azure.microsoft.com/pricing/) 。 使用[定价计算器](https://azure.microsoft.com/pricing/calculator/) 可以估算运行此蓝图示例部署的资源所需的成本。
 
 ## <a name="artifact-parameters-table"></a>项目参数表
 
@@ -99,12 +99,12 @@ ms.locfileid: "86044968"
 |对 SQL 服务器部署审核|策略分配|要进行 SQL Server 审核的存储帐户的资源组名称|审核针对 Azure 存储帐户（将在 SQL Server 所在的每个区域中创建的存储帐户，由该区域中的所有服务器共享）中审核日志的写入数据库事件。 重要提示 - 为了正确地进行审核，请勿删除或重命名资源组或存储帐户。|
 |为网络安全组部署诊断设置|策略分配|适用于网络安全组诊断的存储帐户前缀|此前缀将与网络安全组位置结合使用，一起构成已创建的存储帐户的名称。|
 |为网络安全组部署诊断设置|策略分配|适用于网络安全组诊断的存储帐户的资源组名称（必须存在）|将在其中创建存储帐户的资源组。 此资源组必须已存在。|
-|为 Linux VM 规模集(VMSS)部署 Log Analytics 代理|策略分配|Linux VM 规模集 (VMSS) 的 Log Analytics 工作区|如果此工作区超出分配范围，则必须手动将“Log Analytics 参与者”权限（或类似权限）授予策略分配的主体 ID。|
-|为 Linux VM 规模集(VMSS)部署 Log Analytics 代理|策略分配|可选：支持将 Linux OS 添加到范围的 VM 映像列表|可以使用空数组来表示没有可选参数：\[\]|
+|为 Linux 虚拟机规模集部署 Log Analytics 代理|策略分配|Linux 虚拟机规模集的 Log Analytics 工作区|如果此工作区超出分配范围，则必须手动将“Log Analytics 参与者”权限（或类似权限）授予策略分配的主体 ID。|
+|为 Linux 虚拟机规模集部署 Log Analytics 代理|策略分配|可选：支持将 Linux OS 添加到范围的 VM 映像列表|可以使用空数组来表示没有可选参数：\[\]|
 |为 Linux VM 部署 Log Analytics 代理|策略分配|Linux VM 的 Log Analytics 工作区|如果此工作区超出分配范围，则必须手动将“Log Analytics 参与者”权限（或类似权限）授予策略分配的主体 ID。|
 |为 Linux VM 部署 Log Analytics 代理|策略分配|可选：支持将 Linux OS 添加到范围的 VM 映像列表|可以使用空数组来表示没有可选参数：\[\]|
-|为 Windows VM 规模集(VMSS)部署 Log Analytics 代理|策略分配|Windows VM 规模集 (VMSS) 的 Log Analytics 工作区|如果此工作区超出分配范围，则必须手动将“Log Analytics 参与者”权限（或类似权限）授予策略分配的主体 ID。|
-|为 Windows VM 规模集(VMSS)部署 Log Analytics 代理|策略分配|可选：支持将 Windows OS 添加到范围的 VM 映像列表|可以使用空数组来表示没有可选参数：\[\]|
+|为 Windows 虚拟机规模集部署 Log Analytics 代理|策略分配|Windows 虚拟机规模集的 Log Analytics 工作区|如果此工作区超出分配范围，则必须手动将“Log Analytics 参与者”权限（或类似权限）授予策略分配的主体 ID。|
+|为 Windows 虚拟机规模集部署 Log Analytics 代理|策略分配|可选：支持将 Windows OS 添加到范围的 VM 映像列表|可以使用空数组来表示没有可选参数：\[\]|
 |为 Windows VM 部署 Log Analytics 代理|策略分配|Windows VM 的 Log Analytics 工作区|如果此工作区超出分配范围，则必须手动将“Log Analytics 参与者”权限（或类似权限）授予策略分配的主体 ID。|
 |为 Windows VM 部署 Log Analytics 代理|策略分配|可选：支持将 Windows OS 添加到范围的 VM 映像列表|可以使用空数组来表示没有可选参数：\[\]|
 |\[预览\]：DoD 影响级别 4|策略分配|要包含在管理员本地组中的成员|以分号分隔的应从管理员本地组中排除的成员列表。 例如：管理员；myUser1；myUser2|

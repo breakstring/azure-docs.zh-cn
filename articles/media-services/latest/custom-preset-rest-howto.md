@@ -1,25 +1,27 @@
 ---
-title: 使用媒体服务 v3 REST 对自定义转换进行编码 - Azure | Microsoft Docs
+title: 编码自定义转换 REST
 description: 本主题介绍如何使用 REST 通过 Azure 媒体服务 v3 对自定义转换进行编码。
 services: media-services
 documentationcenter: ''
-author: Juliako
+author: IngridAtMicrosoft
 manager: femila
 editor: ''
 ms.service: media-services
 ms.workload: ''
-ms.topic: article
+ms.topic: how-to
 ms.custom: ''
-ms.date: 05/14/2019
-ms.author: juliako
-ms.openlocfilehash: 4bd092dbee09a783dcbd6e36c82a70ff5decaf83
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.date: 08/31/2020
+ms.author: inhenkel
+ms.openlocfilehash: 2c0416e2787bc69465e18a71f6b9912f7571c24d
+ms.sourcegitcommit: 4e70fd4028ff44a676f698229cb6a3d555439014
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87053324"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98956083"
 ---
 # <a name="how-to-encode-with-a-custom-transform---rest"></a>如何对自定义转换进行编码 - REST
+
+[!INCLUDE [media services api v3 logo](./includes/v3-hr.md)]
 
 使用 Azure 媒体服务进行编码时，可以根据[流式传输文件](stream-files-tutorial-with-rest.md#create-a-transform)教程中演示的行业最佳做法，使用推荐的内置预设之一快速入门。 也可以构建自定义预设以针对特定方案或设备要求。
 
@@ -133,7 +135,7 @@ ms.locfileid: "87053324"
 
 ## <a name="create-a-new-transform"></a>创建新转换  
 
-在此示例中，我们基于前面定义的自定义预设创建**转换**。 创建转换时，应首先使用 [Get](/rest/api/media/transforms/get) 检查是否已存在转换。 如果存在转换，请重新使用它。 
+在此示例中，我们基于前面定义的自定义预设创建 **转换**。 创建转换时，应首先使用 [Get](/rest/api/media/transforms/get) 检查是否已存在转换。 如果存在转换，请重新使用它。 
 
 在下载的 Postman 集合中，选择“转换和作业”  ->“创建或更新转换”  。
 

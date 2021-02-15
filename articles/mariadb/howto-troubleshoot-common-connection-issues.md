@@ -1,17 +1,17 @@
 ---
 title: 排查连接问题 - Azure Database for MariaDB
 description: 了解如何排查与 Azure Database for MariaDB 的连接问题，包括需要重试的暂时性错误、防火墙问题和服务中断。
-author: ajlam
-ms.author: andrela
-ms.service: mariadb
+author: savjani
+ms.author: pariks
+ms.service: jroth
 ms.topic: troubleshooting
 ms.date: 3/18/2020
-ms.openlocfilehash: 521853fd361007159d7e497eb7e7c1f3d200731c
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 50bb6fc008e381855923da801b65198bf712f826
+ms.sourcegitcommit: 52e3d220565c4059176742fcacc17e857c9cdd02
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "82101444"
+ms.lasthandoff: 01/21/2021
+ms.locfileid: "98664726"
 ---
 # <a name="troubleshoot-connection-issues-to-azure-database-for-mariadb"></a>解决 Azure Databases for MariaDB 的连接问题
 

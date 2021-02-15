@@ -2,16 +2,16 @@
 title: 排查无代理 VMware VM 迁移中的复制问题
 description: 获取有关复制周期失败的帮助
 author: anvar-ms
-ms.manager: bsiva
 ms.author: anvar
+ms.manager: bsiva
 ms.topic: troubleshooting
 ms.date: 08/17/2020
-ms.openlocfilehash: 55e79877fb186a5ba2aece316c61f542adeda60c
-ms.sourcegitcommit: c5021f2095e25750eb34fd0b866adf5d81d56c3a
+ms.openlocfilehash: 33e2bf641b75a5dd360498478f1ea70c7614fb38
+ms.sourcegitcommit: 3af12dc5b0b3833acb5d591d0d5a398c926919c8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/25/2020
-ms.locfileid: "88796929"
+ms.lasthandoff: 01/11/2021
+ms.locfileid: "98071368"
 ---
 # <a name="troubleshooting-replication-issues-in-agentless-vmware-vm-migration"></a>排查无代理 VMware VM 迁移中的复制问题
 
@@ -29,14 +29,42 @@ ms.locfileid: "88796929"
 使用以下步骤监视虚拟机的复制状态：
 
   1. 中转到 Azure 门户 Azure Migrate 上的 "服务器" 页。
-  2. 单击 "服务器迁移" 磁贴中的 "复制服务器"，导航到 "复制计算机" 页。
-  3. 你将看到复制服务器的列表以及其他信息，如状态、运行状况、上次同步时间等。"运行状况" 列指示 VM 的当前复制运行状况。 运行状况列中的 "Critical'or" 警告值通常指示 VM 的上一个复制周期失败。 若要获取更多详细信息，请右键单击 VM，并选择 "错误详细信息"。 "错误详细信息" 页包含有关错误的信息以及有关如何进行故障排除的其他详细信息。 你还将看到 "最近的事件" 链接，可用于导航到 VM 的 "事件" 页。
-  4. 单击 "最近的事件"，以查看 VM 的以前的复制周期失败。 在 "事件" 页中，查找 VM 的 "复制周期失败" 或 "磁盘的复制周期失败" 类型的最近事件。
-  5. 单击事件以了解错误的可能原因和建议的修正步骤。 使用提供的信息来排除错误并对其进行修正。
-    
+  ![图像1](./media/troubleshoot-changed-block-tracking-replication/image0.png)
+  1. 单击 "服务器迁移" 磁贴中的 "复制服务器"，导航到 "复制计算机" 页。
+  ![图像2](./media/troubleshoot-changed-block-tracking-replication/image1.png)
+  1. 你将看到复制服务器的列表以及其他信息，如状态、运行状况、上次同步时间等。"运行状况" 列指示 VM 的当前复制运行状况。 运行状况列中的 "严重" 或 "警告" 值通常指示 VM 的上一个复制周期失败。 若要获取更多详细信息，请右键单击 VM，并选择 "错误详细信息"。 "错误详细信息" 页包含有关错误的信息以及有关如何进行故障排除的其他详细信息。 你还将看到 "最近的事件" 链接，可用于导航到 VM 的 "事件" 页。
+  ![图像3](./media/troubleshoot-changed-block-tracking-replication/image2.png)
+  1. 单击 "最近的事件"，以查看 VM 的以前的复制周期失败。 在 "事件" 页中，查找 VM 的 "复制周期失败" 或 "磁盘的复制周期失败" 类型的最近事件。
+  ![图像4](./media/troubleshoot-changed-block-tracking-replication/image3.png)
+  1. 单击事件以了解错误的可能原因和建议的修正步骤。 使用提供的信息来排除错误并对其进行修正。
+ ![图像5](./media/troubleshoot-changed-block-tracking-replication/image4.png)
+
 ## <a name="common-replication-errors"></a>常见复制错误
 
 本部分介绍一些常见错误以及如何解决这些错误。
+
+## <a name="key-vault-operation-failed-error-when-trying-to-replicate-vms"></a>尝试复制 Vm 时出现 Key Vault 操作失败错误
+
+**错误：** "Key Vault 操作失败。 操作：配置托管存储帐户、Key Vault：密钥保管库名称、存储帐户：存储帐户名称失败，并出现以下错误： "
+
+**错误：** "Key Vault 操作失败。 操作：生成共享访问签名定义，Key Vault：密钥保管库名称，存储帐户：存储帐户名称失败，出现错误： "
+
+![Key Vault](./media/troubleshoot-changed-block-tracking-replication/key-vault.png)
+
+发生此错误的原因通常是，Key Vault 的用户访问策略不向当前登录的用户提供配置要 Key Vault 管理的存储帐户所需的权限。 若要检查密钥保管库上的用户访问策略，请在门户中访问密钥保管库的密钥保管库页面，并选择 "访问策略" 
+
+当门户创建密钥保管库时，它还会添加一个授予当前已登录用户权限的用户访问策略，以便将存储帐户配置为 Key Vault 管理。 这可能由于两个原因而失败
+
+- 已登录用户是客户 Azure 租户 (CSP 订阅的远程主体，登录用户是合作伙伴管理员) 。 在这种情况下，解决方法是删除密钥保管库，从门户注销，然后使用客户租户中的用户帐户登录， (不是远程主体) ，并重试该操作。 CSP 合作伙伴通常会在客户 Azure Active Directory 租户中拥有用户帐户，用户可以使用该帐户。 如果不能为客户 Azure Active Directory 租户中的用户创建新用户帐户，请以新用户的身份登录到门户，然后重试复制操作。 所使用的帐户必须拥有 "所有者" 或 "参与者" 和 "用户访问管理员" 权限，才能在资源组 (迁移项目资源组) 
+
+- 另一种情况是，当某个用户 (user1) 尝试在首次设置复制时尝试设置复制，并且已创建了密钥保管库， (并为此用户) 适当分配了用户访问策略。 稍后，其他用户 (用户 2) 尝试设置复制，但是配置托管存储帐户或生成 SAS 定义操作失败，因为没有与密钥保管库中的用户2相对应的用户访问策略。
+
+**解决** 方法：若要解决此问题，请在 keyvault 授予用户2权限中为用户2创建一个用户访问策略，以便配置托管存储帐户和生成 SAS 定义。 可以使用以下 cmdlet 通过 Azure PowerShell 来执行此操作：
+
+$userPrincipalId = $ (Get-azurermaduser-UserPrincipalName "user2_email_address" ) 。识别
+
+Set-AzureRmKeyVaultAccessPolicy-VaultName "keyvaultname"-ObjectId $userPrincipalId-PermissionsToStorage 获取、列出、删除、设置、更新、regeneratekey、getsas、listsas、deletesas、setsas、恢复、备份、还原、清除
+
 
 ## <a name="disposeartefactstimedout"></a>DisposeArtefactsTimedOut
 
@@ -67,7 +95,7 @@ ms.locfileid: "88796929"
     
     **运行性能基准测试的步骤：**
     
-      1. [下载](https://go.microsoft.com/fwlink/?linkid=2138966) azcopy
+      1. [下载](../storage/common/storage-use-azcopy-v10.md) azcopy
         
       2. 在资源组中查找设备存储帐户。 存储帐户的名称类似于 migrategwsa \* \* \* \* \* \* \* \* \* \* 。 这是上述命令中参数 [account] 的值。
         
@@ -147,7 +175,7 @@ ms.locfileid: "88796929"
     
     **运行性能基准测试的步骤：**
     
-      1. [下载](https://go.microsoft.com/fwlink/?linkid=2138966) azcopy
+      1. [下载](../storage/common/storage-use-azcopy-v10.md) azcopy
         
       2. 在资源组中查找设备存储帐户。 存储帐户的名称类似于 migratelsa \* \* \* \* \* \* \* \* \* \* 。 这是上述命令中参数 [account] 的值。
         
@@ -214,7 +242,7 @@ ms.locfileid: "88796929"
 
 [VMWARE KB 2048201](https://go.microsoft.com/fwlink/?linkid=2138888)中介绍了可能导致 VMware vSphere 5.5 上的虚拟机的 CBT 重置的一个此类问题：在 vSphere 1.x 中进行存储 vMotion 操作后，更改了阻止跟踪。 如果你使用的是 VMware vSphere 5.5，请确保使用此知识库中描述的更新。
 
-或者，你可以使用 VMware PowerCLI 在虚拟机上 [重置 VMware 更改的块跟踪]。
+或者，你可以使用 VMware PowerCLI 在虚拟机上重置 VMware 更改的块跟踪。
 
 ## <a name="an-internal-error-occurred"></a>发生了内部错误
 
@@ -270,6 +298,24 @@ VCenter Server 管理代理停止工作时，会出现此问题。 若要解决�
 
 当 NFC 主机缓冲区内存不足时，会发生这种情况。 若要解决此问题，需要将 VM (计算 vMotion) 转移到具有可用资源的其他主机。
 
+## <a name="replication-cycle-failed"></a>复制周期失败
+
+**错误 ID：** 181008
+
+**错误消息：** VM： "VMName"。 错误：找不到快照 Id 为 "SnapshotID" 的快照复制的 disksnapshots。
+
+**可能的原因：**
+
+可能的原因包括：
+1. 由于存储 VMotion 的原因，包含的一个或多个磁盘的路径发生了更改。
+2. 一个或多个包含的磁盘不再附加到 VM。
+      
+**建议：**
+
+提供以下建议
+1. 使用 storage vMotion 将包含的磁盘还原到原始路径，然后禁用 storage vmotion。
+2. 禁用存储 VMotion，如果启用，请停止虚拟机上的复制，并再次复制虚拟机。 如果该问题仍然存在，请联系支持部门。
+
 ## <a name="next-steps"></a>后续步骤
 
-继续 VM 复制，并执行 [测试迁移](https://go.microsoft.com/fwlink/?linkid=2139333)。
+继续 VM 复制，并执行 [测试迁移](./tutorial-migrate-vmware.md#run-a-test-migration)。

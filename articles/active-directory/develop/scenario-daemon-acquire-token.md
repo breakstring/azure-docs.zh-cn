@@ -1,5 +1,5 @@
 ---
-title: 获取用于调用 Web API（守护程序应用）的令牌 - Microsoft 标识平台 | Azure
+title: 获取用于调用 web API 的令牌 (后台应用) -Microsoft 标识平台 |Microsoft
 description: 了解如何构建调用 Web API 的守护程序应用（获取令牌）
 services: active-directory
 author: jmprieur
@@ -11,12 +11,12 @@ ms.workload: identity
 ms.date: 10/30/2019
 ms.author: jmprieur
 ms.custom: aaddev
-ms.openlocfilehash: 13000c5a61dc2c4d49aa395271beddef64d32245
-ms.sourcegitcommit: b8702065338fc1ed81bfed082650b5b58234a702
+ms.openlocfilehash: 295897be03a7dd8e397e8202ff1cf10e6d59cdfb
+ms.sourcegitcommit: 5cdd0b378d6377b98af71ec8e886098a504f7c33
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/11/2020
-ms.locfileid: "88119209"
+ms.lasthandoff: 01/25/2021
+ms.locfileid: "98753872"
 ---
 # <a name="daemon-app-that-calls-web-apis---acquire-a-token"></a>用于调用 Web API 的守护程序应用 - 获取令牌
 
@@ -24,7 +24,7 @@ ms.locfileid: "88119209"
 
 ## <a name="scopes-to-request"></a>请求的作用域
 
-请求客户端凭据流时，其作用域是资源的名称后跟 `/.default`。 此表示法告知 Azure Active Directory (Azure AD) 使用在应用程序注册过程中静态声明的*应用程序级权限*。 另外，这些 API 权限必须由租户管理员授予。
+请求客户端凭据流时，其作用域是资源的名称后跟 `/.default`。 此表示法告知 Azure Active Directory (Azure AD) 使用在应用程序注册过程中静态声明的 *应用程序级权限*。 另外，这些 API 权限必须由租户管理员授予。
 
 # <a name="net"></a>[.NET](#tab/dotnet)
 
@@ -91,6 +91,10 @@ catch (MsalServiceException ex) when (ex.Message.Contains("AADSTS70011"))
     // Mitigation: Change the scope to be as expected.
 }
 ```
+
+### <a name="acquiretokenforclient-uses-the-application-token-cache"></a>AcquireTokenForClient 使用应用程序令牌缓存
+
+在 MSAL.NET 中，`AcquireTokenForClient` 使用应用程序令牌缓存。 （所有其他 AcquireToken *XX* 方法都使用用户令牌缓存。）不要在调用 `AcquireTokenForClient` 之前调用 `AcquireTokenSilent`，因为 `AcquireTokenSilent` 使用“用户”  令牌缓存。 `AcquireTokenForClient` 会检查 *应用程序* 令牌缓存本身并对其进行更新。
 
 # <a name="python"></a>[Python](#tab/python)
 
@@ -200,10 +204,6 @@ scope=https%3A%2F%2Fgraph.microsoft.com%2F.default
 
 有关详细信息，请参阅协议文档：[Microsoft 标识平台和 OAuth 2.0 客户端凭据流](v2-oauth2-client-creds-grant-flow.md)。
 
-## <a name="application-token-cache"></a>应用程序令牌缓存
-
-在 MSAL.NET 中，`AcquireTokenForClient` 使用应用程序令牌缓存。 （所有其他 AcquireToken*XX* 方法都使用用户令牌缓存。）不要在调用 `AcquireTokenForClient` 之前调用 `AcquireTokenSilent`，因为 `AcquireTokenSilent` 使用“用户”  令牌缓存。 `AcquireTokenForClient` 会检查*应用程序*令牌缓存本身并对其进行更新。
-
 ## <a name="troubleshooting"></a>故障排除
 
 ### <a name="did-you-use-the-resourcedefault-scope"></a>你是否使用过 resource/.default 作用域？
@@ -229,21 +229,24 @@ Content: {
 }
 ```
 
+### <a name="are-you-calling-your-own-api"></a>是否在调用自己的 API？
+
+如果你调用自己的 Web API，并且无法向守护程序应用的应用注册添加应用权限，则你是否公开了 Web API 中的应用角色？
+
+有关详细信息，请参阅[公开应用程序权限（应用角色）](scenario-protected-web-api-app-registration.md#exposing-application-permissions-app-roles)，尤其是[确保 Azure AD 仅向允许的客户端颁发 Web API 的令牌](scenario-protected-web-api-app-registration.md#ensuring-that-azure-ad-issues-tokens-for-your-web-api-to-only-allowed-clients)。
+
 ## <a name="next-steps"></a>后续步骤
 
 # <a name="net"></a>[.NET](#tab/dotnet)
 
-> [!div class="nextstepaction"]
-> [守护程序应用 - 调用 Web API](./scenario-daemon-call-api.md?tabs=dotnet)
+转到此方案中的下一篇文章：[调用 Web API](./scenario-daemon-call-api.md?tabs=dotnet)。
 
 # <a name="python"></a>[Python](#tab/python)
 
-> [!div class="nextstepaction"]
-> [守护程序应用 - 调用 Web API](./scenario-daemon-call-api.md?tabs=python)
+转到此方案中的下一篇文章：[调用 Web API](./scenario-daemon-call-api.md?tabs=python)。
 
 # <a name="java"></a>[Java](#tab/java)
 
-> [!div class="nextstepaction"]
-> [守护程序应用 - 调用 Web API](./scenario-daemon-call-api.md?tabs=java)
+转到此方案中的下一篇文章：[调用 Web API](./scenario-daemon-call-api.md?tabs=java)。
 
 ---

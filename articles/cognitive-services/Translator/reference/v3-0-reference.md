@@ -3,19 +3,19 @@ title: Translator V3.0 参考
 titleSuffix: Azure Cognitive Services
 description: Translator V3.0 参考文档。 Translator 的版本 3 提供了基于 JSON 的新型 Web API。
 services: cognitive-services
-author: swmachan
+author: laujan
 manager: nitinme
 ms.service: cognitive-services
 ms.subservice: translator-text
 ms.topic: reference
 ms.date: 8/11/2020
-ms.author: swmachan
-ms.openlocfilehash: 6b211dd8ca735ea9ee4a5209aa6030398cca472e
-ms.sourcegitcommit: b8702065338fc1ed81bfed082650b5b58234a702
+ms.author: lajanuar
+ms.openlocfilehash: 021a65ba69b9d1909df4a86d92b660c0c1033a3b
+ms.sourcegitcommit: 100390fefd8f1c48173c51b71650c8ca1b26f711
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/11/2020
-ms.locfileid: "88121011"
+ms.lasthandoff: 01/27/2021
+ms.locfileid: "98895452"
 ---
 # <a name="translator-v30"></a>Translator 3.0 版
 
@@ -39,9 +39,9 @@ Microsoft Translator 位于多个数据中心位置之外。 目前它们位于 
 
 在大多数情况下，对 Microsoft Translator 的请求由距离请求来源最近的数据中心处理。 如果数据中心出现故障，请求可能会路由到 Azure 地理区域之外。
 
-若要强制由特定 Azure 地理区域处理请求，请将 API 请求中的全球终结点更改为所需的区域终结点：
+若要强制由特定 Azure 地域处理请求，请将 API 请求中的全局终结点更改为所需的地理终结点：
 
-|说明|Azure 地理区域|基 URL|
+|说明|Azure 地理区域|基 URL (地理端点) |
 |:--|:--|:--|
 |Azure|全局 (非区域) |   api.cognitive.microsofttranslator.com|
 |Azure|美国|   api-nam.cognitive.microsofttranslator.com|
@@ -143,22 +143,22 @@ curl --data "" 'https://api.cognitive.microsoft.com/sts/v1.0/issueToken?Subscrip
 Authorization: Bearer <Base64-access_token>
 ```
 
-身份验证令牌的有效期为 10 分钟。 对转换器进行多次调用时，应重新使用该令牌。 但是，如果程序在很长一段时间内向转换器发出请求，则程序必须定期请求新的访问令牌 (例如，每8分钟) 。
+身份验证令牌的有效期为 10 分钟。 在对 Translator 进行多次调用时，应重复使用该令牌。 但是，如果程序向 Translator 发出请求时持续的时间段很长，则该程序必须定期请求新的访问令牌（例如，每隔 8 分钟请求一次）。
 
 ## <a name="virtual-network-support"></a>虚拟网络支持
 
-转换器服务现在可在 Azure 公有云的所有区域中提供虚拟网络 (VNET) 功能。 若要启用虚拟网络，请参阅[配置 Azure 认知服务虚拟网络](https://docs.microsoft.com/azure/cognitive-services/cognitive-services-virtual-networks?tabs=portal)。 
+Translator 服务现在随虚拟网络 (VNET) 功能在 Azure 公有云的所有区域中提供。 若要启用虚拟网络，请参阅[配置 Azure 认知服务虚拟网络](../../cognitive-services-virtual-networks.md?tabs=portal)。 
 
-启用此功能后，必须使用自定义终结点来调用转换器。 不能使用 "api.cognitive.microsofttranslator.com" )  ( 全局转换器终结点，并且不能使用访问令牌进行身份验证。
+启用此功能后，必须使用自定义终结点来调用 Translator。 不能使用 "api.cognitive.microsofttranslator.com" )  ( 全局转换器终结点，并且不能使用访问令牌进行身份验证。
 
-你可以在创建[转换器资源](https://ms.portal.azure.com/#create/Microsoft.CognitiveServicesTextTranslation)后找到自定义终结点，并允许从所选网络和专用终结点进行访问。
+你可以在创建[翻译器资源](https://ms.portal.azure.com/#create/Microsoft.CognitiveServicesTextTranslation)后找到自定义终结点，并允许从所选网络和专用终结点进行访问。
 
-|标头|说明|
+|头文件|说明|
 |:-----|:----|
 |Ocp-Apim-Subscription-Key| 该值是用于 Translator 订阅的 Azure 密钥。|
-|Ocp-Apim-Subscription-Region| 该值是翻译器资源的区域。 如果资源为，则此值是可选的`global`|
+|Ocp-Apim-Subscription-Region| 该值是翻译器资源的区域。 如果资源为 `global`，则此值是可选项|
 
-下面是使用自定义终结点调用转换器的示例请求
+下面是使用自定义终结点调用 Translator 的示例请求
 
 ```curl
 // Pass secret key and region using headers
@@ -230,7 +230,7 @@ curl -X POST "https://<your-custom-domain>.cognitiveservices.azure.com/translato
 | 503000| 服务暂时不可用。 请重试。 如果该错误持续出现，请报告发生错误的日期/时间、响应标头 X-RequestId 中的请求标识符，以及请求标头 X-ClientTraceId 中的客户端标识符。|
 
 ## <a name="metrics"></a>指标 
-利用指标，可以在 Azure 门户中的指标部分下查看翻译器的使用情况和可用性信息，如以下屏幕截图所示。 有关详细信息，请参阅[数据和平台指标](https://docs.microsoft.com/azure/azure-monitor/platform/data-platform-metrics)。
+利用指标，可以在 Azure 门户中的指标部分下查看翻译器的使用情况和可用性信息，如以下屏幕截图所示。 有关详细信息，请参阅[数据和平台指标](../../../azure-monitor/platform/data-platform-metrics.md)。
 
 ![Translator 指标](../media/translatormetrics.png)
 

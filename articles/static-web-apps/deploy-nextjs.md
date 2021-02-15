@@ -1,5 +1,5 @@
 ---
-title: 教程：在 Azure 静态 Web 应用中部署服务器呈现的 Next.js 网站
+title: 教程：在 Azure Static Web Apps 中部署静态呈现的 Next.js 网站
 description: 使用 Azure 静态 Web 应用生成并部署 Next.js 动态站点。
 services: static-web-apps
 author: christiannwamba
@@ -7,15 +7,15 @@ ms.service: static-web-apps
 ms.topic: tutorial
 ms.date: 05/08/2020
 ms.author: chnwamba
-ms.custom: devx-track-javascript
-ms.openlocfilehash: c5afd7d912142dd8556e71ba9e0a522b2fa0da1c
-ms.sourcegitcommit: 56cbd6d97cb52e61ceb6d3894abe1977713354d9
+ms.custom: devx-track-js
+ms.openlocfilehash: a22d06137c3ec17851280605ac85c94ef8b342cd
+ms.sourcegitcommit: 77ab078e255034bd1a8db499eec6fe9b093a8e4f
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/20/2020
-ms.locfileid: "88684586"
+ms.lasthandoff: 12/16/2020
+ms.locfileid: "97563069"
 ---
-# <a name="deploy-server-rendered-nextjs-websites-on-azure-static-web-apps-preview"></a>在 Azure 静态 Web 应用（预览）中部署服务器呈现的 Next.js 网站
+# <a name="deploy-static-rendered-nextjs-websites-on-azure-static-web-apps-preview"></a>在 Azure Static Web Apps（预览版）中部署静态呈现的 Next.js 网站
 
 此教程介绍如何将 [Next.js](https://nextjs.org) 生成的静态网站部署到 [Azure 静态 Web 应用](overview.md)。 首先将介绍如何安装、配置和部署 Next.js 应用。 在此过程中，还会介绍如何处理生成 Next.js 静态页面时遇到的常见问题
 
@@ -29,9 +29,9 @@ ms.locfileid: "88684586"
 
 无需使用 Next.js CLI 创建应用，可以使用初学者存储库，其中包含现有的 Next.js 应用。 此存储库的 Next.js 应用使用动态路由，这突出了一个常见的部署问题。 动态路由需要额外的部署配置，稍后将详细介绍这一点。
 
-首先通过 GitHub 帐户从模板存储库创建新的存储库。 
+首先通过 GitHub 帐户从模板存储库创建新的存储库。
 
-1. 导航到 <http://github.com/staticwebdev/nextjs-starter/generate>
+1. 导航到 [https://github.com/staticwebdev/nextjs-starter/generate](https://github.com/login?return_to=/staticwebdev/nextjs-starter/generate)
 1. 将存储库命名为 nextjs-starter
 1. 接下来，将新存储库克隆到计算机。 确保将 `<YOUR_GITHUB_ACCOUNT_NAME>` 替换为你的帐户名称。
 
@@ -73,7 +73,7 @@ ms.locfileid: "88684586"
 
     ```javascript
     module.exports = {
-      exportTrailingSlash: true,
+      trailingSlash: true,
       exportPathMap: function() {
         return {
           '/': { page: '/' }
@@ -125,7 +125,7 @@ Azure 静态 Web 应用从 GitHub 存储库部署应用，并且每次将提交�
 1. 将所做的更改推送到 GitHub。
 
     ```bash
-    git push origin master
+    git push origin main
     ```
 
 ## <a name="deploy-your-static-website"></a>部署静态网站
@@ -189,7 +189,7 @@ https://github.com/<YOUR_GITHUB_USERNAME>/nextjs-starter/actions
 
 创建应用后，Azure 静态 Web 应用在存储库中创建了 GitHub Actions 工作流文件。 需要将此文件移到本地存储库，以便同步 Git 历史记录。
 
-返回终端并运行以下命令：`git pull origin master`。
+返回终端并运行以下命令：`git pull origin main`。
 
 ## <a name="configure-dynamic-routes"></a>配置动态路由
 
@@ -207,7 +207,7 @@ https://github.com/<YOUR_GITHUB_USERNAME>/nextjs-starter/actions
    const data = require('./utils/projectsData');
 
    module.exports = {
-     exportTrailingSlash: true,
+     trailingSlash: true,
      exportPathMap: async function () {
        const { projects } = data;
        const paths = {

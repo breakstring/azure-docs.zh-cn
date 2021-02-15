@@ -8,13 +8,13 @@ ms.topic: conceptual
 ms.service: azure-maps
 services: azure-maps
 manager: philmea
-ms.custom: devx-track-javascript
-ms.openlocfilehash: 021680a81cc5f97bb92c3a9e14036e1a88dae278
-ms.sourcegitcommit: dccb85aed33d9251048024faf7ef23c94d695145
+ms.custom: devx-track-js
+ms.openlocfilehash: 08966549d2c4d2bf701ee0dbfc5ed24f202396fc
+ms.sourcegitcommit: 4064234b1b4be79c411ef677569f29ae73e78731
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/28/2020
-ms.locfileid: "87279502"
+ms.lasthandoff: 10/28/2020
+ms.locfileid: "92891370"
 ---
 # <a name="core-io-operations"></a>核心 IO 操作
 
@@ -37,11 +37,11 @@ ms.locfileid: "87279502"
 | 选项卡 | `\t` |
 | 管道 | `|` |
 
-此读取器还支持用于处理包含分隔符字符的单元格的文本限定符。 引号（ `'"'` ）字符是默认文本限定符，但可以更改为任意单个字符。
+此读取器还支持用于处理包含分隔符字符的单元格的文本限定符。 引号 (`'"'`) 字符是默认文本限定符，但可以更改为任意单个字符。
 
 ## <a name="write-delimited-files"></a>写入分隔文件
 
-`atlas.io.core.CsvWriter`以带分隔符的字符串形式写入对象数组。 任何单个字符均可用作分隔符或文本限定符。 默认分隔符为逗号（ `','` ），默认文本限定符为引号（ `'"'` ）字符。
+`atlas.io.core.CsvWriter`以带分隔符的字符串形式写入对象数组。 任何单个字符均可用作分隔符或文本限定符。 默认分隔符为逗号 (`','`) ，默认文本限定符是 () 字符的引号 `'"'` 。
 
 若要使用此类，请按照以下步骤操作：
 
@@ -131,19 +131,14 @@ var xmlString = writer.toString();
 
 详细了解本文中使用的类和方法：
 
-> [!div class="nextstepaction"]
-> [CsvReader](https://docs.microsoft.com/javascript/api/azure-maps-spatial-io/atlas.io.core.csvreader)
+[CsvReader](/javascript/api/azure-maps-spatial-io/atlas.io.core.csvreader)
 
-> [!div class="nextstepaction"]
-> [CsvWriter](https://docs.microsoft.com/javascript/api/azure-maps-spatial-io/atlas.io.core.csvwriter)
+[CsvWriter](/javascript/api/azure-maps-spatial-io/atlas.io.core.csvwriter)
 
-> [!div class="nextstepaction"]
-> [SimpleXmlReader](https://docs.microsoft.com/javascript/api/azure-maps-spatial-io/atlas.io.core.simplexmlreader)
+[SimpleXmlReader](/javascript/api/azure-maps-spatial-io/atlas.io.core.simplexmlreader)
 
-> [!div class="nextstepaction"]
-> [SimpleXmlWriter](https://docs.microsoft.com/javascript/api/azure-maps-spatial-io/atlas.io.core.simplexmlwriter)
+[SimpleXmlWriter](/javascript/api/azure-maps-spatial-io/atlas.io.core.simplexmlwriter)
 
 有关可向地图添加的更多代码示例，请参阅以下文章：
 
-> [!div class="nextstepaction"]
-> [支持的数据格式详细信息](spatial-io-supported-data-format-details.md)
+[支持的数据格式详细信息](spatial-io-supported-data-format-details.md)

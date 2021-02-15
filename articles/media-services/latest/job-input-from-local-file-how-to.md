@@ -1,5 +1,5 @@
 ---
-title: 从本地文件创建 Azure 媒体服务作业输入 | Microsoft Docs
+title: 从本地文件创建作业输入
 description: 本文演示如何从本地文件创建 Azure 媒体服务作业输入。
 services: media-services
 documentationcenter: ''
@@ -8,17 +8,19 @@ manager: femila
 editor: ''
 ms.service: media-services
 ms.workload: ''
-ms.topic: article
-ms.date: 08/18/2020
+ms.topic: how-to
+ms.date: 08/31/2020
 ms.author: inhenkel
-ms.openlocfilehash: 4d7e6d9daa5d30c5cbf5b198a147564d0c05c074
-ms.sourcegitcommit: d661149f8db075800242bef070ea30f82448981e
+ms.openlocfilehash: 75cd5922804eb1724eaca0157f2c242a86406aab
+ms.sourcegitcommit: 4e70fd4028ff44a676f698229cb6a3d555439014
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/19/2020
-ms.locfileid: "88607225"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98951372"
 ---
 # <a name="create-a-job-input-from-a-local-file"></a>从本地文件创建作业输入
+
+[!INCLUDE [media services api v3 logo](./includes/v3-hr.md)]
 
 在媒体服务 v3 中提交作业来处理视频时，必须告知媒体服务查找输入视频的位置。 可将输入视频存储为媒体服务资产，这种情况下会基于文件（存储在本地或 Azure Blob 存储中）创建输入资产。 本主题介绍如何从本地文件创建作业输入。 有关完整示例，请参阅此 [GitHub 示例](https://github.com/Azure-Samples/media-services-v3-dotnet-tutorials/blob/master/AMSV3Tutorials/UploadEncodeAndStreamFiles/Program.cs)。
 
@@ -31,7 +33,7 @@ ms.locfileid: "88607225"
 以下代码演示如何创建输入资产并将其用作作业的输入。 此 CreateInputAsset 函数执行以下操作：
 
 * 创建资产
-* 获取[存储中资产容器](../../storage/blobs/storage-quickstart-blobs-dotnet.md#upload-blobs-to-a-container)的可写[SAS URL](../../storage/common/storage-sas-overview.md)
+* 获取资产的[存储中容器](../../storage/blobs/storage-quickstart-blobs-dotnet.md#upload-blobs-to-a-container)的可写 [SAS URL](../../storage/common/storage-sas-overview.md)
 * 使用 SAS URL 将文件上传到存储中的容器中
 
 [!code-csharp[Main](../../../media-services-v3-dotnet-tutorials/AMSV3Tutorials/UploadEncodeAndStreamFiles/Program.cs#CreateInputAsset)]

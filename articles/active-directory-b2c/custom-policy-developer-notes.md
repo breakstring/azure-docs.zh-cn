@@ -12,12 +12,12 @@ ms.date: 05/19/2020
 ms.custom: project-no-code
 ms.author: mimart
 ms.subservice: B2C
-ms.openlocfilehash: 23e443a542ed22906abb237e402834b707e623a9
-ms.sourcegitcommit: b33c9ad17598d7e4d66fe11d511daa78b4b8b330
+ms.openlocfilehash: 18a3216855516156792524dc577ecef725d3119d
+ms.sourcegitcommit: 54e1d4cdff28c2fd88eca949c2190da1b09dca91
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/25/2020
-ms.locfileid: "88852031"
+ms.lasthandoff: 01/31/2021
+ms.locfileid: "99218768"
 ---
 # <a name="developer-notes-for-custom-policies-in-azure-active-directory-b2c"></a>有关 Azure Active Directory B2C 中的自定义策略的开发人员说明
 
@@ -37,14 +37,14 @@ Azure Active Directory B2C 中的自定义策略配置现已正式发布。 此�
 
 ## <a name="responsibilities-of-custom-policy-feature-set-developers"></a>自定义策略功能集开发人员的责任
 
-手动策略配置授予对 Azure AD B2C 基础平台的较低访问级别，因此要求创建唯一的信任框架。 自定义标识提供者、信任关系、与外部服务的集成以及分步工作流的诸多可能组合方式要求在设计和配置方面采用有条理的方法。
+手动策略配置授予对 Azure AD B2C 基础平台的较低访问级别，因此要求创建唯一的信任框架。 自定义标识提供者、信任关系、与外部服务的集成以及分步工作流的多个可能的发展需要有一种方法来设计和配置。
 
 使用自定义策略功能集的开发人员应遵守以下指导原则：
 
 - 熟悉自定义策略和密钥/机密管理的配置语言。 有关详细信息，请参阅 [TrustFrameworkPolicy](trustframeworkpolicy.md)。
 - 取得方案和自定义集成的所有权。 阐述自己的工作并告知实时站点组织。
 - 执行有序的方案测试。
-- 在至少一个开发和测试环境以及一个生产环境中遵循软件开发与过渡最佳做法。
+- 遵循软件开发和暂存最佳实践。 建议至少使用一个开发和测试环境。
 - 随时了解与之集成的标识提供程序和服务的新进展。 例如，跟踪机密的更改情况以及对服务的计划内和计划外更改。
 - 设置主动监控，监控生产环境的响应能力。 有关与 Application Insights 集成的详细信息，请参阅 [Azure Active Directory B2C：收集日志](analytics-with-application-insights.md)。
 - 在 Azure 订阅中保留最新的联系电子邮件地址，并快速回复 Microsoft 活动站点团队的电子邮件。
@@ -58,15 +58,15 @@ Azure Active Directory B2C 中的自定义策略配置现已正式发布。 此�
 
 ## <a name="features-by-stage-and-known-issues"></a>按阶段的功能和已知问题
 
-自定义策略/标识体验框架功能正在持续而快速地进行开发。 下表是功能和组件可用性的索引。
+自定义策略功能在不断开发。 下表是功能和组件可用性的索引。
 
 
 ### <a name="protocols-and-authorization-flows"></a>协议和授权流
 
-| Feature | 开发 | 预览 | GA | 说明 |
+| 功能 | 开发 | 预览 | GA | 注释 |
 |-------- | :-----------: | :-------: | :--: | ----- |
 | [OAuth2 授权代码](authorization-code-flow.md) |  |  | X |  |
-| 具有 PKCE 的 OAuth2 授权代码 |  |  | X | 仅限移动应用程序  |
+| 具有 PKCE 的 OAuth2 授权代码 |  |  | X | [公共客户端和单页应用程序](authorization-code-flow.md)  |
 | [OAuth2 隐式流](implicit-flow-single-page-application.md) |  |  | X |  |
 | [OAuth2 资源所有者密码凭据](ropc-custom.md) |  | X |  |  |
 | [OIDC 连接](openid-connect.md) |  |  | X |  |
@@ -76,7 +76,7 @@ Azure Active Directory B2C 中的自定义策略配置现已正式发布。 此�
 
 ### <a name="identify-providers-federation"></a>标识提供者联合 
 
-| Feature | 开发 | 预览 | GA | 说明 |
+| 功能 | 开发 | 预览 | GA | 注释 |
 |-------- | :-----------: | :-------: | :--: | ----- |
 | [OpenID Connect](openid-connect-technical-profile.md) |  |  | X | 例如 Google+。  |
 | [OAuth2](oauth2-technical-profile.md) |  |  | X | 例如 Facebook。  |
@@ -87,7 +87,7 @@ Azure Active Directory B2C 中的自定义策略配置现已正式发布。 此�
 
 ### <a name="rest-api-integration"></a>REST API 集成
 
-| Feature | 开发 | 预览 | GA | 说明 |
+| 功能 | 开发 | 预览 | GA | 说明 |
 |-------- | :-----------: | :-------: | :--: | ----- |
 | [具有基本身份验证的 REST API](secure-rest-api.md#http-basic-authentication) |  |  | X |  |
 | [具有客户端证书身份验证的 REST API](secure-rest-api.md#https-client-certificate-authentication) |  |  | X |  |
@@ -95,10 +95,10 @@ Azure Active Directory B2C 中的自定义策略配置现已正式发布。 此�
 
 ### <a name="component-support"></a>组件支持
 
-| Feature | 开发 | 预览 | GA | 说明 |
+| 功能 | 开发 | 预览 | GA | 注释 |
 | ------- | :-----------: | :-------: | :--: | ----- |
 | [电话因素身份验证](phone-factor-technical-profile.md) |  |  | X |  |
-| [Azure MFA 身份验证](multi-factor-auth-technical-profile.md) |  | X |  |  |
+| [Azure AD MFA 身份验证](multi-factor-auth-technical-profile.md) |  | X |  |  |
 | [一次性密码](one-time-password-technical-profile.md) |  | X |  |  |
 | [Azure Active Directory](active-directory-technical-profile.md) 用作本地目录 |  |  | X |  |
 | 用于电子邮件验证的 Azure 电子邮件子系统 |  |  | X |  |
@@ -108,39 +108,30 @@ Azure Active Directory B2C 中的自定义策略配置现已正式发布。 此�
 | [显示控件](display-controls.md) |  |X  |  |  |
 
 
-### <a name="page-layout-versions"></a>页面布局版本
-
-| Feature | 开发 | 预览 | GA | 说明 |
-| ------- | :-----------: | :-------: | :--: | ----- |
-| [2.0.0](page-layout.md) |  | X |  |  |
-| [1.2.0](page-layout.md) |  | X |  |  |
-| [1.1.0](page-layout.md) |  |  | X |  |
-| [1.0.0](page-layout.md) |  |  | X |  |
-| [JavaScript 支持](javascript-samples.md) |  | X |  |  |
-
 ### <a name="app-ief-integration"></a>App-IEF 集成
 
-| Feature | 开发 | 预览 | GA | 说明 |
+| 功能 | 开发 | 预览 | GA | 注释 |
 | ------- | :-----------: | :-------: | :--: | ----- |
 | 查询字符串参数 `domain_hint` |  |  | X | 作为声明提供时，可以传递给 IDP。 |
 | 查询字符串参数 `login_hint` |  |  | X | 作为声明提供时，可以传递给 IDP。 |
 | 通过 `client_assertion` 将 JSON 插入用户历程 | X |  |  | 即将弃用。 |
 | 将 JSON 作为 `id_token_hint` 插入用户历程 |  | X |  | 用于传递 JSON 的前向方法。 |
-| [向应用程序传递标识提供者令牌](idp-pass-through-custom.md) |  | X |  | 例如，从 Facebook 到应用。 |
+| [向应用程序传递标识提供者令牌](idp-pass-through-user-flow.md) |  | X |  | 例如，从 Facebook 到应用。 |
+
 
 ### <a name="session-management"></a>会话管理
 
-| Feature | 开发 | 预览 | GA | 说明 |
+| 功能 | 开发 | 预览 | GA | 注释 |
 | ------- | :-----------: | :-------: | :--: | ----- |
 | [默认 SSO 会话提供程序](custom-policy-reference-sso.md#defaultssosessionprovider) |  |  | X |  |
 | [外部登录会话提供程序](custom-policy-reference-sso.md#externalloginssosessionprovider) |  |  | X |  |
 | [SAML SSO 会话提供程序](custom-policy-reference-sso.md#samlssosessionprovider) |  |  | X |  |
 | [OAuthSSOSessionProvider](custom-policy-reference-sso.md#oauthssosessionprovider)  |  | X |  |  |
-| [单一登录](session-overview.md#sign-out)  |  | X |  |  |
+| [单一登录](session-behavior.md#sign-out)  |  | X |  |  |
 
 ### <a name="security"></a>安全性
 
-| Feature | 开发 | 预览 | GA | 说明 |
+| 功能 | 开发 | 预览 | GA | 注释 |
 |-------- | :-----------: | :-------: | :--: | ----- |
 | 策略密钥 - 生成、手动、上传 |  |  | X |  |
 | 策略密钥 - RSA/证书、机密 |  |  | X |  |
@@ -148,12 +139,12 @@ Azure Active Directory B2C 中的自定义策略配置现已正式发布。 此�
 
 ### <a name="developer-interface"></a>开发人员接口
 
-| Feature | 开发 | 预览 | GA | 说明 |
+| 功能 | 开发 | 预览 | GA | 注释 |
 | ------- | :-----------: | :-------: | :--: | ----- |
 | Azure 门户-IEF UX |  |  | X |  |
 | 策略上传 |  |  | X |  |
 | [Application Insights 用户旅程日志](troubleshoot-with-application-insights.md) |  | X |  | 用于在开发过程中进行故障排除。  |
-| [Application Insights 事件日志](application-insights-technical-profile.md) |  | X |  | 用于监视生产中的用户流。 |
+| [Application Insights 事件日志](analytics-with-application-insights.md) |  | X |  | 用于监视生产中的用户流。 |
 
 
 ## <a name="next-steps"></a>后续步骤

@@ -10,14 +10,14 @@ ms.assetid: 1c46ed69-4049-44ec-9b46-e90e964a4a8e
 ms.service: data-factory
 ms.workload: data-services
 ms.topic: conceptual
-ms.date: 08/14/2020
+ms.date: 09/23/2020
 ms.author: jingwang
-ms.openlocfilehash: 26d52eed02c9d25ed2f18afa3a5262ba9224b0ba
-ms.sourcegitcommit: 152c522bb5ad64e5c020b466b239cdac040b9377
+ms.openlocfilehash: e32115c590d73f5c93f322d3bd542096f2964a4c
+ms.sourcegitcommit: 829d951d5c90442a38012daaf77e86046018e5b9
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/14/2020
-ms.locfileid: "88224843"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "91297600"
 ---
 # <a name="get-metadata-activity-in-azure-data-factory"></a>Azure 数据工厂中的“获取元数据”活动
 
@@ -35,7 +35,7 @@ ms.locfileid: "88224843"
 
 ## <a name="capabilities"></a>功能
 
-“获取元数据”活动采用数据集作为输入，并返回元数据信息作为输出。 目前支持以下连接器以及对应的可检索元数据。 返回的元数据的最大大小为 2 MB。
+“获取元数据”活动采用数据集作为输入，并返回元数据信息作为输出。 目前支持以下连接器以及对应的可检索元数据。 返回的元数据的最大大小为 4 MB。
 
 >[!NOTE]
 >如果在自承载集成运行时中运行“获取元数据”活动，3.6 或更高版本将支持最新的功能。
@@ -50,7 +50,7 @@ ms.locfileid: "88224843"
 | [Google Cloud Storage](connector-google-cloud-storage.md) | √/√ | √/√ | √ | x/x | √/√* | √ | x | √ | √ | √/√* |
 | [Azure Blob 存储](connector-azure-blob-storage.md) | √/√ | √/√ | √ | x/x | √/√* | √ | √ | √ | √ | √/√ |
 | [Azure Data Lake Storage Gen1](connector-azure-data-lake-store.md) | √/√ | √/√ | √ | x/x | √/√ | √ | x | √ | √ | √/√ |
-| [Azure Data Lake Storage Gen2](connector-azure-data-lake-storage.md) | √/√ | √/√ | √ | x/x | √/√ | √ | x | √ | √ | √/√ |
+| [Azure Data Lake Storage Gen2](connector-azure-data-lake-storage.md) | √/√ | √/√ | √ | x/x | √/√ | √ | √ | √ | √ | √/√ |
 | [Azure 文件](connector-azure-file-storage.md) | √/√ | √/√ | √ | √/√ | √/√ | √ | x | √ | √ | √/√ |
 | [文件系统](connector-file-system.md) | √/√ | √/√ | √ | √/√ | √/√ | √ | x | √ | √ | √/√ |
 | [SFTP](connector-sftp.md) | √/√ | √/√ | √ | x/x | √/√ | √ | x | √ | √ | √/√ |
@@ -61,7 +61,7 @@ ms.locfileid: "88224843"
 - 对于 Azure Blob 存储，`lastModified` 适用于容器和 Blob，但不适用于虚拟文件夹。
 - `lastModified` 筛选器当前适用于筛选子项，但不适用于筛选指定的文件夹/文件本身。
 - “获取元数据”活动不支持文件夹/文件的通配符筛选器。
-- `structure``columnCount`从二进制、JSON 或 XML 文件获取元数据时，不支持和。
+- 从二进制文件、JSON 文件或 XML 文件获取元数据时，不支持 `structure` 和 `columnCount`。
 
 **关系数据库**
 
@@ -69,7 +69,7 @@ ms.locfileid: "88224843"
 |:--- |:--- |:--- |:--- |
 | [Azure SQL 数据库](connector-azure-sql-database.md) | √ | √ | √ |
 | [Azure SQL 托管实例](../azure-sql/managed-instance/sql-managed-instance-paas-overview.md) | √ | √ | √ |
-| [Azure SQL 数据仓库](connector-azure-sql-data-warehouse.md) | √ | √ | √ |
+| [Azure Synapse Analytics](connector-azure-sql-data-warehouse.md) | √ | √ | √ |
 | [SQL Server](connector-sql-server.md) | √ | √ | √ |
 
 ### <a name="metadata-options"></a>元数据选项
@@ -87,7 +87,7 @@ ms.locfileid: "88224843"
 | contentMD5 | 文件的 MD5。 仅适用于文件。 |
 | structure | 文件或关系数据库表的数据结构。 返回的值为列名称和列类型列表。 |
 | columnCount | 文件或关系表中的列数。 |
-| exists| 是否存在某个文件、文件夹或表。 请注意，如果在“获取元数据”字段列表中指定了 `exists`，那么，即使不存在该文件、文件夹或表，该活动也不会失败， 而是在输出中返回 `exists: false`。 |
+| exists| 是否存在某个文件、文件夹或表。 如果 `exists` 在 "获取元数据字段" 列表中指定了，即使文件、文件夹或表不存在，活动也不会失败。 而是在输出中返回 `exists: false`。 |
 
 >[!TIP]
 >若要验证是否存在某个文件、文件夹或表，请在“获取元数据”活动字段列表中指定 `exists`。 然后可以检查活动输出中的 `exists: true/false` 结果。 如果未在该字段列表中指定 `exists`，那么，在找不到对象时，“获取元数据”活动将会失败。

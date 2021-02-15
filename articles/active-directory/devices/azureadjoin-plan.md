@@ -11,12 +11,12 @@ author: MicrosoftGuyJFlo
 manager: daveba
 ms.reviewer: sandeo
 ms.collection: M365-identity-device-management
-ms.openlocfilehash: d43e6e89faa8eca720e3aeafc873af1a18b9753b
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 3acaf4929158b24ff50655aa18c05b41aeec4b53
+ms.sourcegitcommit: 5e5a0abe60803704cf8afd407784a1c9469e545f
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "85555020"
+ms.lasthandoff: 12/01/2020
+ms.locfileid: "96435444"
 ---
 # <a name="how-to-plan-your-azure-ad-join-implementation"></a>操作方法：计划 Azure AD 联接实现
 
@@ -26,7 +26,7 @@ ms.locfileid: "85555020"
  
 ## <a name="prerequisites"></a>先决条件
 
-本文假设读者已阅读 [Azure Active Directory 中的设备管理简介](../device-management-introduction.md)。
+本文假设读者已阅读 [Azure Active Directory 中的设备管理简介](./overview.md)。
 
 ## <a name="plan-your-implementation"></a>规划实施
 
@@ -58,7 +58,7 @@ Azure AD 联接适用于托管环境和联合环境。
 
 ### <a name="managed-environment"></a>托管环境
 
-可使用无缝单一登录通过[密码哈希同步](/azure/active-directory/hybrid/how-to-connect-password-hash-synchronization)或[直通身份验证](/azure/active-directory/hybrid/how-to-connect-pta-quick-start)来部署托管环境。
+可使用无缝单一登录通过[密码哈希同步](../hybrid/how-to-connect-password-hash-synchronization.md)或[直通身份验证](../hybrid/how-to-connect-pta-quick-start.md)来部署托管环境。
 
 这些方案不需要配置联合服务器进行身份验证。
 
@@ -77,7 +77,7 @@ Azure AD 联接适用于托管环境和联合环境。
 如果标识提供者不支持这些协议，则 Azure AD 联接无法本机运行。 
 
 >[!NOTE]
-> 目前，Azure AD 联接不适用于使用[外部身份验证提供程序配置的 AD FS 2019 作为主要身份验证方法](/windows-server/identity/ad-fs/operations/additional-authentication-methods-ad-fs#enable-external-authentication-methods-as-primary)。 Azure AD 联接默认为密码身份验证作为主要方法，这会导致此方案中的身份验证失败
+> 目前，Azure AD 联接不适用于使用 [外部身份验证提供程序配置的 AD FS 2019 作为主要身份验证方法](/windows-server/identity/ad-fs/operations/additional-authentication-methods-ad-fs#enable-external-authentication-methods-as-primary)。 Azure AD 联接默认为密码身份验证作为主要方法，这会导致此方案中的身份验证失败
 
 
 ### <a name="smartcards-and-certificate-based-authentication"></a>智能卡和基于证书的身份验证
@@ -90,10 +90,12 @@ Azure AD 联接适用于托管环境和联合环境。
 
 如果在下列情况下创建用户：
 
-- **本地 Active Directory**，需要使用 [Azure AD Connect](/azure/active-directory/hybrid/how-to-connect-sync-whatis) 将其同步到 Azure AD。 
+- **本地 Active Directory**，需要使用 [Azure AD Connect](../hybrid/how-to-connect-sync-whatis.md) 将其同步到 Azure AD。 
 - **Azure AD**，无需进行其他设置。
 
 Azure AD 加入设备不支持与 Azure AD UPN 不同的本地 UPN。 如果用户使用本地 UPN，你应计划转换成使用其 Azure AD 中的主 UPN。
+
+UPN 更改仅受 Windows 10 2004 更新的支持。 在更改其 Upn 后，具有此更新的设备上的用户将不会有任何问题。 对于 Windows 10 2004 更新之前的设备，用户将在其设备上出现 SSO 和条件性访问问题。 他们需要使用新 UPN 通过 "其他用户" 磁贴登录 Windows，以解决此问题。 
 
 ## <a name="assess-your-device-management"></a>评估设备管理
 
@@ -119,7 +121,7 @@ Azure AD 联接设备的设备管理基于 MDM 平台（如 Intune）和 MDM Csp
 - **仅限 MDM** - MDM 提供程序（例如 Intune）以独占方式托管设备。 所有策略都作为 MDM 注册过程的一部分提供。 对于 Azure AD Premium 或 EMS 客户，MDM 注册是自动步骤，此步骤是 Azure AD 联接的一部分。
 - **共同管理** - MDM 提供程序和 SCCM 托管设备。 使用这种方法，在 MDM 托管设备上安装 SCCM 代理来管理某些特性。
 
-如果要使用组策略，请使用 [MDM 迁移分析工具 (MMAT)](https://github.com/WindowsDeviceManagement/MMAT) 评估 MDM 策略奇偶校验。 
+如果你使用的是组策略，请通过在 Microsoft 终结点管理器中使用 [组策略分析](/mem/intune/configuration/group-policy-analytics) 来评估 GPO 和 MDM 策略的奇偶校验。 
 
 查看支持和不支持的策略，以确定是否可以使用 MDM 解决方案，而不是组策略。 对于不支持的策略，请考虑以下内容：
 
@@ -128,7 +130,7 @@ Azure AD 联接设备的设备管理基于 MDM 平台（如 Intune）和 MDM Csp
 
 如果 MDM 解决方案不能通过 Azure AD 应用库获取，则可以按照 [Azure Active Directory integration with MDM](/windows/client-management/mdm/azure-active-directory-integration-with-mdm)（Azure Active Directory 与 MDM 集成）中概述的过程添加该解决方案。 
 
-通过共同管理，可以使用 SCCM 来管理设备的某些特性，同时通过 MDM 平台提供策略。 Microsoft Intune 通过 SCCM 启用共同管理。 有关适用于 Windows 10 设备的共同管理的详细信息，请参阅[什么是共同管理？](/configmgr/core/clients/manage/co-management-overview)。 如果使用除 Intune 之外的 MDM 产品，请与 MDM 提供商联系，了解适用的共同管理方案。
+通过共同管理，可以使用 SCCM 来管理设备的某些特性，同时通过 MDM 平台提供策略。 Microsoft Intune 通过 SCCM 启用共同管理。 有关适用于 Windows 10 设备的共同管理的详细信息，请参阅 [什么是共同管理？](/configmgr/core/clients/manage/co-management-overview)。 如果使用除 Intune 之外的 MDM 产品，请与 MDM 提供商联系，了解适用的共同管理方案。
 
 **建议：** 请考虑用于 Azure AD 联接设备的仅限 MDM 管理。
 
@@ -162,7 +164,7 @@ Azure AD 联接设备的设备管理基于 MDM 平台（如 Intune）和 MDM Csp
 
 如果设备有权访问域控制器，则用户从 Azure AD 联接设备获取 SSO。 
 
-**建议：** 部署 [Azure AD 应用代理](/azure/active-directory/manage-apps/application-proxy)，以启用这些应用程序的安全访问。
+**建议：** 部署 [Azure AD 应用代理](../manage-apps/application-proxy.md)，以启用这些应用程序的安全访问。
 
 ### <a name="on-premises-network-shares"></a>本地网络共享
 
@@ -184,13 +186,14 @@ Azure AD 联接设备不支持依赖计算机身份验证的本地应用程序�
 
 Azure AD 联接设备的远程桌面连接需要主机是 Azure AD 联接或混合 Azure AD 联接。 不支持未联接设备或非 Windows 设备的远程桌面。 有关详细信息，请参阅 [Connect to remote Azure Active Directory-joined PC](/windows/client-management/connect-to-remote-aadj-pc)（连接到远程 Azure AD 联接电脑）
 
-启动 Windows 10 2004 更新后，用户可以 alo 使用远程桌面从 Azure AD 注册的 Windows 10 设备连接到 Azure AD 加入的设备。 
+启动 Windows 10 2004 更新后，用户还可以从 Azure AD 注册的 Windows 10 设备使用远程桌面连接到 Azure AD 加入的设备。 
 
 ## <a name="understand-your-provisioning-options"></a>了解预配选项
+**注意**：无法使用系统准备工具（ (Sysprep) 或类似的映像工具）部署 Azure AD 联接的设备
 
 可以使用以下方法预配 Azure AD 联接：
 
-- **OOBE/设置中的自助式** - 在自助模式下，用户在 Windows Out of Box Experience (OOBE) 期间或从 Windows 设置完成 Azure AD 联接过程。 有关详细信息，请参阅[将工作设备加入组织的网络](/azure/active-directory/user-help/user-help-join-device-on-network)。 
+- **OOBE/设置中的自助式** - 在自助模式下，用户在 Windows Out of Box Experience (OOBE) 期间或从 Windows 设置完成 Azure AD 联接过程。 有关详细信息，请参阅[将工作设备加入组织的网络](../user-help/user-help-join-device-on-network.md)。 
 - **Windows Autopilot** - Windows Autopilot 支持预先配置设备，可在 OOBE 中实现更顺畅的体验，以执行 Azure AD 联接。 有关详细信息，请参阅 [Windows Autopilot 概述](/windows/deployment/windows-autopilot/windows-10-autopilot)。 
 - **批量注册** - 批量注册通过使用批量预配工具来配置设备，从而实现管理员驱动的 Azure AD 联接。 有关详细信息，请参阅[Windows 设备的批量注册](/intune/windows-bulk-enroll)。
  
@@ -200,8 +203,8 @@ Azure AD 联接设备的远程桌面连接需要主机是 Azure AD 联接或混�
 | --- | --- | --- | --- |
 | 需要用户交互以进行设置 | 是 | 是 | 否 |
 | 需要 IT 工作量 | 否 | 是 | 是 |
-| 适用流 | OOBE 和设置 | 仅限 OOBE | 仅限 OOBE |
-| 主要用户的本地管理员权限 | 是，默认情况下 | 可配置性 | 否 |
+| 适用的流 | OOBE 和设置 | 仅限 OOBE | 仅限 OOBE |
+| 主要用户的本地管理员权限 | 是，默认情况下 | 可配置 | 否 |
 | 需要设备 OEM 的支持 | 否 | 是 | 否 |
 | 支持的版本 | 1511+ | 1709+ | 1703+ |
  
@@ -218,23 +221,23 @@ Azure AD 联接设备的远程桌面连接需要主机是 Azure AD 联接或混�
 
 ## <a name="configure-your-device-settings"></a>配置设备设置
 
-通过Azure 门户可控制组织中 Azure AD 联接设备的部署。 若要配置相关设置，在“Azure Active Directory 页”中选择 `Devices > Device settings`****。
+通过Azure 门户可控制组织中 Azure AD 联接设备的部署。 若要配置相关设置，在“Azure Active Directory 页”中选择 `Devices > Device settings`。
 
-### <a name="users-may-join-devices-to-azure-ad"></a>用户可将设备联接到 Azure AD
+### <a name="users-may-join-devices-to-azure-ad"></a>用户可以将设备联接到 Azure AD
 
-根据部署范围和你想允许设置 Azure AD 联接设备的人选，将此选项设置为“全部”或“选定”********。 
+根据部署范围和你想允许设置 Azure AD 联接设备的人选，将此选项设置为“全部”或“选定”。 
 
-![用户可将设备联接到 Azure AD](./media/azureadjoin-plan/01.png)
+![用户可以将设备联接到 Azure AD](./media/azureadjoin-plan/01.png)
 
-### <a name="additional-local-administrators-on-azure-ad-joined-devices"></a>Azure AD 联接设备上的其他本地管理员
+### <a name="additional-local-administrators-on-azure-ad-joined-devices"></a>已联接 Azure AD 的设备上的其他本地管理员
 
-选择“选定”，并选择想要添加到所有 Azure AD 联接设备上的本地管理员组的用户****。 
+选择“选定”，并选择想要添加到所有 Azure AD 联接设备上的本地管理员组的用户。 
 
-![Azure AD 联接设备上的其他本地管理员](./media/azureadjoin-plan/02.png)
+![已联接 Azure AD 的设备上的其他本地管理员](./media/azureadjoin-plan/02.png)
 
 ### <a name="require-multi-factor-auth-to-join-devices"></a>需要进行多重身份验证才能联接设备
 
-如果将设备联接到 Azure AD 的同时需要用户执行多重身份验证，则选择“是”****。 对于使用多重身份验证将设备联接到 Azure AD 的用户，设备本身成为第 2 个因素。
+如果将设备联接到 Azure AD 的同时需要用户执行多重身份验证，则选择“是”。 对于使用多重身份验证将设备联接到 Azure AD 的用户，设备本身成为第 2 个因素。
 
 ![需要进行多重身份验证才能联接设备](./media/azureadjoin-plan/03.png)
 
@@ -244,17 +247,17 @@ Azure AD 联接设备的远程桌面连接需要主机是 Azure AD 联接或混�
 
 **若要添加 MDM 提供程序**：
 
-1. 在“Azure Active Directory 页”的“管理”部分，单击 `Mobility (MDM and MAM)`********。 
+1. 在“Azure Active Directory 页”的“管理”部分，单击 `Mobility (MDM and MAM)`。 
 1. 单击“添加应用程序”。
 1. 从列表中选择 MDM 提供程序。
 
-   ![添加应用程序](./media/azureadjoin-plan/04.png)
+   :::image type="content" source="./media/azureadjoin-plan/04.png" alt-text="Azure Active Directory &quot;添加应用程序&quot; 页的屏幕截图。列出了几个 M D M 访问接口。" border="false":::
 
 选择 MDM 提供程序配置相关设置。 
 
 ### <a name="mdm-user-scope"></a>MDM 用户范围
 
-根据部署范围，选择“部分”或“全部”********。 
+根据部署范围，选择“部分”或“全部”。 
 
 ![MDM 用户范围](./media/azureadjoin-plan/05.png)
 
@@ -271,9 +274,9 @@ Azure AD 联接设备的远程桌面连接需要主机是 Azure AD 联接或混�
 - MDM 发现 URL 
 - MDM 符合性 URL
 
-![添加应用程序](./media/azureadjoin-plan/06.png)
+:::image type="content" source="./media/azureadjoin-plan/06.png" alt-text="Azure Active Directory M D M 配置部分中的屏幕截图，其中包含 M D M 使用条款、发现和符合性的 U R L 字段。" border="false":::
 
-每个 URL 都具有预定义的默认值。 如果这些字段都为空，请联系 MDM 提供商，获取更多详细信息。
+每个 URL 都有一个预定义的默认值。 如果这些字段都为空，请联系 MDM 提供商，获取更多详细信息。
 
 ### <a name="mam-settings"></a>MAM 设置
 
@@ -291,13 +294,13 @@ MAM 不适用于 Azure AD 联接。
 
 ![合规的设备](./media/azureadjoin-plan/46.png)
 
-你可以使用此实现来[要求使用条件访问的云应用访问的托管设备](../conditional-access/require-managed-devices.md)。
+你可以使用此实现来 [要求使用条件访问的云应用访问的托管设备](../conditional-access/require-managed-devices.md)。
 
 ## <a name="next-steps"></a>后续步骤
 
 > [!div class="nextstepaction"]
 > 在[首次运行期间使用 Azure AD 加入新的 Windows 10 设备](azuread-joined-devices-frx.md) 
-> [将你的工作设备加入你组织的网络](/azure/active-directory/user-help/user-help-join-device-on-network)
+> [将你的工作设备加入你组织的网络](../user-help/user-help-join-device-on-network.md)
 
 <!--Image references-->
 [1]: ./media/azureadjoin-plan/12.png

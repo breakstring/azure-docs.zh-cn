@@ -1,26 +1,23 @@
 ---
-title: 快速入门：使用 PowerShell 在 Key Vault 中设置和检索密码
+title: 快速入门 - 使用 PowerShell 在 Key Vault 中设置和检索机密
 description: 本快速入门介绍如何使用 Azure PowerShell 在 Azure Key Vault 中创建、检索和删除机密。
 services: key-vault
 author: msmbaldwin
-manager: rkarlin
 tags: azure-resource-manager
 ms.service: key-vault
 ms.subservice: secrets
 ms.topic: quickstart
-ms.custom: mvc
-ms.date: 11/08/2019
+ms.custom: mvc, devx-track-azurepowershell
+ms.date: 01/27/2021
 ms.author: mbaldwin
-ms.openlocfilehash: 9e3f5e37462b30b0201be5350dedc103a49bb39a
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.openlocfilehash: f3b770a5790d5e9554c7bf5d7d24f1eeccff7662
+ms.sourcegitcommit: dd24c3f35e286c5b7f6c3467a256ff85343826ad
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87039287"
+ms.lasthandoff: 01/29/2021
+ms.locfileid: "99072213"
 ---
 # <a name="quickstart-set-and-retrieve-a-secret-from-azure-key-vault-using-powershell"></a>快速入门：使用 PowerShell 在 Azure Key Vault 中设置和检索机密
-
-[!INCLUDE [updated-for-az](../../../includes/updated-for-az.md)]
 
 Azure Key Vault 是一项云服务，用作安全的机密存储。 可以安全地存储密钥、密码、证书和其他机密。 有关 Key Vault 的详细信息，可以参阅[概述](../general/overview.md)。 在本快速入门中，请使用 PowerShell 创建一个密钥保管库， 然后即可在新创建的保管库中存储机密。
 
@@ -28,46 +25,26 @@ Azure Key Vault 是一项云服务，用作安全的机密存储。 可以安全
 
 [!INCLUDE [cloud-shell-try-it.md](../../../includes/cloud-shell-try-it.md)]
 
-如果选择在本地安装并使用 PowerShell，则本教程需要 Azure PowerShell 模块 1.0.0 或更高版本。 键入 `$PSVersionTable.PSVersion` 即可查找版本。 如果需要升级，请参阅[安装 Azure PowerShell 模块](/powershell/azure/install-az-ps)。 如果在本地运行 PowerShell，则还需运行 `Login-AzAccount` 来创建与 Azure 的连接。
+如果选择在本地安装并使用 PowerShell，则本教程需要 Azure PowerShell 模块 5.0.0 版或更高版本。 键入 `$PSVersionTable.PSVersion` 即可查找版本。 如果需要升级，请参阅[安装 Azure PowerShell 模块](/powershell/azure/install-az-ps)。 如果在本地运行 PowerShell，则还需运行 `Connect-AzAccount` 来创建与 Azure 的连接。
 
 ```azurepowershell-interactive
-Login-AzAccount
+Connect-AzAccount
 ```
 
 ## <a name="create-a-resource-group"></a>创建资源组
 
-使用 [New-AzResourceGroup](/powershell/module/az.resources/new-azresourcegroup) 创建 Azure 资源组。 资源组是在其中部署和管理 Azure 资源的逻辑容器。 
-
-```azurepowershell-interactive
-New-AzResourceGroup -Name ContosoResourceGroup -Location EastUS
-```
+[!INCLUDE [Create a resource group](../../../includes/key-vault-powershell-rg-creation.md)]
 
 ## <a name="create-a-key-vault"></a>创建密钥保管库
 
-接下来创建 Key Vault。 执行此步骤时，需要一些信息：
-
-虽然在本快速入门中我们始终使用“Contoso KeyVault2”作为密钥保管库的名称，但你必须使用唯一的名称。
-
-- **保管库名称** Contoso-Vault2。
-- 资源组名称 **ContosoResourceGroup**。
-- **位置**“美国东部”。
-
-```azurepowershell-interactive
-New-AzKeyVault -Name 'Contoso-Vault2' -ResourceGroupName 'ContosoResourceGroup' -Location 'East US'
-```
-
-此 cmdlet 的输出显示新创建的密钥保管库的属性。 请记下下面列出的两个属性：
-
-* **保管库名称**：在本示例中为 **Contoso-Vault2**。 将在其他密钥保管库 cmdlet 中使用此名称。
-* **保管库 URI**：在本示例中为 https://Contoso-Vault2.vault.azure.net/ 。 通过其 REST API 使用保管库的应用程序必须使用此 URI。
-
-创建保管库以后，你的 Azure 帐户是唯一能够对这个新的保管库执行任何操作的帐户。
+[!INCLUDE [Create a key vault](../../../includes/key-vault-powershell-kv-creation.md)]
 
 ## <a name="give-your-user-account-permissions-to-manage-secrets-in-key-vault"></a>向用户帐户授予管理 Key Vault 中的机密的权限
 
 使用 Azure PowerShell Set-AzKeyVaultAccessPolicy cmdlet 来更新 Key Vault 访问策略并向用户帐户授予机密权限。
+
 ```azurepowershell-interactive
-Set-AzKeyVaultAccessPolicy -VaultName 'Contoso-Vault2' -UserPrincipalName 'user@domain.com' -PermissionsToSecrets get,set,delete
+Set-AzKeyVaultAccessPolicy -VaultName "<your-unique-keyvault-name>" -UserPrincipalName "user@domain.com" -PermissionsToSecrets get,set,delete
 ```
 
 ## <a name="adding-a-secret-to-key-vault"></a>向 Key Vault 添加机密
@@ -77,19 +54,29 @@ Set-AzKeyVaultAccessPolicy -VaultName 'Contoso-Vault2' -UserPrincipalName 'user@
 先键入以下内容，将 **hVFkk965BuUv** 值转换成安全字符串：
 
 ```azurepowershell-interactive
-$secretvalue = ConvertTo-SecureString 'hVFkk965BuUv' -AsPlainText -Force
+$secretvalue = ConvertTo-SecureString "hVFkk965BuUv" -AsPlainText -Force
 ```
 
 然后键入以下 PowerShell 命令，在 Key Vault 中创建名为 **ExamplePassword** 且值为 **hVFkk965BuUv** 的机密：
 
+
 ```azurepowershell-interactive
-$secret = Set-AzKeyVaultSecret -VaultName 'Contoso-Vault2' -Name 'ExamplePassword' -SecretValue $secretvalue
+$secret = Set-AzKeyVaultSecret -VaultName "<your-unique-keyvault-name>" -Name "ExamplePassword" -SecretValue $secretvalue
 ```
+
+## <a name="retrieve-a-secret-from-key-vault"></a>从 Key Vault 检索机密
 
 若要查看机密中包含的纯文本形式的值，请执行以下命令：
 
 ```azurepowershell-interactive
-(Get-AzKeyVaultSecret -vaultName "Contoso-Vault2" -name "ExamplePassword").SecretValueText
+$secret = Get-AzKeyVaultSecret -VaultName "<your-unique-keyvault-name>" -Name "ExamplePassword"
+$ssPtr = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($secret.SecretValue)
+try {
+   $secretValueText = [System.Runtime.InteropServices.Marshal]::PtrToStringBSTR($ssPtr)
+} finally {
+   [System.Runtime.InteropServices.Marshal]::ZeroFreeBSTR($ssPtr)
+}
+Write-Output $secretValueText
 ```
 
 现在，你已创建 Key Vault 并存储和检索了机密。
@@ -109,5 +96,5 @@ Remove-AzResourceGroup -Name ContosoResourceGroup
 在本快速入门中，你创建了 Key Vault 并在其中存储了一个机密。 若要详细了解 Key Vault 以及如何将其与应用程序集成，请继续阅读以下文章。
 
 - 阅读 [Azure Key Vault 概述](../general/overview.md)
-- 请参阅 [Azure PowerShell Key Vault cmdlet](/powershell/module/az.keyvault/?view=azps-2.6.0#key_vault) 参考
-- 查看 [Azure Key Vault 最佳做法](../general/best-practices.md)
+- 请参阅 [Azure PowerShell Key Vault cmdlet](/powershell/module/az.keyvault/#key_vault) 参考
+- 请参阅 [Key Vault 安全性概述](../general/security-overview.md)

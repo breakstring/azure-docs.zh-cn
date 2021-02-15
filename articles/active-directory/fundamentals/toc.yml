@@ -25,6 +25,30 @@
   items:
     - name: 安全性
       items:
+        - name: 保护外部协作
+          items:
+            - name: 安全外部访问概述
+              href: secure-external-access-resources.md
+            - name: 1 确定要达到的安全状态
+              href: 1-secure-access-posture.md
+            - name: 2 确定当前状况
+              href: 2-secure-access-current-state.md
+            - name: 3 创建安全计划
+              href: 3-secure-access-plan.md
+            - name: 4 通过群组实现安全访问
+              href: 4-secure-access-groups.md
+            - name: 5 通过 B2B 协作实现安全访问
+              href: 5-secure-access-b2b.md
+            - name: 6 通过权利管理实现安全访问
+              href: 6-secure-access-entitlement-managment.md
+            - name: 7 通过条件访问实现安全访问
+              href: 7-secure-access-conditional-access.md
+            - name: 8 通过敏感度标签实现安全访问
+              href: 8-secure-access-sensitivity-labels.md
+            - name: 9 安全访问 Teams、SharePoint 和 OneDrive
+              href: 9-secure-access-teams-sharepoint.md
+        - name: 保护 Microsoft 365 免受本地攻击
+          href: protect-m365-from-on-premises-attacks.md
         - name: 启用 MFA
           href: concept-fundamentals-mfa-get-started.md
         - name: 安全默认值
@@ -35,8 +59,6 @@
           href: identity-secure-score.md
         - name: 保护远程辅助角色
           href: concept-secure-remote-workers.md
-        - name: 连续访问评估
-          href: concept-fundamentals-continuous-access-evaluation.md
     - name: 组和用户
       items:
         - name: 组和访问管理
@@ -51,6 +73,80 @@
           href: active-directory-architecture.md
         - name: 将所有应用与 Azure AD 集成
           href: five-steps-to-full-application-integration-with-azure-ad.md
+        - name: 身份验证和预配协议
+          items:
+            - name: 概述
+              href: auth-sync-overview.md
+            - name: 基于标头的身份验证
+              href: auth-header-based.md
+            - name: LDAP 身份验证
+              href: auth-ldap.md
+            - name: OAuth 2.0 身份验证
+              href: auth-oauth2.md
+            - name: Open ID Connect 身份验证
+              href: auth-oidc.md
+            - name: 基于密码的身份验证
+              href: auth-password-based-sso.md
+            - name: RADIUS 身份验证
+              href: auth-radius.md
+            - name: 远程桌面网关身份验证
+              href: auth-remote-desktop-gateway.md
+            - name: SAML 身份验证
+              href: auth-saml.md
+            - name: SSH 身份验证
+              href: auth-ssh.md
+            - name: Windows 身份验证 - KCD
+              href: auth-kcd.md
+            - name: 目录同步
+              href: sync-directory.md
+            - name: LDAP 同步
+              href: sync-ldap.md
+            - name: SCIM 同步
+              href: sync-scim.md
+        - name: 针对复原能力构建
+          items:
+            - name: 概述
+              href: resilience-overview.md
+            - name: 基础结构指导
+              items:
+                - name: 基础结构概述
+                  href: resilience-in-infrastructure.md
+                - name: 凭据管理
+                  href: resilience-in-credentials.md
+                - name: 设备状态
+                  href: resilience-with-device-states.md
+                - name: 连续访问评估
+                  href: resilience-with-continuous-access-evaluation.md
+                - name: 外部用户身份验证
+                  href: resilience-b2b-authentication.md
+                - name: 混合身份验证
+                  href: resilience-in-hybrid.md
+                - name: 应用程序代理
+                  href: resilience-on-premises-access.md
+            - name: Azure AD B2C 指导
+              items:
+                - name: Azure AD B2C 复原能力简介
+                  href: resilience-b2c.md
+                - name: 最终用户体验
+                  href: resilient-end-user-experience.md
+                - name: 与外部进程的接口
+                  href: resilient-external-processes.md
+                - name: Azure AD B2C 开发人员最佳做法
+                  href: resilience-b2c-developer-best-practices.md
+                - name: 监视和分析
+                  href: resilience-with-monitoring-alerting.md
+            - name: 应用程序开发指导
+              items:
+                - name: 开发概述
+                  href: resilience-app-development-overview.md
+                - name: 客户端应用程序
+                  href: resilience-client-app.md
+                - name: 守护程序应用程序
+                  href: resilience-daemon-app.md
+            - name: 监视应用程序运行状况以进行复原
+              href: monitor-sign-in-health-for-resilience.md
+        - name: Azure 中使用的证书颁发机构
+          href: certificate-authorities.md
     - name: 部署指南
       items:
         - name: 部署 30 天、90 天及之后的时间
@@ -90,6 +186,8 @@
           href: customize-branding.md
         - name: 配置“保持登录状态?”
           href: keep-me-signed-in.md
+        - name: 如何查找租户 ID
+          href: active-directory-how-to-find-tenant.md
         - name: 关联 Azure 订阅
           href: active-directory-how-subscriptions-associated-directory.md
         - name: 添加隐私信息

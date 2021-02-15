@@ -11,12 +11,12 @@ ms.workload: identity
 ms.topic: tutorial
 ms.date: 01/21/2019
 ms.author: jeedes
-ms.openlocfilehash: ed39064d4aee07554ce795be73732024e1b47f84
-ms.sourcegitcommit: 023d10b4127f50f301995d44f2b4499cbcffb8fc
+ms.openlocfilehash: 3337d66934c1fe317296cffaa9a663e212cce12d
+ms.sourcegitcommit: d79513b2589a62c52bddd9c7bd0b4d6498805dbe
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/18/2020
-ms.locfileid: "88549324"
+ms.lasthandoff: 12/18/2020
+ms.locfileid: "97673165"
 ---
 # <a name="tutorial-azure-active-directory-integration-with-clicktime"></a>教程：Azure Active Directory 与 ClickTime 的集成
 
@@ -27,7 +27,7 @@ ms.locfileid: "88549324"
 * 可以让用户使用其 Azure AD 帐户自动登录到 ClickTime（单一登录）。
 * 可在中心位置（即 Azure 门户）管理帐户。
 
-如果要了解有关 SaaS 应用与 Azure AD 集成的更多详细信息，请参阅 [Azure Active Directory 的应用程序访问与单一登录是什么](https://docs.microsoft.com/azure/active-directory/active-directory-appssoaccess-whatis)。
+如果要了解有关 SaaS 应用与 Azure AD 集成的更多详细信息，请参阅 [Azure Active Directory 的应用程序访问与单一登录是什么](../manage-apps/what-is-single-sign-on.md)。
 如果还没有 Azure 订阅，可以在开始前[创建一个免费帐户](https://azure.microsoft.com/free/)。
 
 ## <a name="prerequisites"></a>必备条件
@@ -63,7 +63,7 @@ ms.locfileid: "88549324"
 
 4. 在搜索框中，键入“ClickTime”，在结果面板中选择“ClickTime”，然后单击“添加”按钮添加该应用程序    。
 
-     ![结果列表中的 ClickTime](common/search-new-app.png)
+    ![结果列表中的 ClickTime](common/search-new-app.png)
 
 ## <a name="configure-and-test-azure-ad-single-sign-on"></a>配置和测试 Azure AD 单一登录
 
@@ -89,7 +89,7 @@ ms.locfileid: "88549324"
 
     ![配置单一登录链接](common/select-sso.png)
 
-2. 在**选择单一登录方法**对话框中，选择 **SAML/WS-Fed**模式以启用单一登录。
+2. 在 **选择单一登录方法** 对话框中，选择 **SAML/WS-Fed** 模式以启用单一登录。
 
     ![单一登录选择模式](common/select-saml-option.png)
 
@@ -104,13 +104,13 @@ ms.locfileid: "88549324"
     a. 在“标识符”文本框中键入 URL：`https://app.clicktime.com/sp/`
 
     b. 在“回复 URL”文本框中，使用以下模式键入 URL： 
-    
+
     ```http
     https://app.clicktime.com/Login/
     https://app.clicktime.com/App/Login/Consume.aspx
     ```
 
-4. 在“使用 SAML 设置单一登录”  页上，在“SAML 签名证书”  部分中，单击“下载”  以根据要求从给定的选项下载**证书(Base64)** 并将其保存在计算机上。
+4. 在“使用 SAML 设置单一登录”  页上，在“SAML 签名证书”  部分中，单击“下载”  以根据要求从给定的选项下载 **证书(Base64)** 并将其保存在计算机上。
 
     ![证书下载链接](common/certificatebase64.png)
 
@@ -131,15 +131,15 @@ ms.locfileid: "88549324"
 1. 在顶部工具栏中，单击“首选项”，并单击“安全设置”。  
 
 1. 在“单一登录首选项”  配置部分中，执行以下步骤：
-   
+
     ![安全设置](./media/clicktime-tutorial/tic777280.png "安全设置")
-   
+
     a.  选择“允许”通过“Azure AD”使用单一登录 (SSO) 进行登录。  
-   
-    b. 在“标识提供者终结点”  文本框中，粘贴从 Azure 门户复制的**登录 URL**。
-   
+
+    b. 在“标识提供者终结点”  文本框中，粘贴从 Azure 门户复制的 **登录 URL**。
+
     c.  在记事本中打开从 Azure 门户下载的 base-64 编码证书，复制内容，然后将其粘贴到“X.509 证书”文本框中    。
-   
+
     d.  单击“保存”  。
 
 ### <a name="create-an-azure-ad-test-user"></a>创建 Azure AD 测试用户 
@@ -159,7 +159,7 @@ ms.locfileid: "88549324"
     ![“用户”对话框](common/user-properties.png)
 
     a. 在“名称”  字段中，输入 BrittaSimon  。
-  
+
     b. 在“用户名”字段中，键入 brittasimon\@yourcompanydomain.extension  
     例如： BrittaSimon@contoso.com
 
@@ -206,37 +206,36 @@ ms.locfileid: "88549324"
 1. 登录到 **ClickTime** 租户。
 
 1. 在顶部工具栏中，单击“公司”，并单击“人员”。  
-   
-    ![People](./media/clicktime-tutorial/tic777282.png "人员")
+
+    ![屏幕截图显示已选择“公司”和“人员”的 ClickTime 租户。](./media/clicktime-tutorial/tic777282.png "人员")
 
 1. 单击“添加用户”  。
-   
+
     ![添加人员](./media/clicktime-tutorial/tic777283.png "添加人员")
 
 1. 在“新建人员”部分中，执行以下步骤：
-   
-    ![People](./media/clicktime-tutorial/tic777284.png "人员")
-   
+
+    ![屏幕截图显示“添加人员”部分，可在其中添加此步骤中的信息。](./media/clicktime-tutorial/tic777284.png "人员")
+
     a.  在“全名”文本框中，键入用户的全名，例如 Britta Simon   。 
-  
+
     b.  在“电子邮件地址”文本框中，键入用户的电子邮件，例如 brittasimon\@contoso.com。
-       
+
     > [!NOTE]
     > 如果需要，可以设置新人员对象的其他属性。
-   
+
     c.  单击“保存”  。
 
 ### <a name="test-single-sign-on"></a>测试单一登录 
 
 在本部分中，使用访问面板测试 Azure AD 单一登录配置。
 
-单击访问面板中的 ClickTime 磁贴时，应当会自动登录到为其设置了 SSO 的 ClickTime。 有关访问面板的详细信息，请参阅 [Introduction to the Access Panel](https://docs.microsoft.com/azure/active-directory/active-directory-saas-access-panel-introduction)（访问面板简介）。
+单击访问面板中的 ClickTime 磁贴时，应当会自动登录到为其设置了 SSO 的 ClickTime。 有关访问面板的详细信息，请参阅 [Introduction to the Access Panel](../user-help/my-apps-portal-end-user-access.md)（访问面板简介）。
 
 ## <a name="additional-resources"></a>其他资源
 
-- [有关如何将 SaaS 应用与 Azure Active Directory 集成的教程列表](https://docs.microsoft.com/azure/active-directory/active-directory-saas-tutorial-list)
+- [有关如何将 SaaS 应用与 Azure Active Directory 集成的教程列表](./tutorial-list.md)
 
-- [Azure Active Directory 的应用程序访问与单一登录是什么？](https://docs.microsoft.com/azure/active-directory/active-directory-appssoaccess-whatis)
+- [Azure Active Directory 的应用程序访问与单一登录是什么？](../manage-apps/what-is-single-sign-on.md)
 
-- [什么是 Azure Active Directory 中的条件访问？](https://docs.microsoft.com/azure/active-directory/conditional-access/overview)
-
+- [什么是 Azure Active Directory 中的条件访问？](../conditional-access/overview.md)

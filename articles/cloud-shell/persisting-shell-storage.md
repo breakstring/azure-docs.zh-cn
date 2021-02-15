@@ -14,12 +14,12 @@ ms.devlang: na
 ms.topic: article
 ms.date: 02/24/2020
 ms.author: damaerte
-ms.openlocfilehash: 37005a722d4a1962b4f6e1ddb8bb1c7a1229d28a
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: f1846c126e81ca5851cfbb1d782e5315ae10a82a
+ms.sourcegitcommit: dbe434f45f9d0f9d298076bf8c08672ceca416c6
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "81273284"
+ms.lasthandoff: 10/17/2020
+ms.locfileid: "92152266"
 ---
 # <a name="persist-files-in-azure-cloud-shell"></a>在 Azure Cloud Shell 中持久保存文件
 Cloud Shell 利用 Azure 文件存储在会话之间持久保存文件。 初始启动时，Cloud Shell 会提示关联新的或现有的文件共享，以便在会话之间持久保存文件。
@@ -55,7 +55,7 @@ Cloud Shell 利用 Azure 文件存储在会话之间持久保存文件。 初始
 ![资源组设置](media/persisting-shell-storage/advanced-storage.png)
 
 ## <a name="securing-storage-access"></a>保护存储访问
-安全起见，每个用户应预配自己的存储帐户。  对于基于角色的访问控制 (RBAC)，用户必须具有存储帐户级别的“参与者”访问权限或更高访问权限。
+安全起见，每个用户应预配自己的存储帐户。  对于 azure RBAC)  (Azure 基于角色的访问控制，用户必须在存储帐户级别具有参与者访问权限或更高权限。
 
 Cloud Shell 在指定订阅中的存储帐户内使用 Azure 文件共享。 由于继承了权限，对订阅拥有足够访问权限的用户将能够访问订阅中包含的所有存储帐户和文件共享。
 
@@ -66,7 +66,7 @@ Cloud Shell 在指定订阅中的存储帐户内使用 Azure 文件共享。 由
 
 Cloud Shell 计算机位于以下区域中：
 
-|区域|区域|
+|分区图|区域|
 |---|---|
 |美洲|美国东部、美国中南部、美国西部|
 |欧洲|欧洲北部、欧洲西部|
@@ -83,7 +83,7 @@ Cloud Shell 计算机位于以下区域中：
 用户可以 `(Get-CloudDrive | Get-AzStorageAccount).Location` 在 PowerShell 中运行以查看其文件共享的位置。
 
 ## <a name="restrict-resource-creation-with-an-azure-resource-policy"></a>根据 Azure 资源策略限制资源创建
-在 Cloud Shell 中创建的存储帐户都标记有 `ms-resource-usage:azure-cloud-shell`。 如果想禁止用户在 Cloud Shell 中创建存储帐户，请创建此特定标记触发的[适用于标记的 Azure 资源策略](../azure-policy/json-samples.md)。
+在 Cloud Shell 中创建的存储帐户都标记有 `ms-resource-usage:azure-cloud-shell`。 如果想禁止用户在 Cloud Shell 中创建存储帐户，请创建此特定标记触发的[适用于标记的 Azure 资源策略](../governance/policy/samples/index.md)。
 
 ## <a name="how-cloud-shell-storage-works"></a>Cloud Shell 存储的工作原理 
 Cloud Shell 通过以下两种方法持久保存文件： 
@@ -103,7 +103,7 @@ Cloud Shell 通过以下两种方法持久保存文件：
 ### <a name="list-clouddrive"></a>列出 `clouddrive`
 若要查明哪些文件共享已装载为 `clouddrive`，请运行 `df` 命令。 
 
-clouddrive 的文件路径会在 URL 中显示存储帐户名称和文件共享。 例如，`//storageaccountname.file.core.windows.net/filesharename`
+clouddrive 的文件路径会在 URL 中显示存储帐户名称和文件共享。 例如 `//storageaccountname.file.core.windows.net/filesharename`
 
 ```
 justin@Azure:~$ df
@@ -170,4 +170,4 @@ clouddrive mount -s mySubscription -g myRG -n storageAccountName -f fileShareNam
 ## <a name="next-steps"></a>后续步骤
 [Cloud Shell 快速入门](quickstart.md) <br>
 [了解 Microsoft Azure 文件存储](../storage/files/storage-files-introduction.md) <br>
-[了解存储标记](https://docs.microsoft.com/azure/azure-resource-manager/resource-group-using-tags) <br>
+[了解存储标记](../azure-resource-manager/management/tag-resources.md) <br>

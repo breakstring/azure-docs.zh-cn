@@ -1,35 +1,35 @@
 ---
 title: 教程 - 创建和部署模板
-description: 创建第一个 Azure 资源管理器模板。 本教程将介绍模板文件语法，以及如何部署存储帐户。
+description: 创建第一个 Azure 资源管理器模板（ARM 模板）。 本教程将介绍模板文件语法，以及如何部署存储帐户。
 author: mumian
-ms.date: 06/10/2020
+ms.date: 12/17/2020
 ms.topic: tutorial
 ms.author: jgao
-ms.custom: devx-track-azurecli
-ms.openlocfilehash: 140eb73cdf6d5bb701c08b0dd8d5f85b6f137df6
-ms.sourcegitcommit: 11e2521679415f05d3d2c4c49858940677c57900
+ms.custom: ''
+ms.openlocfilehash: 001a20c38a82d053ae22a2614a32f0be9d8aabce
+ms.sourcegitcommit: ad677fdb81f1a2a83ce72fa4f8a3a871f712599f
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/31/2020
-ms.locfileid: "87497471"
+ms.lasthandoff: 12/17/2020
+ms.locfileid: "97656982"
 ---
 # <a name="tutorial-create-and-deploy-your-first-arm-template"></a>教程：创建和部署第一个 ARM 模板
 
-本教程介绍 Azure 资源管理器 (ARM) 模板。 其中将会说明如何创建初学者模板并将其部署到 Azure。 本教程还将介绍模板的结构，以及使用模板时所需的工具。 完成本教程大约需要 **12 分钟**，但实际时间根据需要安装的工具数量而异。
+本教程介绍 Azure 资源管理器模板（ARM 模板）。 其中将会说明如何创建初学者模板并将其部署到 Azure。 本教程还将介绍模板的结构，以及使用模板时所需的工具。 完成本教程大约需要 **12 分钟**，但实际时间根据需要安装的工具数量而异。
 
 本文是相关教学系列的第一篇教程。 在学习该教学系列的过程中，你将逐步修改入门模板，直到了解了 ARM 模板的所有核心部分。 这些元素是更复杂的模板的构建基块。 我们希望在本教学系列结束时，你能够自信地创建自己的模板，并准备好使用这些模板自动完成部署。
 
-若要了解使用模板的好处，以及为何要使用模板自动完成部署，请参阅 [Azure 资源管理器模板](overview.md)。
+若要了解使用模板的好处，以及为何要使用模板自动完成部署，请参阅 [ARM 模板概述](overview.md)。 要通过 Microsoft Learn 上的一组引导式模块了解 ARM 模板，请参阅[使用 ARM 模板在 Azure 中部署和管理资源](/learn/paths/deploy-manage-resource-manager-templates/)。
 
 如果还没有 Azure 订阅，可以在开始前[创建一个免费帐户](https://azure.microsoft.com/free/)。
 
 ## <a name="get-tools"></a>获取工具
 
-首先，请确保已获取创建和部署模板所需的工具。
+首先，请确保已获取创建和部署模板所需的工具。 在本地计算机上安装这些工具。
 
 ### <a name="editor"></a>编辑器
 
-模板是一些 JSON 文件。 若要创建模板，需要一个好用的 JSON 编辑器。 我们建议使用带有资源管理器工具扩展的 Visual Studio Code。 如果需要安装这些工具，请参阅[快速入门：使用 Visual Studio Code 创建 Azure 资源管理器模板](quickstart-create-templates-use-visual-studio-code.md)。
+模板是一些 JSON 文件。 若要创建模板，需要一个好用的 JSON 编辑器。 我们建议使用带有资源管理器工具扩展的 Visual Studio Code。 如果需要安装这些工具，请参阅[快速入门：使用 Visual Studio Code 创建 ARM 模板](quickstart-create-templates-use-visual-studio-code.md)。
 
 ### <a name="command-line-deployment"></a>命令行部署
 
@@ -52,7 +52,7 @@ ms.locfileid: "87497471"
 1. 打开装有资源管理器工具扩展的 Visual Studio Code。
 1. 在“文件”菜单中，选择“新建文件”以创建新的文件。 
 1. 在“文件”菜单中选择“另存为”。 
-1. 将该文件命名为 **azuredeploy**，然后选择“JSON”文件扩展名。 完整的文件名为 **azuredeploy.json**。
+1. 将该文件命名为 azuredeploy，然后选择“json”文件扩展名 。 完整的文件名为 azuredeploy.json。
 1. 将该文件保存到工作站。 选择容易记住的路径，因为稍后在部署模板时需要提供该路径。
 1. 将以下 JSON 内容复制并粘贴到该文件中：
 
@@ -64,17 +64,17 @@ ms.locfileid: "87497471"
     }
     ```
 
-    VS Code 环境如下所示：
+    Visual Studio Code 环境如下所示：
 
-    ![资源管理器模板 - Visual Studio Code First 模板](./media/template-tutorial-create-first-template/resource-manager-visual-studio-code-first-template.png)
+    ![ARM 模板 Visual Studio Code First 模板](./media/template-tutorial-create-first-template/resource-manager-visual-studio-code-first-template.png)
 
     此模板不部署任何资源。 我们从一个空白模板开始，以便可以熟悉模板的部署步骤，同时尽量减少出错的可能性。
 
     JSON 文件包含以下元素：
 
-    - **$schema**：指定 JSON 架构文件的位置。 架构文件描述模板中可用的属性。 例如，架构定义 **resources** 作为模板的有效属性之一。 不要担心架构的日期为 2019-04-01。 此架构版本是最新的，其中包含所有最新功能。 之所以未更改架构日期，是因为自从推出以来，它尚未发生重大更改。
-    - **contentVersion**：指定模板的版本（例如 1.0.0.0）。 可为此元素提供任意值。 使用此值记录模板中的重要更改。 使用模板部署资源时，此值可用于确保使用正确的模板。
-    - **resources**：包含要部署或更新的资源。 此元素目前是空的，但稍后要添加资源。
+    - `$schema`：指定 JSON 架构文件的位置。 架构文件描述模板中可用的属性。 例如，架构定义 `resources` 作为模板的有效属性之一。 不要担心架构的日期为 2019-04-01。 此架构版本是最新的，其中包含所有最新功能。 之所以未更改架构日期，是因为自从推出以来，它尚未发生重大更改。
+    - `contentVersion`：指定模板的版本（例如 1.0.0.0）。 可为此元素提供任意值。 使用此值记录模板中的重要更改。 使用模板部署资源时，此值可用于确保使用正确的模板。
+    - `resources`：包含要部署或更新的资源。 此元素目前是空的，但稍后要添加资源。
 
 1. 保存文件。
 
@@ -83,6 +83,8 @@ ms.locfileid: "87497471"
 ## <a name="sign-in-to-azure"></a>登录 Azure
 
 若要开始使用 Azure PowerShell/Azure CLI，请使用你的 Azure 凭据登录。
+
+使用以下代码部分中的选项卡在 Azure PowerShell 与 Azure CLI 之间进行选择。 本文中的 CLI 示例针对 Bash shell 编写。
 
 # <a name="powershell"></a>[PowerShell](#tab/azure-powershell)
 
@@ -98,7 +100,7 @@ az login
 
 ---
 
-如果你有多个 Azure 订阅，请选择要使用的订阅：
+如果你有多个 Azure 订阅，请选择要使用的订阅。 将 `[SubscriptionID/SubscriptionName]` 和方括号 `[]` 替换为你的订阅信息：
 
 # <a name="powershell"></a>[PowerShell](#tab/azure-powershell)
 
@@ -114,10 +116,9 @@ az account set --subscription [SubscriptionID/SubscriptionName]
 
 ---
 
-
 ## <a name="create-resource-group"></a>创建资源组
 
-部署模板时，请指定一个包含资源的资源组。 在运行部署命令之前，请使用 Azure CLI 或 Azure PowerShell 创建该资源组。 使用以下代码部分中的选项卡在 Azure PowerShell 与 Azure CLI 之间进行选择。 本文中的 CLI 示例针对 Bash shell 编写。
+部署模板时，请指定一个包含资源的资源组。 在运行部署命令之前，请使用 Azure CLI 或 Azure PowerShell 创建该资源组。
 
 # <a name="powershell"></a>[PowerShell](#tab/azure-powershell)
 
@@ -139,7 +140,7 @@ az group create \
 
 ## <a name="deploy-template"></a>部署模板
 
-若要部署模板，请使用 Azure CLI 或 Azure PowerShell。 使用创建的资源组。 为部署指定一个适当的名称，以便可以在部署历史记录中轻松识别该部署。 为方便起见，另请创建一个用于存储模板文件路径的变量。 使用此变量可以更轻松地运行部署命令，因为无需在每次部署时重新键入路径。
+若要部署模板，请使用 Azure CLI 或 Azure PowerShell。 使用创建的资源组。 为部署指定一个适当的名称，以便可以在部署历史记录中轻松识别该部署。 为方便起见，另请创建一个用于存储模板文件路径的变量。 使用此变量可以更轻松地运行部署命令，因为无需在每次部署时重新键入路径。 将 `{provide-the-path-to-the-template-file}` 和花括号 `{}` 替换为模板文件的路径。
 
 # <a name="powershell"></a>[PowerShell](#tab/azure-powershell)
 
@@ -178,15 +179,15 @@ az deployment group create \
 ---
 
 > [!NOTE]
-> 如果部署失败，请将 **debug** 开关和部署命令配合使用来显示调试日志。  还可以使用 **verbose** 开关来显示完整的调试日志。
+> 如果部署失败，请使用 `verbose` 开关获取有关正在创建的资源的信息。 使用 `debug` 开关获取调试的详细信息。
 
 ## <a name="verify-deployment"></a>验证部署
 
 可以通过在 Azure 门户中浏览资源组来验证部署。
 
-1. 登录 [Azure 门户](https://portal.azure.com)。
+1. 登录到 [Azure 门户](https://portal.azure.com)。
 
-1. 在左侧菜单中选择“资源组”。
+1. 在左侧菜单中选择“资源组”。 
 
 1. 选择在上一过程中部署的资源组。 默认名称为 **myResourceGroup**。 你应会看到，该资源组中未部署任何资源。
 

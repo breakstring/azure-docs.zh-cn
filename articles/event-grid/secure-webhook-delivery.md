@@ -1,14 +1,14 @@
 ---
 title: 在 Azure 事件网格中使用 Azure AD 进行安全的 WebHook 传递
 description: 介绍如何将事件传递到受到 Azure Active Directory 通过 Azure 事件网格进行保护的 HTTPS 终结点
-ms.topic: conceptual
-ms.date: 07/07/2020
-ms.openlocfilehash: 90d06f203bc93177101a87a7a774d816b11b16f6
-ms.sourcegitcommit: f988fc0f13266cea6e86ce618f2b511ce69bbb96
+ms.topic: how-to
+ms.date: 02/03/2021
+ms.openlocfilehash: b01f0342e185883c4d1552800ab9bdb30cea3040
+ms.sourcegitcommit: 5b926f173fe52f92fcd882d86707df8315b28667
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/31/2020
-ms.locfileid: "87460705"
+ms.lasthandoff: 02/04/2021
+ms.locfileid: "99549146"
 ---
 # <a name="publish-events-to-azure-active-directory-protected-endpoints"></a>将事件发布到受 Azure Active Directory 保护的终结点
 
@@ -16,7 +16,6 @@ ms.locfileid: "87460705"
 
 本文使用 Azure 门户进行演示，但也可通过 CLI、PowerShell 或 SDK 来启用此功能。
 
-[!INCLUDE [event-grid-preview-feature-note.md](../../includes/event-grid-preview-feature-note.md)]
 
 ## <a name="create-an-azure-ad-application"></a>创建 Azure AD 应用程序
 
@@ -24,27 +23,46 @@ ms.locfileid: "87460705"
     - 将受保护的 API 配置为通过守护程序应用进行调用。
     
 ## <a name="enable-event-grid-to-use-your-azure-ad-application"></a>允许事件网格使用 Azure AD 应用程序
+本部分说明如何启用事件网格来使用 Azure AD 应用程序。 
 
-使用下面的 PowerShell 脚本在 Azure AD 应用程序中创建角色和服务主体。 需要来自 Azure AD 应用程序的租户 ID 和对象 ID：
+> [!NOTE]
+> 你必须是 [Azure AD 应用程序管理员角色](../active-directory/roles/permissions-reference.md#available-roles)的成员才能执行此脚本。
 
-   > [!NOTE]
-   > 你必须是 [Azure AD 应用程序管理员角色](../active-directory/users-groups-roles/directory-assign-admin-roles.md#available-roles)的成员才能执行此脚本。
-    
-1. 修改 PowerShell 脚本的 $myTenantId，以便使用 Azure AD 租户 ID。
-1. 修改 PowerShell 脚本的 $myAzureADApplicationObjectId，以便使用 Azure AD 应用程序的对象 ID。
-1. 运行修改的脚本。
+### <a name="connect-to-your-azure-tenant"></a>连接到 Azure 租户
+首先，使用 `Connect-AzureAD` 命令连接到 Azure 租户。 
 
 ```PowerShell
 # This is your Tenant Id. 
 $myTenantId = "<the Tenant Id of your Azure AD Application>"
-
 Connect-AzureAD -TenantId $myTenantId
-    
-# This is your Azure AD Application's ObjectId. 
-$myAzureADApplicationObjectId = "<the Object Id of your Azure AD Application>"
-    
+```
+
+### <a name="create-microsofteventgrid-service-principal"></a>创建 Microsoft.EventGrid 服务主体
+运行以下脚本，为 Microsoft.EventGrid 创建服务主体（如果尚不存在）。 
+
+```PowerShell
 # This is the "Azure Event Grid" Azure Active Directory AppId
 $eventGridAppId = "4962773b-9cdb-44cf-a8bf-237846a00ab7"
+    
+$eventGridSP = Get-AzureADServicePrincipal -Filter ("appId eq '" + $eventGridAppId + "'")
+
+# Create the service principal if it doesn't exist
+if ($eventGridSP -match "Microsoft.EventGrid")
+{
+    Write-Host "The Service principal is already defined.`n"
+} else
+{
+    # Create a service principal for the "Azure Event Grid" Azure AD Application and add it to the role
+    $eventGridSP = New-AzureADServicePrincipal -AppId $eventGridAppId
+}
+```
+
+### <a name="create-a-role-for-your-application"></a>为应用程序创建角色   
+运行以下脚本，为你的 Azure AD 应用程序创建角色。 在此示例中，角色名称为：AzureEventGridSecureWebhook。 修改 PowerShell 脚本的 `$myTenantId` 以使用 Azure AD 租户 ID，并使用 Azure AD 应用程序的对象 ID 修改 `$myAzureADApplicationObjectId`
+
+```PowerShell
+# This is your Azure AD Application's ObjectId. 
+$myAzureADApplicationObjectId = "<the Object Id of your Azure AD Application>"
     
 # This is the name of the new role we will add to your Azure AD Application
 $eventGridRoleName = "AzureEventGridSecureWebhook"
@@ -62,11 +80,10 @@ Function CreateAppRole([string] $Name, [string] $Description)
     $appRole.Value = $Name;
     return $appRole
 }
-    
+
 # Get my Azure AD Application, it's roles and service principal
 $myApp = Get-AzureADApplication -ObjectId $myAzureADApplicationObjectId
 $myAppRoles = $myApp.AppRoles
-$eventGridSP = Get-AzureADServicePrincipal -Filter ("appId eq '" + $eventGridAppId + "'")
 
 Write-Host "App Roles before addition of new role.."
 Write-Host $myAppRoles
@@ -75,8 +92,8 @@ Write-Host $myAppRoles
 if ($myAppRoles -match $eventGridRoleName)
 {
     Write-Host "The Azure Event Grid role is already defined.`n"
-}
-else
+    $myServicePrincipal = Get-AzureADServicePrincipal -Filter ("appId eq '" + $myApp.AppId + "'")
+} else
 {
     $myServicePrincipal = Get-AzureADServicePrincipal -Filter ("appId eq '" + $myApp.AppId + "'")
     
@@ -85,25 +102,25 @@ else
     $myAppRoles.Add($newRole)
     Set-AzureADApplication -ObjectId $myApp.ObjectId -AppRoles $myAppRoles
 }
-    
-# Create the service principal if it doesn't exist
-if ($eventGridSP -match "Microsoft.EventGrid")
-{
-    Write-Host "The Service principal is already defined.`n"
-}
-else
-{
-    # Create a service principal for the "Azure Event Grid" Azure AD Application and add it to the role
-    $eventGridSP = New-AzureADServicePrincipal -AppId $eventGridAppId
-}
-    
+
+# print application's roles
+Write-Host "My Azure AD Application's Roles: "
+Write-Host $myAppRoles
+```
+
+### <a name="add-event-grid-service-principal-to-the-role"></a>将事件网格服务主体添加到角色    
+现在，运行 `New-AzureADServiceAppRoleAssignment` 命令，将事件网格服务主体分配给你在上一步中创建的角色。 
+
+```powershell
 New-AzureADServiceAppRoleAssignment -Id $myApp.AppRoles[0].Id -ResourceId $myServicePrincipal.ObjectId -ObjectId $eventGridSP.ObjectId -PrincipalId $eventGridSP.ObjectId
-    
+```
+
+运行以下命令以输出将使用后续步骤的信息。 
+
+```powershell    
 Write-Host "My Azure AD Tenant Id: $myTenantId"
 Write-Host "My Azure AD Application Id: $($myApp.AppId)"
 Write-Host "My Azure AD Application ObjectId: $($myApp.ObjectId)"
-Write-Host "My Azure AD Application's Roles: "
-Write-Host $myApp.AppRoles
 ```
     
 ## <a name="configure-the-event-subscription"></a>配置事件订阅

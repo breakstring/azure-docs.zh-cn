@@ -1,17 +1,17 @@
 ---
 title: 外部错误代码 - Azure 流分析
 description: 通过外部错误代码对 Azure 流分析进行故障排除。
-ms.author: mamccrea
-author: mamccrea
+ms.author: sidram
+author: sidramadoss
 ms.topic: troubleshooting
 ms.date: 05/07/2020
 ms.service: stream-analytics
-ms.openlocfilehash: f963f4c3538146b7f9929960092a18294659be5d
-ms.sourcegitcommit: e132633b9c3a53b3ead101ea2711570e60d67b83
+ms.openlocfilehash: 9f55a715b11b126ea340e665e008d7245e578190
+ms.sourcegitcommit: 42a4d0e8fa84609bec0f6c241abe1c20036b9575
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/07/2020
-ms.locfileid: "86045240"
+ms.lasthandoff: 01/08/2021
+ms.locfileid: "98016382"
 ---
 # <a name="azure-stream-analytics-external-error-codes"></a>Azure 流分析外部错误代码
 
@@ -85,11 +85,11 @@ ms.locfileid: "86045240"
 
 ## <a name="sqldwoutputinitializationerror"></a>SQLDWOutputInitializationError
 
-* **原因**：初始化 Synapse SQL 池输出时出错。
+* **原因：** 初始化专用 SQL 池输出时出错。
 
 ## <a name="sqldwoutputwriteerror"></a>SQLDWOutputWriteError
 
-* **原因**：将输出写入 Synapse SQL 池时出错。
+* **原因：** 将输出写入专用 SQL 池时出错。
 
 ## <a name="next-steps"></a>后续步骤
 

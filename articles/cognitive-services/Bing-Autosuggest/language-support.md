@@ -10,14 +10,19 @@ ms.subservice: bing-autosuggest
 ms.topic: conceptual
 ms.date: 02/20/2019
 ms.author: scottwhi
-ms.openlocfilehash: 6fe2e78501024983544b399762fb936d86e5c9d5
-ms.sourcegitcommit: 58faa9fcbd62f3ac37ff0a65ab9357a01051a64f
+ms.openlocfilehash: 90946b10bbc7717aa12566c4a25686f8471fb6e7
+ms.sourcegitcommit: 9eda79ea41c60d58a4ceab63d424d6866b38b82d
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/28/2020
-ms.locfileid: "60547330"
+ms.lasthandoff: 11/30/2020
+ms.locfileid: "96353351"
 ---
 # <a name="language-and-region-support-for-the-bing-autosuggest-api"></a>必应自动推荐 API 的语言和区域支持
+
+> [!WARNING]
+> 必应搜索 API 将从认知服务迁移到必应搜索服务。 从 2020 年 10 月 30 日开始，必应搜索的任何新实例都需按照[此处](/bing/search-apis/bing-web-search/create-bing-search-service-resource)所述的过程进行预配。
+> 使用认知服务进行预配的必应搜索 API 将在未来三年或在企业协议结束前（以先发生者为准）得到支持。
+> 有关迁移说明，请参阅[必应搜索服务](/bing/search-apis/bing-web-search/create-bing-search-service-resource)。
 
 下面列出了必应自动推荐 API 支持的语言。
 
@@ -34,7 +39,7 @@ ms.locfileid: "60547330"
 | 英语（加拿大）     | `en-CA`          |
 | 英语（印度）    | `en-IN`          |
 | 英语(印度尼西亚)     | `en-ID`          |
-| 英语（马来西亚）     | `en-MY`          |
+| 英语(马来西亚)     | `en-MY`          |
 | 英语（新西兰）    | `en-NZ`          |
 | 英语（菲律宾）     | `en-PH`          |
 | 英语（南非）    | `en-ZA`          |
@@ -50,11 +55,11 @@ ms.locfileid: "60547330"
 | 德语（瑞士）      | `de-CH`          |
 | 意大利语     | `it`          |
 | 日语    | `ja`          |
-| 朝鲜语      | `ko`          |
+| 韩语      | `ko`          |
 | 挪威语   | `no`          |
 | 波兰语      | `pl`          |
 | 葡萄牙语（巴西）   | `pt-BR`|
-| 葡萄牙语(葡萄牙) | `pt-PT`|
+| 葡萄牙语（葡萄牙） | `pt-PT`|
 | 俄语     | `ru`          |
 | 西班牙语（阿根廷）    | `es-AR`          |
 | 西班牙语（智利）     | `es-CL`          |
@@ -66,5 +71,5 @@ ms.locfileid: "60547330"
 
 ## <a name="see-also"></a>请参阅
 
-- [Azure 认知服务文档页](https://docs.microsoft.com/azure/cognitive-services/)
+- [Azure 认知服务文档页](../index.yml)
 - [Azure 认知服务产品页](https://azure.microsoft.com/services/cognitive-services/)

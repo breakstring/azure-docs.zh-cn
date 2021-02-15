@@ -3,7 +3,7 @@ title: 用于跨域标识管理的系统的已知问题 (SCIM) 2.0 协议符合�
 description: 如何解决将支持 SCIM 2.0 的非库应用程序添加到 Azure AD 时面临的常见协议兼容性问题
 services: active-directory
 author: kenwith
-manager: celestedg
+manager: daveba
 ms.service: active-directory
 ms.subservice: app-provisioning
 ms.workload: identity
@@ -11,12 +11,12 @@ ms.topic: reference
 ms.date: 08/05/2020
 ms.author: kenwith
 ms.reviewer: arvinh
-ms.openlocfilehash: 39a4cbd5ffd04aa3346b1ce4f3b73576b92c4d3b
-ms.sourcegitcommit: d8b8768d62672e9c287a04f2578383d0eb857950
+ms.openlocfilehash: d13629b4cb05995b9652e862f769a0ffcae30a8c
+ms.sourcegitcommit: d49bd223e44ade094264b4c58f7192a57729bada
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/11/2020
-ms.locfileid: "88065482"
+ms.lasthandoff: 02/02/2021
+ms.locfileid: "99256892"
 ---
 # <a name="known-issues-and-resolutions-with-scim-20-protocol-compliance-of-the-azure-ad-user-provisioning-service"></a>Azure AD 用户预配服务 SCIM 2.0 协议合规性的已知问题和解决方法
 
@@ -27,7 +27,7 @@ Azure AD 对 SCIM 2.0 协议的支持在[使用跨域身份管理系统 (SCIM) �
 本文介绍 Azure AD 用户预配服务遵循 SCIM 2.0 协议当前和过去面临的问题，以及如何解决这些问题。
 
 ## <a name="understanding-the-provisioning-job"></a>了解预配作业
-预配服务使用作业的概念来针对应用程序进行操作。 可在[进度栏](application-provisioning-when-will-provisioning-finish-specific-user.md#view-the-provisioning-progress-bar)中找到 jobID。 所有新的预配应用程序都是使用以 "scim" 开头的 jobID 创建的。 Scim 作业表示服务的当前状态。 旧作业的 ID 为 "customappsso"。 此作业表示服务在2018中的状态。 
+预配服务使用作业的概念来针对应用程序进行操作。 可在 [进度栏](application-provisioning-when-will-provisioning-finish-specific-user.md#view-the-provisioning-progress-bar)中找到 jobID。 所有新的预配应用程序都是使用以 "scim" 开头的 jobID 创建的。 Scim 作业表示服务的当前状态。 旧作业的 ID 为 "customappsso"。 此作业表示服务在2018中的状态。 
 
 如果使用的是库中的应用程序，则作业通常包含应用的名称 (例如，缩放雪花、dataBricks 等 ) 。 使用库应用程序时，可以跳过此文档。 这主要适用于 jobID 为 SCIM 或 customAppSSO 的非库应用程序。
 
@@ -50,7 +50,7 @@ Azure AD 对 SCIM 2.0 协议的支持在[使用跨域身份管理系统 (SCIM) �
 
 :::image type="content" source="media/application-provisioning-config-problem-scim-compatibility/scim-flags.jpg" alt-text="将标志 SCIM 为更高的行为。":::
 
-* 使用以下 URL 更新修补程序行为，并确保 SCIM 符合性 (例如，作为布尔值进行活动，并) 正确地删除组成员身份。 此行为当前仅在使用标志时才可用，但会成为今后几个月的默认行为。
+* 使用以下 URL 更新修补程序行为，并确保 SCIM 符合性 (例如，作为布尔值进行活动，并) 正确地删除组成员身份。 此行为当前仅在使用标志时才可用，但会成为今后几个月的默认行为。 请注意，此预览标志目前不适用于按需预配。 
   * **URL (符合 SCIM 的) ：** AzureAdScimPatch062020
   * **SCIM RFC 参考：** 
     * https://tools.ietf.org/html/rfc7644#section-3.5.2
@@ -151,8 +151,8 @@ Azure AD 对 SCIM 2.0 协议的支持在[使用跨域身份管理系统 (SCIM) �
 按照以下步骤操作将删除现有的 customappsso 作业，并创建新的 scim 作业。 
  
 1. 登录 Azure 门户：https://portal.azure.com。
-2. 在 Azure 门户的“Azure Active Directory”>“企业应用程序”部分，找到并选择现有 SCIM 应用程序****。
-3. 在现有 SCIM 应用的“属性”部分，复制“对象 ID”********。
+2. 在 Azure 门户的“Azure Active Directory”>“企业应用程序”部分，找到并选择现有 SCIM 应用程序。
+3. 在现有 SCIM 应用的“属性”部分，复制“对象 ID”。
 4. 在新的 Web 浏览器窗口中，转到 https://developer.microsoft.com/graph/graph-explorer 并以要向其中添加应用的 Azure AD 租户的管理员身份登录。
 5. 在 Graph 资源管理器中，运行以下命令以找到预配作业的 ID。 将“[object-id]”替换为从第三步复制的服务主体 ID（对象 ID）。
  
@@ -183,15 +183,15 @@ Azure AD 对 SCIM 2.0 协议的支持在[使用跨域身份管理系统 (SCIM) �
  `POST https://graph.microsoft.com/beta/servicePrincipals/[object-id]/synchronization/jobs/[new-job-id]/schema`
  `{   <your-schema-json-here>   }`
 
-12. 返回第一个 Web 浏览器窗口，选择应用程序的“预配”选项卡****。
+12. 返回第一个 Web 浏览器窗口，选择应用程序的“预配”选项卡。
 13. 验证配置，然后启动预配作业。 
 
 ## <a name="downgrading-from-the-scim-job-to-the-customappsso-job-not-recommended"></a>不建议将 SCIM 作业从作业降级到 customappsso 作业 () 
  我们允许降级到旧行为，但不建议这样做，因为 customappsso 不能从我们所做的某些更新中获益，而且可能不会被永久支持。 
 
 1. 登录 Azure 门户：https://portal.azure.com。
-2. 在 Azure 门户的“Azure Active Directory”>“企业应用程序”>“创建应用程序”部分，创建新的“非库”应用程序********。
-3. 在新的自定义应用的“属性”部分，复制“对象 ID”********。
+2. 在 Azure 门户的“Azure Active Directory”>“企业应用程序”>“创建应用程序”部分，创建新的“非库”应用程序。
+3. 在新的自定义应用的“属性”部分，复制“对象 ID”。
 4. 在新的 Web 浏览器窗口中，转到 https://developer.microsoft.com/graph/graph-explorer 并以要向其中添加应用的 Azure AD 租户的管理员身份登录。
 5. 在 Graph 资源管理器中，运行以下命令，初始化应用的预配配置。
    将“[object-id]”替换为从第三步复制的服务主体 ID（对象 ID）。
@@ -199,7 +199,7 @@ Azure AD 对 SCIM 2.0 协议的支持在[使用跨域身份管理系统 (SCIM) �
    `POST https://graph.microsoft.com/beta/servicePrincipals/[object-id]/synchronization/jobs`
    `{   templateId: "customappsso"   }`
  
-6. 返回第一个 Web 浏览器窗口，选择应用程序的“预配”选项卡****。
+6. 返回第一个 Web 浏览器窗口，选择应用程序的“预配”选项卡。
 7. 照常完成用户预配配置。
 
 

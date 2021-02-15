@@ -1,21 +1,25 @@
 ---
-title: Azure 云服务的虚拟机大小 | Microsoft 文档
+title: " (经典) 的 Azure 云服务的虚拟机大小 |Microsoft Docs"
 description: 列出 Azure 云服务 Web 角色和辅助角色的不同虚拟机大小（及 ID）。
-services: cloud-services
-documentationcenter: ''
-author: tgore03
-ms.service: cloud-services
 ms.topic: article
-ms.date: 07/18/2017
+ms.service: cloud-services
+ms.date: 10/14/2020
 ms.author: tagore
-ms.openlocfilehash: 2549cb0408c9dad3e92f2cec9625757de45a10dc
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+author: tanmaygore
+ms.reviewer: mimckitt
+ms.custom: ''
+ms.openlocfilehash: 55fa3ab4e5bd4472f7dae9692ae3ac9bcfa8e2b6
+ms.sourcegitcommit: 6272bc01d8bdb833d43c56375bab1841a9c380a5
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "82086243"
+ms.lasthandoff: 01/23/2021
+ms.locfileid: "98743162"
 ---
-# <a name="sizes-for-cloud-services"></a>云服务的大小
+# <a name="sizes-for-cloud-services-classic"></a>云服务的大小 (经典) 
+
+> [!IMPORTANT]
+> [Azure 云服务 (扩展支持) ](../cloud-services-extended-support/overview.md) 是适用于 Azure 云服务产品的新的基于 azure 资源管理器的部署模型。进行此更改后，基于 Azure Service Manager 的部署模型运行的 Azure 云服务已重命名为云服务 (经典) ，所有新部署应使用 [云服务 (扩展支持) ](../cloud-services-extended-support/overview.md)。
+
 本主题介绍云服务角色实例（Web 角色和辅助角色）的可用大小和选项。 此外，还提供了在计划使用这些资源时要考虑的部署注意事项。 每个大小都具有会放入[服务定义文件](cloud-services-model-and-package.md#csdef)中的 ID。 [云服务定价](https://azure.microsoft.com/pricing/details/cloud-services/)页提供每种大小的价格。
 
 > [!NOTE]
@@ -36,7 +40,7 @@ Azure 上有多个标准大小可供选择。 其中某些大小的注意事项�
 
 以下注意事项可能有助于确定大小：
 
-* A8-A11 和 H 系列大小也称为 *计算密集型实例*。 运行这些大小的硬件专为计算密集型和网络密集型应用程序而设计和优化，包括高性能计算 (HPC) 群集应用程序、建模和模拟。 A8-A11 系列使用 Intel Xeon E5-2670 @ 2.6 GHZ，H 系列使用 Intel Xeon E5-2667 v3 @ 3.2 GHz。 有关如何使用这些大小的详细信息和注意事项，请参阅[高性能计算 VM 大小](../virtual-machines/windows/sizes-hpc.md?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json)。
+* A8-A11 和 H 系列大小也称为 *计算密集型实例*。 运行这些大小的硬件专为计算密集型和网络密集型应用程序而设计和优化，包括高性能计算 (HPC) 群集应用程序、建模和模拟。 A8-A11 系列使用 Intel Xeon E5-2670 @ 2.6 GHZ，H 系列使用 Intel Xeon E5-2667 v3 @ 3.2 GHz。 有关如何使用这些大小的详细信息和注意事项，请参阅[高性能计算 VM 大小](../virtual-machines/sizes-hpc.md?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json)。
 * Dv3 系列、Dv2 系列、D 系列和 G 系列是要求有更快速的 CPU、更好的本地磁盘性能，或更高内存的应用程序的理想选择。 它们为许多企业级应用程序提供强大的组合。
 * Azure 数据中心内的一些物理主机可能不支持更大的虚拟机大小，例如 A5 – A11。 因此，在以下情况下，可能会显示错误消息“未能配置虚拟机 {虚拟机名称}”或“未能创建虚拟机 {虚拟机名称}”：将现有虚拟机的大小调整为新的大小时；在 2013 年 4 月 16 日之前创建的虚拟网络中创建新的虚拟机时；或者向现有的云服务中添加新的虚拟机时 。 有关每个部署方案的解决方法，请参阅支持论坛上的[错误：“无法配置虚拟机”](https://social.msdn.microsoft.com/Forums/9693f56c-fcd3-4d42-850e-5e3b56c7d6be/error-failed-to-configure-virtual-machine-with-a5-a6-or-a7-vm-size?forum=WAVirtualMachinesforWindows)。
 * 订阅也可能会限制某些大小系列中可部署的核心数。 若要增加配额，请联系 Azure 支持。
@@ -88,7 +92,7 @@ ACU 标有 *使用 Intel® Turbo 技术来增加 CPU 频率，并提升性能。
 | A7              | 8         | 56           | 2040                 | 4/高 |
 
 ## <a name="a-series---compute-intensive-instances"></a>A 系列 - 计算密集型实例
-有关如何使用这些大小的信息和注意事项，请参阅[高性能计算 VM 大小](../virtual-machines/windows/sizes-hpc.md?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json)。
+有关如何使用这些大小的信息和注意事项，请参阅[高性能计算 VM 大小](../virtual-machines/sizes-hpc.md?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json)。
 
 | 大小            | CPU 核心数 | 内存：GiB  | 临时存储：GiB       | 最大网卡数/网络带宽等级 |
 |---------------- | --------- | ------------ | -------------------- | ---------------------------- |
@@ -217,7 +221,4 @@ Get-AzureRoleSize | where SupportedByWebWorkerRoles -eq $true | select InstanceS
 
 ## <a name="next-steps"></a>后续步骤
 * 了解 [Azure 订阅和服务的限制、配额和约束](../azure-resource-manager/management/azure-subscription-service-limits.md)。
-* 针对 HPC 工作负荷，了解关于[高性能计算 VM 大小](../virtual-machines/windows/sizes-hpc.md?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json)的详细信息。
-
-
-
+* 针对 HPC 工作负荷，了解关于[高性能计算 VM 大小](../virtual-machines/sizes-hpc.md?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json)的详细信息。

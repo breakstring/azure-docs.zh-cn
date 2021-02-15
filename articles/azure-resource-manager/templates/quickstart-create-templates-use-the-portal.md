@@ -1,20 +1,20 @@
 ---
 title: 部署模板 - Azure 门户
-description: 了解如何使用 Azure 门户创建第一个 Azure 资源管理器模板，以及如何部署该模板。
+description: 了解如何使用 Azure 门户创建第一个 Azure 资源管理器模板（ARM 模板），以及如何部署该模板。
 author: mumian
-ms.date: 06/29/2020
+ms.date: 01/26/2021
 ms.topic: quickstart
 ms.author: jgao
-ms.openlocfilehash: ff6c459f2f4178bee6b6b564e177c097d72592a3
-ms.sourcegitcommit: 73ac360f37053a3321e8be23236b32d4f8fb30cf
+ms.openlocfilehash: 946156caa7252a89cab006d604eb6b441e09c643
+ms.sourcegitcommit: 100390fefd8f1c48173c51b71650c8ca1b26f711
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 06/30/2020
-ms.locfileid: "85557310"
+ms.lasthandoff: 01/27/2021
+ms.locfileid: "98892486"
 ---
 # <a name="quickstart-create-and-deploy-arm-templates-by-using-the-azure-portal"></a>快速入门：使用 Azure 门户创建和部署 ARM 模板
 
-了解如何使用 Azure 门户生成 Azure 资源管理器 (ARM) 模板，以及从门户编辑和部署该模板的过程。 ARM 模板为 JSON 文件，用于定义针对解决方案进行部署时所需的资源。 若要了解与部署和管理 Azure 解决方案关联的概念，请参阅[模板部署概述](overview.md)。
+了解如何使用 Azure 门户生成 Azure 资源管理器模板（ARM 模板），以及从门户编辑和部署该模板的过程。 ARM 模板为 JSON 文件，用于定义针对解决方案进行部署时所需的资源。 若要了解与部署和管理 Azure 解决方案关联的概念，请参阅[模版部署概述](overview.md)。
 
 ![资源管理器模板快速入门门户图](./media/quickstart-create-templates-use-the-portal/azure-resource-manager-export-deploy-template-portal.png)
 
@@ -33,9 +33,11 @@ ms.locfileid: "85557310"
 
     ![在 Azure 门户菜单中，选择“创建资源”](./media/quickstart-create-templates-use-the-portal/azure-resource-manager-template-tutorial-create-a-resource.png)
 
-1. 选择“存储” > “存储帐户” 。
+1. 在搜索框中键入“存储帐户”，然后按 [ENTER] 。
+1. 选择“创建”。
 
     ![创建 Azure 存储帐户](./media/quickstart-create-templates-use-the-portal/azure-resource-manager-template-tutorial-create-storage-account-portal.png)
+
 1. 输入以下信息：
 
     |名称|值|
@@ -64,7 +66,7 @@ ms.locfileid: "85557310"
 1. 打开下载的 zip 文件，然后将“template.json”保存到计算机。 在下一部分，请使用模板部署工具来编辑此模板。
 1. 选择“参数”选项卡，查看为参数提供的值。 部署模板时，请写下这些值，下一部分需要它们。
 
-    ![通过门户生成模板](./media/quickstart-create-templates-use-the-portal/azure-resource-manager-template-tutorial-create-storage-account-template-parameters.png)
+    ![屏幕截图突出显示了“参数”选项卡，其中显示了你提供的值。](./media/quickstart-create-templates-use-the-portal/azure-resource-manager-template-tutorial-create-storage-account-template-parameters.png)
 
     使用模板文件和参数文件可以创建一个资源（在本教程中为 Azure 存储帐户）。
 
@@ -167,7 +169,7 @@ Azure 要求每个 Azure 服务都具有唯一的名称。 如果输入了已存
     |**位置**|选择存储帐户的位置。 例如“美国中部”。 |
     |**帐户类型**|对于本快速入门，请输入 **Standard_LRS**。 |
     |**种类**|对于本快速入门，请输入“StorageV2”。 |
-    |**访问层**|对于本快速入门，请输入“Hot”。 |
+    |**访问层**|对于本快速入门，请输入“热”。 |
     |**最低 TLS 版本**|输入 TLS1_0。 |
     |**仅支持 Https 流量**| 对于本快速入门，请选择“true”。 |
     |**允许 Blob 公共访问**| 对于本快速入门，请选择“false”。 |

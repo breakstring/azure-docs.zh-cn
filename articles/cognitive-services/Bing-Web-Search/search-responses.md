@@ -11,16 +11,21 @@ ms.topic: conceptual
 ms.date: 06/25/2019
 ms.author: aahi
 ms.custom: seodec2018
-ms.openlocfilehash: 284f8c8432d732fdfa7e16b43a47578437bcf0ba
-ms.sourcegitcommit: 3541c9cae8a12bdf457f1383e3557eb85a9b3187
+ms.openlocfilehash: 3dda95312a0b9191ddc11de62959f308ee19fff4
+ms.sourcegitcommit: 8a1ba1ebc76635b643b6634cc64e137f74a1e4da
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/09/2020
-ms.locfileid: "86202251"
+ms.lasthandoff: 11/09/2020
+ms.locfileid: "94380974"
 ---
 # <a name="bing-web-search-api-response-structure-and-answer-types"></a>必应 Web 搜索 API 响应结构和答案类型  
 
-在发送必应 Web 搜索搜索请求时，它将 [`SearchResponse`](https://docs.microsoft.com/rest/api/cognitiveservices-bingsearch/bing-web-api-v7-reference#searchresponse) 在响应正文中返回一个对象。 针对必应确定与查询相关的每个应答，该对象包含一个字段。 本示例演示当必应返回所有应答时的响应对象：
+> [!WARNING]
+> 必应搜索 API 将从认知服务迁移到必应搜索服务。 从 2020 年 10 月 30 日开始，必应搜索的任何新实例都需按照[此处](/bing/search-apis/bing-web-search/create-bing-search-service-resource)所述的过程进行预配。
+> 使用认知服务进行预配的必应搜索 API 将在未来三年或在企业协议结束前（以先发生者为准）得到支持。
+> 有关迁移说明，请参阅[必应搜索服务](/bing/search-apis/bing-web-search/create-bing-search-service-resource)。
+
+在发送必应 Web 搜索搜索请求时，它将 [`SearchResponse`](/rest/api/cognitiveservices-bingsearch/bing-web-api-v7-reference#searchresponse) 在响应正文中返回一个对象。 针对必应确定与查询相关的每个应答，该对象包含一个字段。 本示例演示当必应返回所有应答时的响应对象：
 
 ```json
 {
@@ -38,13 +43,13 @@ ms.locfileid: "86202251"
 }, ...
 ```
 
-通常，必应 Web 搜索返回一部分应答。 例如，如果查询字词为*航海 dinghies*，则响应可能包括 `webPages` 、 `images` 和 `rankingResponse` 。 除非使用了 [responseFilter](https://docs.microsoft.com/rest/api/cognitiveservices-bingsearch/bing-web-api-v7-reference#responsefilter) 来筛选出网页，否则响应始终包含 `webpages` 和 `rankingResponse` 应答。
+通常，必应 Web 搜索返回一部分应答。 例如，如果查询字词为 *航海 dinghies* ，则响应可能包括 `webPages` 、 `images` 和 `rankingResponse` 。 除非使用了 [responseFilter](/rest/api/cognitiveservices-bingsearch/bing-web-api-v7-reference#responsefilter) 来筛选出网页，否则响应始终包含 `webpages` 和 `rankingResponse` 应答。
 
 [!INCLUDE [cognitive-services-bing-url-note](../../../includes/cognitive-services-bing-url-note.md)]
 
 ## <a name="webpages-answer"></a>网页应答
 
-[webPages](https://docs.microsoft.com/rest/api/cognitiveservices-bingsearch/bing-web-api-v7-reference#webanswer) 应答包含必应 Web 搜索确定与查询相关的网页的链接列表。 该列表中的每个[网页](https://docs.microsoft.com/rest/api/cognitiveservices-bingsearch/bing-web-api-v7-reference#webpage)将包含：该页面的名称、URL、显示 URL、内容简短说明，以及必应找到内容的日期。
+[webPages](/rest/api/cognitiveservices-bingsearch/bing-web-api-v7-reference#webanswer) 应答包含必应 Web 搜索确定与查询相关的网页的链接列表。 该列表中的每个[网页](/rest/api/cognitiveservices-bingsearch/bing-web-api-v7-reference#webpage)将包含：该页面的名称、URL、显示 URL、内容简短说明，以及必应找到内容的日期。
 
 ```json
 {
@@ -67,7 +72,7 @@ The following shows an example of how you might display the webpage in a search 
 
 ## <a name="images-answer"></a>Images 响应
 
-[images](https://docs.microsoft.com/rest/api/cognitiveservices-bingsearch/bing-images-api-v7-reference#images) 应答包含必应认为与查询相关的图像列表。 该列表中的每个[图像](https://docs.microsoft.com/rest/api/cognitiveservices-bingsearch/bing-images-api-v7-reference#image)包含该图像的 URL、大小、尺寸和编码格式。 图像对象还包含图像的缩略图的 URL 以及缩略图的尺寸。
+[images](/rest/api/cognitiveservices-bingsearch/bing-images-api-v7-reference#images) 应答包含必应认为与查询相关的图像列表。 该列表中的每个[图像](/rest/api/cognitiveservices-bingsearch/bing-images-api-v7-reference#image)包含该图像的 URL、大小、尺寸和编码格式。 图像对象还包含图像的缩略图的 URL 以及缩略图的尺寸。
 
 ```json
 {
@@ -93,7 +98,7 @@ The following shows an example of how you might display the webpage in a search 
 }, ...
 ```
 
-根据用户的设备，通常会显示一部分缩略图，以及用于允许用户[分页查看](paging-webpages.md)剩余图像的一个选项。
+根据用户的设备，通常会显示一部分缩略图，以及用于允许用户[分页查看](./paging-search-results.md)剩余图像的一个选项。
 
 <!-- Remove until this can be replaced with a sanitized version.
 ![List of thumbnail images](./media/cognitive-services-bing-web-api/bing-web-image-thumbnails.PNG)
@@ -107,11 +112,11 @@ The following shows an example of how you might display the webpage in a search 
 
 如果用户单击缩略图，可以使用 `webSearchUrl` 将用户转到必应的图像搜索结果页，其中包含图像的拼贴图。
 
-有关图像应答和图像的详细信息，请参阅[必应图像搜索 API](../bing-image-search/search-the-web.md)。
+有关图像应答和图像的详细信息，请参阅[必应图像搜索 API](../bing-image-search/overview.md)。
 
 ## <a name="related-searches-answer"></a>相关搜索应答
 
-[relatedSearches](https://docs.microsoft.com/rest/api/cognitiveservices-bingsearch/bing-web-api-v7-reference#searchresponse-relatedsearches) 应答包含其他用户最经常执行的相关查询列表。 该列表中的每个[查询](https://docs.microsoft.com/rest/api/cognitiveservices-bingsearch/bing-web-api-v7-reference#query_obj)包含一个查询字符串 (`text`)、突出显示了匹配项字符的查询字符串 (`displayText`)，以及该查询的必应搜索结果页的 URL (`webSearchUrl`)。
+[relatedSearches](/rest/api/cognitiveservices-bingsearch/bing-web-api-v7-reference#searchresponse-relatedsearches) 应答包含其他用户最经常执行的相关查询列表。 该列表中的每个[查询](/rest/api/cognitiveservices-bingsearch/bing-web-api-v7-reference#query_obj)包含一个查询字符串 (`text`)、突出显示了匹配项字符的查询字符串 (`displayText`)，以及该查询的必应搜索结果页的 URL (`webSearchUrl`)。
 
 ```json
 {
@@ -131,7 +136,7 @@ The following shows an example of how you might display the webpage in a search 
 
 ## <a name="videos-answer"></a>Videos 应答
 
-[videos](https://docs.microsoft.com/rest/api/cognitiveservices-bingsearch/bing-video-api-v7-reference#videos) 应答包含必应认为与查询相关的视频列表。 该列表中的每个[视频](https://docs.microsoft.com/rest/api/cognitiveservices-bingsearch/bing-video-api-v7-reference#video)包含该视频的 URL、持续时间、尺寸和编码格式。 视频对象还包含视频缩略图的 URL 以及缩略图的尺寸。
+[videos](/rest/api/cognitiveservices-bingsearch/bing-video-api-v7-reference#videos) 应答包含必应认为与查询相关的视频列表。 该列表中的每个[视频](/rest/api/cognitiveservices-bingsearch/bing-video-api-v7-reference#video)包含该视频的 URL、持续时间、尺寸和编码格式。 视频对象还包含视频缩略图的 URL 以及缩略图的尺寸。
 
 ```json
 {
@@ -181,11 +186,11 @@ The following shows an example of how you might display the webpage in a search 
 - 使用 `webSearchUrl` 可在必应视频浏览器中观看视频
 - 使用 `embedHtml` 可将视频嵌入自己的体验
 
-有关视频应答和视频的详细信息，请参阅[必应视频搜索 API](../bing-video-search/search-the-web.md)。
+有关视频应答和视频的详细信息，请参阅[必应视频搜索 API](../bing-video-search/overview.md)。
 
 ## <a name="news-answer"></a>News 应答
 
-[news](https://docs.microsoft.com/rest/api/cognitiveservices-bingsearch/bing-news-api-v7-reference#news) 应答包含必应认为与查询相关的新闻列表。 该列表中的每篇[新闻](https://docs.microsoft.com/rest/api/cognitiveservices-bingsearch/bing-news-api-v7-reference#newsarticle)包含该文章的名称、说明及其在宿主网站上的 URL。 如果文章包含图像，则该对象包括图像的缩略图。
+[news](/rest/api/cognitiveservices-bingsearch/bing-news-api-v7-reference#news) 应答包含必应认为与查询相关的新闻列表。 该列表中的每篇[新闻](/rest/api/cognitiveservices-bingsearch/bing-news-api-v7-reference#newsarticle)包含该文章的名称、说明及其在宿主网站上的 URL。 如果文章包含图像，则该对象包括图像的缩略图。
 
 ```json
 {
@@ -220,11 +225,11 @@ The following shows an example of how you might display articles in a search res
 
 ## <a name="computation-answer"></a>Computation 应答
 
-如果用户输入数学表达式或单位转换查询，响应可能包含 [Computation](https://docs.microsoft.com/rest/api/cognitiveservices-bingsearch/bing-web-api-v7-reference#computation) 应答。 `computation` 应答包含规范化表达式及其结果。
+如果用户输入数学表达式或单位转换查询，响应可能包含 [Computation](/rest/api/cognitiveservices-bingsearch/bing-web-api-v7-reference#computation) 应答。 `computation` 应答包含规范化表达式及其结果。
 
-单位转换查询是将一个单位转换为另一个单位的查询。 例如，“10 米是多少英尺？”或“1/4 杯有多少汤匙？”****
+单位转换查询是将一个单位转换为另一个单位的查询。 例如，“10 米是多少英尺？”或“1/4 杯有多少汤匙？”
 
-下面显示了“10 米是多少英尺？”的 `computation` 应答**
+下面显示了“10 米是多少英尺？”的 `computation` 应答
 
 ```json
 "computation": {
@@ -296,7 +301,7 @@ Encoded query: 8^2%2B11^2-2*8*11*cos%2837%29
 |-|减法|
 |/|部门|
 |*|乘法|
-|^|强力|
+|^|电源|
 |!|阶乘|
 |.|小数|
 |()|优先级分组|
@@ -304,7 +309,7 @@ Encoded query: 8^2%2B11^2-2*8*11*cos%2837%29
 
 数学表达式可包含以下常量：
 
-|符号|描述|
+|符号|说明|
 |------------|-----------------|
 |Pi|3.14159...|
 |度|度|
@@ -314,7 +319,7 @@ Encoded query: 8^2%2B11^2-2*8*11*cos%2837%29
 
 数学表达式可包含以下函数：
 
-|符号|描述|
+|符号|说明|
 |------------|-----------------|
 |排序|平方根|
 |Sin[x]、Cos[x]、Tan[x]<br />Csc[x]、Sec[x]、Cot[x]|三角函数（以弧度为单位的参数）|
@@ -328,7 +333,7 @@ Encoded query: 8^2%2B11^2-2*8*11*cos%2837%29
 
 ## <a name="timezone-answer"></a>TimeZone 应答
 
-如果用户输入时间或日期查询，响应可能包含 [TimeZone](https://docs.microsoft.com/rest/api/cognitiveservices-bingsearch/bing-web-api-v7-reference#timezone) 应答。 此应答支持隐式或显式查询。 隐式查询（例如，“现在是几点”）基于用户的位置返回本地时间。** 显式查询（例如，“西雅图现在是几点”）返回华盛顿州西雅图的本地时间。**
+如果用户输入时间或日期查询，响应可能包含 [TimeZone](/rest/api/cognitiveservices-bingsearch/bing-web-api-v7-reference#timezone) 应答。 此应答支持隐式或显式查询。 隐式查询（例如，“现在是几点”）基于用户的位置返回本地时间。 显式查询（例如，“西雅图现在是几点”）返回华盛顿州西雅图的本地时间。
 
 `timeZone` 应答提供位置的名称、指定位置的当前 UTC 日期和时间，以及 UTC 时差。 如果位置边界处于多个时区内，则该应答包含该边界内所有时区的当前 UTC 日期和时间。 例如，由于佛罗里达州跨两个时区，因此该应答包含这两个时区的本地日期和时间。  
 
@@ -419,7 +424,7 @@ Query: What time is it in the U.S.
 
 ## <a name="spellsuggestion-answer"></a>SpellSuggestion 应答
 
-如果必应判断用户的意图可能搜索不同的内容，则响应中会包含 [SpellSuggestions](https://docs.microsoft.com/rest/api/cognitiveservices-bingsearch/bing-web-api-v7-reference#spellsuggestions) 对象。 例如，如果用户搜索 *carlos pen*，必应会判断该用户的意图可能是搜索 Carlos Pena（基于以往其他用户的搜索来判断），而不是 *carlos pen*。 下面显示了示例拼写响应。
+如果必应判断用户的意图可能搜索不同的内容，则响应中会包含 [SpellSuggestions](/rest/api/cognitiveservices-bingsearch/bing-web-api-v7-reference#spellsuggestions) 对象。 例如，如果用户搜索 *carlos pen* ，必应会判断该用户的意图可能是搜索 Carlos Pena（基于以往其他用户的搜索来判断），而不是 *carlos pen* 。 下面显示了示例拼写响应。
 
 ```json
 "spellSuggestions": {
@@ -435,7 +440,7 @@ Query: What time is it in the U.S.
 
 来自必应 Web 搜索 API 的响应可能包含以下标头：
 
-| 标头 | 描述 |
+| 标头 | 说明 |
 |-|-|
 |`X-MSEdge-ClientID`|必应分配给用户的唯一 ID|
 |`BingAPIs-Market`|用于完成请求的市场|
@@ -445,7 +450,7 @@ Query: What time is it in the U.S.
 
 不过，通过 JavaScript 调用必应 Web 搜索 API 时，浏览器内置的安全功能 (CORS) 可能会阻止访问这些响应头的值。
 
-若要访问响应头，可以通过 CORS 代理发出必应 Web 搜索 API 请求。 此类代理的响应中有 `Access-Control-Expose-Headers` 头，可以将响应头列入允许列表，让响应头可供 JavaScript 访问。
+若要访问响应头，可以通过 CORS 代理发出必应 Web 搜索 API 请求。 此类代理的响应有一个 `Access-Control-Expose-Headers` 标头，该标头筛选响应标头并使它们可供 JavaScript 使用。
 
 CORS 代理安装起来很简单，可便于[教程应用](tutorial-bing-web-search-single-page-app.md)访问可选的客户端标头。 首先，如果尚未安装 Node.js，请先[安装](https://nodejs.org/en/download/)。 然后，在命令提示符处输入以下命令。
 
@@ -480,6 +485,6 @@ cors-proxy-server
 
 * 查看[请求限制](throttling-requests.md)文档。  
 
-## <a name="see-also"></a>另请参阅  
+## <a name="see-also"></a>请参阅  
 
-* [必应 Web 搜索 API 参考](https://docs.microsoft.com/rest/api/cognitiveservices-bingsearch/bing-web-api-v7-reference)
+* [必应 Web 搜索 API 参考](/rest/api/cognitiveservices-bingsearch/bing-web-api-v7-reference)

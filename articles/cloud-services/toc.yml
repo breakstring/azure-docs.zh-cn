@@ -1,8 +1,8 @@
-- name: 云服务文档
+- name: 云服务（经典）文档
   href: index.yml
 - name: 概述
   items:
-    - name: 什么是云服务？
+    - name: 什么是 Azure 云服务（经典）？
       href: cloud-services-choose-me.md
     - name: 云服务配置文件和打包
       href: cloud-services-model-and-package.md
@@ -12,6 +12,12 @@
       href: cloud-services-dotnet-get-started.md
     - name: Visual Studio 云服务的 Python 示例
       href: cloud-services-python-ptvs.md
+- name: 概念
+  items:
+    - name: 安全性
+      items:
+        - name: 安全基线
+          href: security-baseline.md
 - name: 操作方式
   items:
     - name: 计划
@@ -151,6 +157,8 @@
           href: cloud-services-disaster-recovery-guidance.md
         - name: 经典 VM 体系结构的工作流
           href: cloud-services-workflow-process.md
+        - name: 针对云服务的资源运行状况支持
+          href: resource-health-for-cloud-services.md
         - name: 云服务常见问题
           items:
             - name: 应用程序和服务可用性常见问题解答
@@ -192,7 +200,7 @@
     - name: 学习路径
       href: /learn/paths/azure-fundamentals/
     - name: Microsoft Q&A 问题页面
-      href: 'https://docs.microsoft.com/answers/topics/azure-cloud-services.html'
+      href: /answers/topics/azure-cloud-services.html
     - name: 定价
       href: 'https://azure.microsoft.com/pricing/details/cloud-services/'
     - name: 定价计算器

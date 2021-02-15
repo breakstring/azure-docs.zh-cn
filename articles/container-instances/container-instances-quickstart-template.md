@@ -4,14 +4,14 @@ description: 在本快速入门中，你将使用 Azure 资源管理器模板快
 services: azure-resource-manager
 ms.service: azure-resource-manager
 ms.topic: quickstart
-ms.custom: subject-armqs, devx-track-javascript
+ms.custom: subject-armqs, devx-track-js
 ms.date: 04/30/2020
-ms.openlocfilehash: d09cc1b1dbefa906e938a3721308222d4f63e131
-ms.sourcegitcommit: 42107c62f721da8550621a4651b3ef6c68704cd3
+ms.openlocfilehash: 621e3e1cef39e34656c094a39d218d5d5866fa26
+ms.sourcegitcommit: eb6bef1274b9e6390c7a77ff69bf6a3b94e827fc
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/29/2020
-ms.locfileid: "87408044"
+ms.lasthandoff: 10/05/2020
+ms.locfileid: "91309075"
 ---
 # <a name="quickstart-deploy-a-container-instance-in-azure-using-an-arm-template"></a>快速入门：使用 ARM 模板在 Azure 中部署容器实例
 
@@ -31,7 +31,7 @@ ms.locfileid: "87408044"
 
 本快速入门中使用的模板来自 [Azure 快速启动模板](https://azure.microsoft.com/resources/templates/101-aci-linuxcontainer-public-ip/)。
 
-:::code language="json" source="~/quickstart-templates/101-aci-linuxcontainer-public-ip/azuredeploy.json" range="1-107" highlight="61-100":::
+:::code language="json" source="~/quickstart-templates/101-aci-linuxcontainer-public-ip/azuredeploy.json":::
 
 模板中定义了以下资源：
 

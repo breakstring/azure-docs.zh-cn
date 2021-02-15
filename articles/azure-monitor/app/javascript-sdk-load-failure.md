@@ -5,13 +5,13 @@ ms.topic: conceptual
 author: MSNev
 ms.author: newylie
 ms.date: 06/05/2020
-ms.custom: devx-track-javascript
-ms.openlocfilehash: 83f518326b38e9832c46997a0a2791eb9f35705e
-ms.sourcegitcommit: f353fe5acd9698aa31631f38dd32790d889b4dbb
+ms.custom: devx-track-js
+ms.openlocfilehash: 30c7caef4143b1a7cdba959971ff7689f986cb9e
+ms.sourcegitcommit: 829d951d5c90442a38012daaf77e86046018e5b9
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/29/2020
-ms.locfileid: "87371628"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "91333250"
 ---
 # <a name="troubleshooting-sdk-load-failure-for-javascript-web-apps"></a>排查 JavaScript Web 应用的 SDK 加载失败问题
 

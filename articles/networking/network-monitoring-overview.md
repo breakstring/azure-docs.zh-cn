@@ -15,12 +15,12 @@ ms.tgt_pltfrm: na
 ms.workload: infrastructure-services
 ms.date: 02/22/2018
 ms.author: agummadi
-ms.openlocfilehash: 2912488286745bf8d2e567d09e445b0a44dc7c39
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: a92c6789723dc42ac8f3a9c471e494079dc19328
+ms.sourcegitcommit: c7153bb48ce003a158e83a1174e1ee7e4b1a5461
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "67672181"
+ms.lasthandoff: 01/15/2021
+ms.locfileid: "98233434"
 ---
 # <a name="network-monitoring-solutions"></a>网络监视解决方案 
 
@@ -52,10 +52,10 @@ Azure 提供了许多解决方案来监视网络资产。 Azure 具有相应的�
 有关详细信息，请查看以下文章：
 
 * [在 Azure Monitor 日志中配置网络性能监视器解决方案](../azure-monitor/insights/network-performance-monitor.md) 
-* [用例](https://blogs.technet.microsoft.com/msoms/2016/08/30/monitor-on-premises-cloud-iaas-and-hybrid-networks-using-oms-network-performance-monitor/)
+* [用例](/archive/blogs/msoms/monitor-on-premises-cloud-iaas-and-hybrid-networks-using-oms-network-performance-monitor)
 * 产品更新：
-  * [2017 年 2 月](https://blogs.technet.microsoft.com/msoms/2017/02/27/oms-network-performance-monitor-is-now-generally-available/)
-  * [2017 年 8 月](https://blogs.technet.microsoft.com/msoms/2017/08/14/improvements-to-oms-network-performance-monitor/)
+  * [2017 年 2 月](/archive/blogs/msoms/oms-network-performance-monitor-is-now-generally-available)
+  * [2017 年 8 月](/archive/blogs/msoms/improvements-to-oms-network-performance-monitor)
 
 ## <a name="expressroute-monitor"></a>ExpressRoute 监视器
 
@@ -65,12 +65,12 @@ Azure 提供了许多解决方案来监视网络资产。 Azure 具有相应的�
 * 检测从本地到你的云应用程序的网络拓扑
 * 容量规划、带宽利用率分析
 * 针对主要路径和辅助路径进行监视并发出警报
-* 通过 ExpressRoute 监视与 Azure 服务（如 Office 365、Dynamics 365 等）的连接情况
+* 监视与 Azure 服务的连接，例如 Microsoft 365、Dynamics 365 .。。over ExpressRoute
 * 检测与 VNet 的连接的降级
 
 ![显示各区域流量的地图](./media/network-monitoring-overview/expressroute-topology-map.png) 
 
-有关详细信息，请参阅下列文章：
+有关详细信息，请参阅以下文章：
 
 * [为 ExpressRoute 配置网络性能监视器](../expressroute/how-to-npm.md)
 * [博客文章](https://aka.ms/NPMExRmonitorGA)
@@ -84,9 +84,9 @@ Azure 提供了许多解决方案来监视网络资产。 Azure 具有相应的�
 * 从全球的多个用户位置测试应用程序可访问性
 * 确定你的业务线和 SaaS 应用程序的网络延迟和包丢失
 * 确定网络上可能会导致应用程序性能变差的热点
-* 使用针对 Microsoft Office 365、Dynamics 365、Skype for Business 和其他 Microsoft 服务的内置测试来监视 Office 365 应用程序的可访问性。
+* 使用内置测试 Microsoft 365、Dynamics 365、Skype for Business 和其他 Microsoft 服务监视 Microsoft 365 应用程序的可访问性
 
-有关详细信息，请参阅下列文章：
+有关详细信息，请参阅以下文章：
 
 * [配置用于监视服务终结点的网络性能监视器](../azure-monitor/insights/network-performance-monitor-service-connectivity.md#configuration)
 * [博客文章](https://aka.ms/svcendptmonitor)
@@ -103,10 +103,10 @@ Azure 提供了许多解决方案来监视网络资产。 Azure 具有相应的�
 
 流量分析可以提供可操作的信息，帮助你审核组织的网络活动、保护应用程序和数据、优化工作负荷性能和保持符合性。
 
-![显示各区域流量的地图](../network-watcher/media/traffic-analytics/geo-map-view-showcasing-traffic-distribution-to-countries-and-continents.png) 
+![显示跨区域的流量的地图](../network-watcher/media/traffic-analytics/geo-map-view-showcasing-traffic-distribution-to-countries-and-continents.png) 
 
 相关链接：
-* [博客文章](https://aka.ms/trafficanalytics)、[文档](https://aka.ms/trafficanalyticsdocs)、[常见问题解答](https://docs.microsoft.com/azure/network-watcher/traffic-analytics-faq)
+* [博客文章](https://aka.ms/trafficanalytics)、[文档](../network-watcher/traffic-analytics.md)、[常见问题解答](../network-watcher/traffic-analytics-faq.md)
 
 ## <a name="dns-analytics"></a>DNS Analytics
 此解决方案专为 DNS 管理员构建，可收集、分析和关联 DNS 日志，以提供与安全性、操作和性能相关的见解。  一些功能包括：
@@ -120,8 +120,8 @@ Azure 提供了许多解决方案来监视网络资产。 Azure 具有相应的�
 ![DNS Analytics 仪表板](./media/network-monitoring-overview/dns-analytics-overview.png) 
 
 相关链接：
-* [博客文章](https://blogs.technet.microsoft.com/msoms/2017/04/19/introducing-oms-dns-analytics/)、[文档](https://docs.microsoft.com/azure/log-analytics/log-analytics-dns)
+* [博客文章](/archive/blogs/msoms/introducing-oms-dns-analytics)、[文档](../azure-monitor/insights/dns-analytics.md)
 
 ## <a name="miscellaneous"></a>杂项
 
-* [新定价](https://docs.microsoft.com/azure/log-analytics/log-analytics-network-performance-monitor-pricing-faq)
+* [新定价](../azure-monitor/insights/network-performance-monitor-pricing-faq.md)

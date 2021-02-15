@@ -1,9 +1,9 @@
 ---
-title: 通过 Azure 媒体服务 v3 管理流式处理终结点
+title: 管理流式处理终结点
 description: 本文演示如何通过 Azure 媒体服务 v3 管理流式处理终结点。
 services: media-services
 documentationcenter: ''
-author: Juliako
+author: IngridAtMicrosoft
 writer: juliako
 manager: femila
 editor: ''
@@ -11,18 +11,20 @@ ms.service: media-services
 ms.workload: media
 ms.tgt_pltfrm: na
 ms.devlang: na
-ms.topic: article
-ms.date: 03/11/2020
-ms.author: juliako
-ms.custom: devx-track-azurecli
-ms.openlocfilehash: 6c88a1f36d4e3405b44f36864262b2ab97517933
-ms.sourcegitcommit: 11e2521679415f05d3d2c4c49858940677c57900
+ms.topic: how-to
+ms.date: 08/31/2020
+ms.author: inhenkel
+ms.custom: devx-track-azurecli, devx-track-csharp
+ms.openlocfilehash: d656ce23cf68a1eec23421b769d5847f9b661bb4
+ms.sourcegitcommit: 4e70fd4028ff44a676f698229cb6a3d555439014
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/31/2020
-ms.locfileid: "87500549"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98955896"
 ---
 # <a name="manage-streaming-endpoints-with--media-services-v3"></a>通过媒体服务 v3 管理流式处理终结点
+
+[!INCLUDE [media services api v3 logo](./includes/v3-hr.md)]
 
 创建媒体服务帐户后，一个处于“已停止”状态的默认[流式处理终结点](streaming-endpoint-concept.md)会添加到帐户。   若要开始对内容进行流式处理并利用[动态打包](dynamic-packaging-overview.md)和[动态加密](content-protection-overview.md)功能，必须确保要从其流式获取内容的流式处理终结点处于“正在运行”状态。 
 

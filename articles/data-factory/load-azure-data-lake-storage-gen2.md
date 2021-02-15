@@ -1,23 +1,18 @@
 ---
 title: 将数据加载到 Azure Data Lake Storage Gen2 中
 description: 使用 Azure 数据工厂将数据复制到 Azure Data Lake Storage Gen2 中
-services: data-factory
-documentationcenter: ''
 ms.author: jingwang
 author: linda33wj
-manager: shwang
-ms.reviewer: douglasl
 ms.service: data-factory
-ms.workload: data-services
 ms.topic: conceptual
 ms.custom: seo-lt-2019
-ms.date: 06/08/2020
-ms.openlocfilehash: 8f8cfef5ed98682a1d03f7d36caa2008f4ff03b6
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.date: 11/09/2020
+ms.openlocfilehash: 61e34d41d9f7a60b6ad74e12331864e6ba08e4f5
+ms.sourcegitcommit: d4734bc680ea221ea80fdea67859d6d32241aefc
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "84660462"
+ms.lasthandoff: 02/14/2021
+ms.locfileid: "100370795"
 ---
 # <a name="load-data-into-azure-data-lake-storage-gen2-with-azure-data-factory"></a>使用 Azure 数据工厂将数据加载到 Azure Data Lake Storage Gen2 中
 
@@ -42,7 +37,7 @@ Azure 数据工厂提供可横向扩展的托管数据移动解决方案。 得�
 
 ## <a name="create-a-data-factory"></a>创建数据工厂
 
-1. 在左侧菜单中，选择“创建资源” > “数据 + 分析” > “数据工厂”：
+1. 在左侧菜单中，选择“创建资源” > “集成” > “数据工厂”  ：
    
    ![在“新建”窗格中选择“数据工厂”](./media/doc-common-process/new-azure-data-factory-menu.png)
 
@@ -80,7 +75,7 @@ Azure 数据工厂提供可横向扩展的托管数据移动解决方案。 得�
    3. 单击“测试连接”以验证设置，然后选择“创建” 。
 
       ![指定 Amazon S3 帐户](./media/load-azure-data-lake-storage-gen2/specify-amazon-s3-account.png)
-   4. 随即会显示新创建的 AmazonS3 连接。 选择“下一步”。 
+   4. 随即会显示新创建的 AmazonS3 连接。 选择“**下一步**”。 
 
 5. 在“选择输入文件或文件夹”页上，浏览到要复制的文件夹和文件。 选中文件夹/文件，然后选择“选择”。
 
@@ -88,7 +83,7 @@ Azure 数据工厂提供可横向扩展的托管数据移动解决方案。 得�
 
 6. 通过选中“以递归方式”和“以二进制方式复制”选项，指定复制行为 。 选择“**下一步**”。
 
-    ![指定输出文件夹](./media/load-azure-data-lake-storage-gen2/specify-binary-copy.png)
+    ![屏幕截图显示了“选择输入文件或文件夹”，你可以在其中选择“以二进制方式复制”和“以递归方式”。](./media/load-azure-data-lake-storage-gen2/specify-binary-copy.png)
     
 7. 在“目标数据存储”页中，单击“+ 新建连接”，接着选择“Azure Data Lake Storage Gen2”，然后选择“继续”   。
 
@@ -103,7 +98,7 @@ Azure 数据工厂提供可横向扩展的托管数据移动解决方案。 得�
 
 9. 在“选择输出文件或文件夹”页中，输入 **copyfroms3** 作为输出文件夹名称，然后选择“下一步”。 ADF 将在复制过程中创建相应的 ADLS Gen2 文件系统和子文件夹（如果不存在）。
 
-    ![指定输出文件夹](./media/load-azure-data-lake-storage-gen2/specify-adls-path.png)
+    ![屏幕截图显示了所输入的文件夹路径。](./media/load-azure-data-lake-storage-gen2/specify-adls-path.png)
 
 10. 在“设置”页中选择“下一步”，以便使用默认设置 。
 

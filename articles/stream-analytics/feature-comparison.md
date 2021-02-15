@@ -1,21 +1,21 @@
 ---
 title: Azure 流分析功能比较
 description: 本文比较了 Azure 流分析云和 IoT Edge 作业在 Azure 门户、Visual Studio 和 Visual Studio Code 中支持的功能。
-author: mamccrea
-ms.author: mamccrea
+author: an-emma
+ms.author: raan
 ms.service: stream-analytics
 ms.topic: conceptual
 ms.date: 06/27/2019
-ms.openlocfilehash: b169a067f05de422b714e18a4d7ebb9c9e7f0428
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 037bd8bc823cd8c77241d0ca25174e29d25149b9
+ms.sourcegitcommit: 42a4d0e8fa84609bec0f6c241abe1c20036b9575
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "82133497"
+ms.lasthandoff: 01/08/2021
+ms.locfileid: "98020530"
 ---
 # <a name="azure-stream-analytics-feature-comparison"></a>Azure 流分析功能比较
 
-借助 Azure 流分析，可以使用 [Azure 门户](stream-analytics-quick-create-portal.md)，[Visual Studio](stream-analytics-quick-create-vs.md) 和 [Visual Studio Code](quick-create-vs-code.md) 在云端和 IoT Edge 中创建流式处理解决方案。 本文中的表显示了每种平台支持这两种作业类型的哪些功能。
+借助 Azure 流分析，可以使用 [Azure 门户](stream-analytics-quick-create-portal.md)，[Visual Studio](stream-analytics-quick-create-vs.md) 和 [Visual Studio Code](quick-create-visual-studio-code.md) 在云端和 IoT Edge 中创建流式处理解决方案。 本文中的表显示了每种平台支持这两种作业类型的哪些功能。
 
 > [!NOTE]
 > Visual Studio 和 Visual Studio Code 工具不支持“中国东部”、“中国北部”、“德国中部”和“德国东北部”区域中的作业。
@@ -44,7 +44,7 @@ ms.locfileid: "82133497"
 |C# 自定义代码函数和反序列化程序|只读模式|是|否|
 |JavaScript UDF 和 UDA     |是         |是         |仅限 Windows         |
 |机器学习服务     |是        |是         |否         |
-|机器学习工作室     |是，但无法测试查询        |是 |否         |
+|Azure 机器学习工作室（经典）|是，但无法测试查询        |是 |否         |
 |兼容性级别     |1.0</br>1.1</br>1.2（默认值）         |1.0</br>1.1</br>1.2（默认值）           |1.0</br>1.1</br>1.2（默认值）           |
 |基于 ML 的内置异常情况检测函数     |是         |是         |是         |
 |内置地理空间函数     |是         |是         |是         |

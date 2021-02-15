@@ -7,14 +7,16 @@ ms.service: spring-cloud
 ms.topic: tutorial
 ms.date: 12/29/2019
 ms.custom: devx-track-java
-ms.openlocfilehash: c31c52d278c1e40b18b3308ca154b934d060d403
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.openlocfilehash: c706f38dabbe21e5bafb096bf406e70af0855aa3
+ms.sourcegitcommit: 30505c01d43ef71dac08138a960903c2b53f2499
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87071164"
+ms.lasthandoff: 10/15/2020
+ms.locfileid: "92089972"
 ---
 # <a name="tutorial-how-to-monitor-spring-cloud-resources-using-alerts-and-action-groups"></a>教程：如何使用警报和操作组监视 Spring Cloud 资源
+
+本文适用于：✔️ Java ✔️ C#
 
 Azure Spring Cloud 警报支持根据可用存储、请求速率或数据用量等条件监视资源。 当速率或条件符合定义的规范时，警报将发送通知。
 
@@ -24,7 +26,7 @@ Azure Spring Cloud 警报支持根据可用存储、请求速率或数据用量�
 
 ## <a name="prerequisites"></a>先决条件
 
-除了 Azure Spring 要求外，本教程中的过程还适用于已部署的 Azure Spring Cloud 实例。  按[快速入门](spring-cloud-quickstart-launch-app-cli.md)的说明开始操作。
+除了 Azure Spring 要求外，本教程中的过程还适用于已部署的 Azure Spring Cloud 实例。  按[快速入门](spring-cloud-quickstart.md)的说明开始操作。
 
 以下过程初始化**操作组**，以及从 Spring Cloud 实例左侧导航窗格中的“警报”选项启动的**警报**。 （该过程也可以从 Azure 门户的“监视器概述”页启动。） 
 
@@ -58,11 +60,11 @@ Azure Spring Cloud 警报支持根据可用存储、请求速率或数据用量�
 
 ## <a name="set-up-alert"></a>设置警报 
 
-前面的步骤创建了一个使用电子邮件的**操作组**。 也可以使用电话通知、Webhook、Azure Functions 等。  
+前面的步骤创建了一个使用电子邮件的**操作组**。 也可以使用电话通知、Webhook、Azure Functions 等。 以下步骤配置警报。
 
-若要配置**警报**，请导航回到“警报”页，单击“管理警报规则”。 
+1. 导航回到“警报”页，单击“管理警报规则” 。
 
-  ![在门户中定义警报的屏幕截图](media/alerts-action-groups/alerts-2.png)
+   ![在门户中定义警报的屏幕截图](media/alerts-action-groups/alerts-2.png)
 
 1. 选择警报针对的**资源**。
 
@@ -76,19 +78,19 @@ Azure Spring Cloud 警报支持根据可用存储、请求速率或数据用量�
 
 1. 选择条件。 此示例采用“系统 CPU 使用率百分比”。
 
-   ![门户中“新建警报规则”的屏幕截图](media/alerts-action-groups/alerts-3-1.png)
+   ![门户中“新建警报规则”的屏幕截图 2](media/alerts-action-groups/alerts-3-1.png)
 
 1. 向下滚动“配置信号逻辑”窗格，然后设置“阈值”以进行监视 。
 
-   ![门户中“新建警报规则”的屏幕截图](media/alerts-action-groups/alerts-3-2.png)
+   ![门户中“新建警报规则”的屏幕截图 3](media/alerts-action-groups/alerts-3-2.png)
 
 1. 单击“完成”。
 
-若要详细了解可用于监视的条件，请参阅[用户门户指标选项](spring-cloud-concept-metrics.md#user-metrics-options)。
+   若要详细了解可用于监视的条件，请参阅[用户门户指标选项](spring-cloud-concept-metrics.md#user-metrics-options)。
 
- 在“操作”下，单击“选择操作组” 。 在“操作”窗格中，选择前面定义的**操作组**。
+1. 在“操作”下，单击“选择操作组” 。 在“操作”窗格中，选择前面定义的“操作组” 。
 
-   ![门户中“新建警报规则”的屏幕截图](media/alerts-action-groups/alerts-3-3.png) 
+   ![门户中“新建警报规则”的屏幕截图 4](media/alerts-action-groups/alerts-3-3.png) 
 
 1. 向下滚动，然后在“警报详细信息”中为警报规则命名。
 
@@ -96,22 +98,22 @@ Azure Spring Cloud 警报支持根据可用存储、请求速率或数据用量�
 
 1. 单击“创建警报规则”。
 
-   ![门户中“新建警报规则”的屏幕截图](media/alerts-action-groups/alerts-3-4.png)
+   ![门户中“新建警报规则”的屏幕截图 5](media/alerts-action-groups/alerts-3-4.png)
 
-确认是否已启用新警报规则。
+1. 确认是否已启用新警报规则。
 
-   ![门户中“新建警报规则”的屏幕截图](media/alerts-action-groups/alerts-4.png)
+   ![门户中“新建警报规则”的屏幕截图 6](media/alerts-action-groups/alerts-4.png)
 
 还可以使用“指标”页创建规则：
 
-   ![门户中“新建警报规则”的屏幕截图](media/alerts-action-groups/alerts-5.png)
+![门户中“新建警报规则”的屏幕截图 7](media/alerts-action-groups/alerts-5.png)
 
 ## <a name="next-steps"></a>后续步骤
 
 本教程介绍了如何为 Azure Spring Cloud 应用程序设置警报和操作组。 若要详细了解操作组，请参阅：
 
 > [!div class="nextstepaction"]
-> [在 Azure 门户中创建和管理器操作组](https://docs.microsoft.com/azure/azure-monitor/platform/action-groups)
+> [在 Azure 门户中创建和管理器操作组](../azure-monitor/platform/action-groups.md)
 
 > [!div class="nextstepaction"]
-> [操作组中的短信警报行为](https://docs.microsoft.com/azure/azure-monitor/platform/alerts-sms-behavior)
+> [操作组中的短信警报行为](../azure-monitor/platform/alerts-sms-behavior.md)

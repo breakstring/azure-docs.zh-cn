@@ -1,20 +1,22 @@
 ---
 title: 通过 Gremlin SDK 使用 Azure Cosmos DB 资源令牌
 description: 了解如何创建资源令牌并使用它们访问图形数据库。
-author: luisbosquez
-ms.author: lbosq
+author: christopheranderson
+ms.author: chrande
 ms.service: cosmos-db
 ms.subservice: cosmosdb-graph
 ms.topic: how-to
 ms.date: 09/06/2019
-ms.openlocfilehash: 211dce8a2810d9eb07bf0f388753afd50add4945
-ms.sourcegitcommit: 4f1c7df04a03856a756856a75e033d90757bb635
+ms.custom: devx-track-csharp
+ms.openlocfilehash: 22c048b748806404ccfa580e660552a1744f3781
+ms.sourcegitcommit: 6a902230296a78da21fbc68c365698709c579093
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/07/2020
-ms.locfileid: "87919950"
+ms.lasthandoff: 11/05/2020
+ms.locfileid: "93361687"
 ---
 # <a name="use-azure-cosmos-db-resource-tokens-with-the-gremlin-sdk"></a>通过 Gremlin SDK 使用 Azure Cosmos DB 资源令牌
+[!INCLUDE[appliesto-gremlin-api](includes/appliesto-gremlin-api.md)]
 
 本文介绍如何通过 Gremlin SDK 使用 [Azure Cosmos DB 资源令牌](secure-access-to-data.md)访问图形数据库。
 
@@ -36,7 +38,7 @@ Apache TinkerPop Gremlin SDK 没有用于创建资源令牌的 API。 术语“�
 // Notice that document client is created against .NET SDK endpoint, rather than Gremlin.
 DocumentClient client = new DocumentClient(
   new Uri("https://contoso.documents.azure.com:443/"), 
-  "<master key>", 
+  "<primary key>", 
   new ConnectionPolicy 
   {
     EnableEndpointDiscovery = false, 
@@ -62,7 +64,7 @@ DocumentClient client = new DocumentClient(
 // You can obtain the token for a given permission by using the Azure Cosmos DB SDK, or you can pass it into the application as a command line argument or configuration value.
 string resourceToken = GetResourceToken();
 
-// Configure the Gremlin server to use a resource token rather than a master key.
+// Configure the Gremlin server to use a resource token rather than a primary key.
 GremlinServer server = new GremlinServer(
   "contoso.gremlin.cosmosdb.azure.com",
   port: 443,
@@ -102,5 +104,5 @@ builder.authProperties(authenticationProperties);
 应用程序在使用资源令牌时遇到的常见错误是“授权标头中为相应请求提供的权限不足。 请使用另一个授权标头重试”。 当 Gremlin 遍历尝试写入边缘或顶点但资源令牌仅授予“读取”  权限时，会返回此错误。 检查遍历是否包含以下任何步骤：.addV()  、.addE()  、.drop()  或 .property()  。
 
 ## <a name="next-steps"></a>后续步骤
-* [AZURE RBAC) 中的 azure 基于角色的访问控制 (](role-based-access-control.md) Azure Cosmos DB
+* Azure Cosmos DB 中的 [Azure 基于角色的访问控制 (Azure RBAC)](role-based-access-control.md)
 * [了解如何保护对 Azure Cosmos DB 中数据的访问](secure-access-to-data.md)

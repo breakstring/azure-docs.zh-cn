@@ -10,13 +10,13 @@ metadata:
   ms.collection: collection
   author: DCtheGeek
   ms.author: dacoulte
-  ms.date: 06/29/2020
-  ms.openlocfilehash: bd8c72593bf88289234ce281710b8be249e0966b
-  ms.sourcegitcommit: 73ac360f37053a3321e8be23236b32d4f8fb30cf
+  ms.date: 01/29/2021
+  ms.openlocfilehash: 9f9d2c694196b48aa4905a3783cb16609727b951
+  ms.sourcegitcommit: 24f30b1e8bb797e1609b1c8300871d2391a59ac2
   ms.translationtype: HT
   ms.contentlocale: zh-CN
-  ms.lasthandoff: 06/30/2020
-  ms.locfileid: "85564511"
+  ms.lasthandoff: 02/10/2021
+  ms.locfileid: "100099126"
 highlightedContent:
   items:
   - title: 治理概述
@@ -28,9 +28,9 @@ highlightedContent:
   - title: 云采用框架中的治理
     itemType: architecture
     url: /azure/architecture/cloud-adoption/governance
-  - title: 使用 Azure Policy 应用和监视基础结构标准
+  - title: 在 Azure 上构建云治理策略
     itemType: learn
-    url: /learn/modules/intro-to-governance/
+    url: /learn/modules/build-cloud-governance-strategy-azure/
 productDirectory:
   title: 组件和服务
   items:
@@ -113,8 +113,12 @@ additionalContent:
         url: /powershell/module/az.resources/#resources
       - text: 用于 .NET 的 Azure SDK
         url: /dotnet/api/overview/azure/managementgroups
+      - text: Azure SDK for Go
+        url: https://pkg.go.dev/github.com/Azure/azure-sdk-for-go/services/preview/resources/mgmt/2018-03-01-preview/managementgroups
       - text: 用于 JavaScript 的 Azure SDK
         url: /javascript/api/@azure/arm-managementgroups/managementgroups
+      - text: 用于 Python 的 Azure SDK
+        url: /python/api/azure-mgmt-managementgroups/azure.mgmt.managementgroups
       - text: REST
         url: /rest/api/resources/managementgroups
       - text: 资源管理器模板
@@ -124,10 +128,10 @@ additionalContent:
       - text: Azure CLI
         url: /cli/azure/policy
       - text: Azure PowerShell
-        url: /powershell/module/az.resources/#policies
+        url: /powershell/module/az.resources/#policy
         note: （策略）
       - text: Azure PowerShell
-        url: /powershell/module/az.policyinsights#policy_insights
+        url: /powershell/module/az.policyinsights#policy-insights
         note: （策略见解）
       - text: Azure PowerShell
         url: https://www.powershellgallery.com/packages/Az.GuestConfiguration
@@ -141,6 +145,9 @@ additionalContent:
       - text: REST
         url: /rest/api/resources/policydefinitions
         note: （定义）
+      - text: REST
+        url: /rest/api/resources/policyexemptions
+        note: （豁免）
       - text: REST
         url: /rest/api/resources/policysetdefinitions
         note: （计划）
@@ -185,7 +192,7 @@ additionalContent:
       - text: Azure CLI
         url: /cli/azure/ext/resource-graph/graph
       - text: Azure PowerShell
-        url: /powershell/module/az.resourcegraph/
+        url: /powershell/module/az.resourcegraph/#resourcegraph
       - text: 用于 .NET 的 Azure SDK
         url: /dotnet/api/Microsoft.Azure.Management.ResourceGraph
       - text: 用于 .NET 的 Azure SDK
@@ -194,7 +201,7 @@ additionalContent:
       - text: Azure SDK for Go
         url: https://godoc.org/github.com/Azure/azure-sdk-for-go/services/resourcegraph/mgmt/2019-04-01/resourcegraph
       - text: 用于 Java 的 Azure SDK
-        url: /java/api/overview/azure/resourcegraph/management?view=azure-java-stable
+        url: /java/api/overview/azure/resourcegraph/management
       - text: 用于 Java 的 Azure SDK
         url: https://search.maven.org/artifact/com.microsoft.azure.resourcegraph.v2019_04_01/azure-mgmt-resourcegraph/1.0.0-beta/jar
         note: (Maven)

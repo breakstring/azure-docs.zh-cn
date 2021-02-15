@@ -3,16 +3,15 @@ title: Azure 流分析中的数据驱动调试
 description: 本文介绍如何使用 Azure 门户中的作业关系图和指标对 Azure 流分析作业进行故障排除。
 author: jseb225
 ms.author: jeanb
-ms.reviewer: mamccrea
 ms.service: stream-analytics
 ms.topic: how-to
 ms.date: 05/01/2017
-ms.openlocfilehash: fdb3c5c12af8e9022f5babc84126badda890dce5
-ms.sourcegitcommit: e132633b9c3a53b3ead101ea2711570e60d67b83
+ms.openlocfilehash: 6d20454515088ccca87665d9b3b27c0d82c3cdf9
+ms.sourcegitcommit: 42a4d0e8fa84609bec0f6c241abe1c20036b9575
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/07/2020
-ms.locfileid: "86044475"
+ms.lasthandoff: 01/08/2021
+ms.locfileid: "98020394"
 ---
 # <a name="data-driven-debugging-by-using-the-job-diagram"></a>使用作业关系图进行数据驱动调试
 
@@ -75,15 +74,15 @@ QueryLastProcessedTime 指标指示特定步骤收到数据的时间。 通过�
  
 ### <a name="are-we-falling-behind-in-reading-data"></a>在读取数据上是否落后于人？
 
-*   **囤积的输入事件数(总计)** 告知还需要为事件中心和 Azure IoT 中心输入读取多少条消息。 当此数字大于 0 时，表示作业不能以数据传入速度快速处理数据。 在这种情况下，可能需要增加流单元数和/或确保作业可以并行化。 可以在[查询并行化页](https://docs.microsoft.com/azure/stream-analytics/stream-analytics-parallelization)上看到有关此内容的更多信息。 
+*   **囤积的输入事件数(总计)** 告知还需要为事件中心和 Azure IoT 中心输入读取多少条消息。 当此数字大于 0 时，表示作业不能以数据传入速度快速处理数据。 在这种情况下，可能需要增加流单元数和/或确保作业可以并行化。 可以在[查询并行化页](./stream-analytics-parallelization.md)上看到有关此内容的更多信息。 
 
 
 ## <a name="get-help"></a>获取帮助
-如需获取进一步的帮助，请阅读[关于 Azure 流分析的 Microsoft 问答页](https://docs.microsoft.com/answers/topics/azure-stream-analytics.html)。 
+如需获取进一步的帮助，请阅读[关于 Azure 流分析的 Microsoft 问答页](/answers/topics/azure-stream-analytics.html)。 
 
 ## <a name="next-steps"></a>后续步骤
 * [流分析简介](stream-analytics-introduction.md)
 * [流分析入门](stream-analytics-real-time-fraud-detection.md)
 * [扩展流分析作业](stream-analytics-scale-jobs.md)
-* [流分析查询语言参考](https://docs.microsoft.com/stream-analytics-query/stream-analytics-query-language-reference)
-* [流分析管理 REST API 参考](https://msdn.microsoft.com/library/azure/dn835031.aspx)
+* [流分析查询语言参考](/stream-analytics-query/stream-analytics-query-language-reference)
+* [流分析管理 REST API 参考](/rest/api/streamanalytics/)

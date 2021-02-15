@@ -3,14 +3,14 @@ title: Azure 上的 Kubernetes 教程 - 更新应用程序
 description: 本 Azure Kubernetes 服务 (AKS) 教程介绍如何使用新版应用程序代码将现有应用程序部署更新到 AKS。
 services: container-service
 ms.topic: tutorial
-ms.date: 12/19/2018
+ms.date: 01/12/2021
 ms.custom: mvc
-ms.openlocfilehash: d5457d790cd3c95bb23ec0c517097b443a2389ed
-ms.sourcegitcommit: c5021f2095e25750eb34fd0b866adf5d81d56c3a
+ms.openlocfilehash: b969e3ec1c670c0a12129289c8ff7eb81df51ff9
+ms.sourcegitcommit: 25d1d5eb0329c14367621924e1da19af0a99acf1
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/25/2020
-ms.locfileid: "77593370"
+ms.lasthandoff: 01/16/2021
+ms.locfileid: "98250649"
 ---
 # <a name="tutorial-update-an-application-in-azure-kubernetes-service-aks"></a>教程：在 Azure Kubernetes 服务 (AKS) 中更新应用程序
 
@@ -64,7 +64,7 @@ docker-compose up --build -d
 
 若要验证已更新的容器映像是否显示所做的更改，请打开一个本地 Web 浏览器并访问 `http://localhost:8080`。
 
-![Azure 上的 Kubernetes 群集映像](media/container-service-kubernetes-tutorials/vote-app-updated.png)
+:::image type="content" source="media/container-service-kubernetes-tutorials/vote-app-updated.png" alt-text="屏幕截图，显示已更新的容器映像 Azure 投票应用的示例，该应用在本地运行并在本地 Web 浏览器中打开":::
 
 在 *config_file.cfg* 文件中提供的已更新值显示在正运行的应用程序中。
 
@@ -79,7 +79,7 @@ az acr list --resource-group myResourceGroup --query "[].{acrLoginServer:loginSe
 使用 [docker tag][docker-tag] 标记映像。 将 `<acrLoginServer>` 替换为 ACR 登录服务器名称或公共注册表主机名，并将映像版本更新为 *:v2*，如下所示：
 
 ```console
-docker tag azure-vote-front <acrLoginServer>/azure-vote-front:v2
+docker tag mcr.microsoft.com/azuredocs/azure-vote-front:v1 <acrLoginServer>/azure-vote-front:v2
 ```
 
 现在，请使用 [docker push][docker-push] 将映像上传到注册表。 将 `<acrLoginServer>` 替换为 ACR 登录服务器名称。
@@ -143,9 +143,9 @@ azure-vote-front-1297194256-zktw9  1/1       Terminating   0          1m
 kubectl get service azure-vote-front
 ```
 
-现在，请打开本地 Web 浏览器并访问服务的 IP 地址：
+现在，请打开 Web 浏览器并访问服务的 IP 地址：
 
-![Azure 上的 Kubernetes 群集映像](media/container-service-kubernetes-tutorials/vote-app-updated-external.png)
+:::image type="content" source="media/container-service-kubernetes-tutorials/vote-app-updated-external.png" alt-text="屏幕截图，显示已更新的映像 Azure 投票应用的示例，该应用在 AKS 群集中运行并在本地 Web 浏览器中打开。":::
 
 ## <a name="next-steps"></a>后续步骤
 

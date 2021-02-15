@@ -9,12 +9,12 @@ ms.service: iot-dps
 services: iot-dps
 ms.devlang: python
 ms.custom: mvc, devx-track-python
-ms.openlocfilehash: 53590344a45990187b5ca8aba4eca18da526f308
-ms.sourcegitcommit: dea88d5e28bd4bbd55f5303d7d58785fad5a341d
+ms.openlocfilehash: 23a2ca3cae92f65786a3d2fb978b1727e18857e8
+ms.sourcegitcommit: cd9754373576d6767c06baccfd500ae88ea733e4
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/06/2020
-ms.locfileid: "87872610"
+ms.lasthandoff: 11/20/2020
+ms.locfileid: "94966630"
 ---
 # <a name="quickstart-create-and-provision-a-simulated-tpm-device-using-python-device-sdk-for-iot-hub-device-provisioning-service"></a>快速入门：使用适用于 IoT 中心设备预配服务的 Python 设备 SDK 创建和预配模拟的 TPM 设备
 
@@ -24,7 +24,7 @@ ms.locfileid: "87872610"
 
 ## <a name="prerequisites"></a>先决条件
 
-- 查看[自动预配概念](concepts-auto-provisioning.md)。
+- 熟悉[预配](about-iot-dps.md#provisioning-process)概念。
 - 完成[通过 Azure 门户设置 IoT 中心设备预配服务](./quick-setup-auto-provision.md)。
 - 具有活动订阅的 Azure 帐户。 [免费创建一个](https://azure.microsoft.com/free/?ref=microsoft.com&utm_source=microsoft.com&utm_medium=docs&utm_campaign=visualstudio)。
 - [Visual Studio 2015+](https://visualstudio.microsoft.com/vs/)，结合使用通过 C++ 进行的桌面开发。
@@ -64,7 +64,7 @@ ms.locfileid: "87872610"
     cmake -Duse_prov_client:BOOL=ON -Duse_tpm_simulator:BOOL=ON ..
     ```
 
-1. 在单独的命令提示符处，导航到 TPM 模拟器文件夹，然后运行将要成为模拟设备的 [HSM](https://azure.microsoft.com/blog/azure-iot-supports-new-security-hardware-to-strengthen-iot-security/) 的 [TPM](https://docs.microsoft.com/windows/device-security/tpm/trusted-platform-module-overview) 模拟器。 单击“允许访问”。  该模拟器通过套接字在端口 2321 和 2322 上进行侦听。 请勿关闭此命令窗口；本快速入门指南自始至终都需让该模拟器保持运行状态。 
+1. 在单独的命令提示符处，导航到 TPM 模拟器文件夹，然后运行将要成为模拟设备的 [HSM](https://azure.microsoft.com/blog/azure-iot-supports-new-security-hardware-to-strengthen-iot-security/) 的 [TPM](/windows/device-security/tpm/trusted-platform-module-overview) 模拟器。 单击“允许访问”。  该模拟器通过套接字在端口 2321 和 2322 上进行侦听。 请勿关闭此命令窗口；本快速入门指南自始至终都需让该模拟器保持运行状态。 
 
     ```cmd/sh
     .\azure-iot-sdk-python\c\provisioning_client\deps\utpm\tools\tpm_simulator\Simulator.exe
@@ -93,7 +93,7 @@ Azure IoT 设备预配服务支持两类注册：
 1. 在“设备预配服务”菜单中，选择“管理注册”  。 选择“个人注册”选项卡，然后选择顶部的“添加个人注册”按钮   。 
 
 1. 在“添加注册”面板中，输入以下信息  ：
-   - 选择“TPM”  作为标识证明*机制*。
+   - 选择“TPM”  作为标识证明 *机制*。
    - 使用你之前记下的值输入 TPM 设备的“注册 ID”和“认可密钥”   。
    - 选择与预配服务链接的 IoT 中心。
    - （可选）可以提供以下信息：

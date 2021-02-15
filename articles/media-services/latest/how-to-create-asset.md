@@ -1,5 +1,5 @@
 ---
-title: 使用 Azure CLI 将内容上传到 Azure 媒体服务资产
+title: 将内容上传到资产 CLI
 description: 本主题中的 Azure CLI 脚本演示如何创建媒体服务资产供上传内容使用。
 services: media-services
 documentationcenter: ''
@@ -12,17 +12,19 @@ ms.devlang: azurecli
 ms.topic: how-to
 ms.tgt_pltfrm: multiple
 ms.workload: na
-ms.date: 08/18/2020
+ms.date: 08/31/2020
 ms.author: inhenkel
 ms.custom: devx-track-azurecli
-ms.openlocfilehash: 65b0b276dcda58810f44494c14f06dd412d633f6
-ms.sourcegitcommit: 6fc156ceedd0fbbb2eec1e9f5e3c6d0915f65b8e
+ms.openlocfilehash: 6f3c5fa41150f5df2b0e89c4253cb0bb55b1d625
+ms.sourcegitcommit: 4e70fd4028ff44a676f698229cb6a3d555439014
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/21/2020
-ms.locfileid: "88719285"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98955811"
 ---
 # <a name="create-an-asset"></a>创建资产
+
+[!INCLUDE [media services api v3 logo](./includes/v3-hr.md)]
 
 本文介绍如何创建媒体服务资产。  你将使用资产来保存用于编码和流式传输的媒体内容。  若要了解有关媒体服务资产的详细信息，请参阅 [Azure 媒体服务 v3 中的资产](assets-concept.md)
 

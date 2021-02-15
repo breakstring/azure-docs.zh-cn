@@ -5,14 +5,14 @@ services: vpn-gateway
 author: cherylmc
 ms.service: vpn-gateway
 ms.topic: how-to
-ms.date: 11/29/2017
+ms.date: 09/02/2020
 ms.author: cherylmc
-ms.openlocfilehash: c4809c51a59805ac996bd4c5971ec633ae6c2aed
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: aadb2107cd009ac58cf8edb12853b10a5a0e3677
+ms.sourcegitcommit: 8e7316bd4c4991de62ea485adca30065e5b86c67
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "84987073"
+ms.lasthandoff: 11/17/2020
+ms.locfileid: "94659992"
 ---
 # <a name="modify-local-network-gateway-settings-using-the-azure-cli"></a>使用 Azure CLI 修改本地网络网关设置
 
@@ -27,7 +27,7 @@ ms.locfileid: "84987073"
 
 ## <a name="before-you-begin"></a><a name="before"></a>准备工作
 
-安装最新版本的 CLI 命令（2.0 或更高版本）。 有关安装 CLI 命令的信息，请参阅[安装 Azure CLI](https://docs.microsoft.com/cli/azure/install-azure-cli)。
+安装最新版本的 CLI 命令（2.0 或更高版本）。 有关安装 CLI 命令的信息，请参阅[安装 Azure CLI](/cli/azure/install-azure-cli)。
 
 [!INCLUDE [CLI-login](../../includes/vpn-gateway-cli-login-include.md)]
 
@@ -42,4 +42,3 @@ ms.locfileid: "84987073"
 ## <a name="next-steps"></a>后续步骤
 
 可验证网关连接。 请参阅[验证网关连接](vpn-gateway-verify-connection-resource-manager.md)。
-

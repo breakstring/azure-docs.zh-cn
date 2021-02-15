@@ -8,17 +8,18 @@ manager: gwallace
 editor: ''
 ms.assetid: ''
 ms.service: virtual-machines-linux
+ms.subservice: extensions
 ms.topic: article
 ms.tgt_pltfrm: vm-linux
 ms.workload: infrastructure-services
-ms.date: 02/11/2019
-ms.author: akjosh
-ms.openlocfilehash: 52f896e5cbcc8089ee8683338c99fb514400be4a
-ms.sourcegitcommit: 3543d3b4f6c6f496d22ea5f97d8cd2700ac9a481
+ms.date: 01/21/2021
+ms.author: amverma
+ms.openlocfilehash: a241086e6a590096cf40cbdb7a84838b14889f73
+ms.sourcegitcommit: b39cf769ce8e2eb7ea74cfdac6759a17a048b331
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/20/2020
-ms.locfileid: "86511137"
+ms.lasthandoff: 01/22/2021
+ms.locfileid: "98678282"
 ---
 # <a name="nvidia-gpu-driver-extension-for-linux"></a>适用于 Linux 的 NVIDIA GPU 驱动程序扩展
 
@@ -38,8 +39,8 @@ ms.locfileid: "86511137"
 | 分发 | 版本 |
 |---|---|
 | Linux：Ubuntu | 16.04 LTS、18.04 LTS |
-| Linux：Red Hat Enterprise Linux | 7.3、7.4、7.5、7.6、7.7 |
-| Linux：CentOS | 7.3、7.4、7.5、7.6、7.7 |
+| Linux：Red Hat Enterprise Linux | 7.3、7.4、7.5、7.6、7.7、7。8 |
+| Linux：CentOS | 7.3、7.4、7.5、7.6、7.7、7。8 |
 
 ### <a name="internet-connectivity"></a>Internet 连接
 
@@ -85,16 +86,16 @@ ms.locfileid: "86511137"
 | 名称 | 说明 | 默认值 | 有效值 | 数据类型 |
 | ---- | ---- | ---- | ---- | ---- |
 | updateOS | 更新内核，即使安装驱动程序时不需要更新 | false | true、false | boolean |
-| driverVersion | NV：GRID 驱动程序版本<br> NC/ND：CUDA 工具包版本。 将自动安装所选 CUDA 的最新驱动程序。 | 最新 | GRID：“430.30”、“418.70”、“410.92”、“410.71”、“390.75”、“390.57”、“390.42”<br> CUDA：“10.0.130”、“9.2.88”、“9.1.85” | string |
-| installCUDA | 安装 CUDA 工具包。 仅适用于 NC/ND 系列 VM。 | true | true、false | boolean |
+| driverVersion | NV：GRID 驱动程序版本<br> NC/ND：CUDA 工具包版本。 将自动安装所选 CUDA 的最新驱动程序。 | 最新 | 受支持的驱动程序版本的[列表](https://github.com/Azure/azhpc-extensions/blob/master/NvidiaGPU/resources.json) | string |
+| installCUDA | 安装 CUDA 工具包。 仅适用于 NC/ND 系列 VM。 | 是 | true、false | boolean |
 
 
 ## <a name="deployment"></a>部署
 
 
-### <a name="azure-resource-manager-template"></a>Azure 资源管理器模板 
+### <a name="azure-resource-manager-template"></a>Azure Resource Manager 模板 
 
-可使用 Azure Resource Manager 模板部署 Azure VM 扩展。 部署需要部署后配置的一个或多个虚拟机时，模板是理想选择。
+可使用 Azure 资源管理器模板部署 Azure VM 扩展。 部署需要部署后配置的一个或多个虚拟机时，模板是理想选择。
 
 虚拟机扩展的 JSON 配置可以嵌套在虚拟机资源内，或放置在资源管理器 JSON 模板的根级别或顶级别。 JSON 的位置会影响资源名称和类型的值。 有关详细信息，请参阅[设置子资源的名称和类型](../../azure-resource-manager/templates/child-resource-name-type.md)。 
 
@@ -165,7 +166,7 @@ az vm extension set \
 
 ## <a name="troubleshoot-and-support"></a>故障排除和支持
 
-### <a name="troubleshoot"></a>故障排除
+### <a name="troubleshoot"></a>疑难解答
 
 有关扩展部署状态的数据可以从 Azure 门户以及使用 Azure PowerShell 和 Azure CLI 进行检索。 若要查看给定 VM 的扩展部署状态，请运行以下命令。
 

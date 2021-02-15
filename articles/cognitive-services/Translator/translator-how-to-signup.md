@@ -3,19 +3,19 @@ title: 入门 - 翻译器
 titleSuffix: Azure Cognitive Services
 description: 本文将演示如何注册 Azure 认知服务翻译器并获取订阅密钥。
 services: cognitive-services
-author: swmachan
+author: laujan
 manager: nitinme
 ms.service: cognitive-services
 ms.subservice: translator-text
 ms.topic: conceptual
 ms.date: 05/26/2020
-ms.author: swmachan
-ms.openlocfilehash: a9050b85c974a3c04ca717e8fe3d5188c1bf7a40
-ms.sourcegitcommit: c293217e2d829b752771dab52b96529a5442a190
+ms.author: lajanuar
+ms.openlocfilehash: 8932c389138c1fb86509a59bc055a2ce147c51a3
+ms.sourcegitcommit: 100390fefd8f1c48173c51b71650c8ca1b26f711
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/15/2020
-ms.locfileid: "88244306"
+ms.lasthandoff: 01/27/2021
+ms.locfileid: "98896708"
 ---
 # <a name="how-to-sign-up-for-translator"></a>如何注册翻译器
 
@@ -41,7 +41,7 @@ ms.locfileid: "88244306"
 注册翻译器时，将获得你的订阅所特有的个性化访问密钥。 每次调用翻译器时都需要此密钥。
 
 1. 通过先选择相应的订阅检索身份验证密钥。
-1. 在订阅详细信息的“资源管理”部分中选择“密钥” 。
+1. 在订阅详细信息的 "**资源管理**" 部分中选择 "**密钥和终结点**"。
 1. 复制订阅所列出的任一密钥。
 
 ## <a name="learn-test-and-get-support"></a>了解、测试和获取支持

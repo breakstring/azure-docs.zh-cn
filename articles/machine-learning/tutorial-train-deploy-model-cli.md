@@ -9,19 +9,19 @@ ms.service: machine-learning
 ms.subservice: core
 ms.topic: tutorial
 ms.date: 03/26/2020
-ms.openlocfilehash: b4167f8958f7a1613c4d48625f7a79a02c7588d0
-ms.sourcegitcommit: 8def3249f2c216d7b9d96b154eb096640221b6b9
+ms.openlocfilehash: 55221fa529688fbae1698a094ea31f6a3f765100
+ms.sourcegitcommit: ab829133ee7f024f9364cd731e9b14edbe96b496
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/03/2020
-ms.locfileid: "87543395"
+ms.lasthandoff: 12/28/2020
+ms.locfileid: "97796238"
 ---
 # <a name="tutorial-train-and-deploy-a-model-from-the-cli"></a>教程：通过 CLI 训练和部署模型
-[!INCLUDE [applies-to-skus](../../includes/aml-applies-to-basic-enterprise-sku.md)]
+
 
 在本教程中，你将使用 Azure CLI 的机器学习扩展来训练、注册和部署模型。
 
-本教程中的 Python 训练脚本使用 [scikit-learn](https://scikit-learn.org/) 来训练基本模型。 本教程的侧重点不是脚本或模型，而是使用 CLI 处理 Azure 机器学习的过程。
+本教程中的 Python 训练脚本使用 [scikit-learn](https://scikit-learn.org/) 来训练一个简单模型。 本教程的侧重点不是脚本或模型，而是使用 CLI 处理 Azure 机器学习的过程。
 
 了解如何执行以下操作：
 
@@ -39,7 +39,7 @@ ms.locfileid: "87543395"
 
 * Azure 订阅。 如果没有 Azure 订阅，请在开始操作前先创建一个免费帐户。 立即试用[免费版或付费版 Azure 机器学习](https://aka.ms/AMLFree)。
 
-* 若要从本地环境使用本文档中的 CLI 命令，需要使用 [Azure CLI](https://docs.microsoft.com/cli/azure/install-azure-cli?view=azure-cli-latest)。
+* 若要从本地环境使用本文档中的 CLI 命令，需要使用 [Azure CLI](/cli/azure/install-azure-cli?preserve-view=true&view=azure-cli-latest)。
 
     如果使用的是 [Azure Cloud Shell](https://azure.microsoft.com//features/cloud-shell/)，则可通过浏览器访问 CLI（它位于云端）。
 
@@ -75,7 +75,7 @@ git clone https://github.com/microsoft/MLOps.git
 
 ## <a name="connect-to-your-azure-subscription"></a>连接到 Azure 订阅
 
-可使用多种方法通过 CLI 对 Azure 订阅进行身份验证。 最基本的方法是使用浏览器进行交互式身份验证。 若要以交互方式进行身份验证，请打开命令行或终端，然后使用以下命令：
+可使用多种方法通过 CLI 对 Azure 订阅进行身份验证。 最简单的方法是使用浏览器进行交互式身份验证。 若要以交互方式进行身份验证，请打开命令行或终端，然后使用以下命令：
 
 ```azurecli-interactive
 az login
@@ -101,7 +101,7 @@ az extension update -n azure-cli-ml
 
 ## <a name="create-a-resource-group"></a>创建资源组
 
-资源组是 Azure 平台上资源的基本容器。 使用 Azure 机器学习时，资源组将包含 Azure 机器学习工作区。 它还将包含工作区使用的其他 Azure 服务。 例如，如果使用基于云的计算资源训练模型，则该资源将在资源组中进行创建。
+资源组是 Azure 平台上资源的容器。 使用 Azure 机器学习时，资源组将包含 Azure 机器学习工作区。 它还将包含工作区使用的其他 Azure 服务。 例如，如果使用基于云的计算资源训练模型，则该资源将在资源组中进行创建。
 
 若要创建新的资源组，请使用以下命令。 将 `<resource-group-name>` 替换为此资源组使用的名称。 将 `<location>` 替换为此资源组使用的 Azure 区域：
 
@@ -128,7 +128,7 @@ az group create --name <resource-group-name> --location <location>
 }
 ```
 
-要详细了解如何使用资源组，请参阅 [az group](https://docs.microsoft.com//cli/azure/group?view=azure-cli-latest)。
+要详细了解如何使用资源组，请参阅 [az group](/cli/azure/group?preserve-view=true&view=azure-cli-latest)。
 
 ## <a name="create-a-workspace"></a>创建工作区
 
@@ -300,17 +300,17 @@ runconfig 文件还包含用于配置训练运行所使用的环境的信息。 
 > [!TIP]
 > 虽然可手动创建 runconfig 文件，但本例中的文件是使用存储库中包含的 `generate-runconfig.py` 文件创建的。 此文件获取对已注册的数据集的引用，以编程方式创建运行配置，然后将其保存到文件中。
 
-要详细了解运行配置文件，请参阅[设置计算目标并将其用于模型训练](how-to-set-up-training-targets.md#create-run-configuration-and-submit-run-using-azure-machine-learning-cli)。 有关完整的 JSON 引用，请参阅 [runconfigschema.json](https://github.com/microsoft/MLOps/blob/b4bdcf8c369d188e83f40be8b748b49821f71cf2/infra-as-code/runconfigschema.json)。
+若要了解有关如何运行配置文件的详细信息，请参阅[使用计算目标进行模型训练](how-to-set-up-training-targets.md#whats-a-run-configuration)。 有关完整的 JSON 引用，请参阅 [runconfigschema.json](https://github.com/microsoft/MLOps/blob/b4bdcf8c369d188e83f40be8b748b49821f71cf2/infra-as-code/runconfigschema.json)。
 
 ## <a name="submit-the-training-run"></a>提交训练运行
 
 若要在 `cpu-cluster` 计算目标上开始训练运行，请使用以下命令：
 
 ```azurecli-interactive
-az ml run submit-script -c mnist -e myexperiment --source-directory scripts -t runoutput.json
+az ml run submit-script -c mnist -e tutorial-cli --source-directory scripts -t runoutput.json
 ```
 
-此命令会指定试验的名称 (`myexperiment`)。 实验将此运行的相关信息存储在工作区中。
+此命令会指定试验的名称 (`tutorial-cli`)。 实验将此运行的相关信息存储在工作区中。
 
 `-c mnist` 参数指定 `.azureml/mnist.runconfig` 文件。
 
@@ -327,7 +327,7 @@ Accuracy is 0.9185
 
 如果检查训练脚本，你会注意到它在将训练模型存储到 `outputs/sklearn_mnist_model.pkl` 时也使用 Alpha 值。
 
-模型已保存到计算目标上训练它的 `./outputs` 目录中， 在本例中为 Azure 云中的 Azure 机器学习计算实例。 训练过程会将 `./outputs` 目录的内容从进行训练的计算目标自动上传到 Azure 机器学习工作区。 它存储为试验的一部分（在本例中为 `myexperiment`）。
+模型已保存到计算目标上训练它的 `./outputs` 目录中， 在本例中为 Azure 云中的 Azure 机器学习计算实例。 训练过程会将 `./outputs` 目录的内容从进行训练的计算目标自动上传到 Azure 机器学习工作区。 它存储为试验的一部分（在本例中为 `tutorial-cli`）。
 
 ## <a name="register-the-model"></a>注册模型
 
@@ -345,13 +345,13 @@ az ml model register -n mymodel -f runoutput.json --asset-path "outputs/sklearn_
 {
   "createdTime": "2019-09-19T15:25:32.411572+00:00",
   "description": "",
-  "experimentName": "myexperiment",
+  "experimentName": "tutorial-cli",
   "framework": "Custom",
   "frameworkVersion": null,
   "id": "mymodel:1",
   "name": "mymodel",
   "properties": "",
-  "runId": "myexperiment_1568906070_5874522d",
+  "runId": "tutorial-cli_1568906070_5874522d",
   "tags": "",
   "version": 1
 }

@@ -14,12 +14,12 @@ ms.tgt_pltfrm: na
 ms.topic: troubleshooting
 ms.date: 03/31/2020
 ms.author: v-mibufo
-ms.openlocfilehash: 76c3f729a8520c7bff7b49a1d2200d7950f8a9f4
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.openlocfilehash: 145d58013b259bf14c26d0840b8cd4299cfe85f0
+ms.sourcegitcommit: 484f510bbb093e9cfca694b56622b5860ca317f7
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87074308"
+ms.lasthandoff: 01/21/2021
+ms.locfileid: "98632616"
 ---
 # <a name="vm-is-unresponsive-with-c01a001d-error-when-applying-windows-update"></a>应用 Windows 更新时 VM 无响应并出现“C01A001D”错误
 
@@ -39,6 +39,9 @@ ms.locfileid: "87074308"
 
 ### <a name="process-overview"></a>过程概述
 
+> [!TIP]
+> 如果你有 VM 的最新备份，则可以尝试 [从备份还原 vm](../../backup/backup-azure-arm-restore-vms.md) ，以解决启动问题。
+
 1. [创建并访问修复 VM](#create-and-access-a-repair-vm)。
 2. [释放硬盘上的空间](#free-up-space-on-the-hard-disk)。
 3. [建议：在重建 VM 之前，启用串行控制台和内存转储收集](#recommended-before-rebuilding-the-vm-enable-serial-console-and-memory-dump-collection)。
@@ -56,7 +59,7 @@ ms.locfileid: "87074308"
 
 如果磁盘空间尚不足 1 TB，必须调整其大小。 磁盘空间达到 1 TB 后，执行磁盘清理和驱动器碎片整理。
 
-1. 检查磁盘是否已满。 如果磁盘空间低于 1 TB，请[使用 PowerShell 将其扩展到最大 1 TB](../windows/expand-os-disk.md?toc=%2Fazure%2Fvirtual-machines%2Fwindows%2Ftoc.json)。
+1. 检查磁盘是否已满。 如果磁盘空间低于 1 TB，请[使用 PowerShell 将其扩展到最大 1 TB](../windows/expand-os-disk.md)。
 2. 磁盘空间达到 1 TB 后，执行磁盘清理。
     - [从损坏的 VM 中分离数据磁盘](../windows/detach-disk.md)。
     - [将数据磁盘附加到正常运行的 VM](../windows/attach-disk-ps.md#attach-an-existing-data-disk-to-a-vm)。

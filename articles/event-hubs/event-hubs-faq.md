@@ -2,13 +2,13 @@
 title: 常见问题 - Azure 事件中心 | Microsoft Docs
 description: 本文提供了有关 Azure 事件中心的常见问题 (FAQ) 和解答的列表。
 ms.topic: article
-ms.date: 06/23/2020
-ms.openlocfilehash: bec50da97bc826eb1bd26452e8f69f5c11f2d65d
-ms.sourcegitcommit: 3543d3b4f6c6f496d22ea5f97d8cd2700ac9a481
+ms.date: 01/20/2021
+ms.openlocfilehash: e6fd4814e771d03827e51f1cd5ee182c9e432cc5
+ms.sourcegitcommit: 77afc94755db65a3ec107640069067172f55da67
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/20/2020
-ms.locfileid: "86537174"
+ms.lasthandoff: 01/22/2021
+ms.locfileid: "98696102"
 ---
 # <a name="event-hubs-frequently-asked-questions"></a>事件中心常见问题
 
@@ -42,77 +42,23 @@ Azure 事件中心标准层提供的功能超出了基本层中提供的功能�
 
 在所有支持的 Azure 区域中都可使用 Azure 事件中心。 有关列表，请访问 [Azure 区域](https://azure.microsoft.com/regions/)页。  
 
-### <a name="can-i-use-a-single-amqp-connection-to-send-and-receive-from-multiple-event-hubs"></a>是否可以使用单个 AMQP 连接来与多个事件中心相互收发数据？
+### <a name="can-i-use-a-single-advanced-message-queuing-protocol-amqp-connection-to-send-and-receive-from-multiple-event-hubs"></a>是否可以使用单个高级消息队列协议 (AMQP) 连接来与多个事件中心相互收发数据？
 
 可以，但前提是所有事件中心都在同一个命名空间中。
 
 ### <a name="what-is-the-maximum-retention-period-for-events"></a>事件的最长保留期有多久？
 
-事件中心标准版目前支持的最长保留期为七天。 事件中心不应作为永久性的数据存储。 大于 24 小时的保留期适用于将事件流重播到相同系统中的情形；例如，为了基于现有数据来培训或验证新机器学习模型。 如果需要将消息保留七天以上，请启用事件中心的[事件中心捕获](event-hubs-capture-overview.md)功能，将数据从事件中心提取到所选的存储帐户或 Azure Data Lake 服务帐户。 启用捕获功能需要支付费用，具体因购买的吞吐量单位而异。
+事件中心标准版目前支持的最长保留期为七天。 事件中心不应作为永久性的数据存储。 大于 24 小时的保留期适用于将事件流重播到相同系统中的情形。 例如，基于现有数据训练或验证新机器学习模型。 如果需要将消息保留七天以上，请启用事件中心的[事件中心捕获](event-hubs-capture-overview.md)功能，将数据从事件中心提取到所选的存储帐户或 Azure Data Lake 服务帐户。 启用捕获功能需要支付费用，具体因购买的吞吐量单位而异。
 
 可以在存储帐户上配置已捕获数据的保留期。 Azure 存储的“生命周期管理”功能为常规用途 v2 和 blob 存储帐户提供了基于规则的丰富策略。 可使用该策略将数据转移到适当的访问层，或在数据的生命周期结束时使数据过期。 有关详细信息，请参阅[管理 Azure Blob 存储生命周期](../storage/blobs/storage-lifecycle-management-concepts.md)。 
 
 ### <a name="how-do-i-monitor-my-event-hubs"></a>如何监视事件中心？
 事件中心向 [Azure Monitor](../azure-monitor/overview.md) 发出详尽指标用于提供资源的状态。 此外，参考指标不仅可以在命名空间级别，而且还能在实体级别评估事件中心服务的总体运行状况。 了解 [Azure 事件中心](event-hubs-metrics-azure-monitor.md)提供哪些监视功能。
 
-### <a name="what-ports-do-i-need-to-open-on-the-firewall"></a>需要在防火墙上打开哪些端口？ 
-可以将以下协议与 Azure 服务总线配合使用，以便发送和接收消息：
+### <a name="where-does-azure-event-hubs-store-data"></a><a name="in-region-data-residency"></a>Azure 事件中心将数据存储在何处？
+Azure 事件中心标准和专用层在你选择的区域中存储元数据和数据。 为 Azure 事件中心命名空间设置异地灾难恢复时，会将元数据复制到所选的次要区域。 因此，此服务会自动满足区域数据派驻要求，其中包括 [信任中心](https://azuredatacentermap.azurewebsites.net/)中指定的要求。
 
-- 高级消息队列协议 (AMQP)
-- HTTP
-- Apache Kafka
-
-请参阅下表，了解需要打开的出站端口，以使用这些协议与 Azure 事件中心通信。 
-
-| 协议 | 端口 | 详细信息 | 
-| -------- | ----- | ------- | 
-| AMQP | 5671 和 5672 | 请参阅 [AMQP 协议指南](../service-bus-messaging/service-bus-amqp-protocol-guide.md) | 
-| HTTP、HTTPS | 80、443 |  |
-| Kafka | 9093 | 请参阅[使用 Kafka 应用程序中的事件中心](event-hubs-for-kafka-ecosystem-overview.md)
-
-### <a name="what-ip-addresses-do-i-need-to-whitelist"></a>需要将哪些 IP 地址列入允许列表？
-若要找到适合加入连接的允许列表的 IP 地址，请执行以下步骤：
-
-1. 从命令提示符运行以下命令： 
-
-    ```
-    nslookup <YourNamespaceName>.servicebus.windows.net
-    ```
-2. 记下 `Non-authoritative answer` 中返回的 IP 地址。 只有在你将命名空间还原到另一群集时，它才会更改。
-
-如果对命名空间使用区域冗余，则需要执行一些额外步骤： 
-
-1. 首先，在命名空间中运行 nslookup。
-
-    ```
-    nslookup <yournamespace>.servicebus.windows.net
-    ```
-2. 记下“非权威回答”部分中的名称，该名称采用下述格式之一： 
-
-    ```
-    <name>-s1.cloudapp.net
-    <name>-s2.cloudapp.net
-    <name>-s3.cloudapp.net
-    ```
-3. 为每一个运行 nslookup，使用后缀 s1、s2 和 s3 获取所有三个在三个可用性区域中运行的实例的 IP 地址。 
-
-### <a name="where-can-i-find-client-ip-sending-or-receiving-msgs-to-my-namespace"></a>在哪里可以找到向命名空间发送消息或从命名空间接收消息的客户端 IP？
-首先，在命名空间上启用 [IP 筛选](event-hubs-ip-filtering.md)。 
-
-然后，按照[启用诊断日志](event-hubs-diagnostic-logs.md#enable-diagnostic-logs)中的说明，为[事件中心虚拟网络连接事件](event-hubs-diagnostic-logs.md#event-hubs-virtual-network-connection-event-schema)启用诊断日志。 将看到连接遭到拒绝的 IP 地址。
-
-```json
-{
-    "SubscriptionId": "0000000-0000-0000-0000-000000000000",
-    "NamespaceName": "namespace-name",
-    "IPAddress": "1.2.3.4",
-    "Action": "Deny Connection",
-    "Reason": "IPAddress doesn't belong to a subnet with Service Endpoint enabled.",
-    "Count": "65",
-    "ResourceId": "/subscriptions/0000000-0000-0000-0000-000000000000/resourcegroups/testrg/providers/microsoft.eventhub/namespaces/namespace-name",
-    "Category": "EventHubVNetConnectionEvent"
-}
-```
+[!INCLUDE [event-hubs-connectivity](../../includes/event-hubs-connectivity.md)]
 
 ## <a name="apache-kafka-integration"></a>Apache Kafka 集成
 
@@ -122,13 +68,24 @@ Azure 事件中心标准层提供的功能超出了基本层中提供的功能�
 ### <a name="what-configuration-changes-need-to-be-done-for-my-existing-application-to-talk-to-event-hubs"></a>要使现有的应用程序与事件中心通信，需要完成哪些配置更改？
 要连接到事件中心，需要更新 Kafka 客户端配置。 为此，可以创建事件中心命名空间并获取[连接字符串](event-hubs-get-connection-string.md)。 更改 bootstrap.servers，以将事件中心 FQDN 和端口指向 9093。 更新 sasl.jaas.config，以使用正确的身份验证将 Kafka 客户端定向到事件中心终结点（已获取的连接字符串），如下所示：
 
-bootstrap.servers={YOUR.EVENTHUBS.FQDN}:9093 request.timeout.ms=60000 security.protocol=SASL_SSL sasl.mechanism=PLAIN sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username="$ConnectionString" password="{YOUR.EVENTHUBS.CONNECTION.STRING}";
+```properties
+bootstrap.servers={YOUR.EVENTHUBS.FQDN}:9093
+request.timeout.ms=60000
+security.protocol=SASL_SSL
+sasl.mechanism=PLAIN
+sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username="$ConnectionString" password="{YOUR.EVENTHUBS.CONNECTION.STRING}";
+```
 
-示例：
+例如：
 
-bootstrap.servers=dummynamespace.servicebus.windows.net:9093 request.timeout.ms=60000 security.protocol=SASL_SSL sasl.mechanism=PLAIN sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username="$ConnectionString" password="Endpoint=sb://dummynamespace.servicebus.windows.net/;SharedAccessKeyName=DummyAccessKeyName;SharedAccessKey=5dOntTRytoC24opYThisAsit3is2B+OGY1US/fuL3ly=";
-
-注意：如果 sasl.jaas.config 不是框架中受支持的配置，请查找用于设置 SASL 用户名和密码的配置，并改为使用这些配置。 将用户名设置为 $ConnectionString，将密码设置为事件中心连接字符串。
+```properties
+bootstrap.servers=dummynamespace.servicebus.windows.net:9093
+request.timeout.ms=60000
+security.protocol=SASL_SSL
+sasl.mechanism=PLAIN
+sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username="$ConnectionString" password="Endpoint=sb://dummynamespace.servicebus.windows.net/;SharedAccessKeyName=DummyAccessKeyName;SharedAccessKey=XXXXXXXXXXXXXXXXXXXXX";
+```
+注意：如果 sasl.jaas.config 在框架中不是受支持的配置，请查找用于设置 SASL 用户名和密码的配置，改为使用这些配置。 将用户名设置为 $ConnectionString，将密码设置为事件中心连接字符串。
 
 ### <a name="what-is-the-messageevent-size-for-event-hubs"></a>事件中心的消息/事件大小是多少？
 事件中心允许的最大消息大小为 1 MB。
@@ -153,12 +110,12 @@ bootstrap.servers=dummynamespace.servicebus.windows.net:9093 request.timeout.ms=
 可以从最少的一个吞吐量单位 (TU) 着手，并启用[自动扩充](event-hubs-auto-inflate.md)。 自动扩充功能可让你在流量/有效负载增大时扩展 TU。 还可以针对 TU 数量设置上限。
 
 ### <a name="how-does-auto-inflate-feature-of-event-hubs-work"></a>事件中心自动扩充功能的工作原理是什么？
-使用自动扩充功能可以纵向扩展吞吐量单位 (TU)。 这意味着，一开始可以购买较低的 TU，自动扩充会在入口流量增大时纵向扩展 TU。 自动扩充是一种经济高效的选项，可让你完全控制 TU 数量。 这是一个**仅限纵向扩展**的功能，可以通过更新来完全控制 TU 数量的缩减。 
+使用自动扩充功能可以纵向扩展吞吐量单位 (TU)。 这意味着，一开始可以购买较低的 TU，自动扩充会在入口流量增大时纵向扩展 TU。 自动扩充是一种经济高效的选项，可让你完全控制 TU 数量。 这是一个 **仅限纵向扩展** 的功能，可以通过更新来完全控制 TU 数量的缩减。 
 
 可以从较低的吞吐量单位 (TU) 着手，例如 2 个 TU。 如果预测流量可能会增大到 15 TU，请对命名空间启用自动扩充功能，并将最大限制设置为 15 TU。 现在，当流量增大时可以自动扩展 TU。
 
 ### <a name="is-there-a-cost-associated-when-i-turn-on-the-auto-inflate-feature"></a>启用自动扩充功能是否会产生相关的费用？
-此功能**不会**产生相关的费用。 
+此功能 **不会** 产生相关的费用。 
 
 ### <a name="how-are-throughput-limits-enforced"></a>如何强制实施吞吐量限制？
 如果某个命名空间中所有事件中心间的总入口吞吐量或总入口事件率超过了聚合吞吐量单位限额，那么发送方会受到限制，并会收到指明已超出入口配额的错误信息。
@@ -167,46 +124,57 @@ bootstrap.servers=dummynamespace.servicebus.windows.net:9093 request.timeout.ms=
 
 入口和出口配额是分开强制实施的，因此，任何发送方都不会使事件耗用速度减慢，并且接收方也无法阻止事件发送到事件中心。
 
-### <a name="is-there-a-limit-on-the-number-of-throughput-units-tus-that-can-be-reservedselected"></a>可预留/选择的吞吐量单位 (TU) 数量是否有限制？
-在多租户产品/服务中，吞吐量单位最多可扩展到 40 TU（可在门户中最多选择 20 TU，然后提出支持票证，在同一命名空间中将数目提高到 40 TU）。 如果超出 40 TU，事件中心可提供名为“事件中心专用群集”的基于资源/容量的模型。 专用群集按容量单位 (CU) 销售。
+### <a name="is-there-a-limit-on-the-number-of-throughput-units-that-can-be-reservedselected"></a>可预留/选择的吞吐量单位数量是否有限制？
+
+在 Azure 门户中创建基本层或标准层命名空间时，最多可以为命名空间选择 20 个 TU。 若要将其 **准确** 提升为 40 tu，请提交  [支持请求](../azure-portal/supportability/how-to-create-azure-support-request.md)。  
+
+1. 在“事件总线命名空间”页面上，选择左侧菜单上的“新建支持请求” 。 
+1. 在“新建支持请求”页面上，按照以下步骤操作：
+    1. 对于“摘要”，用几句话描述这个问题。 
+    1. 对于“问题类型”，请选择“配额”。 
+    1. 对于“问题子类型”，选择“吞吐量单位增加或减少请求” 。 
+    
+        :::image type="content" source="./media/event-hubs-faq/support-request-throughput-units.png" alt-text="“支持请求”页面":::
+
+如果超出 40 TU，事件中心可提供名为“事件中心专用群集”的基于资源/容量的模型。 专用群集按容量单位 (CU) 销售。 有关详细信息，请参阅 [事件中心专用层-概述](event-hubs-dedicated-overview.md)。
 
 ## <a name="dedicated-clusters"></a>专用群集
 
 ### <a name="what-are-event-hubs-dedicated-clusters"></a>什么是事件中心专用群集？
 事件中心专用群集提供单租户部署来满足苛刻的客户要求。 此产品/服务会构建一个不受限于吞吐量单位的基于容量的群集。 这意味着，可以使用该群集，根据群集的 CPU 和内存用量情况来引入和流式传输数据。 有关详细信息，请参阅[事件中心专用群集](event-hubs-dedicated-overview.md)。
 
-### <a name="how-much-does-a-single-capacity-unit-let-me-achieve"></a>一个容量单位可以实现多大的处理量？
-对于专用群集，可以引入和流式传输的数据量取决于各种因素，例如生成者、使用者、引入和处理速率，等等。 
-
-下表显示了我们在测试期间实现的基准结果：
-
-| 有效负载形状 | 接收方 | 入口带宽| 入口消息 | 出口带宽 | 出口消息 | TU 总数 | 每个 CU 的 TU 数 |
-| ------------- | --------- | ---------------- | ------------------ | ----------------- | ------------------- | --------- | ---------- |
-| 100x1KB 批 | 2 | 400 MB/秒 | 400k 消息数/秒 | 800 MB/秒 | 800k 消息数/秒 | 400 TU | 100 TU | 
-| 10x10KB 批 | 2 | 666 MB/秒 | 66.6k 消息数/秒 | 1.33 GB/秒 | 133k 消息数/秒 | 666 TU | 166 TU |
-| 6x32KB 批 | 1 | 1.05 GB/秒 | 34k 消息数/秒 | 1.05 GB/秒 | 34k 消息数/秒 | 1000 TU | 250 TU |
-
-测试中使用了以下条件：
-
-- 一个专用的事件中心群集，其中使用了四个容量单位 (CU)。 
-- 用于引入的事件中心包含 200 个分区。 
-- 引入的数据由从所有分区接收数据的两个接收方应用程序接收。
-
-结果大致反映了一个专用事件中心群集可以实现的处理量。 此外，专用群集还为微批和长期保留方案启用了“事件中心捕获”。
-
 ### <a name="how-do-i-create-an-event-hubs-dedicated-cluster"></a>如何创建事件中心专用群集？
-可以通过提交[提高配额支持请求](https://portal.azure.com/#create/Microsoft.Support)或联系[事件中心团队](mailto:askeventhubs@microsoft.com)来创建事件中心专用群集。 通常，我们需要花费大约两周时间来部署群集，并将其转交给你使用。 此过程是临时的，直到可通过 Azure 门户提供完整的自助服务为止。
+有关设置事件中心专用群集的分步说明和详细信息，请参阅 [快速入门：使用 Azure 门户创建专用事件中心群集](event-hubs-dedicated-cluster-create-portal.md)。 
 
-## <a name="best-practices"></a>最佳实践
+
+[!INCLUDE [event-hubs-dedicated-clusters-faq](../../includes/event-hubs-dedicated-clusters-faq.md)]
+
+
+## <a name="partitions"></a>分区
 
 ### <a name="how-many-partitions-do-i-need"></a>需要多少分区？
-分区数在创建时指定，必须介于 2 到 32 之间。 分区计数不可更改，因此在设置分区计数时应考虑长期规模。 分区是一种数据组织机制，与使用方应用程序中所需的下游并行度相关。 事件中心的分区数与预期会有的并发读取者数直接相关。 有关分区的详细信息，请参阅[分区](event-hubs-features.md#partitions)。
+分区数在创建时指定，并且必须介于 1 和 32 之间。 分区计数在除 [专用层](event-hubs-dedicated-overview.md)以外的所有层中不可更改，因此在设置分区计数时应考虑长期规模。 分区是一种数据组织机制，与使用方应用程序中所需的下游并行度相关。 事件中心的分区数与预期会有的并发读取者数直接相关。 有关分区的详细信息，请参阅[分区](event-hubs-features.md#partitions)。
 
-你可能希望在创建时将其设置为最高可能值，即 32。 请记住，具有多个分区将导致事件发送到多个分区，不会保留顺序，除非将发送方配置为：仅发送到 32 个分区中的一个分区，而让其余 31 个分区冗余。 在前一种情况下，必须跨所有 32 个分区读取事件。 在后一种情况下，除了必须在事件处理器主机上进行额外配置外，没有明显的额外成本。
+你可能希望在创建时将其设置为最高可能值，即 32。 请记住，拥有多个分区将导致事件发送到多个分区而不保留顺序，除非你将发送方配置为仅发送到 32 个分区中的一个分区，剩下的 31 个分区是冗余分区。 在前一种情况下，必须跨所有 32 个分区读取事件。 在后一种情况下，除了必须在事件处理器主机上进行额外配置外，没有明显的额外成本。
 
 事件中心设计用于允许每个用户组使用单个分区读取器。 在大多数用例中，四个分区的默认设置就足够了。 如果希望扩展事件处理，则可以考虑添加其他分区。 对分区没有特定的吞吐量限制，但是命名空间中的聚合吞吐量受吞吐量单位数限制。 增加命名空间中吞吐量单位的数量时，可能需要添加额外分区来允许并发读取器实现其自身的最大吞吐量。
 
 但是，如果有一个模型，其中应用程序具有到特定分区的关联性，则增加分区数可能对你没有任何益处。 有关详细信息，请参阅[可用性和一致性](event-hubs-availability-and-consistency.md)。
+
+### <a name="increase-partitions"></a>增加分区数
+通过提交支持请求，你可以请求将分区计数增加到 40（精确）。 
+
+1. 在“事件总线命名空间”页面上，选择左侧菜单上的“新建支持请求” 。 
+1. 在“新建支持请求”页面上，按照以下步骤操作：
+    1. 对于“摘要”，用几句话描述这个问题。 
+    1. 对于“问题类型”，请选择“配额”。 
+    1. 对于“问题子类型”，选择“分区更改请求” 。 
+    
+        :::image type="content" source="./media/event-hubs-faq/support-request-increase-partitions.png" alt-text="增加分区计数":::
+
+分区计数可以增加到正好 40 个。 在这种情况下，TU 的数量也必须增加到 40 个。 如果你稍后决定将 TU 限制降低到 <= 20 个，那么最大分区限制也将减少到 32 个。 
+
+减少分区数不会影响现有的事件中心，因为分区数只在事件中心级别应用，在创建该中心之后是不可变的。 
 
 ## <a name="pricing"></a>定价
 
@@ -220,13 +188,13 @@ bootstrap.servers=dummynamespace.servicebus.windows.net:9093 request.timeout.ms=
 
 ### <a name="how-is-the-event-hubs-storage-size-calculated-and-charged"></a>怎样对事件中心存储区大小进行计算和收费？
 
-所有存储的事件的总大小（包括所有事件中心内事件标头或磁盘存储器结构上的所有内部开销）按整天计量。 在一天结束时，计算存储区大小峰值。 每天的存储限制根据在当天所选择的吞吐量单元的最小数量（每个吞吐量单元提供 84 GB 的限制）来计算。 如果总大小超过计算出的每日存储限额，超出的存储量会采用 Azure Blob 存储费率（按**本地冗余存储**费率）来计费。
+所有存储的事件的总大小（包括所有事件中心内事件标头或磁盘存储器结构上的所有内部开销）按整天计量。 在一天结束时，计算存储区大小峰值。 每天的存储限制根据在当天所选择的吞吐量单元的最小数量（每个吞吐量单元提供 84 GB 的限制）来计算。 如果总大小超过计算出的每日存储限额，超出的存储量会采用 Azure Blob 存储费率（按 **本地冗余存储** 费率）来计费。
 
 ### <a name="how-are-event-hubs-ingress-events-calculated"></a>事件中心入口事件是怎样计算的？
 
 发送到事件中心的每个事件均计为一条可计费消息。 *入口事件* 定义为小于等于 64 KB 的数据单位。 任何小于等于 64 KB 的事件均被视为一个计费事件。 如果该事件大于 64 KB，则根据事件大小按 64 KB 的倍数来计算计费事件的数量。 例如，发送到事件中心的 8-KB 事件按一个事件计费，而发送到事件中心的 96-KB 的消息则按两个事件计费。
 
-从事件中心耗用的事件，以及管理操作和控制调用（例如检查点），不统计为计费入口事件，但会累计，上限为吞吐量单位限额。
+从事件中心耗用的事件以及管理操作和控制调用（例如检查点）不计为计费入口事件，但会累计，其上限为吞吐量单位限额。
 
 ### <a name="do-brokered-connection-charges-apply-to-event-hubs"></a>中转连接费用是否适用于事件中心？
 
@@ -246,7 +214,7 @@ bootstrap.servers=dummynamespace.servicebus.windows.net:9093 request.timeout.ms=
 
 如需所有事件中心配额的列表，请参阅[配额](event-hubs-quotas.md)。
 
-## <a name="troubleshooting"></a>故障排除
+## <a name="troubleshooting"></a>疑难解答
 
 ### <a name="why-am-i-not-able-to-create-a-namespace-after-deleting-it-from-another-subscription"></a>为什么在从其他订阅中删除命名空间后无法创建该命名空间？ 
 从订阅中删除命名空间时，请等待 4 个小时，然后才能在另一个订阅中使用相同的名称重新创建它。 否则，可能会收到以下错误消息：`Namespace already exists`。 
@@ -264,6 +232,20 @@ bootstrap.servers=dummynamespace.servicebus.windows.net:9093 request.timeout.ms=
 事件中心的技术支持可通过 [Azure 服务总线的 Microsoft 问答页面](/answers/topics/azure-service-bus.html)获取。 计费和订阅管理支持免费提供。
 
 若要详细了解我们的 SLA，请参阅[服务级别协议](https://azure.microsoft.com/support/legal/sla/)页面。
+
+## <a name="azure-stack-hub"></a>Azure Stack Hub
+
+### <a name="how-can-i-target-a-specific-version-of-azure-storage-sdk-when-using-azure-blob-storage-as-a-checkpoint-store"></a>当使用 Azure Blob 存储作为检查点存储时，我如何以特定版本的 Azure Storage SDK 为目标？
+如果在 Azure Stack Hub 上运行此代码，除非将特定的存储 API 版本作为目标，否则会遇到运行时错误。 这是因为事件中心 SDK 使用 Azure 中提供的最新 Azure 存储 API，而此 API 可能在 Azure Stack Hub 平台上不可用。 Azure Stack Hub 支持的存储 Blob SDK 版本可能与 Azure 上通常提供的版本不同。 如果你是将 Azure Blob 存储用作检查点存储，请检查[支持用于 Azure Stack Hub 内部版本的 Azure 存储 API 版本](/azure-stack/user/azure-stack-acs-differences?#api-version)，并在代码中将该版本作为目标。 
+
+例如，如果在 Azure Stack Hub 版本 2005 上运行，则存储服务的最高可用版本为版本 2019-02-02。 默认情况下，事件中心 SDK 客户端库使用 Azure 上的最高可用版本（在 SDK 发布时为 2019-07-07）。 在这种情况下，除了执行本部分中的步骤以外，还需要添加相关代码，将存储服务 API 版本 2019-02-02 作为目标。 如需通过示例来了解如何以特定的存储 API 版本为目标，请参阅以下 C#、Java、Python 和 JavaScript/TypeScript 示例。  
+
+如需通过示例来了解如何从代码中以特定存储 API 版本为目标，请参阅 GitHub 上的以下示例： 
+
+- [.NET](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples/)
+- [Java](https://github.com/Azure/azure-sdk-for-java/blob/master/sdk/eventhubs/azure-messaging-eventhubs-checkpointstore-blob/src/samples/java/com/azure/messaging/eventhubs/checkpointstore/blob/EventProcessorWithCustomStorageVersion.java)
+- Python - [同步](https://github.com/Azure/azure-sdk-for-python/blob/master/sdk/eventhub/azure-eventhub-checkpointstoreblob/samples/receive_events_using_checkpoint_store_storage_api_version.py)、[异步](https://github.com/Azure/azure-sdk-for-python/blob/master/sdk/eventhub/azure-eventhub-checkpointstoreblob-aio/samples/receive_events_using_checkpoint_store_storage_api_version_async.py)
+- [JavaScript](https://github.com/Azure/azure-sdk-for-js/blob/master/sdk/eventhub/eventhubs-checkpointstore-blob/samples/javascript/receiveEventsWithApiSpecificStorage.js) 和 [TypeScript](https://github.com/Azure/azure-sdk-for-js/blob/master/sdk/eventhub/eventhubs-checkpointstore-blob/samples/typescript/src/receiveEventsWithApiSpecificStorage.ts)
 
 ## <a name="next-steps"></a>后续步骤
 

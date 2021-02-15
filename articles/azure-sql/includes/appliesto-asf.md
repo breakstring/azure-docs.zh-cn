@@ -1,10 +1,9 @@
 ---
-ms.openlocfilehash: ac2953d91b475bd8f9fc7f7365f63d64f87ec652
-ms.sourcegitcommit: 3543d3b4f6c6f496d22ea5f97d8cd2700ac9a481
-ms.translationtype: MT
+ms.openlocfilehash: 93d18701af52aaa76d591035e068158c1c7a933c
+ms.sourcegitcommit: 829d951d5c90442a38012daaf77e86046018e5b9
+ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/20/2020
-ms.locfileid: "86544305"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "90533126"
 ---
-<Token>**适用于：** ![是 azure ](../media/applies-to/yes.png) Sql 数据库 ![ 是 azure ](../media/applies-to/yes.png) ![ ](../media/applies-to/yes.png) VM 上的 "是" 托管实例是 SQL Server</Token> 
-
+<Token>适用于：:::image type="icon" source="../media/applies-to/yes.png" border="false":::Azure SQL 数据库 :::image type="icon" source="../media/applies-to/yes.png" border="false":::Azure SQL 托管实例 :::image type="icon" source="../media/applies-to/yes.png" border="false":::Azure VM 上的 SQL Server</Token> 

@@ -1,24 +1,28 @@
 ---
-title: 如何为 Azure Redis 缓存设置异地复制 | Microsoft Docs
-description: 了解如何跨地理区域复制 Azure Redis 缓存实例。
+title: 为 Redis 实例的高级 Azure 缓存配置异地复制
+description: 了解如何在 Azure 区域中复制适用于 Redis 高级实例的 Azure 缓存
 author: yegu-ms
 ms.service: cache
 ms.topic: conceptual
-ms.date: 03/06/2019
+ms.date: 02/08/2021
 ms.author: yegu
-ms.openlocfilehash: 956e3e83686677f3eb9895354a008783df5f7dcd
-ms.sourcegitcommit: 98854e3bd1ab04ce42816cae1892ed0caeedf461
+ms.openlocfilehash: 27ccc81ddf0a771de9fb15f60820dfd3efa6146e
+ms.sourcegitcommit: d4734bc680ea221ea80fdea67859d6d32241aefc
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/07/2020
-ms.locfileid: "88003698"
+ms.lasthandoff: 02/14/2021
+ms.locfileid: "100386865"
 ---
-# <a name="how-to-set-up-geo-replication-for-azure-cache-for-redis"></a>如何为 Azure Redis 缓存设置异地复制
+# <a name="configure-geo-replication-for-premium-azure-cache-for-redis-instances"></a>为 Redis 实例的高级 Azure 缓存配置异地复制
 
-“异地复制”提供一种用于链接两个高级层 Azure Redis 缓存实例的机制。 一个缓存选作主链接缓存，另一个缓存指定为辅助链接缓存。 辅助链接缓存将变为只读，写入主缓存的数据将复制到辅助链接缓存。 主缓存实例和辅助缓存实例之间的数据传输受 TLS 保护。 异地复制可用于设置跨两个 Azure 区域的缓存。 本文提供了为高级层 Azure Redis 缓存实例配置异地复制的指南。
+本文介绍如何使用 Azure 门户配置异地复制的 Azure 缓存。
+
+异地复制将 Redis 实例的两个高级 Azure 缓存链接在一起，并创建数据复制关系。 这些缓存实例通常位于不同的 Azure 区域，不过它们不需要。 一个实例充当主实例，另一个实例用作辅助实例。 主处理读取和写入请求，并将更改传播到辅助副本。 此过程将继续，直到两个实例之间的链接被删除。
 
 > [!NOTE]
-> 异地复制设计为灾难恢复解决方案。 默认情况下，你的应用程序将写入并从主要区域读取。 可以选择将其配置为从次要区域读取。 异地复制并不提供自动故障转移，因为如果应用程序的其余部分保留在主要区域中，则在区域之间增加网络延迟。 你需要通过取消链接辅助缓存来管理和启动故障转移。 这会将其升级为新的主实例。
+> 异地复制设计为灾难恢复解决方案。
+>
+>
 
 ## <a name="geo-replication-prerequisites"></a>异地复制先决条件
 
@@ -51,11 +55,11 @@ ms.locfileid: "88003698"
 
 ## <a name="add-a-geo-replication-link"></a>添加异地复制链接
 
-1. 若要将两个缓存链接到一起以进行异地复制，请先在要用作主链接缓存的缓存的“资源”菜单中单击“异地复制”。**** 接下来，在“异地复制”边栏选项卡中单击“添加缓存复制链接”。********
+1. 若要将两个缓存链接到一起以进行异地复制，请先在要用作主链接缓存的缓存的“资源”菜单中单击“异地复制”。 接下来，在“异地复制”边栏选项卡中单击“添加缓存复制链接”。
 
     ![添加链接](./media/cache-how-to-geo-replication/cache-geo-location-menu.png)
 
-2. 在“兼容的缓存”列表中，单击所需辅助缓存的名称。**** 如果列表中未显示辅助缓存，请确认是否符合辅助缓存的[异地复制先决条件](#geo-replication-prerequisites)。 若要按区域筛选缓存，请在地图中单击相应的区域，以便仅显示“兼容的缓存”列表中的缓存。****
+2. 在“兼容的缓存”列表中，单击所需辅助缓存的名称。 如果列表中未显示辅助缓存，请确认是否符合辅助缓存的[异地复制先决条件](#geo-replication-prerequisites)。 若要按区域筛选缓存，请在地图中单击相应的区域，以便仅显示“兼容的缓存”列表中的缓存。
 
     ![异地复制兼容缓存](./media/cache-how-to-geo-replication/cache-geo-location-select-link.png)
     
@@ -63,19 +67,19 @@ ms.locfileid: "88003698"
 
     ![异地复制上下文菜单](./media/cache-how-to-geo-replication/cache-geo-location-select-link-context-menu.png)
 
-3. 单击“链接”将两个缓存链接在一起并开始复制过程。****
+3. 单击“链接”将两个缓存链接在一起并开始复制过程。
 
     ![链接缓存](./media/cache-how-to-geo-replication/cache-geo-location-confirm-link.png)
 
-4. 可以在“异地复制”边栏选项卡上查看复制过程的进度。****
+4. 可以在“异地复制”边栏选项卡上查看复制过程的进度。
 
     ![链接状态](./media/cache-how-to-geo-replication/cache-geo-location-linking.png)
 
-    还可以在主缓存和辅助缓存的“概述”边栏选项卡上查看链接状态。****
+    还可以在主缓存和辅助缓存的“概述”边栏选项卡上查看链接状态。
 
-    ![缓存状态](./media/cache-how-to-geo-replication/cache-geo-location-link-status.png)
+    ![此屏幕截图重点演示了如何查看主缓存和辅助缓存的链接状态。](./media/cache-how-to-geo-replication/cache-geo-location-link-status.png)
 
-    复制过程完成后，“链接状态”改为“成功”。********
+    复制过程完成后，“链接状态”改为“成功”。
 
     ![缓存状态](./media/cache-how-to-geo-replication/cache-geo-location-link-successful.png)
 
@@ -83,7 +87,7 @@ ms.locfileid: "88003698"
 
 ## <a name="remove-a-geo-replication-link"></a>删除异地复制链接
 
-1. 若要删除两个缓存之间的链接并停止异地复制，请在 "**异地复制**" 边栏选项卡中单击 "**取消缓存**连接"。
+1. 若要删除两个缓存之间的链接并停止异地复制，请在“异地复制”边栏选项卡中，单击“取消链接缓存”。 
     
     ![取消链接缓存](./media/cache-how-to-geo-replication/cache-geo-location-unlink.png)
 
@@ -96,21 +100,22 @@ ms.locfileid: "88003698"
 
 ## <a name="geo-replication-faq"></a>异地复制常见问题解答
 
-- [是否可以对标准或基本层缓存使用异地复制？](#can-i-use-geo-replication-with-a-standard-or-basic-tier-cache)
+- [是否可以通过标准层或基本层缓存使用异地复制？](#can-i-use-geo-replication-with-a-standard-or-basic-tier-cache)
 - [在链接或取消链接过程中是否可以使用缓存？](#is-my-cache-available-for-use-during-the-linking-or-unlinking-process)
 - [是否可以链接两个以上的缓存？](#can-i-link-more-than-two-caches-together)
 - [是否可以链接来自不同 Azure 订阅的两个缓存？](#can-i-link-two-caches-from-different-azure-subscriptions)
 - [是否可以链接不同大小的两个缓存？](#can-i-link-two-caches-with-different-sizes)
 - [是否可以在启用群集时使用异地复制？](#can-i-use-geo-replication-with-clustering-enabled)
-- [能否对 VNET 中的缓存使用异地复制？](#can-i-use-geo-replication-with-my-caches-in-a-vnet)
+- [当缓存位于 VNET 中时是否可以使用异地复制？](#can-i-use-geo-replication-with-my-caches-in-a-vnet)
 - [什么是 Redis 异地复制的复制计划？](#what-is-the-replication-schedule-for-redis-geo-replication)
 - [异地复制需要多长时间？](#how-long-does-geo-replication-replication-take)
 - [复制恢复点是否受保证？](#is-the-replication-recovery-point-guaranteed)
-- [是否可以使用 PowerShell 或 Azure CLI 来管理异地复制？](#can-i-use-powershell-or-azure-cli-to-manage-geo-replication)
+- [是否可以使用 PowerShell 或 Azure CLI管理异地复制？](#can-i-use-powershell-or-azure-cli-to-manage-geo-replication)
 - [跨 Azure 区域复制数据的费用是多少？](#how-much-does-it-cost-to-replicate-my-data-across-azure-regions)
 - [尝试删除链接缓存时为何操作会失败？](#why-did-the-operation-fail-when-i-tried-to-delete-my-linked-cache)
 - [应为辅助链接缓存选择哪个区域？](#what-region-should-i-use-for-my-secondary-linked-cache)
 - [辅助链接缓存如何进行故障转移？](#how-does-failing-over-to-the-secondary-linked-cache-work)
+- [能否为防火墙配置异地复制？](#can-i-configure-a-firewall-with-geo-replication)
 
 ### <a name="can-i-use-geo-replication-with-a-standard-or-basic-tier-cache"></a>是否可以通过标准层或基本层缓存使用异地复制？
 
@@ -144,9 +149,9 @@ ms.locfileid: "88003698"
 
 - 支持在同一 VNET 中的缓存间进行异地复制。
 - 也支持在不同 VNET 中的缓存之间进行异地复制。
-  - 如果 VNET 位于同一区域，则可以使用 [VNET 对等互连](https://docs.microsoft.com/azure/virtual-network/virtual-network-peering-overview)或 [VPN 网关 VNET 到 VNET 连接](https://docs.microsoft.com/azure/vpn-gateway/vpn-gateway-about-vpngateways#V2V)来连接 VNET。
-  - 如果 VNET 位于不同的区域，则不支持使用 VNET 对等互连进行异地复制，因为基本内部负载均衡器存在约束。 有关 VNET 对等互连约束的详细信息，请参阅[虚拟网络 - 对等互连 - 要求和约束](https://docs.microsoft.com/azure/virtual-network/virtual-network-manage-peering#requirements-and-constraints)。 建议的解决方法是使用 VPN 网关 VNET 到 VNET 连接。
-
+  - 如果 VNET 位于同一区域，则可以使用 [VNET 对等互连](../virtual-network/virtual-network-peering-overview.md)或 [VPN 网关 VNET 到 VNET 连接](../vpn-gateway/vpn-gateway-howto-vnet-vnet-resource-manager-portal.md)来连接 VNET。
+  - 如果 VNET 位于不同的区域，则使用 VNET 对等互连进行异地复制会受支持，但是由于基本内部负载均衡器的约束，VNET 1（区域 1）中的客户端 VM 将无法通过其 DNS 名称访问 VNET 2（区域 2）中的缓存。 有关 VNET 对等互连约束的详细信息，请参阅[虚拟网络 - 对等互连 - 要求和约束](../virtual-network/virtual-network-manage-peering.md#requirements-and-constraints)。 建议的解决方法是使用 VPN 网关 VNET 到 VNET 连接。
+  
 使用[此 Azure 模板](https://azure.microsoft.com/resources/templates/201-redis-vnet-geo-replication/)可以快速将两个异地复制的缓存部署到通过 VPN 网关 VNET 到 VNET 连接进行连接的 VNET 中。
 
 ### <a name="what-is-the-replication-schedule-for-redis-geo-replication"></a>什么是 Redis 异地复制的复制计划？
@@ -165,11 +170,11 @@ ms.locfileid: "88003698"
 
 ### <a name="can-i-use-powershell-or-azure-cli-to-manage-geo-replication"></a>是否可以使用 PowerShell 或 Azure CLI管理异地复制？
 
-是的，可以使用 Azure 门户、PowerShell 或 Azure CLI 管理异地复制。 有关详细信息，请参阅 [PowerShell 文档](https://docs.microsoft.com/powershell/module/az.rediscache/?view=azps-1.4.0#redis_cache)或 [Azure CLI 文档](https://docs.microsoft.com/cli/azure/redis/server-link?view=azure-cli-latest)。
+是的，可以使用 Azure 门户、PowerShell 或 Azure CLI 管理异地复制。 有关详细信息，请参阅 [PowerShell 文档](/powershell/module/az.rediscache/?view=azps-1.4.0#redis_cache)或 [Azure CLI 文档](/cli/azure/redis/server-link?view=azure-cli-latest)。
 
 ### <a name="how-much-does-it-cost-to-replicate-my-data-across-azure-regions"></a>跨 Azure 区域复制数据的费用是多少？
 
-使用异地复制时，主链接缓存中的数据将复制到辅助链接缓存。 如果两个链接缓存位于同一区域，则数据传输不会产生费用。 如果两个链接缓存位于不同的区域，则数据传输费用是跨任一区域移动数据所产生的网络传出费用。 有关详细信息，请参阅[带宽定价详细信息](https://azure.microsoft.com/pricing/details/bandwidth/)。
+使用异地复制时，主链接缓存中的数据会复制到辅助链接缓存中。 如果两个链接缓存位于同一区域，则数据传输不会产生费用。 如果两个链接缓存位于不同的区域，则数据传输费用是跨任一区域移动数据所产生的网络传出费用。 有关详细信息，请参阅[带宽定价详细信息](https://azure.microsoft.com/pricing/details/bandwidth/)。
 
 ### <a name="why-did-the-operation-fail-when-i-tried-to-delete-my-linked-cache"></a>尝试删除链接缓存时为何操作会失败？
 
@@ -177,7 +182,7 @@ ms.locfileid: "88003698"
 
 ### <a name="what-region-should-i-use-for-my-secondary-linked-cache"></a>应为辅助链接缓存选择哪个区域？
 
-一般而言，建议将缓存放置在应用程序所在的同一 Azure 区域，便于应用程序访问。 对于使用单独主要区域和故障回复区域的应用程序，建议将主缓存和辅助缓存放置在这些区域。 有关配对区域的详细信息，请参阅[最佳做法 – Azure 配对区域](../best-practices-availability-paired-regions.md)。
+一般而言，建议将缓存放置在应用程序所在的同一 Azure 区域，便于应用程序访问。 对于使用单独主要区域和故障回复区域的应用程序，建议将主缓存和辅助缓存放置在这些区域。 有关配对区域的详细信息，请参阅 [最佳做法-Azure 配对区域](../best-practices-availability-paired-regions.md)。
 
 ### <a name="how-does-failing-over-to-the-secondary-linked-cache-work"></a>辅助链接缓存如何进行故障转移？
 
@@ -185,7 +190,12 @@ ms.locfileid: "88003698"
 
 若要启动客户发起的故障转移，请先取消链接缓存。 然后将 Redis 客户端更改为使用（以前链接的）辅助缓存的连接终结点。 取消链接两个缓存后，辅助缓存将再次成为常规的读取写入缓存，并直接从 Redis 客户端接受请求。
 
-## <a name="next-steps"></a>后续步骤
-详细了解 Azure Cache for Redis 功能。
+### <a name="can-i-configure-a-firewall-with-geo-replication"></a>能否为防火墙配置异地复制？
 
-* [适用于 Redis 服务层的 Azure 缓存](cache-overview.md#service-tiers)
+能，可以为[防火墙](./cache-configure.md#firewall)配置异地复制。 要使异地复制与防火墙一起工作，请确保将辅助缓存的 IP 地址添加到主缓存的防火墙规则。
+
+## <a name="next-steps"></a>后续步骤
+
+了解有关 Azure Cache for Redis 功能的详细信息。
+
+* [Azure Cache for Redis 服务层](cache-overview.md#service-tiers)

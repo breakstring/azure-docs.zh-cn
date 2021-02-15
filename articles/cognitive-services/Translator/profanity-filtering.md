@@ -3,19 +3,19 @@ title: 猥亵筛选-翻译人员
 titleSuffix: Azure Cognitive Services
 description: 使用猥亵筛选来确定在 Azure 认知服务翻译人员的文本中翻译的猥亵级别。
 services: cognitive-services
-author: swmachan
+author: laujan
 manager: nitinme
 ms.service: cognitive-services
 ms.subservice: translator-text
 ms.topic: conceptual
 ms.date: 05/26/2020
-ms.author: swmachan
-ms.openlocfilehash: 7ebfe766e6362a3f62e70db8bf2dcae370aceee3
-ms.sourcegitcommit: fc718cc1078594819e8ed640b6ee4bef39e91f7f
+ms.author: lajanuar
+ms.openlocfilehash: 9f389d669e69dbfa6ec6d4d0b4716d2367443f17
+ms.sourcegitcommit: 100390fefd8f1c48173c51b71650c8ca1b26f711
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 05/27/2020
-ms.locfileid: "83996153"
+ms.lasthandoff: 01/27/2021
+ms.locfileid: "98896793"
 ---
 # <a name="add-profanity-filtering-with-the-translator"></a>通过转换器添加猥亵语言筛选器
 
@@ -23,7 +23,7 @@ ms.locfileid: "83996153"
 
 如果希望避免在翻译中看到不雅内容（即使源文本中存在不雅内容），可以使用 Translate() 方法中提供的不雅内容筛选选项。 使用该选项可以选择是要看到不雅内容被删除、标有相应标记还是不被执行任何操作。
 
-转换（）方法采用 "options" 参数，该参数包含新元素 "ProfanityAction"。 ProfanityAction 的接受值为 "NoAction"、"标记" 和 "已删除"。
+转换 ( # A1 方法采用 "options" 参数，该参数包含新元素 "ProfanityAction"。 ProfanityAction 的接受值为 "NoAction"、"标记" 和 "已删除"。
 
 ## <a name="accepted-values-of-profanityaction-and-examples"></a>可接受的 ProfanityAction 值和示例
 |ProfanityAction 值 | 操作 | 示例：源 - 日语 | 示例：目标 - 英语|

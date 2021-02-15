@@ -9,12 +9,12 @@ ms.devlang: rest-api
 ms.service: cognitive-search
 ms.topic: conceptual
 ms.date: 07/11/2020
-ms.openlocfilehash: a57232853284dad6f363797c009b1c38738d5b37
-ms.sourcegitcommit: 3543d3b4f6c6f496d22ea5f97d8cd2700ac9a481
+ms.openlocfilehash: 2c67cd4d071660da2ca5714623695ca434329263
+ms.sourcegitcommit: 829d951d5c90442a38012daaf77e86046018e5b9
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/20/2020
-ms.locfileid: "86519773"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "91275177"
 ---
 # <a name="how-to-index-tables-from-azure-table-storage-with-azure-cognitive-search"></a>如何使用 Azure 认知搜索从 Azure 表存储索引表
 
@@ -25,8 +25,8 @@ ms.locfileid: "86519773"
 可以使用以下资源设置 Azure 表存储索引器：
 
 * [Azure 门户](https://ms.portal.azure.com)
-* Azure 认知搜索 [REST API](https://docs.microsoft.com/rest/api/searchservice/Indexer-operations)
-* Azure 认知搜索 [.NET SDK](https://docs.microsoft.com/dotnet/api/overview/azure/search)
+* Azure 认知搜索 [REST API](/rest/api/searchservice/Indexer-operations)
+* Azure 认知搜索 [.NET SDK](/dotnet/api/overview/azure/search)
 
 在这里，我们使用 REST API 演示流。 
 
@@ -62,18 +62,19 @@ ms.locfileid: "86519773"
     }   
 ```
 
-有关创建数据源 API 的详细信息，请参阅[创建数据源](https://docs.microsoft.com/rest/api/searchservice/create-data-source)。
+有关创建数据源 API 的详细信息，请参阅[创建数据源](/rest/api/searchservice/create-data-source)。
 
 <a name="Credentials"></a>
 #### <a name="ways-to-specify-credentials"></a>指定凭据的方式 ####
 
 可通过以下一种方式提供表的凭据： 
 
-- **完全访问存储帐户连接字符串**：`DefaultEndpointsProtocol=https;AccountName=<your storage account>;AccountKey=<your account key>` 可通过转到“存储帐户”边栏选项卡  > “设置” > “密钥”（适用于经典存储帐户）或“设置” > “访问密钥”（适用于 Azure 资源管理器存储帐户），从 Azure 门户获取连接字符串      。
-- **存储帐户共享访问签名连接字符串**：`TableEndpoint=https://<your account>.table.core.windows.net/;SharedAccessSignature=?sv=2016-05-31&sig=<the signature>&spr=https&se=<the validity end time>&srt=co&ss=t&sp=rl` 共享访问签名应具有容器（本例中为表）和对象（表行）的列表和读取权限。
--  **表共享访问签名**：`ContainerSharedAccessUri=https://<your storage account>.table.core.windows.net/<table name>?tn=<table name>&sv=2016-05-31&sig=<the signature>&se=<the validity end time>&sp=r` 共享访问签名应具有表的查询（读取）权限。
+- **托管标识连接字符串**： `ResourceId=/subscriptions/<your subscription ID>/resourceGroups/<your resource group name>/providers/Microsoft.Storage/storageAccounts/<your storage account name>/;` 此连接字符串不需要帐户密钥，但必须按照说明 [使用托管标识设置到 Azure 存储帐户的连接](search-howto-managed-identities-storage.md)。
+- **完全访问存储帐户连接字符串**： `DefaultEndpointsProtocol=https;AccountName=<your storage account>;AccountKey=<your account key>` 通过转到 "**存储帐户" 边栏选项卡上的 "存储帐户" 边栏选项卡**  >  **Settings**  >  **Keys** (Azure 门户) 适用于**Settings**  >  Azure 资源管理器存储帐户 (的 "存储帐户" 边栏选项卡 "设置" "**访问密钥**"，从获取连接字符串。
+- **存储帐户共享访问签名连接字符串**： `TableEndpoint=https://<your account>.table.core.windows.net/;SharedAccessSignature=?sv=2016-05-31&sig=<the signature>&spr=https&se=<the validity end time>&srt=co&ss=t&sp=rl` 在此情况下，共享访问签名应具有对容器 (表的列表和读取权限) 和 (表行) 的对象。
+-  **表共享访问签名**： `ContainerSharedAccessUri=https://<your storage account>.table.core.windows.net/<table name>?tn=<table name>&sv=2016-05-31&sig=<the signature>&se=<the validity end time>&sp=r` 共享访问签名应具有对表的查询 (读取) 权限。
 
-有关存储共享访问签名的详细信息，请参阅[使用共享访问签名](../storage/common/storage-dotnet-shared-access-signature-part-1.md)。
+有关存储共享访问签名的详细信息，请参阅[使用共享访问签名](../storage/common/storage-sas-overview.md)。
 
 > [!NOTE]
 > 如果使用共享访问签名凭据，则需使用续订的签名定期更新数据源凭据，以防止其过期。 如果共享访问签名凭据过期，索引器会失败并出现类似于“连接字符串中提供的凭据无效或已过期”的错误消息。  
@@ -97,7 +98,7 @@ ms.locfileid: "86519773"
     }
 ```
 
-有关创建索引的详细信息，请参阅[创建索引](https://docs.microsoft.com/rest/api/searchservice/create-index)。
+有关创建索引的详细信息，请参阅[创建索引](/rest/api/searchservice/create-index)。
 
 ### <a name="step-3-create-an-indexer"></a>步骤 3：创建索引器
 索引器将数据源与目标搜索索引关联，并提供自动执行数据刷新的计划。 
@@ -117,9 +118,9 @@ ms.locfileid: "86519773"
     }
 ```
 
-此索引器每两小时运行一次。 （已将计划间隔设置为“PT2H”）。若要每隔 30 分钟运行一次索引器，可将间隔设置为“PT30M”。 支持的最短间隔为 5 分钟。 计划是可选的；如果省略，则索引器在创建后只运行一次。 但是，可以随时根据需要运行索引器。   
+此索引器每两小时运行一次。  ("计划间隔" 设置为 "PT2H"。 ) 每隔30分钟运行一次索引器，请将间隔设置为 "PT30M"。 支持的最短间隔为 5 分钟。 计划是可选的；如果省略，则索引器在创建后只运行一次。 但是，可以随时根据需要运行索引器。   
 
-有关创建索引器 API 的详细信息，请参阅[创建索引器](https://docs.microsoft.com/rest/api/searchservice/create-indexer)。
+有关创建索引器 API 的详细信息，请参阅[创建索引器](/rest/api/searchservice/create-indexer)。
 
 若要详细了解如何定义索引器计划，请参阅[如何为 Azure 认知搜索计划索引器](search-howto-schedule-indexers.md)。
 
@@ -170,7 +171,7 @@ ms.locfileid: "86519773"
 
 - 如果数据按时间分区（例如，每天或每周创建一个新分区），请考虑以下方法： 
     - 使用此格式的查询：`(PartitionKey ge <TimeStamp>) and (other filters)`。 
-    - 使用[获取索引器状态 API](https://docs.microsoft.com/rest/api/searchservice/get-indexer-status)监视器索引器进度，并基于最新的成功的高使用标记值定期更新查询的 `<TimeStamp>` 条件。 
+    - 使用[获取索引器状态 API](/rest/api/searchservice/get-indexer-status)监视器索引器进度，并基于最新的成功的高使用标记值定期更新查询的 `<TimeStamp>` 条件。 
     - 借助此方法，如果需要触发完整的索引重编制，除了重置索引器外还需要重置数据源查询。 
 
 

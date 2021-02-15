@@ -1,20 +1,20 @@
 ---
 title: 教程 - 为 Azure Active Directory 域服务配置 LDAPS | Microsoft Docs
 description: 本教程介绍如何为 Azure Active Directory 域服务托管域配置安全的轻型目录访问协议 (LDAPS)。
-author: iainfoulds
+author: justinha
 manager: daveba
 ms.service: active-directory
 ms.subservice: domain-services
 ms.workload: identity
 ms.topic: tutorial
 ms.date: 07/06/2020
-ms.author: iainfou
-ms.openlocfilehash: 1164d838a45496a075d356995a60beb967cdfcca
-ms.sourcegitcommit: 269da970ef8d6fab1e0a5c1a781e4e550ffd2c55
+ms.author: justinha
+ms.openlocfilehash: 6da1d285440daa5d1d5a230905a77057728d4ae6
+ms.sourcegitcommit: d49bd223e44ade094264b4c58f7192a57729bada
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/10/2020
-ms.locfileid: "88054334"
+ms.lasthandoff: 02/02/2021
+ms.locfileid: "99256536"
 ---
 # <a name="tutorial-configure-secure-ldap-for-an-azure-active-directory-domain-services-managed-domain"></a>教程：为 Azure Active Directory 域服务托管域配置安全 LDAP
 
@@ -45,7 +45,7 @@ ms.locfileid: "88054334"
 * 在 Azure AD 租户中启用并配置 Azure Active Directory 域服务托管域。
     * 如果需要，请[创建并配置 Azure Active Directory 域服务托管域][create-azure-ad-ds-instance]。
 * 已计算机上安装 *LDP.exe* 工具。
-    * 如果需要，请为 *Active Directory 域服务和 LDAP* 安装[远程服务器管理工具 (RSAT)][rsat]。
+    * 如果需要，请为 *Active Directory 域服务和 LDAP* 安装 [远程服务器管理工具 (RSAT)][rsat]。
 
 ## <a name="sign-in-to-the-azure-portal"></a>登录到 Azure 门户
 
@@ -74,7 +74,7 @@ ms.locfileid: "88054334"
 
 在本教程中，让我们使用 [New-SelfSignedCertificate][New-SelfSignedCertificate] cmdlet 为安全 LDAP 创建自签名证书。
 
-以**管理员**身份打开 PowerShell 窗口并运行以下命令。 将 *$dnsName* 变量替换为你自己的托管域使用的 DNS 名称，例如 *aaddscontoso.com*：
+以 **管理员** 身份打开 PowerShell 窗口并运行以下命令。 将 *$dnsName* 变量替换为你自己的托管域使用的 DNS 名称，例如 *aaddscontoso.com*：
 
 ```powershell
 # Define your own DNS name used by your managed domain
@@ -111,7 +111,7 @@ Thumbprint                                Subject
     * 此私钥用于解密安全 LDAP 通信。 只能将私钥应用到托管域，而不应将其广泛分发到客户端计算机。
     * 包含私钥的证书使用 *.PFX* 文件格式。
     * 证书的加密算法必须是 TripleDES-SHA1。
-* **公钥**将应用到客户端计算机。
+* **公钥** 将应用到客户端计算机。
     * 此公钥用于加密安全 LDAP 通信。 公钥可分发到客户端计算机。
     * 不包含私钥的证书使用 *.CER* 文件格式。
 
@@ -202,7 +202,7 @@ Thumbprint                                Subject
     >
     > 请确保证书采用适当的格式。 否则，在启用安全 LDAP 时，Azure 平台会生成证书验证错误。
 
-1. 输入在上一步骤中将证书导出到 *.PFX* 文件时设置的**用于解密 .PFX 文件的密码**。
+1. 输入在上一步骤中将证书导出到 *.PFX* 文件时设置的 **用于解密 .PFX 文件的密码**。
 1. 选择“保存”以启用安全 LDAP。
 
     ![在 Azure 门户中为托管域启用安全 LDAP](./media/tutorial-configure-ldaps/enable-ldaps.png)
@@ -212,6 +212,12 @@ Thumbprint                                Subject
 为托管域启用安全 LDAP 需要花费几分钟时间。 如果提供的安全 LDAP 证书不符合所需的条件，为托管域启用安全 LDAP 的操作将会失败。
 
 失败的一些常见原因包括域名不正确、证书的加密算法不是 TripleDES-SHA1 或者证书即将过期或已过期。 可以使用有效的参数重新创建证书，然后使用此更新的证书启用安全 LDAP。
+
+## <a name="change-an-expiring-certificate"></a>更改过期证书
+
+1. 通过执行[创建安全 LDAP 证书](#create-a-certificate-for-secure-ldap)的步骤来创建替换安全 LDAP 证书。
+1. 若要将替换证书应用于 Azure AD DS，请在 Azure 门户中 Azure AD DS 的左侧菜单中，选择“安全 LDAP”，然后选择“更改证书” 。
+1. 将证书分发给使用安全 LDAP 连接的所有客户端。 
 
 ## <a name="lock-down-secure-ldap-access-over-the-internet"></a>锁定通过 Internet 进行的安全 LDAP 访问
 

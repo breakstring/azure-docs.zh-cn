@@ -5,20 +5,20 @@ ms.topic: tutorial
 ms.date: 07/16/2020
 ms.author: msangapu
 keywords: azure 应用服务, web 应用, linux, windows, docker, 容器
-ms.custom: devx-track-csharp, mvc, seodec18, devx-track-python
+ms.custom: devx-track-csharp, mvc, seodec18, devx-track-python, devx-track-azurecli
 zone_pivot_groups: app-service-containers-windows-linux
-ms.openlocfilehash: a3579ba805d0da08184e6274de60086a9d55a938
-ms.sourcegitcommit: 4913da04fd0f3cf7710ec08d0c1867b62c2effe7
+ms.openlocfilehash: b3507e22c691f3e3ca9f9e6562a313e95e42f080
+ms.sourcegitcommit: 5e762a9d26e179d14eb19a28872fb673bf306fa7
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/14/2020
-ms.locfileid: "88212939"
+ms.lasthandoff: 01/05/2021
+ms.locfileid: "97900189"
 ---
 # <a name="migrate-custom-software-to-azure-app-service-using-a-custom-container"></a>使用自定义容器将自定义软件迁移到 Azure 应用服务
 
 ::: zone pivot="container-windows"  
 
-[Azure 应用服务](overview.md)在 Windows 上提供预定义的应用程序堆栈，例如在 IIS 上运行的 ASP.NET 或 Node.js。 预配置的 Windows 环境锁定了操作系统，不允许对其进行管理访问、软件安装、全局程序集缓存更改等操作（请参阅 [Azure 应用服务上的操作系统功能](operating-system-functionality.md)）。 但是，通过在应用服务（预览版）中使用自定义 Windows 容器，可以作出应用所需的 OS 更改，因此可轻松迁移需要自定义 OS 和软件配置的本地应用。 本教程演示如何将使用 Windows 字体库中安装的自定义字体的 ASP.NET 应用迁移到应用服务。 你将自定义配置的 Windows 映像从 Visual Studio 部署到 [Azure 容器注册表](https://docs.microsoft.com/azure/container-registry/)，然后在应用服务中运行它。
+[Azure 应用服务](overview.md)在 Windows 上提供预定义的应用程序堆栈，例如在 IIS 上运行的 ASP.NET 或 Node.js。 预配置的 Windows 环境锁定了操作系统，不允许对其进行管理访问、软件安装、全局程序集缓存更改等操作（请参阅 [Azure 应用服务上的操作系统功能](operating-system-functionality.md)）。 但是，通过在应用服务中使用自定义 Windows 容器，可以作出应用所需的 OS 更改，因此可轻松迁移需要自定义 OS 和软件配置的本地应用。 本教程演示如何将使用 Windows 字体库中安装的自定义字体的 ASP.NET 应用迁移到应用服务。 你将自定义配置的 Windows 映像从 Visual Studio 部署到 [Azure 容器注册表](../container-registry/index.yml)，然后在应用服务中运行它。
 
 ![显示在 Windows 容器中运行的 Web 应用。](media/tutorial-custom-container/app-running.png)
 
@@ -28,8 +28,8 @@ ms.locfileid: "88212939"
 
 - <a href="https://hub.docker.com/" target="_blank">注册 Docker 中心帐户</a>
 - <a href="https://docs.docker.com/docker-for-windows/install/" target="_blank">安装用于 Windows 的 Docker</a>。
-- <a href="https://docs.microsoft.com/virtualization/windowscontainers/quick-start/quick-start-windows-10" target="_blank">将 Docker 切换为运行 Windows 容器</a>。
-- <a href="https://www.visualstudio.com/downloads/" target="_blank">安装 Visual Studio 2019</a>，其中包含 **ASP.NET 和 web 开发**以及 **Azure 开发**工作负载。 如果已安装 Visual Studio 2019：
+- <a href="/virtualization/windowscontainers/quick-start/quick-start-windows-10" target="_blank">将 Docker 切换为运行 Windows 容器</a>。
+- <a href="https://www.visualstudio.com/downloads/" target="_blank">安装 Visual Studio 2019</a>，其中包含 **ASP.NET 和 web 开发** 以及 **Azure 开发** 工作负载。 如果已安装 Visual Studio 2019：
     - 通过单击“帮助” > “检查更新”，在 Visual Studio 中安装最新的更新。
     - 在 Visual Studio 中，通过单击“工具” > “获取工具和功能”，添加工作负载。
 
@@ -56,7 +56,7 @@ ms.locfileid: "88212939"
 
 键入 `Ctrl+F5` 在不调试的情况下运行应用。 该应用将显示在默认浏览器中。 
 
-![“新建 ASP.NET 项目”对话框](media/tutorial-custom-container/local-app-in-browser.png)
+:::image type="content" source="media/tutorial-custom-container/local-app-in-browser.png" alt-text="显示在默认浏览器中显示的应用的屏幕截图。":::
 
 由于它使用已安装的字体，因此应用无法在应用服务沙盒中运行。 但是，可以改为使用 Windows 容器对其进行部署，因为可以在 Windows 容器中安装该字体。
 
@@ -64,7 +64,7 @@ ms.locfileid: "88212939"
 
 在解决方案资源管理器中，右键单击“CustomFontSample”项目，选择“添加” > “容器业务流程支持”  。
 
-![“新建 ASP.NET 项目”对话框](media/tutorial-custom-container/enable-container-orchestration.png)
+:::image type="content" source="media/tutorial-custom-container/enable-container-orchestration.png" alt-text="解决方案资源管理器窗口的屏幕截图，其中显示已选择 CustomFontSample 项目、“添加”和“容器业务流程协调程序支持”菜单项。":::
 
 选择“Docker Compose” > “确定” 。
 
@@ -72,7 +72,7 @@ ms.locfileid: "88212939"
 
 在解决方案资源管理器中，打开 Dockerfile。
 
-需要使用[受支持的父映像](quickstart-custom-container.md#use-a-different-parent-image)。 通过将 `FROM` 行替换为以下代码，更改父映像：
+需要使用[受支持的父映像](configure-custom-container.md#supported-parent-images)。 通过将 `FROM` 行替换为以下代码，更改父映像：
 
 ```dockerfile
 FROM mcr.microsoft.com/dotnet/framework/aspnet:4.7.2-windowsservercore-ltsc2019
@@ -92,19 +92,19 @@ RUN ${source:-obj/Docker/publish/InstallFont.ps1}
 
 ## <a name="publish-to-azure-container-registry"></a>发布到 Azure 容器注册表
 
-[Azure 容器注册表](https://docs.microsoft.com/azure/container-registry/)可以存储用于容器部署的映像。 可以将应用服务配置为使用 Azure 容器注册表中托管的映像。
+[Azure 容器注册表](../container-registry/index.yml)可以存储用于容器部署的映像。 可以将应用服务配置为使用 Azure 容器注册表中托管的映像。
 
 ### <a name="open-publish-wizard"></a>打开发布向导
 
 在解决方案资源管理器中，右键单击“CustomFontSample”项目，选择“发布” 。
 
-![“新建 ASP.NET 项目”对话框](media/tutorial-custom-container/open-publish-wizard.png)
+:::image type="content" source="media/tutorial-custom-container/open-publish-wizard.png" alt-text="解决方案资源管理器的屏幕截图，其中已选择 CustomFontSample 项目和“发布”。":::
 
 ### <a name="create-registry-and-publish"></a>创建注册表并发布
 
 在发布向导中，选择“容器注册表” > “新建 Azure 容器注册表” > “发布”  。
 
-![“新建 ASP.NET 项目”对话框](media/tutorial-custom-container/create-registry.png)
+:::image type="content" source="media/tutorial-custom-container/create-registry.png" alt-text="发布向导的屏幕截图，其中显示已选择“容器注册表”、“新建 Azure 容器注册表”和“发布”按钮。":::
 
 ### <a name="sign-in-with-azure-account"></a>使用 Azure 帐户登录
 
@@ -211,7 +211,7 @@ https://<app-name>.scm.azurewebsites.net/api/logstream
 
 ::: zone pivot="container-linux"
 
-Azure 应用服务使用 Docker 容器技术同时托管内置映像和自定义映像。 若要查看内置映像列表，请运行 Azure CLI 命令 ['az webapp list-runtimes --linux'](/cli/azure/webapp?view=azure-cli-latest#az-webapp-list-runtimes)。 如果这些映像无法满足需要，可以生成并部署自定义映像。
+Azure 应用服务使用 Docker 容器技术同时托管内置映像和自定义映像。 若要查看内置映像列表，请运行 Azure CLI 命令 ['az webapp list-runtimes --linux'](/cli/azure/webapp?view=azure-cli-latest&preserve-view=true#az-webapp-list-runtimes)。 如果这些映像无法满足需要，可以生成并部署自定义映像。
 
 在本教程中，你将了解如何执行以下操作：
 
@@ -228,31 +228,16 @@ Azure 应用服务使用 Docker 容器技术同时托管内置映像和自定义
 
 ## <a name="set-up-your-initial-environment"></a>设置初始环境
 
-* 具有活动订阅的 Azure 帐户。 [免费创建帐户](https://azure.microsoft.com/free/?ref=microsoft.com&utm_source=microsoft.com&utm_medium=docs&utm_campaign=visualstudio)。
-* 安装 [Docker](https://docs.docker.com/get-started/#setup)，用于构建 Docker 映像。 安装 Docker 可能需要重新启动计算机。
-* 安装 <a href="/cli/azure/install-azure-cli" target="_blank">Azure CLI</a> 2.0.80 或更高版本，使用它可以在任何 shell 中运行命令来预配和配置 Azure 资源。
+- 具有活动订阅的 Azure 帐户。 [免费创建帐户](https://azure.microsoft.com/free/?ref=microsoft.com&utm_source=microsoft.com&utm_medium=docs&utm_campaign=visualstudio)。
+- 安装 [Docker](https://docs.docker.com/get-started/#setup)，用于构建 Docker 映像。 安装 Docker 可能需要重新启动计算机。
+[!INCLUDE [azure-cli-prepare-your-environment-no-header.md](../../includes/azure-cli-prepare-your-environment-no-header.md)]
+- 本教程需要 2.0.80 或更高版本 Azure CLI。 如果使用 Azure Cloud Shell，则最新版本已安装。
 
-安装 Docker 和 Azure CLI 后，打开终端窗口，验证是否已安装 docker：
+安装 Docker 或运行 Azure Cloud Shell 后，打开终端窗口，验证是否已安装 docker：
 
 ```bash
 docker --version
 ```
-
-同时，验证 Azure CLI 版本是否为 2.0.80 或更高版本：
-
-```azurecli
-az --version
-```
-
-然后通过 CLI 登录到 Azure：
-
-```azurecli
-az login
-```
-
-`az login` 命令打开浏览器以收集凭据。 当命令完成时，会显示包含订阅相关信息的 JSON 输出。
-
-登录后，可以使用 Azure CLI 运行 Azure 命令，处理订阅中的资源。
 
 ## <a name="clone-or-download-the-sample-app"></a>克隆或下载示例应用
 
@@ -319,6 +304,10 @@ ENTRYPOINT ["init.sh"]
 
 ## <a name="build-and-test-the-image-locally"></a>在本地生成和测试映像
 
+> [!NOTE]
+> Docker Hub [对每个 IP 的匿名请求数和每个免费用户的经过身份验证的请求数都有配额（请参阅“数据传输”）](https://www.docker.com/pricing)。 如果发现来自 Docker Hub 的请求受到限制，请尝试 `docker login`（如果尚未登录）。
+> 
+
 1. 运行以下命令生成映像：
 
     ```bash
@@ -340,13 +329,11 @@ ENTRYPOINT ["init.sh"]
 
     ![在本地测试 Web 应用](./media/app-service-linux-using-custom-docker-image/app-service-linux-browse-local.png)
 
-[!INCLUDE [Try Cloud Shell](../../includes/cloud-shell-try-it.md)]
-
 ## <a name="create-a-resource-group"></a>创建资源组
 
 在本部分以及后续部分中，将在 Azure 中预配要向其推送映像的资源，然后将容器部署到 Azure 应用服务。 首先，创建一个资源组，用于收集所有这些资源。
 
-运行 [az group create](/cli/azure/group?view=azure-cli-latest#az-group-create) 命令创建资源组：
+运行 [az group create](/cli/azure/group?view=azure-cli-latest&preserve-view=true#az-group-create) 命令创建资源组：
 
 ```azurecli-interactive
 az group create --name AppSvc-DockerTutorial-rg --location westus2
@@ -358,7 +345,7 @@ az group create --name AppSvc-DockerTutorial-rg --location westus2
 
 在本部分中，将映像推送到 Azure 容器注册表，应用服务可以从此注册表中对映像进行部署。
 
-1. 运行 [`az acr create`](/cli/azure/acr?view=azure-cli-latest#az-acr-create) 命令创建 Azure 容器注册表：
+1. 运行 [`az acr create`](/cli/azure/acr?view=azure-cli-latest&preserve-view=true#az-acr-create) 命令创建 Azure 容器注册表：
 
     ```azurecli-interactive
     az acr create --name <registry-name> --resource-group AppSvc-DockerTutorial-rg --sku Basic --admin-enabled true
@@ -366,7 +353,7 @@ az group create --name AppSvc-DockerTutorial-rg --location westus2
     
     将 `<registry-name>` 替换为适合注册表的名称。 名称只能包含字母和数字，并且必须在整个 Azure 中都是唯一的。
 
-1. 运行 [`az acr show`](/cli/azure/acr?view=azure-cli-latest#az-acr-show) 命令以检索注册表的凭据：
+1. 运行 [`az acr show`](/cli/azure/acr?view=azure-cli-latest&preserve-view=true#az-acr-show) 命令以检索注册表的凭据：
 
     ```azurecli-interactive
     az acr credential show --resource-group AppSvc-DockerTutorial-rg --name <registry-name>
@@ -413,7 +400,7 @@ az group create --name AppSvc-DockerTutorial-rg --location westus2
 
 若要将容器部署到 Azure 应用服务，请先在应用服务上创建 Web 应用，然后将 Web 应用连接到容器注册表。 Web 应用启动时，应用服务会自动从注册表中拉取映像。
 
-1. 使用 [`az appservice plan create`](/cli/azure/appservice/plan?view=azure-cli-latest#az-appservice-plan-create) 命令创建应用服务计划：
+1. 使用 [`az appservice plan create`](/cli/azure/appservice/plan?view=azure-cli-latest&preserve-view=true#az-appservice-plan-create) 命令创建应用服务计划：
 
     ```azurecli-interactive
     az appservice plan create --name AppSvc-DockerTutorial-plan --resource-group AppSvc-DockerTutorial-rg --is-linux
@@ -421,7 +408,7 @@ az group create --name AppSvc-DockerTutorial-rg --location westus2
 
     应用服务计划对应托管 Web 应用的虚拟机。 默认情况下，前面的命令使用平价的 [B1 定价层](https://azure.microsoft.com/pricing/details/app-service/linux/)，该定价层第一个月免费提供。 可以使用 `--sku` 参数控制层。
 
-1. 使用 [`az webpp create`](/cli/azure/webapp?view=azure-cli-latest#az-webapp-create) 命令创建 Web 应用：
+1. 使用 [`az webpp create`](/cli/azure/webapp?view=azure-cli-latest&preserve-view=true#az-webapp-create) 命令创建 Web 应用：
 
     ```azurecli-interactive
     az webapp create --resource-group AppSvc-DockerTutorial-rg --plan AppSvc-DockerTutorial-plan --name <app-name> --deployment-container-image-name <registry-name>.azurecr.io/appsvc-tutorial-custom-image:latest
@@ -429,7 +416,7 @@ az group create --name AppSvc-DockerTutorial-rg --location westus2
     
     将 `<app-name>` 替换为 Web 应用的名称，该名称在整个 Azure 中必须是唯一的。 同时将 `<registry-name>` 替换为上一部分中注册表的名称。
 
-1. 使用 [`az webapp config appsettings set`](/cli/azure/webapp/config/appsettings?view=azure-cli-latest#az-webapp-config-appsettings-set) 按应用代码的需要设置 `WEBSITES_PORT` 环境变量： 
+1. 使用 [`az webapp config appsettings set`](/cli/azure/webapp/config/appsettings?view=azure-cli-latest&preserve-view=true#az-webapp-config-appsettings-set) 按应用代码的需要设置 `WEBSITES_PORT` 环境变量： 
 
     ```azurecli-interactive
     az webapp config appsettings set --resource-group AppSvc-DockerTutorial-rg --name <app-name> --settings WEBSITES_PORT=8000
@@ -439,7 +426,7 @@ az group create --name AppSvc-DockerTutorial-rg --location westus2
     
     有关此环境变量的详细信息，请参阅[示例 GitHub 存储库中的自述文件](https://github.com/Azure-Samples/docker-django-webapp-linux)。
 
-1. 使用 [`az webapp identity assign`](/cli/azure/webapp/identity?view=azure-cli-latest#az-webapp-identity-assign) 命令为 web 应用启用[托管标识](/azure/app-service/overview-managed-identity)：
+1. 使用 [`az webapp identity assign`](/cli/azure/webapp/identity?view=azure-cli-latest&preserve-view=true#az-webapp-identity-assign) 命令为 web 应用启用[托管标识](./overview-managed-identity.md)：
 
     ```azurecli-interactive
     az webapp identity assign --resource-group AppSvc-DockerTutorial-rg --name <app-name> --query principalId --output tsv
@@ -449,7 +436,7 @@ az group create --name AppSvc-DockerTutorial-rg --location westus2
 
     通过托管标识，可以向 Web 应用授予访问其他 Azure 资源的权限，且无需任何特定凭据。
 
-1. 使用 [`az account show`](/cli/azure/account?view=azure-cli-latest#az-account-show) 命令检索订阅 ID，在下一步中需要用到它：
+1. 使用 [`az account show`](/cli/azure/account?view=azure-cli-latest&preserve-view=true#az-account-show) 命令检索订阅 ID，在下一步中需要用到它：
 
     ```azurecli-interactive
     az account show --query id --output tsv
@@ -466,13 +453,13 @@ az group create --name AppSvc-DockerTutorial-rg --location westus2
     - 将 `<registry-name>` 替换为容器注册表的名称
     - 将 `<subscription-id>` 替换为从 `az account show` 命令检索到的订阅 ID
 
-有关这些权限的详细信息，请参阅[什么是 Azure 基于角色的访问控制](/azure/role-based-access-control/overview)和 
+有关这些权限的详细信息，请参阅[什么是 Azure 基于角色的访问控制](../role-based-access-control/overview.md)和 
 
 ## <a name="deploy-the-image-and-test-the-app"></a>部署映像并测试应用
 
 将映像推送到容器注册表并完全预配应用服务后，即可完成这些步骤。
 
-1. 使用 [`az webapp config container set`](/cli/azure/webapp/config/container?view=azure-cli-latest#az-webapp-config-container-set) 命令指定要为 Web 应用部署的容器注册表和映像：
+1. 使用 [`az webapp config container set`](/cli/azure/webapp/config/container?view=azure-cli-latest&preserve-view=true#az-webapp-config-container-set) 命令指定要为 Web 应用部署的容器注册表和映像：
 
     ```azurecli-interactive
     az webapp config container set --name <app-name> --resource-group AppSvc-DockerTutorial-rg --docker-custom-image-name <registry-name>.azurecr.io/appsvc-tutorial-custom-image:latest --docker-registry-server-url https://<registry-name>.azurecr.io
@@ -618,6 +605,8 @@ service ssh start
 az group delete --name AppSvc-DockerTutorial-rg
 ```
 
+::: zone-end
+
 ## <a name="next-steps"></a>后续步骤
 
 你已了解：
@@ -625,9 +614,13 @@ az group delete --name AppSvc-DockerTutorial-rg
 > [!div class="checklist"]
 > * 将自定义映像部署到专用容器注册表
 > * 在应用服务中部署和自定义映像
+::: zone pivot="container-linux"
 > * 更新并重新部署映像
+::: zone-end
 > * 访问诊断日志
+::: zone pivot="container-linux"
 > * 使用 SSH 连接到容器
+::: zone-end
 
 在下一教程中，你将了解如何将自定义 DNS 名称映射到应用。
 
@@ -639,7 +632,7 @@ az group delete --name AppSvc-DockerTutorial-rg
 > [!div class="nextstepaction"]
 > [配置自定义容器](configure-custom-container.md)
 
+::: zone pivot="container-linux"
 > [!div class="nextstepaction"]
 > [教程：多容器 WordPress 应用](tutorial-multi-container-app.md)
-
 ::: zone-end

@@ -1,24 +1,24 @@
 ---
-title: 使用 Azure Media Player 进行播放 - Azure | Microsoft Docs
+title: 播放 Azure Media Player-Azure
 description: Azure Media Player 是一种 Web 视频播放器，用于在各种浏览器和设备中播放 Microsoft Azure 媒体服务中的媒体内容。
 services: media-services
 documentationcenter: ''
-author: Juliako
+author: IngridAtMicrosoft
 manager: femila
 editor: ''
 ms.service: media-services
 ms.workload: ''
 ms.topic: article
 ms.date: 07/17/2019
-ms.author: juliako
-ms.openlocfilehash: ca2da842d9a2d529cf5ea01211efaff2047a9e9a
-ms.sourcegitcommit: 2ff0d073607bc746ffc638a84bb026d1705e543e
+ms.author: inhenkel
+ms.openlocfilehash: cf4916341a97868de757804b570212f1cc1105b2
+ms.sourcegitcommit: 100390fefd8f1c48173c51b71650c8ca1b26f711
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/06/2020
-ms.locfileid: "87836014"
+ms.lasthandoff: 01/27/2021
+ms.locfileid: "98898115"
 ---
-# <a name="playback-with-azure-media-player"></a>播放 Azure Media Player
+# <a name="playback-with-azure-media-player"></a>使用 Azure Media Player 来播放
 
 Azure Media Player 是一种 Web 视频播放器，用于在各种浏览器和设备中播放 Microsoft Azure 媒体服务中的媒体内容。 Azure 媒体播放器采用行业标准（如 HTML5、媒体源扩展 (MSE) 和加密媒体扩展插件 (EME)）来提供更丰富的自适应流式处理体验。 如果无法在设备或浏览器中提供这些标准，Azure 媒体播放器会采用 Flash 和 Silverlight 作为回退技术。 如果不考虑所使用的播放技术，开发人员将有一个统一的 JavaScript 接口来访问 API。 这使 Azure 媒体服务提供的内容无需其他措施便可在各种设备和浏览中轻松播放。
 
@@ -33,9 +33,9 @@ Microsoft Azure 媒体服务允许播放使用 HLS、DASH、平滑流格式提�
 
 可以使用 [Azure Media Player 演示页](https://aka.ms/azuremediaplayer)播放 Azure 媒体服务示例或你自己的流。  
 
-若要播放新视频，请粘贴一个不同的 URL，然后按“更新”****。
+若要播放新视频，请粘贴一个不同的 URL，然后按“更新”  。
 
-若要配置各种播放选项（例如技术、语言或加密），请按“高级选项”****。
+若要配置各种播放选项（例如技术、语言或加密），请按“高级选项”  。
 
 ![Azure Media Player](./media/azure-media-player/home-page.png)
 

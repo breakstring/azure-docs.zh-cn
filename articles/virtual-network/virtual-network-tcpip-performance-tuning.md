@@ -15,12 +15,12 @@ ms.workload: infrastructure-services
 ms.date: 04/02/2019
 ms.author: rimayber
 ms.reviewer: dgoddard, stegag, steveesp, minale, btalb, prachank
-ms.openlocfilehash: 67b635f09cb9407279e89b5f7b8526dab3c08946
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.openlocfilehash: 1f6abbf68d4f648aeee6c025800f24140c9459e9
+ms.sourcegitcommit: d59abc5bfad604909a107d05c5dc1b9a193214a8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87068525"
+ms.lasthandoff: 01/14/2021
+ms.locfileid: "98219311"
 ---
 # <a name="tcpip-performance-tuning-for-azure-vms"></a>适用于 Azure VM 的 TCP/IP 性能优化
 
@@ -42,7 +42,7 @@ ms.locfileid: "87068525"
 
 #### <a name="the-dont-fragment-bit-in-an-ip-packet"></a>IP 数据包中的 "不分段" 位
 
-不分段（DF）位是 IP 协议标头中的标志。 DF 位指示发送方与接收方之间的路径中的网络设备不得将数据包分段。 设置此位的原因有很多。 （有关示例，请参阅本文的 "路径 MTU 发现" 部分。）当网络设备接收到不分段位集的数据包，并且该数据包超过设备的接口 MTU 时，标准行为是设备丢弃数据包。 设备会将一条 ICMP Fragmentation Needed（需要 ICMP 分段）消息发回给数据包的原始源。
+不分段 (DF) 位是 IP 协议标头中的标志。 DF 位指示发送方与接收方之间的路径中的网络设备不得将数据包分段。 设置此位的原因有很多。  (请参阅本文的 "路径 MTU 发现" 部分，其中有一个示例。 ) 当网络设备接收到未设置分段位的数据包，并且该数据包超过设备的接口 MTU 时，标准行为是设备丢弃数据包。 设备会将一条 ICMP Fragmentation Needed（需要 ICMP 分段）消息发回给数据包的原始源。
 
 #### <a name="performance-implications-of-fragmentation"></a>分段对性能的影响
 
@@ -89,7 +89,7 @@ FragmentSmack 是 Linux 内核处理分段的 IPv4 和 IPv6 数据包重组时�
 
 #### <a name="large-send-offload"></a>大规模发送卸载
 
-大规模发送卸载 (LSO) 可以通过将数据包分段任务卸载到以太网适配器来提高网络性能。 启用 LSO 后，TCP/IP 堆栈会创建一个较大的 TCP 数据包并将其发送到以太网适配器进行分段，然后转发片段。 LSO 的好处是无需让 CPU 将数据包分段成符合 MTU 的大小，而是将该处理任务卸载到硬件中执行分段的以太网接口。 若要详细了解 LSO 的好处，请参阅[支持大规模发送卸载](https://docs.microsoft.com/windows-hardware/drivers/network/performance-in-network-adapters#supporting-large-send-offload-lso)。
+大规模发送卸载 (LSO) 可以通过将数据包分段任务卸载到以太网适配器来提高网络性能。 启用 LSO 后，TCP/IP 堆栈会创建一个较大的 TCP 数据包并将其发送到以太网适配器进行分段，然后转发片段。 LSO 的好处是无需让 CPU 将数据包分段成符合 MTU 的大小，而是将该处理任务卸载到硬件中执行分段的以太网接口。 若要详细了解 LSO 的好处，请参阅[支持大规模发送卸载](/windows-hardware/drivers/network/performance-in-network-adapters#supporting-large-send-offload-lso)。
 
 启用 LSO 后，Azure 客户在执行数据包捕获时可能会看到较大的帧大小。 这种大帧大小可能会导致一些客户考虑到碎片发生，或者不使用较大的 MTU。 以太网适配器可以使用 LSO 将更大的最大片段大小 (MSS) 播发到 TCP/IP 堆栈，以创建更大的 TCP 数据包。 然后，整个未分段的帧将转发到以太网适配器，并在 VM 上执行的数据包捕获中显示。 但是，以太网适配器会根据以太网适配器的 MTU 将数据包分解为多个较小的帧。
 
@@ -117,7 +117,7 @@ PMTUD 过程的效率低下，会影响网络性能。 如果发送的数据包�
 
 如果使用执行封装（例如 IPsec VPN）的 VM，在数据包大小和 MTU 方面还需要注意其他一项事项。 VPN 将更多标头添加到数据包，这会增大数据包的大小并需要减小 MSS。
 
-对于 Azure，我们建议将 TCP MSS 钳位设置为 1,350 字节，将隧道接口 MTU 设置为 1,400。 有关详细信息，请参阅 [VPN 设备和 IPSec/IKE 参数页](https://docs.microsoft.com/azure/vpn-gateway/vpn-gateway-about-vpn-devices)。
+对于 Azure，我们建议将 TCP MSS 钳位设置为 1,350 字节，将隧道接口 MTU 设置为 1,400。 有关详细信息，请参阅 [VPN 设备和 IPSec/IKE 参数页](../vpn-gateway/vpn-gateway-about-vpn-devices.md)。
 
 ### <a name="latency-round-trip-time-and-tcp-window-scaling"></a>延迟、往返时间和 TCP 窗口缩放
 
@@ -135,7 +135,7 @@ PMTUD 过程的效率低下，会影响网络性能。 如果发送的数据包�
 
 `minimum RTT = 2 * (Distance in kilometers / Speed of propagation)`
 
-可以使用 200 作为传播速度。 这是光在1毫秒内的距离，以公里为单位。
+可以使用 200 作为传播速度。 这是光在 1 毫秒内传播的距离（以千米为单位）。
 
 接下来，我们将纽约转到旧金山。 两者之间的直线距离为 4,148 公里。 将该值插入公式，会得到以下结果：
 
@@ -147,7 +147,7 @@ PMTUD 过程的效率低下，会影响网络性能。 如果发送的数据包�
 
 #### <a name="latency-and-round-trip-time-effects-on-tcp"></a>延迟和往返时间对 TCP 的影响
 
-往返时间直接影响到最大 TCP 吞吐量。 在 TCP 协议中，“窗口大小”是指发送方需要收到接收方的确认之前，可以通过 TCP 连接发送的最大流量。** 如果 TCP MSS 设置为 1,460，TCP 窗口大小设置为 65,535，则发送方在必须收到接收方的确认之前，可以发送 45 个数据包。 如果发送方未收到确认，将重新传输数据。 公式如下：
+往返时间直接影响到最大 TCP 吞吐量。 在 TCP 协议中，“窗口大小”是指发送方需要收到接收方的确认之前，可以通过 TCP 连接发送的最大流量。  如果 TCP MSS 设置为 1,460，TCP 窗口大小设置为 65,535，则发送方在必须收到接收方的确认之前，可以发送 45 个数据包。 如果发送方未收到确认，将重新传输数据。 公式如下：
 
 `TCP window size / TCP MSS = packets sent`
 
@@ -198,7 +198,7 @@ TCP 窗口缩放可以动态增大 TCP 窗口大小，以便在需要收到确�
 
 #### <a name="support-for-tcp-window-scaling"></a>TCP 窗口缩放支持
 
-Windows 可为不同的连接类型设置不同的缩放因子。 （连接的类包括数据中心、internet 等。）使用 `Get-NetTCPConnection` PowerShell 命令可以查看窗口缩放连接类型：
+Windows 可为不同的连接类型设置不同的缩放因子。 （连接类包括数据中心、Internet 等。）可以使用 `Get-NetTCPConnection` PowerShell 命令查看窗口缩放连接类型：
 
 ```powershell
 Get-NetTCPConnection
@@ -210,7 +210,7 @@ Get-NetTCPConnection
 Get-NetTCPSetting
 ```
 
-可以使用 `Set-NetTCPSetting` PowerShell 命令在 Windows 中设置初始 TCP 窗口大小和 TCP 缩放因子。 有关详细信息，请参阅 [Set-NetTCPSetting](https://docs.microsoft.com/powershell/module/nettcpip/set-nettcpsetting?view=win10-ps)。
+可以使用 `Set-NetTCPSetting` PowerShell 命令在 Windows 中设置初始 TCP 窗口大小和 TCP 缩放因子。 有关详细信息，请参阅 [Set-NetTCPSetting](/powershell/module/nettcpip/set-nettcpsetting?view=win10-ps)。
 
 ```powershell
 Set-NetTCPSetting
@@ -218,10 +218,10 @@ Set-NetTCPSetting
 
 下面是 `AutoTuningLevel` 的有效 TCP 设置：
 
-| AutoTuningLevel | 缩放因子 | 缩放乘数 | 公式到<br/>计算最大窗口大小 |
+| AutoTuningLevel | 缩放因子 | 缩放乘数 | 用于计算<br/>窗口大小的公式 |
 | --------------- | -------------- | ------------------ | -------------------------------------------- |
-|已禁用|None|None|窗口大小|
-|受限制|4|2^4|窗口大小 * (2^4)|
+|禁用|无|无|窗口大小|
+|受限|4|2^4|窗口大小 * (2^4)|
 |严格限制|2|2^2|窗口大小 * (2^2)|
 |普通|8|2^8|窗口大小 * (2^8)|
 |实验|14|2^14|窗口大小 * (2^14)|
@@ -247,31 +247,31 @@ Set-NetTCPSetting
 
 加速网络通过允许来宾 VM 绕过主机并直接与主机的 SmartNIC 建立数据路径，提高了性能。 加速网络的部分优势如下：
 
-- **低延迟/更高的每秒数据包数（pps）**：从数据路径中删除虚拟交换机可以消除数据包在主机上用于策略处理的时间，并增加了 VM 中可处理的数据包数。
+- **降低延迟/提高每秒数据包数 (pps)** ：从数据路径中去除虚拟交换机可以消除数据包在主机中进行策略处理所花费的时间，同时增大了 VM 中可处理的数据包数。
 
-- **减少抖动**：虚拟交换机处理取决于需要应用的策略数量，以及正在执行处理的 CPU 工作负荷。 将策略实施卸载到硬件消除了这种可变性，因为可以将数据包直接传送到 VM，消除了主机与 VM 之间的通信，以及所有的软件中断和上下文切换。
+- **减少波动**：虚拟交换机处理取决于需要应用的策略数量，以及正在执行处理的 CPU 工作负荷。 将策略实施卸载到硬件消除了这种可变性，因为可以将数据包直接传送到 VM，消除了主机与 VM 之间的通信，以及所有的软件中断和上下文切换。
 
 - **降低 CPU 利用率**：绕过主机中的虚拟交换机可以减少用于处理流量的 CPU 资源。
 
-若要使用加速网络，需要在每个适用的 VM 上显式启用它。 有关说明，请参阅[创建启用加速网络的 Linux 虚拟机](https://docs.microsoft.com/azure/virtual-network/create-vm-accelerated-networking-cli)。
+若要使用加速网络，需要在每个适用的 VM 上显式启用它。 有关说明，请参阅[创建启用加速网络的 Linux 虚拟机](./create-vm-accelerated-networking-cli.md)。
 
 #### <a name="receive-side-scaling"></a>接收端缩放
 
-接收端缩放 (RSS) 是一种网络驱动程序技术，它通过在多处理器系统中的多个 CPU 之间分配接收处理，更有效地分配网络流量的接收负载。 简单来说，RSS 可让系统处理更多的接收流量，因为它使用所有可用的 CPU，而不是只使用一个。 有关 RSS 的更多技术讨论，请参阅[接收端缩放简介](https://docs.microsoft.com/windows-hardware/drivers/network/introduction-to-receive-side-scaling)。
+接收端缩放 (RSS) 是一种网络驱动程序技术，它通过在多处理器系统中的多个 CPU 之间分配接收处理，更有效地分配网络流量的接收负载。 简单来说，RSS 可让系统处理更多的接收流量，因为它使用所有可用的 CPU，而不是只使用一个。 有关 RSS 的更多技术讨论，请参阅[接收端缩放简介](/windows-hardware/drivers/network/introduction-to-receive-side-scaling)。
 
-在 VM 上启用加速网络后，若要获得最佳性能，需要启用 RSS。 RSS 还可为不使用加速网络的 Vm 提供权益。 有关如何确定 RSS 是否已启用及其启用方法的概述，请参阅[优化 Azure 虚拟机的网络吞吐量](https://aka.ms/FastVM)。
+在 VM 上启用加速网络后，若要获得最佳性能，需要启用 RSS。 RSS 还可为不使用加速网络的 Vm 提供权益。 有关如何确定 RSS 是否已启用及其启用方法的概述，请参阅[优化 Azure 虚拟机的网络吞吐量](./virtual-network-optimize-network-bandwidth.md)。
 
 ### <a name="tcp-time_wait-and-time_wait-assassination"></a>TCP TIME_WAIT 和 TIME_WAIT 抹消
 
 TCP TIME_WAIT 是影响网络和应用程序性能的另一项常用设置。 在用作客户端或服务器（“源 IP:源端口”+“目标 IP:目标端口”）的、不断打开和关闭多个套接字的繁忙 VM 上，在 TCP 正常运行期间，给定的套接字最终可能会长时间处于 TIME_WAIT 状态。 TIME_WAIT 状态是指在关闭某个套接字之前允许在其上传送任何附加的数据。 因此，TCP/IP 堆栈通常会通过静默丢弃客户端的 TCP SYN 数据包来防止重复使用套接字。
 
-套接字处于 TIME_WAIT 状态的时间长短是可配置的。 该值的范围为 30 秒到 240 秒。 套接字是有限的资源，在任意给定时间可使用的套接字数目是可配置的。 （可用套接字的数量通常约为30000。）如果使用的是可用套接字，或者客户端和服务器的 TIME_WAIT 设置不匹配，并且 VM 尝试在 TIME_WAIT 状态中重复使用套接字，则新连接将失败，因为不会以静默方式删除 TCP SYN 数据包。
+套接字处于 TIME_WAIT 状态的时间长短是可配置的。 该值的范围为 30 秒到 240 秒。 套接字是有限的资源，在任意给定时间可使用的套接字数目是可配置的。 （可用套接字数目通常约为 30,000 个。）如果可用套接字已耗尽，或者客户端和服务器的 TIME_WAIT 设置不匹配，当某个 VM 尝试重复使用处于 TIME_WAIT 状态的套接字时，新的连接将会失败，因为 TCP SYN 数据包已静默丢弃。
 
 通常可以在操作系统的 TCP/IP 堆栈中配置出站套接字的端口范围值。 这同样适用于 TCP TIME_WAIT 设置和重复使用套接字的情况。 更改这些数字可能会提高可伸缩性。 但是，根据具体的情况，这些更改可能会导致互操作性问题。 应小心更改这些值。
 
 可以使用 TIME_WAIT 抹消来解决此缩放限制。 使用 TIME_WAIT 抹消可以在某些情况下重用某个套接字，例如，当新连接的 IP 数据包中的序列号超过前一连接的最后一个数据包的序列号时。 在这种情况下，操作系统允许建立新连接（接受新的 SYN/ACK），并强制关闭处于 TIME_WAIT 状态的上一个连接。 Azure 中的 Windows VM 支持此功能。 若要了解其他 VM 是否支持此功能，请咨询 OS 供应商。
 
-若要了解如何配置 TCP TIME_WAIT 设置和源端口范围，请参阅[可修改哪些设置来提高网络性能](https://docs.microsoft.com/biztalk/technical-guides/settings-that-can-be-modified-to-improve-network-performance)。
+若要了解如何配置 TCP TIME_WAIT 设置和源端口范围，请参阅[可修改哪些设置来提高网络性能](/biztalk/technical-guides/settings-that-can-be-modified-to-improve-network-performance)。
 
 ## <a name="virtual-network-factors-that-can-affect-performance"></a>可能会影响性能的虚拟网络因素
 
@@ -287,29 +287,29 @@ Azure 提供多种 VM 大小和类型，每种大小和类型的性能各不相�
 
 Azure 虚拟机上至少附加了一个网络接口。 它们可能包含多个网络接口。 分配给某个虚拟机的带宽是流经所有网络接口（已连接到该虚拟机）的所有出站流量的总和。 换言之，带宽是按虚拟机分配的，而不管该虚拟机上附加了多少个网络接口。
 
-[Azure 中 Windows 虚拟机的大小](https://docs.microsoft.com/azure/virtual-machines/windows/sizes?toc=%2fazure%2fvirtual-network%2ftoc.json)详细说明了每种 VM 大小支持的预期出站吞吐量和网络接口数。 若要查看最大吞吐量，请选择一种类型（例如“常规用途”），然后在结果页上找到有关大小系列的部分（例如“Dv2 系列”）。**** 对于每个系列，有一个表格的最后一列中提供了网络规范，其标题为“最大 NIC 数/预期网络带宽 (MBps)”。
+[Azure 中 Windows 虚拟机的大小](../virtual-machines/sizes.md?toc=%2fazure%2fvirtual-network%2ftoc.json)详细说明了每种 VM 大小支持的预期出站吞吐量和网络接口数。 若要查看最大吞吐量，请选择一种类型（例如“常规用途”），然后在结果页上找到有关大小系列的部分（例如“Dv2 系列”）。 对于每个系列，有一个表格的最后一列中提供了网络规范，其标题为“最大 NIC 数/预期网络带宽 (MBps)”。
 
 吞吐量限制适用于虚拟机。 吞吐量不受这些因素的影响：
 
-- **网络接口数**：带宽限制适用于来自虚拟机的所有出站流量之和。
+- **网络接口数**：带宽限制适用于来自虚拟机的所有出站流量的总和。
 
-- **加速网络**：尽管此功能有助于实现发布的限制，但它不会更改限制。
+- **加速网络**：尽管此功能有助于流量达到已发布的限制，但不会更改限制。
 
 - **流量目标**：所有目标都计入出站限制。
 
 - **协议**：基于所有协议的所有出站流量都计入限制。
 
-有关详细信息，请参阅[虚拟机网络带宽](https://aka.ms/AzureBandwidth)。
+有关详细信息，请参阅[虚拟机网络带宽](./virtual-machine-network-throughput.md)。
 
 ### <a name="internet-performance-considerations"></a>Internet 性能注意事项
 
 如本文所述，Internet 因素以及不受 Azure 控制的因素可能会影响网络性能。 以下是其中的部分因素：
 
-- **滞后**时间：两个目标之间的往返时间可能会受到中间网络上的问题的影响，而不是采用 "最短" 距离路径的流量，也不是通过不理想的对等互连路径。
+- **延迟**：两个目标之间的往返时间可能会受中间网络问题、不采用“最短”距离路径的流量，以及欠佳对等互连路径的影响。
 
-- **数据包丢失**：网络拥塞、物理路径问题和绩效不佳网络设备可能导致数据包丢失。
+- **数据包丢失**：数据包丢失可能是网络拥塞、物理路径问题和性能不佳的网络设备造成的。
 
-- **MTU 大小/碎片**：沿着路径碎片可能会导致数据到达延迟或数据包到达顺序的数据包，这可能会影响数据包的传送。
+- **MTU 大小/分段**：在路径中分段可能导致数据延迟抵达，或数据包不按顺序抵达，而这可能会影响数据包的传送。
 
 Traceroute 是一个不错的工具，它可以测量源设备与目标设备之间的每条网络路径上的网络性能特征（例如数据包丢失和延迟）。
 
@@ -333,7 +333,7 @@ Azure 中的部署可与 Azure 外部的公共 Internet 和/或公共 IP 地址�
 
 对于每个出站连接，Azure 负载均衡器需要保持此映射一段时间。 根据 Azure 的多租户性质，对每个 VM 的每个出站流保持此映射可能会消耗大量的资源。 因此，需要根据 Azure 虚拟网络的配置设置一些限制。 或者，更准确地说，Azure VM 在给定的时间只能建立特定数量的出站连接。 达到这些限制时，VM 无法建立更多的出站连接。
 
-但是，此行为是可配置的。 有关 SNAT 和 SNAT 端口耗尽的详细信息，请参阅[此文](https://docs.microsoft.com/azure/load-balancer/load-balancer-outbound-connections)。
+但是，此行为是可配置的。 有关 SNAT 和 SNAT 端口耗尽的详细信息，请参阅[此文](../load-balancer/load-balancer-outbound-connections.md)。
 
 ## <a name="measure-network-performance-on-azure"></a>测试 Azure 上的网络性能
 
@@ -341,13 +341,13 @@ Azure 中的部署可与 Azure 外部的公共 Internet 和/或公共 IP 地址�
 
 ### <a name="measure-round-trip-time-and-packet-loss"></a>测量往返时间和丢包率
 
-TCP 性能严重依赖于 RTT 和丢包率。 测量 RTT 和丢包率的最简单方法是使用 Windows 和 Linux 中提供的 PING 实用工具。 PING 的输出会显示源与目标之间的最小/最大/平均延迟。 它还会显示丢包率。 PING 默认使用 ICMP 协议。 可以使用 PsPing 来测试 TCP RTT。 有关详细信息，请参阅 [PsPing](https://docs.microsoft.com/sysinternals/downloads/psping)。
+TCP 性能严重依赖于 RTT 和丢包率。 测量 RTT 和丢包率的最简单方法是使用 Windows 和 Linux 中提供的 PING 实用工具。 PING 的输出会显示源与目标之间的最小/最大/平均延迟。 它还会显示丢包率。 PING 默认使用 ICMP 协议。 可以使用 PsPing 来测试 TCP RTT。 有关详细信息，请参阅 [PsPing](/sysinternals/downloads/psping)。
 
 ### <a name="measure-actual-throughput-of-a-tcp-connection"></a>测量 TCP 连接的实际吞吐量
 
 NTttcp 是用于测试 Linux 或 Windows VM 的 TCP 性能的工具。 可以更改各项 TCP 设置，然后测试使用 NTttcp 所带来的优势。 有关详细信息，请参阅以下资源：
 
-- [带宽/吞吐量测试（NTttcp）](https://aka.ms/TestNetworkThroughput)
+- [带宽/吞吐量测试 (NTttcp)](./virtual-network-bandwidth-testing.md)
 
 - [NTttcp 实用工具](https://gallery.technet.microsoft.com/NTttcp-Version-528-Now-f8b12769)
 
@@ -357,9 +357,9 @@ NTttcp 是用于测试 Linux 或 Windows VM 的 TCP 性能的工具。 可以更
 
 有关详细信息，请参阅以下文章：
 
-- [排查 Expressroute 网络性能问题](https://docs.microsoft.com/azure/expressroute/expressroute-troubleshooting-network-performance)
+- [排查 Expressroute 网络性能问题](../expressroute/expressroute-troubleshooting-network-performance.md)
 
-- [如何验证到达虚拟网络的 VPN 吞吐量](https://docs.microsoft.com/azure/vpn-gateway/vpn-gateway-validate-throughput-to-vnet)
+- [如何验证到达虚拟网络的 VPN 吞吐量](../vpn-gateway/vpn-gateway-validate-throughput-to-vnet.md)
 
 ### <a name="detect-inefficient-tcp-behaviors"></a>检测低效的 TCP 行为
 
@@ -371,4 +371,4 @@ NTttcp 是用于测试 Linux 或 Windows VM 的 TCP 性能的工具。 可以更
 
 ## <a name="next-steps"></a>后续步骤
 
-了解 Azure VM 的 TCP/IP 性能优化后，我们建议了解[规划虚拟网络](https://docs.microsoft.com/azure/virtual-network/virtual-network-vnet-plan-design-arm)时的其他考虑因素，或[详细了解如何连接和配置虚拟网络](https://docs.microsoft.com/azure/virtual-network/)。
+了解 Azure VM 的 TCP/IP 性能优化后，我们建议了解[规划虚拟网络](./virtual-network-vnet-plan-design-arm.md)时的其他考虑因素，或[详细了解如何连接和配置虚拟网络](./index.yml)。

@@ -8,18 +8,18 @@ manager: nitinme
 ms.service: cognitive-services
 ms.subservice: text-analytics
 ms.topic: conceptual
-ms.date: 02/13/2019
+ms.date: 01/05/2021
 ms.author: aahi
-ms.openlocfilehash: aca3b0bea65923cee1bae25020058666c973922c
-ms.sourcegitcommit: 58faa9fcbd62f3ac37ff0a65ab9357a01051a64f
+ms.openlocfilehash: 9a4e179767cc38169cd794f4cd629604bdcdaab0
+ms.sourcegitcommit: 19ffdad48bc4caca8f93c3b067d1cf29234fef47
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/29/2020
-ms.locfileid: "73837125"
+ms.lasthandoff: 01/06/2021
+ms.locfileid: "97955036"
 ---
-# <a name="frequently-asked-questions-faq-about-the-text-analytics-cognitive-service"></a>有关文本分析认知服务的常见问题解答 (FAQ)
+# <a name="frequently-asked-questions-faq-about-the-text-analytics-api"></a>有关文本分析 API 的常见问题解答 (FAQ)
 
- 在 Azure 上找到与 Microsoft 认知服务文本分析 API 有关的概念、代码和方案相关的常见问题解答。
+ 查找有关与 Azure 认知服务中文本分析 API 相关的概念、代码和方案的常见问题的解答。
 
 ## <a name="can-text-analytics-identify-sarcasm"></a>文本分析能否识别嘲讽？
 
@@ -29,11 +29,11 @@ ms.locfileid: "73837125"
 
 ## <a name="can-i-add-my-own-training-data-or-models"></a>我可以添加自己的训练数据或模型吗？
 
-不可以，模型是预先训练的。 对上传数据的唯一可用操作是评分、关键短语提取和语言检测。 我们不托管自定义模型。 如果想要创建并托管自定义机器学习模型，请考虑 [Microsoft R Server 中的机器学习功能](https://docs.microsoft.com/r-server/r/concept-what-is-the-microsoftml-package)。
+不可以，模型是预先训练的。 对上传数据的唯一可用操作是评分、关键短语提取和语言检测。 我们不托管自定义模型。 如果想要创建并托管自定义机器学习模型，请考虑 [Microsoft R Server 中的机器学习功能](/r-server/r/concept-what-is-the-microsoftml-package)。
 
 ## <a name="can-i-request-additional-languages"></a>我可以请求其他语言吗？
 
-情绪分析和关键短语提取可用于[部分语言](text-analytics-supported-languages.md)。 自然语言处理很复杂，需要进行大量测试才能发布新功能。 出于这个原因，我们避免预先宣布支持，这样就不会有人依赖需要更多时间才能成熟的功能。 
+情绪分析和关键短语提取可用于[部分语言](./language-support.md)。 自然语言处理很复杂，需要进行大量测试才能发布新功能。 出于这个原因，我们避免预先宣布支持，这样就不会有人依赖需要更多时间才能成熟的功能。 
 
 为帮助我们确定下一步要处理哪些语言的优先顺序，请在[用户之声](https://cognitive.uservoice.com/forums/555922-text-analytics)上为特定语言投票。 
 
@@ -47,11 +47,21 @@ ms.locfileid: "73837125"
 
 如果更改较大，则会宣布对模型和算法进行改进；如果更新很小，则会悄悄地将其整合到服务中。 随着时间的推移，你可能会发现相同的文本输入会产生不同的情绪分数或关键短语输出。 这是在云中使用托管机器学习资源的正常且有意的结果。
 
+## <a name="service-availability-and-redundancy"></a>服务可用性和冗余性
+
+### <a name="is-text-analytics-service-zone-resilient"></a>文本分析服务区域是否可复原？
+
+是。 默认情况下，文本分析服务是区域复原的。
+
+### <a name="how-do-i-configure-the-text-analytics-service-to-be-zone-resilient"></a>如何实现将文本分析服务配置为区域复原？
+
+客户无需配置即可启用区域复原能力。 默认情况下，文本分析资源的区域复原功能可用，并由服务自身管理。
+
 ## <a name="next-steps"></a>后续步骤
 
 问题是否与缺少功能相关？ 请考虑在我们的 [UserVoice 网站](https://cognitive.uservoice.com/forums/555922-text-analytics)上为其发起请求或投票。
 
-## <a name="see-also"></a>请参阅
+## <a name="see-also"></a>另请参阅
 
- [StackOverflow：文本分析 API](https://stackoverflow.com/questions/tagged/text-analytics-api)   
- [StackOverflow：认知服务](https://stackoverflow.com/questions/tagged/microsoft-cognitive)
+ * [StackOverflow：文本分析 API](https://stackoverflow.com/questions/tagged/text-analytics-api)   
+ * [StackOverflow：认知服务](https://stackoverflow.com/questions/tagged/microsoft-cognitive)

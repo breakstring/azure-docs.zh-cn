@@ -1,20 +1,20 @@
 ---
-title: 通过 Azure IoT 中心设备流使用 C 与设备应用进行通信
+title: 快速入门 - 通过 Azure IoT 中心设备流与采用 C 的设备应用进行通信
 description: 在本快速入门中，我们将运行一个通过设备流来与 IoT 设备通信的 C 设备端应用程序。
 author: robinsh
 ms.service: iot-hub
 services: iot-hub
 ms.devlang: c
 ms.topic: quickstart
-ms.custom: mvc
+ms.custom: mvc, devx-track-azurecli
 ms.date: 08/20/2019
 ms.author: robinsh
-ms.openlocfilehash: 7b5487233e2bd0e532efad4e108c41f188b51d91
-ms.sourcegitcommit: ef055468d1cb0de4433e1403d6617fede7f5d00e
+ms.openlocfilehash: 403fe82c46c90c5f8efb48ce0a394a2f63488fed
+ms.sourcegitcommit: a0c1d0d0906585f5fdb2aaabe6f202acf2e22cfc
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/17/2020
-ms.locfileid: "83727149"
+ms.lasthandoff: 01/21/2021
+ms.locfileid: "98624619"
 ---
 # <a name="quickstart-communicate-to-a-device-application-in-c-via-iot-hub-device-streams-preview"></a>快速入门：通过 IoT 中心设备流在 C 中与设备应用程序通信（预览）
 
@@ -36,25 +36,19 @@ Azure IoT 中心目前支持设备流作为[预览版功能](https://azure.micro
 
 代码将演示设备流的发起过程，以及如何用其来发送和接收数据。
 
-[!INCLUDE [cloud-shell-try-it.md](../../includes/cloud-shell-try-it.md)]
-
-如果还没有 Azure 订阅，可以在开始前创建一个[免费帐户](https://azure.microsoft.com/free/?WT.mc_id=A261C142F)。
+[!INCLUDE [quickstarts-free-trial-note](../../includes/quickstarts-free-trial-note.md)]
 
 ## <a name="prerequisites"></a>先决条件
 
 需要具备以下先决条件：
 
-* 安装 [Visual Studio 2019](https://www.visualstudio.com/vs/) 并启用**使用 C++ 的桌面开发**工作负荷。
+* 安装 [Visual Studio 2019](https://www.visualstudio.com/vs/) 并启用 **使用 C++ 的桌面开发** 工作负荷。
 
 * [安装最新版本的 Git](https://git-scm.com/download/)。
 
-* 运行以下命令将用于 Azure CLI 的 Azure IoT 扩展添加到 Cloud Shell 实例。 IOT 扩展会将 IoT 中心、IoT Edge 和 IoT 设备预配服务 (DPS) 特定的命令添加到 Azure CLI。
+[!INCLUDE [azure-cli-prepare-your-environment.md](../../includes/azure-cli-prepare-your-environment-no-header.md)]
 
-   ```azurecli-interactive
-   az extension add --name azure-iot
-   ```
-
-   [!INCLUDE [iot-hub-cli-version-info](../../includes/iot-hub-cli-version-info.md)]
+[!INCLUDE [iot-hub-cli-version-info](../../includes/iot-hub-cli-version-info.md)]
 
 目前仅以下区域中创建的 IoT 中心支持设备流预览：
 
@@ -68,7 +62,7 @@ Azure IoT 中心目前支持设备流作为[预览版功能](https://azure.micro
 在本快速入门中，我们将使用[适用于 C 的 Azure IoT 设备 SDK](iot-hub-device-sdk-c-intro.md)。准备一个用于从 GitHub 克隆和生成 [Azure IoT C SDK](https://github.com/Azure/azure-iot-sdk-c) 的开发环境。 GitHub 上的 SDK 包括在本快速入门中使用的示例代码。
 
    > [!NOTE]
-   > 在开始此过程之前，请确保已安装了带有“使用 C++ 进行桌面开发”  工作负荷的 Visual Studio。
+   > 在开始此过程之前，请确保已安装了带有“使用 C++ 进行桌面开发”工作负荷的 Visual Studio。
 
 1. 按照下载页上的说明安装 [CMake 生成系统](https://cmake.org/download/)。
 
@@ -82,7 +76,7 @@ Azure IoT 中心目前支持设备流作为[预览版功能](https://azure.micro
 
     此操作需要花费几分钟时间。
 
-1. 在 git 存储库的根目录中创建 cmake  子目录，并导航到该文件夹。 从 azure-iot-sdk-c  目录运行以下命令：
+1. 在 git 存储库的根目录中创建 cmake 子目录，并导航到该文件夹。 从 azure-iot-sdk-c 目录运行以下命令：
 
     ```cmd/sh
     mkdir cmake
@@ -120,7 +114,7 @@ Azure IoT 中心目前支持设备流作为[预览版功能](https://azure.micro
 
 ## <a name="register-a-device"></a>注册设备
 
-必须先将设备注册到 IoT 中心，然后该设备才能进行连接。 在本部分中，我们将使用具有 [IoT 扩展](https://docs.microsoft.com/cli/azure/ext/azure-iot/iot?view=azure-cli-latest)的 Azure Cloud Shell 注册模拟设备。
+必须先将设备注册到 IoT 中心，然后该设备才能进行连接。 在本部分中，我们将使用具有 [IoT 扩展](/cli/azure/ext/azure-iot/iot?view=azure-cli-latest&preserve-view=true)的 Azure Cloud Shell 注册模拟设备。
 
 1. 若要创建设备标识，请在 Cloud Shell 中运行以下命令：
 
@@ -132,13 +126,13 @@ Azure IoT 中心目前支持设备流作为[预览版功能](https://azure.micro
     az iot hub device-identity create --hub-name {YourIoTHubName} --device-id MyDevice
     ```
 
-1. 若要获取刚刚注册的设备的*设备连接字符串*，请在 Cloud Shell 中运行以下命令：
+1. 若要获取刚刚注册的设备的 *设备连接字符串*，请在 Cloud Shell 中运行以下命令：
 
    > [!NOTE]
    > 请将 *YourIoTHubName* 占位符替换为你为 IoT 中心选择的名称。
 
     ```azurecli-interactive
-    az iot hub device-identity show-connection-string --hub-name {YourIoTHubName} --device-id MyDevice --output table
+    az iot hub device-identity connection-string show --hub-name {YourIoTHubName} --device-id MyDevice --output table
     ```
 
     请记下返回的设备连接字符串，以便稍后在此快速入门中使用。 如以下示例所示：

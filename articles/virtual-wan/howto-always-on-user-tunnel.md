@@ -2,18 +2,18 @@
 title: 配置 Always-On VPN 用户隧道
 titleSuffix: Azure Virtual WAN
 description: 本文介绍如何为虚拟 WAN 配置 Always On VPN 用户隧道
-services: vpn-gateway
+services: virtual-wan
 author: cherylmc
-ms.service: vpn-gateway
+ms.service: virtual-wan
 ms.topic: how-to
-ms.date: 06/22/2020
+ms.date: 09/22/2020
 ms.author: cherylmc
-ms.openlocfilehash: 03f67053a5a199c8c64efb05d2b6a65ad6707650
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: e83ca64d2b0e50ec02007a3cd878e6bf034d0961
+ms.sourcegitcommit: 829d951d5c90442a38012daaf77e86046018e5b9
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "85564046"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "91313580"
 ---
 # <a name="configure-an-always-on-vpn-user-tunnel-for-virtual-wan"></a>为虚拟 WAN 配置 Always On VPN 用户隧道
 
@@ -24,7 +24,7 @@ ms.locfileid: "85564046"
 必须创建点到站点配置并编辑虚拟中心分配。 有关说明，请参阅以下部分：
 
 * [创建 P2S 配置](virtual-wan-point-to-site-portal.md#p2sconfig)
-* [通过 P2S gateway 创建集线器](virtual-wan-point-to-site-portal.md#hub)
+* [使用 P2S 网关创建中心](virtual-wan-point-to-site-portal.md#hub)
 
 ## <a name="configure-a-user-tunnel"></a>配置用户隧道
 

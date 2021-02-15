@@ -1,6 +1,6 @@
 ---
 title: Azure 密钥保管库客户数据功能 - Azure 密钥保管库 | Microsoft Docs
-description: 了解在创建或更新保管库、密钥、机密、证书和托管存储帐户期间 Azure Key Vault 收到的客户数据。
+description: 了解在创建或更新保管库、密钥、机密、证书和托管的存储帐户期间由 Azure Key Vault 接收的客户数据。
 services: key-vault
 author: msmbaldwin
 manager: rkarlin
@@ -9,16 +9,16 @@ ms.service: key-vault
 ms.topic: reference
 ms.date: 01/07/2019
 ms.author: mbaldwin
-ms.openlocfilehash: e7cfc707aa4bccdcd72e45efa3693ebd8f88a211
-ms.sourcegitcommit: 9ce0350a74a3d32f4a9459b414616ca1401b415a
+ms.openlocfilehash: 8806ff41edabcd3c0875d3c02360dc9a275e3878
+ms.sourcegitcommit: 6a350f39e2f04500ecb7235f5d88682eb4910ae8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/13/2020
-ms.locfileid: "88189913"
+ms.lasthandoff: 12/01/2020
+ms.locfileid: "96460820"
 ---
 # <a name="azure-key-vault-customer-data-features"></a>Azure Key Vault 客户数据功能
 
-Azure Key Vault 在创建或更新保管库、密钥、机密、证书和托管的存储帐户期间接收客户数据。 此客户数据在 Azure 门户中以及通过 REST API 直接可见。 可以通过更新或删除包含客户数据的对象来编辑或删除此数据。
+Azure Key Vault 在创建或更新保管库、托管 HSM 池、密钥、机密、证书和托管存储帐户期间接收客户数据。 此客户数据在 Azure 门户中以及通过 REST API 直接可见。 可以通过更新或删除包含客户数据的对象来编辑或删除此数据。
 
 系统访问日志是在用户或应用程序访问 Key Vault 时生成的。 使用 Azure 见解的客户可以获得详细的访问日志。
 
@@ -52,14 +52,14 @@ Azure Key Vault 诊断日志包含可通过在用户隐私门户中发出导出�
 
 ## <a name="next-steps"></a>后续步骤
 
-- [Azure Key Vault 日志记录](logging.md)) 
+- [Azure 密钥保管库日志记录](logging.md)
 
-- [Azure Key Vault 软删除概述](soft-delete-cli.md)
+- [Azure Key Vault 软删除概述](./key-vault-recovery.md)
 
-- [Azure Key Vault 密钥操作](https://docs.microsoft.com/rest/api/keyvault/key-operations)
+- [Azure Key Vault 密钥操作](/rest/api/keyvault/key-operations)
 
-- [Azure Key Vault 机密操作](https://docs.microsoft.com/rest/api/keyvault/secret-operations)
+- [Azure Key Vault 机密操作](/rest/api/keyvault/secret-operations)
 
-- [Azure Key Vault 证书和策略](https://docs.microsoft.com/rest/api/keyvault/certificates-and-policies)
+- [Azure Key Vault 证书和策略](/rest/api/keyvault/certificates-and-policies)
 
-- [Azure Key Vault 存储帐户操作](https://docs.microsoft.com/rest/api/keyvault/storage-account-key-operations)
+- [Azure Key Vault 存储帐户操作](/rest/api/keyvault/storage-account-key-operations)

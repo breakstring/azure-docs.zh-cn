@@ -4,12 +4,12 @@ ms.service: databox
 ms.topic: include
 ms.date: 03/06/2019
 ms.author: alkohli
-ms.openlocfilehash: 348f7bdd333da4f4a6cb41a438b7aee08d6a6bbb
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 10c1680afd6cd6673efe3fe9d2397a0dc6a04859
+ms.sourcegitcommit: 78ecfbc831405e8d0f932c9aafcdf59589f81978
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "67173412"
+ms.lasthandoff: 01/23/2021
+ms.locfileid: "98738479"
 ---
 远程连接到设备的过程不同，具体取决于客户端的操作系统。
 
@@ -23,6 +23,8 @@ ms.locfileid: "67173412"
 2. 请确保 Windows 远程管理服务在客户端上运行。 在命令提示符处，键入：
 
     `winrm quickconfig`
+
+    有关详细信息，请参阅 [Windows 远程管理的安装和配置](/windows/win32/winrm/installation-and-configuration-for-windows-remote-management#quick-default-configuration)。
 
 3. 将变量分配给设备 IP 地址。
 
@@ -38,7 +40,7 @@ ms.locfileid: "67173412"
 
     `Enter-PSSession -ComputerName $ip -Credential $ip\EdgeUser -ConfigurationName Minishell`
 
-6. 在出现提示时提供密码。 使用用于登录本地 web UI 的相同密码。 默认的本地 web UI 密码为*Password1*。 使用远程 PowerShell 成功连接到设备后，会看到以下示例输出：  
+6. 在出现提示时提供密码。 使用用于登录本地 web UI 的相同密码。 默认的本地 web UI 密码为 *Password1*。 使用远程 PowerShell 成功连接到设备后，会看到以下示例输出：  
 
     ```
     Windows PowerShell
@@ -58,11 +60,11 @@ ms.locfileid: "67173412"
 
 在将用于连接的 Linux 客户端上：
 
-- 从 GitHub[安装最新的适用于 Linux 的 PowerShell Core](https://docs.microsoft.com/powershell/scripting/install/installing-powershell-core-on-linux?view=powershell-6)以获取 SSH 远程处理功能。 
+- 从 GitHub[安装最新的适用于 Linux 的 PowerShell Core](/powershell/scripting/install/installing-powershell-core-on-linux?view=powershell-6)以获取 SSH 远程处理功能。 
 - [仅 `gss-ntlmssp` 从 NTLM 模块安装包](https://github.com/Microsoft/omi/blob/master/Unix/doc/setup-ntlm-omi.md)。 对于 Ubuntu 客户端，请使用以下命令：
     - `sudo apt-get install gss-ntlmssp`
 
-有关详细信息，请参阅[通过 SSH 进行 PowerShell 远程处理](https://docs.microsoft.com/powershell/scripting/learn/remoting/ssh-remoting-in-powershell-core?view=powershell-6)。
+有关详细信息，请参阅 [通过 SSH 进行 PowerShell 远程处理](/powershell/scripting/learn/remoting/ssh-remoting-in-powershell-core?view=powershell-6)。
 
 请按照以下步骤从 NFS 客户端进行远程连接。
 

@@ -1,23 +1,20 @@
 ---
 title: 在群集创建过程中添加 Apache Hive 库 - Azure HDInsight
 description: 了解如何在群集创建过程中将 Apache Hive 库（jar 文件）添加到 HDInsight 群集中。
-author: hrasheed-msft
-ms.author: hrasheed
-ms.reviewer: jasonh
 ms.service: hdinsight
 ms.topic: how-to
 ms.custom: H1Hack27Feb2017,hdinsightactive
 ms.date: 02/14/2020
-ms.openlocfilehash: c678372fbd54e528a8a16eacc601e815cfd32e58
-ms.sourcegitcommit: 124f7f699b6a43314e63af0101cd788db995d1cb
+ms.openlocfilehash: b6695e5e985a30d6f912095225c4899e1c910e34
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/08/2020
-ms.locfileid: "86082227"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98945950"
 ---
 # <a name="add-custom-apache-hive-libraries-when-creating-your-hdinsight-cluster"></a>创建 HDInsight 群集时添加自定义 Apache Hive 库
 
-了解如何在 HDInsight 上预加载 [Apache Hive](https://hive.apache.org/) 库。 本文档包含有关在群集创建过程中使用脚本操作预加载库的信息。 使用本文档中的步骤添加的库在 Hive 中全局可用-无需使用 "[添加 JAR](https://cwiki.apache.org/confluence/display/Hive/LanguageManual+Cli) " 来加载这些库。
+了解如何在 HDInsight 上预加载 [Apache Hive](https://hive.apache.org/) 库。 本文档包含有关在群集创建过程中使用脚本操作预加载库的信息。 使用本文档中的步骤添加的库在 Hive 中全局可用-无需使用 " [添加 JAR](https://cwiki.apache.org/confluence/display/Hive/LanguageManual+Cli) " 来加载这些库。
 
 ## <a name="how-it-works"></a>工作原理
 
@@ -37,9 +34,9 @@ ms.locfileid: "86082227"
 
 * 这些脚本必须同时应用于“头节点”  和“辅助角色节点”  。
 
-* 要安装的 jar 必须存储在**单个容器**中的 Azure Blob 存储中。
+* 要安装的 jar 必须存储在 **单个容器** 中的 Azure Blob 存储中。
 
-* 在创建期间，包含 jar 文件的库的存储帐户**必须**链接到 HDInsight 群集。 它必须是默认的存储帐户，或通过__存储帐户设置__添加的帐户。
+* 在创建期间，包含 jar 文件的库的存储帐户 **必须** 链接到 HDInsight 群集。 它必须是默认的存储帐户，或通过 __存储帐户设置__ 添加的帐户。
 
 * 必须指定容器的 WASB 路径作为脚本操作的参数。 例如，如果 jar 存储在名为 **mystorage** 的存储帐户上名为 **libs** 的容器中，则该参数应为 `wasbs://libs@mystorage.blob.core.windows.net/`。
 

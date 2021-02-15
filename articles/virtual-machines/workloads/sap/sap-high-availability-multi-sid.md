@@ -1,6 +1,6 @@
 ---
 title: 在 Azure 中创建高可用性 SAP 多 SID 配置
-description: Windows 虚拟机上的高可用性 SAP NetWeaver 多 SID 配置指南
+description: 了解如何在 Windows 虚拟机上创建高可用性 SAP NetWeaver 多 SID 配置。
 services: virtual-machines-windows, virtual-network, storage
 documentationcenter: saponazure
 author: rdeltcheva
@@ -10,18 +10,19 @@ tags: azure-resource-manager
 keywords: ''
 ms.assetid: 0b89b4f8-6d6c-45d7-8d20-fe93430217ca
 ms.service: virtual-machines-windows
+ms.subservice: workloads
 ms.topic: article
 ms.tgt_pltfrm: vm-windows
 ms.workload: infrastructure-services
 ms.date: 05/05/2017
 ms.author: radeltch
 ms.custom: H1Hack27Feb2017
-ms.openlocfilehash: 9cf62be1ad9d95ff20351966bf21af0cb3d9f0a3
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.openlocfilehash: 0d9e611ea3bd1243ef93bd5731199c549ed7e431
+ms.sourcegitcommit: cd9754373576d6767c06baccfd500ae88ea733e4
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87079870"
+ms.lasthandoff: 11/20/2020
+ms.locfileid: "94951275"
 ---
 # <a name="create-a-high-availability-sap-netweaver-multi-sid-configuration"></a>创建高可用性 SAP NetWeaver 多 SID 配置
 
@@ -242,7 +243,7 @@ Write-Host "Successfully added new IP '$ILBIP' to the internal load balancer '$I
 概要过程如下所述：
 
 1. [安装 SAP 的第一个群集节点][sap-ha-guide-9.1.2]。  
- 此步骤在**现有 WSFC 群集节点 1** 上安装包含高可用性 ASCS/SCS 实例的 SAP 系统。
+ 此步骤在 **现有 WSFC 群集节点 1** 上安装包含高可用性 ASCS/SCS 实例的 SAP 系统。
 
 2. [修改 ASCS/SCS 实例的 SAP 配置文件][sap-ha-guide-9.1.3]。
 

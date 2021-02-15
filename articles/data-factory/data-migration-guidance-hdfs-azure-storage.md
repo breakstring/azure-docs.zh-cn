@@ -1,22 +1,18 @@
 ---
 title: 将数据从本地 Hadoop 群集迁移到 Azure 存储
 description: 了解如何使用 Azure 数据工厂将数据从本地 Hadoop 群集迁移到 Azure 存储。
-services: data-factory
 ms.author: yexu
 author: dearandyxu
-ms.reviewer: ''
-manager: shwang
 ms.service: data-factory
-ms.workload: data-services
 ms.topic: conceptual
 ms.custom: seo-lt-2019
 ms.date: 8/30/2019
-ms.openlocfilehash: 63b657e77172282225a9bc890b2f185b0f4d42a1
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 9959a37d9b68d756437a3b4f0d75a2d63385758e
+ms.sourcegitcommit: d4734bc680ea221ea80fdea67859d6d32241aefc
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "81417134"
+ms.lasthandoff: 02/14/2021
+ms.locfileid: "100367786"
 ---
 # <a name="use-azure-data-factory-to-migrate-data-from-an-on-premises-hadoop-cluster-to-azure-storage"></a>使用 Azure 数据工厂将数据从本地 Hadoop 群集迁移到 Azure 存储 
 
@@ -26,7 +22,7 @@ Azure 数据工厂提供高性能、稳健且经济高效的机制用于将数�
 
 数据工厂提供两种基本方法用于将数据从本地 HDFS 迁移到 Azure。 你可以根据自己的情况选择所需的方法。 
 
-- **数据工厂 DistCp 模式**（建议）：在数据工厂中，可以使用 [DistCp](https://hadoop.apache.org/docs/current3/hadoop-distcp/DistCp.html)（分布式复制）将文件按原样复制到 Azure Blob 存储（包括[分阶段复制](https://docs.microsoft.com/azure/data-factory/copy-activity-performance#staged-copy)）或 Azure Data Lake Store Gen2。 使用与 DistCp 集成的数据工厂可以利用现有的强大群集来实现最佳复制吞吐量。 此外，还能受益于数据工厂提供的灵活计划功能和统一的监视体验。 根据数据工厂配置，复制活动会自动构造 DistCp 命令，将数据提交到 Hadoop 群集，然后监视复制状态。 建议使用数据工厂 DistCp 模式将数据从本地 Hadoop 群集迁移到 Azure。
+- **数据工厂 DistCp 模式**（建议）：在数据工厂中，可以使用 [DistCp](https://hadoop.apache.org/docs/current3/hadoop-distcp/DistCp.html)（分布式复制）将文件按原样复制到 Azure Blob 存储（包括 [分阶段复制](./copy-activity-performance.md#staged-copy)）或 Azure Data Lake Store Gen2。 使用与 DistCp 集成的数据工厂可以利用现有的强大群集来实现最佳复制吞吐量。 此外，还能受益于数据工厂提供的灵活计划功能和统一的监视体验。 根据数据工厂配置，复制活动会自动构造 DistCp 命令，将数据提交到 Hadoop 群集，然后监视复制状态。 建议使用数据工厂 DistCp 模式将数据从本地 Hadoop 群集迁移到 Azure。
 - **数据工厂本机集成运行时模式**：DistCp 并非在所有情况下都适用。 例如，在 Azure 虚拟网络环境中，DistCp 工具不支持使用 Azure 存储虚拟网络终结点的 Azure ExpressRoute 专用对等互连。 此外，在某些情况下，你不希望使用现有的 Hadoop 群集作为引擎来迁移数据，因此你不会在群集上施加繁重的负载，这可能影响现有 ETL 作业的性能。 可以改用数据工厂集成运行时的本机功能作为引擎，将数据从本地 HDFS 复制到 Azure。
 
 本文提供上述两种方法的以下信息：
@@ -45,11 +41,11 @@ DistCp 使用 MapReduce 来影响数据分发、错误处理和恢复以及报�
 
 数据工厂本机集成运行时模式还允许不同级别的并行度。 可以使用并行度来充分利用网络带宽、存储 IOPS 和带宽，以最大化数据移动吞吐量。
 
-- 单个复制活动可以利用可缩放的计算资源。 使用自承载集成运行时可以手动纵向扩展计算机或横向扩展到多个计算机（[最多 4 个节点](https://docs.microsoft.com/azure/data-factory/create-self-hosted-integration-runtime#high-availability-and-scalability)）。 单个复制活动将在所有节点之间对其文件集进行分区。 
+- 单个复制活动可以利用可缩放的计算资源。 使用自承载集成运行时可以手动纵向扩展计算机或横向扩展到多个计算机（[最多 4 个节点](./create-self-hosted-integration-runtime.md#high-availability-and-scalability)）。 单个复制活动将在所有节点之间对其文件集进行分区。 
 - 单个复制活动使用多个线程读取和写入数据存储。 
-- 数据工厂控制流可以同时启动多个复制活动。 例如，可以使用 [For Each 循环](https://docs.microsoft.com/azure/data-factory/control-flow-for-each-activity)。 
+- 数据工厂控制流可以同时启动多个复制活动。 例如，可以使用 [For Each 循环](./control-flow-for-each-activity.md)。 
 
-有关详细信息，请参阅[复制活动性能指南](https://docs.microsoft.com/azure/data-factory/copy-activity-performance)。
+有关详细信息，请参阅[复制活动性能指南](./copy-activity-performance.md)。
 
 ## <a name="resilience"></a>复原能力
 
@@ -93,10 +89,10 @@ DistCp 使用 MapReduce 来影响数据分发、错误处理和恢复以及报�
 
 ### <a name="authentication-and-credential-management"></a>身份验证和凭据管理 
 
-- 若要对 HDFS 进行身份验证，可以使用 [Windows (Kerberos) 或“匿名”](https://docs.microsoft.com/azure/data-factory/connector-hdfs#linked-service-properties)。 
-- 支持使用多种身份验证类型连接到 Azure Blob 存储。  我们强烈建议使用 [Azure 资源的托管标识](https://docs.microsoft.com/azure/data-factory/connector-azure-blob-storage#managed-identity)。 托管标识构建在 Azure Active Directory (Azure AD) 中自动管理的数据工厂标识基础之上，使你无需在链接服务定义中提供凭据，即可配置管道。 或者，可以使用[服务主体](https://docs.microsoft.com/azure/data-factory/connector-azure-blob-storage#service-principal-authentication)、[共享访问签名](https://docs.microsoft.com/azure/data-factory/connector-azure-blob-storage#shared-access-signature-authentication)或[存储帐户密钥](https://docs.microsoft.com/azure/data-factory/connector-azure-blob-storage#account-key-authentication)对 Blob 存储进行身份验证。 
-- 也支持使用多种身份验证类型连接到 Data Lake Storage Gen2。  我们强烈建议使用 [Azure 资源的托管标识](https://docs.microsoft.com/azure/data-factory/connector-azure-data-lake-storage#managed-identity)，不过，也可以使用[服务主体](https://docs.microsoft.com/azure/data-factory/connector-azure-data-lake-storage#service-principal-authentication)或[存储帐户密钥](https://docs.microsoft.com/azure/data-factory/connector-azure-data-lake-storage#account-key-authentication)。 
-- 如果不使用 Azure 资源的托管标识，则我们强烈建议[在 Azure Key Vault 中存储凭据](https://docs.microsoft.com/azure/data-factory/store-credentials-in-key-vault)，以便更轻松地集中管理和轮换密钥，而无需修改数据工厂链接服务。 这也是[CI/CD 的最佳实践](https://docs.microsoft.com/azure/data-factory/continuous-integration-deployment#best-practices-for-cicd)。 
+- 若要对 HDFS 进行身份验证，可以使用 [Windows (Kerberos) 或“匿名”](./connector-hdfs.md#linked-service-properties)。 
+- 支持使用多种身份验证类型连接到 Azure Blob 存储。  我们强烈建议使用 [Azure 资源的托管标识](./connector-azure-blob-storage.md#managed-identity)。 托管标识构建在 Azure Active Directory (Azure AD) 中自动管理的数据工厂标识基础之上，使你无需在链接服务定义中提供凭据，即可配置管道。 或者，可以使用[服务主体](./connector-azure-blob-storage.md#service-principal-authentication)、[共享访问签名](./connector-azure-blob-storage.md#shared-access-signature-authentication)或[存储帐户密钥](./connector-azure-blob-storage.md#account-key-authentication)对 Blob 存储进行身份验证。 
+- 也支持使用多种身份验证类型连接到 Data Lake Storage Gen2。  我们强烈建议使用 [Azure 资源的托管标识](./connector-azure-data-lake-storage.md#managed-identity)，不过，也可以使用[服务主体](./connector-azure-data-lake-storage.md#service-principal-authentication)或[存储帐户密钥](./connector-azure-data-lake-storage.md#account-key-authentication)。 
+- 如果不使用 Azure 资源的托管标识，则我们强烈建议[在 Azure Key Vault 中存储凭据](./store-credentials-in-key-vault.md)，以便更轻松地集中管理和轮换密钥，而无需修改数据工厂链接服务。 这也是 [CI/CD 的最佳实践](./continuous-integration-deployment.md#best-practices-for-cicd)。 
 
 ### <a name="initial-snapshot-data-migration"></a>初始快照数据迁移 
 
@@ -141,16 +137,16 @@ DistCp 使用 MapReduce 来影响数据分发、错误处理和恢复以及报�
 
 ### <a name="additional-references"></a>其他参考
 
-- [HDFS 连接器](https://docs.microsoft.com/azure/data-factory/connector-hdfs)
-- [Azure Blob 存储连接器](https://docs.microsoft.com/azure/data-factory/connector-azure-blob-storage)
-- [Azure Data Lake Storage Gen2 连接器](https://docs.microsoft.com/azure/data-factory/connector-azure-data-lake-storage)
-- [复制活动性能和优化指南](https://docs.microsoft.com/azure/data-factory/copy-activity-performance)
-- [创建和配置自承载集成运行时](https://docs.microsoft.com/azure/data-factory/create-self-hosted-integration-runtime)
-- [自承载集成运行时的高可用性和可伸缩性](https://docs.microsoft.com/azure/data-factory/create-self-hosted-integration-runtime#high-availability-and-scalability)
-- [数据移动安全注意事项](https://docs.microsoft.com/azure/data-factory/data-movement-security-considerations)
-- [在 Azure Key Vault 中存储凭据](https://docs.microsoft.com/azure/data-factory/store-credentials-in-key-vault)
-- [基于时间分区文件名增量复制文件](https://docs.microsoft.com/azure/data-factory/tutorial-incremental-copy-partitioned-file-name-copy-data-tool)
-- [基于 LastModifiedDate 复制新文件和更改的文件](https://docs.microsoft.com/azure/data-factory/tutorial-incremental-copy-lastmodified-copy-data-tool)
+- [HDFS 连接器](./connector-hdfs.md)
+- [Azure Blob 存储连接器](./connector-azure-blob-storage.md)
+- [Azure Data Lake Storage Gen2 连接器](./connector-azure-data-lake-storage.md)
+- [复制活动性能和优化指南](./copy-activity-performance.md)
+- [创建和配置自承载集成运行时](./create-self-hosted-integration-runtime.md)
+- [自承载集成运行时的高可用性和可伸缩性](./create-self-hosted-integration-runtime.md#high-availability-and-scalability)
+- [数据移动安全注意事项](./data-movement-security-considerations.md)
+- [在 Azure Key Vault 中存储凭据](./store-credentials-in-key-vault.md)
+- [基于时间分区文件名增量复制文件](./tutorial-incremental-copy-partitioned-file-name-copy-data-tool.md)
+- [基于 LastModifiedDate 复制新文件和更改的文件](./tutorial-incremental-copy-lastmodified-copy-data-tool.md)
 - [数据工厂定价页](https://azure.microsoft.com/pricing/details/data-factory/data-pipeline/)
 
 ## <a name="next-steps"></a>后续步骤

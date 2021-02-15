@@ -11,12 +11,12 @@ ms.workload: integration
 ms.topic: article
 ms.date: 04/20/2020
 ms.author: apimpm
-ms.openlocfilehash: 93c686fb2688a7a8ae71d8156e6e5c7915d6c604
-ms.sourcegitcommit: 3541c9cae8a12bdf457f1383e3557eb85a9b3187
+ms.openlocfilehash: bd36434bbfe435a53567c46728610627f99f987f
+ms.sourcegitcommit: 02b1179dff399c1aa3210b5b73bf805791d45ca2
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/09/2020
-ms.locfileid: "86205760"
+ms.lasthandoff: 01/12/2021
+ms.locfileid: "98127781"
 ---
 # <a name="upgrade-and-scale-an-azure-api-management-instance"></a>升级和缩放 Azure API 管理实例  
 
@@ -79,9 +79,14 @@ ms.locfileid: "86205760"
 ## <a name="downtime-during-scaling-up-and-down"></a>纵向扩展和纵向缩减过程中的停机时间
 若要从开发人员层缩放或缩放到开发人员层，将会出现停机时间。 否则，不会出现停机时间。 
 
+## <a name="compute-isolation"></a>计算隔离
+如果安全要求包括 [计算隔离](../azure-government/azure-secure-isolation-guidance.md#compute-isolation)，则可以使用 **隔离** 定价层。 此层可确保 API 管理服务实例的计算资源消耗整个物理主机，并提供支持所需的隔离级别，例如，美国国防部影响级别 5 (IL5) 工作负荷。 若要访问隔离层，请 [创建支持票证](../azure-portal/supportability/how-to-create-azure-support-request.md)。 
+
+
 
 ## <a name="next-steps"></a>后续步骤
 
 - [如何将 Azure API 管理服务实例部署到多个 Azure 区域](api-management-howto-deploy-multi-region.md)
 - [如何自动缩放 Azure API 管理服务实例](api-management-howto-autoscale.md)
-- [优化并节省云支出](https://docs.microsoft.com/azure/cost-management-billing/costs/quick-acm-cost-analysis?WT.mc_id=costmanagementcontent_docsacmhorizontal_-inproduct-learn)
+- [规划和管理 API 管理的成本](plan-manage-costs.md)
+- [API 管理限制](../azure-resource-manager/management/azure-subscription-service-limits.md#api-management-limits)

@@ -5,13 +5,13 @@ author: anthonychu
 ms.topic: tutorial
 ms.date: 01/15/2020
 ms.author: antchu
-ms.custom: mvc, devx-track-python
-ms.openlocfilehash: 03f27315a1506a67f41bec929f42f3cf6278f126
-ms.sourcegitcommit: a2a7746c858eec0f7e93b50a1758a6278504977e
+ms.custom: mvc, devx-track-python, devx-track-azurepowershell
+ms.openlocfilehash: ca9ce27583168dfee1a597fce559afad38a3a8c7
+ms.sourcegitcommit: a43a59e44c14d349d597c3d2fd2bc779989c71d7
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/12/2020
-ms.locfileid: "88142275"
+ms.lasthandoff: 11/25/2020
+ms.locfileid: "95994598"
 ---
 # <a name="tutorial-apply-machine-learning-models-in-azure-functions-with-python-and-tensorflow"></a>教程：在 Azure Functions 中使用 Python 和 TensorFlow 应用机器学习模型
 
@@ -133,7 +133,7 @@ py -3.7 -m venv .venv
     func new --name classify --template "HTTP trigger"
     ```
 
-    此命令创建与函数名称匹配的文件夹 *classify*。 该文件夹中有两个文件： *\_\_init\_\_.py*，其中包含函数代码；*function.json*，描述函数的触发器及其输入和输出绑定。 有关这些文件的内容的详细信息，请参阅 Python 快速入门中的[检查文件内容](./functions-create-first-azure-function-azure-cli.md?pivots=programming-language-python#optional-examine-the-file-contents)。
+    此命令创建与函数名称匹配的文件夹 *classify*。 该文件夹中有两个文件： *\_\_init\_\_.py*，其中包含函数代码；*function.json*，描述函数的触发器及其输入和输出绑定。 有关这些文件的内容的详细信息，请参阅 Python 快速入门中的[检查文件内容](./create-first-function-cli-python.md#optional-examine-the-file-contents)。
 
 
 ## <a name="run-the-function-locally"></a>在本地运行函数

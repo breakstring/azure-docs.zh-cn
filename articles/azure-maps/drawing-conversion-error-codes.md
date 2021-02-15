@@ -3,21 +3,21 @@ title: Azure Maps 绘图转换错误和警告
 description: 了解在使用 Azure Maps 转换服务时可能会看到的转换错误和警告。 阅读关于如何解决这些错误和警告的建议，以及一些示例。
 author: anastasia-ms
 ms.author: v-stharr
-ms.date: 05/18/2020
+ms.date: 12/07/2020
 ms.topic: conceptual
 ms.service: azure-maps
 services: azure-maps
 manager: philMea
-ms.openlocfilehash: d79c42f3bdf84efcdf2187741ac270087be05272
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: cecc19f0984ce1801d50e5cbda73e98a01e2825b
+ms.sourcegitcommit: 80c1056113a9d65b6db69c06ca79fa531b9e3a00
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "83682001"
+ms.lasthandoff: 12/09/2020
+ms.locfileid: "96906210"
 ---
 # <a name="drawing-conversion-errors-and-warnings"></a>绘图转换错误和警告
 
-使用 [Azure Maps 转换服务](https://docs.microsoft.com/rest/api/maps/conversion)，可以将上传的绘图包转换为定位数据。 绘图包必须符合[绘图包要求](drawing-requirements.md)。 如果不符合一个或多个要求，转换服务就会返回错误或警告。 本文列出了转换错误和警告代码，以及关于如何解决这些问题的建议。 此外，还提供了一些可能会导致转换服务返回这些代码的绘图示例。
+使用 [Azure Maps 转换服务](/rest/api/maps/conversion)，可以将上传的绘图包转换为定位数据。 绘图包必须符合[绘图包要求](drawing-requirements.md)。 如果不符合一个或多个要求，转换服务就会返回错误或警告。 本文列出了转换错误和警告代码，以及关于如何解决这些问题的建议。 此外，还提供了一些可能会导致转换服务返回这些代码的绘图示例。
 
 如果有任何转换警告，转换服务也会成功。 尽管如此，仍建议你审阅并解决所有警告。 警告表示转换的一部分被忽略或自动修复。 如果不解决警告，可能会导致后续进程出错。
 
@@ -35,9 +35,9 @@ ms.locfileid: "83682001"
 
 * 下面的两幅图展示了自相交多边形的示例。
 
-     ![自相交多边形的示例](./media/drawing-conversion-error-codes/geometry-warning-1.png)
+     ![自相交多边形的示例，示例1。](./media/drawing-conversion-error-codes/geometry-warning-1.png)
 
-     ![自相交多边形的示例](./media/drawing-conversion-error-codes/geometry-warning-2.png)
+     ![自相交多边形的示例，示例二。](./media/drawing-conversion-error-codes/geometry-warning-2.png)
 
 * 下图展示了非闭合折线。 假设图层只支持闭合几何图形。
 
@@ -330,7 +330,7 @@ ms.locfileid: "83682001"
 若要修复 invalidUserData 错误，请验证：
 
 * 是否为已上传包提供了正确的 `udid`。
-* 是否为用于上传绘图包的 Azure Maps 帐户启用了 Azure Maps Creator。
+* 已为用于上载绘图包的 Azure Maps 帐户启用 Azure Maps Creator (预览版) 。
 * 对转换服务的 API 请求是否包含用于上传绘图包的 Azure Maps 帐户的订阅密钥。
 
 ### <a name="dwgerror"></a>**dwgError**
@@ -506,4 +506,4 @@ manifest.json 文件因 JSON 格式或语法错误而无法读取。 若要详�
 > [如何使用 Azure Maps 绘图错误可视化工具](drawing-error-visualizer.md)
 
 > [!div class="nextstepaction"]
-> [适用于室内定位的 Creator](creator-indoor-maps.md)
+> [室内地图的 Creator (预览) ](creator-indoor-maps.md)

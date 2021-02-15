@@ -7,12 +7,12 @@ ms.topic: conceptual
 ms.date: 11/28/2018
 ms.author: thfalgou
 ms.custom: fasttrack-edit
-ms.openlocfilehash: 110a25fca0b0e764650665635dbe545de7a350cd
-ms.sourcegitcommit: 271601d3eeeb9422e36353d32d57bd6e331f4d7b
+ms.openlocfilehash: 3ff8406a3634fa946ab8ce7aca694bbc57d556a5
+ms.sourcegitcommit: 8f0803d3336d8c47654e119f1edd747180fe67aa
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/20/2020
-ms.locfileid: "88653990"
+ms.lasthandoff: 01/07/2021
+ms.locfileid: "97976395"
 ---
 # <a name="best-practices-for-business-continuity-and-disaster-recovery-in-azure-kubernetes-service-aks"></a>Azure Kubernetes 服务 (AKS) 中实现业务连续性和灾难恢复的最佳做法
 
@@ -93,7 +93,7 @@ AKS 区域可用性和配对区域是共同考虑的因素。 将 AKS 群集部�
 
 状态可以外部化或与操作状态的代码共存。 通常，你会使用一个数据库或其他数据存储（在网络中不同计算机上运行或同一计算机进程外部运行）来实现状态的外部化。
 
-当容器和微服务中运行的进程不保持状态时，它们最有弹性。 由于应用程序几乎始终包含某种状态，因此请使用 PaaS 解决方案，如 Azure Cosmos DB、Azure Database for PostgreSQL、Azure Database for MySQL 或 Azure SQL 数据库。
+当容器和微服务中运行的进程不保持状态时，它们最有弹性。 由于应用程序几乎始终包含某种状态，因此请使用 Azure Cosmos DB、Azure Database for PostgreSQL、Azure Database for MySQL 或 Azure SQL 数据库等 PaaS 解决方案。
 
 如何构建可移植的应用程序，请参阅以下指导原则：
 
@@ -113,16 +113,13 @@ AKS 区域可用性和配对区域是共同考虑的因素。 将 AKS 群集部�
 
 即使删除了 pod，应用程序也可能需要持久存储。 在 Kubernetes 中，可以使用持久性卷来持久保存数据存储。 持久性卷会装载到节点 VM，然后公开给 pod。 持久性卷遵循 pod，即使 pod 被移动到同一群集内的其他节点也是如此。
 
-使用的复制策略取决于存储解决方案。 常见的存储解决方案（例如 [Gluster](https://docs.gluster.org/en/latest/Administrator%20Guide/Geo%20Replication/)、[Ceph](https://docs.ceph.com/docs/master/cephfs/disaster-recovery/)、[Rook](https://rook.io/docs/rook/v1.2/ceph-disaster-recovery.html) 和 [Portworx](https://docs.portworx.com/scheduler/kubernetes/going-production-with-k8s.html#disaster-recovery-with-cloudsnaps)）在灾难恢复和复制方面都提供了自身的指导。
+使用的复制策略取决于存储解决方案。 常见的存储解决方案（例如 [Gluster](https://docs.gluster.org/en/latest/Administrator-Guide/Geo-Replication/)、[Ceph](https://docs.ceph.com/docs/master/cephfs/disaster-recovery/)、[Rook](https://rook.io/docs/rook/v1.2/ceph-disaster-recovery.html) 和 [Portworx](https://docs.portworx.com/scheduler/kubernetes/going-production-with-k8s.html#disaster-recovery-with-cloudsnaps)）在灾难恢复和复制方面都提供了自身的指导。
 
 典型的策略是提供一个通用存储点，应用程序可在其中写入其数据。 然后跨区域复制此数据，在本地访问。
 
 ![基于基础结构的异步复制](media/operator-best-practices-bc-dr/aks-infra-based-async-repl.png)
 
-如果使用 Azure 托管磁盘，可以选择如下所述的复制和 DR 解决方案：
-
-* [Azure 上的 Velero](https://github.com/vmware-tanzu/velero-plugin-for-microsoft-azure/blob/master/README.md)
-* [Azure 备份](../backup/backup-overview.md)
+如果使用 Azure 托管磁盘，则可以使用几个选项来处理复制和灾难恢复。 [Azure 上的 Velero][velero] 和 [Kasten][kasten] 是备份到 Kubernetes 的本机解决方案，但不受支持。
 
 ### <a name="application-based-asynchronous-replication"></a>基于应用程序的异步复制
 
@@ -140,3 +137,6 @@ AKS 区域可用性和配对区域是共同考虑的因素。 将 AKS 群集部�
 <!-- INTERNAL LINKS -->
 [aks-best-practices-scheduler]: operator-best-practices-scheduler.md
 [aks-best-practices-cluster-isolation]: operator-best-practices-cluster-isolation.md
+
+[velero]: https://github.com/vmware-tanzu/velero-plugin-for-microsoft-azure/blob/master/README.md
+[kasten]: https://www.kasten.io/

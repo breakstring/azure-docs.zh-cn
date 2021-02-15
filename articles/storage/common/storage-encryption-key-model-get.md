@@ -10,13 +10,13 @@ ms.date: 03/13/2020
 ms.author: tamram
 ms.reviewer: ozgun
 ms.subservice: common
-ms.custom: devx-track-azurecli
-ms.openlocfilehash: 5e3dba072179b57576b387bdabd624372988e975
-ms.sourcegitcommit: 11e2521679415f05d3d2c4c49858940677c57900
+ms.custom: devx-track-azurepowershell
+ms.openlocfilehash: f59e4238c983cdb336500a68c52730ae5346b1c7
+ms.sourcegitcommit: 829d951d5c90442a38012daaf77e86046018e5b9
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/31/2020
-ms.locfileid: "87495023"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "91612415"
 ---
 # <a name="determine-which-azure-storage-encryption-key-model-is-in-use-for-the-storage-account"></a>确定用于存储帐户的 Azure 存储加密密钥模型
 
@@ -79,4 +79,4 @@ key_source=$(az storage account show \
 ## <a name="next-steps"></a>后续步骤
 
 - [静态数据的 Azure 存储加密](storage-service-encryption.md)
-- [在 Azure Key Vault 中使用客户托管密钥管理 Azure 存储加密](encryption-customer-managed-keys.md)
+- [用于 Azure 存储加密的客户托管密钥](customer-managed-keys-overview.md)

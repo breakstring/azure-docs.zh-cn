@@ -5,18 +5,19 @@ metadata:
   title: Azure Key Vault 文档
   description: 了解如何使用密钥保管库来创建及维护用于访问和加密云资源、应用和解决方案的密钥。 教程、API 参考和其他资源。
   services: key-vault
+  ms.subservice: general
   ms.service: key-vault
   ms.topic: landing-page
   author: msmbaldwin
   ms.author: mbaldwin
   manager: rkarlin
   ms.date: 09/19/2019
-  ms.openlocfilehash: ada202a8683b64144f2adacc759b9461472e4a31
-  ms.sourcegitcommit: 64ad2c8effa70506591b88abaa8836d64621e166
+  ms.openlocfilehash: d1b3d48f89fc979775c0ee71df29e3af0ff5f5fa
+  ms.sourcegitcommit: 431bf5709b433bb12ab1f2e591f1f61f6d87f66c
   ms.translationtype: HT
   ms.contentlocale: zh-CN
-  ms.lasthandoff: 08/17/2020
-  ms.locfileid: "88262562"
+  ms.lasthandoff: 01/12/2021
+  ms.locfileid: "98133423"
 landingContent:
 - title: 关于 Azure Key Vault
   linkLists:
@@ -48,20 +49,26 @@ landingContent:
   linkLists:
   - linkListType: overview
     links:
+    - text: 安全概述
+      url: security-overview.md
     - text: 保护 Key Vault
       url: secure-your-key-vault.md
-    - text: 安全建议
-      url: security-recommendations.md
     - text: 安全基线
       url: security-baseline.md
+  - linkListType: how-to-guide
+    links:
+    - text: 对 Key Vault 进行身份验证
+      url: authentication.md
+    - text: 分配访问策略 (CLI)
+      url: assign-access-policy-CLI.md
+    - text: 分配访问策略 (PowerShell)
+      url: assign-access-policy-powershell.md
+    - text: 分配访问策略（门户）
+      url: assign-access-policy-portal.md
   - linkListType: tutorial
     links:
     - text: 使用专用链接
       url: private-link-service.md
-    - text: 使用托管标识
-      url: managed-identity.md
-    - text: 使用访问策略
-      url: group-permissions-for-apps.md
 - title: 客户端库
   linkLists:
   - linkListType: reference

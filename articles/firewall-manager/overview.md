@@ -5,14 +5,14 @@ author: vhorne
 ms.service: firewall-manager
 services: firewall-manager
 ms.topic: overview
-ms.date: 08/18/2020
+ms.date: 01/12/2021
 ms.author: victorh
-ms.openlocfilehash: b4ef35f2892925919ca9c8eda37a9b0e0d11835e
-ms.sourcegitcommit: 02ca0f340a44b7e18acca1351c8e81f3cca4a370
+ms.openlocfilehash: 63e2aac4c12ecc5d832cb037fda91bd2c6ad0bf1
+ms.sourcegitcommit: 431bf5709b433bb12ab1f2e591f1f61f6d87f66c
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/19/2020
-ms.locfileid: "88590398"
+ms.lasthandoff: 01/12/2021
+ms.locfileid: "98132437"
 ---
 # <a name="what-is-azure-firewall-manager"></a>什么是 Azure 防火墙管理器？
 
@@ -78,7 +78,7 @@ Azure 防火墙管理器存在以下已知问题：
 
 |问题  |说明  |缓解操作  |
 |---------|---------|---------|
-|流量拆分|当前不支持 Office 365 和 Azure 公共 PaaS 流量拆分。 因此，为 V2I 或 B2I 选择第三方提供程序也会通过合作伙伴服务发送所有 Azure 公共 PaaS 和 Office 365 流量。|正在调查中心的流量拆分。
+|流量拆分|当前不支持 Microsoft 365 和 Azure 公共 PaaS 流量拆分。 因此，为 V2I 或 B2I 选择第三方提供程序也会通过合作伙伴服务发送所有的 Azure 公共 PaaS 和 Microsoft 365 流量。|正在调查中心的流量拆分。
 |每个区域一个安全虚拟中心|在每个区域最多只能使用一个安全虚拟中心。|可在一个区域中创建多个虚拟 WAN。|
 |基本策略必须与本地策略位于同一区域中|可在与基本策略相同的区域中创建所有本地策略。 仍可以将在安全中心的某个区域中创建的策略应用于另一个区域。|正在调查|
 |在安全的虚拟中心部署中筛选中心之间的流量|目前尚不支持安全虚拟中心之间的通信筛选。 但如果未启用对经 Azure 防火墙的专用流量进行筛选，则中心之间的通信仍然有效。|正在调查|
@@ -86,7 +86,10 @@ Azure 防火墙管理器存在以下已知问题：
 |启用了专用流量筛选的分支之间的流量|不支持启用了专用流量筛选时的分支之间的流量。 |正在调查。<br><br>如果分支之间的连接至关重要，请勿保护专用流量的安全。|
 |共享同一虚拟 WAN 的所有安全虚拟中心必须位于同一资源组中。|此行为现在与虚拟 WAN 中心保持一致。|创建多个虚拟 WAN，以允许在不同的资源组中创建安全虚拟中心。|
 |批量 IP 地址添加失败|如果添加多个公共 IP 地址，安全中心防火墙将进入失败状态。|添加较小的公共 IP 地址增量。 例如，一次添加 10 个。|
-|如果安全中心中配置了自定义 DNS（预览版），应用程序规则将失败。|DNS 代理/自定义 DNS（预览版）在配置了防火墙管理 NIC 的情况下不起作用。 这包括安全中心部署以及启用强制隧道的情况。|通过检查解决该问题。|
+|安全虚拟中心不支持 DDoS 防护标准|DDoS 防护标准未与 vWAN 集成。|正在调查|
+|不完全支持活动日志|防火墙策略当前不支持活动日志。|正在调查|
+|配置 SNAT 专用 IP 地址范围|如果已配置 Azure 防火墙策略，则会忽略[专用 IP 范围设置](../firewall/snat-private-range.md)。 会使用默认 Azure 防火墙行为；根据 [IANA RFC 1918](https://tools.ietf.org/html/rfc1918)，当目标 IP 地址位于专用 IP 地址范围内时，该行为不使用 SNAT 网络规则。|正在调查|
+|迁移防火墙以使用防火墙策略时，某些防火墙设置不会迁移|迁移到 Azure 防火墙策略时，不会迁移可用性区域和 SNAT 专用地址。|正在调查| 
 
 ## <a name="next-steps"></a>后续步骤
 

@@ -3,12 +3,12 @@ title: 将 SQL Server 数据库备份到 Azure
 description: 本文介绍如何将 SQL Server 备份到 Azure。 此外还介绍 SQL Server 的恢复。
 ms.topic: conceptual
 ms.date: 06/18/2019
-ms.openlocfilehash: 88ac95a3e21269ccb5ca2c0fed1c1444af2f4d11
-ms.sourcegitcommit: ac7ae29773faaa6b1f7836868565517cd48561b2
+ms.openlocfilehash: 510d9637031928e31abaa5f82a5bf58c6ef44719
+ms.sourcegitcommit: 829d951d5c90442a38012daaf77e86046018e5b9
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/25/2020
-ms.locfileid: "88826916"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "91316829"
 ---
 # <a name="about-sql-server-backup-in-azure-vms"></a>关于 Azure VM 中的 SQL Server 备份
 
@@ -33,7 +33,7 @@ ms.locfileid: "88826916"
 * 该插件会直接将数据发送到恢复服务保管库，从而无需暂存位置。 Azure 备份服务在存储帐户中加密和存储数据。
 * 数据传输完成后，协调器通过备份服务确认提交。
 
-  ![SQL 备份体系结构](./media/backup-azure-sql-database/backup-sql-overview.png)
+  ![SQL 备份体系结构](./media/backup-azure-sql-database/azure-backup-sql-overview.png)
 
 ## <a name="before-you-start"></a>开始之前
 
@@ -51,9 +51,9 @@ ms.locfileid: "88826916"
 * 创建 NT SERVICE\AzureWLBackupPluginSvc 帐户，以发现虚拟机上的数据库。 此帐户用于备份和还原，需要拥有 SQL sysadmin 权限。
 * Azure 备份使用 NT AUTHORITY\SYSTEM 帐户来发现 VM 上运行的数据库。 此帐户必须是 SQL 上的公共登录名。
 
-如果未在 Azure Marketplace 中创建 SQL Server VM，或者使用的是 SQL 2008 和 2008 R2，则可能会收到 **UserErrorSQLNoSysadminMembership** 错误。
+如果未在 Azure Marketplace 中创建 SQL Server VM，或者使用的是 SQL 2008 或 2008 R2，则可能会收到 **UserErrorSQLNoSysadminMembership** 错误。
 
-有关在使用 Windows 2008 R2 上运行的 **SQL 2008** 和 **2008 R2** 时如何授予权限，请参阅[此文](#give-sql-sysadmin-permissions-for-sql-2008-and-sql-2008-r2)。
+对于在 Windows 2008 R2 上运行的 **SQL 2008** 和 **2008 R2** 的情况下提供权限，请参阅 [此处](#give-sql-sysadmin-permissions-for-sql-2008-and-sql-2008-r2)。
 
 对于所有其他版本，可使用以下步骤解决权限问题：
 
@@ -66,11 +66,11 @@ ms.locfileid: "88826916"
 
       ![在“登录名 - 新建”对话框中选择“搜索”](./media/backup-azure-sql-database/new-login-search.png)
 
-  4. 在虚拟机注册和 SQL 发现阶段已创建 Windows 虚拟服务帐户 NT SSERVICE\AzureWLBackupPluginSvc。 输入“输入要选择的对象名称”中显示的帐户名。 选择“检查名称”以解析名称。 单击 **“确定”** 。
+  4. 在虚拟机注册和 SQL 发现阶段已创建 Windows 虚拟服务帐户 NT SSERVICE\AzureWLBackupPluginSvc。 输入“输入要选择的对象名称”中显示的帐户名。 选择“检查名称”以解析名称。 选择“确定”  。
 
       ![选择“检查名称”以解析未知的服务名称](./media/backup-azure-sql-database/check-name.png)
 
-  5. 在“服务器角色”中，确保“sysadmin”角色已选中。  单击 **“确定”** 。 现在，所需的权限应会存在。
+  5. 在“服务器角色”中，确保“sysadmin”角色已选中。  选择“确定”  。 现在，所需的权限应会存在。
 
       ![确保 sysadmin 服务器角色已选中](./media/backup-azure-sql-database/sysadmin-server-role.png)
 
@@ -91,7 +91,7 @@ ms.locfileid: "88826916"
 
 1. 在对象资源管理器中转到该 SQL Server 实例。
 2. 导航到“安全性”->“登录名”
-3. 右键单击“登录名”，然后单击“新建登录名...”
+3. 右键单击 "登录名"，然后选择 "*新建登录名 ...* "
 
     ![使用 SSMS 的新登录名](media/backup-azure-sql-database/sql-2k8-new-login-ssms.png)
 
@@ -107,7 +107,7 @@ ms.locfileid: "88826916"
 
     ![在 SSMS 中授予权限](media/backup-azure-sql-database/sql-2k8-grant-permission-ssms.png)
 
-7. 单击“确定”。
+7. 选择“确定”。
 8. 重复相同的步骤序列（上述步骤 1-7），将 NT Service\AzureWLBackupPluginSvc 登录名添加到 SQL Server 实例。 如果该登录名已存在，请确保它具有 sysadmin 服务器角色并处于这种状态：已授予连接到数据库引擎的权限，且“登录名”设置为“已启用”。
 9. 授予权限后，在门户中**重新发现数据库**：“保管库”->“备份基础结构”->“Azure VM 中的工作负荷”： 
 

@@ -13,13 +13,19 @@
     - name: Ansible
       items:
         - name: 运行 Ansible playbook
-          href: /azure/ansible/ansible-run-playbook-in-cloudshell?toc=/azure/cloud-shell/toc.json&bc=/azure/bread/toc.json
+          href: /azure/developer/ansible/getting-started-cloud-shell?bc=%2fazure%2fbread%2ftoc.json&toc=%2fazure%2fcloud-shell%2ftoc.json
         - name: 管理 Azure 动态库存
-          href: /azure/ansible/ansible-manage-azure-dynamic-inventories?toc=/azure/cloud-shell/toc.json&bc=/azure/bread/toc.json
+          href: /azure/developer/ansible/dynamic-inventory-configure?bc=%2fazure%2fbread%2ftoc.json&toc=%2fazure%2fcloud-shell%2ftoc.json
     - name: Terraform
       items:
         - name: 创建执行计划
           href: example-terraform-bash.md
+- name: 概念
+  items:
+    - name: 安全性
+      items:
+        - name: 安全基线
+          href: security-baseline.md
 - name: 操作指南
   items:
     - name: 适用于 Windows 用户的 PowerShell Cloud Shell

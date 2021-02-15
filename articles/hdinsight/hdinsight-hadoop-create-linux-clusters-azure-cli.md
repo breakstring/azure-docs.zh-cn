@@ -1,19 +1,16 @@
 ---
 title: 使用 Azure CLI 创建 Apache Hadoop 群集 - Azure HDInsight
 description: 了解如何使用跨平台 Azure CLI 创建 Azure HDInsight 群集。
-author: hrasheed-msft
-ms.author: hrasheed
-ms.reviewer: jasonh
 ms.service: hdinsight
 ms.topic: how-to
-ms.custom: hdinsightactive
+ms.custom: hdinsightactive, devx-track-azurecli
 ms.date: 02/03/2020
-ms.openlocfilehash: 04def98108bf996a8f8cabe0ad36c022011aa533
-ms.sourcegitcommit: 124f7f699b6a43314e63af0101cd788db995d1cb
+ms.openlocfilehash: a2b39f25aa2a8847697df8a5097f5ffdc9cbd212
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/08/2020
-ms.locfileid: "86080680"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98945883"
 ---
 # <a name="create-hdinsight-clusters-using-the-azure-cli"></a>使用 Azure CLI 创建 HDInsight 群集
 
@@ -23,13 +20,9 @@ ms.locfileid: "86080680"
 
 [!INCLUDE [delete-cluster-warning](../../includes/hdinsight-delete-cluster-warning.md)]
 
-如果没有 Azure 订阅，请在开始之前创建一个[免费帐户](https://azure.microsoft.com/free/?WT.mc_id=A261C142F)。
+[!INCLUDE [quickstarts-free-trial-note](../../includes/quickstarts-free-trial-note.md)]
 
-## <a name="prerequisites"></a>先决条件
-
-Azure CLI。 如果尚未安装 Azure CLI，请参阅[安装 Azure CLI](https://docs.microsoft.com/cli/azure/install-azure-cli) 来了解步骤。
-
-[!INCLUDE [cloud-shell-try-it.md](../../includes/cloud-shell-try-it.md)]
+[!INCLUDE [azure-cli-prepare-your-environment.md](../../includes/azure-cli-prepare-your-environment.md)]
 
 ## <a name="create-a-cluster"></a>创建群集
 
@@ -42,14 +35,14 @@ Azure CLI。 如果尚未安装 Azure CLI，请参阅[安装 Azure CLI](https://
     # az account set --subscription "SUBSCRIPTIONID"
     ```
 
-2. 设置环境变量。 本文中的变量用法基于 Bash。 在其他环境中需要进行细微的更改。 有关用于群集创建的可能参数的完整列表，请参见 [az-hdinsight-create](https://docs.microsoft.com/cli/azure/hdinsight?view=azure-cli-latest#az-hdinsight-create)。
+2. 设置环境变量。 本文中的变量用法基于 Bash。 在其他环境中需要进行细微的更改。 有关用于群集创建的可能参数的完整列表，请参见 [az-hdinsight-create](/cli/azure/hdinsight#az-hdinsight-create)。
 
     |参数 | 说明 |
     |---|---|
     |`--workernode-count`| 群集中的工作器节点数。 本文使用变量 `clusterSizeInNodes` 作为传递给 `--workernode-count` 的值。 |
     |`--version`| HDInsight 群集版本。 本文使用变量 `clusterVersion` 作为传递给 `--version` 的值。 另请参阅：[支持的 HDInsight 版本](./hdinsight-component-versioning.md#supported-hdinsight-versions)。|
     |`--type`| HDInsight 群集的类型，如：hadoop、interactivehive、hbase、Kafka、storm、spark、rserver、mlservices。  本文使用变量 `clusterType` 作为传递给 `--type` 的值。 另请参阅：[群集类型和配置](./hdinsight-hadoop-provision-linux-clusters.md#cluster-type)。|
-    |`--component-version`|各种 Hadoop 组件的版本，采用“component=version”格式的空格分隔版本。 本文使用变量 `componentVersion` 作为传递给 `--component-version` 的值。 另请参阅： [Hadoop 组件](./hdinsight-component-versioning.md#apache-components-available-with-different-hdinsight-versions)。|
+    |`--component-version`|各种 Hadoop 组件的版本，采用“component=version”格式的空格分隔版本。 本文使用变量 `componentVersion` 作为传递给 `--component-version` 的值。 另请参阅：[Hadoop 组件](./hdinsight-component-versioning.md#apache-components-available-with-different-hdinsight-versions)。|
 
     将 `RESOURCEGROUPNAME`、`LOCATION`、`CLUSTERNAME`、`STORAGEACCOUNTNAME` 和 `PASSWORD` 替换为所需的值。 根据需要更改其他变量的值。 然后输入 CLI 命令。
 
@@ -68,7 +61,7 @@ Azure CLI。 如果尚未安装 Azure CLI，请参阅[安装 Azure CLI](https://
     export componentVersion=Hadoop=2.7
     ```
 
-3. 通过输入以下命令[创建资源组](https://docs.microsoft.com/cli/azure/group?view=azure-cli-latest#az-group-create)：
+3. 输入以下命令来[创建资源组](/cli/azure/group#az-group-create)：
 
     ```azurecli-interactive
     az group create \
@@ -78,7 +71,7 @@ Azure CLI。 如果尚未安装 Azure CLI，请参阅[安装 Azure CLI](https://
 
     有关有效位置的列表，请使用 `az account list-locations` 命令，并使用 `name` 值中的位置之一。
 
-4. 通过输入以下命令[创建 Azure 存储帐户](https://docs.microsoft.com/cli/azure/storage/account?view=azure-cli-latest#az-storage-account-create)：
+4. 通过输入以下命令[创建 Azure 存储帐户](/cli/azure/storage/account#az-storage-account-create)：
 
     ```azurecli-interactive
     # Note: kind BlobStorage is not available as the default storage account.
@@ -91,7 +84,7 @@ Azure CLI。 如果尚未安装 Azure CLI，请参阅[安装 Azure CLI](https://
         --sku Standard_LRS
     ```
 
-5. 通过输入以下命令，[从 Azure 存储帐户提取主密钥](https://docs.microsoft.com/cli/azure/storage/account/keys?view=azure-cli-latest#az-storage-account-keys-list)，并将其存储在变量中：
+5. 通过输入以下命令，[从 Azure 存储帐户提取主密钥](/cli/azure/storage/account/keys#az-storage-account-keys-list)，并将其存储在变量中：
 
     ```azurecli-interactive
     export AZURE_STORAGE_KEY=$(az storage account keys list \
@@ -100,7 +93,7 @@ Azure CLI。 如果尚未安装 Azure CLI，请参阅[安装 Azure CLI](https://
         --query [0].value -o tsv)
     ```
 
-6. 通过输入以下命令来[创建 Azure 存储容器](https://docs.microsoft.com/cli/azure/storage/container?view=azure-cli-latest#az-storage-container-create)：
+6. 通过输入以下命令来[创建 Azure 存储容器](/cli/azure/storage/container#az-storage-container-create)：
 
     ```azurecli-interactive
     az storage container create \
@@ -109,7 +102,7 @@ Azure CLI。 如果尚未安装 Azure CLI，请参阅[安装 Azure CLI](https://
         --account-name $AZURE_STORAGE_ACCOUNT
     ```
 
-7. 输入以下命令来[创建 HDInsight 群集](https://docs.microsoft.com/cli/azure/hdinsight?view=azure-cli-latest#az-hdinsight-create)：
+7. 输入以下命令来[创建 HDInsight 群集](/cli/azure/hdinsight#az-hdinsight-create)：
 
     ```azurecli-interactive
     az hdinsight create \
@@ -132,7 +125,7 @@ Azure CLI。 如果尚未安装 Azure CLI，请参阅[安装 Azure CLI](https://
     > [!IMPORTANT]  
     > HDInsight 群集具有各种不同的类型，与该群集进行优化的工作负荷或技术相对应。 不支持在一个群集上创建合并了多个类型（如 Storm 和 HBase）的群集。
 
-    群集创建过程可能需要几分钟才能完成。 通常大约为 15 分钟。
+    可能需要几分钟时间才能完成群集创建过程。 通常大约为 15 分钟。
 
 ## <a name="clean-up-resources"></a>清理资源
 

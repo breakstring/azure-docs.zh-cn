@@ -9,12 +9,12 @@ ms.subservice: core
 ms.topic: tutorial
 ms.date: 04/30/2020
 ms.custom: devx-track-python
-ms.openlocfilehash: 3a6ce5860704e6fd16b79fc253650dd45ec743e7
-ms.sourcegitcommit: 7fe8df79526a0067be4651ce6fa96fa9d4f21355
+ms.openlocfilehash: cdfeb2fdeefabb0d2d4af2fb63222adda5d023fb
+ms.sourcegitcommit: 1f1d29378424057338b246af1975643c2875e64d
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/06/2020
-ms.locfileid: "87852610"
+ms.lasthandoff: 02/05/2021
+ms.locfileid: "99576019"
 ---
 # <a name="tutorial-convert-ml-experiments-to-production-python-code"></a>教程：将 ML 试验转换为生产 Python 代码
 
@@ -67,7 +67,7 @@ args = {
 }
 
 reg_model = Ridge(**args)
-reg.fit(data["train"]["X"], data["train"]["y"])
+reg_model.fit(data["train"]["X"], data["train"]["y"])
 
 preds = reg_model.predict(data["test"]["X"])
 mse = mean_squared_error(preds, y_test)
@@ -353,7 +353,7 @@ print("Test result: ", prediction)
 在命令提示符下运行以下使用 `nbconvert` 包和 `experimentation/Diabetes Ridge Regression Training.ipynb` 路径的语句，将笔记本转换为可执行脚本：
 
 ```
-jupyter nbconvert -- to script "Diabetes Ridge Regression Training.ipynb" –output train
+jupyter nbconvert "Diabetes Ridge Regression Training.ipynb" --to script --output train
 ```
 
 将笔记本转换为 `train.py` 后，删除任何不需要的注释。 将位于文件末尾的 `main()` 调用替换为如以下代码所示的条件调用：
@@ -441,7 +441,7 @@ if __name__ == '__main__':
 在命令提示符下运行使用 `nbconvert` 包和 `experimentation/Diabetes Ridge Regression Scoring.ipynb` 路径的以下语句，将笔记本转换为可执行脚本：
 
 ```
-jupyter nbconvert -- to script "Diabetes Ridge Regression Scoring.ipynb" –output score
+jupyter nbconvert "Diabetes Ridge Regression Scoring.ipynb" --to script --output score
 ```
 
 将笔记本转换为 `score.py` 后，删除任何不需要的注释。 `score.py` 文件应类似于以下代码：
@@ -527,5 +527,5 @@ def test_train_model():
 现在，你已了解了如何从试验代码转换为生产代码，接下来请参阅以下链接来了解详细信息和后续步骤：
 
 + [MLOpsPython](https://github.com/microsoft/MLOpsPython/blob/master/docs/custom_model.md)：构建一个 CI/CD 管道，以使用 Azure Pipelines 和 Azure 机器学习来训练、评估和部署自己的模型
-+ [监视 Azure ML 试验运行和指标](https://docs.microsoft.com/azure/machine-learning/how-to-track-experiments)
-+ [监视 ML Web 服务终结点并从中收集数据](https://docs.microsoft.com/azure/machine-learning/how-to-enable-app-insights)
++ [监视 Azure ML 试验运行和指标](./how-to-track-experiments.md)
++ [监视 ML Web 服务终结点并从中收集数据](./how-to-enable-app-insights.md)

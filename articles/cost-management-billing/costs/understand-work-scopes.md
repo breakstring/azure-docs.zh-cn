@@ -6,14 +6,15 @@ ms.author: banders
 ms.date: 08/12/2020
 ms.topic: conceptual
 ms.service: cost-management-billing
+ms.subservice: cost-management
 ms.reviewer: micflan
 ms.custom: ''
-ms.openlocfilehash: 31ec2e75f9bc1bd02d097af9076c9356598a9499
-ms.sourcegitcommit: c28fc1ec7d90f7e8b2e8775f5a250dd14a1622a6
+ms.openlocfilehash: 729444b1d1ccf55f34e54a4b59508131458c472b
+ms.sourcegitcommit: d1e56036f3ecb79bfbdb2d6a84e6932ee6a0830e
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/13/2020
-ms.locfileid: "88167566"
+ms.lasthandoff: 01/29/2021
+ms.locfileid: "99054798"
 ---
 # <a name="understand-and-work-with-scopes"></a>了解并使用范围
 
@@ -25,7 +26,7 @@ ms.locfileid: "88167566"
 - 计费数据，例如付款和发票
 - 云服务，例如成本和策略监管
 
-你将在特定的范围内管理计费数据、获取特定于付款的角色、查看发票，以及执行常规的帐户管理。 对计费和帐户角色的管理独立于对用于资源管理的角色（使用 [Azure RBAC](../../role-based-access-control/overview.md)）的管理。 为了明确区分不同范围的意图（包括访问控制的差异），我们分别将其称作计费范围和 RBAC 范围 。
+你将在特定的范围内管理计费数据、获取特定于付款的角色、查看发票，以及执行常规的帐户管理。 对计费和帐户角色的管理独立于对用于资源管理的角色（使用 [Azure RBAC](../../role-based-access-control/overview.md)）的管理。 为了明确区分不同范围的意图（包括访问控制的差异），我们分别将其称作计费范围和 Azure RBAC 范围 。
 
 若要了解有关范围的详细信息，请观看 [Cost Management setting up hierarchies](https://www.youtube.com/watch?v=n3TLRaYJ1NY)（成本管理设置层次结构）视频。 若要观看其他视频，请访问[成本管理 YouTube 频道](https://www.youtube.com/c/AzureCostManagement)。
 
@@ -33,7 +34,7 @@ ms.locfileid: "88167566"
 
 ## <a name="how-cost-management-uses-scopes"></a>成本管理如何使用范围
 
-成本管理在资源上方的所有范围内工作，使组织能够在它们有权访问的级别管理成本，无论该级别是整个计费帐户还是单个资源组。 计费范围根据 Microsoft 协议（订阅类型）而异，但 RBAC 范围并非如此。
+成本管理在资源上方的所有范围内工作，使组织能够在它们有权访问的级别管理成本，无论该级别是整个计费帐户还是单个资源组。 计费范围根据 Microsoft 协议（订阅类型）而异，但 Azure RBAC 范围并非如此。
 
 ## <a name="azure-rbac-scopes"></a>Azure RBAC 范围
 
@@ -97,7 +98,7 @@ EA 计费范围支持以下角色：
 - **企业只读用户** – 可以查看计费帐户设置、成本数据和成本配置。 例如预算和导出。 在功能方面，EA 计费范围与[成本管理读取者 Azure 角色](../../role-based-access-control/built-in-roles.md#cost-management-reader)相同。
 - **部门管理员** – 可以管理部门设置（例如成本中心），可以访问和查看所有成本，并可以管理成本配置。 例如预算和导出。  必须启用“DA 查看费用”计费帐户设置，才能让部门管理员和只读用户查看成本。 如果禁用了“DA 查看费用”选项，则即使部门用户是帐户或订阅所有者，他们也无法在任何级别查看成本。
 - **部门只读用户** – 可以查看部门设置、成本数据和成本配置。 例如预算和导出。 如果禁用了“DA 查看费用”选项，则即使部门用户是帐户或订阅所有者，他们也无法在任何级别查看成本。
-- **帐户所有者** – 可以管理注册帐户设置（例如成本中心）、查看所有成本，以及管理注册帐户的成本配置（例如预算和导出）。 必须启用“AO 查看费用”计费帐户设置，才能让帐户所有者和 RBAC 用户查看成本。
+- **帐户所有者** – 可以管理注册帐户设置（例如成本中心）、查看所有成本，以及管理注册帐户的成本配置（例如预算和导出）。 必须启用“AO 查看费用”计费帐户设置，才能让帐户所有者和 Azure RBAC 用户查看成本。
 
 EA 计费帐户用户无法直接访问发票。 可以从外部批量授权系统访问发票。
 
@@ -113,7 +114,7 @@ Azure 订阅嵌套在注册帐户下。 计费用户有权在其各自范围下�
 
     资源类型：不适用
 
-个人 Azure 订阅帐户管理员可以在 [Azure 帐户中心](https://account.azure.com/subscriptions)查看和管理计费数据，例如发票和付款。 但是，他们无法在 Azure 门户中查看成本数据或管理资源。 若要向帐户管理员授予访问权限，请使用前面所述的成本管理角色。
+Azure 订阅个人帐户管理员可访问 [Azure 门户](https://portal.azure.com) > “订阅”，然后选择一个订阅来查看和管理计费数据，例如发票和付款。
 
 与 EA 不同，个人 Azure 订阅帐户管理员可以在 Azure 门户中查看其发票。 请记住，成本管理读取者和成本管理参与者角色不提供对发票的访问权限。 有关详细信息，请参阅[如何授予对发票的访问权限](../manage/manage-billing-access.md#give-read-only-access-to-billing)。
 
@@ -179,7 +180,7 @@ Azure 订阅嵌套在发票科目下，就如同嵌套在 EA 注册帐户下一�
 
 只有具有“全局管理员”和“管理员代理”角色的用户才能直接在合作伙伴的 Azure 租户中管理和查看计费帐户、计费配置文件与客户的成本。  有关合作伙伴中心角色的详细信息，请参阅[分配用户角色和权限](/partner-center/permissions-overview)。
 
-仅当 CSP 合作伙伴客户签署了 Microsoft 客户协议时，Azure 成本管理才支持这些客户。 对于 CSP 支持的但尚未签署 Microsoft 客户协议的客户，请参阅[合作伙伴中心](https://docs.microsoft.com/azure/cloud-solution-provider/overview/partner-center-overview)。
+仅当 CSP 合作伙伴客户签署了 Microsoft 客户协议时，Azure 成本管理才支持这些客户。 对于 CSP 支持的但尚未签署 Microsoft 客户协议的客户，请参阅[合作伙伴中心](/azure/cloud-solution-provider/overview/partner-center-overview)。
 
 成本管理不支持 CSP 范围中的管理组。 如果你有 CSP 订阅，并在成本分析中将范围设置为管理组，则会看到如下错误：
 

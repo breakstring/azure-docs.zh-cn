@@ -9,14 +9,14 @@ ms.service: active-directory
 ms.subservice: saas-app-tutorial
 ms.workload: identity
 ms.topic: tutorial
-ms.date: 03/12/2020
+ms.date: 09/10/2020
 ms.author: jeedes
-ms.openlocfilehash: 8bd41034d6d4cfa444ae4c0711fd46cb2924d009
-ms.sourcegitcommit: 023d10b4127f50f301995d44f2b4499cbcffb8fc
+ms.openlocfilehash: 57b1d47fa40c0af4bced1e4169fe60cd759ee2f3
+ms.sourcegitcommit: f6f928180504444470af713c32e7df667c17ac20
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/18/2020
-ms.locfileid: "88554067"
+ms.lasthandoff: 01/07/2021
+ms.locfileid: "97963632"
 ---
 # <a name="tutorial-azure-active-directory-integration-with-palo-alto-networks---admin-ui"></a>教程：Azure Active Directory 与 Palo Alto Networks - 管理 UI 的集成
 
@@ -26,9 +26,6 @@ ms.locfileid: "88554067"
 * 可在 Azure AD 中控制谁有权访问 Palo Alto Networks - 管理 UI。
 * 可以让用户使用其 Azure AD 帐户自动登录到 Palo Alto Networks - 管理 UI（单一登录）。
 * 可在中心位置（即 Azure 门户）管理帐户。
-
-如果要了解有关 SaaS 应用与 Azure AD 集成的更多详细信息，请参阅 [Azure Active Directory 的应用程序访问与单一登录是什么](https://docs.microsoft.com/azure/active-directory/manage-apps/what-is-single-sign-on)。
-如果还没有 Azure 订阅，可以在开始前[创建一个免费帐户](https://azure.microsoft.com/free/)。
 
 ## <a name="prerequisites"></a>先决条件
 
@@ -42,25 +39,25 @@ ms.locfileid: "88554067"
 本教程会在测试环境中配置和测试 Azure AD 单一登录。
 
 * Palo Alto Networks - 管理 UI 支持 **SP** 发起的 SSO
-* Palo Alto Networks - 管理 UI 支持**实时**用户预配
+* Palo Alto Networks - 管理 UI 支持 **实时** 用户预配
 
 ## <a name="adding-palo-alto-networks---admin-ui-from-the-gallery"></a>从库添加 Palo Alto Networks - 管理 UI
 
 若要配置 Palo Alto Networks - 管理 UI 与 Azure AD 的集成，需要从库中将 Palo Alto Networks - 管理 UI 添加到托管的 SaaS 应用列表。
 
-1. 使用工作或学校帐户或个人 Microsoft 帐户登录到 [Azure 门户](https://portal.azure.com)。
-1. 在左侧导航窗格中，选择“Azure Active Directory”服务。
-1. 导航到“企业应用程序”，选择“所有应用程序” 。
+1. 使用工作或学校帐户或个人 Microsoft 帐户登录到 Azure 门户。
+1. 在左侧导航窗格中，选择“Azure Active Directory”服务  。
+1. 导航到“企业应用程序”，选择“所有应用程序”   。
 1. 若要添加新的应用程序，请选择“新建应用程序”。
 1. 在“从库中添加”部分中，在搜索框中键入“Palo Alto Networks - Admin UI”。 
 1. 在结果面板中选择“Palo Alto Networks - Admin UI”，然后添加该应用。 在该应用添加到租户时等待几秒钟。
 
-## <a name="configure-and-test-azure-ad-single-sign-on"></a>配置和测试 Azure AD 单一登录
+## <a name="configure-and-test-azure-ad-sso"></a>配置和测试 Azure AD SSO
 
 在本部分中，将基于名为 **B.Simon** 的测试用户配置并测试“Palo Alto Networks - Admin UI”的 Azure AD 单一登录。
 若要运行单一登录，需要在 Azure AD 用户与 Palo Alto Networks - 管理 UI 中相关用户之间建立链接关系。
 
-若要配置和测试 Palo Alto Networks - 管理 UI 的 Azure AD 单一登录，需要完成以下构建基块：
+若要为 Palo Alto Networks - Admin UI 配置和测试 Azure AD 单一登录，请执行以下步骤：
 
 1. **[配置 Azure AD SSO](#configure-azure-ad-sso)** - 使用户能够使用此功能。
     * **[创建 Azure AD 测试用户](#create-an-azure-ad-test-user)** - 使用 B. Simon 测试 Azure AD 单一登录。
@@ -69,27 +66,19 @@ ms.locfileid: "88554067"
     * **[创建 Palo Alto Networks - Admin UI 测试用户](#create-palo-alto-networks---admin-ui-test-user)** - 在 Palo Alto Networks - Admin UI 中创建 B.Simon 的对应用户，并将其链接到该用户的 Azure AD 表示形式。
 1. **[测试 SSO](#test-sso)** - 验证配置是否正常工作。
 
-### <a name="configure-azure-ad-sso"></a>配置 Azure AD SSO
+## <a name="configure-azure-ad-sso"></a>配置 Azure AD SSO
 
-在本部分中，将在 Azure 门户中启用 Azure AD 单一登录。
+按照下列步骤在 Azure 门户中启用 Azure AD SSO。
 
-若要配置 Palo Alto Networks - 管理 UI 的 Azure AD 单一登录，请执行以下步骤：
+1. 在 Azure 门户中的“Palo Alto Networks - Admin UI”应用程序集成页上，找到“管理”部分并选择“单一登录”。  
+1. 在“选择单一登录方法”页上选择“SAML” 。
+1. 在“设置 SAML 单一登录”页面上，单击“基本 SAML 配置”旁边的铅笔图标以编辑设置 。
 
-1. 在 [Azure 门户](https://portal.azure.com/)中，在 **Palo Alto Networks - 管理 UI** 应用程序集成页上，选择“单一登录”。
+   ![编辑基本 SAML 配置](common/edit-urls.png)
 
-    ![配置单一登录链接](common/select-sso.png)
+1. 在“基本 SAML 配置”  部分中，按照以下步骤操作：
 
-1. 在**选择单一登录方法**对话框中，选择 **SAML/WS-Fed**模式以启用单一登录。
-
-    ![单一登录选择模式](common/select-saml-option.png)
-
-1. 在“使用 SAML 设置单一登录”页上，单击“编辑”图标以打开“基本 SAML 配置”对话框  。
-
-    ![编辑基本 SAML 配置](common/edit-urls.png)
-
-1. 在“基本 SAML 配置”部分中，按照以下步骤操作：
-
-    a. 在“登录 URL”文本框中，使用以下模式键入 URL：`https://<Customer Firewall FQDN>/php/login.php`。
+    a. 在“登录 URL”  文本框中，使用以下模式键入 URL：`https://<Customer Firewall FQDN>/php/login.php`。
 
     b. 在“标识符”框中，使用以下模式键入 URL：`https://<Customer Firewall FQDN>:443/SAML20/SP`
 
@@ -118,6 +107,9 @@ ms.locfileid: "88554067"
     | | |
 
     > [!NOTE]
+    > adminrole 值应与步骤 9 中提到的 Palo Alto Networks 中配置的角色名相同。 
+
+    > [!NOTE]
     > 有关这些属性的详细信息，请参阅以下文章：
     > * [Admin UI 的管理角色配置文件 (adminrole)](https://www.paloaltonetworks.com/documentation/80/pan-os/pan-os/firewall-administration/manage-firewall-administrators/configure-an-admin-role-profile)
     > * [Admin UI 的设备访问域 (accessdomain)](https://docs.paloaltonetworks.com/pan-os/8-0/pan-os-web-interface-help/device/device-access-domain.html)
@@ -130,11 +122,6 @@ ms.locfileid: "88554067"
 
     ![复制配置 URL](common/copy-configuration-urls.png)
 
-    a. 登录 URL
-
-    b. Azure AD 标识符
-
-    c. 注销 URL
 
 ### <a name="create-an-azure-ad-test-user"></a>创建 Azure AD 测试用户
 
@@ -145,7 +132,7 @@ ms.locfileid: "88554067"
 1. 在“用户”属性中执行以下步骤：
    1. 在“名称”字段中，输入 `B.Simon`。  
    1. 在“用户名”字段中输入 username@companydomain.extension。 例如，`B.Simon@contoso.com`。
-   1. 选中“显示密码”复选框，然后记下“密码”框中显示的值。 
+   1. 选中“显示密码”复选框，然后记下“密码”框中显示的值。
    1. 单击“创建”。
 
 ### <a name="assign-the-azure-ad-test-user"></a>分配 Azure AD 测试用户
@@ -155,18 +142,12 @@ ms.locfileid: "88554067"
 1. 在 Azure 门户中，依次选择“企业应用程序”、“所有应用程序”。 
 1. 在应用程序列表中，选择“Palo Alto Networks - 管理 UI”。
 1. 在应用的概述页中，找到“管理”部分，选择“用户和组” 。
+1. 选择“添加用户”，然后在“添加分配”对话框中选择“用户和组”。
+1. 在“用户和组”对话框中，从“用户”列表中选择“B.Simon”，然后单击屏幕底部的“选择”按钮。
+1. 如果你希望将某角色分配给用户，可以从“选择角色”下拉列表中选择该角色。 如果尚未为此应用设置任何角色，你将看到选择了“默认访问权限”角色。
+1. 在“添加分配”对话框中，单击“分配”按钮。
 
-   ![“用户和组”链接](common/users-groups-blade.png)
-
-1. 选择“添加用户”，然后在“添加分配”对话框中选择“用户和组”。  
-
-    ![“添加用户”链接](common/add-assign-user.png)
-
-1. 在“用户和组”对话框中，从“用户”列表中选择“B.Simon”，然后单击屏幕底部的“选择”按钮。  
-1. 如果在 SAML 断言中需要任何角色值，请在“选择角色”对话框的列表中为用户选择合适的角色，然后单击屏幕底部的“选择”按钮。 
-1. 在“添加分配”对话框中，单击“分配”按钮。 
-
-### <a name="configure-palo-alto-networks---admin-ui-sso"></a>配置 Palo Alto Networks - Admin UI SSO
+## <a name="configure-palo-alto-networks---admin-ui-sso"></a>配置 Palo Alto Networks - Admin UI SSO
 
 1. 在新窗口中以管理员身份打开 Palo Alto Networks Firewall Admin UI。
 
@@ -255,22 +236,17 @@ ms.locfileid: "88554067"
 
 Palo Alto Networks - Admin UI 支持实时用户预配。 如果用户尚不存在，在身份验证成功后会自动创建该用户。 无需执行创建用户的操作。
 
-### <a name="test-sso"></a>测试 SSO
+## <a name="test-sso"></a>测试 SSO
 
-在本部分中，使用访问面板测试 Azure AD 单一登录配置。
+在本部分，你将使用以下选项测试 Azure AD 单一登录配置。 
 
-单击访问面板中的 Palo Alto Networks - 管理 UI 磁贴时，应当会自动登录到你为其设置了 SSO 的 Palo Alto Networks - 管理 UI。 有关访问面板的详细信息，请参阅 [Introduction to the Access Panel](https://docs.microsoft.com/azure/active-directory/active-directory-saas-access-panel-introduction)（访问面板简介）。
+* 在 Azure 门户中单击“测试此应用程序”。 这会重定向到 Palo Alto Networks - Admin UI 登录 URL，你可以在其中启动登录流。 
 
-## <a name="additional-resources"></a>其他资源
+* 直接转到 Palo Alto Networks - Admin UI 登录 URL，并在其中启动登录流。
 
-- [有关如何将 SaaS 应用与 Azure Active Directory 集成的教程列表](https://docs.microsoft.com/azure/active-directory/active-directory-saas-tutorial-list)
+* 你可使用 Microsoft 的“我的应用”。 单击“我的应用”中的“Palo Alto Networks - Admin UI”磁贴时，应当会自动登录到已为其设置了 SSO 的 Palo Alto Networks - Admin UI。 有关“我的应用”的详细信息，请参阅[“我的应用”简介](../user-help/my-apps-portal-end-user-access.md)。
 
-- [Azure Active Directory 的应用程序访问与单一登录是什么？](https://docs.microsoft.com/azure/active-directory/manage-apps/what-is-single-sign-on)
 
-- [什么是 Azure Active Directory 中的条件访问？](https://docs.microsoft.com/azure/active-directory/conditional-access/overview)
+## <a name="next-steps"></a>后续步骤
 
-- [尝试通过 Azure AD 使用 Palo Alto Networks - Admin UI](https://aad.portal.azure.com/)
-
-- [Microsoft Cloud App Security 中的会话控制是什么？](https://docs.microsoft.com/cloud-app-security/proxy-intro-aad)
-
-- [如何通过高级可见性和控制保护 Palo Alto Networks - Admin UI](https://docs.microsoft.com/cloud-app-security/proxy-intro-aad)
+配置 Palo Alto Networks - 管理员 UI 后，可以强制实施会话控制，实时防止组织的敏感数据外泄和渗透。 会话控制从条件访问扩展而来。 [了解如何通过 Microsoft Cloud App Security 强制实施会话控制](/cloud-app-security/proxy-deployment-any-app)。

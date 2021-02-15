@@ -1,23 +1,20 @@
 ---
 title: 快速入门：使用模板创建 Apache Spark 群集 - Azure HDInsight
 description: 本快速入门演示如何使用资源管理器模板在 Azure HDInsight 中创建 Apache Spark 群集，并运行 Spark SQL 查询。
-author: hrasheed-msft
-ms.author: hrasheed
-ms.reviewer: jasonh
 ms.service: hdinsight
 ms.topic: quickstart
 ms.custom: subject-armqs
 ms.date: 03/13/2020
-ms.openlocfilehash: b5f3f0af39830a25680b5dd7c8c47a5848fe5986
-ms.sourcegitcommit: 124f7f699b6a43314e63af0101cd788db995d1cb
+ms.openlocfilehash: 1bbf3cbffe2ab51f10e86dc3b9fe4ea6040a7911
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/08/2020
-ms.locfileid: "86084811"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98930278"
 ---
 # <a name="quickstart-create-apache-spark-cluster-in-azure-hdinsight-using-arm-template"></a>快速入门：使用 ARM 模板在 Azure HDInsight 中创建 Apache Spark 群集
 
-本快速入门将使用 Azure 资源管理器模板（ARM 模板）在 Azure HDInsight 中创建一个 [Apache Spark](./apache-spark-overview.md) 群集。 然后，我们创建一个 Jupyter 笔记本，并使用它针对 Apache Hive 表运行 Spark SQL 查询。 Azure HDInsight 是适用于企业的分析服务，具有托管、全面且开源的特点。 用于 HDInsight 的 Apache Spark 框架使用内存中处理功能实现快速数据分析和群集计算。 使用 Jupyter 笔记本，可以与数据进行交互、将代码和 Markdown 文本结合使用，以及进行简单的可视化。
+本快速入门将使用 Azure 资源管理器模板（ARM 模板）在 Azure HDInsight 中创建一个 [Apache Spark](./apache-spark-overview.md) 群集。 然后，你将创建一个 Jupyter Notebook 文件，并使用它针对 Apache Hive 表运行 Spark SQL 查询。 Azure HDInsight 是适用于企业的分析服务，具有托管、全面且开源的特点。 用于 HDInsight 的 Apache Spark 框架使用内存中处理功能实现快速数据分析和群集计算。 使用 Jupyter Notebook，可以与数据进行交互、将代码和 Markdown 文本结合使用，以及进行简单的可视化。
 
 如果将多个群集一起使用，则需创建一个虚拟网络；如果使用的是 Spark 群集，则还需使用 Hive Warehouse Connector。 有关详细信息，请参阅[为 Azure HDInsight 规划虚拟网络](../hdinsight-plan-virtual-network-deployment.md)和[将 Apache Spark 和 Apache Hive 与 Hive Warehouse Connector 集成](../interactive-query/apache-hive-warehouse-connector.md)。
 
@@ -35,7 +32,7 @@ ms.locfileid: "86084811"
 
 本快速入门中使用的模板来自 [Azure 快速启动模板](https://azure.microsoft.com/resources/templates/101-hdinsight-spark-linux)。
 
-:::code language="json" source="~/quickstart-templates/101-hdinsight-spark-linux/azuredeploy.json" range="1-143" highlight="51-85":::
+:::code language="json" source="~/quickstart-templates/101-hdinsight-spark-linux/azuredeploy.json":::
 
 该模板中定义了两个 Azure 资源：
 
@@ -69,11 +66,11 @@ ms.locfileid: "86084811"
 
 ## <a name="review-deployed-resources"></a>查看已部署的资源
 
-创建群集后，你会收到“部署成功”通知，通知中附有“转到资源”链接 。 “资源组”页会列出新的 HDInsight 群集以及与该群集关联的默认存储。 每个群集都有一个 [Azure 存储帐户](../hdinsight-hadoop-use-blob-storage.md)或 [Azure Data Lake Storage 帐户](../hdinsight-hadoop-use-data-lake-store.md)依赖项。 该帐户称为默认存储帐户。 HDInsight 群集及其默认存储帐户必须共存于同一个 Azure 区域中。 删除群集不会删除存储帐户。
+创建群集后，你会收到“部署成功”通知，通知中附有“转到资源”链接 。 “资源组”页会列出新的 HDInsight 群集以及与该群集关联的默认存储。 每个群集都有一个 [Azure 存储](../hdinsight-hadoop-use-blob-storage.md)、[Azure Data Lake Storage Gen1](../hdinsight-hadoop-use-data-lake-storage-gen1.md) 或 [`Azure Data Lake Storage Gen2`](../hdinsight-hadoop-use-data-lake-storage-gen2.md) 依赖项。 该帐户称为默认存储帐户。 HDInsight 群集及其默认存储帐户必须共存于同一个 Azure 区域中。 删除群集不会删除存储帐户依赖项。 该帐户称为默认存储帐户。 HDInsight 群集及其默认存储帐户必须共存于同一个 Azure 区域中。 删除群集不会删除存储帐户。
 
-## <a name="create-a-jupyter-notebook"></a>创建 Jupyter 笔记本
+## <a name="create-a-jupyter-notebook-file"></a>创建 Jupyter Notebook 文件
 
-[Jupyter Notebook](https://jupyter.org/) 是支持各种编程语言的交互式笔记本环境。 使用此笔记本，可以与数据进行交互，将代码和 markdown 文本结合使用，以及执行简单的可视化效果。
+[Jupyter Notebook](https://jupyter.org/) 是支持各种编程语言的交互式笔记本环境。 可以使用 Jupyter Notebook 文件与数据交互，将代码和 Markdown 文本相结合，并执行简单的可视化操作。
 
 1. 打开 [Azure 门户](https://portal.azure.com)。
 
@@ -87,7 +84,7 @@ ms.locfileid: "86084811"
 
 4. 选择“新建” > “PySpark”，创建笔记本 。
 
-   ![创建 Jupyter Notebook 以运行交互式 Spark SQL 查询](./media/apache-spark-jupyter-spark-sql/hdinsight-spark-create-jupyter-interactive-spark-sql-query.png "创建 Jupyter Notebook 以运行交互式 Spark SQL 查询")
+   ![创建 Jupyter Notebook 文件以运行交互式 Spark SQL 查询](./media/apache-spark-jupyter-spark-sql/hdinsight-spark-create-jupyter-interactive-spark-sql-query.png "创建 Jupyter Notebook 以运行交互式 Spark SQL 查询")
 
    新笔记本随即已创建，并以 Untitled(Untitled.pynb) 名称打开。
 
@@ -108,11 +105,11 @@ SQL（结构化查询语言）是用于查询和转换数据的最常见、最�
     SHOW TABLES
     ```
 
-    将 Jupyter Notebook 与 HDInsight 群集配合使用时，会获得一个预设 `spark` 会话，可以使用它通过 Spark SQL 来运行 Hive 查询。 `%%sql` 指示 Jupyter Notebook 使用预设 `spark` 会话运行 Hive 查询。 该查询从默认情况下所有 HDInsight 群集都带有的 Hive 表 (hivesampletable) 检索前 10 行。 第一次提交查询时，Jupyter 将为笔记本创建 Spark 应用程序。 该操作需要大约 30 秒才能完成。 Spark 应用程序准备就绪后，查询将在大约一秒钟内执行并生成结果。 输出如下所示：
+    将 Jupyter Notebook 文件与 HDInsight 群集配合使用时，会获得一个预设 `spark` 会话，可以使用它通过 Spark SQL 来运行 Hive 查询。 `%%sql` 指示 Jupyter Notebook 使用预设 `spark` 会话运行 Hive 查询。 该查询从默认情况下所有 HDInsight 群集都带有的 Hive 表 (hivesampletable) 检索前 10 行。 第一次提交查询时，Jupyter 将为笔记本创建 Spark 应用程序。 该操作需要大约 30 秒才能完成。 Spark 应用程序准备就绪后，查询将在大约一秒钟内执行并生成结果。 输出如下所示：
 
     ![HDInsight 中的 Apache Hive 查询](./media/apache-spark-jupyter-spark-sql/hdinsight-spark-get-started-hive-query.png "HDInsight 中的 Hive 查询")
 
-    每次在 Jupyter 中运行查询时，Web 浏览器窗口标题中都会显示“(繁忙)”状态和 Notebook 标题。 右上角“PySpark”文本的旁边还会出现一个实心圆。
+    每次在 Jupyter 中运行查询时，Web 浏览器窗口标题中都会显示“(繁忙)”状态和 Notebook 标题。 右上角“PySpark”  文本的旁边还会出现一个实心圆。
 
 1. 运行另一个查询，请查看 `hivesampletable` 中的数据。
 
@@ -135,7 +132,7 @@ SQL（结构化查询语言）是用于查询和转换数据的最常见、最�
 
 ![在 Azure 门户中删除 HDInsight 群集](./media/apache-spark-jupyter-spark-sql/hdinsight-azure-portal-delete-cluster.png "删除 HDInsight 群集")
 
-还可以选择资源组名称来打开“资源组”页，然后选择“删除资源组”。 通过删除资源组，可以删除 HDInsight 群集和默认存储帐户。
+还可以选择资源组名称来打开“资源组”页，然后选择“删除资源组”  。 通过删除资源组，可以删除 HDInsight 群集和默认存储帐户。
 
 ## <a name="next-steps"></a>后续步骤
 

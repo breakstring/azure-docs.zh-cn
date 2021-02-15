@@ -1,7 +1,7 @@
 ---
-title: Azure 媒体服务作业（编码和分析）错误代码 | Microsoft Docs
+title: 作业 (编码和分析) 错误代码
 description: 本文会链接到作业错误代码参考主题，并提供指向相关主题的有用链接。
-author: Juliako
+author: IngridAtMicrosoft
 manager: femila
 editor: ''
 services: media-services
@@ -10,17 +10,19 @@ ms.service: media-services
 ms.workload: media
 ms.tgt_pltfrm: na
 ms.devlang: na
-ms.topic: article
-ms.date: 04/28/2019
-ms.author: juliako
-ms.openlocfilehash: ec057d86ea39afb7eabd4e8227646eaec11c5655
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.topic: error-reference
+ms.date: 08/31/2020
+ms.author: inhenkel
+ms.openlocfilehash: ed57252a112aad8dd7d94dda95219867424dbb8f
+ms.sourcegitcommit: 4e70fd4028ff44a676f698229cb6a3d555439014
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87023001"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98954151"
 ---
 # <a name="media-services-job-error-codes"></a>媒体服务作业错误代码
+
+[!INCLUDE [media services api v3 logo](./includes/v3-hr.md)]
 
 本主题会链接到 REST 参考文档，以获取[作业](transforms-jobs-concept.md)错误代码和消息的详细说明。
 

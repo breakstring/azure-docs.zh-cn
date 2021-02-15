@@ -1,46 +1,48 @@
 ---
 title: 使用 Azure Pipelines 和模板实现 CI/CD
-description: 介绍如何在 Visual Studio 中使用 Azure 资源组部署项目在 Azure Pipelines 中设置持续集成，以部署资源管理器模板。
+description: 介绍如何使用 Azure 资源管理器模板在 Azure Pipelines 中配置持续集成。 它演示如何使用 PowerShell 脚本，或如何将文件复制到暂存位置并从该位置进行部署。
 ms.topic: conceptual
-ms.date: 10/17/2019
-ms.openlocfilehash: d8eff1c7efae319106eb8a85af7823a820a0da39
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.date: 02/05/2021
+ms.openlocfilehash: ea1ccac00f121bd81fd8b9b1f182b565fc53d214
+ms.sourcegitcommit: f377ba5ebd431e8c3579445ff588da664b00b36b
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "82084645"
+ms.lasthandoff: 02/05/2021
+ms.locfileid: "99594191"
 ---
 # <a name="integrate-arm-templates-with-azure-pipelines"></a>将 ARM 模板与 Azure Pipelines 集成
 
-Visual Studio 提供了用于创建 Azure 资源管理器 (ARM) 模板并将其部署到 Azure 订阅的 Azure 资源组项目。 可将此项目与 Azure Pipelines 集成，以实现持续集成和持续部署 (CI/CD)。
+可将 Azure 资源管理器模板（ARM 模板）与 Azure Pipelines 集成，以实现持续集成和持续部署 (CI/CD)。 本文介绍两种更高级的方法来部署具有 Azure Pipelines 的模板。
 
-可通过两种方式在 Azure Pipelines 中部署模板：
+## <a name="select-your-option"></a>选择选项
 
-* **添加用于运行 Azure PowerShell 脚本的任务**。 此选项的优势是可在整个开发生命周期中提供一致性，因为使用的脚本与 Visual Studio 项目中包含的脚本相同 (Deploy-AzureResourceGroup.ps1)。 该脚本会将项目中的生成工件暂存到资源管理器可以访问的存储帐户。 生成工件是项目中的一些项，例如链接的模板、脚本和应用程序二进制文件。 然后，该脚本将部署模板。
+在继续阅读本文之前，请考虑从管道部署 ARM 模板的不同选项。
 
-* **添加用于复制和部署任务的任务**。 此选项可以方便地取代项目脚本。 在管道中配置两个任务。 一个任务暂存生成工件，另一个任务部署模板。
+* **使用 ARM 模板部署任务**。 此选项是最简单的选项。 如果要直接从存储库部署模板，则可以使用此方法。 此选项不会在本文中介绍，但会在 [与 Azure Pipelines 的 ARM 模板持续集成](deployment-tutorial-pipeline.md)中介绍。 其中介绍了如何使用 [ARM 模板部署任务](https://github.com/microsoft/azure-pipelines-tasks/blob/master/Tasks/AzureResourceManagerTemplateDeploymentV3/README.md) 从 GitHub 存储库部署模板。
 
-本文介绍了这两种方法。
+* **添加用于运行 Azure PowerShell 脚本的任务**。 此选项的优势是可在整个开发生命周期中提供一致性，因为你可以使用运行本地测试时所用的同一脚本。 脚本将部署模板，但也可以执行其他操作，例如，获取要用作参数的值。 本文显示了此选项。 请参阅 [Azure PowerShell 任务](#azure-powershell-task)。
+
+   Visual Studio 提供包含 PowerShell 脚本的 [Azure 资源组项目](create-visual-studio-deployment-project.md)。 该脚本会将项目中的生成工件暂存到资源管理器可以访问的存储帐户。 生成工件是项目中的一些项，例如链接的模板、脚本和应用程序二进制文件。 如果要继续使用项目中的脚本，请使用本文中显示的 PowerShell 脚本任务。
+
+* **添加用于复制和部署任务的任务**。 此选项可以方便地取代项目脚本。 在管道中配置两个任务。 一个任务将生成工件暂存到可访问的位置。 其他任务从该位置部署模板。 本文显示了此选项。 请参阅 [复制和部署任务](#copy-and-deploy-tasks)。
 
 ## <a name="prepare-your-project"></a>准备项目
 
-本文假设 Visual Studio 项目和 Azure DevOps 组织已准备好创建管道。 以下步骤说明如何确保准备就绪：
+本文假设 ARM 模板和 Azure DevOps 组织已准备好创建管道。 以下步骤说明如何确保准备就绪：
 
-* 你已有一个 Azure DevOps 组织。 如果没有，请[免费创建一个](/azure/devops/pipelines/get-started/pipelines-sign-up?view=azure-devops)。 如果你的团队已创建了一个 Azure DevOps 组织，请确保你是要使用的 Azure DevOps 项目的管理员。
+* 你已有一个 Azure DevOps 组织。 如果没有，请[免费创建一个](/azure/devops/pipelines/get-started/pipelines-sign-up)。 如果你的团队已创建了一个 Azure DevOps 组织，请确保你是要使用的 Azure DevOps 项目的管理员。
 
-* 已配置与 Azure 订阅之间的[服务连接](/azure/devops/pipelines/library/connect-to-azure?view=azure-devops)。 管道中的任务将以服务主体的身份执行。 有关创建连接的步骤，请参阅[创建 DevOps 项目](deployment-tutorial-pipeline.md#create-a-devops-project)。
+* 已配置与 Azure 订阅之间的[服务连接](/azure/devops/pipelines/library/connect-to-azure)。 管道中的任务将以服务主体的身份执行。 有关创建连接的步骤，请参阅[创建 DevOps 项目](deployment-tutorial-pipeline.md#create-a-devops-project)。
 
-* 已从 **Azure 资源组**初学者模板创建了一个 Visual Studio 项目。 有关创建此类项目的信息，请参阅[通过 Visual Studio 创建和部署 Azure 资源组](create-visual-studio-deployment-project.md)。
-
-* Visual Studio 项目[已连接到 Azure DevOps 项目](/azure/devops/repos/git/share-your-code-in-git-vs-2017?view=azure-devops)。
+* 你有一个用于定义项目基础结构的 [ARM 模板](quickstart-create-templates-use-visual-studio-code.md)。
 
 ## <a name="create-pipeline"></a>创建管道
 
-1. 如果事先尚未添加管道，需要创建一个新管道。 在 Azure DevOps 组织中，选择“管道”和“新建管道”。**** ****
+1. 如果事先尚未添加管道，需要创建一个新管道。 在 Azure DevOps 组织中，选择“管道”和“新建管道”。 
 
    ![添加新管道](./media/add-template-to-azure-pipelines/new-pipeline.png)
 
-1. 指定代码的存储位置。 在下图中，选择的是“Azure Repos Git”。****
+1. 指定代码的存储位置。 在下图中，选择的是“Azure Repos Git”。
 
    ![选择代码源](./media/add-template-to-azure-pipelines/select-source.png)
 
@@ -48,7 +50,7 @@ Visual Studio 提供了用于创建 Azure 资源管理器 (ARM) 模板并将其�
 
    ![选择存储库](./media/add-template-to-azure-pipelines/select-repo.png)
 
-1. 选择要创建的管道类型。 可以选择“初学者管道”。****
+1. 选择要创建的管道类型。 可以选择“初学者管道”。
 
    ![选择管道](./media/add-template-to-azure-pipelines/select-pipeline.png)
 
@@ -56,27 +58,32 @@ Visual Studio 提供了用于创建 Azure 资源管理器 (ARM) 模板并将其�
 
 ## <a name="azure-powershell-task"></a>Azure PowerShell 任务
 
-本部分介绍如何使用一个在项目中运行 PowerShell 脚本的任务来配置持续部署。 以下 YAML 文件将创建 [Azure PowerShell 任务](/azure/devops/pipelines/tasks/deploy/azure-powershell?view=azure-devops)：
+本部分介绍如何使用一个在项目中运行 PowerShell 脚本的任务来配置持续部署。 如果需要部署模板的 PowerShell 脚本，请参阅 [Deploy-AzTemplate.ps1](https://github.com/Azure/azure-quickstart-templates/blob/master/Deploy-AzTemplate.ps1) 或 [Deploy-AzureResourceGroup.ps1](https://github.com/Azure/azure-quickstart-templates/blob/master/Deploy-AzureResourceGroup.ps1)。
 
-```yaml
+以下 YAML 文件将创建 [Azure PowerShell 任务](/azure/devops/pipelines/tasks/deploy/azure-powershell)：
+
+```yml
+trigger:
+- master
+
 pool:
-  name: Hosted Windows 2019 with VS2019
-  demands: azureps
+  vmImage: 'ubuntu-latest'
 
 steps:
-- task: AzurePowerShell@3
+- task: AzurePowerShell@5
   inputs:
-    azureSubscription: 'demo-deploy-sp'
-    ScriptPath: 'AzureResourceGroupDemo/Deploy-AzureResourceGroup.ps1'
-    ScriptArguments: -ResourceGroupName 'demogroup' -ResourceGroupLocation 'centralus'
-    azurePowerShellVersion: LatestVersion
+    azureSubscription: 'script-connection'
+    ScriptType: 'FilePath'
+    ScriptPath: './Deploy-AzTemplate.ps1'
+    ScriptArguments: -Location 'centralus' -ResourceGroupName 'demogroup' -TemplateFile templates\mainTemplate.json
+    azurePowerShellVersion: 'LatestVersion'
 ```
 
-将该任务设置为 `AzurePowerShell@3` 时，管道将使用 AzureRM 模块中的命令对连接进行身份验证。 默认情况下，Visual Studio 项目中的 PowerShell 脚本使用 AzureRM 模块。 如果已将脚本更新为使用 [Az 模块](/powershell/azure/new-azureps-module-az)，请将任务设置为 `AzurePowerShell@4`。
+将任务设置为 `AzurePowerShell@5` 时，管道使用 [Az 模块](/powershell/azure/new-azureps-module-az)。 如果要在脚本中使用 AzureRM 模块，请将任务设置为 `AzurePowerShell@3`。
 
 ```yaml
 steps:
-- task: AzurePowerShell@4
+- task: AzurePowerShell@3
 ```
 
 对于 `azureSubscription`，请提供创建的服务连接的名称。
@@ -92,69 +99,45 @@ inputs:
 ScriptPath: '<your-relative-path>/<script-file-name>.ps1'
 ```
 
-如果不需要暂存生成工件，则只需传递用于部署的资源组的名称和位置。 如果该资源组尚不存在，Visual Studio 脚本将创建该资源组。
+在 `ScriptArguments` 中，提供脚本所需的任何参数。 以下示例演示脚本的一些参数，但你需要为脚本自定义参数。
 
 ```yaml
-ScriptArguments: -ResourceGroupName '<resource-group-name>' -ResourceGroupLocation '<location>'
+ScriptArguments: -Location 'centralus' -ResourceGroupName 'demogroup' -TemplateFile templates\mainTemplate.json
 ```
 
-如果需要将生成工件暂存到现有存储帐户，请使用：
+选择“保存”时，生成管道将自动运行。 返回生成管道的摘要并观察状态。
 
-```yaml
-ScriptArguments: -ResourceGroupName '<resource-group-name>' -ResourceGroupLocation '<location>' -UploadArtifacts -ArtifactStagingDirectory '$(Build.StagingDirectory)' -StorageAccountName '<your-storage-account>'
-```
-
-了解如何创建任务后，接下来让我们完成编辑管道的步骤。
-
-1. 打开管道，并将内容替换为 YAML：
-
-   ```yaml
-   pool:
-     name: Hosted Windows 2019 with VS2019
-     demands: azureps
-
-   steps:
-   - task: AzurePowerShell@3
-     inputs:
-       azureSubscription: 'demo-deploy-sp'
-       ScriptPath: 'AzureResourceGroupDemo/Deploy-AzureResourceGroup.ps1'
-       ScriptArguments: -ResourceGroupName 'demogroup' -ResourceGroupLocation 'centralus' -UploadArtifacts -ArtifactStagingDirectory '$(Build.StagingDirectory)' -StorageAccountName 'stage3a4176e058d34bb88cc'
-       azurePowerShellVersion: LatestVersion
-   ```
-
-1. 选择“保存” ****。
-
-   ![保存管道](./media/add-template-to-azure-pipelines/save-pipeline.png)
-
-1. 提供要提交的消息，并直接提交到 **master**。
-
-1. 选择“保存”时，生成管道将自动运行。**** 返回生成管道的摘要并观察状态。
-
-   ![查看结果](./media/add-template-to-azure-pipelines/view-results.png)
+![查看结果](./media/add-template-to-azure-pipelines/view-results.png)
 
 可以选择当前正在运行的管道来查看有关任务的详细信息。 管道运行完成后，你将看到每个步骤的结果。
 
 ## <a name="copy-and-deploy-tasks"></a>复制并部署任务
 
-本部分介绍如何配置持续部署：使用两个任务来暂存生成工件并部署模板。
+本部分介绍如何使用两个任务来配置持续部署。 第一个任务将生成工件暂存到存储帐户，第二个任务部署模板。
 
-以下 YAML 显示了 [Azure 文件复制任务](/azure/devops/pipelines/tasks/deploy/azure-file-copy?view=azure-devops)：
+若要将文件复制到存储帐户，必须为服务连接的服务主体分配存储 blob 数据参与者或存储 blob 数据所有者角色。 有关详细信息，请参阅 [AzCopy 入门](../../storage/common/storage-use-azcopy-v10.md)。
 
-```yaml
-- task: AzureFileCopy@3
-  displayName: 'Stage files'
+以下 YAML 显示了 [Azure 文件复制任务](/azure/devops/pipelines/tasks/deploy/azure-file-copy)。
+
+```yml
+trigger:
+- master
+
+pool:
+  vmImage: 'windows-latest'
+
+steps:
+- task: AzureFileCopy@4
   inputs:
-    SourcePath: 'AzureResourceGroup1'
-    azureSubscription: 'demo-deploy-sp'
+    SourcePath: 'templates'
+    azureSubscription: 'copy-connection'
     Destination: 'AzureBlob'
-    storage: 'stage3a4176e058d34bb88cc'
-    ContainerName: 'democontainer'
-    outputStorageUri: 'artifactsLocation'
-    outputStorageContainerSasToken: 'artifactsLocationSasToken'
-    sasTokenTimeOutInMinutes: '240'
+    storage: 'demostorage'
+    ContainerName: 'projecttemplates'
+  name: AzureFileCopy
 ```
 
-需要根据环境修改此任务的多个部分。 `SourcePath` 指示生成工件相对于管道文件的位置。 在此示例中，文件位于名为 `AzureResourceGroup1`（也是项目名称）的文件夹中。
+需要根据环境修改此任务的多个部分。 `SourcePath` 指示生成工件相对于管道文件的位置。
 
 ```yaml
 SourcePath: '<path-to-artifacts>'
@@ -173,92 +156,82 @@ storage: '<your-storage-account-name>'
 ContainerName: '<container-name>'
 ```
 
+创建复制文件任务后，可以添加该任务来部署暂存模板。
+
 以下 YAML 显示了 [Azure 资源管理器模板部署任务](https://github.com/microsoft/azure-pipelines-tasks/blob/master/Tasks/AzureResourceManagerTemplateDeploymentV3/README.md)：
 
 ```yaml
-- task: AzureResourceGroupDeployment@2
-  displayName: 'Deploy template'
+- task: AzureResourceManagerTemplateDeployment@3
   inputs:
     deploymentScope: 'Resource Group'
-    ConnectedServiceName: 'demo-deploy-sp'
-    subscriptionName: '01234567-89AB-CDEF-0123-4567890ABCDEF'
+    azureResourceManagerConnection: 'copy-connection'
+    subscriptionId: '00000000-0000-0000-0000-000000000000'
     action: 'Create Or Update Resource Group'
     resourceGroupName: 'demogroup'
-    location: 'Central US'
+    location: 'West US'
     templateLocation: 'URL of the file'
-    csmFileLink: '$(artifactsLocation)WebSite.json$(artifactsLocationSasToken)'
-    csmParametersFileLink: '$(artifactsLocation)WebSite.parameters.json$(artifactsLocationSasToken)'
-    overrideParameters: '-_artifactsLocation $(artifactsLocation) -_artifactsLocationSasToken "$(artifactsLocationSasToken)"'
+    csmFileLink: '$(AzureFileCopy.StorageContainerUri)templates/mainTemplate.json$(AzureFileCopy.StorageContainerSasToken)'
+    csmParametersFileLink: '$(AzureFileCopy.StorageContainerUri)templates/mainTemplate.parameters.json$(AzureFileCopy.StorageContainerSasToken)'
     deploymentMode: 'Incremental'
+    deploymentName: 'deploy1'
 ```
 
-需要根据环境修改此任务的多个部分。
+此任务有几个部分需要更详细地评审。
 
-- `deploymentScope`：从以下选项中选择部署范围：`Subscription`、`Management Group` 和 `Resource Group`。 在本演练中使用**资源组**。 若要详细了解范围，请参阅[部署范围](deploy-rest.md#deployment-scope)。
+- `deploymentScope`：从以下选项中选择部署范围：`Management Group`、`Subscription` 和 `Resource Group`。 若要详细了解范围，请参阅[部署范围](deploy-rest.md#deployment-scope)。
 
-- `ConnectedServiceName`：提供创建的服务连接的名称。
+- `azureResourceManagerConnection`：提供创建的服务连接的名称。
 
-    ```yaml
-    ConnectedServiceName: '<your-connection-name>'
-    ```
-
-- `subscriptionName`：提供目标订阅 ID。 此属性仅适用于资源组部署范围和订阅部署范围。
+- `subscriptionId`：提供目标订阅 ID。 此属性仅适用于资源组部署范围和订阅部署范围。
 
 - `resourceGroupName` 和 `location`：提供要部署到的资源组的名称和位置。 如果该资源组不存在，任务将创建该资源组。
 
-    ```yaml
-    resourceGroupName: '<resource-group-name>'
-    location: '<location>'
-    ```
-
-部署任务链接到名为 `WebSite.json` 的模板以及名为 WebSite.parameters.json 的参数文件。 请使用模板和参数文件的名称。
-
-了解如何创建任务后，接下来让我们完成编辑管道的步骤。
-
-1. 打开管道，并将内容替换为 YAML：
-
-   ```yaml
-   pool:
-     name: Hosted Windows 2019 with VS2019
-
-   steps:
-   - task: AzureFileCopy@3
-     displayName: 'Stage files'
-     inputs:
-       SourcePath: 'AzureResourceGroup1'
-       azureSubscription: 'demo-deploy-sp'
-       Destination: 'AzureBlob'
-       storage: 'stage3a4176e058d34bb88cc'
-       ContainerName: 'democontainer'
-       outputStorageUri: 'artifactsLocation'
-       outputStorageContainerSasToken: 'artifactsLocationSasToken'
-       sasTokenTimeOutInMinutes: '240'
-    - task: AzureResourceGroupDeployment@2
-      displayName: 'Deploy template'
-      inputs:
-        deploymentScope: 'Resource Group'
-        ConnectedServiceName: 'demo-deploy-sp'
-        subscriptionName: '01234567-89AB-CDEF-0123-4567890ABCDEF'
-        action: 'Create Or Update Resource Group'
-        resourceGroupName: 'demogroup'
-        location: 'Central US'
-        templateLocation: 'URL of the file'
-        csmFileLink: '$(artifactsLocation)WebSite.json$(artifactsLocationSasToken)'
-        csmParametersFileLink: '$(artifactsLocation)WebSite.parameters.json$(artifactsLocationSasToken)'
-        overrideParameters: '-_artifactsLocation $(artifactsLocation) -_artifactsLocationSasToken "$(artifactsLocationSasToken)"'
-        deploymentMode: 'Incremental'
+   ```yml
+   resourceGroupName: '<resource-group-name>'
+   location: '<location>'
    ```
 
-1. 选择“保存” ****。
+- `csmFileLink`：提供暂存模板的链接。 设置该值时，请使用从文件复制任务返回的变量。 以下示例链接到名为 mainTemplate.json 的模板。 包含名为 templates 的文件夹，因为文件复制任务将文件复制到该文件夹中。 在管道中，提供模板的路径和模板的名称。
 
-1. 提供要提交的消息，并直接提交到 **master**。
+   ```yml
+   csmFileLink: '$(AzureFileCopy.StorageContainerUri)templates/mainTemplate.json$(AzureFileCopy.StorageContainerSasToken)'
+   ```
 
-1. 选择“保存”时，生成管道将自动运行。**** 返回生成管道的摘要并观察状态。
+管道如下所示：
 
-   ![查看结果](./media/add-template-to-azure-pipelines/view-results.png)
+```yml
+trigger:
+- master
 
-可以选择当前正在运行的管道来查看有关任务的详细信息。 管道运行完成后，你将看到每个步骤的结果。
+pool:
+  vmImage: 'windows-latest'
+
+steps:
+- task: AzureFileCopy@4
+  inputs:
+    SourcePath: 'templates'
+    azureSubscription: 'copy-connection'
+    Destination: 'AzureBlob'
+    storage: 'demostorage'
+    ContainerName: 'projecttemplates'
+  name: AzureFileCopy
+- task: AzureResourceManagerTemplateDeployment@3
+  inputs:
+    deploymentScope: 'Resource Group'
+    azureResourceManagerConnection: 'copy-connection'
+    subscriptionId: '00000000-0000-0000-0000-000000000000'
+    action: 'Create Or Update Resource Group'
+    resourceGroupName: 'demogroup'
+    location: 'West US'
+    templateLocation: 'URL of the file'
+    csmFileLink: '$(AzureFileCopy.StorageContainerUri)templates/mainTemplate.json$(AzureFileCopy.StorageContainerSasToken)'
+    csmParametersFileLink: '$(AzureFileCopy.StorageContainerUri)templates/mainTemplate.parameters.json$(AzureFileCopy.StorageContainerSasToken)'
+    deploymentMode: 'Incremental'
+    deploymentName: 'deploy1'
+```
+
+选择“保存”时，生成管道将自动运行。 返回生成管道的摘要并观察状态。
 
 ## <a name="next-steps"></a>后续步骤
 
-有关将 Azure Pipelines 与 ARM 模板配合使用的分步过程，请参阅[教程：使用 Azure Pipelines 持续集成 Azure 资源管理器模板](deployment-tutorial-pipeline.md)。
+若要了解如何通过 GitHub Actions 使用 ARM 模板，请参阅[使用 GitHub Actions 部署 Azure 资源管理器模板](deploy-github-actions.md)。

@@ -1,6 +1,6 @@
 ---
-title: Microsoft 标识平台 Windows 桌面快速入门
-description: 了解 Windows 桌面 .NET (XAML) 应用程序如何获取访问令牌并调用受 Microsoft 标识平台终结点保护的 API
+title: 快速入门：在通用 Windows 平台桌面应用中让用户登录并调用 Microsoft Graph | Azure
+description: 本快速入门介绍 Windows 桌面 .NET (XAML) 应用程序如何获取访问令牌并调用受 Microsoft 标识平台保护的 API。
 services: active-directory
 author: jmprieur
 manager: CelesteDG
@@ -11,18 +11,24 @@ ms.workload: identity
 ms.date: 12/12/2019
 ms.author: jmprieur
 ms.custom: aaddev, identityplatformtop40
-ms.openlocfilehash: ad45f4c57c336b30f09684c250539bd4452a10a8
-ms.sourcegitcommit: b8702065338fc1ed81bfed082650b5b58234a702
+ms.openlocfilehash: b54438441b0e34cccda7fbec37dc1d1740101e9e
+ms.sourcegitcommit: 5cdd0b378d6377b98af71ec8e886098a504f7c33
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/11/2020
-ms.locfileid: "88114551"
+ms.lasthandoff: 01/25/2021
+ms.locfileid: "98754005"
 ---
 # <a name="quickstart-acquire-a-token-and-call-microsoft-graph-api-from-a-windows-desktop-app"></a>快速入门：获取令牌并从 Windows 桌面应用中调用 Microsoft Graph API
 
-本快速入门介绍如何编写 Windows 桌面.NET (WPF) 应用程序，该应用程序能够登录个人、工作和学校帐户，获取访问令牌以及调用 Microsoft Graph API。 （有关说明，请参阅[示例工作原理](#how-the-sample-works)。）
+在本快速入门中，你将下载并运行一个代码示例，该示例演示 Windows desktop .NET (WPF) 应用程序如何让用户登录并获取访问令牌来调用 Microsoft Graph API。 
+
+有关说明，请参阅[示例工作原理](#how-the-sample-works)。
 
 > [!div renderon="docs"]
+> ## <a name="prerequisites"></a>先决条件
+>
+> * 安装了[通用 Windows 平台开发](/windows/uwp/get-started/get-set-up)工作负荷的 [Visual Studio 2019](https://visualstudio.microsoft.com/vs/)
+>
 > ## <a name="register-and-download-your-quickstart-app"></a>注册并下载快速入门应用
 > 可以使用两个选项来启动快速入门应用程序：
 > * [快速][选项 1：注册并自动配置应用，然后下载代码示例](#option-1-register-and-auto-configure-your-app-and-then-download-your-code-sample)
@@ -30,7 +36,7 @@ ms.locfileid: "88114551"
 >
 > ### <a name="option-1-register-and-auto-configure-your-app-and-then-download-your-code-sample"></a>选项 1：注册并自动配置应用，然后下载代码示例
 >
-> 1. 转到新的 [Azure 门户 - 应用注册](https://portal.azure.com/#blade/Microsoft_AAD_RegisteredApps/applicationsListBlade/quickStartType/WinDesktopQuickstartPage/sourceType/docs)。
+> 1. 转到 <a href="https://portal.azure.com/#blade/Microsoft_AAD_RegisteredApps/applicationsListBlade/quickStartType/WinDesktopQuickstartPage/sourceType/docs" target="_blank">Azure 门户 - 应用注册<span class="docon docon-navigate-external x-hidden-focus"></span></a>快速入门体验。
 > 1. 输入应用程序的名称并选择“注册”。
 > 1. 遵照说明下载内容，并只需单击一下自动配置新应用程序。
 >
@@ -39,16 +45,17 @@ ms.locfileid: "88114551"
 > #### <a name="step-1-register-your-application"></a>步骤 1：注册应用程序
 > 若要手动注册应用程序并将应用的注册信息添加到解决方案，请执行以下步骤：
 >
-> 1. 使用工作或学校帐户或个人 Microsoft 帐户登录到 [Azure 门户](https://portal.azure.com)。
-> 1. 如果你的帐户有权访问多个租户，请在右上角选择该帐户，并将门户会话设置为所需的 Azure AD 租户。
-> 1. 在 Azure 门户中转到 Azure Active Directory 的[应用注册](https://aka.ms/MobileAppReg)边栏选项卡。
-> 1. 选择“新注册”。
->      - 在“名称”部分输入一个会显示给应用用户的有意义的应用程序名称，例如 `Win-App-calling-MsGraph`。
->      - 在“支持的帐户类型”部分，选择“任何组织目录中的帐户和个人 Microsoft 帐户(例如 Skype、Xbox、Outlook.com)”。 
->      - 选择“注册”以创建应用程序。
-> 1. 在应用的页面列表中，选择“身份验证”。
-> 1. 在“重定向 URI” | “建议用于公共客户端(移动、桌面)的重定向 URI”部分中，使用 **https://login.microsoftonline.com/common/oauth2/nativeclient** 。
-> 1. 选择“保存”。
+> 1. 登录到 <a href="https://portal.azure.com/" target="_blank">Azure 门户<span class="docon docon-navigate-external x-hidden-focus"></span></a>。
+> 1. 如果有权访问多个租户，请使用顶部菜单中的“目录 + 订阅”筛选器:::image type="icon" source="./media/common/portal-directory-subscription-filter.png" border="false":::，选择要在其中注册应用程序的租户。
+> 1. 搜索并选择“Azure Active Directory”  。
+> 1. 在“管理”下，选择“应用注册” > “新建注册”  。
+> 1. 输入应用程序的名称（例如 `Win-App-calling-MsGraph`）。 应用的用户可能会看到此名称，你稍后可对其进行更改。
+> 1. 在“支持的帐户类型”部分，选择“任何组织目录中的帐户和个人 Microsoft 帐户(例如 Skype、Xbox、Outlook.com)”。 
+> 1. 选择“注册”以创建应用程序。
+> 1. 在“管理”下，选择“身份验证”。 
+> 1. 选择“添加平台” > “移动和桌面应用程序” 。
+> 1. 在“重定向 URI”部分中，选择 `https://login.microsoftonline.com/common/oauth2/nativeclient`。
+> 1. 选择“配置” 。
 
 > [!div class="sxs-lookup" renderon="portal"]
 > #### <a name="step-1-configure-your-application-in-azure-portal"></a>步骤 1：在 Azure 门户中配置应用程序
@@ -66,7 +73,7 @@ ms.locfileid: "88114551"
 
 > [!div class="sxs-lookup" renderon="portal"]
 > 使用 Visual Studio 2019 运行项目。
-> [!div renderon="portal" id="autoupdate" class="nextstepaction"]
+> [!div renderon="portal" id="autoupdate" class="sxs-lookup nextstepaction"]
 > [下载代码示例](https://github.com/Azure-Samples/active-directory-dotnet-desktop-msgraph-v2/archive/msal3x.zip)
 
 > [!div class="sxs-lookup" renderon="portal"]
@@ -89,9 +96,9 @@ ms.locfileid: "88114551"
 >    ```
 >
 > 其中：
-> - `Enter_the_Application_Id_here` - 是已注册应用程序的**应用程序（客户端）ID**。
+> - `Enter_the_Application_Id_here` - 是已注册应用程序的 **应用程序（客户端）ID**。
 > - `Enter_the_Tenant_Info_Here` - 设置为以下选项之一：
->   - 如果应用程序支持“此组织目录中的帐户”，请将该值替换为**租户 ID** 或**租户名称**（例如 contoso.microsoft.com）
+>   - 如果应用程序支持“此组织目录中的帐户”，请将该值替换为 **租户 ID** 或 **租户名称**（例如 contoso.microsoft.com）
 >   - 如果应用程序支持“任何组织目录中的帐户”，请将该值替换为`organizations`
 >   - 如果应用程序支持“任何组织目录中的帐户和个人 Microsoft 帐户”，请将该值替换为`common`
 >
@@ -130,7 +137,7 @@ PublicClientApplicationBuilder.Create(ClientId)
 
 > |其中： | 说明 |
 > |---------|---------|
-> | `ClientId` | 是在 Azure 门户中注册的应用程序的**应用程序(客户端) ID**。 可以在 Azure 门户的应用的“概览”页中找到此值。 |
+> | `ClientId` | 是在 Azure 门户中注册的应用程序的 **应用程序(客户端) ID**。 可以在 Azure 门户的应用的“概览”页中找到此值。 |
 
 ### <a name="requesting-tokens"></a>请求令牌
 
@@ -138,7 +145,7 @@ MSAL 有两种获取令牌的方法：`AcquireTokenInteractive` 和 `AcquireToke
 
 #### <a name="get-a-user-token-interactively"></a>以交互方式获取用户令牌
 
-某些情况下需要强制用户通过弹出窗口与 Microsoft 标识平台终结点进行交互，以验证其凭据或进行许可。 示例包括：
+在某些情况下，需要强制用户通过弹出窗口与 Microsoft 标识平台进行交互，以验证其凭据或授予许可。 示例包括：
 
 - 用户首次登录应用程序
 - 由于密码已过期，用户可能需要重新输入凭据的情况

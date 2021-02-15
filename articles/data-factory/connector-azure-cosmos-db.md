@@ -1,22 +1,18 @@
 ---
 title: 在 Azure Cosmos DB (SQL API) 中复制和转换数据
 description: 了解如何使用数据工厂向/从 Azure Cosmos DB (SQL API) 复制数据，以及如何在 Azure Cosmos DB (SQL API) 中转换数据。
-services: data-factory, cosmosdb
 ms.author: jingwang
 author: linda33wj
-manager: shwang
-ms.reviewer: douglasl
-ms.service: multiple
-ms.workload: data-services
+ms.service: data-factory
 ms.topic: conceptual
 ms.custom: seo-lt-2019
-ms.date: 12/11/2019
-ms.openlocfilehash: be6dbb74883f12498c5c011e35fa955509ff627c
-ms.sourcegitcommit: 1a0dfa54116aa036af86bd95dcf322307cfb3f83
+ms.date: 01/29/2021
+ms.openlocfilehash: 2a084683d99117697657ba8900fcd6534b4a3e95
+ms.sourcegitcommit: d4734bc680ea221ea80fdea67859d6d32241aefc
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/10/2020
-ms.locfileid: "88042762"
+ms.lasthandoff: 02/14/2021
+ms.locfileid: "100379941"
 ---
 # <a name="copy-and-transform-data-in-azure-cosmos-db-sql-api-by-using-azure-data-factory"></a>使用 Azure 数据工厂在 Azure Cosmos DB (SQL API) 中复制和转换数据
 
@@ -37,13 +33,13 @@ ms.locfileid: "88042762"
 
 以下活动支持此 Azure Cosmos DB (SQL API) 连接器：
 
-- 包含[支持的源/接收器矩阵](copy-activity-overview.md)的 [Copy 活动](copy-activity-overview.md)
+- 带有[支持的源或接收器矩阵](copy-activity-overview.md)的[复制活动](copy-activity-overview.md)
 - [映射数据流](concepts-data-flow-overview.md)
 - [Lookup 活动](control-flow-lookup-activity.md)
 
 对于复制活动，此 Azure Cosmos DB(SQL API) 连接器支持：
 
-- 在 Azure Cosmos DB [SQL API](https://docs.microsoft.com/azure/cosmos-db/documentdb-introduction) 中复制和粘贴数据。
+- 在 Azure Cosmos DB [SQL API](../cosmos-db/introduction.md) 中复制和粘贴数据。
 - 以 **insert** 或 **upsert** 的形式写入 Azure Cosmos DB。
 - 按原样导入和导出 JSON 文档，或在表格数据集中复制或粘贴数据。 示例包括 SQL 数据库和 CSV 文件。 若要在 JSON 文件或另一个 Azure Cosmos DB 集合中按原样复制或粘贴文档，请参阅[导入和导出 JSON 文档](#import-and-export-json-documents)。
 
@@ -95,13 +91,13 @@ Azure Cosmos DB (SQL API) 链接服务支持以下属性：
         "type": "CosmosDb",
         "typeProperties": {
             "connectionString": "AccountEndpoint=<EndpointUrl>;Database=<Database>",
-            "accountKey": { 
-                "type": "AzureKeyVaultSecret", 
-                "store": { 
-                    "referenceName": "<Azure Key Vault linked service name>", 
-                    "type": "LinkedServiceReference" 
-                }, 
-                "secretName": "<secretName>" 
+            "accountKey": { 
+                "type": "AzureKeyVaultSecret", 
+                "store": { 
+                    "referenceName": "<Azure Key Vault linked service name>", 
+                    "type": "LinkedServiceReference" 
+                }, 
+                "secretName": "<secretName>" 
             }
         },
         "connectVia": {
@@ -123,7 +119,7 @@ Azure Cosmos DB (SQL API) 数据集支持以下属性：
 | type | 数据集的 **type** 属性必须设置为 **CosmosDbSqlApiCollection**。 |是 |
 | collectionName |Azure Cosmos DB 文档集合的名称。 |是 |
 
-如果使用的是 "DocumentDbCollection" 类型的数据集，则它仍受支持，以实现复制和查找活动的后向兼容性，但不支持数据流。 建议你今后使用新模型。
+如果你使用“DocumentDbCollection”类型的数据集，则复制和查找活动仍按原样支持它以提供后向兼容性，但数据流不支持它。 建议你今后使用新模型。
 
 **示例**
 
@@ -160,6 +156,7 @@ Azure Cosmos DB (SQL API) 数据集支持以下属性：
 | query |指定要读取数据的 Azure Cosmos DB 查询。<br/><br/>示例：<br /> `SELECT c.BusinessEntityID, c.Name.First AS FirstName, c.Name.Middle AS MiddleName, c.Name.Last AS LastName, c.Suffix, c.EmailPromotion FROM c WHERE c.ModifiedDate > \"2009-01-01T00:00:00\"` |否 <br/><br/>如果未指定，则执行此 SQL 语句：`select <columns defined in structure> from mycollection` |
 | preferredRegions | 从 Cosmos DB 检索数据时要连接到的区域的首选列表。 | 否 |
 | pageSize | 查询结果的每页文档数。 默认值为“-1”，表示使用服务端动态页大小，最大为 1000。 | 否 |
+| detectDatetime | 是否从文档中的字符串值检测日期时间。 允许的值是：true（默认）、false。 | 否 |
 
 如果使用“DocumentDbCollectionSource”类型的源，则仍按原样提供支持以实现后向兼容性。 建议今后使用新模型，新模型提供了更丰富的功能来从 Cosmos DB 复制数据。
 
@@ -210,14 +207,14 @@ Azure Cosmos DB (SQL API) 数据集支持以下属性：
 |:--- |:--- |:--- |
 | type | 复制活动接收器的 **type** 属性必须设置为 **CosmosDbSqlApiSink**。 |是 |
 | writeBehavior |描述如何将数据写入 Azure Cosmos DB。 允许的值为 **insert** 和 **upsert**。<br/><br/>**upsert** 的行为是，如果已存在具有相同 ID 的文档，则替换该文档；否则将插入该文档。<br /><br />**注意**：如果未在原始文档中指定 ID，或未通过列映射指定 ID，则数据工厂会自动为文档生成 ID。 这表示必须先确保文档有 ID，才能让 **upsert** 按预期工作。 |否<br />（默认值为 **insert**） |
-| writeBatchSize | 数据工厂使用 [Azure Cosmos DB 批量执行程序库](https://github.com/Azure/azure-cosmosdb-bulkexecutor-dotnet-getting-started)将数据写入 Azure Cosmos DB。 **writeBatchSize** 属性控制 ADF 提供给库的文档的大小。 可尝试增加 writeBatchSize 的值以提高性能，并在文档大小较大时降低该值 - 请参阅下面的提示****。 |否<br /> (默认值为**10000**)  |
+| writeBatchSize | 数据工厂使用 [Azure Cosmos DB 批量执行程序库](https://github.com/Azure/azure-cosmosdb-bulkexecutor-dotnet-getting-started)将数据写入 Azure Cosmos DB。 **writeBatchSize** 属性控制 ADF 提供给库的文档的大小。 可尝试增加 writeBatchSize 的值以提高性能，并在文档大小较大时降低该值 - 请参阅下面的提示。 |否<br />（默认值为 **10,000**） |
 | disableMetricsCollection | 数据工厂收集指标（如 Cosmos DB RU），以获取复制性能优化和建议。 如果你担心此行为，请指定 `true` 将其关闭。 | 否（默认值为 `false`） |
 
 >[!TIP]
 >若要按原样导入 JSON 文档，请参阅[导入或导出 JSON 文档](#import-and-export-json-documents)部分；若要从表格形数据复制，请参阅[从关系数据库迁移到 Cosmos DB](#migrate-from-relational-database-to-cosmos-db)。
 
 >[!TIP]
->Cosmos DB 将单个请求的大小限制为 2MB。 公式为请求大小 = 单个文档大小 * 写入批大小。 若出现“请求太大。”错误，请减少复制接收器配置中的 `writeBatchSize` 值********。
+>Cosmos DB 将单个请求的大小限制为 2MB。 公式为请求大小 = 单个文档大小 * 写入批大小。 若出现“请求太大。”错误，请减少复制接收器配置中的 `writeBatchSize` 值。
 
 如果使用“DocumentDbCollectionSink”类型的源，则仍按原样提供支持以实现后向兼容性。 建议今后使用新模型，新模型提供了更丰富的功能来从 Cosmos DB 复制数据。
 
@@ -259,51 +256,54 @@ Azure Cosmos DB (SQL API) 数据集支持以下属性：
 
 ## <a name="mapping-data-flow-properties"></a>映射数据流属性
 
-在映射数据流中转换数据时，可以在 Cosmos DB 中对集合进行读取和写入。 有关详细信息，请参阅映射数据流中的[源转换](data-flow-source.md)和[接收器转换](data-flow-sink.md)。
+在映射数据流中转换数据时，可以在 Cosmos DB 的集合中读取和写入数据。 有关详细信息，请参阅映射数据流中的[源转换](data-flow-source.md)和[接收器转换](data-flow-sink.md)。
 
 ### <a name="source-transformation"></a>源转换
 
-源转换的 "**源选项**" 选项卡中提供了特定于 Azure Cosmos DB 的设置。 
+特定于 Azure Cosmos DB 的设置可在源转换的“源选项”选项卡中找到。 
 
-**包含系统列：** 如果为 true，则 ```id``` ```_ts``` 将在 CosmosDB 中包括、、和其他系统列。 更新集合时，必须包括此项，以便能够获取现有行 id。
+包括系统列：如果为 true，则会将 ```id```、```_ts``` 和其他系统列包括在 CosmosDB 的数据流元数据中。 更新集合时，必须包括此项，以便能够获取现有行 ID。
 
-**页面大小：** 查询结果每页的文档数。 默认值为 "-1"，它使用最多为1000的服务动态页。
+页面大小：查询结果的每页文档数。 默认值为“-1”，表示使用服务动态页，最大为 1000。
 
-**吞吐量：** 为在读取操作过程中每次执行此数据流时要应用到 CosmosDB 集合的 ru 数设置一个可选值。 最小值为400。
+吞吐量：为读取操作期间每次执行此数据流时要应用于 CosmosDB 集合的 RU 数设置一个可选值。 最小值为 400。
 
-**首选区域：** 选择此进程的首选读取区域。
+首选区域：选择此进程的首选读取区域。
 
 #### <a name="json-settings"></a>JSON 设置
 
-**单个文档：** 如果 ADF 将整个文件视为单个 JSON 文档，请选择此选项。
+单个文档：如果 ADF 会将整个文件视为单个 JSON 文档，请选择此选项。
 
-不带**引号的列名：** 如果 JSON 中的列名称未加引号，则选择此选项。
+不带引号的列名称：如果 JSON 中的列名称未加引号，请选择此选项。
 
-**包含注释：** 如果 JSON 文档中包含数据注释，请使用此选项。
+具有注释：如果 JSON 文档的数据中包含注释，请使用此选项。
 
-**单引号：** 如果文档中的列和值用单引号引起来，则应选择此选项。
+带单引号：如果文档中的列和值加了单引号，则应选择此选项。
 
-**反斜杠转义：** 如果使用反斜杠来转义 JSON 中的字符，请选择此选项。
+使用反斜杠转义：如果使用反斜杠对 JSON 中的字符进行转义，请选择此选项。
 
 ### <a name="sink-transformation"></a>接收器转换
 
-接收器转换的 "**设置**" 选项卡中提供了特定于 Azure Cosmos DB 的设置。
+特定于 Azure Cosmos DB 的设置可在接收器转换的“设置”选项卡中找到。
 
 **更新方法：** 确定数据库目标上允许哪些操作。 默认设置为仅允许插入。 若要更新、更新插入或删除行，需要进行 alter-row 转换才能标记这些操作的行。 对于更新、更新插入和删除操作，必须设置一个或多个键列，以确定要更改的行。
 
-**集合操作：** 确定在写入之前是否重新创建目标集合。
-* None：不会对集合执行任何操作。
-* 重新创建：将删除并重新创建集合
+集合操作：确定在写入之前是否重新创建目标集合。
+* 无：不会对集合执行任何操作。
+* 重新创建：将删除集合并重新创建集合
 
-**批大小**：控制每个 Bucket 中写入的行数。 较大的批大小可提高压缩比并改进内存优化，但在缓存数据时可能会导致内存不足异常。
+**批大小**：一个整数，表示每个批处理中 Cosmos DB 集合中写入的对象数。 通常，从默认的批大小开始便已足够。 若要进一步优化此值，请注意：
+
+- Cosmos DB 将单个请求的大小限制为 2MB。 公式为 "请求大小 = 单文档大小 * 批大小"。 如果遇到错误，指出 "请求太大"，请减小 "批大小" 值。
+- 批大小越大，就可以获得更好的吞吐量，同时请确保分配足够的 ru 来提供工作负荷。
 
 **分区键：** 输入一个字符串，该字符串表示集合的分区键。 示例： ```/movies/title```
 
-**吞吐量：** 为每次执行此数据流时要应用到 CosmosDB 集合的 ru 数设置一个可选值。 最小值为400。
+吞吐量：为每次执行此数据流时要应用于 CosmosDB 集合的 RU 数设置一个可选值。 最小值为 400。
 
-**写入吞吐量预算：** 一个整数，表示要分配给大容量引入 Spark 作业的 ru 数。 此数目超出分配给集合的总吞吐量。
+**写入吞吐量预算：** 一个整数，表示要分配给此数据流写操作的 ru，超出分配给集合的总吞吐量。
 
-## <a name="lookup-activity-properties"></a>Lookup 活动属性
+## <a name="lookup-activity-properties"></a>查找活动属性
 
 若要了解有关属性的详细信息，请查看 [Lookup 活动](control-flow-lookup-activity.md)。
 
@@ -317,7 +317,7 @@ Azure Cosmos DB (SQL API) 数据集支持以下属性：
 
 若要实现“架构不可知”复制，请执行以下操作：
 
-* 使用复制数据工具时，选择“原样导出到 JSON 文件或 Cosmos DB 集合”选项****。
+* 使用复制数据工具时，选择“原样导出到 JSON 文件或 Cosmos DB 集合”选项。
 * 使用活动创作时，请为源或接收器选择 JSON 格式以及相应的文件存储。
 
 ## <a name="migrate-from-relational-database-to-cosmos-db"></a>从关系数据库迁移到 Cosmos DB

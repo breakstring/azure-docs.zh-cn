@@ -1,195 +1,85 @@
 ---
-title: Docker 部署故障排除
+title: 远程模型部署故障排除
 titleSuffix: Azure Machine Learning
-description: 了解如何使用 Azure 机器学习使用 Azure Kubernetes 服务和 Azure 容器实例解决、解决常见的 Docker 部署错误，并对其进行故障排除。
+description: 了解如何使用 Azure Kubernetes 服务和 Azure 容器实例解决、解决和排查一些常见的 Docker 部署错误。
 services: machine-learning
 ms.service: machine-learning
 ms.subservice: core
-author: clauren42
-ms.author: clauren
-ms.reviewer: jmartens
-ms.date: 08/06/2020
-ms.topic: conceptual
-ms.custom: troubleshooting, contperfq4, devx-track-python
-ms.openlocfilehash: 3f8a3c705878e212e6a26670e20b5a81a3f2a6ba
-ms.sourcegitcommit: 4e5560887b8f10539d7564eedaff4316adb27e2c
+author: gvashishtha
+ms.author: gopalv
+ms.date: 11/25/2020
+ms.topic: troubleshooting
+ms.custom: contperf-fy20q4, devx-track-python, deploy, contperf-fy21q2
+ms.openlocfilehash: 2b953fd040b9ba76eacddb91a89ac65d51e340a0
+ms.sourcegitcommit: 3af12dc5b0b3833acb5d591d0d5a398c926919c8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/06/2020
-ms.locfileid: "87904371"
+ms.lasthandoff: 01/11/2021
+ms.locfileid: "98071657"
 ---
-# <a name="troubleshoot-docker-deployment-of-models-with-azure-kubernetes-service-and-azure-container-instances"></a>使用 Azure Kubernetes 服务和 Azure 容器实例对模型的 Docker 部署进行故障排除 
+# <a name="troubleshooting-remote-model-deployment"></a>远程模型部署故障排除 
 
-了解如何使用 Azure 机器学习排查、解决或规避 Azure 容器实例 (ACI) 和 Azure Kubernetes 服务 (AKS) 的常见 Docker 部署错误。
+了解如何使用 Azure 机器学习在将模型部署到 Azure 容器实例时可能会遇到的常见错误以及如何解决这些错误，如使用 (ACI) 和 Azure Kubernetes Service (AKS) 。
 
 ## <a name="prerequisites"></a>先决条件
 
-* 一个 **Azure 订阅**。 如果没有订阅，可试用 [Azure 机器学习免费版或付费版](https://aka.ms/AMLFree)。
-* [Azure 机器学习 SDK](https://docs.microsoft.com/python/api/overview/azure/ml/install?view=azure-ml-py)。
-* [Azure CLI](https://docs.microsoft.com/cli/azure/install-azure-cli?view=azure-cli-latest)。
+* 一个 **Azure 订阅**。 试用[免费版或付费版 Azure 机器学习](https://aka.ms/AMLFree)。
+* [Azure 机器学习 SDK](/python/api/overview/azure/ml/install?preserve-view=true&view=azure-ml-py)。
+* [Azure CLI](/cli/azure/install-azure-cli?preserve-view=true&view=azure-cli-latest)。
 * [用于 Azure 机器学习的 CLI 扩展](reference-azure-machine-learning-cli.md)。
-* 若要在本地调试，则必须在本地系统上安装一个有效的 Docker。
-
-    若要验证 Docker 安装，请使用终端或命令提示符中的命令 `docker run hello-world`。 有关安装 Docker 或排除 Dcoker 错误的详细信息，请参阅 [Docker 文档](https://docs.docker.com/)。
 
 ## <a name="steps-for-docker-deployment-of-machine-learning-models"></a>机器学习模型的 Docker 部署步骤
 
-在 Azure 机器学习中部署模型时，系统将执行大量任务。
+在 Azure 机器学习中将模型部署到非本地计算时，会发生以下情况：
 
-推荐使用的模型部署方法是使用 [Model.deploy()](https://docs.microsoft.com/python/api/azureml-core/azureml.core.model%28class%29?view=azure-ml-py#deploy-workspace--name--models--inference-config-none--deployment-config-none--deployment-target-none--overwrite-false-) API 并以 [Environment](how-to-use-environments.md) 对象作为输入参数。 在这种情况下，服务将在部署阶段创建一个基础 docker 映像，并在一次调用中装载所需的全部模型。 基本部署任务包括：
+1. 你在 InferenceConfig 的 Environments 对象中指定的 Dockerfile 将与源目录的内容一起发送到云
+1. 如果容器注册表中不存在以前生成的映像，则会在云中生成新的 Docker 映像，并将其存储在工作区的默认容器注册表中。
+1. 容器注册表中的 Docker 映像将下载到计算目标。
+1. 你的工作区的默认 Blob 存储区将装载到你的计算目标，从而使你可以访问已注册的模型
+1. Web 服务器通过运行入口脚本的 `init()` 函数进行初始化
+1. 已部署的模型收到请求时，`run()` 函数会处理该请求
 
-1. 在工作区模型注册表中注册模型。
+使用本地部署时的主要区别是，容器映像在本地计算机上生成，因此需要为本地部署安装 Docker。
 
-2. 定义推理配置：
-    1. 基于你在环境 yaml 文件中指定的依赖项创建一个 [Environment](how-to-use-environments.md) 对象，或者使用我们获得的环境之一。
-    2. 基于环境和评分脚本创建推理配置（InferenceConfig 对象）。
+了解这些高级步骤会有助于了解发生错误的位置。
 
-3. 将模型部署到 Azure 容器实例 (ACI) 服务或 Azure Kubernetes 服务 (AKS)。
+## <a name="get-deployment-logs"></a>获取部署日志
 
-请参阅[模型管理](concept-model-management-and-deployment.md)简介，详细了解此过程。
+调试错误的第一步是获取部署日志。 首先，请按照[此处的说明](how-to-deploy-and-where.md#connect-to-your-workspace)连接到工作区。
 
-## <a name="before-you-begin"></a>准备阶段
+# <a name="azure-cli"></a>[Azure CLI](#tab/azcli)
 
-如果遇到任何问题，首先需要将部署任务（上述）分解为单独的步骤，以查出问题所在。
+若要从已部署的 Web 服务获取日志，请执行以下命令：
 
-假设你使用新的/推荐的部署方法，也就是使用 [Model.deploy()](https://docs.microsoft.com/python/api/azureml-core/azureml.core.model%28class%29?view=azure-ml-py#deploy-workspace--name--models--inference-config-none--deployment-config-none--deployment-target-none--overwrite-false-) API 并以 [Environment](how-to-use-environments.md) 对象作为输入参数，则你的代码可以分为三个主要步骤：
+```bash
+az ml service get-logs --verbose --workspace-name <my workspace name> --name <service name>
+```
 
-1. 注册模型。 下面是一些示例代码：
-
-    ```python
-    from azureml.core.model import Model
-
-
-    # register a model out of a run record
-    model = best_run.register_model(model_name='my_best_model', model_path='outputs/my_model.pkl')
-
-    # or, you can register a file or a folder of files as a model
-    model = Model.register(model_path='my_model.pkl', model_name='my_best_model', workspace=ws)
-    ```
-
-2. 为部署定义推理配置：
-
-    ```python
-    from azureml.core.model import InferenceConfig
-    from azureml.core.environment import Environment
+# <a name="python"></a>[Python](#tab/python)
 
 
-    # create inference configuration based on the requirements defined in the YAML
-    myenv = Environment.from_conda_specification(name="myenv", file_path="myenv.yml")
-    inference_config = InferenceConfig(entry_script="score.py", environment=myenv)
-    ```
+假设有一个名为 `ws` 的 `azureml.core.Workspace` 类型的对象，可以执行以下操作：
 
-3. 使用在前面步骤中创建的推理配置来部署模型：
+```python
+print(ws.webservices)
 
-    ```python
-    from azureml.core.webservice import AciWebservice
+# Choose the webservice you are interested in
 
+from azureml.core import Webservice
 
-    # deploy the model
-    aci_config = AciWebservice.deploy_configuration(cpu_cores=1, memory_gb=1)
-    aci_service = Model.deploy(workspace=ws,
-                           name='my-service',
-                           models=[model],
-                           inference_config=inference_config,
-                           deployment_config=aci_config)
-    aci_service.wait_for_deployment(show_output=True)
-    ```
+service = Webservice(ws, '<insert name of webservice>')
+print(service.get_logs())
+```
 
-将部署过程分解为单独任务后，可以查看部分最常见的错误。
+---
 
 ## <a name="debug-locally"></a>本地调试
 
-如果将模型部署到 ACI 或 AKS 时遇到问题，请尝试将其部署为本地 Web 服务。 使用本地 Web 服务可简化解决问题的过程。 在本地系统上下载并启动包含模型的 Docker 映像。
+如果将模型部署到 ACI 或 AKS 时遇到问题，请将其部署为本地 Web 服务。 使用本地 Web 服务可简化解决问题的过程。 若要在本地对部署进行故障排除，请参阅[本地故障排除文章](./how-to-troubleshoot-deployment-local.md)。
 
-可以在[MachineLearningNotebooks](https://github.com/Azure/MachineLearningNotebooks)存储库中找到示例[本地部署笔记本](https://github.com/Azure/MachineLearningNotebooks/blob/master/how-to-use-azureml/deployment/deploy-to-local/register-model-deploy-local.ipynb)，以浏览可运行的示例。
-
-> [!WARNING]
-> 生成方案不支持本地 Web 服务部署。
-
-若要进行本地部署，请修改代码以使用 `LocalWebservice.deploy_configuration()` 创建部署配置。 然后使用 `Model.deploy()` 部署该服务。 以下示例将模型（包含在 model 变量中）部署为本地 Web 服务：
-
-```python
-from azureml.core.environment import Environment
-from azureml.core.model import InferenceConfig, Model
-from azureml.core.webservice import LocalWebservice
-
-
-# Create inference configuration based on the environment definition and the entry script
-myenv = Environment.from_conda_specification(name="env", file_path="myenv.yml")
-inference_config = InferenceConfig(entry_script="score.py", environment=myenv)
-# Create a local deployment, using port 8890 for the web service endpoint
-deployment_config = LocalWebservice.deploy_configuration(port=8890)
-# Deploy the service
-service = Model.deploy(
-    ws, "mymodel", [model], inference_config, deployment_config)
-# Wait for the deployment to complete
-service.wait_for_deployment(True)
-# Display the port that the web service is available on
-print(service.port)
-```
-
-如果定义你自己的 Conda 规范 YAML，则必须将版本大于等于 1.0.45 的 azureml-defaults 作为 pip 依赖项列出。 此包包含将模型作为 Web 服务托管时所需的功能。
-
-此时，你可以正常使用该服务。 例如，以下代码演示了将数据发送到该服务的过程：
-
-```python
-import json
-
-test_sample = json.dumps({'data': [
-    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-    [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
-]})
-
-test_sample = bytes(test_sample, encoding='utf8')
-
-prediction = service.run(input_data=test_sample)
-print(prediction)
-```
-
-有关自定义 Python 环境的详细信息，请参阅[创建和管理用于训练和部署的环境](how-to-use-environments.md)。 
-
-### <a name="update-the-service"></a>更新服务
-
-在本地测试中，可能需要更新 `score.py` 文件以添加记录或尝试解决发现的任何问题。 若要重新加载对 `score.py` 文件的更改，请使用 `reload()`。 例如，以下代码重新加载服务的脚本，然后向其发送数据。 使用 `score.py` 文件对数据进行评分：
-
-> [!IMPORTANT]
-> `reload` 方法仅适用于本地部署。 有关将部署更新到另一个计算目标的信息，请参阅[如何更新 webservice](how-to-deploy-update-web-service.md)。
-
-```python
-service.reload()
-print(service.run(input_data=test_sample))
-```
-
-> [!NOTE]
-> 可从服务所使用的 `InferenceConfig` 对象指定的位置重新加载该脚本。
-
-若要更改模型、Conda 依赖项或部署配置，请使用 [update()](https://docs.microsoft.com/python/api/azureml-core/azureml.core.webservice%28class%29?view=azure-ml-py#update--args-)。 以下示例更新服务使用的模型：
-
-```python
-service.update([different_model], inference_config, deployment_config)
-```
-
-### <a name="delete-the-service"></a>删除服务
-
-要删除服务，请使用 [delete()](https://docs.microsoft.com/python/api/azureml-core/azureml.core.webservice%28class%29?view=azure-ml-py#delete--)。
-
-### <a name="inspect-the-docker-log"></a><a id="dockerlog"></a> 检查 Docker 日志
-
-可以通过服务对象打印详细的 Docker 引擎日志消息。 可以查看 ACI、AKS 和 Local 部署的日志。 以下示例演示如何打印日志。
-
-```python
-# if you already have the service object handy
-print(service.get_logs())
-
-# if you only know the name of the service (note there might be multiple services with the same name but different version number)
-print(ws.webservices['mysvc'].get_logs())
-```
-如果在日志中看到行多次 `Booting worker with pid: <pid>` 出现，这意味着没有足够的内存来启动辅助角色。
-可以通过增大的值来解决该错误。 `memory_gb``deployment_config`
- 
 ## <a name="container-cannot-be-scheduled"></a>无法计划容器
 
-将服务部署到 Azure Kubernetes Service 计算目标时，Azure 机器学习将尝试使用请求的资源量来计划服务。 如果在 5 分钟后，群集中未提供具有相应的可用资源量的节点，则部署会失败，并显示消息“`Couldn't Schedule because the kubernetes cluster didn't have available resources after trying for 00:05:00`”。 可通过添加更多节点、更改节点的 SKU 或更改服务的资源要求来解决此错误。 
+将服务部署到 Azure Kubernetes Service 计算目标时，Azure 机器学习将尝试使用请求的资源量来计划服务。 如果在 5 分钟后，群集中没有具有相应可用资源量的节点，则部署将失败。 失败消息为 `Couldn't Schedule because the kubernetes cluster didn't have available resources after trying for 00:05:00`。 可通过添加更多节点、更改节点的 SKU 或更改服务的资源要求来解决此错误。 
 
 该错误消息通常会指示你更需要哪一种资源 - 例如，如果看到一条指示“`0/3 nodes are available: 3 Insufficient nvidia.com/gpu`”的错误消息，则意味着该服务需要 GPU，且群集中有三个节点没有可用的 GPU。 如果使用的是 GPU SKU，则可以通过添加更多节点来解决此问题；如果使用的不是 GPU SKU，则可以通过切换到启用 GPU 的 SKU，或将环境更改为不需要 GPU 来解决此问题。  
 
@@ -197,11 +87,11 @@ print(ws.webservices['mysvc'].get_logs())
 
 成功生成映像后，系统会尝试使用部署配置启动容器。 作为容器启动过程的一部分，评分脚本中的 `init()` 函数由系统调用。 如果 `init()` 函数中存在未捕获的异常，则可能在错误消息中看到 CrashLoopBackOff 错误。
 
-使用[检查 Docker 日志](#dockerlog)部分中的信息检查日志。
+利用[检查 Docker 日志](how-to-troubleshoot-deployment-local.md#dockerlog)文章中的信息。
 
 ## <a name="function-fails-get_model_path"></a>函数故障：get_model_path()
 
-通常情况下，在评分脚本的 `init()` 函数中，会调用 [Model.get_model_path()](https://docs.microsoft.com/python/api/azureml-core/azureml.core.model.model?view=azure-ml-py#get-model-path-model-name--version-none---workspace-none-) 来查找容器中的模型文件或模型文件的文件夹。 如果找不到模型文件或文件夹，函数将失败。 调试此错误的最简单方法是在容器 shell 中运行以下 Python 代码：
+通常情况下，在评分脚本的 `init()` 函数中，会调用 [Model.get_model_path()](/python/api/azureml-core/azureml.core.model.model?preserve-view=true&view=azure-ml-py#&preserve-view=trueget-model-path-model-name--version-none---workspace-none-) 来查找容器中的模型文件或模型文件的文件夹。 如果找不到模型文件或文件夹，函数将失败。 调试此错误的最简单方法是在容器 shell 中运行以下 Python 代码：
 
 ```python
 from azureml.core.model import Model
@@ -239,13 +129,16 @@ def run(input_data):
 
 ## <a name="http-status-code-503"></a>HTTP 状态代码 503
 
-Azure Kubernetes 服务部署支持自动缩放，这允许添加副本以支持额外的负载。 但是，自动缩放程序旨在处理负载中的逐步更改。 如果每秒收到大量请求，客户端可能会收到 HTTP 状态代码 503。
+Azure Kubernetes 服务部署支持自动缩放，这允许添加副本以支持额外的负载。 自动缩放程序旨在处理负载中的逐步更改。 如果每秒收到大量请求，客户端可能会收到 HTTP 状态代码 503。 即使自动缩放器反应迅速，但 AKS 仍需要大量时间来创建其他容器。
+
+纵向扩展/缩减决策取决于当前容器副本的利用率。 处于繁忙状态（正在处理请求）的副本数除以当前副本的总数为当前利用率。 如果此数字超出 `autoscale_target_utilization`，则会创建更多的副本。 如果它较低，则会减少副本。 添加副本的决策是迫切而迅速的（大约 1 秒）。 删除副本的决策是保守的（大约 1 分钟）。 默认情况下，自动缩放目标利用率设置为 70%，这意味着服务可以处理高达 30% 的大量每秒请求数 (RPS) 。
 
 有两种方法可以帮助防止 503 状态代码：
 
-* 更改自动缩放创建新副本的利用率。
-    
-    默认情况下，自动缩放目标利用率设置为 70%，这意味着服务可以处理高达 30% 的大量每秒请求数 (RPS)。 可以通过将 `autoscale_target_utilization` 设置为较低的值来调整利用率目标。
+> [!TIP]
+> 这两种方法可以单独使用，也可以结合使用。
+
+* 更改自动缩放创建新副本的利用率。 可以通过将 `autoscale_target_utilization` 设置为较低的值来调整利用率目标。
 
     > [!IMPORTANT]
     > 该更改不会导致更快创建副本。 而会以较低的利用率阈值创建副本。 可以在利用率达到 30% 时，通过将值改为 30% 来创建副本，而不是等待该服务的利用率达到 70% 时再创建。
@@ -276,7 +169,7 @@ Azure Kubernetes 服务部署支持自动缩放，这允许添加副本以支持
     > [!NOTE]
     > 如果收到请求高峰大于新的最小副本可以处理的数量，则可能会再次收到 503 代码。 例如，服务流量增加时，可能需要增加最小副本数据。
 
-有关设置 `autoscale_target_utilization`、`autoscale_max_replicas` 和 `autoscale_min_replicas` 的详细信息，请参阅 [AksWebservice](https://docs.microsoft.com/python/api/azureml-core/azureml.core.webservice.akswebservice?view=azure-ml-py) 模块参考。
+有关设置 `autoscale_target_utilization`、`autoscale_max_replicas` 和 `autoscale_min_replicas` 的详细信息，请参阅 [AksWebservice](/python/api/azureml-core/azureml.core.webservice.akswebservice?preserve-view=true&view=azure-ml-py) 模块参考。
 
 ## <a name="http-status-code-504"></a>HTTP 状态代码 504
 
@@ -284,9 +177,23 @@ Azure Kubernetes 服务部署支持自动缩放，这允许添加副本以支持
 
 可以通过修改 score.py 删除不必要的调用来增加超时值或尝试加快服务速度。 如果这些操作不能解决问题，请使用本文中的信息调试 score.py 文件。 代码可能处于无响应状态或无限循环。
 
+## <a name="other-error-messages"></a>其他错误消息
+
+对以下错误采取以下操作：
+
+|错误  | 解决方法  |
+|---------|---------|
+|部署 Web 服务时映像生成失败     |  将“pynacl==1.2.1”作为 pip 依赖项添加到 Conda 文件以进行映像配置       |
+|`['DaskOnBatch:context_managers.DaskOnBatch', 'setup.py']' died with <Signals.SIGKILL: 9>`     |   请将部署中使用的 VM 的 SKU 更改为具有更多内存的 SKU。 |
+|FPGA 失败     |  你将无法在 FPGA 上部署模型，直到已请求并获得 FPGA 配额批准为止。 若要请求访问权限，请填写配额请求表单： https://aka.ms/aml-real-time-ai       |
+
 ## <a name="advanced-debugging"></a>高级调试
 
-某些情况下，可能需要以交互方式调试包含在模型部署中的 Python 代码。 例如，如果输入脚本失败，并且无法通过其他记录确定原因。 通过使用 Visual Studio Code 和 debugpy，可以附加到在 Docker 容器中运行的代码。 有关详细信息，请访问[VS Code 指南中的交互式调试](how-to-debug-visual-studio-code.md#debug-and-troubleshoot-deployments)。
+你可能需要以交互方式调试模型部署中包含的 Python 代码。 例如，如果输入脚本失败，并且无法通过其他记录确定原因。 通过使用 Visual Studio Code 和 debugpy，可以附加到在 Docker 容器中运行的代码。
+
+有关详细信息，请访问[在 VS Code 指南中进行交互式调试](how-to-debug-visual-studio-code.md#debug-and-troubleshoot-deployments)。
+
+## <a name="model-deployment-user-forum"></a>[模型部署用户论坛](/answers/topics/azure-machine-learning-inference.html)
 
 ## <a name="next-steps"></a>后续步骤
 
@@ -294,3 +201,4 @@ Azure Kubernetes 服务部署支持自动缩放，这允许添加副本以支持
 
 * [部署方式和部署位置](how-to-deploy-and-where.md)
 * [教程：训练和部署模型](tutorial-train-models-with-aml.md)
+* [如何在本地运行和调试试验](./how-to-debug-visual-studio-code.md)

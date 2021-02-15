@@ -4,15 +4,16 @@ description: 了解购买 HANA 大型实例预留之前需注意的事项以及�
 author: yashesvi
 ms.reviewer: yashar
 ms.service: cost-management-billing
+ms.subservice: reservations
 ms.topic: how-to
 ms.date: 07/24/2020
 ms.author: banders
-ms.openlocfilehash: cefb6b2cb2908b9c7311df745417686b52241bab
-ms.sourcegitcommit: dccb85aed33d9251048024faf7ef23c94d695145
+ms.openlocfilehash: ea1ee2311d8655ce17017c73309bc69e89f4b5f4
+ms.sourcegitcommit: fc401c220eaa40f6b3c8344db84b801aa9ff7185
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/28/2020
-ms.locfileid: "87286557"
+ms.lasthandoff: 01/20/2021
+ms.locfileid: "98599116"
 ---
 # <a name="save-on-sap-hana-large-instances-with-an-azure-reservation"></a>使用 Azure 预留节省 SAP HANA 大型实例
 
@@ -31,15 +32,15 @@ ms.locfileid: "87286557"
 - 不能为 HANA 预留容量提供共享预留范围。 无法拆分、合并或更新预留范围。
 - 可以使用预留容量 API 调用一次购买一个 HLI。 若要购买更多数量，请进行额外的 API 调用。
 
-可以在 Azure 门户或使用 [REST API](https://docs.microsoft.com/rest/api/reserved-vm-instances/reservationorder/purchase) 购买预留容量。
+可以在 Azure 门户或使用 [REST API](/rest/api/reserved-vm-instances/reservationorder/purchase) 购买预留容量。
 
 ## <a name="buy-a-hana-large-instance-reservation"></a>购买 HANA 大型实例预留
 
-使用以下信息，通过[预留订单 REST API](https://docs.microsoft.com/rest/api/reserved-vm-instances/reservationorder/purchase) 购买 HLI 预留。
+使用以下信息，通过[预留订单 REST API](/rest/api/reserved-vm-instances/reservationorder/purchase) 购买 HLI 预留。
 
 ### <a name="get-the-reservation-order-and-price"></a>获取预留订单和价格
 
-首先，使用[计算价格](https://docs.microsoft.com/rest/api/reserved-vm-instances/reservationorder/calculate) API，获取预配 HANA 大型实例 SKU 的预留订单和价格。
+首先，使用[计算价格](/rest/api/reserved-vm-instances/reservationorder/calculate) API，获取预配 HANA 大型实例 SKU 的预留订单和价格。
 
 下面的示例使用 [armclient](https://github.com/projectkudu/ARMClient) 通过 PowerShell 进行 REST API 调用。 预留订单和计算价格 API 请求以及请求正文应如下所示：
 
@@ -219,11 +220,11 @@ armclient get /providers/microsoft.capacity/reservationOrders/22222222-2222-2222
 
   SKU：HLI SKU 名称。 应类似于 `SAP_HANA_On_Azure_<SKUname>`。
 
-  位置：可用的 HLI 区域。 有关可用区域，请参阅 [Azure 上的 SAP HANA（大型实例）的 SKU](https://docs.microsoft.com/azure/virtual-machines/workloads/sap/hana-available-skus)。 若要获取位置字符串格式，请使用[获取位置 API 调用](https://docs.microsoft.com/rest/api/resources/subscriptions/listlocations#locationlistresult)。
+  位置：可用的 HLI 区域。 有关可用区域，请参阅 [Azure 上的 SAP HANA（大型实例）的 SKU](../../virtual-machines/workloads/sap/hana-available-skus.md)。 若要获取位置字符串格式，请使用[获取位置 API 调用](/rest/api/resources/subscriptions/listlocations#locationlistresult)。
 
   **保留的资源类型** `SapHana`
 
-  订阅：用于支付预留费用的订阅。 将向订阅的付款方式收取预留的费用。 订阅类型必须为企业协议（套餐编号：MS-AZR-0017P or MS-AZR-0148P）或 Microsoft 客户协议。 从货币承诺余额中扣除费用（如果可用）或作为超额收取费用。
+  订阅：用于支付预留费用的订阅。 将向订阅的付款方式收取预留的费用。 订阅类型必须为企业协议（套餐编号：MS-AZR-0017P or MS-AZR-0148P）或 Microsoft 客户协议。 从 Azure 预付款（以前称为货币承诺）余额中扣除费用（如果可用）或按超额收取费用。
 
   范围：预留范围应为单一范围。
 
@@ -247,5 +248,5 @@ location. You can also go to https://aka.ms/corequotaincrease to learn about quo
 
 ## <a name="next-steps"></a>后续步骤
 
-- 了解[如何通过 Postman 和 cURL 调用 Azure REST API](https://docs.microsoft.com/rest/api/azure/#how-to-call-azure-rest-apis-with-postman)。
-- 请参阅 [Azure 上的 SAP HANA（大型实例）的 SKU](https://docs.microsoft.com/azure/virtual-machines/workloads/sap/hana-available-skus) 获取可用的 SKU 列表和区域。
+- 了解[如何通过 Postman 和 cURL 调用 Azure REST API](/rest/api/azure/#how-to-call-azure-rest-apis-with-postman)。
+- 请参阅 [Azure 上的 SAP HANA（大型实例）的 SKU](../../virtual-machines/workloads/sap/hana-available-skus.md) 获取可用的 SKU 列表和区域。

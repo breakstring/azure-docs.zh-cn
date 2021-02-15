@@ -2,43 +2,56 @@
 title: Azure Migrate 中的新增功能
 description: 了解 Azure Migrate 服务中的新增功能和最新更新。
 ms.topic: overview
+author: anvar-ms
+ms.author: anvar
+ms.manager: bsiva
 ms.date: 04/19/2020
 ms.custom: mvc
-ms.openlocfilehash: 58c77dccd1e43ed497cd56b2831eb2ab914d8d5d
-ms.sourcegitcommit: 73ac360f37053a3321e8be23236b32d4f8fb30cf
+ms.openlocfilehash: fbafed60019005fe2d81c96fb9557e3c307669ac
+ms.sourcegitcommit: c7153bb48ce003a158e83a1174e1ee7e4b1a5461
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 06/30/2020
-ms.locfileid: "85556933"
+ms.lasthandoff: 01/15/2021
+ms.locfileid: "98233757"
 ---
 # <a name="whats-new-in-azure-migrate"></a>Azure Migrate 中的新增功能
 
 [Azure Migrate](migrate-services-overview.md) 可帮助发现和访问本地服务器、应用和数据并将其迁移到 Microsoft Azure 云。 本文汇总了 Azure Migrate 中的新版本和功能。
 
+## <a name="update-january-2021"></a>更新（2021 年 1 月）
+-  现可通过 Azure 门户使用 Azure Migrate 服务器迁移（无代理复制）将 VMware VM 迁移到 Azure 虚拟机，后者具有使用双重加密（平台管理的和客户管理的密钥 (CMK)）进行加密的磁盘。
+- 现可通过 Azure 门户使用 Azure Migrate 服务器迁移（基于代理的复制）将 VMware VM 迁移到 Azure 虚拟机，后者具有使用服务器端加密 (SSE) 和客户管理的密钥 (CMK) 以及双重加密（平台管理的和客户管理的密钥）进行加密的磁盘。
+- 现可通过 Azure 门户使用 Azure Migrate 服务器迁移（基于代理的复制）将物理服务器和 VM 从其他云（如 AWS 和 GCP）迁移到 Azure 虚拟机，后者具有使用服务器端加密 (SSE) 和客户管理的密钥 (CMK) 以及双重加密（平台管理的和客户管理的密钥）进行加密的磁盘。
+
+## <a name="update-december-2020"></a>更新（2020 年 12 月）
+- Azure Migrate 现在会自动将 Azure VM 代理安装在 VMware VM 上，同时使用 VMware 迁移的无代理方法将其迁移到 Azure。
+- 现可通过 Azure 门户使用 Azure Migrate 服务器迁移（无代理复制）将 VMware VM 迁移到 Azure 虚拟机，后者具有使用服务器端加密 (SSE) 和客户管理的密钥 (CMK) 进行加密的磁盘。
+
+## <a name="update-september-2020"></a>更新（2020 年 9 月）
+- 现支持将服务器迁移到可用性区域。
+- 现支持将基于 UEFI 的虚拟机 (VM) 和物理服务器迁移到 Azure 第二代 VM。 在此版本中，Azure Migrate：服务器迁移工具将不会在迁移过程中执行从第二代 VM 到第一代 VM 的转换。
+- 现提供一个新的 Azure Migrate Power BI 评估仪表板来帮助你比较不同评估设置的费用。 该仪表板覆盖了一个 PowerShell 实用工具，它会自动创建要插入到 Power BI 仪表板中的评估。 [了解详细信息。](https://github.com/Azure/azure-docs-powershell-samples/tree/master/azure-migrate/assessment-utility)
+- 依赖项分析（无代理）现可在 1000 个 VM 上并发运行。
+- 现可使用 PowerShell 脚本大规模地启用或禁用依赖项分析（无代理）。 [了解详细信息。](https://github.com/Azure/azure-docs-powershell-samples/tree/master/azure-migrate/dependencies-at-scale)
+- 通过用依赖项分析（无代理）收集的数据在 Power BI 中直观呈现网络连接 [了解详细信息。](https://github.com/Azure/azure-docs-powershell-samples/tree/master/azure-migrate/dependencies-at-scale)
+- 现在，可使用 Azure Migrate 支持迁移数据磁盘大小高达 32 TB 的 VMware VM：服务器迁移无代理 VMware 迁移方法。
+
+## <a name="update-august-2020"></a>更新（2020 年 8 月）
+
+- 改进了载入体验，其中 Azure Migrate 项目密钥是从门户生成的，用于完成设备注册。
+- 从门户下载 OVA/VHD 文件或安装程序脚本以便分别设置 VMware 和 Hyper-V 设备的选项。
+- 已通过增强的用户体验刷新设备配置管理器。
+- 多个凭据支持 Hyper-V VM 发现。
+
+## <a name="update-july-2020"></a>更新（2020 年 7 月）
+
+- 无代理 VMware 迁移现支持按每个 vCenter 并发复制 300 个 VM
+
 ## <a name="update-june-2020"></a>更新（2020 年 6 月）
 
-- 现在支持将本地 VMware VM 迁移到 [Azure VMware 解决方案 (AVS)](https://go.microsoft.com/fwlink/?linkid=2132637) 的评估。 [了解详细信息](how-to-create-azure-vmware-solution-assessment.md)
+- 现在支持将本地 VMware VM 迁移到 [Azure VMware 解决方案 (AVS)](./concepts-azure-vmware-solution-assessment-calculation.md) 的评估。 [了解详细信息](how-to-create-azure-vmware-solution-assessment.md)
 - 支持在设备上用多个凭据来发现物理服务器。
 - 支持允许租户从设备登录 Azure，其中租户限制已配置。
-- 新的 Azure Migrate 设备版本，如下所示。
-
-### <a name="azure-public-cloud"></a>Azure 公有云
-
-**方案** | **下载** | **SHA256**
---- | --- | ---
-Hyper-V (8.93 GB) | [最新版本](https://aka.ms/migrate/appliance/hyperv) |  572be425ea0aca69a9aa8658c950bc319b2bdbeb93b440577264500091c846a1
-VMware (10.9 GB) | [最新版本](https://aka.ms/migrate/appliance/vmware) | cacbdaef927fe5477fa4e1f494fcb7203cbd6b6ce7402b79f234bc0fe69663dd
-Physical (63.1 MB) | [最新版本](https://go.microsoft.com/fwlink/?linkid=2105112) | 0a27adf13cc5755e4b23df0c05732c6ac08d1fe8850567cb57c9906fbc3b85a0
-
-
-### <a name="azure-government"></a>Azure Government
-
-**方案** | **下载** | **SHA256**
---- | --- | ---
-Hyper-V (63.1 MB) | [最新版本](https://go.microsoft.com/fwlink/?linkid=2120200&clcid=0x409) |  2c5e73a1e5525d4fae468934408e43ab55ff397b7da200b92121972e683f9aa3
-VMware (63.1 MB) | [最新版本](https://go.microsoft.com/fwlink/?linkid=2120300&clcid=0x409 ) | 3d5822038646b81f458d89d706832c0a2c0e827bfa9b0a55cc478eaf2757a4de
-Physical (63.1 MB) | [最新版本](https://go.microsoft.com/fwlink/?linkid=2120100&clcid=0x409) | 93dfef131026e70acdfad2769cd208ff745ab96a96f013cdf3f9e1e61c9b37e1
-
 
 
 ## <a name="update-april-2020"></a>更新（2020 年 4 月）
@@ -104,4 +117,4 @@ Azure Migrate 的当前版本（在 2019 年 7 月发布）提供许多新功能
 
 - [详细了解](https://azure.microsoft.com/pricing/details/azure-migrate/) Azure Migrate 定价。
 - [查看常见问题解答](resources-faq.md)（关于 Azure Migrate）。
-- 试用我们的教程来评估 [VMware VM](tutorial-assess-vmware.md) 和 [Hyper-V VM](tutorial-assess-hyper-v.md)。
+- 试用我们的教程来评估 [VMware VM](./tutorial-assess-vmware-azure-vm.md) 和 [Hyper-V VM](tutorial-assess-hyper-v.md)。

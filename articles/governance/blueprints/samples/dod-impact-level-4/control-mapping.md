@@ -1,14 +1,14 @@
 ---
 title: DoD 影响级别 4 蓝图示例控制
-description: DoD 影响级别 4 蓝图示例的控制映射。 每个控制都映射到一个或多个协助评估的 Azure 策略。
-ms.date: 06/30/2020
+description: DoD 影响级别 4 蓝图示例的控制映射。 每个控制措施都映射到一个或多个协助评估的 Azure Policy 定义。
+ms.date: 01/08/2021
 ms.topic: sample
-ms.openlocfilehash: a704731f4fe8e810235507fd84c90b17571a8442
-ms.sourcegitcommit: 4f1c7df04a03856a756856a75e033d90757bb635
+ms.openlocfilehash: 4345cd67cda5b00d89d9eae1f8abaedb40228759
+ms.sourcegitcommit: c4c554db636f829d7abe70e2c433d27281b35183
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/07/2020
-ms.locfileid: "87923282"
+ms.lasthandoff: 01/08/2021
+ms.locfileid: "98035098"
 ---
 # <a name="control-mapping-of-the-dod-impact-level-4-blueprint-sample"></a>DoD 影响级别 4 蓝图示例的控制映射
 
@@ -17,8 +17,7 @@ ms.locfileid: "87923282"
 以下映射是到 **DoD 影响级别 4** 控制的映射。 使用右侧的导航栏可直接跳转到特定的控制映射。 许多的映射控制措施都是使用 [Azure Policy](../../../policy/overview.md) 计划实施的。 若要查看完整计划，请在 Azure 门户中打开“策略”，并选择“定义”页。  然后，找到并选择“ **\[预览\]：DoD 影响级别 4** 内置策略计划。
 
 > [!IMPORTANT]
-> 下面的每个控件都与一个或多个 [Azure Policy](../../../policy/overview.md) 定义关联。 这些策略可以帮助你[评估控件的符合性](../../../policy/how-to/get-compliance-data.md)；但是，控件与一个或多个策略之间通常不是 1:1 或完全匹配。 因此，Azure Policy 中的符合性仅引用策略本身；这不确保你完全符合控件的所有要求。 此外，符合性标准包含目前未由任何 Azure Policy 定义处理的控件。 因此，Azure Policy 中的符合性只是整体符合性状态的部分视图。 此符合性蓝图示例的控件和 Azure Policy 定义之间的关联可能会随着时间的推移而发生变化。
-> 若要查看更改历史记录，请参阅 [GitHub 提交历史记录](https://github.com/MicrosoftDocs/azure-docs/commits/master/articles/governance/blueprints/samples/dod-impact-level-4/control-mapping.md)。
+> 下面的每个控件都与一个或多个 [Azure Policy](../../../policy/overview.md) 定义关联。 这些策略有助于[评估控制的合规性](../../../policy/how-to/get-compliance-data.md)；但是，控制与一个或多个策略之间通常不是一对一或完全匹配。 因此，Azure Policy 中的符合性仅引用策略本身；这不确保你完全符合控件的所有要求。 此外，符合性标准包含目前未由任何 Azure Policy 定义处理的控件。 因此，Azure Policy 中的符合性只是整体符合性状态的部分视图。 此符合性蓝图示例的控件和 Azure Policy 定义之间的关联可能会随着时间的推移而发生变化。 若要查看更改历史记录，请参阅 [GitHub 提交历史记录](https://github.com/MicrosoftDocs/azure-docs/commits/master/articles/governance/blueprints/samples/dod-impact-level-4/control-mapping.md)。
 
 ## <a name="ac-2-account-management"></a>AC-2 帐户管理
 
@@ -32,7 +31,7 @@ ms.locfileid: "87923282"
 
 ## <a name="ac-2-7-account-management--role-based-schemes"></a>AC-2 (7) 帐户管理 | 基于角色的方案
 
-Azure 实施 [Azure 基于角色的访问控制 (Azure RBAC)](../../../../role-based-access-control/overview.md) 来帮助你管理谁有权访问 Azure 中的资源。 使用 Azure 门户可以评审有权访问 Azure 资源的用户及其权限。 此蓝图还分配 [Azure Policy](../../../policy/overview.md) 定义，用于审核 Azure Active Directory 身份验证在 SQL 服务器和 Service Fabric 中的使用。 使用 Azure Active Directory 身份验证可以简化权限管理，以及集中化数据库用户和其他 Microsoft 服务的标识管理。 此外，此蓝图还分配一个 Azure Policy 定义用于审核自定义 RBAC 规则的使用。 了解实施自定义 RBAC 规则的位置有助于验证需求以及实施是否适当，因为自定义 RBAC 规则容易出错。
+Azure 实施 [Azure 基于角色的访问控制 (Azure RBAC)](../../../../role-based-access-control/overview.md) 来帮助你管理谁有权访问 Azure 中的资源。 使用 Azure 门户可以评审有权访问 Azure 资源的用户及其权限。 此蓝图还分配 [Azure Policy](../../../policy/overview.md) 定义，用于审核 Azure Active Directory 身份验证在 SQL 服务器和 Service Fabric 中的使用。 使用 Azure Active Directory 身份验证可以简化权限管理，以及集中化数据库用户和其他 Microsoft 服务的标识管理。 另外，此蓝图还分配一个 Azure Policy 定义，用于审核自定义 Azure RBAC 规则的使用。 了解实施自定义 Azure RBAC 规则的位置有助于验证需求以及实施是否适当，因为自定义 Azure RBAC 规则容易出错。
 
 - 应该为 SQL 服务器预配 Azure Active Directory 管理员
 - 审核自定义 RBAC 规则的使用
@@ -102,11 +101,11 @@ Azure 实施 [Azure 基于角色的访问控制 (Azure RBAC)](../../../../role-b
 Azure Monitor 收集的日志数据存储在支持集中配置和管理的 Log Analytics 工作区中。 此蓝图通过分配 [Azure Policy](../../../policy/overview.md) 定义来确保事件被记录下来，这些定义审核并强制在 Azure 虚拟机上部署 Log Analytics 代理。
 
 - \[预览\]：审核 Log Analytics 代理部署 - VM 映像 (OS) 未列出
-- \[预览\]：审核 VMSS 中的 Log Analytics 代理部署 - VM 映像 (OS) 未列出
+- 审核虚拟机规模集中的 Log Analytics 代理部署 - VM 映像 (OS) 未列出
 - \[预览\]：审核 VM 的 Log Analytics 工作区 — 报告不匹配
-- \[预览\]：为 Linux VM 规模集(VMSS)部署 Log Analytics 代理
+- 为 Linux 虚拟机规模集部署 Log Analytics 代理
 - \[预览\]：为 Linux VM 部署 Log Analytics 代理
-- \[预览\]：为 Windows VM 规模集(VMSS)部署 Log Analytics 代理
+- 为 Windows 虚拟机规模集部署 Log Analytics 代理
 - \[预览\]：为 Windows VM 部署 Log Analytics 代理
 
 ## <a name="au-5-response-to-audit-processing-failures"></a>AU-5 对审核处理失败的响应
@@ -123,11 +122,11 @@ Azure Monitor 收集的日志数据存储在支持集中配置和管理的 Log A
 Azure Monitor 收集的日志数据存储在支持集中报告和分析的 Log Analytics 工作区中。 此蓝图通过分配 [Azure Policy](../../../policy/overview.md) 定义来确保事件被记录下来，这些定义审核并强制在 Azure 虚拟机上部署 Log Analytics 代理。
 
 - \[预览\]：审核 Log Analytics 代理部署 - VM 映像 (OS) 未列出
-- \[预览\]：审核 VMSS 中的 Log Analytics 代理部署 - VM 映像 (OS) 未列出
+- 审核虚拟机规模集中的 Log Analytics 代理部署 - VM 映像 (OS) 未列出
 - \[预览\]：审核 VM 的 Log Analytics 工作区 — 报告不匹配
-- \[预览\]：为 Linux VM 规模集(VMSS)部署 Log Analytics 代理
+- 为 Linux 虚拟机规模集部署 Log Analytics 代理
 - \[预览\]：为 Linux VM 部署 Log Analytics 代理
-- \[预览\]：为 Windows VM 规模集(VMSS)部署 Log Analytics 代理
+- 为 Windows 虚拟机规模集部署 Log Analytics 代理
 - \[预览\]：为 Windows VM 部署 Log Analytics 代理
 
 ## <a name="au-6-5-audit-review-analysis-and-reporting--integration--scanning-and-monitoring-capabilities"></a>AU-6 (5) 审核评审、分析和报告 | 集成/扫描和监视功能
@@ -144,7 +143,7 @@ Azure Monitor 收集的日志数据存储在支持集中报告和分析的 Log A
 - 应该通过漏洞评估解决方案修复漏洞
 - 应该修复虚拟机规模集上安全配置中的漏洞
 - \[预览\]：审核 Log Analytics 代理部署 - VM 映像 (OS) 未列出
-- \[预览\]：审核 VMSS 中的 Log Analytics 代理部署 - VM 映像 (OS) 未列出
+- 审核虚拟机规模集中的 Log Analytics 代理部署 - VM 映像 (OS) 未列出
 
 ## <a name="au-12-audit-generation"></a>AU-12 审核生成
 
@@ -152,11 +151,11 @@ Azure Monitor 收集的日志数据存储在支持集中报告和分析的 Log A
 这些策略定义还审核诊断日志配置，以提供对 Azure 资源内执行的操作的见解。 此外，审核和高级数据安全在 SQL 服务器上配置。
 
 - \[预览\]：审核 Log Analytics 代理部署 - VM 映像 (OS) 未列出
-- \[预览\]：审核 VMSS 中的 Log Analytics 代理部署 - VM 映像 (OS) 未列出
+- 审核虚拟机规模集中的 Log Analytics 代理部署 - VM 映像 (OS) 未列出
 - \[预览\]：审核 VM 的 Log Analytics 工作区 — 报告不匹配
-- \[预览\]：为 Linux VM 规模集(VMSS)部署 Log Analytics 代理
+- 为 Linux 虚拟机规模集部署 Log Analytics 代理
 - \[预览\]：为 Linux VM 部署 Log Analytics 代理
-- \[预览\]：为 Windows VM 规模集(VMSS)部署 Log Analytics 代理
+- 为 Windows 虚拟机规模集部署 Log Analytics 代理
 - \[预览\]：为 Windows VM 部署 Log Analytics 代理
 - 审核诊断设置
 - 应在 SQL Server 的高级数据安全设置上启用审核
@@ -336,11 +335,8 @@ Azure 的分布式拒绝服务 (DDoS) 标准层通过基本服务层提供额外
 
 ## <a name="si-02-06-flaw-remediation--removal-of-previous-versions-of-software--firmware"></a>SI-02 (06) 缺陷修正 | 删除以前版本的软件/固件
 
-此蓝图分配的策略定义可帮助确保你的应用程序使用最新版本的 .NET Framework、HTTP、Java、PHP、Python 和 TLS。 此蓝图分配的一个策略定义还可以确保 Kubernetes 服务升级到其不易受攻击的版本。
+此蓝图分配的策略定义有助于确保你的应用程序使用最新版本的 HTTP、Java、PHP、Python 和 TLS。 此蓝图分配的一个策略定义还可以确保 Kubernetes 服务升级到其不易受攻击的版本。
 
-- 确保用作 API 应用一部分的“.Net Framework”版本是最新的
-- 确保用作函数应用一部分的“.Net Framework”版本是最新的
-- 确保用作 Web 应用一部分的“.Net Framework”版本是最新的
 - 确保用于运行 API 应用的“HTTP 版本”是最新的
 - 确保用于运行函数应用的“HTTP 版本”是最新的
 - 确保用于运行 Web 应用的“HTTP 版本”是最新的
@@ -348,7 +344,6 @@ Azure 的分布式拒绝服务 (DDoS) 标准层通过基本服务层提供额外
 - 确保用作函数应用一部分的“Java 版本”是最新的
 - 确保用作 Web 应用一部分的“Java 版本”是最新的
 - 确保用作 API 应用一部分的“PHP 版本”是最新的
-- 确保用作函数应用一部分的“PHP 版本”是最新的
 - 确保用作 WEB 应用一部分的“PHP 版本”是最新的
 - 确保用作 API 应用一部分的“Python 版本”是最新的
 - 确保用作函数应用一部分的“Python 版本”是最新的
@@ -356,7 +351,7 @@ Azure 的分布式拒绝服务 (DDoS) 标准层通过基本服务层提供额外
 - 应在 API 应用中使用最新的 TLS 版本
 - 应在函数应用中使用最新的 TLS 版本
 - 应在 Web 应用中使用最新的 TLS 版本
-- \[预览\]：Kubernetes 服务应升级到不易受攻击的 Kubernetes 版本
+- Kubernetes 服务应升级到不易受攻击的 Kubernetes 版本
 
 ## <a name="si-3-malicious-code-protection"></a>SI-3 恶意代码防护
 
@@ -378,11 +373,11 @@ Azure 的分布式拒绝服务 (DDoS) 标准层通过基本服务层提供额外
 此蓝图有助于通过审核和跨 Azure 资源强制执行日志记录和数据安全来监视系统。 具体而言，分配的策略审核并强制执行 Log Analytics 代理的部署和 SQL 数据库、存储帐户和网络资源的强化安全设置。 这些功能有助于检测异常行为和攻击指标，以便你采取相应措施。
 
 - \[预览\]：审核 Log Analytics 代理部署 - VM 映像 (OS) 未列出
-- \[预览\]：审核 VMSS 中的 Log Analytics 代理部署 - VM 映像 (OS) 未列出
+- 审核虚拟机规模集中的 Log Analytics 代理部署 - VM 映像 (OS) 未列出
 - \[预览\]：审核 VM 的 Log Analytics 工作区 — 报告不匹配
-- \[预览\]：为 Linux VM 规模集(VMSS)部署 Log Analytics 代理
+- 为 Linux 虚拟机规模集部署 Log Analytics 代理
 - \[预览\]：为 Linux VM 部署 Log Analytics 代理
-- \[预览\]：为 Windows VM 规模集(VMSS)部署 Log Analytics 代理
+- 为 Windows 虚拟机规模集部署 Log Analytics 代理
 - \[预览\]：为 Windows VM 部署 Log Analytics 代理
 - 应在托管实例上启用高级数据安全性
 - 应在 SQL 服务器上启用高级数据安全性

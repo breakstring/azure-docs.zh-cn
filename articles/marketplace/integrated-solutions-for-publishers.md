@@ -7,16 +7,16 @@ ms.topic: conceptual
 author: vikrambmsft
 ms.author: vikramb
 ms.date: 04/16/2020
-ms.openlocfilehash: a1fcaced7783d09f1733fbee8744ba725b639a02
-ms.sourcegitcommit: d7008edadc9993df960817ad4c5521efa69ffa9f
+ms.openlocfilehash: 0a3188d5dc2c34c9959ae488ad5a5f962a99f02f
+ms.sourcegitcommit: aaa65bd769eb2e234e42cfb07d7d459a2cc273ab
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/08/2020
-ms.locfileid: "86119525"
+ms.lasthandoff: 01/27/2021
+ms.locfileid: "98880264"
 ---
 # <a name="publish-an-integrated-solution"></a>发布集成解决方案
 
-本文介绍了向商业市场发布集成解决方案的总体过程和要求。 在单个捆绑产品/服务中，集成解决方案结合了软件供应商的点解决方案技术与服务合作伙伴的部署和支持。 服务合作伙伴在 Microsoft AppSource 或 Azure 市场中将产品/服务作为[咨询服务](./consulting-services.md)列出。
+本文介绍了向商业市场发布集成解决方案的总体过程和要求。 在单个捆绑产品/服务中，集成解决方案结合了软件供应商的点解决方案技术与服务合作伙伴的部署和支持。 服务合作伙伴在 Microsoft AppSource 或 Azure 市场中将产品/服务作为[咨询服务](./plan-consulting-service-offer.md)列出。
 
 集成解决方案旨在解决特定客户的需求或方案。 提供商首先要了解行业所面临的挑战或难点。 然后，他们可以将两种或更多同类最佳技术相集成，为客户创造统一且可重复的部署体验。 提供商可以让客户快速启动和运行。 他们为客户提供单一的联系点，进而提供相关的自定义、咨询和解决方案支持。 其结果是一个集成的解决方案，其中包括技术和服务。
 
@@ -32,18 +32,17 @@ ms.locfileid: "86119525"
 ## <a name="eligibility-criteria"></a>资格条件
 
 * 参与合作伙伴必须具有 MPN ID。
-* 参与的服务提供商应准备好进行联合销售。
-* 参与的软件供应商应准备好进行 IP 联合销售。
+* 参与服务提供商应 [共同销售](/legal/marketplace/certification-policies#3000-requirements-for-co-sell-status)。
+* 参与的软件供应商应该是 [IP 联销售准备就绪](/legal/marketplace/certification-policies#3000-requirements-for-co-sell-status)。
 * 至少一个参与合作伙伴必须具有以下某个领域的黄金资格：
-
-    * 应用程序开发
-    * 应用程序集成
-    * 应用程序生命周期管理
-    * 云平台
-    * 数据分析
-    * 数据中心
-    * 数据平台
-    * DevOps
+    - 应用程序开发
+    - 应用程序集成
+    - 应用程序生命周期管理
+    - 云平台
+    - 数据分析
+    - 数据中心
+    - 数据平台
+    - DevOps
 
 * 解决方案必须包含至少两个合作伙伴组织，将 IP 和服务组合在一起，以形成完整的客户解决方案和体验。
 * 必须在 Azure、Dynamics 365 或 Power Platform 上构建合作伙伴 IP。
@@ -52,7 +51,7 @@ ms.locfileid: "86119525"
 
 ## <a name="submit-a-nomination"></a>提交提名
 
-希望参与计划的合作伙伴应确定他们要合作的其他合作伙伴。 他们应填写[集成解决方案提名表单](https://aka.ms/AA5qicu)。 集成解决方案计划团队将评审提名，并在 10 个工作日内进行跟进。 该团队提供审批和后续步骤。
+希望参与计划的合作伙伴应确定他们要合作的其他合作伙伴。 他们应完成 " [集成解决方案提名" 窗体](https://aka.ms/AA5qicu)。 集成解决方案计划团队将评审提名，并在 10 个工作日内进行跟进。 该团队提供审批和后续步骤。
 
 ## <a name="develop-an-integrated-solution"></a>部署集成解决方案
 
@@ -104,7 +103,7 @@ ms.locfileid: "86119525"
 
 ## <a name="publish-your-integrated-solution"></a>发布集成解决方案
 
-完成技术集成和营销宣传后，请参阅 [Microsoft AppSource 和 Azure 市场咨询服务](./consulting-services.md)发布者指南。 使用此资源确定是否将在 Microsoft AppSource 或 Azure 市场中发布解决方案。 还可以使用指南准备发布项目并完成发布过程。
+完成技术集成和营销宣传后，请参阅 [Microsoft AppSource 和 Azure 市场咨询服务](./plan-consulting-service-offer.md)发布者指南。 使用此资源确定是否将在 Microsoft AppSource 或 Azure 市场中发布解决方案。 还可以使用指南准备发布项目并完成发布过程。
 
 尽管有五种服务类型可用于咨询服务产品，但集成解决方案必须是概念证明或完整实现。
 
@@ -114,4 +113,4 @@ ms.locfileid: "86119525"
 
 ## <a name="next-steps"></a>后续步骤
 
-有关在市场中购买集成解决方案的信息，请参阅[集成解决方案](./integrated-solutions.md)。
+- [集成解决方案提名表单](https://aka.ms/AA5qicu)

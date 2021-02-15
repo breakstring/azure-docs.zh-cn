@@ -17,12 +17,12 @@ ms.date: 11/13/2018
 ms.author: markvi
 ms.reviewer: dhanyahk
 ms.collection: M365-identity-device-management
-ms.openlocfilehash: eec5c5a3d810fdd2d561313e3a355e872fb525c2
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: abc8badf261e631dd6ceb7af9a6a0cb3676ae25d
+ms.sourcegitcommit: a43a59e44c14d349d597c3d2fd2bc779989c71d7
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "85608086"
+ms.lasthandoff: 11/25/2020
+ms.locfileid: "96017587"
 ---
 # <a name="troubleshoot-errors-in-azure-active-directory-reporting-api"></a>对 Azure Active Directory 报告 API 中的错误进行故障排除
 
@@ -38,7 +38,7 @@ ms.locfileid: "85608086"
 
 ### <a name="error-user-is-not-in-the-allowed-roles"></a>错误: 用户不是允许的角色 
 
-如果在尝试使用 API 访问审核日志或登录时看到此错误消息，请确保帐户属于 Azure Active Directory 租户中的“安全读取者”或“报表读取者”角色********。 
+如果在尝试使用 API 访问审核日志或登录时看到此错误消息，请确保帐户属于 Azure Active Directory 租户中的“安全读取者”或“报表读取者”角色。 
 
 ### <a name="error-application-missing-aad-read-directory-data-permission"></a>错误：应用程序缺少 AAD“读取目录数据”权限 
 
@@ -50,5 +50,5 @@ ms.locfileid: "85608086"
 
 ## <a name="next-steps"></a>后续步骤
 
-[使用审核 API 参考](https://developer.microsoft.com/graph/docs/api-reference/beta/resources/directoryaudit) 
-[使用登录活动报告 API 参考](https://developer.microsoft.com/graph/docs/api-reference/beta/resources/signin)
+[使用审核 API 参考](/graph/api/resources/directoryaudit?view=graph-rest-beta) 
+[使用登录活动报告 API 参考](/graph/api/resources/signin?view=graph-rest-beta)

@@ -1,19 +1,16 @@
 ---
 title: 教程：适用于 Spark 和 IntelliJ 的 Scala Maven 应用程序 - Azure HDInsight
 description: 教程 - 使用 Apache Maven 作为生成系统创建用 Scala 编写的 Spark 应用程序。 并且介绍了由 IntelliJ IDEA 提供的适用于 Scala 的现有 Maven 原型。
-author: hrasheed-msft
-ms.author: hrasheed
-ms.reviewer: jasonh
 ms.service: hdinsight
 ms.topic: tutorial
-ms.custom: contperfq1
+ms.custom: contperf-fy21q1
 ms.date: 08/21/2020
-ms.openlocfilehash: cfdb02b0a5942536a608fbc957ed69d1efd97e8e
-ms.sourcegitcommit: afa1411c3fb2084cccc4262860aab4f0b5c994ef
+ms.openlocfilehash: d2c7c4feca32544a0e15e876c7207c49dee39341
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/23/2020
-ms.locfileid: "88756888"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98940516"
 ---
 # <a name="tutorial-create-a-scala-maven-application-for-apache-spark-in-hdinsight-using-intellij"></a>教程：使用 IntelliJ 在 HDInsight 中创建适用于 Apache Spark 的 Scala Maven 应用程序
 
@@ -39,7 +36,7 @@ ms.locfileid: "88756888"
 
 * Java IDE。 本文使用 [IntelliJ IDEA Community 版本2018.3.4](https://www.jetbrains.com/idea/download/)。
 
-* Azure Toolkit for IntelliJ。  请参阅[安装 Azure Toolkit for IntelliJ](https://docs.microsoft.com/java/azure/intellij/azure-toolkit-for-intellij-create-hello-world-web-app#installation-and-sign-in)。
+* Azure Toolkit for IntelliJ。  请参阅[安装 Azure Toolkit for IntelliJ](/java/azure/intellij/azure-toolkit-for-intellij-create-hello-world-web-app#installation-and-sign-in)。
 
 ## <a name="install-scala-plugin-for-intellij-idea"></a>安装适用于 IntelliJ IDEA 的 Scala 插件
 
@@ -98,7 +95,7 @@ ms.locfileid: "88756888"
 
 5. 从原型列表中，选择 `org.scala-tools.archetypes:scala-archetype-simple`。 此原型会创建适当的目录结构，并下载所需的默认依赖项来编写 Scala 程序。
 
-    ![“IntelliJ IDEA 创建 Maven 项目”](./media/apache-spark-create-standalone-application/intellij-project-create-maven.png)
+    ![屏幕截图显示了“新建项目”窗口中的所选原型。](./media/apache-spark-create-standalone-application/intellij-project-create-maven.png)
 
 6. 选择“**下一页**”。
 
@@ -107,7 +104,7 @@ ms.locfileid: "88756888"
     - **GroupId:** com.microsoft.spark.example
     - **ArtifactId:** SparkSimpleApp
 
-    ![“IntelliJ IDEA 创建 Maven 项目”](./media/apache-spark-create-standalone-application/intellij-artifact-coordinates.png)
+    ![屏幕截图显示了“新建项目”窗口中的“项目坐标”选项。](./media/apache-spark-create-standalone-application/intellij-artifact-coordinates.png)
 
 8. 选择“**下一页**”。
 
@@ -213,7 +210,7 @@ ms.locfileid: "88756888"
 
 * **将应用程序 jar 复制到与群集关联的 Azure 存储 blob**。 可以使用命令行实用工具 AzCopy 来执行此操作。 也可以使用许多其他客户端来上传数据。 有关详细信息，请参阅[在 HDInsight 中上传 Apache Hadoop 作业的数据](../hdinsight-upload-data.md)。
 
-* **使用 Apache Livy 将应用程序作业远程提交**到 Spark 群集。 HDInsight 上的 Spark 群集包括公开 REST 终结点的 Livy，可远程提交 Spark 作业。 有关详细信息，请参阅[将 Apache Livy 与 HDInsight 上的 Apache Spark 群集配合使用以远程提交 Spark 作业](apache-spark-livy-rest-interface.md)。
+* **使用 Apache Livy 将应用程序作业远程提交** 到 Spark 群集。 HDInsight 上的 Spark 群集包括公开 REST 终结点的 Livy，可远程提交 Spark 作业。 有关详细信息，请参阅[将 Apache Livy 与 HDInsight 上的 Apache Spark 群集配合使用以远程提交 Spark 作业](apache-spark-livy-rest-interface.md)。
 
 ## <a name="clean-up-resources"></a>清理资源
 

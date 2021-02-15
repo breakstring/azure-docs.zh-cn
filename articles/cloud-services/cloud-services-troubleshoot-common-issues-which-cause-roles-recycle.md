@@ -1,27 +1,25 @@
 ---
-title: 云服务角色回收的常见原因 | Microsoft Docs
+title: 云服务 (经典) 角色回收的常见原因 |Microsoft Docs
 description: 突然回收云服务角色可能会导致严重停机。 以下是导致角色回收的一些常见问题，解决这些问题将有助于减少停机。
-services: cloud-services
-documentationcenter: ''
-author: simonxjx
-manager: dcscontentpm
-editor: ''
-tags: top-support-issue
-ms.assetid: 533930d1-8035-4402-b16a-cf887b2c4f85
+ms.topic: article
 ms.service: cloud-services
-ms.topic: troubleshooting
-ms.tgt_pltfrm: na
-ms.workload: tbd
-ms.date: 06/15/2018
-ms.author: v-six
-ms.openlocfilehash: 61f555dc8f24ce303934187d36ee994b25b31920
-ms.sourcegitcommit: dee7b84104741ddf74b660c3c0a291adf11ed349
+ms.date: 10/14/2020
+ms.author: tagore
+author: tanmaygore
+ms.reviewer: mimckitt
+ms.custom: ''
+ms.openlocfilehash: 9610b32207f8367b9415c0881e49b54e24c49ad7
+ms.sourcegitcommit: 6272bc01d8bdb833d43c56375bab1841a9c380a5
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "85920084"
+ms.lasthandoff: 01/23/2021
+ms.locfileid: "98741156"
 ---
-# <a name="common-issues-that-cause-roles-to-recycle"></a>导致角色回收的常见问题
+# <a name="common-issues-that-cause-azure-cloud-service-classic-roles-to-recycle"></a>导致 Azure 云服务 (经典) 角色回收的常见问题
+
+> [!IMPORTANT]
+> [Azure 云服务 (扩展支持) ](../cloud-services-extended-support/overview.md) 是适用于 Azure 云服务产品的新的基于 azure 资源管理器的部署模型。进行此更改后，基于 Azure Service Manager 的部署模型运行的 Azure 云服务已重命名为云服务 (经典) ，所有新部署应使用 [云服务 (扩展支持) ](../cloud-services-extended-support/overview.md)。
+
 本文讨论部署问题的一些常见原因，并提供故障排除技巧以帮助你解决这些问题。 角色实例无法启动，或者在“正在初始化”、“忙”和“正在停止”状态之间循环时，即指示应用程序存在问题。
 
 [!INCLUDE [support-disclaimer](../../includes/support-disclaimer.md)]
@@ -63,11 +61,11 @@ DefaultEndpointsProtocol=https;AccountName=MyAccountName;AccountKey=MyAccountKey
 若要在 TLS 下运行 Web 角色，必须确保导出的管理证书包含私钥。 如果使用 Windows 证书管理器导出证书，请务必对“导出私钥”选项选择“是”    。 该证书必须以 PFX 格式导出，这是当前支持的唯一格式。
 
 ## <a name="next-steps"></a>后续步骤
-查看更多针对云服务的 [故障排除文章](https://azure.microsoft.com/documentation/articles/?tag=top-support-issue&product=cloud-services) 。
+查看更多针对云服务的 [故障排除文章](../index.yml?product=cloud-services&tag=top-support-issue) 。
 
-在 [Kevin Williamson 博客系列](https://blogs.msdn.com/b/kwill/archive/2013/08/09/windows-azure-paas-compute-diagnostics-data.aspx)中查看更多角色回收方案。
+在 [Kevin Williamson 博客系列](/archive/blogs/kwill/windows-azure-paas-compute-diagnostics-data)中查看更多角色回收方案。
 
-[RoleEntryPoint]: https://msdn.microsoft.com/library/microsoft.windowsazure.serviceruntime.roleentrypoint.aspx
-[OnStart]: https://msdn.microsoft.com/library/microsoft.windowsazure.serviceruntime.roleentrypoint.onstart.aspx
-[OnStop]: https://msdn.microsoft.com/library/microsoft.windowsazure.serviceruntime.roleentrypoint.onstop.aspx
-[Run]: https://msdn.microsoft.com/library/microsoft.windowsazure.serviceruntime.roleentrypoint.run.aspx
+[RoleEntryPoint]: /previous-versions/azure/reference/ee758619(v=azure.100)
+[OnStart]: /previous-versions/azure/reference/ee772851(v=azure.100)
+[OnStop]: /previous-versions/azure/reference/ee772844(v=azure.100)
+[Run]: /previous-versions/azure/reference/ee772746(v=azure.100)

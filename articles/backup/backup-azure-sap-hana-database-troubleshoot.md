@@ -3,12 +3,12 @@ title: 排查 SAP HANA 数据库备份错误
 description: 介绍如何排查在使用 Azure 备份对 SAP HANA 数据库进行备份时可能发生的常见错误。
 ms.topic: troubleshooting
 ms.date: 11/7/2019
-ms.openlocfilehash: 6216c39231ad17a55f0d428fe5e1f85e64cef403
-ms.sourcegitcommit: ac7ae29773faaa6b1f7836868565517cd48561b2
+ms.openlocfilehash: b9fa73ee38e337a547816432212bc68d419f40bb
+ms.sourcegitcommit: 1d366d72357db47feaea20c54004dc4467391364
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/25/2020
-ms.locfileid: "88826984"
+ms.lasthandoff: 11/23/2020
+ms.locfileid: "95411319"
 ---
 # <a name="troubleshoot-backup-of-sap-hana-databases-on-azure"></a>排查 Azure 上的 SAP HANA 数据库备份问题
 
@@ -96,8 +96,8 @@ ms.locfileid: "88826984"
 请注意以下几点：
 
 - 默认情况下会使用备份项名称填充还原的数据库名称。 在本例中为 h21(sdc)。
-- 选择目标为 "H11" 不会自动更改还原的数据库名称。 **应将其编辑为 h11(sdc)** 。 对于 SDC，还原的数据库名称将是小写字母形式的目标实例 ID，并且在括号中追加了“sdc”。
-- 由于 SDC 只能包含一个数据库，因此还需要单击相应的复选框，以允许使用恢复点数据替代现有的数据库数据。
+- 选择 H11 作为目标不会自动更改已还原的数据库名称。 **应将其编辑为 h11(sdc)** 。 对于 SDC，还原的数据库名称将是小写字母形式的目标实例 ID，并且在括号中追加了“sdc”。
+- 由于 SDC 只能包含一个数据库，因此还需要选择相应的复选框，以允许使用恢复点数据替代现有的数据库数据。
 - 在 Linux 中，此项输入区分大小写。 因此请小心保留大小写。
 
 ### <a name="multiple-container-database-mdc-restore"></a>多容器数据库 (MDC) 还原
@@ -153,7 +153,7 @@ ms.locfileid: "88826984"
 - 确保新的 OS 版本、SDC 或 MDC 版本当前[受 Azure 备份支持](sap-hana-backup-support-matrix.md#scenario-support)
 - 对数据库[停止保护并保留数据](sap-hana-db-manage.md#stop-protection-for-an-sap-hana-database)
 - 执行升级或更新
-- 重新运行预注册脚本。 通常，升级过程会删除必需的角色。 运行预注册脚本有助于验证所有必需的角色
+- 重新运行预注册脚本。 通常，升级过程可能会删除 [必要的角色](tutorial-backup-sap-hana-db.md#what-the-pre-registration-script-does)。 运行预注册脚本将帮助验证所有必需的角色。
 - 再次恢复对数据库的保护
 
 ## <a name="sdc-to-mdc-upgrade-with-no-change-in-sid"></a>从 SDC 升级到 MDC（不更改 SID）
@@ -165,7 +165,7 @@ ms.locfileid: "88826984"
 - 执行升级。 完成后，HANA 系统现在便是包含一个系统 DB 和多个租户 DB 的 MDC
 - 重新运行[预注册脚本](https://aka.ms/scriptforpermsonhana)
 - 在 Azure 门户中为同一计算机重新注册扩展（“备份” -> “查看详细信息”->“选择相关 Azure VM”->“重新注册”） 
-- 针对同一 VM 单击“重新发现 DB”。 此操作应将步骤 3 中的新 DB 显示为 SYSTEMDB 和租户 DB，而不是 SDC
+- 针对同一 VM 选择“重新发现 DB”。 此操作应将步骤 3 中的新 DB 显示为 SYSTEMDB 和租户 DB，而不是 SDC
 - 旧的 SDC 数据库将继续位于保管库中，并根据相应策略保留旧的备份数据
 - 为这些数据库配置备份
 
@@ -174,11 +174,11 @@ ms.locfileid: "88826984"
 要从 SDC 升级到 MDC 并更改 SID，可以按如下方式进行处理：
 
 - 确保新的 MDC 版本当前[受 Azure 备份支持](sap-hana-backup-support-matrix.md#scenario-support)
-- 对旧的 SDC 数据库**停止保护并保留数据**
+- 对旧的 SDC 数据库 **停止保护并保留数据**
 - 执行升级。 完成后，HANA 系统现在便是包含一个系统 DB 和多个租户 DB 的 MDC
 - 重新运行具有正确详细信息（新 SID 和 MDC）的[预注册脚本](https://aka.ms/scriptforpermsonhana)。 由于 SID 发生了更改，你可能会遇到阻碍脚本成功运行的问题。 如果遇到问题，请联系 Azure 备份支持部门。
 - 在 Azure 门户中为同一计算机重新注册扩展（“备份” -> “查看详细信息”->“选择相关 Azure VM”->“重新注册”） 
-- 针对同一 VM 单击“重新发现 DB”。 此操作应将步骤 3 中的新 DB 显示为 SYSTEMDB 和租户 DB，而不是 SDC
+- 针对同一 VM 选择“重新发现 DB”。 此操作应将步骤 3 中的新 DB 显示为 SYSTEMDB 和租户 DB，而不是 SDC
 - 旧的 SDC 数据库将继续位于保管库中，并根据相应策略保留旧的备份数据
 - 为这些数据库配置备份
 

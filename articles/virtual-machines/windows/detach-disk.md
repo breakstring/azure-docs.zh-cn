@@ -6,21 +6,21 @@ ms.service: virtual-machines-windows
 ms.subservice: disks
 ms.workload: infrastructure-services
 ms.topic: how-to
-ms.date: 01/08/2020
+ms.date: 01/26/2021
 ms.author: cynthn
-ms.openlocfilehash: 02192850dd9103b6c1783baf42c184ee16fe299f
-ms.sourcegitcommit: 3543d3b4f6c6f496d22ea5f97d8cd2700ac9a481
+ms.openlocfilehash: a995cd1d02438ae3be7091ba55e945549558829d
+ms.sourcegitcommit: d1e56036f3ecb79bfbdb2d6a84e6932ee6a0830e
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/20/2020
-ms.locfileid: "86500678"
+ms.lasthandoff: 01/29/2021
+ms.locfileid: "99055189"
 ---
 # <a name="how-to-detach-a-data-disk-from-a-windows-virtual-machine"></a>如何从 Windows 虚拟机分离数据磁盘
 
 当不再需要附加到虚拟机的数据磁盘时，可以轻松地分离它。 这会从虚拟机中删除该磁盘，但不会从存储中删除它。
 
 > [!WARNING]
-> 如果用户分离磁盘，它不会自动删除。 如果用户订阅了高级存储，则将继续承担该磁盘的存储费用。 有关详细信息，请参阅[使用高级存储时的定价和计费方式](disks-types.md#billing)。
+> 如果用户分离磁盘，它不会自动删除。 如果用户订阅了高级存储，则将继续承担该磁盘的存储费用。 有关详细信息，请参阅[使用高级存储时的定价和计费方式](../disks-types.md#billing)。
 
 如果希望再次使用磁盘上的现有数据，可以将其重新附加到相同的虚拟机或另一个虚拟机。
 
@@ -53,12 +53,13 @@ Update-AzVM `
 1. 在左侧菜单中，选择“虚拟机”。
 1. 选择具有要分离的数据磁盘的虚拟机。
 1. 在“设置”下，选择“磁盘” 。
-1. 在“磁盘”窗格的顶部，选择“编辑”。
-1. 在“磁盘”窗格中，在要分离的数据磁盘的最右侧，选择“分离”。
+1. 在 " **磁盘** " 窗格中，选择要分离的数据磁盘的最右侧，然后单击 " **X 分离** " 按钮。
 1. 选择页面顶部的“保存”以保存更改。
 
 磁盘保留在存储中，但不再附加到虚拟机。
 
 ## <a name="next-steps"></a>后续步骤
 
-要重新使用数据磁盘，只需[将其附加到其他 VM](attach-managed-disk-portal.md?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json) 即可
+要重新使用数据磁盘，只需[将其附加到其他 VM](attach-managed-disk-portal.md) 即可。
+
+如果要删除磁盘，以便不再产生存储费用，请参阅 [查找并删除未连接的 Azure 托管和非托管磁盘-Azure 门户](../disks-find-unattached-portal.md)。

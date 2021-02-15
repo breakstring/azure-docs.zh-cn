@@ -6,14 +6,14 @@ services: site-recovery
 manager: rochakm
 ms.service: site-recovery
 ms.topic: conceptual
-ms.date: 03/06/2019
+ms.date: 09/15/2020
 ms.author: mayg
-ms.openlocfilehash: 281743268364b0e9d39c7bea28afc17d753db2f6
-ms.sourcegitcommit: e995f770a0182a93c4e664e60c025e5ba66d6a45
+ms.openlocfilehash: 9e1008f7acbfe0685b7a171176c7dc54592d1491
+ms.sourcegitcommit: a43a59e44c14d349d597c3d2fd2bc779989c71d7
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/08/2020
-ms.locfileid: "86130141"
+ms.lasthandoff: 11/25/2020
+ms.locfileid: "96019236"
 ---
 # <a name="install-a-linux-master-target-server-for-failback"></a>安装用于故障回复的 Linux 主目标服务器
 将虚拟机故障转移到 Azure 后，可将虚拟机故障回复到本地站点。 若要故障回复，需要在本地站点中重新保护 Azure 中的虚拟机。 对于此过程，需要安装一个本地主目标服务器用于接收流量。 
@@ -48,16 +48,7 @@ ms.locfileid: "86130141"
 - **OS 磁盘大小**：100 GB 或更多（用于安装 OS）
 - **保留驱动器的附加磁盘大小**：1 TB
 - **CPU 核心数**：4 个核心或更多
-
-支持以下的 Ubuntu 内核。
-
-
-|内核系列  |最高支持  |
-|---------|---------|
-|4.4      |4.4.0-81-generic         |
-|4.8      |4.8.0-56-generic         |
-|4.10     |4.10.0-24-generic        |
-
+- 内核：4.16。*
 
 ## <a name="deploy-the-master-target-server"></a>部署主目标服务器
 
@@ -120,7 +111,7 @@ ms.locfileid: "86130141"
 
 1.  在配置代理选项中选择默认选项，再选择“继续”按钮并按 Enter。 
      
-     ![选择如何管理升级](./media/vmware-azure-install-linux-master-target/image17-ubuntu.png)
+     ![此屏幕截图显示了在何处选择“继续”，然后选择“Enter”。](./media/vmware-azure-install-linux-master-target/image17-ubuntu.png)
 
 1.  在管理系统升级相应选项中选择“不自动更新”选项，再按 Enter。 
 
@@ -247,7 +238,7 @@ Azure Site Recovery 主目标服务器需要特定版本的 Ubuntu，请确保�
 
     ![多路径 ID](./media/vmware-azure-install-linux-master-target/image27.png)
 
-3. 格式化驱动器，然后在新驱动器上创建文件系统： **mkfs. ext4/dev/mapper/ \<Retention disk's multipath id> **。
+3. 格式化驱动器，然后在新驱动器上创建文件系统：mkfs.ext4 /dev/mapper/\<Retention disk's multipath id>。
     
     ![文件系统](./media/vmware-azure-install-linux-master-target/image23-centos.png)
 
@@ -351,7 +342,7 @@ Azure Site Recovery 主目标服务器需要特定版本的 Ubuntu，请确保�
 
 * 主目标不应在虚拟机上留下任何快照。 如果有快照，故障回复会失败。
 
-* 由于使用某些自定义 NIC 配置，网络接口已在启动期间被禁用，因此主目标代理无法初始化。 请确保正确设置以下属性。 检查 Ethernet 卡文件的/etc/network/interfaces. 中的这些属性
+* 由于使用某些自定义 NIC 配置，网络接口已在启动期间被禁用，因此主目标代理无法初始化。 请确保正确设置以下属性。 在以太网卡文件 /etc/network/interfaces 中检查这些属性。
     * auto eth0
     * iface eth0 inet dhcp <br>
 

@@ -7,29 +7,28 @@ ms.subservice: sizes
 ms.topic: conceptual
 ms.date: 02/03/2020
 ms.author: jushiman
-ms.openlocfilehash: ac3f31fecd53ddf1dd8bb81229c67cb4bb60c34e
-ms.sourcegitcommit: 271601d3eeeb9422e36353d32d57bd6e331f4d7b
+ms.openlocfilehash: d0972c9ed48f56a495804052c1ffc2b28e1db083
+ms.sourcegitcommit: b4e6b2627842a1183fce78bce6c6c7e088d6157b
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/20/2020
-ms.locfileid: "88650632"
+ms.lasthandoff: 01/30/2021
+ms.locfileid: "99095318"
 ---
 # <a name="av2-series"></a>Av2 系列
 
 Av2 系列 VM 可以部署在各种不同的硬件类型和处理器上。 Av2 系列 VM 的 CPU 性能和内存配置非常适合部署和测试等入门级工作负荷。 无论部署在哪个硬件上，都会限制大小以为正在运行的实例提供一致的处理器性能。 若要判断此大小部署所在的物理硬件，请从虚拟机中查询虚拟硬件。 一些示例用例包括开发和测试服务器、低流量 Web 服务器、中小型数据库、概念证明和代码存储库。
 
-ACU：100
+[ACU](acu.md)：100<br>
+[高级存储](premium-storage-performance.md)：不支持 <br>
+[高级存储缓存](premium-storage-performance.md)：不支持 <br>
+[实时迁移](maintenance-and-updates.md)：支持 <br>
+[内存保留更新](maintenance-and-updates.md)：支持 <br>
+[VM 代系支持](generation-2.md)：第 1 代 <br>
+[加速网络](../virtual-network/create-vm-accelerated-networking-cli.md)：不支持<br>
+[临时 OS 磁盘](ephemeral-os-disks.md)：不支持 <br>
+<br>
 
-高级存储：不支持
-
-高级存储缓存：不支持
-
-实时迁移：支持
-
-内存保留更新：支持
-
-
-| 大小 | vCPU | 内存:GiB | 临时存储 (SSD) GiB | 最大临时存储吞吐量：IOPS/读取 MBps/写入 MBps | 最大数据磁盘数/吞吐量：IOPS | 最大 NIC 数 | 预期网络带宽 (Mbps) 
+| 大小 | vCore | 内存:GiB | 临时存储 (SSD) GiB | 最大临时存储吞吐量：IOPS/读取 MBps/写入 MBps | 最大数据磁盘数/吞吐量：IOPS | 最大 NIC 数 | 预期的网络带宽 (Mbps)
 |---|---|---|---|---|---|---|---|
 | Standard_A1_v2  | 1 | 2  | 10 | 1000/20/10  | 2/2x500   | 2 | 250  |
 | Standard_A2_v2  | 2 | 4  | 20 | 2000/40/20  | 4/4x500   | 2 | 500  |
@@ -50,9 +49,9 @@ ACU：100
 - [高性能计算](sizes-hpc.md)
 - [前几代](sizes-previous-gen.md)
 
-定价计算器： [定价计算器](https://azure.microsoft.com/pricing/calculator/)
+定价计算器：[定价计算器](https://azure.microsoft.com/pricing/calculator/)
 
-有关磁盘类型的详细信息： [磁盘类型](./disks-types.md#ultra-disk)
+有关磁盘类型的详细信息：[磁盘类型](./disks-types.md#ultra-disk)
 
 ## <a name="next-steps"></a>后续步骤
 

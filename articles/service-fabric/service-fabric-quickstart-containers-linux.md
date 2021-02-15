@@ -3,14 +3,13 @@ title: 在 Azure 中的 Service Fabric 上创建 Linux 容器应用
 description: 在此快速入门中，将使用你的应用程序生成 Docker 映像、将映像推送到容器注册表，然后将容器部署到 Service Fabric 群集。
 ms.topic: quickstart
 ms.date: 07/22/2019
-ms.author: suhuruli
-ms.custom: mvc
-ms.openlocfilehash: d765168ea2eddaf42715536b5da67f15bb8a8cee
-ms.sourcegitcommit: dabd9eb9925308d3c2404c3957e5c921408089da
+ms.custom: mvc, devx-track-azurecli
+ms.openlocfilehash: f58b8feda0e88d8a5e7cddaabbc650b0f0ab3973
+ms.sourcegitcommit: a055089dd6195fde2555b27a84ae052b668a18c7
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/11/2020
-ms.locfileid: "86258542"
+ms.lasthandoff: 01/26/2021
+ms.locfileid: "98788156"
 ---
 # <a name="quickstart-deploy-linux-containers-to-service-fabric"></a>快速入门：将 Linux 容器部署到 Service Fabric
 
@@ -26,7 +25,7 @@ Azure Service Fabric 是一款分布式系统平台，可用于部署和管理�
 
 1. 如果还没有订阅，请在开始前创建一个[免费 Azure 帐户](https://azure.microsoft.com/free/)。
 
-2. 安装 [Azure CLI](/cli/azure/install-azure-cli-apt?view=azure-cli-latest)
+2. 安装 [Azure CLI](/cli/azure/install-azure-cli-apt)
 
 3. 安装 [Service Fabric SDK 和 CLI](service-fabric-get-started-linux.md#installation-methods)
 
@@ -53,14 +52,14 @@ cd service-fabric-containers/Linux/container-tutorial/Voting
 #!/bin/bash
 
 # Variables
-ResourceGroupName="containertestcluster" 
-ClusterName="containertestcluster" 
-Location="eastus" 
-Password="q6D7nN%6ck@6" 
-Subject="containertestcluster.eastus.cloudapp.azure.com" 
-VaultName="containertestvault" 
-VmPassword="Mypa$$word!321"
-VmUserName="sfadminuser"
+ResourceGroupName='containertestcluster' 
+ClusterName='containertestcluster' 
+Location='eastus' 
+Password='q6D7nN%6ck@6' 
+Subject='containertestcluster.eastus.cloudapp.azure.com' 
+VaultName='containertestvault' 
+VmPassword='Mypa$$word!321'
+VmUserName='sfadminuser'
 
 # Login to Azure and set the subscription
 az login
@@ -169,7 +168,7 @@ Service Fabric 可确保在发生故障时，将容器实例自动转移到群�
 
 若要删除群集及其占用的所有资源，最简单的方式是删除资源组。
 
-登录到 Azure，选择要删除群集的订阅 ID。 可通过登录到 Azure 门户查找订阅 ID。 使用 [az group delete 命令](/cli/azure/group?view=azure-cli-latest)删除资源组和所有群集资源。
+登录到 Azure，选择要删除群集的订阅 ID。 可通过登录到 Azure 门户查找订阅 ID。 使用 [az group delete 命令](/cli/azure/group)删除资源组和所有群集资源。
 
 ```azurecli
 az login

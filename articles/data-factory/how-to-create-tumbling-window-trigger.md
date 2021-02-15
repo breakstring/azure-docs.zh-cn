@@ -1,22 +1,18 @@
 ---
 title: 在 Azure 数据工厂中创建翻转窗口触发器
 description: 了解如何在 Azure 数据工厂中创建按翻转窗口运行管道的触发器。
-services: data-factory
-documentationcenter: ''
-author: djpmsft
-ms.author: daperlov
-manager: jroth
+author: chez-charlie
+ms.author: chez
 ms.reviewer: maghan
 ms.service: data-factory
-ms.workload: data-services
 ms.topic: conceptual
-ms.date: 09/11/2019
-ms.openlocfilehash: 964190108bb53a349fa1cb1301e2a554c1e32b26
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.date: 10/25/2020
+ms.openlocfilehash: f5bc9951229c61dd988f44b06b8fcd40881226ae
+ms.sourcegitcommit: d4734bc680ea221ea80fdea67859d6d32241aefc
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "83996680"
+ms.lasthandoff: 02/14/2021
+ms.locfileid: "100393694"
 ---
 # <a name="create-a-trigger-that-runs-a-pipeline-on-a-tumbling-window"></a>创建按翻转窗口运行管道的触发器
 [!INCLUDE[appliesto-adf-asa-md](includes/appliesto-adf-asa-md.md)]
@@ -37,7 +33,7 @@ ms.locfileid: "83996680"
 
 翻转窗口具有以下触发器类型属性：
 
-```
+```json
 {
     "name": "MyTriggerName",
     "properties": {
@@ -47,7 +43,7 @@ ms.locfileid: "83996680"
             "frequency": <<Minute/Hour>>,
             "interval": <<int>>,
             "startTime": "<<datetime>>",
-            "endTime: <<datetime – optional>>,
+            "endTime": <<datetime – optional>>,
             "delay": <<timespan – optional>>,
             "maxConcurrency": <<int>> (required, max allowed: 50),
             "retryPolicy": {
@@ -115,9 +111,9 @@ ms.locfileid: "83996680"
 
 ### <a name="windowstart-and-windowend-system-variables"></a>WindowStart 和 WindowEnd 系统变量
 
-可以在**管道**定义中（即，作为查询的一部分），使用翻转窗口触发器的 **WindowStart** 和 **WindowEnd** 系统变量。 **触发器**定义中将系统变量作为参数传递给管道。 下面的示例演示如何将这些变量作为参数传递：
+可以在 **管道** 定义中（即，作为查询的一部分），使用翻转窗口触发器的 **WindowStart** 和 **WindowEnd** 系统变量。 **触发器** 定义中将系统变量作为参数传递给管道。 下面的示例演示如何将这些变量作为参数传递：
 
-```
+```json
 {
     "name": "MyTriggerName",
     "properties": {
@@ -147,7 +143,7 @@ ms.locfileid: "83996680"
 
 ### <a name="execution-order-of-windows-in-a-backfill-scenario"></a>回填方案中的窗口执行顺序
 
-如果触发器的 startTime 为过去时间，那么根据公式 M=(CurrentTime- TriggerStartTime)/TriggerSliceSize，触发器将在执行未来运行之前生成 {M} backfill(past) 次并行运行，以保证触发器并发性。 窗口的执行顺序是确定的（从最旧到最新的时间间隔）。 当前无法修改此行为。
+如果触发器的 startTime 为过去时间，那么根据公式 M=(CurrentTime- TriggerStartTime)/TumblingWindowSize，触发器将在执行未来运行之前生成 {M} backfill(past) 次并行运行，以保证触发器并发性。 窗口的执行顺序是确定的（从最旧到最新的时间间隔）。 当前无法修改此行为。
 
 ### <a name="existing-triggerresource-elements"></a>现有 TriggerResource 元素
 
@@ -162,7 +158,20 @@ ms.locfileid: "83996680"
 
 ### <a name="tumbling-window-trigger-dependency"></a>翻转窗口触发器依赖项
 
-若要确保仅在数据工厂中成功执行另一个翻转窗口触发器后才执行翻转窗口触发器，请[创建翻转窗口触发器依赖项](tumbling-window-trigger-dependency.md)。 
+若要确保仅在数据工厂中成功执行另一个翻转窗口触发器后才执行翻转窗口触发器，请[创建翻转窗口触发器依赖项](tumbling-window-trigger-dependency.md)。
+
+### <a name="cancel-tumbling-window-run"></a>取消翻转窗口运行
+
+如果特定窗口处于“正在等待”、“正在等待依赖项”或“正在运行”状态，则可以取消翻转窗口触发器的运行。
+
+* 如果窗口处于“正在运行”状态，则取消关联的“管道运行”，然后触发器运行会被标记为“已取消”
+* 如果窗口处于“正在等待”或“正在等待依赖项”状态，则可以取消该窗口的监视：
+
+![从“监视”页取消翻转窗口触发器](media/how-to-create-tumbling-window-trigger/cancel-tumbling-window-trigger.png)
+
+还可以重新运行已取消的窗口。 重新运行会采用触发器的最新发布定义，并且指定窗口的依赖项会在重新运行时重新进行评估
+
+![为之前取消的运行重新运行翻转窗口触发器](media/how-to-create-tumbling-window-trigger/rerun-tumbling-window-trigger.png)
 
 ## <a name="sample-for-azure-powershell"></a>Azure PowerShell 示例
 

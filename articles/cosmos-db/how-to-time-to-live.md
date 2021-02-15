@@ -3,20 +3,24 @@ title: 在 Azure Cosmos DB 中配置和管理生存时间
 description: 了解如何在 Azure Cosmos DB 中配置和管理容器和项的生存时间
 author: anfeldma-ms
 ms.service: cosmos-db
+ms.subservice: cosmosdb-sql
 ms.topic: how-to
-ms.date: 03/27/2020
+ms.date: 10/11/2020
 ms.author: anfeldma
-ms.custom: devx-track-javascript, devx-track-azurecli
-ms.openlocfilehash: 029c2ffa548c8c99030f630a90eb07ac8ba063a0
-ms.sourcegitcommit: 11e2521679415f05d3d2c4c49858940677c57900
+ms.custom: devx-track-js, devx-track-azurecli, devx-track-csharp
+ms.openlocfilehash: 2ddba95f9ccc25d536638dbc68c41027d26e71c7
+ms.sourcegitcommit: fa90cd55e341c8201e3789df4cd8bd6fe7c809a3
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/31/2020
-ms.locfileid: "87496995"
+ms.lasthandoff: 11/04/2020
+ms.locfileid: "93341002"
 ---
 # <a name="configure-time-to-live-in-azure-cosmos-db"></a>在 Azure Cosmos DB 中配置生存时间
+[!INCLUDE[appliesto-sql-api](includes/appliesto-sql-api.md)]
 
 在 Azure Cosmos DB 中，可以选择在容器级别配置生存时间 (TTL)，也可以在为容器完成设置之后，在项级别重写生存时间。 可以通过 Azure 门户或特定于语言的 SDK 配置容器的 TTL。 可以通过 SDK 配置项级别 TTL 重写。
+
+> 此内容与 Azure Cosmos DB 事务存储 TTL 相关。 如果正在查找通过 [Azure Synapse Link](./synapse-link.md) 启用 NoETL HTAP 方案的分析存储 TTL，请单击[此处](./analytical-store-introduction.md#analytical-ttl)。
 
 ## <a name="enable-time-to-live-on-a-container-using-azure-portal"></a>使用 Azure 门户在容器上启用生存时间
 
@@ -26,14 +30,14 @@ ms.locfileid: "87496995"
 
 2. 创建新的 Azure Cosmos 帐户或选择现有的帐户。
 
-3. 打开“数据资源管理器”窗格****。
+3. 打开“数据资源管理器”窗格。
 
 4. 选择一个现有的容器，将其展开并修改以下值：
 
-   * 打开“规模和设置”窗口。****
-   * 在“设置”下找到“生存时间”。**** ****
-   * 选择“启用(无默认值)”或选择“启用”，然后设置一个 TTL 值**** ****
-   * 单击“保存” **** 以保存更改。
+   * 打开“规模和设置”窗口。
+   * 在“设置”下找到“生存时间”。 
+   * 选择“启用(无默认值)”或选择“启用”，然后设置一个 TTL 值 
+   * 单击“保存”  以保存更改。
 
    :::image type="content" source="./media/how-to-time-to-live/how-to-time-to-live-portal.png" alt-text="在 Azure 门户中配置生存时间":::
 
@@ -50,7 +54,7 @@ ms.locfileid: "87496995"
 
 ## <a name="enable-time-to-live-on-a-container-using-sdk"></a>使用 SDK 在容器上启用生存时间
 
-### <a name="net-sdk"></a><a id="dotnet-enable-noexpiry"></a>.NET SDK
+### <a name="net-sdk"></a><a id="dotnet-enable-noexpiry"></a> .NET SDK
 
 # <a name="net-sdk-v2"></a>[.NET SDK V2](#tab/dotnetv2)
 
@@ -83,7 +87,7 @@ await client.GetDatabase("database").CreateContainerAsync(new ContainerPropertie
 ```
 ---
 
-### <a name="java-sdk"></a><a id="java-enable-noexpiry"></a>Java SDK
+### <a name="java-sdk"></a><a id="java-enable-noexpiry"></a> Java SDK
 
 # <a name="java-sdk-v4"></a>[Java SDK V4](#tab/javav4)
 
@@ -114,9 +118,9 @@ container = database.createContainerIfNotExists(containerProperties, 400).block(
 
 ## <a name="set-time-to-live-on-a-container-using-sdk"></a>使用 SDK 在容器上设置生存时间
 
-若要在容器上设置生存时间，需提供一个非零正数来指示时间段（以秒为单位）。 在项的上次修改的时间戳 (`_ts`) 过后，将会删除容器中的所有值，具体取决于配置的 TTL 值。
+若要在容器上设置生存时间，需提供一个非零正数来指示时间段（以秒为单位）。 在项的上次修改的时间戳 (`_ts`) 过后，将会删除容器中的所有值，具体取决于配置的 TTL 值。 您可以选择性地设置 `TimeToLivePropertyPath` ，这将使用不同的属性而不是系统生成的属性，根据 `_ts` TTL 确定要删除的项。
 
-### <a name="net-sdk"></a><a id="dotnet-enable-withexpiry"></a>.NET SDK
+### <a name="net-sdk"></a><a id="dotnet-enable-withexpiry"></a> .NET SDK
 
 # <a name="net-sdk-v2"></a>[.NET SDK V2](#tab/dotnetv2)
 
@@ -149,7 +153,7 @@ await client.GetDatabase("database").CreateContainerAsync(new ContainerPropertie
 ```
 ---
 
-### <a name="java-sdk"></a><a id="java-enable-defaultexpiry"></a>Java SDK
+### <a name="java-sdk"></a><a id="java-enable-defaultexpiry"></a> Java SDK
 
 # <a name="java-sdk-v4"></a>[Java SDK V4](#tab/javav4)
 
@@ -210,16 +214,16 @@ async function createcontainerWithTTL(db: Database, containerDefinition: Contain
 
 2. 创建新的 Azure Cosmos 帐户或选择现有的帐户。
 
-3. 打开“数据资源管理器”窗格****。
+3. 打开“数据资源管理器”窗格。
 
 4. 选择一个现有的容器，将其展开并修改以下值：
 
-   * 打开“规模和设置”窗口。****
-   * 在“设置”下找到“生存时间”。**** ****
-   * 选择“启用(无默认值)”或选择“启用”，然后设置一个 TTL 值。**** **** 
-   * 单击“保存” **** 以保存更改。
+   * 打开“规模和设置”窗口。
+   * 在“设置”下找到“生存时间”。 
+   * 选择“启用(无默认值)”或选择“启用”，然后设置一个 TTL 值。  
+   * 单击“保存”  以保存更改。
 
-5. 接下来导航到要为其设置生存时间的项，添加 `ttl` 属性，然后选择“更新”。**** 
+5. 接下来导航到要为其设置生存时间的项，添加 `ttl` 属性，然后选择“更新”。 
 
    ```json
    {
@@ -269,7 +273,7 @@ const itemDefinition = {
         };
 ```
 
-### <a name="java-sdk"></a><a id="java-set-ttl-item"></a>Java SDK
+### <a name="java-sdk"></a><a id="java-set-ttl-item"></a> Java SDK
 
 # <a name="java-sdk-v4"></a>[Java SDK V4](#tab/javav4)
 
@@ -350,7 +354,7 @@ SalesOrder salesOrder = new SalesOrder(
 
 可以通过在项上执行写入或更新操作，重置项的生存时间。 写入或更新操作会将 `_ts` 设置为当前时间，要到期的项的 TTL 就会重启。 若要更改项的 TTL，可以更新相关字段，就像更新任何其他字段那样。
 
-### <a name="net-sdk"></a><a id="dotnet-extend-ttl-item"></a>.NET SDK
+### <a name="net-sdk"></a><a id="dotnet-extend-ttl-item"></a> .NET SDK
 
 # <a name="net-sdk-v2"></a>[.NET SDK V2](#tab/dotnetv2)
 
@@ -382,7 +386,7 @@ await client.GetContainer("database", "container").ReplaceItemAsync(itemResponse
 ```
 ---
 
-### <a name="java-sdk"></a><a id="java-enable-modifyitemexpiry"></a>Java SDK
+### <a name="java-sdk"></a><a id="java-enable-modifyitemexpiry"></a> Java SDK
 
 # <a name="java-sdk-v4"></a>[Java SDK V4](#tab/javav4)
 
@@ -424,7 +428,7 @@ container.getItem("SO05", new PartitionKey("CO18009186470")).read()
 
 如果已在项上设置生存时间，并且不再想要该项过期，则可以获取该项，删除 TTL 字段并替换服务器上的项。 从项中删除 TTL 字段时，分配给容器的默认 TTL 值会应用到项。 将 TTL 值设置为 -1 可以防止项过期，并且不会从容器继承 TTL 值。
 
-### <a name="net-sdk"></a><a id="dotnet-turn-off-ttl-item"></a>.NET SDK
+### <a name="net-sdk"></a><a id="dotnet-turn-off-ttl-item"></a> .NET SDK
 
 # <a name="net-sdk-v2"></a>[.NET SDK V2](#tab/dotnetv2)
 
@@ -457,7 +461,7 @@ await client.GetContainer("database", "container").ReplaceItemAsync(itemResponse
 ```
 ---
 
-### <a name="java-sdk"></a><a id="java-enable-itemdefaultexpiry"></a>Java SDK
+### <a name="java-sdk"></a><a id="java-enable-itemdefaultexpiry"></a> Java SDK
 
 # <a name="java-sdk-v4"></a>[Java SDK V4](#tab/javav4)
 
@@ -499,7 +503,7 @@ container.getItem("SO05", new PartitionKey("CO18009186470")).read()
 
 若要在容器上禁用生存时间并阻止后台进程查找过期项，则应删除容器上的 `DefaultTimeToLive` 属性。 删除此属性不同于将其设置为 -1。 将它设置为 -1 时，添加到容器的新项将永久生存。但是，可以在容器中的特定项上重写此值。 从容器中删除 TTL 属性后项就不会过期，即使这些项已显式重写了以前的默认 TTL 值。
 
-### <a name="net-sdk"></a><a id="dotnet-disable-ttl"></a>.NET SDK
+### <a name="net-sdk"></a><a id="dotnet-disable-ttl"></a> .NET SDK
 
 # <a name="net-sdk-v2"></a>[.NET SDK V2](#tab/dotnetv2)
 
@@ -526,7 +530,7 @@ await client.GetContainer("database", "container").ReplaceContainerAsync(contain
 ```
 ---
 
-### <a name="java-sdk"></a><a id="java-enable-disableexpiry"></a>Java SDK
+### <a name="java-sdk"></a><a id="java-enable-disableexpiry"></a> Java SDK
 
 # <a name="java-sdk-v4"></a>[Java SDK V4](#tab/javav4)
 

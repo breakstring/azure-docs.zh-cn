@@ -5,22 +5,22 @@ ms.devlang: azurecli
 ms.topic: quickstart
 ms.date: 01/31/2019
 ms.custom: mvc, devx-track-azurecli
-ms.openlocfilehash: b263d5394d642301c5fc53e169186e4aea56ecab
-ms.sourcegitcommit: 11e2521679415f05d3d2c4c49858940677c57900
+ms.openlocfilehash: 1a1b11d517fdfea0aa3a0f553b63276bc20f90be
+ms.sourcegitcommit: fc8ce6ff76e64486d5acd7be24faf819f0a7be1d
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/31/2020
-ms.locfileid: "87497454"
+ms.lasthandoff: 01/26/2021
+ms.locfileid: "98805464"
 ---
-# <a name="back-up-a-virtual-machine-in-azure-with-the-cli"></a>使用 CLI 在 Azure 中备份虚拟机
+# <a name="back-up-a-virtual-machine-in-azure-with-the-azure-cli"></a>使用 Azure CLI 在 Azure 中备份虚拟机
 
 Azure CLI 用于从命令行或脚本创建和管理 Azure 资源。 可以通过定期创建备份来保护数据。 Azure 备份可创建恢复点，这些恢复点可存储在异地冗余的恢复保管库中。 本文详细介绍如何使用 Azure CLI 在 Azure 中备份虚拟机 (VM)。 也可以使用 [Azure PowerShell](quick-backup-vm-powershell.md) 或 [Azure 门户](quick-backup-vm-portal.md)执行这些步骤。
 
 参考本快速入门可在现有的 Azure VM 上备份。 如果需要创建 VM，可以[使用 Azure CLI 创建 VM](../virtual-machines/linux/quick-create-cli.md)。
 
-[!INCLUDE [cloud-shell-try-it.md](../../includes/cloud-shell-try-it.md)]
+[!INCLUDE [azure-cli-prepare-your-environment.md](../../includes/azure-cli-prepare-your-environment.md)]
 
-若要在本地安装和使用 CLI，必须运行 Azure CLI 2.0.18 或更高版本。 若要查找 CLI 版本，请运行 `az --version`。 如需进行安装或升级，请参阅[安装 Azure CLI](/cli/azure/install-azure-cli)。
+ - 本快速入门需要 Azure CLI 版本 2.0.18 或更高版本。 如果使用 Azure Cloud Shell，则最新版本已安装。
 
 ## <a name="create-a-recovery-services-vault"></a>创建恢复服务保管库
 
@@ -38,7 +38,7 @@ az backup vault create --resource-group myResourceGroup \
     --location eastus
 ```
 
-默认情况下，恢复服务保管库是针对异地冗余存储设置的。 异地冗余存储可确保将备份数据复制到距主区域数百英里以外的辅助 Azure 区域。 如果存储冗余设置需要修改，请使用 [az backup vault backup-properties set](/cli/azure/backup/vault/backup-properties?view=azure-cli-latest#az-backup-vault-backup-properties-set) cmdlet。
+默认情况下，恢复服务保管库是针对异地冗余存储设置的。 异地冗余存储可确保将备份数据复制到距主要区域数百英里以外的 Azure 次要区域。 如果存储冗余设置需要修改，请使用 [az backup vault backup-properties set](/cli/azure/backup/vault/backup-properties#az-backup-vault-backup-properties-set) cmdlet。
 
 ```azurecli
 az backup vault backup-properties set \
@@ -71,7 +71,7 @@ az backup protection enable-for-vm \
 ```
 
 > [!IMPORTANT]
-> 使用 CLI 一次为多个 VM 启用备份时，请确保单个策略关联的 VM 不超过 100 个。 这是[建议的最佳做法](./backup-azure-vm-backup-faq.md#is-there-a-limit-on-number-of-vms-that-can-beassociated-with-the-same-backup-policy)。 目前，如果有超过 100 个 VM，PS 客户端不会显式阻止，但计划在将来添加检查。
+> 使用 CLI 一次为多个 VM 启用备份时，请确保单个策略关联的 VM 不超过 100 个。 这是[建议的最佳做法](./backup-azure-vm-backup-faq.yml#is-there-a-limit-on-number-of-vms-that-can-be-associated-with-the-same-backup-policy)。 目前，如果 VM 超过 100 个，PowerShell 客户端不会显式阻止，但计划在将来添加检查。
 
 ## <a name="start-a-backup-job"></a>启动备份作业
 
@@ -118,7 +118,7 @@ fe5d0414  ConfigureBackup  Completed   myvm         2017-09-19T03:03:57  0:00:31
 
 ## <a name="clean-up-deployment"></a>清理部署
 
-如果不再需要，可以在 VM 上禁用保护，删除还原点和恢复服务保管库，然后删除资源组和关联的 VM 资源。 如果使用了现有的 VM，可以跳过最后一个 [az group delete](/cli/azure/group?view=azure-cli-latest#az-group-delete) 命令，以保留资源组和 VM。
+如果不再需要，可以在 VM 上禁用保护，删除还原点和恢复服务保管库，然后删除资源组和关联的 VM 资源。 如果使用了现有的 VM，可以跳过最后一个 [az group delete](/cli/azure/group#az-group-delete) 命令，以保留资源组和 VM。
 
 若要尝试备份教程，了解如何还原 VM 的数据，请转到[后续步骤](#next-steps)。
 

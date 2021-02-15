@@ -1,7 +1,7 @@
 ---
 title: MSAL for iOS & macOS 差异 |Microsoft
 titleSuffix: Microsoft identity platform
-description: 介绍 iOS 与 macOS 之间的 Microsoft 身份验证库 (MSAL) 使用差异。
+description: 介绍 (MSAL) iOS 与 macOS 之间的使用差异的 Microsoft 身份验证库。
 services: active-directory
 author: mmacy
 manager: CelesteDG
@@ -13,12 +13,12 @@ ms.date: 08/28/2019
 ms.author: marsma
 ms.reviewer: oldalton
 ms.custom: aaddev
-ms.openlocfilehash: 41389bc5ed8580cd80dbc40e771c7f15241f5ae7
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 59e4111b6dda386777e820c9be16ace9ff01135c
+ms.sourcegitcommit: 2488894b8ece49d493399d2ed7c98d29b53a5599
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "85479396"
+ms.lasthandoff: 01/11/2021
+ms.locfileid: "98064909"
 ---
 # <a name="microsoft-authentication-library-for-ios-and-macos-differences"></a>适用于 iOS 的 Microsoft 身份验证库和适用于 macOS 的 Microsoft 身份验证库的差异
 
@@ -42,7 +42,7 @@ ms.locfileid: "85479396"
 
 ### <a name="conditional-access-authentication-differences"></a>条件性访问身份验证差异
 
-对于条件访问方案，使用适用于 iOS 的 MSAL 时，用户将会出现更少的提示。 这是因为，iOS 使用 broker 应用（Microsoft Authenticator），这在某些情况下不再需要提示用户。
+对于条件访问方案，使用适用于 iOS 的 MSAL 时，用户将会出现更少的提示。 这是因为，iOS 使用 broker 应用 (Microsoft Authenticator) 在某些情况下不再需要提示用户。
 
 ### <a name="project-setup-differences"></a>项目设置差异
 

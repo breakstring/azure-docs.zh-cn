@@ -4,37 +4,36 @@ description: include 文件
 services: digital-twins
 ms.service: digital-twins
 ms.topic: include
-ms.date: 07/09/2020
+ms.date: 11/11/2020
 author: deepakpalled
 ms.author: dpalled
 manager: diviso
 ms.custom: include file
-ms.openlocfilehash: 48080bb4d1e24f7f98d3dfe1fd63b65ba46df35e
-ms.sourcegitcommit: dccb85aed33d9251048024faf7ef23c94d695145
+ms.openlocfilehash: 016ad0e11f3378dba887e0a235f235fa91e3aa03
+ms.sourcegitcommit: 48e5379c373f8bd98bc6de439482248cd07ae883
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/28/2020
-ms.locfileid: "87289897"
+ms.lasthandoff: 01/12/2021
+ms.locfileid: "98109415"
 ---
 ### <a name="property-limits"></a>属性限制
 
-在 Gen1 中，Azure 时序见解属性限制增加到1000，最大上限为800。 提供的事件属性具有相应的 JSON、CSV 和图表列，你可以在[Azure 时序见解 Gen2 资源管理器](https://docs.microsoft.com/azure/time-series-insights/time-series-insights-update-quickstart)中查看这些列。
+对于暖存储，Azure 时序见解属性限制已增加到 1,000，而对于冷存储，则没有属性限制。 提供的事件属性具有相应的 JSON、CSV 和图表列，你可以在 [Azure 时序见解 Gen2 资源管理器](../articles/time-series-insights/quickstart-explore-tsi.md)中查看这些列。
 
 | SKU | 最大属性数 |
 | --- | --- |
-| Gen2 （L1） | 1,000 属性（列） |
-| Gen1 （S1） | 600 属性（列） |
-| Gen1 （S2） | 800 属性（列） |
+| 第 2 代 (L1) | 对于暖存储，限制为 1,000 个属性（列），而对于冷存储，则无限制。|
+| 第 1 代 (S1) | 600 属性（列） |
+| 第 1 代 (S2) | 800 属性（列） |
 
-### <a name="event-sources"></a>事件源
+### <a name="streaming-ingestion"></a>流式引入
 
-每个实例最多支持两个事件源。
+* 每个环境最多只能有两个[事件源](../articles/time-series-insights/concepts-streaming-ingestion-event-sources.md)。
 
-* 了解如何[添加事件中心源](https://docs.microsoft.com/azure/time-series-insights/time-series-insights-how-to-add-an-event-source-eventhub)。
-* 配置 [IoT 中心源](https://docs.microsoft.com/azure/time-series-insights/time-series-insights-how-to-add-an-event-source-iothub)。
+* 有关事件源的最佳做法和一般指南，可在[此处](../articles/time-series-insights/concepts-streaming-ingestion-event-sources.md#streaming-ingestion-best-practices)找到
 
-默认情况下， [Gen2 环境支持](https://docs.microsoft.com/azure/time-series-insights/concepts-streaming-ingress-throughput-limits)**每秒 1 mb/秒（MB/s）每个环境**的入口速率。 如果需要，客户可以将其环境扩展到最高**16 MB/秒**的吞吐量。 还存在每个分区 0.5 MB/秒  的限制。
+* 默认情况下，对于每个 Azure 时序见解第 2 代环境，Azure 时序见解第 2 代可按 **每秒最多 1 兆字节 (MBps)** 的速率引入传入的数据。 存在针对[单个中心分区](../articles/time-series-insights/concepts-streaming-ingress-throughput-limits.md#hub-partitions-and-per-partition-limits)的其他限制。 通过 Azure 门户提交支持票证，可以提供高达 2 MBps 的速率。 若要了解详细信息，请参阅[流式引入吞吐量限制](../articles/time-series-insights/concepts-streaming-ingress-throughput-limits.md)。
 
 ### <a name="api-limits"></a>API 限制
 
-[REST API 参考文档](https://docs.microsoft.com/rest/api/time-series-insights/preview#limits-1)中指定了 Azure 时序见解 Gen2 REST API 限制。
+[REST API 参考文档](/rest/api/time-series-insights/preview#limits-1)中指定了针对 Azure 时序见解第 2 代的 REST API 限制。

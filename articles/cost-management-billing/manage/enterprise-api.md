@@ -4,22 +4,23 @@ description: 了解使企业 Azure 客户能够以编程方式提取消耗数据
 author: mumami
 tags: billing
 ms.service: cost-management-billing
+ms.subservice: enterprise
 ms.topic: reference
-ms.date: 06/22/2020
+ms.date: 08/20/2020
 ms.author: banders
-ms.openlocfilehash: bf1acd8bce53801c7c241121db2079e9b8a01851
-ms.sourcegitcommit: bf99428d2562a70f42b5a04021dde6ef26c3ec3a
+ms.openlocfilehash: a1c420eed89b7b45ea6c50345737b8615f39ad8c
+ms.sourcegitcommit: fc401c220eaa40f6b3c8344db84b801aa9ff7185
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 06/23/2020
-ms.locfileid: "85253700"
+ms.lasthandoff: 01/20/2021
+ms.locfileid: "98602089"
 ---
 # <a name="overview-of-reporting-apis-for-enterprise-customers"></a>面向企业客户的报告 API 概述
 
 > [!Note]
 > Microsoft 不再更新 Azure 计费 - 企业报告 API。 应改用 [Azure 使用量](/rest/api/consumption) API。
 
-报告 API 使企业 Azure 客户能够以编程方式将消耗数据和计费数据提取到首选的数据分析工具。 企业客户与 Azure 签订了[企业协议 (EA)](https://azure.microsoft.com/pricing/enterprise-agreement/)，以达成协商的货币承诺并获取自定义 Azure 资源定价的访问权限。
+报告 API 使企业 Azure 客户能够以编程方式将消耗数据和计费数据提取到首选的数据分析工具。 企业客户与 Azure 签订了[企业协议 (EA)](https://azure.microsoft.com/pricing/enterprise-agreement/)，以达成协商的 Azure 预付款（以前称为货币承诺）并获取自定义 Azure 资源定价的访问权限。
 
 API 所需的所有日期和时间参数都必须表示为组合的协调世界时 (UTC) 值。 API 返回的值以 UTC 格式显示。
 

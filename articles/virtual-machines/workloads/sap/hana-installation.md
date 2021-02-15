@@ -1,24 +1,25 @@
 ---
 title: 在 Azure SAP HANA（大型实例）上安装 SAP HANA | Microsoft Docs
-description: 如何在 Azure 上的 SAP HANA （大型实例）上安装 SAP HANA。
+description: 如何在 Azure 上的 SAP HANA 上安装 SAP HANA (大型实例) 。
 services: virtual-machines-linux
 documentationcenter: ''
 author: hermanndms
 manager: juergent
 editor: ''
 ms.service: virtual-machines-linux
+ms.subservice: workloads
 ms.topic: article
 ms.tgt_pltfrm: vm-linux
 ms.workload: infrastructure
 ms.date: 01/16/2020
 ms.author: juergent
 ms.custom: H1Hack27Feb2017
-ms.openlocfilehash: ae4a7dc400b347a963e07a8c696e7581e2dcd703
-ms.sourcegitcommit: 3543d3b4f6c6f496d22ea5f97d8cd2700ac9a481
+ms.openlocfilehash: 81d44dae0fed45d4a4df76973c7e233fd71baff1
+ms.sourcegitcommit: 2bd0a039be8126c969a795cea3b60ce8e4ce64fc
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/20/2020
-ms.locfileid: "86507839"
+ms.lasthandoff: 01/14/2021
+ms.locfileid: "98198962"
 ---
 # <a name="how-to-install-and-configure-sap-hana-large-instances-on-azure"></a>如何安装和配置 Azure 上的 SAP HANA（大型实例）
 
@@ -27,9 +28,9 @@ ms.locfileid: "86507839"
 SAP HANA 的安装由你负责。 可以在 Azure 虚拟网络与 HANA 大型实例单元之间建立连接之后再开始安装新的 Azure 上的 SAP HANA（大型实例）。 
 
 > [!Note]
-> 按照 SAP 策略，SAP HANA 的安装必须由经过认证的 SAP 技术关联考试、SAP HANA 安装认证考试，或者是经过 SAP 认证的系统集成商（SI）的人员执行。
+> 按照 SAP 策略，SAP HANA 的安装必须由经过认证的 SAP 技术关联考试、SAP HANA 安装认证考试，或 (SI) 的经过 SAP 认证的系统集成商的人员执行。
 
-规划 HANA 2.0 的安装时，请参阅 [SAP 支持说明 #2235581 - SAP HANA：支持的操作系统](https://launchpad.support.sap.com/#/notes/2235581/E)，确保所要安装的 SAP HANA 版本支持该 OS。 HANA 2.0 支持的 OS 比 HANA 1.0 支持的 OS 限制性更强。 还需要检查是否为此已发布[列表](https://www.sap.com/dmc/exp/2014-09-02-hana-hardware/enEN/iaas.html#categories=Microsoft%20Azure)上的特定 b-hli 单元列出了你感兴趣的操作系统版本。 单击该单元可获取该设备支持的操作系统列表的完整详细信息。 
+规划 HANA 2.0 的安装时，请参阅 [SAP 支持说明 #2235581 - SAP HANA：支持的操作系统](https://launchpad.support.sap.com/#/notes/2235581/E)，确保所要安装的 SAP HANA 版本支持该 OS。 HANA 2.0 支持的 OS 比 HANA 1.0 支持的 OS 限制性更强。 还需要检查是否为此已发布 [列表](https://www.sap.com/dmc/exp/2014-09-02-hana-hardware/enEN/iaas.html#categories=Microsoft%20Azure)上的特定 b-hli 单元列出了你感兴趣的操作系统版本。 单击该单元可获取该设备支持的操作系统列表的完整详细信息。 
 
 在开始安装 HANA 之前，请先验证以下内容：
 - [HLI 单元](#validate-the-hana-large-instance-units)
@@ -42,17 +43,17 @@ SAP HANA 的安装由你负责。 可以在 Azure 虚拟网络与 HANA 大型实
 
 从 Microsoft 收到 HANA 大型实例单元后，请验证以下设置并根据需要进行调整。
 
-接收 HANA 大型实例并建立与实例的访问和连接的**第一步**是签入 Azure 门户是否将实例显示为正确的 SKU 和操作系统。 [通过 Azure 门户读取 AZURE HANA 大型实例控制](./hana-li-portal.md)，以执行检查所需的步骤。
+接收 HANA 大型实例并建立与实例的访问和连接的 **第一步** 是签入 Azure 门户 (s) 的实例是否显示了正确的 SKU 和操作系统。 [通过 Azure 门户读取 AZURE HANA 大型实例控制](./hana-li-portal.md)，以执行检查所需的步骤。
 
-接收 HANA 大型实例并建立与实例的访问和连接后，**第二步**是将实例的 os 注册到 os 提供程序。 此步骤在要部署到 Azure VM 的 SUSE SMT 实例中注册 SUSE Linux OS。 
+接收 HANA 大型实例并建立与实例的访问和连接后， **第二步** 是将实例的 os 注册到 os 提供程序。 此步骤在要部署到 Azure VM 的 SUSE SMT 实例中注册 SUSE Linux OS。 
 
 HANA 大型实例单元可以连接到此 SMT 实例。 （有关详细信息，请参阅[如何为 SUSE Linux 设置 SMT 服务器](hana-setup-smt.md)）。 或者，需要在所要连接的 Red Hat 订阅管理器中注册 Red Hat OS。 有关详细信息，请参阅[什么是 Azure 上的 SAP HANA（大型实例）？](./hana-overview-architecture.md?toc=/azure/virtual-machines/linux/toc.json)中的备注。 
 
 此步骤对于修补操作系统（客户的责任）是必需的。 对于 SUSE，可在有关 [SMT 安装](https://www.suse.com/documentation/sles-12/book_smt/data/smt_installation.html)的页面中找到有关安装和配置 SMT 的文档。
 
-**第三步**是检查特定 OS 发行版/版本的新修补程序和修补程序。 验证 HANA 大型实例的修补级别是否处于最新状态。 有时可能未包含最新修补程序。 在接管 HANA 大型实例单元后，必须检查是否需要应用修补程序。
+**第三步** 是检查特定 OS 发行版/版本的新修补程序和修补程序。 验证 HANA 大型实例的修补级别是否处于最新状态。 有时可能未包含最新修补程序。 在接管 HANA 大型实例单元后，必须检查是否需要应用修补程序。
 
-**第四步**是查看相关的 SAP 说明，以便在特定 OS 版本/版本上安装和配置 SAP HANA。 由于建议会不断发生变化，或者与各种安装方案相关的 SAP 说明或配置会发生更改，因此，Microsoft 不一定总能完美配置 HANA 大型实例单元。 
+**第四步** 是查看相关的 SAP 说明，以便在特定 OS 版本/版本上安装和配置 SAP HANA。 由于建议会不断发生变化，或者与各种安装方案相关的 SAP 说明或配置会发生更改，因此，Microsoft 不一定总能完美配置 HANA 大型实例单元。 
 
 因此，作为客户，必须阅读与确切 Linux 发行版上的 SAP HANA 相关的 SAP 说明。 还要检查 OS 发行版/版本的配置，并应用尚未应用的配置设置。
 
@@ -72,11 +73,11 @@ HANA 大型实例单元可以连接到此 SMT 实例。 （有关详细信息，
 - 必须在 in/etc/modprobe.d/sunrpc-local.conf 中设置 sunrpc.tcp_slot_table_entries = 128 参数。 如果该文件不存在，则需要首先通过添加条目来创建它： 
     - options sunrpc tcp_max_slot_table_entries=128
 
-**第五步**是检查 HANA 大型实例单元的系统时间。 部署实例时使用的是系统时区。 此时区表示 HANA 大型实例阵列所在 Azure 区域的位置。 可以更改自己拥有的实例的系统时间或时区。 
+**第五步** 是检查 HANA 大型实例单元的系统时间。 部署实例时使用的是系统时区。 此时区表示 HANA 大型实例阵列所在 Azure 区域的位置。 可以更改自己拥有的实例的系统时间或时区。 
 
 如果在租户中订购了更多的实例，则需要调整新交付的实例的时区。 在交接后，Microsoft 并不了解你在实例上设置的系统时区。 因此，新部署的实例可能不会在与切换到的实例相同的时区中设置。 在必要时，客户需负责调整交接后的实例的时区。 
 
-**第六步**是检查 etc/hosts。 交接刀片服务器后，会根据不同的用途为它们分配不同的 IP 地址。 检查 etc/hosts 文件。 如果将单元添加到了现有租户，请不要料想会使用以前交付的系统的 IP 地址正确维护新部署的系统的 etc/hosts。 客户需负责确保新部署的实例能够与租户中以前部署的单元交互并解析其名称。 
+**第六步** 是检查 etc/hosts。 交接刀片服务器后，会根据不同的用途为它们分配不同的 IP 地址。 检查 etc/hosts 文件。 如果将单元添加到了现有租户，请不要料想会使用以前交付的系统的 IP 地址正确维护新部署的系统的 etc/hosts。 客户需负责确保新部署的实例能够与租户中以前部署的单元交互并解析其名称。 
 
 
 ## <a name="operating-system"></a>操作系统
@@ -128,7 +129,7 @@ HANA 大型实例单元可以连接到此 SMT 实例。 （有关详细信息，
 假设已遵循以下文档中的建议设计了 Azure 虚拟网络并将这些虚拟网络连接到了 HANA 大型实例：
 
 - [Azure 上的 SAP HANA（大型实例）概述和体系结构](./hana-overview-architecture.md)
-- [Azure 上的 SAP HANA （大型实例）基础结构和连接](hana-overview-infrastructure-connectivity.md?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json)
+- [SAP HANA Azure 上的 (大型实例) 基础结构和连接](hana-overview-infrastructure-connectivity.md)
 
 在单个单元的网络方面，有些详细信息值得注意。 每个 HANA 大型实例单元附带两个或三个 IP 地址，这些地址已分配到两个或三个 NIC 端口。 HANA 横向扩展配置和 HANA 系统复制方案中使用三个 IP 地址。 分配给单元 NIC 的一个 IP 地址位于 [Azure 上的 SAP HANA（大型实例）概述和体系结构](./hana-overview-architecture.md)中所述的服务器 IP 池外部。
 
@@ -136,9 +137,9 @@ HANA 大型实例单元可以连接到此 SMT 实例。 （有关详细信息，
 
 ## <a name="storage"></a>存储
 
-Azure 上的 SAP HANA （大型实例）的存储布局是通过 Azure 上的 SAP HANA Azure `service management` 建议指导原则配置的。 [SAP HANA 存储要求](https://go.sap.com/documents/2015/03/74cdb554-5a7c-0010-82c7-eda71af511fa.html)白皮书中阐述了这些指导原则。 
+Azure 上的 SAP HANA 的存储布局 (大型实例) 通过 Azure 上的 Azure `service management` 建议指导原则进行 SAP HANA 配置。 [SAP HANA 存储要求](https://go.sap.com/documents/2015/03/74cdb554-5a7c-0010-82c7-eda71af511fa.html)白皮书中阐述了这些指导原则。 
 
-有关包含不同 HANA 大型实例 SKU 的各卷的粗略大小，请参阅 [Azure 上的 SAP HANA（大型实例）概述和体系结构](hana-overview-architecture.md?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json)。
+有关包含不同 HANA 大型实例 SKU 的各卷的粗略大小，请参阅 [Azure 上的 SAP HANA（大型实例）概述和体系结构](hana-overview-architecture.md)。
 
 下表列出了存储卷的命名约定：
 
@@ -160,11 +161,11 @@ HANA usr/sap 共享同一个卷。 装入点的命名法包括 HANA 实例系统
 
 查看 HANA 大型实例单元时，你会发现，单元随附了相当大的 HANA/data 磁盘卷，并且还有一个 HANA/log/backup 卷。 我们提供这么大的 HANA/data 卷的原因是，为客户提供的存储快照使用同一个磁盘卷。 执行的存储快照越多，分配的存储卷中的快照占用的空间就越多。 
 
-HANA/log/backup 卷并非旨在用作数据库备份的卷。 它的大小适合用作 HANA 事务日志备份的备份卷。 有关详细信息，请参阅 [Azure 上的 SAP HANA（大型实例）的高可用性和灾难恢复](hana-overview-high-availability-disaster-recovery.md?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json) 
+HANA/log/backup 卷并非旨在用作数据库备份的卷。 它的大小适合用作 HANA 事务日志备份的备份卷。 有关详细信息，请参阅 [Azure 上的 SAP HANA（大型实例）的高可用性和灾难恢复](hana-overview-high-availability-disaster-recovery.md) 
 
 除了提供的存储以外，还可以购买更多存储容量，增量为 1-TB。 可以将此附加存储作为新卷添加到 HANA 大型实例。
 
-使用 Azure 上的 SAP HANA 在载入期间 `service management` ，客户将为 sidadm 用户和 sapsys 组指定用户 ID （UID）和组 ID （GID）（例如：1000500）。 在安装 SAP HANA 系统期间，必须使用与此相同的值。 由于要在一个单元上部署多个 HANA 实例，因此将获得多个卷集（每个实例有一个集）。 因此，需要在部署时定义：
+在 Azure 中使用 SAP HANA 进行载入期间 `service management` ，客户将为 sidadm 用户和 sapsys 组指定用户 ID (UID) 和组 ID (GID)  (例如： 1000500) 。 在安装 SAP HANA 系统期间，必须使用与此相同的值。 由于要在一个单元上部署多个 HANA 实例，因此将获得多个卷集（每个实例有一个集）。 因此，需要在部署时定义：
 
 - 不同 HANA 实例的 SID（sidadm 由此派生）。
 - 不同 HANA 实例的内存大小。 每个实例的内存大小定义各个卷集的卷大小。
@@ -179,7 +180,7 @@ HANA/log/backup 卷并非旨在用作数据库备份的卷。 它的大小适合
 
 S72m HANA 大型实例单元上的命令 df -h 的输出如下所示：
 
-![HANA 大型实例单元中已装载卷的 fstab](./media/hana-installation/image2_df_output.PNG)
+![屏幕截图显示 HANA 大型实例单元的命令输出。](./media/hana-installation/image2_df_output.PNG)
 
 
 大型实例戳中的存储控制器和节点将同步到 NTP 服务器。 针对 NTP 服务器同步 Azure SAP HANA（大型实例）单元和 Azure VM 之后，在 Azure 或大型实例阵列中的基础结构与计算单元之间就不会出现明显的时间偏差。
@@ -202,8 +203,8 @@ HANA 大型实例中使用的存储具有文件大小限制。 [大小限制为]
 > 
 > - datavolume_striping = true
 > - datavolume_striping_size_gb = 15000
-> - 另请参阅 SAP 说明[#2400005](https://launchpad.support.sap.com/#/notes/2400005)
-> - 请注意 SAP 说明[#2631285](https://launchpad.support.sap.com/#/notes/2631285)
+> - 另请参阅 SAP 说明 [#2400005](https://launchpad.support.sap.com/#/notes/2400005)
+> - 请注意 SAP 说明 [#2631285](https://launchpad.support.sap.com/#/notes/2631285)
 
 
 在 SAP HANA 2.0 中，hdbparam 框架已弃用。 因此，必须使用 SQL 命令设置这些参数。 有关详细信息，请参阅 [SAP 说明 #2399079：HANA 2 中已弃用 hdbparam](https://launchpad.support.sap.com/#/notes/2399079)。
@@ -211,7 +212,7 @@ HANA 大型实例中使用的存储具有文件大小限制。 [大小限制为]
 请参阅 [HLI 支持的方案](hana-supported-scenario.md)，详细了解体系结构的存储布局。
 
 
-**后续步骤**
+后续步骤
 
 - 参阅 [HLI 上的 HANA 安装](hana-example-installation.md)
 

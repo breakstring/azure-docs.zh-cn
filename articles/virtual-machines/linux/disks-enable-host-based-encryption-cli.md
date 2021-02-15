@@ -7,17 +7,17 @@ ms.topic: how-to
 ms.date: 08/24/2020
 ms.author: rogarana
 ms.subservice: disks
-ms.custom: references_regions
-ms.openlocfilehash: ff56654981ef69648b1fa7ad11a8681c887289f6
-ms.sourcegitcommit: d39f2cd3e0b917b351046112ef1b8dc240a47a4f
+ms.custom: references_regions, devx-track-azurecli
+ms.openlocfilehash: 94a691badf056c8e93f47ae8d052fc1388b34e4c
+ms.sourcegitcommit: 78ecfbc831405e8d0f932c9aafcdf59589f81978
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/25/2020
-ms.locfileid: "88816960"
+ms.lasthandoff: 01/23/2021
+ms.locfileid: "98737466"
 ---
 # <a name="use-the-azure-cli-to-enable-end-to-end-encryption-using-encryption-at-host"></a>使用 Azure CLI 在主机上使用加密启用端到端加密
 
-启用主机加密时，存储在 VM 主机上的数据将静态加密，且已加密的数据将流向存储服务。 有关主机加密以及其他托管磁盘加密类型的概念信息，请参阅[主机加密 - 为 VM 数据启用端到端加密](disk-encryption.md#encryption-at-host---end-to-end-encryption-for-your-vm-data)。
+启用主机加密时，存储在 VM 主机上的数据将静态加密，且已加密的数据将流向存储服务。 有关主机加密以及其他托管磁盘加密类型的概念信息，请参阅[主机加密 - 为 VM 数据启用端到端加密](../disk-encryption.md#encryption-at-host---end-to-end-encryption-for-your-vm-data)。
 
 ## <a name="restrictions"></a>限制
 
@@ -208,7 +208,7 @@ az vmss show -n $vmssName \
     }
 ```
 
-或者，调用 [AzComputeResourceSku](/powershell/module/az.compute/get-azcomputeresourcesku?view=azps-3.8.0) PowerShell cmdlet。
+或者，调用 [AzComputeResourceSku](/powershell/module/az.compute/get-azcomputeresourcesku) PowerShell cmdlet。
 
 ```powershell
 $vmSizes=Get-AzComputeResourceSku | where{$_.ResourceType -eq 'virtualMachines' -and $_.Locations.Contains('CentralUSEUAP')} 

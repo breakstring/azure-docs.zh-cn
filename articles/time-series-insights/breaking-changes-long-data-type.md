@@ -8,14 +8,14 @@ ms.author: dpalled
 manager: diviso
 ms.workload: big-data
 ms.topic: conceptual
-ms.date: 08/25/2020
+ms.date: 12/07/2020
 ms.custom: dpalled
-ms.openlocfilehash: 8d9b166d4ac9290a0389eac23f9d6882f667e1a0
-ms.sourcegitcommit: b33c9ad17598d7e4d66fe11d511daa78b4b8b330
+ms.openlocfilehash: 0f7ac9844bfe7eac7094d3b7fdf653e07f236599
+ms.sourcegitcommit: 8b4b4e060c109a97d58e8f8df6f5d759f1ef12cf
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/25/2020
-ms.locfileid: "88856100"
+ms.lasthandoff: 12/07/2020
+ms.locfileid: "96780818"
 ---
 # <a name="adding-support-for-long-data-type-in-azure-time-series-insights-gen2"></a>Azure 时序见解第 2 代中添加了对 long 数据类型的支持
 
@@ -31,9 +31,9 @@ ms.locfileid: "88856100"
 - **情况 4**：你使用 JavaScript SDK 构建自定义前端应用程序。
 - **情况 5**：你在暖存储中已快要达到 1,000 属性名称限制，并且你同时发送整型和非整型数据。 可以在 [Azure 门户](https://portal.azure.com/)中将属性计数作为指标查看。
 
-如果你符合上述任何情况，请对模型进行更改。 请使用建议的更改更新你的变量定义中的时序表达式 (TSX)。 更新两个：
+如果你符合上述任何情况，请对模型进行更改。 请使用建议的更改更新你的变量定义中的时序表达式 (TSX)。 同时更新：
 
-- Azure 时序见解 TSI 资源管理器
+- Azure 时序见解资源管理器
 - 任何使用我们的 API 的自定义客户端
 
 你可能看不到发送到你的 Azure 时序见解第 2 代环境的数据，具体取决于你的 IoT 解决方案和约束。 如果你不确定你的数据都是整型的还是既有整型的又有非整型的，则你有几个选择。
@@ -42,11 +42,11 @@ ms.locfileid: "88856100"
 - 你可以提前对所有数字标记进行建议的更改。
 - 你可以暂时将部分事件路由到存储，以便更好地了解和探究你的架构。
 
-若要存储事件，请为 Azure 事件中心开启[事件捕获](https://docs.microsoft.com/azure/event-hubs/event-hubs-capture-overview)，或者从 IoT 中心[路由](https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messages-d2c#azure-storage)到 Azure Blob 存储。
+若要存储事件，请为 Azure 事件中心开启[事件捕获](../event-hubs/event-hubs-capture-overview.md)，或者从 IoT 中心[路由](../iot-hub/iot-hub-devguide-messages-d2c.md#azure-storage-as-a-routing-endpoint)到 Azure Blob 存储。
 
-还可以通过[事件中心资源管理器](https://marketplace.visualstudio.com/items?itemName=Summer.azure-event-hub-explorer)或[事件处理器主机](https://docs.microsoft.com/azure/event-hubs/event-hubs-dotnet-standard-getstarted-send#receive-events)来观察数据。
+还可以通过[事件中心资源管理器](https://marketplace.visualstudio.com/items?itemName=Summer.azure-event-hub-explorer)或[事件处理器主机](../event-hubs/event-hubs-dotnet-standard-getstarted-send.md#receive-events)来观察数据。
 
-如果你使用 IoT 中心，请参阅[从内置终结点读取设备到云消息](https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messages-read-builtin)以了解如何访问内置终结点。
+如果你使用 IoT 中心，请参阅[从内置终结点读取设备到云消息](../iot-hub/iot-hub-devguide-messages-read-builtin.md)以了解如何访问内置终结点。
 
 > [!NOTE]
 > 如果未进行建议的更改，则可能会发生中断。 例如，通过查询 API 或时序见解资源管理器访问的受影响的时序见解变量将返回 **null**（即，不在资源管理器中显示数据）。
@@ -66,19 +66,19 @@ ms.locfileid: "88856100"
 
 整数数据写入到 **propertyValue_long**。 **propertyValue_double** 中以前引入的（和将来引入的）数字数据不会进行复制。
 
-如果你要跨这两个列查询 **propertyValue** 属性的数据，则需要在 TSX 中使用 **coalesce()** 标量函数。 此函数接受相同 **DataType** 的参数，并返回参数列表中的第一个非 null 值。 有关详细信息，请参阅 [Azure 时序见解第 2 代数据访问概念](https://docs.microsoft.com/rest/api/time-series-insights/reference-time-series-expression-syntax#other-functions)。
+如果你要跨这两个列查询 **propertyValue** 属性的数据，则需要在 TSX 中使用 **coalesce()** 标量函数。 此函数接受相同 **DataType** 的参数，并返回参数列表中的第一个非 null 值。 有关详细信息，请参阅 [Azure 时序见解第 2 代数据访问概念](/rest/api/time-series-insights/reference-time-series-expression-syntax#other-functions)。
 
 #### <a name="variable-definition-in-tsx---numeric"></a>TSX 中的变量定义 - 数字
 
 *以前的变量定义：*
 
-[![以前的变量定义](media/time-series-insights-long-data-type/var-def-previous.png)](media/time-series-insights-long-data-type/var-def-previous.png#lightbox)
+[![屏幕截图显示了 PropertyValue 变量（数值）的“添加新变量”对话框。](media/time-series-insights-long-data-type/var-def-previous.png)](media/time-series-insights-long-data-type/var-def-previous.png#lightbox)
 
 *新的变量定义：*
 
-[![新的变量定义](media/time-series-insights-long-data-type/var-def.png)](media/time-series-insights-long-data-type/var-def.png#lightbox)
+[![屏幕截图显示了具有自定义值的 PropertyValue 变量（数值）的“添加新变量”对话框。](media/time-series-insights-long-data-type/var-def.png)](media/time-series-insights-long-data-type/var-def.png#lightbox)
 
-还可以使用 **coalesce($event.propertyValue.Double, toDouble($event.propertyValue.Long))** 作为自定义[时序表达式](https://docs.microsoft.com/rest/api/time-series-insights/reference-time-series-expression-syntax)。
+还可以使用 **coalesce($event.propertyValue.Double, toDouble($event.propertyValue.Long))** 作为自定义 [时序表达式](/rest/api/time-series-insights/reference-time-series-expression-syntax)。
 
 #### <a name="inline-variable-definition-using-tsx-query-apis---numeric"></a>使用 TSX 查询 API 的内联变量定义 - 数字
 
@@ -126,7 +126,7 @@ ms.locfileid: "88856100"
 }
 ```
 
-还可以使用 **coalesce($event.propertyValue.Double, toDouble($event.propertyValue.Long))** 作为自定义[时序表达式](https://docs.microsoft.com/rest/api/time-series-insights/reference-time-series-expression-syntax)。
+还可以使用 **coalesce($event.propertyValue.Double, toDouble($event.propertyValue.Long))** 作为自定义 [时序表达式](/rest/api/time-series-insights/reference-time-series-expression-syntax)。
 
 > [!NOTE]
 > 建议在可能使用这些变量的所有位置更新它们。 这些位置包括时序模型、已保存的查询和 Power BI 连接器查询。
@@ -139,15 +139,15 @@ ms.locfileid: "88856100"
 
 *以前的变量定义：*
 
-[![以前的变量定义](media/time-series-insights-long-data-type/var-def-cat-previous.png)](media/time-series-insights-long-data-type/var-def-cat-previous.png#lightbox)
+[![屏幕截图显示了 PropertyValue 变量（类别）的“添加新变量”对话框。](media/time-series-insights-long-data-type/var-def-cat-previous.png)](media/time-series-insights-long-data-type/var-def-cat-previous.png#lightbox)
 
 *新的变量定义：*
 
-[![新的变量定义](media/time-series-insights-long-data-type/var-def-cat.png)](media/time-series-insights-long-data-type/var-def-cat.png#lightbox)
+[![屏幕截图显示了具有自定义值的 PropertyValue 变量（类别）的“添加新变量”对话框。](media/time-series-insights-long-data-type/var-def-cat.png)](media/time-series-insights-long-data-type/var-def-cat.png#lightbox)
 
-还可以使用 **coalesce($event.propertyValue.Double, toDouble($event.propertyValue.Long))** 作为自定义[时序表达式](https://docs.microsoft.com/rest/api/time-series-insights/preview#time-series-expression-and-syntax)。
+还可以使用 **coalesce($event.propertyValue.Double, toDouble($event.propertyValue.Long))** 作为自定义 [时序表达式](/rest/api/time-series-insights/preview#time-series-expression-and-syntax)。
 
-分类变量仍要求值为整数类型。 在自定义[时序表达式](https://docs.microsoft.com/rest/api/time-series-insights/reference-time-series-expression-syntax)中，**coalesce()** 中的所有参数的 **DataType** 都必须是 **Long** 类型。
+分类变量仍要求值为整数类型。 在自定义 [时序表达式](/rest/api/time-series-insights/reference-time-series-expression-syntax)中，**coalesce()** 中的所有参数的 **DataType** 都必须是 **Long** 类型。
 
 #### <a name="inline-variable-definition-using-tsx-query-apis---categorical"></a>使用 TSX 查询 API 的内联变量定义 - 类别
 
@@ -227,7 +227,7 @@ ms.locfileid: "88856100"
 }
 ```
 
-分类变量仍要求值为整数类型。 在自定义[时序表达式](https://docs.microsoft.com/rest/api/time-series-insights/reference-time-series-expression-syntax)中，**coalesce()** 中的所有参数的 **DataType** 都必须是 **Long** 类型。
+分类变量仍要求值为整数类型。 在自定义 [时序表达式](/rest/api/time-series-insights/reference-time-series-expression-syntax)中，**coalesce()** 中的所有参数的 **DataType** 都必须是 **Long** 类型。
 
 > [!NOTE]
 > 建议在可能使用这些变量的所有位置更新它们。 这些位置包括时序模型、已保存的查询和 Power BI 连接器查询。

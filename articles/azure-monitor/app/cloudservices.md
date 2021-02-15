@@ -2,13 +2,14 @@
 title: 适用于 Azure 云服务的 Application Insights | Microsoft Docs
 description: 使用 Application Insights 有效监视 Web 角色和辅助角色
 ms.topic: conceptual
+ms.custom: devx-track-csharp
 ms.date: 09/05/2018
-ms.openlocfilehash: 2adcdcdc36fdd41b1f871acbea386beb1d7a9451
-ms.sourcegitcommit: a76ff927bd57d2fcc122fa36f7cb21eb22154cfa
+ms.openlocfilehash: ccd863db55ef0ff9f4051947321321c8b01430c4
+ms.sourcegitcommit: fec60094b829270387c104cc6c21257826fccc54
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/28/2020
-ms.locfileid: "87318430"
+ms.lasthandoff: 12/09/2020
+ms.locfileid: "96920688"
 ---
 # <a name="application-insights-for-azure-cloud-services"></a>适用于 Azure 云服务的 Application Insights
 [Application Insights][start] 可以通过将 Application Insights SDK 提供的数据与云服务提供的 [Azure 诊断](../platform/diagnostics-extension-overview.md)数据合并，来监视 [Azure 云服务应用](https://azure.microsoft.com/services/cloud-services/)的可用性、性能、故障和使用情况。 通过收到的有关应用在现实中的性能和有效性的反馈，可以针对每个开发生命周期确定合理的设计方向。
@@ -41,7 +42,7 @@ ms.locfileid: "87318430"
 * 通过应用添加自定义遥测。
 
 ## <a name="sample-app-instrumented-with-application-insights"></a>使用 Application Insights 检测的示例应用
-在此[示例应用](https://github.com/Microsoft/ApplicationInsights-Home/tree/master/Samples/AzureEmailService)中，Application Insights 已添加到某个云服务，该服务包含 Azure 中托管的两个辅助角色。 
+在此[示例应用](https://github.com/MohanGsk/ApplicationInsights-Home/tree/master/Samples/AzureEmailService)中，Application Insights 已添加到某个云服务，该服务包含 Azure 中托管的两个辅助角色。 
 
 下一部分介绍如何以相同的方式改编你自己的云服务项目。
 
@@ -65,6 +66,8 @@ ms.locfileid: "87318430"
 为了避免这种情况，可以单独为系统的每个生成配置或“堆栈”（开发、测试、生产等）创建资源。 将每个生成配置的资源放在独立的资源组中。 
 
 若要将遥测数据发送到相应的资源，可以设置 Application Insights SDK，使其根据生成配置选择不同的检测密钥。 
+
+了解如何为不同的阶段[动态设置检测密钥](./separate-resources.md#dynamic-ikey)。 
 
 ## <a name="create-an-application-insights-resource-for-each-role"></a>为每个角色创建 Application Insights 资源
 
@@ -90,9 +93,9 @@ ms.locfileid: "87318430"
 
 ![配置 Application Insights](./media/cloudservices/configure-azure-diagnostics.png)
 
-这相当于将 Application Insights 检测密钥插入到名为 *ServiceConfiguration.\*.cscfg* 的文件。 下面是[示例代码](https://github.com/Microsoft/ApplicationInsights-Home/blob/master/Samples/AzureEmailService/AzureEmailService/ServiceConfiguration.Cloud.cscfg)。
+这相当于将 Application Insights 检测密钥插入到名为 *ServiceConfiguration.\*.cscfg* 的文件。 下面是[示例代码](https://github.com/MohanGsk/ApplicationInsights-Home/blob/master/Samples/AzureEmailService/AzureEmailService/ServiceConfiguration.Cloud.cscfg)。
 
-若要改变发送到 Application Insights 的诊断信息级别，可以[直接编辑 *.cscfg* 文件](../platform/diagnostics-extension-to-application-insights.md)。
+若要改变发送到 Application Insights 的诊断信息级别，可以 [直接编辑 *.cscfg* 文件](../platform/diagnostics-extension-to-application-insights.md)。
 
 ## <a name="install-the-sdk-in-each-project"></a><a name="sdk"></a>在每个项目中安装 SDK
 使用此选项可将自定义的业务遥测添加到任何角色。 使用该选项可以更细致地分析应用的用法和性能。
@@ -101,28 +104,27 @@ ms.locfileid: "87318430"
 
 1. 若要配置 Web 角色，请右键单击项目，并选择“配置 Application Insights”或“添加”>“Application Insights 遥测”  。
 
-1. 配置**辅助角色**： 
+1. 配置 **辅助角色**： 
 
     a. 右键单击项目，并选择“管理 NuGet 包”。
 
     b. 添加[适用于 Windows Server 的 Application Insights](https://www.nuget.org/packages/Microsoft.ApplicationInsights.WindowsServer/)。
-
-    ![搜索“Application Insights”](./media/cloudservices/04-ai-nuget.png)
 
 1. 将 SDK 配置为向 Application Insights 资源发送数据：
 
     a. 在适当的启动函数中，通过 *.cscfg* 文件中的配置设置指定检测密钥：
  
     ```csharp
-   
-     TelemetryConfiguration.Active.InstrumentationKey = RoleEnvironment.GetConfigurationSettingValue("APPINSIGHTS_INSTRUMENTATIONKEY");
+        TelemetryConfiguration configuration = TelemetryConfiguration.CreateDefault();
+        configuration.InstrumentationKey = RoleEnvironment.GetConfigurationSettingValue("APPINSIGHTS_INSTRUMENTATIONKEY");
+        var telemetryClient = new TelemetryClient(configuration);
     ```
    
     b. 针对应用中的每个角色重复“步骤 a”。 参阅示例：
    
-    * [Web 角色](https://github.com/Microsoft/ApplicationInsights-Home/blob/master/Samples/AzureEmailService/MvcWebRole/Global.asax.cs#L27)
-    * [辅助角色](https://github.com/Microsoft/ApplicationInsights-Home/blob/master/Samples/AzureEmailService/WorkerRoleA/WorkerRoleA.cs#L232)
-    * [对于网页](https://github.com/Microsoft/ApplicationInsights-Home/blob/master/Samples/AzureEmailService/MvcWebRole/Views/Shared/_Layout.cshtml#L13) 
+    * [Web 角色](https://github.com/MohanGsk/ApplicationInsights-Home/blob/master/Samples/AzureEmailService/MvcWebRole/Global.asax.cs#L27)
+    * [辅助角色](https://github.com/MohanGsk/ApplicationInsights-Home/blob/master/Samples/AzureEmailService/WorkerRoleA/WorkerRoleA.cs#L232)
+    * [对于网页](https://github.com/MohanGsk/ApplicationInsights-Home/blob/master/Samples/AzureEmailService/MvcWebRole/Views/Shared/_Layout.cshtml#L13) 
 
 1. 将 *ApplicationInsights.config* 文件设置为始终复制到输出目录。
 
@@ -147,7 +149,7 @@ ms.locfileid: "87318430"
     </Startup>
     ```
     
-2. 下载 [InstallAgent.bat](https://github.com/microsoft/ApplicationInsights-Home/blob/master/Samples/AzureEmailService/WorkerRoleA/AppInsightsAgent/InstallAgent.bat) 和 [InstallAgent.ps1](https://github.com/microsoft/ApplicationInsights-Home/blob/master/Samples/AzureEmailService/WorkerRoleA/AppInsightsAgent/InstallAgent.ps1)，将它们放入每个角色项目的 `AppInsightsAgent` 文件夹中。 确保通过 Visual Studio 文件属性或生成脚本将它们复制到输出目录。
+2. 下载 [InstallAgent.bat](https://github.com/MohanGsk/ApplicationInsights-Home/blob/master/Samples/AzureEmailService/WorkerRoleA/AppInsightsAgent/InstallAgent.bat) 和 [InstallAgent.ps1](https://github.com/MohanGsk/ApplicationInsights-Home/blob/master/Samples/AzureEmailService/WorkerRoleA/AppInsightsAgent/InstallAgent.ps1)，将它们放入每个角色项目的 `AppInsightsAgent` 文件夹中。 确保通过 Visual Studio 文件属性或生成脚本将它们复制到输出目录。
 
 3. 在所有辅助角色上添加环境变量： 
 
@@ -188,7 +190,7 @@ ms.locfileid: "87318430"
 
 ![Azure 诊断数据](./media/cloudservices/23-wad.png)
 
-若要在 Azure 诊断发送的各种跟踪日志中进行搜索，请使用[搜索](./diagnostic-search.md)或 [Analytics 查询](../log-query/get-started-portal.md)。 例如，假设某个未经处理的异常导致角色崩溃和回收。 该信息会在应用程序通道的 Windows 事件日志中显示。 可使用搜索来查看 Windows 事件日志错误，并获取异常的完整堆栈跟踪。 这样有助于找到问题的根本原因。
+若要在 Azure 诊断发送的各种跟踪日志中进行搜索，请使用[搜索](./diagnostic-search.md)或 [Analytics 查询](../log-query/log-analytics-tutorial.md)。 例如，假设某个未经处理的异常导致角色崩溃和回收。 该信息会在应用程序通道的 Windows 事件日志中显示。 可使用搜索来查看 Windows 事件日志错误，并获取异常的完整堆栈跟踪。 这样有助于找到问题的根本原因。
 
 ![Azure 诊断搜索](./media/cloudservices/25-wad.png)
 
@@ -196,26 +198,26 @@ ms.locfileid: "87318430"
 以下部分从应用的不同层面介绍如何获取其他遥测数据。
 
 ## <a name="track-requests-from-worker-roles"></a>从辅助角色跟踪请求
-在 Web 角色中，请求模块会自动收集有关 HTTP 请求的数据。 有关如何覆盖默认收集行为的示例，请参阅[示例 MVCWebRole](https://github.com/Microsoft/ApplicationInsights-Home/tree/master/Samples/AzureEmailService/MvcWebRole)。 
+在 Web 角色中，请求模块会自动收集有关 HTTP 请求的数据。 有关如何覆盖默认收集行为的示例，请参阅[示例 MVCWebRole](https://github.com/MohanGsk/ApplicationInsights-Home/tree/master/Samples/AzureEmailService/MvcWebRole)。 
 
 可以像跟踪 HTTP 请求一样捕获辅助角色调用的性能。 在 Application Insights 中，请求遥测类型用于测量一个单位的可计时且可独立成功/失败的命名服务器端工作。 尽管 SDK 可以自动捕获 HTTP 请求，但你也可以插入自己的代码来跟踪针对辅助角色发出的请求。
 
 请参阅报告请求的两个检测示例辅助角色： 
-* [WorkerRoleA](https://github.com/Microsoft/ApplicationInsights-Home/tree/master/Samples/AzureEmailService/WorkerRoleA)
-* [WorkerRoleB](https://github.com/Microsoft/ApplicationInsights-Home/tree/master/Samples/AzureEmailService/WorkerRoleB)
+* [WorkerRoleA](https://github.com/MohanGsk/ApplicationInsights-Home/tree/master/Samples/AzureEmailService/WorkerRoleA)
+* [WorkerRoleB](https://github.com/MohanGsk/ApplicationInsights-Home/tree/master/Samples/AzureEmailService/WorkerRoleB)
 
 ## <a name="exceptions"></a>异常
 有关如何从不同的 Web 应用类型收集未经处理的异常的信息，请参阅[在 Application Insights 中监视异常](./asp-net-exceptions.md)。
 
 该示例 Web 角色包含 MVC5 和 Web API 2 控制器。 可使用以下处理程序捕获这两个控制器的未经处理的异常：
 
-* [按此示例所示](https://github.com/Microsoft/ApplicationInsights-Home/blob/master/Samples/AzureEmailService/MvcWebRole/App_Start/FilterConfig.cs#L12)设置 MVC5 控制器的 [AiHandleErrorAttribute](https://github.com/Microsoft/ApplicationInsights-Home/blob/master/Samples/AzureEmailService/MvcWebRole/Telemetry/AiHandleErrorAttribute.cs) 
-* [按此示例所示](https://github.com/Microsoft/ApplicationInsights-Home/blob/master/Samples/AzureEmailService/MvcWebRole/App_Start/WebApiConfig.cs#L25)设置 Web API 2 控制器的 [AiWebApiExceptionLogger](https://github.com/Microsoft/ApplicationInsights-Home/blob/master/Samples/AzureEmailService/MvcWebRole/Telemetry/AiWebApiExceptionLogger.cs) 
+* [按此示例所示](https://github.com/MohanGsk/ApplicationInsights-Home/blob/master/Samples/AzureEmailService/MvcWebRole/App_Start/FilterConfig.cs#L12)设置 MVC5 控制器的 [AiHandleErrorAttribute](https://github.com/MohanGsk/ApplicationInsights-Home/blob/master/Samples/AzureEmailService/MvcWebRole/Telemetry/AiHandleErrorAttribute.cs) 
+* [按此示例所示](https://github.com/MohanGsk/ApplicationInsights-Home/blob/master/Samples/AzureEmailService/MvcWebRole/App_Start/WebApiConfig.cs#L25)设置 Web API 2 控制器的 [AiWebApiExceptionLogger](https://github.com/MohanGsk/ApplicationInsights-Home/blob/master/Samples/AzureEmailService/MvcWebRole/Telemetry/AiWebApiExceptionLogger.cs) 
 
 对于辅助角色，可通过两种方式跟踪异常：
 
 * 使用 TrackException(ex)。
-* 如果已添加 Application Insights 跟踪侦听程序 NuGet 包，可[按此示例所示](https://github.com/Microsoft/ApplicationInsights-Home/blob/master/Samples/AzureEmailService/WorkerRoleA/WorkerRoleA.cs#L107)，使用 System.Diagnostics.Trace 来记录异常。
+* 如果已添加 Application Insights 跟踪侦听程序 NuGet 包，可[按此示例所示](https://github.com/MohanGsk/ApplicationInsights-Home/blob/master/Samples/AzureEmailService/WorkerRoleA/WorkerRoleA.cs#L107)，使用 System.Diagnostics.Trace 来记录异常。
 
 ## <a name="performance-counters"></a>性能计数器
 默认收集以下计数器：
@@ -233,7 +235,7 @@ ms.locfileid: "87318430"
 * \ASP.NET Applications(??APP_W3SVC_PROC??)\Request Execution Time
 * \ASP.NET Applications(??APP_W3SVC_PROC??)\Requests In Application Queue
 
-可[按此示例所示](https://github.com/Microsoft/ApplicationInsights-Home/blob/master/Samples/AzureEmailService/WorkerRoleA/ApplicationInsights.config#L14)，通过编辑 ApplicationInsights.config 来指定其他自定义性能计数器或其他 Windows 性能计数器。
+可[按此示例所示](https://github.com/MohanGsk/ApplicationInsights-Home/blob/master/Samples/AzureEmailService/WorkerRoleA/ApplicationInsights.config#L14)，通过编辑 ApplicationInsights.config 来指定其他自定义性能计数器或其他 Windows 性能计数器。
 
   ![性能计数器](./media/cloudservices/002-servers.png)
 
@@ -244,9 +246,9 @@ ms.locfileid: "87318430"
 
 方法如下：
 
-* [按此示例所示](https://github.com/Microsoft/ApplicationInsights-Home/blob/master/Samples/AzureEmailService/WorkerRoleA/WorkerRoleA.cs#L36)，将 correlationId 设置到 CallContext 中。 本例使用请求 ID 作为 correlationId。
-* 添加自定义 TelemetryInitializer 实现，将 Operation.Id 设置为前面所设置的 correlationId。 有关示例，请参阅 [ItemCorrelationTelemetryInitializer](https://github.com/Microsoft/ApplicationInsights-Home/blob/master/Samples/AzureEmailService/WorkerRoleA/Telemetry/ItemCorrelationTelemetryInitializer.cs#L13)。
-* 添加自定义遥测初始值设定项。 可[按此示例所示](https://github.com/Microsoft/ApplicationInsights-Home/blob/master/Samples/AzureEmailService/WorkerRoleA/WorkerRoleA.cs#L233)，在 *ApplicationInsights.config* 文件或代码中执行此操作。
+* [按此示例所示](https://github.com/MohanGsk/ApplicationInsights-Home/blob/master/Samples/AzureEmailService/WorkerRoleA/WorkerRoleA.cs#L36)，将 correlationId 设置到 CallContext 中。 本例使用请求 ID 作为 correlationId。
+* 添加自定义 TelemetryInitializer 实现，将 Operation.Id 设置为前面所设置的 correlationId。 有关示例，请参阅 [ItemCorrelationTelemetryInitializer](https://github.com/MohanGsk/ApplicationInsights-Home/blob/master/Samples/AzureEmailService/WorkerRoleA/Telemetry/ItemCorrelationTelemetryInitializer.cs#L13)。
+* 添加自定义遥测初始值设定项。 可 [按此示例所示](https://github.com/MohanGsk/ApplicationInsights-Home/blob/master/Samples/AzureEmailService/WorkerRoleA/WorkerRoleA.cs#L233)，在 *ApplicationInsights.config* 文件或代码中执行此操作。
 
 ## <a name="client-telemetry"></a>客户端遥测数据
 若要获取基于浏览器的遥测数据（例如页面查看次数、页面加载时间或脚本异常）以及在页面脚本中编写自定义遥测，请参阅[将 JavaScript SDK 添加到网页][client]。
@@ -262,7 +264,7 @@ ms.locfileid: "87318430"
 如果有客户端移动应用，请使用 [App Center](../learn/mobile-center-quickstart.md)。 在 [Analytics](../log-query/log-query-overview.md) 中创建查询来显示事件计数，并将事件固定到仪表板。
 
 ## <a name="example"></a>示例
-[该示例](https://github.com/Microsoft/ApplicationInsights-Home/tree/master/Samples/AzureEmailService)监视包含一个 Web 角色和两个辅助角色的服务。
+[该示例](https://github.com/MohanGsk/ApplicationInsights-Home/tree/master/Samples/AzureEmailService)监视包含一个 Web 角色和两个辅助角色的服务。
 
 ## <a name="exception-method-not-found-on-running-in-azure-cloud-services"></a>在 Azure 云服务中运行时发生“找不到方法”异常
 生成的项目是否面向 .NET 4.6？ Azure 云服务角色不能现成地支持 .NET 4.6。 运行应用之前，请先[在每个角色上安装 .NET 4.6](../../cloud-services/cloud-services-dotnet-install-dotnet.md)。
@@ -287,4 +289,3 @@ ms.locfileid: "87318430"
 [qna]: ../faq.md
 [redfield]: ./monitor-performance-live-website-now.md
 [start]: ./app-insights-overview.md
-

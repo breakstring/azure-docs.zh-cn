@@ -1,7 +1,7 @@
 ---
-title: 在设计器中转换数据（预览）
+title: 在设计器中转换数据
 titleSuffix: Azure Machine Learning
-description: 了解如何转换 Azure 机器学习设计器（预览版）中的数据，以创建自己的数据集。
+description: 了解如何在 Azure 机器学习设计器中导入和转换数据，以创建自己的数据集。
 services: machine-learning
 ms.service: machine-learning
 ms.subservice: core
@@ -10,19 +10,19 @@ ms.author: peterlu
 ms.date: 06/28/2020
 ms.topic: conceptual
 ms.custom: how-to, designer
-ms.openlocfilehash: 05a21ce10db2822c963f1b375842e9a7233e0816
-ms.sourcegitcommit: f988fc0f13266cea6e86ce618f2b511ce69bbb96
+ms.openlocfilehash: 70f5e17c4cc42201e9aa3d36c9937f6ceb9527d0
+ms.sourcegitcommit: aaa65bd769eb2e234e42cfb07d7d459a2cc273ab
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/31/2020
-ms.locfileid: "87457815"
+ms.lasthandoff: 01/27/2021
+ms.locfileid: "98880197"
 ---
-# <a name="transform-data-in-azure-machine-learning-designer-preview"></a>在 Azure 机器学习设计器（预览版）中转换数据
-[!INCLUDE [applies-to-skus](../../includes/aml-applies-to-enterprise-sku.md)]
+# <a name="transform-data-in-azure-machine-learning-designer"></a>在 Azure 机器学习设计器中转换数据
+
 
 本文介绍如何在 Azure 机器学习设计器中转换和保存数据集，以便可以为机器学习准备好自己的数据。
 
-你将使用示例 [Adult Census Income Binary Classification](sample-designer-datasets.md) 数据集来准备两个数据集：一个数据集包含仅来自美国的成年人口信息，另一个数据集包含来自非美国成人的人口信息。
+你将使用示例 [Adult Census Income Binary Classification](./samples-designer.md) 数据集来准备两个数据集：一个数据集包含仅来自美国的成年人口信息，另一个数据集包含来自非美国成人的人口信息。
 
 在本文中，学习如何：
 
@@ -52,11 +52,7 @@ ms.locfileid: "87457815"
 
 1. 将“Adult Census Income Binary classification”数据集拖放到画布上。
 
-1. 选择“Adult Census Income”数据集模块。
-
-1. 在画布右侧出现的详细信息窗格中，选择“输出”。
-
-1. 选择可视化图标 ![可视化图标](media/how-to-designer-transform-data/visualize-icon.png)。
+1. 右键单击 "**成人人口收入** 数据集" 模块，并选择 "**可视化**  >  **数据集输出**"
 
 1. 使用数据预览窗口浏览数据集。 请特别注意“native-country”列值。
 
@@ -112,7 +108,7 @@ ms.locfileid: "87457815"
     文件格式：csv
 
     > [!NOTE]
-    > 本文假设你有权访问注册到当前 Azure 机器学习工作区的数据存储。 有关如何设置数据存储的说明，请参阅[连接到 Azure 存储服务](how-to-access-data.md#studio)。
+    > 本文假设你有权访问注册到当前 Azure 机器学习工作区的数据存储。 有关如何设置数据存储的说明，请参阅[连接到 Azure 存储服务](how-to-connect-data-ui.md#create-datastores)。
 
     如果没有数据存储，则可以立即创建一个。 例如，本文会将数据集保存到与工作区关联的默认 blob 存储帐户。 它会将数据集保存到名为 `data` 的新文件夹中的 `azureml` 容器。
 

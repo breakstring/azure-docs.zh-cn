@@ -1,18 +1,19 @@
 ---
 title: 配置 Azure 文件同步网络终结点 | Microsoft Docs
-description: Azure 文件同步的网络选项概述。
+description: 了解如何配置 Azure 文件同步网络终结点。
 author: roygara
 ms.service: storage
 ms.topic: how-to
 ms.date: 5/11/2020
 ms.author: rogarana
 ms.subservice: files
-ms.openlocfilehash: 68d2b864b0e825756fbcd8e43fee3d6289c77c36
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
-ms.translationtype: HT
+ms.custom: devx-track-azurepowershell, devx-track-azurecli
+ms.openlocfilehash: 64d66e1b9eab225b38ee21306fea6f9534a708f3
+ms.sourcegitcommit: b39cf769ce8e2eb7ea74cfdac6759a17a048b331
+ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "85512854"
+ms.lasthandoff: 01/22/2021
+ms.locfileid: "98673836"
 ---
 # <a name="configuring-azure-file-sync-network-endpoints"></a>配置 Azure 文件同步网络终结点
 Azure 文件存储和 Azure 文件同步提供两种主要类型的终结点用于访问 Azure 文件共享： 
@@ -32,8 +33,8 @@ Azure 文件存储和 Azure 文件同步提供两种主要类型的终结点用�
 - 已经创建一个存储同步服务并通过它注册了 Windows 文件服务器。 若要了解如何部署 Azure 文件同步，请参阅[部署 Azure 文件同步](storage-sync-files-deployment-guide.md)。
 
 此外：
-- 如果你打算使用 Azure PowerShell，请[安装最新版本](https://docs.microsoft.com/powershell/azure/install-az-ps)。
-- 如果你打算使用 Azure CLI，请[安装最新版本](https://docs.microsoft.com/cli/azure/install-azure-cli?view=azure-cli-latest)。
+- 如果你打算使用 Azure PowerShell，请[安装最新版本](/powershell/azure/install-az-ps)。
+- 如果你打算使用 Azure CLI，请[安装最新版本](/cli/azure/install-azure-cli?view=azure-cli-latest&preserve-view=true)。
 
 ## <a name="create-the-private-endpoints"></a>创建专用终结点
 为 Azure 资源创建专用终结点时，将部署以下资源：
@@ -51,13 +52,13 @@ Azure 文件存储和 Azure 文件同步提供两种主要类型的终结点用�
 
 如果你在虚拟网络中有一个虚拟机，或者已按[配置 Azure 文件存储的 DNS 转发](storage-files-networking-dns.md)所述配置了 DNS 转发，则可以通过在 PowerShell、命令行或终端（适用于 Windows、Linux 或 macOS）中运行以下命令，来测试是否已正确设置专用终结点。 必须将 `<storage-account-name>` 替换为相应的存储帐户名称：
 
-```
+```console
 nslookup <storage-account-name>.file.core.windows.net
 ```
 
 如果一切成功进行，则应会看到以下输出，其中 `192.168.0.5` 是虚拟网络中专用终结点的专用 IP 地址（Windows 中显示的输出）：
 
-```Output
+```output
 Server:  UnKnown
 Address:  10.2.4.4
 
@@ -72,7 +73,7 @@ Aliases:  storageaccount.file.core.windows.net
 
 如果你在虚拟网络中有一个虚拟机，或者已按[配置 Azure 文件存储的 DNS 转发](storage-files-networking-dns.md)所述配置了 DNS 转发，则可以使用以下命令测试是否已正确设置专用终结点：
 
-```PowerShell
+```powershell
 $storageAccountHostName = [System.Uri]::new($storageAccount.PrimaryEndpoints.file) | `
     Select-Object -ExpandProperty Host
 
@@ -81,7 +82,7 @@ Resolve-DnsName -Name $storageAccountHostName
 
 如果一切成功进行，则应会看到以下输出，其中 `192.168.0.5` 是虚拟网络中专用终结点的专用 IP 地址：
 
-```Output
+```output
 Name                             Type   TTL   Section    NameHost
 ----                             ----   ---   -------    --------
 storageaccount.file.core.windows CNAME  60    Answer     storageaccount.privatelink.file.core.windows.net
@@ -112,7 +113,7 @@ nslookup $hostName
 
 如果一切成功进行，则应会看到以下输出，其中 `192.168.0.5` 是虚拟网络中专用终结点的专用 IP 地址：
 
-```Output
+```output
 Server:         127.0.0.53
 Address:        127.0.0.53#53
 
@@ -167,7 +168,7 @@ Get-AzPrivateEndpoint `
 
 如果一切设置正确，则应看到以下输出，其中 `192.168.1.4`、`192.168.1.5`、`192.168.1.6` 和 `192.168.1.7` 是分配给专用终结点的专用 IP 地址：
 
-```Output
+```output
 Name     : mysssmanagement.westus2.afs.azure.net
 Type     : CNAME
 TTL      : 60
@@ -243,7 +244,7 @@ if ($null -eq $storageSyncService) {
 
 若要创建专用终结点，必须与存储同步服务建立专用链接服务连接。 专用链接连接是创建专用终结点时使用的输入。
 
-```PowerShell 
+```powershell 
 # Disable private endpoint network policies
 $subnet.PrivateEndpointNetworkPolicies = "Disabled"
 $virtualNetwork = $virtualNetwork | `
@@ -324,7 +325,7 @@ if ($null -eq $dnsZone) {
 ```
 获取对专用 DNS 区域的引用后，接下来必须创建存储同步服务的 A 记录。
 
-```PowerShell 
+```powershell 
 $privateEndpointIpFqdnMappings = $privateEndpoint | `
     Select-Object -ExpandProperty NetworkInterfaces | `
     Select-Object -ExpandProperty Id | `
@@ -587,7 +588,7 @@ done
 Azure 文件同步让你可限制为，仅通过专用终结点访问特定的虚拟网络；Azure 文件同步不支持通过服务终结点限制为从特定的虚拟网络访问公共终结点。 这意味着存储同步服务的公共终结点的两个状态为“已启用”和“已禁用”。
 
 # <a name="portal"></a>[门户](#tab/azure-portal)
-这不能通过 Azure 门户来完成。 请选择 Azure PowerShell 或 Azure CLI 选项卡说明，获取有关如何禁用存储同步服务公共终结点的说明。 
+这不能通过 Azure 门户来完成。 请选择 "Azure PowerShell" 选项卡，以获取有关如何禁用存储同步服务公共终结点的说明。 
 
 # <a name="powershell"></a>[PowerShell](#tab/azure-powershell)
 若要禁止对存储同步服务的公共终结点的访问，请将存储同步服务上的 `incomingTrafficPolicy` 属性设置为 `AllowVirtualNetworksOnly`。 若要启用对存储同步服务的公共终结点的访问，请将 `incomingTrafficPolicy` 设置为 `AllowAllTraffic`。 记得替换 `<storage-sync-service-resource-group>` 和 `<storage-sync-service>`。
@@ -602,23 +603,12 @@ $storageSyncService = Get-AzResource `
         -ResourceType "Microsoft.StorageSync/storageSyncServices"
 
 $storageSyncService.Properties.incomingTrafficPolicy = "AllowVirtualNetworksOnly"
-$storageSyncService = $storageSyncService | Set-AzResource -Confirm:$false -Force
+$storageSyncService = $storageSyncService | Set-AzResource -Confirm:$false -Force -UsePatchSemantics
 ```
 
 # <a name="azure-cli"></a>[Azure CLI](#tab/azure-cli)
-若要禁止对存储同步服务的公共终结点的访问，请将存储同步服务上的 `incomingTrafficPolicy` 属性设置为 `AllowVirtualNetworksOnly`。 若要启用对存储同步服务的公共终结点的访问，请将 `incomingTrafficPolicy` 设置为 `AllowAllTraffic`。 记得替换 `<storage-sync-service-resource-group>` 和 `<storage-sync-service>`。
+Azure CLI 不支持在 `incomingTrafficPolicy` 存储同步服务上设置属性。 请选择 "Azure PowerShell" 选项卡，以获取有关如何禁用存储同步服务公共终结点的说明。
 
-```bash
-storageSyncServiceResourceGroupName="<storage-sync-service-resource-group>"
-storageSyncServiceName="<storage-sync-service>"
-
-az resource update \
-        --resource-group $storageSyncServiceResourceGroupName \
-        --name $storageSyncServiceName \
-        --resource-type "Microsoft.StorageSync/storageSyncServices" \
-        --set "properties.incomingTrafficPolicy=AllowVirtualNetworksOnly" \
-        --output none
-```
 ---
 
 ## <a name="see-also"></a>另请参阅

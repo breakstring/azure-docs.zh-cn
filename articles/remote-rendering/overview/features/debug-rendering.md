@@ -5,12 +5,13 @@ author: jumeder
 ms.author: jumeder
 ms.date: 06/15/2020
 ms.topic: article
-ms.openlocfilehash: aa6e6dced3dfd32896489db2ed76704304dbc745
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.custom: devx-track-csharp
+ms.openlocfilehash: f6d79f41843069fe6cafe1fa1358ac6c1aab12e6
+ms.sourcegitcommit: f377ba5ebd431e8c3579445ff588da664b00b36b
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "85565451"
+ms.lasthandoff: 02/05/2021
+ms.locfileid: "99591729"
 ---
 # <a name="debug-rendering"></a>调试渲染
 
@@ -27,9 +28,9 @@ ms.locfileid: "85565451"
 以下代码启用了这些调试效果：
 
 ```cs
-void EnableDebugRenderingEffects(AzureSession session, bool highlight)
+void EnableDebugRenderingEffects(RenderingSession session, bool highlight)
 {
-    DebugRenderingSettings settings = session.Actions.DebugRenderingSettings;
+    DebugRenderingSettings settings = session.Connection.DebugRenderingSettings;
 
     // Enable frame counter text overlay on the server side rendering
     settings.RenderFrameCount = true;
@@ -43,18 +44,18 @@ void EnableDebugRenderingEffects(AzureSession session, bool highlight)
 ```
 
 ```cpp
-void EnableDebugRenderingEffects(ApiHandle<AzureSession> session, bool highlight)
+void EnableDebugRenderingEffects(ApiHandle<RenderingSession> session, bool highlight)
 {
-    ApiHandle<DebugRenderingSettings> settings = *session->Actions()->DebugRenderingSettings();
+    ApiHandle<DebugRenderingSettings> settings = session->Connection()->GetDebugRenderingSettings();
 
     // Enable frame counter text overlay on the server side rendering
-    settings->RenderFrameCount(true);
+    settings->SetRenderFrameCount(true);
 
     // Enable polygon count text overlay on the server side rendering
-    settings->RenderPolygonCount(true);
+    settings->SetRenderPolygonCount(true);
 
     // Enable wireframe rendering of object geometry on the server
-    settings->RenderWireframe(true);
+    settings->SetRenderWireframe(true);
 }
 ```
 
@@ -73,6 +74,10 @@ void EnableDebugRenderingEffects(ApiHandle<AzureSession> session, bool highlight
 
 * 启用文本叠加只会产生极少的性能开销，甚至不会产生任何开销。
 * 启用线框模式确实会产生相当高的性能开销，不过，具体的开销因场景而异。 对于复杂场景，此模式可能导致帧速率下降到 60-Hz 目标以下。
+
+## <a name="api-documentation"></a>API 文档
+
+* [C + + RenderingConnection：:D ebugRenderingSettings ( # B1 ](/cpp/api/remote-rendering/renderingconnection#debugrenderingsettings)
 
 ## <a name="next-steps"></a>后续步骤
 

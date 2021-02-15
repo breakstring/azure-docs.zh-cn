@@ -1,20 +1,20 @@
 ### YamlMime:Landing
 title: Azure Functions 文档
-summary: Azure Functions 是一种无服务器计算服务，使用它可以运行事件触发的代码，而无需显式预配或管理基础结构。
+summary: Azure Functions 是一项按需提供的云服务，可提供运行应用程序所需的所有不断更新的基础结构和资源。 你只需专注于对你最重要的代码，Azure Functions 处理其余代码。 可使用 Azure Functions 来生成 Web API、响应数据库更改、处理 IoT 流和管理消息队列等。
 metadata:
   title: Azure Functions 文档
-  description: Azure Functions 是一种无服务器计算服务，使用它可以运行事件触发的代码，而无需显式预配或管理基础结构。
+  description: Azure Functions 是一项按需提供的云服务，可提供运行应用程序所需的所有不断更新的基础结构和资源。 你只需专注于对你最重要的代码，Azure Functions 处理其余代码。 可使用 Azure Functions 来生成 Web API、响应数据库更改、处理 IoT 流和管理消息队列等。
   ms.service: azure-functions
   ms.topic: landing-page
   author: ggailey777
   ms.author: azfundocs
   ms.date: 09/17/2019
-  ms.openlocfilehash: 7a6f493bef86952de212eea264cccea1c0bcfeca
-  ms.sourcegitcommit: 85eb6e79599a78573db2082fe6f3beee497ad316
+  ms.openlocfilehash: 10c606ab86a577f22167197138e56a14d176b88a
+  ms.sourcegitcommit: 9d9221ba4bfdf8d8294cf56e12344ed05be82843
   ms.translationtype: HT
   ms.contentlocale: zh-CN
-  ms.lasthandoff: 08/05/2020
-  ms.locfileid: "87810048"
+  ms.lasthandoff: 01/19/2021
+  ms.locfileid: "98570127"
 landingContent:
 - title: 关于 Azure Functions
   linkLists:
@@ -41,15 +41,21 @@ landingContent:
   - linkListType: quickstart
     links:
     - text: 创建第一个函数 (C#)
-      url: functions-create-your-first-function-visual-studio.md
+      url: create-first-function-vs-code-csharp.md
+    - text: 创建第一个函数 (Go)
+      url: create-first-function-vs-code-other.md?tabs=go
     - text: 创建第一个函数 (Java)
-      url: functions-create-first-azure-function-azure-cli.md?pivots=programming-language-java
+      url: create-first-function-cli-java.md?tabs=bash%2Cazure-cli%2Cbrowser
     - text: 创建第一个函数 (JavaScript)
-      url: functions-create-first-function-vs-code.md?pivots=programming-language-javascript
+      url: create-first-function-vs-code-node.md
     - text: 创建第一个函数 (PowerShell)
-      url: functions-create-first-function-vs-code.md?pivots=programming-language-powershell
+      url: create-first-function-vs-code-powershell.md
     - text: 创建第一个函数 (Python)
-      url: functions-create-first-function-vs-code.md?pivots=programming-language-python
+      url: create-first-function-vs-code-python.md
+    - text: 创建第一个函数 (Rust)
+      url: create-first-function-vs-code-other.md?tabs=rust
+    - text: 创建你的第一个函数 (TypeScript)
+      url: create-first-function-vs-code-typescript.md
   - linkListType: learn
     links:
     - text: 创建无服务器逻辑

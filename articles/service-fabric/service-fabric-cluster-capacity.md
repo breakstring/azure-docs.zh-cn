@@ -4,13 +4,12 @@ description: 在规划 Service Fabric 群集时要考虑节点类型、持久性
 ms.topic: conceptual
 ms.date: 05/21/2020
 ms.author: pepogors
-ms.custom: sfrev
-ms.openlocfilehash: 28a01bbc54f752ffc1f25b57dcf2eca566aa635a
-ms.sourcegitcommit: 6fc156ceedd0fbbb2eec1e9f5e3c6d0915f65b8e
+ms.openlocfilehash: 03ec9b411f13f22a74b864a745acfed922e78b12
+ms.sourcegitcommit: a055089dd6195fde2555b27a84ae052b668a18c7
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/21/2020
-ms.locfileid: "88718095"
+ms.lasthandoff: 01/26/2021
+ms.locfileid: "98790692"
 ---
 # <a name="service-fabric-cluster-capacity-planning-considerations"></a>Service Fabric 群集容量规划注意事项
 
@@ -34,27 +33,27 @@ ms.locfileid: "88718095"
 
 非主节点类型可用于定义应用程序角色（例如前端和后端服务）并在群集中物理隔离服务 。 Service Fabric 群集可以有零个或更多非主节点类型。
 
-使用 Azure 资源管理器部署模板中节点类型定义下的 `isPrimary` 属性配置主节点类型。 有关节点类型属性的完整列表，请参阅 [NodeTypeDescription 对象](/azure/templates/microsoft.servicefabric/clusters#nodetypedescription-object)。 若要了解示例用法，请打开 [Service Fabric 群集示例](https://github.com/Azure-Samples/service-fabric-cluster-templates/tree/master/)中的任意 AzureDeploy.json 文件，并通过“在页面上查找”来搜索 `nodetTypes` 对象 。
+使用 Azure 资源管理器部署模板中节点类型定义下的 `isPrimary` 属性配置主节点类型。 有关节点类型属性的完整列表，请参阅 [NodeTypeDescription 对象](/azure/templates/microsoft.servicefabric/clusters#nodetypedescription-object)。 若要了解示例用法，请打开 [Service Fabric 群集示例](https://github.com/Azure-Samples/service-fabric-cluster-templates/tree/master/)中的任意 AzureDeploy.json 文件，并通过“在页面上查找”来搜索 `nodeTypes` 对象 。
 
 ### <a name="node-type-planning-considerations"></a>主节点计划注意事项
 
 初始节点类型的数量取决于集群的目的以及集群上运行的应用程序和服务。 考虑以下问题：
 
-* ***应用程序是否有多个服务，其中是否有任何服务需面向公众或面向 Internet？***
+* ***应用程序是否有多个服务，其中是否有任何服务需面向公众或面向 Internet？** _
 
     典型的应用程序包括从客户端接收输入的前端网关服务，以及与前端服务进行通信的一个或多个后端服务，前端和后端服务之间单独联网。 这些情况通常需要三种节点类型：一个主节点类型和两个非主节点类型（分别用于前端和后端服务）。
 
-* ***构成应用程序的各项服务是否有不同的基础结构要求，例如更多的 RAM 或更高的 CPU 周期？***
+_ ***构成应用程序的各项服务是否有不同的基础结构要求，例如更多的 RAM 或更高的 CPU 周期？** _
 
-    前端服务通常可以在容量较小（如 D2 等 VM 大小）且向 Internet 开放了端口的 VM 上运行。  计算密集型后端服务可能需要在不面向 Internet 的大型 VM（D4、D6、D15 等 VM 大小）上运行。 为这些服务定义不同的节点类型，可以更有效、更安全地使用基础 Service Fabric VM，并使它们能够独立缩放。 有关估算所需资源量的详细信息，请参阅 [Service Fabric 应用程序的容量计划](service-fabric-capacity-planning.md)
+    Often, front-end service can run on smaller VMs (VM sizes like D2) that have ports open to the internet.  Computationally intensive back-end services might need to run on larger VMs (with VM sizes like D4, D6, D15) that are not internet-facing. Defining different node types for these services allow you to make more efficient and secure use of underlying Service Fabric VMs, and enables them to scale them independently. For more on estimating the amount of resources you'll need, see [Capacity planning for Service Fabric applications](service-fabric-capacity-planning.md)
 
-* ***是否有应用程序服务需要扩展到 100 个节点以上？***
+_ ***是否有应用程序服务需要横向扩展到 100 个节点以上？** _
 
-    对于 Service Fabric 应用程序，单个节点类型无法可靠地扩展到每个虚拟机规模集 100 个节点以上。 运行超过 100 个节点需要额外的虚拟机规模集（因而还需要其他节点类型）。
+    A single node type can't reliably scale beyond 100 nodes per virtual machine scale set for Service Fabric applications. Running more than 100 nodes requires additional virtual machine scale sets (and therefore additional node types).
 
-* ***你的群集是否跨越可用性区域？***
+_ ***群集是否跨越可用性区域？** _
 
-    Service Fabric 通过部署固定到特定区域的节点类型来支持跨 [可用性区域](../availability-zones/az-overview.md) 的群集，确保应用程序的高可用性。 可用性区域需要其他节点类型规划和最低要求。 有关详细信息，请参阅 [跨可用性区域 Service Fabric 群集的主节点类型的建议拓扑](service-fabric-cross-availability-zones.md#recommended-topology-for-primary-node-type-of-azure-service-fabric-clusters-spanning-across-availability-zones)。 
+    Service Fabric supports clusters that span across [Availability Zones](../availability-zones/az-overview.md) by deploying node types that are pinned to specific zones, ensuring high-availability of your applications. Availability Zones require additional node type planning and minimum requirements. For details, see [Recommended topology for primary node type of Service Fabric clusters spanning across Availability Zones](service-fabric-cross-availability-zones.md#recommended-topology-for-primary-node-type-of-azure-service-fabric-clusters-spanning-across-availability-zones). 
 
 为集群的初始创建确定节点类型的数量和属性时，请记住，部署集群后，随时可以添加、修改或删除（非主要）节点类型。 也可以在正在运行的集群中[修改主节点类型](service-fabric-scale-up-primary-node-type.md)（尽管在生产环境中执行此类操作需要大量的计划和谨慎工作）。
 
@@ -147,7 +146,7 @@ ms.locfileid: "88718095"
 | 7 或 8 | Gold |
 | 9 及以上 | Platinum |
 
-当增大或减小群集的大小（所有节点类型中的 VM 实例的总数）时，请考虑提升群集的可靠性层级。 这样做会触发更改系统服务副本集计数所需的群集升级。 等待升级完成，然后对群集做出其他任何更改，例如添加节点。  可以在 Service Fabric Explorer 中运行 [Get-ServiceFabricClusterUpgrade](/powershell/module/servicefabric/get-servicefabricclusterupgrade?view=azureservicefabricps) 来监视升级进度
+当增大或减小群集的大小（所有节点类型中的 VM 实例的总数）时，请考虑提升群集的可靠性层级。 这样做会触发更改系统服务副本集计数所需的群集升级。 等待升级完成，然后对群集做出其他任何更改，例如添加节点。  可以在 Service Fabric Explorer 中运行 [Get-ServiceFabricClusterUpgrade](/powershell/module/servicefabric/get-servicefabricclusterupgrade) 来监视升级进度
 
 ### <a name="capacity-planning-for-reliability"></a>保障可靠性的容量计划
 
@@ -155,7 +154,7 @@ ms.locfileid: "88718095"
 
 #### <a name="virtual-machine-sizing"></a>虚拟机大小调整
 
-**对于生产工作负荷， (SKU) 的建议 VM 大小为 [标准 D2_V2](../virtual-machines/dv2-dsv2-series.md) (或等效) ，最少 50 GB 本地 SSD、2核和 4 GiB 内存。** 建议至少使用 50 GB 的本地 SSD，但某些工作负载（例如运行 Windows 容器的工作负荷）需要更大的磁盘。 为生产工作负载选择其他 [VM 大小](../virtual-machines/sizes-general.md)时，请记住以下约束：
+“对于生产工作负载，建议将 VM 大小 (SKU) 设为 [Standard D2_V2](../virtual-machines/dv2-dsv2-series.md)（或同等规模），并使其具有至少 50 GB 的本地 SSD、2 个核心和 4 GiB 的内存。” 建议至少使用 50 GB 的本地 SSD，但某些工作负载（例如运行 Windows 容器的工作负荷）需要更大的磁盘。 为生产工作负载选择其他 [VM 大小](../virtual-machines/sizes-general.md)时，请记住以下约束：
 
 - 不支持部分核心 VM 大小，例如 Standard A0。
 - 由于性能原因，不支持 A系列 VM 大小。

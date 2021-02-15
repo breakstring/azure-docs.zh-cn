@@ -1,23 +1,23 @@
 ---
-title: Microsoft Azure Stack Edge 电源线在各地的技术规范 | Microsoft Docs
-description: 了解 Azure Stack Edge 电源线的技术规范。
+title: 基于位置 Microsoft Azure Stack 边缘 Pro 电源线技术规格 |Microsoft Docs
+description: 了解 Azure Stack Edge Pro 电源线的技术规格。
 services: databox
-author: twooley
+author: alkohli
 ms.service: databox
 ms.subservice: edge
 ms.topic: article
 ms.date: 04/16/2020
-ms.author: twooley
-ms.openlocfilehash: 8248f0a8e003351449186638fd4914c6b6fe4bed
-ms.sourcegitcommit: 9c3cfbe2bee467d0e6966c2bfdeddbe039cad029
+ms.author: alkohli
+ms.openlocfilehash: 18de1f445990f167041c755aa5e7d909819319b1
+ms.sourcegitcommit: 6a350f39e2f04500ecb7235f5d88682eb4910ae8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/24/2020
-ms.locfileid: "88783971"
+ms.lasthandoff: 12/01/2020
+ms.locfileid: "96446463"
 ---
-# <a name="azure-stack-edge-power-cord-specifications"></a>Azure Stack Edge 电源线的规范
+# <a name="azure-stack-edge-pro-power-cord-specifications"></a>Azure Stack Edge Pro 电源线规格
 
-Azure Stack Edge 设备需要的电源线因 Azure 区域而异。
+Azure Stack Edge Pro 设备需要电源线，这会因 Azure 区域而异。
 
 ## <a name="supported-power-cords"></a>支持的电源线
 
@@ -158,4 +158,4 @@ Azure Stack Edge 设备需要的电源线因 Azure 区域而异。
 
 ## <a name="next-steps"></a>后续步骤
 
-[Azure Stack Edge 技术规范](data-box-edge-technical-specifications-compliance.md)
+[Azure Stack Edge Pro 技术规范](./azure-stack-edge-technical-specifications-compliance.md)

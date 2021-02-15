@@ -1,16 +1,14 @@
 ---
 title: 升级独立群集的配置
 description: 了解如何升级运行独立 Service Fabric 群集的配置。
-author: dkkapur
 ms.topic: conceptual
 ms.date: 11/09/2018
-ms.author: dekapur
-ms.openlocfilehash: 4817c7b76ccd127d5f310a9d2abcecdb094944dc
-ms.sourcegitcommit: dabd9eb9925308d3c2404c3957e5c921408089da
+ms.openlocfilehash: 3cb1d40f5b32415588d3fd5a108967cfb4c0e534
+ms.sourcegitcommit: 829d951d5c90442a38012daaf77e86046018e5b9
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/11/2020
-ms.locfileid: "86246599"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "91842608"
 ---
 # <a name="upgrade-the-configuration-of-a-standalone-cluster"></a>升级独立群集的配置 
 

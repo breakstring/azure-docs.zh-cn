@@ -1,7 +1,7 @@
 ---
-title: 带有 Microsoft PlayReady 许可证模板的 Azure 媒体服务 v3
-description: 本主题概述了用于配置 PlayReady 许可证的 PlayReady 许可证模板。
-author: juliako
+title: 媒体服务 Microsoft PlayReady 许可证模板
+description: 通过 PlayReady 许可证模板了解 Azure 媒体服务 v3 和如何配置 PlayReady 许可证。
+author: IngridAtMicrosoft
 manager: femila
 editor: ''
 services: media-services
@@ -10,17 +10,20 @@ ms.service: media-services
 ms.workload: media
 ms.tgt_pltfrm: na
 ms.devlang: na
-ms.topic: article
-ms.date: 10/16/2018
-ms.author: juliako
-ms.openlocfilehash: ba4b8de4b8cf1d1d1b8124185a8006eb7695b21e
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.topic: conceptual
+ms.date: 08/31/2020
+ms.author: inhenkel
+ms.custom: devx-track-csharp
+ms.openlocfilehash: 0dc015ee1798bb4b9ce632d11f952178156155d6
+ms.sourcegitcommit: 4e70fd4028ff44a676f698229cb6a3d555439014
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87074505"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98955178"
 ---
-# <a name="media-services-v3-with-playready-license-template"></a>带有 PlayReady 许可证模板的媒体服务 v3 
+# <a name="media-services-v3-with-playready-license-template"></a>带有 PlayReady 许可证模板的媒体服务 v3
+
+[!INCLUDE [media services api v3 logo](./includes/v3-hr.md)]
 
 通过 Azure 媒体服务，可使用 Microsoft PlayReady 加密内容  。 媒体服务还提供用于交付 PlayReady 许可证的服务。 可使用媒体服务 API 来配置 PlayReady 许可证。 当播放器尝试播放受 PlayReady 保护的内容时，将向许可证交付服务发送请求以获取许可证。 如果许可证服务批准了该请求，则会颁发该许可证，该许可证将发送到客户端，并用来解密和播放指定的内容。
 

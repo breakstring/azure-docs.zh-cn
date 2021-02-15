@@ -14,17 +14,19 @@ ms.topic: article
 ms.date: 03/20/2019
 ms.author: juliako
 ms.reviewer: willzhan; johndeu
-ms.openlocfilehash: be7ac4073bb332a7595dcf211feb7087d0734854
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.openlocfilehash: 28719046c9a8ccc65d231244ef8b5b3f8e116282
+ms.sourcegitcommit: 77afc94755db65a3ec107640069067172f55da67
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87082726"
+ms.lasthandoff: 01/22/2021
+ms.locfileid: "98694724"
 ---
 # <a name="use-azure-ad-authentication-to-access-the-media-services-api-with-rest"></a>通过 Azure AD 身份验证使用 REST 访问媒体服务 API
 
+[!INCLUDE [media services api v2 logo](./includes/v2-hr.md)]
+
 > [!NOTE]
-> 不会向媒体服务 v2 添加任何新特性或新功能。 <br/>查看最新版本：[媒体服务 v3](../latest/index.yml)。 另请参阅[从 v2 到 v3 的迁移指南](../latest/migrate-from-v2-to-v3.md)
+> 不会向媒体服务 v2 添加任何新特性或新功能。 <br/>查看最新版本：[媒体服务 v3](../latest/index.yml)。 另请参阅[从 v2 到 v3 的迁移指南](../latest/migrate-v-2-v-3-migration-introduction.md)
 
 通过 Azure 媒体服务使用 Azure AD 身份验证时，可以通过以下两种方式之一进行身份验证：
 
@@ -69,7 +71,7 @@ ms.locfileid: "87082726"
 |客户端 ID（应用程序 ID）|f7fbbb29-a02d-4d91-bbc6-59a2579259d2|Azure AD 应用程序（客户端）ID。 需要客户端 ID 才能获取访问令牌。 |
 |客户端机密|+mUERiNzVMoJGggD6aV1etzFGa1n6KeSlLjIq+Dbim0=|Azure AD 应用程序密钥（客户端密码）。 需要客户端密码才能获取访问令牌。|
 
-### <a name="get-aad-auth-info-from-the-azure-portal"></a>从 Azure 门户获取 AAD 身份验证信息
+### <a name="get-azure-active-directory-auth-info-from-the-azure-portal"></a>从 Azure 门户获取 Azure Active Directory 身份验证信息
 
 若要获取信息，请按照以下步骤操作：
 
@@ -78,7 +80,7 @@ ms.locfileid: "87082726"
 3. 选择“API 访问”  。
 4. 点击“通过服务主体连接到 Azure 媒体服务 API”  。
 
-    ![API 访问](./media/connect-with-rest/connect-with-rest01.png)
+    ![屏幕截图显示从“媒体服务”菜单中选择了“API 访问”，并从右侧窗格选择了“通过服务主体连接到 Azure 媒体服务 API”。](./media/connect-with-rest/connect-with-rest01.png)
 
 5. 选择现有的“Azure AD 应用程序”或新建一个 Azure AD 应用程序（如下所示）  。
 
@@ -92,7 +94,7 @@ ms.locfileid: "87082726"
    3. 再次按“新建”  。
    4. 按“保存”  。
 
-      ![API 访问](./media/connect-with-rest/new-app.png)
+      ![屏幕截图显示了“新建”对话框，其中突出显示了“创建应用”文本框，并选择了“保存”按钮。](./media/connect-with-rest/new-app.png)
 
       新的应用将显示在页面上。
 
@@ -101,53 +103,53 @@ ms.locfileid: "87082726"
    1. 选择应用程序。
    2. 从右侧的窗口获取“客户端 ID”  。 
 
-      ![API 访问](./media/connect-with-rest/existing-client-id.png)
+      ![屏幕截图显示已选择“Azure AD 应用”和“管理应用程序”，并在右侧窗格突出显示了“客户端 ID”。](./media/connect-with-rest/existing-client-id.png)
 
 7. 获取应用程序的“密钥”（客户端密码）  。 
 
-   1. 单击“管理应用程序”按钮（请注意，客户端 ID 信息位于“应用程序 ID”的下方）********。 
-   2. 按“密钥”****。
+   1. 单击“管理应用程序”按钮（请注意，客户端 ID 信息位于“应用程序 ID”的下方）。 
+   2. 按“密钥”。
     
-       ![API 访问](./media/connect-with-rest/manage-app.png)
-   3. 填写“说明”和“到期时间”，然后按“保存”以生成应用密钥（客户端密码）************。
+       ![屏幕截图显示了所选的 "管理应用程序" 按钮，中间窗格中突出显示了 "应用程序 I D"，在右窗格中选择了 "键"。](./media/connect-with-rest/manage-app.png)
+   3. 填写“说明”和“到期时间”，然后按“保存”以生成应用密钥（客户端密码）    。
     
-       按下“保存”按钮后将显示密钥值****。 在退出此边栏选项卡之前复制此密钥值。
+       按下“保存”按钮后将显示密钥值  。 在退出此边栏选项卡之前复制此密钥值。
 
    ![API 访问](./media/connect-with-rest/connect-with-rest03.png)
 
 可以将 AD 连接参数的值添加到 web.config 或 app.config 文件，稍后在代码中使用。
 
 > [!IMPORTANT]
-> “客户端密钥”是重要的密码，应该正确地在密钥保管库中受到保护或在生产中加密****。
+> “客户端密钥”是重要的密码，应该正确地在密钥保管库中受到保护或在生产中加密  。
 
 ## <a name="get-the-access-token-using-postman"></a>使用 Postman 获取访问令牌
 
-本部分演示如何使用 Postman 执行返回 JWT 持有者令牌（访问令牌）的 REST API****。 若要调用任何媒体服务 REST API，需要将“授权”标头添加到这些调用，并将“持有者 your_access_token”的值添加到每个调用（如本教程的下一部分中所示）**。 
+本部分演示如何使用 Postman 执行返回 JWT 持有者令牌（访问令牌）的 REST API  。 若要调用任何媒体服务 REST API，需要将“授权”标头添加到这些调用，并将“持有者 your_access_token”的值添加到每个调用（如本教程的下一部分中所示）  。 
 
-1. 打开**Postman**。
+1. 打开 Postman  。
 2. 选择“POST”  。
-3. 使用以下格式输入包括租户名称的 URL：此租户名称应以“.onmicrosoft.com”结尾，此 URL 应以“oauth2/token”结尾********： 
+3. 使用以下格式输入包括租户名称的 URL：此租户名称应以“.onmicrosoft.com”结尾，此 URL 应以“oauth2/token”结尾： 
 
     `https://login.microsoftonline.com/{your-aad-tenant-name.onmicrosoft.com}/oauth2/token`
 
-4. 选择“标头”选项卡。
-5. 使用“密钥/值”数据网格输入“标头”信息****。 
+4. 选择“标头”选项卡  。
+5. 使用“密钥/值”数据网格输入“标头”信息  。 
 
-    ![数据网格](./media/connect-with-rest/headers-data-grid.png)
+    ![屏幕截图显示已选择“标头”选项卡和“批量编辑”操作按钮。](./media/connect-with-rest/headers-data-grid.png)
 
-    或者，单击 Postman 窗口右侧的“批量编辑”链接，然后粘贴以下代码****。
+    或者，单击 Postman 窗口右侧的“批量编辑”链接，然后粘贴以下代码  。
 
     ```javascript
     Content-Type:application/x-www-form-urlencoded
     Keep-Alive:true
     ```
 
-6. 按“正文”选项卡****。
+6. 按“正文”选项卡  。
 7. 使用“密钥/值”数据网格输入正文信息（替换客户端 ID 和密钥值）。 
 
     ![数据网格](./media/connect-with-rest/data-grid.png)
 
-    或者，单击 Postman 窗口右侧的“批量编辑”，然后粘贴以下正文（替换客户端 ID 和密钥值）****：
+    或者，单击 Postman 窗口右侧的“批量编辑”，然后粘贴以下正文（替换客户端 ID 和密钥值）  ：
 
     ```javascript
     grant_type:client_credentials
@@ -156,32 +158,32 @@ ms.locfileid: "87082726"
     resource:https://rest.media.azure.net
     ```
 
-8. 按“发送”。
+8. 按“发送”。 
 
-    ![获取令牌](./media/connect-with-rest/connect-with-rest04.png)
+    ![屏幕截图显示了“发布”文本框以及“标头”和“正文”选项卡，其中突出显示了“access_token”，并检测到了“发送”按钮。](./media/connect-with-rest/connect-with-rest04.png)
 
-返回的响应包含需要用于访问任何 AMS API 的访问令牌****。
+返回的响应包含需要用于访问任何 AMS API 的访问令牌  。
 
-## <a name="test-the-assets-api-using-the-access-token"></a>使用访问令牌测试资产 API****
+## <a name="test-the-assets-api-using-the-access-token"></a>使用访问令牌测试资产 API 
 
-本部分演示如何使用 Postman 访问资产 API********。
+此部分介绍如何使用 **Postman** 访问 **资产** API。
 
-1. 打开**Postman**。
-2. 选择 "**获取**"。
-3. 粘贴 REST API 终结点（例如，https://amshelloworld.restv2.westus.media.azure.net/api/Assets)
-4. 选择“授权”选项卡****。 
-5. 选择“持有者令牌”****。
+1. 打开 Postman  。
+2. 选择“GET”  。
+3. 粘贴 REST API 终结点（例如， https://amshelloworld.restv2.westus.media.azure.net/api/Assets)
+4. 选择“授权”选项卡  。 
+5. 选择“持有者令牌”  。
 6. 粘贴上一部分中创建的令牌。
 
     ![获取令牌](./media/connect-with-rest/connect-with-rest05.png)
 
     > [!NOTE]
-    > Postman UX 在 Mac 和电脑上可能有所不同。 如果 Mac 版本的“身份验证”部分下拉列表中没有“持有者令牌”选项，应在 Mac 客户端上手动添加“授权”标头********。
+    > Postman UX 在 Mac 和电脑上可能有所不同。 如果 Mac 版本的“身份验证”部分下拉列表中没有“持有者令牌”选项，应在 Mac 客户端上手动添加“授权”标头   。
 
    ![“授权”标头](./media/connect-with-rest/auth-header.png)
 
-7. 选择“标头”****。
-5. 单击 Postman 窗口右侧的“批量编辑”链接****。
+7. 选择“标头”  。
+5. 单击 Postman 窗口右侧的“批量编辑”链接  。
 6. 粘贴以下标头：
 
     ```javascript
@@ -192,7 +194,7 @@ ms.locfileid: "87082726"
     MaxDataServiceVersion:3.0
     ```
 
-7. 按“发送”。
+7. 按“发送”。 
 
 返回的响应包含帐户中的资产。
 

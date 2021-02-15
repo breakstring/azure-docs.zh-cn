@@ -4,16 +4,16 @@ description: 使用 Azure 文件同步服务计划部署，该服务允许你在
 author: roygara
 ms.service: storage
 ms.topic: conceptual
-ms.date: 01/15/2020
+ms.date: 01/29/2021
 ms.author: rogarana
 ms.subservice: files
 ms.custom: references_regions
-ms.openlocfilehash: c2d3237e629c7ed5d2931e15939b154e0239f259
-ms.sourcegitcommit: 023d10b4127f50f301995d44f2b4499cbcffb8fc
+ms.openlocfilehash: 65293df5fae523bff36240273afb93c4dd8485df
+ms.sourcegitcommit: 54e1d4cdff28c2fd88eca949c2190da1b09dca91
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/18/2020
-ms.locfileid: "88553101"
+ms.lasthandoff: 01/31/2021
+ms.locfileid: "99219470"
 ---
 # <a name="planning-for-an-azure-file-sync-deployment"></a>规划 Azure 文件同步部署
 
@@ -39,17 +39,20 @@ Azure 文件同步部署有三个基本管理对象：
 
 - **Azure 文件共享**：Azure 文件共享是一种无服务器云文件共享功能，它提供具有“Azure 文件同步”同步关系的云终结点。 Azure 文件共享中的文件可以直接通过 SMB 或 FileREST 协议进行访问，但在将 Azure 文件共享与 Azure 文件同步一起使用时，建议通过 Windows Server 缓存来访问文件。这是因为 Azure 文件存储目前缺少一种 Windows Server 所具有的那种高效的更改检测机制，如果直接对 Azure 文件共享进行更改，需要经过一段时间之后才能传播回服务器终结点。
 - **服务器终结点**：与 Azure 文件共享进行同步的 Windows Server 上的路径。 它可以是某个卷上的特定文件夹，也可以是卷的根目录。 如果命名空间不重叠，多个服务器终结点可存在于同一个卷。
-- **同步组**：用于定义**云终结点**或 Azure 文件共享与服务器终结点之间的同步关系的对象。 同步组中的终结点保持彼此同步。 例如，如果想使用 Azure 文件同步管理两组不同文件，需创建两个同步组并在每个同步组中添加不同的终结点。
+- **同步组**：用于定义 **云终结点** 或 Azure 文件共享与服务器终结点之间的同步关系的对象。 同步组中的终结点保持彼此同步。 例如，如果想使用 Azure 文件同步管理两组不同文件，需创建两个同步组并在每个同步组中添加不同的终结点。
 
 ### <a name="azure-file-share-management-concepts"></a>Azure 文件共享管理相关概念
 [!INCLUDE [storage-files-file-share-management-concepts](../../../includes/storage-files-file-share-management-concepts.md)]
 
 ### <a name="azure-file-sync-management-concepts"></a>Azure 文件同步管理相关概念
-**存储同步服务**中会部署同步组，这些组是顶层对象，用于注册要与 Azure 文件同步一起使用的服务器，并包含同步组关系。 存储同步服务资源是存储帐户资源的对等物，可按类似方式部署到 Azure 资源组。 存储同步服务可以创建同步组，这些组包含多个存储帐户和多个已注册的 Windows 服务器中的 Azure 文件共享。
+**存储同步服务** 中会部署同步组，这些组是顶层对象，用于注册要与 Azure 文件同步一起使用的服务器，并包含同步组关系。 存储同步服务资源是存储帐户资源的对等物，可按类似方式部署到 Azure 资源组。 存储同步服务可以创建同步组，这些组包含多个存储帐户和多个已注册的 Windows 服务器中的 Azure 文件共享。
 
-需要先向存储同步服务注册 Windows Server，然后才能在存储同步服务中创建同步组。 该步骤会创建一个**已注册的服务器**对象，表示服务器或群集与存储同步服务之间的信任关系。 若要注册存储同步服务，需要先在服务器上安装 Azure 文件同步代理。 一个服务器或群集一次只能注册一个存储同步服务。
+需要先向存储同步服务注册 Windows Server，然后才能在存储同步服务中创建同步组。 该步骤会创建一个 **已注册的服务器** 对象，表示服务器或群集与存储同步服务之间的信任关系。 若要注册存储同步服务，需要先在服务器上安装 Azure 文件同步代理。 一个服务器或群集一次只能注册一个存储同步服务。
 
 同步组包含一个云终结点或 Azure 文件共享，以及至少一个服务器终结点。 服务器终结点对象包含用于配置云分层功能的设置，该功能可实现 Azure 文件同步的缓存功能。为了与 Azure 文件共享进行同步，包含 Azure 文件共享的存储帐户必须与存储同步服务位于同一 Azure 区域。
+
+> [!Important]  
+> 可对同步组中的任何云终结点或服务器终结点进行更改，并将文件同步到同步组中的其他终结点。 如果直接对云终结点（Azure 文件分享）进行更改，首先需要通过 Azure 文件同步更改检测作业来发现更改。 每 24 小时仅针对云终结点启动一次更改检测作业。 有关详细信息，请参阅 [Azure 文件常见问题解答](storage-files-faq.md#afs-change-detection)。
 
 ### <a name="management-guidance"></a>管理指南
 部署 Azure 文件同步时，建议执行以下操作：
@@ -58,7 +61,7 @@ Azure 文件同步部署有三个基本管理对象：
 
 - 尽可能少地使用存储同步服务。 这在配置了包含多个服务器终结点的同步组的情况下可以简化管理，因为 Windows Server 一次只能注册一个存储同步服务。 
 
-- 部署 Azure 文件共享时，应注意存储帐户的 IOPS 限制。 理想情况下，会将文件共享与存储帐户以 1:1 的比例进行映射，但由于存在来自于你的组织和 Azure 的各种限制，这并非总是可能的。 如果无法做到在一个存储帐户中只部署一个文件共享，可以考虑哪些共享会非常活跃，哪些共享不会那么活跃，以此确保不会将使用率最高的那些文件共享放置在同一存储帐户中。
+- 部署 Azure 文件共享时，应注意存储帐户的 IOPS 限制。 理想情况下，应该以 1:1 的形式将文件共享与存储帐户相映射，但由于组织和 Azure 施加的各种限制和制约，不一定总能实现这种映射。 如果无法做到在一个存储帐户中只部署一个文件共享，可以考虑哪些共享会非常活跃，哪些共享不会那么活跃，以此确保不会将使用率最高的那些文件共享放置在同一存储帐户中。
 
 ## <a name="windows-file-server-considerations"></a>Windows 文件服务器注意事项
 若要在 Windows Server 上启用同步功能，需要安装可下载的 Azure 文件同步代理。 Azure 文件同步代理提供两个主要组件：`FileSyncSvc.exe`，这是负责监视服务器终结点上所做更改和启动同步会话的后台 Windows 服务，以及 `StorageSync.sys`，这是可实现云分层功能和快速灾难恢复的文件系统筛选器。  
@@ -115,7 +118,7 @@ Azure 文件同步需要使用服务器（物理或虚拟），服务器需配�
 ### <a name="evaluation-cmdlet"></a>评估 cmdlet
 在部署 Azure 文件同步之前，应当使用 Azure 文件同步评估 cmdlet 评估它是否与你的系统兼容。 此 cmdlet 用于检查文件系统和数据集的潜在问题，例如不受支持的字符或不受支持的操作系统版本。 其检查涵盖了下面提到的大多数但并非全部功能；建议你仔细读完本部分的剩余内容，以确保你的部署顺利进行。 
 
-可以通过安装 Az PowerShell 模块来安装评估 cmdlet，该模块可按照以下说明进行安装：[安装和配置 Azure PowerShell](https://docs.microsoft.com/powershell/azure/install-Az-ps)。
+可以通过安装 Az PowerShell 模块来安装评估 cmdlet，该模块可按照以下说明进行安装：[安装和配置 Azure PowerShell](/powershell/azure/install-Az-ps)。
 
 #### <a name="usage"></a>使用情况  
 可以采用以下多种不同的方式调用评估工具：可以执行系统检查、数据集检查或者同时执行这两种检查。 若要同时执行系统和数据集检查，请使用以下命令： 
@@ -136,9 +139,8 @@ Invoke-AzStorageSyncCompatibilityCheck -ComputerName <computer name> -SkipNamesp
  
 若要以 CSV 格式显示结果，请使用以下命令：
 ```powershell
-$errors = Invoke-AzStorageSyncCompatibilityCheck […]
-$validation.Results | Select-Object -Property Type, Path, Level, Description, Result | Export-Csv -Path
-    C:\results.csv -Encoding utf8
+$validation = Invoke-AzStorageSyncCompatibilityCheck C:\DATA
+$validation.Results | Select-Object -Property Type, Path, Level, Description, Result | Export-Csv -Path C:\results.csv -Encoding utf8
 ```
 
 ### <a name="file-system-compatibility"></a>文件系统兼容性
@@ -184,7 +186,7 @@ Windows Server 故障转移群集受 Azure 文件同步支持，用于“一般�
 
 ### <a name="data-deduplication"></a>重复数据删除
 **Windows Server 2016 和 Windows Server 2019**   
-Windows Server 2016 和 Windows Server 2019 上启用了云分层的卷支持重复数据删除。 在启用了云分层的卷上启用重复数据删除后，即可在本地缓存更多文件，而无需预配更多存储。 
+支持重复数据删除，而不管是否在 Windows Server 2016 和 Windows Server 2019 卷上的一个或多个服务器终结点上启用或禁用云分层。 在启用了云分层的卷上启用重复数据删除后，即可在本地缓存更多文件，而无需预配更多存储。 
 
 在启用了云分层的卷上启用重复数据删除后，将根据云分层策略设置，按与普通文件类似的方式，对服务器终结点位置中经过“重复数据删除”优化的文件进行分层。 将经过“重复数据删除”优化的文件进行分层后，重复数据删除垃圾回收作业将自动运行，通过删除卷上不再被其他文件引用的、不必要的区块来回收磁盘空间。
 
@@ -201,7 +203,7 @@ Azure 文件同步不支持在 Windows Server 2012 R2 上的同一卷上启用�
 - 如果重复数据删除是在启用云分层之后在卷上启用的，则初始重复数据删除优化作业将优化卷上尚未分层的的文件，这会对云分层产生以下影响：
     - 可用空间策略将使用热度地图，根据卷上的可用空间，继续对文件进行分层。
     - 由于重复数据删除优化作业会访问文件，日期策略会跳过对本来可能有资格进行分层的文件进行分层。
-- 对于正在进行的重复数据删除优化作业，如果文件尚未分层，启用了日期策略的云分层操作会因“重复数据删除”的 [MinimumFileAgeDays](https://docs.microsoft.com/powershell/module/deduplication/set-dedupvolume?view=win10-ps) 设置而延迟执行。 
+- 对于正在进行的重复数据删除优化作业，如果文件尚未分层，启用了日期策略的云分层操作会因“重复数据删除”的 [MinimumFileAgeDays](/powershell/module/deduplication/set-dedupvolume?view=win10-ps) 设置而延迟执行。 
     - 示例：如果 MinimumFileAgeDays 设置为 7 天，而云分层日期策略设置为 30 天，则日期策略将在 37 天后对文件分层。
     - 注意：一旦 Azure 文件同步对某个文件进行分层后，重复数据删除优化作业将立即跳过该文件。
 - 如果某个服务器正在运行 Windows Server 2012 R2 且安装了 Azure 文件同步代理，当它升级到 Windows Server 2016 或 Windows Server 2019 后，需要执行以下步骤，才能支持在同一卷上启用重复数据删除和云分层：  
@@ -214,7 +216,7 @@ Azure 文件同步不支持在 Windows Server 2012 R2 上的同一卷上启用�
 ### <a name="distributed-file-system-dfs"></a>分布式文件系统 (DFS)
 Azure 文件同步支持与 DFS 命名空间 (DFS-N) 和 DFS 复制 (DFS-R) 进行互操作。
 
-**DFS 命名空间 (DFS-N)** ：Azure 文件同步在 DFS-N 服务器上完全受支持。 可以在一个或多个 DFS-N 成员上安装 Azure 文件同步代理，以在服务器终结点与云终结点之间同步数据。 有关详细信息，请参阅 [DFS 命名空间概述](https://docs.microsoft.com/windows-server/storage/dfs-namespaces/dfs-overview)。
+**DFS 命名空间 (DFS-N)** ：Azure 文件同步在 DFS-N 服务器上完全受支持。 可以在一个或多个 DFS-N 成员上安装 Azure 文件同步代理，以在服务器终结点与云终结点之间同步数据。 有关详细信息，请参阅 [DFS 命名空间概述](/windows-server/storage/dfs-namespaces/dfs-overview)。
  
 **DFS 复制 (DFS-R)** ：因为 DFS-R 和 Azure 文件同步都是复制解决方案，所以在大多数情况下建议将 DFS-R 替换为 Azure 文件同步。不过在以下几个方案中，可能需要同时使用 DFS-R 和 Azure 文件同步：
 
@@ -227,7 +229,7 @@ Azure 文件同步支持与 DFS 命名空间 (DFS-N) 和 DFS 复制 (DFS-R) 进�
 1. 必须在包含 DFS-R 复制文件夹的卷上禁用 Azure 文件同步云分层。
 2. 不应在 DFS-R 只读复制文件夹上配置服务器终结点。
 
-有关详细信息，请参阅 [DFS 复制概述](https://technet.microsoft.com/library/jj127250)。
+有关详细信息，请参阅 [DFS 复制概述](/previous-versions/windows/it-pro/windows-server-2012-R2-and-2012/jj127250(v=ws.11))。
 
 ### <a name="sysprep"></a>Sysprep
 不支持在安装了 Azure 文件同步代理的服务器上使用 sysprep，此操作会导致意外结果。 应该在部署服务器映像并完成 sysprep 迷你安装后再安装代理和注册服务器。
@@ -264,7 +266,7 @@ Azure 文件同步代理使用 Azure 文件同步 REST 协议和 FileREST 协议
 ### <a name="windows-server-encryption-at-rest"></a>Windows Server 静态加密 
 对于 Azure 文件同步，有两个基本适用的关于 Windows Server 上加密数据的策略：一种是可对文件系统和写入其中的所有数据进行加密的文件系统下加密策略，另一种是文件格式内部的加密策略。 这些方法不是互斥的；如果需要，可以将它们一起使用，因为加密的目的不同。
 
-为了在文件系统下提供加密，Windows Server 提供了 BitLocker 收件箱。 BitLocker 对 Azure 文件同步是完全透明的。使用 BitLocke 这样的加密机制的主要原因是，阻止想窃取磁盘的人造成本地数据中心数据的物理泄漏，并防止有人通过旁加载未授权的操作系统来对数据执行未经授权的读取/写入操作。 若要了解有关 BitLocker 的详细信息，请参阅 [BitLocker 概述](https://docs.microsoft.com/windows/security/information-protection/bitlocker/bitlocker-overview)。
+为了在文件系统下提供加密，Windows Server 提供了 BitLocker 收件箱。 BitLocker 对 Azure 文件同步是完全透明的。使用 BitLocke 这样的加密机制的主要原因是，阻止想窃取磁盘的人造成本地数据中心数据的物理泄漏，并防止有人通过旁加载未授权的操作系统来对数据执行未经授权的读取/写入操作。 若要了解有关 BitLocker 的详细信息，请参阅 [BitLocker 概述](/windows/security/information-protection/bitlocker/bitlocker-overview)。
 
 与 BitLocker 工作方式类似的第三方产品（即都在 NTFS 卷下运行），其工作方式也应对 Azure 文件同步完全透明。 
 
@@ -300,48 +302,16 @@ Azure 存储帐户包含一个用于要求在传输过程中加密的开关，�
 [!INCLUDE [storage-files-tiers-large-file-share-availability](../../../includes/storage-files-tiers-large-file-share-availability.md)]
 
 ## <a name="azure-file-sync-region-availability"></a>Azure 文件同步区域可用性
-Azure 文件同步在以下区域中可用：
 
-| Azure 云 | 地理区域 | Azure 区域 | 区域代码 |
-|-------------|-------------------|--------------|-------------|
-| 公共 | 亚洲 | 东亚 | `eastasia` |
-| 公共 | 亚洲 | 东南亚 | `southeastasia` |
-| 公共 | 澳大利亚 | 澳大利亚东部 | `australiaeast` |
-| 公共 | 澳大利亚 | 澳大利亚东南部 | `australiasoutheast` |
-| 公共 | 巴西 | 巴西南部 | `brazilsouth` |
-| 公共 | Canada | 加拿大中部 | `canadacentral` |
-| 公共 | Canada | 加拿大东部 | `canadaeast` |
-| 公共 | 欧洲 | 北欧 | `northeurope` |
-| 公共 | 欧洲 | 西欧 | `westeurope` |
-| 公共 | 法国 | 法国中部 | `francecentral` |
-| 公共 | 法国 | 法国南部* | `francesouth` |
-| 公共 | 印度 | 印度中部 | `centralindia` |
-| 公共 | 印度 | 印度南部 | `southindia` |
-| 公共 | 日本 | 日本东部 | `japaneast` |
-| 公共 | 日本 | 日本西部 | `japanwest` |
-| 公共 | 韩国 | 韩国中部 | `koreacentral` |
-| 公共 | 韩国 | 韩国南部 | `koreasouth` |
-| 公共 | 南非 | 南非北部 | `southafricanorth` |
-| 公共 | 南非 | 南非西部* | `southafricawest` |
-| 公共 | 阿拉伯联合酋长国 | 阿联酋中部* | `uaecentral` |
-| 公共 | 阿拉伯联合酋长国 | 阿拉伯联合酋长国北部 | `uaenorth` |
-| 公共 | 英国 | 英国南部 | `uksouth` |
-| 公共 | 英国 | 英国西部 | `ukwest` |
-| 公共 | 美国 | 美国中部 | `centralus` |
-| 公共 | 美国 | 美国东部 | `eastus` |
-| 公共 | 美国 | 美国东部 2 | `eastus2` |
-| 公共 | 美国 | 美国中北部 | `northcentralus` |
-| 公共 | 美国 | 美国中南部 | `southcentralus` |
-| 公共 | 美国 | 美国中西部 | `westcentralus` |
-| 公共 | 美国 | 美国西部 | `westus` |
-| 公共 | 美国 | 美国西部 2 | `westus2` |
-| US Gov | 美国 | US Gov 亚利桑那州 | `usgovarizona` |
-| US Gov | 美国 | US Gov 德克萨斯州 | `usgovtexas` |
-| US Gov | 美国 | US Gov 弗吉尼亚州 | `usgovvirginia` |
+有关区域可用性，请参阅 [可用产品（按区域](https://azure.microsoft.com/global-infrastructure/services/?products=storage)）。
 
-Azure 文件同步仅支持与存储同步服务所在区域中的 Azure 文件共享进行同步。
+以下区域要求先请求 Azure 存储的访问权限，然后才能将 Azure 文件同步与它们一起使用：
 
-对于带星号的区域，需要与 Azure 支持部门联系，请求访问这些区域中的 Azure 存储。 [此文档](https://azure.microsoft.com/global-infrastructure/geographies/)中介绍了相关流程。
+- 法国南部
+- 南非西部
+- 阿联酋中部
+
+若要请求对这些区域的访问权限，请按照 [本文档](https://azure.microsoft.com/global-infrastructure/geographies/)中的过程进行操作。
 
 ## <a name="redundancy"></a>冗余
 [!INCLUDE [storage-files-redundancy-overview](../../../includes/storage-files-redundancy-overview.md)]
@@ -369,7 +339,7 @@ Microsoft 的内部防病毒解决方案 Windows Defender 和 System Center Endp
 > 防病毒供应商可以使用 [Azure 文件同步防病毒兼容性测试套件](https://www.microsoft.com/download/details.aspx?id=58322)（可从 Microsoft 下载中心下载）来检查其产品与 Azure 文件同步的兼容性。
 
 ## <a name="backup"></a>备份 
-如果启用了云分层，则不应使用直接备份服务器终结点的解决方案或服务器终结点所在的 VM。 云分层仅导致在服务器终结点上存储数据的一个子集，并将完整的数据集驻留在 Azure 文件共享中。 根据所使用的备份解决方案，将跳过或不备份分层文件 (因为它们 FILE_ATTRIBUTE_RECALL_ON_DATA_ACCESS 属性集) ，或者它们将被召回到磁盘，导致大量出口费用。 建议使用云备份解决方案直接备份 Azure 文件共享。 有关详细信息，请参阅 [关于 azure 文件共享备份](https://docs.microsoft.com/azure/backup/azure-file-share-backup-overview?toc=/azure/storage/files/toc.json) 或与备份提供商联系，查看他们是否支持备份 Azure 文件共享。
+如果启用了云分层，则不应使用直接备份服务器终结点的解决方案或服务器终结点所在的 VM。 云分层仅导致在服务器终结点上存储数据的一个子集，并将完整的数据集驻留在 Azure 文件共享中。 根据所使用的备份解决方案，将跳过或不备份分层文件 (因为它们 FILE_ATTRIBUTE_RECALL_ON_DATA_ACCESS 属性集) ，或者它们将被召回到磁盘，导致大量出口费用。 建议使用云备份解决方案直接备份 Azure 文件共享。 有关详细信息，请参阅 [关于 azure 文件共享备份](../../backup/azure-file-share-backup-overview.md?toc=%2fazure%2fstorage%2ffiles%2ftoc.json) 或与备份提供商联系，查看他们是否支持备份 Azure 文件共享。
 
 如果希望使用本地备份解决方案，则应在禁用云分层的同步组中的服务器上执行备份。 执行还原时，使用卷级别或文件级还原选项。 使用文件级别还原选项还原的文件将同步到同步组中的所有终结点，现有文件将被替换为从备份还原的版本。  卷级别的还原不会替换 Azure 文件共享或其他服务器终结点中较新的文件版本。
 
@@ -385,6 +355,6 @@ Microsoft 的内部防病毒解决方案 Windows Defender 和 System Center Endp
 ## <a name="next-steps"></a>后续步骤
 * [考虑防火墙和代理设置](storage-sync-files-firewall-and-proxy.md)
 * [规划 Azure 文件部署](storage-files-planning.md)
-* [部署 Azure 文件](storage-files-deployment-guide.md)
+* [部署 Azure 文件](./storage-how-to-create-file-share.md)
 * [部署 Azure 文件同步](storage-sync-files-deployment-guide.md)
 * [监视 Azure 文件同步](storage-sync-files-monitoring.md)

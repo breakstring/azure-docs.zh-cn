@@ -11,13 +11,13 @@ metadata:
   author: KumudD
   ms.author: kumud
   manager: mtillman
-  ms.date: 03/17/2020
-  ms.openlocfilehash: eba71e790c9da1978e0c9cac84b1913447972db2
-  ms.sourcegitcommit: cf7caaf1e42f1420e1491e3616cc989d504f0902
+  ms.date: 09/28/2020
+  ms.openlocfilehash: 0f0536c259bb8b4168ab5fcf3e05016a281b05d5
+  ms.sourcegitcommit: c7153bb48ce003a158e83a1174e1ee7e4b1a5461
   ms.translationtype: HT
   ms.contentlocale: zh-CN
-  ms.lasthandoff: 05/22/2020
-  ms.locfileid: "83800717"
+  ms.lasthandoff: 01/15/2021
+  ms.locfileid: "98233944"
 highlightedContent:
   items:
   - title: 什么是 Azure 网络？
@@ -28,13 +28,13 @@ highlightedContent:
     url: https://azure.microsoft.com/updates/?category=networking
   - title: Azure 中的负载均衡选项
     itemType: architecture
-    url: https://docs.microsoft.com/azure/architecture/guide/technology-choices/load-balancing-overview
+    url: /azure/architecture/guide/technology-choices/load-balancing-overview
   - title: Azure 中的中心辐射型网络拓扑
     itemType: architecture
-    url: https://docs.microsoft.com/azure/architecture/reference-architectures/hybrid-networking/hub-spoke
-  - title: 什么是路由首选项？
+    url: /azure/architecture/reference-architectures/hybrid-networking/hub-spoke
+  - title: 什么是 Azure Orbital？
     itemType: concept
-    url: ../virtual-network/routing-preference-overview.md
+    url: azure-orbital-overview.md
   - title: 使用 Azure 服务在远程工作
     itemType: concept
     url: working-remotely-support.md
@@ -62,7 +62,7 @@ conceptualContent:
     - url: ../vpn-gateway/vpn-gateway-about-vpngateways.md
       itemType: overview
       text: 什么是 Azure VPN 网关？
-    - url: ../vpn-gateway/vpn-gateway-howto-site-to-site-resource-manager-portal.md
+    - url: ../vpn-gateway/tutorial-site-to-site-portal.md
       itemType: tutorial
       text: 站点到站点连接
     - url: ../vpn-gateway/vpn-gateway-howto-point-to-site-resource-manager-portal.md
@@ -113,15 +113,15 @@ conceptualContent:
     - url: ../load-balancer/load-balancer-overview.md
       itemType: overview
       text: 什么是 Azure 负载均衡器？
+    - url: https://azure.microsoft.com/updates/?category=networking&query=load%20balancer
+      itemType: whats-new
+      text: 新增功能
     - url: ../load-balancer/quickstart-load-balancer-standard-public-portal.md
       itemType: quickstart
       text: 对传入 VM 的 Internet 流量进行负载均衡
-    - url: ../load-balancer/tutorial-load-balancer-port-forwarding-portal.md
-      itemType: tutorial
-      text: 配置端口转发
     - url: ../load-balancer/load-balancer-troubleshoot.md
       itemType: how-to-guide
-      text: 排查 Azure 负载均衡器问题
+      text: 对 Azure 负载均衡器进行故障排除
     footerLink:
       url: ../load-balancer/index.yml
       text: 查看详细信息
@@ -150,7 +150,7 @@ conceptualContent:
     - url: ../application-gateway/quick-create-portal.md
       itemType: quickstart
       text: 使用门户定向 Web 流量
-    - url: ../application-gateway/application-gateway-faq.md
+    - url: ../application-gateway/application-gateway-faq.yml
       itemType: concept
       text: 常见问题
     - url: ../application-gateway/application-gateway-troubleshooting-502.md
@@ -209,7 +209,7 @@ conceptualContent:
     - url: ../bastion/bastion-overview.md
       itemType: overview
       text: 什么是 Azure Bastion？
-    - url: ../bastion/bastion-create-host-portal.md
+    - url: ../bastion/tutorial-create-host-portal.md
       itemType: how-to-guide
       text: 创建 Azure Bastion 主机
     - url: ../bastion/troubleshoot.md
@@ -268,17 +268,17 @@ conceptualContent:
       text: 查看详细信息
   - title: DDoS 保护
     links:
-    - url: ../virtual-network/ddos-protection-overview.md
+    - url: ../ddos-protection/ddos-protection-overview.md
       itemType: overview
       text: 什么是 Azure DDoS 防护标准版？
-    - url: ../virtual-network/manage-ddos-protection.md
+    - url: ../ddos-protection/manage-ddos-protection.md
       itemType: how-to-guide
       text: 管理 DDoS 防护
-    - url: ../virtual-network/ddos-protection-partner-onboarding.md
+    - url: ../ddos-protection/ddos-protection-partner-onboarding.md
       itemType: concept
       text: 登记合作伙伴
     footerLink:
-      url: https://docs.microsoft.com/azure/security/fundamentals/ddos-best-practices
+      url: ../ddos-protection/index.yml
       text: 查看详细信息
   - title: 内容分发网络
     links:
@@ -333,10 +333,10 @@ additionalContent:
   - items:
     - title: 适用于 Azure 网络的 Azure PowerShell 命令
       summary: 了解 Azure 网络 Cmdlet。
-      url: https://docs.microsoft.com/en-us/powershell/module/az.network/?view=azps-3.5.0#networking
+      url: /powershell/module/az.network/?view=azps-3.5.0#networking
     - title: 适用于 Azure 网络的 Azure CLI 命令
       summary: 在 CLI 参考中查找 Azure 网络命令。
-      url: https://docs.microsoft.com/en-us/cli/azure/network?view=azure-cli-latest
+      url: /cli/azure/network?view=azure-cli-latest
     - title: Azure 网络博客
       summary: 查看有关 Azure 网络的最新博客。
       url: https://azure.microsoft.com/blog/topics/networking/

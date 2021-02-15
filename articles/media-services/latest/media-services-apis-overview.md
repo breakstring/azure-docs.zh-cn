@@ -1,26 +1,14 @@
 ---
-title: 使用 v3 API 进行开发
-titleSuffix: Azure Media Services
-description: 了解在使用媒体服务 v3 进行开发时适用于实体和 API 的规则。
-services: media-services
-documentationcenter: ''
-author: Juliako
-manager: femila
-editor: ''
-ms.service: media-services
-ms.workload: ''
-ms.topic: article
-ms.date: 10/21/2019
-ms.author: juliako
-ms.custom: seodec18
-ms.openlocfilehash: dcec4d0bc93433c768faf10e4520131aeecc5e77
-ms.sourcegitcommit: 6fc156ceedd0fbbb2eec1e9f5e3c6d0915f65b8e
-ms.translationtype: MT
-ms.contentlocale: zh-CN
-ms.lasthandoff: 08/21/2020
-ms.locfileid: "88719183"
+# <a name="mandatory-fields-see-more-on-akamsskyeyemeta"></a>必填字段。 有关详细信息，请参阅 aka.ms/skyeye/meta。
+标题：使用 v3 Api 进行开发： Azure 媒体服务说明：了解在使用媒体服务 v3 进行开发时适用于实体和 Api 的规则。 服务：媒体服务 documentationcenter： ' ' author： IngridAtMicrosoft manager： femila editor： ' '
+
+ms. service： media services ms. 工作负荷：毫秒。主题：概念性毫秒。日期： 10/23/2020 ms. author： inhenkel： seodec18
+
 ---
+
 # <a name="develop-with-media-services-v3-apis"></a>使用媒体服务 v3 API 进行开发
+
+[!INCLUDE [media services api v3 logo](./includes/v3-hr.md)]
 
 作为开发者，可以利用媒体服务 [REST API](/rest/api/media/) 或客户端库，与 REST API 交互，以轻松创建、管理和维护自定义媒体工作流。 [媒体服务 v3](https://aka.ms/ams-v3-rest-sdk) API 基于 OpenAPI 规范（以前称为 Swagger）。
 
@@ -33,13 +21,13 @@ ms.locfileid: "88719183"
 * **服务主体身份验证**：用于对服务进行身份验证（例如 Web 应用、函数应用、逻辑应用、API 和微服务）。 常常使用这种身份验证方法的应用程序是运行守护程序服务、中间层服务或计划作业的应用程序。 例如，对于 Web 应用而言，应始终有一个使用服务主体连接到媒体服务的中间层。
 * **用户身份验证**：用于验证使用应用与媒体服务资源进行交互的用户。 交互式应用应先提示用户输入用户凭据。 例如，授权用户用来监视编码作业或实时传送视频流的管理控制台应用程序。
 
-媒体服务 API 有两个要求：发出 REST API 请求的用户或应用有权访问媒体服务帐户资源，这些用户或应用使用“参与者”或“所有者”角色 。 使用“读者”角色可访问 API，但该角色只能执行“获取”或“列出”操作  。 有关详细信息，请参阅[对媒体服务帐户基于角色的访问控制](rbac-overview.md)。
+媒体服务 API 有两个要求：发出 REST API 请求的用户或应用有权访问媒体服务帐户资源，这些用户或应用使用“参与者”或“所有者”角色 。 使用“读者”角色可访问 API，但该角色只能执行“获取”或“列出”操作  。有关详细信息，请参阅[媒体服务帐户的 Azure 基于角色的访问控制 (Azure RBAC)](rbac-overview.md)。
 
 请考虑使用托管标识（而不是创建服务主体），以便 Azure 资源通过 Azure 资源管理器访问媒体服务 API。 若要详细了解 Azure 资源托管标识，请参阅[什么是 Azure 资源的托管标识](../../active-directory/managed-identities-azure-resources/overview.md)。
 
 ### <a name="azure-ad-service-principal"></a>Azure AD 服务主体
 
-如果你要创建 Azure AD 应用和服务主体，必须使应用位于其自己的租户中。 创建应用后，向应用授予对媒体服务帐户的“参与者”或“所有者”角色访问权限 。
+Azure AD 应用和服务主体应在同一个租户中。 创建应用后，向应用授予对媒体服务帐户的“参与者”或“所有者”角色访问权限 。
 
 如果不确定自己是否有权创建 Azure AD 应用，请查看[需要的权限](../../active-directory/develop/howto-create-service-principal-portal.md#permissions-required-for-registering-an-app)。
 
@@ -107,11 +95,11 @@ Azure 媒体服务 v3 资源名称（例如，资产、作业、转换）需遵�
 * [停止流式处理终结点](/rest/api/media/streamingendpoints/stop)
 * [缩放流式处理终结点](/rest/api/media/streamingendpoints/scale)
 
-成功提交某个长期运行的操作后，你收到消息“202 已接受”，必须使用返回的操作 ID 轮询操作的完成情况。
+成功提交长时间运行的操作后，你会收到“201 已创建”；必须使用返回的操作 ID 轮询操作的完成状态。
 
 [跟踪异步 Azure 操作](../../azure-resource-manager/management/async-operations.md)一文深入说明了如何通过响应中返回的值跟踪异步 Azure 操作的状态。
 
-对于给定的直播活动或任何与之相关的实时输出，仅支持一个长期运行的操作。 启动长期运行的操作后，必须先完成该操作，再为同一个直播活动或任何关联的实时输出启动下一个长期运行的操作。 对于拥有多个实时输出的直播活动，你必须等到对某个实时输出的长期运行的操作完成后，才能为另一个实时输出触发长期运行的操作。 
+对于给定的直播活动或任何与之相关的实时输出，仅支持一个长期运行的操作。 启动长期运行的操作后，必须先完成该操作，再为同一个直播活动或任何关联的实时输出启动下一个长期运行的操作。 对于拥有多个实时输出的直播活动，你必须等到对某个实时输出的长期运行的操作完成后，才能为另一个实时输出触发长期运行的操作。
 
 ## <a name="sdks"></a>SDK
 
@@ -120,9 +108,9 @@ Azure 媒体服务 v3 资源名称（例如，资产、作业、转换）需遵�
 
 |SDK 中 IsInRole 中的声明|参考|
 |---|---|
-|[.NET SDK](https://aka.ms/ams-v3-dotnet-sdk)|[.NET 参考](https://aka.ms/ams-v3-dotnet-ref)|
-|[Java SDK](https://aka.ms/ams-v3-java-sdk)|[Java 参考](https://aka.ms/ams-v3-java-ref)|
-|[Python SDK](https://aka.ms/ams-v3-python-sdk)|[Python 参考](https://aka.ms/ams-v3-python-ref)|
+|[.NET SDK](https://aka.ms/ams-v3-dotnet-sdk)|[.NET 参考](/dotnet/api/overview/azure/mediaservices/management)|
+|[Java SDK](https://aka.ms/ams-v3-java-sdk)|[Java 参考](/java/api/overview/azure/mediaservices/management)|
+|[Python SDK](https://aka.ms/ams-v3-python-sdk)|[Python 参考](/python/api/overview/azure/mediaservices/management)|
 |[Node.js SDK](https://aka.ms/ams-v3-nodejs-sdk) |[Node.js 参考](/javascript/api/overview/azure/mediaservices/management)| 
 |[Go SDK](https://aka.ms/ams-v3-go-sdk) |[Go 参考](https://aka.ms/ams-v3-go-ref)|
 |[Ruby SDK](https://aka.ms/ams-v3-ruby-sdk)||

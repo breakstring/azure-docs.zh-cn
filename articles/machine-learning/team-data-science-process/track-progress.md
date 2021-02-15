@@ -10,12 +10,12 @@ ms.topic: article
 ms.date: 01/10/2020
 ms.author: tdsp
 ms.custom: seodec18, previous-author=deguhath, previous-ms.author=deguhath
-ms.openlocfilehash: 8cf1e5a4d97b882e7a8d0c81041bbcde709760d1
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 78a543fabadcc0d4e1766af1bc5c65aac0dadebe
+ms.sourcegitcommit: 829d951d5c90442a38012daaf77e86046018e5b9
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "75864190"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "91358919"
 ---
 # <a name="track-the-progress-of-data-science-projects"></a>跟踪数据科学项目的进度
 
@@ -46,8 +46,8 @@ ms.locfileid: "75864190"
 
 - **燃耗图表**显示已完成工作与冲刺 (sprint) 中的总工时数的比较。
 
-![仪表板](./media/track-progress/dashboard.png)
+![屏幕截图显示了 Azure DevOps 仪表板示例。](./media/track-progress/dashboard.png)
 
 ## <a name="next-steps"></a>后续步骤
 
-[执行团队数据科学过程的演练](walkthroughs.md)列出了演示所有过程步骤的演练。 这些链接的方案说明了如何将云和本地资源管理到智能应用程序中。 
+[执行团队数据科学过程的演练](walkthroughs.md) 列出了演示所有过程步骤的演练。 这些链接的方案说明了如何将云和本地资源管理到智能应用程序中。 

@@ -10,17 +10,19 @@ ms.workload: media
 ms.tgt_pltfrm: na
 ms.devlang: na
 ms.topic: tutorial
-ms.date: 07/1/2020
+ms.date: 08/31/2020
 ms.author: inhenkel
-ms.custom: devx-track-javascript
-ms.openlocfilehash: ad50b29dbda7c09c9312ebb4a01ebc5da568f3da
-ms.sourcegitcommit: e71da24cc108efc2c194007f976f74dd596ab013
+ms.custom: devx-track-js
+ms.openlocfilehash: 9415d66c49992bc31f773dec908a861f1126e714
+ms.sourcegitcommit: 6906980890a8321dec78dd174e6a7eb5f5fcc029
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/29/2020
-ms.locfileid: "87422090"
+ms.lasthandoff: 10/22/2020
+ms.locfileid: "92427213"
 ---
 # <a name="tutorial-end-to-end-content-protection-using-azure-ad"></a>教程：使用 Azure AD 进行端到端内容保护
+
+[!INCLUDE [media services api v3 logo](./includes/v3-hr.md)]
 
 通过本教程和提供的播放器示例，可以在 Azure 媒体服务 (AMS) 和 Azure Active Directory (AAD) 上设置端到端媒体内容保护子系统，以使用所有 AMS 支持的 DRM/AES-128、流式处理协议、编解码器和容器格式来流式传输媒体内容。 该示例的兼容性足够高，可以通过使用 Proof Key for Code Exchange (PKCE) 的授权代码流安全访问受 OAuth 2 保护的任何 REST API。 （Azure 媒体服务许可证传送服务只是其中之一。）它还适用于 Microsoft Graph API 或使用 OAuth 2 授权代码流保护的任何自定义开发 REST API。 这是[示例代码](https://github.com/Azure-Samples/media-services-content-protection-azure-ad)的配套文档。
 
@@ -127,11 +129,11 @@ SPA 播放器应用完成以下操作：
 
 用于解析 JWT 令牌（access_token 或 id_token）的屏幕：
 
-![用于解析 JWT 令牌的屏幕](media/aad-ams-content-protection/parsing-jwt-tokens.png)
+![屏幕截图显示正在解析 JWT 令牌。](media/aad-ams-content-protection/parsing-jwt-tokens.png)
 
 用于通过 DRM/AES 和流式处理协议和容器格式的不同组合测试受保护内容的屏幕：
 
-![用于解析 JWT 令牌的屏幕](media/aad-ams-content-protection/testing-protected-content.png)
+![屏幕截图显示使用 DRM 或 AES 和流式处理协议及容器格式的不同组合测试受保护内容：](media/aad-ams-content-protection/testing-protected-content.png)
 -->
 
 <!-- You can see a hosted version of the sample at [https://aka.ms/ott](https://aka.ms/ott)-->
@@ -159,7 +161,7 @@ SPA 播放器应用完成以下操作：
 1. 从菜单中选择“清单”。 此时将显示“清单”视图。
 1. 将 `accessTokenAcceptedVersion` 的值更改为 2（无引号）。
 1. 将 `groupMembershipClaims` 的值更改为 "SecurityGroup"（含引号）。
-1. 单击“ **保存**”。
+1. 单击“ **保存** ”。
 1. 从菜单中选择“公开 API”。 此时将显示“添加作用域”视图。 （Azure 提供应用程序 ID URI，但如果你想对其进行更改，可以在“应用程序 ID URI”字段中编辑它。）
 1. 单击“保存并继续”。 视图将会更改。 对于下表“设置”列中的每个设置，请在“值”列中输入值，然后单击“添加作用域”。
 
@@ -207,7 +209,7 @@ SPA 播放器应用完成以下操作：
     > [!NOTE]
     > 此时，你还没有播放器应用的 URL。  如果要从 localhost Web 服务器运行应用，可以仅使用 localhost 值对。 部署播放器应用后，可以在此处使用已部署的 URL 添加条目。  如果忘记这样做，将在 Azure AD 登录时看到一条错误消息。
 
-1. 单击“ **保存**”。
+1. 单击“ **保存** ”。
 1. 最后，要验证配置是否正确，请选择“身份验证”。  此时将显示“身份验证”视图。 你的客户端应用程序将被列为单页应用 (SPA)，并列出重定向 URI，且授权类型将为带有 PKCE 的授权代码流。
 
 ### <a name="set-up-the-media-services-account-content-key-policy-and-streaming-policies"></a>设置媒体服务帐户内容密钥策略和流式处理策略
@@ -267,7 +269,7 @@ return objContentKeyPolicyRestriction;
 1. 将 `OAUTH2_CONST.CLIENT_ID` 替换为 AAD 租户中已注册的客户端应用的 `client_id`。  可以在 Azure 门户中已注册的应用的“概述”部分找到 `client_id`。 注意：它是客户端 ID，而不是对象 ID。
 1. 将 `OAUTH2_CONST.TENANT_ID` 替换为 Azure AD 租户的 `tenant_id`。 可以通过单击 Azure Active Directory 菜单找到 `tenant_id`。 tenant_id 将出现在“概述”部分。
 1. 将 `OAUTH2_CONST.SCOPE` 替换为添加到已注册的客户端应用中的作用域。 可以通过从“应用注册”菜单导航到已注册的客户端应用，然后选择客户端应用来找到该作用域：
-    1. 选择客户端应用，单击“API 权限”菜单，然后在 API 权限 LicenseDeliveryResource2 下选择作用域 DRM.License.Delivery 。 权限的格式应类似于 api://df4ed433-dbf0-4da6-b328-e1fe05786db5/DRM.License.Delivery。 **重要说明**：在 `OAUTH2_CONST.SCOPE` 中的 `offline_access` 前面留空格。
+    1. 选择客户端应用，单击“API 权限”菜单，然后在 API 权限 LicenseDeliveryResource2 下选择作用域 DRM.License.Delivery 。 权限的格式应类似于 api://df4ed433-dbf0-4da6-b328-e1fe05786db5/DRM.License.Delivery。 **重要说明** ：在 `OAUTH2_CONST.SCOPE` 中的 `offline_access` 前面留空格。
 1. 替换 `AMS_CONST` 的两个常量字符串，如下所示。 一个是测试资产的受保护流式处理 URL，另一个是 FPS 应用程序证书 URL（如果要包含 FairPlay 测试用例）。 否则，可以将其保留为 `AMS_CONST.APP_CERT_URL`。 然后，单击“保存”。
 
 ```javascript
@@ -311,7 +313,7 @@ class AMS_CONST {
 
 现在，你已经完成了本教程并拥有一个正常工作的子系统，可以尝试针对以下客户方案修改该子系统：
 
-### <a name="role-based-access-control-rbac-for-license-delivery-via-azure-ad-group-membership"></a>基于角色的访问控制 (RBAC)，用于通过 Azure AD 组成员资格传送许可证
+### <a name="azure-role-based-access-control-azure-rbac-for-license-delivery-via-azure-ad-group-membership"></a>Azure 基于角色的访问控制 (Azure RBAC)，用于通过 Azure AD 组成员资格传送许可证
 
 到目前为止，系统允许任何能够登录的用户获取有效的许可证并播放受保护的内容。
 

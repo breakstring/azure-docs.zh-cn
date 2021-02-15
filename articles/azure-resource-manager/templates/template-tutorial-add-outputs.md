@@ -1,21 +1,21 @@
 ---
 title: 教程 - 将输出添加到模板
-description: 将输出添加到 Azure 资源管理器模板以简化语法。
+description: 将输出添加到 Azure 资源管理器模板（ARM 模板）以简化语法。
 author: mumian
 ms.date: 03/27/2020
 ms.topic: tutorial
 ms.author: jgao
-ms.custom: devx-track-azurecli
-ms.openlocfilehash: 4c90f1ce4bc3f3f5ed91bee86bb1f6f9093876c7
-ms.sourcegitcommit: 11e2521679415f05d3d2c4c49858940677c57900
+ms.custom: ''
+ms.openlocfilehash: 7acfb168462354017168ee333ea0b1ecaea434c1
+ms.sourcegitcommit: 6172a6ae13d7062a0a5e00ff411fd363b5c38597
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/31/2020
-ms.locfileid: "87497777"
+ms.lasthandoff: 12/11/2020
+ms.locfileid: "97107118"
 ---
 # <a name="tutorial-add-outputs-to-your-arm-template"></a>教程：将输出添加到 ARM 模板
 
-本教程介绍如何从 Azure 资源管理器 (ARM) 模板返回值。 需要已部署资源提供的值时，请使用输出。 完成本教程需要 **7 分钟**。
+本教程介绍如何从 Azure 资源管理器模板（ARM 模板）返回值。 需要已部署资源提供的值时，请使用输出。 完成本教程需要 **7 分钟**。
 
 ## <a name="prerequisites"></a>先决条件
 
@@ -41,17 +41,17 @@ ms.locfileid: "87497777"
 
 关于添加的输出值，有一些重要的值得注意的项。
 
-返回的值的类型设置为 **object**，这意味着它会返回 JSON 对象。
+返回的值的类型设置为 `object`，这意味着它会返回 JSON 对象。
 
 它使用 [reference](template-functions-resource.md#reference) 函数获取存储帐户的运行时状态。 若要获取资源的运行时状态，请传入资源的名称或 ID。 在此示例中，使用的变量与创建存储帐户名称时使用的变量相同。
 
-最后，它从存储帐户返回 **primaryEndpoints** 属性
+最后，它从存储帐户返回 `primaryEndpoints` 属性
 
 ## <a name="deploy-template"></a>部署模板
 
 现在可以部署模板并查看返回的值了。
 
-如果尚未创建资源组，请参阅[创建资源组](template-tutorial-create-first-template.md#create-resource-group)。 此示例假设已根据[第一篇教程](template-tutorial-create-first-template.md#deploy-template)中所述，将 **templateFile** 变量设置为模板文件的路径。
+如果尚未创建资源组，请参阅[创建资源组](template-tutorial-create-first-template.md#create-resource-group)。 此示例假设已根据[第一篇教程](template-tutorial-create-first-template.md#deploy-template)中所述，将 `templateFile` 变量设置为模板文件的路径。
 
 # <a name="powershell"></a>[PowerShell](#tab/azure-powershell)
 
@@ -92,7 +92,7 @@ az deployment group create \
 ```
 
 > [!NOTE]
-> 如果部署失败，请将 **debug** 开关和部署命令配合使用来显示调试日志。  还可以使用 **verbose** 开关来显示完整的调试日志。
+> 如果部署失败，请使用 `verbose` 开关获取有关正在创建的资源的信息。 使用 `debug` 开关获取调试的详细信息。
 
 ## <a name="review-your-work"></a>回顾所做的工作
 

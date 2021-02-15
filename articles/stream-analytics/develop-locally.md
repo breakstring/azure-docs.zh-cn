@@ -1,17 +1,17 @@
 ---
 title: 在本地开发和调试 Azure 流分析作业
 description: 了解如何在本地计算机上开发和测试 Azure 流分析作业，然后在 Azure 门户中运行它们。
-ms.author: mamccrea
-author: mamccrea
+ms.author: sujie
+author: su-jie
 ms.topic: conceptual
 ms.date: 03/31/2020
 ms.service: stream-analytics
-ms.openlocfilehash: 70097ad02c17f8c23bd9613487a905ccd562635e
-ms.sourcegitcommit: 46f8457ccb224eb000799ec81ed5b3ea93a6f06f
+ms.openlocfilehash: 18df480dab90d9ab127bb96971fc19cdc5a361ce
+ms.sourcegitcommit: 42a4d0e8fa84609bec0f6c241abe1c20036b9575
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/28/2020
-ms.locfileid: "87337545"
+ms.lasthandoff: 01/08/2021
+ms.locfileid: "98016467"
 ---
 # <a name="develop-and-debug-azure-stream-analytics-jobs-locally"></a>在本地开发和调试 Azure 流分析作业
 
@@ -25,7 +25,7 @@ ms.locfileid: "87337545"
 
 |环境                              |说明    |
 |-----------------------------------------|------------|
-|[Visual Studio Code](visual-studio-code-explore-jobs.md)| 利用适用于 Visual Studio Code 的[Azure 流分析工具扩展](https://marketplace.visualstudio.com/items?itemName=ms-bigdatatools.vscode-asa)，可以通过丰富的 IntelliSense 和本机源代码管理，在本地和云中创作、管理和测试流分析作业。 支持在 Linux、MacOS 和 Windows 上进行开发。 若要了解详细信息，请参阅[在 Visual Studio Code 中创建 Azure 流分析作业](quick-create-vs-code.md)。 扩展还支持[Visual Studio Codespaces](https://visualstudio.microsoft.com/services/visual-studio-codespaces/) ，它是云托管的开发环境。|
+|[Visual Studio Code](visual-studio-code-explore-jobs.md)| 利用适用于 Visual Studio Code 的 [Azure 流分析工具扩展](https://marketplace.visualstudio.com/items?itemName=ms-bigdatatools.vscode-asa) ，可以通过丰富的 IntelliSense 和本机源代码管理，在本地和云中创作、管理和测试流分析作业。 支持在 Linux、MacOS 和 Windows 上进行开发。 若要了解详细信息，请参阅[在 Visual Studio Code 中创建 Azure 流分析作业](quick-create-visual-studio-code.md)。 扩展还支持 [Visual Studio Codespaces](https://visualstudio.microsoft.com/services/visual-studio-codespaces/) ，它是云托管的开发环境。|
 |[Visual Studio 2019](stream-analytics-tools-for-visual-studio-install.md) |流分析工具是 Visual Studio 中 Azure 开发以及数据存储和处理工作负载的一部分。 可以使用 Visual Studio 编写自定义 C# 用户定义函数和反序列化程序。 若要了解详细信息，请参阅[使用 Visual Studio 创建 Azure 流分析作业](stream-analytics-quick-create-vs.md)。|
 |[命令提示符或终端](stream-analytics-tools-for-visual-studio-cicd.md)|Azure 流分析 CI/CD NuGet 包提供了用于在任意计算机上进行 Visual Studio 项目生成、本地测试的工具。 Azure 流分析 CI/CD npm 包提供了用于在任意计算机上进行 Visual Studio Code 项目生成（将生成 Azure 资源管理器模板）的工具。|
 

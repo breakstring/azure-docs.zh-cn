@@ -2,18 +2,16 @@
 title: 使用 Visual Studio 和 C# 的 Apache Storm 拓扑 - Azure HDInsight
 description: 了解如何在 C# 中创建 Storm 拓扑。 在 Visual Studio 中使用适用于 Visual Studio 的 Hadoop 工具创建字数统计拓扑。
 ROBOTS: NOINDEX
-author: hrasheed-msft
-ms.author: hrasheed
-ms.reviewer: jasonh
 ms.service: hdinsight
 ms.topic: how-to
 ms.date: 12/31/2019
-ms.openlocfilehash: 3645b6752a49a0cf2544d170ac55a77cc8ae5e40
-ms.sourcegitcommit: 124f7f699b6a43314e63af0101cd788db995d1cb
+ms.custom: devx-track-csharp
+ms.openlocfilehash: a81f2b21545a5362168482f3f0a65fbbbf381c10
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/08/2020
-ms.locfileid: "86082006"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98929150"
 ---
 # <a name="develop-c-topologies-for-apache-storm-by-using-the-data-lake-tools-for-visual-studio"></a>使用针对 Visual Studio 的 Data Lake 工具开发 Apache Storm 的 C# 拓扑
 
@@ -31,7 +29,7 @@ C# 拓扑使用 .NET 4.5，并使用 Mono 在 HDInsight 群集上运行。 有�
 
 ## <a name="prerequisite"></a>先决条件
 
-HDInsight 上的 Apache Storm 群集。 请参阅[使用 Azure 门户创建 Apache Hadoop 群集](../hdinsight-hadoop-create-linux-clusters-portal.md)，并选择 **Storm** 作为**群集类型**。
+HDInsight 上的 Apache Storm 群集。 请参阅 [使用 Azure 门户创建 Apache Hadoop 群集](../hdinsight-hadoop-create-linux-clusters-portal.md)，并选择 **Storm** 作为 **群集类型**。
 
 ## <a name="install-visual-studio"></a>安装 Visual Studio
 
@@ -58,30 +56,30 @@ using System;
 using System.IO;
 namespace ConsoleApplication2
 {
-   class Program
-   {
-       static void Main(string[] args)
-       {
-           string javaHome = Environment.GetEnvironmentVariable("JAVA_HOME");
-           if (!string.IsNullOrEmpty(javaHome))
-           {
-               string jarExe = Path.Combine(javaHome + @"\bin", "jar.exe");
-               if (File.Exists(jarExe))
-               {
-                   Console.WriteLine("JAVA Is Installed properly");
-                    return;
-               }
-               else
-               {
-                   Console.WriteLine("A valid JAVA JDK is not found. Looks like JRE is installed instead of JDK.");
-               }
-           }
-           else
-           {
-             Console.WriteLine("A valid JAVA JDK is not found. JAVA_HOME environment variable is not set.");
-           }
-       }  
-   }
+   class Program
+   {
+       static void Main(string[] args)
+       {
+           string javaHome = Environment.GetEnvironmentVariable("JAVA_HOME");
+           if (!string.IsNullOrEmpty(javaHome))
+           {
+               string jarExe = Path.Combine(javaHome + @"\bin", "jar.exe");
+               if (File.Exists(jarExe))
+               {
+                   Console.WriteLine("JAVA Is Installed properly");
+                    return;
+               }
+               else
+               {
+                   Console.WriteLine("A valid JAVA JDK is not found. Looks like JRE is installed instead of JDK.");
+               }
+           }
+           else
+           {
+             Console.WriteLine("A valid JAVA JDK is not found. JAVA_HOME environment variable is not set.");
+           }
+       }  
+   }
 }
 ```
 
@@ -128,7 +126,7 @@ HBase 读取器和写入器模板使用 HBase REST API（而不是 HBase Java AP
 
 1. 在“创建新项目”窗口中，滚动并选择“Storm 应用程序”，然后选择“下一步”。   
 
-1. 在“配置新项目”窗口中，输入 *WordCount* 作为**项目名称**，转到或创建该项目的**位置**目录路径，然后选择“创建”。  
+1. 在“配置新项目”窗口中，输入 *WordCount* 作为 **项目名称**，转到或创建该项目的 **位置** 目录路径，然后选择“创建”。  
 
     ![Storm 应用程序，“配置新项目”对话框，Visual Studio](./media/apache-storm-develop-csharp-visual-studio-topology/apache-storm-new-project.png)
 
@@ -538,13 +536,13 @@ public static MyComponent Get(Context ctx, Dictionary<string, Object> parms)
 > 如果项目是通过未使用 NuGet 的旧版 SCP.NET 创建的，则必须执行以下步骤以更新到新版本：
 >
 > 1. 在“解决方案资源管理器”  中，右键单击项目，然后选择“管理 NuGet 包”  。
-> 2. 使用**搜索**字段，搜索并添加 `Microsoft.SCP.Net.SDK` 到项目。
+> 2. 使用 **搜索** 字段，搜索并添加 `Microsoft.SCP.Net.SDK` 到项目。
 
 ## <a name="troubleshoot-common-issues-with-topologies"></a>排查拓扑常见问题
 
 ### <a name="null-pointer-exceptions"></a>空指针异常
 
-在将 c # 拓扑与基于 Linux 的 HDInsight 群集配合使用时，使用**ConfigurationManager**在运行时读取配置设置的 spout 组件可能会返回空指针异常。
+在将 c # 拓扑与基于 Linux 的 HDInsight 群集配合使用时，使用 **ConfigurationManager** 在运行时读取配置设置的 spout 组件可能会返回空指针异常。
 
 项目的配置将作为拓扑上下文中的键值对传递到 Storm 拓扑中。 它可以从在初始化时传递给组件的字典对象中进行检索。
 
@@ -686,7 +684,7 @@ public static MyComponent Get(Context ctx, Dictionary<string, Object> parms)
 
 1. 保存更改，然后按 **F5**，或选择“调试”   > “开始调试”  以启动项目。 此时会出现一个控制台窗口，该窗口会在测试进行过程中记录状态。 显示 `Tests finished` 时，请按任意键以关闭窗口。
 
-1. 使用 Windows 资源管理器  找到包含项目的目录。 （例如： *C： \\ Users \\ \<your_user_name> \\ source \\ 存储库 \\ WordCount \\ WordCount*。）然后在此目录中打开*Bin*，然后选择 "*调试*"。 应可看到运行测试时生成的文本文件：*sentences.txt*、*counter.txt* 和 *splitter.txt*。 打开每个文本文件并检查数据。
+1. 使用 Windows 资源管理器  找到包含项目的目录。 （例如：*C:\\Users\\\<your_user_name>\\source\\repos\\WordCount\\WordCount*)在此目录中打开 *Bin*，然后选择“调试”。 应可看到运行测试时生成的文本文件：*sentences.txt*、*counter.txt* 和 *splitter.txt*。 打开每个文本文件并检查数据。
 
    > [!NOTE]  
    > 字符串数据在这些文件中持久保存为十进制值数组。 例如，**splitter.txt** 文件中的 `[[97,103,111]]` 代表单词 *ago*。

@@ -4,28 +4,23 @@ description: 了解如何启用和配置 Azure Kubernetes Service 中的 Ultra �
 services: container-service
 ms.topic: article
 ms.date: 07/10/2020
-ms.openlocfilehash: 6ad739a128839eac4d664ffb6f9e3b2fcd07f2d9
-ms.sourcegitcommit: 271601d3eeeb9422e36353d32d57bd6e331f4d7b
+ms.openlocfilehash: 049c2682a8f61bb658083b0418a4fcf99dc477a5
+ms.sourcegitcommit: 693df7d78dfd5393a28bf1508e3e7487e2132293
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/20/2020
-ms.locfileid: "88650173"
+ms.lasthandoff: 10/28/2020
+ms.locfileid: "92900037"
 ---
 # <a name="use-azure-ultra-disks-on-azure-kubernetes-service-preview"></a>使用 Azure 上的 Azure Kubernetes 服务 (预览) 
 
 [Azure ultra 磁盘](../virtual-machines/disks-enable-ultra-ssd.md) 为有状态应用程序提供高吞吐量、高 IOPS 和一致的低延迟磁盘存储。 超磁盘的一个主要优点是能够在不重新启动代理节点的情况下动态更改 SSD 的性能和工作负荷。 超磁盘适用于数据密集型工作负荷。
 
-## <a name="before-you-begin"></a>在开始之前
+## <a name="before-you-begin"></a>开始之前
 
 此功能只能在创建群集或创建节点池时设置。
 
 > [!IMPORTANT]
 > Azure ultra 磁盘要求在可用性区域中部署 nodepools，并在支持这些磁盘的区域以及仅特定的 VM 系列上部署。 请参阅 [**Ultra 磁盘 GA 范围和限制**](../virtual-machines/disks-enable-ultra-ssd.md#ga-scope-and-limitations)。
-
-### <a name="prerequisites"></a>先决条件
-
-- 确保已 `EnableUltraSSD` 启用功能标志。
-- 确保已安装最新的 `aks-preview` [CLI 扩展][az-extension-add] 。
 
 ### <a name="register-the-enableultrassd-preview-feature"></a>注册 `EnableUltraSSD` 预览功能
 
@@ -37,7 +32,7 @@ ms.locfileid: "88650173"
 az feature register --namespace "Microsoft.ContainerService" --name "EnableUltraSSD"
 ```
 
-状态显示为“已注册”需要几分钟时间**。 可以使用 [az feature list][az-feature-list] 命令检查注册状态：
+状态显示为“已注册”需要几分钟时间  。 可以使用 [az feature list][az-feature-list] 命令检查注册状态：
 
 ```azurecli-interactive
 az feature list -o table --query "[?contains(name, 'Microsoft.ContainerService/EnableUltraSSD')].{Name:name,State:properties.state}"
@@ -53,7 +48,7 @@ az provider register --namespace Microsoft.ContainerService
 
 ### <a name="install-aks-preview-cli-extension"></a>安装 aks-preview CLI 扩展
 
-若要创建可使用超磁盘的 AKS 群集或节点池，需要使用最新的 *AKS* CLI 扩展。 使用[az extension add][az-extension-add]命令安装*aks-preview* Azure CLI 扩展，或使用[az extension update][az-extension-update]命令安装任何可用更新：
+若要创建可使用超磁盘的 AKS 群集或节点池，需要使用最新的 *AKS* CLI 扩展。 使用 [az extension add][az-extension-add]命令安装 *aks-preview* Azure CLI 扩展，或使用 [az extension update][az-extension-update]命令安装任何可用更新：
 
 ```azurecli-interactive
 # Install the aks-preview extension
@@ -64,7 +59,7 @@ az extension update --name aks-preview
 ``` 
 
 ### <a name="limitations"></a>限制
-- 查看[ **ULTRA 磁盘 GA 范围和限制**](../virtual-machines/disks-enable-ultra-ssd.md#ga-scope-and-limitations)
+- 查看 [ **ULTRA 磁盘 GA 范围和限制**](../virtual-machines/disks-enable-ultra-ssd.md#ga-scope-and-limitations)
 - 超磁盘支持的大小范围为100到1500
 
 ## <a name="create-a-new-cluster-that-can-use-ultra-disks"></a>创建可以使用超磁盘的新群集
@@ -78,7 +73,7 @@ az extension update --name aks-preview
 az group create --name myResourceGroup --location westus2
 ```
 
-创建具有托管 Azure AD 集成的 AKS 群集和用于 Kubernetes 授权的 Azure RBAC。
+创建支持超磁盘的 AKS 群集。
 
 ```azurecli-interactive
 # Create an AKS-managed Azure AD cluster
@@ -133,7 +128,7 @@ storageclass.storage.k8s.io/ultra-disk-sc created
 
 ## <a name="create-a-persistent-volume-claim"></a>创建永久性卷声明
 
-永久卷声明 (PVC) 用于基于存储类自动预配存储。 在这种情况下，PVC 可以使用预先创建的存储类之一创建标准或高级 Azure 托管磁盘。
+永久卷声明 (PVC) 用于基于存储类自动预配存储。 在这种情况下，PVC 可以使用以前创建的存储类来创建超磁盘。
 
 创建名为 `azure-ultra-disk-pvc.yaml` 的文件，并将其复制到以下清单中。 声明请求的磁盘 `ultra-disk` 的大小为 *1000 GB* ， *ReadWriteOnce* 访问。 将 *超小型* 存储类指定为存储类。
 
@@ -173,7 +168,7 @@ metadata:
 spec:
   containers:
   - name: nginx-ultra
-    image: nginx
+    image: mcr.microsoft.com/oss/nginx/nginx:1.15.5-alpine
     resources:
       requests:
         cpu: 100m

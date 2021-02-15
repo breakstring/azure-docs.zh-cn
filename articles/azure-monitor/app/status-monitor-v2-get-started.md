@@ -4,13 +4,14 @@ description: Application Insights 代理的快速入门指南。 无需重新部
 ms.topic: conceptual
 author: TimothyMothra
 ms.author: tilee
-ms.date: 04/23/2019
-ms.openlocfilehash: 66b0ba083dc05c10dbf001eebcbbdfa269285c2e
-ms.sourcegitcommit: a76ff927bd57d2fcc122fa36f7cb21eb22154cfa
+ms.date: 01/22/2021
+ms.custom: devx-track-azurepowershell
+ms.openlocfilehash: f340b4fdf7fef6daecf8801d16d19aee9b89e4d5
+ms.sourcegitcommit: 4d48a54d0a3f772c01171719a9b80ee9c41c0c5d
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/28/2020
-ms.locfileid: "87318957"
+ms.lasthandoff: 01/24/2021
+ms.locfileid: "98746452"
 ---
 # <a name="get-started-with-azure-monitor-application-insights-agent-for-on-premises-servers"></a>本地服务器的 Azure Monitor Application Insights 代理入门
 
@@ -20,11 +21,18 @@ ms.locfileid: "87318957"
 
 有关这些命令的说明、自定义说明以及有关故障排除的信息，请参阅[详细说明](status-monitor-v2-detailed-instructions.md)。
 
-如果你还没有 Azure 订阅，可以在开始前创建一个[免费帐户](https://azure.microsoft.com/free/?WT.mc_id=A261C142F)。
+如果没有 Azure 订阅，请在开始之前创建一个[免费帐户](https://azure.microsoft.com/free/?WT.mc_id=A261C142F)。
 
 ## <a name="download-and-install-via-powershell-gallery"></a>通过 PowerShell 库下载并安装
 
 ### <a name="install-prerequisites"></a>安装先决条件
+
+> [!NOTE]
+> 从2020年4月起，PowerShell 库弃用了 TLS 1.1 和1.0。
+>
+> 对于可能需要的 additionnal 必备组件，请参阅 [POWERSHELL 库 TLS 支持](https://devblogs.microsoft.com/powershell/powershell-gallery-tls-support)。
+>
+
 以管理员身份运行 PowerShell。
 ```powershell
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process -Force
@@ -44,7 +52,7 @@ Install-Module -Name Az.ApplicationMonitor -AllowPrerelease -AcceptLicense
 ### <a name="enable-monitoring"></a>启用监视
 ```powershell
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process -Force
-Enable-ApplicationInsightsMonitoring -InstrumentationKey xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+Enable-ApplicationInsightsMonitoring -ConnectionString xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 ```
     
         
@@ -62,7 +70,7 @@ Expand-Archive -LiteralPath $pathToZip -DestinationPath $pathInstalledModule
 ```
 ### <a name="enable-monitoring"></a>启用监视
 ```powershell
-Enable-ApplicationInsightsMonitoring -InstrumentationKey xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+Enable-ApplicationInsightsMonitoring -ConnectionString xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 ```
 
 

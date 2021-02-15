@@ -1,19 +1,19 @@
 ---
 title: 快速入门：创建服务器 - az postgres up - Azure Database for PostgreSQL（单一服务器）
 description: 使用 Azure CLI（命令行界面）up 命令创建 Azure Database for PostgreSQL - 单一服务器的快速入门指南。
-author: rachel-msft
-ms.author: raagyema
+author: lfittl-msft
+ms.author: lufittl
 ms.service: postgresql
 ms.devlang: azurecli
 ms.topic: quickstart
 ms.date: 05/06/2019
 ms.custom: devx-track-azurecli
-ms.openlocfilehash: 1a2b7ceea74091931c92d28f8fa47b9046b545fc
-ms.sourcegitcommit: 11e2521679415f05d3d2c4c49858940677c57900
+ms.openlocfilehash: c11a98c04f81e7c111faf4aa449ab2bf9a4890bb
+ms.sourcegitcommit: 3bcce2e26935f523226ea269f034e0d75aa6693a
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/31/2020
-ms.locfileid: "87496570"
+ms.lasthandoff: 10/23/2020
+ms.locfileid: "92485216"
 ---
 # <a name="quickstart-use-an-azure-cli-command-az-postgres-up-preview-to-create-an-azure-database-for-postgresql---single-server"></a>快速入门：使用 Azure CLI 命令、az postgres up（预览版）创建 Azure Database for PostgreSQL - 单一服务器
 
@@ -28,7 +28,7 @@ ms.locfileid: "87496570"
 
 本文要求在本地运行 Azure CLI 2.0 或更高版本。 若要查看安装的版本，请运行 `az --version` 命令。 如果需要进行安装或升级，请参阅[安装 Azure CLI](/cli/azure/install-azure-cli)。
 
-需要使用 [az login](/cli/azure/authenticate-azure-cli?view=interactive-log-in) 命令登录账户。 记下命令行输出中相应订阅名称的 ID 属性。
+需要使用 [az login](/cli/azure/authenticate-azure-cli) 命令登录账户。 记下命令行输出中相应订阅名称的 ID 属性。
 
 ```azurecli
 az login
@@ -75,7 +75,7 @@ admin-password | 系统生成的 | 管理员用户的密码。
 
 服务器创建后，随附有以下设置：
 
-- 创建了一条名为“devbox”的防火墙规则。 Azure CLI 尝试检测运行 `az postgres up` 命令的计算机的 IP 地址以及该 IP 面向的允许列表。
+- 创建了一条名为“devbox”的防火墙规则。 Azure CLI 尝试检测运行 `az postgres up` 命令的计算机的 IP 地址，并允许此 IP 地址。
 - “允许访问 Azure 服务”设置为“开”。 此设置会将服务器的防火墙配置为接受来自所有 Azure 资源（包括非订阅中的资源）的连接。
 - 创建了一个名为“sampledb”的空数据库
 - 创建了一个特权为“sampledb”且名为“root”的新用户

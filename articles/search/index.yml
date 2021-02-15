@@ -11,12 +11,12 @@ metadata:
   author: HeidiSteen
   ms.author: heidist
   ms.date: 02/25/2020
-  ms.openlocfilehash: f5acb693e758d3a574b799b2999e6d956aaf883c
-  ms.sourcegitcommit: 845a55e6c391c79d2c1585ac1625ea7dc953ea89
+  ms.openlocfilehash: af7bb5fe7709d0a15254e8660600e284103fa668
+  ms.sourcegitcommit: 1bdcaca5978c3a4929cccbc8dc42fc0c93ca7b30
   ms.translationtype: HT
   ms.contentlocale: zh-CN
-  ms.lasthandoff: 07/05/2020
-  ms.locfileid: "85954496"
+  ms.lasthandoff: 12/13/2020
+  ms.locfileid: "97368777"
 landingContent:
 - title: 关于认知搜索
   linkLists:
@@ -69,9 +69,9 @@ landingContent:
   - linkListType: reference
     links:
     - text: 创建索引 (REST)
-      url: https://docs.microsoft.com/rest/api/searchservice/create-index
+      url: /rest/api/searchservice/create-index
     - text: 创建索引器 (REST)
-      url: https://docs.microsoft.com/rest/api/searchservice/create-indexer
+      url: /rest/api/searchservice/create-indexer
 - title: 使用 AI 扩充
   linkLists:
   - linkListType: concept
@@ -107,7 +107,7 @@ landingContent:
   - linkListType: how-to-guide
     links:
     - text: 创建简单查询
-      url: search-query-simple-examples.md
+      url: search-query-create.md
     - text: 使用完整语法
       url: search-query-lucene-examples.md
   - linkListType: reference
@@ -115,7 +115,7 @@ landingContent:
     - text: OData 语言参考
       url: query-odata-filter-orderby-syntax.md
     - text: 搜索文档 (REST)
-      url: https://docs.microsoft.com/rest/api/searchservice/search-documents
+      url: /rest/api/searchservice/search-documents
 - title: 帮助和反馈
   linkLists:
   - linkListType: reference

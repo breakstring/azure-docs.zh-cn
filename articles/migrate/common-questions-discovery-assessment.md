@@ -1,14 +1,17 @@
 ---
 title: Azure Migrate 中的发现、评估和依赖项分析问题
 description: 获取有关 Azure Migrate 中的发现、评估和依赖关系分析的常见问题的解答。
+author: vineetvikram
+ms.author: vivikram
+ms.manager: abhemraj
 ms.topic: conceptual
 ms.date: 06/09/2020
-ms.openlocfilehash: 9b8ba0ec83b9f2faedebb2bfb4ba84109f6f8b77
-ms.sourcegitcommit: 64ad2c8effa70506591b88abaa8836d64621e166
+ms.openlocfilehash: 944d867ef888e70faa659adcc0e2d4c02f003c97
+ms.sourcegitcommit: ca215fa220b924f19f56513fc810c8c728dff420
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/17/2020
-ms.locfileid: "88263497"
+ms.lasthandoff: 01/19/2021
+ms.locfileid: "98567415"
 ---
 # <a name="discovery-assessment-and-dependency-analysis---common-questions"></a>发现、评估和依赖关系分析-常见问题
 
@@ -31,9 +34,9 @@ ms.locfileid: "88263497"
 
 ## <a name="how-do-i-choose-the-assessment-type"></a>如何选择评估类型？
 
-- 若要评估本地[VMware vm](how-to-set-up-appliance-vmware.md)、 [hyper-v vm](how-to-set-up-appliance-hyper-v.md)和[物理服务器](how-to-set-up-appliance-physical.md)以迁移到 AZURE vm，请使用**Azure VM 评估**。 [了解详细信息](concepts-assessment-calculation.md)
+- 若要评估本地 [VMware vm](how-to-set-up-appliance-vmware.md)、 [hyper-v vm](how-to-set-up-appliance-hyper-v.md)和 [物理服务器](how-to-set-up-appliance-physical.md)以迁移到 AZURE vm，请使用 **Azure VM 评估**。 [了解详细信息](concepts-assessment-calculation.md)
 
-- 如果要评估本地[VMware vm](how-to-set-up-appliance-vmware.md)以便迁移到[Azure VMWARE 解决方案 (avs) ](../azure-vmware/introduction.md)使用此评估类型，请使用**Azure VMware 解决方案 (AVS) **评估。 [了解详细信息](concepts-azure-vmware-solution-assessment-calculation.md)
+- 如果要评估本地 [VMware vm](how-to-set-up-appliance-vmware.md)以便迁移到 [Azure VMWARE 解决方案 (avs)](../azure-vmware/introduction.md)使用此评估类型，请使用 **Azure VMware 解决方案 (AVS)** 评估。 [了解详细信息](concepts-azure-vmware-solution-assessment-calculation.md)
 
 - 为了同时运行这两种类型的评估，可以使用具有 VMware 计算机的公共组。 请注意，如果是首次在 Azure Migrate 中运行 AVS 评估，建议创建一组新的 VMware 计算机。
  
@@ -43,22 +46,28 @@ ms.locfileid: "88263497"
 对于“基于性能”的评估，当 Azure Migrate 设备无法收集本地 VM 的性能数据时，评估报告导出会显示“PercentageOfCoresUtilizedMissing”或“PercentageOfMemoryUtilizedMissing”。 请检查：
 
 - 是否在创建评估期间启动了 VM
-- 如果只有内存计数器缺失，而你尝试评估 Hyper-V VM，则请检查是否在这些 VM 上启用了动态内存。 目前有一个已知问题，由于该问题的存在，Azure Migrate 设备无法收集此类 VM 的内存利用率。
-- 如果所有性能计数器都缺失，请确保允许通过端口 443 (HTTPS) 进行出站连接。
+- 如果仅缺少内存计数器，则尝试评估 Hyper-v Vm。 在此方案中，请在 Vm 上启用动态内存，并通过 "重新计算" 评估来反映最新的更改。 仅当 VM 启用了动态内存时，设备才可以收集 Hyper-v Vm 的内存使用率值。
+
+- 如果所有性能计数器都丢失，请确保端口443上的出站连接 (允许使用 HTTPS) 。
 
 请注意，如果缺少任何性能计数器，则 Azure Migrate：服务器评估会回退到本地分配的核心/内存，并相应地建议一个 VM 大小。
 
 ## <a name="why-is-the-confidence-rating-of-my-assessment-low"></a>为什么我的评估的置信度分级较低？
 
-根据计算评估所需的[可用数据点](https://docs.microsoft.com/azure/migrate/concepts-assessment-calculation#ratings)的百分比，为“基于性能”的评估计算置信度评级。 下面是为什么评估可能会获得较低置信度分级的原因：
+根据计算评估所需的[可用数据点](./concepts-assessment-calculation.md#ratings)的百分比，为“基于性能”的评估计算置信度评级。 下面是为什么评估可能会获得较低置信度分级的原因：
 
 - 在创建评估的过程中，你没有对环境进行分析。 例如，如果创建性能持续时间设置为一周的评估，则在对所有数据点启用发现之后，需要等待至少一周才能收集。 如果无法等待这么久，请将性能持续时间缩短，并“重新计算”评估。
  
-- 服务器评估无法在评估期内收集部分或全部 VM 的性能数据。 请检查是否已在评估期间启用 VM 且允许通过端口 443 进行出站连接。 对于 Hyper-V VM，如果已启用了动态内存，则内存计数器将缺失，导致置信度分级较低。 请重新计算评估以反映置信度评级的最新更改。 
+- 服务器评估无法在评估期内收集部分或全部 Vm 的性能数据。 若要获得更高的置信度，请确保： 
+    - Vm 在评估期间开机
+    - 允许端口443上的出站连接
+    - 对于 Hyper-v Vm，已启用动态内存 
+
+    请重新计算评估以反映置信度评级的最新更改。
 
 - 启动服务器评估中的发现之后，基本不再创建 VM。 例如，如果要针对最后一个月的性能历史记录创建评估，但仅仅在一周前，在环境中创建了一些 VM， 在这种情况下，新 VM 的性能数据在整个过程中都不可用，并且置信度分级会较低。
 
-[详细了解](https://docs.microsoft.com/azure/migrate/concepts-assessment-calculation#confidence-ratings-performance-based)置信度分级。
+[详细了解](./concepts-assessment-calculation.md#confidence-ratings-performance-based)置信度分级。
 
 ## <a name="i-cant-see-some-groups-when-i-am-creating-an-azure-vmware-solution-avs-assessment"></a>创建 Azure VMware 解决方案时，无法看到某些组 (AVS) 评估
 
@@ -124,7 +133,7 @@ Azure Migrate 设备不断地收集有关本地环境的信息。  评估是本�
 
 ## <a name="why-is-the-suggested-migration-tool-in-import-based-avs-assessment-marked-as-unknown"></a>为什么基于导入的 AVS 评估中建议的迁移工具标记为未知？
 
-对于通过 CSV 文件导入的计算机，AVS 评估中的默认迁移工具是未知的。 但对于 VMware 计算机，建议使用 VMware 混合云扩展 (HCX) 解决方案。 [了解详细信息](../azure-vmware/hybrid-cloud-extension-installation.md)。
+对于通过 CSV 文件导入的计算机，AVS 评估中的默认迁移工具是未知的。 但对于 VMware 计算机，建议使用 VMware 混合云扩展 (HCX) 解决方案。 [了解详细信息](../azure-vmware/tutorial-deploy-vmware-hcx.md)。
 
 
 ## <a name="what-is-dependency-visualization"></a>什么是依赖项可视化？
@@ -141,7 +150,7 @@ Azure Migrate 设备不断地收集有关本地环境的信息。  评估是本�
 **要求** | **无代理** | **基于代理**
 --- | --- | ---
 支持 | 此选项目前为预览版，仅适用于 VMware Vm。 [查看](migrate-support-matrix-vmware.md#dependency-analysis-requirements-agentless) 支持的操作系统。 | 公开上市 (GA) 。
-代理 | 无需在要交叉检查的计算机上安装代理。 | 要在要分析的每台本地计算机上安装的代理： [Microsoft Monitoring agent (MMA) ](../azure-monitor/platform/agent-windows.md)和 [依赖关系代理](../azure-monitor/platform/agents-overview.md#dependency-agent)。 
+Agent | 无需在要交叉检查的计算机上安装代理。 | 要在要分析的每台本地计算机上安装的代理： [Microsoft Monitoring agent (MMA) ](../azure-monitor/platform/agent-windows.md)和 [依赖关系代理](../azure-monitor/platform/agents-overview.md#dependency-agent)。 
 先决条件 | [查看](concepts-dependency-visualization.md#agentless-analysis) 先决条件和部署要求。 | [查看](concepts-dependency-visualization.md#agent-based-analysis) 先决条件和部署要求。
 Log Analytics | 不需要。 | Azure Migrate 在 [Azure Monitor 日志](../azure-monitor/log-query/log-query-overview.md)中使用[服务映射](../azure-monitor/insights/service-map.md)解决方案来进行依赖关系可视化。 [了解详细信息](concepts-dependency-visualization.md#agent-based-analysis)。
 工作原理 | 捕获启用了依赖关系可视化的计算机上的 TCP 连接数据。 发现后，它会按五分钟的间隔收集数据。 | 计算机上安装的服务映射代理收集有关每个进程的 TCP 进程和入站/出站连接的数据。
@@ -181,13 +190,13 @@ Log Analytics | 不需要。 | Azure Migrate 在 [Azure Monitor 日志](../azure
 对于基于代理的依赖项可视化：
 
 - 使用 [脚本安装依赖关系代理](../azure-monitor/insights/vminsights-enable-hybrid.md#dependency-agent)。
-- 对于 MMA，请 [使用命令行或自动化](../azure-monitor/platform/log-analytics-agent.md#installation-and-configuration)，或使用 [脚本](https://gallery.technet.microsoft.com/scriptcenter/Install-OMS-Agent-with-2c9c99ab)。
+- 对于 MMA，请 [使用命令行或自动化](../azure-monitor/platform/log-analytics-agent.md#installation-options)，或使用 [脚本](https://gallery.technet.microsoft.com/scriptcenter/Install-OMS-Agent-with-2c9c99ab)。
 - 除了脚本以外，还可以使用部署工具（如 Microsoft Endpoint Configuration Manager 和 [Intigua](https://www.intigua.com/intigua-for-azure-migration) ）来部署代理。
 
 ## <a name="what-operating-systems-does-mma-support"></a>MMA 支持哪些操作系统？
 
-- 查看 [MMA 支持的 Windows 操作系统](../azure-monitor/platform/log-analytics-agent.md#supported-windows-operating-systems)的列表。
-- 查看 [MMA 支持的 Linux 操作系统](../azure-monitor/platform/log-analytics-agent.md#supported-linux-operating-systems)的列表。
+- 查看 [MMA 支持的 Windows 操作系统](../azure-monitor/platform/log-analytics-agent.md#installation-options)的列表。
+- 查看 [MMA 支持的 Linux 操作系统](../azure-monitor/platform/log-analytics-agent.md#installation-options)的列表。
 
 ## <a name="can-i-visualize-dependencies-for-more-than-one-hour"></a>是否可将依赖项显示超过一小时？
 

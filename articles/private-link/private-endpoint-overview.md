@@ -7,12 +7,12 @@ ms.service: private-link
 ms.topic: conceptual
 ms.date: 06/18/2020
 ms.author: allensu
-ms.openlocfilehash: 7456402605328592d4f5677767bcd985941173ec
-ms.sourcegitcommit: 628be49d29421a638c8a479452d78ba1c9f7c8e4
+ms.openlocfilehash: 88d44f4f8cedbad604eb59cde91f4eed79918c0f
+ms.sourcegitcommit: fc8ce6ff76e64486d5acd7be24faf819f0a7be1d
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/20/2020
-ms.locfileid: "88639828"
+ms.lasthandoff: 01/26/2021
+ms.locfileid: "98806668"
 ---
 # <a name="what-is-azure-private-endpoint"></a>什么是 Azure 专用终结点？
 
@@ -28,7 +28,7 @@ Azure 专用终结点是一个网络接口，可以将你通过专用且安全�
 |子网    |  虚拟网络中要部署和分配专用 IP 地址的子网。 有关子网要求，请参阅本文中的“限制”部分。         |
 |专用链接资源    |   用于通过可用类型列表中的资源 ID 或别名建立连接的专用链接资源。 将为发送到此资源的所有流量生成唯一的网络标识符。       |
 |目标子资源   |      要连接的子资源。 每个专用链接资源类型具有不同的选项，可根据偏好做出选择。    |
-|连接批准方法    |  自动或手动。 可以根据基于角色的访问控制 (RBAC) 权限自动批准专用终结点。 如果尝试在不使用 RBAC 的情况下连接到专用链接资源，请使用手动方法来允许资源所有者批准连接。        |
+|连接批准方法    |  自动或手动。 基于 Azure 基于角色的访问控制 (Azure RBAC) 权限，可以自动批准专用终结点。 如果尝试在不使用 Azure RBAC 的情况下连接到专用链接资源，请使用手动方法来允许资源所有者批准连接。        |
 |请求消息     |  可为请求手动批准的连接指定消息。 此消息可用于标识特定的请求。        |
 |连接状态   |   一个只读属性，指定专用终结点是否处于活动状态。 只能使用处于已批准状态的专用终结点发送流量。 可用的其他状态： <br>-**已批准**：连接已自动或手动批准，随时可供使用。</br><br>-**等待中**：连接是手动创建的，正等待由专用链接资源所有者批准。</br><br>-**已拒绝**：连接已被专用链接资源所有者拒绝。</br><br>-**已断开连接**：连接已被专用链接资源所有者删除。 专用终结点已变为参考性终结点，应将其删除以清理资源。 </br>|
 
@@ -45,9 +45,9 @@ Azure 专用终结点是一个网络接口，可以将你通过专用且安全�
  
 - 可以使用同一个专用链接资源创建多个专用终结点。 对于使用常见 DNS 服务器配置的单个网络，建议的做法是对给定的专用链接资源使用单个专用终结点，以避免出现重复条目或 DNS 解析冲突。 
  
-- 可以在同一虚拟网络中的相同或不同子网上创建多个专用终结点。 在一个订阅中可以创建的专用终结点数量有限制。 有关详细信息，请参阅  [Azure 限制](https://docs.microsoft.com/azure/azure-resource-manager/management/azure-subscription-service-limits#networking-limits)。
+- 可以在同一虚拟网络中的相同或不同子网上创建多个专用终结点。 在一个订阅中可以创建的专用终结点数量有限制。 有关详细信息，请参阅  [Azure 限制](../azure-resource-manager/management/azure-subscription-service-limits.md#networking-limits)。
 
-- 还必须向 Micosoft 资源提供程序注册来自专用链接资源的订阅。 有关详细信息，请参阅 [Azure 资源提供程序](https://docs.microsoft.com/azure/azure-resource-manager/management/resource-providers-and-types)。
+- 来自专用链接资源的订阅也必须注册到 Micosoft.Network 资源提供程序。 有关详细信息，请参阅 [Azure 资源提供程序](../azure-resource-manager/management/resource-providers-and-types.md)。
 
  
 ## <a name="private-link-resource"></a>专用链接资源 
@@ -56,7 +56,7 @@ Azure 专用终结点是一个网络接口，可以将你通过专用且安全�
 |专用链接资源名称  |资源类型   |子资源  |
 |---------|---------|---------|
 |**专用链接服务**（你自己的服务）   |  Microsoft.Network/privateLinkServices       | empty |
-|**Azure 自动化** |  Microsoft.Automation/automationAccounts | Webhook，DSCAndHybridWorker |
+|**Azure 自动化** |  Microsoft.Automation/automationAccounts | Webhook, DSCAndHybridWorker |
 |**Azure SQL 数据库** | Microsoft.Sql/servers    |  Sql Server (sqlServer)        |
 |**Azure Synapse Analytics** | Microsoft.Sql/servers    |  Sql Server (sqlServer)        | 
 |**Azure 存储**  | Microsoft.Storage/storageAccounts    |  Blob（blob、blob_secondary）<BR> 表（table、table_secondary）<BR> 队列（queue、queue_secondary）<BR> 文件（file、file_secondary）<BR> Web（web、web_secondary）        |
@@ -77,12 +77,12 @@ Azure 专用终结点是一个网络接口，可以将你通过专用且安全�
 |**Azure 中继** | Microsoft.Relay/namespaces | 命名空间 |
 |**Azure 事件网格** | Microsoft.EventGrid/topics    | 主题 |
 |**Azure 事件网格** | Microsoft.EventGrid/domains    | 域 |
-|**Azure WebApps** | Microsoft.Web/sites    | sites |
-|**Azure 机器学习** | Microsoft.MachineLearningServices/workspaces    | 工作区 |
+|**Azure 应用服务** | Microsoft.Web/sites    | sites |
+|**Azure 机器学习** | Microsoft.MachineLearningServices/workspaces    | amlworkspace |
 |**SignalR** | Microsoft.SignalRService/SignalR    | signalR |
-|**Azure Monitor** | Microsoft Insights/privateLinkScopes    | azuremonitor |
-|**认知服务** |  (Cognitiveservices account/帐户    | account |
-|**Azure 文件同步** | Storagesync.sys/storageSyncServices    | Afs |
+|**Azure Monitor** | Microsoft.Insights/privateLinkScopes    | azuremonitor |
+|**认知服务** | (Microsoft.CognitiveServices/accounts    | account |
+|**Azure 文件同步** | Microsoft.StorageSync/storageSyncServices    | Afs |
     
   
 
@@ -95,8 +95,8 @@ Azure 专用终结点是一个网络接口，可以将你通过专用且安全�
  
 ## <a name="access-to-a-private-link-resource-using-approval-workflow"></a>使用批准工作流访问专用链接资源 
 可使用以下连接批准方法连接到专用链接资源：
-- 当你拥有特定的专用链接资源或对其拥权限时**自动**批准。 所需的权限基于采用以下格式的专用链接资源类型：Microsoft.\<Provider>/<resource_type>/privateEndpointConnectionApproval/action
-- 没有所需的权限并想要请求访问权限时**手动**发出请求。 将发起批准工作流。 将会以“挂起”状态创建专用终结点和后续的专用终结点连接。 专用链接资源所有者负责审批该连接。 获得批准后，将启用专用终结点来正常发送流量，如以下批准工作流图中所示。  
+- 当你拥有特定的专用链接资源或对其拥权限时 **自动** 批准。 所需的权限基于采用以下格式的专用链接资源类型：Microsoft.\<Provider>/<resource_type>/privateEndpointConnectionApproval/action
+- 没有所需的权限并想要请求访问权限时 **手动** 发出请求。 将发起批准工作流。 将会以“挂起”状态创建专用终结点和后续的专用终结点连接。 专用链接资源所有者负责审批该连接。 获得批准后，将启用专用终结点来正常发送流量，如以下批准工作流图中所示。  
 
 ![工作流批准](media/private-endpoint-overview/private-link-paas-workflow.png)
  
@@ -127,21 +127,22 @@ Azure 专用终结点是一个网络接口，可以将你通过专用且安全�
 下表列出了使用专用终结点时的已知限制： 
 
 
-|限制 |说明 |缓解操作  |
+|限制 |说明 |缓解措施  |
 |---------|---------|---------|
 |网络安全组 (NSG) 规则和用户定义的路由不适用于专用终结点    |专用终结点不支持 NSG。 尽管包含专用终结点的子网可以有关联的 NSG，但这些规则不会针对专用终结点处理的流量生效。 必须[禁用网络策略的强制实施](disable-private-endpoint-network-policy.md)，才能在子网中部署专用终结点。 NSG 仍会在同一子网中托管的其他工作负荷上强制实施。 任何客户端子网上的路由将使用 /32 前缀，更改默认路由行为需要类似的 UDR  | 对源客户端上的出站流量使用 NSG 规则来控制流量。 部署具有 /32 前缀的单个路由，以替代专用终结点路由。 仍支持出站连接的 NSG 流日志和监视信息，并且可以使用这些信息        |
 
 
 ## <a name="next-steps"></a>后续步骤
-- [使用门户创建 SQL 数据库的专用终结点 ](create-private-endpoint-portal.md)
-- [使用 PowerShell 为 SQL 数据库创建专用终结点 ](create-private-endpoint-powershell.md)
-- [使用 CLI 创建 SQL 数据库的专用终结点 ](create-private-endpoint-cli.md)
-- [使用门户创建存储帐户的专用终结点](create-private-endpoint-storage-portal.md)
+- [使用门户创建 SQL 数据库的专用终结点](create-private-endpoint-portal.md)
+- [使用 PowerShell 为 SQL 数据库创建专用终结点](create-private-endpoint-powershell.md)
+- [使用 CLI 创建 SQL 数据库的专用终结点](create-private-endpoint-cli.md)
+- [使用门户为存储帐户创建专用终结点](./tutorial-private-endpoint-storage-portal.md)
 - [使用门户创建 Azure Cosmos 帐户的专用终结点](../cosmos-db/how-to-configure-private-endpoints.md)
 - [使用 Azure PowerShell 创建自己的专用链接服务](create-private-link-service-powershell.md)
-- [使用门户创建自己的用于 Azure Database for PostgreSQL - 单个服务器的专用链接](../postgresql/howto-configure-privatelink-portal.md)
+- [使用门户创建 Azure Database for PostgreSQL 单一服务器的自己的专用链接](../postgresql/howto-configure-privatelink-portal.md)
 - [使用 CLI 创建自己的用于 Azure Database for PostgreSQL - 单个服务器的专用链接](../postgresql/howto-configure-privatelink-cli.md)
-- [使用门户创建自己的用于 Azure Database for MySQL 的专用链接](../mysql/howto-configure-privatelink-portal.md)
+- [使用门户创建 Azure Database for MySQL 的专用链接](../mysql/howto-configure-privatelink-portal.md)
 - [使用 CLI 创建自己的用于 Azure Database for MySQL 的专用链接](../mysql/howto-configure-privatelink-cli.md)
-- [使用门户创建自己的用于 Azure Database for MariaDB 的专用链接](../mariadb/howto-configure-privatelink-portal.md)
+- [使用门户创建 Azure Database for MariaDB 的专用链接](../mariadb/howto-configure-privatelink-portal.md)
 - [使用 CLI 创建自己的用于 Azure Database for MariaDB 的专用链接](../mariadb/howto-configure-privatelink-cli.md)
+- [使用门户和 CLI 为 Azure Key Vault 创建自己的专用链接](../key-vault/general/private-link-service.md)

@@ -7,13 +7,13 @@ ms.service: static-web-apps
 ms.topic: tutorial
 ms.date: 05/08/2020
 ms.author: aapowell
-ms.custom: devx-track-javascript
-ms.openlocfilehash: 192e939d21cae3b67cafe190e32e7202cd8bdb20
-ms.sourcegitcommit: 0b8320ae0d3455344ec8855b5c2d0ab3faa974a3
+ms.custom: devx-track-js
+ms.openlocfilehash: e24a2a19eb39e2c6c7612631ad98f95cb4c5b9ef
+ms.sourcegitcommit: 829d951d5c90442a38012daaf77e86046018e5b9
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/30/2020
-ms.locfileid: "87429664"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "91250158"
 ---
 # <a name="tutorial-publish-a-gatsby-site-to-azure-static-web-apps-preview"></a>教程：将 Gatsby 站点发布到 Azure 静态 Web 应用（预览）
 
@@ -102,7 +102,7 @@ ms.locfileid: "87429664"
 
 1. 对于“SKU”，选择“免费”。
 
-   :::image type="content" source="./media/publish-gatsby/basic-app-details.png" alt-text="已填写的详细信息":::
+   :::image type="content" source="./media/publish-gatsby/basic-app-details.png" alt-text="在门户中创建静态 Web 应用（预览）":::
 
 1. 单击“使用 GitHub 登录”按钮。
 
@@ -112,7 +112,7 @@ ms.locfileid: "87429664"
 
 1. 对于“分支”，选择“主”。
 
-   :::image type="content" source="./media/publish-gatsby/completed-github-info.png" alt-text="已完成的 GitHub 信息":::
+   :::image type="content" source="./media/publish-gatsby/completed-github-info.png" alt-text="在门户中创建静态 Web 应用（预览）":::
 
 ### <a name="build"></a>构建
 
@@ -126,7 +126,7 @@ ms.locfileid: "87429664"
 
    “API 位置”的值不是必需的，因为目前不会部署 API。
 
-   :::image type="content" source="./media/publish-gatsby/build-details.png" alt-text="生成设置":::
+   :::image type="content" source="./media/publish-gatsby/build-details.png" alt-text="在门户中创建静态 Web 应用（预览）":::
 
 ### <a name="review-and-create"></a>查看并创建
 
@@ -138,7 +138,7 @@ ms.locfileid: "87429664"
 
 1. 在资源屏幕中，单击 URL 链接，打开已部署的应用程序。 可能需要等待一两分钟，GitHub 操作才能完成。
 
-   :::image type="content" source="./media/publish-gatsby/deployed-app.png" alt-text="已部署的应用程序":::
+   :::image type="content" source="./media/publish-gatsby/deployed-app.png" alt-text="在门户中创建静态 Web 应用（预览）":::
 
 ## <a name="clean-up-resources"></a>清理资源
 

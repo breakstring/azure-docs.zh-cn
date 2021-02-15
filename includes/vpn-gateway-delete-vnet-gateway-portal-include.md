@@ -5,20 +5,20 @@ services: vpn-gateway
 author: cherylmc
 ms.service: vpn-gateway
 ms.topic: include
-ms.date: 03/21/2018
+ms.date: 02/10/2021
 ms.author: cherylmc
 ms.custom: include file
-ms.openlocfilehash: d36d2be59010c47348a8e196b28d87e5b967868e
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 91dc6ba0bcd455aefe9de2efdff2feb20938152d
+ms.sourcegitcommit: d4734bc680ea221ea80fdea67859d6d32241aefc
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "67172821"
+ms.lasthandoff: 02/14/2021
+ms.locfileid: "100376373"
 ---
 ### <a name="step-1-navigate-to-the-virtual-network-gateway"></a>步骤 1：导航到虚拟网络网关
 
 1. 在 [Azure 门户](https://portal.azure.com)中导航到“所有资源”。  
-2. 若要打开“虚拟网关”页，请导航到要删除的虚拟网关，然后单击它。
+2. 若要打开 "虚拟网络网关" 页，请导航到虚拟网络网关，然后单击将其选中。 
 
 ### <a name="step-2-delete-connections"></a>步骤 2：删除连接
 

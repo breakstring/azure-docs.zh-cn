@@ -8,19 +8,21 @@ ms.topic: sample
 ms.date: 12/26/2018
 author: sivethe
 ms.author: sivethe
-ms.custom: devx-track-javascript
-ms.openlocfilehash: deb0ca935cd01a0d86eea007711f65e439d4da00
-ms.sourcegitcommit: e71da24cc108efc2c194007f976f74dd596ab013
+ms.custom: devx-track-js
+ms.openlocfilehash: c2117c535cca679d3a7a3b75491bf60ab9567ceb
+ms.sourcegitcommit: 3bdeb546890a740384a8ef383cf915e84bd7e91e
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/29/2020
-ms.locfileid: "87421971"
+ms.lasthandoff: 10/30/2020
+ms.locfileid: "93098206"
 ---
 # <a name="build-an-app-using-nodejs-and-azure-cosmos-dbs-api-for-mongodb"></a>使用 Node.js 和 Azure Cosmos DB 的用于 MongoDB 的 API 生成应用 
+[!INCLUDE[appliesto-mongodb-api](includes/appliesto-mongodb-api.md)]
+
 > [!div class="op_single_selector"]
 > * [.NET](sql-api-get-started.md)
-> * [.NET Core](sql-api-dotnetcore-get-started.md)
-> * [Java](sql-api-java-get-started.md)
+> * [.NET Core](./sql-api-get-started.md)
+> * [Java](./create-sql-api-java.md)
 > * [用于 MongoDB 的 Node.js](mongodb-samples.md)
 > * [Node.js](sql-api-nodejs-get-started.md)
 >
@@ -116,7 +118,7 @@ ms.locfileid: "87421971"
     });
     ```
     
-    **可选**：如果使用的是 MongoDB Node.js 2.2 驱动程序，请替换下面的代码片段  ：
+    **可选** ：如果使用的是 MongoDB Node.js 2.2 驱动程序，请替换下面的代码片段  ：
 
     原始：
 
@@ -168,7 +170,7 @@ ms.locfileid: "87421971"
     var url = 'mongodb://<endpoint>:<password>@<endpoint>.documents.azure.com:10255/?ssl=true';
     ```
      
-3. 打开偏爱的终端，运行 **npm install mongodb --save**，并使用 **node app.js** 运行应用程序
+3. 打开偏爱的终端，运行 **npm install mongodb --save** ，并使用 **node app.js** 运行应用程序
 
 ## <a name="next-steps"></a>后续步骤
 

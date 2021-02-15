@@ -3,20 +3,20 @@ title: 使用 Azure Active Directory 按需预配用户
 description: 强制同步
 services: active-directory
 author: msmimart
-manager: CelesteDG
+manager: daveba
 ms.service: active-directory
 ms.subservice: app-provisioning
 ms.workload: identity
 ms.topic: how-to
-ms.date: 06/23/2020
+ms.date: 10/01/2020
 ms.author: mimart
 ms.reviewer: arvinh
-ms.openlocfilehash: 52819fc37cf0d10cb36009feb82dec234184752c
-ms.sourcegitcommit: 3bf69c5a5be48c2c7a979373895b4fae3f746757
+ms.openlocfilehash: be03a149f34c16621905081a2f9bb663d85bc53c
+ms.sourcegitcommit: d49bd223e44ade094264b4c58f7192a57729bada
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/14/2020
-ms.locfileid: "88235530"
+ms.lasthandoff: 02/02/2021
+ms.locfileid: "99255655"
 ---
 # <a name="on-demand-provisioning"></a>按需预配
 使用按需预配可在数秒内将用户预配到应用程序。 除此之外，还可以使用此功能执行以下操作：
@@ -27,13 +27,16 @@ ms.locfileid: "88235530"
 
 ## <a name="how-to-use-on-demand-provisioning"></a>如何使用按需预配
 
-1. 登录到 **Azure 门户**。
-2. 中转到 "**所有服务**" "  >  **企业应用程序**"。
-3. 选择应用程序，然后打开 "设置配置" 页。
-4. 通过提供管理员凭据来配置设置。
-5. 选择 **"按需预配"**。
-6. 按名字、姓氏、显示名称、用户主体名称或电子邮件地址搜索用户。
-7. 选择页面底部的 " **预配** "。
+1. 登录 **Azure 门户**。
+1. 中转到 "**所有服务**" "  >  **企业应用程序**"。
+1. 选择应用程序，然后打开 "设置配置" 页。
+1. 通过提供管理员凭据来配置设置。
+1. 选择 **"按需预配"**。
+1. 按名字、姓氏、显示名称、用户主体名称或电子邮件地址搜索用户。
+   > [!NOTE]
+   > 对于云 HR 预配应用 (Workday/SuccessFactors 到 AD/Azure AD) ，输入值不同。 对于 Workday 方案，请在 Workday 中提供用户的 "WID"。 对于 SuccessFactors 方案，请在 SuccessFactors 中提供用户的 "personIdExternal"。 
+ 
+1. 选择页面底部的 " **预配** "。
 
 :::image type="content" source="media/provision-on-demand/on-demand-provision-user.jpg" alt-text="显示用于按需预配用户的 Azure 门户 UI 的屏幕截图。":::
 
@@ -90,7 +93,7 @@ ms.locfileid: "88235530"
 * "**分配给应用程序**" 指示将用户分配到 Azure AD 中的应用程序。
 * **作用域同步所有** 指示范围设置允许租户中的所有用户和组。
 * **用户具有所需角色** 表示用户具有要预配到应用程序中的必要角色。 
-* 如果已为应用程序定义了范围筛选器，也会显示**范围筛选器**。 此筛选器以以下格式显示： {范围筛选器标题} {范围筛选器属性} {范围筛选器运算符} {范围筛选器值}。
+* 如果已为应用程序定义了范围筛选器，也会显示 **范围筛选器**。 此筛选器以以下格式显示： {范围筛选器标题} {范围筛选器属性} {范围筛选器运算符} {范围筛选器值}。
 
 #### <a name="troubleshooting-tips"></a>故障排除提示
 
@@ -131,20 +134,20 @@ ms.locfileid: "88235530"
 
 * 导出更改失败可能会有很大差异。 请查看 [文档，](../reports-monitoring/concept-provisioning-logs.md#error-codes) 了解常见故障的设置日志。
 
-## <a name="frequently-asked-questions"></a>常见问题
+## <a name="frequently-asked-questions"></a>常见问题解答
 
 * **是否需要关闭预配以使用按需预配？** 对于使用长生存期持有者令牌或用于授权的用户名和密码的应用程序，无需执行其他步骤。 使用 OAuth 进行授权的应用程序当前需要在使用按需预配之前停止预配作业。 应用程序（如 G Suite、Box、Workplace by Facebook 和时差）属于此类别。 工作正在进行中，支持所有应用程序的按需预配，无需停止预配作业。
 
 * **按需预配需要多长时间？** 按需预配通常需要不到30秒的时间。
 
-## <a name="known-limitations"></a>已知的限制
+## <a name="known-limitations"></a>已知限制
 
 对于按需预配，当前存在一些已知限制。 发布你的 [建议和反馈](https://aka.ms/appprovisioningfeaturerequest) ，以便我们可以更好地确定要进行的改进。
 
 > [!NOTE]
 > 以下限制特定于按需预配功能。 有关应用程序是否支持预配组、删除或其他功能的信息，请参阅该应用程序的教程。
 
-* Workday、Amazon Web Services (AWS) 和 SuccessFactors 应用程序不支持按需预配。 
+* Amazon Web Services (AWS) 应用程序不支持按需预配。 
 * 不支持按需预配组和角色。
 * 按需预配支持禁用从应用程序中取消分配的用户。 但是，它不支持禁用或删除已从 Azure AD 中禁用或删除的用户。 搜索用户时不会显示这些用户。
 

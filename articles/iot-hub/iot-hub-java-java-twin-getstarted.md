@@ -10,12 +10,12 @@ ms.devlang: java
 ms.topic: conceptual
 ms.date: 08/26/2019
 ms.custom: mqtt, devx-track-java
-ms.openlocfilehash: c439f1a5aaa03774652dc815364c45633096f6de
-ms.sourcegitcommit: a76ff927bd57d2fcc122fa36f7cb21eb22154cfa
+ms.openlocfilehash: 68908b7d62b8211c202262112831d5d2b523f594
+ms.sourcegitcommit: dbe434f45f9d0f9d298076bf8c08672ceca416c6
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/28/2020
-ms.locfileid: "87327593"
+ms.lasthandoff: 10/17/2020
+ms.locfileid: "92146966"
 ---
 # <a name="get-started-with-device-twins-java"></a>设备孪生入门 (Java)
 
@@ -31,7 +31,7 @@ ms.locfileid: "87327593"
 
 ## <a name="prerequisites"></a>先决条件
 
-* [Java SE 开发工具包 8](https://docs.microsoft.com/java/azure/jdk/?view=azure-java-stable)。 请确保在“长期支持”下选择“Java 8”以获取 JDK 8 的下载。
+* [Java SE 开发工具包 8](/java/azure/jdk/?view=azure-java-stable)。 请确保在“长期支持”下选择“Java 8”以获取 JDK 8 的下载。
 
 * [Maven 3](https://maven.apache.org/download.cgi)
 
@@ -380,7 +380,7 @@ ms.locfileid: "87327593"
     mvn exec:java -Dexec.mainClass="com.mycompany.app.App"
     ```
 
-    ![Java IoT 中心服务应用会更新标记值并运行设备查询](./media/iot-hub-java-java-twin-getstarted/service-app-1.png)
+    ![屏幕截图，显示命令的输出以运行 "添加标记" 查询服务应用。](./media/iot-hub-java-java-twin-getstarted/service-app-1.png)
 
     可以看到，**plant** 和 **region** 标记已添加到设备孪生。 第一个查询返回设备，但第二个查询则不会。
 
@@ -390,7 +390,7 @@ ms.locfileid: "87327593"
     mvn exec:java -Dexec.mainClass="com.mycompany.app.App"
     ```
 
-    ![设备客户端会添加 **connectivityType** 报告属性](./media/iot-hub-java-java-twin-getstarted/device-app-1.png)
+    ![设备客户端添加连接类型报告属性](./media/iot-hub-java-java-twin-getstarted/device-app-1.png)
 
 3. 在 add-tags-query 文件夹中的命令提示符下，再次运行以下命令以运行 add-tags-query 服务应用：
 

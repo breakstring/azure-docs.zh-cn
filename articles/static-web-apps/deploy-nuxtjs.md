@@ -7,13 +7,13 @@ ms.service: static-web-apps
 ms.topic: tutorial
 ms.date: 05/08/2020
 ms.author: chnwamba
-ms.custom: devx-track-javascript
-ms.openlocfilehash: 2eafd2f74ffcf5fe0fe65d04884cfd2d668cdf0b
-ms.sourcegitcommit: 56cbd6d97cb52e61ceb6d3894abe1977713354d9
+ms.custom: devx-track-js
+ms.openlocfilehash: 8f21f5fa8ee9035fe594cecff37a63b1ef2115cc
+ms.sourcegitcommit: 77ab078e255034bd1a8db499eec6fe9b093a8e4f
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/20/2020
-ms.locfileid: "88684569"
+ms.lasthandoff: 12/16/2020
+ms.locfileid: "97563460"
 ---
 # <a name="deploy-server-rendered-nuxtjs-websites-on-azure-static-web-apps-preview"></a>将服务器呈现的 Nuxt.js 网站部署到 Azure 静态 Web 应用（预览）
 
@@ -30,7 +30,7 @@ ms.locfileid: "88684569"
 可以使用 `create-nuxt-app` 设置新的 Nuxt.js 项目。 在本教程中，首先克隆现有存储库，而不是设置新项目。 设置此存储库的目的是演示如何将动态 Nuxt.js 应用部署为静态站点。
 
 1. 通过 GitHub 帐户从模板存储库创建新的存储库。
-1. 导航到 <http://github.com/staticwebdev/nuxtjs-starter/generate>
+1. 导航到 [http://github.com/staticwebdev/nuxtjs-starter/generate](https://github.com/login?return_to=/staticwebdev/nuxtjs-starter/generate)
 1. 将存储库命名为 nuxtjs-starter
 1. 接下来，将新存储库克隆到计算机。 确保将 <YOUR_GITHUB_ACCOUNT_NAME> 替换为你的帐户名称。
 
@@ -109,7 +109,7 @@ Azure 静态 Web 应用从 GitHub 存储库部署应用，并且每次将提交�
 1. 将所做的更改推送到 GitHub。
 
     ```bash
-    git push origin master
+    git push origin main
     ```
 
 ## <a name="deploy-your-static-website"></a>部署静态网站
@@ -172,7 +172,7 @@ https://github.com/<YOUR_GITHUB_USERNAME>/nuxtjs-starter/actions
 
 创建应用后，Azure 静态 Web 应用在存储库中创建了 GitHub Actions 工作流文件。 需要将此文件移到本地存储库，以便同步 Git 历史记录。
 
-返回终端并运行以下命令：`git pull origin master`。
+返回终端并运行以下命令：`git pull origin main`。
 
 ## <a name="configure-dynamic-routes"></a>配置动态路由
 

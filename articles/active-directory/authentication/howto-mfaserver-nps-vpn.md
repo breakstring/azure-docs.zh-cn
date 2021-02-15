@@ -6,24 +6,30 @@ ms.service: active-directory
 ms.subservice: authentication
 ms.topic: how-to
 ms.date: 11/21/2019
-ms.author: iainfou
-author: iainfoulds
+ms.author: justinha
+author: justinha
 manager: daveba
 ms.reviewer: michmcla
 ms.collection: M365-identity-device-management
-ms.openlocfilehash: 01decb99a9eb24ae60250f83f1f961b4c1690bc0
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 88fe09199cb50d2a3796c3b638dca1a723016dc4
+ms.sourcegitcommit: ad83be10e9e910fd4853965661c5edc7bb7b1f7c
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "80652848"
+ms.lasthandoff: 12/06/2020
+ms.locfileid: "96742011"
 ---
 # <a name="advanced-scenarios-with-azure-mfa-server-and-third-party-vpn-solutions"></a>Azure MFA 服务器和第三方 VPN 解决方案的高级方案
 
-Azure 多重身份验证服务器（Azure MFA 服务器）可用于与各种第三方 VPN 解决方案无缝连接。 本文重点介绍 Cisco &reg; ASA vpn 设备、Citrix NETSCALER SSL VPN 设备和刺柏网络 Secure Access/脉冲 Secure Connect SECURE SSL VPN 设备。 我们创建了配置指南来处理这三个常用设备。 Azure MFA 服务器还可与其他使用 RADIUS、LDAP、IIS 或基于声明的身份验证的其他系统集成，以 AD FS。 可以在[AZURE MFA 服务器配置](howto-mfaserver-deploy.md#next-steps)中找到更多详细信息。
+Azure 多重身份验证服务器 (Azure MFA 服务器) 可用于与各种第三方 VPN 解决方案无缝连接。 本文重点介绍 Cisco &reg; ASA vpn 设备、Citrix NETSCALER SSL VPN 设备和刺柏网络 Secure Access/脉冲 Secure Connect SECURE SSL VPN 设备。 我们创建了配置指南来处理这三个常用设备。 Azure MFA 服务器还可与其他使用 RADIUS、LDAP、IIS 或基于声明的身份验证的其他系统集成，以 AD FS。 可以在 [AZURE MFA 服务器配置](howto-mfaserver-deploy.md#next-steps)中找到更多详细信息。
 
 > [!IMPORTANT]
-> 从 2019 年 7 月 1 日开始，Microsoft 将不再为新部署提供 MFA 服务器。 希望用户执行多重身份验证的新客户应使用基于云的 Azure 多重身份验证。 在 7 月 1 日之前激活了 MFA 服务器的现有客户可以像平时一样下载最新版本、将来的更新以及生成激活凭据。
+> 从2019年7月1日起，Microsoft 不再为新部署提供 MFA 服务器。 希望在登录事件期间 (MFA) 需要多重身份验证的新客户应使用基于云的 Azure AD 多重身份验证。
+>
+> 若要开始执行基于云的 MFA，请参阅 [教程：通过 Azure AD 多重身份验证保护用户登录事件](tutorial-enable-azure-mfa.md)。
+>
+> 如果你使用基于云的 MFA，请参阅将 [VPN 基础结构与 AZURE MFA 集成](howto-mfa-nps-extension-vpn.md)。
+>
+> 在2019年7月1日之前激活 MFA 服务器的现有客户，可以下载最新版本、将来的更新，并照常生成激活凭据。
 
 ## <a name="cisco-asa-vpn-appliance-and-azure-mfa-server"></a>Cisco ASA VPN 设备和 Azure MFA 服务器
 Azure MFA 服务器与 Cisco &reg; ASA vpn 设备集成，以便为 Cisco AnyConnect &reg; vpn 登录和门户访问提供更高的安全性。  可以使用 LDAP 或 RADIUS 协议。  选择下列其中一项以下载详细的分步配置指南。

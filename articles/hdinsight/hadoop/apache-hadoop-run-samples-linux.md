@@ -1,19 +1,16 @@
 ---
 title: 在 HDInsight 上运行 Apache Hadoop MapReduce 示例 - Azure
 description: 开始使用 HDInsight 随附的 jar 文件中的 MapReduce 示例。 使用 SSH 连接到群集，然后使用 Hadoop 命令运行示例作业。
-author: hrasheed-msft
-ms.author: hrasheed
-ms.reviewer: jasonh
 ms.service: hdinsight
 ms.topic: how-to
 ms.custom: hdinsightactive,hdiseo17may2017
 ms.date: 12/12/2019
-ms.openlocfilehash: cc0918f3d9739a214e682d7faa460b6cc519cb0b
-ms.sourcegitcommit: 3541c9cae8a12bdf457f1383e3557eb85a9b3187
+ms.openlocfilehash: 5e75a39b1f9e8503097914b0c9e735915f9ae667
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/09/2020
-ms.locfileid: "86207838"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98943215"
 ---
 # <a name="run-the-mapreduce-examples-included-in-hdinsight"></a>运行 HDInsight 随附的 MapReduce 示例
 
@@ -21,7 +18,7 @@ ms.locfileid: "86207838"
 
 了解如何在 HDInsight 上运行 Apache Hadoop 随附的 MapReduce 示例。
 
-## <a name="prerequisites"></a>先决条件
+## <a name="prerequisites"></a>必备条件
 
 * HDInsight 中的 Apache Hadoop 群集。 请参阅 [Linux 上的 HDInsight 入门](./apache-hadoop-linux-tutorial-get-started.md)。
 
@@ -174,7 +171,7 @@ yarn jar /usr/hdp/current/hadoop-mapreduce-client/hadoop-mapreduce-examples.jar 
 
 GraySort 是一种基准排序。 其指标为在给大量数据（通常至少 100 TB）排序时达到的排序速率（TB/分钟）。
 
-此示例使用适中的 10 GB 数据，这样它运行时能相对快一点。 它使用由 Owen O'Malley 和 Arun Murthy 开发的 MapReduce 应用程序。 这些应用程序在2009中赢得了年度通用 ( "Daytona" ) tb 级排序基准，在173分钟) 速率为 0.578 TB/分钟 (100 TB。 有关此分类基准和其他排序基准的详细信息，请参阅[排序基准](https://sortbenchmark.org/)站点。
+此示例使用适中的 10 GB 数据，这样它运行时能相对快一点。 它使用由 Owen O'Malley 和 Arun Murthy 开发的 MapReduce 应用程序。 这些应用程序在2009中赢得了年度通用 ( "Daytona" ) tb 级排序基准，在173分钟) 速率为 0.578 TB/分钟 (100 TB。 有关此分类基准和其他排序基准的详细信息，请参阅 [排序基准](https://sortbenchmark.org/) 站点。
 
 本示例使用三组 MapReduce 程序：
 

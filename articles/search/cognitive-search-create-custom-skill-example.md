@@ -8,16 +8,17 @@ ms.author: luisca
 ms.service: cognitive-search
 ms.topic: conceptual
 ms.date: 11/04/2019
-ms.openlocfilehash: 2994c55b39d30ff16a0ca135e93a116784feb201
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.custom: devx-track-csharp
+ms.openlocfilehash: 5755e14e53d359fd8b322939bf1325d21536d593
+ms.sourcegitcommit: 829d951d5c90442a38012daaf77e86046018e5b9
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "74113816"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "89020178"
 ---
 # <a name="example-create-a-custom-skill-using-the-bing-entity-search-api"></a>示例：使用必应实体搜索 API 创建自定义技能
 
-在此示例中，了解如何创建 Web API 自定义技能。 此技能将接受位置、公众人物和组织，并返回其说明。 该示例使用[Azure 函数](https://azure.microsoft.com/services/functions/)包装[必应实体搜索 API](https://azure.microsoft.com/services/cognitive-services/bing-entity-search-api/)以便实现自定义技能接口。
+在此示例中，了解如何创建 Web API 自定义技能。 此技能将接受位置、公众人物和组织，并返回其说明。 该示例使用 [Azure 函数](https://azure.microsoft.com/services/functions/) 包装 [必应实体搜索 API](https://azure.microsoft.com/services/cognitive-services/bing-entity-search-api/) 以便实现自定义技能接口。
 
 ## <a name="prerequisites"></a>先决条件
 
@@ -481,5 +482,5 @@ POST https://[your-entity-search-app-name].azurewebsites.net/api/EntitySearch?co
 + [强大技能：自定义技能的存储库](https://github.com/Azure-Samples/azure-search-power-skills)
 + [将自定义技能添加到 AI 扩充管道](cognitive-search-custom-skill-interface.md)
 + [如何定义技能集](cognitive-search-defining-skillset.md)
-+ [创建技能组合 (REST)](https://docs.microsoft.com/rest/api/searchservice/create-skillset)
++ [创建技能组合 (REST)](/rest/api/searchservice/create-skillset)
 + [如何映射扩充的域](cognitive-search-output-field-mapping.md)

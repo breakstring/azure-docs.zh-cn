@@ -2,14 +2,14 @@
 author: erhopf
 ms.service: cognitive-services
 ms.topic: include
-ms.date: 03/29/2019
+ms.date: 01/08/2021
 ms.author: erhopf
-ms.openlocfilehash: b5a3ec1d6e33c08b460088c9aeb4fd18f6bf29ff
-ms.sourcegitcommit: b33c9ad17598d7e4d66fe11d511daa78b4b8b330
+ms.openlocfilehash: 22127f81d871fe333750020196540db17e7544f7
+ms.sourcegitcommit: c4c554db636f829d7abe70e2c433d27281b35183
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/25/2020
-ms.locfileid: "88864872"
+ms.lasthandoff: 01/08/2021
+ms.locfileid: "98033434"
 ---
 ## <a name="authentication"></a>Authentication
 
@@ -17,7 +17,7 @@ ms.locfileid: "88864872"
 
 | 支持的授权标头 | 语音转文本 | 文本转语音 |
 |------------------------|----------------|----------------|
-| Ocp-Apim-Subscription-Key | 是 | 否 |
+| Ocp-Apim-Subscription-Key | 是 | 是 |
 | 授权：持有者 | 是 | 是 |
 
 使用 `Ocp-Apim-Subscription-Key` 标头时，只需提供订阅密钥。 例如：
@@ -151,7 +151,7 @@ def get_token(subscription_key):
 
 应将访问令牌作为 `Authorization: Bearer <TOKEN>` 标头发送到服务。 每个访问令牌的有效期为 10 分钟。 随时可以获取新令牌，但是，为了最大限度地减少流量和延迟，我们建议使用同一令牌 9 分钟。
 
-下面是向文本转语音 REST API 发出的示例 HTTP 请求：
+下面是用于短音频的语音到文本 REST API 的示例 HTTP 请求：
 
 ```http
 POST /cognitiveservices/v1 HTTP/1.1

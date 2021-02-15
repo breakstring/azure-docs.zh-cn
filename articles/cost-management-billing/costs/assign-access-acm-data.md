@@ -6,22 +6,23 @@ ms.author: banders
 ms.date: 07/24/2020
 ms.topic: how-to
 ms.service: cost-management-billing
+ms.subservice: cost-management
 ms.reviewer: adwise
 ms.custom: secdec18
-ms.openlocfilehash: a11dcbf9aaa383fca1a0d99539b63ff9478176e9
-ms.sourcegitcommit: dccb85aed33d9251048024faf7ef23c94d695145
+ms.openlocfilehash: 660b5751e3b3cbc632331e99d797af3392a8aea4
+ms.sourcegitcommit: 8192034867ee1fd3925c4a48d890f140ca3918ce
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/28/2020
-ms.locfileid: "87290874"
+ms.lasthandoff: 12/05/2020
+ms.locfileid: "91371960"
 ---
 # <a name="assign-access-to-cost-management-data"></a>分配对成本管理数据的访问权限
 
-具有 Azure Enterprise 协议的用户在 Azure 门户和企业 (EA) 门户中被授予了一些权限的组合，这些权限定义了用户对 Azure 成本管理数据的访问级别。 对于其他 Azure 帐户类型的用户，使用 Azure 基于角色的访问控制来定义用户对成本管理数据的访问级别更为简单。 本文介绍如何分配对成本管理数据的访问权限。 为用户分配权限组合后，该用户可以根据其访问范围及其在 Azure 门户中选择的范围查看成本管理中的数据。
+具有 Azure Enterprise 协议的用户在 Azure 门户和企业 (EA) 门户中被授予了一些权限的组合，这些权限定义了用户对 Azure 成本管理数据的访问级别。 对于其他 Azure 帐户类型的用户，使用 Azure 基于角色的访问控制 (Azure RBAC) 来定义用户对成本管理数据的访问级别更为简单。 本文介绍如何分配对成本管理数据的访问权限。 为用户分配权限组合后，该用户可以根据其访问范围及其在 Azure 门户中选择的范围查看成本管理中的数据。
 
 用户所选的范围将用于整个成本管理，以提供数据整合并控制对成本信息的访问。 使用范围时，用户不要多选它们。 而应选择一个子范围要汇总到的较大范围，然后筛选到要查看的范围。 理解数据整合很重要，因为有些人不应该访问子范围所属的父范围。
 
-观看视频 [Cost Management controlling access](https://www.youtube.com/watch?v=_uQzQ9puPyM)（成本管理控制访问），了解如何通过 Azure 基于角色的访问控制分配查看成本和费用的访问权限。 若要观看其他视频，请访问[成本管理 YouTube 频道](https://www.youtube.com/c/AzureCostManagement)。
+观看视频 [Cost Management controlling access](https://www.youtube.com/watch?v=_uQzQ9puPyM)（成本管理控制访问），了解如何通过 Azure 基于角色的访问控制 (Azure RBAC) 分配查看成本和费用的访问权限。 若要观看其他视频，请访问[成本管理 YouTube 频道](https://www.youtube.com/c/AzureCostManagement)。
 
 >[!VIDEO https://www.youtube.com/embed/_uQzQ9puPyM]
 
@@ -36,11 +37,11 @@ ms.locfileid: "87290874"
 | **范围** | **定义位置** | **查看数据所需的访问权限** | **先决条件 EA 设置** | **将数据合并到** |
 | --- | --- | --- | --- | --- |
 | 计费帐户<sup>1</sup> | [https://ea.azure.com](https://ea.azure.com/) | 企业管理员 | 无 | 企业协议中的所有订阅 |
-| 部门 | [https://ea.azure.com](https://ea.azure.com/) | 部门管理员 | **DA 视图费用**已启用 | 属于一个合约帐户的所有订阅，该帐户已关联到部门 |
-| 合约帐户<sup>2</sup> | [https://ea.azure.com](https://ea.azure.com/) | 帐户所有者 | **AO 视图费用**已启用 | 注册帐户的所有订阅 |
-| 管理组 | [https://portal.azure.com](https://portal.azure.com/) | 成本管理读者（或读者） | **AO 视图费用**已启用 | 管理组下的所有订阅 |
-| 订阅 | [https://portal.azure.com](https://portal.azure.com/) | 成本管理读者（或读者） | **AO 视图费用**已启用 | 订阅中的所有资源/资源组 |
-| 资源组 | [https://portal.azure.com](https://portal.azure.com/) | 成本管理读者（或读者） | **AO 视图费用**已启用 | 资源组中的所有资源 |
+| 部门 | [https://ea.azure.com](https://ea.azure.com/) | 部门管理员 | **DA 视图费用** 已启用 | 属于一个合约帐户的所有订阅，该帐户已关联到部门 |
+| 合约帐户<sup>2</sup> | [https://ea.azure.com](https://ea.azure.com/) | 帐户所有者 | **AO 视图费用** 已启用 | 注册帐户的所有订阅 |
+| 管理组 | [https://portal.azure.com](https://portal.azure.com/) | 成本管理读者（或读者） | **AO 视图费用** 已启用 | 管理组下的所有订阅 |
+| 订阅 | [https://portal.azure.com](https://portal.azure.com/) | 成本管理读者（或读者） | **AO 视图费用** 已启用 | 订阅中的所有资源/资源组 |
+| 资源组 | [https://portal.azure.com](https://portal.azure.com/) | 成本管理读者（或读者） | **AO 视图费用** 已启用 | 资源组中的所有资源 |
 
 <sup>1</sup> 计费帐户还称为“企业协议”或“合约”。
 
@@ -66,11 +67,11 @@ ms.locfileid: "87290874"
 1. 使用企业管理员帐户通过 https://portal.azure.com 登录到 Azure 门户。
 1. 选择“成本管理 + 计费”菜单项。 
 1. 选择“计费范围”查看可用计费范围和计费帐户的列表。 
-1. 从可用计费帐户列表中选择你的**计费帐户**。
+1. 从可用计费帐户列表中选择你的 **计费帐户**。
 1. 在“设置”下选择“策略”菜单项，然后配置设置。    
     ![显示“查看费用”选项的计费范围策略](./media/assign-access-acm-data/azure-portal-policies-view-charges.png)
 
-启用视图费用选项后，大多数范围还需要 Azure 门户中的基于角色的访问控制 (RBAC) 权限配置。
+启用视图费用选项后，大多数范围还需要 Azure 门户中的 Azure 基于角色的访问控制 (Azure RBAC) 权限配置。
 
 ## <a name="enable-access-to-costs-in-the-ea-portal"></a>启动对 EA 门户中的成本的访问
 
@@ -83,7 +84,7 @@ ms.locfileid: "87290874"
 3. 为想提供访问权限的成本管理范围启用“DA 视图费用”和“AO 视图费用”的费用选项   。  
     ![显示 DA 和 AO 视图费用选项的“合约”选项卡](./media/assign-access-acm-data/ea-portal-enrollment-tab.png)
 
-启用视图费用选项后，大多数范围还需要 Azure 门户中的基于角色的访问控制 (RBAC) 权限配置。
+启用视图费用选项后，大多数范围还需要 Azure 门户中的 Azure 基于角色的访问控制 (Azure RBAC) 权限配置。
 
 ## <a name="enterprise-administrator-role"></a>企业管理员角色
 
@@ -181,9 +182,9 @@ ms.locfileid: "87290874"
 
 ## <a name="cross-tenant-authentication-issues"></a>跨租户身份验证问题
 
-目前，Azure 成本管理对跨租户身份验证提供有限的支持。 在某些情况下，当你尝试跨租户进行身份验证时，可能会在成本分析中收到“访问被拒绝”  错误。 如果你为另一租户的订阅配置基于角色的访问控制 (RBAC)，然后尝试查看成本数据，则可能会出现此问题。
+目前，Azure 成本管理对跨租户身份验证提供有限的支持。 在某些情况下，当你尝试跨租户进行身份验证时，可能会在成本分析中收到“访问被拒绝”  错误。 如果你为另一租户的订阅配置 Azure 基于角色的访问控制 (Azure RBAC)，然后尝试查看成本数据，则可能会出现此问题。
 
-*若要解决此问题，请执行以下操作*：在配置跨租户 RBAC 后，请等待一小时。 然后，尝试在两个租户中查看成本分析中的成本或者向用户授予成本管理访问权限。  
+*若要解决此问题，请执行以下操作*：在配置跨租户 Azure RBAC 后，请等待一小时。 然后，尝试在两个租户中查看成本分析中的成本或者向用户授予成本管理访问权限。  
 
 
 ## <a name="next-steps"></a>后续步骤

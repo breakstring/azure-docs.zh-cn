@@ -1,19 +1,18 @@
 ---
 title: 使用适用于 Visual Studio 的 Azure 流分析工具测试实时数据
 description: 了解如何使用实时流数据在本地测试 Azure 流分析作业。
-author: mamccrea
-ms.author: mamccrea
-ms.reviewer: mamccrea
+author: ajetasin
+ms.author: ajetasi
 ms.service: stream-analytics
 ms.topic: how-to
 ms.date: 12/07/2018
 ms.custom: seodec18
-ms.openlocfilehash: fe1caca11ec0a3d89ddae140d00cd3556b9d3d89
-ms.sourcegitcommit: e132633b9c3a53b3ead101ea2711570e60d67b83
+ms.openlocfilehash: 99e9ce85bb1e59b5016e836ff16d03cb3326ec8c
+ms.sourcegitcommit: 42a4d0e8fa84609bec0f6c241abe1c20036b9575
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/07/2020
-ms.locfileid: "86044458"
+ms.lasthandoff: 01/08/2021
+ms.locfileid: "98020360"
 ---
 # <a name="test-live-data-locally-using-azure-stream-analytics-tools-for-visual-studio-preview"></a>使用适用于 Visual Studio 的 Azure 流分析工具在本地测试实时数据（预览版）
 
@@ -39,7 +38,7 @@ ms.locfileid: "86044458"
 
    ![Azure 流分析 Visual Studio 实时云输入](./media/stream-analytics-live-data-local-testing/stream-analytics-local-testing-cloud-input.png)
 
-3. 设置**开始时间**以定义作业何时开始处理输入数据。 作业可能需要提前读取输入数据来确保结果准确。 默认时间设置为当前时间之前的 30 分钟。
+3. 设置 **开始时间** 以定义作业何时开始处理输入数据。 作业可能需要提前读取输入数据来确保结果准确。 默认时间设置为当前时间之前的 30 分钟。
 
    ![Azure 流分析 Visual Studio 实时数据开始时间](./media/stream-analytics-live-data-local-testing/stream-analytics-local-testing-cloud-input-start-time.png)
 
@@ -59,7 +58,7 @@ ms.locfileid: "86044458"
 
 * 由于身份验证模型的限制，Power BI 和 Azure Data Lake Storage 不是受支持的输出接收器。
 
-* 只有云输入选项具有[时间策略](stream-analytics-out-of-order-and-late-events.md)支持，本地输入选项不具备此支持。
+* 只有云输入选项具有[时间策略](./stream-analytics-time-handling.md)支持，本地输入选项不具备此支持。
 
 ## <a name="next-steps"></a>后续步骤
 

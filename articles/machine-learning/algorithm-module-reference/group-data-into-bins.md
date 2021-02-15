@@ -8,17 +8,17 @@ ms.subservice: core
 ms.topic: reference
 author: likebupt
 ms.author: keli19
-ms.date: 05/19/2020
-ms.openlocfilehash: d3a9f88325f03d0252adf51c5bf221b131d7d33b
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.date: 10/13/2020
+ms.openlocfilehash: 392cb9b4c2ded1b98b79ce8dcd780ac59e96b78a
+ms.sourcegitcommit: 090ea6e8811663941827d1104b4593e29774fa19
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "84751719"
+ms.lasthandoff: 10/13/2020
+ms.locfileid: "91998487"
 ---
 # <a name="group-data-into-bins-module"></a>“将数据分组到箱中”模块
 
-本文介绍如何使用 Azure 机器学习设计器（预览版）中的“将数据分组到箱中”模块来对数字进行分组或更改连续数据的分布。
+本文介绍如何在 Azure 机器学习设计器中使用 "将数据分组到容器" 模块，对数字进行分组或更改连续数据的分布。
 
 “将数据分组到箱中”模块支持使用多个选项将数据分箱。 可以自定义量化边界的设置方式，以及在箱中分配值的方式。例如，可以：  
 
@@ -44,13 +44,14 @@ ms.locfileid: "84751719"
 
 下图显示了使用*分位数*方法分箱之前和之后的数字值分布。 请注意，与左侧的原始数据相比，数据已分箱并转换为单位法线标度。  
 
-你可以找到[此管道运行的结果中的示例](https://ml.azure.com/visualinterface/authoring/Normal/87270db9-4651-448e-bd28-8ef7428084dc?wsid=%2Fsubscriptions%2Fe9b2ec51-5c94-4fa8-809a-dc1e695e4896%2Fresourcegroups%2Fmodule-ws-rg%2Fworkspaces%2Fmodule-prerelease-119&flight=cm&tid=72f988bf-86f1-41af-91ab-2d7cd011db47&smtendpoint=https%3A%2F%2Fsmt-test1.azureml-test.net)。
+> [!div class="mx-imgBorder"]
+> ![结果可视化](media/module/group-data-into-bins-result-example.png)
 
 由于可以通过许多方式对数据进行分组且所有方式都可自定义，因此我们建议使用不同的方法和值进行试验。 
 
 ## <a name="how-to-configure-group-data-into-bins"></a>如何配置“将数据分组到箱中”
 
-1. 在设计器（预览版）中将“将数据分组到箱中”模块添加到管道。 可以在“数据转换”类别中找到此模块。
+1. 在设计器中将 **组数据** 添加到管道中的管道。 可以在“数据转换”类别中找到此模块。
 
 2. 连接包含要分箱的数字数据的数据集。 量化只能应用于包含数字数据的列。 
 
@@ -65,6 +66,9 @@ ms.locfileid: "84751719"
     - **自定义边界**：可以指定每个箱的开始值。 边界值始终是箱的下边界。 
     
       例如，假设要将值分组到两个箱中。其中一个箱中有大于 0 的值，另一个箱中有小于或等于 0 的值。 在这种情况下，对于量化边界，请在“量化边界的逗号分隔列表”中输入“0” 。 该模块的输出将会是 1 和 2，表示每个行值的箱索引。 请注意，逗号分隔值列表必须采用升序，例如“1,3,5,7”。
+    
+    > [!Note]
+    > *熵 MDL* 模式在 Studio (经典) 中定义，没有相应的开源包可用于在设计器中支持。        
 
 4. 如果使用“分位数”和“等宽”分箱模式，请使用“箱数”选项来指定要创建的箱数（或“分位数”）  。
 

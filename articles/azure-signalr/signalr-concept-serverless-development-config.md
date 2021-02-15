@@ -6,13 +6,13 @@ ms.service: signalr
 ms.topic: conceptual
 ms.date: 03/01/2019
 ms.author: antchu
-ms.custom: devx-track-javascript
-ms.openlocfilehash: e25a874af66b73f5f75a07a5df65c155a16c9f01
-ms.sourcegitcommit: 5b8fb60a5ded05c5b7281094d18cf8ae15cb1d55
+ms.custom: devx-track-js, devx-track-csharp
+ms.openlocfilehash: 3d69b72012819e3d9099e447b9048fe07aea86d3
+ms.sourcegitcommit: 89c0482c16bfec316a79caa3667c256ee40b163f
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/29/2020
-ms.locfileid: "87387143"
+ms.lasthandoff: 01/04/2021
+ms.locfileid: "97858699"
 ---
 # <a name="azure-functions-development-and-configuration-with-azure-signalr-service"></a>使用 Azure SignalR 服务进行 Azure Functions 开发和配置
 
@@ -49,9 +49,11 @@ Azure Functions 应用程序可以利用 [Azure SignalR 服务绑定](../azure-f
 
 ### <a name="handle-messages-sent-from-signalr-service"></a>处理从 SignalR 服务发送的消息
 
-使用 SignalR 触发器绑定来处理从 SignalR 服务发送的消息。 可在客户端发送消息或客户端连接或断开连接时通过触发功能收到通知。
+使用 SignalR 触发器绑定来处理从 SignalR 服务发送的消息。 当客户端发送消息或客户端连接或断开连接时，你可以获得通知。
 
-有关详细信息，请参阅 [SignalR 触发器绑定参考](../azure-functions/functions-bindings-signalr-service-trigger.md)
+有关详细信息，请参阅 [SignalR 触发器绑定参考](../azure-functions/functions-bindings-signalr-service-trigger.md)。
+
+还需要将函数终结点配置为上游，以便在有来自客户端的消息时，服务将触发该函数。 有关如何配置上游的详细信息，请参阅此[文档](concept-upstream.md)。
 
 ### <a name="sending-messages-and-managing-group-membership"></a>发送消息和管理组成员身份
 
@@ -109,7 +111,7 @@ public class SignalRTestHub : ServerlessHub
 
 ### <a name="define-hub-method"></a>定义中心方法
 
-所有中心方法必须具有 `[SignalRTrigger]` 属性，且必须使用无参数的构造函数 。 然后将方法名称视为参数 event 。
+所有中心方法必须具有由 `[SignalRTrigger]` 属性修饰的 `InvocationContext` 参数，并使用无参数构造函数。 然后将方法名称视为参数 event 。
 
 默认情况下，除了方法名称外，`category=messages` 是以下名称之一：
 
@@ -196,17 +198,21 @@ SDK 根据约定自动将 `/negotiate` 追加到 URL，然后使用该 URL 开�
 
 有关如何使用 SignalR 客户端 SDK 的详细信息，请参阅适用于所用语言的文档：
 
-* [.NET Standard](https://docs.microsoft.com/aspnet/core/signalr/dotnet-client)
-* [JavaScript](https://docs.microsoft.com/aspnet/core/signalr/javascript-client)
-* [Java](https://docs.microsoft.com/aspnet/core/signalr/java-client)
+* [.NET Standard](/aspnet/core/signalr/dotnet-client)
+* [JavaScript](/aspnet/core/signalr/javascript-client)
+* [Java](/aspnet/core/signalr/java-client)
 
 ### <a name="sending-messages-from-a-client-to-the-service"></a>将消息从客户端发送到服务
 
-尽管 SignalR SDK 允许客户端应用程序调用 SignalR 中心内的后端逻辑，但在将 SignalR 服务与 Azure Functions 配合使用时，尚不支持此功能。 使用 HTTP 请求调用 Azure Functions。
+如果为 SignalR 资源配置了[上游](concept-upstream.md)，则可以使用任何 SignalR 客户端将消息从客户端发送到 Azure Functions。 下面是一个 JavaScript 示例：
+
+```javascript
+connection.send('method1', 'arg1', 'arg2');
+```
 
 ## <a name="azure-functions-configuration"></a>Azure Functions 配置
 
-与 Azure SignalR 服务集成的 azure Function apps 可以像使用[持续部署](../azure-functions/functions-continuous-deployment.md)、 [zip 部署](../azure-functions/deployment-zip-push.md)和[从包运行](../azure-functions/run-functions-from-deployment-package.md)这样的技术一样部署，如任何典型的 azure function app。
+与 Azure SignalR 服务集成的 azure Function apps 可以像使用 [持续部署](../azure-functions/functions-continuous-deployment.md)、 [zip 部署](../azure-functions/deployment-zip-push.md)和 [从包运行](../azure-functions/run-functions-from-deployment-package.md)这样的技术一样部署，如任何典型的 azure function app。
 
 但是，对于使用 SignalR 服务绑定的应用，需要注意几个特殊事项。 如果客户端在浏览器中运行，则必须启用 CORS。 如果应用需要身份验证，则你可以将协商终结点与应用服务身份验证集成。
 
@@ -241,7 +247,7 @@ JavaScript/TypeScript 客户端向 negotiate 函数发出 HTTP 请求，以启�
 若要在 Azure 函数应用中启用 CORS，请在 Azure 门户中函数应用的“平台功能”选项卡下，转到 CORS 配置屏幕。
 
 > [!NOTE]
-> CORS 配置在 Azure Functions Linux 消耗计划中尚不可用。 使用[AZURE API 管理](#cloud---azure-api-management)启用 CORS。
+> CORS 配置在 Azure Functions Linux 消耗计划中尚不可用。 使用 [AZURE API 管理](#cloud---azure-api-management) 启用 CORS。
 
 必须启用支持 Access-Control-Allow-Credentials 的 CORS 才能让 SignalR 客户端调用 negotiate 函数。 选中相应的复选框以启用 CORS。
 

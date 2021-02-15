@@ -1,19 +1,16 @@
 ---
 title: 使用 HDInsight .NET SDK 运行 Apache Hive 查询 - Azure
 description: 了解如何使用 HDInsight .NET SDK 将 Apache Hadoop 作业提交到 Azure HDInsight Apache Hadoop。
-author: hrasheed-msft
-ms.author: hrasheed
-ms.reviewer: jasonh
 ms.service: hdinsight
 ms.topic: how-to
-ms.custom: hdinsightactive
+ms.custom: hdinsightactive, devx-track-csharp
 ms.date: 12/24/2019
-ms.openlocfilehash: f1927d44daf49d938d2c43ce9de02cb1dbfb735f
-ms.sourcegitcommit: 3541c9cae8a12bdf457f1383e3557eb85a9b3187
+ms.openlocfilehash: 17264fc2a7d0a51de545e329ccf12ad45ad49d46
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/09/2020
-ms.locfileid: "86207751"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98927240"
 ---
 # <a name="run-apache-hive-queries-using-hdinsight-net-sdk"></a>使用 HDInsight .NET SDK 运行 Apache Hive 查询
 
@@ -146,6 +143,6 @@ HDInsight .NET SDK 提供 .NET 客户端库，可简化从 .NET 中使用 HDInsi
 
 * [Azure HDInsight 入门](apache-hadoop-linux-tutorial-get-started.md)
 * [在 HDInsight 中创建 Apache Hadoop 群集](../hdinsight-hadoop-provision-linux-clusters.md)
-* [HDInsight .NET SDK 参考](https://docs.microsoft.com/dotnet/api/overview/azure/hdinsight)
+* [HDInsight .NET SDK 参考](/dotnet/api/overview/azure/hdinsight)
 * [将 Apache Sqoop 与 HDInsight 配合使用](apache-hadoop-use-sqoop-mac-linux.md)
 * [创建非交互式身份验证 .NET HDInsight 应用程序](../hdinsight-create-non-interactive-authentication-dotnet-applications.md)

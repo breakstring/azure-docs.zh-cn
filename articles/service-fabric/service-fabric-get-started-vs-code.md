@@ -5,13 +5,13 @@ author: peterpogorski
 ms.topic: article
 ms.date: 06/29/2018
 ms.author: pepogors
-ms.custom: devx-track-javascript
-ms.openlocfilehash: 1480b5e1ddab86761adb1c7caef808de89a3d947
-ms.sourcegitcommit: 0b8320ae0d3455344ec8855b5c2d0ab3faa974a3
+ms.custom: devx-track-js
+ms.openlocfilehash: a655199d854462285ca98a2d8f454c483c061f99
+ms.sourcegitcommit: ce8eecb3e966c08ae368fafb69eaeb00e76da57e
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/30/2020
-ms.locfileid: "87428994"
+ms.lasthandoff: 10/21/2020
+ms.locfileid: "92316659"
 ---
 # <a name="service-fabric-for-visual-studio-code"></a>Service Fabric for Visual Studio Code
 
@@ -42,7 +42,7 @@ ms.locfileid: "87428994"
 
 必须为 Java 开发安装以下必备组件：
 
-* [Java SDK](https://aka.ms/azure-jdks)（版本 1.8）
+* [Java SDK](/azure/developer/java/fundamentals/java-jdk-long-term-support)（版本 1.8）
 * [Gradle](https://gradle.org/install/)
 * 调试 Java 服务时所需的[适用于 Java VS Code 的调试程序扩展](https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-java-debug)。 仅支持在 Linux 上调试 Java 服务。 可通过以下方法之一安装该扩展：在 VS Code 中的**活动栏**上单击“扩展”图标并搜索该扩展，或者从 VS Code 市场安装。
 

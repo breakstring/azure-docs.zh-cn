@@ -9,16 +9,16 @@ ms.service: virtual-machines
 ms.subservice: sizes
 ms.topic: conceptual
 ms.date: 6/8/2020
-ms.openlocfilehash: 34c29a6f6cab77eaa69c7f28f57a4b823dd23d08
-ms.sourcegitcommit: 56cbd6d97cb52e61ceb6d3894abe1977713354d9
+ms.openlocfilehash: 7d0e3f8c55a2c8eff40c196719213390e96efb0a
+ms.sourcegitcommit: b4e6b2627842a1183fce78bce6c6c7e088d6157b
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/20/2020
-ms.locfileid: "88685232"
+ms.lasthandoff: 01/30/2021
+ms.locfileid: "99089302"
 ---
 # <a name="ev4-and-esv4-series"></a>Ev4 和 Esv4 系列
 
-Ev4 和 Esv4 系列在采用超线程配置的 Intel&reg; Xeon&reg; Platinum 8272CL (Cascade Lake) 处理器上运行，非常适合各种内存密集型企业应用程序，并且配备高达 504 GiB 的 RAM。
+Ev4 和 Esv4 系列在采用超线程配置的 Intel&reg; Xeon&reg; Platinum 8272CL (Cascade Lake) 处理器上运行，非常适合各种内存密集型企业应用程序，并且配备高达 504 GiB 的 RAM。 它的全核睿频时钟速度达到 3.4 GHz。
 
 > [!NOTE]
 > 有关常见问题解答，请参阅[无本地临时磁盘的 Azure VM 规格](azure-vms-no-temp-disk.md)。
@@ -29,20 +29,17 @@ Ev4 系列规格在 Intel Xeon&reg; Platinum 8272CL (Cascade Lake) 处理器上�
 
 远程数据磁盘存储与虚拟机分开计费。 要使用高级存储磁盘，请使用 Esv4 规格。 Esv4 系列规格的定价和计费标准与 Ev4 系列相同。
 
-> [!IMPORTANT]
-> 这些新规格目前仅以公共预览版提供。 可在 [此处](https://forms.office.com/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR_Y3toRKxchLjARedqtguBRURE1ZSkdDUzg1VzJDN0cwWUlKTkcyUlo5Mi4u)注册这些 Ev4 和 Esv4 系列。 
+[ACU](acu.md)：195 - 210<br>
+[高级存储](premium-storage-performance.md)：不支持<br>
+[高级存储缓存](premium-storage-performance.md)：不支持<br>
+[实时迁移](maintenance-and-updates.md)：支持<br>
+[内存保留更新](maintenance-and-updates.md)：支持<br>
+[VM 代系支持](generation-2.md)：第 1 代<br>
+[加速网络](../virtual-network/create-vm-accelerated-networking-cli.md)：支持<br>
+[临时 OS 磁盘](ephemeral-os-disks.md)：不支持 <br>
+<br>
 
-ACU：195 - 210
-
-高级存储：不支持
-
-高级存储缓存：不支持
-
-实时迁移：支持
-
-内存保留更新：支持
-
-| 大小 | vCPU | 内存:GiB | 临时存储 (SSD) GiB | 最大数据磁盘数 | 最大 NIC 数|预期网络带宽 (Mbps)  |
+| 大小 | vCPU | 内存:GiB | 临时存储 (SSD) GiB | 最大数据磁盘数 | 最大 NIC 数|预期的网络带宽 (Mbps) |
 |---|---|---|---|---|---|---|
 | Standard_E2_v4  | 2 | 16   | 仅限远程存储 | 4 | 2|1000  |
 | Standard_E4_v4  | 4 | 32  | 仅限远程存储 | 8 | 2|2000  |
@@ -58,31 +55,31 @@ ACU：195 - 210
 
 Esv4 系列规格在 Intel&reg; Xeon&reg; Platinum 8272CL (Cascade Lake) 处理器上运行。 Esv4 系列实例非常适合于内存密集型企业应用程序。 Esv4 系列 VM 采用 Intel&reg; 超线程技术。 远程数据磁盘存储与虚拟机分开计费。
 
-> [!IMPORTANT]
-> 这些新规格目前仅以公共预览版提供。 可在 [此处](https://forms.office.com/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR_Y3toRKxchLjARedqtguBRURE1ZSkdDUzg1VzJDN0cwWUlKTkcyUlo5Mi4u)注册这些 Ev4 和 Esv4 系列。 
+[ACU](acu.md)：195-210<br>
+[高级存储](premium-storage-performance.md)：支持<br>
+[高级存储缓存](premium-storage-performance.md)：支持<br>
+[实时迁移](maintenance-and-updates.md)：支持<br>
+[内存保留更新](maintenance-and-updates.md)：支持<br>
+[VM 代系支持](generation-2.md)：第 1 代和第 2 代<br>
+[加速网络](../virtual-network/create-vm-accelerated-networking-cli.md)：支持<br>
+[临时 OS 磁盘](ephemeral-os-disks.md)：不支持 <br>
+<br>
 
-ACU：195-210
+| 大小 | vCPU | 内存:GiB | 临时存储 (SSD) GiB | 最大数据磁盘数 | 最大非缓存磁盘吞吐量：IOPS/MBps | 最大 NIC 数|预期的网络带宽 (Mbps) |
+|---|---|---|---|---|---|---|---|
+| Standard_E2s_v4  | 2 | 16  | 仅限远程存储 | 4 | 3200/48 | 2|1000  |
+| Standard_E4s_v4  | 4 | 32  | 仅限远程存储 | 8 | 6400/96 | 2|2000  |
+| Standard_E8s_v4  | 8 | 64  | 仅限远程存储 | 16 | 12800/192 | 4|4000 |
+| Standard_E16s_v4 | 16 | 128 | 仅限远程存储 | 32 | 25600/384 | 8|8000 |
+| Standard_E20s_v4 | 20 | 160 | 仅限远程存储 | 32 | 32000/480  | 8|10000 |
+| Standard_E32s_v4 | 32 | 256 | 仅限远程存储 | 32 | 51200/768  | 8|16000 |
+| Standard_E48s_v4 | 48 | 384 | 仅限远程存储 | 32 | 76800/1152 | 8|24000 |
+| Standard_E64s_v4 <sup>1</sup> | 64 | 504| 仅限远程存储 | 32 | 80000/1200 | 8|30000 |
+| Standard_E80is_v4 <sup>2</sup> | 80 | 504 | 仅限远程存储 | 32 | 80000/1200 | 8|30000 |
 
-高级存储：支持
+<sup>1</sup> [受约束的可用核心大小）](./constrained-vcpu.md)。
 
-高级存储缓存：支持
-
-实时迁移：支持
-
-内存保留更新：支持
-
-| 大小 | vCPU | 内存:GiB | 临时存储 (SSD) GiB | 最大数据磁盘数 | 最大缓存吞吐量：IOPS/MBps（以 GiB 为单位的缓存大小） | 最大非缓存磁盘吞吐量：IOPS/MBps | 最大 NIC 数|预期网络带宽 (Mbps)  |
-|---|---|---|---|---|---|---|---|---|
-| Standard_E2s_v4  | 2 | 16  | 仅限远程存储 | 4 | 19000/120 (50) | 3200/48 | 2|1000  |
-| Standard_E4s_v4  | 4 | 32  | 仅限远程存储 | 8 | 38500/242 (100) | 6400/96 | 2|2000  |
-| Standard_E8s_v4  | 8 | 64  | 仅限远程存储 | 16 | 77000/485 (200) | 12800/192 | 4|4000 |
-| Standard_E16s_v4 | 16 | 128 | 仅限远程存储 | 32 | 154000/968 (400) | 25600/384 | 8|8000 |
-| Standard_E20s_v4 | 20 | 160 | 仅限远程存储 | 32 | 193000/1211 (500) | 32000/480  | 8|10000 |
-| Standard_E32s_v4 | 32 | 256 | 仅限远程存储 | 32 | 308000/1936 (800) | 51200/768  | 8|16000 |
-| Standard_E48s_v4 | 48 | 384 | 仅限远程存储 | 32 | 462000/2904 (1200) | 76800/1152 | 8|24000 |
-| Standard_E64s_v4 <sup>1</sup> | 64 | 504| 仅限远程存储 | 32 | 615000/3872 (1600) | 80000/1200 | 8|30000 |
-
-<sup>1</sup> [受约束的可用核心规格](./constrained-vcpu.md)。
+<sup>2</sup> 实例对于专用于单个客户的硬件独立。
 
 [!INCLUDE [virtual-machines-common-sizes-table-defs](../../includes/virtual-machines-common-sizes-table-defs.md)]
 
@@ -95,9 +92,9 @@ ACU：195-210
 - [高性能计算](sizes-hpc.md)
 - [前几代](sizes-previous-gen.md)
 
-定价计算器： [定价计算器](https://azure.microsoft.com/pricing/calculator/)
+定价计算器：[定价计算器](https://azure.microsoft.com/pricing/calculator/)
 
-有关磁盘类型的详细信息： [磁盘类型](./disks-types.md#ultra-disk)
+有关磁盘类型的详细信息：[磁盘类型](./disks-types.md#ultra-disk)
 
 
 ## <a name="next-steps"></a>后续步骤

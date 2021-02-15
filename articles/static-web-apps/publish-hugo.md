@@ -7,12 +7,12 @@ ms.service: static-web-apps
 ms.topic: tutorial
 ms.date: 05/08/2020
 ms.author: aapowell
-ms.openlocfilehash: 250be11f498e825c3e487abfac1c0acc585e5317
-ms.sourcegitcommit: 4042aa8c67afd72823fc412f19c356f2ba0ab554
+ms.openlocfilehash: e49a84f5ac507ac80481313c103701a88934083a
+ms.sourcegitcommit: 5e762a9d26e179d14eb19a28872fb673bf306fa7
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 06/24/2020
-ms.locfileid: "85297935"
+ms.lasthandoff: 01/05/2021
+ms.locfileid: "97900750"
 ---
 # <a name="tutorial-publish-a-hugo-site-to-azure-static-web-apps-preview"></a>教程：将 Hugo 站点发布到 Azure 静态 Web 应用（预览版）
 
@@ -150,6 +150,37 @@ ms.locfileid: "85297935"
 1. 在 Azure 门户的新建 Azure 静态 Web 应用资源的“概述”窗口中，单击“URL”链接以打开已部署的应用程序。
 
    :::image type="content" source="./media/publish-hugo/deployed-app.png" alt-text="已部署的应用程序":::
+
+#### <a name="custom-hugo-version"></a>自定义 Hugo 版本
+
+生成静态 Web 应用时，将生成一个[工作流文件](./github-actions-workflow.md)，其中包含应用程序的发布配置设置。 可通过在 `env` 部分中输入 `HUGO_VERSION` 的值，在工作流文件中指定特定的 Hugo 版本。 以下示例配置演示了如何将 Hugo 设置为特定版本。
+
+```yaml
+jobs:
+  build_and_deploy_job:
+    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
+    runs-on: ubuntu-latest
+    name: Build and Deploy Job
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+      - name: Build And Deploy
+        id: builddeploy
+        uses: Azure/static-web-apps-deploy@v0.0.1-preview
+        with:
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
+          repo_token: ${{ secrets.GITHUB_TOKEN }} # Used for Github integrations (i.e. PR comments)
+          action: "upload"
+          ###### Repository/Build Configurations - These values can be configured to match you app requirements. ######
+          # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
+          app_location: "/" # App source code path
+          api_location: "api" # Api source code path - optional
+          output_location: "public" # Built app content directory - optional
+          ###### End of Repository/Build Configurations ######
+        env:
+          HUGO_VERSION: 0.58.0
+```
 
 ## <a name="clean-up-resources"></a>清理资源
 

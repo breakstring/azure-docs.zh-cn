@@ -3,16 +3,16 @@ title: 为 Azure 流分析作业设置监视警报
 description: 本文介绍如何使用 Azure 门户为 Azure 流分析作业设置监视和警报。
 author: jseb225
 ms.author: sidram
-ms.reviewer: mamccrea
 ms.service: stream-analytics
 ms.topic: how-to
+ms.custom: contperf-fy21q1
 ms.date: 06/21/2019
-ms.openlocfilehash: de8b69cbe3117a3ec248cee4808b676b39c56658
-ms.sourcegitcommit: a76ff927bd57d2fcc122fa36f7cb21eb22154cfa
+ms.openlocfilehash: 7884f8baa24180fcb94f77a45c3457ba62d3f351
+ms.sourcegitcommit: 42a4d0e8fa84609bec0f6c241abe1c20036b9575
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/28/2020
-ms.locfileid: "87324788"
+ms.lasthandoff: 01/08/2021
+ms.locfileid: "98018133"
 ---
 # <a name="set-up-alerts-for-azure-stream-analytics-jobs"></a>为 Azure 流分析作业设置警报
 
@@ -47,11 +47,11 @@ ms.locfileid: "87324788"
 
 7. “资源”、“条件”和“操作组”都应该有对应的条目。   请注意，为了触发警报，需要满足所定义的条件。 例如，可以每 5 分钟检测一次某个指标在过去 15 分钟的平均值。
 
-   ![创建流分析警报规则](./media/stream-analytics-set-up-alerts/stream-analytics-create-alert-rule-2.png)
+   ![屏幕截图显示了包含“资源”、“条件”和“操作组”的“创建规则”对话框。](./media/stream-analytics-set-up-alerts/stream-analytics-create-alert-rule-2.png)
 
-   在“警报详细信息”中添加**警报规则名称**、**说明**和**资源组**，然后单击“创建警报规则”创建流分析作业的规则。 
+   在“警报详细信息”中添加 **警报规则名称**、**说明** 和 **资源组**，然后单击“创建警报规则”创建流分析作业的规则。 
 
-   ![创建流分析警报规则](./media/stream-analytics-set-up-alerts/stream-analytics-create-alert-rule.png)
+   ![屏幕截图显示了带有“警报详细信息”的“创建规则”对话框。](./media/stream-analytics-set-up-alerts/stream-analytics-create-alert-rule.png)
    
 ## <a name="scenarios-to-monitor"></a>要监视的方案
 
@@ -67,5 +67,4 @@ ms.locfileid: "87324788"
 ## <a name="next-steps"></a>后续步骤
 
 * [缩放 Azure 流分析作业](stream-analytics-scale-jobs.md)
-* [Azure 流分析查询语言参考](https://docs.microsoft.com/stream-analytics-query/stream-analytics-query-language-reference)
-
+* [Azure 流分析查询语言参考](/stream-analytics-query/stream-analytics-query-language-reference)

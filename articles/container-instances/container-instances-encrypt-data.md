@@ -3,14 +3,14 @@ title: 加密部署数据
 description: 了解为容器实例资源保存的数据的加密，以及如何使用客户管理的密钥来加密数据
 ms.topic: article
 ms.date: 01/17/2020
-author: dkkapur
-ms.author: dekapur
-ms.openlocfilehash: 3c7a84dad1f107d8709e3bcdeac696414cdf883d
-ms.sourcegitcommit: dabd9eb9925308d3c2404c3957e5c921408089da
+author: macolso
+ms.author: macolso
+ms.openlocfilehash: 1b73ce5c994231a1c7b2f26ad702f2ad5880ba44
+ms.sourcegitcommit: c157b830430f9937a7fa7a3a6666dcb66caa338b
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/11/2020
-ms.locfileid: "86259715"
+ms.lasthandoff: 11/17/2020
+ms.locfileid: "94686270"
 ---
 # <a name="encrypt-deployment-data"></a>加密部署数据
 
@@ -33,7 +33,7 @@ ACI 中的数据是使用 256 位 AES 加密法加密和解密的。 此加密�
 
 本文档的余下内容将介绍使用你自己的密钥（客户管理的密钥）加密 ACI 部署数据所要执行的步骤。 
 
-[!INCLUDE [cloud-shell-try-it.md](../../includes/cloud-shell-try-it.md)]
+[!INCLUDE [azure-cli-prepare-your-environment.md](../../includes/azure-cli-prepare-your-environment.md)]
 
 ## <a name="encrypt-data-with-a-customer-managed-key"></a>使用客户管理的密钥来加密数据
 
@@ -59,7 +59,7 @@ az ad sp create --id 6bb8e274-af5d-4df2-98a3-4fd78b4cafd9
 
 ### <a name="create-a-key-vault-resource"></a>创建 Key Vault 资源
 
-使用 [Azure 门户](../key-vault/secrets/quick-create-portal.md#create-a-vault)、[CLI](../key-vault/secrets/quick-create-cli.md) 或 [PowerShell](../key-vault/secrets/quick-create-powershell.md) 创建一个 Azure Key Vault。 
+使用 [Azure 门户](../key-vault/general/quick-create-portal.md)、 [Azure CLI](../key-vault/general/quick-create-cli.md)或 [Azure PowerShell](../key-vault/general/quick-create-powershell.md)创建 Azure Key Vault。
 
 对于 Key Vault 的属性，请使用以下指导原则： 
 * 姓名：必须提供唯一的名称。 
@@ -83,7 +83,7 @@ az ad sp create --id 6bb8e274-af5d-4df2-98a3-4fd78b4cafd9
 
 * 生成密钥后，返回到 Key Vault 资源边栏选项卡，在“设置”下单击“访问策略”。 
 * 在 Key Vault 的“访问策略”页上，单击“添加访问策略”。 
-* 设置“密钥权限”以包括“获取”和“解包密钥”![设置密钥权限](./media/container-instances-encrypt-data/set-key-permissions.png)   
+* 设置 *密钥权限* 以包含 **Get** 和 **解包密钥** ![ 设置密钥权限](./media/container-instances-encrypt-data/set-key-permissions.png)
 * 对于“选择主体”，请选择“Azure 容器实例服务”  
 * 在底部单击“添加”  
 

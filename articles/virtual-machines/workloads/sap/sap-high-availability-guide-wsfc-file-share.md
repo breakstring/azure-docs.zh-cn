@@ -10,22 +10,23 @@ tags: azure-resource-manager
 keywords: ''
 ms.assetid: 5e514964-c907-4324-b659-16dd825f6f87
 ms.service: virtual-machines-windows
+ms.subservice: workloads
 ms.topic: article
 ms.tgt_pltfrm: vm-windows
 ms.workload: infrastructure-services
 ms.date: 07/24/2019
 ms.author: radeltch
 ms.custom: H1Hack27Feb2017
-ms.openlocfilehash: bf9e00e8acba241f1445977dcc53724b9981039f
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.openlocfilehash: 469f6a1021fde661c4eae7951b86c9bb500c7050
+ms.sourcegitcommit: a43a59e44c14d349d597c3d2fd2bc779989c71d7
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87068688"
+ms.lasthandoff: 11/25/2020
+ms.locfileid: "96012487"
 ---
 # <a name="cluster-an-sap-ascsscs-instance-on-a-windows-failover-cluster-by-using-a-file-share-in-azure"></a>使用 Azure 中的文件共享在 Windows 故障转移群集上群集化 SAP ASCS/SCS 实例
 
-> ![Windows][Logo_Windows] Windows
+> ![Windows 徽标。][Logo_Windows] Windows
 >
 
 Windows Server 故障转移群集是 Windows 中高可用性 SAP ASCS/SCS 安装和 DBMS 的基础。
@@ -50,13 +51,13 @@ Windows Server 故障转移群集是 Windows 中高可用性 SAP ASCS/SCS 安装
 
 Azure 云平台不提供配置虚拟 IP 地址（例如浮动 IP 地址）的选项。 需要一个替代解决方案来设置虚拟 IP，以便连接到云中的群集资源。 
 
-Azure 负载均衡器服务提供适用于 Azure 的内部负载均衡器**。 借助内部负载均衡器，客户端通过群集虚拟 IP 地址访问群集。 
+Azure 负载均衡器服务提供适用于 Azure 的内部负载均衡器。 借助内部负载均衡器，客户端通过群集虚拟 IP 地址访问群集。 
 
 在包含群集节点的资源组中部署内部负载均衡器。 然后，使用内部负载均衡器的探测端口配置所有必要的端口转发规则。 客户端可以通过虚拟主机名连接。 DNS 服务器解析群集 IP 地址。 内部负载均衡器处理目标为群集活动节点的端口转发。
 
 ![图 1：Azure 中未使用共享磁盘的 Windows Server 故障转移群集配置][sap-ha-guide-figure-1001]
 
-_图 1：Azure 中未使用共享磁盘的 Windows Server 故障转移群集配置_****
+_图 1：Azure 中未使用共享磁盘的 Windows Server 故障转移群集配置_
 
 ## <a name="sap-ascsscs-ha-with-file-share"></a>采用文件共享的 SAP ASCS/SCS HA
 
@@ -77,7 +78,7 @@ SAP 开发了可以取代群集共享磁盘的新方法和新方案，用于将 
 
 ![图 2：采用 SMB 文件共享的 SAP ASCS/SCS HA 体系结构][sap-ha-guide-figure-8004]
 
-**图 2：** 采用 SMB 文件共享的新 SAP ASCS/SCS HA 体系结构__
+**图 2：** 采用 SMB 文件共享的新 SAP ASCS/SCS HA 体系结构
 
 SMB 文件共享的先决条件：
 
@@ -92,7 +93,7 @@ SAP \<SID\> 群集角色不包含群集共享磁盘或通用文件共享群集�
 
 ![图 3：使用文件共享所需的 SAP \<SID\> 群集角色资源][sap-ha-guide-figure-8005]
 
-**图 3：** 使用文件共享所需的 SAP &lt;SID&gt; 群集角色资源__
+**图 3：** 使用文件共享所需的 SAP &lt;SID&gt; 群集角色资源
 
 
 ## <a name="scale-out-file-shares-with-storage-spaces-direct-in-azure-as-an-sapmnt-file-share"></a>在 Azure 中用作 SAPMNT 文件共享且具有存储空间直通功能的横向扩展文件共享
@@ -101,7 +102,7 @@ SAP \<SID\> 群集角色不包含群集共享磁盘或通用文件共享群集�
 
 ![图 4：用于保护 SAP 全局主机文件的横向扩展文件共享][sap-ha-guide-figure-8006]
 
-**图 4：** 用于保护 SAP 全局主机文件的横向扩展文件共享__
+**图 4：** 用于保护 SAP 全局主机文件的横向扩展文件共享
 
 > [!IMPORTANT]
 > Microsoft Azure 云和本地环境均完全支持横向扩展文件共享。
@@ -114,7 +115,7 @@ SAP \<SID\> 群集角色不包含群集共享磁盘或通用文件共享群集�
 选择存储空间直通时，请考虑以下用例：
 
 - 需要在 Azure 可用性集中部署用于构建存储空间直通群集的虚拟机。
-- 对于存储空间直通群集的灾难恢复，可以使用[Azure Site Recovery 服务](../../../site-recovery/azure-to-azure-support-matrix.md#replicated-machines---storage)。
+- 对于存储空间直通群集的灾难恢复，可以使用 [Azure Site Recovery 服务](../../../site-recovery/azure-to-azure-support-matrix.md#replicated-machines---storage)。
 - 不支持将存储空间直通群集延伸到不同的 Azure 可用性区域。
 
 ### <a name="sap-prerequisites-for-scale-out-file-shares-in-azure"></a>Azure 中的横向扩展文件共享的 SAP 先决条件
@@ -123,7 +124,7 @@ SAP \<SID\> 群集角色不包含群集共享磁盘或通用文件共享群集�
 
 * 至少有两个群集节点用于横向扩展文件共享。
 * 每个节点必须至少包含两个本地磁盘。
-* 出于性能原因，必须使用** 镜像复原：
+* 出于性能原因，必须使用镜像复原：
     * 双向镜像适用于两个群集节点的横向扩展文件共享。
     * 三向镜像适用于三个（或三个以上）群集节点的横向扩展文件共享。
 * 建议使用三个（或三个以上）群集节点进行横向扩展文件共享，启用三向镜像。
@@ -137,7 +138,7 @@ SAP \<SID\> 群集角色不包含群集共享磁盘或通用文件共享群集�
 * 若要获得良好的 VM 间网络性能以顺利进行存储空间直通磁盘同步，请使用至少能够提供“高”网络带宽的 VM 类型。
     有关详细信息，请参阅 [DSv2 系列][dv2-series]和 [DS 系列][ds-series]规格。
 * 建议在存储池中保留一些未分配的容量。 在存储池中留一些未分配的容量可以使卷空间能够在驱动器故障时进行“就地”修复。 这样可提高数据安全性和性能。  有关详细信息，请参阅[选择卷大小][choosing-the-size-of-volumes-s2d]。
-* 不需要为横向扩展文件共享网络名称（例如）配置 Azure 内部负载均衡器 \<SAP global host\> 。 对于 \<ASCS/SCS virtual host name\> SAP ASCS/SCS 实例或 DBMS，此操作可实现。 横向扩展文件共享将负载横向扩展到所有群集节点。 \<SAP global host\>使用所有群集节点的本地 IP 地址。
+* 不需要为横向扩展文件共享网络名称（例如）配置 Azure 内部负载均衡器 \<SAP global host\> 。 对于 \<ASCS/SCS virtual host name\> SAP ASCS/SCS 实例或 DBMS，此操作可实现。 横向扩展文件共享将负载横向扩展到所有群集节点。 \<SAP global host\> 使用所有群集节点的本地 IP 地址。
 
 
 > [!IMPORTANT]
@@ -155,7 +156,7 @@ SAP \<SID\> 群集角色不包含群集共享磁盘或通用文件共享群集�
 
 ![图 5：在两个群集中部署的 SAP ASCS/SCS 实例和横向扩展文件共享][sap-ha-guide-figure-8007]
 
-**图 5：** 在两个群集中部署的 SAP ASCS/SCS 实例和横向扩展文件共享__
+**图 5：** 在两个群集中部署的 SAP ASCS/SCS 实例和横向扩展文件共享
 
 > [!IMPORTANT]
 > 在 Azure 云中，用于 SAP 和横向扩展文件共享的每个群集都必须部署在其自己的 Azure 可用性集中或跨 Azure 可用性区域。 这样可确保将群集 VM 分散放置在其下的 Azure 基础结构中。 此技术支持可用性区域部署。

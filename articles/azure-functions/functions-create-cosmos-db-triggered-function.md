@@ -5,12 +5,12 @@ ms.assetid: bc497d71-75e7-47b1-babd-a060a664adca
 ms.topic: how-to
 ms.date: 04/28/2020
 ms.custom: cc996988-fb4f-47
-ms.openlocfilehash: c7dc18d8186d7262154cc0718bb6ad77ebbb5d2e
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 621773a84db99dbacfaa163f77189974ba102163
+ms.sourcegitcommit: c4c554db636f829d7abe70e2c433d27281b35183
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "85829833"
+ms.lasthandoff: 01/08/2021
+ms.locfileid: "98034809"
 ---
 # <a name="create-a-function-triggered-by-azure-cosmos-db"></a>创建由 Azure Cosmos DB 触发的函数
 
@@ -28,6 +28,7 @@ ms.locfileid: "85829833"
 > [!INCLUDE [SQL API support only](../../includes/functions-cosmosdb-sqlapi-note.md)]
 
 ## <a name="sign-in-to-azure"></a>登录 Azure
+
 使用 Azure 帐户登录到 [Azure 门户](https://portal.azure.com/)。
 
 ## <a name="create-an-azure-cosmos-db-account"></a>创建 Azure Cosmos DB 帐户
@@ -36,7 +37,7 @@ ms.locfileid: "85829833"
 
 [!INCLUDE [cosmos-db-create-dbaccount](../../includes/cosmos-db-create-dbaccount.md)]
 
-## <a name="create-an-azure-function-app"></a>创建 Azure Function App
+## <a name="create-a-function-app-in-azure"></a>在 Azure 中创建一个函数应用
 
 [!INCLUDE [Create function app Azure portal](../../includes/functions-create-function-app-portal.md)]
 
@@ -100,7 +101,7 @@ ms.locfileid: "85829833"
     | ---|---|--- |
     | **数据库 ID** | 任务 |新数据库的名称。 它必须匹配函数绑定中定义的名称。 |
     | **容器 ID** | Items | 新容器的名称。 它必须匹配函数绑定中定义的名称。  |
-    | **[分区键](../cosmos-db/partition-data.md)** | /category|一个分区键，用于将数据均匀分配到每个分区。 选择正确的分区键对于创建高性能容器而言很重要。 | 
+    | **[分区键](../cosmos-db/partitioning-overview.md)** | /category|一个分区键，用于将数据均匀分配到每个分区。 选择正确的分区键对于创建高性能容器而言很重要。 | 
     | **吞吐量** |400 RU| 使用默认值。 如果想要减少延迟，以后可以增加吞吐量。 |    
 
 1. 单击“确定”以创建 Items 容器。 创建该容器可能需要很短的时间。

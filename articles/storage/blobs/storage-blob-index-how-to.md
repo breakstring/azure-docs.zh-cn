@@ -1,63 +1,70 @@
 ---
-title: 利用 Blob 索引管理和查找 Azure Blob 存储上的数据
-description: 请参阅相关示例，了解如何使用 Blob 索引标记进行发现 Blob 对象所需的分类、管理和查询。
+title: 使用 blob 索引标记来管理和查找 Azure Blob 存储上的数据
+description: 请参阅如何使用 blob 索引标记对 blob 对象进行分类、管理和查询的示例。
 author: mhopkins-msft
 ms.author: mhopkins
-ms.date: 04/24/2020
+ms.date: 11/19/2020
 ms.service: storage
 ms.subservice: blobs
 ms.topic: how-to
-ms.reviewer: hux
-ms.openlocfilehash: 57366011c93065803162164c03c7878e1610af9f
-ms.sourcegitcommit: 11e2521679415f05d3d2c4c49858940677c57900
+ms.reviewer: klaasl
+ms.custom: devx-track-csharp
+ms.openlocfilehash: 411815ca2f947c47b8dfb0d2e5d61f8ea18f3545
+ms.sourcegitcommit: c95e2d89a5a3cf5e2983ffcc206f056a7992df7d
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/31/2020
-ms.locfileid: "87500379"
+ms.lasthandoff: 11/24/2020
+ms.locfileid: "95541243"
 ---
-# <a name="utilize-blob-index-tags-preview-to-manage-and-find-data-on-azure-blob-storage"></a>利用 Blob 索引标记（预览版）管理和查找 Azure Blob 存储上的数据
+# <a name="use-blob-index-tags-preview-to-manage-and-find-data-on-azure-blob-storage"></a>使用 blob 索引标记 (预览) 在 Azure Blob 存储中管理和查找数据
 
-Blob 索引标记使用键/值标记特性对存储帐户中的数据进行分类。 这些标记会自动编制索引，并作为可查询的多维索引公开，以便你轻松查找数据。 本文介绍了如何使用 blob 索引标记来设置、获取和查找数据。
-
-若要详细了解 Blob 索引，请参阅[通过 Blob 索引（预览版）管理和查找 Azure Blob 存储上的数据](storage-manage-find-blobs.md)。
+Blob 索引标记使用键-值标记特性对存储帐户中的数据进行分类。 这些标记会自动编制索引，并作为可搜索的多维索引公开，以方便地查找数据。 本文介绍了如何使用 blob 索引标记来设置、获取和查找数据。
 
 > [!NOTE]
-> Blob 索引处于公共预览阶段，可在**加拿大中部**、**加拿大东部**、**法国中部**和**法国南部**地区使用。 若要详细了解此功能以及已知问题和限制，请参阅[通过 Blob 索引（预览版）管理和查找 Azure Blob 存储上的数据](storage-manage-find-blobs.md)。
+> Blob 索引处于公共预览阶段，可在 **加拿大中部**、 **加拿大东部**、 **法国中部** 和 **法国南部** 地区使用。 若要了解有关此功能以及已知问题和限制的详细信息，请参阅 [通过 Blob 索引标记管理和查找 Azure Blob 数据 (预览) ](storage-manage-find-blobs.md)。
 
 ## <a name="prerequisites"></a>先决条件
-# <a name="portal"></a>[门户](#tab/azure-portal)
-- 已注册订阅并已批准它访问 Blob 索引预览版
-- 对 [Azure 门户](https://portal.azure.com/)的访问权限
+
+# <a name="portal"></a>[Portal](#tab/azure-portal)
+
+- 已注册并批准访问 blob 索引预览的 Azure 订阅
+- 访问 [Azure 门户](https://portal.azure.com/)
 
 # <a name="net"></a>[.NET](#tab/net)
-由于 Blob 索引为公共预览版，因此将在预览版 NuGet 源中发布 .NET 存储包。 从现在到正式发布之前的这段时间内，此库可能会更改。 
 
-1. 将 Visual Studio 项目设置为开始处理适用于 .NET 的 Azure Blob 存储客户端库 v12。 若要了解详细信息，请参阅[.Net 快速入门](storage-quickstart-blobs-dotnet.md)
+由于 blob 索引处于预览阶段，因此将在预览版 NuGet 源中发布 .NET 存储包。 此库在预览期可能会更改。
 
-2. 在 NuGet 包管理器中，找到 "12.5.0" 包，并安装**项目的版本**" **12.5.0-preview.6** " 或更高版本。 还可以运行 ```Install-Package Azure.Storage.Blobs -Version 12.5.0-preview.6``` 命令
+1. 将 Visual Studio 项目设置为开始处理适用于 .NET 的 Azure Blob 存储客户端库 v12。 若要了解详细信息，请参阅 [.Net 快速入门](storage-quickstart-blobs-dotnet.md)
 
-   若要了解如何操作，请参阅[查找并安装包](https://docs.microsoft.com/nuget/consume-packages/install-use-packages-visual-studio#find-and-install-a-package)。
+2. 在 NuGet 包管理器中，找到 "12.7.0" 包，并安装 **项目的版本**"" 或更高版本 **。** 你还可以运行 PowerShell 命令： `Install-Package Azure.Storage.Blobs -Version 12.7.0-preview.1`
+
+   若要了解如何操作，请参阅[查找并安装包](/nuget/consume-packages/install-use-packages-visual-studio#find-and-install-a-package)。
 
 3. 将下列 using 语句添加到你的代码文件的顶部。
-```csharp
-using Azure;
-using Azure.Storage.Blobs;
-using Azure.Storage.Blobs.Models;
-using Azure.Storage.Blobs.Specialized;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-```
+
+    ```csharp
+    using Azure;
+    using Azure.Storage.Blobs;
+    using Azure.Storage.Blobs.Models;
+    using Azure.Storage.Blobs.Specialized;
+    using System;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+    ```
+
 ---
 
 ## <a name="upload-a-new-blob-with-index-tags"></a>上传带有索引标记的新 blob
+
+此任务可以由 [存储 Blob 数据所有者](../../role-based-access-control/built-in-roles.md#storage-blob-data-owner) 或安全主体执行，已 `Microsoft.Storage/storageAccounts/blobServices/containers/blobs/tags/write` 通过自定义 azure 角色向其授予 [Azure 资源提供程序操作](../../role-based-access-control/resource-provider-operations.md#microsoftstorage) 的权限。
+
 # <a name="portal"></a>[门户](#tab/azure-portal)
 
 1. 在 [Azure 门户](https://portal.azure.com/)中，选择你的存储帐户 
 
-2. 导航到“Blob 服务”下的“容器”选项，选择你的容器
+2. 导航到 " **Blob 服务**" 下的 "**容器**" 选项，选择容器
 
-3. 选择“上传”按钮打开“上传”边栏选项卡，并浏览本地文件系统，找到要作为块 Blob 上传的文件。
+3. 选择 " **上传** " 按钮，然后浏览本地文件系统以查找要上传的文件作为块 blob。
 
 4. 展开“高级”下拉列表，并转到“Blob 索引标记”部分
 
@@ -65,7 +72,7 @@ using System.Threading.Tasks;
 
 6. 选择“上传”按钮以上传 Blob
 
-![上传带有 blob 索引标记的数据](media/storage-blob-index-concepts/blob-index-upload-data-with-tags.png)
+:::image type="content" source="media/storage-blob-index-concepts/blob-index-upload-data-with-tags.png" alt-text="演示如何上传具有索引标记的 blob 的 Azure 门户屏幕截图。":::
 
 # <a name="net"></a>[.NET](#tab/net)
 
@@ -85,8 +92,8 @@ static async Task BlobIndexTagsOnCreate()
           // Create an append blob
           AppendBlobClient appendBlobWithTags = container.GetAppendBlobClient("myAppendBlob0.logs");
 
-          // Blob Index tags to upload
-          CreateAppendBlobOptions appendOptions = new CreateAppendBlobOptions();
+          // Blob index tags to upload
+          AppendBlobCreateOptions appendOptions = new AppendBlobCreateOptions();
           appendOptions.Tags = new Dictionary<string, string>
           {
               { "Sealed", "false" },
@@ -106,13 +113,18 @@ static async Task BlobIndexTagsOnCreate()
 ---
 
 ## <a name="get-set-and-update-blob-index-tags"></a>获取、设置和更新 blob 索引标记
+
+获取 blob 索引标记可以由 [存储 Blob 数据所有者](../../role-based-access-control/built-in-roles.md#storage-blob-data-owner) 或已 `Microsoft.Storage/storageAccounts/blobServices/containers/blobs/tags/read` 通过自定义 azure 角色授予 [Azure 资源提供程序操作](../../role-based-access-control/resource-provider-operations.md#microsoftstorage) 权限的安全主体来执行。
+
+设置和更新 blob 索引标记可以由 [存储 Blob 数据所有者](../../role-based-access-control/built-in-roles.md#storage-blob-data-owner) 或已 `Microsoft.Storage/storageAccounts/blobServices/containers/blobs/tags/write` 通过自定义 azure 角色授予 [Azure 资源提供程序操作](../../role-based-access-control/resource-provider-operations.md#microsoftstorage) 权限的安全主体来执行。
+
 # <a name="portal"></a>[门户](#tab/azure-portal)
 
 1. 在 [Azure 门户](https://portal.azure.com/)中，选择你的存储帐户 
 
 2. 导航到“Blob 服务”下的“容器”选项，选择你的容器
 
-3. 从所选容器的 blob 列表中选择所需的 blob
+3. 从所选容器中的 blob 列表中选择 blob
 
 4. Blob 概览选项卡会显示 blob 的属性，包括任何 **Blob 索引标记**
 
@@ -120,9 +132,10 @@ static async Task BlobIndexTagsOnCreate()
 
 6. 选择“保存”按钮以确认对 blob 所做的任何更新
 
-![获取、设置、更新和删除对象上的 blob 索引标记](media/storage-blob-index-concepts/blob-index-get-set-tags.png)
+:::image type="content" source="media/storage-blob-index-concepts/blob-index-get-set-tags.png" alt-text="显示如何获取、设置、更新和删除 blob 上索引标记的 Azure 门户屏幕截图。":::
 
 # <a name="net"></a>[.NET](#tab/net)
+
 ```csharp
 static async Task BlobIndexTagsExample()
    {
@@ -138,7 +151,7 @@ static async Task BlobIndexTagsExample()
           AppendBlobClient appendBlob = container.GetAppendBlobClient("myAppendBlob1.logs");
           await appendBlob.CreateAsync();
 
-          // Set or Update Blob Index tags on existing blob
+          // Set or update blob index tags on existing blob
           Dictionary<string, string> tags = new Dictionary<string, string>
           {
               { "Project", "Contoso" },
@@ -147,7 +160,7 @@ static async Task BlobIndexTagsExample()
           };
           await appendBlob.SetTagsAsync(tags);
 
-          // Get Blob Index tags
+          // Get blob index tags
           Response<IDictionary<string, string>> tagsResponse = await appendBlob.GetTagsAsync();
           Console.WriteLine(appendBlob.Name);
           foreach (KeyValuePair<string, string> tag in tagsResponse.Value)
@@ -155,7 +168,7 @@ static async Task BlobIndexTagsExample()
               Console.WriteLine($"{tag.Key}={tag.Value}");
           }
 
-          // List Blobs with all options returned including Blob Index tags
+          // List blobs with all options returned including blob index tags
           await foreach (BlobItem blobItem in container.GetBlobsAsync(BlobTraits.All))
           {
               Console.WriteLine(Environment.NewLine + blobItem.Name);
@@ -165,7 +178,7 @@ static async Task BlobIndexTagsExample()
               }
           }
 
-          // Delete existing Blob Index tags by replacing all tags
+          // Delete existing blob index tags by replacing all tags
           Dictionary<string, string> noTags = new Dictionary<string, string>();
           await appendBlob.SetTagsAsync(noTags);
 
@@ -178,25 +191,28 @@ static async Task BlobIndexTagsExample()
 
 ---
 
-## <a name="filter-and-find-data-with-blob-index-tags"></a>筛选和查找带有 blob 索引标记的数据
+## <a name="filter-and-find-data-with-blob-index-tags"></a>筛选和查找包含 blob 索引标记的数据
 
-# <a name="portal"></a>[门户](#tab/azure-portal)
+此任务可以由 [存储 Blob 数据所有者](../../role-based-access-control/built-in-roles.md#storage-blob-data-owner) 或安全主体执行，已 `Microsoft.Storage/storageAccounts/blobServices/containers/blobs/filter/action` 通过自定义 azure 角色向其授予 [Azure 资源提供程序操作](../../role-based-access-control/resource-provider-operations.md#microsoftstorage) 的权限。
 
-在 Azure 门户中，“Blob 索引标记”筛选器会自动应用 `@container` 参数，以限制所选容器的范围。 如果希望在整个存储帐户中筛选和查找带标记的数据，请使用我们的 REST API、SDK 或工具。
+# <a name="portal"></a>[Portal](#tab/azure-portal)
 
-1. 在 [Azure 门户](https://portal.azure.com/)中，选择你的存储帐户。 
+在 Azure 门户中，"blob 索引标记" 筛选器会自动应用 `@container` 参数以限定所选容器的范围。 如果要跨整个存储帐户筛选和查找标记的数据，请使用我们的 REST API、Sdk 或工具。
 
-2. 导航到“Blob 服务”下的“容器”选项，选择你的容器
+1. 在 [Azure 门户](https://portal.azure.com/)中，选择存储帐户。 
+
+2. 导航到 " **Blob 服务**" 下的 "**容器**" 选项，选择容器
 
 3. 选择“Blob 索引标记筛选器”按钮，在所选容器内进行筛选
 
-4. 输入 Blob 索引标记键和标记值
+4. 输入 blob 索引标记键和标记值
 
 5. 选择“Blob 索引标记筛选器”按钮，以便添加更多标记筛选器（最多 10 个）
 
-![使用 blob 索引标记筛选和查找带标记的对象](media/storage-blob-index-concepts/blob-index-tag-filter-within-container.png)
+:::image type="content" source="media/storage-blob-index-concepts/blob-index-tag-filter-within-container.png" alt-text="显示如何使用索引标记筛选和查找带标记的 blob 的 Azure 门户屏幕截图":::
 
 # <a name="net"></a>[.NET](#tab/net)
+
 ```csharp
 static async Task FindBlobsByTagsExample()
    {
@@ -204,7 +220,7 @@ static async Task FindBlobsByTagsExample()
       BlobContainerClient container1 = serviceClient.GetBlobContainerClient("mycontainer");
       BlobContainerClient container2 = serviceClient.GetBlobContainerClient("mycontainer2");
 
-      // Blob Index queries and selection
+      // Blob index queries and selection
       String singleEqualityQuery = @"""Archive"" = 'false'";
       String andQuery = @"""Archive"" = 'false' AND ""Priority"" = '01'";
       String rangeQuery = @"""Date"" >= '2020-04-20' AND ""Date"" <= '2020-04-30'";
@@ -226,7 +242,7 @@ static async Task FindBlobsByTagsExample()
           AppendBlobClient appendBlobWithTags4 = container2.GetAppendBlobClient("myAppendBlob04.logs");
           AppendBlobClient appendBlobWithTags5 = container2.GetAppendBlobClient("myAppendBlob05.logs");
            
-          // Blob Index tags to upload
+          // Blob index tags to upload
           CreateAppendBlobOptions appendOptions = new CreateAppendBlobOptions();
           appendOptions.Tags = new Dictionary<string, string>
           {
@@ -254,10 +270,10 @@ static async Task FindBlobsByTagsExample()
           // Find Blobs given a tags query
           Console.WriteLine("Find Blob by Tags query: " + queryToUse + Environment.NewLine);
 
-          List<FilterBlobItem> blobs = new List<FilterBlobItem>();
-          await foreach (FilterBlobItem filterBlobItem in serviceClient.FindBlobsByTagsAsync(queryToUse))
+          List<TaggedBlobItem> blobs = new List<TaggedBlobItem>();
+          await foreach (TaggedBlobItem taggedBlobItem in serviceClient.FindBlobsByTagsAsync(queryToUse))
           {
-              blobs.Add(filterBlobItem);
+              blobs.Add(taggedBlobItem);
           }
 
           foreach (var filteredBlob in blobs)
@@ -285,19 +301,23 @@ static async Task FindBlobsByTagsExample()
 
 3. 选择“添加规则”，然后填写操作集窗体字段
 
-4. 选择“筛选器集”，为“前缀匹配”和“Blob 索引匹配”添加可选筛选器 ![添加 blob 索引标记筛选器以进行生命周期管理](media/storage-blob-index-concepts/blob-index-match-lifecycle-filter-set.png)
+4. 选择 " **筛选器** 集"，为前缀匹配和 blob 索引匹配添加可选筛选器
 
-5. 选择“查看 + 添加”来查看规则设置 ![使用 blob 索引标记筛选器进行生命周期管理的示例](media/storage-blob-index-concepts/blob-index-lifecycle-management-example.png)
+  :::image type="content" source="media/storage-blob-index-concepts/blob-index-match-lifecycle-filter-set.png" alt-text="显示如何为生命周期管理添加索引标记的 Azure 门户屏幕截图。":::
+
+5. 选择 "查看" " **+ 添加** " 以查看规则设置
+
+  :::image type="content" source="media/storage-blob-index-concepts/blob-index-lifecycle-management-example.png" alt-text="显示包含 blob 索引标记的生命周期管理规则筛选器示例的 Azure 门户屏幕截图":::
 
 6. 选择“添加”，将新规则应用于生命周期管理策略
 
 # <a name="net"></a>[.NET](#tab/net)
-[生命周期管理](storage-lifecycle-management-concepts.md)策略在控制平面级别应用于每个存储帐户。 对于 .NET，请安装 [Microsoft Azure 管理存储库版本 16.0.0](https://www.nuget.org/packages/Microsoft.Azure.Management.Storage/) 或更高版本，以在生命周期管理规则中利用 Blob 索引匹配筛选器。
+
+[生命周期管理](storage-lifecycle-management-concepts.md)策略在控制平面级别应用于每个存储帐户。 对于 .NET，安装 [Microsoft Azure 管理存储库](https://www.nuget.org/packages/Microsoft.Azure.Management.Storage/) 版本16.0.0 或更高版本。
 
 ---
 
 ## <a name="next-steps"></a>后续步骤
 
-详细了解 Blob 索引。 请参阅[通过 Blob 索引（预览版）管理和查找 Azure Blob 存储上的数据](storage-manage-find-blobs.md )
-
-详细了解生命周期管理。 请参阅[管理 Azure Blob 存储生命周期](storage-lifecycle-management-concepts.md)
+ - 了解有关 blob 索引标记的详细信息，请参阅 [通过 blob 索引标记管理和查找 Azure blob 数据 (预览) ](storage-manage-find-blobs.md )
+ - 了解有关生命周期管理的详细信息，请参阅 [管理 Azure Blob 存储生命周期](storage-lifecycle-management-concepts.md)

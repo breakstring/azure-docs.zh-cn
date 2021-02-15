@@ -2,19 +2,15 @@
 title: Azure Automation State Configuration 入门
 description: 本文介绍如何在 Azure Automation State Configuration 中执行最常见的任务。
 services: automation
-ms.service: automation
 ms.subservice: dsc
-author: mgoedtel
-ms.author: magoedte
 ms.date: 04/15/2019
 ms.topic: conceptual
-manager: carmonm
-ms.openlocfilehash: 0e98078fe2799d1c524190c8ced36588f35498b4
-ms.sourcegitcommit: ec682dcc0a67eabe4bfe242fce4a7019f0a8c405
+ms.openlocfilehash: 95072970004ae53663f130a78af36a84a6fab685
+ms.sourcegitcommit: d1e56036f3ecb79bfbdb2d6a84e6932ee6a0830e
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/09/2020
-ms.locfileid: "86186429"
+ms.lasthandoff: 01/29/2021
+ms.locfileid: "99051492"
 ---
 # <a name="get-started-with-azure-automation-state-configuration"></a>Azure Automation State Configuration 入门
 
@@ -26,7 +22,7 @@ ms.locfileid: "86186429"
 
 若要完成本文中的示例，需要具备以下条件：
 
-- 一个 Azure 自动化帐户。 有关如何创建 Azure 自动化运行方式帐户的说明，请参阅 [Azure 运行方式帐户](./manage-runas-account.md)。
+- 一个 Azure 自动化帐户。 若要了解有关自动化帐户及其要求的详细信息，请参阅 [自动化帐户身份验证概述](./automation-security-overview.md)。
 - 一个运行[支持的操作系统](automation-dsc-overview.md#operating-system-requirements)的 Azure 资源管理器 VM（非经典）。 如需创建 VM 的说明，请参阅[在 Azure 门户中创建第一个 Windows 虚拟机](../virtual-machines/windows/quick-create-portal.md)
 
 ## <a name="create-a-dsc-configuration"></a>创建 DSC 配置
@@ -237,4 +233,4 @@ Azure 将启动启用 VM 的过程。 完成后，VM 会显示在自动化帐户
 - 要为你的环境中的 VM 启用此功能，请参阅[启用 Azure Automation State Configuration](automation-dsc-onboarding.md)。
 - 若要了解 PowerShell DSC，请参阅 [Windows PowerShell Desired State Configuration 概述](/powershell/scripting/dsc/overview/overview)。
 - 有关定价信息，请参阅 [Azure Automation State Configuration 定价](https://azure.microsoft.com/pricing/details/automation/)。
-- 有关 PowerShell cmdlet 参考，请参阅 [Az.Automation](/powershell/module/az.automation/?view=azps-3.7.0#automation)。
+- 有关 PowerShell cmdlet 参考，请参阅 [Az.Automation](/powershell/module/az.automation)。

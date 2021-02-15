@@ -8,15 +8,16 @@ ms.subservice: cosmosdb-cassandra
 ms.devlang: nodejs
 ms.topic: quickstart
 ms.date: 05/18/2020
-ms.custom: devx-track-javascript
-ms.openlocfilehash: 1fa481911be8eb91db498350e57e2ba42e4aedb5
-ms.sourcegitcommit: e71da24cc108efc2c194007f976f74dd596ab013
+ms.custom: devx-track-js
+ms.openlocfilehash: b9e036df91eecadc701664a19905a92c142b7585
+ms.sourcegitcommit: d2d1c90ec5218b93abb80b8f3ed49dcf4327f7f4
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/29/2020
-ms.locfileid: "87421002"
+ms.lasthandoff: 12/16/2020
+ms.locfileid: "97591865"
 ---
 # <a name="quickstart-build-a-cassandra-app-with-nodejs-sdk-and-azure-cosmos-db"></a>快速入门：使用 Node.js SDK 和 Azure Cosmos DB 构建 Cassandra 应用
+[!INCLUDE[appliesto-cassandra-api](includes/appliesto-cassandra-api.md)]
 
 > [!div class="op_single_selector"]
 > * [.NET](create-cassandra-dotnet.md)
@@ -106,7 +107,7 @@ ms.locfileid: "87421002"
 
    ```javascript
    function createTable(next) {
-    var query = "CREATE TABLE IF NOT EXISTS uprofile.user (user_id int PRIMARY KEY, user_name text, user_bcity text)";
+       var query = "CREATE TABLE IF NOT EXISTS uprofile.user (user_id int PRIMARY KEY, user_name text, user_bcity text)";
         client.execute(query, next);
         console.log("created table");
    },
@@ -148,7 +149,7 @@ ms.locfileid: "87421002"
             });
         },
     ```  
-    
+
 * 用于获取键-值的查询。
 
     ```javascript
@@ -188,7 +189,7 @@ ms.locfileid: "87421002"
     第 2 行现在应如下所示 
 
     `config.username = 'cosmos-db-quickstart';`
-    
+
 1. 复制并粘贴门户中的“密码”值，并覆盖第 3 行中的 `<FillMEIN>`。
 
     第 3 行现在应如下所示
@@ -196,12 +197,12 @@ ms.locfileid: "87421002"
     `config.password = '2Ggkr662ifxz2Mg==';`
 
 1. 保存 `config.js` 文件。
-    
+
 ## <a name="use-the-x509-certificate"></a>使用 X509 证书
 
 1. 从 [https://cacert.omniroot.com/bc2025.crt](https://cacert.omniroot.com/bc2025.crt) 在本地下载 Baltimore CyberTrust 根证书。 使用文件扩展名 `.cer` 重命名该文件。
 
-   证书的序列号为 `02:00:00:b9`，SHA1 指纹为 `d4🇩🇪20:d0:5e:66:fc:53:fe:1a:50:88:2c:78:db:28:52:ca:e4:74`。
+   证书的序列号为 `02:00:00:b9`，SHA1 指纹为 `d4:de:20:d0:5e:66:fc:53:fe:1a:50:88:2c:78:db:28:52:ca:e4:74`。
 
 2. 打开 `uprofile.js` 并更改 `path\to\cert` 以指向新证书。
 
@@ -212,11 +213,11 @@ ms.locfileid: "87421002"
 > 
 > 双击 .crt 文件，将其打开到证书显示。 
 >
-> :::image type="content" source="./media/create-cassandra-nodejs/crtcer1.gif" alt-text="查看并验证输出":::
+> :::image type="content" source="./media/create-cassandra-nodejs/crtcer1.gif" alt-text="显示“证书”窗口的屏幕截图。":::
 >
 > 在证书向导中按“下一步”。 选择“Base-64 编码 X.509 (.CER)”，然后选择“下一步”。
 >
-> :::image type="content" source="./media/create-cassandra-nodejs/crtcer2.gif" alt-text="查看并验证输出":::
+> :::image type="content" source="./media/create-cassandra-nodejs/crtcer2.gif" alt-text="显示“Base-64 编码 X.509 (.CER)”选项的屏幕截图。":::
 >
 > 选择“浏览”（目的是查找目标），然后键入文件名。
 > 完成后，选择“下一步”。

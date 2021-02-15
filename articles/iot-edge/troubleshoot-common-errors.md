@@ -4,19 +4,19 @@ description: 本文介绍了部署 IoT Edge 解决方案时遇到的问题的常
 author: kgremban
 manager: philmea
 ms.author: kgremban
-ms.date: 04/27/2020
+ms.date: 11/10/2020
 ms.topic: conceptual
 ms.service: iot-edge
 services: iot-edge
 ms.custom:
 - amqp
 - mqtt
-ms.openlocfilehash: ed93d24bc06a6622a8ace2b0ab6b44582da001c0
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: e1605f45dc8a7a1c03b5481ea17478064414df59
+ms.sourcegitcommit: d4734bc680ea221ea80fdea67859d6d32241aefc
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "82783742"
+ms.lasthandoff: 02/14/2021
+ms.locfileid: "100382202"
 ---
 # <a name="common-issues-and-resolutions-for-azure-iot-edge"></a>Azure IoT Edge 的常见问题和解决方法
 
@@ -174,7 +174,7 @@ warn: edgelet_utils::logging --     caused by: failed to create endpoint edgeHub
    ```json
    "edgeHub": {
        "settings": {
-           "image": "mcr.microsoft.com/azureiotedge-hub:1.0",
+           "image": "mcr.microsoft.com/azureiotedge-hub:1.1",
            "createOptions": "{\"HostConfig\":{\"PortBindings\":{\"8883/tcp\":[{\"HostPort\":\"8883\"}],\"443/tcp\":[{\"HostPort\":\"443\"}]}}}"
        },
        "type": "docker",
@@ -188,7 +188,7 @@ warn: edgelet_utils::logging --     caused by: failed to create endpoint edgeHub
    ```json
    "edgeHub": {
        "settings": {
-           "image": "mcr.microsoft.com/azureiotedge-hub:1.0"
+           "image": "mcr.microsoft.com/azureiotedge-hub:1.1"
        },
        "type": "docker",
        "status": "running",
@@ -286,7 +286,7 @@ IoT Edge 中心是 IoT Edge 运行时的一部分，默认情况下已针对性�
 "edgeHub": {
   "type": "docker",
   "settings": {
-    "image": "mcr.microsoft.com/azureiotedge-hub:1.0",
+    "image": "mcr.microsoft.com/azureiotedge-hub:1.1",
     "createOptions": <snipped>
   },
   "env": {
@@ -331,6 +331,25 @@ Error: Time:Thu Jun  4 19:44:58 2018 File:/usr/sdk/src/c/provisioning_client/ada
 每个设备仅使用一种类型的部署机制，即自动部署或单设备部署。 如果你有针对某个设备的多个自动部署，则可以更改优先级或目标说明，以确保正确的部署应用于给定的设备。 还可以更新设备孪生，使其不再与自动部署的目标描述匹配。
 
 有关详细信息，请参阅[了解单个设备或大规模的 IoT Edge 自动部署](module-deployment-monitoring.md)。
+
+<!-- <1.2> -->
+::: moniker range=">=iotedge-2020-11"
+
+## <a name="iot-edge-behind-a-gateway-cannot-perform-http-requests-and-start-edgeagent-module"></a>网关后面的 IoT Edge 无法执行 HTTP 请求和启动 edgeAgent 模块
+
+**观察到的行为：**
+
+使用有效的配置文件时，IoT Edge 守护程序处于活动状态，但它无法启动 edgeAgent 模块。 命令 `iotedge list` 返回一个空列表。 IoT Edge 守护程序日志报告 `Could not perform HTTP request`。
+
+**根本原因：**
+
+网关后面的 IoT Edge 设备将从父 IoT Edge 设备（在 config.yaml 文件的 `parent_hostname` 字段中指定）获取其模块映像。 `Could not perform HTTP request` 错误表示子设备无法通过 HTTP 到访问父设备。
+
+**解决方法：**
+
+请确保父 IoT Edge 设备可以接收来自子 IoT Edge 设备的传入请求。 在端口 443 和 6617 上打开网络流量，以获取来自子设备的请求。
+
+:::moniker-end
 
 ## <a name="next-steps"></a>后续步骤
 

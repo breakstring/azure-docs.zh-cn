@@ -4,12 +4,12 @@ description: 在 Application Insights 中设置 Web 测试。 当网站不可用
 ms.topic: conceptual
 ms.date: 09/16/2019
 ms.reviewer: sdash
-ms.openlocfilehash: 6f9c5fa691456195943f97419c1175fd5b586878
-ms.sourcegitcommit: a76ff927bd57d2fcc122fa36f7cb21eb22154cfa
+ms.openlocfilehash: b0f66608c6e0f23b861e207d0dea07a546b41c2a
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/28/2020
-ms.locfileid: "87310270"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98937411"
 ---
 # <a name="monitor-the-availability-of-any-website"></a>监视任意网站的可用性
 
@@ -23,9 +23,12 @@ ms.locfileid: "87310270"
 
 * [URL ping 测试](#create-a-url-ping-test)：可以在 Azure 门户中创建的简单测试。
 * [多步骤 Web 测试](availability-multistep.md)：记录一系列 Web 请求，这些请求可以通过再现来测试更复杂的场景。 多步骤 Web 测试在 Visual Studio Enterprise 中创建并上传到门户执行。
-* [自定义跟踪可用性测试](/dotnet/api/microsoft.applicationinsights.telemetryclient.trackavailability?view=azure-dotnet)：如果决定创建自定义应用程序以运行可用性测试，则可以使用 `TrackAvailability()` 方法将结果发送到 Application Insights。
+* [自定义跟踪可用性测试](/dotnet/api/microsoft.applicationinsights.telemetryclient.trackavailability)：如果决定创建自定义应用程序以运行可用性测试，则可以使用 `TrackAvailability()` 方法将结果发送到 Application Insights。
 
 **对于每个 Application Insights 资源，最多可以创建 100 个可用性测试。**
+
+> [!IMPORTANT]
+> [URL ping 测试](#create-a-url-ping-test)和[多步骤 web 测试](availability-multistep.md)都依赖公共 internet DNS 基础结构来解析已测试终结点的域名。 这意味着，如果你使用专用 DNS，则必须确保你的测试的每个域名也可由公共域名服务器解析，如果不可能，你可以改用 [自定义跟踪可用性测试](/dotnet/api/microsoft.applicationinsights.telemetryclient.trackavailability) 。
 
 ## <a name="create-an-application-insights-resource"></a>创建 Application Insights 资源
 
@@ -54,7 +57,7 @@ ms.locfileid: "87310270"
 **如果 URL 在公共 Internet 中不可见，可以选择性地打开防火墙，只允许测试事务通过**。 若要详细了解可用性测试代理的防火墙例外，请参阅 [IP 地址指南](./ip-addresses.md#availability-tests)。
 
 > [!NOTE]
-> 强烈建议从多个位置进行测试，**至少为 5 个位置**。 这是为了防止可能由特定位置的暂时性问题导致的虚假警报。 此外，我们发现最佳配置是使**测试位置的数目等于警报位置阈值 + 2**。
+> 强烈建议从多个位置进行测试，**至少为 5 个位置**。 这是为了防止可能由特定位置的暂时性问题导致的虚假警报。 此外，我们发现最佳配置是使 **测试位置的数目等于警报位置阈值 + 2**。
 
 ### <a name="success-criteria"></a>成功标准
 
@@ -72,13 +75,48 @@ ms.locfileid: "87310270"
 |**经典** | 我们不再建议对新的可用性测试使用经典警报。|
 |**警报位置阈值**|建议最少 3/5 个位置。 警报位置阈值和测试位置数目之间的最佳关系是警报位置阈值  =  测试位置数 - 2，至少有 5 个测试位置   。|
 
+### <a name="location-population-tags"></a>位置人口标记
+
+使用 Azure 资源管理器部署可用性 URL ping 测试时，可以将以下填充标记用于地理位置属性。
+
+#### <a name="azure-gov"></a>Azure Gov
+
+| 显示名称   | 总体名称     |
+|----------------|---------------------|
+| USGov Virginia | usgov-va-bc-op-nt-azr        |
+| USGov Arizona  | usgov-phx-bc-op-nt-azr       |
+| USGov Texas    | usgov-bc-op-nt-azr        |
+| USDoD 东部     | usgov-ddeast-bc-op-nt-azr    |
+| USDoD 中部  | usgov-ddcentral-bc-op-nt-azr |
+
+#### <a name="azure"></a>Azure
+
+| 显示名称                           | 总体名称   |
+|----------------------------------------|-------------------|
+| 澳大利亚东部                         | emea-au-syd  |
+| Brazil South                           | latam-gru-边缘 |
+| 美国中部                             | 美国 mia-边缘    |
+| 东亚                              | apac-hkn-bc-op-nt-azr   |
+| 美国东部                                | us-va-圣 bc-op-nt-azr     |
+| 法国南部 (以前的华北)  | emea-ch-zrh  |
+| 法国中部                         | emea-pra-边缘  |
+| Japan East                             | apac-jp-kaw-ft-85h  |
+| 北欧                           | emea-db3-bc-op-nt-azr   |
+| 美国中北部                       | us-ch1-bc-op-nt-azr     |
+| 美国中南部                       | us-sn1-bc-op-nt-azr     |
+| Southeast Asia                         | apac-sin-bc-op-nt-azr   |
+| 英国西部                                | emea-停止-边缘  |
+| 西欧                            | emea-nl-bc-op-nt-azr   |
+| 美国西部                                | us-sjc-dp1-bc-op-nt-azr     |
+| 英国南部                               | emea-ru-  |
+
 ## <a name="see-your-availability-test-results"></a>查看可用性测试结果
 
 可用性测试结果可以使用折线图和散点图的视图进行可视化。
 
 几分钟之后，单击“刷新”  即可查看测试结果。
 
-![折线图视图](./media/monitor-web-app-availability/availability-refresh-002.png)
+![屏幕截图显示突出显示了“刷新”按钮的“可用性”页。](./media/monitor-web-app-availability/availability-refresh-002.png)
 
 散点图视图显示其中有诊断测试步骤详细信息的测试结果示例。 测试引擎存储已失败的测试的诊断详细信息。 对于成功的测试，将存储执行子集的诊断详细信息。 将鼠标悬停在任何绿点/红点上，可查看测试、测试名称和位置。
 

@@ -9,13 +9,13 @@ services: iot-hub
 ms.devlang: nodejs
 ms.topic: conceptual
 ms.date: 08/16/2019
-ms.custom: mqtt, devx-track-javascript
-ms.openlocfilehash: 16e6c72f9fbb710524752c2d220d442735d809b7
-ms.sourcegitcommit: e71da24cc108efc2c194007f976f74dd596ab013
+ms.custom: mqtt, devx-track-js
+ms.openlocfilehash: e1992c806619154fa7b3c33500b2e54fbc919f20
+ms.sourcegitcommit: dbe434f45f9d0f9d298076bf8c08672ceca416c6
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/29/2020
-ms.locfileid: "87420764"
+ms.lasthandoff: 10/17/2020
+ms.locfileid: "92151428"
 ---
 # <a name="schedule-and-broadcast-jobs-nodejs"></a>计划和广播作业 (Node.js)
 
@@ -300,4 +300,4 @@ Azure IoT 中心是一项完全托管的服务，允许后端应用创建和跟�
 
 若要继续完成 IoT 中心和设备管理模式（如远程无线固件更新）的入门内容，请参阅[教程：如何执行固件更新](tutorial-firmware-update.md)。
 
-若要继续完成 IoT 中心入门内容，请参阅 [Azure IoT Edge 入门](../iot-edge/tutorial-simulate-device-linux.md)。
+若要继续完成 IoT 中心入门内容，请参阅 [Azure IoT Edge 入门](../iot-edge/quickstart-linux.md)。

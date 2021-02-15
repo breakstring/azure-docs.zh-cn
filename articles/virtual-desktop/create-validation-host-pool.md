@@ -3,24 +3,24 @@ title: Windows 虚拟桌面主机池服务更新 - Azure
 description: 如何创建验证主机池以在将更新推广到生产之前监视服务更新。
 author: Heidilohr
 ms.topic: tutorial
-ms.date: 03/13/2020
+ms.date: 12/15/2020
 ms.author: helohr
 manager: lizross
-ms.openlocfilehash: 8eac40ad958a10b8c853304ee2be8b2dc27af1a2
-ms.sourcegitcommit: 98854e3bd1ab04ce42816cae1892ed0caeedf461
+ms.openlocfilehash: ead4c0aa7d8d71642fd8a4635edbabcafee5b6c2
+ms.sourcegitcommit: 77ab078e255034bd1a8db499eec6fe9b093a8e4f
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/07/2020
-ms.locfileid: "88008706"
+ms.lasthandoff: 12/16/2020
+ms.locfileid: "97563239"
 ---
 # <a name="tutorial-create-a-host-pool-to-validate-service-updates"></a>教程：创建主机池以验证服务更新
 
 >[!IMPORTANT]
 >本教程的内容适用于包含 Azure 资源管理器 Windows 虚拟桌面对象的 Windows 虚拟桌面。 如果你使用的是不包含 Azure 资源管理器对象的 Windows 虚拟桌面（经典），请参阅[此文](./virtual-desktop-fall-2019/create-validation-host-pool-2019.md)。
 
-主机池是 Windows 虚拟桌面租户环境中一个或多个相同虚拟机的集合。 在将主机池部署到生产环境之前，强烈建议创建验证主机池。 更新首先应用于验证主机池，从而可以监视在将服务更新推广到生产环境之前监视它们。 如果没有验证主机池，则可能无法发现引入错误的更改，这可能会在生产环境中对用户导致故障时间。
+主机池是 Windows 虚拟桌面环境中包含一个或多个相同虚拟机的集合。 我们强烈建议先创建一个要应用服务更新的验证主机池。 这样可以在服务将更新应用于标准或非验证环境之前，监视服务更新。 如果没有验证主机池，则可能无法发现引入错误的更改，这可能会在标准环境中对用户导致故障时间。
 
-若要确保应用适用于最新更新，验证主机池应尽可能类似于生产环境中的主机池。 用户应如同连接到生成主机池一样频繁地连接到验证主机池。 如果在主机池上进行自动测试，则应在验证主机池上包含自动测试。
+若要确保应用适用于最新更新，验证主机池应尽可能地与非验证环境中的主机池类似。 用户应如同连接到标准主机池一样频繁地连接到验证主机池。 如果在主机池上进行自动测试，则应在验证主机池上包含自动测试。
 
 可以使用[诊断功能](diagnostics-role-service.md)或 [Windows 虚拟桌面故障排除文章](troubleshoot-set-up-overview.md)对验证主机池中的问题进行调试。
 
@@ -66,6 +66,20 @@ cmdlet 的结果应类似于以下输出：
     LoadBalancerType    : BreadthFirst
     ValidationEnvironment : True
 ```
+
+## <a name="enable-your-validation-environment-with-the-azure-portal"></a>使用 Azure 门户启用验证环境
+
+还可以使用 Azure 门户来启用验证环境。
+
+使用 Azure 门户配置验证主机池：
+
+1. 通过 <https://portal.azure.com> 登录到 Azure 门户。
+2. 搜索并选择“Windows 虚拟桌面”  。
+3. 在“Windows 虚拟桌面”页中，选择“主机池”。
+4. 选择要编辑的主机池的名称。
+5. 选择“属性”。
+6. 在“验证环境”字段中，选择“是”，启用验证环境。
+7. 选择“保存”。 这将应用新设置。
 
 ## <a name="update-schedule"></a>更新计划
 

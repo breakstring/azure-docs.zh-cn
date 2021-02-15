@@ -14,14 +14,17 @@ ms.devlang: na
 ms.topic: article
 ms.date: 10/21/2019
 ms.author: xpouyat
-ms.openlocfilehash: 7d4822f453e27a5e2fa7b97d77056b6bee1041d9
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.openlocfilehash: 8e2217c04f5c39ad93185273d537324f4b56e456
+ms.sourcegitcommit: 24f30b1e8bb797e1609b1c8300871d2391a59ac2
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87086228"
+ms.lasthandoff: 02/10/2021
+ms.locfileid: "100099534"
 ---
-# <a name="licensing-microsoftreg-smooth-streaming-client-porting-kit"></a>授权 Microsoft&reg; 平滑流式处理客户端移植工具包 
+# <a name="licensing-microsoftreg-smooth-streaming-client-porting-kit"></a>授权 Microsoft&reg; 平滑流式处理客户端移植工具包
+
+[!INCLUDE [media services api v2 logo](./includes/v2-hr.md)]
+ 
 ## <a name="overview"></a>概述
 Microsoft 平滑流式处理客户端移植工具包（简称 **SSPK**）是经过优化的平滑流式处理客户端实现，可帮助嵌入式设备制造商、有线和移动运营商、内容服务提供商、手持设备制造商、独立软件供应商 (ISV) 和解决方案提供商创建产品和服务，用于流式传输平滑流式处理格式的自适应内容。 SSPK 是平滑流式处理客户端的与设备和平台无关的实现，许可接受方可将它移植到任何设备和平台。 
 
@@ -51,8 +54,8 @@ Microsoft 平滑流式处理客户端移植工具包（简称 **SSPK**）是经�
 ## <a name="licensing-options"></a>许可选项
 Microsoft 平滑流式处理客户端移植工具包根据两份不同的许可协议提供给受证人：一份用于开发平滑流式处理客户端中期产品，另一份用于将平滑流式处理客户端最终产品分发给最终用户。
 
-* 需要使用源代码移植工具包开发中期产品的芯片组制造商、系统集成商或独立软件供应商 (ISV)，应该执行 Microsoft 平滑流式处理客户端移植工具包**中期产品许可证**。
-* 需要拥有对最终用户分发平滑流式处理客户端最终产品的权限的设备制造商或 ISV 应该执行 Microsoft 平滑流式处理客户端移植工具包**最终产品许可证**。
+* 需要使用源代码移植工具包开发中期产品的芯片组制造商、系统集成商或独立软件供应商 (ISV)，应该执行 Microsoft 平滑流式处理客户端移植工具包 **中期产品许可证**。
+* 需要拥有对最终用户分发平滑流式处理客户端最终产品的权限的设备制造商或 ISV 应该执行 Microsoft 平滑流式处理客户端移植工具包 **最终产品许可证**。
 
 ### <a name="microsoft-smooth-streaming-client-porting-kit-interim-product-license"></a>Microsoft 平滑流式处理客户端移植工具包中期产品许可证
 Microsoft 根据此许可证提供平滑流式处理客户端移植工具包和所需的知识产权，使客户能够开发平滑流式处理客户端中期产品并分发给其他可分发平滑流式处理客户端最终产品的平滑流式处理客户端移植工具包设备受证者。
@@ -113,32 +116,35 @@ Microsoft 根据此许可证提供全部所需的知识产权，以便从其他�
 ## <a name="microsoft-smooth-streaming-client-final-product-agreement-licensees"></a>Microsoft 平滑流式处理客户端最终产品协议受证人
 * Advanced Digital Broadcast SA
 * AirTies Kablosuz Iletism Sanayive Dis Ticaret A.S.
+* AmTRAN Technology Co., Ltd 
 * Arcadyan Technology Corporation
-* Arcelik
+* Arcelik A.S
 * Compal Electronics, Inc.
-* 明示技术有限
+* EXPRESS LUCK TECHNOLOGY LIMITED
 * Fluendo S.A.
 * FUNAI ELECTRIC CO., LTD
-* Hisense International Co., Ltd. 
-* HKC 公司有限
-* 中国香港 Konka 有限公司
-* Innolux 公司
-* Innopia 技术，Inc。
-* Tronics （Suzhou）技术有限公司。 
+* Hisense International Co., Ltd.
+* Hisense 视觉技术有限公司
+* HKC Corporation Limited
+* Hong Kong Konka Ltd
+* Innolux Corporation
+* Jinpin Electrical Company Ltd.Zhuhai.S.E.Z
+* K-Tronics (Suzhou) Technology Co., Ltd. 
 * Kaonmedia Co., Ltd.
 * KDDI Corporation
-* 成名电气有限公司
-* MIRC 电子设备有限
+* Mega Fame Electronics Co. Limited
+* MIRC Electronics Limited
+* MOKA INTERNATIONAL LIMITED
 * Nintendo Co., Ltd.
-* ONEPLUS 电子（SHENZHEN）有限公司。
-* Panasonic 公司
-* Qingdao Haier information Optronics
-* Shenzhen ATEKO 相片电力公司
+* ONEPLUS ELECTRONICS (SHENZHEN) CO., LTD.
+* Panasonic Corporation
+* Qingdao Haier Optronics Co., Ltd.
+* Shenzhen ATEKO PHOTO Electricity Co.,Ltd.
 * Shenzhen Chuangwei-RGB Electronics Co.,Ltd.
 * Shenzhen Jiuzhou Electric Co., Ltd
-* Shenzhen KTC 技术有限公司。 
-* Shenzhen Maxmade 技术有限公司
-* Shenzhen MTC，有限公司
+* Shenzhen KTC Technology Co., Ltd. 
+* Shenzhen Maxmade Technology Co., Ltd
+* Shenzhen MTC Co., Ltd
 * Shenzhen Skyworth Digital Technology Co., Ltd
 * Sichuan Changhong Electric Co., Ltd.
 * Skardin Industrial Corp.
@@ -148,7 +154,8 @@ Microsoft 根据此许可证提供全部所需的知识产权，以便从其他�
 * Sony Corporation
 * Technicolor Delivery Technologies, SAS
 * Top Victory Investments, Ltd.
-* UMC 波兰 sp。 o.o。
+* UMC Poland sp. z .o.o.
+* Vizio, Inc.
 * ZTE Corporation
 
 ## <a name="media-services-learning-paths"></a>媒体服务学习路径

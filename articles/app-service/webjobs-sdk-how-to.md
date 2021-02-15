@@ -7,12 +7,12 @@ ms.custom: devx-track-csharp
 ms.topic: article
 ms.date: 02/18/2019
 ms.author: glenga
-ms.openlocfilehash: 25aaf49d32da29fe5fb082e6e4481cd9266f88e1
-ms.sourcegitcommit: 4913da04fd0f3cf7710ec08d0c1867b62c2effe7
+ms.openlocfilehash: 5666a489cfd0f0d92120c9ec7e3c8d3c2d083b5e
+ms.sourcegitcommit: 78ecfbc831405e8d0f932c9aafcdf59589f81978
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/14/2020
-ms.locfileid: "88208634"
+ms.lasthandoff: 01/23/2021
+ms.locfileid: "98737263"
 ---
 # <a name="how-to-use-the-azure-webjobs-sdk-for-event-driven-background-processing"></a>如何使用 Azure WebJobs SDK 进行事件驱动的后台处理
 
@@ -66,7 +66,8 @@ static void Main(string[] args)
 }
 ```
 
-由于版本 3.x 使用默认的 .NET Core 配置 API，因此没有用于更改连接字符串名称的 API。
+> [!NOTE]
+> 由于版本 3.x 使用默认的 .NET Core 配置 API，因此没有用于更改连接字符串名称的 API。 请参阅[使用 Visual Studio 开发和部署 WebJobs](webjobs-dotnet-deploy-vs.md)
 
 ### <a name="host-development-settings"></a>主机开发设置
 
@@ -793,7 +794,7 @@ public static void RemoveItem([QueueTrigger("remove-item")] string message)
 
 ### <a name="viewing-lease-blobs"></a>查看租约 Blob
 
-WebJobs SDK 在幕后使用 [Azure Blob 租约](../storage/common/storage-concurrency.md#pessimistic-concurrency-for-blobs)来实现分布式锁定。 可以在 `AzureWebJobsStorage` 存储帐户的 `azure-webjobs-host` 容器中的路径“locks”下面找到单一实例使用的租约 Blob。 例如，前面演示的第一个 `ProcessImage` 示例的租约 Blob 路径可能是 `locks/061851c758f04938a4426aa9ab3869c0/WebJobs.Functions.ProcessImage`。 所有路径包含 JobHost ID，在本例中为 061851c758f04938a4426aa9ab3869c0。
+WebJobs SDK 在幕后使用 [Azure Blob 租约](../storage/blobs/concurrency-manage.md#pessimistic-concurrency-for-blobs)来实现分布式锁定。 可以在 `AzureWebJobsStorage` 存储帐户的 `azure-webjobs-host` 容器中的路径“locks”下面找到单一实例使用的租约 Blob。 例如，前面演示的第一个 `ProcessImage` 示例的租约 Blob 路径可能是 `locks/061851c758f04938a4426aa9ab3869c0/WebJobs.Functions.ProcessImage`。 所有路径包含 JobHost ID，在本例中为 061851c758f04938a4426aa9ab3869c0。
 
 ## <a name="async-functions"></a>异步函数
 
@@ -815,7 +816,7 @@ WebJobs SDK 在幕后使用 [Azure Blob 租约](../storage/common/storage-concur
 
 ## <a name="filters"></a>筛选器
 
-通过函数筛选器（预览版）可以使用自己的逻辑自定义 WebJobs 执行管道。 筛选器类似于 [ASP.NET Core 筛选器](https://docs.microsoft.com/aspnet/core/mvc/controllers/filters)。 可将其实现为应用到函数或类的声明性特性。 有关详细信息，请参阅[函数筛选器](https://github.com/Azure/azure-webjobs-sdk/wiki/Function-Filters)。
+通过函数筛选器（预览版）可以使用自己的逻辑自定义 WebJobs 执行管道。 筛选器类似于 [ASP.NET Core 筛选器](/aspnet/core/mvc/controllers/filters)。 可将其实现为应用到函数或类的声明性特性。 有关详细信息，请参阅[函数筛选器](https://github.com/Azure/azure-webjobs-sdk/wiki/Function-Filters)。
 
 ## <a name="logging-and-monitoring"></a>日志记录和监视
 
@@ -986,7 +987,7 @@ private class CustomTelemetryClientFactory : DefaultTelemetryClientFactory
 }
 ```
 
-`SamplingPercentageEstimatorSettings` 对象配置[自适应采样](https://docs.microsoft.com/azure/application-insights/app-insights-sampling)。 这意味着，在某些大容量方案中，Application Insights 会向服务器发送选定的遥测数据子集。
+`SamplingPercentageEstimatorSettings` 对象配置[自适应采样](../azure-monitor/app/sampling.md)。 这意味着，在某些大容量方案中，Application Insights 会向服务器发送选定的遥测数据子集。
 
 创建遥测工厂后，可将其传入 Application Insights 日志记录提供程序：
 

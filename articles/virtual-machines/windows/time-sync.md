@@ -7,12 +7,12 @@ ms.topic: conceptual
 ms.workload: infrastructure-services
 ms.date: 09/17/2018
 ms.author: cynthn
-ms.openlocfilehash: 1717ebd5709c05e33e658d3798494324a702b1d9
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.openlocfilehash: 830bdd45be4b0365ac45bc3ea366b99a34882a4c
+ms.sourcegitcommit: a43a59e44c14d349d597c3d2fd2bc779989c71d7
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87074043"
+ms.lasthandoff: 11/25/2020
+ms.locfileid: "96010616"
 ---
 # <a name="time-sync-for-windows-vms-in-azure"></a>Azure 中 Windows VM 的时间同步
 
@@ -60,7 +60,7 @@ VMICTimeSync 服务以采样或同步模式运行，只会影响时钟前进。 
 - NtpClient 提供程序，从 time.windows.com 获取信息。
 - VMICTimeSync 服务，用于将主机时间传递给 VM，并在 VM 因维护而暂停后进行纠正。 Azure 主机使用 Microsoft 拥有的 Stratum 1 设备来保持准确的时间。
 
-w32time 会按以下优先级顺序来首选时间提供程序：层次级别、根延迟、根分散、时间偏差。 大多数情况下，w32time 会首选 time.windows.com 而不是主机，因为 time.windows.com 报告的层次较低。 
+w32time 会按以下优先级顺序来首选时间提供程序：层次级别、根延迟、根分散、时间偏差。 在大多数情况下，Azure VM 上的 w32time 会首选主机时间，因为它会进行评估以比较两个时间源。 
 
 对于已加入域的计算机来说，域本身已建立时间同步层次结构，但林根仍需从某个位置获取时间，因此仍需考虑以下注意事项。
 
@@ -115,8 +115,8 @@ w32tm /query /source
 
 下面是可能会看到的输出及其含义：
     
-- **time.windows.com** - 在默认配置中，w32time 会从 time.windows.com 获取时间。 时间同步质量取决于到它的 Internet 连接，受数据包延迟的影响。 这是默认设置的常规输出。
-- **VM IC 时间同步提供程序**-vm 正在从主机同步时间。 这通常是你选择启用“仅主机”时间同步或 NtpServer 目前不可用的结果。 
+- **time.windows.com** - 在默认配置中，w32time 会从 time.windows.com 获取时间。 时间同步质量取决于到它的 Internet 连接，受数据包延迟的影响。 这是你将在物理计算机上获得的常见输出。
+- **VM IC 时间同步提供程序**  -vm 正在从主机同步时间。 这是你将在 Azure 中运行的虚拟机上获得的常见输出。 
 - 你的域服务器 - 当前计算机位于某个域中，该域定义时间同步层次结构。
 - 某个其他的服务器 - w32time 已显式配置为从该服务器获取时间。 时间同步质量取决于该时间服务器质量。
 - **本地 CMOS 时钟** - 时钟未同步。 如果 w32time 在重启后还没有足够的时间启动，或者所有配置的时间源均不可用，则可能获得此输出。
@@ -173,6 +173,6 @@ w32tm /dumpreg /subkey:Parameters | findstr /i "ntpserver"
 下面是有关时间同步的更多详细信息的链接：
 
 - [Windows 时间服务工具和设置](/windows-server/networking/windows-time-service/windows-time-service-tools-and-settings)
-- [Windows Server 2016 改进](/windows-server/networking/windows-time-service/windows-server-2016-improvements)
+- [Windows Server 2016 改进 ](/windows-server/networking/windows-time-service/windows-server-2016-improvements)
 - [Windows Server 2016 的准确时间](/windows-server/networking/windows-time-service/accurate-time)
 - [Support boundary to configure the Windows Time service for high-accuracy environments](/windows-server/networking/windows-time-service/support-boundary)（为高准确性环境配置 Windows 时间服务所需的支持边界）

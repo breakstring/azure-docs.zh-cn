@@ -1,5 +1,5 @@
 ---
-title: 升级到 .NET SDK 版本10
+title: 升级到 .NET SDK 版本 10
 titleSuffix: Azure Cognitive Search
 description: 从旧版本将代码迁移到 Azure 认知搜索 .NET SDK 版本 10。 了解新增功能和所需的代码更改。
 manager: nitinme
@@ -9,16 +9,17 @@ ms.service: cognitive-search
 ms.devlang: dotnet
 ms.topic: conceptual
 ms.date: 11/04/2019
-ms.openlocfilehash: 61fee97323d110875cb05fb48157527a39c80f56
-ms.sourcegitcommit: 4e5560887b8f10539d7564eedaff4316adb27e2c
+ms.custom: devx-track-csharp
+ms.openlocfilehash: bfe24ff38446fa0d0ccea96799e6f42b561713bf
+ms.sourcegitcommit: 829d951d5c90442a38012daaf77e86046018e5b9
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/06/2020
-ms.locfileid: "87905775"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "89002804"
 ---
 # <a name="upgrade-to-azure-cognitive-search-net-sdk-version-10"></a>升级到 Azure 认知搜索 .NET SDK 版本 10
 
-如果你使用的是 9.0 或更低版本的 [.NET SDK](https://docs.microsoft.com/dotnet/api/overview/azure/search)，本文可帮助你升级应用程序，以使用版本 10。
+如果你使用的是 9.0 或更低版本的 [.NET SDK](/dotnet/api/overview/azure/search)，本文可帮助你升级应用程序，以使用版本 10。
 
 Azure 搜索在版本 10 中重命名为 Azure 认知搜索，但命名空间和包名不变。 以前的 SDK 版本（9.0 及更低版本）仍使用以前的名称。 若要详细了解如何使用 SDK（包括示例），请参阅[如何从 .NET 应用程序使用 Azure 认知搜索](search-howto-dotnet-sdk.md)。
 
@@ -35,13 +36,13 @@ Azure 搜索在版本 10 中重命名为 Azure 认知搜索，但命名空间和
 Azure 认知搜索 .NET SDK 版本 10 面向 REST API `2019-05-06`，其中包含以下更新：
 
 * 引入了两项新技能 - [条件技能](cognitive-search-skill-conditional.md)和[文本翻译技能](cognitive-search-skill-text-translation.md)。
-* 重新组织了[整形程序技能](cognitive-search-skill-shaper.md)输入的结构，以适应嵌套上下文的合并。 有关详细信息，请参阅此[示例 JSON 定义](https://docs.microsoft.com/azure/search/cognitive-search-skill-shaper#scenario-3-input-consolidation-from-nested-contexts)。
+* 重新组织了[整形程序技能](cognitive-search-skill-shaper.md)输入的结构，以适应嵌套上下文的合并。 有关详细信息，请参阅此[示例 JSON 定义](./cognitive-search-skill-shaper.md#scenario-3-input-consolidation-from-nested-contexts)。
 * 添加了两个新的[字段映射函数](search-indexer-field-mappings.md)：
-    - [urlEncode](https://docs.microsoft.com/azure/search/search-indexer-field-mappings#urlencode-function)
-    - [urlDecode](https://docs.microsoft.com/azure/search/search-indexer-field-mappings#urldecode-function)
-* 在某些情况下，[索引器执行状态](https://docs.microsoft.com/rest/api/searchservice/get-indexer-status)中显示的错误和警告可以提供有助于调试的更多详细信息。 `IndexerExecutionResult` 已更新，以反映此行为。
+    - [urlEncode](./search-indexer-field-mappings.md#urlencode-function)
+    - [urlDecode](./search-indexer-field-mappings.md#urldecode-function)
+* 在某些情况下，[索引器执行状态](/rest/api/searchservice/get-indexer-status)中显示的错误和警告可以提供有助于调试的更多详细信息。 `IndexerExecutionResult` 已更新，以反映此行为。
 * 可以选择性地通过指定 `name` 属性来识别[技能集](cognitive-search-defining-skillset.md)中定义的单个技能。
-* `ServiceLimits` 显示[复杂类型](https://docs.microsoft.com/azure/search/search-howto-complex-data-types)的限制，`IndexerExecutionInfo` 显示相关的索引器限制/配额。
+* `ServiceLimits` 显示[复杂类型](./search-howto-complex-data-types.md)的限制，`IndexerExecutionInfo` 显示相关的索引器限制/配额。
 
 <a name="UpgradeSteps"></a>
 
@@ -159,4 +160,3 @@ var skillset = new Skillset()
 - 更改整形程序技能很有可能会对新代码或现有代码造成影响。 接下来，请务必重新访问这个演示输入结构的示例：[整形程序技能 JSON 定义示例](cognitive-search-skill-shaper.md)
 - 浏览 [AI 扩充概述](cognitive-search-concept-intro.md)。
 - 我们欢迎你对 SDK 提供反馈。 如果遇到问题，请随时通过 [Stack Overflow](https://stackoverflow.com/questions/tagged/azure-search) 向我们寻求帮助。 如果找到 Bug，可以在 [Azure .NET SDK GitHub 存储库](https://github.com/Azure/azure-sdk-for-net/issues)中提出问题。 务必在问题标题上加前缀“[Azure 认知搜索]”。
-

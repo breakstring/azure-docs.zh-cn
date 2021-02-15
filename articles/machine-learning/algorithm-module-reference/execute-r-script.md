@@ -1,26 +1,26 @@
 ---
 title: 执行 R 脚本：模块引用
 titleSuffix: Azure Machine Learning
-description: 了解如何使用 Azure 机器学习中的“执行 R 脚本”模块来运行 R 代码。
+description: 了解如何使用 Azure 机器学习设计器中的 "执行 R 脚本" 模块来运行自定义 R 代码。
 services: machine-learning
 ms.service: machine-learning
 ms.subservice: core
 ms.topic: reference
 author: likebupt
 ms.author: keli19
-ms.date: 07/27/2020
-ms.openlocfilehash: 873f0d7d2aa4493e77a10f62b0646f4f8233f6b9
-ms.sourcegitcommit: 46f8457ccb224eb000799ec81ed5b3ea93a6f06f
+ms.date: 12/17/2020
+ms.openlocfilehash: bdd7fd8e19bf2de6d0b3c6b2edd4515771fae237
+ms.sourcegitcommit: aacbf77e4e40266e497b6073679642d97d110cda
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/28/2020
-ms.locfileid: "87337834"
+ms.lasthandoff: 01/12/2021
+ms.locfileid: "98118995"
 ---
 # <a name="execute-r-script-module"></a>“执行 R 脚本”模块
 
-本文介绍如何使用“执行 R 脚本”模块在 Azure 机器学习设计器（预览版）管道中运行 R 代码。
+本文介绍如何使用“执行 R 脚本”模块在 Azure 机器学习设计器管道中运行 R 代码。
 
-使用 R，可以执行现有模块当前不支持的任务，例如： 
+使用 R 可以执行现有模块不支持的任务，例如： 
 - 创建自定义数据转换
 - 使用你自己的指标来评估预测
 - 使用未在设计器中作为独立模块实施的算法来生成模型
@@ -49,7 +49,12 @@ azureml_main <- function(dataframe1, dataframe2){
 若要安装其他 R 包，请使用 `install.packages()` 方法。 包是针对每一个“执行 R 脚本”模块分别安装的。 它们不在其他“执行 R 脚本”模块之间共享。
 
 > [!NOTE]
+> **不** 建议从脚本捆绑包安装 R 包。 建议直接在脚本编辑器中安装包。
 > 在安装包时，请指定 CRAN 存储库，例如 `install.packages("zoo",repos = "http://cran.us.r-project.org")`。
+
+> [!WARNING]
+> Excute R 脚本模块不支持安装需要本机编译的包，如 `qdap` 需要 JAVA 和需要 `drc` c + + 的包的包。 这是因为此模块是在预安装的环境中使用非管理员权限执行的。
+> 不要安装预构建于 Windows 上的包，因为设计器模块是在 Ubuntu 上运行的。 若要检查是否在 windows 上预先生成了包，可以使用 [CRAN](https://cran.r-project.org/) 并搜索包，根据 OS 下载一个二进制文件，然后选中 " **生成：** **说明** 文件中的部分"。 下面是一个示例： :::image type="content" source="media/module/r-package-description.png" alt-text="R 包说明" lightbox="media/module/r-package-page.png":::
 
 此示例演示如何安装 Zoo：
 ```R
@@ -78,25 +83,27 @@ azureml_main <- function(dataframe1, dataframe2){
  > [!NOTE]
  > 安装包之前，请检查它是否已经存在，以避免重复安装。 重复安装可能会导致 Web 服务请求超时。     
 
+## <a name="access-to-registered-dataset"></a>访问已注册的数据集
+
+可以参考以下示例代码，访问工作区中 [已注册的数据集](../how-to-create-register-datasets.md) ：
+
+```R
+azureml_main <- function(dataframe1, dataframe2){
+  print("R script run.")
+  run = get_current_run()
+  ws = run$experiment$workspace
+  dataset = azureml$core$dataset$Dataset$get_by_name(ws, "YOUR DATASET NAME")
+  dataframe2 <- dataset$to_pandas_dataframe()
+  # Return datasets as a Named List
+  return(list(dataset1=dataframe1, dataset2=dataframe2))
+}
+```
+
 ## <a name="uploading-files"></a>上传文件
 “执行 R 脚本”模块支持通过使用 Azure 机器学习 R SDK 上传文件。
 
 以下示例演示了如何在“执行 R 脚本”中上传图像文件：
 ```R
-
-# R version: 3.5.1
-# The script MUST contain a function named azureml_main,
-# which is the entry point for this module.
-
-# Note that functions dependent on the X11 library,
-# such as "View," are not supported because the X11 library
-# is not preinstalled.
-
-# The entry point function MUST have two input arguments.
-# If the input port is not connected, the corresponding
-# dataframe argument will be null.
-#   Param<dataframe1>: a R DataFrame
-#   Param<dataframe2>: a R DataFrame
 azureml_main <- function(dataframe1, dataframe2){
   print("R script run.")
 
@@ -119,25 +126,9 @@ azureml_main <- function(dataframe1, dataframe2){
 > [!div class="mx-imgBorder"]
 > ![预览上传的图像](media/module/upload-image-in-r-script.png)
 
-## <a name="access-to-registered-dataset"></a>访问已注册的数据集
-
-可以参考以下示例代码，访问工作区中[已注册的数据集](https://docs.microsoft.com/azure/machine-learning/how-to-create-register-datasets#access-datasets-in-your-script)：
-
-```R
-        azureml_main <- function(dataframe1, dataframe2){
-  print("R script run.")
-  run = get_current_run()
-  ws = run$experiment$workspace
-  dataset = azureml$core$dataset$Dataset$get_by_name(ws, "YOUR DATASET NAME")
-  dataframe2 <- dataset$to_pandas_dataframe()
-  # Return datasets as a Named List
-  return(list(dataset1=dataframe1, dataset2=dataframe2))
-}
-```
-
 ## <a name="how-to-configure-execute-r-script"></a>如何配置“执行 R 脚本”
 
-“执行 R 脚本”模块包含可用作起点的代码示例。 若要配置“执行 R 脚本”模块，请提供一组输入和要运行的代码。
+“执行 R 脚本”模块包含可用作起点的示例代码。
 
 ![R 模块的输入示意图](media/module/execute-r-script.png)
 
@@ -194,11 +185,14 @@ azureml_main <- function(dataframe1, dataframe2){
     > [!NOTE]
     > 现有 R 代码可能需要稍做更改才能在设计器管道中运行。 例如，以 CSV 格式提供的输入数据应显式转换为数据集，然后才能在代码中使用。 R 语言中使用的数据和列类型与在设计器中使用的数据和列类型在某些方面也有所不同。
 
-    如果脚本大于16KB，请使用**脚本捆绑**端口来避免错误，如*命令行数超过16597个字符的限制*。 
+1. 如果你的脚本大于 16 KB，请使用 **脚本捆绑** 端口来避免错误，如 *命令行数超过16597个字符的限制*。 
     
-    将脚本和其他自定义资源捆绑到一个 zip 文件，然后将 zip 文件作为**文件数据集**上传到工作室。 然后，可以从 "设计器创作" 页左侧模块窗格中的 "*我的数据集*" 列表中拖动数据集模块。 将数据集模块连接到**执行 R 脚本**模块的**脚本捆绑**端口。
+    1. 将脚本和其他自定义资源捆绑到一个 zip 文件中。
+    1. 将 zip 文件作为“文件数据集”上传到工作室。 
+    1. 从设计器创作页面左侧模块窗格的“数据集”列表中拖取数据集模块。 
+    1. 将数据集模块连接到“执行 R 脚本”模块的“脚本包”端口。
     
-    下面是使用脚本捆绑中的脚本的示例代码：
+    下面是使用脚本包中的脚本的示例代码：
 
     ```R
     azureml_main <- function(dataframe1, dataframe2){
@@ -219,7 +213,7 @@ azureml_main <- function(dataframe1, dataframe2){
 
 ## <a name="results"></a>结果
 
-“执行 R 脚本”模块可返回多个输出，但必须将它们作为 R 数据帧提供。 数据帧会自动转换为设计器中的数据集，以便与其他模块兼容。
+“执行 R 脚本”模块可返回多个输出，但必须将它们作为 R 数据帧提供。 设计器会自动将数据帧转换为数据集，使之与其他模块兼容。
 
 来自 R 的标准消息和错误将返回到模块的日志中。
 
@@ -236,7 +230,7 @@ azureml_main <- function(dataframe1, dataframe2){
 
 1. 若要将包含 R 代码的 .zip 文件上传到工作区，请转到“数据集”资产页。 选择“创建数据集”，然后选择“从本地文件”和“文件”数据集类型选项  。  
 
-1. 验证左侧模块树中“数据集”类别下“我的数据集”列表中是否存在该压缩文件 。
+1. 验证该压缩文件是否出现在左侧模块树的“数据集”类别下“我的数据集”中 。
 
 1.  将数据集连接到“脚本包”输入端口。
 
@@ -340,7 +334,7 @@ azureml_main <- function(dataframe1, dataframe2){
 
 1. 添加“执行 R 脚本”模块的第二个实例，并将其连接到以前模块的输出端口。
 
-1. 在 " **R 脚本**" 文本框中键入以下代码，以 `A` 从输入数据表提取对象。 
+1. 在 " **R 脚本** " 文本框中键入以下代码，以 `A` 从输入数据表提取对象。 
 
     ```R
     azureml_main <- function(dataframe1, dataframe2){
@@ -502,4 +496,4 @@ azureml_main <- function(dataframe1, dataframe2){
 
 ## <a name="next-steps"></a>后续步骤
 
-请参阅 Azure 机器学习的[可用模块集](module-reference.md)。 
+请参阅 Azure 机器学习的[可用模块集](module-reference.md)。

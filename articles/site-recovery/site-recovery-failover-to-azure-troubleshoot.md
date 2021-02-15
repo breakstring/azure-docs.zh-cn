@@ -9,12 +9,12 @@ ms.topic: article
 ms.workload: storage-backup-recovery
 ms.date: 01/08/2020
 ms.author: mayg
-ms.openlocfilehash: 39a92dbdc0bdcd0fdd2bb06efe3fbd4bfe33069d
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.openlocfilehash: d2a0444483c382da7c54accf7dca49d097671771
+ms.sourcegitcommit: 28c5fdc3828316f45f7c20fc4de4b2c05a1c5548
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87071197"
+ms.lasthandoff: 10/22/2020
+ms.locfileid: "92371981"
 ---
 # <a name="troubleshoot-errors-when-failing-over-vmware-vm-or-physical-machine-to-azure"></a>解决将 VMware VM 或物理计算机故障转移到 Azure 时出现的错误
 
@@ -55,7 +55,7 @@ Site Recovery 无法在 Azure 中创建故障转移的虚拟机。 发生此情�
     如果需要混合，则它提供以下结果：
 
     ```output
-    REGISTRY::HKEY_LOCAL_MACHINE\SYSTEM\ControlSet001\services\storvsc           start =  3 expected value =  0
+    REGISTRY::HKEY_LOCAL_MACHINE\SYSTEM\ControlSet001\services\storvsc           start =  3 expected value =  0
 
     This system doesn't meet no-hydration requirement.
     ```
@@ -84,8 +84,8 @@ Site Recovery 无法在 Azure 中创建故障转移的虚拟机。 发生此情�
 
 如果 Azure 中已故障转移的 VM 的“连接”按钮灰显，并且你未通过快速路由或站点到站点 VPN 连接来连接到 Azure，则执行以下操作：
 
-1. 转到“虚拟机” > “网络”，单击所需网络接口的名称。  ![network-interface](media/site-recovery-failover-to-azure-troubleshoot/network-interface.PNG)
-2. 导航到“IP 配置”，然后单击所需 IP 配置的名称字段。 ![IPConfigurations](media/site-recovery-failover-to-azure-troubleshoot/IpConfigurations.png)
+1. 转到“虚拟机” > “网络”，单击所需网络接口的名称。  ![屏幕截图显示已选择网络接口名称的虚拟机的 "网络" 页。](media/site-recovery-failover-to-azure-troubleshoot/network-interface.PNG)
+2. 导航到“IP 配置”，然后单击所需 IP 配置的名称字段。 ![屏幕截图显示选定了 "I P 配置" 名称的网络接口的 "I P 配置" 页。](media/site-recovery-failover-to-azure-troubleshoot/IpConfigurations.png)
 3. 若要启用公共 IP 地址，请单击“启用”。 ![启用 IP](media/site-recovery-failover-to-azure-troubleshoot/Enable-Public-IP.png)
 4. 单击“配置所需设置” > “新建”。 ![新建](media/site-recovery-failover-to-azure-troubleshoot/Create-New-Public-IP.png)
 5. 输入公共地址的名称，选择“SKU”和“分配”的默认选项，然后单击“确定”。
@@ -168,7 +168,7 @@ RegisterHostStaticInfo encountered exception config/talwrapper.cpp(107)[post] Cu
 
 2. 如果前面命令的输出显示已定义 http_proxy 或 https_proxy 设置，请使用以下方法之一取消阻止主目标与配置服务器之间的通信：
    
-   - 下载 [PsExec 工具](https://aka.ms/PsExec)。
+   - 下载 [PsExec 工具](/sysinternals/downloads/psexec)。
    - 使用该工具访问系统用户上下文并确定是否配置了代理地址。 
    - 如果已配置代理，请使用 PsExec 工具在系统用户上下文中打开 IE。
   

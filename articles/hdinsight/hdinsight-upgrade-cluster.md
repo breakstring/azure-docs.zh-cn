@@ -2,19 +2,17 @@
 title: 将群集迁移到较新的版本
 titleSuffix: Azure HDInsight
 description: 了解将 Azure HDInsight 群集迁移到较新版本的准则。
-author: hrasheed-msft
-ms.author: hrasheed
 ms.reviewer: jasonh
 ms.service: hdinsight
 ms.topic: how-to
 ms.custom: hdinsightactive
 ms.date: 01/31/2020
-ms.openlocfilehash: f3bfd430023330d3a399a0a760fd353b6ee60941
-ms.sourcegitcommit: 124f7f699b6a43314e63af0101cd788db995d1cb
+ms.openlocfilehash: 04da5d668515fe96d50d4e6a7d0f5ff1c4c48c27
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/08/2020
-ms.locfileid: "86085882"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98931371"
 ---
 # <a name="migrate-hdinsight-cluster-to-a-newer-version"></a>将 HDInsight 群集迁移到较新版本
 
@@ -51,7 +49,7 @@ ms.locfileid: "86085882"
 
 ## <a name="backup-and-restore"></a>备份和还原
 
-有关数据库备份和还原的详细信息，请参阅[使用自动数据库备份恢复 AZURE SQL 数据库中的数据库](../azure-sql/database/recovery-using-backups.md)。
+有关数据库备份和还原的详细信息，请参阅[使用自动数据库备份在 Azure SQL 数据库中恢复数据库](../azure-sql/database/recovery-using-backups.md)。
 
 ## <a name="next-steps"></a>后续步骤
 

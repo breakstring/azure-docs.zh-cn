@@ -1,7 +1,7 @@
 ---
 title: 注册调用 Web API 的移动应用 | Azure
 titleSuffix: Microsoft identity platform
-description: 了解如何构建调用 Web API 的移动应用（应用的代码配置）
+description: 了解如何构建用于调用 Web API 的移动应用（应用的注册）
 services: active-directory
 author: jmprieur
 manager: CelesteDG
@@ -13,12 +13,12 @@ ms.date: 05/07/2019
 ms.author: jmprieur
 ms.reviewer: brandwe
 ms.custom: aaddev
-ms.openlocfilehash: f24b3c9256f759b87c705aae9b93c2d6bc74d30c
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 6385f03556d155941139b77333d6f4a25081fe67
+ms.sourcegitcommit: 126ee1e8e8f2cb5dc35465b23d23a4e3f747949c
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "82652640"
+ms.lasthandoff: 02/10/2021
+ms.locfileid: "100103152"
 ---
 # <a name="register-mobile-apps-that-call-web-apis"></a>注册调用 Web API 的移动应用
 
@@ -30,66 +30,70 @@ ms.locfileid: "82652640"
 
 ### <a name="audience-for-interactive-token-acquisition"></a>交互式令牌获取的受众
 
-大多数移动应用程序使用交互式身份验证。 如果应用使用这种形式的身份验证，则你可以从任何[帐户类型](quickstart-register-app.md#register-a-new-application-using-the-azure-portal)将用户登录。
+大多数移动应用程序使用交互式身份验证。 如果应用使用这种形式的身份验证，则你可以从任何[帐户类型](quickstart-register-app.md)将用户登录。
 
 ### <a name="audience-for-integrated-windows-authentication-username-password-and-b2c"></a>Windows 集成身份验证、用户名-密码以及 B2C 的受众
 
 如果你有通用 Windows 平台 (UWP) 应用，则可以使用 Windows 集成身份验证将用户登录。 若要使用 Windows 集成身份验证或用户名-密码身份验证，应用程序需在你自己的业务线 (LOB) 开发人员租户中将用户登录。 在独立软件供应商 (ISV) 方案中，应用程序可以在 Azure Active Directory 组织中将用户登录。 Microsoft 个人帐户不支持这些身份验证流。
 
-还可以通过使用传递 B2C 机构和策略的社交标识来登录用户。 若要使用此方法，只能使用交互式身份验证和用户名密码身份验证。 用户名-当前仅支持 Xamarin、Xamarin 和 UWP 上的密码身份验证。
+还可以使用传递 B2C 颁发机构和策略的社交标识将用户登录。 若要使用此方法，只能使用交互式身份验证和用户名-密码身份验证。 用户名-密码身份验证目前仅在 Xamarin.iOS、Xamarin.Android 和 UWP 上受支持。
 
-有关详细信息，请参阅[方案和支持的身份验证流](authentication-flows-app-scenarios.md#scenarios-and-supported-authentication-flows)、[方案以及支持的平台和语言](authentication-flows-app-scenarios.md#scenarios-and-supported-platforms-and-languages)。
+有关详细信息，请参阅[方案和支持的身份验证流](authentication-flows-app-scenarios.md#scenarios-and-supported-authentication-flows)以及[方案和支持的平台与语言](authentication-flows-app-scenarios.md#scenarios-and-supported-platforms-and-languages)
 
-## <a name="platform-configuration-and-redirect-uris"></a>平台配置和重定向 URI  
+## <a name="platform-configuration-and-redirect-uris"></a>平台配置和重定向 URI
 
 ### <a name="interactive-authentication"></a>交互式身份验证
 
-生成使用交互式身份验证的移动应用时，最关键的注册步骤是重定向 URI。 可以通过["**身份验证**" 边栏选项卡上的平台配置](https://aka.ms/MobileAppReg)来设置交互式身份验证。
+构建使用交互式身份验证的移动应用时，最关键的注册步骤是重定向 URI。 可以通过[“身份验证”边栏选项卡上的平台配置](https://aka.ms/MobileAppReg)来设置交互式身份验证。
 
-这种体验使你的应用能够通过 Microsoft Authenticator （在 Android 上 Intune 公司门户）获取单一登录（SSO）。 它还将支持设备管理策略。
+应用可以在此体验中通过 Microsoft Authenticator（以及 Android 上的 Intune 公司门户）实现单一登录 (SSO)。 它还支持设备管理策略。
 
-应用注册门户提供预览版体验，帮助你计算 iOS 和 Android 应用程序的中转回复 URI：
+应用注册门户提供一个预览版体验来帮助你计算 iOS 和 Android 应用程序的中介回复 URI：
 
-1. 在应用注册门户中，选择 "**身份验证**  >  **"，尝试新体验**。
+1. 在应用注册门户中选择“身份验证” > “尝试新体验”。
 
-   !["身份验证" 边栏选项卡，你可以在其中选择新体验](https://user-images.githubusercontent.com/13203188/60799285-2d031b00-a173-11e9-9d28-ac07a7ae894a.png)
+   ![“身份验证”边栏选项卡，可在其中选择新体验](https://user-images.githubusercontent.com/13203188/60799285-2d031b00-a173-11e9-9d28-ac07a7ae894a.png)
 
-2. 选择“添加平台”。****
+2. 选择“添加平台”。 
 
    ![添加平台](https://user-images.githubusercontent.com/13203188/60799366-4c01ad00-a173-11e9-934f-f02e26c9429e.png)
 
-3. 如果支持平台列表，请选择“iOS”。****
+3. 如果支持平台列表，请选择“iOS”。 
 
    ![选择移动应用程序](https://user-images.githubusercontent.com/13203188/60799411-60de4080-a173-11e9-9dcc-d39a45826d42.png)
 
-4. 输入你的捆绑 ID，然后选择 "**注册**"。
+4. 输入捆绑 ID，然后选择“注册”。 
 
    ![输入捆绑 ID](https://user-images.githubusercontent.com/13203188/60799477-7eaba580-a173-11e9-9f8b-431f5b09344e.png)
 
-完成这些步骤后，将为你计算重定向 URI，如下图所示。
+完成这些步骤后，系统将会计算重定向 URI，如下图所示。
 
 ![生成的重定向 URI](https://user-images.githubusercontent.com/13203188/60799538-9e42ce00-a173-11e9-860a-015a1840fd19.png)
 
-如果希望手动配置重定向 URI，可以通过应用程序清单执行此操作。 下面是清单的推荐格式：
+如果你偏向于手动配置重定向 URI，可以通过应用程序清单进行配置。 下面是清单的建议格式：
 
-- **iOS**：`msauth.<BUNDLE_ID>://auth` 
+- **iOS**：`msauth.<BUNDLE_ID>://auth`
   - 例如，输入 `msauth.com.yourcompany.appName://auth`
 - **Android**：`msauth://<PACKAGE_NAME>/<SIGNATURE_HASH>`
-  - 可以通过 KeyTool 命令使用 release 键或调试键生成 Android 签名哈希。
+  - 可以通过 KeyTool 命令使用发布密钥或调试密钥来生成 Android 签名哈希。
 
 ### <a name="username-password-authentication"></a>用户名-密码身份验证
 
-如果应用只使用用户名密码身份验证，则不需要为应用程序注册重定向 URI。 此流将执行到 Microsoft 标识平台2.0 版终结点的往返。 不会在任何特定 URI 上调用你的应用程序。 
+如果应用仅使用用户名-密码身份验证，则无需为应用程序注册重定向 URI。 此流将执行到 Microsoft 标识平台的往返过程。 不会在任何特定 URI 上调用你的应用程序。
 
-但是，你需要将应用程序标识为公用客户端应用程序。 为此，请在应用程序的 "**身份验证**" 部分启动。 在 "**高级设置**" 子节的 "**默认客户端类型**" 段落中，对于 "将**应用程序视为公共客户端**"，请选择 **"是"**。
+但是，将应用程序标识为公用客户端应用程序。 为此，请执行以下操作：
+
+1. 仍在 <a href="https://portal.azure.com/" target="_blank">Azure 门户</a>中，选择“应用注册”中的应用，然后选择“身份验证” 。
+1. 在“高级设置” > “允许公共客户端流” > “启用以下移动和桌面流:”中，选择“是”。
+
+   :::image type="content" source="media/scenarios/default-client-type.png" alt-text="在 Azure 门户中的“身份验证”窗格上启用公共客户端设置":::
 
 ## <a name="api-permissions"></a>API 权限
 
-移动应用程序代表已登录用户调用 API。 应用需要请求委托的权限。 这些权限也称为作用域。 根据你的需要，你可以通过 Azure 门户以静态方式请求委托的权限。 也可以在运行时动态请求它们。 
+移动应用程序代表已登录用户调用 API。 应用需要请求委托的权限。 这些权限也称为范围。 根据所需的体验，可以通过 Azure 门户以静态方式请求委托的权限。 或者，可以在运行时动态请求这些权限。
 
-通过静态注册权限，管理员可以轻松地批准你的应用程序。 建议使用静态注册。
+以静态方式注册权限可让管理员轻松审批应用。 建议使用静态注册。
 
 ## <a name="next-steps"></a>后续步骤
 
-> [!div class="nextstepaction"]
-> [代码配置](scenario-mobile-app-configuration.md)
+转到此方案中的下一篇文章：[应用代码配置](scenario-mobile-app-configuration.md)。

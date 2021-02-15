@@ -1,5 +1,5 @@
 ---
-title: 有关磁盘的常见问题
+title: 有关磁盘的常见问题解答
 description: 有关 Azure IaaS Linux VM 磁盘和高级磁盘（托管和非托管）的常见问题解答
 author: roygara
 ms.service: virtual-machines
@@ -7,12 +7,12 @@ ms.topic: conceptual
 ms.date: 06/15/2017
 ms.author: rogarana
 ms.subservice: disks
-ms.openlocfilehash: d05de44343d5d530a367286bec3d82ba3d66f0f6
-ms.sourcegitcommit: d39f2cd3e0b917b351046112ef1b8dc240a47a4f
+ms.openlocfilehash: dcfef81f2d7f3413489490d97c143fdec7e11bed
+ms.sourcegitcommit: d60976768dec91724d94430fb6fc9498fdc1db37
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/25/2020
-ms.locfileid: "88817417"
+ms.lasthandoff: 12/02/2020
+ms.locfileid: "96499316"
 ---
 # <a name="frequently-asked-questions-about-azure-iaas-vm-disks-and-managed-and-unmanaged-premium-disks"></a>有关 Azure IaaS VM 磁盘以及托管和非托管高级磁盘的常见问题解答
 
@@ -76,7 +76,7 @@ ms.locfileid: "88817417"
 
 设置 VM 诊断的专用存储帐户。
 
-托管磁盘支持哪类基于角色的访问控制？
+**托管磁盘可以使用哪种类型的 Azure 基于角色的访问控制支持？**
 
 托管磁盘支持三个密钥默认角色：
 
@@ -136,7 +136,7 @@ Azure 托管磁盘当前仅支持本地冗余存储托管磁盘。
 
 第 1 代映像只能在数据磁盘而不是 OS 磁盘上使用 GPT 分区。 操作系统磁盘必须使用 MBR 分区样式。
 
-[第 2 代映像](https://docs.microsoft.com/azure/virtual-machines/linux/generation-2)可以在 OS 磁盘和数据磁盘上使用 GPT 分区。
+[第 2 代映像](./generation-2.md)可以在 OS 磁盘和数据磁盘上使用 GPT 分区。
 
 哪些磁盘类型支持快照？
 
@@ -151,7 +151,7 @@ Azure 磁盘预留提供的选项可用于购买为期一年的采用指定 SKU�
 预留采用磁盘（而不是容量）的形式。 换句话说，预留 P80 (32 TiB) 磁盘时，你会收到单个 P80 磁盘，因此，无法将该特定预留划分为两个较小的 P70 (16 TiB) 磁盘。 当然，可以根据自己的需要预留任意数量的磁盘，包括两个单独的 P70 (16 TiB) 磁盘。
 
 如何应用 Azure 磁盘预留？    
-磁盘预留遵循类似于预留虚拟机 (VM) 实例的模型。 不同之处在于，磁盘预留无法应用于不同的 SKU，而 VM 实例可以。 有关 VM 实例的详细信息，请参阅[通过 Azure 虚拟机预留实例节省成本](./linux/prepay-reserved-vm-instances.md)。     
+磁盘预留遵循类似于预留虚拟机 (VM) 实例的模型。 不同之处在于，磁盘预留无法应用于不同的 SKU，而 VM 实例可以。 有关 VM 实例的详细信息，请参阅[通过 Azure 虚拟机预留实例节省成本](./prepay-reserved-vm-instances.md)。     
 
 是否可以跨多个区域使用通过 Azure 磁盘预留购买的数据存储？    
 Azure 磁盘预留是针对特定区域和 SKU（如美国东部 2 中的 P30）购买的，因此无法在这些构造外部使用。 始终可以购买额外的 Azure 磁盘预留来满足其他区域或 SKU 的磁盘存储需求。    
@@ -171,7 +171,7 @@ Azure 磁盘预留是针对特定区域和 SKU（如美国东部 2 中的 P30）
 
 哪些区域支持共享磁盘？
 
-有关区域信息，请参阅我们的 [概念文章](./linux/disks-shared.md)。
+有关区域信息，请参阅我们的 [概念文章](disks-shared.md)。
 
 共享磁盘是否可用作操作系统磁盘？
 
@@ -179,7 +179,7 @@ Azure 磁盘预留是针对特定区域和 SKU（如美国东部 2 中的 P30）
 
 哪些磁盘大小支持共享磁盘？
 
-有关支持的大小，请参阅我们的 [概念文章](./linux/disks-shared.md)。
+有关支持的大小，请参阅我们的 [概念文章](disks-shared.md)。
 
 **如果有现成的磁盘，是否可以在其上启用共享磁盘？**
 
@@ -241,7 +241,7 @@ Azure 备份是否可用于超级磁盘？
 
 **如何上传到托管磁盘？**
 
-创建一个托管磁盘，并将 [creationData](https://docs.microsoft.com/rest/api/compute/disks/createorupdate#creationdata) 的 [createOption](https://docs.microsoft.com/rest/api/compute/disks/createorupdate#diskcreateoption) 属性设置为“Upload”，然后可以将数据上传到该磁盘。
+创建一个托管磁盘，并将 [creationData](/rest/api/compute/disks/createorupdate#creationdata) 的 [createOption](/rest/api/compute/disks/createorupdate#diskcreateoption) 属性设置为“Upload”，然后可以将数据上传到该磁盘。
 
 是否可以在 VM 处于上传状态时将磁盘附加到它？
 
@@ -396,13 +396,19 @@ DS 系列的缓存和本地 SSD 合并限制是每个核心 4,000 IOPS，以及�
 
 否，任何大小的标准 SSD 托管磁盘都不能与非托管磁盘或页 blob 配合使用。
 
-**操作系统和数据磁盘支持的最大托管磁盘大小是多少？**
+**Gen1 VM 上的操作系统和数据磁盘支持的最大托管磁盘大小是多少？**
 
-Azure 支持的操作系统磁盘的分区类型是主启动记录 (MBR)。 MBR 格式支持的磁盘最大大小为 2 TiB。 Azure 支持的操作系统磁盘的最大大小为 2 TiB。 Azure 支持的托管数据磁盘最大大小为 32 TiB。
+Azure 支持的 Gen1 操作系统磁盘的分区类型是主启动记录 (MBR)。 尽管 Gen1 OS 磁盘仅支持 MBR，但数据磁盘支持 GPT。 虽然你可以分配的 OS 磁盘最大大小为 4 TiB，但 MBR 分区类型最多只能将此磁盘空间的 2 TiB 用于操作系统。 Azure 支持的托管数据磁盘最大大小为 32 TiB。
+
+**Gen2 VM 上的操作系统和数据磁盘支持的最大托管磁盘大小是多少？**
+
+Azure 支持的 Gen2 操作系统磁盘的分区类型是 GUID 分区表 (GPT)。 Gen2 VM 支持的 OS 磁盘最大大小为 4 TiB。 Azure 支持的托管数据磁盘最大大小为 32 TiB。
+
 
 **操作系统和数据磁盘支持的最大非托管磁盘大小是多少？**
 
-Azure 支持的操作系统磁盘的分区类型是主启动记录 (MBR)。 MBR 格式支持的磁盘最大大小为 2 TiB。 Azure 支持的操作系统非托管磁盘的最大大小为 2 TiB。 Azure 支持的非托管数据磁盘最大大小为 4 TiB。
+Azure 支持的使用非托管磁盘的操作系统磁盘的分区类型是主启动记录 (MBR)。  虽然你可以分配的 OS 磁盘最大大小为 4 TiB，但 MBR 分区类型最多只能将此磁盘空间的 2 TiB 用于操作系统。 Azure 支持的非托管数据磁盘最大大小为 4 TiB。
+
 
 支持的最大页 blob 大小是多少？
 
@@ -421,7 +427,7 @@ Azure 支持的最大页 blob 大小是 8 TiB (8,191 GiB)。 附加到 VM 作为
 
 非托管磁盘或页 blob 是否支持 P4 和 P6 磁盘大小？
 
-非托管磁盘和页 blob 不支持 P4 (32 GiB) 和 P6 (64 GiB) 磁盘大小作为默认磁盘层。 需要显式[设置 Blob 层](https://docs.microsoft.com/rest/api/storageservices/set-blob-tier)，将其设为 P4 和 P6，以便存储映射到这些层的磁盘。 如果使用少于 32 GiB 或介于 32 GiB 到 64 GiB 之间的磁盘大小或内容长度部署非托管磁盘或页 blob 而不设置 Blob 层，则将继续停留在 P10（500 IOPS 和 100 MiB/秒）和映射的定价层。
+非托管磁盘和页 blob 不支持 P4 (32 GiB) 和 P6 (64 GiB) 磁盘大小作为默认磁盘层。 需要显式[设置 Blob 层](/rest/api/storageservices/set-blob-tier)，将其设为 P4 和 P6，以便存储映射到这些层的磁盘。 如果使用少于 32 GiB 或介于 32 GiB 到 64 GiB 之间的磁盘大小或内容长度部署非托管磁盘或页 blob 而不设置 Blob 层，则将继续停留在 P10（500 IOPS 和 100 MiB/秒）和映射的定价层。
 
 **如果在支持较小磁盘（约 2017 年 6 月 15 日）之前创建了小于 64 GiB 的高级托管磁盘，将如何计费？**
 
@@ -491,6 +497,6 @@ Azure 全球、 Microsoft Azure 政府和 Azure 中国世纪互联涵盖的所�
 
 ## <a name="what-if-my-question-isnt-answered-here"></a>如果未在此处找到相关问题怎么办？
 
-如果未在此处找到相关问题，请联系我们获取帮助。 你可以在本文末尾的评论中发布问题。 若要与 Azure 存储团队和其他社区成员就本文进行沟通，请使用 MSDN [有关 Azure 存储的 Microsoft Q&A 问题页面](https://docs.microsoft.com/answers/products/azure?product=storage)。
+如果未在此处找到相关问题，请联系我们获取帮助。 你可以在本文末尾的评论中发布问题。 若要与 Azure 存储团队和其他社区成员合作了解本文，请使用 [Microsoft 问答&Azure 存储的问题页](/answers/products/azure?product=storage)。
 
 若要提出功能请求，请将请求和想法提交到 [Azure 存储反馈论坛](https://feedback.azure.com/forums/217298-storage)。

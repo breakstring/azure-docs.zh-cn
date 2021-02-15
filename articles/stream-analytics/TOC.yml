@@ -2,10 +2,10 @@
   href: index.yml
 - name: 概述
   items:
-    - name: 什么是流分析？
+    - name: 欢迎使用流分析
       href: stream-analytics-introduction.md
-    - name: 端到端解决方案模式
-      href: stream-analytics-solution-patterns.md
+    - name: 流分析群集
+      href: cluster-overview.md
 - name: 快速入门
   expanded: true
   items:
@@ -23,28 +23,32 @@
         - name: Visual Studio
           href: stream-analytics-quick-create-vs.md
         - name: Visual Studio Code
-          href: quick-create-vs-code.md
+          href: quick-create-visual-studio-code.md
+    - name: 创建群集
+      items:
+        - name: Azure 门户
+          href: create-cluster.md
 - name: 教程
   items:
-    - name: 1 - 创建/管理作业
-      href: stream-analytics-manage-job.md
-    - name: 2 - 运行 Azure Functions
+    - name: 直观显示 Power BI 中的欺诈性呼叫
+      href: stream-analytics-real-time-fraud-detection.md
+    - name: 运行 Azure Functions
       href: stream-analytics-with-azure-functions.md
-    - name: 3 - 在 Azure Pipelines 中通过 CI/CD 进行部署
-      href: stream-analytics-tools-visual-studio-cicd-vsts.md
-    - name: 4 - 运行 C# UDF
+    - name: 运行 C# UDF
       href: stream-analytics-edge-csharp-udf.md
-    - name: 5 - 创建自定义 .NET 反序列化程序
+    - name: 创建自定义 .NET 反序列化程序
       href: custom-deserializer.md
+    - name: 创建 IoT Edge 作业
+      href: ../iot-edge/tutorial-deploy-stream-analytics.md?view=iotedge-2018-06
+      maintainContext: true
 - name: 示例
   items:
     - name: 代码示例
       href: 'https://azure.microsoft.com/resources/samples/?service=stream-analytics'
-    - name: Azure Policy 内置策略定义
-      displayName: 'samples, policies, definitions'
-      href: ./policy-samples.md
 - name: 概念
   items:
+    - name: 端到端解决方案模式
+      href: stream-analytics-solution-patterns.md
     - name: 选择流分析技术
       href: streaming-technologies.md
     - name: 选择作业开发工具
@@ -53,6 +57,8 @@
       href: develop-locally.md
     - name: 安全性
       items:
+        - name: 将作业连接到 Azure 虚拟网络 (VNet)
+          href: connect-job-to-vnet.md
         - name: Azure Policy 的安全控件
           displayName: 'regulatory, compliance, standards, domains'
           href: ./security-controls-policy.md
@@ -73,12 +79,34 @@
         - name: 输出概述
           href: stream-analytics-define-outputs.md
           displayName: 'adls, sql, blob, event hubs, power bi, table, service bus, cosmos, functions'
-        - name: 输出到 Cosmos DB
-          href: stream-analytics-documentdb-output.md
-        - name: 输出到 Azure SQL DB
+        - name: Azure Data Lake Storage Gen 1
+          href: azure-data-lake-storage-gen1-output.md
+        - name: Azure SQL 数据库
+          href: sql-database-output.md
+        - name: SQL Database 性能
           href: stream-analytics-sql-output-perf.md
+        - name: Azure Synapse Analytics
+          href: azure-synapse-analytics-output.md
+        - name: Blob 存储和 Azure Data Lake Gen 2
+          href: blob-storage-azure-data-lake-gen2-output.md
         - name: Blob 自定义路径模式
           href: stream-analytics-custom-path-patterns-blob-storage-output.md
+        - name: 事件中心
+          href: event-hubs-output.md
+        - name: Power BI
+          href: power-bi-output.md
+        - name: 表存储
+          href: table-storage-output.md
+        - name: 服务总线队列
+          href: service-bus-queues-output.md
+        - name: 服务总线主题
+          href: service-bus-topics-output.md
+        - name: Azure Cosmos DB
+          href: azure-cosmos-db-output.md
+        - name: Cosmos DB 优化
+          href: stream-analytics-documentdb-output.md
+        - name: Azure Functions
+          href: azure-functions-output.md
     - name: 使用函数扩展查询
       items:
         - name: 函数概述
@@ -104,13 +132,15 @@
           href: repartition.md
         - name: 提高作业的吞吐量
           href: stream-analytics-scale-jobs.md
+    - name: IoT Edge
+      href: stream-analytics-edge.md
     - name: 作业的状态
       href: job-states.md
     - name: 开窗函数
       href: stream-analytics-window-functions.md
     - name: 地理空间函数
       href: stream-analytics-geospatial-functions.md
-    - name: 兼容性级别
+    - name: 兼容级别
       href: stream-analytics-compatibility-level.md
     - name: 通用查询模式
       href: stream-analytics-stream-analytics-query-patterns.md
@@ -126,6 +156,14 @@
   items:
     - name: 管理
       items:
+        - name: 群集
+          items:
+            - name: 创建和删除专用终结点
+              href: private-endpoints.md
+            - name: 添加和删除作业
+              href: manage-jobs-cluster.md
+            - name: 缩放群集大小
+              href: scale-cluster.md
         - name: 自动缩放作业
           href: stream-analytics-autoscale.md
         - name: 更新凭据
@@ -148,30 +186,33 @@
           href: stream-analytics-job-reliability.md
         - name: 使用 SQL 参考数据
           href: sql-reference-data.md
-        - name: 使用托管标识进行身份验证
-          items:
-            - name: ADLS Gen 1
-              href: stream-analytics-managed-identities-adls.md
-              displayName: 'managed identity, identities, authenticate'
-            - name: Blob 存储
-              href: blob-output-managed-identity.md
-              displayName: 'managed identity, identities, authenticate'
-            - name: Power BI
-              href: powerbi-output-managed-identity.md
-              displayName: 'managed identity, identities, authenticate'
-            - name: Azure SQL DB
-              href: sql-database-output-managed-identity.md
-              displayName: 'managed identity, identities, authenticate'
         - name: 加密数据
           href: data-protection.md
+        - name: 异地冗余
+          href: geo-redundancy.md
+    - name: 使用托管标识进行身份验证
+      items:
+        - name: ADLS Gen 1
+          href: stream-analytics-managed-identities-adls.md
+          displayName: 'managed identity, identities, authenticate'
+        - name: Blob 存储
+          href: blob-output-managed-identity.md
+          displayName: 'managed identity, identities, authenticate'
+        - name: 事件中心
+          href: event-hubs-managed-identity.md
+          displayName: 'managed identity, identities, authenticate'
+        - name: Power BI
+          href: powerbi-output-managed-identity.md
+          displayName: 'managed identity, identities, authenticate'
+        - name: Azure SQL 和 Azure Synapse
+          href: sql-database-output-managed-identity.md
+          displayName: 'managed identity, identities, authenticate'
     - name: 构建解决方案
       items:
         - name: Twitter 情绪分析
           href: stream-analytics-twitter-sentiment-analysis-trends.md
-        - name: 实时欺诈检测
-          href: stream-analytics-real-time-fraud-detection.md
-        - name: 在 IoT Edge 上运行作业
-          href: stream-analytics-edge.md
+        - name: 在 Azure Stack 上运行作业
+          href: on-azure-stack.md
         - name: 收费站传感器数据分析
           href: stream-analytics-build-an-iot-solution-using-stream-analytics.md
         - name: 高频交易
@@ -187,7 +228,7 @@
           href: ../event-hubs/process-data-azure-stream-analytics.md
           maintainContext: true
         - name: 处理 Azure SQL 数据库
-          href: ../sql-database/sql-database-stream-analytics.md
+          href: ../azure-sql/database/stream-data-stream-analytics-integration.md
           maintainContext: true
         - name: 地理空间方案
           href: geospatial-scenarios.md
@@ -211,6 +252,14 @@
           href: stream-analytics-cicd-api.md
         - name: 使用 Azure 资源管理器进行导出和部署
           href: resource-manager-export.md
+    - name: 持续集成和持续部署
+      items:
+        - name: CI/CD 概述
+          href: cicd-overview.md
+        - name: 使用 PowerShell 进行构建、测试和部署
+          href: cicd-tools.md
+        - name: 使用 Azure DevOps 设置管道
+          href: set-up-cicd-pipeline.md
     - name: Visual Studio
       items:
         - name: 安装工具
@@ -237,10 +286,10 @@
           href: visual-studio-code-local-run-live-input.md
         - name: 使用作业关系图调试查询
           href: debug-locally-using-job-diagram-vs-code.md
-        - name: 设置 CI/CD 管道
-          href: setup-cicd-vs-code.md
         - name: 探索作业
           href: visual-studio-code-explore-jobs.md
+        - name: 创建和调试 .NET 自定义反序列化程序
+          href: visual-studio-code-custom-deserializer.md
         - name: JobConfig.json 字段
           href: job-config-json.md
     - name: 疑难解答
@@ -629,6 +678,9 @@
       href: /azure/templates/microsoft.streamanalytics/allversions
     - name: Azure CLI
       href: /cli/azure/ext/stream-analytics/stream-analytics
+    - name: Azure Policy 内置策略定义
+      displayName: 'samples, policies, definitions'
+      href: ./policy-reference.md
 - name: 资源
   items:
     - name: 流分析预览版
@@ -640,7 +692,7 @@
     - name: 反馈论坛
       href: 'https://feedback.azure.com/forums/270577-azure-stream-analytics'
     - name: Microsoft Q&A 问题页面
-      href: 'https://docs.microsoft.com/answers/topics/azure-stream-analytics.html'
+      href: /answers/topics/azure-stream-analytics.html
     - name: 定价
       href: 'https://azure.microsoft.com/pricing/details/stream-analytics/'
     - name: 定价计算器

@@ -3,20 +3,19 @@ title: 使用 Visual Studio 在本地测试 Azure 流分析查询
 description: 本文介绍如何使用针对 Visual Studio 的 Azure 流分析工具在本地测试查询。
 author: su-jie
 ms.author: sujie
-ms.reviewer: mamccrea
 ms.service: stream-analytics
 ms.topic: how-to
 ms.date: 07/10/2018
-ms.openlocfilehash: aa1d8ff0743399d96436f33426ebc4c4ab4a29f6
-ms.sourcegitcommit: e132633b9c3a53b3ead101ea2711570e60d67b83
+ms.openlocfilehash: b856826761f355e896cae48aa4a6fb62f5947e0b
+ms.sourcegitcommit: 42a4d0e8fa84609bec0f6c241abe1c20036b9575
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/07/2020
-ms.locfileid: "86045631"
+ms.lasthandoff: 01/08/2021
+ms.locfileid: "98019918"
 ---
 # <a name="test-stream-analytics-queries-locally-with-visual-studio"></a>使用 Visual Studio 在本地测试流分析查询
 
-可以使用适用于 Visual Studio 的 Azure 流分析工具，通过示例数据或[实时数据](stream-analytics-live-data-local-testing.md)在本地测试流分析作业。 
+可以使用适用于 Visual Studio 的 Azure 流分析工具，通过示例数据或 [实时数据](stream-analytics-live-data-local-testing.md)在本地测试流分析作业。 
 
 使用此[快速入门](stream-analytics-quick-create-vs.md)了解如何使用 Visual Studio 创建流分析作业。
 
@@ -30,7 +29,7 @@ ms.locfileid: "86045631"
 
 若要针对本地静态数据验证查询，右键单击输入并选择“添加本地输入”  。
    
-![添加本地输入](./media/stream-analytics-vs-tools-local-run/stream-analytics-tools-for-vs-add-local-input-01.png)
+![突出显示 "添加本地输入" 菜单选项的屏幕截图。](./media/stream-analytics-vs-tools-local-run/stream-analytics-tools-for-vs-add-local-input-01.png)
    
 在弹出窗口中，从本地路径选择示例数据，然后单击“保存”  。
    
@@ -75,5 +74,4 @@ ms.locfileid: "86045631"
 * [快速入门：使用 Visual Studio 创建流分析作业](stream-analytics-quick-create-vs.md)
 * [使用 Visual Studio 查看 Azure 流分析作业](stream-analytics-vs-tools.md)
 * [使用用于 Visual Studio 的 Azure 流分析工具在本地测试实时数据（预览）](stream-analytics-live-data-local-testing.md)
-* [教程：使用 Azure DevOps 通过 CI/CD 部署 Azure 流分析作业](stream-analytics-tools-visual-studio-cicd-vsts.md)
 * [使用流分析工具进行持续集成和开发](stream-analytics-tools-for-visual-studio-cicd.md)

@@ -9,13 +9,13 @@ ms.devlang: csharp
 ms.topic: conceptual
 ms.date: 07/04/2017
 ms.author: robinsh
-ms.custom: mqtt
-ms.openlocfilehash: 14472e84d425bf03a3c6a0c2dc558d4b8225caec
-ms.sourcegitcommit: 849bb1729b89d075eed579aa36395bf4d29f3bd9
+ms.custom: mqtt, devx-track-csharp
+ms.openlocfilehash: 43cafb8c5efe0581fe7c4136aa41980b3d817be2
+ms.sourcegitcommit: 706e7d3eaa27f242312d3d8e3ff072d2ae685956
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/28/2020
-ms.locfileid: "81733400"
+ms.lasthandoff: 02/09/2021
+ms.locfileid: "99981402"
 ---
 # <a name="upload-files-from-your-device-to-the-cloud-with-iot-hub-net"></a>通过 IoT 中心将设备中的文件上传到云 (.NET)
 
@@ -48,6 +48,8 @@ ms.locfileid: "81733400"
 > [!NOTE]
 > IoT 中心通过 Azure IoT 设备 SDK 来支持许多设备平台和语言（包括 C、Java、Python 和 Javascript）。 有关如何将设备连接到 Azure IoT 中心的分步说明，请参阅 [Azure IoT 开发人员中心](https://azure.microsoft.com/develop/iot)。
 
+[!INCLUDE [iot-hub-include-x509-ca-signed-file-upload-support-note](../../includes/iot-hub-include-x509-ca-signed-file-upload-support-note.md)]
+
 ## <a name="prerequisites"></a>先决条件
 
 * Visual Studio
@@ -77,16 +79,15 @@ ms.locfileid: "81733400"
 1. 将以下方法添加到 **Program** 类：
 
     ```csharp
-    private static async void SendToBlobAsync()
+    private static async Task SendToBlobAsync(string fileName)
     {
-        string fileName = "image.jpg";
         Console.WriteLine("Uploading file: {0}", fileName);
         var watch = System.Diagnostics.Stopwatch.StartNew();
 
-        using (var sourceData = new FileStream(@"image.jpg", FileMode.Open))
-        {
-            await deviceClient.UploadToBlobAsync(fileName, sourceData);
-        }
+        await deviceClient.GetFileUploadSasUriAsync(new FileUploadSasUriRequest { BlobName = fileName });
+        var blob = new CloudBlockBlob(sas.GetBlobUri());
+        await blob.UploadFromFileAsync(fileName);
+        await deviceClient.CompleteFileUploadAsync(new FileUploadCompletionNotification { CorrelationId = sas.CorrelationId, IsSuccess = true });
 
         watch.Stop();
         Console.WriteLine("Time to upload file: {0}ms\n", watch.ElapsedMilliseconds);
@@ -98,7 +99,7 @@ ms.locfileid: "81733400"
 1. 在 Main 方法中的 `Console.ReadLine()` 前面添加以下行：
 
     ```csharp
-    SendToBlobAsync();
+    await SendToBlobAsync("image.jpg");
     ```
 
 > [!NOTE]
@@ -198,4 +199,4 @@ ms.locfileid: "81733400"
 
 若要进一步探索 IoT 中心的功能，请参阅：
 
-* [使用 Azure IoT Edge 将 AI 部署到边缘设备](../iot-edge/tutorial-simulate-device-linux.md)
+* [使用 Azure IoT Edge 将 AI 部署到边缘设备](../iot-edge/quickstart-linux.md)

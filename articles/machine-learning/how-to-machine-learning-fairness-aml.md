@@ -1,125 +1,142 @@
 ---
-title: '在 Python (预览版中评估 ML 模型的公平) '
+title: 在 Python 中评估机器学习模型的公平性（预览版）
 titleSuffix: Azure Machine Learning
-description: 了解如何在中评估模型的公平 Azure 机器学习
+description: 了解如何使用 Fairlearn 和 Azure 机器学习 Python SDK 评估和缓解机器学习模型的公平。
 services: machine-learning
 ms.service: machine-learning
 ms.subservice: core
 ms.author: mesameki
 author: mesameki
 ms.reviewer: luquinta
-ms.date: 07/09/2020
+ms.date: 11/16/2020
 ms.topic: conceptual
-ms.custom: how-to, devx-track-python
-ms.openlocfilehash: a0f06c2db0a5bf196ae610efadd85ef1df8defe8
-ms.sourcegitcommit: 56cbd6d97cb52e61ceb6d3894abe1977713354d9
+ms.custom: how-to, devx-track-python, responsible-ml
+ms.openlocfilehash: ee589aed2b8f3c53d21c1f762a5d2027f3762649
+ms.sourcegitcommit: d59abc5bfad604909a107d05c5dc1b9a193214a8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/20/2020
-ms.locfileid: "88691303"
+ms.lasthandoff: 01/14/2021
+ms.locfileid: "98222762"
 ---
-# <a name="use-azure-machine-learning-with-the-fairlearn-open-source-package-to-assess-the-fairness-of-ml-models-preview"></a>将 Azure 机器学习与 Fairlearn 开源包一起使用，以 (预览版评估 ML 模型的公平) 
+# <a name="use-azure-machine-learning-with-the-fairlearn-open-source-package-to-assess-the-fairness-of-ml-models-preview"></a>将 Azure 机器学习与 Fairlearn 开源程序包配合使用来评估机器学习模型的公平性（预览版）
 
-[!INCLUDE [applies-to-skus](../../includes/aml-applies-to-basic-enterprise-sku.md)]
+在本操作指南中，你将了解如何将 [Fairlearn](https://fairlearn.github.io/) 开源 Python 程序包与 Azure 机器学习配合使用来执行以下任务：
 
-在本操作方法指南中，你将了解如何将 [Fairlearn](https://fairlearn.github.io/) 开源 Python 包与 Azure 机器学习配合使用来执行以下任务：
-
-* 评估模型预测的公平。 若要在机器学习中了解有关公平的详细信息，请参阅 [机器学习一文中的公平](concept-fairness-ml.md)。
-* 在 Azure 机器学习 studio 中上传、列出和下载公平评估见解。
-* 请参阅 Azure 机器学习 studio 中的 "公平评估" 仪表板，与模型 () "公平见解交互。
+* 评估模型预测的公平性。 若要详细了解机器学习中的公平性，请参阅[机器学习中的公平性](concept-fairness-ml.md)一文。
+* 在 Azure 机器学习工作室中上传、列出和下载公平性评估见解。
+* 请查看 Azure 机器学习工作室中的公平性评估仪表板，与模型的公平性见解进行交互。
 
 >[!NOTE]
-> 公平评估并非纯粹的技术运动。 **此包可帮助你评估机器学习模型的公平，但只有你可以配置并做出有关模型执行方式的决策。**  尽管此包有助于识别量化指标以评估公平，但机器学习模型的开发人员还必须执行定性分析来评估其自己的模型的公平。
+> 公平性评估并非纯粹的技术练习。 **此程序包可帮助你评估机器学习模型的公平性，但只有你可以配置并做出有关模型执行方式的决策。**  虽然此程序包有助于识别用于评估公平性的量化指标，但机器学习模型的开发人员也必须执行定性分析来评估其自己的模型的公平性。
 
-## <a name="azure-machine-learning-fairness-sdk"></a>Azure 机器学习公平 SDK 
+## <a name="azure-machine-learning-fairness-sdk"></a>Azure 机器学习公平性 SDK 
 
-Azure 机器学习公平 SDK `azureml-contrib-fairness` 集成了 Azure 机器学习内的开源 Python 包 [Fairlearn](http://fairlearn.github.io)。 若要了解有关 Fairlearn 在 Azure 机器学习中的集成的详细信息，请查看这些 [示例笔记本](https://github.com/Azure/MachineLearningNotebooks/tree/master/contrib/fairness)。 有关 Fairlearn 的详细信息，请参阅 [示例指南](https://fairlearn.github.io/auto_examples/) 和 [示例笔记本](https://github.com/fairlearn/fairlearn/tree/master/notebooks)。 
+Azure 机器学习公平性 SDK `azureml-contrib-fairness` 在 Azure 机器学习中集成了开源 Python 程序包 [Fairlearn](http://fairlearn.github.io)。 若要详细了解 Azure 机器学习中的 Fairlearn 的集成，请查看这些[示例笔记本](https://github.com/Azure/MachineLearningNotebooks/tree/master/contrib/fairness)。 有关 Fairlearn 的详细信息，请参阅[示例指南](https://fairlearn.github.io/master/auto_examples/)和[示例笔记本](https://github.com/fairlearn/fairlearn/tree/master/notebooks)。 
 
-使用以下命令安装 `azureml-contrib-fairness` 和 `fairlearn` 包：
+使用以下命令安装 `azureml-contrib-fairness` 和 `fairlearn` 程序包：
 ```bash
 pip install azureml-contrib-fairness
 pip install fairlearn==0.4.6
 ```
+更高版本的 Fairlearn 还应在下面的示例代码中使用。
 
 
 
-## <a name="upload-fairness-insights-for-a-single-model"></a>为单个模型上载公平见解
+## <a name="upload-fairness-insights-for-a-single-model"></a>为单个模型上传公平性见解
 
-下面的示例演示如何使用公平包将模型公平见解上载到 Azure 机器学习，并查看 Azure 机器学习 studio 中的 "公平评估" 仪表板。
+下面的示例演示如何使用公平包。 我们会将模型公平见解上载到 Azure 机器学习，并在 Azure 机器学习 studio 中查看公平评估仪表板。
 
-1. 训练 Jupyter 笔记本中的示例模型。 
+1. 在 Jupyter Notebook 中训练示例模型。 
 
-    对于数据集，我们使用众所周知的成人人口数据集，我们使用 (加载这些数据集， `shap` 以方便) 。 出于本示例的目的，我们将此数据集视为一个贷款决策问题，并假设标签指示每个个体是否偿还过去的贷款。 我们将使用数据来训练预测值，以预测之前不可见的个人是否会报答贷款。 假设模型预测用于决定是否应向个人提供贷款。
+    对于数据集，我们使用众所周知的成人人口统计数据集，我们将从 OpenML 中提取这些数据集。 我们假设我们有一个贷款决策问题，该标签指示个体是否偿还上一个贷款。 我们将定型一个模型，以预测之前不可见的个人是否会报答贷款。 这种模型可用于做出贷款决定。
 
     ```python
-    from sklearn.model_selection import train_test_split
-    from fairlearn.widget import FairlearnDashboard
-    from sklearn.linear_model import LogisticRegression
-    from sklearn.preprocessing import LabelEncoder, StandardScaler
+    import copy
+    import numpy as np
     import pandas as pd
-    import shap
+
+    from sklearn.compose import ColumnTransformer
+    from sklearn.datasets import fetch_openml
+    from sklearn.impute import SimpleImputer
+    from sklearn.linear_model import LogisticRegression
+    from sklearn.model_selection import train_test_split
+    from sklearn.preprocessing import StandardScaler, OneHotEncoder
+    from sklearn.compose import make_column_selector as selector
+    from sklearn.pipeline import Pipeline
+    
+    from fairlearn.widget import FairlearnDashboard
 
     # Load the census dataset
-    X_raw, Y = shap.datasets.adult()
-    X_raw["Race"].value_counts().to_dict()
+    data = fetch_openml(data_id=1590, as_frame=True)
+    X_raw = data.data
+    y = (data.target == ">50K") * 1
     
-
     # (Optional) Separate the "sex" and "race" sensitive features out and drop them from the main data prior to training your model
-    A = X_raw[['Sex','Race']]
-    X = X_raw.drop(labels=['Sex', 'Race'],axis = 1)
-    X = pd.get_dummies(X)
+    X_raw = data.data
+    y = (data.target == ">50K") * 1
+    A = X_raw[["race", "sex"]]
+    X = X_raw.drop(labels=['sex', 'race'],axis = 1)
     
-    sc = StandardScaler()
-    X_scaled = sc.fit_transform(X)
-    X_scaled = pd.DataFrame(X_scaled, columns=X.columns)
+    # Split the data in "train" and "test" sets
+    (X_train, X_test, y_train, y_test, A_train, A_test) = train_test_split(
+        X_raw, y, A, test_size=0.3, random_state=12345, stratify=y
+    )
 
-    # Perform some standard data preprocessing steps to convert the data into a format suitable for the ML algorithms
-    le = LabelEncoder()
-    Y = le.fit_transform(Y)
-
-    # Split data into train and test
-    from sklearn.model_selection import train_test_split
-    from sklearn.model_selection import train_test_split
-    X_train, X_test, Y_train, Y_test, A_train, A_test = train_test_split(X_scaled, 
-                                                        Y, 
-                                                        A,
-                                                        test_size = 0.2,
-                                                        random_state=0,
-                                                        stratify=Y)
-
-    # Work around indexing issue
+    # Ensure indices are aligned between X, y and A,
+    # after all the slicing and splitting of DataFrames
+    # and Series
     X_train = X_train.reset_index(drop=True)
-    A_train = A_train.reset_index(drop=True)
     X_test = X_test.reset_index(drop=True)
+    y_train = y_train.reset_index(drop=True)
+    y_test = y_test.reset_index(drop=True)
+    A_train = A_train.reset_index(drop=True)
     A_test = A_test.reset_index(drop=True)
 
-    # Improve labels
-    A_test.Sex.loc[(A_test['Sex'] == 0)] = 'female'
-    A_test.Sex.loc[(A_test['Sex'] == 1)] = 'male'
+    # Define a processing pipeline. This happens after the split to avoid data leakage
+    numeric_transformer = Pipeline(
+        steps=[
+            ("impute", SimpleImputer()),
+            ("scaler", StandardScaler()),
+        ]
+    )
+    categorical_transformer = Pipeline(
+        [
+            ("impute", SimpleImputer(strategy="most_frequent")),
+            ("ohe", OneHotEncoder(handle_unknown="ignore")),
+        ]
+    )
+    preprocessor = ColumnTransformer(
+        transformers=[
+            ("num", numeric_transformer, selector(dtype_exclude="category")),
+            ("cat", categorical_transformer, selector(dtype_include="category")),
+        ]
+    )
 
+    # Put an estimator onto the end of the pipeline
+    lr_predictor = Pipeline(
+        steps=[
+            ("preprocessor", copy.deepcopy(preprocessor)),
+            (
+                "classifier",
+                LogisticRegression(solver="liblinear", fit_intercept=True),
+            ),
+        ]
+    )
 
-    A_test.Race.loc[(A_test['Race'] == 0)] = 'Amer-Indian-Eskimo'
-    A_test.Race.loc[(A_test['Race'] == 1)] = 'Asian-Pac-Islander'
-    A_test.Race.loc[(A_test['Race'] == 2)] = 'Black'
-    A_test.Race.loc[(A_test['Race'] == 3)] = 'Other'
-    A_test.Race.loc[(A_test['Race'] == 4)] = 'White'
-
-
-    # Train a classification model
-    lr_predictor = LogisticRegression(solver='liblinear', fit_intercept=True)
-    lr_predictor.fit(X_train, Y_train)
+    # Train the model on the test data
+    lr_predictor.fit(X_train, y_train)
 
     # (Optional) View this model in Fairlearn's fairness dashboard, and see the disparities which appear:
     from fairlearn.widget import FairlearnDashboard
     FairlearnDashboard(sensitive_features=A_test, 
-                       sensitive_feature_names=['Sex', 'Race'],
-                       y_true=Y_test,
+                       sensitive_feature_names=['Race', 'Sex'],
+                       y_true=y_test,
                        y_pred={"lr_model": lr_predictor.predict(X_test)})
     ```
 
-2. 登录到 Azure 机器学习并注册模型。
+2. 登录到 Azure 机器学习并注册你的模型。
    
-    公平仪表板可以与已注册或未注册的模型集成。 在 Azure 机器学习中注册模型，步骤如下：
+    公平性仪表板可以与已注册或未注册的模型进行集成。 在 Azure 机器学习中注册模型，步骤如下：
     ```python
     from azureml.core import Workspace, Experiment, Model
     import joblib
@@ -142,32 +159,32 @@ pip install fairlearn==0.4.6
         return registered_model.id
 
     # Call the register_model function 
-    lr_reg_id = register_model("fairness_linear_regression", lr_predictor)
+    lr_reg_id = register_model("fairness_logistic_regression", lr_predictor)
     ```
 
-3. 预先计算公平指标。
+3. 预先计算公平性指标。
 
-    使用 Fairlearn 的包创建仪表板词典 `metrics` 。 `_create_group_metric_set`方法的参数与仪表板构造函数类似，只是将敏感功能作为字典传递 (以确保名称) 可用。 在这种情况下，还必须指定预测类型 (二元分类) 调用此方法时。
+    使用 Fairlearn 的 `metrics` 程序包创建一个仪表板字典。 `_create_group_metric_set` 方法的参数与仪表板构造函数类似，只是将敏感特性作为字典传递（以确保名称可用）。 调用此方法时，还必须指定预测类型（在本例中为二元分类）。
 
     ```python
     #  Create a dictionary of model(s) you want to assess for fairness 
-    sf = { 'Race': A_test.Race, 'Sex': A_test.Sex}
+    sf = { 'Race': A_test.race, 'Sex': A_test.sex}
     ys_pred = { lr_reg_id:lr_predictor.predict(X_test) }
     from fairlearn.metrics._group_metric_set import _create_group_metric_set
 
-    dash_dict = _create_group_metric_set(y_true=Y_test,
+    dash_dict = _create_group_metric_set(y_true=y_test,
                                         predictions=ys_pred,
                                         sensitive_features=sf,
                                         prediction_type='binary_classification')
     ```
-4. 上传预计算公平指标。
+4. 上传预先计算的公平性指标。
     
-    现在，导入 `azureml.contrib.fairness` 包以执行上传：
+    现在，导入 `azureml.contrib.fairness` 程序包以执行上传操作：
 
     ```python
     from azureml.contrib.fairness import upload_dashboard_dictionary, download_dashboard_by_upload_id
     ```
-    创建一个试验，然后运行并上传仪表板：
+    创建一个试验，然后创建一个运行并将仪表板上传到其中：
     ```python
     exp = Experiment(ws, "Test_Fairness_Census_Demo")
     print(exp)
@@ -188,54 +205,59 @@ pip install fairlearn==0.4.6
     finally:
         run.complete()
     ```
-5. 检查 Azure 机器学习 studio 中的 "公平" 仪表板
+5. 查看 Azure 机器学习工作室中的公平性仪表板
 
-    如果你完成了前面的步骤 (上传 Azure 机器学习) 生成的公平见解，则可以在 [Azure 机器学习 studio](https://ml.azure.com)中查看 "公平" 仪表板。 此仪表板是 Fairlearn 中提供的相同可视化仪表板，可用于分析敏感功能的子组中的发达国家 (例如，雌雄) 。
+    如果你完成了前面的步骤（将生成的公平性见解上传到 Azure 机器学习），则可查看 [Azure 机器学习工作室](https://ml.azure.com)中的公平性仪表板。 此仪表板与 Fairlearn 中提供的可视化效果仪表板相同，可用于分析敏感特性的子组（例如，男性与女性）之间的差异。
     通过以下途径之一访问 Azure 机器学习工作室中的可视化仪表板：
 
-    * **试验窗格 (预览) **
+    * **“试验”窗格（预览版）**
     1. 在左侧窗格中选择“试验”，以查看在 Azure 机器学习中运行的试验列表。
     1. 选择特定的试验可查看该试验中的所有运行。
-    1. 选择一个 "运行"，然后选择 " **公平** " 选项卡，然后选择 "说明可视化" 仪表板。
+    1. 选择一个运行，然后选择“公平性”选项卡来查看解释可视化效果仪表板。
 
 
-    [![公平仪表板](./media/how-to-machine-learning-fairness-aml/dashboard.png)](./media/how-to-machine-learning-fairness-aml/dashboard.png#lightbox)
+    [![“公平性”仪表板](./media/how-to-machine-learning-fairness-aml/dashboard.png)](./media/how-to-machine-learning-fairness-aml/dashboard.png#lightbox)
     
-    * **模型窗格**
-    1. 如果按照前面的步骤注册了原始模型，则可以选择左窗格中的 " **模型** " 来查看它。
-    1. 选择模型，然后选择 " **公平** " 选项卡，查看 "解释可视化效果" 仪表板。
+    * “模型”窗格
+    1. 如果已通过前面的步骤注册了原始模型，则可在左侧窗格中选择“模型”来查看它。
+    1. 选择一个模型，然后选择“公平性”选项卡来查看解释可视化效果仪表板。
 
-    若要详细了解可视化仪表板及其包含的内容，请查看 Fairlearn 的 [用户指南](https://fairlearn.github.io/user_guide/assessment.html#fairlearn-dashboard)。
+    若要了解有关可视化仪表板及其包含内容的详细信息，请查看 Fairlearn 的 [用户指南](https://fairlearn.github.io/master/user_guide/assessment.html#fairlearn-dashboard)。
 
-## <a name="upload-fairness-insights-for-multiple-models"></a>为多个模型上载公平见解
+## <a name="upload-fairness-insights-for-multiple-models"></a>为多个模型上传公平性见解
 
-如果有兴趣比较多个模型并了解其公平评估的不同之处，可以将多个模型传递到可视化仪表板，并浏览其性能-公平权衡。
+若要比较多个模型并了解其公平评估的不同之处，可以将多个模型传递到可视化仪表板，并比较它们的性能公平权衡。
 
-1. 训练模型：
+1. 训练你的模型：
     
-    除了以前的逻辑回归模型之外，我们现在还创建了一个基于支持向量计算机估计器的第二个分类器，并使用 Fairlearn 的包上传公平仪表板字典 `metrics` 。 请注意，在这里，我们跳过加载和预处理数据的步骤，直接转到模型定型阶段。
+    现在，我们创建了一个基于支持向量计算机估计器的第二个分类器，并使用 Fairlearn 的包上传公平仪表板字典 `metrics` 。 假设先前训练的模型仍可用。
 
 
     ```python
-    # Train your first classification model
-    from sklearn.linear_model import LogisticRegression
-    lr_predictor = LogisticRegression(solver='liblinear', fit_intercept=True)
-    lr_predictor.fit(X_train, Y_train)
+    # Put an SVM predictor onto the preprocessing pipeline
+    from sklearn import svm
+    svm_predictor = Pipeline(
+        steps=[
+            ("preprocessor", copy.deepcopy(preprocessor)),
+            (
+                "classifier",
+                svm.SVC(),
+            ),
+        ]
+    )
 
     # Train your second classification model
-    from sklearn import svm
-    svm_predictor = svm.SVC()
-    svm_predictor.fit(X_train, Y_train)
+    svm_predictor.fit(X_train, y_train)
     ```
 
 2. 注册模型
 
-    接下来，在 Azure 机器学习中注册这两个模型。 为方便起见，在后续方法调用中，将结果存储在字典中，这会将 `id` 已注册模型的设置 (格式) 的字符串映射 `name:version` 到预测器本身：
+    接下来，在 Azure 机器学习中注册这两个模型。 为方便起见，请将结果存储在字典中，这会将 `id` 已注册模型的)  (格式的字符串映射 `name:version` 到预测器本身：
 
     ```python
     model_dict = {}
 
-    lr_reg_id = register_model("fairness_linear_regression", lr_predictor)
+    lr_reg_id = register_model("fairness_logistic_regression", lr_predictor)
     model_dict[lr_reg_id] = lr_predictor
 
     svm_reg_id = register_model("fairness_svm", svm_predictor)
@@ -244,7 +266,7 @@ pip install fairlearn==0.4.6
 
 3. 在本地加载 Fairlearn 仪表板
 
-    在将公平见解上载到 Azure 机器学习之前，可以在本地调用的 Fairlearn 仪表板中检查这些预测。 
+    在将公平性见解上传到 Azure 机器学习之前，可以在通过本地方式调用的 Fairlearn 仪表板中检查这些预测。 
 
 
 
@@ -257,17 +279,17 @@ pip install fairlearn==0.4.6
     from fairlearn.widget import FairlearnDashboard
 
     FairlearnDashboard(sensitive_features=A_test, 
-                    sensitive_feature_names=['Sex', 'Race'],
-                    y_true=Y_test.tolist(),
+                    sensitive_feature_names=['Race', 'Sex'],
+                    y_true=y_test.tolist(),
                     y_pred=ys_pred)
     ```
 
-3. 预先计算公平指标。
+3. 预先计算公平性指标。
 
-    使用 Fairlearn 的包创建仪表板词典 `metrics` 。
+    使用 Fairlearn 的 `metrics` 程序包创建一个仪表板字典。
 
     ```python
-    sf = { 'Race': A_test.Race, 'Sex': A_test.Sex }
+    sf = { 'Race': A_test.race, 'Sex': A_test.sex }
 
     from fairlearn.metrics._group_metric_set import _create_group_metric_set
 
@@ -276,14 +298,14 @@ pip install fairlearn==0.4.6
                                         sensitive_features=sf,
                                         prediction_type='binary_classification')
     ```
-4. 上传预计算公平指标。
+4. 上传预先计算的公平性指标。
     
-    现在，导入 `azureml.contrib.fairness` 包以执行上传：
+    现在，导入 `azureml.contrib.fairness` 程序包以执行上传操作：
 
     ```python
     from azureml.contrib.fairness import upload_dashboard_dictionary, download_dashboard_by_upload_id
     ```
-    创建一个试验，然后运行并上传仪表板：
+    创建一个试验，然后创建一个运行并将仪表板上传到其中：
     ```python
     exp = Experiment(ws, "Compare_Two_Models_Fairness_Census_Demo")
     print(exp)
@@ -306,16 +328,16 @@ pip install fairlearn==0.4.6
     ```
 
 
-    与上一节类似，你可以遵循上述路径中所述的某个路径 (Azure 机器学习 studio 中的 **试验** 或 **模型**) 来访问可视化仪表板，并在公平和性能方面对这两种模型进行比较。
+    与上一部分类似，你可以在 Azure 机器学习工作室中遵循上述路径之一（使用 **试验** 或 **模型**）来访问可视化结果仪表板，并比较两个模型的公平性和性能。
 
 
-## <a name="upload-unmitigated-and-mitigated-fairness-insights"></a>上传 unmitigated 并缓解公平见解
+## <a name="upload-unmitigated-and-mitigated-fairness-insights"></a>上传未修正和已修正公平性见解
 
-您可以使用 Fairlearn 的 [缓解算法](https://fairlearn.github.io/user_guide/mitigation.html)，将其生成的缓解模式 (s) 与原始的 unmitigated 模型进行比较，并在比较的模型之间导航性能/公平权衡。
+你可以使用 Fairlearn 的[修正算法](https://fairlearn.github.io/master/user_guide/mitigation.html)，将其生成的修正模型与原始的未修正模型进行比较，查看所比较模型在性能/公平性方面的权衡情况。
 
-若要查看演示如何使用 [网格搜索](https://fairlearn.github.io/user_guide/mitigation.html#grid-search) 缓解算法的示例 (这会创建一组具有不同公平和性能折衷的缓解模型) 查看此 [示例笔记本](https://github.com/Azure/MachineLearningNotebooks/blob/master/contrib/fairness/fairlearn-azureml-mitigation.ipynb)。 
+若要查看演示如何使用 [网格搜索](https://fairlearn.github.io/master/user_guide/mitigation.html#grid-search) 缓解算法的示例 (这会创建一组具有不同公平和性能折衷的缓解模型) 查看此 [示例笔记本](https://github.com/Azure/MachineLearningNotebooks/blob/master/contrib/fairness/fairlearn-azureml-mitigation.ipynb)。 
 
-如果在一次运行中上传多个模型的公平见解，则可以比较与公平和性能相关的模型。 您可以进一步单击模型比较图表中显示的任何模型，以便查看特定模型的详细公平信息。
+如果在一次运行中上传多个模型的公平见解，则可以比较与公平和性能相关的模型。 您可以单击 "模型比较" 图表中显示的任意模型，以查看特定模型的详细公平见解。
 
 
 [![模型比较 Fairlearn 仪表板](./media/how-to-machine-learning-fairness-aml/multi-model-dashboard.png)](./media/how-to-machine-learning-fairness-aml/multi-model-dashboard.png#lightbox)
@@ -323,6 +345,6 @@ pip install fairlearn==0.4.6
 
 ## <a name="next-steps"></a>后续步骤
 
-[了解有关模型公平的详细信息](concept-fairness-ml.md)
+[详细了解模型公平性](concept-fairness-ml.md)
 
-[查看 Azure 机器学习公平示例笔记本](https://github.com/Azure/MachineLearningNotebooks/tree/master/contrib/fairness)
+[查看 Azure 机器学习公平性示例笔记本](https://github.com/Azure/MachineLearningNotebooks/tree/master/contrib/fairness)

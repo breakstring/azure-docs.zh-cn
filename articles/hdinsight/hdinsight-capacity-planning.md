@@ -1,19 +1,16 @@
 ---
 title: Azure HDInsight 中的群集容量规划
-description: 发现 Azure HDInsight 群集容量和性能规划方面的主要问题。
-author: hrasheed-msft
-ms.author: hrasheed
-ms.reviewer: jasonh
+description: 确定 Azure HDInsight 群集的容量和性能规划的关键问题。
 ms.service: hdinsight
 ms.topic: conceptual
 ms.custom: hdinsightactive
 ms.date: 05/07/2020
-ms.openlocfilehash: 8e76f767470b9052b25cd2b2958f3f9e9780881b
-ms.sourcegitcommit: 958f086136f10903c44c92463845b9f3a6a5275f
+ms.openlocfilehash: 45cfa90f2156dba87cbec2b6313bc24e5d030572
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 05/20/2020
-ms.locfileid: "83714740"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98933231"
 ---
 # <a name="capacity-planning-for-hdinsight-clusters"></a>HDInsight 群集的容量规划
 
@@ -68,7 +65,7 @@ Azure 存储具有某些[容量限制](../azure-resource-manager/management/azur
 
 若要确定应用程序的最佳群集大小，可以建立群集容量基准，并根据指示增加大小。 例如，可以使用模拟工作负荷或“canary 查询”。 在不同大小的群集上运行模拟工作负载。 逐渐增加大小，直到达到预期性能。 可在其他生产查询之间定期插入 canary 查询，以显示群集是否有足够的资源。
 
-如果要详细了解如何为工作负载选择正确的 VM 系列，请参阅[为群集选择适当的 VM 大小](hdinsight-selecting-vm-size.md)。
+有关如何为工作负荷选择正确的 VM 系列的详细信息，请参阅[为群集选择适当的 VM 大小](hdinsight-selecting-vm-size.md)。
 
 ## <a name="choose-the-cluster-scale"></a>选择群集规模
 

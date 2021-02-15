@@ -1,25 +1,25 @@
 ---
-title: Azure 机器学习中的模型 interpretability （预览版）
+title: Azure 机器学习（预览版）中的模型可解释性
 titleSuffix: Azure Machine Learning
-description: 了解如何使用 Azure 机器学习 SDK 解释模型做出预测的原因。 可以在训练和推理期间使用该 SDK 来了解模型做出预测的原因。
+description: 了解如何了解 & 说明你的机器学习模型如何在使用 Azure 机器学习 Python SDK 培训 & 推断时进行预测。
 services: machine-learning
 ms.service: machine-learning
 ms.subservice: core
 ms.topic: conceptual
-ms.custom: how-to
+ms.custom: how-to, responsible-ml
 ms.author: mithigpe
 author: minthigpen
 ms.reviewer: Luis.Quintanilla
-ms.date: 07/09/2020
-ms.openlocfilehash: 533ecbaebc5d36f8a6660ce22e5cab3630e3655f
-ms.sourcegitcommit: a76ff927bd57d2fcc122fa36f7cb21eb22154cfa
+ms.date: 11/16/2020
+ms.openlocfilehash: 6784361dde67d7dcc1423d9edbcc92ec513ff6d4
+ms.sourcegitcommit: d59abc5bfad604909a107d05c5dc1b9a193214a8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/28/2020
-ms.locfileid: "87306394"
+ms.lasthandoff: 01/14/2021
+ms.locfileid: "98222626"
 ---
-# <a name="model-interpretability-in-azure-machine-learning-preview"></a>Azure 机器学习中的模型 interpretability （预览版）
-[!INCLUDE [applies-to-skus](../../includes/aml-applies-to-basic-enterprise-sku.md)]
+# <a name="model-interpretability-in-azure-machine-learning-preview"></a>Azure 机器学习（预览版）中的模型可解释性
+
 
 ## <a name="overview-of-model-interpretability"></a>模型可解释性概述
 
@@ -39,20 +39,11 @@ ms.locfileid: "87306394"
 
 ## <a name="interpretability-with-azure-machine-learning"></a>Azure 机器学习的可解释性
 
-可通过多个 SDK 包使用可解释性类：（了解如何[安装适用于 Azure 机器学习的 SDK 包](https://docs.microsoft.com/python/api/overview/azure/ml/install?view=azure-ml-py)）
+可通过以下 SDK 包使用可解释性类：（了解如何[安装适用于 Azure 机器学习的 SDK 包](/python/api/overview/azure/ml/install?preserve-view=true&view=azure-ml-py)）
 
-* 主包 `azureml.interpret`，包含 Microsoft 支持的功能。
+* `azureml.interpret` 包含 Microsoft 支持的功能。
 
-* `azureml.contrib.interpret`，可以尝试的预览版和试验性功能。
-
-使用 `pip install azureml-interpret` 和 `pip install azureml-contrib-interpret` 进行一般使用。
-
-
-> [!IMPORTANT]
-> `contrib` 命名空间中的内容不完全受支持。 试验性功能变成熟后，会逐渐转移到主命名空间。
-上获取。
-
-
+一般使用 `pip install azureml-interpret`。
 
 ## <a name="how-to-interpret-your-model"></a>如何解释模型
 
@@ -62,7 +53,7 @@ ms.locfileid: "87306394"
 + 使用交互式可视化仪表板在训练时发现数据中的模式和解释
 
 
-在机器学习中，“特征”是用于预测目标数据点的数据字段。 例如，若要预测信用风险，可以使用年龄、帐户大小和帐龄的数据字段。 在本例中，年龄、帐户大小和帐龄都是**特征**。 特征重要性告知每个数据字段如何影响模型的预测。 例如，年龄可能在预测中广泛使用，而帐户大小和帐龄不会显著影响预测值。 此过程可让数据科学家解释生成的预测，使利益干系人能够洞察哪些特征在模型中最重要。
+在机器学习中，“特征”是用于预测目标数据点的数据字段。 例如，若要预测信用风险，可以使用年龄、帐户大小和帐龄的数据字段。 在本例中，年龄、帐户大小和帐龄都是 **特征**。 特征重要性告知每个数据字段如何影响模型的预测。 例如，年龄可能在预测中广泛使用，而帐户大小和帐龄不会显著影响预测值。 此过程可让数据科学家解释生成的预测，使利益干系人能够洞察哪些特征在模型中最重要。
 
 下面介绍支持的可解释性技术、支持的机器学习模型和支持的运行环境。
 
@@ -73,12 +64,12 @@ ms.locfileid: "87306394"
 
 |可解释性技术|说明|类型|
 |--|--|--------------------|
-|SHAP 树解释器| [SHAP](https://github.com/slundberg/shap) 的树解释器，侧重于特定于**树和树系综**的多项式时间快速 SHAP 值估算算法。|特定于模型|
+|SHAP 树解释器| [SHAP](https://github.com/slundberg/shap) 的树解释器，侧重于特定于 **树和树系综** 的多项式时间快速 SHAP 值估算算法。|特定于模型|
 |SHAP 深度解释器| 深度解释器基于来自 SHAP 的解释，“是用于计算深度学习模型中 SHAP 值的高速近似算法，建立在与 [SHAP NIPS 论文](https://papers.nips.cc/paper/7062-a-unified-approach-to-interpreting-model-predictions)中所述 DeepLIFT 的关联的基础之上。 使用 TensorFlow 后端的 **TensorFlow** 模型和 **Keras** 模型受支持（还有对 PyTorch 的初步支持）”。|特定于模型|
-|SHAP 线性解释器| SHAP 的线性解释器计算**线性模型**的 SHAP 值，有时还会解释特征间的关联。|特定于模型|
-|SHAP 内核解释器| SHAP 的内核解释器使用特殊加权的本地线性回归来估算**任何模型**的 SHAP 值。|与模型无关|
-|模拟解释器（全局代理）| 模拟解释器基于训练[全局代理模型](https://christophm.github.io/interpretable-ml-book/global.html)来模拟黑盒模型的思路。 全局代理模型是本质上可解释的模型，经训练后可以尽量准确地给出**任何黑盒模型**的预测近似值。 数据科学家可以解释代理模型，以得出有关黑盒模型的结论。 可以使用以下可解释模型之一作为代理模型：LightGBM (LGBMExplainableModel)、线性回归 (LinearExplainableModel)、随机梯度下降可解释模型 (SGDExplainableModel) 和决策树 (DecisionTreeExplainableModel)。|与模型无关|
-|排列特征重要性解释器 (PFI)| 排列特征重要性是用于解释分类和回归模型的技术，该技术是受 [Breiman 的随机林论文](https://www.stat.berkeley.edu/~breiman/randomforest2001.pdf)（参阅第 10 部分）的启发开发出来的。 从较高层面看，其工作原理是对整个数据集以每次一个特征的形式随机排布数据，并计算相关性能指标的变化程度。 变化越大，该特征越重要。 PFI 可以解释**任何基础模型**的整体行为，但不会解释各个预测。 |与模型无关|
+|SHAP 线性解释器| SHAP 的线性解释器计算 **线性模型** 的 SHAP 值，有时还会解释特征间的关联。|特定于模型|
+|SHAP 内核解释器| SHAP 的内核解释器使用特殊加权的本地线性回归来估算 **任何模型** 的 SHAP 值。|与模型无关|
+|模拟解释器（全局代理）| 模拟解释器基于训练[全局代理模型](https://christophm.github.io/interpretable-ml-book/global.html)来模拟黑盒模型的思路。 全局代理模型是本质上可解释的模型，经训练后可以尽量准确地给出 **任何黑盒模型** 的预测近似值。 数据科学家可以解释代理模型，以得出有关黑盒模型的结论。 可以使用以下可解释模型之一作为代理模型：LightGBM (LGBMExplainableModel)、线性回归 (LinearExplainableModel)、随机梯度下降可解释模型 (SGDExplainableModel) 和决策树 (DecisionTreeExplainableModel)。|与模型无关|
+|排列特征重要性解释器 (PFI)| 排列特征重要性是用于解释分类和回归模型的技术，该技术是受 [Breiman 的随机林论文](https://www.stat.berkeley.edu/~breiman/randomforest2001.pdf)（参阅第 10 部分）的启发开发出来的。 从较高层面看，其工作原理是对整个数据集以每次一个特征的形式随机排布数据，并计算相关性能指标的变化程度。 变化越大，该特征越重要。 PFI 可以解释 **任何基础模型** 的整体行为，但不会解释各个预测。 |与模型无关|
 
 
 

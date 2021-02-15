@@ -4,7 +4,7 @@ description: 介绍如何使本机客户端应用与 Azure AD 应用程序代理
 services: active-directory
 documentationcenter: ''
 author: kenwith
-manager: celestedg
+manager: daveba
 ms.service: active-directory
 ms.subservice: app-mgmt
 ms.workload: identity
@@ -16,12 +16,12 @@ ms.author: kenwith
 ms.reviewer: japere
 ms.custom: it-pro
 ms.collection: M365-identity-device-management
-ms.openlocfilehash: 3f8494852bcff49602645c940470b529302f119f
-ms.sourcegitcommit: c28fc1ec7d90f7e8b2e8775f5a250dd14a1622a6
+ms.openlocfilehash: e830b52accefa0bcb76cc3434cae2fe94eed97db
+ms.sourcegitcommit: d49bd223e44ade094264b4c58f7192a57729bada
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/13/2020
-ms.locfileid: "88165067"
+ms.lasthandoff: 02/02/2021
+ms.locfileid: "99258656"
 ---
 # <a name="how-to-enable-native-client-applications-to-interact-with-proxy-applications"></a>如何让本机客户端应用程序与代理应用程序交互
 
@@ -31,7 +31,7 @@ ms.locfileid: "88165067"
 
 ![最终用户、Azure AD 与已发布应用程序之间的关系](./media/application-proxy-configure-native-client-application/richclientflow.png)
 
-若要发布本机应用程序，请使用 Microsoft 身份验证库（负责处理身份验证并支持许多客户端环境）。 应用程序代理适用于[代表已登录用户调用 Web API 的桌面应用](https://docs.microsoft.com/azure/active-directory/develop/authentication-flows-app-scenarios#desktop-app-that-calls-a-web-api-on-behalf-of-a-signed-in-user)方案。
+若要发布本机应用程序，请使用 Microsoft 身份验证库（负责处理身份验证并支持许多客户端环境）。 应用程序代理适用于[代表已登录用户调用 Web API 的桌面应用](../develop/authentication-flows-app-scenarios.md#desktop-app-that-calls-a-web-api-on-behalf-of-a-signed-in-user)方案。
 
 本文引导读者完成使用应用程序代理和 Azure AD 身份验证库发布本机应用程序的四个步骤。
 
@@ -68,7 +68,7 @@ ms.locfileid: "88165067"
 1. 在新应用程序注册页的边栏中，选择“API 权限”。 会显示新应用程序注册的“API 权限”页。
 1. 选择“添加权限”。 会显示“请求获取 API 权限”页。
 1. 在“选择 API”设置下，选择“我的组织使用的 API”。 将显示一个列表，其中包含目录中公开 API 的应用程序。
-1. 在搜索框中键入或滚动查找在[步骤 1：发布代理应用程序](https://docs.microsoft.com/azure/active-directory/manage-apps/application-proxy-configure-native-client-application#step-1-publish-your-proxy-application)中发布的代理应用程序，然后选择该代理应用程序。
+1. 在搜索框中键入或滚动查找在[步骤 1：发布代理应用程序](#step-1-publish-your-proxy-application)中发布的代理应用程序，然后选择该代理应用程序。
 1. 在“应用程序需要哪种类型的权限?”标题中，选择权限类型。 如果本机应用程序需要以已登录用户的身份访问代理应用程序 API，请选择“委托的权限”。
 1. 在“选择权限”标题中，选择所需权限，然后选择“添加权限”。 本机应用程序的“API 权限”页现在会显示你添加的代理应用程序和权限 API。
 

@@ -1,290 +1,190 @@
 ---
 title: 使用 Azure Migrate 服务器评估来评估要迁移到 Azure 的物理服务器
 description: 介绍如何使用 Azure Migrate 服务器评估来评估要迁移到 Azure 的本地物理服务器。
+author: rashi-ms
+ms.author: rajosh
+ms.manager: abhemraj
 ms.topic: tutorial
-ms.date: 04/15/2020
-ms.openlocfilehash: 5b4d5241e4236d4c11f2e2a5a8feb7c73258cba0
-ms.sourcegitcommit: d7bd8f23ff51244636e31240dc7e689f138c31f0
+ms.date: 09/14/2020
+ms.custom: MVC
+ms.openlocfilehash: b8e59e96d5ecb65933120ecaa4aa43fe4d59d367
+ms.sourcegitcommit: ca215fa220b924f19f56513fc810c8c728dff420
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/24/2020
-ms.locfileid: "87171390"
+ms.lasthandoff: 01/19/2021
+ms.locfileid: "98567546"
 ---
-# <a name="assess-physical-servers-with-azure-migrateserver-assessment"></a>使用 Azure Migrate:服务器评估工具评估物理服务器
+# <a name="tutorial-assess-physical-servers-for-migration-to-azure"></a>教程：评估物理服务器以便迁移到 Azure
 
-本文介绍如何使用 Azure Migrate:服务器评估工具评估本地物理服务器。
+在迁移到 Azure 的过程中，将评估本地工作负载，以衡量云的就绪性、确定风险以及估算成本和复杂性。
 
-[Azure Migrate](migrate-services-overview.md) 在一个中心位置提供多种工具，帮助你发现、评估应用、基础结构和工作负荷并将其迁移到 Microsoft Azure。 该中心包含 Azure Migrate 工具，以及第三方独立软件供应商 (ISV) 的产品/服务。
+本文介绍如何使用 Azure Migrate 评估用于迁移到 Azure 的本地物理服务器：服务器评估”工具评估本地 VMware VM。
 
-本教程是演示如何评估物理服务器以及将其迁移到 Azure 的教程系列中的第二篇文章。 在本教程中，你将了解如何执行以下操作：
+
+在本教程中，你将了解如何执行以下操作：
 > [!div class="checklist"]
-> * 设置一个 Azure Migrate 项目。
-> * 设置本地运行的 Azure Migrate 设备，用于评估物理服务器。
-> * 开始连续发现本地物理服务器。 设备会将已发现的服务器的配置和性能数据发送到 Azure。
-> * 对发现的服务器进行分组，并评估服务器组。
-> * 查看评估。
+- 基于计算机元数据和配置信息运行评估。
+- 基于性能数据运行评估。
 
 > [!NOTE]
-> 教程中演示了方案的最简单部署路径，使你能够快速设置概念证明。 教程尽可能使用默认选项，不会演示所有可能的设置和路径。 有关详细说明，请查看操作指南文章。
+> 教程显示尝试方案的最快路径，并尽可能使用默认选项。 
 
 如果没有 Azure 订阅，请在开始之前创建一个[免费帐户](https://azure.microsoft.com/pricing/free-trial/)。
 
 
 ## <a name="prerequisites"></a>先决条件
 
-- [完成](tutorial-prepare-physical.md)本教程系列中的第一篇教程。 否则，本教程中的说明不适用。
-- 下面是在第一篇教程中应已完成的操作：
-    - 为 Azure Migrate [设置 Azure 权限](tutorial-prepare-physical.md)。
-    - [准备物理服务器](tutorial-prepare-physical.md#prepare-for-physical-server-assessment)以进行评估。 应验证设备要求。 此外，应该设置一个帐户用于发现物理服务器。 所需的端口应该可用；你应该知道用于访问 Azure 的 URL。
+- 在按照本教程来评估要迁移到 Azure VM 的计算机之前，请确保已发现要评估的计算机：
+    - 若要使用 Azure Migrate 设备发现计算机，请[遵循本教程](tutorial-discover-physical.md)。 
+    - 若要使用导入的 CSV 文件发现计算机，请[遵循本教程](tutorial-discover-import.md)。
+- 请确保要评估的物理计算机未运行 Windows Server 2003 或 SUSE Linux。 不支持对这些计算机进行评估。
 
 
+## <a name="decide-which-assessment-to-run"></a>确定要运行的评估
 
 
-## <a name="set-up-an-azure-migrate-project"></a>设置 Azure Migrate 项目
+确定在运行评估时，所使用的大小调整标准是基于按原样在本地收集的计算机配置数据/元数据，还是基于动态的性能数据。
 
-按如下所述设置新的 Azure Migrate 项目。
-
-1. 在 Azure 门户中选择“所有服务”，然后搜索 **Azure Migrate**。
-2. 在“服务”下选择“Azure Migrate”。
-3. 在“概述”中的“发现、评估和迁移服务器”下，单击“评估和迁移服务器”。
-
-    ![发现和评估服务器](./media/tutorial-assess-physical/assess-migrate.png)
-
-4. 在“开始”中，单击“添加工具”。
-5. 在“迁移项目”中选择你的 Azure 订阅，并创建一个资源组（如果没有）。  
-6. 在“项目详细信息”中，指定项目名称以及要在其中创建项目的地理位置。 查看[公有云](migrate-support-matrix.md#supported-geographies-public-cloud)和[政府云](migrate-support-matrix.md#supported-geographies-azure-government)支持的地理位置。
-
-    - 项目地理位置仅用于存储从本地服务器中收集的元数据。
-    - 运行迁移时，可以选择任一目标区域。
-
-    ![创建 Azure Migrate 项目](./media/tutorial-assess-physical/migrate-project.png)
-
-
-7. 单击“下一步”。
-8. 在“选择评估工具”中，选择“Azure Migrate: 服务器评估” > “下一步”。
-
-    ![创建 Azure Migrate 项目](./media/tutorial-assess-physical/assessment-tool.png)
-
-9. 在“选择迁移工具”中，选择“暂时跳过添加迁移工具” > “下一步”。
-10. 在“检查 + 添加工具”中检查设置，然后单击“添加工具”。
-11. 等待几分钟，让 Azure Migrate 项目部署完成。 随后将转到项目页。 如果未看到该项目，可以从 Azure Migrate 仪表板中的“服务器”访问它。
-
-
-## <a name="set-up-the-appliance"></a>设置设备
-
-“Azure Migrate:服务器评估”运行一个轻型设备。
-
-- 此设备执行物理服务器发现，并将服务器元数据和性能数据发送到 Azure Migrate 服务器评估。
-- 若要设置该设备，请执行以下操作：
-    - 从 Azure 门户下载带有 Azure Migrate 安装程序脚本的压缩文件。
-    - 从压缩文件中提取内容。 使用管理权限启动 PowerShell 控制台。
-    - 执行 PowerShell 脚本以启动设备 Web 应用程序。
-    - 完成设备的首次配置，并将其注册到 Azure Migrate 项目。
-- 可为单个 Azure Migrate 项目设置多个设备。 在所有设备中，你可以发现任意数量的物理服务器。 在每台设备上，最多可发现 1000 个服务器。
-
-### <a name="download-the-installer-script"></a>下载安装程序脚本
-
-下载设备的压缩文件。
-
-1. 在“迁移目标” > “服务器” > “Azure Migrate:  服务器评估”中，单击“发现”。
-2. 在“发现计算机” > “计算机是否已虚拟化?”中，单击“未虚拟化/其他”。
-3. 单击“下载”以下载压缩文件。
-
-    ![下载安装程序](./media/tutorial-assess-physical/download-appliance.png)
-
-
-### <a name="verify-security"></a>验证安全性
-
-在部署压缩文件之前检查其安全性。
-
-1. 在下载文件的计算机上，打开管理员命令窗口。
-2. 运行以下命令以生成 zip 文件的哈希：
-    - ```C:\>CertUtil -HashFile <file_location> [Hashing Algorithm]```
-    - 公有云的示例用法：```C:\>CertUtil -HashFile C:\Users\administrator\Desktop\AzureMigrateInstaller.zip SHA256 ```
-    - 政府云的示例用法：```  C:\>CertUtil -HashFile C:\Users\administrator\Desktop\AzureMigrateInstaller-Server-USGov.zip SHA256 ```
-3.  验证最新的设备版本和哈希值：
-    - 对于公有云：
-
-        **方案** | **下载*** | **哈希值**
-        --- | --- | ---
-        Physical (63.1 MB) | [最新版本](https://go.microsoft.com/fwlink/?linkid=2105112) | 0a27adf13cc5755e4b23df0c05732c6ac08d1fe8850567cb57c9906fbc3b85a0
-
-    - 对于 Azure 政府：
-
-        **方案** | **下载*** | **哈希值**
-        --- | --- | ---
-        Physical (63.1 MB) | [最新版本](https://go.microsoft.com/fwlink/?linkid=2120100&clcid=0x409) | 93dfef131026e70acdfad2769cd208ff745ab96a96f013cdf3f9e1e61c9b37e1
-
-### <a name="run-the-azure-migrate-installer-script"></a>运行 Azure Migrate 安装程序脚本
-
-此安装程序脚本执行以下操作：
-
-- 安装用于物理服务器发现和评估的代理和 Web 应用程序。
-- 安装 Windows 角色，包括 Windows 激活服务、IIS 和 PowerShell ISE。
-- 下载并安装 IIS 可重写模块。 [了解详细信息](https://www.microsoft.com/download/details.aspx?id=7435)。
-- 更新 Azure Migrate 的注册表项 (HKLM) 和永久性设置详细信息。
-- 在路径下创建以下文件：
-    - **配置文件**：%Programdata%\Microsoft Azure\Config
-    - **日志文件**：%Programdata%\Microsoft Azure\Logs
-
-按如下所示运行脚本：
-
-1. 将压缩文件解压缩到托管设备的服务器上的某个文件夹中。  请确保不要在现有 Azure Migrate 设备上的计算机中运行该脚本。
-2. 使用管理（提升）权限在上述服务器上启动 PowerShell。
-3. 将 PowerShell 目录更改为从下载的压缩文件中提取内容的文件夹。
-4. 通过运行以下命令，运行名为“AzureMigrateInstaller.ps1”的脚本：
-
-    - 对于公有云：``` PS C:\Users\administrator\Desktop\AzureMigrateInstaller> AzureMigrateInstaller.ps1 ```
-    - 对于 Azure 政府云：``` PS C:\Users\Administrators\Desktop\AzureMigrateInstaller-Server-USGov>AzureMigrateInstaller.ps1 ```
-
-    脚本将在成功完成时启动设备 Web 应用程序。
-
-如果遇到任何问题，可以访问位于 C:\ProgramData\Microsoft Azure\Logs\AzureMigrateScenarioInstaller_<em>Timestamp</em>.log 的脚本日志来进行故障排除。
-
-### <a name="verify-appliance-access-to-azure"></a>验证设备的 Azure 访问权限
-
-确保设备可以连接到[公有云](migrate-appliance.md#public-cloud-urls)和[政府云](migrate-appliance.md#government-cloud-urls)的 Azure URL。
-
-
-### <a name="configure-the-appliance"></a>配置设备
-
-首次设置设备。
-
-1. 在可连接到该设备的任一计算机上打开浏览器，然后打开设备 Web 应用的 URL： https://设备名称或 IP 地址:44368。
-
-   或者，可以在桌面上单击应用快捷方式打开该应用。
-2. 在 Web 应用 >“设置必备组件”中执行以下操作：
-    - **许可证**：接受许可条款，并阅读第三方信息。
-    - **连接**：应用将检查服务器是否可访问 Internet。 如果服务器使用代理：
-        - 单击“代理设置”，并以 http://ProxyIPAddress 或 http://ProxyFQDN 格式指定代理地址和侦听端口。
-        - 如果代理需要身份验证，请指定凭据。
-        - 仅支持 HTTP 代理。
-    - **时间同步**：将验证时间。 设备上的时间应与 Internet 时间同步，这样才能正常发现服务器。
-    - **安装更新**：Azure Migrate 服务器评估将检查设备上是否安装了最新更新。
-
-### <a name="register-the-appliance-with-azure-migrate"></a>将设备注册到 Azure Migrate
-
-1. 单击“登录”。 如果未显示该按钮，请确保已在浏览器中禁用弹出窗口阻止程序。
-2. 在新的标签页中，使用 Azure 凭据登录。
-    - 使用用户名和密码登录。
-    - 不支持使用 PIN 登录。
-3. 成功登录后，返回到 Web 应用。
-4. 选择在其中创建了 Azure Migrate 项目的订阅。 然后选择该项目。
-5. 指定设备的名称。 该名称应是字母数字，长度为 14 个或更少的字符。
-6. 单击“注册”。
-
-
-## <a name="start-continuous-discovery"></a>启动持续发现
-
-现在，从设备连接到要发现的物理服务器，并启动发现。
-
-1. 单击“添加凭据”以指定设备用于发现服务器的帐户凭据。  
-2. 使用用户名和密码登录。 不支持使用密钥登录。 此外，用户必须是根登录名或本地管理员组的成员。
-3. 指定操作系统、凭据的友好名称以及用户名和密码。 然后单击“添加”。
-你可以为 Windows 和 Linux 服务器添加多个凭据。
-4. 单击“添加服务器”，然后指定服务器详细信息 - FQDN/IP 地址和凭据的友好名称（每行一个条目）以连接到服务器。
-5. 单击 **“验证”** 。 验证后，将显示可发现的服务器列表。
-    - 如果服务器验证失败，请将鼠标悬停在“状态”列中的图标上以查看错误。 解决问题并再次验证。
-    - 若要删除服务器，请选择 >“删除”。
-6. 验证之后，单击“保存并启动发现”以启动发现过程。
-
-随即会启动发现。 每台服务器大约需要 1.5 分钟，才能将已发现的服务器的元数据显示在 Azure 门户中。
-
-### <a name="verify-servers-in-the-portal"></a>验证门户中的服务器
-
-发现完成后，可以验证服务器是否出现在 Azure 门户中。
-
-1. 打开 Azure Migrate 仪表板。
-2. 在“Azure Migrate - 服务器” > “Azure Migrate: 服务器评估”页中，单击显示了**已发现服务器**计数的图标。
-
-## <a name="set-up-an-assessment"></a>设置评估
-
-使用“Azure Migrate: 服务器评估”可以运行两种类型的评估。
-
-**评估** | **详细信息** | **数据**
+**评估** | **详细信息** | 建议
 --- | --- | ---
-**基于性能** | 基于收集的性能数据的评估 | **建议的 VM 大小**：基于 CPU 和内存利用率数据。<br/><br/> **建议的磁盘类型(标准或高级托管磁盘)** ：基于本地磁盘的 IOPS 和吞吐量。
-**本地** | 基于本地大小的评估。 | **建议的 VM 大小**：基于本地服务器大小<br/><br> **建议的磁盘类型**：基于为评估选择的存储类型设置。
+**按本地原样** | 基于计算机配置数据/元数据进行评估。  | 建议的 Azure VM 大小基于本地 VM大小。<br/><br> 建议的 Azure 磁盘类型基于在评估的存储类型设置中选择的内容。
+**基于性能** | 基于收集的动态性能数据进行评估。 | 建议的 Azure VM 大小基于 CPU 和内存利用率数据。<br/><br/> 建议的磁盘类型基于本地磁盘的 IOPS 和吞吐量。
 
-
-### <a name="run-an-assessment"></a>运行评估
+## <a name="run-an-assessment"></a>运行评估
 
 按如下述运行评估：
 
-1. 查看有关创建评估的[最佳做法](best-practices-assessment.md)。
-2. 在“服务器”选项卡上的“Azure Migrate: 服务器评估”磁贴中，单击“评估”。
+1. 在“服务器”页 >“Windows 和 Linux 服务器”中，单击“评估和迁移服务器”  。
 
-    ![评估](./media/tutorial-assess-physical/assess.png)
+   ![“评估和迁移服务器”按钮的位置](./media/tutorial-assess-vmware-azure-vm/assess.png)
 
-2. 在“评估服务器”中，指定评估的名称。
-3. 单击“全部查看”查看评估属性。
+2. 在 **Azure Migrate:** 服务器评估”中，单击“评估”。
 
-    ![评估属性](./media/tutorial-assess-physical/view-all.png)
+    ![“评估”按钮的位置](./media/tutorial-assess-vmware-azure-vm/assess-servers.png)
 
-3. 在“选择或创建组”中，选择“新建”并指定组名称。 组将要评估的一个或多个服务器集合到一起。
-4. 在“将计算机添加到组”中，选择要添加到该组的服务器。
-5. 单击“创建评估”以创建该组，并运行评估。
+3. 在“评估服务器” > “评估类型”中，选择“Azure VM”  。
+4. 在“发现源”中：
 
-    ![创建评估](./media/tutorial-assess-physical/assessment-create.png)
+    - 如果使用设备发现了计算机，请选择“从 Azure Migrate 设备中发现的计算机”。
+    - 如果使用导入的 CSV 文件发现了计算机，请选择“导入的计算机”。 
+    
+1. 单击“编辑”查看评估属性。
 
-6. 创建评估后，在“服务器” > “Azure Migrate: 服务器评估” > “评估”中查看它。
-7. 单击“导出评估”，将评估下载为 Excel 文件。
+    :::image type="content" source="./media/tutorial-assess-vmware-azure-vm/assessment-name.png" alt-text="用于查看评估属性的“编辑”按钮的位置":::
+
+1. 在“评估属性” > “目标属性”中 ：
+    - 在“目标位置”中，选择要迁移到的 Azure 区域。
+        - 大小和成本建议基于你指定的位置。 将目标位置从默认位置更改后，系统将提示你指定“预留实例”和“VM 序列” 。
+        - 在 Azure 政府中，你可以以[这些区域](migrate-support-matrix.md#supported-geographies-azure-government)中的评估为目标
+    - 在“存储类型”中，
+        - 如果要在评估中使用基于性能的数据，请为 Azure Migrate 选择“自动”，以根据磁盘 IOPS 和吞吐量推荐存储类型。
+        - 或者，选择在迁移 VM 时要使用的存储类型。
+    - 在“预留实例”中，指定在迁移 VM 时是否要使用 VM 的“预留实例”。
+        - 如果选择使用预留实例，则无法指定“折扣(%)”或“VM 运行时间” 。 
+        - [了解详细信息](https://aka.ms/azurereservedinstances)。
+ 1. 在“VM 大小”中：
+     - 在“大小调整条件”中，选择进行评估时是基于计算机配置数据/元数据，还是以基于性能的数据为基础。 如果使用性能数据：
+        - 在“性能历史记录”中，指示要用于评估的数据持续时间
+        - 在“百分位使用率”中，指定要用于性能示例的百分位数值。 
+    - 在“VM 系列”中，指定要列入考虑的 Azure VM 系列。
+        - 如果使用基于性能的评估，Azure Migrate 会为你建议一个值。
+        - 根据需要调整设置。 例如，如果不需要将生产环境迁移到 Azure 中的 A 系列 VM，可以从系列的列表中排除 A 系列。
+    - 在“舒适因子”中，指明要在评估过程中使用的缓冲区。 此帐户用于解决季节性使用情况、短期性能历史记录，以及未来使用量可能会增加等问题。 例如，如果使用舒适因子 2：
+    
+        **组件** | **有效利用率** | **添加舒适因子 (2.0)**
+        --- | --- | ---
+        核心数 | 2  | 4
+        内存 | 8 GB | 16 GB
+   
+1. 在“定价”中：
+    - 在“产品/服务”中，如果已注册，请指定 [Azure 产品/服务](https://azure.microsoft.com/support/legal/offer-details/)。 “服务器评估”会估计该产品/服务的费用。
+    - 在“货币”中，为帐户选择计费货币。
+    - 在“折扣 (%)”中，添加基于 Azure 产品/服务获得的任何特定于订阅的折扣。 默认设置是 0%。
+    - 在“VM 运行时间”中，指定 VM 将运行的持续时间（每月天数/每天小时数）。
+        - 这对于无法连续运行的 Azure VM 非常有用。
+        - 成本估算基于指定的持续时间。
+        - 默认为“每月 31 天/每天 24 小时”。
+    - 在“EA 订阅”中，指定是否将企业协议 (EA) 订阅折扣考虑在内以进行成本估算。 
+    - 在“Azure 混合权益”中，指定是否已有 Windows Server 许可证。 如果已有许可证，并且许可证具有 Windows Server 订阅的有效软件保障，则在将许可证引入 Azure 时，可以申请 [Azure 混合权益](https://azure.microsoft.com/pricing/hybrid-use-benefit/)。
+
+1. 如有更改，请单击“保存”。
+
+    ![评估属性](./media/tutorial-assess-vmware-azure-vm/assessment-properties.png)
+
+1. 在“评估服务器”中，单击“下一个” 。
+
+1. 在“选择要评估的计算机” > “评估名称”中，指定评估的名称 。 
+
+1. 在“选择或创建组”中，选择“新建”并指定组名称 。 
+    
+    :::image type="content" source="./media/tutorial-assess-physical/assess-group.png" alt-text="将 VM 添加到组":::
 
 
+1. 选择设备，然后选择要添加到组的 VM。 然后单击“下一步”。
+
+
+1. 在“审阅 + 创建评估”中，查看评估详细信息，然后单击“创建评估”以创建组并运行评估 。
+
+1. 创建评估后，在“服务器” > “Azure Migrate: 服务器评估” > “评估”中查看它。
+
+1. 单击“导出评估”，将评估下载为 Excel 文件。
+    > [!NOTE]
+    > 对于基于性能的评估，建议在开始发现后至少等待一天，然后再创建评估。 这为收集具有较高置信度的性能数据提供了时间。 理想情况下，在开始发现后，等待指定的性能持续时间（日/周/月）进行高置信度评级。
 
 ## <a name="review-an-assessment"></a>查看评估
 
 评估描述：
 
-- **Azure 迁移就绪性**：服务器是否适合迁移到 Azure。
-- **每月成本估算**：在 Azure 中运行服务器的估算每月计算和存储成本。
+- **Azure 迁移就绪性**：VM 是否适合迁移到 Azure。
+- **每月成本估算**：在 Azure 中运行 VM 的估算每月计算和存储成本。
 - **每月存储成本估算**：迁移后的磁盘存储估算成本。
 
-### <a name="view-an-assessment"></a>查看评估
+若要查看评估，请执行以下操作：
 
-1. 在“迁移目标” >  “服务器”中，单击“Azure Migrate:   服务器评估”中的“评估”。
-2. 在“评估”中，单击某项评估将其打开。
+1. 在“服务器” > “Azure Migrate: 服务器评估”中，单击“评估”旁边的数字。
+2. 在“评估”中，选择某项评估将其打开。 例如（估算和费用仅用于示例）： 
 
     ![评估摘要](./media/tutorial-assess-physical/assessment-summary.png)
 
-### <a name="review-azure-readiness"></a>查看 Azure 迁移就绪性
+3. 查看评估摘要。 你还可以编辑评估属性，或重新计算评估。
+ 
+ 
+### <a name="review-readiness"></a>查看就绪情况
 
-1. 在“Azure 迁移就绪性”中，验证服务器是否已准备好迁移到 Azure。
-2. 查看状态：
-    - **已做好 Azure 迁移准备**：对于评估中的 VM，Azure Migrate 将建议 VM 大小并显示估算成本。
+1. 单击“Azure 迁移就绪性”。
+2. 在“Azure 迁移就绪性”中，查看 VM 状态：
+    - **已做好 Azure 迁移准备**：在 Azure Migrate 针对评估中的 VM 建议 VM 大小并显示估算成本时使用。
     - **准备就绪但存在以下状况**：显示问题和建议的补救措施。
     - **尚未做好 Azure 迁移准备**：显示问题和建议的补救措施。
     - **就绪性未知**：当数据可用性问题导致 Azure Migrate 无法评估就绪性时使用。
 
-2. 单击某种“Azure 迁移就绪性”状态。 可以查看服务器就绪性详细信息，并深入查看服务器详细信息，包括计算、存储和网络设置。
+3. 选择某种“Azure 迁移就绪性”状态。 可以查看 VM 就绪详情。 还可以深入查看 VM 详细信息，包括计算、存储和网络设置。
 
+### <a name="review-cost-estimates"></a>查看成本估算
 
+评估摘要显示估算出来的在 Azure 中运行 VM 的计算和存储成本。 
 
-### <a name="review-cost-details"></a>查看成本详细信息
+1. 查看每月总成本。 将聚合评估的组中所有 VM 的成本。
 
-此视图显示在 Azure 中运行 VM 的估算计算和存储成本。
-
-1. 查看每月计算和存储成本。 将聚合评估的组中所有服务器的成本。
-
-    - 估算成本是根据计算机的大小建议及其磁盘和属性给出的。
+    - 成本估算基于计算机及其磁盘和属性的大小建议。
     - 将显示估算的每月计算和存储成本。
-    - 估算成本适用于作为 IaaS VM 运行的本地服务器。 Azure Migrate 服务器评估不考虑 PaaS 或 SaaS 成本。
+    - 估算成本用于在 Azure VM 上运行本地 VM。 该估算不考虑 PaaS 或 SaaS 成本。
 
-2. 可以查看每月存储估算成本。 此视图显示评估的组的聚合存储成本，按不同类型的存储磁盘划分。
-3. 可以深入查看特定服务器的详细信息。
-
+2. 查看每月存储成本。 此视图显示评估的组的聚合存储成本，按不同类型的存储磁盘划分。 
+3. 可以深入查看特定 VM 的成本详细信息。
 
 ### <a name="review-confidence-rating"></a>查看置信度分级
 
-运行基于性能的评估时，会将一个置信度分级分配到评估。
+服务器评估为基于性能的评估分配置信度评级。 评级从一星（最低）到五星（最高）。
 
 ![置信度分级](./media/tutorial-assess-physical/confidence-rating.png)
 
-- 将授予从 1 星（最低）到 5 星（最高）的分级。
-- 置信度分级可帮助你判断评估所提供的大小建议的可靠性。
-- 置信度分级基于计算评估所需的数据点的可用性。
+置信度评级用于估计评估中的大小建议的可靠性。 此评级基于对评估进行计算时所需数据点的可用性。
 
-评估的置信度分级如下。
+> [!NOTE]
+> 如果基于 CSV 文件创建评估，则不会分配置信度评级。
+
+置信度评级如下所示。
 
 **数据点可用性** | **置信度分级**
 --- | ---
@@ -294,18 +194,9 @@ ms.locfileid: "87171390"
 61%-80% | 4 星
 81%-100% | 5 星
 
-[详细了解](best-practices-assessment.md#best-practices-for-confidence-ratings)有关置信度分级的最佳做法。
-
+[详细了解](concepts-assessment-calculation.md#confidence-ratings-performance-based)置信度评级。
 
 ## <a name="next-steps"></a>后续步骤
 
-本教程介绍以下操作：
-
-> [!div class="checklist"]
-> * 已设置一个 Azure Migrate 设备
-> * 已创建并查看评估
-
-请继续学习本教程系列的第三篇教程，了解如何使用 Azure Migrate：服务器迁移服务器迁移。
-
-> [!div class="nextstepaction"]
-> [迁移物理服务器](./tutorial-migrate-physical-virtual-machines.md)
+- 使用[依赖项映射](concepts-dependency-visualization.md)查找计算机依赖项。
+- 设置[基于代理](how-to-create-group-machine-dependencies.md)的依赖项映射。

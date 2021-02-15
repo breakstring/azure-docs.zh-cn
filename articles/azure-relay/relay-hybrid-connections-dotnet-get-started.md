@@ -2,13 +2,14 @@
 title: Azure 中继混合连接 - .NET 中的 WebSocket
 description: 为 Azure 中继混合连接 WebSocket 编写 C# 控制台应用程序。
 ms.topic: conceptual
+ms.custom: devx-track-dotnet
 ms.date: 06/23/2020
-ms.openlocfilehash: a6e759b8cda7515faf63834ef15c013e2f075687
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: bf22b8b11dc386644803b43ee4e3a51d04b70419
+ms.sourcegitcommit: 829d951d5c90442a38012daaf77e86046018e5b9
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "85317078"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "90527422"
 ---
 # <a name="get-started-with-relay-hybrid-connections-websockets-in-net"></a>开始在 .NET 中使用中继混合连接 WebSocket
 [!INCLUDE [relay-selector-hybrid-connections](../../includes/relay-selector-hybrid-connections.md)]
@@ -51,7 +52,7 @@ ms.locfileid: "85317078"
 2. 运行客户端应用程序并输入一些文本。
 3. 确保服务器应用程序控制台显示了客户端应用程序中输入的文本。
 
-    ![running-applications](./media/relay-hybrid-connections-dotnet-get-started/running-applications.png)
+    ![控制台 windows 测试服务器和客户端应用程序。](./media/relay-hybrid-connections-dotnet-get-started/running-applications.png)
 
 祝贺你，你已创建了一个完整的混合连接应用程序！
 

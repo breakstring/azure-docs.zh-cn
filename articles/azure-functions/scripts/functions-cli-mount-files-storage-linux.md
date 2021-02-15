@@ -4,12 +4,12 @@ description: 使用 Azure CLI 创建无服务器 Python 函数应用并装载现
 ms.topic: sample
 ms.date: 03/01/2020
 ms.custom: devx-track-azurecli
-ms.openlocfilehash: 63ab9ba3219dc600187e73bbf124d62d3f51317a
-ms.sourcegitcommit: 11e2521679415f05d3d2c4c49858940677c57900
+ms.openlocfilehash: 00bf0ecc9db3cf369fd75b427dcfba686aed0ed5
+ms.sourcegitcommit: c4c554db636f829d7abe70e2c433d27281b35183
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/31/2020
-ms.locfileid: "87498202"
+ms.lasthandoff: 01/08/2021
+ms.locfileid: "98035115"
 ---
 # <a name="mount-a-file-share-to-a-python-function-app-using-azure-cli"></a>使用 Azure CLI 将文件共享装载到 Python 函数应用
 
@@ -20,15 +20,15 @@ ms.locfileid: "87498202"
 
 [!INCLUDE [quickstarts-free-trial-note](../../../includes/quickstarts-free-trial-note.md)]
 
-[!INCLUDE [cloud-shell-try-it.md](../../../includes/cloud-shell-try-it.md)]
+[!INCLUDE [azure-cli-prepare-your-environment.md](../../../includes/azure-cli-prepare-your-environment.md)]
 
-如果选择在本地安装并使用 CLI，本文要求运行 Azure CLI 2.0 版或更高版本。 运行 `az --version` 即可查找版本。 如需进行安装或升级，请参阅[安装 Azure CLI]( /cli/azure/install-azure-cli)。 示例是为 Bash shell 编写的，必须将其修改为在 Windows 命令提示符下运行。 
+ - 本教程需要 Azure CLI 版本 2.0 或更高版本。 如果使用 Azure Cloud Shell，则最新版本已安装。 
 
 ## <a name="sample-script"></a>示例脚本
 
-此脚本使用[消耗计划](../functions-scale.md#consumption-plan)创建 Azure 函数应用。
+此脚本使用[消耗计划](../consumption-plan.md)在 Azure Functions 中创建函数应用。
 
-[!code-azurecli-interactive[main](../../../cli_scripts/azure-functions/functions-cli-mount-files-storage-linux/functions-cli-mount-files-storage-linux.sh "Create an Azure Function on a Consumption plan")]
+[!code-azurecli-interactive[main](../../../cli_scripts/azure-functions/functions-cli-mount-files-storage-linux/functions-cli-mount-files-storage-linux.sh "Create a function app on a Consumption plan")]
 
 [!INCLUDE [cli-script-clean-up](../../../includes/cli-script-clean-up.md)]
 
@@ -36,7 +36,7 @@ ms.locfileid: "87498202"
 
 表中的每条命令均链接到特定于命令的文档。 此脚本使用以下命令：
 
-| Command | 说明 |
+| 命令 | 说明 |
 |---|---|
 | [az group create](/cli/azure/group#az-group-create) | 创建用于存储所有资源的资源组。 |
 | [az storage account create](/cli/azure/storage/account#az-storage-account-create) | 创建 Azure 存储帐户。 |

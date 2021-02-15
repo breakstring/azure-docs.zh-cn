@@ -5,20 +5,21 @@ author: jakrams
 ms.author: jakras
 ms.date: 02/27/2020
 ms.topic: how-to
-ms.openlocfilehash: f3400d82a6aa184daabfa2ebbe6b775b8e4c1562
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.custom: devx-track-csharp
+ms.openlocfilehash: 48f01058d8e879a9610e76638215214c059982fa
+ms.sourcegitcommit: f377ba5ebd431e8c3579445ff588da664b00b36b
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "85565459"
+ms.lasthandoff: 02/05/2021
+ms.locfileid: "99594208"
 ---
 # <a name="set-up-remote-rendering-for-unity"></a>为 Unity 设置远程渲染
 
-若要在 Unity 中启用 Azure 远程呈现（ARR），我们提供了专门的方法来处理某些特定于 Unity 的方面。
+若要在 Unity 中启用 (ARR) 的 Azure 远程呈现功能，我们提供了用于处理某些特定于 Unity 的方面的专用方法。
 
 ## <a name="startup-and-shutdown"></a>启动和关闭
 
-若要初始化远程呈现，请使用 `RemoteManagerUnity` 。 此类调入到泛型， `RemoteManager` 但已经实现了 Unity 特定的详细信息。 例如，Unity 使用特定的坐标系统。 调用时 `RemoteManagerUnity.Initialize` ，将设置适当的约定。 调用还要求提供 Unity 摄像机，此照相机应用于显示远程呈现的内容。
+若要初始化远程呈现，请使用 `RemoteManagerUnity` 。 此类调入到泛型， `RenderingConnection` 但已经实现了 Unity 特定的详细信息。 例如，Unity 使用特定的坐标系统。 调用时 `RemoteManagerUnity.Initialize` ，将设置适当的约定。 调用还要求提供 Unity 摄像机，此照相机应用于显示远程呈现的内容。
 
 ```cs
 // initialize Azure Remote Rendering for use in Unity:
@@ -29,7 +30,7 @@ RemoteManagerUnity.InitializeManager(clientInit);
 
 对于关闭远程渲染，请调用 `RemoteManagerStatic.ShutdownRemoteRendering()` 。
 
-`AzureSession`创建并选择作为主呈现会话之后，必须向注册它 `RemoteManagerUnity` ：
+`RenderingSession`创建并选择作为主呈现会话之后，必须向注册它 `RemoteManagerUnity` ：
 
 ```cs
 RemoteManagerUnity.CurrentSession = ...
@@ -45,17 +46,18 @@ RemoteUnityClientInit clientInit = new RemoteUnityClientInit(Camera.main);
 RemoteManagerUnity.InitializeManager(clientInit);
 
 // create a frontend
-AzureFrontendAccountInfo accountInfo = new AzureFrontendAccountInfo();
-// ... fill out accountInfo ...
-AzureFrontend frontend = new AzureFrontend(accountInfo);
+SessionConfiguration sessionConfig = new SessionConfiguration();
+// ... fill out sessionConfig ...
+RemoteRenderingClient client = new RemoteRenderingClient(sessionConfig);
 
 // start a session
-AzureSession session = await frontend.CreateNewRenderingSessionAsync(new RenderingSessionCreationParams(RenderingSessionVmSize.Standard, 0, 30)).AsTask();
+CreateRenderingSessionResult result = await client.CreateNewRenderingSessionAsync(new RenderingSessionCreationOptions(RenderingSessionVmSize.Standard, 0, 30));
+RenderingSession session = result.Session;
 
 // let RemoteManagerUnity know about the session we want to use
 RemoteManagerUnity.CurrentSession = session;
 
-session.ConnectToRuntime(new ConnectToRuntimeParams());
+await session.ConnectAsync(new RendererInitOptions());
 
 /// When connected, load and modify content
 
@@ -66,17 +68,17 @@ RemoteManagerStatic.ShutdownRemoteRendering();
 
 ### <a name="session-state-events"></a>会话状态事件
 
-`RemoteManagerUnity.OnSessionUpdate`在事件的会话状态发生更改时发出事件，有关详细信息，请参阅代码文档。
+`RemoteManagerUnity.OnSessionUpdate` 在事件的会话状态发生更改时发出事件，有关详细信息，请参阅代码文档。
 
 ### <a name="arrserviceunity"></a>ARRServiceUnity
 
-`ARRServiceUnity`是一个可选组件，用于简化设置和会话管理。 它包含一些选项，可用于在应用程序退出时自动停止其会话，或者在编辑器中退出播放模式，以及在需要时自动续订会话租约。 它会缓存数据（例如会话属性 `LastProperties` ），并为会话状态更改和会话错误公开事件。
+`ARRServiceUnity` 是一个可选组件，用于简化设置和会话管理。 它包含一些选项，可用于在应用程序退出时自动停止其会话，或者在编辑器中退出播放模式，以及在需要时自动续订会话租约。 它会缓存数据（例如会话属性） (查看其 `LastProperties` 变量) ，并为会话状态更改和会话错误公开事件。
 
 一次不能有一个以上的实例 `ARRServiceUnity` 。 它旨在让你快速入门，因为它实现了一些通用功能。 对于更大的应用程序，可能更愿意自己执行这些操作。
 
-有关如何设置和使用的示例， `ARRServiceUnity` 请参阅[教程：查看远程呈现的模型](../../tutorials/unity/view-remote-models/view-remote-models.md)。
+有关如何设置和使用的示例， `ARRServiceUnity` 请参阅 [教程：查看远程呈现的模型](../../tutorials/unity/view-remote-models/view-remote-models.md)。
 
 ## <a name="next-steps"></a>后续步骤
 
 * [安装 Unity 的远程渲染包](install-remote-rendering-unity-package.md)
-* [教程：查看远程呈现的模型](../../tutorials/unity/view-remote-models/view-remote-models.md)
+* [教程：查看远程渲染的模型](../../tutorials/unity/view-remote-models/view-remote-models.md)

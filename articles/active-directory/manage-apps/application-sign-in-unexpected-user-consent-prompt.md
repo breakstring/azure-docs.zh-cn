@@ -4,7 +4,7 @@ description: 如何对用户遇到的与 Azure AD 集成的应用程序出现意
 services: active-directory
 documentationcenter: ''
 author: kenwith
-manager: celestedg
+manager: daveba
 ms.assetid: ''
 ms.service: active-directory
 ms.subservice: app-mgmt
@@ -16,12 +16,12 @@ ms.date: 07/11/2017
 ms.author: kenwith
 ms.reviewer: asteen
 ms.collection: M365-identity-device-management
-ms.openlocfilehash: 9559e22a8396de93bbe46f20b76855d9ff00f753
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 6253458bb31388e5f7e6f84b7720cce0dc22886c
+ms.sourcegitcommit: d49bd223e44ade094264b4c58f7192a57729bada
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "84763714"
+ms.lasthandoff: 02/02/2021
+ms.locfileid: "99259954"
 ---
 # <a name="unexpected-consent-prompt-when-signing-in-to-an-application"></a>登录到应用程序时出现的意外许可提示
 
@@ -39,7 +39,7 @@ ms.locfileid: "84763714"
 
 * 最初对应用程序进行许可的用户是管理员，但他们未代表整个组织进行许可。
 
-* 最初授予许可后，应用程序使用[增量许可和动态许可](https://docs.microsoft.com/azure/active-directory/develop/active-directory-v2-compare#incremental-and-dynamic-consent)请求其他权限。 这通常会在以下情况下使用：应用程序的可选功能需要超出基线功能所需权限以外的附加权限。
+* 最初授予许可后，应用程序使用[增量许可和动态许可](../azuread-dev/azure-ad-endpoint-comparison.md#incremental-and-dynamic-consent)请求其他权限。 这通常会在以下情况下使用：应用程序的可选功能需要超出基线功能所需权限以外的附加权限。
 
 * 已在最初授予许可后将其吊销。
 
@@ -47,8 +47,6 @@ ms.locfileid: "84763714"
 
 ## <a name="next-steps"></a>后续步骤
 
--   [Azure Active Directory（v1.0 终结点）中的应用、权限和许可](https://docs.microsoft.com/azure/active-directory/active-directory-apps-permissions-consent)
+-   [Azure Active Directory（v1.0 终结点）中的应用、权限和许可](../develop/quickstart-register-app.md)
 
--   [Azure Active Directory（v2.0 终结点）中的范围、权限和许可](https://docs.microsoft.com/azure/active-directory/develop/active-directory-v2-scopes)
-
-
+-   [Azure Active Directory（v2.0 终结点）中的范围、权限和许可](../develop/v2-permissions-and-consent.md)

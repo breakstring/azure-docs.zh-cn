@@ -1,7 +1,7 @@
 ---
 title: 执行 Python 脚本：模块引用
 titleSuffix: Azure Machine Learning
-description: 了解如何使用 Azure 机器学习中的“执行 Python 脚本”模块来运行 Python 代码。
+description: 了解如何使用 Azure 机器学习设计器中的 "执行 Python 脚本" 模块来运行 Python 代码。
 services: machine-learning
 ms.service: machine-learning
 ms.subservice: core
@@ -9,19 +9,19 @@ ms.topic: reference
 ms.custom: devx-track-python
 author: likebupt
 ms.author: keli19
-ms.date: 07/27/2020
-ms.openlocfilehash: e3e14001758cadc8df5af3c82cb4386659a59d6a
-ms.sourcegitcommit: 7fe8df79526a0067be4651ce6fa96fa9d4f21355
+ms.date: 01/02/2021
+ms.openlocfilehash: 7b5bc77375d684340116a21b7f95cf576d99dad2
+ms.sourcegitcommit: 2488894b8ece49d493399d2ed7c98d29b53a5599
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/06/2020
-ms.locfileid: "87843719"
+ms.lasthandoff: 01/11/2021
+ms.locfileid: "98065348"
 ---
 # <a name="execute-python-script-module"></a>“执行 Python 脚本”模块
 
-本文介绍 Azure 机器学习设计器（预览版）中的“执行 Python 脚本”模块。
+本文介绍 Azure 机器学习设计器中的“执行 Python 脚本”模块。
 
-使用此模块可以运行 Python 代码。 有关 Python 的体系结构和设计原则的详细信息，请参阅[如何在 Azure 机器学习设计器中运行 python 代码](../how-to-designer-python.md)。
+使用此模块可以运行 Python 代码。 有关 Python 体系结构和设计原理的详细信息，请参阅[如何在 Azure 机器学习设计器中运行 Python 代码](../how-to-designer-python.md)。
 
 使用 Python，可以执行现有模块不支持的任务，例如：
 
@@ -57,8 +57,43 @@ if spec is None:
 > [!NOTE]
 > 如果管道包含的多个“执行 Python 脚本”模块需要使用预安装列表中未包含的包，请在每个模块中安装这些包。
 
+> [!WARNING]
+> “执行 Python 脚本”模块不支持使用“apt-get”之类的命令安装依赖于其他本机库的包，例如 Java、PyODBC 等。这是因为，此模块是在仅预安装了 Python 并且具有非管理员权限的简单环境中执行的。  
+
+## <a name="access-to-current-workspace-and-registered-datasets"></a>访问当前工作区和已注册的数据集
+
+可以参考以下示例代码，访问工作区中 [已注册的数据集](../how-to-create-register-datasets.md) ：
+
+```Python
+def azureml_main(dataframe1 = None, dataframe2 = None):
+
+    # Execution logic goes here
+    print(f'Input pandas.DataFrame #1: {dataframe1}')
+    from azureml.core import Run
+    run = Run.get_context(allow_offline=True)
+    #access to current workspace
+    ws = run.experiment.workspace
+
+    #access to registered dataset of current workspace
+    from azureml.core import Dataset
+    dataset = Dataset.get_by_name(ws, name='test-register-tabular-in-designer')
+    dataframe1 = dataset.to_pandas_dataframe()
+     
+    # If a zip file is connected to the third input port,
+    # it is unzipped under "./Script Bundle". This directory is added
+    # to sys.path. Therefore, if your zip file contains a Python file
+    # mymodule.py you can import it using:
+    # import mymodule
+
+    # Return value must be of a sequence of pandas.DataFrame
+    # E.g.
+    #   -  Single return value: return dataframe1,
+    #   -  Two return values: return dataframe1, dataframe2
+    return dataframe1,
+```
+
 ## <a name="upload-files"></a>上传文件
-“执行 Python 脚本”支持使用 [Azure 机器学习 Python SDK](https://docs.microsoft.com/python/api/azureml-core/azureml.core.run%28class%29?view=azure-ml-py#upload-file-name--path-or-stream-) 上传文件。
+“执行 Python 脚本”支持使用 [Azure 机器学习 Python SDK](/python/api/azureml-core/azureml.core.run%28class%29?preserve-view=true&view=azure-ml-py#upload-file-name--path-or-stream-) 上传文件。
 
 以下示例演示如何在“执行 Python 脚本”模块中上传映像文件：
 
@@ -105,7 +140,7 @@ def azureml_main(dataframe1 = None, dataframe2 = None):
 
 “执行 Python 脚本”模块包含可用作起点的示例 Python 代码。 若要配置“执行 Python 脚本”模块，请在“Python 脚本”文本框中提供要运行的一组输入和 Python 代码。
 
-1. 将**执行 Python 脚本**模块添加到管道。
+1. 将 **执行 Python 脚本** 模块添加到管道。
 
 2. 从设计器中，在 **Dataset1** 上添加并连接要用于输入的任何数据集。 在 Python 脚本中将此数据集引用为 **DataFrame1**。
 
@@ -117,9 +152,50 @@ def azureml_main(dataframe1 = None, dataframe2 = None):
 
     ![执行 Python 输入映射](media/module/python-module.png)
 
-4. 若要包括新的 Python 包或代码，请在脚本捆绑包中添加包含这些自定义资源的压缩文件。 脚本捆绑包的输入必须是作为文件类型数据集上传到工作区的压缩文件。 可以在“数据集”资产页中上传数据集。 可以从设计器创作页面左侧模块树中的“我的数据集”列表中拖取数据集模块。 
+4. 若要包括新的 Python 包或代码，请将包含这些自定义资源的压缩文件连接到脚本绑定端口。 或者，如果脚本大于 16 KB，请使用脚本绑定端口以避免错误，如命令行超过 16597 个字符的限制。 
 
-    在管道执行期间，可以使用已上传的压缩存档中包含的任何文件。 如果存档中包含目录结构，则会保留该结构，但你必须在路径前面追加一个名为 **src** 的目录。
+    
+    1. 将脚本和其他自定义资源捆绑到一个 zip 文件中。
+    1. 将 zip 文件作为“文件数据集”上传到工作室。 
+    1. 从设计器创作页面左侧模块窗格的“数据集”列表中拖取数据集模块。 
+    1. 将数据集模块连接到 **执行 Python 脚本** 模块的 **脚本捆绑** 端口。
+    
+    在管道执行期间，可以使用已上传的压缩存档中包含的任何文件。 如果存档中包含目录结构，则会保留结构。
+ 
+    > [!WARNING]
+    > 请勿使用 app 作为文件夹或脚本的名称，因为 app 是内置服务的保留字  。 但可以使用其他命名空间，如 `app123`。
+   
+    下面是一个脚本绑定示例，其中包含一个 python 脚本文件和一个 txt 文件：
+      
+    > [!div class="mx-imgBorder"]
+    > ![脚本绑定示例](media/module/python-script-bundle.png)  
+
+    下面是 `my_script.py` 的内容：
+
+    ```python
+    def my_func(dataframe1):
+    return dataframe1
+    ```
+    以下是示例代码，显示了如何使用脚本绑定中的文件：    
+
+    ```python
+    import pandas as pd
+    from my_script import my_func
+ 
+    def azureml_main(dataframe1 = None, dataframe2 = None):
+ 
+        # Execution logic goes here
+        print(f'Input pandas.DataFrame #1: {dataframe1}')
+ 
+        # Test the custom defined python function
+        dataframe1 = my_func(dataframe1)
+ 
+        # Test to read custom uploaded files by relative path
+        with open('./Script Bundle/my_sample.txt', 'r') as text_file:
+            sample = text_file.read()
+    
+        return dataframe1, pd.DataFrame(columns=["Sample"], data=[[sample]])
+    ```
 
 5. 在“Python 脚本”文本框中，键入或粘贴有效的 Python 脚本。
 
@@ -140,9 +216,14 @@ def azureml_main(dataframe1 = None, dataframe2 = None):
 
     可以向设计器返回两个数据集，数据集必须是 `pandas.DataFrame` 类型的序列。 可以在 Python 代码中创建其他输出，并将其直接写入到 Azure 存储。
 
-6. 提交管道，或者选择模块，然后选择“运行所选”以便仅运行 Python 脚本。
+    > [!WARNING]
+    > 建议不要在“执行 Python 脚本”模块中连接到数据库或其他外部存储。  可以使用[“导入数据”模块](./import-data.md)和[“导出数据”模块](./export-data.md)     
 
-    所有数据和代码都将加载到虚拟机中，并使用指定的 Python 环境运行。
+6. 提交管道。
+
+    如果模块已完成，请检查输出（如果需要）。
+
+    如果该模块失败，则需要进行一些故障排除。 选择该模块，然后在右侧窗格中打开 " **输出 + 日志** "。 打开 **70_driver_log.txt** 并 **在 azureml_main 中** 搜索，然后可以找到导致错误的行。 例如，在 azureml_main "中第17行" File "/tmp/tmp01_ID/user_script. py" 表示错误发生在 python 脚本的17行中。
 
 ## <a name="results"></a>结果
 
@@ -268,4 +349,4 @@ def azureml_main(dataframe1 = None, dataframe2 = None):
 
 ## <a name="next-steps"></a>后续步骤
 
-请参阅 Azure 机器学习的[可用模块集](module-reference.md)。 
+请参阅 Azure 机器学习的[可用模块集](module-reference.md)。

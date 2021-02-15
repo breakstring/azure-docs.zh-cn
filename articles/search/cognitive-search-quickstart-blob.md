@@ -7,29 +7,29 @@ author: HeidiSteen
 ms.author: heidist
 ms.service: cognitive-search
 ms.topic: quickstart
-ms.date: 06/07/2020
-ms.openlocfilehash: db9e8f71787026abea74fbbfeed51a227a295601
-ms.sourcegitcommit: 20e246e86e25d63bcd521a4b4d5864fbc7bad1b0
+ms.date: 01/12/2021
+ms.openlocfilehash: d07b52d8abeab34d565ebde4bac58eec66780dce
+ms.sourcegitcommit: c136985b3733640892fee4d7c557d40665a660af
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 06/08/2020
-ms.locfileid: "84488947"
+ms.lasthandoff: 01/13/2021
+ms.locfileid: "98179259"
 ---
 # <a name="quickstart-create-an-azure-cognitive-search-cognitive-skillset-in-the-azure-portal"></a>快速入门：在 Azure 门户中创建 Azure 认知搜索认知技能集
 
-技能集是一项基于 AI 的功能，它可以从大型的无差别文本或图像文件提取信息和结构，使内容可编制索引并可在 Azure 认知搜索中搜索。 
+技能组是一项基于 AI 的功能，它使用深度学习模型从大型的无差别文本或图像文件提取信息和结构，使内容可编制索引并可在 Azure 认知搜索中搜索。 
 
 在本快速入门中，你将合并 Azure 云中的服务和数据以创建技能集。 一切准备就绪后，可在 Azure 门户中运行“导入数据”向导，以将这些数据提取到一起。 最终结果是一个可在门户（[搜索资源管理器](search-explorer.md)）中查询的可搜索索引，其中填充了 AI 处理功能创建的数据。
 
 ## <a name="prerequisites"></a>先决条件
 
-在开始之前，必须满足以下条件：
+开始之前，必须具备以下先决条件：
 
 + 具有活动订阅的 Azure 帐户。 [免费创建帐户](https://azure.microsoft.com/free/)。
 
 + Azure 认知搜索服务。 [创建服务](search-create-service-portal.md)或在当前订阅下[查找现有服务](https://ms.portal.azure.com/#blade/HubsExtension/BrowseResourceBlade/resourceType/Microsoft.Search%2FsearchServices)。 可以使用本快速入门的免费服务。 
 
-+ 具有 [Blob 存储](https://docs.microsoft.com/azure/storage/blobs/)的 Azure 存储帐户。
++ 具有 [Blob 存储](../storage/blobs/index.yml)的 Azure 存储帐户。
 
 > [!NOTE]
 > 此快速入门还将 [Azure 认知服务](https://azure.microsoft.com/services/cognitive-services/)用于 AI。 由于工作负荷很小，因此，认知服务在幕后会抽调一部分算力来免费处理事务（最多 20 个）。 这意味着，无需创建其他认知服务资源即可完成此练习。
@@ -40,7 +40,7 @@ ms.locfileid: "84488947"
 
 1. [下载示例数据](https://1drv.ms/f/s!As7Oy81M_gVPa-LCb5lC_3hbS-4)，其中包括不同类型的小型文件集。 解压缩文件。
 
-1. [创建 Azure 存储帐户](https://docs.microsoft.com/azure/storage/common/storage-quickstart-create-account?tabs=azure-portal)或[查找现有帐户](https://ms.portal.azure.com/#blade/HubsExtension/BrowseResourceBlade/resourceType/Microsoft.Storage%2storageAccounts/)。 
+1. [创建 Azure 存储帐户](../storage/common/storage-account-create.md?tabs=azure-portal)或[查找现有帐户](https://ms.portal.azure.com/#blade/HubsExtension/BrowseResourceBlade/resourceType/Microsoft.Storage%2storageAccounts/)。 
 
    + 选择 Azure 认知搜索所在的同一区域，以避免带宽费用。 
 
@@ -50,7 +50,7 @@ ms.locfileid: "84488947"
 
 1. 在容器中，单击“上传”以上传在第一个步骤中下载的示例文件。 请注意，内容类型非常广泛，其中包括图像和应用程序文件，而这些内容在使用其本机格式时不支持全文搜索。
 
-   ![Azure Blob 存储中的源文件](./media/cognitive-search-quickstart-blob/sample-data.png)
+   :::image type="content" source="media/cognitive-search-quickstart-blob/sample-data.png" alt-text="Azure Blob 存储中的源文件" border="false":::
 
 现在可以在“导入数据”向导中转到下一步。
 
@@ -60,13 +60,13 @@ ms.locfileid: "84488947"
 
 1. [查找搜索服务](https://ms.portal.azure.com/#blade/HubsExtension/BrowseResourceBlade/resourceType/Microsoft.Storage%2storageAccounts/)，并在“概述”页中，单击命令栏上的“导入数据”，通过四个步骤设置认知扩充。
 
-   ![导入数据命令](media/cognitive-search-quickstart-blob/import-data-cmd2.png)
+   :::image type="content" source="media/cognitive-search-quickstart-blob/import-data-cmd2.png" alt-text="导入数据命令" border="false":::
 
 ### <a name="step-1---create-a-data-source"></a>步骤 1 - 创建数据源
 
 1. 在“连接到数据”中选择“Azure Blob 存储”，然后选择创建的存储帐户和容器 。 为数据源命名，并对余下的设置使用默认值。 
 
-   ![Azure Blob 配置](./media/cognitive-search-quickstart-blob/blob-datasource.png)
+   :::image type="content" source="media/cognitive-search-quickstart-blob/blob-datasource.png" alt-text="Azure Blob 配置" border="false":::
 
     继续转到下一页。
 
@@ -74,9 +74,9 @@ ms.locfileid: "84488947"
 
 接下来，配置 AI 扩充来调用 OCR、图像分析和自然语言处理。 
 
-1. 本快速入门将使用**免费**的认知服务资源。 示例数据包括 14 个文件，因此，认知服务免费提供的 20 个事务配额足以完成本快速入门。 
+1. 本快速入门将使用 **免费** 的认知服务资源。 示例数据包括 14 个文件，因此，认知服务免费提供的 20 个事务配额足以完成本快速入门。 
 
-   ![附加认知服务](media/cognitive-search-quickstart-blob/cog-search-attach.png)
+   :::image type="content" source="media/cognitive-search-quickstart-blob/cog-search-attach.png" alt-text="附加认知服务 - 附加基本服务" border="false":::
 
 1. 展开“添加扩充”，进行四个选择。 
 
@@ -86,7 +86,7 @@ ms.locfileid: "84488947"
 
    选择实体识别（人员、组织和位置）和图像分析技能。
 
-   ![附加认知服务](media/cognitive-search-quickstart-blob/skillset.png)
+   :::image type="content" source="media/cognitive-search-quickstart-blob/skillset.png" alt-text="附加认知服务 - 为技能组选择服务" border="false":::
 
    继续转到下一页。
 
@@ -100,9 +100,9 @@ ms.locfileid: "84488947"
 
 + 默认文档键是 *metadata_storage_path*（由于字段包含唯一值，因此选择了此键）。
 
-+ 默认属性为**可检索**和**可搜索**。 **可搜索**允许对字段进行全文搜索。 **可检索**意味着可以在结果中返回字段值。 向导假设你希望这些字段可检索且可搜索，因为它们是通过技能集创建的。
++ 默认属性为 **可检索** 和 **可搜索**。 **可搜索** 允许对字段进行全文搜索。 **可检索** 意味着可以在结果中返回字段值。 向导假设你希望这些字段可检索且可搜索，因为它们是通过技能集创建的。
 
-  ![索引字段](media/cognitive-search-quickstart-blob/index-fields.png)
+  :::image type="content" source="media/cognitive-search-quickstart-blob/index-fields.png" alt-text="索引字段" border="false":::
 
 请注意 `content` 字段旁边的 **Retrievable** 属性带有删除线和问号。 对于包含大量的文本的 Blob 文档，`content` 字段包含文件主体，因此可能包含数千行。 此类字段在搜索结果中不实用，应在此演示中排除它。 
 
@@ -118,7 +118,7 @@ ms.locfileid: "84488947"
 
 1. 在“索引器”页中，可以接受默认名称并单击“一次”计划选项来立即运行该索引器 。 
 
-   ![索引器定义](media/cognitive-search-quickstart-blob/indexer-def.png)
+   :::image type="content" source="media/cognitive-search-quickstart-blob/indexer-def.png" alt-text="索引器定义" border="false":::
 
 1. 单击“提交”以创建并同时运行索引器。
 
@@ -126,7 +126,7 @@ ms.locfileid: "84488947"
 
 与典型的基于文本的索引相比，认知技能索引编制需要花费更长的时间才能完成，OCR 和图像分析尤其如此。 若要监视进度，请转到“概述”页，然后单击页面中间的“索引器”。
 
-  ![Azure 认知搜索通知](./media/cognitive-search-quickstart-blob/indexer-notification.png)
+  :::image type="content" source="media/cognitive-search-quickstart-blob/indexer-notification.png" alt-text="Azure 认知搜索通知" border="false":::
 
 由于内容类型广泛，因此警告很常见。 某些内容类型对于特定技能并不有效，在较低层级上，常常会遇到[索引器限制](search-limits-quotas-capacity.md#indexer-limits)。 例如，32,000 字符的截断通知是“免费”层级上的索引器限制。 如果在更高的层级上运行此演示，许多截断警告会消失。
 
@@ -134,15 +134,15 @@ ms.locfileid: "84488947"
 
 在该页上再次单击“警告”状态以查看警告列表，如下所示。 
 
-  ![索引器警告列表](./media/cognitive-search-quickstart-blob/indexer-warnings.png)
+  :::image type="content" source="media/cognitive-search-quickstart-blob/indexer-warnings.png" alt-text="索引器警告列表" border="false":::
 
 单击特定的状态行时将显示详细信息。 此警告表明合并在达到最大阈值（此特定 PDF 较大）后停止。
 
-  ![警告详细信息](./media/cognitive-search-quickstart-blob/warning-detail.png)
+  :::image type="content" source="media/cognitive-search-quickstart-blob/warning-detail.png" alt-text="警告详细信息" border="false":::
 
 ## <a name="query-in-search-explorer"></a>搜索浏览器中的查询
 
-创建索引后，可以运行查询以返回结果。 为完成此任务，请在门户中使用**搜索浏览器**。 
+创建索引后，可以运行查询以返回结果。 为完成此任务，请在门户中使用 **搜索浏览器**。 
 
 1. 在搜索服务仪表板页上，单击命令栏上的“搜索浏览器”。
 
@@ -157,7 +157,7 @@ ms.locfileid: "84488947"
 
 查询字符串区分大小写，因此如果收到“未知字段”消息，请检查“字段”或“索引定义(JSON)”以验证名称和大小写。 
 
-  ![搜索浏览器示例](./media/cognitive-search-quickstart-blob/search-explorer.png)
+  :::image type="content" source="media/cognitive-search-quickstart-blob/search-explorer.png" alt-text="搜索浏览器示例" border="false":::
 
 ## <a name="takeaways"></a>要点
 
@@ -169,7 +169,7 @@ ms.locfileid: "84488947"
 
 输出将定向到搜索索引，在编制索引期间创建的名称/值对与索引中的各个字段之间存在映射关系。 在内部，门户将设置[批注](cognitive-search-concept-annotations-syntax.md)并定义[技能集](cognitive-search-defining-skillset.md)，以建立操作顺序和常规流。 这些步骤隐藏在门户中，但开始编写代码时，这些概念就很重要。
 
-最后，你已了解可以通过查询索引来验证内容。 Azure 认知搜索最终提供的结果是一个可搜索的索引，可以[简单](https://docs.microsoft.com/rest/api/searchservice/simple-query-syntax-in-azure-search)或[全面扩展的查询语法](https://docs.microsoft.com/rest/api/searchservice/lucene-query-syntax-in-azure-search)来查询它。 包含扩充字段的索引与其他任何索引类似。 若要合并标准或[自定义分析器](search-analyzers.md)、[评分配置文件](https://docs.microsoft.com/rest/api/searchservice/add-scoring-profiles-to-a-search-index)、[同义词](search-synonyms.md)、[分面筛选器](search-filters-facets.md)、异地搜索或其他任何 Azure 认知搜索功能，完全可以这样做。
+最后，你已了解可以通过查询索引来验证内容。 Azure 认知搜索最终提供的结果是一个可搜索的索引，可以[简单](/rest/api/searchservice/simple-query-syntax-in-azure-search)或[全面扩展的查询语法](/rest/api/searchservice/lucene-query-syntax-in-azure-search)来查询它。 包含扩充字段的索引与其他任何索引类似。 若要合并标准或[自定义分析器](search-analyzers.md)、[评分配置文件](/rest/api/searchservice/add-scoring-profiles-to-a-search-index)、[同义词](search-synonyms.md)、[分面筛选器](search-filters-facets.md)、异地搜索或其他任何 Azure 认知搜索功能，完全可以这样做。
 
 ## <a name="clean-up-resources"></a>清理资源
 

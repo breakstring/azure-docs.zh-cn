@@ -9,18 +9,18 @@ ms.topic: how-to
 ms.workload: infrastructure
 ms.date: 10/15/2019
 ms.author: haroldw
-ms.openlocfilehash: a7524ea80906f9df5f63af9e7d672bbef500b0d9
-ms.sourcegitcommit: f353fe5acd9698aa31631f38dd32790d889b4dbb
+ms.openlocfilehash: d0a10c6c700f11e540dc7edaa27baee35396d814
+ms.sourcegitcommit: 78ecfbc831405e8d0f932c9aafcdf59589f81978
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/29/2020
-ms.locfileid: "87373328"
+ms.lasthandoff: 01/23/2021
+ms.locfileid: "98732388"
 ---
 # <a name="deploy-okd-in-azure"></a>在 Azure 中部署 OKD
 
 可使用两种方式之一在 Azure 中部署 OKD（以前称为 OpenShift Origin）：
 
-- 可以手动部署所有必要的 Azure 基础结构组件，然后按照[OKD 文档](https://docs.okd.io)进行操作。
+- 可以手动部署所有必要的 Azure 基础结构组件，然后按照 [OKD 文档](https://docs.okd.io)进行操作。
 - 也可使用现有的[资源管理器模板](https://github.com/Microsoft/openshift-origin)，该模板可简化 OKD 群集的部署。
 
 ## <a name="deploy-using-the-okd-template"></a>使用 OKD 模板进行部署
@@ -119,12 +119,12 @@ ms.locfileid: "87373328"
 
 
 > [!NOTE] 
-> 以下命令需要 Azure CLI 2.0.8 或更高版本。 可以使用 `az --version` 命令检查 CLI 版本。 若要更新 CLI 版本，请参阅[安装 Azure CLI](/cli/azure/install-azure-cli?view=azure-cli-latest)。
+> 以下命令需要 Azure CLI 2.0.8 或更高版本。 可以使用 `az --version` 命令检查 CLI 版本。 若要更新 CLI 版本，请参阅[安装 Azure CLI](/cli/azure/install-azure-cli)。
 
 以下示例使用名为 myOpenShiftCluster 的部署将 OKD 群集和所有相关资源部署到名为 openshiftrg 的资源组中。 它直接从 GitHub 存储库引用模板，同时使用名为 azuredeploy.parameters.json 的本地参数文件。
 
 ```azurecli 
-az group deployment create -g openshiftrg --name myOpenShiftCluster \
+az deployment group create -g openshiftrg --name myOpenShiftCluster \
       --template-uri https://raw.githubusercontent.com/Microsoft/openshift-origin/master/azuredeploy.json \
       --parameters @./azuredeploy.parameters.json
 ```

@@ -2,26 +2,12 @@
   href: index.yml
 - name: 转换器
   items:
-    - name: 概述
-      items:
-        - name: 什么是翻译器？
-          href: translator-info-overview.md
-        - name: 语言支持
-          href: 'https://docs.microsoft.com/azure/cognitive-services/translator/language-support#customization'
+    - name: 什么是翻译器？
+      href: translator-info-overview.md
     - name: 快速入门
-      items:
-        - name: 翻译文本
-          href: quickstart-translate.md
-        - name: 直译文本
-          href: quickstart-transliterate.md
-        - name: 检测语言
-          href: quickstart-detect.md
-        - name: 查找字词翻译
-          href: quickstart-dictionary.md
-        - name: 获取支持的语言
-          href: quickstart-languages.md
-        - name: 确定句子长度
-          href: quickstart-sentences.md
+      href: quickstart-translator.md
+    - name: 语言支持
+      href: language-support.md
     - name: 教程
       items:
         - name: 通过 C# 创建一个使用翻译器的 WPF 应用
@@ -37,7 +23,7 @@
     - name: 操作指南
       items:
         - name: 注册到翻译器
-          href: translator-text-how-to-signup.md
+          href: ./translator-how-to-signup.md
         - name: 迁移到 V3 文本 API
           href: migrate-to-v3.md
         - name: 添加不雅内容筛选
@@ -70,34 +56,26 @@
       items:
         - name: v3 翻译器参考
           href: reference/v3-0-reference.md
-          items:
-            - name: Languages
-              href: reference/v3-0-languages.md
-            - name: Translate
-              href: reference/v3-0-translate.md
-            - name: Transliterate
-              href: reference/v3-0-transliterate.md
-            - name: Detect
-              href: reference/v3-0-detect.md
-            - name: BreakSentence
-              href: reference/v3-0-break-sentence.md
-            - name: 字典查找
-              href: reference/v3-0-dictionary-lookup.md
-            - name: 字典示例
-              href: reference/v3-0-dictionary-examples.md
-        - name: v2 翻译器参考（已弃用）
-          href: reference/v2-0-reference.md
-          items:
-            - name: 转换文本
-              href: transform-text.md
-            - name: 如何使用协作性翻译框架 (CTF) 报告
-              href: ctf-reporting.md
-            - name: 返回 N 个最佳翻译
-              href: return-n-best-translations.md
+        - name: Languages
+          href: reference/v3-0-languages.md
+        - name: Translate
+          href: reference/v3-0-translate.md
+        - name: Transliterate
+          href: reference/v3-0-transliterate.md
+        - name: Detect
+          href: reference/v3-0-detect.md
+        - name: BreakSentence
+          href: reference/v3-0-break-sentence.md
+        - name: 字典查找
+          href: reference/v3-0-dictionary-lookup.md
+        - name: 字典示例
+          href: reference/v3-0-dictionary-examples.md
         - name: 请求限制
           href: request-limits.md
     - name: 资源
       items:
+        - name: 支持和帮助选项
+          href: ../cognitive-services-support-options.md?context=/azure/cognitive-services/translator/context/context
         - name: GitHub 上的代码示例
           href: 'https://aka.ms/TranslatorGitHub'
         - name: 常见问题解答
@@ -108,8 +86,6 @@
           href: 'https://azure.microsoft.com/global-infrastructure/services/?products=cognitive-services'
         - name: 合规性
           href: 'https://azure.microsoft.com/support/legal/cognitive-services-compliance-and-privacy/'
-        - name: Stack Overflow
-          href: 'https://stackoverflow.com/questions/tagged/microsoft-translator'
 - name: 自定义翻译
   items:
     - name: 概述
@@ -162,6 +138,8 @@
           href: custom-translator/unsupported-language-deployments.md
     - name: 资源
       items:
+        - name: 支持和帮助选项
+          href: ../cognitive-services-support-options.md?context=/azure/cognitive-services/translator/context/context
         - name: 术语表
           href: custom-translator/glossary.md
         - name: 常见问题解答
@@ -172,5 +150,3 @@
           href: 'https://azure.microsoft.com/support/legal/cognitive-services-compliance-and-privacy/'
         - name: 加密
           href: translator-encryption-of-data-at-rest.md
-        - name: Stack Overflow
-          href: 'https://stackoverflow.com/questions/tagged/microsoft-translator'

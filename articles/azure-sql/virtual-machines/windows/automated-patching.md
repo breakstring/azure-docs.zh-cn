@@ -8,18 +8,19 @@ editor: ''
 tags: azure-resource-manager
 ms.assetid: 58232e92-318f-456b-8f0a-2201a541e08d
 ms.service: virtual-machines-sql
+ms.subservice: management
 ms.topic: article
 ms.tgt_pltfrm: vm-windows-sql-server
 ms.workload: iaas-sql-server
 ms.date: 03/07/2018
 ms.author: mathoma
 ms.reviewer: jroth
-ms.openlocfilehash: 822d74c6f080a1bb1e5e5af38bdf2c221af16d52
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.openlocfilehash: 429fe39f84a54c22fa97178b85f417d76dc84a8e
+ms.sourcegitcommit: dfc4e6b57b2cb87dbcce5562945678e76d3ac7b6
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87086755"
+ms.lasthandoff: 12/12/2020
+ms.locfileid: "97359466"
 ---
 # <a name="automated-patching-for-sql-server-on-azure-virtual-machines-resource-manager"></a>Azure 虚拟机（资源管理器）上 SQL Server 的自动修补
 [!INCLUDE[appliesto-sqlvm](../../includes/appliesto-sqlvm.md)]
@@ -40,6 +41,7 @@ ms.locfileid: "87086755"
 * Windows Server 2012
 * Windows Server 2012 R2
 * Windows Server 2016
+* Windows Server 2019
 
 **SQL Server 版本**：
 
@@ -48,6 +50,7 @@ ms.locfileid: "87086755"
 * SQL Server 2014
 * SQL Server 2016
 * SQL Server 2017
+* SQL Server 2019
 
 **Azure PowerShell**：
 
@@ -61,7 +64,7 @@ ms.locfileid: "87086755"
 > 
 
 ## <a name="settings"></a>设置
-下表描述了可为自动修补配置的选项。 实际配置步骤根据你使用的是 Azure 门户还是 Azure Windows PowerShell 命令而有所不同。
+下表描述了可为自动修补配置的选项。 实际配置步骤根据使用的是 Azure 门户还是 Azure Windows PowerShell 命令而有所不同。
 
 | 设置 | 可能的值 | 说明 |
 | --- | --- | --- |

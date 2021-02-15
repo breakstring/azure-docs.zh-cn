@@ -7,10 +7,14 @@
     - name: 媒体服务中的新增功能
       displayName: release notes
       href: release-notes.md
+    - name: 媒体服务符合性
+      href: concept-compliance.md
 - name: 快速入门
   items:
     - name: 设置你的环境
       items:
+        - name: 查找租户 ID
+          href: how-to-set-azure-tenant.md
         - name: 查找你的 Azure 订阅
           href: how-to-set-azure-subscription.md
         - name: 创建媒体服务帐户
@@ -18,7 +22,7 @@
         - name: 访问 API
           href: access-api-howto.md
         - name: 设置 Azure Cloud Shell
-          href: 'https://docs.microsoft.com/azure/cloud-shell/overview'
+          href: ../../cloud-shell/overview.md
         - name: 使用 REST 进行开发
           items:
             - name: 使用 Postman 进行连接
@@ -43,33 +47,51 @@
           href: manage-assets-quickstart.md
         - name: 使用门户加密内容
           href: encrypt-content-quickstart.md
+    - name: 使用 ARM 模板
+      items:
+        - name: 通过 ARM 创建帐户
+          href: quickstart-arm-template-account.md
 - name: 教程
   items:
-    - name: 对远程文件进行编码并流式传输视频
+    - name: .NET
       items:
-        - name: 使用 REST
-          displayName: 'encoding, job, transform'
-          href: stream-files-tutorial-with-rest.md
-        - name: 使用 CLI
-          href: stream-files-cli-quickstart.md
-        - name: （使用 .NET）
+        - name: 对远程文件 .NET 进行编码和流式传输
           href: stream-files-dotnet-quickstart.md
-        - name: 利用 Node.js
+        - name: 对上传的文件进行编码和流式传输 (.NET)
+          href: stream-files-tutorial-with-api.md
+        - name: 使用 .NET 实时传送视频流
+          href: stream-live-tutorial-with-api.md
+        - name: 使用 .NET 分析视频
+          href: analyze-videos-tutorial-with-api.md
+        - name: 通过 AES-128 进行动态加密
+          href: protect-with-aes128.md
+        - name: 通过 DRM 进行动态加密
+          href: protect-with-drm.md
+        - name: 使用 Azure AD 进行内容保护
+          href: azure-ad-content-protection.md
+          displayName: 'AAD, Active Directory'
+    - name: REST
+      items:
+        - name: 启用受信任的存储
+          href: tutorial-trusted-storage-rest.md
+        - name: 对远程文件 REST 进行编码和流式传输
+          href: stream-files-tutorial-with-rest.md
+        - name: REST API 的客户管理的密钥
+          href: tutorial-byok-postman.md
+    - name: CLI
+      items:
+        - name: 对远程文件 CLI 进行编码和流式传输
+          href: stream-files-cli-quickstart.md
+    - name: Node.js
+      items:
+        - name: 对远程文件 Node.js 进行编码和流式传输
           href: stream-files-nodejs-quickstart.md
-    - name: 对上传的文件和流视频进行编码
-      displayName: 'encode, encoding, job, transform'
-      href: stream-files-tutorial-with-api.md
-    - name: 实时流式处理
-      href: stream-live-tutorial-with-api.md
-      displayName: 'Live Events, Live Outputs, ingest'
-    - name: 分析视频
-      displayName: 'job, transform, VideoAnalyzerPreset, AudioAnalyzerPreset'
-      href: analyze-videos-tutorial-with-api.md
-    - name: 通过 AES-128 进行动态加密
-      href: protect-with-aes128.md
-    - name: 通过 DRM 进行动态加密
-      displayName: 'PlayReady, Widevine, FairPlay'
-      href: protect-with-drm.md
+    - name: Azure 门户
+      items:
+        - name: 客户管理的密钥或 BYOK 教程
+          href: tutorial-byok-portal.md
+        - name: 在 Azure 日志分析中存储 AMS 事件
+          href: tutorial-events-log-analytics.md
 - name: 示例
   items:
     - name: 媒体服务 v3 示例
@@ -90,6 +112,13 @@
         - name: 存储帐户
           href: storage-account-concept.md
           displayName: Storage side encryption
+        - name: 托管标识和媒体服务
+          displayName: content protection
+          href: concept-managed-identities.md
+        - name: 受信任的存储
+          href: concept-trusted-storage.md
+        - name: 客户管理的密钥
+          href: concept-use-customer-managed-keys-byok.md
     - name: 资产
       items:
         - name: 资产
@@ -111,13 +140,15 @@
           href: autogen-bitrate-ladder.md
         - name: 内容感知型编码
           href: content-aware-encoding.md
+        - name: 媒体保留单位
+          href: concept-media-reserved-units.md
     - name: 分析内容（视频索引器）
       items:
         - name: 概述
           href: analyzing-video-audio-files-concept.md
           displayName: 'analyze, analyzing, presets, jobs'
-        - name: 转换和作业
-          href: transforms-jobs-concept.md
+    - name: 转换和作业
+      href: transforms-jobs-concept.md
     - name: 实时传送视频流
       items:
         - name: 概述
@@ -179,8 +210,6 @@
           href: streaming-policy-concept.md
         - name: 内容密钥策略
           href: content-key-policy-concept.md
-        - name: 使用 Azure AD 进行内容保护
-          href: azure-ad-content-protection.md
     - name: 监视
       items:
         - name: 将事件与事件网格配合使用
@@ -202,7 +231,7 @@
           displayName: 'accessing, long-running, sdk, invalid character, name, naming, file name'
         - name: 对实体进行分页、筛选、排序
           href: entities-overview.md
-        - name: RBAC
+        - name: Azure RBAC
           href: rbac-overview.md
         - name: 错误代码
           items:
@@ -217,6 +246,9 @@
         - name: 点播视频
           displayName: 'failover, bcdr, HA, high availability'
           href: media-services-high-availability-encoding.md
+    - name: 媒体服务体系结构
+      displayName: architectures
+      href: architectures-concept.md
     - name: 疑难解答
       items:
         - name: 常见问题
@@ -232,16 +264,57 @@
               href: job-error-codes.md
         - name: 重置帐户凭据
           href: cli-reset-account-credentials.md
-    - name: 从 v2 迁移到 v3
+    - name: 迁移指南
+      displayName: migration
       items:
-        - name: v2 与 v3
-          displayName: 'migrate, v2 to v3'
-          href: media-services-v2-vs-v3.md
-        - name: 迁移指南
-          href: migrate-from-v2-to-v3.md
-          displayName: naming
+        - name: 迁移指南简介
+          href: migrate-v-2-v-3-migration-introduction.md
+          displayName: migration
+        - name: 步骤 1 - 优势
+          href: migrate-v-2-v-3-migration-benefits.md
+          displayName: 'migration, benefits'
+        - name: 步骤 2 - 区别
+          items:
+            - name: API 访问
+              href: migrate-v-2-v-3-differences-api-access.md
+              displayName: 'migration, api'
+            - name: 功能差异
+              href: migrate-v-2-v-3-differences-feature-gaps.md
+              displayName: 'migration, features'
+            - name: 术语和实体更改
+              href: migrate-v-2-v-3-differences-terminology.md
+              displayName: 'migration, entity, api'
+        - name: 步骤 3 - SDK 设置
+          href: migrate-v-2-v-3-migration-setup.md
+          displayName: 'migration, SDK`'
+        - name: 步骤 4 - 基于方案的迁移指南
+          items:
+            - name: 编码
+              href: migrate-v-2-v-3-migration-scenario-based-encoding.md
+              displayName: 'migration, encoding'
+            - name: 实时传送视频流
+              href: migrate-v-2-v-3-migration-scenario-based-live-streaming.md
+              displayName: 'migration, live streaming'
+            - name: 打包和交付
+              href: migrate-v-2-v-3-migration-scenario-based-publishing.md
+              displayName: 'migration, packaging, delivery, publishing'
+            - name: 内容保护
+              href: migrate-v-2-v-3-migration-scenario-based-content-protection.md
+              displayName: 'migration, content protection, DRM, digital rights management'
+            - name: 媒体保留单位 (MRU)
+              href: migrate-v-2-v-3-migration-scenario-based-media-reserved-units.md
+              displayName: 'migration, media reserved units'
+        - name: 示例比较
+          href: migrate-v-2-v-3-migration-samples.md
+          displayName: 'migration, samples'
 - name: 操作指南
   items:
+    - name: 查找租户和订阅
+      items:
+        - name: 查找租户 ID
+          href: how-to-set-azure-tenant.md
+        - name: 查找你的订阅 ID
+          href: how-to-set-azure-subscription.md
     - name: 创建资产并上传媒体
       items:
         - name: 创建资产
@@ -251,7 +324,13 @@
     - name: 创建转换和作业
       items:
         - name: 创建转换
-          href: cli-create-transform.md
+          href: how-to-create-transform.md
+        - name: 使用 REST 创建基本音频转换
+          href: how-to-create-basic-audio-transform.md
+        - name: 使用 REST 创建 copyAllBitrateNonInterleaved 转换
+          href: how-to-create-copyallbitratenoninterleaved-transform.md
+        - name: 复制未使用 REST 编码的视频
+          href: how-to-create-copy-video-audio-transform.md
         - name: 创建作业
           href: cli-create-jobs.md
         - name: 使用本地文件和 .NET 创建作业输入
@@ -365,15 +444,15 @@
     - name: REST
       href: /rest/api/media/
     - name: Azure CLI
-      href: 'https://aka.ms/ams-v3-cli-ref'
+      href: /cli/azure/ams
     - name: SDK
       items:
         - name: .NET
-          href: 'https://aka.ms/ams-v3-dotnet-ref'
+          href: /dotnet/api/overview/azure/mediaservices/management
         - name: Java
-          href: 'https://aka.ms/ams-v3-java-ref'
+          href: /java/api/overview/azure/mediaservices/management
         - name: Python
-          href: 'https://aka.ms/ams-v3-python-ref'
+          href: /python/api/overview/azure/mediaservices/management
         - name: Node.js
           href: /javascript/api/overview/azure/mediaservices/management
         - name: Go
@@ -392,7 +471,8 @@
       displayName: 'forums, twitter, feedback'
       href: media-services-community.md
     - name: Azure 路线图
-      href: 'https://azure.microsoft.com/roadmap/?category=web-mobile'
+      displayName: azure updates
+      href: 'https://azure.microsoft.com/updates/?category=media'
     - name: 定价
       href: 'https://azure.microsoft.com/pricing/details/media-services/'
     - name: 视频
@@ -402,7 +482,7 @@
     - name: SDK/工具
       items:
         - name: Azure CLI
-          href: 'https://aka.ms/ams-v3-cli'
+          href: /cli/azure/install-azure-cli
         - name: .NET
           href: 'https://aka.ms/ams-v3-dotnet-sdk'
         - name: Java
@@ -421,5 +501,7 @@
       href: limits-quotas-constraints.md
     - name: Azure 云和区域
       href: azure-clouds-regions.md
+    - name: 区域代码名称和终结点
+      href: azure-regions-code-names.md
     - name: 文档更新
       href: docs-release-notes.md

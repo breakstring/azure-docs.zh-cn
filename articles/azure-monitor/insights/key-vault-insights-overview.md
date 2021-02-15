@@ -1,23 +1,23 @@
 ---
-title: 使用用于密钥保管库的 Azure Monitor（预览版）监视密钥保管库 | Microsoft Docs
+title: 监视 Key Vault 的 Azure Monitor Key Vault |Microsoft Docs
 description: 本文介绍用于密钥保管库的 Azure Monitor。
 services: azure-monitor
 ms.topic: conceptual
-author: mrbullwinkle
-ms.author: mbullwin
-ms.date: 04/13/2019
-ms.openlocfilehash: c669946ab76fcaeaaa6fd681f521408643c5a63c
-ms.sourcegitcommit: 023d10b4127f50f301995d44f2b4499cbcffb8fc
+author: lgayhardt
+ms.author: lagayhar
+ms.date: 09/10/2020
+ms.openlocfilehash: 41b058cf41aa1a8fb1def68851457385c8187823
+ms.sourcegitcommit: f5b8410738bee1381407786fcb9d3d3ab838d813
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/18/2020
-ms.locfileid: "88531253"
+ms.lasthandoff: 01/14/2021
+ms.locfileid: "98209876"
 ---
-# <a name="monitoring-your-key-vault-service-with-azure-monitor-for-key-vault-preview"></a>使用用于密钥保管库的 Azure Monitor（预览版）监视密钥保管库服务
-用于密钥保管库的 Azure Monitor（预览版）通过提供密钥保管库请求、性能、故障和延迟的统一视图，对密钥保管库进行全面监视。
-本文将帮助你了解如何加入和自定义用于密钥保管库的 Azure Monitor（预览版）的体验。
+# <a name="monitoring-your-key-vault-service-with-azure-monitor-for-key-vault"></a>使用 Azure Monitor for Key Vault 监视密钥保管库服务
+Azure Monitor for Key Vault 通过提供 Key Vault 请求、性能、故障和延迟的统一视图，对密钥保管库进行全面监视。
+本文将帮助你了解如何加入和自定义 Azure Monitor for Key Vault 的体验。
 
-## <a name="introduction-to-azure-monitor-for-key-vault-preview"></a>用于密钥保管库的 Azure Monitor（预览版）简介
+## <a name="introduction-to-azure-monitor-for-key-vault"></a>Azure Monitor for Key Vault 简介
 
 在深入了解此体验之前，应该了解它如何呈现和可视化信息。
 -    **大规模透视图**：可显示基于请求的性能快照视图、故障详情以及操作和延迟概览。
@@ -26,30 +26,15 @@ ms.locfileid: "88531253"
 
 用于密钥保管库的 Azure Monitor 结合了日志和指标来提供全局监视解决方案。 所有用户都可以访问基于指标的监视数据，但包含基于日志的可视化效果可能要求用户[对其 Azure 密钥保管库启用日志记录](../../key-vault/general/logging.md)。
 
-## <a name="configuring-your-key-vaults-for-monitoring"></a>配置密钥保管库以进行监视
-
-> [!NOTE]
-> 启用日志是一项付费服务，可提供其他监视功能。
-
-1. “操作与延迟”选项卡可帮助确定启用多少个以及启用哪些密钥保管库。 要开始收集，请选择“启用”按钮，随后跳转到一个单独的工作簿，其中列出了需要启用诊断日志的密钥保管库。
-
-    ![“操作和延迟”选项卡的屏幕截图，其中显示了蓝色启用按钮](./media/key-vaults-insights-overview/enable-logging.png)
-
-2. 要启用诊断日志，请单击“操作”列下的“启用”链接，然后创建一个可将日志发送到 Log Analytics 工作区的新诊断设置。 建议将所有日志发送到同一工作区。
-
-3. 保存诊断设置后，你将能够查看蜜月保管库见解下的所有基于日志的图表和可视化效果。 请注意，可能需要几分钟到几小时才能开始填充日志。
-
-4. 有关如何为密钥保管库服务启用诊断日志的其他帮助，请参阅[完整指南](../../key-vault/general/logging.md)。
-
 ## <a name="view-from-azure-monitor"></a>从 Azure Monitor 查看
 
 在 Azure Monitor 中，可以查看订阅中多个密钥保管库的请求、延迟和故障详细信息，并帮助确定性能问题和限制方案。
 
-若要查看所有订阅中的密钥保管库的使用情况和操作，请执行以下步骤：
+若要查看所有订阅中密钥保管库的利用率和操作情况，请执行以下步骤：
 
 1. 登录到 [Azure 门户](https://portal.azure.com/)
 
-2. 从 Azure 门户的左侧窗格中选择“监视”，然后在“见解”部分下选择“密钥保管库(预览版)” 。
+2. 从 Azure 门户的左侧窗格中选择“监视”，然后在“见解”部分下选择“密钥保管库” 。
 
 ![“概览”体验的屏幕截图，其中显示了多个关系图](./media/key-vaults-insights-overview/overview.png)
 
@@ -77,23 +62,13 @@ ms.locfileid: "88531253"
 
 为了更好地理解每个状态代码的含义，建议通读有关 [Azure 密钥保管库状态和响应代码](../../key-vault/general/authentication-requests-and-responses.md)的文档。
 
-## <a name="operations--latency-workbook"></a>“操作与延迟”工作簿
-
-在页面顶部选择“操作与延迟”，“操作与延迟”选项卡随即打开 。 借助此选项卡，可加入密钥保管库以进行监视。 有关更多详细步骤，请参阅[配置密钥保管库以进行监视](#configuring-your-key-vaults-for-monitoring)部分。
-
-你可以查看有多少个密钥保管库启用了日志记录。 如果正确配置了至少一个保管库，你将能够看到相关的表，其中显示了每个密钥保管库的操作和状态代码。 可单击各行的详细信息部分，以获取有关各个操作的其他信息。
-
-![“操作与延迟”图表的屏幕截图](./media/key-vaults-insights-overview/logs.png)
-
-如果在此部分未看到任何数据，请参考上面介绍如何为 Azure 密钥保管库启用日志的部分，或查看下面的疑难解答部分。
-
 ## <a name="view-from-a-key-vault-resource"></a>从密钥保管库资源查看
 
 要直接从密钥保管库访问用于密钥保管库的 Azure Monitor，请执行以下操作：
 
 1. 在 Azure 门户中，选择密钥保管库。
 
-2. 从列表中选择一个密钥保管库。 在“监视”部分选择“见解(预览版)”。
+2. 从列表中选择一个密钥保管库。 在“监视”部分中，选择“见解”。
 
 还可以从 Azure Monitor 级别工作簿中选择密钥保管库的资源名称来访问这些视图。
 
@@ -115,7 +90,7 @@ ms.locfileid: "88531253"
 
 借助“操作”工作簿，用户可深入了解所有事务的完整详细信息，可以使用顶层磁贴按“结果状态”筛选这些事务。
 
-![“操作”视图的屏幕截图](./media/key-vaults-insights-overview/info.png)
+![此屏幕截图显示了包含所有事务的完整详细信息的“操作”工作簿。](./media/key-vaults-insights-overview/info.png)
 
 用户还可以根据上表中的特定事务类型来确定视图的作用域，这会动态更新下表，用户可以在弹出的上下文窗格中查看完整的操作详细信息。
 
@@ -150,7 +125,7 @@ ms.locfileid: "88531253"
 
 你可以将包含多个订阅和密钥保管库的“概览”或“故障”工作簿配置为在每次运行时作用于特定的订阅或密钥保管库，具体操作步骤如下：
 
-1. 从门户中选择“监视”，然后从左侧窗格中选择“密钥保管库(预览版)” 。
+1. 从门户中选择“监视”，然后从左侧窗格中选择“密钥保管库” 。
 2. 在“概览”工作簿上，从命令栏中选择“编辑” 。
 3. 从“订阅”下拉列表中选择要用作默认订阅的一个或多个订阅。 请记住，工作簿最多支持选择 10 个订阅。
 4. 从“密钥保管库”下拉列表中选择要用作默认帐户的一个或多个帐户。 请记住，工作簿最多支持选择 200 个存储帐户。
@@ -160,11 +135,11 @@ ms.locfileid: "88531253"
 
 如需常规故障排除指南，请参阅专用的基于工作簿的见解[故障排除文章](troubleshoot-workbooks.md)。
 
-本部分将帮助你诊断和排查在使用用于密钥保管库的 Azure Monitor（预览版）时可能会遇到的一些常见问题。 使用下面的列表来查找与具体问题相关的信息。
+本部分将帮助你诊断和排查在使用 Azure Monitor for Key Vault 时可能会遇到的一些常见问题。 使用下面的列表来查找与具体问题相关的信息。
 
 ### <a name="resolving-performance-issues-or-failures"></a>解决性能问题或故障
 
-要帮助解决使用用于密钥保管库的 Azure Monitor（预览版）标识的任何密钥保管库相关问题，请参阅 [Azure 密钥保管库文档](../../key-vault/index.yml)。
+若要解决使用 Azure Monitor for Key Vault 确定的任何密钥保管库相关问题，请参阅 [Azure Key Vault 文档](../../key-vault/index.yml)。
 
 ### <a name="why-can-i-only-see-200-key-vaults"></a>为什么只能看到 200 个密钥保管库
 
@@ -175,10 +150,6 @@ ms.locfileid: "88531253"
 我们只显示从所选订阅筛选器中选择的包含密钥保管库的订阅，你可在 Azure 门户标头的“目录 + 订阅”中选择这些订阅。
 
 ![订阅筛选器的屏幕截图](./media/key-vaults-insights-overview/Subscriptions.png)
-
-### <a name="i-am-getting-an-error-message-that-the-query-exceeds-the-maximum-number-of-workspacesregions-allowed-what-to-do-now"></a>我收到一条错误消息，指出“查询超出了允许的最大工作区数/区域数”，现在该怎么办
-
-目前，只能查询 25 个区域和 200 个工作区，要查看你的数据，需要减少订阅和/或资源组的数目。
 
 ### <a name="i-want-to-make-changes-or-add-additional-visualizations-to-key-vault-insights-how-do-i-do-so"></a>我想要在 Key Vault Insights 中进行更改或添加更多可视化效果，如何执行此操作
 
@@ -191,16 +162,6 @@ ms.locfileid: "88531253"
 ### <a name="what-is-the-time-range-when-any-part-of-the-workbook-is-pinned"></a>固定工作簿的任何部分后，时间范围是多少
 
 时间范围将取决于面板设置。
-
-### <a name="why-do-i-not-see-any-data-for-my-key-vault-under-the-operations--latency-sections"></a>为何在“操作和延迟”部分下看不到我的 Key Vault 的任何数据
-
-要查看基于日志的数据，需要为要监视的每个密钥保管库启用日志。 可在每个密钥保管库的诊断设置下完成此操作。 需要将数据发送到指定的 Log Analytics 工作区。
-
-### <a name="i-have-already-enabled-logs-for-my-key-vault-why-am-i-still-unable-to-see-my-data-under-operations--latency"></a>我已经为 Key Vault 启用了日志，为何在“操作和延迟”下仍看不到我的数据
-
-目前，诊断日志无法追溯，只有在对密钥保管库执行了操作后，才会显示数据。 因此，此操作可能需要一段时间（几小时到一天），具体取决于密钥保管库的活动情况。
-
-此外，如果选择了大量的密钥保管库和订阅，则由于查询限制，可能无法查看数据。 要查看数据，可能需要减少所选订阅或密钥保管库的数目。 
 
 ### <a name="what-if-i-want-to-see-other-data-or-make-my-own-visualizations-how-can-i-make-changes-to-the-key-vault-insights"></a>如果想要查看其他数据或生成自己的可视化效果，应该怎么做？ 如何对 Key Vault Insights 进行更改
 

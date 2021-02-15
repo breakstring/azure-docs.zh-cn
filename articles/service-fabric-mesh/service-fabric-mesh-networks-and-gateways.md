@@ -1,19 +1,25 @@
 ---
 title: Azure Service Fabric 网络简介
 description: 了解有关 Service Fabric 网格中的网络、网关和智能流量路由。
-author: dkkapur
+author: georgewallace
 ms.topic: conceptual
 ms.date: 11/26/2018
-ms.author: dekapur
+ms.author: gwallace
 ms.custom: mvc, devcenter
-ms.openlocfilehash: dc793e2991783cc9b7b46d92fcc8e0267feb529b
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: ef8b40be366afe24b960f7419d84cc2a9976b592
+ms.sourcegitcommit: 59cfed657839f41c36ccdf7dc2bee4535c920dd4
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "75459137"
+ms.lasthandoff: 02/06/2021
+ms.locfileid: "99625695"
 ---
 # <a name="introduction-to-networking-in-service-fabric-mesh-applications"></a>Service Fabric 网格应用程序中的网络简介
+
+> [!IMPORTANT]
+> Azure Service Fabric 网格的预览已停用。 不允许再通过 Service Fabric 的网格 API 来进行新的部署。 对现有部署的支持将持续到2021年4月28日。
+> 
+> 有关详细信息，请参阅 [Azure Service Fabric 网格预览停](https://azure.microsoft.com/updates/azure-service-fabric-mesh-preview-retirement/)用。
+
 本文介绍了不同类型的负载均衡器、网关如何将网络与你的应用程序连接到其他网络，以及如何在应用程序中的服务之间路由流量。
 
 ## <a name="layer-4-vs-layer-7-load-balancers"></a>第 4 层和第 7 层负载均衡器

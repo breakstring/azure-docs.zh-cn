@@ -7,32 +7,32 @@ ms.service: sql-managed-instance
 ms.subservice: data-movement
 ms.custom: sqldbrb=1
 ms.devlang: ''
-ms.topic: conceptual
+ms.topic: tutorial
 author: MashaMSFT
 ms.author: ferno
 ms.reviewer: mathoma
 ms.date: 04/28/2020
-ms.openlocfilehash: 114d4f41ad48af3d1e585fcb01eb0794a8e349b5
-ms.sourcegitcommit: 4f1c7df04a03856a756856a75e033d90757bb635
-ms.translationtype: MT
+ms.openlocfilehash: 67902073b1484835d23566c91cbfae6f1d80d249
+ms.sourcegitcommit: 693df7d78dfd5393a28bf1508e3e7487e2132293
+ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/07/2020
-ms.locfileid: "87920103"
+ms.lasthandoff: 10/28/2020
+ms.locfileid: "92900470"
 ---
 # <a name="tutorial-configure-replication-between-two-managed-instances"></a>教程：配置两个托管实例之间的复制
 
 [!INCLUDE[appliesto-sqlmi](../includes/appliesto-sqlmi.md)]
 
-事务复制允许您将数据从一个数据库复制到 SQL Server 或[AZURE SQL 托管实例](sql-managed-instance-paas-overview.md)上承载的另一个数据库中。 SQL 托管实例可以是复制拓扑中的发布服务器、分发服务器或订阅服务器。 有关可用配置，请参阅[事务复制配置](replication-transactional-overview.md#common-configurations)。 
+通过事务复制可以将数据从一个数据库复制到 SQL Server 或 [Azure SQL 托管实例](sql-managed-instance-paas-overview.md)中托管的另一个数据库。 SQL 托管实例可以是复制拓扑中的发布服务器、分发服务器或订阅服务器。 有关可用配置，请参阅[事务复制配置](replication-transactional-overview.md#common-configurations)。 
 
-事务性复制目前处于公共预览版的 SQL 托管实例。 
+事务复制目前提供了用于 SQL 托管实例的公共预览版。 
 
-本教程介绍如何执行下列操作：
+在本教程中，你将了解如何执行以下操作：
 
 > [!div class="checklist"]
 >
-> - 将托管实例配置为复制发布服务器和分发服务器。
-> - 将托管实例配置为复制分发服务器。
+> - 将托管实例配置为复制发布服务器和分发器。
+> - 将托管实例配置为复制订阅服务器。
 
 ![在两个托管实例之间复制](./media/replication-between-two-instances-configure-tutorial/sqlmi-sqlmi-repl.png)
 
@@ -40,7 +40,7 @@ ms.locfileid: "87920103"
 
 
 > [!NOTE]
-> - 本文介绍了如何在 Azure SQL 托管实例中使用[事务复制](/sql/relational-databases/replication/transactional/transactional-replication)。 它与[故障转移组](../database/auto-failover-group-overview.md)无关，这是一项 Azure SQL 托管实例功能，可用于创建单个实例的完整可读副本。 在[通过故障转移组配置事务复制](replication-transactional-overview.md#with-failover-groups)时，还有其他注意事项。
+> - 本文介绍了如何在 Azure SQL 托管实例中使用[事务复制](/sql/relational-databases/replication/transactional/transactional-replication)。 它与[故障转移组](../database/auto-failover-group-overview.md)无关，这是一项 Azure SQL 托管实例功能，可用于创建单个实例的完整可读副本。 配置[故障转移组的事务复制](replication-transactional-overview.md#with-failover-groups)时还有其他注意事项。
 
 
 
@@ -48,7 +48,7 @@ ms.locfileid: "87920103"
 
 要配置 SQL 托管实例来充当发布服务器和/或分发服务器，需满足以下要求：
 
-- 发布服务器托管实例与分发服务器和订阅服务器位于同一虚拟网络中，或者已在所有三个实体的虚拟网络之间配置[虚拟网络对等互连](../../virtual-network/tutorial-connect-virtual-networks-powershell.md)。 
+- 发布服务器托管实例与分发服务器和订阅服务器位于同一虚拟网络中，或者已在所有三个实体的虚拟网络之间配置了 [VPN 网关](../../vpn-gateway/vpn-gateway-howto-vnet-vnet-resource-manager-portal.md)。 
 - 连接时，在复制参与者之间使用 SQL 身份验证。
 - 适用于复制工作目录的 Azure 存储帐户共享。
 - 需要在托管实例的 NSG 安全规则中打开端口 445（TCP 出站）才能访问 Azure 文件共享。  如果遇到错误 `failed to connect to azure storage \<storage account name> with os error 53`，则需要将出站规则添加到相应 SQL 托管实例子网的 NSG。
@@ -68,7 +68,7 @@ ms.locfileid: "87920103"
 
 ## <a name="3---create-an-azure-storage-account"></a>3 - 创建 Azure 存储帐户
 
-为工作目录[创建 Azure 存储帐户](/azure/storage/common/storage-create-storage-account#create-a-storage-account)，并在存储帐户中创建[文件共享](../../storage/files/storage-how-to-create-file-share.md)。 
+为工作目录[创建 Azure 存储帐户](../../storage/common/storage-account-create.md#create-a-storage-account)，并在存储帐户中创建[文件共享](../../storage/files/storage-how-to-create-file-share.md)。 
 
 复制采用 `\\storage-account-name.file.core.windows.net\file-share-name` 格式的文件共享路径
 
@@ -326,4 +326,4 @@ GO
 
 ## <a name="next-steps"></a>后续步骤
 
-你还可详细了解 [Azure SQL 托管实例的事务复制](replication-transactional-overview.md)的，或者了解如何[在 SQL 托管实例发布服务器/分发服务器与 Azure VM 订阅服务器上的 SQL](replication-two-instances-and-sql-server-configure-tutorial.md) 之间配置复制。 
+你还可详细了解 [Azure SQL 托管实例的事务复制](replication-transactional-overview.md)的，或者了解如何[在 SQL 托管实例发布服务器/分发服务器与 Azure VM 订阅服务器上的 SQL](replication-two-instances-and-sql-server-configure-tutorial.md) 之间配置复制。

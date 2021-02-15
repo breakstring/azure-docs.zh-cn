@@ -9,29 +9,31 @@ ms.topic: how-to
 ms.date: 09/27/2018
 ms.author: cynthn
 ms.custom: legacy
-ms.openlocfilehash: e579223691ed7593d04c3b67004a6dd511f72c78
-ms.sourcegitcommit: 3bf69c5a5be48c2c7a979373895b4fae3f746757
+ms.openlocfilehash: 9b63ec5b8a5d0684a0e144de7dfe4114af9777e2
+ms.sourcegitcommit: aaa65bd769eb2e234e42cfb07d7d459a2cc273ab
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/14/2020
-ms.locfileid: "88236601"
+ms.lasthandoff: 01/27/2021
+ms.locfileid: "98881883"
 ---
 # <a name="create-a-managed-image-of-a-generalized-vm-in-azure"></a>在 Azure 中创建通用 VM 的托管映像
 
 可通过在存储帐户中存储为托管/非托管磁盘的通用虚拟机 (VM) 创建托管的映像资源。 然后可以使用该映像创建多个 VM。 有关托管映像如何计费的信息，请参阅[托管磁盘定价](https://azure.microsoft.com/pricing/details/managed-disks/)。 
 
-一个托管映像最多支持 20 个同时部署。 如果尝试从同一托管映像同时创建超过 20 个 VM，则可能会由于单个 VHD 的存储性能限制而导致预配超时。 若要同时创建 20 个以上的 VM，请使用为每 20 个并发 VM 部署配置 1 个副本的[共享映像库](shared-image-galleries.md)映像。
+一个托管映像最多支持 20 个同时部署。 如果尝试从同一托管映像同时创建超过 20 个 VM，则可能会由于单个 VHD 的存储性能限制而导致预配超时。 若要同时创建 20 个以上的 VM，请使用为每 20 个并发 VM 部署配置 1 个副本的[共享映像库](../shared-image-galleries.md)映像。
 
 ## <a name="generalize-the-windows-vm-using-sysprep"></a>使用 Sysprep 通用化 Windows VM
 
 Sysprep 将删除所有个人帐户和安全信息，并准备好要用作映像的计算机。 有关 Sysprep 的信息，请参阅 [Sysprep 概述](/windows-hardware/manufacture/desktop/sysprep--system-preparation--overview)。
 
-确保 Sysprep 支持计算机上运行的服务器角色。 有关详细信息，请参阅 [Sysprep 对服务器角色的支持](/windows-hardware/manufacture/desktop/sysprep-support-for-server-roles)和[不支持的方案](/windows-hardware/manufacture/desktop/sysprep--system-preparation--overview#unsupported-scenarios)。 Sysprep 要求在执行之前完全解密驱动器。 如果在 VM 上启用了加密，请在运行 Sysprep 之前将其禁用。
+确保 Sysprep 支持计算机上运行的服务器角色。 有关详细信息，请参阅 [Sysprep 对服务器角色的支持](/windows-hardware/manufacture/desktop/sysprep-support-for-server-roles)和[不支持的方案](/windows-hardware/manufacture/desktop/sysprep--system-preparation--overview#unsupported-scenarios)。 
 
 > [!IMPORTANT]
 > 在 VM 上运行 Sysprep 后，该 VM 将被视为已通用化而无法重启。 通用化 VM 的过程是不可逆的。 如果需要保持原始 VM 正常运行，请创建 [VM 的副本](create-vm-specialized.md#option-3-copy-an-existing-azure-vm)并将其副本通用化。 
 >
-> 如果计划在首次将虚拟硬盘 (VHD) 上传到 Azure 之前运行 Sysprep，请确保先[准备好 VM](prepare-for-upload-vhd-image.md?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json)。  
+>Sysprep 要求对驱动器进行完全解密。 如果在 VM 上启用了加密，请在运行 Sysprep 之前将其禁用。
+>
+> 如果计划在首次将虚拟硬盘 (VHD) 上传到 Azure 之前运行 Sysprep，请确保先[准备好 VM](prepare-for-upload-vhd-image.md)。  
 > 
 > 
 
@@ -41,7 +43,7 @@ Sysprep 将删除所有个人帐户和安全信息，并准备好要用作映像
    
 2. 以管理员身份打开“命令提示符”窗口。 
 
-3. 删除 panther 目录 (C:\Windows\Panther) 。 然后将目录更改为%windir%\system32\sysprep，然后运行 `sysprep.exe` 。
+3. 删除 panther 目录 (C:\Windows\Panther)。 然后将目录切换到 %windir%\system32\sysprep，然后运行 `sysprep.exe`。
    
 4. 在“系统准备工具”对话框中，选择“进入系统全新体验(OOBE)”，并选中“通用”复选框。
    
@@ -248,4 +250,4 @@ Sysprep 将删除所有个人帐户和安全信息，并准备好要用作映像
 
     
 ## <a name="next-steps"></a>后续步骤
-- [从托管的映像创建 VM](create-vm-generalized-managed.md?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json)。    
+- [从托管的映像创建 VM](create-vm-generalized-managed.md)。 

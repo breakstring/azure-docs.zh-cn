@@ -1,8 +1,8 @@
 ---
-title: 使用 Azure 通知中心向特定用户发送推送通知 |Microsoft Docs
-description: 了解如何使用 Azure 通知中心向特定用户推送通知。
+title: 使用 Azure 通知中心向特定用户发送推送通知 | Microsoft Docs
+description: 了解如何使用 Azure 通知中心向特定 iOS 用户发送推送通知。
 documentationcenter: ios
-author: sethm
+author: sethmanheim
 manager: femila
 services: notification-hubs
 ms.service: notification-hubs
@@ -14,12 +14,12 @@ ms.date: 08/07/2020
 ms.author: sethm
 ms.reviewer: thsomasu
 ms.lastreviewed: 01/04/2019
-ms.openlocfilehash: 0d53709a9fd7cb3f40f540e1bb96c2be12b75f2c
-ms.sourcegitcommit: 98854e3bd1ab04ce42816cae1892ed0caeedf461
+ms.openlocfilehash: 167c666c536ee33531fd069dbd1edb530331a9f3
+ms.sourcegitcommit: a43a59e44c14d349d597c3d2fd2bc779989c71d7
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/07/2020
-ms.locfileid: "88004181"
+ms.lasthandoff: 11/25/2020
+ms.locfileid: "96016927"
 ---
 # <a name="tutorial-send-push-notifications-to-specific-users-using-azure-notification-hubs"></a>教程：使用 Azure 通知中心向特定用户发送推送通知
 
@@ -50,7 +50,7 @@ ms.locfileid: "88004181"
 1. 打开你在[使用 Azure 通知中心将推送通知发送到 iOS 应用](ios-sdk-get-started.md)教程中创建的单页视图应用。
 
    > [!NOTE]
-   > 本节假定项目配置了空的组织名称。 否则，请在所有类名前面添加组织名称。
+   > 本节假定项目配置了空的组织名称。 如果未配置，请在所有类名前面追加组织名称。
 
 2. 在 `Main.storyboard` 文件中，添加屏幕截图中显示的对象库中的组件。
 
@@ -62,11 +62,11 @@ ms.locfileid: "88004181"
    * **WNS**：标签和开关，用于已在中心设置 Windows 通知服务时，启用将通知发送到 Windows 通知服务。 请参阅 [Windows 入门](notification-hubs-windows-store-dotnet-get-started-wns-push-notification.md)教程。
    * **GCM**：标签和开关，用于已在中心设置 Google Cloud Messaging 时，启用将通知发送到 Google Cloud Messaging。 请参阅 [Android 入门](notification-hubs-android-push-notification-google-gcm-get-started.md)教程。
    * **APNS**：标签和开关，用于启用将通知发送到 Apple 平台通知服务。
-   * **收件人用户名**：包含占位符文本“收件人用户名标记”的 UITextField，直接位于 GCM 标签下，受左右边距限制**。
+   * **收件人用户名**：包含占位符文本“收件人用户名标记”的 UITextField，直接位于 GCM 标签下，受左右边距限制。
 
      在[使用 Azure 通知中心将推送通知发送到 iOS 应用](ios-sdk-get-started.md)教程中添加了一些组件。
 
-3. **按住 Ctrl**的同时从视图中的组件拖到 `ViewController.h` 并添加这些新插座：
+3. 按 Ctrl 的同时从视图中的组件拖至 `ViewController.h` 并添加这些新插座：
 
     ```objc
     @property (weak, nonatomic) IBOutlet UITextField *UsernameField;
@@ -92,7 +92,7 @@ ms.locfileid: "88004181"
     #define BACKEND_ENDPOINT @"<Your backend endpoint>"
     ```
 
-5. 在项目中，创建一个名为 `RegisterClient` 的新 Cocoa Touch 类，以便与你创建的 ASP.NET 后端交互。 创建继承自 `NSObject`的类。 然后在中添加以下代码 `RegisterClient.h` ：
+5. 在项目中，创建一个名为 `RegisterClient` 的新 Cocoa Touch 类，以便与你创建的 ASP.NET 后端交互。 创建继承自 `NSObject`的类。 然后在 `RegisterClient.h` 中添加以下代码：
 
     ```objc
     @interface RegisterClient : NSObject

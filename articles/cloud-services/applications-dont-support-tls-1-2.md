@@ -12,20 +12,24 @@ ms.tgt_pltfrm: na
 ms.workload: ''
 ms.date: 03/16/2020
 ms.author: tagore
-ms.openlocfilehash: 9338ad86595771c1c70d243250c2d57af5eb7858
-ms.sourcegitcommit: 50673ecc5bf8b443491b763b5f287dde046fdd31
+ms.openlocfilehash: 70bcf5bce1c8c07633baf070149a9bb80c331d9c
+ms.sourcegitcommit: 6272bc01d8bdb833d43c56375bab1841a9c380a5
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 05/20/2020
-ms.locfileid: "83683792"
+ms.lasthandoff: 01/23/2021
+ms.locfileid: "98742567"
 ---
 # <a name="troubleshooting-applications-that-dont-support-tls-12"></a>对不支持 TLS 1.2 的应用程序进行故障排除
+
+> [!IMPORTANT]
+> [Azure 云服务 (扩展支持) ](../cloud-services-extended-support/overview.md) 是适用于 Azure 云服务产品的新的基于 azure 资源管理器的部署模型。进行此更改后，基于 Azure Service Manager 的部署模型运行的 Azure 云服务已重命名为云服务 (经典) ，所有新部署应使用 [云服务 (扩展支持) ](../cloud-services-extended-support/overview.md)。
+
 本文介绍了如何启用旧版 TLS 协议（TLS 1.0 和 1.1），以及如何应用旧密码套件来支持 Windows Server 2019 云服务 Web 和辅助角色上的其他协议。 
 
 我们了解到，虽然我们正在采取措施来弃用 TLS 1.0 和 TLS 1.1，但我们的客户可能需要支持较旧的协议和密码套件，直到他们能够计划弃用为止。  虽然我们不建议重新启用这些旧值，但我们提供了帮助客户的指导。 我们鼓励客户在实施本文概述的更改之前评估回归的风险。 
 
 > [!NOTE]
-> 来宾 OS 系列 6 版本通过显式禁用 TLS 1.0 和 1.1 并定义一组特定的密码套件来强制实施 TLS 1.2。有关来宾 OS 系列的详细信息，请参阅[来宾 OS 发行动态](https://docs.microsoft.com/azure/cloud-services/cloud-services-guestos-update-matrix#family-6-releases)
+> 来宾 OS 系列 6 版本通过显式禁用 TLS 1.0 和 1.1 并定义一组特定的密码套件来强制实施 TLS 1.2。有关来宾 OS 系列的详细信息，请参阅[来宾 OS 发行动态](./cloud-services-guestos-update-matrix.md#family-6-releases)
 
 
 ## <a name="dropping-support-for-tls-10-tls-11-and-older-cipher-suites"></a>删除对 TLS 1.0、TLS 1.1 和更早版本密码套件的支持 
@@ -362,4 +366,3 @@ EXIT /B %ERRORLEVEL%
 
 可以使用 [SSLLabs](https://www.ssllabs.com/) 验证终结点的 TLS 状态 
 
- 

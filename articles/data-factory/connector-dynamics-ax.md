@@ -1,23 +1,18 @@
 ---
 title: 从 Dynamics AX 复制数据
 description: 了解如何通过在 Azure 数据工厂管道中使用复制活动，将数据从 Dynamics AX 复制到受支持的接收器数据存储。
-services: data-factory
-documentationcenter: ''
 ms.author: jingwang
 author: linda33wj
-manager: shwang
-ms.reviewer: douglasl
 ms.service: data-factory
-ms.workload: data-services
 ms.topic: conceptual
 ms.custom: seo-lt-2019
 ms.date: 06/12/2020
-ms.openlocfilehash: 23a486dfe1256cea46f6722873950ffcb1bde084
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 38ff77ad56f16fbd33b77021b18be77f6a153b3f
+ms.sourcegitcommit: d4734bc680ea221ea80fdea67859d6d32241aefc
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "84982690"
+ms.lasthandoff: 02/14/2021
+ms.locfileid: "100380978"
 ---
 # <a name="copy-data-from-dynamics-ax-by-using-azure-data-factory"></a>使用 Azure 数据工厂从 Dynamics AX 中复制数据
 
@@ -34,10 +29,10 @@ ms.locfileid: "84982690"
 
 可以将数据从 Dynamics AX 复制到任何受支持的接收器数据存储。 有关复制活动支持作为源和接收器的数据存储的列表，请参阅[支持的数据存储和格式](copy-activity-overview.md#supported-data-stores-and-formats)。
 
-具体而言，此 Dynamics AX 连接器支持将 **OData 协议**与**服务主体身份验证**配合使用来从 Dynamics AX 中复制数据。
+具体而言，此 Dynamics AX 连接器支持将 **OData 协议** 与 **服务主体身份验证** 配合使用来从 Dynamics AX 中复制数据。
 
 >[!TIP]
->还可以使用此连接器从 **Dynamics 365 Finance and Operations** 复制数据。 请参阅 Dynamics 365 的 [OData 支持](https://docs.microsoft.com/dynamics365/unified-operations/dev-itpro/data-entities/odata)和[身份验证方法](https://docs.microsoft.com/dynamics365/unified-operations/dev-itpro/data-entities/services-home-page#authentication)。
+>还可以使用此连接器从 **Dynamics 365 Finance and Operations** 复制数据。 请参阅 Dynamics 365 的 [OData 支持](/dynamics365/unified-operations/dev-itpro/data-entities/odata)和[身份验证方法](/dynamics365/unified-operations/dev-itpro/data-entities/services-home-page#authentication)。
 
 ## <a name="get-started"></a>入门
 
@@ -66,7 +61,7 @@ Dynamics AX 链接的服务支持以下属性：
 | type | **type** 属性必须设置为 **DynamicsAX**。 |是 |
 | url | Dynamics AX（或 Dynamics 365 Finance and Operations）实例 OData 终结点。 |是 |
 | servicePrincipalId | 指定应用程序的客户端 ID。 | 是 |
-| servicePrincipalKey | 指定应用程序的密钥。 将此字段标记为 **SecureString** 以安全地将其存储在数据工厂中或[引用存储在 Azure Key Vault 中的机密](store-credentials-in-key-vault.md)。 | 是 |
+| servicePrincipalKey | 指定应用程序的密钥。 将此字段标记为 **SecureString** 以安全地将其存储在数据工厂中或 [引用存储在 Azure Key Vault 中的机密](store-credentials-in-key-vault.md)。 | 是 |
 | tenant | 指定应用程序的租户信息（域名或租户 ID）。 将鼠标悬停在 Azure 门户右上角进行检索。 | 是 |
 | aadResourceId | 指定你请求授权的 AAD 资源。 例如，如果动态 URL 为 `https://sampledynamics.sandbox.operations.dynamics.com/data/`，则相应的 AAD 资源通常为 `https://sampledynamics.sandbox.operations.dynamics.com`。 | 是 |
 | connectVia | 用于连接到数据存储的 [ Integration Runtime](concepts-integration-runtime.md)。 可选择 Azure Integration Runtime 或自承载集成运行时（如果数据存储位于专用网络）。 如果未指定，则使用默认 Azure Integration Runtime。 |否 |
@@ -143,7 +138,7 @@ Dynamics AX 链接的服务支持以下属性：
 |:--- |:--- |:--- |
 | type | 复制活动源的 **type** 属性必须设置为 **DynamicsAXSource**。 | 是 |
 | query | 用于筛选数据的 OData 查询选项。 示例：`"?$select=Name,Description&$top=5"`。<br/><br/>**注意**：连接器会从以下组合 URL 复制数据：`[URL specified in linked service]/[path specified in dataset][query specified in copy activity source]`。 有关详细信息，请参阅 [OData URL 组件](https://www.odata.org/documentation/odata-version-3-0/url-conventions/)。 | 否 |
-| httpRequestTimeout | 用于获取响应的 HTTP 请求的超时 （TimeSpan 值）  。 该值是获取响应而不是读取响应数据的超时。 如果未指定，则默认值为**00:30:00** （30分钟）。 | 否 |
+| httpRequestTimeout | 用于获取响应的 HTTP 请求的超时 （TimeSpan 值）  。 该值是获取响应而不是读取响应数据的超时。 如果未指定，默认值为“00:30:00”（30 分钟）。 | 否 |
 
 **示例**
 

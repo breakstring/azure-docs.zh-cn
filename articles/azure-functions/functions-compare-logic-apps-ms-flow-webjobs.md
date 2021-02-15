@@ -4,12 +4,12 @@ description: 比较针对集成任务进行了优化的各种 Microsoft 云服�
 ms.topic: overview
 ms.date: 04/09/2018
 ms.custom: mvc
-ms.openlocfilehash: 2e0d8f356ec8da900b4a38399ba94434c3b1b93d
-ms.sourcegitcommit: 85eb6e79599a78573db2082fe6f3beee497ad316
+ms.openlocfilehash: 95167791efe13526b0a70c28fa89771542a9d220
+ms.sourcegitcommit: b39cf769ce8e2eb7ea74cfdac6759a17a048b331
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/05/2020
-ms.locfileid: "87809963"
+ms.lasthandoff: 01/22/2021
+ms.locfileid: "98685555"
 ---
 # <a name="choose-the-right-integration-and-automation-services-in-azure"></a>在 Azure 中选择合适的集成和自动化服务
 
@@ -41,7 +41,7 @@ Power Automate 基于逻辑应用而构建。 它们有相同的工作流设计�
 | **设计工具** |浏览器内和移动应用、仅 UI |浏览器和 [Visual Studio](../logic-apps/logic-apps-azure-resource-manager-templates-overview.md)、[代码视图](../logic-apps/logic-apps-author-definitions.md)可用 |
 | **应用程序生命周期管理 (ALM)** |在非生产环境中进行设计和测试，并在准备就绪后投放到生产 |Azure DevOps：[Azure 资源管理器](../logic-apps/logic-apps-azure-resource-manager-templates-overview.md)中的源代码管理、测试、支持、自动化和可管理性 |
 | **管理员体验** |管理 Power Automate 环境和数据丢失防护 (DLP) 策略，跟踪许可：[管理中心](https://admin.flow.microsoft.com) |管理资源组、连接、访问管理和日志记录：[Azure 门户](https://portal.azure.com) |
-| **安全性** |Office 365 安全与合规审核日志、DLP、针对敏感数据的[静态加密](https://wikipedia.org/wiki/Data_at_rest#Encryption) |Azure 的安全保证：[Azure 安全性](https://www.microsoft.com/en-us/trustcenter/Security/AzureSecurity)、[Azure 安全中心](https://azure.microsoft.com/services/security-center/)、[审核日志](https://azure.microsoft.com/blog/azure-audit-logs-ux-refresh/) |
+| **安全性** |Microsoft 365 安全审核日志、DLP、针对敏感数据的[静态加密](https://wikipedia.org/wiki/Data_at_rest#Encryption) |Azure 的安全保证：[Azure 安全性](https://www.microsoft.com/en-us/trustcenter/Security/AzureSecurity)、[Azure 安全中心](https://azure.microsoft.com/services/security-center/)、[审核日志](https://azure.microsoft.com/blog/azure-audit-logs-ux-refresh/) |
 
 ## <a name="compare-azure-functions-and-azure-logic-apps"></a>比较 Azure Functions 和 Azure 逻辑应用
 
@@ -78,9 +78,9 @@ Azure Functions 是在 WebJobs SDK 上构建的，因此共享许多相同的事
 
 |  | 函数 | 带 WebJobs SDK 的 WebJobs |
 | --- | --- | --- |
-|使用[自动缩放](functions-scale.md#how-the-consumption-and-premium-plans-work)的[无服务器应用模型](https://azure.microsoft.com/solutions/serverless/)|✔||
-|[在浏览器中进行开发和测试](functions-create-first-azure-function.md) |✔||
-|[按使用付费定价](functions-scale.md#consumption-plan)|✔||
+|使用[自动缩放](event-driven-scaling.md)的[无服务器应用模型](https://azure.microsoft.com/solutions/serverless/)|✔||
+|[在浏览器中进行开发和测试](./functions-get-started.md) |✔||
+|[按使用付费定价](consumption-plan.md)|✔||
 |[与逻辑应用集成](functions-twitter-email.md)|✔||
 | 触发事件 |[计时器](functions-bindings-timer.md)<br>[Azure 存储队列和 Blob](functions-bindings-storage-blob.md)<br>[Azure 服务总线队列和主题](functions-bindings-service-bus.md)<br>[Azure Cosmos DB](functions-bindings-cosmosdb.md)<br>[Azure 事件中心](functions-bindings-event-hubs.md)<br>[HTTP/WebHook（GitHub、Slack）](functions-bindings-http-webhook.md)<br>[Azure 事件网格](functions-bindings-event-grid.md)|[计时器](functions-bindings-timer.md)<br>[Azure 存储队列和 Blob](functions-bindings-storage-blob.md)<br>[Azure 服务总线队列和主题](functions-bindings-service-bus.md)<br>[Azure Cosmos DB](functions-bindings-cosmosdb.md)<br>[Azure 事件中心](functions-bindings-event-hubs.md)<br>[文件系统](https://github.com/Azure/azure-webjobs-sdk-extensions/blob/master/src/WebJobs.Extensions/Extensions/Files/FileTriggerAttribute.cs)|
 | **支持的语言**  |C#<br>F#<br>JavaScript<br>Java<br>Python<br>PowerShell |C#<sup>1</sup>|
@@ -124,4 +124,4 @@ Azure Functions 是在 WebJobs SDK 上构建的，因此共享许多相同的事
 
 * [Power Automate 入门](/power-automate/getting-started)
 * [创建逻辑应用](../logic-apps/quickstart-create-first-logic-app-workflow.md)
-* [创建第一个 Azure 函数](functions-create-first-azure-function.md)
+* [创建第一个 Azure 函数](./functions-get-started.md)

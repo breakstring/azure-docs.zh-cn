@@ -5,14 +5,14 @@ services: logic-apps
 ms.suite: integration
 ms.reviewer: logicappspm
 ms.topic: tutorial
-ms.custom: mvc
+ms.custom: mvc, devx-track-csharp
 ms.date: 02/27/2020
-ms.openlocfilehash: 925759b63d1225c720ad439f15b82632a4921cbb
-ms.sourcegitcommit: 0e8a4671aa3f5a9a54231fea48bcfb432a1e528c
+ms.openlocfilehash: bd1715dc0a3767bc5826154616bbdc97c7b61dd3
+ms.sourcegitcommit: 1f1d29378424057338b246af1975643c2875e64d
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/24/2020
-ms.locfileid: "87132324"
+ms.lasthandoff: 02/05/2021
+ms.locfileid: "99576357"
 ---
 # <a name="tutorial-automate-tasks-to-process-emails-by-using-azure-logic-apps-azure-functions-and-azure-storage"></a>教程：使用 Azure 逻辑应用、Azure Functions 和 Azure 存储来自动执行处理电子邮件的任务
 
@@ -36,16 +36,18 @@ Azure 逻辑应用有助于跨 Azure 服务、Microsoft 服务、其他软件即
 
 ## <a name="prerequisites"></a>先决条件
 
-* Azure 订阅。 如果没有 Azure 订阅，请[注册一个免费 Azure 帐户](https://azure.microsoft.com/free/)。
+* Azure 帐户和订阅。 如果没有 Azure 订阅，请[注册一个免费 Azure 帐户](https://azure.microsoft.com/free/)。
 
 * 逻辑应用支持的电子邮件提供商（例如 Office 365 Outlook、Outlook.com 或 Gmail）提供的电子邮件帐户。 至于其他提供商，请[查看此处的连接器列表](/connectors/)。
 
-  此逻辑应用使用 Office 365 Outlook 帐户。 如果使用其他电子邮件帐户，则常规步骤保持不变，但 UI 显示可能稍有不同。
+  此逻辑应用使用工作或学校帐户。 如果使用其他电子邮件帐户，则常规步骤保持不变，但 UI 显示可能稍有不同。
 
   > [!IMPORTANT]
   > 如果要使用 Gmail 连接器，则只有 G-Suite 商业帐户可以在逻辑应用中不受限制地使用此连接器。 如果有 Gmail 用户帐户，则只能将此连接器与 Google 批准的特定服务一起使用，也可以[创建用于通过 Gmail 连接器进行身份验证的 Google 客户端应用](/connectors/gmail/#authentication-and-bring-your-own-application)。 有关详细信息，请参阅 [Azure 逻辑应用中 Google 连接器的数据安全和隐私策略](../connectors/connectors-google-data-security-privacy-policy.md)。
 
 * 下载并安装[免费 Microsoft Azure 存储资源管理器](https://storageexplorer.com/)。 此工具可以用于检查存储容器是否已正确设置。
+
+* 如果逻辑应用需要通过将流量限制为特定 IP 地址的防火墙进行通信，则该防火墙需要允许访问逻辑应用所在的 Azure 区域中的逻辑应用服务或运行时所使用的[入站](logic-apps-limits-and-config.md#inbound)和[出站](logic-apps-limits-and-config.md#outbound) IP 地址。 如果逻辑应用还使用[托管连接器](../connectors/apis-list.md#managed-api-connectors)（如 Office 365 Outlook 连接器或 SQL 连接器），或使用[自定义连接器](/connectors/custom-connectors/)，则防火墙还需要允许访问逻辑应用的 Azure 区域中的所有[托管连接器出站 IP 地址](logic-apps-limits-and-config.md#outbound)。
 
 ## <a name="set-up-storage-to-save-attachments"></a>设置用于保存附件的存储。
 
@@ -55,7 +57,7 @@ Azure 逻辑应用有助于跨 Azure 服务、Microsoft 服务、其他软件即
 
 1. 在创建存储容器之前，请先在 Azure 门户中的“基本信息”选项卡上使用以下设置[创建一个存储帐户](../storage/common/storage-account-create.md)：
 
-   | 设置 | 值 | 描述 |
+   | 设置 | 值 | 说明 |
    |---------|-------|-------------|
    | **订阅** | <*Azure-subscription-name*> | Azure 订阅的名称 |  
    | **资源组** | <Azure-resource-group> | 用于组织和管理相关资源的 [Azure 资源组](../azure-resource-manager/management/overview.md)的名称。 此示例使用“LA-Tutorial-RG”。 <p>**注意：** 资源组存在于特定的区域内。 本教程中的项目可能不在所有区域提供，请尽可能尝试使用同一区域。 |
@@ -86,7 +88,7 @@ Azure 逻辑应用有助于跨 Azure 服务、Microsoft 服务、其他软件即
 
       ![复制并保存存储帐户名称和密钥](./media/tutorial-process-email-attachments-workflow/copy-save-storage-name-key.png)
 
-   若要获取存储帐户的访问密钥，也可以使用 [Azure PowerShell](/powershell/module/az.storage/get-azstorageaccountkey) 或 [Azure CLI](/cli/azure/storage/account/keys?view=azure-cli-latest.md#az-storage-account-keys-list)。
+   若要获取存储帐户的访问密钥，也可以使用 [Azure PowerShell](/powershell/module/az.storage/get-azstorageaccountkey) 或 [Azure CLI](/cli/azure/storage/account/keys)。
 
 1. 为电子邮件附件创建 Blob 存储容器。
 
@@ -102,7 +104,7 @@ Azure 逻辑应用有助于跨 Azure 服务、Microsoft 服务、其他软件即
 
       ![完成的存储容器](./media/tutorial-process-email-attachments-workflow/created-storage-container.png)
 
-   若要创建存储容器，也可以使用 [Azure PowerShell](/powershell/module/az.storage/new-azstoragecontainer) 或 [Azure CLI](/cli/azure/storage/container?view=azure-cli-latest#az-storage-container-create)。
+   若要创建存储容器，也可以使用 [Azure PowerShell](/powershell/module/az.storage/new-azstoragecontainer) 或 [Azure CLI](/cli/azure/storage/container#az-storage-container-create)。
 
 接下来，将存储资源管理器连接到存储帐户。
 
@@ -160,7 +162,7 @@ Azure 逻辑应用有助于跨 Azure 服务、Microsoft 服务、其他软件即
 
    ![创建的函数应用](./media/tutorial-process-email-attachments-workflow/function-app-created.png)
 
-   若要创建函数应用，也可以使用 [Azure CLI](../azure-functions/functions-create-first-azure-function-azure-cli.md) 或 [PowerShell 和资源管理器模板](../azure-resource-manager/templates/deploy-powershell.md)。
+   若要创建函数应用，也可以使用 [Azure CLI](../azure-functions/create-first-function-cli-csharp.md) 或 [PowerShell 和资源管理器模板](../azure-resource-manager/templates/deploy-powershell.md)。
 
 1. 在“函数应用”列表中展开函数（如果尚未展开）。 在你的函数应用下，选择“函数”。 在函数工具栏上选择“新建函数”。
 
@@ -323,7 +325,7 @@ Azure 逻辑应用有助于跨 Azure 服务、Microsoft 服务、其他软件即
 
    1. 在“和”下面的第一行中，单击左侧框的内部。 从显示的动态内容列表中，选择“包含附件”属性。
 
-      ![构建条件](./media/tutorial-process-email-attachments-workflow/build-condition.png)
+      ![显示选择了条件的“And”属性和“Has Attachment”属性的屏幕截图。](./media/tutorial-process-email-attachments-workflow/build-condition.png)
 
    1. 在中间框中，保留运算符“等于”。
 
@@ -363,7 +365,7 @@ Azure 逻辑应用有助于跨 Azure 服务、Microsoft 服务、其他软件即
 
 1. 向自己发送一封满足以下条件的电子邮件：
 
-   * 电子邮件主题的文本是在触发器的**主题筛选器**中指定的：`Business Analyst 2 #423501`
+   * 电子邮件主题的文本是在触发器的 **主题筛选器** 中指定的：`Business Analyst 2 #423501`
 
    * 电子邮件有一个附件。 现在，请直接创建一个空的文本文件，然后将该文件附加到电子邮件。
 
@@ -389,7 +391,7 @@ Azure 逻辑应用有助于跨 Azure 服务、Microsoft 服务、其他软件即
 
    ![在“If true”中添加操作](./media/tutorial-process-email-attachments-workflow/if-true-add-action.png)
 
-1. 在搜索框中，查找“azure functions”，然后选择以下操作：**选择 Azure 函数 - Azure Functions**
+1. 在搜索框中，查找“Azure functions”，然后选择以下操作：**选择 Azure 函数 - Azure Functions**
 
    ![为“选择 Azure 函数”选择操作](./media/tutorial-process-email-attachments-workflow/add-action-azure-function.png)
 
@@ -458,7 +460,7 @@ Azure 逻辑应用有助于跨 Azure 服务、Microsoft 服务、其他软件即
 
    完成后，此操作如以下示例所示：
 
-   ![现已完成“创建 Blob”操作](./media/tutorial-process-email-attachments-workflow/create-blob-for-email-body-done.png)
+   ![屏幕截图显示了已完成的“创建 blob”操作的示例。](./media/tutorial-process-email-attachments-workflow/create-blob-for-email-body-done.png)
 
 1. 保存逻辑应用。
 
@@ -470,7 +472,7 @@ Azure 逻辑应用有助于跨 Azure 服务、Microsoft 服务、其他软件即
 
 1. 向自己发送一封满足以下条件的电子邮件：
 
-   * 电子邮件主题的文本是在触发器的**主题筛选器**中指定的：`Business Analyst 2 #423501`
+   * 电子邮件主题的文本是在触发器的 **主题筛选器** 中指定的：`Business Analyst 2 #423501`
 
    * 电子邮件至少有一个附件。 现在，请直接创建一个空的文本文件，然后将该文件附加到电子邮件。
 

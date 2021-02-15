@@ -1,29 +1,35 @@
 ---
-title: Azure Blob 存储中的更改源（预览版）| Microsoft Docs
+title: Azure Blob 存储中的更改源 | Microsoft Docs
 description: 了解 Azure Blob 存储中的更改源日志以及如何使用这些日志。
 author: normesta
 ms.author: normesta
-ms.date: 11/04/2019
+ms.date: 02/08/2021
 ms.topic: how-to
 ms.service: storage
 ms.subservice: blobs
 ms.reviewer: sadodd
-ms.openlocfilehash: 09a97897ca7e3984c7003c1dbbca65cddaec1ee6
-ms.sourcegitcommit: 269da970ef8d6fab1e0a5c1a781e4e550ffd2c55
+ms.openlocfilehash: 3e4211da59193d0c48398d9f2822fd12cc217d8b
+ms.sourcegitcommit: d4734bc680ea221ea80fdea67859d6d32241aefc
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/10/2020
-ms.locfileid: "88055410"
+ms.lasthandoff: 02/14/2021
+ms.locfileid: "100390566"
 ---
-# <a name="change-feed-support-in-azure-blob-storage-preview"></a>Azure Blob 存储中的更改源支持（预览版）
+# <a name="change-feed-support-in-azure-blob-storage"></a>Azure Blob 存储中的更改源支持
 
 更改源的用途是提供存储帐户中 Blob 和 Blob 元数据发生的所有更改的事务日志。 更改源提供这些更改的有序、有保证、持久、不可变、只读的日志。     客户端应用程序可以在流式处理或批处理模式下随时读取这些日志。 使用更改源可以生成高效且可缩放的解决方案，因此能够以较低的成本处理 Blob 存储帐户中发生的更改事件。
 
 [!INCLUDE [storage-data-lake-gen2-support](../../../includes/storage-data-lake-gen2-support.md)]
 
-更改源作为 [Blob](https://docs.microsoft.com/rest/api/storageservices/understanding-block-blobs--append-blobs--and-page-blobs) 存储在存储帐户中的特殊容器内，按标准的 [Blob 定价](https://azure.microsoft.com/pricing/details/storage/blobs/)计费。 你可以根据要求控制这些文件的保留期（请参阅当前版本的[条件](#conditions)）。 更改事件根据 [Apache Avro](https://avro.apache.org/docs/1.8.2/spec.html) 格式（一种简洁且快速的二进制格式，通过内联架构提供丰富的数据结构）规范以记录的形式追加到更改源。 这种格式广泛用于 Hadoop 生态系统、流分析和 Azure 数据工厂。
+## <a name="how-the-change-feed-works"></a>更改源的工作原理
+
+更改源作为 [Blob](/rest/api/storageservices/understanding-block-blobs--append-blobs--and-page-blobs) 存储在存储帐户中的特殊容器内，按标准的 [Blob 定价](https://azure.microsoft.com/pricing/details/storage/blobs/)计费。 你可以根据要求控制这些文件的保留期（请参阅当前版本的[条件](#conditions)）。 更改事件根据 [Apache Avro](https://avro.apache.org/docs/1.8.2/spec.html) 格式（一种简洁且快速的二进制格式，通过内联架构提供丰富的数据结构）规范以记录的形式追加到更改源。 这种格式广泛用于 Hadoop 生态系统、流分析和 Azure 数据工厂。
 
 可通过异步、增量或整体方式处理这些日志。 任意数目的客户端应用程序都可以按照自身的步调单独并行读取更改源。 分析应用程序（例如 [Apache Drill](https://drill.apache.org/docs/querying-avro-files/) 或 [Apache Spark](https://spark.apache.org/docs/latest/sql-data-sources-avro.html)）可以直接将日志用作 Avro 文件，使你能够以较低的成本和较高的带宽处理这些日志，而无需编写自定义应用程序。
+
+下图显示了如何将记录添加到更改源：
+
+:::image type="content" source="media/storage-blob-change-feed/change-feed-diagram.png" alt-text="显示更改源如何为 blob 的更改提供有序日志的关系图":::
 
 更改源支持非常适合基于已更改的对象处理数据的方案。 例如，应用程序可以执行以下操作：
 
@@ -37,7 +43,7 @@ ms.locfileid: "88055410"
 
   - 生成连接的应用程序管道，以便根据创建的或更改的对象来响应更改事件或计划执行。
   
-更改源是用于[对象复制](object-replication-overview.md)和[块 Blob 的时间点还原](point-in-time-restore-overview.md)的先决条件功能。
+更改源是用于 [对象复制](object-replication-overview.md) 和 [块 Blob 的时间点还原](point-in-time-restore-overview.md)的先决条件功能。
 
 > [!NOTE]
 > 更改源提供一个持久且有序的日志模型来记录发生在 Blob 中的更改。 在发生更改后的几分钟内，这些更改就会写入并出现在更改源日志中。 如果应用程序必须以比这快得多的速度对事件做出反应，请考虑改用 [Blob 存储事件](storage-blob-event-overview.md)。 [Blob 存储事件](storage-blob-event-overview.md)提供实时的一次性事件，使 Azure Functions 或应用程序能够快速对 Blob 中发生的更改做出反应。 
@@ -55,9 +61,6 @@ ms.locfileid: "88055410"
 - 更改源会捕获帐户中发生的所有可用事件的所有更改。 客户端应用程序可根据需要筛选出事件类型。 （请参阅当前版本的[条件](#conditions)）。
 
 - 只有 GPv2 和 Blob 存储帐户可以启用更改源。 目前不支持高级 BlockBlobStorage 帐户和已启用分层命名空间的帐户。 不支持 GPv1 存储帐户，但可以在不停机的情况下将其升级到 GPv2。有关详细信息，请参阅[升级到 GPv2 存储帐户](../common/storage-account-upgrade.md)。
-
-> [!IMPORTANT]
-> 更改源以公共预览版提供，在**美国西部**、**美国西部 2**、**法国中部**、**法国南部**、**加拿大中部**和**加拿大东部**区域提供。 请参阅本文的 "[条件](#conditions)" 一节。 若要注册预览版，请参阅本文的[注册订阅](#register)部分。 必须先注册你的订阅，然后才能在存储帐户上启用更改源。
 
 ### <a name="portal"></a>[Portal](#tab/azure-portal)
 
@@ -85,10 +88,10 @@ ms.locfileid: "88055410"
 
 2. 关闭 PowerShell 控制台，然后重新将其打开。
 
-3. 安装 Az.Storage 预览版模块。
+3. 安装 Az.Storage 模块 2.5.0 版或更高版本。
 
    ```powershell
-   Install-Module Az.Storage –Repository PSGallery -RequiredVersion 1.8.1-preview –AllowPrerelease –AllowClobber –Force
+   Install-Module Az.Storage –Repository PSGallery -RequiredVersion 2.5.0 –AllowClobber –Force
    ```
 
 4. 使用 `Connect-AzAccount` 命令登录到 Azure 订阅，然后按照屏幕上的说明进行身份验证。
@@ -142,7 +145,7 @@ ms.locfileid: "88055410"
 更改源生成多个元数据文件和日志文件。 这些文件位于存储帐户的 $blobchangefeed 容器中。 
 
 > [!NOTE]
-> 在当前版本中，$blobchangefeed 容器在 Azure 存储资源管理器或 Azure 门户中不可见。 目前，在调用 ListContainers API 时无法看到 $blobchangefeed 容器，但可以直接对容器调用 ListBlobs API 来查看 Blob。
+> 在当前版本中，$blobchangefeed 容器仅在 Azure 门户中可见，而在 Azure 存储资源管理器中不可见。 目前，在调用 ListContainers API 时无法看到 $blobchangefeed 容器，但可以直接对容器调用 ListBlobs API 来查看 Blob
 
 客户端应用程序可以通过更改源处理器 SDK 随附的 Blob 更改源处理器库来使用更改源。 
 
@@ -156,7 +159,7 @@ ms.locfileid: "88055410"
 
 更改源是按小时段组织的更改日志，但系统每隔几分钟就会在其中追加和更新内容。 仅当在该小时内发生了 Blob 更改事件时，才会创建这些段。 因此，客户端应用程序可以使用在特定时间范围内发生的更改，不必搜索整个日志。 有关详细信息，请参阅[规范](#specifications)。
 
-更改源的可用小时段在清单文件中描述，该文件指定了该段的更改源文件的路径。 `$blobchangefeed/idx/segments/` 虚拟目录的列表按时间顺序显示这些段。 段的路径描述该段所代表的小时时间范围的开始时间。 可以使用该列表来筛选出你感兴趣的日志段。
+更改源的可用小时段在清单文件中描述，该文件指定了该段的更改源文件的路径。 `$blobchangefeed/idx/segments/` 虚拟目录的列表按时间顺序显示这些段。 段的路径描述该段所代表的小时时间范围的开始时间。 你可以使用该列表来筛选出你感兴趣的日志段。
 
 ```text
 Name                                                                    Blob Type    Blob Tier      Length  Content Type    
@@ -209,7 +212,7 @@ $blobchangefeed/idx/segments/2019/02/23/0110/meta.json                  BlockBlo
 
 更改源文件包含一系列更改事件记录。 每条更改事件记录对应于单个 Blob 发生的一项更改。 使用 [Apache Avro](https://avro.apache.org/docs/1.8.2/spec.html) 格式规范序列化记录并将其写入文件。 可以使用 Avro 文件格式规范读取记录。 有多个库可用于处理该格式的文件。
 
-更改源文件以[追加 Blob](https://docs.microsoft.com/rest/api/storageservices/understanding-block-blobs--append-blobs--and-page-blobs#about-append-blobs) 的形式存储在 `$blobchangefeed/log/` 虚拟目录中。 每个路径下的第一个更改源文件的文件名包含 `00000`（例如 `00000.avro`）。 添加到该路径的每个后续日志文件的名称编号将递增 1（例如：`00001.avro`）。
+更改源文件以[追加 Blob](/rest/api/storageservices/understanding-block-blobs--append-blobs--and-page-blobs#about-append-blobs) 的形式存储在 `$blobchangefeed/log/` 虚拟目录中。 每个路径下的第一个更改源文件的文件名包含 `00000`（例如 `00000.avro`）。 添加到该路径的每个后续日志文件的名称编号将递增 1（例如：`00001.avro`）。
 
 更改源记录中捕获以下事件类型：
 - BlobCreated
@@ -246,7 +249,7 @@ $blobchangefeed/idx/segments/2019/02/23/0110/meta.json                  BlockBlo
 }
 ```
 
-有关每个属性的说明，请参阅 [Blob 存储的 Azure 事件网格事件架构](https://docs.microsoft.com/azure/event-grid/event-schema-blob-storage?toc=%2fazure%2fstorage%2fblobs%2ftoc.json#event-properties)。 BlobPropertiesUpdated 和 BlobSnapshotCreated 事件当前是更改源独有的事件，尚不支持用于 Blob 存储事件。
+有关每个属性的说明，请参阅 [Blob 存储的 Azure 事件网格事件架构](../../event-grid/event-schema-blob-storage.md?toc=%2fazure%2fstorage%2fblobs%2ftoc.json#event-properties)。 BlobPropertiesUpdated 和 BlobSnapshotCreated 事件当前是更改源独有的事件，尚不支持用于 Blob 存储事件。
 
 > [!NOTE]
 > 创建某个段后，该段的更改源文件不会立即显示。 延迟时长处于正常的更改源发布延迟间隔范围内，而该间隔为更改后的几分钟内。
@@ -289,43 +292,18 @@ $blobchangefeed/idx/segments/2019/02/23/0110/meta.json                  BlockBlo
 
 ```
 
-<a id="register"></a>
-
-## <a name="register-your-subscription-preview"></a>注册订阅（预览版）
-
-由于更改源仅以公共预览版形式提供，因此你需要注册订阅才能使用该功能。
-
-### <a name="register-by-using-powershell"></a>使用 PowerShell 注册
-
-在 PowerShell 控制台中运行以下命令：
-
-```powershell
-Register-AzProviderFeature -FeatureName Changefeed -ProviderNamespace Microsoft.Storage
-Register-AzResourceProvider -ProviderNamespace Microsoft.Storage
-```
-   
-### <a name="register-by-using-azure-cli"></a>使用 Azure CLI 注册
-
-在 Azure Cloud Shell 中运行以下命令：
-
-```azurecli
-az feature register --namespace Microsoft.Storage --name Changefeed
-az provider register --namespace 'Microsoft.Storage'
-```
-
 <a id="conditions"></a>
 
-## <a name="conditions-and-known-issues-preview"></a>条件和已知问题（预览版）
+## <a name="conditions-and-known-issues"></a>条件和已知问题
 
-本部分介绍当前的更改源公共预览版中的已知问题和条件。 
-- 对于预览版，你必须先[注册你的订阅](#register)，然后才能在美国西部、美国西部2、法国中部、法国南部、加拿大中部和加拿大东部区域为你的存储帐户启用更改源。 
-- 更改源只捕获创建、更新、删除和复制操作。 还会捕获 Blob 属性和元数据更改。 但当前未捕获访问层属性。 
+本部分介绍当前的更改源版本中的已知问题和条件。 
+
 - 任何一项更改的更改事件记录可能会在更改源中出现多次。
 - 暂时无法通过对更改源日志文件设置基于时间的保留策略来管理其生存期，且无法删除 Blob。
 - 日志文件的 `url` 属性目前始终是空的。
 - segments.json 文件的 `LastConsumable` 属性不会列出更改源最终处理的第一个段。 此问题只会在对第一个段进行最终处理之后才出现。 第一个小时之后的所有后续段会准确捕获到 `LastConsumable` 属性中。
 - 目前，在调用 ListContainers API 时看不到 $blobchangefeed 容器，且在 Azure 门户或存储资源管理器中也看不到该容器。 可以通过直接在 $blobchangefeed 容器上调用 ListBlobs API 来查看内容。
-- 以前启动了[帐户故障转移](../common/storage-disaster-recovery-guidance.md)的存储帐户可能会出现不显示日志文件的问题。 在预览期，将来的任何帐户故障转移也可能会影响日志文件。
+- 以前启动了[帐户故障转移](../common/storage-disaster-recovery-guidance.md)的存储帐户可能会出现不显示日志文件的问题。 将来的任何帐户故障转移也可能会影响日志文件。
 
 ## <a name="faq"></a>常见问题
 

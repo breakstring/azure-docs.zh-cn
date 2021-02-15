@@ -6,13 +6,14 @@ ms.author: banders
 ms.date: 07/24/2020
 ms.topic: how-to
 ms.service: cost-management-billing
+ms.subservice: cost-management
 ms.reviewer: adwise
-ms.openlocfilehash: 1c1d883d3bc71d23b460e960c903401e1acdd0e2
-ms.sourcegitcommit: dccb85aed33d9251048024faf7ef23c94d695145
+ms.openlocfilehash: 72b371fd1184c9c9e69593c5ad7e57310abf1de2
+ms.sourcegitcommit: fc401c220eaa40f6b3c8344db84b801aa9ff7185
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/28/2020
-ms.locfileid: "87290833"
+ms.lasthandoff: 01/20/2021
+ms.locfileid: "98600024"
 ---
 # <a name="common-cost-analysis-uses"></a>常见成本分析的使用
 
@@ -197,7 +198,7 @@ EA 注册累积整个组织的成本。 了解成本如何累积以及如何按�
 
 
 1. 在 Azure 门户中，导航到“成本管理 + 计费” > “概览”。
-1. 单击当月的“细目”，查看货币承诺尚未完成的部分。  
+1. 单击当月的“细目”，查看 Azure 预付款（以前称为货币承诺）尚未完成的部分。  
     [![EA 成本概述 - 细目汇总](./media/cost-analysis-common-uses/breakdown1.png)](./media/cost-analysis-common-uses/breakdown1.png#lightbox)
 1.  单击“用量和费用”选项卡，查看上个月在所选时间范围内的细目。  
     [![“用量和费用”选项卡](./media/cost-analysis-common-uses/breakdown2.png)](./media/cost-analysis-common-uses/breakdown2.png#lightbox)

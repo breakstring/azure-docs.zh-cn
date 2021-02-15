@@ -1,6 +1,6 @@
 ---
 title: 有关选择时序 ID 的最佳做法 - Azure 时序见解 | Microsoft Docs
-description: 了解在 Azure 时序见解 Gen2 中选择时序 ID 时的最佳实践。
+description: 了解在 Azure 时序见解第 2 代中选择时序 ID 时的最佳做法。
 author: shipramishra
 ms.author: shmishr
 manager: diviso
@@ -8,22 +8,22 @@ ms.workload: big-data
 ms.service: time-series-insights
 services: time-series-insights
 ms.topic: conceptual
-ms.date: 05/11/2020
+ms.date: 09/30/2020
 ms.custom: seodec18
-ms.openlocfilehash: 94abdf8735fa487f46d423f17f7e1ff7bc853eb7
-ms.sourcegitcommit: dccb85aed33d9251048024faf7ef23c94d695145
+ms.openlocfilehash: c3f6f6a5ac1068f2eabca351e85376b8e16d1058
+ms.sourcegitcommit: 10d00006fec1f4b69289ce18fdd0452c3458eca5
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/28/2020
-ms.locfileid: "87289886"
+ms.lasthandoff: 11/21/2020
+ms.locfileid: "95016745"
 ---
 # <a name="best-practices-for-choosing-a-time-series-id"></a>选择时序 ID 的最佳做法
 
-本文总结了 Azure 时序见解 Gen2 环境的时序 ID 的重要性，以及选择其中的最佳实践。
+本文总结了 Azure 时序见解第 2 代环境的时序 ID 的重要性，以及有关选择时序 ID 的最佳做法。
 
 ## <a name="choose-a-time-series-id"></a>选择时间序列 ID
 
-选择适当的时序 ID 至关重要。 选择时序 ID 与为数据库选择分区键相同。 创建 Azure 时序见解 Gen2 环境时，需要使用此方法。 
+选择适当的时序 ID 至关重要。 选择时序 ID 与为数据库选择分区键相同。 它在创建时序见解第 2 代环境时是必需的。
 
 > [!IMPORTANT]
 > 时序 ID 如下：
@@ -36,11 +36,11 @@ ms.locfileid: "87289886"
 
 要遵守的主要最佳做法包括：
 
-* 选择具有许多（例如，几百甚至几千个）非重复值的分区键。 在许多情况下，该键可能是 JSON 中的设备 ID、传感器 ID 或标记 ID。
+_ 选取具有许多（例如，几百甚至几千个）非重复值的分区键。 在许多情况下，该键可能是 JSON 中的设备 ID、传感器 ID 或标记 ID。
 * 在[时序模型](./concepts-model-overview.md)的叶节点级别，时序 ID 应是唯一的。
 * 时序 ID 属性名称字符串的字符数限制为 128 个。 时序 ID 属性值的字符数限制为 1024 个。
 * 如果时序 ID 的某个唯一属性值缺失，该值将被视为 null 值，并遵循相同的唯一性约束规则。
-* 如果你的时序 ID 嵌套在复杂的 JSON 对象中，请确保在提供属性名称时遵循入口[平展规则](./concepts-json-flattening-escaping-rules.md)。 请参阅示例[B](concepts-json-flattening-escaping-rules.md#example-b)。 
+* 如果时序 ID 嵌套在复杂的 JSON 对象中，请确保在提供属性名称时遵循入口[平展规则](./concepts-json-flattening-escaping-rules.md)。 查看示例 [B](concepts-json-flattening-escaping-rules.md#example-b)。
 * 此外，最多可以选择三个键属性作为时序 ID。 这些属性的组合将是表示时序 ID 的组合键。  
   > [!NOTE]
   > 三个键属性必须是字符串。
@@ -75,15 +75,15 @@ ms.locfileid: "87289886"
 ```
 
 然后，可在 Azure 门户中输入组合键，如下所示：
- 
+
 [![配置环境的时序 ID。](media/v2-how-to-tsid/configure-environment-key.png)](media/v2-how-to-tsid/configure-environment-key.png#lightbox)
 
   > [!NOTE]
-  > 在 Azure 门户中，不要在一个文本框中输入以逗号分隔的属性名称，否则，它将被视为包含逗号的单个属性名称。
-  > 在其自己的文本框中输入每个属性名称。
+  > 在 Azure 门户中，请不要在一个文本框中输入以逗号分隔的属性名称，否则，它将被视为单个包含逗号的属性名称。
+  > 请在每个属性名称自己的文本框中输入每个属性名称。
 
 ## <a name="next-steps"></a>后续步骤
 
-* 阅读[JSON 平展和转义规则](./concepts-json-flattening-escaping-rules.md)以了解如何存储事件。
+* 阅读 [JSON 平展和转义规则](./concepts-json-flattening-escaping-rules.md)以了解事件将如何存储。
 
-* 规划[Azure 时序见解 Gen2 环境](./time-series-insights-update-plan.md)。
+* 规划 [Azure 时序见解第 2 代环境](./how-to-plan-your-environment.md)。

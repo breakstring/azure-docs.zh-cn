@@ -1,17 +1,17 @@
 ---
 title: 查询存储方案 - Azure Database for PostgreSQL（单一服务器）
 description: 本文介绍了 Azure Database for PostgreSQL - 单一服务器中的查询存储功能的一些使用方案。
-author: rachel-msft
-ms.author: raagyema
+author: sunilagarwal
+ms.author: sunila
 ms.service: postgresql
 ms.topic: conceptual
 ms.date: 5/6/2019
-ms.openlocfilehash: 31e3f82b6ea1b1fc15c0832dc03edce2a59f1e1b
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: ad646e39e9b6a87611dc2f40330a77fe70c92c27
+ms.sourcegitcommit: 829d951d5c90442a38012daaf77e86046018e5b9
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "74768344"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "91710543"
 ---
 # <a name="usage-scenarios-for-query-store"></a>查询存储的使用方案
 

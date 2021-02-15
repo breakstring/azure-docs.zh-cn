@@ -9,16 +9,16 @@ ms.date: 1/8/2020
 ms.topic: conceptual
 ms.service: iot-edge
 services: iot-edge
-ms.openlocfilehash: 92540c57179ae0198f78b588681167fe48097362
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 9ae7009468b548cb9386fd405abfbe110d62f9a3
+ms.sourcegitcommit: d4734bc680ea221ea80fdea67859d6d32241aefc
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "82134359"
+ms.lasthandoff: 02/14/2021
+ms.locfileid: "100377510"
 ---
 # <a name="deploy-iot-edge-modules-at-scale-using-visual-studio-code"></a>使用 Visual Studio Code 大规模部署 IoT Edge 模块
 
-可以使用 Visual Studio Code 接口创建 **IoT Edge 自动部署**，以便同时管理多个设备的持续部署。 IoT Edge 的自动部署属于 IoT 中心的[自动设备管理](/azure/iot-hub/iot-hub-automatic-device-management)功能。 部署是可让你将多个模块部署到多个设备的动态过程。 还可以跟踪模块的状态和运行状况，并按需进行更改。
+可以使用 Visual Studio Code 接口创建 **IoT Edge 自动部署**，以便同时管理多个设备的持续部署。 IoT Edge 的自动部署属于 IoT 中心的[自动设备管理](../iot-hub/iot-hub-automatic-device-management.md)功能。 部署是可让你将多个模块部署到多个设备的动态过程。 还可以跟踪模块的状态和运行状况，并按需进行更改。
 
 有关详细信息，请参阅[了解单个设备或大规模的 IoT Edge 自动部署](module-deployment-monitoring.md)。
 
@@ -27,7 +27,10 @@ ms.locfileid: "82134359"
 ## <a name="prerequisites"></a>先决条件
 
 * Azure 订阅中的 [IoT 中心](../iot-hub/iot-hub-create-through-portal.md)。
-* 已安装 IoT Edge 运行时的 [IoT Edge 设备](how-to-register-device.md#register-with-visual-studio-code)。
+* 一个或多个 IoT Edge 设备。
+
+  如果未设置 IoT Edge 设备，可在 Azure 虚拟机中创建一个。 按照[创建虚拟 Linux 设备](quickstart-linux.md)或[创建虚拟 Windows 设备](quickstart.md)快速入门文章（其中一篇）中的步骤进行操作。
+
 * [Visual Studio Code](https://code.visualstudio.com/)。
 * 适用于 Visual Studio Code 的 [Azure IoT 工具](https://marketplace.visualstudio.com/items?itemName=vsciot-vscode.azure-iot-tools#overview)。
 
@@ -57,13 +60,16 @@ ms.locfileid: "82134359"
 
 下面是一个基本的部署清单示例，其中有一个模块：
 
+>[!NOTE]
+>此示例部署清单使用 IoT Edge 代理和中心的架构版本 1.1。 架构版本 1.1 随 IoT Edge 版本 1.0.10 一起发布，支持模块启动顺序和路由优先级等功能。
+
 ```json
 {
   "content": {
     "modulesContent": {
       "$edgeAgent": {
         "properties.desired": {
-          "schemaVersion": "1.0",
+          "schemaVersion": "1.1",
           "runtime": {
             "type": "docker",
             "settings": {
@@ -76,7 +82,7 @@ ms.locfileid: "82134359"
             "edgeAgent": {
               "type": "docker",
               "settings": {
-                "image": "mcr.microsoft.com/azureiotedge-agent:1.0",
+                "image": "mcr.microsoft.com/azureiotedge-agent:1.1",
                 "createOptions": "{}"
               }
             },
@@ -85,14 +91,14 @@ ms.locfileid: "82134359"
               "status": "running",
               "restartPolicy": "always",
               "settings": {
-                "image": "mcr.microsoft.com/azureiotedge-hub:1.0",
+                "image": "mcr.microsoft.com/azureiotedge-hub:1.1",
                 "createOptions": "{\"HostConfig\":{\"PortBindings\":{\"5671/tcp\":[{\"HostPort\":\"5671\"}],\"8883/tcp\":[{\"HostPort\":\"8883\"}],\"443/tcp\":[{\"HostPort\":\"443\"}]}}}"
               }
             }
           },
           "modules": {
             "SimulatedTemperatureSensor": {
-              "version": "1.0",
+              "version": "1.1",
               "type": "docker",
               "status": "running",
               "restartPolicy": "always",
@@ -223,7 +229,7 @@ ms.locfileid: "82134359"
   | 参数 | 说明 |
   | --- | --- |
   | 部署 ID | 将在 IoT 中心创建的部署的名称。 为部署提供唯一名称（最多包含 128 个小写字母）。 避免空格和以下无效字符：`& ^ [ ] { } \ | " < > /`。 |
-  | 目标条件 | 输入目标条件，确定用作此部署的目标的设备。 该条件基于设备孪生标记或设备孪生报告的属性，应与表达式格式相匹配。 例如 `tags.environment='test' and properties.reported.devicemodel='4000x'`。 |
+  | 目标条件 | 输入目标条件，确定用作此部署的目标的设备。  该条件基于设备孪生标记或设备孪生报告的属性，应与表达式格式相匹配。  例如，`tags.environment='test' and properties.reported.devicemodel='4000x'` 。 |
   | 优先级 |  正整数。 如果同一设备上确定的部署目标至少有两个，则会应用优先级数值最高的部署。 |
 
   指定优先级后，终端应会显示类似于以下描述内容的输出：

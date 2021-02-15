@@ -1,19 +1,16 @@
 ---
 title: 查询 Azure Monitor 日志来监视 Azure HDInsight 群集
 description: 了解如何在 Azure Monitor 日志上运行查询，以监视在 HDInsight 群集中运行的作业。
-author: hrasheed-msft
-ms.author: hrasheed
-ms.reviewer: jasonh
 ms.service: hdinsight
 ms.topic: how-to
 ms.custom: hdinsightactive
 ms.date: 12/02/2019
-ms.openlocfilehash: c2ddcd8ea3524b4afdfa7f70d21f0cba96975f72
-ms.sourcegitcommit: 124f7f699b6a43314e63af0101cd788db995d1cb
+ms.openlocfilehash: f9213f36ec33939c3df3b56d21822aa3b6a17c03
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/08/2020
-ms.locfileid: "86085355"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98945612"
 ---
 # <a name="query-azure-monitor-logs-to-monitor-hdinsight-clusters"></a> Azure Monitor 日志以监视 HDInsight 群集
 
@@ -24,17 +21,17 @@ ms.locfileid: "86085355"
 
 [!INCLUDE [azure-monitor-log-analytics-rebrand](../../includes/azure-monitor-log-analytics-rebrand.md)]
 
-## <a name="prerequisites"></a>先决条件
+## <a name="prerequisites"></a>必备条件
 
-必须将 HDInsight 群集配置为使用 Azure Monitor 日志，并将特定于 HDInsight 群集的 Azure Monitor 日志监视解决方案添加到工作区。 有关说明，请参阅[将 Azure Monitor 日志与 HDInsight 群集配合使用](hdinsight-hadoop-oms-log-analytics-tutorial.md)。
+必须将 HDInsight 群集配置为使用 Azure Monitor 日志，并将特定于 HDInsight 群集的 Azure Monitor 日志监视解决方案添加到工作区。 有关说明，请参阅 [将 Azure Monitor 日志与 HDInsight 群集配合使用](hdinsight-hadoop-oms-log-analytics-tutorial.md)。
 
 ## <a name="analyze-hdinsight-cluster-metrics"></a>分析 HDInsight 群集指标
 
 了解如何查找 HDInsight 群集的特定指标。
 
 1. 从 Azure 门户打开关联到 HDInsight 群集的 Log Analytics 工作区。
-1. 在 "**常规**" 下，选择 "**日志**"。
-1. 在 "搜索" 框中键入以下查询，搜索配置为使用 Azure Monitor 日志的所有 HDInsight 群集的所有可用指标的所有指标，然后选择 "**运行**"。 查看结果。
+1. 在“常规”下，选择“日志”。
+1. 在 "搜索" 框中键入以下查询，搜索配置为使用 Azure Monitor 日志的所有 HDInsight 群集的所有可用指标的所有指标，然后选择 " **运行**"。 查看结果。
 
     ```kusto
     search *
@@ -42,9 +39,9 @@ ms.locfileid: "86085355"
 
     ![Apache Ambari 分析搜索所有指标](./media/hdinsight-hadoop-oms-log-analytics-use-queries/hdinsight-log-analytics-search-all-metrics.png "搜索所有指标")
 
-1. 从左侧菜单中选择 "**筛选器**" 选项卡。
+1. 从左侧菜单中选择 " **筛选器** " 选项卡。
 
-1. 在 "**类型**" 下，选择 "**检测信号**"。 然后选择 "**应用 & 运行**"。
+1. 在 " **类型**" 下，选择 " **检测信号**"。 然后选择 " **应用 & 运行**"。
 
     ![log analytics 搜索特定度量值](./media/hdinsight-hadoop-oms-log-analytics-use-queries/hdinsight-log-analytics-search-specific-metrics.png "搜索特定指标")
 
@@ -65,7 +62,7 @@ ms.locfileid: "86085355"
 
         ![搜索特定错误输出2](./media/hdinsight-hadoop-oms-log-analytics-use-queries/log-analytics-specific-time.png "搜索特定错误输出2")
 
-1. 选择 "**应用" & "运行**" 并查看结果。 另请注意，查询已更新为：
+1. 选择 " **应用" & "运行** " 并查看结果。 另请注意，查询已更新为：
 
     ```kusto
     search *
@@ -94,8 +91,8 @@ search in (metrics_resourcemanager_queue_root_default_CL) *
 创建警报的第一步是到达基于其触发警报的查询。 可以根据需要使用任何查询创建警报。
 
 1. 从 Azure 门户打开关联到 HDInsight 群集的 Log Analytics 工作区。
-1. 在 "**常规**" 下，选择 "**日志**"。
-1. 运行以下要为其创建警报的查询，然后选择 "**运行**"。
+1. 在“常规”下，选择“日志”。
+1. 运行以下要为其创建警报的查询，然后选择 " **运行**"。
 
     ```kusto
     metrics_resourcemanager_queue_root_default_CL | where AppsFailed_d > 0
@@ -103,11 +100,11 @@ search in (metrics_resourcemanager_queue_root_default_CL) *
 
     查询列出了 HDInsight 群集上运行失败的应用程序。
 
-1. 选择页面顶部的 "**新建警报规则**"。
+1. 选择页面顶部的 " **新建警报规则** "。
 
     ![输入查询以创建警报1](./media/hdinsight-hadoop-oms-log-analytics-use-queries/hdinsight-log-analytics-create-alert-query.png "输入查询以创建警报1")
 
-1. 在“创建规则”窗口中，输入用于创建警报的查询和其他详细信息，然后选择“创建预警规则”********。
+1. 在“创建规则”窗口中，输入用于创建警报的查询和其他详细信息，然后选择“创建预警规则”。
 
     ![输入查询以创建 alert2](./media/hdinsight-hadoop-oms-log-analytics-use-queries/hdinsight-log-analytics-create-alert.png "输入查询以创建 alert2")
 
@@ -115,13 +112,13 @@ search in (metrics_resourcemanager_queue_root_default_CL) *
 
 1. 从 Azure 门户打开 Log Analytics 工作区。
 
-1. 在左侧菜单中的 "**监视**" 下，选择 "**警报**"。
+1. 在左侧菜单中的 " **监视**" 下，选择 " **警报**"。
 
-1. 在顶部，选择 "**管理警报规则**"。
+1. 在顶部，选择 " **管理警报规则**"。
 
 1. 选择要编辑或删除的警报。
 
-1. 可选择以下选项：“保存”、“放弃”、“禁用”和“删除”****************。
+1. 可选择以下选项：“保存”、“放弃”、“禁用”和“删除”。
 
     ![HDInsight Azure Monitor 日志警报删除编辑](media/hdinsight-hadoop-oms-log-analytics-use-queries/hdinsight-log-analytics-edit-alert.png)
 

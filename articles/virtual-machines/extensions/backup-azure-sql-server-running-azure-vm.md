@@ -1,19 +1,19 @@
 ---
 title: 在 Azure VM 中运行的 SQL Server 的 Azure 备份
 description: 本文介绍如何将 Azure 备份注册到在 Azure 虚拟机中运行的 SQL Server。
-services: backup
 author: dcurwin
 manager: carmonm
-ms.service: backup
+ms.service: virtual-machines
+ms.subservice: extensions
 ms.topic: conceptual
 ms.date: 07/05/2019
 ms.author: dacurwin
-ms.openlocfilehash: 84ff3e18cf488f5536d5945d7b8fc8d78882424e
-ms.sourcegitcommit: 3543d3b4f6c6f496d22ea5f97d8cd2700ac9a481
+ms.openlocfilehash: c6a071956565a8bbc31e5be362c41a7c39d8f551
+ms.sourcegitcommit: 78ecfbc831405e8d0f932c9aafcdf59589f81978
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/20/2020
-ms.locfileid: "86511171"
+ms.lasthandoff: 01/23/2021
+ms.locfileid: "98738044"
 ---
 # <a name="azure-backup-for-sql-server-running-in-azure-vm"></a>在 Azure VM 中运行的 SQL Server 的 Azure 备份
 
@@ -102,7 +102,7 @@ statusBlobUri | <https://seapod01coord1exsapk732.blob.core.windows.net/bcdrexten
 
 ## <a name="powershell-deployment"></a>PowerShell 部署
 
-需要将包含 SQL 应用程序的 Azure VM“注册”到恢复服务保管库。 在注册期间，AzureBackupWindowsWorkload 扩展会安装到 VM 上。 请使用  [Register-AzRecoveryServicesBackupContainerPS](/powershell/module/az.recoveryservices/register-azrecoveryservicesbackupcontainer?view=azps-1.5.0) cmdlet 注册 VM。
+需要将包含 SQL 应用程序的 Azure VM“注册”到恢复服务保管库。 在注册期间，AzureBackupWindowsWorkload 扩展会安装到 VM 上。 请使用  [Register-AzRecoveryServicesBackupContainerPS](/powershell/module/az.recoveryservices/register-azrecoveryservicesbackupcontainer) cmdlet 注册 VM。
 
 ```powershell
 $myVM = Get-AzVM -ResourceGroupName <VMRG Name> -Name <VMName>

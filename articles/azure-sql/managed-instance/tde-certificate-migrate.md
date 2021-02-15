@@ -6,22 +6,22 @@ ms.service: sql-managed-instance
 ms.subservice: security
 ms.custom: sqldbrb=1
 ms.devlang: ''
-ms.topic: conceptual
+ms.topic: how-to
 author: MladjoA
 ms.author: mlandzic
-ms.reviewer: carlrab, jovanpop
+ms.reviewer: sstein, jovanpop
 ms.date: 07/21/2020
-ms.openlocfilehash: ba2dd167cdf49b5f1a4b4f2dcd0edd48ea969fae
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.openlocfilehash: c465da3d5d812ea7e811cbe59318122700c6e786
+ms.sourcegitcommit: e7179fa4708c3af01f9246b5c99ab87a6f0df11c
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87073329"
+ms.lasthandoff: 12/30/2020
+ms.locfileid: "97824671"
 ---
 # <a name="migrate-a-certificate-of-a-tde-protected-database-to-azure-sql-managed-instance"></a>将 TDE 保护的数据库的证书迁移到 Azure SQL 托管实例
 [!INCLUDE[appliesto-sqlmi](../includes/appliesto-sqlmi.md)]
 
-使用本机还原选项将[透明数据加密 (TDE)](https://docs.microsoft.com/sql/relational-databases/security/encryption/transparent-data-encryption) 保护的数据库迁移到 Azure SQL 托管实例时，需在还原数据库之前迁移 SQL Server 实例中的相应证书。 本文引导你完成将证书手动迁移到 Azure SQL 托管实例的过程：
+使用本机还原选项将[透明数据加密 (TDE)](/sql/relational-databases/security/encryption/transparent-data-encryption) 保护的数据库迁移到 Azure SQL 托管实例时，需在还原数据库之前迁移 SQL Server 实例中的相应证书。 本文引导你完成将证书手动迁移到 Azure SQL 托管实例的过程：
 
 > [!div class="checklist"]
 >
@@ -38,20 +38,20 @@ ms.locfileid: "87073329"
 
 若要完成本文中的步骤，需要符合以下先决条件：
 
-* 已在本地服务器上，或者有权访问导出为文件的证书的计算机上，安装了 [Pvk2Pfx](https://docs.microsoft.com/windows-hardware/drivers/devtest/pvk2pfx) 命令行工具。 Pvk2Pfx 工具是[企业 Windows 驱动程序工具包](https://docs.microsoft.com/windows-hardware/drivers/download-the-wdk)（一个自包含性命令行环境）的一部分。
+* 已在本地服务器上，或者有权访问导出为文件的证书的计算机上，安装了 [Pvk2Pfx](/windows-hardware/drivers/devtest/pvk2pfx) 命令行工具。 Pvk2Pfx 工具是[企业 Windows 驱动程序工具包](/windows-hardware/drivers/download-the-wdk)（一个自包含性命令行环境）的一部分。
 * 已安装 [Windows PowerShell](/powershell/scripting/install/installing-windows-powershell) 5.0 或更高版本。
 
 # <a name="powershell"></a>[PowerShell](#tab/azure-powershell)
 
 确保具有以下内容：
 
-* [已安装并更新](https://docs.microsoft.com/powershell/azure/install-az-ps) Azure PowerShell 模块。
+* [已安装并更新](/powershell/azure/install-az-ps) Azure PowerShell 模块。
 * [Az.Sql 模块](https://www.powershellgallery.com/packages/Az.Sql)。
 
 [!INCLUDE [updated-for-az](../../../includes/updated-for-az.md)]
 
 > [!IMPORTANT]
-> PowerShell Azure 资源管理器模块仍受 Azure SQL 托管实例的支持，但所有未来的开发都是针对 Az.Sql 模块的。 若要了解这些 cmdlet，请参阅 [AzureRM.Sql](https://docs.microsoft.com/powershell/module/AzureRM.Sql/)。 Az 模块和 AzureRM 模块中的命令参数大体上是相同的。
+> PowerShell Azure 资源管理器模块仍受 Azure SQL 托管实例的支持，但所有未来的开发都是针对 Az.Sql 模块的。 若要了解这些 cmdlet，请参阅 [AzureRM.Sql](/powershell/module/AzureRM.Sql/)。 Az 模块和 AzureRM 模块中的命令参数大体上是相同的。
 
 在 PowerShell 中运行以下命令，以安装/更新模块：
 
@@ -160,7 +160,7 @@ Update-Module -Name Az.Sql
 
 # <a name="azure-cli"></a>[Azure CLI](#tab/azure-cli)
 
-首先需要使用 .pfx 文件[设置 Azure 密钥保管库](/azure/key-vault/key-vault-manage-with-cli2)。
+首先需要使用 .pfx 文件[设置 Azure 密钥保管库](../../key-vault/general/manage-with-cli2.md)。
 
 1. 在 PowerShell 中开始准备步骤：
 

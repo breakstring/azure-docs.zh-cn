@@ -1,14 +1,14 @@
 ---
 title: 计划定义结构的详细信息
 description: 描述如何使用策略计划定义对策略定义进行分组，以便部署到组织中的 Azure 资源。
-ms.date: 08/17/2020
+ms.date: 10/07/2020
 ms.topic: conceptual
-ms.openlocfilehash: b151ef4d58998b810e116321de68cbdb2e8d3eff
-ms.sourcegitcommit: 023d10b4127f50f301995d44f2b4499cbcffb8fc
+ms.openlocfilehash: 8f9c6146e1dde5b5a7f6595c61638319de60a82d
+ms.sourcegitcommit: fbb620e0c47f49a8cf0a568ba704edefd0e30f81
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/18/2020
-ms.locfileid: "88544632"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "91876169"
 ---
 # <a name="azure-policy-initiative-definition-structure"></a>Azure Policy 计划定义结构
 
@@ -248,19 +248,18 @@ strongType 的非资源类型允许值有：
 ]
 ```
 
-## <a name="policy-definitions-groups-preview"></a><a name="policy-definition-groups"></a> (预览的策略定义组) 
+## <a name="policy-definition-groups"></a>策略定义组
 
-作为 Azure 策略的 [法规遵从性](./regulatory-compliance.md) (预览版) 功能的一部分，可对计划定义中的策略定义进行分组。 此信息在 `policyDefinitionGroups` _array_ 属性中定义。 这些分组包含其他详细信息，例如，策略定义提供涵盖的 **控制** 和 **符合性域** 。
-可以在 Microsoft 创建的 **policyMetadata** 对象中找到其他分组详细信息。 有关信息，请参阅 [元数据对象](#metadata-objects)。
+可对计划定义中的策略定义进行分组和分类。 Azure 策略的 [法规遵从性](./regulatory-compliance.md) (预览版) 功能使用此属性将定义分组到 **控件** 和 **符合性域**中。 此信息在 `policyDefinitionGroups` _array_ 属性中定义。 可以在 Microsoft 创建的 **policyMetadata** 对象中找到其他分组详细信息。 有关信息，请参阅 [元数据对象](#metadata-objects)。
 
 ### <a name="policy-definition-groups-parameters"></a>策略定义组参数
 
 中的每个 _数组_ 元素 `policyDefinitionGroups` 必须具有以下两个属性：
 
-- `name` (字符串) \[ 必需 \] ： **控件**的短名称。 此属性的值由 `groupNames` 在中使用 `policyDefinitions` 。
-- `category` (字符串) ：控件的 **符合性域** 。
-- `displayName` (字符串) ： **控件**的友好名称。 供门户使用。
-- `description` (字符串) ：对 **控件** 执行的操作的说明。
+- `name` (字符串) \[ 必需 \] ： **组**的短名称。 在法规遵从性中， **控件**。 此属性的值由 `groupNames` 在中使用 `policyDefinitions` 。
+- `category` (字符串) ：该组所属的层次结构。 在法规遵从性中，是控件的 **符合性域** 。
+- `displayName` (字符串) ： **组** 或 **控件**的友好名称。 供门户使用。
+- `description` (字符串) ：有关 **组** 或 **控件** 所涵盖内容的说明。
 - `additionalMetadataId` (字符串) ：包含有关**控件**和**符合性域**的其他详细信息的[policyMetadata](#metadata-objects)对象的位置。
 
   > [!NOTE]
@@ -284,7 +283,7 @@ Microsoft 创建的法规遵从性内置包含有关每个控件的其他信息�
 
 - 在 Azure 门户上显示的有关合规性计划 **控制** 的概述。
 - 通过 REST API 提供。 请参阅 `Microsoft.PolicyInsights` 资源提供程序和 [policyMetadata 操作组](/rest/api/policy-insights/policymetadata/getresource)。
-- 通过 Azure CLI 提供。 请参阅 [az policy metadata](/cli/azure/policy/metadata?view=azure-cli-latest) 命令。
+- 通过 Azure CLI 提供。 请参阅 [az policy metadata](/cli/azure/policy/metadata) 命令。
 
 > [!IMPORTANT]
 > 合规性的元数据对象是 _只读_ 的，不能由客户创建。

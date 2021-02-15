@@ -2,20 +2,19 @@
 title: Azure 订阅限制和配额
 description: 提供常见的 Azure 订阅和服务限制、配额和约束的列表。 本文包括有关如何增加限制以及最大值的信息。
 ms.topic: conceptual
-author: davidsmatlak
-ms.date: 06/04/2020
-ms.openlocfilehash: 86c9958818b5439502ab37471ed7a51fb3f21bf9
-ms.sourcegitcommit: b33c9ad17598d7e4d66fe11d511daa78b4b8b330
+ms.date: 09/02/2020
+ms.openlocfilehash: ac35f09e1a7274019a8ca504fc697ca81de000f7
+ms.sourcegitcommit: d4734bc680ea221ea80fdea67859d6d32241aefc
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/25/2020
-ms.locfileid: "88854096"
+ms.lasthandoff: 02/14/2021
+ms.locfileid: "100370085"
 ---
 # <a name="azure-subscription-and-service-limits-quotas-and-constraints"></a>Azure 订阅和服务限制、配额和约束
 
 本文列出了一些最常见的 Microsoft Azure 限制，有时也称为配额。
 
-若要详细了解 Azure 定价，请参阅 [Azure 定价概述](https://azure.microsoft.com/pricing/)。 在那里，可以使用[定价计算器](https://azure.microsoft.com/pricing/calculator/)来估算成本。 你还可以转到特定服务的定价详细信息页，例如 [Windows VM](https://azure.microsoft.com/pricing/details/virtual-machines/#Windows)。 有关帮助管理成本的提示，请参阅[通过 Azure 计费和成本管理来防止意外成本](../../cost-management-billing/manage/getting-started.md)。
+若要详细了解 Azure 定价，请参阅 [Azure 定价概述](https://azure.microsoft.com/pricing/)。 在那里，可以使用[定价计算器](https://azure.microsoft.com/pricing/calculator/)来估算成本。 你还可以转到特定服务的定价详细信息页，例如 [Windows VM](https://azure.microsoft.com/pricing/details/virtual-machines/#Windows)。 有关帮助管理成本的提示，请参阅[通过 Azure 计费和成本管理来防止意外成本](../../cost-management-billing/cost-management-billing-overview.md)。
 
 ## <a name="managing-limits"></a>管理限制
 
@@ -27,6 +26,9 @@ ms.locfileid: "88854096"
 > 如果可以调整限制，则表中包含“默认限制”和“最大限制”表头。 可以将限制提高到默认限制以上，但不能超过最大限制。
 >
 > 如果想要提高限制或配额，使其超出默认限制，可以[免费建立联机客户支持请求](../templates/error-resource-quota.md)。
+>
+> 术语“软限制”和“硬限制”通常非正式地用于描述当前可调整的限制（软限制）和最大限制（硬限制）。 如果某个限制不可调整，则不会有软限制，只有硬限制。
+>
 
 [免费试用订阅](https://azure.microsoft.com/offers/ms-azr-0044p) 不符合限制或配额增加的条件。 如果有[免费试用版订阅](https://azure.microsoft.com/offers/ms-azr-0044p)，可将其升级到[即用即付](https://azure.microsoft.com/offers/ms-azr-0003p/)订阅。 有关详细信息，请参阅将 [Azure 免费试用版订阅升级到即用即付订阅](../../cost-management-billing/manage/upgrade-azure-subscription.md) 和 [免费试用订阅常见问题解答](https://azure.microsoft.com/free/free-account-faq)。
 
@@ -75,6 +77,10 @@ ms.locfileid: "88854096"
 ## <a name="automation-limits"></a>自动化限制
 
 [!INCLUDE [automation-limits](../../../includes/azure-automation-service-limits.md)]
+
+## <a name="azure-app-configuration"></a>Azure 应用配置
+
+[!INCLUDE [app-configuration-limits](../../../includes/app-configuration-limits.md)]
 
 ## <a name="azure-cache-for-redis-limits"></a>Azure Redis 缓存限制
 
@@ -126,7 +132,7 @@ ms.locfileid: "88854096"
 
 [!INCLUDE [functions-limits](../../../includes/functions-limits.md)]
 
-有关详细信息，请参阅 [Functions 托管计划比较](../../azure-functions/functions-scale.md#hosting-plans-comparison)。
+有关详细信息，请参阅 [Functions 托管计划比较](../../azure-functions/functions-scale.md)。
 
 ## <a name="azure-kubernetes-service-limits"></a>Azure Kubernetes 服务限制
 
@@ -150,6 +156,10 @@ ms.locfileid: "88854096"
 
 [!INCLUDE [monitoring-limits](../../../includes/azure-monitor-limits-action-groups.md)]
 
+### <a name="autoscale"></a>自动缩放
+
+[!INCLUDE [monitoring-limits](../../../includes/azure-monitor-limits-autoscale.md)]
+
 ### <a name="log-queries-and-language"></a>日志查询和语言
 
 [!INCLUDE [monitoring-limits](../../../includes/azure-monitor-limits-log-queries.md)]
@@ -165,6 +175,14 @@ ms.locfileid: "88854096"
 ## <a name="azure-policy-limits"></a>Azure Policy 限制
 
 [!INCLUDE [policy-limits](../../../includes/azure-policy-limits.md)]
+
+## <a name="azure-quantum-limits"></a>Azure 量程限制
+
+[!INCLUDE [quantum-limits](../../../includes/azure-quantum-limits.md)]
+
+## <a name="azure-role-based-access-control-limits"></a>Azure 基于角色的访问控制限制
+
+[!INCLUDE [role-based-access-control-limits](../../../includes/role-based-access-control/limits.md)]
 
 ## <a name="azure-signalr-service-limits"></a>Azure SignalR 服务限制
 
@@ -206,7 +224,7 @@ ms.locfileid: "88854096"
 
 [!INCLUDE [azure-data-lake-analytics-limits](../../../includes/azure-data-lake-analytics-limits.md)]
 
-## <a name="data-lake-store-limits"></a>Data Lake Store 限制
+## <a name="data-lake-storage-limits"></a>Data Lake Storage 限制
 
 [!INCLUDE [azure-data-lake-store-limits](../../../includes/azure-data-lake-store-limits.md)]
 
@@ -233,10 +251,6 @@ ms.locfileid: "88854096"
 
 [!INCLUDE [azure-servicebus-limits](../../../includes/event-hubs-limits.md)]
 
-## <a name="identity-manager-limits"></a>Identity Manager 限制
-
-[!INCLUDE [automation-limits](~/includes/managed-identity-limits.md)]
-
 ## <a name="iot-central-limits"></a>IoT Central 限制
 [!INCLUDE [iot-central-limits](../../../includes/iot-central-limits.md)]
 
@@ -251,6 +265,11 @@ ms.locfileid: "88854096"
 ## <a name="key-vault-limits"></a>密钥保管库限制
 
 [!INCLUDE [key-vault-limits](../../../includes/key-vault-limits.md)]
+
+## <a name="managed-identity-limits"></a>托管标识限制
+
+[!INCLUDE [Managed-Identity-Limits](../../../includes/managed-identity-limits.md)]
+
 
 ## <a name="media-services-limits"></a>媒体服务限制
 
@@ -278,7 +297,11 @@ ms.locfileid: "88854096"
 
 ### <a name="virtual-network-gateway-limits"></a>虚拟网络网关限制
 
-[!INCLUDE [virtual-wan-limits](../../../includes/azure-virtual-network-gateway-limits.md)]
+[!INCLUDE [virtual-network-gateway-limits](../../../includes/azure-virtual-network-gateway-limits.md)]
+
+### <a name="nat-gateway-limits"></a>NAT 网关限制
+
+[!INCLUDE [nat-gateway-limits](../../../includes/azure-nat-gateway-limits.md)]
 
 ### <a name="virtual-wan-limits"></a>虚拟 WAN 限制
 
@@ -296,6 +319,10 @@ ms.locfileid: "88854096"
 ### <a name="private-link-limits"></a>专用链接限制
 
 [!INCLUDE [private-link-limits](../../../includes/private-link-limits.md)]
+
+## <a name="purview-limits"></a>监控范围限制
+
+可以在[Azure 监控范围配额页](../../purview/how-to-manage-quotas.md)中找到 azure 监控范围配额的最新值
 
 ### <a name="traffic-manager-limits"></a>流量管理器限制
 
@@ -321,10 +348,6 @@ ms.locfileid: "88854096"
 
 [!INCLUDE [notification-hub-limits](../../../includes/notification-hub-limits.md)]
 
-## <a name="role-based-access-control-limits"></a>基于角色的访问控制限制
-
-[!INCLUDE [role-based-access-control-limits](../../../includes/role-based-access-control-limits.md)]
-
 ## <a name="service-bus-limits"></a>服务总线限制
 
 [!INCLUDE [azure-servicebus-limits](../../../includes/service-bus-quotas-table.md)]
@@ -341,6 +364,9 @@ ms.locfileid: "88854096"
 
 有关 Azure Synapse Analytics 限制，请参阅 [Azure Synapse 资源限制](../../synapse-analytics/sql-data-warehouse/sql-data-warehouse-service-capacity-limits.md)。
 
+## <a name="azure-files-and-azure-file-sync"></a>Azure 文件和 Azure 文件同步
+若要详细了解 Azure 文件和文件同步的限制，请参阅 [Azure 文件可伸缩性和性能目标](../../storage/files/storage-files-scale-targets.md)。
+
 ## <a name="storage-limits"></a>存储限制
 
 <!--like # storage accts -->
@@ -355,16 +381,6 @@ ms.locfileid: "88854096"
 ### <a name="azure-blob-storage-limits"></a>Azure Blob 存储限制
 
 [!INCLUDE [storage-blob-scale-targets](../../../includes/storage-blob-scale-targets.md)]
-
-### <a name="azure-files-limits"></a>Azure 文件限制
-
-有关 Azure 文件限制的详细信息，请参阅 [Azure 文件可伸缩性和性能目标](../../storage/files/storage-files-scale-targets.md)。
-
-[!INCLUDE [storage-files-scale-targets](../../../includes/storage-files-scale-targets.md)]
-
-### <a name="azure-file-sync-limits"></a>Azure 文件同步限制
-
-[!INCLUDE [storage-sync-files-scale-targets](../../../includes/storage-sync-files-scale-targets.md)]
 
 ### <a name="azure-queue-storage-limits"></a>Azure 队列存储限制
 
@@ -383,7 +399,7 @@ ms.locfileid: "88854096"
 
 #### <a name="disk-encryption-sets"></a>磁盘加密集
 
-每个区域、每个订阅有 50 个磁盘加密集的限制。 有关更多信息，请参阅 [Linux](../../virtual-machines/linux/disk-encryption.md#restrictions) 或 [Windows](../../virtual-machines/windows/disk-encryption.md#restrictions) 虚拟机的加密文档。 如果需要增加配额，请与 Azure 支持部门联系。
+每个区域每个订阅的磁盘加密集限制为1000。 有关更多信息，请参阅 [Linux](../../virtual-machines/disk-encryption.md#restrictions) 或 [Windows](../../virtual-machines/disk-encryption.md#restrictions) 虚拟机的加密文档。 如果需要增加配额，请与 Azure 支持部门联系。
 
 ### <a name="managed-virtual-machine-disks"></a>托管虚拟机磁盘
 

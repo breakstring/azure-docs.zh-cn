@@ -2,28 +2,28 @@
 title: Azure ExpressRoute：路由器配置示例 - NAT
 description: 本页提供 Cisco 和 Juniper 路由器的路由器配置示例。
 services: expressroute
-author: cherylmc
+author: duongau
 ms.service: expressroute
 ms.topic: article
-ms.date: 12/06/2018
-ms.author: cherylmc
-ms.openlocfilehash: 3393c661240ae5619597256a6691ae43608d622b
-ms.sourcegitcommit: 9b5c20fb5e904684dc6dd9059d62429b52cb39bc
+ms.date: 01/07/2021
+ms.author: duau
+ms.openlocfilehash: ae0a39d65bf0f1bc5221cd5e46493c489f7630f8
+ms.sourcegitcommit: 42a4d0e8fa84609bec0f6c241abe1c20036b9575
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "85856714"
+ms.lasthandoff: 01/08/2021
+ms.locfileid: "98012659"
 ---
 # <a name="router-configuration-samples-to-set-up-and-manage-nat"></a>用于设置和管理 NAT 的路由器配置示例
 
-本页提供处理 ExpressRoute 时适用于 Cisco ASA 和 Juniper SRX 系列路由器的 NAT 配置示例。 这些示例仅供指导，不能按原样使用。 可以与供应商合作，以便为网络指定适当的配置。
+本文提供了适用于在使用 ExpressRoute 的情况下，适用于 Cisco ASA 和刺柏 SRX 系列路由器的 NAT 配置示例。 这些路由器配置仅用作指导的示例，不能按原样使用。 你需要与供应商合作，以便为你的网络提供相应的配置。
 
 > [!IMPORTANT]
 > 本页中的示例仅供指导。 必须与供应商的销售/技术团队和网络团队合作，以便指定符合需要的适当配置。 对于本页中所列配置的相关问题，Microsoft 不提供支持。 有关支持问题，必须与设备供应商联系。
 > 
 > 
 
-* 以下路由器配置示例适用于 Azure 公共与 Microsoft 对等互连。 不得为 Azure 专用对等互连配置 NAT。 有关更多详细信息，请查看 [ExpressRoute 对等互连](expressroute-circuit-peerings.md)和 [ExpressRoute NAT 要求](expressroute-nat.md)。
+* 以下路由器配置示例适用于 Azure 公共与 Microsoft 对等互连。 不为 Azure 专用对等互连配置 NAT。 有关更多详细信息，请查看 [ExpressRoute 对等互连](expressroute-circuit-peerings.md)和 [ExpressRoute NAT 要求](expressroute-nat.md)。
 
 * 必须使用独立的 NAT IP 池来连接到 Internet 和 ExpressRoute。 在 Internet 与 ExpressRoute 中使用相同的 NAT IP 池会导致非对称路由和连接断开。
 
@@ -56,7 +56,7 @@ nat (outside,inside) source dynamic on-prem pat-pool MSFT-PAT destination static
 
 **接口和方向：**
 
-源接口（流量进入 ASA）：目标接口内部（流量在此位置用于退出 ASA）：外部
+源接口 (流量进入 ASA) ：目标接口内 (流量在该位置退出 ASA) ：外部
 
 **配置：**
 
@@ -92,7 +92,7 @@ nat (inside,outside) source dynamic MSFT-PAT-Networks pat-pool outbound-PAT dest
 
 
 ## <a name="juniper-srx-series-routers"></a>Juniper SRX 系列路由器
-### <a name="1-create-redundant-ethernet-interfaces-for-the-cluster"></a>1. 为群集创建冗余的以太网接口
+### <a name="1-create-redundant-ethernet-interfaces-for-the-cluster"></a>1.为群集创建冗余的以太网接口
 
 ```console
     interfaces {
@@ -126,7 +126,7 @@ nat (inside,outside) source dynamic MSFT-PAT-Networks pat-pool outbound-PAT dest
     }
 ```
 
-### <a name="2-create-two-security-zones"></a>2. 创建两个安全区域
+### <a name="2-create-two-security-zones"></a>2.创建两个安全区域
 * 内部网络的信任区域和面向外部网络的边缘路由器的非信任区域
 * 向区域分配适当的接口
 * 在接口上允许服务
@@ -361,5 +361,5 @@ nat (inside,outside) source dynamic MSFT-PAT-Networks pat-pool outbound-PAT dest
 ```
 
 ## <a name="next-steps"></a>后续步骤
-有关更多详细信息，请参阅 [ExpressRoute 常见问题解答](expressroute-faqs.md)。
+有关详细信息，请参阅 [ExpressRoute 常见问题解答](expressroute-faqs.md)。
 

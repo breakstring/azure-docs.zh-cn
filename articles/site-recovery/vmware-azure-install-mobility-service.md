@@ -6,12 +6,12 @@ ms.service: site-recovery
 ms.topic: conceptual
 ms.date: 03/25/2019
 ms.author: ramamill
-ms.openlocfilehash: f75723aedae390a0d41956d63acadf6370f390d9
-ms.sourcegitcommit: d661149f8db075800242bef070ea30f82448981e
+ms.openlocfilehash: 78fddb5b4512883f8e78d6ed53f6e3dbbeba0e4f
+ms.sourcegitcommit: 829d951d5c90442a38012daaf77e86046018e5b9
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/19/2020
-ms.locfileid: "88606522"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "90524991"
 ---
 # <a name="prepare-source-machine-for-push-installation-of-mobility-agent"></a>准备源计算机以推送安装移动代理
 
@@ -25,14 +25,18 @@ ms.locfileid: "88606522"
 1. 创建可供进程服务器用来访问计算机的帐户。 该帐户应具有管理员权限（本地或域）。 只能将此帐户用于推送安装和代理更新。
 2. 如果未使用域帐户，请在本地计算机上禁用远程用户访问控制，如下所述：
     - 在 HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System 注册表项下，添加一个新的 DWORD：**LocalAccountTokenFilterPolicy**。 将值设置为 **1**。
-    -  为此，请在命令提示符下运行以下命令：  
-   `REG ADD HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System /v LocalAccountTokenFilterPolicy /t REG_DWORD /d
+    -  为此，请在命令提示符下运行以下命令：
+    
+       ```
+       REG ADD HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System /v LocalAccountTokenFilterPolicy /t REG_DWORD /d 1 /f
+       ```
+
 3. 在要保护的计算机上的 Windows 防火墙中，选择“允许应用或功能通过防火墙”。  启用“文件和打印机共享”和“Windows Management Instrumentation (WMI)”。   对于属于某个域的计算机，可以使用组策略对象 (GPO) 配置防火墙设置。
 
    ![防火墙设置](./media/vmware-azure-install-mobility-service/mobility1.png)
 
 4. 添加在 CSPSConfigtool 中创建的帐户。 若要执行此操作，请登录到你的配置服务器。
-5. 打开 **cspsconfigtool.exe**。 它作为桌面和%ProgramData%\ASR\home\svsystems\bin 文件夹中的快捷方式提供。
+5. 打开 **cspsconfigtool.exe**。 桌面上有该工具的快捷方式，也可以在 %ProgramData%\ASR\home\svsystems\bin 文件夹中找到它。
 6. 在“管理帐户”选项卡中，选择“添加帐户”。  
 7. 添加已创建的帐户。
 8. 输入为计算机启用复制时使用的凭据。
@@ -59,7 +63,7 @@ ms.locfileid: "88606522"
 11. 在“管理帐户”选项卡中，选择“添加帐户”。  
 12. 添加已创建的帐户。
 13. 输入为计算机启用复制时使用的凭据。
-1. 用于更新或保护 SUSE Linux Enterprise Server 11 SP3 计算机的其他步骤。 [确保配置服务器中提供最新版本](vmware-physical-mobility-service-overview.md#download-latest-mobility-agent-installer-for-suse-11-sp3-server)。
+1. 用于更新或保护 SUSE Linux Enterprise Server 11 SP3 或 RHEL 5 或 Debian 7 计算机的其他步骤。 [确保配置服务器中提供了最新版本](vmware-physical-mobility-service-overview.md#download-latest-mobility-agent-installer-for-suse-11-sp3-rhel-5-debian-7-server)。
 
 ## <a name="anti-virus-on-replicated-machines"></a>复制计算机上的防病毒
 

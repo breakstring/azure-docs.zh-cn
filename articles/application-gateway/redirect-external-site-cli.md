@@ -1,18 +1,18 @@
 ---
 title: 使用 CLI 进行外部流量重定向 - Azure 应用程序网关
-description: 了解如何创建应用程序网关，将内部 web 流量重定向到相应的池中使用 Azure CLI。
+description: 了解如何使用 Azure CLI 创建将外部 Web 流量重定向到相应池的应用程序网关。
 services: application-gateway
 author: vhorne
 ms.service: application-gateway
 ms.topic: how-to
-ms.date: 11/13/2019
+ms.date: 09/24/2020
 ms.author: victorh
-ms.openlocfilehash: b671af46d34e3b45796186cd10282d060fa8c537
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 838c2dc887790bb12b390261d94748595232d8b3
+ms.sourcegitcommit: 04fb3a2b272d4bbc43de5b4dbceda9d4c9701310
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "84804671"
+ms.lasthandoff: 11/12/2020
+ms.locfileid: "94565851"
 ---
 # <a name="create-an-application-gateway-with-external-redirection-using-the-azure-cli"></a>使用 Azure CLI 创建支持外部重定向的应用程序网关
 
@@ -20,22 +20,21 @@ ms.locfileid: "84804671"
 
 在本文中，学习如何：
 
-> [!div class="checklist"]
-> * 设置网络
-> * 创建侦听器和重定向规则
-> * 创建应用程序网关
+* 设置网络
+* 创建侦听器和重定向规则
+* 创建应用程序网关
 
-如果没有 Azure 订阅，请在开始之前创建一个[免费帐户](https://azure.microsoft.com/free/?WT.mc_id=A261C142F)。
+[!INCLUDE [quickstarts-free-trial-note](../../includes/quickstarts-free-trial-note.md)]
 
-[!INCLUDE [cloud-shell-try-it.md](../../includes/cloud-shell-try-it.md)]
+[!INCLUDE [azure-cli-prepare-your-environment.md](../../includes/azure-cli-prepare-your-environment.md)]
 
-如果选择在本地安装并使用 CLI，此快速入门教程要求运行 Azure CLI 2.0.4 版或更高版本。 若要查找版本，请运行 `az --version`。 如果需要进行安装或升级，请参阅[安装 Azure CLI](/cli/azure/install-azure-cli)。
+ - 本教程需要 Azure CLI 版本的2.0.4 或更高版本。 如果使用 Azure Cloud Shell，则最新版本已安装。
 
 ## <a name="create-a-resource-group"></a>创建资源组
 
 资源组是在其中部署和管理 Azure 资源的逻辑容器。 使用 [az group create](/cli/azure/group) 创建资源组。
 
-以下示例在 eastus 位置创建名为 myResourceGroupAG 的资源组****。
+以下示例在 eastus 位置创建名为 myResourceGroupAG 的资源组 。
 
 ```azurecli-interactive 
 az group create --name myResourceGroupAG --location eastus
@@ -60,7 +59,7 @@ az network public-ip create \
 
 ## <a name="create-an-application-gateway"></a>创建应用程序网关
 
-可以使用 [az network application-gateway create](/cli/azure/network/application-gateway) 创建名为 *myAppGateway* 的应用程序网关。 使用 Azure CLI 创建应用程序网关时，请指定配置信息，例如容量、sku 和 HTTP 设置。 将应用程序网关分配给之前创建的 *myAGSubnet* 和 *myPublicIPAddress*。 
+可以使用 [az network application-gateway create](/cli/azure/network/application-gateway) 创建名为 *myAppGateway* 的应用程序网关。 使用 Azure CLI 创建应用程序网关时，请指定配置信息，例如容量、sku 和 HTTP 设置。 将应用程序网关分配给之前创建的 *myAGSubnet* 和 *myPublicIPAddress* 。 
 
 ```azurecli-interactive
 az network application-gateway create \
@@ -83,7 +82,7 @@ az network application-gateway create \
 - *appGatewayBackendPool* - 应用程序网关必须至少具有一个后端地址池。
 - *appGatewayBackendHttpSettings* - 指定将端口 80 和 HTTP 协议用于通信。
 - *appGatewayHttpListener* - 与 *appGatewayBackendPool* 关联的默认侦听器。
-- *appGatewayFrontendIP* - 将 *myAGPublicIPAddress* 分配给 *appGatewayHttpListener*。
+- *appGatewayFrontendIP* - 将 *myAGPublicIPAddress* 分配给 *appGatewayHttpListener* 。
 - *rule1* - 与 *appGatewayHttpListener* 关联的默认路由规则。
 
 ### <a name="add-the-redirection-configuration"></a>添加重定向配置
@@ -132,8 +131,4 @@ az network application-gateway rule create \
 
 ## <a name="next-steps"></a>后续步骤
 
-在本教程中，你已学习了如何执行以下操作：
-
-> * 设置网络
-> * 创建侦听器和重定向规则
-> * 创建应用程序网关
+- [使用 Azure CLI 创建支持内部重定向的应用程序网关](redirect-internal-site-cli.md)

@@ -9,16 +9,16 @@ ms.date: 4/3/2020
 ms.topic: conceptual
 ms.service: iot-edge
 services: iot-edge
-ms.openlocfilehash: c6c2067526850ba972f002dc40bbd5d4cb24c9ba
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: bfb61a5434089fffab9d8ceb9c7b0fbca528cac5
+ms.sourcegitcommit: eb546f78c31dfa65937b3a1be134fb5f153447d6
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "82131015"
+ms.lasthandoff: 02/02/2021
+ms.locfileid: "99430605"
 ---
 # <a name="create-and-provision-an-iot-edge-device-using-symmetric-key-attestation"></a>使用对称密钥证明创建和预配 IoT Edge 设备
 
-可以使用[设备预配服务](../iot-dps/index.yml)自动预配 Azure IoT Edge 设备，就像预配未启用 Edge 的设备一样。 如果你不熟悉自动预配过程，请在继续操作之前查看[自动预配的概念](../iot-dps/concepts-auto-provisioning.md)。
+可以使用[设备预配服务](../iot-dps/index.yml)自动预配 Azure IoT Edge 设备，就像预配未启用 Edge 的设备一样。 如果你不熟悉自动预配过程，请在继续操作之前查看[预配](../iot-dps/about-iot-dps.md#provisioning-process)概述。
 
 本文介绍如何通过以下步骤，在 IoT Edge 设备上使用对称密钥证明创建设备预配服务的单个注册：
 
@@ -26,7 +26,7 @@ ms.locfileid: "82131015"
 * 为设备创建个人注册。
 * 安装 IoT Edge 运行时并连接到 IoT 中心。
 
-对称密钥证明是一种通过设备预配服务实例对设备进行身份验证的简单方法。 此证明方法表示不熟悉设备预配或不具备严格安全要求的开发人员的“Hello world”体验。 使用 [TPM](../iot-dps/concepts-tpm-attestation.md) 或 [X.509 证书](../iot-dps/concepts-security.md#x509-certificates)的设备证明更加安全，且应该用于更严格的安全要求。
+对称密钥证明是一种通过设备预配服务实例对设备进行身份验证的简单方法。 此证明方法表示不熟悉设备预配或不具备严格安全要求的开发人员的“Hello world”体验。 使用 [TPM](../iot-dps/concepts-tpm-attestation.md) 或 [X.509 证书](../iot-dps/concepts-x509-attestation.md)的设备证明更加安全，且应该用于更严格的安全要求。
 
 ## <a name="prerequisites"></a>先决条件
 
@@ -73,13 +73,13 @@ ms.locfileid: "82131015"
    1. 选择“True”，声明该注册适用于 IoT Edge 设备。  对于组注册，所有设备必须是 IoT Edge 设备，或者都不是 IoT Edge 设备。
 
    > [!TIP]
-   > 在 Azure CLI 中，可以创建[注册](https://docs.microsoft.com/cli/azure/ext/azure-iot/iot/dps/enrollment)或[注册组](https://docs.microsoft.com/cli/azure/ext/azure-iot/iot/dps/enrollment-group)，并使用“支持 Edge”  标志来指定某个设备或设备组是 IoT Edge 设备。
+   > 在 Azure CLI 中，可以创建[注册](/cli/azure/ext/azure-iot/iot/dps/enrollment)或[注册组](/cli/azure/ext/azure-iot/iot/dps/enrollment-group)，并使用“支持 Edge”  标志来指定某个设备或设备组是 IoT Edge 设备。
 
-   1. 接受设备预配服务分配策略中有关**如何将设备分配到中心**的默认值，或选择特定于此注册的其他值。
+   1. 接受设备预配服务分配策略中有关 **如何将设备分配到中心** 的默认值，或选择特定于此注册的其他值。
 
    1. 选择要将设备连接到的链接“IoT 中心”。  可以选择多个中心，设备将根据所选的分配策略分配到其中的一个中心。
 
-   1. 选择**在首次预配后，重新预配设备请求时如何处理设备数据**。
+   1. 选择 **在首次预配后，重新预配设备请求时如何处理设备数据**。
 
    1. 根据需要，将标记值添加到“初始设备孪生状态”。  可以使用标记将设备组指定为模块部署的目标。 例如：
 
@@ -98,14 +98,14 @@ ms.locfileid: "82131015"
 
    1. 选择“保存”  。
 
-既然此设备已存在注册，IoT Edge 运行时在安装期间可以自动预配设备。 在安装 IoT Edge 运行时，或者要创建用于组注册的设备密钥时，请确保复制注册的**主密钥**值以供使用。
+既然此设备已存在注册，IoT Edge 运行时在安装期间可以自动预配设备。 在安装 IoT Edge 运行时，或者要创建用于组注册的设备密钥时，请确保复制注册的 **主密钥** 值以供使用。
 
 ## <a name="derive-a-device-key"></a>派生一个设备密钥
 
 > [!NOTE]
 > 仅当使用组注册时，才需要此部分。
 
-每个设备将使用其派生的设备密钥和唯一注册 ID，于预配期间在注册中执行对称密钥证明。 若要生成设备密钥，请使用从 DPS 注册复制的密钥来计算设备的唯一注册 ID 的[HMAC-SHA256](https://wikipedia.org/wiki/HMAC) ，并将结果转换为 Base64 格式。
+每个设备将使用其派生的设备密钥和唯一注册 ID，于预配期间在注册中执行对称密钥证明。 若要生成设备密钥，请使用从 DPS 注册复制的密钥来计算设备的唯一注册 ID 的 [HMAC-SHA256](https://wikipedia.org/wiki/HMAC) ，并将结果转换为 Base64 格式。
 
 不要在设备代码中包含注册的主密钥或辅助密钥。
 
@@ -156,7 +156,13 @@ Jsm0lyGpjaVYVP2g3FnmnmG9dI/9qU24wNoykUmermc=
 
 IoT Edge 运行时部署在所有 IoT Edge 设备上。 该运行时的组件在容器中运行，允许你将其他容器部署到设备，以便在边缘上运行代码。
 
-预配设备时需要以下信息：
+按照[安装 Azure IoT Edge 运行时](how-to-install-iot-edge.md)中的步骤操作，然后返回到本文来预配设备。
+
+## <a name="configure-the-device-with-provisioning-information"></a>用预配信息配置设备
+
+在设备上安装运行时后，请借助它用于连接到设备预配服务和 IoT 中心的信息来配置设备。
+
+准备好以下信息：
 
 * DPS 的“ID 范围”值 
 * 为设备创建的“注册 ID” 
@@ -167,50 +173,53 @@ IoT Edge 运行时部署在所有 IoT Edge 设备上。 该运行时的组件在
 
 ### <a name="linux-device"></a>Linux 设备
 
-请遵照设备体系结构的说明。 确保将 IoT Edge 运行时配置为自动预配而不是手动预配。
+1. 在 IoT Edge 设备上打开配置文件。
 
-[在 Linux 上安装 Azure IoT Edge 运行时](how-to-install-iot-edge-linux.md)
+   ```bash
+   sudo nano /etc/iotedge/config.yaml
+   ```
 
-配置文件用于对称密钥预配的节如下所示：
+1. 找到该文件的预配配置部分。 取消注释 DPS 对称密钥预配的行，并确保注释掉任何其他预配行。
 
-```yaml
-# DPS symmetric key provisioning configuration
-provisioning:
-   source: "dps"
-   global_endpoint: "https://global.azure-devices-provisioning.net"
-   scope_id: "<SCOPE_ID>"
-   attestation:
-      method: "symmetric_key"
-      registration_id: "<REGISTRATION_ID>"
-      symmetric_key: "<SYMMETRIC_KEY>"
-```
+   `provisioning:` 行前面应无空格，并且嵌套项应该缩进两个空格。
 
-请将 `<SCOPE_ID>`、`<REGISTRATION_ID>` 和 `<SYMMETRIC_KEY>` 的占位符值替换为前面收集的数据。 请确保 **provisioning:** 行前面没有空格，并且嵌套项缩进了两个空格。
+   ```yml
+   # DPS TPM provisioning configuration
+   provisioning:
+     source: "dps"
+     global_endpoint: "https://global.azure-devices-provisioning.net"
+     scope_id: "<SCOPE_ID>"
+     attestation:
+       method: "symmetric_key"
+       registration_id: "<REGISTRATION_ID>"
+       symmetric_key: "<SYMMETRIC_KEY>"
+   #  always_reprovision_on_startup: true
+   #  dynamic_reprovisioning: false
+   ```
+
+   （可选）使用 `always_reprovision_on_startup` 或 `dynamic_reprovisioning` 行配置设备的重新设置行为。 如果在启动时将设备设置为重新设置，它将始终首先尝试使用 DPS 进行预配，然后回退到预配备份（如果失败）。 如果设备设置为动态重新设置，则在检测到重新设置事件时，IoT Edge 将重新启动并重新设置。 有关详细信息，请参阅 [IoT 中心设备重新设置概念](../iot-dps/concepts-device-reprovision.md)。
+
+1. 将 `scope_id`、`registration_id` 和 `symmetric_key` 的值更新为你的 DPS 和设备信息。
+
+1. 重启 IoT Edge 运行时，使之拾取你在设备上所做的所有配置更改。
+
+   ```bash
+   sudo systemctl restart iotedge
+   ```
 
 ### <a name="windows-device"></a>Windows 设备
 
-在为其生成了派生设备密钥的设备上安装 IoT Edge 运行时。 将 IoT Edge 运行时配置为自动预配而不是手动预配。
-
-有关在 Windows 上安装 IoT Edge 的更多详细信息，包括管理容器和更新 IoT Edge 等任务的先决条件和说明，请参阅[在 Windows 上安装 Azure IoT Edge 运行时](how-to-install-iot-edge-windows.md)。
-
 1. 在管理员模式下打开 PowerShell 窗口。 在安装 IoT Edge 而不是 PowerShell (x86) 时，请确保使用 PowerShell 的 AMD64 会话。
 
-1. **Deploy-IoTEdge** 命令检查 Windows 计算机是否使用了支持的版本，启用容器功能，然后下载 moby 运行时和 IoT Edge 运行时。 该命令默认使用 Windows 容器。
-
-   ```powershell
-   . {Invoke-WebRequest -useb https://aka.ms/iotedge-win} | Invoke-Expression; `
-   Deploy-IoTEdge
-   ```
-
-1. 此时，IoT Core 设备可能会自动重启。 其他 Windows 10 或 Windows Server 设备可能会提示你重启。 如果是这样，请立即重启设备。 设备准备就绪后，再次以管理员身份运行 PowerShell。
-
-1. Initialize-IoTEdge 命令在计算机上配置 IoT Edge 运行时  。 该命令默认为使用 Windows 容器手动预配，除非你使用 `-Dps` 标志以使用自动预配。
+1. Initialize-IoTEdge 命令在计算机上配置 IoT Edge 运行时。 该命令默认为使用 Windows 容器手动预配，因此使用 `-DpsSymmetricKey` 标志借助对称密钥身份验证来使用自动预配。
 
    请将 `{scope_id}`、`{registration_id}` 和 `{symmetric_key}` 的占位符值替换为前面收集的数据。
 
+   如果是在 Windows 上使用 Linux 容器，则添加 `-ContainerOs Linux` 参数。
+
    ```powershell
    . {Invoke-WebRequest -useb https://aka.ms/iotedge-win} | Invoke-Expression; `
-   Initialize-IoTEdge -Dps -ScopeId {scope ID} -RegistrationId {registration ID} -SymmetricKey {symmetric key}
+   Initialize-IoTEdge -DpsSymmetricKey -ScopeId {scope ID} -RegistrationId {registration ID} -SymmetricKey {symmetric key}
    ```
 
 ## <a name="verify-successful-installation"></a>验证是否成功安装

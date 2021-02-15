@@ -14,14 +14,16 @@ ms.devlang: dotnet
 ms.topic: article
 ms.date: 03/18/2019
 ms.author: juliako
-ms.openlocfilehash: 5e8318b480cfa0d399a7fb2a0e7f6ebed1488397
-ms.sourcegitcommit: 2ff0d073607bc746ffc638a84bb026d1705e543e
+ms.openlocfilehash: f3cc775cd65293a39de28dfbdc8b1d06aeada3b7
+ms.sourcegitcommit: 829d951d5c90442a38012daaf77e86046018e5b9
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/06/2020
-ms.locfileid: "87836490"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "90987314"
 ---
-# <a name="azure-media-services-community"></a>Azure 媒体服务社区  
+# <a name="azure-media-services-community"></a>Azure 媒体服务社区
+
+[!INCLUDE [media services api v2 logo](./includes/v2-hr.md)]  
 
 此 Azure 媒体服务 (AMS) 社区页讨论了如何通过不同的方式来获取有关 AMS 的更新。 此外，还可以观看新视频和播客、提出问题并提供反馈。   
 
@@ -48,11 +50,11 @@ ms.locfileid: "87836490"
 
 目前，MSDN 为媒体服务团队的主社区论坛。
 
-[![MSDN](./media/media-services-community/msdn.png)](/answers/topics/azure-media-services.html) 
+[:::image type="icon" source="./media/media-services-community/msdn.png" border="false":::](/answers/topics/azure-media-services.html) 
 
 团队还可以监控使用 Azure 媒体服务标记 Stack Overflow 的问题。
 
-[![StackOverflow](./media/media-services-community/stack-overflow.png)](https://stackoverflow.com/questions/tagged/azure-media-services) 
+[:::image type="icon" source="./media/media-services-community/stack-overflow.png" border="false":::](https://stackoverflow.com/questions/tagged/azure-media-services) 
 
 ## <a name="need-help"></a>需要帮助？
 

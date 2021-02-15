@@ -2,15 +2,16 @@
 title: '自定义提供程序 c # RESTful 终结点引用'
 description: '提供 Azure 自定义提供程序 c # RESTful 终结点的基本参考。 终结点是通过 Azure function app 提供的。'
 ms.topic: conceptual
+ms.custom: devx-track-csharp
 ms.author: jobreen
 author: jjbfour
-ms.date: 06/20/2019
-ms.openlocfilehash: b6ecb22cb968e0d963242c8c2d5dd1a6cb24229c
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.date: 01/14/2021
+ms.openlocfilehash: 3b951cd0878bda4a3f65f9208f6997419a10d537
+ms.sourcegitcommit: 2bd0a039be8126c969a795cea3b60ce8e4ce64fc
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "75651171"
+ms.lasthandoff: 01/14/2021
+ms.locfileid: "98200254"
 ---
 # <a name="custom-provider-c-restful-endpoint-reference"></a>自定义提供程序 c # RESTful 终结点引用
 
@@ -18,12 +19,12 @@ ms.locfileid: "75651171"
 
 ## <a name="azure-function-app-restful-endpoint"></a>Azure function app RESTful 终结点
 
-以下代码适用于 Azure function app。 若要了解如何设置 Azure function app 以使用 Azure 自定义提供程序，请参阅[设置 Azure 自定义提供程序的 Azure Functions 教程](./tutorial-custom-providers-function-setup.md)。
+以下代码适用于 Azure function app。 若要了解如何设置 Azure function app 以使用 Azure 自定义提供程序，请参阅 [设置 Azure 自定义提供程序的 Azure Functions 教程](./tutorial-custom-providers-function-setup.md)。
 
 ```csharp
 #r "Newtonsoft.Json"
 #r "Microsoft.WindowsAzure.Storage"
-#r "../bin/Microsoft.Azure.Management.ResourceManager.Fluent.dll"
+#r "../bin/Microsoft.Azure.Management.ResourceManager.Fluent"
 
 using System;
 using System.Net;

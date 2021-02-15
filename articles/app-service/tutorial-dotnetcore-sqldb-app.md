@@ -1,19 +1,19 @@
 ---
-title: 教程：将 ASP.NET Core 与 SQL 数据库配合使用
-description: 了解如何在 Azure 应用服务中运行 .NET Core 应用，同时使其连接到 SQL 数据库。
+title: 教程：将 ASP.NET Core 与 Azure SQL 数据库配合使用
+description: 了解如何在 Azure 应用服务中运行 .NET Core 应用，同时使其连接到 Azure SQL 数据库。
 ms.devlang: dotnet
 ms.topic: tutorial
 ms.date: 06/20/2020
-ms.custom: devx-track-csharp, mvc, cli-validate, seodec18
+ms.custom: devx-track-csharp, mvc, cli-validate, seodec18, devx-track-azurecli
 zone_pivot_groups: app-service-platform-windows-linux
-ms.openlocfilehash: 10182abb99788e4974e08c9bfc5c9c53df2a201b
-ms.sourcegitcommit: 4913da04fd0f3cf7710ec08d0c1867b62c2effe7
+ms.openlocfilehash: bafebcc54e4cbde87e8deb776eff227fc99035cc
+ms.sourcegitcommit: a0c1d0d0906585f5fdb2aaabe6f202acf2e22cfc
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/14/2020
-ms.locfileid: "88212935"
+ms.lasthandoff: 01/21/2021
+ms.locfileid: "98623849"
 ---
-# <a name="tutorial-build-an-aspnet-core-and-sql-database-app-in-azure-app-service"></a>教程：在 Azure 应用服务中生成 ASP.NET Core 和 SQL 数据库应用
+# <a name="tutorial-build-an-aspnet-core-and-azure-sql-database-app-in-azure-app-service"></a>教程：在 Azure 应用服务中生成 ASP.NET Core 和 Azure SQL 数据库应用
 
 ::: zone pivot="platform-windows"  
 
@@ -45,8 +45,10 @@ ms.locfileid: "88212935"
 
 完成本教程：
 
-* <a href="https://git-scm.com/" target="_blank">安装 Git</a>
-* <a href="https://dotnet.microsoft.com/download/dotnet-core/3.1" target="_blank">安装最新的 .NET Core 3.1 SDK</a>
+- <a href="https://git-scm.com/" target="_blank">安装 Git</a>
+- <a href="https://dotnet.microsoft.com/download/dotnet-core/3.1" target="_blank">安装最新的 .NET Core 3.1 SDK</a>
+
+[!INCLUDE [azure-cli-prepare-your-environment-no-header.md](../../includes/azure-cli-prepare-your-environment-no-header.md)]
 
 ## <a name="create-local-net-core-app"></a>创建本地 .NET Core 应用
 
@@ -63,7 +65,7 @@ git clone https://github.com/azure-samples/dotnetcore-sqldb-tutorial
 cd dotnetcore-sqldb-tutorial
 ```
 
-此示例项目包含使用 [Entity Framework Core](https://docs.microsoft.com/ef/core/) 的基本 CRUD（创建-读取-更新-删除）应用。
+此示例项目包含使用 [Entity Framework Core](/ef/core/) 的基本 CRUD（创建-读取-更新-删除）应用。
 
 ### <a name="run-the-application"></a>运行应用程序
 
@@ -81,8 +83,6 @@ dotnet run
 
 在终端按 `Ctrl+C`，随时停止 .NET Core。
 
-[!INCLUDE [cloud-shell-try-it.md](../../includes/cloud-shell-try-it.md)]
-
 ## <a name="create-production-sql-database"></a>创建生产环境 SQL 数据库
 
 此步骤在 Azure 中创建一个 SQL 数据库。 应用部署到 Azure 后，它将使用该云数据库。
@@ -95,7 +95,7 @@ dotnet run
 
 ### <a name="create-a-sql-database-logical-server"></a>创建 SQL 数据库逻辑服务器
 
-在 Cloud Shell 中，使用 [`az sql server create`](/cli/azure/sql/server?view=azure-cli-latest#az-sql-server-create) 命令创建 SQL 数据库逻辑服务器。
+在 Cloud Shell 中，使用 [`az sql server create`](/cli/azure/sql/server#az-sql-server-create) 命令创建 SQL 数据库逻辑服务器。
 
 将 \<server-name> 占位符替换为唯一的 SQL 数据库名称 。 此名称将用作全局唯一的 SQL 数据库终结点 (`<server-name>.database.windows.net`) 的一部分。 有效字符为 `a`-`z`、`0`-`9` 和 `-`。 此外，将 \<db-username> 和 \<db-password> 替换为所选的用户名和密码 。 
 
@@ -126,7 +126,7 @@ az sql server create --name <server-name> --resource-group myResourceGroup --loc
 
 ### <a name="configure-a-server-firewall-rule"></a>配置服务器防火墙规则
 
-使用 [`az sql server firewall create`](/cli/azure/sql/server/firewall-rule?view=azure-cli-latest#az-sql-server-firewall-rule-create) 命令创建 [Azure SQL 数据库服务器级防火墙规则](../sql-database/sql-database-firewall-configure.md)。 若同时将起始 IP 和结束 IP 设置为 0.0.0.0，防火墙将仅对其他 Azure 资源开启。 
+使用 [`az sql server firewall create`](/cli/azure/sql/server/firewall-rule#az-sql-server-firewall-rule-create) 命令创建 [Azure SQL 数据库服务器级防火墙规则](../azure-sql/database/firewall-configure.md)。 若同时将起始 IP 和结束 IP 设置为 0.0.0.0，防火墙将仅对其他 Azure 资源开启。 
 
 ```azurecli-interactive
 az sql server firewall-rule create --resource-group myResourceGroup --server <server-name> --name AllowAzureIps --start-ip-address 0.0.0.0 --end-ip-address 0.0.0.0
@@ -144,7 +144,7 @@ az sql server firewall-rule create --name AllowLocalClient --server <server-name
 
 ### <a name="create-a-database"></a>创建数据库
 
-使用 [`az sql db create`](/cli/azure/sql/db?view=azure-cli-latest#az-sql-db-create) 命令在服务器中创建 [S0 性能级别](../sql-database/sql-database-service-tiers-dtu.md)的数据库。
+使用 [`az sql db create`](/cli/azure/sql/db#az-sql-db-create) 命令在服务器中创建 [S0 性能级别](../azure-sql/database/service-tiers-dtu.md)的数据库。
 
 ```azurecli-interactive
 az sql db create --resource-group myResourceGroup --server <server-name> --name coreDB --service-objective S0
@@ -152,7 +152,7 @@ az sql db create --resource-group myResourceGroup --server <server-name> --name 
 
 ### <a name="create-connection-string"></a>创建连接字符串
 
-使用 [`az sql db show-connection-string`](/cli/azure/sql/db?view=azure-cli-latest#az-sql-db-show-connection-string) 命令获取连接字符串。
+使用 [`az sql db show-connection-string`](/cli/azure/sql/db#az-sql-db-show-connection-string) 命令获取连接字符串。
 
 ```azurecli-interactive
 az sql db show-connection-string --client ado.net --server <server-name> --name coreDB
@@ -190,7 +190,7 @@ services.AddDbContext<MyDatabaseContext>(options =>
 
 ```
 # Delete old migrations
-rm Migrations -r
+rm -r Migrations
 # Recreate migrations
 dotnet ef migrations add InitialCreate
 
@@ -263,7 +263,7 @@ git commit -m "connect to SQLDB in Azure"
 
 ### <a name="configure-connection-string"></a>配置连接字符串
 
-若要为 Azure 应用设置连接字符串，请使用 Cloud Shell 中的 [`az webapp config appsettings set`](/cli/azure/webapp/config/appsettings?view=azure-cli-latest#az-webapp-config-appsettings-set) 命令。 在下列命令中，将 \<app-name> 和 \<connection-string> 参数替换为先前创建的连接字符串 。
+若要为 Azure 应用设置连接字符串，请使用 Cloud Shell 中的 [`az webapp config appsettings set`](/cli/azure/webapp/config/appsettings#az-webapp-config-appsettings-set) 命令。 在下列命令中，将 \<app-name> 和 \<connection-string> 参数替换为先前创建的连接字符串 。
 
 ```azurecli-interactive
 az webapp config connection-string set --resource-group myResourceGroup --name <app-name> --settings MyDbConnection="<connection-string>" --connection-string-type SQLAzure
@@ -286,7 +286,7 @@ Compressing objects: 100% (171/171), done.
 Writing objects: 100% (268/268), 1.18 MiB | 1.55 MiB/s, done.
 Total 268 (delta 95), reused 251 (delta 87), pack-reused 0
 remote: Resolving deltas: 100% (95/95), done.
-remote: Updating branch 'master'.
+remote: Updating branch 'main'.
 remote: Updating submodules.
 remote: Preparing deployment for commit id '64821c3558'.
 remote: Generating deployment script.
@@ -303,7 +303,7 @@ remote: Running post deployment command(s)...
 remote: Triggering recycle (preview mode disabled).
 remote: App container will begin restart within 10 seconds.
 To https://&lt;app-name&gt;.scm.azurewebsites.net/&lt;app-name&gt;.git
- * [new branch]      master -> master
+ * [new branch]      main -> main
 </pre>
 
 ::: zone-end
@@ -321,7 +321,7 @@ Writing objects: 100% (273/273), 1.19 MiB | 1.85 MiB/s, done.
 Total 273 (delta 96), reused 259 (delta 88)
 remote: Resolving deltas: 100% (96/96), done.
 remote: Deploy Async
-remote: Updating branch 'master'.
+remote: Updating branch 'main'.
 remote: Updating submodules.
 remote: Preparing deployment for commit id 'cccecf86c5'.
 remote: Repository path is /home/site/repository
@@ -337,7 +337,7 @@ remote: Triggering recycle (preview mode disabled).
 remote: Deployment successful.
 remote: Deployment Logs : 'https://&lt;app-name&gt;.scm.azurewebsites.net/newui/jsonviewer?view_url=/api/deployments/cccecf86c56493ffa594e76ea1deb3abb3702d89/log'
 To https://&lt;app-name&gt;.scm.azurewebsites.net/&lt;app-name&gt;.git
- * [new branch]      master -> master
+ * [new branch]      main -> main
 </pre>
 
 ::: zone-end
@@ -446,7 +446,7 @@ dotnet run
 ```bash
 git add .
 git commit -m "added done field"
-git push azure master
+git push azure main
 ```
 
 `git push` 完成后，请导航至应用服务应用，尝试添加一个待办事项并选中“Done”。
@@ -459,22 +459,21 @@ git push azure master
 
 当 ASP.NET Core 应用在 Azure 应用服务中运行时，可以将控制台日志传输到 Cloud Shell。 如此，可以获得相同的诊断消息，以便调试应用程序错误。
 
-示例项目已遵循了 [Azure 中的 ASP.NET Core 日志记录](https://docs.microsoft.com/aspnet/core/fundamentals/logging#azure-app-service-provider)中的指南，并且进行了两个配置更改：
+示例项目已遵循了 [Azure 中的 ASP.NET Core 日志记录](/aspnet/core/fundamentals/logging#azure-app-service-provider)中的指南，并且进行了两个配置更改：
 
 - 在 *DotNetCoreSqlDb.csproj* 中包含了对 `Microsoft.Extensions.Logging.AzureAppServices` 的引用。
 - 在 *Program.cs* 中调用 `loggerFactory.AddAzureWebAppDiagnostics()`。
 
-若要将应用服务中的 ASP.NET Core [日志级别](https://docs.microsoft.com/aspnet/core/fundamentals/logging#log-level)从默认级别 `Error` 设置为 `Information`，请在 Cloud Shell 中使用 [`az webapp log config`](/cli/azure/webapp/log?view=azure-cli-latest#az-webapp-log-config) 命令。
+若要将应用服务中的 ASP.NET Core [日志级别](/aspnet/core/fundamentals/logging#log-level)从默认级别 `Error` 设置为 `Information`，请在 Cloud Shell 中使用 [`az webapp log config`](/cli/azure/webapp/log#az-webapp-log-config) 命令。
 
 ```azurecli-interactive
-az webapp log config --name <app-name> --resource-group myResourceGroup --application-logging true --level information
+az webapp log config --name <app-name> --resource-group myResourceGroup --application-logging filesystem --level information
 ```
 
 > [!NOTE]
 > 项目的日志级别在 *appsettings.json* 中已设置为 `Information`。
-> 
 
-若要启动日志流式处理，请在 Cloud Shell 中使用 [`az webapp log tail`](/cli/azure/webapp/log?view=azure-cli-latest#az-webapp-log-tail) 命令。
+若要启动日志流式处理，请在 Cloud Shell 中使用 [`az webapp log tail`](/cli/azure/webapp/log#az-webapp-log-tail) 命令。
 
 ```azurecli-interactive
 az webapp log tail --name <app-name> --resource-group myResourceGroup
@@ -484,7 +483,7 @@ az webapp log tail --name <app-name> --resource-group myResourceGroup
 
 若要随时停止日志流式处理，请键入 `Ctrl`+`C`。
 
-有关自定义 ASP.NET Core 日志的详细信息，请参阅 [ASP.NET Core 中的日志记录](https://docs.microsoft.com/aspnet/core/fundamentals/logging)。
+有关自定义 ASP.NET Core 日志的详细信息，请参阅 [ASP.NET Core 中的日志记录](/aspnet/core/fundamentals/logging)。
 
 ## <a name="manage-your-azure-app"></a>管理 Azure 应用
 

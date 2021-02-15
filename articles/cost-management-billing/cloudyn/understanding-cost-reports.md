@@ -6,15 +6,16 @@ ms.author: banders
 ms.date: 03/12/2020
 ms.topic: conceptual
 ms.service: cost-management-billing
+ms.subservice: cloudyn
 ms.reviewer: benshy
 ms.custom: seodec18
 ROBOTS: NOINDEX
-ms.openlocfilehash: 5d4f8e26aef5fbfb20c1721d1851a4940863121b
-ms.sourcegitcommit: 0947111b263015136bca0e6ec5a8c570b3f700ff
+ms.openlocfilehash: 9afe34097d005daeedf46fbaf30b37e53a8e3658
+ms.sourcegitcommit: 33368ca1684106cb0e215e3280b828b54f7e73e8
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/24/2020
-ms.locfileid: "79474537"
+ms.lasthandoff: 10/16/2020
+ms.locfileid: "92132034"
 ---
 # <a name="understanding-cloudyn-cost-management-reports"></a>了解 Cloudyn 成本管理报表
 
@@ -204,5 +205,5 @@ ms.locfileid: "79474537"
 
 ## <a name="next-steps"></a>后续步骤
 
-- 在[使用 Cloudyn 报表](../../cost-management/use-reports.md)处了解 Cloudyn 中包括的报表。
-- 了解如何使用报表创建[仪表板](../../cost-management/dashboards.md)。
+- 在[使用 Cloudyn 报表](./use-reports.md)处了解 Cloudyn 中包括的报表。
+- 了解如何使用报表创建[仪表板](./dashboards.md)。

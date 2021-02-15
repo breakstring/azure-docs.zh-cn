@@ -3,27 +3,29 @@ title: 在 Azure Cosmos DB 中编写存储过程、触发器和 UDF
 description: 了解如何在 Azure Cosmos DB 中定义存储过程、触发器和用户定义的函数
 author: timsander1
 ms.service: cosmos-db
+ms.subservice: cosmosdb-sql
 ms.topic: how-to
 ms.date: 06/16/2020
 ms.author: tisande
-ms.custom: devx-track-javascript
-ms.openlocfilehash: 17cde20d69fbf7d135fe48c9e285ccf348b4b58c
-ms.sourcegitcommit: e71da24cc108efc2c194007f976f74dd596ab013
+ms.custom: devx-track-js
+ms.openlocfilehash: 7600d8aa2f78e06ea4046273635fdbba18042010
+ms.sourcegitcommit: e46f9981626751f129926a2dae327a729228216e
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/29/2020
-ms.locfileid: "87420152"
+ms.lasthandoff: 01/08/2021
+ms.locfileid: "98028856"
 ---
 # <a name="how-to-write-stored-procedures-triggers-and-user-defined-functions-in-azure-cosmos-db"></a>如何在 Azure Cosmos DB 中编写存储过程、触发器和用户定义的函数
+[!INCLUDE[appliesto-sql-api](includes/appliesto-sql-api.md)]
 
-Azure Cosmos DB 提供 JavaScript 的语言集成式事务执行用于编写**存储过程**、**触发器**和**用户定义的函数 (UDF)** 。 在 Azure Cosmos DB 中使用 SQL API 时，可以采用 JavaScript 语言定义存储过程、触发器和 UDF。 可在 JavaScript 中编写逻辑，并在数据库引擎内部执行该逻辑。 可以使用 [Azure 门户](https://portal.azure.com/)、[Azure Cosmos DB 中的 JavaScript 语言集成式查询 API](javascript-query-api.md) 和 [Cosmos DB SQL API 客户端 SDK](sql-api-dotnet-samples.md) 来创建及执行触发器、存储过程与 UDF。 
+Azure Cosmos DB 提供 JavaScript 的语言集成式事务执行用于编写 **存储过程**、**触发器** 和 **用户定义的函数 (UDF)** 。 在 Azure Cosmos DB 中使用 SQL API 时，可以采用 JavaScript 语言定义存储过程、触发器和 UDF。 可在 JavaScript 中编写逻辑，并在数据库引擎内部执行该逻辑。 可以使用 [Azure 门户](https://portal.azure.com/)、[Azure Cosmos DB 中的 JavaScript 语言集成式查询 API](javascript-query-api.md) 和 [Cosmos DB SQL API 客户端 SDK](sql-api-dotnet-samples.md) 来创建及执行触发器、存储过程与 UDF。 
 
 若要调用存储过程、触发器和用户定义的函数，需将其注册。 有关详细信息，请参阅[如何在 Azure Cosmos DB 中使用存储过程、触发器和用户定义的函数](how-to-use-stored-procedures-triggers-udfs.md)。
 
 > [!NOTE]
 > 对于已分区的容器，在执行存储过程时，必须在请求选项中提供分区键值。 存储过程的范围始终限定为分区键。 存储过程看不到具有不同分区键值的项。 这一点也适用于触发器。
 > [!Tip]
-> Cosmos 支持使用存储过程、触发器和用户定义的函数部署容器。 有关详细信息，请参阅[使用服务器端功能创建 Azure Cosmos DB 容器](manage-sql-with-resource-manager.md#create-sproc)。
+> Cosmos 支持使用存储过程、触发器和用户定义的函数部署容器。 有关详细信息，请参阅[使用服务器端功能创建 Azure Cosmos DB 容器](./manage-with-templates.md#create-sproc)。
 
 ## <a name="how-to-write-stored-procedures"></a><a id="stored-procedures"></a>如何编写存储过程
 
@@ -53,7 +55,7 @@ var helloWorldStoredProc = {
 
 存储过程还包含一个用于设置说明的参数（一个布尔值）。 如果该参数设置为 true，同时缺少说明，则存储过程将引发异常。 否则，存储过程的剩余部分将继续运行。
 
-以下示例存储过程使用新的 Azure Cosmos 项的数组作为输入，将其插入 Azure Cosmos 容器，并返回插入项的计数。 此示例利用[快速入门 .NET SQL API](create-sql-api-dotnet.md) 中的 ToDoList 示例
+以下示例存储过程采用新 Azure Cosmos 项的数组作为输入，将其插入 Azure Cosmos 容器，然后返回插入项的计数。 此示例利用[快速入门 .NET SQL API](create-sql-api-dotnet.md) 中的 ToDoList 示例
 
 ```javascript
 function createToDoItems(items) {
@@ -282,7 +284,7 @@ function async_sample() {
 
 ## <a name="how-to-write-triggers"></a><a id="triggers"></a>如何编写触发器
 
-Azure Cosmos DB 支持前触发器和后触发器。 前触发器是在修改数据库项之前执行的，后触发器是在修改数据库项之后执行的。
+Azure Cosmos DB 支持前触发器和后触发器。 前触发器是在修改数据库项之前执行的，后触发器是在修改数据库项之后执行的。 触发器不会自动执行，必须为要在其中执行的每个数据库操作指定触发器。 定义触发器后，应使用 Azure Cosmos DB Sdk [注册并调用预先触发器](how-to-use-stored-procedures-triggers-udfs.md#pre-triggers) 。
 
 ### <a name="pre-triggers"></a><a id="pre-triggers"></a>前触发器
 

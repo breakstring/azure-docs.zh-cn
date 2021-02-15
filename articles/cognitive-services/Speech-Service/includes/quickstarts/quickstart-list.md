@@ -1,16 +1,15 @@
 ---
-ms.openlocfilehash: 1bc7d5e4b895f451b1680408f6cd7d17d76019e7
-ms.sourcegitcommit: 9ee0cbaf3a67f9c7442b79f5ae2e97a4dfc8227b
+ms.openlocfilehash: 36ce57b7d659ced05712855094134cb2abf752c2
+ms.sourcegitcommit: d60976768dec91724d94430fb6fc9498fdc1db37
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/27/2020
-ms.locfileid: "80243659"
+ms.lasthandoff: 12/02/2020
+ms.locfileid: "96509303"
 ---
-- [快速入门：识别来自麦克风的语音](~/articles/cognitive-services/speech-service/quickstarts/speech-to-text-from-microphone.md)
-- [快速入门：从文件中识别语音](~/articles/cognitive-services/speech-service/quickstarts/speech-to-text-from-file.md)
-- [快速入门：识别来自 Azure Blob 的语音](~/articles/cognitive-services/speech-service/quickstarts/from-blob.md)
-- [快速入门：将语音转换为文本](~/articles/cognitive-services/speech-service/quickstarts/translate-speech-to-text.md)
-- [快速入门：将文本合成到音频设备](~/articles/cognitive-services/speech-service/quickstarts/text-to-speech.md)
-- [快速入门：将文本合成到文件](~/articles/cognitive-services/speech-service/quickstarts/text-to-speech-audio-file.md)
+- [快速入门：识别来自麦克风的语音](../../get-started-speech-to-text.md)
+- [快速入门：从文件中识别语音](../../get-started-speech-to-text.md)
+- [快速入门：识别来自 Azure Blob 的语音](../../batch-transcription.md)
+- [快速入门：将语音转换为文本](~/articles/cognitive-services/speech-service/get-started-speech-translation.md)
+- [快速入门：将文本合成到音频设备](../../get-started-text-to-speech.md)
+- [快速入门：将文本合成到文件](../../get-started-text-to-speech.md)
 - [快速入门：识别意向](~/articles/cognitive-services/speech-service/quickstarts/intent-recognition.md)
-- [快速入门：创建自定义语音助手](~/articles/cognitive-services/speech-service/quickstarts/voice-assistants.md)

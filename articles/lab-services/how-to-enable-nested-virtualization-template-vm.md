@@ -1,14 +1,14 @@
 ---
 title: 在 Azure 实验室服务中对模板 VM 启用嵌套虚拟化 | Microsoft Docs
-description: 了解如何创建包含多个 VM 的模板 VM。  也就是说，在 Azure 实验室服务中对模板 VM 启用嵌套虚拟化。
+description: 本文介绍如何在 Azure 实验室服务中的模板计算机上设置嵌套虚拟化。
 ms.topic: article
 ms.date: 06/26/2020
-ms.openlocfilehash: a2f045cbf7c107e7f5dbeff0d78bf5e8d9d8fba6
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 319695088e967dc3156ecab5c1b9458e77fcc186
+ms.sourcegitcommit: 829d951d5c90442a38012daaf77e86046018e5b9
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "85445230"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "91251468"
 ---
 # <a name="enable-nested-virtualization-on-a-template-virtual-machine-in-azure-lab-services"></a>在 Azure 实验室服务中对模板虚拟机启用嵌套虚拟化
 

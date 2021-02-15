@@ -3,19 +3,19 @@ title: 提供了视频索引器的区域 - Azure
 titleSuffix: Azure Media Services
 description: 本文介绍 Azure 媒体服务视频索引器可用的 Azure 区域。
 services: media-services
-author: anikaz
-manager: johndeu
+author: Juliako
+manager: femila
 ms.service: media-services
 ms.subservice: video-indexer
 ms.topic: article
-ms.date: 05/15/2019
-ms.author: kumud
-ms.openlocfilehash: 45da0556d074fdb81002f73cd89d0c35cb37276e
-ms.sourcegitcommit: 3543d3b4f6c6f496d22ea5f97d8cd2700ac9a481
+ms.date: 09/14/2020
+ms.author: juliako
+ms.openlocfilehash: 6ebdb22f50efbefc695f9752c6e6fc333571828c
+ms.sourcegitcommit: 829d951d5c90442a38012daaf77e86046018e5b9
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/20/2020
-ms.locfileid: "86530043"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "90530925"
 ---
 # <a name="azure-regions-in-which-video-indexer-exists"></a>存在视频索引器的 Azure 区域
 
@@ -23,7 +23,18 @@ ms.locfileid: "86530043"
 
 ## <a name="locations"></a>位置
 
-`location`必须为参数提供 Azure 区域代码名称作为其值。 如果在预览模式下使用视频索引器，应将 `"trial"` 作为值。 `trial`参数的默认值 `location` 。 否则，若要获取你的帐户所在的并且应当将你的调用路由到的 Azure 区域的代码名称，可以在 [Azure CLI](/cli/azure) 中运行以下命令行：
+`location`必须为参数提供 Azure 区域代码名称作为其值。 如果在预览模式下使用视频索引器，应将 `"trial"` 作为值。 `trial` 参数的默认值 `location` 。 否则，若要获取你的帐户所在的 Azure 区域的代码名称，并且应将你的调用路由到，你可以使用 Azure 门户或运行 [Azure CLI](/cli/azure) 命令。
+
+### <a name="azure-portal"></a>Azure 门户
+
+1. 登录到[视频索引器](https://www.videoindexer.ai/)网站。
+1. 选择页面右上角的 " **用户帐户** "。
+1. 在右上角查找帐户的位置。  
+
+    > [!div class="mx-imgBorder"]
+    > :::image type="content" source="./media/location/location1.png" alt-text="位置":::
+    
+###  <a name="cli-command"></a>CLI 命令
 
 ```azurecli-interactive
 az account list-locations
@@ -36,7 +47,7 @@ az account list-locations
 ```json
    {
       "displayName": "West US 2",
-      "id": "/subscriptions/35c2594a-23da-4fce-b59c-f6fb9513eeeb/locations/westus2",
+      "id": "/subscriptions/00000000-0000-0000-0000-000000000000/locations/westus2",
       "latitude": "47.233",
       "longitude": "-119.852",
       "name": "westus2",

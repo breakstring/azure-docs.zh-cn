@@ -1,20 +1,17 @@
 ---
 title: 管理中心
 description: 在 Azure 数据工厂管理中心管理连接、源代码管理配置和全局创作属性
-services: data-factory
 ms.service: data-factory
-ms.workload: data-services
 ms.topic: conceptual
-author: djpmsft
-ms.author: daperlov
-manager: anandsub
-ms.date: 06/02/2020
-ms.openlocfilehash: bba49014fd6b082ea015da259402a8e87bf4afff
-ms.sourcegitcommit: 7fe8df79526a0067be4651ce6fa96fa9d4f21355
+author: dcstwh
+ms.author: weetok
+ms.date: 02/01/2021
+ms.openlocfilehash: b4b9ecef84f8ffcc82107299ad6603466380d1c0
+ms.sourcegitcommit: d4734bc680ea221ea80fdea67859d6d32241aefc
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/06/2020
-ms.locfileid: "87851973"
+ms.lasthandoff: 02/14/2021
+ms.locfileid: "100371492"
 ---
 # <a name="management-hub-in-azure-data-factory"></a>Azure 数据工厂中的管理中心
 
@@ -40,13 +37,17 @@ ms.locfileid: "87851973"
 
 ### <a name="git-configuration"></a>Git 配置
 
-查看和编辑管理中心内配置的 git 存储库设置。 有关详细信息，请参阅[Azure 数据工厂中的源代码管理](source-control.md)。
+你可以在管理中心的 Git 配置设置下查看/编辑所有与 Git 相关的信息。 
+
+最后发布的提交信息也会列出，有助于了解在环境中最后发布/部署的精确提交。 在生产环境中执行热修复时，此操作也很有用。
+
+有关详细信息，请参阅 [Azure 数据工厂中的源代码管理](source-control.md)。
 
 ![管理 git 存储库](media/author-management-hub/management-hub-git.png)
 
 ### <a name="parameterization-template"></a>参数化模板
 
-若要在从协作分支发布时重写生成的资源管理器模板参数，可以生成或编辑自定义参数文件。 有关详细信息，请了解如何[使用资源管理器模板中的自定义参数](continuous-integration-deployment.md#use-custom-parameters-with-the-resource-manager-template)。 参数化模板仅在 git 存储库中工作时可用。 如果工作分支中不存在文件的*arm-template-parameters-definition.js* ，则编辑默认模板将生成该文件。
+若要在从协作分支发布时重写生成的资源管理器模板参数，可以生成或编辑自定义参数文件。 有关详细信息，请了解如何 [使用资源管理器模板中的自定义参数](continuous-integration-deployment.md#use-custom-parameters-with-the-resource-manager-template)。 参数化模板仅在 git 存储库中工作时可用。 如果工作分支中不存在文件的 *arm-template-parameters-definition.js* ，则编辑默认模板将生成该文件。
 
 ![管理自定义参数](media/author-management-hub/management-hub-custom-parameters.png)
 
@@ -56,11 +57,11 @@ ms.locfileid: "87851973"
 
 触发器确定何时应开始管道运行。 目前，触发器可以按挂钟计划触发，可以定期运行，也可以按事件触发。 有关详细信息，请参阅[触发器执行](concepts-pipeline-execution-triggers.md#trigger-execution)。 可以在管理中心创建、编辑、删除触发器或查看触发器的当前状态。
 
-![管理自定义参数](media/author-management-hub/management-hub-triggers.png)
+![此屏幕截图显示了在何处创建、编辑、删除或查看触发器的当前状态。](media/author-management-hub/management-hub-triggers.png)
 
 ### <a name="global-parameters"></a>全局参数
 
-全局参数是可由任意表达式中的管道使用的数据工厂中的常量。 有关详细信息，请参阅[全局参数](author-global-parameters.md)。
+全局参数是整个数据工厂的常量，可由管道在任何表达式中使用。 有关详细信息，请参阅[全局参数](author-global-parameters.md)。
 
 ![创建全局参数](media/author-global-parameters/create-global-parameter-3.png)
 

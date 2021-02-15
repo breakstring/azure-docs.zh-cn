@@ -5,12 +5,13 @@ author: florianborn71
 ms.author: flborn
 ms.date: 02/07/2020
 ms.topic: article
-ms.openlocfilehash: be3dc2b113cb21c2dfb54a29e7f426e0d925c6d9
-ms.sourcegitcommit: 0690ef3bee0b97d4e2d6f237833e6373127707a7
+ms.custom: devx-track-csharp
+ms.openlocfilehash: 9c5ad4b21b428f38bbd4d9f7d19fa633c5161b5c
+ms.sourcegitcommit: f377ba5ebd431e8c3579445ff588da664b00b36b
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 05/21/2020
-ms.locfileid: "83759109"
+ms.lasthandoff: 02/05/2021
+ms.locfileid: "99594174"
 ---
 # <a name="sky-reflections"></a>天空反射
 
@@ -27,8 +28,8 @@ Azure 远程渲染运用基于物理学的渲染 (PBR) 来计算现实照明。 
 
 | 粗糙度  | 0                                        | 0.25                                          | 0.5                                          | 0.75                                          | 1                                          |
 |:----------:|:----------------------------------------:|:---------------------------------------------:|:--------------------------------------------:|:---------------------------------------------:|:------------------------------------------:|
-| 非金属  | ![Dielectric0](media/dielectric-0.png)   | ![GreenPointPark](media/dielectric-0.25.png)  | ![GreenPointPark](media/dielectric-0.5.png)  | ![GreenPointPark](media/dielectric-0.75.png)  | ![GreenPointPark](media/dielectric-1.png)  |
-| 金属      | ![GreenPointPark](media/metallic-0.png)  | ![GreenPointPark](media/metallic-0.25.png)    | ![GreenPointPark](media/metallic-0.5.png)    | ![GreenPointPark](media/metallic-0.75.png)    | ![GreenPointPark](media/metallic-1.png)    |
+| 非金属  | ![Dielectric，粗糙度 = 0](media/dielectric-0.png)   | ![Dielectric，粗糙度 = 0.25](media/dielectric-0.25.png)  | ![Dielectric，粗糙度 = 0。5](media/dielectric-0.5.png)  | ![Dielectric，粗糙度 = 0.75](media/dielectric-0.75.png)  | ![Dielectric，粗糙度 = 1](media/dielectric-1.png)  |
+| 金属      | ![金属，粗糙度 = 0](media/metallic-0.png)  | ![金属，粗糙度 = 0.25](media/metallic-0.25.png)    | ![金属，粗糙度 = 0。5](media/metallic-0.5.png)    | ![金属，粗糙度 = 0.75](media/metallic-0.75.png)    | ![金属，粗糙度 = 1](media/metallic-1.png)    |
 
 有关照明模型的详细信息，请参阅[材料](../../concepts/materials.md)一章。
 
@@ -40,61 +41,45 @@ Azure 远程渲染运用基于物理学的渲染 (PBR) 来计算现实照明。 
 若要更改环境地图，只需[加载纹理](../../concepts/textures.md)并更改会话的 `SkyReflectionSettings`：
 
 ```cs
-LoadTextureAsync _skyTextureLoad = null;
-void ChangeEnvironmentMap(AzureSession session)
+async void ChangeEnvironmentMap(RenderingSession session)
 {
-    _skyTextureLoad = session.Actions.LoadTextureFromSASAsync(new LoadTextureFromSASParams("builtin://VeniceSunset", TextureType.CubeMap));
-
-    _skyTextureLoad.Completed += (LoadTextureAsync res) =>
-        {
-            if (res.IsRanToCompletion)
-            {
-                try
-                {
-                    session.Actions.SkyReflectionSettings.SkyReflectionTexture = res.Result;
-                }
-                catch (RRException exception)
-                {
-                    System.Console.WriteLine($"Setting sky reflection failed: {exception.Message}");
-                }
-            }
-            else
-            {
-                System.Console.WriteLine("Texture loading failed!");
-            }
-        };
+    try
+    {
+        Texture skyTex = await session.Connection.LoadTextureFromSasAsync(new LoadTextureFromSasOptions("builtin://VeniceSunset", TextureType.CubeMap));
+        session.Connection.SkyReflectionSettings.SkyReflectionTexture = skyTex;
+    }
+    catch (RRException exception)
+    {
+        System.Console.WriteLine($"Setting sky reflection failed: {exception.Message}");
+    }
 }
 ```
 
 ```cpp
-void ChangeEnvironmentMap(ApiHandle<AzureSession> session)
+void ChangeEnvironmentMap(ApiHandle<RenderingSession> session)
 {
-    LoadTextureFromSASParams params;
+    LoadTextureFromSasOptions params;
     params.TextureType = TextureType::CubeMap;
-    params.TextureUrl = "builtin://VeniceSunset";
-    ApiHandle<LoadTextureAsync> skyTextureLoad = *session->Actions()->LoadTextureFromSASAsync(params);
-
-    skyTextureLoad->Completed([&](ApiHandle<LoadTextureAsync> res)
-    {
-        if (res->IsRanToCompletion())
+    params.TextureUri = "builtin://VeniceSunset";
+    session->Connection()->LoadTextureFromSasAsync(params, [&](Status status, ApiHandle<Texture> res) {
+        if (status == Status::OK)
         {
-            ApiHandle<SkyReflectionSettings> settings = *session->Actions()->SkyReflectionSettings();
-            settings->SkyReflectionTexture(*res->Result());
+            ApiHandle<SkyReflectionSettings> settings = session->Connection()->GetSkyReflectionSettings();
+            settings->SetSkyReflectionTexture(res);
         }
         else
         {
-            printf("Texture loading failed!");
+            printf("Texture loading failed!\n");
         }
     });
 }
-
 ```
 
-请注意，上面使用了 `LoadTextureFromSASAsync` 变体，因为加载了内置纹理。 如果纹理是从[关联的 Blob 存储](../../how-tos/create-an-account.md#link-storage-accounts)加载的，请使用 `LoadTextureAsync` 变体。
+请注意，上面使用了 `LoadTextureFromSasAsync` 变体，因为加载了内置纹理。 如果纹理是从[关联的 Blob 存储](../../how-tos/create-an-account.md#link-storage-accounts)加载的，请使用 `LoadTextureAsync` 变体。
 
 ## <a name="sky-texture-types"></a>天空纹理类型
 
-可以使用[立体地图](https://en.wikipedia.org/wiki/Cube_mapping)和 *2D 纹理*作为环境地图。
+可以使用 [立体地图](https://en.wikipedia.org/wiki/Cube_mapping)和 *2D 纹理* 作为环境地图。
 
 所有纹理都必须采用[支持的纹理格式](../../concepts/textures.md#supported-texture-formats)。 不需要为天空纹理提供 mipmap。
 
@@ -104,7 +89,7 @@ void ChangeEnvironmentMap(ApiHandle<AzureSession> session)
 
 ![已解包的立体地图](media/Cubemap-example.png)
 
-将 `AzureSession.Actions.LoadTextureAsync`/ `LoadTextureFromSASAsync` 与 `TextureType.CubeMap` 一起使用来加载立体地图纹理。
+将 `RenderingSession.Connection.LoadTextureAsync`/ `LoadTextureFromSasAsync` 与 `TextureType.CubeMap` 一起使用来加载立体地图纹理。
 
 ### <a name="sphere-environment-maps"></a>球体环境地图
 
@@ -112,7 +97,7 @@ void ChangeEnvironmentMap(ApiHandle<AzureSession> session)
 
 ![球面坐标中的天空图像](media/spheremap-example.png)
 
-结合使用 `TextureType.Texture2D` 和 `AzureSession.Actions.LoadTextureAsync` 加载球体环境地图。
+结合使用 `TextureType.Texture2D` 和 `RenderingSession.Connection.LoadTextureAsync` 加载球体环境地图。
 
 ## <a name="built-in-environment-maps"></a>内置环境地图
 
@@ -120,24 +105,28 @@ Azure 远程渲染提供了几个始终可用的内置环境地图。 所有内�
 
 |标识符                         | 说明                                              | 图示                                                      |
 |-----------------------------------|:---------------------------------------------------------|:-----------------------------------------------------------------:|
-|builtin://Autoshop                 | 各种条带光线，明亮的室内基本照明    | ![Autoshop](media/autoshop.png)
-|builtin://BoilerRoom               | 明亮的室内光线设置，多窗口光线      | ![BoilerRoom](media/boiler-room.png)
-|builtin://ColorfulStudio           | 中等亮度室内照明设置中的各种彩色光线  | ![ColorfulStudio](media/colorful-studio.png)
-|builtin://Hangar                   | 适中亮度的大厅环境光线                     | ![SmallHangar](media/hangar.png)
-|builtin://IndustrialPipeAndValve   | 昏暗室内设置和明暗对比度              | ![IndustrialPipeAndValve](media/industrial-pipe-and-valve.png)
-|builtin://Lebombo                  | 白天的室内环境光线，明亮的窗口区域光线     | ![Lebombo](media/lebombo.png)
-|builtin://SataraNight              | 夜晚昏暗的天空和地面以及许多周边光线   | ![SataraNight](media/satara-night.png)
-|builtin://SunnyVondelpark          | 明亮的日光和阴影对比度                      | ![SunnyVondelpark](media/sunny-vondelpark.png)
-|builtin://Syferfontein             | 晴朗天空光线和适中的地面照明            | ![Syferfontein](media/syferfontein.png)
-|builtin://TearsOfSteelBridge       | 适度变化的日光和阴影                         | ![TearsOfSteelBridge](media/tears-of-steel-bridge.png)
-|builtin://VeniceSunset             | 傍晚接近黄昏时的日落光线                    | ![VeniceSunset](media/venice-sunset.png)
-|builtin://WhippleCreekRegionalPark | 明亮、嫩绿和白色光线色调，昏暗的地面 | ![WhippleCreekRegionalPark](media/whipple-creek-regional-park.png)
-|builtin://WinterRiver              | 白天的明亮地面环境光线                 | ![WinterRiver](media/winter-river.png)
-|builtin://DefaultSky               | 与 TearsOfSteelBridge 相同                               | ![DefaultSky](media/tears-of-steel-bridge.png)
+|builtin://Autoshop                 | 各种条带光线，明亮的室内基本照明    | ![用于浅对象的 Autoshop skybox](media/autoshop.png)
+|builtin://BoilerRoom               | 明亮的室内光线设置，多窗口光线      | ![用于浅对象的 BoilerRoom skybox](media/boiler-room.png)
+|builtin://ColorfulStudio           | 中等亮度室内照明设置中的各种彩色光线  | ![用于浅对象的 ColorfulStudio skybox](media/colorful-studio.png)
+|builtin://Hangar                   | 适中亮度的大厅环境光线                     | ![用于浅对象的 SmallHangar skybox](media/hangar.png)
+|builtin://IndustrialPipeAndValve   | 昏暗室内设置和明暗对比度              | ![用于浅对象的 IndustrialPipeAndValve skybox](media/industrial-pipe-and-valve.png)
+|builtin://Lebombo                  | 白天的室内环境光线，明亮的窗口区域光线     | ![用于浅对象的 Lebombo skybox](media/lebombo.png)
+|builtin://SataraNight              | 夜晚昏暗的天空和地面以及许多周边光线   | ![用于浅对象的 SataraNight skybox](media/satara-night.png)
+|builtin://SunnyVondelpark          | 明亮的日光和阴影对比度                      | ![用于浅对象的 SunnyVondelpark skybox](media/sunny-vondelpark.png)
+|builtin://Syferfontein             | 晴朗天空光线和适中的地面照明            | ![用于浅对象的 Syferfontein skybox](media/syferfontein.png)
+|builtin://TearsOfSteelBridge       | 适度变化的日光和阴影                         | ![用于浅对象的 TearsOfSteelBridge skybox](media/tears-of-steel-bridge.png)
+|builtin://VeniceSunset             | 傍晚接近黄昏时的日落光线                    | ![用于浅对象的 VeniceSunset skybox](media/venice-sunset.png)
+|builtin://WhippleCreekRegionalPark | 明亮、嫩绿和白色光线色调，昏暗的地面 | ![用于浅对象的 WhippleCreekRegionalPark skybox](media/whipple-creek-regional-park.png)
+|builtin://WinterRiver              | 白天的明亮地面环境光线                 | ![用于浅对象的 WinterRiver skybox](media/winter-river.png)
+|builtin://DefaultSky               | 与 TearsOfSteelBridge 相同                               | ![用于浅对象的 DefaultSky skybox](media/tears-of-steel-bridge.png)
+
+## <a name="api-documentation"></a>API 文档
+
+* [C # RenderingConnection SkyReflectionSettings 属性](/dotnet/api/microsoft.azure.remoterendering.renderingconnection.skyreflectionsettings)
+* [C + + RenderingConnection：： SkyReflectionSettings ( # B1 ](/cpp/api/remote-rendering/renderingconnection#skyreflectionsettings)
 
 ## <a name="next-steps"></a>后续步骤
 
 * [光线](../../overview/features/lights.md)
 * [材料](../../concepts/materials.md)
 * [纹理](../../concepts/textures.md)
-* [TexConv 命令行工具](../../resources/tools/tex-conv.md)

@@ -2,29 +2,29 @@
 title: 概念-标识和访问
 description: 了解 Azure VMware 解决方案的标识和访问概念
 ms.topic: conceptual
-ms.date: 05/04/2020
-ms.openlocfilehash: 9d5b7b4c7c2e0d55cffc99a3f371494f40320a16
-ms.sourcegitcommit: 62717591c3ab871365a783b7221851758f4ec9a4
+ms.date: 02/02/2021
+ms.openlocfilehash: 68f4ce9136cca1cf9bf0824395e31704d8ed1a17
+ms.sourcegitcommit: d4734bc680ea221ea80fdea67859d6d32241aefc
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/22/2020
-ms.locfileid: "88750585"
+ms.lasthandoff: 02/14/2021
+ms.locfileid: "100364879"
 ---
 # <a name="azure-vmware-solution-identity-concepts"></a>Azure VMware 解决方案标识概念
 
-部署私有云时，将设置 vCenter 服务器和 NSX-T 管理器。 你使用 vCenter 来管理虚拟机工作负荷，并使用 NSX-T 管理器来扩展私有云软件定义的网络。
+Azure VMware 解决方案私有云是使用 vCenter 服务器和 NSX-T 管理器预配的。 你使用 vCenter 来管理虚拟机 (VM) 工作负荷。 你使用 NSX-T 管理器来扩展私有云。
 
-访问和身份管理使用 CloudAdmin 组权限，以便对 NSX-T 管理器使用 vCenter 和受限的管理员权限。 此策略可确保你的私有云平台可以自动升级。 这会定期提供最新的功能和修补程序。 有关私有云升级的更多详细信息，请参阅 [私有云升级概念一文][concepts-upgrades] 。
+访问和身份管理使用 CloudAdmin 组权限，以便对 NSX-T 管理器使用 vCenter 和受限的管理员权限。 它确保私有云平台会自动升级到最新的功能和修补程序。  有关详细信息，请参阅 [私有云升级概念一文][concepts-upgrades]。
 
 ## <a name="vcenter-access-and-identity"></a>vCenter 访问和标识
 
-VCenter 中的权限通过 CloudAdmin 组提供。 该组可以在 vCenter 本地管理，也可以通过与 Azure Active Directory 集成 vCenter LDAP 单一登录。 你能够在部署私有云后启用该集成。
+CloudAdmin 组在 vCenter 中提供权限。 你可以在 vCenter 本地管理组。 另一种方法是通过将 vCenter LDAP 单一登录与 Azure Active Directory 集成。 部署私有云后，启用该集成。 
 
-下表显示了 CloudAdmin 和 CloudGlobalAdmin 权限。
+该表显示了 **CloudAdmin** 和 **CloudGlobalAdmin** 特权。
 
-|  权限集           | CloudAdmin | CloudGlobalAdmin | 评论 |
+|  权限集           | CloudAdmin | CloudGlobalAdmin | 注释 |
 | :---                     |    :---:   |       :---:      |   :--:  |
-|  警报                  | CloudAdmin 用户具有 ResourcePool 和 Vm 中的警报的所有警报特权。     |          --        |  -- |
+|  警报                  | CloudAdmin 用户对 Compute-ResourcePool 和 Vm 中的警报具有所有告警特权。     |          --        |  -- |
 |  自动部署             |  --  |        --        |  Microsoft 进行主机管理。  |
 |  证书            |  --  |        --       |  Microsoft 进行证书管理。  |
 |  内容库         | CloudAdmin 用户有权创建和使用内容库中的文件。    |         已通过 SSO 启用。         |  Microsoft 会将内容库中的文件分发到 ESXi 的主机。  |
@@ -49,11 +49,15 @@ VCenter 中的权限通过 CloudAdmin 组提供。 该组可以在 vCenter 本�
 
 ## <a name="nsx-t-manager-access-and-identity"></a>NSX-T 管理器访问和标识
 
-使用 "管理员" 帐户访问 NSX-T 管理器。 该帐户具有完全权限，使你能够创建和管理 T1 路由器、逻辑交换机和所有服务。 NSX-T 中的全部权限还提供对 NSX-T T0 路由器的访问。 更改 T0 路由器可能导致网络性能下降或失去对私有云的访问。 为了满足支持要求，需要在 Azure 门户中打开支持请求，才能请求对 NSX-T T0 路由器进行任何更改。
+使用 *管理员* 帐户访问 NSX-T 管理器。 它具有完全权限，可让你创建和管理第1层 (T1) 网关、段 (逻辑交换机) 和所有服务）。 权限使你可以访问 (T0) 网关的 NSX T 层级。 更改 T0 网关可能导致网络性能下降或没有私有云访问。 在 Azure 门户中打开支持请求，请求对你的 NSX-T T0 网关进行任何更改。
   
 ## <a name="next-steps"></a>后续步骤
 
-下一步是了解 [私有云升级概念][concepts-upgrades]。
+现在，你已介绍 Azure VMware 解决方案访问和标识概念，你可能想要了解：
+
+- [私有云升级概念](concepts-upgrades.md)。
+- [针对 Azure VMware 解决方案的基于角色的访问控制 vSphere](concepts-role-based-access-control.md)。
+- [如何启用 Azure VMware 解决方案资源](enable-azure-vmware-solution.md)。
 
 <!-- LINKS - external -->
 

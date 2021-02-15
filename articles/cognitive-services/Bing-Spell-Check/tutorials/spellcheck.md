@@ -10,15 +10,20 @@ ms.subservice: bing-spell-check
 ms.topic: tutorial
 ms.date: 03/05/2020
 ms.author: aahi
-ms.custom: devx-track-javascript
-ms.openlocfilehash: 71dca130fa20fd1887d9c80582997bf274dd475e
-ms.sourcegitcommit: 42107c62f721da8550621a4651b3ef6c68704cd3
+ms.custom: devx-track-js
+ms.openlocfilehash: bd01eaefa457c5ade10a5f1f4b8389d90ed60adf
+ms.sourcegitcommit: 9eda79ea41c60d58a4ceab63d424d6866b38b82d
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/29/2020
-ms.locfileid: "87405103"
+ms.lasthandoff: 11/30/2020
+ms.locfileid: "96351940"
 ---
 # <a name="tutorial-build-a-web-page-spell-check-client"></a>教程：生成网页拼写检查客户端
+
+> [!WARNING]
+> 必应搜索 API 将从认知服务迁移到必应搜索服务。 从 2020 年 10 月 30 日开始，必应搜索的任何新实例都需按照[此处](/bing/search-apis/bing-web-search/create-bing-search-service-resource)所述的过程进行预配。
+> 使用认知服务进行预配的必应搜索 API 将在未来三年或在企业协议结束前（以先发生者为准）得到支持。
+> 有关迁移说明，请参阅[必应搜索服务](/bing/search-apis/bing-web-search/create-bing-search-service-resource)。
 
 本教程介绍如何生成使用户能够查询必应拼写检查 API 的网页。 [GitHub](https://github.com/Azure-Samples/cognitive-services-REST-api-samples/blob/master/Tutorials/BingSpellCheckApp.html) 上提供了此应用程序的源代码。
 
@@ -327,4 +332,4 @@ function bingSpellCheck(query, key) {
 ## <a name="next-steps"></a>后续步骤
 
 > [!div class="nextstepaction"]
-> [使用和显示要求](../UseAndDisplayRequirements.md)
+> [使用和显示要求](../../bing-web-search/use-display-requirements.md)

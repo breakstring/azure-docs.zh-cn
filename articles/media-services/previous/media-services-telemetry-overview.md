@@ -14,18 +14,19 @@ ms.devlang: na
 ms.topic: article
 ms.date: 04/01/2019
 ms.author: juliako
-ms.openlocfilehash: 52b737e88e13c59d260da73c6fa37a1088cb91d5
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.openlocfilehash: 4bf9a96d7ffc3b939abe8cfb889c5bd49fee09cc
+ms.sourcegitcommit: 77afc94755db65a3ec107640069067172f55da67
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87038454"
+ms.lasthandoff: 01/22/2021
+ms.locfileid: "98694579"
 ---
 # <a name="azure-media-services-telemetry"></a>Azure 媒体服务遥测  
 
+[!INCLUDE [media services api v2 logo](./includes/v2-hr.md)]
 
 > [!NOTE]
-> 不会向媒体服务 v2 添加任何新特性或新功能。 <br/>查看最新版本：[媒体服务 v3](../latest/index.yml)。 另请参阅[从 v2 到 v3 的迁移指南](../latest/migrate-from-v2-to-v3.md)
+> 不会向媒体服务 v2 添加任何新特性或新功能。 <br/>查看最新版本：[媒体服务 v3](../latest/index.yml)。 另请参阅[从 v2 到 v3 的迁移指南](../latest/migrate-v-2-v-3-migration-introduction.md)
 
 通过 Azure 媒体服务 (AMS) 可访问其服务的遥测/指标数据。 通过当前版本的 AMS，可收集活动 **Channel**、**StreamingEndpoint** 和 **Archive** 实体的遥测数据。 
 
@@ -51,7 +52,7 @@ ms.locfileid: "87038454"
 
 可通过以下方式之一使用遥测数据：
 
-- 直接从 Azure 表存储中读取数据（例如使用存储 SDK）。 有关遥测存储表的说明，请参阅[此](/previous-versions/azure/mt742089(v=azure.100))主题中的**使用遥测信息**。
+- 直接从 Azure 表存储中读取数据（例如使用存储 SDK）。 有关遥测存储表的说明，请参阅 [此](/previous-versions/azure/mt742089(v=azure.100))主题中的 **使用遥测信息**。
 
 或
 

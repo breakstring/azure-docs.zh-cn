@@ -8,28 +8,28 @@ manager: nitinme
 ms.service: cognitive-services
 ms.subservice: speech-service
 ms.topic: conceptual
-ms.date: 08/20/2020
+ms.date: 02/01/2021
 ms.author: panosper
-ms.openlocfilehash: a14ac8089aa29a592164168e6ccfc4fd2342f68c
-ms.sourcegitcommit: d18a59b2efff67934650f6ad3a2e1fe9f8269f21
+ms.openlocfilehash: 21924ad5da8833ca5cf8373270ed1bfd3facfdc9
+ms.sourcegitcommit: d4734bc680ea221ea80fdea67859d6d32241aefc
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/20/2020
-ms.locfileid: "88661514"
+ms.lasthandoff: 02/14/2021
+ms.locfileid: "100388611"
 ---
 # <a name="speech-to-text-frequently-asked-questions"></a>语音转文本常见问题解答
 
-如果在本常见问题解答中找不到你的问题的解答，请检查[其他支持选项](support.md)。
+如果在本常见问题解答中找不到你的问题的解答，请检查[其他支持选项](../cognitive-services-support-options.md?context=%2fazure%2fcognitive-services%2fspeech-service%2fcontext%2fcontext%253fcontext%253d%2fazure%2fcognitive-services%2fspeech-service%2fcontext%2fcontext)。
 
 ## <a name="general"></a>常规
 
 **问：基线模型和自定义语音转文本模型之间有什么区别？**
 
-**答**：基线模型已使用 Microsoft 拥有的数据定型，并且已部署在云中。 你可以使用自定义模型来调整模型，以便更好地适应具有特定环境噪音或语言的具体环境。 工厂、汽车或嘈杂的街道需要适应的声学模型。 生物学、物理学、放射学、产品名称和自定义首字母缩略词等主题需要适应的语言模型。
+**答**：基线模型已使用 Microsoft 拥有的数据定型，并且已部署在云中。 你可以使用自定义模型来调整模型，以便更好地适应具有特定环境噪音或语言的具体环境。 工厂、汽车或嘈杂的街道需要适应的声学模型。 生物学、物理学、放射学、产品名称和自定义首字母缩略词等主题需要适应的语言模型。 如果您训练某个自定义模型，则应首先使用相关文本来改善对特殊术语和短语的识别。
 
 **问：如果想要使用基线模型，从何处开始？**
 
-**答**：首先，获取[订阅密钥](get-started.md)。 如果想要对预先部署的基线模型进行 REST 调用，请参阅 [REST API](rest-apis.md)。 如果想要使用 WebSocket，请[下载 SDK](speech-sdk.md)。
+**答**：首先，获取 [订阅密钥](overview.md#try-the-speech-service-for-free)。 如果想要对预先部署的基线模型进行 REST 调用，请参阅 [REST API](./overview.md#reference-docs)。 如果想要使用 WebSocket，请[下载 SDK](speech-sdk.md)。
 
 **问：是否始终需要生成自定义语音识别模型？**
 
@@ -49,9 +49,15 @@ ms.locfileid: "88661514"
 
 **答**：当前无法回滚声学或语言适应过程。 可以在导入的数据和模型处于终点状态时删除它们。
 
-**问：搜索和听写模型与对话模型之间有什么区别？**
+**问：我针对每个短语获得了采用详细输出格式的多个结果。我应该使用哪一种？**
 
-**答**：你可以在语音服务中从多个基线模型中进行选择。 对话模型适用于识别以对话方式说出的语音。 此模型非常适合转录电话。 搜索和听写模型非常适合语音触发的应用。 通用模型是一种旨在解决这两种情况的新模型。 在大多数区域设置中，通用模型目前处于或高于对话式模型的质量级别。
+**答**：始终采用第一个结果，即使另一个结果（“N-最佳”）可能具有更高的置信度值。 语音服务认为第一个结果是最佳的。 如果未识别出语音，则它也可以是空字符串。
+
+其他结果可能更糟，可能没有应用完整的大写和标点。 这些结果在特殊情况下非常有用，例如，为用户提供选项来从列表中选取更正项或处理错误识别的命令。
+
+**问：** 为什么会有不同的基础模型？
+
+**答**：你可以从语音服务的多个基础模型中进行选择。 每个模型名称都包含添加它的日期。 开始训练自定义模型时，请使用最新模型以获取最佳准确度。 当有新模型可用时，较旧的基础模型在一段时间内仍可供使用。 你可以继续使用所使用的模型，直到它被停用（请参阅[模型生命周期](custom-speech-overview.md#model-lifecycle)）。 仍建议切换到最新的基础模型，以提高准确度。
 
 **问：能否更新现有模型（模型堆叠）？**
 
@@ -59,19 +65,27 @@ ms.locfileid: "88661514"
 
 旧数据集和新数据集必须合并为单个 .zip 文件（用于声学数据）或 .txt 文件（用于语言数据）。 适应完成后，需要重新部署新的更新后模型以获取新的终结点
 
-**问：当新版本的基线可用时，是否会自动更新我的部署？**
+**问：** 当有新版本的基础模型可用时，我的部署是否会自动更新？
 
 **答**：部署不会自动更新。
 
-如果已调整并部署了具有基线 V1.0 的模型，该部署将保持原样。 客户可以解除已部署的模型，使用较新版本的基线重新调整并重新部署。
+如果你已调整并部署了某个模型，该部署会保持原样。 你可以解除已部署的模型，使用较新版本的基础模型重新调整，并重新部署以提高准确度。
+
+基础模型和自定义模型在一段时间后都会停用（请参阅[模型生命周期](custom-speech-overview.md#model-lifecycle)）。
 
 **问：能否下载模型并在本地运行？**
 
-**答**：无法下载模型并在本地执行。
+**答**：你可以在 [Docker 容器](speech-container-howto.md?tabs=cstt)中本地运行自定义模型。
+
+**问：** 是否可以将数据集、模型和部署复制或移动到另一个区域或订阅？
+
+**答**：你可以使用 [REST API](https://centralus.dev.cognitive.microsoft.com/docs/services/speech-to-text-api-v3-0/operations/CopyModelToSubscription) 将自定义模型复制到另一个区域或订阅。 无法复制数据集或部署。 可以在另一个订阅中再次导入数据集，并使用模型副本在其中创建终结点。
 
 **问：是否会记录我的请求？**
 
-**答**：默认情况下不记录请求（既不进行音频记录，也不进行听录）。 如果需要，可以在[创建自定义终结点](how-to-custom-speech-deploy-model.md)时选择“从此终结点记录内容”选项以启用跟踪。 然后，请求会记录在 Azure 的安全存储中。
+**答**：默认情况下不记录请求（既不进行音频记录，也不进行听录）。 如果需要，可以在[创建自定义终结点](how-to-custom-speech-train-model.md#deploy-a-custom-model)时选择“从此终结点记录内容”选项。 你还可以在[语音 SDK](how-to-use-logging.md) 中逐个请求启用音频日志记录，而无需创建自定义终结点。 在两种情况下，请求的音频和识别结果都将存储在安全的存储中。 对于使用 Microsoft 拥有的存储的订阅，它们将可供使用 30 天。
+
+如果你在启用了“从此终结点记录内容”的情况下使用自定义终结点，则可在 Speech Studio 中的部署页面上导出所记录的文件。 如果音频日志记录是通过 SDK 启用的，请调用 [API](https://centralus.dev.cognitive.microsoft.com/docs/services/speech-to-text-api-v3-0/operations/GetBaseModelLogs) 来访问文件。
 
 **问：我的请求是否受到限制？**
 
@@ -85,14 +99,14 @@ ms.locfileid: "88661514"
 > 如果有禁止使用自定义语音识别服务的其他隐私问题，请联系其中一个支持渠道。
 
 ## <a name="increasing-concurrency"></a>提高并发性
-请参阅 [语音服务配额和限制](speech-services-quotas-and-limits.md)。
+请参阅[语音服务配额和限制](speech-services-quotas-and-limits.md)。
 
 
 ## <a name="importing-data"></a>导入数据
 
 **问：数据集大小的限制是什么？为何限制？**
 
-**答**：由于 HTTP 上传的文件大小限制，限制。 请参阅 [语音服务配额和](speech-services-quotas-and-limits.md) 实际限制的限制。
+**答**：之所以有此限制，是由于 HTTP 上传文件大小存在限制。 有关实际限制，请参阅[语音服务配额和限制](speech-services-quotas-and-limits.md)。 你可以将数据拆分为多个数据集，并选择所有数据集来训练模型。
 
 **问：是否可以压缩文本文件，以便上传更大的文本文件？**
 
@@ -118,21 +132,21 @@ ms.locfileid: "88661514"
 
 **问：是否需要自行转录适应数据？**
 
-**答**：能！ 可以自行转录或使用专业听录服务进行转录。 有些用户更喜欢使用专业听录器，而其他用户则使用众包或自己进行听录。
+**答**：是的。 可以自行转录或使用专业听录服务进行转录。 有些用户更喜欢使用专业听录器，而其他用户则使用众包或自己进行听录。
+
+**问：** 使用音频数据训练一个自定义模型需要多长时间？
+
+**答**：使用音频数据训练模型可能是一个漫长的过程。 创建自定义模型可能需要几天时间，具体取决于数据量。 如果它无法在一周内完成，则服务可能会中止训练操作并将该模型报告为失败。
+
+为了更快地获得结果，请使用其中有用于训练的专用硬件的[区域](custom-speech-overview.md#set-up-your-azure-account)之一。 通常，该服务会在具有此类硬件的区域中每天处理大约10小时的音频数据。 它在其他区域每天只能处理大约1小时的音频数据。 你可以使用 [REST API](https://centralus.dev.cognitive.microsoft.com/docs/services/speech-to-text-api-v3-0/operations/CopyModelToSubscription) 将已完全训练好的模型复制到另一个区域。 仅使用文本进行训练速度要快得多，通常在几分钟内就可完成。
+
+某些基础模型不能使用音频数据进行自定义。 对于这些模型，该服务会仅使用听录的文本进行训练并忽略音频数据。 然后，训练的完成速度会快得多，结果将与仅使用文本进行训练相同。 有关支持音频数据定型的基本模型的列表，请参阅 [语言支持](language-support.md#speech-to-text) 。
 
 ## <a name="accuracy-testing"></a>精确度测试
 
-**问：是否可以使用自定义语言模型对我的自定义声学模型执行离线测试？**
-
-**答**：可以，只需在设置离线测试时从下拉菜单中选择自定义语言模型即可。
-
-**问：是否可以使用自定义声学模型对我的自定义语言模型执行离线测试？**
-
-**答**：可以，只需在设置脱机测试时，选择下拉菜单中的自定义声学模型即可。
-
 **问：什么是字错误率 (WER) 以及如何计算此错误率？**
 
-**答**：WER 是用于语音识别的评估指标。 WER 由错误总数（包括插入、删除和替换）除以引用听录中的总字数得出。 有关详细信息，请参阅[字错误率](https://en.wikipedia.org/wiki/Word_error_rate)。
+**答**：WER 是用于语音识别的评估指标。 WER 由错误总数（包括插入、删除和替换）除以引用听录中的总字数得出。 有关详细信息，请参阅[评估自定义语音识别准确度](how-to-custom-speech-evaluate-data.md#evaluate-custom-speech-accuracy)。
 
 **问：如何确定准确度测试的结果是否良好？**
 
@@ -152,17 +166,17 @@ ms.locfileid: "88661514"
 
 **答**：上传字词列表会将字词添加到词汇中，但不会告知系统这些字词的通常用法。 通过提供完整或部分话语（用户很可能会说事物的句子或短语），语言模型可以学习这些新字词及其用法。 自定义语言模型不仅适用于向系统中添加新字词，还适用于调整应用程序已知字词的概率。 提供完整话语可帮助系统更好地学习。
 
-## <a name="tenant-model-custom-speech-with-office-365-data"></a>自定义语音 Office 365 数据的租户模型 () 
+## <a name="tenant-model-custom-speech-with-microsoft-365-data"></a>与 Microsoft 365 数据自定义语音的租户模型 () 
 
 **问：租户模型中包含哪些信息，如何创建？**
 
-**答：** 租户模型是使用 [公用组](https://support.office.com/article/learn-about-office-365-groups-b565caa1-5c40-40ef-9915-60fdb2d97fa2) 电子邮件和文档生成的，你的组织中的任何人都可以看到该模型。
+**答：** 租户模型是使用 [公用组](https://support.microsoft.com/office/learn-about-microsoft-365-groups-b565caa1-5c40-40ef-9915-60fdb2d97fa2) 电子邮件和文档生成的，你的组织中的任何人都可以看到该模型。
 
 **问：租户模型改进了哪些语音体验？**
 
 **答：** 启用并发布租户模型后，它将用于改进使用语音服务生成的任何企业应用程序的识别;这也会传递一个用户 Azure AD 标记，指示企业的成员身份。
 
-当你为语音服务应用程序创建租户模型时，Office 365 中内置的语音体验（如听写和 PowerPoint 字幕）不会更改。
+为语音服务应用程序创建租户模型时，不会更改内置于 Microsoft 365 中的语音体验，如听写和 PowerPoint 字幕。
 
 ## <a name="next-steps"></a>后续步骤
 

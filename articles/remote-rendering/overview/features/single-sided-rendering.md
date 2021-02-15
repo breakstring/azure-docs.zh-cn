@@ -5,20 +5,21 @@ author: florianborn71
 ms.author: flborn
 ms.date: 02/06/2020
 ms.topic: article
-ms.openlocfilehash: 1a9f80166e47b17644b37d4bc9b93e1abefe3432
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.custom: devx-track-csharp
+ms.openlocfilehash: fea9deae3948b36732b5ea5203fceea6bec07fb9
+ms.sourcegitcommit: f377ba5ebd431e8c3579445ff588da664b00b36b
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "84022754"
+ms.lasthandoff: 02/05/2021
+ms.locfileid: "99594072"
 ---
-# <a name="no-loc-textsingle-sided-rendering"></a>:::no-loc text="Single-sided":::着色
+# <a name="no-loc-textsingle-sided-rendering"></a>:::no-loc text="Single-sided"::: 着色
 
 大多数呈现器使用[背面剔除](https://en.wikipedia.org/wiki/Back-face_culling)来提高性能。 但是，在使用[剪切平面](cut-planes.md)来切开网格时，用户常常将查看三角形的背面。 如果这些三角形被剔除，那么结果看起来没有说服力。
 
-要可靠地避免这一问题，三角形的*两面*都需要渲染。 由于不使用背面剔除会影响性能，因此默认情况下，Azure 远程渲染仅在处理与剪切平面相交的网格时才切换到双面渲染。
+要可靠地避免这一问题，三角形的 *两面* 都需要渲染。 由于不使用背面剔除会影响性能，因此默认情况下，Azure 远程渲染仅在处理与剪切平面相交的网格时才切换到双面渲染。
 
-* :::no-loc text="single-sided"::: 呈现*设置允许您自定义此行为。
+*:::no-loc text="single-sided"::: 呈现* 设置允许您自定义此行为。
 
 > [!CAUTION]
 > :::no-loc text="single-sided":::呈现设置是一项实验性功能。 未来可能会再次将其移除。 请勿更改默认设置，除非它确实解决了应用程序中的关键问题。
@@ -27,7 +28,7 @@ ms.locfileid: "84022754"
 
 :::no-loc text="single-sided":::呈现设置仅对已使用设置为的选项进行[转换](../../how-tos/conversion/configure-model-conversion.md)的网格有效 `opaqueMaterialDefaultSidedness` `SingleSided` 。 此选项默认设置为 `DoubleSided`。
 
-## <a name="no-loc-textsingle-sided-rendering-setting"></a>:::no-loc text="Single-sided":::呈现设置
+## <a name="no-loc-textsingle-sided-rendering-setting"></a>:::no-loc text="Single-sided"::: 呈现设置
 
 有 3 种不同的模式：
 
@@ -40,9 +41,9 @@ ms.locfileid: "84022754"
 :::no-loc text="single-sided":::可以按如下所示更改呈现设置：
 
 ```cs
-void ChangeSingleSidedRendering(AzureSession session)
+void ChangeSingleSidedRendering(RenderingSession session)
 {
-    SingleSidedSettings settings = session.Actions.SingleSidedSettings;
+    SingleSidedSettings settings = session.Connection.SingleSidedSettings;
 
     // Single-sided geometry is rendered as is
     settings.Mode = SingleSidedMode.Normal;
@@ -53,17 +54,22 @@ void ChangeSingleSidedRendering(AzureSession session)
 ```
 
 ```cpp
-void ChangeSingleSidedRendering(ApiHandle<AzureSession> session)
+void ChangeSingleSidedRendering(ApiHandle<RenderingSession> session)
 {
-    ApiHandle<SingleSidedSettings> settings = *session->Actions()->SingleSidedSettings();
+    ApiHandle<SingleSidedSettings> settings = session->Connection()->GetSingleSidedSettings();
 
     // Single-sided geometry is rendered as is
-    settings->Mode(SingleSidedMode::Normal);
+    settings->SetMode(SingleSidedMode::Normal);
 
     // Single-sided geometry is always rendered double-sided
-    settings->Mode(SingleSidedMode::AlwaysDoubleSided);
+    settings->SetMode(SingleSidedMode::AlwaysDoubleSided);
 }
 ```
+
+## <a name="api-documentation"></a>API 文档
+
+* [C # RenderingConnection SingleSidedSettings 属性](/dotnet/api/microsoft.azure.remoterendering.renderingconnection.singlesidedsettings)
+* [C + + RenderingConnection：： SingleSidedSettings ( # B1 ](/cpp/api/remote-rendering/renderingconnection#singlesidedsettings)
 
 ## <a name="next-steps"></a>后续步骤
 

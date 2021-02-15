@@ -1,22 +1,18 @@
 ---
 title: Azure 数据工厂中的 Azure 函数活动
 description: 了解如何使用 Azure 函数活动在数据工厂管道中运行 Azure 函数
-services: data-factory
-documentationcenter: ''
-author: djpmsft
-ms.author: daperlov
-manager: jroth
+author: dcstwh
+ms.author: weetok
 ms.reviewer: maghan
 ms.service: data-factory
-ms.workload: data-services
 ms.topic: conceptual
 ms.date: 01/09/2019
-ms.openlocfilehash: ee2e59e794cf34a8fd5043a56867a81c2537f1ae
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 51cf396fb6f1fcc86a0187e9f3be6b81487b86c2
+ms.sourcegitcommit: d4734bc680ea221ea80fdea67859d6d32241aefc
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "81415309"
+ms.lasthandoff: 02/14/2021
+ms.locfileid: "100383393"
 ---
 # <a name="azure-function-activity-in-azure-data-factory"></a>Azure 数据工厂中的 Azure 函数活动
 [!INCLUDE[appliesto-adf-asa-md](includes/appliesto-adf-asa-md.md)]
@@ -28,11 +24,11 @@ ms.locfileid: "81415309"
 
 ## <a name="azure-function-linked-service"></a>Azure 函数链接服务
 
-Azure 函数的返回类型必须是有效的 `JObject`。 （请记住：[JArray](https://www.newtonsoft.com/json/help/html/T_Newtonsoft_Json_Linq_JArray.htm) 不是 `JObject`。）除了 `JObject` 之外的任何返回类型都将失败，并且会引发用户错误*响应内容不是有效的 JObject*。
+Azure 函数的返回类型必须是有效的 `JObject`。 （请记住：[JArray](https://www.newtonsoft.com/json/help/html/T_Newtonsoft_Json_Linq_JArray.htm) 不是 `JObject`。）除了 `JObject` 之外的任何返回类型都将失败，并且会引发用户错误 *响应内容不是有效的 JObject*。
 
 | **属性** | **说明** | **必需** |
 | --- | --- | --- |
-| 类型   | type 属性必须设置为：**AzureFunction** | 是 |
+| type   | type 属性必须设置为：**AzureFunction** | 是 |
 | 函数应用 URL | Azure 函数应用的 URL。 格式为 `https://<accountname>.azurewebsites.net`。 在 Azure 门户中查看函数应用时，此 URL 是 URL 部分下的值  | 是 |
 | 函数密钥 | Azure 函数的访问密钥。 单击相应函数的“管理”部分，并复制“函数密钥”或“主机密钥”。 在此处了解详细信息：[Azure Functions HTTP 触发器和绑定](../azure-functions/functions-bindings-http-webhook-trigger.md#authorization-keys) | 是 |
 |   |   |   |
@@ -47,16 +43,16 @@ Azure 函数的返回类型必须是有效的 `JObject`。 （请记住：[JArra
 | 函数名称  | 此活动在 Azure 函数应用中调用的函数的名称 | String | 是 |
 | method  | 函数调用的 Rest API 方法 | 字符串支持的类型：“GET”、“POST”、“PUT”   | 是 |
 | 标头的值开始缓存响应  | 发送到请求的标头。 例如，若要在请求中设置语言和类型："headers": { "Accept-Language": "en-us", "Content-Type": "application/json" } | 字符串（或带有 resultType 字符串的表达式） | 否 |
-| body  | 随请求一起发送到函数 API 方法的正文  | 字符串（或带有 resultType 字符串的表达式）或对象。   | PUT/POST 方法所必需 |
+| body  | 随请求一起发送到函数 API 方法的正文  | 字符串（或带有 resultType 字符串的表达式）或对象。   | PUT/POST 方法所必需 |
 |   |   |   | |
 
-请参阅 [请求有效负载架构](control-flow-web-activity.md#request-payload-schema) 部分中的请求有效负载架构。
+请参阅[请求有效负载架构](control-flow-web-activity.md#request-payload-schema)部分中的请求有效负载架构。
 
 ## <a name="routing-and-queries"></a>路由和查询
 
-Azure 函数活动支持**路由**。 例如，如果你的 Azure Function 具有终结点 `https://functionAPP.azurewebsites.net/api/<functionName>/<value>?code=<secret>`，则要在 Azure 函数活动中使用的 `functionName` 是 `<functionName>/<value>`。 你可以将此函数参数化以在运行时提供所需的 `functionName`。
+Azure 函数活动支持 **路由**。 例如，如果你的 Azure Function 具有终结点 `https://functionAPP.azurewebsites.net/api/<functionName>/<value>?code=<secret>`，则要在 Azure 函数活动中使用的 `functionName` 是 `<functionName>/<value>`。 你可以将此函数参数化以在运行时提供所需的 `functionName`。
 
-Azure 函数活动还支持**查询**。 必须将查询包括为 `functionName` 的一部分。 例如，当函数名称为 `HttpTriggerCSharp` 并且要包括的查询为 `name=hello` 时，无法将 Azure 函数活动中的 `functionName` 构造为 `HttpTriggerCSharp?name=hello`。 可以将此函数参数化，以便在运行时确定值。
+Azure 函数活动还支持 **查询**。 必须将查询包括为 `functionName` 的一部分。 例如，当函数名称为 `HttpTriggerCSharp` 并且要包括的查询为 `name=hello` 时，无法将 Azure 函数活动中的 `functionName` 构造为 `HttpTriggerCSharp?name=hello`。 可以将此函数参数化，以便在运行时确定值。
 
 ## <a name="timeout-and-long-running-functions"></a>超时和长时间运行的函数
 

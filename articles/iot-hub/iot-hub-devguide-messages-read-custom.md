@@ -8,12 +8,12 @@ ms.service: iot-hub
 services: iot-hub
 ms.topic: conceptual
 ms.date: 04/09/2018
-ms.openlocfilehash: e5e92c40cef15e99431dc9652820c71e87935f67
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 8aebb5b6f6a3ac53bc49fd1d2f75de88667865fb
+ms.sourcegitcommit: dbe434f45f9d0f9d298076bf8c08672ceca416c6
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "61244338"
+ms.lasthandoff: 10/17/2020
+ms.locfileid: "92147650"
 ---
 # <a name="use-message-routes-and-custom-endpoints-for-device-to-cloud-messages"></a>对设备到云的消息使用消息路由和自定义终结点
 
@@ -46,7 +46,7 @@ IoT 中心具有默认的[内置终结点](iot-hub-devguide-messages-read-builti
 
 * 从 [Azure 存储容器](../storage/blobs/storage-blobs-introduction.md)读取。
 
-* 从[事件中心](../event-hubs/event-hubs-csharp-ephcs-getstarted.md)读取。
+* 从[事件中心](../event-hubs/event-hubs-dotnet-standard-getstarted-send.md)读取。
 
 * 从[服务总线队列](../service-bus-messaging/service-bus-dotnet-get-started-with-queues.md)读取。
 

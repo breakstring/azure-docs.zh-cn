@@ -6,19 +6,19 @@ ms.author: nimoolen
 ms.service: data-factory
 ms.topic: conceptual
 ms.custom: seo-lt-2019
-ms.date: 07/29/2020
-ms.openlocfilehash: d28cd7a7edd5d6405761bf21ee87ec39dc9ec9cb
-ms.sourcegitcommit: cee72954f4467096b01ba287d30074751bcb7ff4
+ms.date: 12/23/2020
+ms.openlocfilehash: 3f5a6171ba81b858d649f381ed316be0637a2571
+ms.sourcegitcommit: 89c0482c16bfec316a79caa3667c256ee40b163f
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/30/2020
-ms.locfileid: "87448532"
+ms.lasthandoff: 01/04/2021
+ms.locfileid: "97858648"
 ---
-# <a name="data-flow-script-dfs"></a>数据流脚本（DFS）
+# <a name="data-flow-script-dfs"></a> (DFS) 的数据流脚本
 
 [!INCLUDE[appliesto-adf-asa-md](includes/appliesto-adf-asa-md.md)]
 
-数据流脚本（DFS）是基本元数据，类似于编码语言，用于执行映射数据流中包含的转换。 每个转换均由一系列属性表示，这些属性提供正确运行作业所需的信息。 通过单击浏览器 UI 顶部功能区上的 "脚本" 按钮，可从 ADF 查看并编辑该脚本。
+ (DFS) 的数据流脚本是用于执行映射数据流中包含的转换的基本元数据，类似于编码语言。 每个转换均由一系列属性表示，这些属性提供正确运行作业所需的信息。 通过单击浏览器 UI 顶部功能区上的 "脚本" 按钮，可从 ADF 查看并编辑该脚本。
 
 ![脚本按钮](media/data-flow/scriptbutton.png "脚本按钮")
 
@@ -71,7 +71,7 @@ source1 sink(allowSchemaDrift: true,
     validateSchema: false) ~> sink1
 ```
 
-现在，我们将通过识别要新转换之后的转换（在本例中为）来重新路由传入流 `source1` ，并将流的名称复制到新转换：
+现在，我们会通过标识在这种情况下要使新转换 (的转换来重新路由传入流， `source1`) 并将流的名称复制到新的转换：
 ```
 source(output(
         movieId as string,
@@ -85,7 +85,7 @@ source1 sink(allowSchemaDrift: true,
     validateSchema: false) ~> sink1
 ```
 
-最后，我们确定要在此新转换后出现的转换，并将其输入流（在本例中 `sink1` 为）替换为新转换的输出流名称：
+最后，我们要确定我们希望在此新转换后出现的转换，并将其输入流替换 (在这种情况下， `sink1`) 并将输出流名称替换为新的转换：
 ```
 source(output(
         movieId as string,
@@ -109,7 +109,7 @@ source(
 ) ~> source_name
 ```
 
-例如，具有三个列（movieId、title、流派）的简单源将为：
+例如，具有三列 (movieId、title、流派) 的简单源将为：
 ```
 source(output(
         movieId as string,
@@ -127,7 +127,7 @@ name_of_incoming_stream transformation_type(
 ) ~> new_stream_name
 ```
 
-例如，一个简单的派生转换，它采用列（title）并使用大写的版本覆盖它，如下所示：
+例如，使用列 (标题的简单派生转换) 并使用大写形式覆盖它，如下所示：
 ```
 source1 derive(
   title = upper(title)
@@ -176,13 +176,13 @@ aggregate(groupBy(movie),
 使用数据流脚本中的此代码创建一个名为的新派生列 ```DWhash``` ，该派生列生成 ```sha1``` 三列的哈希。
 
 ```
-derive(DWhash = sha1(Name,ProductNumber,Color))
+derive(DWhash = sha1(Name,ProductNumber,Color)) ~> DWHash
 ```
 
 你还可以使用以下脚本，使用流中存在的所有列生成行哈希，而无需命名每个列：
 
 ```
-derive(DWhash = sha1(columns()))
+derive(DWhash = sha1(columns())) ~> DWHash
 ```
 
 ### <a name="string_agg-equivalent"></a>String_agg 等效项
@@ -191,7 +191,7 @@ derive(DWhash = sha1(columns()))
 ```
 source1 aggregate(groupBy(year),
     string_agg = collect(title)) ~> Aggregate1
-Aggregate1 derive(string_agg = toString(string_agg)) ~> DerivedColumn2
+Aggregate1 derive(string_agg = toString(string_agg)) ~> StringAgg
 ```
 
 ### <a name="count-number-of-updates-upserts-inserts-deletes"></a>更新、upsert、插入、删除的次数
@@ -210,6 +210,53 @@ aggregate(updates = countIf(isUpdate(), 1),
 ```
 aggregate(groupBy(mycols = sha2(256,columns())),
     each(match(true()), $$ = first($$))) ~> DistinctRows
+```
+
+### <a name="check-for-nulls-in-all-columns"></a>检查所有列中的 Null 值
+这是一个代码段，你可以将其粘贴到数据流中，以一般检查所有列中的 NULL 值。 此方法利用架构偏移来浏览所有行中的所有列，并使用有条件拆分将行中的 Null 与无 Null 的行分隔开。 
+
+```
+split(contains(array(columns()),isNull(#item)),
+    disjoint: false) ~> LookForNULLs@(hasNULLs, noNULLs)
+```
+
+### <a name="automap-schema-drift-with-a-select"></a>使用 select 自动映射架构偏移
+如果需要从未知或动态的传入列集中加载现有的数据库架构，则必须在接收器转换中映射右侧列。 仅在加载现有表时需要此。 将此代码段添加到接收器前面，以创建自动映射列的 Select。 将接收器映射留到自动映射。
+
+```
+select(mapColumn(
+        each(match(true()))
+    ),
+    skipDuplicateMapInputs: true,
+    skipDuplicateMapOutputs: true) ~> automap
+```
+
+### <a name="persist-column-data-types"></a>保留列数据类型
+将此脚本添加到派生列定义中，以使用接收器将数据流中的列名称和数据类型存储到持久存储区中。
+
+```
+derive(each(match(type=='string'), $$ = 'string'),
+    each(match(type=='integer'), $$ = 'integer'),
+    each(match(type=='short'), $$ = 'short'),
+    each(match(type=='complex'), $$ = 'complex'),
+    each(match(type=='array'), $$ = 'array'),
+    each(match(type=='float'), $$ = 'float'),
+    each(match(type=='date'), $$ = 'date'),
+    each(match(type=='timestamp'), $$ = 'timestamp'),
+    each(match(type=='boolean'), $$ = 'boolean'),
+    each(match(type=='double'), $$ = 'double')) ~> DerivedColumn1
+```
+
+### <a name="fill-down"></a>向下填充
+当您希望将 NULL 值替换为序列中前一个非 NULL 值的值时，如何实现数据集的常见 "向下填充" 问题。 请注意，此操作可能会对性能造成负面影响，因为必须使用 "虚拟" 类别值跨整个数据集创建综合窗口。 此外，必须按值进行排序才能创建适当的数据序列以查找以前的非 NULL 值。 下面的代码段创建 "虚拟" 合成类别，并按代理键进行排序。 您可以删除代理键，并使用自己的数据特定的排序关键字。 此代码段假定已添加名为的源转换 ```source1```
+
+```
+source1 derive(dummy = 1) ~> DerivedColumn
+DerivedColumn keyGenerate(output(sk as long),
+    startAt: 1L) ~> SurrogateKey
+SurrogateKey window(over(dummy),
+    asc(sk, true),
+    Rating2 = coalesce(Rating, last(Rating, true()))) ~> Window1
 ```
 
 ## <a name="next-steps"></a>后续步骤

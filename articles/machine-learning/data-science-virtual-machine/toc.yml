@@ -44,20 +44,28 @@
       href: vm-do-ten-things.md
     - name: 使用 Linux Data Science Virtual Machine
       href: linux-dsvm-walkthrough.md
-    - name: 创建自动缩放的 Data Science Virtual Machine 池
-      href: dsvm-pools.md
-    - name: 与 Azure Active Directory 集成
-      href: dsvm-common-identity.md
-    - name: 保护资源访问凭据
-      href: dsvm-secure-access-keys.md
+    - name: 与 Azure 机器学习集成
+      items:
+        - name: 跟踪试验
+          href: how-to-track-experiments.md
+    - name: 企业指南
+      items:
+        - name: 创建自动缩放的 Data Science Virtual Machine 池
+          href: dsvm-pools.md
+        - name: 与 Azure Active Directory 集成
+          href: dsvm-common-identity.md
+        - name: 保护资源访问凭据
+          href: dsvm-secure-access-keys.md
+    - name: 将 Data Science Virtual Machine 升级到 Ubuntu 18.04
+      href: ubuntu-upgrade.md
 - name: 资源
   items:
     - name: Microsoft Q&A 问题页面
-      href: 'https://docs.microsoft.com/answers/topics/azure-data-science-vm.html'
+      href: /answers/topics/azure-data-science-vm.html
     - name: Stack Overflow
       href: 'https://stackoverflow.com/search?q=dsvm'
     - name: R 开发人员指南
-      href: /azure/architecture/data-guide/technology-choices/r-developers-guide?context=azure/machine-learning/data-science-virtual-machine/context/ml-context
+      href: /azure/architecture/data-guide/technology-choices/r-developers-guide?context=%2fazure/machine-learning/data-science-virtual-machine/context/ml-context
 - name: 参考
   items:
     - name: Ubuntu Data Science Virtual Machine
@@ -66,5 +74,3 @@
       href: release-notes.md
     - name: 已知问题
       href: reference-known-issues.md
-    - name: 弃用公告
-      href: reference-deprecation.md

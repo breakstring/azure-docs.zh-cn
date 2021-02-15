@@ -1,23 +1,18 @@
 ---
 title: 使用 Hive 活动转换数据-Azure
-description: 了解如何使用 Azure 数据工厂中的 Hive 活动在按需/自己的 HDInsight 群集上运行 Hive 查询。
-services: data-factory
-documentationcenter: ''
-author: djpmsft
-ms.author: daperlov
-manager: jroth
+description: 了解如何使用 Azure 数据工厂 v1 中的 Hive 活动，在按需/自己的 HDInsight 群集上运行 Hive 查询。
+author: dcstwh
+ms.author: weetok
 ms.reviewer: maghan
-ms.assetid: 80083218-743e-4da8-bdd2-60d1c77b1227
 ms.service: data-factory
-ms.workload: data-services
 ms.topic: conceptual
 ms.date: 01/10/2018
-ms.openlocfilehash: d153f8c316cbb76e063f07f7f823c8d9c4a21f87
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 9d14ddb172546e062b62a5a8dd98b49a0a6e1c6f
+ms.sourcegitcommit: d4734bc680ea221ea80fdea67859d6d32241aefc
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "74703356"
+ms.lasthandoff: 02/14/2021
+ms.locfileid: "100383018"
 ---
 # <a name="transform-data-using-hive-activity-in-azure-data-factory"></a>在 Azure 数据工厂中使用 Hive 活动转换数据 
 > [!div class="op_single_selector" title1="转换活动"]
@@ -26,8 +21,8 @@ ms.locfileid: "74703356"
 > * [MapReduce 活动](data-factory-map-reduce.md)
 > * [Hadoop 流式处理活动](data-factory-hadoop-streaming-activity.md)
 > * [Spark 活动](data-factory-spark.md)
-> * [机器学习批处理执行活动](data-factory-azure-ml-batch-execution-activity.md)
-> * [机器学习更新资源活动](data-factory-azure-ml-update-resource-activity.md)
+> * [Azure 机器学习工作室（经典）批处理执行活动](data-factory-azure-ml-batch-execution-activity.md)
+> * [Azure 机器学习工作室（经典）更新资源活动](data-factory-azure-ml-update-resource-activity.md)
 > * [存储过程活动](data-factory-stored-proc-activity.md)
 > * [Data Lake Analytics U-SQL 活动](data-factory-usql-activity.md)
 > * [.NET 自定义活动](data-factory-use-custom-activities.md)
@@ -35,7 +30,7 @@ ms.locfileid: "74703356"
 > [!NOTE]
 > 本文适用于数据工厂版本 1。 如果使用当前版本数据工厂服务，请参阅[在数据工厂中使用 Hive 活动转换数据](../transform-data-using-hadoop-hive.md)。
 
-数据工厂[管道](data-factory-create-pipelines.md)中的 HDInsight Hive 活动会在[自己](data-factory-compute-linked-services.md#azure-hdinsight-linked-service)或基于 Windows/Linux 的[按需](data-factory-compute-linked-services.md#azure-hdinsight-on-demand-linked-service)HDInsight 群集上执行 Hive 查询。 本文基于[数据转换活动](data-factory-data-transformation-activities.md)一文，它概述了数据转换和受支持的转换活动。
+数据工厂 [管道](data-factory-create-pipelines.md) 中的 HDInsight Hive 活动会在 [自己](data-factory-compute-linked-services.md#azure-hdinsight-linked-service) 或基于 Windows/Linux 的 [按需](data-factory-compute-linked-services.md#azure-hdinsight-on-demand-linked-service) HDInsight 群集上执行 Hive 查询。 本文基于[数据转换活动](data-factory-data-transformation-activities.md)一文，它概述了数据转换和受支持的转换活动。
 
 > [!NOTE] 
 > 如果是刚开始接触 Azure 数据工厂，请仔细阅读 [Azure 数据工厂简介](data-factory-introduction.md)，并学习[教程：生成首个数据管道](data-factory-build-your-first-pipeline.md)，然后再阅读本文。 
@@ -72,7 +67,7 @@ ms.locfileid: "74703356"
 }
 ```
 ## <a name="syntax-details"></a>语法详细信息
-| properties | 描述 | 必需 |
+| properties | 说明 | 必须 |
 | --- | --- | --- |
 | name |活动名称 |是 |
 | description |描述活动用途的文本 |否 |
@@ -132,43 +127,44 @@ FROM HiveSampleIn Group by ProfileID
 4. 将 Hive 查询作为文件复制到步骤 2 中配置的 Azure Blob 存储。 如果承载数据的存储不同于承载此查询文件的存储，则创建单独的 Azure 存储链接服务，并在活动中引用它。 使用 **scriptPath** 指定 hive 查询文件的路径，使用 **scriptLinkedService** 指定包含脚本文件的 Azure 存储。 
    
    > [!NOTE]
-   > 还可以通过使用**脚本**属性在活动定义中提供 Hive 脚本内联。 不建议使用此方法，因为需要转义 JSON 文档内的脚本中的所有特殊字符，并且可能会导致调试问题。 最佳做法是遵循步骤 #4。
+   > 还可以通过使用 **脚本** 属性在活动定义中提供 Hive 脚本内联。 不建议使用此方法，因为需要转义 JSON 文档内的脚本中的所有特殊字符，并且可能会导致调试问题。 最佳做法是遵循步骤 #4。
    > 
    > 
 5. 创建 HDInsightHive 活动的管道。 活动处理/转换数据。
 
-    ```JSON   
-    {   
-        "name": "HiveActivitySamplePipeline",
-        "properties": {
-        "activities": [
-            {
-                "name": "HiveActivitySample",
-                "type": "HDInsightHive",
-                "inputs": [
-                {
-                    "name": "HiveSampleIn"
-                }
-                ],
-                "outputs": [
-                {
-                    "name": "HiveSampleOut"
-                }
-                ],
-                "linkedServiceName": "HDInsightLinkedService",
-                "typeproperties": {
-                    "scriptPath": "adfwalkthrough\\scripts\\samplehive.hql",
-                    "scriptLinkedService": "StorageLinkedService"
-                },
-                "scheduler": {
-                    "frequency": "Hour",
-                    "interval": 1
-                }
-            }
-            ]
+  ```json
+  {
+    "name": "HiveActivitySamplePipeline",
+       "properties": {
+    "activities": [
+      {
+        "name": "HiveActivitySample",
+        "type": "HDInsightHive",
+        "inputs": [
+        {
+          "name": "HiveSampleIn"
         }
+        ],
+             "outputs": [
+               {
+                "name": "HiveSampleOut"
+               }
+             ],
+             "linkedServiceName": "HDInsightLinkedService",
+             "typeproperties": {
+                 "scriptPath": "adfwalkthrough\\scripts\\samplehive.hql",
+                 "scriptLinkedService": "StorageLinkedService"
+             },
+              "scheduler": {
+          "frequency": "Hour",
+                   "interval": 1
+             }
+           }
+      ]
     }
-    ```
+  }
+  ```
+
 6. 部署管道。 有关详细信息，请参阅[创建管道](data-factory-create-pipelines.md)一文。 
 7. 使用数据工厂监视和管理视图来监视管道。 有关详细信息，请参阅[监视和管理数据工厂管道](data-factory-monitor-manage-pipelines.md)一文。 
 
@@ -179,7 +175,7 @@ FROM HiveSampleIn Group by ProfileID
 
 * 定义 **defines** 中的参数。
 
-    ```JSON  
+  ```JSON  
     {
         "name": "HiveActivitySamplePipeline",
           "properties": {

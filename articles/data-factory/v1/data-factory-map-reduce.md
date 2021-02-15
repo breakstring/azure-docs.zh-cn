@@ -1,23 +1,18 @@
 ---
 title: 从 Azure 数据工厂调用 MapReduce 程序
 description: 了解如何通过从 Azure 数据工厂在 Azure HDInsight 群集上运行 MapReduce 程序来处理数据。
-services: data-factory
-documentationcenter: ''
-author: djpmsft
-ms.author: daperlov
-manager: jroth
+author: dcstwh
+ms.author: weetok
 ms.reviewer: maghan
-ms.assetid: c34db93f-570a-44f1-a7d6-00390f4dc0fa
 ms.service: data-factory
-ms.workload: data-services
 ms.topic: conceptual
 ms.date: 01/10/2018
-ms.openlocfilehash: 598a16d25ba375b984a966cba190181edbda3d15
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: f5ad917609d6f9ea401abc898f80631474a44475
+ms.sourcegitcommit: d4734bc680ea221ea80fdea67859d6d32241aefc
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "74703156"
+ms.lasthandoff: 02/14/2021
+ms.locfileid: "100371067"
 ---
 # <a name="invoke-mapreduce-programs-from-data-factory"></a>从数据工厂调用 MapReduce 程序
 > [!div class="op_single_selector" title1="转换活动"]
@@ -26,8 +21,8 @@ ms.locfileid: "74703156"
 > * [MapReduce 活动](data-factory-map-reduce.md)
 > * [Hadoop 流式处理活动](data-factory-hadoop-streaming-activity.md)
 > * [Spark 活动](data-factory-spark.md)
-> * [机器学习批处理执行活动](data-factory-azure-ml-batch-execution-activity.md)
-> * [机器学习更新资源活动](data-factory-azure-ml-update-resource-activity.md)
+> * [Azure 机器学习工作室（经典）批处理执行活动](data-factory-azure-ml-batch-execution-activity.md)
+> * [Azure 机器学习工作室（经典）更新资源活动](data-factory-azure-ml-update-resource-activity.md)
 > * [存储过程活动](data-factory-stored-proc-activity.md)
 > * [Data Lake Analytics U-SQL 活动](data-factory-usql-activity.md)
 > * [.NET 自定义活动](data-factory-use-custom-activities.md)
@@ -36,7 +31,7 @@ ms.locfileid: "74703156"
 > 本文适用于数据工厂版本 1。 如果使用当前版本数据工厂服务，请参阅[在数据工厂中使用 MapReduce 活动转换数据](../transform-data-using-hadoop-map-reduce.md)。
 
 
-数据工厂[管道](data-factory-create-pipelines.md)中的 HDInsight MapReduce 活动会在[自己](data-factory-compute-linked-services.md#azure-hdinsight-linked-service)或基于 Windows/Linux 的[按需](data-factory-compute-linked-services.md#azure-hdinsight-on-demand-linked-service)HDInsight 群集上执行 MapReduce 程序。 本文基于[数据转换活动](data-factory-data-transformation-activities.md)一文，它概述了数据转换和受支持的转换活动。
+数据工厂 [管道](data-factory-create-pipelines.md) 中的 HDInsight MapReduce 活动会在 [自己](data-factory-compute-linked-services.md#azure-hdinsight-linked-service) 或基于 Windows/Linux 的 [按需](data-factory-compute-linked-services.md#azure-hdinsight-on-demand-linked-service) HDInsight 群集上执行 MapReduce 程序。 本文基于[数据转换活动](data-factory-data-transformation-activities.md)一文，它概述了数据转换和受支持的转换活动。
 
 > [!NOTE] 
 > 如果是刚开始接触 Azure 数据工厂，请仔细阅读 [Azure 数据工厂简介](data-factory-introduction.md)，并学习[教程：生成首个数据管道](data-factory-build-your-first-pipeline.md)，然后再阅读本文。  
@@ -49,7 +44,7 @@ Azure 数据工厂中的管道通过使用链接计算服务来处理链接存�
 ## <a name="json-for-hdinsight-mapreduce-activity"></a>HDInsight MapReduce 活动的 JSON
 在 HDInsight 活动的 JSON 定义中： 
 
-1. 将**活动**的**类型**设置为 **HDInsight**。
+1. 将 **活动** 的 **类型** 设置为 **HDInsight**。
 2. 为 **className** 属性指定类名。
 3. 为 **jarFilePath** 属性指定 JAR 文件的路径（包括文件名）。
 4. 为 **jarLinkedService** 属性指定引用包含 JAR 文件的 Azure Blob 存储的链接服务。   
@@ -118,7 +113,7 @@ Azure 数据工厂中的管道通过使用链接计算服务来处理链接存�
 此示例中的管道在 Azure HDInsight 群集上运行字数统计 Map/Reduce 程序。   
 
 ### <a name="linked-services"></a>链接服务
-首先，创建一个链接服务，将 Azure HDInsight 群集使用的 Azure 存储链接到 Azure 数据工厂。 如果要复制/粘贴下面的代码，请不要忘记将“帐户名”**** 和“帐户密钥”**** 替换为自己的 Azure 存储 的名称和密钥。 
+首先，创建一个链接服务，将 Azure HDInsight 群集使用的 Azure 存储链接到 Azure 数据工厂。 如果要复制/粘贴下面的代码，请不要忘记将“帐户名”和“帐户密钥”替换为自己的 Azure 存储 的名称和密钥。 
 
 #### <a name="azure-storage-linked-service"></a>Azure 存储链接服务
 
@@ -135,7 +130,7 @@ Azure 数据工厂中的管道通过使用链接计算服务来处理链接存�
 ```
 
 #### <a name="azure-hdinsight-linked-service"></a>Azure HDInsight 链接服务
-接下来，创建一个链接服务，将 Azure HDInsight 群集链接到 Azure 数据工厂。 如果复制/粘贴以下代码，请将**hdinsight 群集名称**替换为 hdinsight 群集的名称，并更改用户名和密码值。   
+接下来，创建一个链接服务，将 Azure HDInsight 群集链接到 Azure 数据工厂。 如果复制/粘贴以下代码，请将 **hdinsight 群集名称** 替换为 hdinsight 群集的名称，并更改用户名和密码值。   
 
 ```JSON
 {
@@ -235,14 +230,14 @@ Azure 数据工厂中的管道通过使用链接计算服务来处理链接存�
 ## <a name="run-spark-programs"></a>运行 Spark 程序
 可以通过 MapReduce 活动在 HDInsight Spark 群集上运行 Spark 程序。 有关详细信息，请参阅[从 Azure 数据工厂调用 Spark 程序](data-factory-spark.md)。  
 
-[developer-reference]: https://go.microsoft.com/fwlink/?LinkId=516908
+[developer-reference]: /previous-versions/azure/dn834987(v=azure.100)
 [cmdlet-reference]: https://go.microsoft.com/fwlink/?LinkId=517456
 
 
 [adfgetstarted]: data-factory-copy-data-from-azure-blob-storage-to-sql-database.md
 [adfgetstartedmonitoring]:data-factory-copy-data-from-azure-blob-storage-to-sql-database.md#monitor-pipelines 
 
-[Developer Reference]: https://go.microsoft.com/fwlink/?LinkId=516908
+[Developer Reference]: /previous-versions/azure/dn834987(v=azure.100)
 [Azure Portal]: https://portal.azure.com
 
 ## <a name="see-also"></a>另请参阅
@@ -251,4 +246,3 @@ Azure 数据工厂中的管道通过使用链接计算服务来处理链接存�
 * [Hadoop 流式处理活动](data-factory-hadoop-streaming-activity.md)
 * [调用 Spark 程序](data-factory-spark.md)
 * [调用 R 脚本](https://github.com/Azure/Azure-DataFactory/tree/master/SamplesV1/RunRScriptUsingADFSample)
-

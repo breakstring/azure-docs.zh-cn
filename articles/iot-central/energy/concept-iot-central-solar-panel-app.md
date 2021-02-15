@@ -1,24 +1,21 @@
 ---
 title: Azure IoT Central 中的体系结构概念 - 太阳能板 | Microsoft Docs
-description: 本文介绍与 Azure IoT Central 的体系结构相关的重要概念
+description: 本文介绍与 Azure IoT Central 太阳能板监视应用的体系结构相关的重要概念。
 author: op-ravi
 ms.author: omravi
-ms.date: 10/23/2019
-ms.topic: overview
+ms.date: 12/11/2020
+ms.topic: conceptual
 ms.service: iot-central
 services: iot-central
 manager: abjork
-ms.openlocfilehash: f09a8cfae9b0f12df2ea76ecc216b1b2eb66e9ff
-ms.sourcegitcommit: 3543d3b4f6c6f496d22ea5f97d8cd2700ac9a481
+ms.openlocfilehash: 1efb693e1ad9b9e9bfdbeafa27e9cc75c645baf4
+ms.sourcegitcommit: d1b0cf715a34dd9d89d3b72bb71815d5202d5b3a
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/20/2020
-ms.locfileid: "86511851"
+ms.lasthandoff: 02/08/2021
+ms.locfileid: "99834283"
 ---
 # <a name="azure-iot-central---solar-panel-app-architecture"></a>Azure IoT Central - 太阳能板应用体系结构
-
-
-
 
 本文提供了太阳能电池板监视应用模板体系结构的概述。 下图显示了在 Azure 中使用 IoT Central 平台的太阳能电池板应用的常用体系结构。
 
@@ -27,11 +24,9 @@ ms.locfileid: "86511851"
 
 该体系结构包括以下组件。 某些应用程序可能不需要此处列出的每个组件。
 
-## <a name="solar-panels-and-connectivity"></a>太阳能电池板和连接 
+## <a name="solar-panels-and-connectivity"></a>太阳能电池板和连接
 
-太阳能板是可再生能源的重要来源之一。 根据太阳能电池板的类型和设置，可以使用网关或其他中间设备和专用系统来连接它。 可能需要构建 IoT Central 设备网桥以连接无法直接连接的设备。 IoT Central 设备桥是一种开放源代码解决方案，你可以在[此处](https://docs.microsoft.com/azure/iot-central/core/howto-build-iotc-device-bridge)找到完整的详细信息。 
-
-
+太阳能板是可再生能源的重要来源之一。 根据太阳能电池板的类型和设置，可以使用网关或其他中间设备和专用系统来连接它。 可能需要构建 IoT Central 设备网桥以连接无法直接连接的设备。 IoT Central 设备桥是一种开放源代码解决方案，你可以在[此处](../core/howto-build-iotc-device-bridge.md)找到完整的详细信息。 
 
 ## <a name="iot-central-platform"></a>IoT Central 平台
 Azure IoT Central 是一个平台，可简化 IoT 解决方案的构建，并有助于减轻 IoT 管理、运营和开发的负担以及降低相关成本。 借助 IoT Central，可以轻松地大规模连接、监视和管理物联网 (IoT) 资产。 将太阳能电池板连接到 IoT Central 之后，应用模板将使用设备模型、命令和仪表板等内置功能。 该应用模板还将 IoT Central 存储用于暖路径方案，例如近实时仪表数据监视、分析、规则和可视化效果。
@@ -43,4 +38,4 @@ IoT Central 平台提供了两个扩展选项：连续数据导出 (CDE) 和 API
 ## <a name="next-steps"></a>后续步骤
 
 * 现在，你已了解体系结构，[免费创建太阳能板应用](https://apps.azureiotcentral.com/build/new/solar-panel-monitoring)
-* 若要详细了解 IoT Central，请参阅 [IoT Central 概述](https://docs.microsoft.com/azure/iot-central/)
+* 若要详细了解 IoT Central，请参阅 [IoT Central 概述](../index.yml)

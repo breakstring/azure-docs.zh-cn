@@ -3,12 +3,13 @@ title: Azure Service Fabric DNS 服务
 description: 使用 Service Fabric 的 DNS 服务从群集内部发现微服务。
 ms.topic: conceptual
 ms.date: 7/20/2018
-ms.openlocfilehash: 6a6611281fd2d2368809419ad594d2eb1289b5a0
-ms.sourcegitcommit: dabd9eb9925308d3c2404c3957e5c921408089da
+ms.custom: devx-track-csharp
+ms.openlocfilehash: f7f06920820cdc73f8d3101ab24ee46625931ee4
+ms.sourcegitcommit: 829d951d5c90442a38012daaf77e86046018e5b9
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/11/2020
-ms.locfileid: "86258911"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "91268037"
 ---
 # <a name="dns-service-in-azure-service-fabric"></a>Azure Service Fabric 中的 DNS 服务
 DNS 服务是可选的系统服务，可以在群集中启用，用于发现使用 DNS 协议的其他服务。 
@@ -17,7 +18,7 @@ DNS 服务是可选的系统服务，可以在群集中启用，用于发现使�
 
 DNS 服务将 DNS 名称映射到服务名称，命名服务将服务名称进行解析并将其发送回服务终结点。 在创建时提供服务的 DNS 名称。 下图显示了如何对无状态服务运行 DNS 服务。
 
-![服务终结点](./media/service-fabric-dnsservice/stateless-dns.png)
+![显示 dns 服务如何为无状态服务将 DNS 名称映射到服务名称的关系图。](./media/service-fabric-dnsservice/stateless-dns.png)
 
 从 Service Fabric 版本 6.3 开始，Service Fabric DNS 协议经过扩展，现在包含用于寻址已分区的有状态服务的方案。 使用这些扩展可以通过有状态服务 DNS 名称和分区名称的组合来解析特定的分区 IP 地址。 支持所有三种分区方案：
 
@@ -27,7 +28,7 @@ DNS 服务将 DNS 名称映射到服务名称，命名服务将服务名称进�
 
 下图显示了如何分区的有状态服务运行 DNS 服务。
 
-![有状态服务终结点](./media/service-fabric-dnsservice/stateful-dns.png)
+![显示已分区无状态服务的 dns 服务将 DNS 名称映射到服务名称的关系图。](./media/service-fabric-dnsservice/stateful-dns.png)
 
 DNS 服务不支持动态端口。 若要解析动态端口上公开的服务，请使用[反向代理服务](./service-fabric-reverseproxy.md)。
 

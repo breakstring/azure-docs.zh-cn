@@ -1,27 +1,32 @@
 ---
 title: 通过 Java 使用 Azure 表存储或 Azure Cosmos DB 表 API
-description: 使用 Azure 表存储或 Azure Cosmos DB 表 API 将结构化数据存储在云中。
+description: 通过 Java 使用 Azure 表存储或 Azure Cosmos DB 表 API 将结构化数据存储在云中。
 ms.service: cosmos-db
 ms.subservice: cosmosdb-table
 ms.devlang: Java
 ms.topic: sample
-ms.date: 07/23/2020
-author: sakash279
-ms.author: akshanka
+ms.date: 12/10/2020
+author: ThomasWeiss
+ms.author: thweiss
 ms.custom: devx-track-java
-ms.openlocfilehash: e28770bae9f845ae8f5edd3b67bc55175392052a
-ms.sourcegitcommit: 269da970ef8d6fab1e0a5c1a781e4e550ffd2c55
+ms.openlocfilehash: a5da5e1717f897d2236fd73f0fff525e157f7a0e
+ms.sourcegitcommit: 5db975ced62cd095be587d99da01949222fc69a3
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/10/2020
-ms.locfileid: "88056663"
+ms.lasthandoff: 12/10/2020
+ms.locfileid: "97093683"
 ---
 # <a name="how-to-use-azure-table-storage-or-azure-cosmos-db-table-api-from-java"></a>如何通过 Java 使用 Azure 表存储或 Azure Cosmos DB 表 API
+
+[!INCLUDE[appliesto-table-api](includes/appliesto-table-api.md)]
 
 [!INCLUDE [storage-selector-table-include](../../includes/storage-selector-table-include.md)]
 [!INCLUDE [storage-table-applies-to-storagetable-and-cosmos](../../includes/storage-table-applies-to-storagetable-and-cosmos.md)]
 
-本文介绍如何创建表、存储数据以及对数据执行 CRUD 操作。 选择 Azure 表服务或 Azure Cosmos DB 表 API。 这些示例用 Java 编写并使用[用于 Java 的 Azure 存储 SDK][Azure Storage SDK for Java]。 涉及的方案包括**创建**、**列出**和**删除**表，以及**插入**、**查询**、**修改**和**删除**表中的实体。 有关表的详细信息，请参阅[后续步骤](#next-steps)部分。
+本文介绍如何创建表、存储数据以及对数据执行 CRUD 操作。 选择 Azure 表服务或 Azure Cosmos DB 表 API。 这些示例用 Java 编写并使用[用于 Java 的 Azure 存储 SDK v8][Azure Storage SDK for Java]。 涉及的方案包括 **创建**、**列出** 和 **删除** 表，以及 **插入**、**查询**、**修改** 和 **删除** 表中的实体。 有关表的详细信息，请参阅[后续步骤](#next-steps)部分。
+
+> [!IMPORTANT]
+> 支持表存储的 Azure 存储 SDK 的最新版本为 [v8][Azure Storage SDK for Java]。 即将推出新版本的适用于 Java 的表存储 SDK。
 
 > [!NOTE]
 > SDK 提供给在 Android 设备上使用 Azure 存储的开发人员。 有关详细信息，请参阅[用于 Android 的 Azure 存储 SDK][Azure Storage SDK for Android]。
@@ -627,8 +632,8 @@ catch (Exception e)
 有关详细信息，请访问[面向 Java 开发人员的 Azure](/java/azure)。
 
 [Azure SDK for Java]: https://go.microsoft.com/fwlink/?LinkID=525671
-[Azure Storage SDK for Java]: https://github.com/azure/azure-storage-java
+[Azure Storage SDK for Java]: https://github.com/Azure/azure-storage-java/tree/v8.6.5
 [Azure Storage SDK for Android]: https://github.com/azure/azure-storage-android
 [Azure 存储客户端 SDK 参考]: https://azure.github.io/azure-storage-java/
-[Azure Storage REST API]: https://msdn.microsoft.com/library/azure/dd179355.aspx
+[Azure Storage REST API]: /rest/api/storageservices/
 [Azure Storage Team Blog]: https://blogs.msdn.microsoft.com/windowsazurestorage/

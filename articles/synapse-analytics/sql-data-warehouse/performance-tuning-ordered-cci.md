@@ -1,6 +1,6 @@
 ---
 title: 使用有序聚集列存储索引优化性能
-description: 使用有序聚集列存储索引改善查询性能时应了解的建议和注意事项。
+description: 当你使用有序聚集列存储索引以提高专用 SQL 池中的查询性能时，你应了解的建议和注意事项。
 services: synapse-analytics
 author: XiaoyuMSFT
 manager: craigg
@@ -11,22 +11,22 @@ ms.date: 09/05/2019
 ms.author: xiaoyul
 ms.reviewer: nibruno; jrasnick
 ms.custom: seo-lt-2019, azure-synapse
-ms.openlocfilehash: 454e205904b3623bdb5adc906465f01abd77092a
-ms.sourcegitcommit: c5021f2095e25750eb34fd0b866adf5d81d56c3a
+ms.openlocfilehash: afb6efcee2ad4f5cf25a411eed353ff2fc27d75c
+ms.sourcegitcommit: 6a350f39e2f04500ecb7235f5d88682eb4910ae8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/25/2020
-ms.locfileid: "88795603"
+ms.lasthandoff: 12/01/2020
+ms.locfileid: "96460785"
 ---
 # <a name="performance-tuning-with-ordered-clustered-columnstore-index"></a>使用有序聚集列存储索引优化性能  
 
-当用户查询 Synapse SQL 池中的列存储表时，优化器会检查每个段中存储的最小值和最大值。  超出查询谓词边界的段不会从磁盘读取到内存。  如果要读取的段的数目及其总大小较小，则查询性能可以更快。   
+当用户查询专用 SQL 池中的列存储表时，优化器会检查每个段中存储的最小值和最大值。  超出查询谓词边界的段不会从磁盘读取到内存。  如果要读取的段的数目及其总大小较小，则查询性能可以更快。   
 
 ## <a name="ordered-vs-non-ordered-clustered-columnstore-index"></a>有序与无序聚集列存储索引
 
 默认情况下，对于不是使用索引选项创建的每个表，某个内部组件（索引生成器）将在该表中创建无序的聚集列存储索引 (CCI)。  每个列中的数据压缩成单独的 CCI 行组段。  每个段的值范围都有元数据，因此，在执行查询期间，不会从磁盘中读取超出查询谓词边界的段。  CCI 提供最高级别的数据压缩，可减少要读取的段大小，因此查询可以更快地运行。 但是，由于索引生成器在将数据压缩成段之前不会将数据排序，因此可能会出现值范围重叠的段，从而导致查询从磁盘中读取更多的段，需要更长的时间才能完成。  
 
-创建有序 CCI 时，Synapse SQL 引擎会先按顺序键将内存中的现有数据排序，然后，索引生成器将这些数据压缩成索引段。  使用有序数据可以减少段重叠的情况，使查询更有效地消除段，因而可提高性能，因为要从磁盘读取的段数更少。  如果可以一次性在内存中为所有数据排序，则可以避免段重叠的情况。  由于数据仓库中的表较大，因此这种情况不经常发生。  
+创建按序的 CCI 时，专用 SQL 池引擎会按顺序键 (s) 在内存中对现有数据进行排序，然后索引生成器将它们压缩为索引段。  使用有序数据可以减少段重叠的情况，使查询更有效地消除段，因而可提高性能，因为要从磁盘读取的段数更少。  如果可以一次性在内存中为所有数据排序，则可以避免段重叠的情况。  由于数据仓库中的表较大，因此这种情况不经常发生。  
 
 若要检查列的段范围，请结合表名称和列名称运行以下命令：
 
@@ -49,11 +49,8 @@ ORDER BY o.name, pnp.distribution_id, cls.min_data_id
 
 ```
 
->[!TIP]
-> 为提高 Synapse SQL 中的性能，请考虑**pdw_permanent_table_mappings**使用持久性用户表上的而不是**sys.databases pdw_table_mappings。** 有关详细信息，请参阅 **[.sys &#40;transact-sql&#41;pdw_permanent_table_mappings ](/sql/relational-databases/system-catalog-views/sys-pdw-permanent-table-mappings-transact-sql?view=azure-sqldw-latest)** 。
-
 > [!NOTE] 
-> 在有序 CCI 表中，同一批 DML 或数据加载操作生成的新数据将在该批中排序，而表中的所有数据不会经过全局排序。  用户可以重新生成 (REBUILD) 有序 CCI 来对表中的所有数据进行排序。  在 Synapse SQL 中，列存储索引重新生成是一项脱机操作。  对于已分区的表，每次将对一个分区执行重新生成。  重新生成的分区中的数据是“脱机”的，在对该分区完成重新生成之前，这些数据不可用。 
+> 在有序 CCI 表中，同一批 DML 或数据加载操作生成的新数据将在该批中排序，而表中的所有数据不会经过全局排序。  用户可以重新生成 (REBUILD) 有序 CCI 来对表中的所有数据进行排序。  在专用 SQL 池中，列存储索引重新生成是一项脱机操作。  对于已分区的表，每次将对一个分区执行重新生成。  重新生成的分区中的数据是“脱机”的，在对该分区完成重新生成之前，这些数据不可用。 
 
 ## <a name="query-performance"></a>查询性能
 
@@ -98,7 +95,7 @@ SELECT * FROM T1 WHERE Col_A = 'a' AND Col_C = 'c';
 
 以下示例将数据载入采用不同架构的表的性能做了比较。
 
-![Performance_comparison_data_loading](./media/performance-tuning-ordered-cci/cci-data-loading-performance.png)
+![柱状图，将数据载入采用不同架构的表的性能做了比较。](./media/performance-tuning-ordered-cci/cci-data-loading-performance.png)
 
 
 以下示例对使用 CCI 和有序 CCI 的查询性能做了比较。

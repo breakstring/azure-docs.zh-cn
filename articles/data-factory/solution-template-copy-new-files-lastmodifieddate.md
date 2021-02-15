@@ -1,22 +1,19 @@
 ---
 title: 按 LastModifiedDate 复制新文件和更改的文件
 description: 了解如何在 Azure 数据工厂中使用解决方案模板根据 LastModifiedDate 复制新的和已更改的文件。
-services: data-factory
 author: dearandyxu
 ms.author: yexu
 ms.reviewer: ''
-manager: shwang
 ms.service: data-factory
-ms.workload: data-services
 ms.topic: conceptual
 ms.custom: seo-lt-2019
 ms.date: 3/8/2019
-ms.openlocfilehash: 363af1012b327a55703cc6e35a02dc1f27869bd0
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 94d09dc96d017dba3b16cc5fe113272a9393741d
+ms.sourcegitcommit: d4734bc680ea221ea80fdea67859d6d32241aefc
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "82629059"
+ms.lasthandoff: 02/14/2021
+ms.locfileid: "100362074"
 ---
 # <a name="copy-new-and-changed-files-by-lastmodifieddate-with-azure-data-factory"></a>使用 Azure 数据工厂根据 LastModifiedDate 复制新的和已更改的文件
 
@@ -41,11 +38,11 @@ ms.locfileid: "82629059"
 
 ## <a name="how-to-use-this-solution-template"></a>如何使用此解决方案模板
 
-1. 转到模板“仅根据 LastModifiedDate 复制新文件”。  创建与源存储的**新**连接。 源存储是要从中复制文件的存储。
+1. 转到模板“仅根据 LastModifiedDate 复制新文件”。  创建与源存储的 **新** 连接。 源存储是要从中复制文件的存储。
 
     ![与源建立新的连接](media/solution-template-copy-new-files-lastmodifieddate/copy-new-files-lastmodifieddate1.png)
     
-2. 与目标存储建立**新的**连接。 目标存储是要将文件复制到的存储。 
+2. 与目标存储建立 **新的** 连接。 目标存储是要将文件复制到的存储。 
 
     ![与目标建立新的连接](media/solution-template-copy-new-files-lastmodifieddate/copy-new-files-lastmodifieddate3.png)
 
@@ -75,7 +72,7 @@ ms.locfileid: "82629059"
     
 7. 现在，可以添加一个翻转窗口触发器来自动执行此管道，使管道始终可以定期根据 LastModifiedDate，仅复制新文件和已更改的文件。  依次选择“添加触发器”、“新建/编辑”。  
 
-    ![查看结果](media/solution-template-copy-new-files-lastmodifieddate/copy-new-files-lastmodifieddate8.png)
+    ![突出显示在选择“添加”触发器时显示的“新建/编辑”菜单选项的屏幕截图。](media/solution-template-copy-new-files-lastmodifieddate/copy-new-files-lastmodifieddate8.png)
     
 8. 在“添加触发器”窗口中，选择“+ 新建”。  
 
@@ -103,7 +100,7 @@ ms.locfileid: "82629059"
 
 14. 查看结果。 你将看到，管道每隔 15 分钟自动触发，并且在每个管道运行中，只会将源存储中新的或已更改的文件复制到目标存储。
 
-    ![查看结果](media/solution-template-copy-new-files-lastmodifieddate/copy-new-files-lastmodifieddate15.png)
+    ![显示触发管道时返回的结果的屏幕截图。](media/solution-template-copy-new-files-lastmodifieddate/copy-new-files-lastmodifieddate15.png)
     
 ## <a name="next-steps"></a>后续步骤
 

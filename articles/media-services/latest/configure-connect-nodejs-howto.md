@@ -1,27 +1,29 @@
 ---
 title: 连接到 Azure 媒体服务 v3 API - Node.js
-description: 本文演示如何通过 Node.js 连接到媒体服务 v3 API。
+description: 本文演示如何使用 Node.js 连接到媒体服务 v3 API。
 services: media-services
 documentationcenter: ''
-author: Juliako
+author: IngridAtMicrosoft
 manager: femila
 editor: ''
 ms.service: media-services
 ms.workload: media
 ms.tgt_pltfrm: na
 ms.devlang: na
-ms.topic: article
-ms.date: 03/25/2019
-ms.author: juliako
-ms.custom: devx-track-javascript
-ms.openlocfilehash: 8e54fec584f8961dfc44a7c93f95772ea03e1259
-ms.sourcegitcommit: e71da24cc108efc2c194007f976f74dd596ab013
+ms.topic: how-to
+ms.date: 08/31/2020
+ms.author: inhenkel
+ms.custom: devx-track-js
+ms.openlocfilehash: c6ea238edd68413646dda59b22d1c0dc2557d57e
+ms.sourcegitcommit: f6236e0fa28343cf0e478ab630d43e3fd78b9596
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/29/2020
-ms.locfileid: "87424420"
+ms.lasthandoff: 11/19/2020
+ms.locfileid: "94916825"
 ---
 # <a name="connect-to-media-services-v3-api---nodejs"></a>连接到媒体服务 v3 API - Node.js
+
+[!INCLUDE [media services api v3 logo](./includes/v3-hr.md)]
 
 本文介绍如何使用服务主体登录方法连接到 Azure 媒体服务 v3 node.js SDK。
 
@@ -38,6 +40,8 @@ ms.locfileid: "87424420"
 1. 使用偏好的编辑器创建一个 package.json 文件。
 1. 打开该文件并粘贴以下代码：
 
+   请确保获取最新版本的 [适用于 JavaScript 的 AZUREMEDIASERVICES SDK](https://www.npmjs.com/package/@azure/arm-mediaservices)。
+
 ```json
 {
   "name": "media-services-node-sample",
@@ -45,7 +49,7 @@ ms.locfileid: "87424420"
   "description": "",
   "main": "./index.js",
   "dependencies": {
-    "azure-arm-mediaservices": "^4.1.0",
+    "azure-arm-mediaservices": "^8.0.0",
     "azure-storage": "^2.8.0",
     "ms-rest": "^2.3.3",
     "ms-rest-azure": "^2.5.5"

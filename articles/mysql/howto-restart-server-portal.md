@@ -1,17 +1,17 @@
 ---
-title: 重新启动服务器-Azure 门户-Azure Database for MySQL
+title: 重启服务器 - Azure 门户 - Azure Database for MySQL
 description: 本文介绍了如何使用 Azure 门户重启 Azure Database for MySQL 服务器。
-author: ajlam
-ms.author: andrela
+author: savjani
+ms.author: pariks
 ms.service: mysql
 ms.topic: how-to
 ms.date: 3/18/2020
-ms.openlocfilehash: aa79d1ba2cba86bf3f381ff78fd630ce455128d9
-ms.sourcegitcommit: d7008edadc9993df960817ad4c5521efa69ffa9f
+ms.openlocfilehash: 2d19c0bd4ef5c49b8be82ffa11115ff6a1c6b302
+ms.sourcegitcommit: 6ab718e1be2767db2605eeebe974ee9e2c07022b
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/08/2020
-ms.locfileid: "86107863"
+ms.lasthandoff: 11/12/2020
+ms.locfileid: "94541787"
 ---
 # <a name="restart-azure-database-for-mysql-server-using-azure-portal"></a>使用 Azure 门户重启 Azure Database for MySQL 服务器
 本主题介绍如何重启 Azure Database for MySQL 服务器。 出于维护原因，可能需要重启服务器，这会在服务器执行操作时导致短暂中断。
@@ -32,19 +32,19 @@ ms.locfileid: "86107863"
 
 2. 在服务器“概述”页的工具栏中，单击“重启”   。
 
-   ![Azure Database for MySQL -“概述”-“重启”按钮](./media/howto-restart-server-portal/2-server.png)
+   :::image type="content" source="./media/howto-restart-server-portal/2-server.png" alt-text="Azure Database for MySQL -“概述”-“重启”按钮":::
 
 3. 单击“是”以确认重启服务器  。
 
-   ![Azure Database for MySQL - 重启确认](./media/howto-restart-server-portal/3-restart-confirm.png)
+   :::image type="content" source="./media/howto-restart-server-portal/3-restart-confirm.png" alt-text="Azure Database for MySQL - 重启确认":::
 
 4. 观察到服务器状态更改为“正在重启”。
 
-   ![Azure Database for MySQL - 重启状态](./media/howto-restart-server-portal/4-restarting-status.png)
+   :::image type="content" source="./media/howto-restart-server-portal/4-restarting-status.png" alt-text="Azure Database for MySQL - 重启状态":::
 
 5. 确认服务器重启成功。
 
-   ![Azure Database for MySQL - 重启成功](./media/howto-restart-server-portal/5-restart-success.png)
+   :::image type="content" source="./media/howto-restart-server-portal/5-restart-success.png" alt-text="Azure Database for MySQL - 重启成功":::
 
 ## <a name="next-steps"></a>后续步骤
 

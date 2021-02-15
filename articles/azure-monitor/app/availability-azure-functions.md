@@ -2,15 +2,13 @@
 title: 使用 Azure Functions 创建和运行自定义可用性测试
 description: 本文档将介绍如何使用 TrackAvailability() 创建一个 Azure 函数，该函数会根据 TimerTrigger 函数中给定的配置定期运行。 此测试的结果将发送到 Application Insights 资源，你可以在其中查询可用性结果数据并对其发出警报。 使用自定义测试，你可以编写比使用门户 UI 更为复杂的可用性测试、监视 Azure VNET 内部的应用、更改终结点地址或创建可用性测试（如果在你所在的区域中不可用）。
 ms.topic: conceptual
-author: mrbullwinkle
-ms.author: mbullwin
 ms.date: 05/04/2020
-ms.openlocfilehash: e2603d921973aefdcc1a6f4a76bdf70d69dcb68f
-ms.sourcegitcommit: a76ff927bd57d2fcc122fa36f7cb21eb22154cfa
+ms.openlocfilehash: 3553b212d1b63d4bd239893ba90aa3465d98df60
+ms.sourcegitcommit: ba7fafe5b3f84b053ecbeeddfb0d3ff07e509e40
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/28/2020
-ms.locfileid: "87320623"
+ms.lasthandoff: 10/12/2020
+ms.locfileid: "91945645"
 ---
 # <a name="create-and-run-custom-availability-tests-using-azure-functions"></a>使用 Azure Functions 创建和运行自定义可用性测试
 
@@ -45,7 +43,7 @@ ms.locfileid: "87320623"
 >![Azure 门户中 Azure 函数的 run.csx](media/availability-azure-functions/runcsx.png)
 
 > [!NOTE]
-> 对于“终结点地址”，你将使用 `EndpointAddress= https://dc.services.visualstudio.com/v2/track`。 除非你的资源位于 Azure 政府版或 Azure 中国等区域，否则请参阅此文，了解如何[覆盖默认终结点](./custom-endpoints.md#regions-that-require-endpoint-modification)，并选择适用于你所在区域的相应遥测通道终结点。
+> 对于“终结点地址”，你将使用 `EndpointAddress= https://dc.services.visualstudio.com/v2/track`。 除非你的资源位于 Azure 政府版或 Azure 中国等区域，否则请参阅此文，了解如何 [覆盖默认终结点](./custom-endpoints.md#regions-that-require-endpoint-modification) ，并选择适用于你所在区域的相应遥测通道终结点。
 
 ```C#
 #load "runAvailabilityTest.csx"
@@ -135,7 +133,7 @@ public async static Task Run(TimerInfo myTimer, ILogger log)
         <TargetFramework>netstandard2.0</TargetFramework>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.8.2" /> <!-- Ensure you’re using the latest version -->
+        <PackageReference Include="Microsoft.ApplicationInsights" Version="2.15.0" /> <!-- Ensure you’re using the latest version -->
     </ItemGroup>
 </Project>
 
@@ -183,7 +181,7 @@ public async static Task RunAvailbiltyTestAsync(ILogger log)
 >![可用性结果](media/availability-azure-functions/availabilityresults.png)
 
 >[!div class="mx-imgBorder"]
->![依赖项](media/availability-azure-functions/dependencies.png)
+>![屏幕截图显示具有限制为50的依赖项的新查询选项卡。](media/availability-azure-functions/dependencies.png)
 
 ## <a name="next-steps"></a>后续步骤
 

@@ -1,0 +1,14 @@
+- name: Azure Arc 文档
+  href: index.yml
+- name: 概述
+  items:
+    - name: 关于 Azure Arc
+      href: overview.md
+- name: 已启用 Arc 的服务器 >
+  href: ./servers/overview.md
+- name: 已启用 Arc 的 Kubernetes >
+  href: ./kubernetes/overview.md
+- name: 已启用 Arc 的数据服务（预览）>
+  href: ./data/overview.md
+- name: 已启用 Arc 的 SQL Server（预览）>
+  href: 'https://docs.microsoft.com/sql/sql-server/azure-arc/overview'

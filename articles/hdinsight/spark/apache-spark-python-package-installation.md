@@ -1,27 +1,20 @@
 ---
 title: 用于 Azure HDInsight 上包含 Jupyter 的 Python 包的脚本操作
-description: 逐步说明如何使用脚本操作配置 HDInsight Spark 群集随附的 Jupyter notebook，以使用外部 python 包。
-author: hrasheed-msft
-ms.author: hrasheed
-ms.reviewer: jasonh
+description: 逐步说明如何使用脚本操作来配置 HDInsight Spark 群集可使用的 Jupyter 笔记本，以使用外部 python 包。
 ms.service: hdinsight
 ms.topic: how-to
 ms.custom: seoapr2020, devx-track-python
 ms.date: 04/29/2020
-ms.openlocfilehash: 59de3eb2370029ab9edcb609298c7b1fdf5f8ff8
-ms.sourcegitcommit: dea88d5e28bd4bbd55f5303d7d58785fad5a341d
+ms.openlocfilehash: 8fbbe137ece7aac2dd2196c5ebec435e118297ad
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/06/2020
-ms.locfileid: "87873749"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98929810"
 ---
 # <a name="safely-manage-python-environment-on-azure-hdinsight-using-script-action"></a>使用脚本操作在 Azure HDInsight 上安全管理 Python 环境
 
-> [!div class="op_single_selector"]
-> * [使用单元格 magic](apache-spark-jupyter-notebook-use-external-packages.md)
-> * [使用脚本操作](apache-spark-python-package-installation.md)
-
-HDInsight 在 Spark 群集中有两个内置 Python 安装，即 Anaconda Python 2.7 和 Python 3.5。 客户可能需要自定义 Python 环境。 例如，安装外部 Python 包或其他 Python 版本。 本文介绍的最佳做法涉及如何安全地管理 HDInsight 上 Apache Spark 群集的 Python 环境。
+HDInsight 在 Spark 群集中有两个内置 Python 安装，即 Anaconda Python 2.7 和 Python 3.5。 客户可能需要自定义 Python 环境，例如安装外部 Python 包。 本文介绍的最佳做法涉及如何安全地管理 HDInsight 上 Apache Spark 群集的 Python 环境。
 
 ## <a name="prerequisites"></a>先决条件
 
@@ -41,7 +34,7 @@ HDInsight 服务中有两种类型的开放源代码组件：
 > [!IMPORTANT]
 > 完全支持通过 HDInsight 群集提供的组件。 Microsoft 支持部门可帮助找出并解决与这些组件相关的问题。
 >
-> 自定义组件可获得合理范围的支持，有助于进一步解决问题。 Microsoft 支持部门也许能够解决问题，也可能要求你参与可用的开放源代码技术渠道，获取该技术的深入专业知识。 例如，有许多可以使用的社区站点，例如：[有关 HDInsight 的 Microsoft Q&A 问题页面](https://docs.microsoft.com/answers/topics/azure-hdinsight.html)、`https://stackoverflow.com`。 此外，Apache 项目在 `https://apache.org` 上提供了项目站点。
+> 自定义组件可获得合理范围的支持，有助于进一步解决问题。 Microsoft 支持部门也许能够解决问题，也可能要求你参与可用的开放源代码技术渠道，获取该技术的深入专业知识。 例如，有许多可以使用的社区站点，例如：[有关 HDInsight 的 Microsoft Q&A 问题页面](/answers/topics/azure-hdinsight.html)、`https://stackoverflow.com`。 此外，Apache 项目在 `https://apache.org` 上有项目站点。
 
 ## <a name="understand-default-python-installation"></a>了解默认 Python 安装
 
@@ -49,9 +42,9 @@ HDInsight Spark 群集是通过 Anaconda 安装创建的。 群集中有两个 P
 
 |设置 |Python 2.7|Python 3.5|
 |----|----|----|
-|路径|/usr/bin/anaconda/bin|/usr/bin/anaconda/envs/py35/bin|
-|Spark 版本|默认设置为 2.7|空值|
-|Livy 版本|默认设置为 2.7|空值|
+|`Path`|/usr/bin/anaconda/bin|/usr/bin/anaconda/envs/py35/bin|
+|Spark 版本|默认设置为 2.7|可以将配置更改为 3.5|
+|Livy 版本|默认设置为 2.7|可以将配置更改为 3.5|
 |Jupyter|PySpark 内核|PySpark3 内核|
 
 ## <a name="safely-install-external-python-packages"></a>安全安装外部 Python 包
@@ -85,7 +78,7 @@ HDInsight 群集依赖于内置 Python 环境（Python 2.7 和 Python 3.5）。 
 
     - 或者使用 PyPi 存储库，请相应地更改 `seaborn` 和 `py35new`：
         ```bash
-        sudo /usr/bin/anaconda/env/py35new/bin/pip install seaborn
+        sudo /usr/bin/anaconda/envs/py35new/bin/pip install seaborn
         ```
 
     如果要安装特定版本的库，请使用以下命令：
@@ -102,7 +95,7 @@ HDInsight 群集依赖于内置 Python 环境（Python 2.7 和 Python 3.5）。 
     - 或者使用 PyPi 存储库，请相应地更改 `numpy==1.16.1` 和 `py35new`：
 
         ```bash
-        sudo /usr/bin/anaconda/env/py35new/bin/pip install numpy==1.16.1
+        sudo /usr/bin/anaconda/envs/py35new/bin/pip install numpy==1.16.1
         ```
 
     如果不知道虚拟环境名称，则可以通过 SSH 连接到群集的头节点并运行 `/usr/bin/anaconda/bin/conda info -e` 以显示所有虚拟环境。
@@ -132,7 +125,25 @@ HDInsight 群集依赖于内置 Python 环境（Python 2.7 和 Python 3.5）。 
 
     4. 保存更改并重启受影响的服务。 需要重启 Spark2 服务才能使这些更改生效。 Ambari UI 将提示需要重启。单击“重启”以重启所有受影响的服务。
 
-        ![通过 Ambari 更改 Spark 配置](./media/apache-spark-python-package-installation/ambari-restart-services.png)
+        ![重新启动服务](./media/apache-spark-python-package-installation/ambari-restart-services.png)
+
+    5. 为 Spark 会话设置两个属性，以确保作业指向更新的 spark 配置：`spark.yarn.appMasterEnv.PYSPARK_PYTHON` 和 `spark.yarn.appMasterEnv.PYSPARK_DRIVER_PYTHON`。 
+
+        使用终端或笔记本时，使用 `spark.conf.set` 函数。
+
+        ```spark
+        spark.conf.set("spark.yarn.appMasterEnv.PYSPARK_PYTHON", "/usr/bin/anaconda/envs/py35/bin/python")
+        spark.conf.set("spark.yarn.appMasterEnv.PYSPARK_DRIVER_PYTHON", "/usr/bin/anaconda/envs/py35/bin/python")
+        ```
+
+        如果使用的是 livy，请将以下属性添加到请求正文：
+
+        ```
+        “conf” : {
+        “spark.yarn.appMasterEnv.PYSPARK_PYTHON”:”/usr/bin/anaconda/envs/py35/bin/python”,
+        “spark.yarn.appMasterEnv.PYSPARK_DRIVER_PYTHON”:”/usr/bin/anaconda/envs/py35/bin/python”
+        }
+        ```
 
 4. 如果要在 Jupyter 上使用新创建的虚拟环境。 更改 Jupyter 配置并重启 Jupyter。 使用以下语句在所有头节点上运行脚本操作，使 Jupyter 指向新创建的虚拟环境。 请务必修改针对虚拟环境指定的前缀的路径。 运行此脚本操作后，通过 Ambari UI 重启 Jupyter 服务，使此项更改生效。
 
@@ -153,5 +164,5 @@ Anaconda 版本 `4.7.11`、`4.7.12`、`4.8.0` 有一个已知的 bug。 如果�
 ## <a name="next-steps"></a>后续步骤
 
 * [概述：Azure HDInsight 上的 Apache Spark](apache-spark-overview.md)
-* [在 Apache Spark 中将外部包与 Jupyter 笔记本配合使用](apache-spark-jupyter-notebook-use-external-packages.md)
+* [Apache Spark 中包含 Jupyter 笔记本的外部包](apache-spark-jupyter-notebook-use-external-packages.md)
 * [Track and debug jobs running on an Apache Spark cluster in HDInsight（跟踪和调试 HDInsight 中的 Apache Spark 群集上运行的作业）](apache-spark-job-debugging.md)

@@ -7,28 +7,16 @@ ms.topic: conceptual
 ms.date: 04/23/2019
 ms.author: vitalyg
 ms.subservice: metrics
-ms.openlocfilehash: 4800234b55507b7c8d8a16d16ce4d2fef3365baa
-ms.sourcegitcommit: 2ff0d073607bc746ffc638a84bb026d1705e543e
+ms.openlocfilehash: 5219553fe300d607212af1ef6cedf72ce6506762
+ms.sourcegitcommit: 25d1d5eb0329c14367621924e1da19af0a99acf1
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/06/2020
-ms.locfileid: "87829588"
+ms.lasthandoff: 01/16/2021
+ms.locfileid: "98250326"
 ---
 # <a name="troubleshooting-metrics-charts"></a>排查指标图表问题
 
 在 Azure 指标资源管理器中创建、自定义或解释图表时如果遇到问题，请参考本文。 如果你不熟悉指标，请参阅[指标资源管理器入门](metrics-getting-started.md)和[指标资源管理器的高级功能](metrics-charts.md)。 还可以查看配置的指标图表[示例](metric-chart-samples.md)。
-
-## <a name="cant-find-your-resource-to-select-it"></a>找不到要选择的资源
-
-你已单击“选择资源”按钮，但资源选取器对话框中未显示你的资源。 
-
-**解决方案：** 只有在选择订阅和资源组之后，指标资源管理器才会列出可用的资源。 如果看不到你的资源：
-
-1. 确保已在“订阅”下拉列表中选择正确的订阅。  如果你的订阅未列出，请单击“目录 + 订阅设置”，并添加包含资源的订阅。 
-
-1. 确保已选择正确的资源组。
-    > [!WARNING]
-    > 为提供最佳性能，当你首次打开指标资源管理器时，“资源组”下拉列表中不会包含预先选择的资源组。  必须至少选择一个组才能看到任何资源。
 
 ## <a name="chart-shows-no-data"></a>图表未显示任何数据
 
@@ -42,7 +30,7 @@ ms.locfileid: "87829588"
 
 ### <a name="you-dont-have-sufficient-access-rights-to-your-resource"></a>你对资源没有足够的访问权限
 
-在 Azure 中，对指标的访问由[azure 基于角色的访问控制 (AZURE RBAC) ](../../role-based-access-control/overview.md)控制。 只有[监视读取者](../../role-based-access-control/built-in-roles.md#monitoring-reader)、[监视参与者](../../role-based-access-control/built-in-roles.md#monitoring-contributor)或[参与者](../../role-based-access-control/built-in-roles.md#contributor)的成员才能浏览任何资源的指标。
+在 Azure 中，对指标的访问由 [Azure 基于角色的访问控制 (Azure RBAC)](../../role-based-access-control/overview.md) 控制。 只有[监视读取者](../../role-based-access-control/built-in-roles.md#monitoring-reader)、[监视参与者](../../role-based-access-control/built-in-roles.md#monitoring-contributor)或[参与者](../../role-based-access-control/built-in-roles.md#contributor)的成员才能浏览任何资源的指标。
 
 **解决方案：** 请确保你对要在其中浏览指标的资源拥有足够的权限。
 
@@ -60,13 +48,13 @@ ms.locfileid: "87829588"
 
 ### <a name="all-metric-values-were-outside-of-the-locked-y-axis-range"></a>所有指标值超过了已锁定的 y 轴范围
 
-[锁定图表 y 轴的边界](metrics-charts.md#lock-boundaries-of-chart-y-axis)时，你可能无意中造成图表显示区域不显示图表线条。 例如，如果 y 轴已锁定为 0% 到 50% 的范围，而指标包含 100% 的常量值，则线条始终会显示在可视区域的外部，使图表看上去是空白的。
+[锁定图表 y 轴的边界](metrics-charts.md#locking-the-range-of-the-y-axis)时，你可能无意中造成图表显示区域不显示图表线条。 例如，如果 y 轴已锁定为 0% 到 50% 的范围，而指标包含 100% 的常量值，则线条始终会显示在可视区域的外部，使图表看上去是空白的。
 
 **解决方案：** 确认图表的 y 轴边界是否未锁定在指标值的范围以外。 如果 y 轴边界已锁定，你可以暂时将其重置，以确保指标值不超过图表范围。 不建议使用 **sum**、**min** 和 **max** 聚合以自动粒度锁定图表的 y 轴范围，因为在调整浏览器窗口大小或者更改不同的屏幕分辨率时，图表值会随着粒度而变化。 切换粒度可能会使图表显示区域保持空白。
 
 ### <a name="you-are-looking-at-a-guest-os-metric-but-didnt-enable-azure-diagnostic-extension"></a>你正在查看来宾 OS 指标，但未启用 Azure 诊断扩展
 
-收集**来宾 OS** 指标需要配置 Azure 诊断扩展，或使用资源的“诊断设置”面板来启用该扩展。 
+收集 **来宾 OS** 指标需要配置 Azure 诊断扩展，或使用资源的“诊断设置”面板来启用该扩展。 
 
 **解决方案：** 如果 Azure 诊断扩展已启用，但你仍然无法看到指标，请遵循 [Azure 诊断扩展故障排除指南](diagnostics-extension-troubleshooting.md#metric-data-doesnt-appear-in-the-azure-portal)中所述的步骤。 另请参阅[无法选取来宾 OS 命名空间和指标](#cannot-pick-guest-os-namespace-and-metrics)的故障排除步骤
 
@@ -79,16 +67,16 @@ ms.locfileid: "87829588"
 ## <a name="chart-shows-dashed-line"></a>图表显示虚线
 
 Azure 指标图表使用虚线样式来指示两个已知时间粒度数据点之间存在缺失值（也称为“null 值”）。 例如，如果你在时间选择器中选择了“1 分钟”时间粒度，但指标是在 07:26、07:27、07:29 和 07:30 报告的（请注意第二和第三个数据点之间的分钟间隔），则 07:27 和 07:29 数据点之间会以虚线连接，所有其他数据点之间以实线连接。 当指标使用 **count** 和 **sum** 聚合时，虚线将下降到零。 对于 **avg**、**min** 或 **max** 聚合，虚线将连接两个最接近的已知数据点。 此外，当图表最右侧或最左侧缺少数据时，虚线将朝缺失数据点的方向延长。
-  ![指标插图](./media/metrics-troubleshoot/missing-data-point-line-chart.png)
+  ![此屏幕截图显示了当图表最右侧或最左侧缺少数据时，虚线将如何朝缺失数据点的方向延长。](./media/metrics-troubleshoot/dashed-line.png)
 
-**解决方案：** 此行为是设计使然。 这样可以识别缺失的数据点。 折线图能够出色地可视化高密度指标的趋势，但对于包含稀疏值的指标，可能很难解释，尤其是必须将值与时间粒度关联时。 虚线可以方便阅读这些图表，但如果图表仍不清晰，请考虑使用不同的图表类型查看指标。 例如，对同一个指标使用散点图可以清晰地显示每个时间粒度，因为它只会在某个值存在时才可视化某个点，并在该值缺失时统一跳过数据点：![指标插图](./media/metrics-troubleshoot/missing-data-point-scatter-chart.png)
+**解决方案：** 此行为是设计使然。 这样可以识别缺失的数据点。 折线图能够出色地可视化高密度指标的趋势，但对于包含稀疏值的指标，可能很难解释，尤其是必须将值与时间粒度关联时。 虚线可以方便阅读这些图表，但如果图表仍不清晰，请考虑使用不同的图表类型查看指标。 例如，同一指标的散点图只在有值时显示一个点，在缺失值时完全跳过数据点，从而清楚地显示每个时间粒度：![突出显示“散点图”菜单选项的屏幕截图。](./media/metrics-troubleshoot/scatter-plot.png)
 
    > [!NOTE]
    > 如果你仍然偏向于使用折线图来查看指标，将鼠标移到图表上可在鼠标指针位置突出显示数据点，这可能有助于评估时间粒度。
 
 ## <a name="chart-shows-unexpected-drop-in-values"></a>图表显示值出现意外的下降
 
-在许多情况下，指标值的明显下降是图表上显示的数据造成的一种错觉。 如果图表显示最近几分钟的数据，则总和或计数下降可能会给你造成误解，因为 Azure 此时尚未收到或处理最后的指标数据点。 指标处理延迟在几分钟范围内变化，具体取决于所用的服务。 对于显示最近 1 分钟或 5 分钟粒度时间范围的图表，过去几分钟的值的下降会更明显：![指标插图](./media/metrics-troubleshoot/drop-in-values.png)
+在许多情况下，指标值的明显下降是图表上显示的数据造成的一种错觉。 如果图表显示最近几分钟的数据，则总和或计数下降可能会给你造成误解，因为 Azure 此时尚未收到或处理最后的指标数据点。 指标处理延迟在几分钟范围内变化，具体取决于所用的服务。 对于显示最近时间范围（1 或 5 分钟粒度）的图表，过去几分钟内的值减小变得更加明显：![此屏幕截图显示了在过去几分钟内值减小。](./media/metrics-troubleshoot/unexpected-dip.png)
 
 **解决方案：** 此行为是设计使然。 我们相信，即使数据是部分性的或者不完整的，在收到数据后立即显示数据比较有利。   这样，就可以更快地做出重要结论，并立即开始调查。 例如，对于显示失败次数的指标，查看部分值 X 可以判断，在给定的分钟内至少发生了 X 次失败。 然后可以立即开始调查问题，而不是等到图表中显示此分钟内发生的确切失败次数，确切的数字可能不如立即调查那么重要。 收到整个数据集后，图表将会更新，但此时，它可能还会显示更近时间内发生的新的不完整数据点。
 
@@ -98,7 +86,7 @@ Azure 指标图表使用虚线样式来指示两个已知时间粒度数据点�
 
 默认情况下，来宾 OS 指标存储在 Azure 存储帐户中，可通过资源的“诊断设置”选项卡选取这些指标。  如果未收集来宾 OS 指标或者指标资源管理器无法访问这些指标，则你只会看到“虚拟机主机”指标命名空间： 
 
-![图表上的](./media/metrics-troubleshoot/cannot-pick-guest-os-namespace.png)
+![图表上的](./media/metrics-troubleshoot/vm.png)
 
 **解决方案：** 如果在指标资源管理器中未看到“来宾 OS (经典)”命名空间和指标： 
 

@@ -10,12 +10,12 @@ ms.subservice: immersive-reader
 ms.topic: conceptual
 ms.date: 07/22/2019
 ms.author: rwaller
-ms.openlocfilehash: 66a2fde47f71536661431959b957246e28c81d6a
-ms.sourcegitcommit: 628be49d29421a638c8a479452d78ba1c9f7c8e4
+ms.openlocfilehash: 2503355a24a7452ca1ff9886a80f2956897889c4
+ms.sourcegitcommit: 484f510bbb093e9cfca694b56622b5860ca317f7
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/20/2020
-ms.locfileid: "88639795"
+ms.lasthandoff: 01/21/2021
+ms.locfileid: "98630389"
 ---
 # <a name="create-an-immersive-reader-resource-and-configure-azure-active-directory-authentication"></a>创建沉浸式读者资源并配置 Azure Active Directory 身份验证
 
@@ -29,7 +29,7 @@ ms.locfileid: "88639795"
 
 ## <a name="set-up-powershell-environment"></a>设置 PowerShell 环境
 
-1. 首先打开 [Azure Cloud Shell](https://docs.microsoft.com/azure/cloud-shell/overview)。 请确保在左上角下拉列表中或键入时，将 Cloud Shell 设置为 PowerShell `pwsh` 。
+1. 首先打开 [Azure Cloud Shell](../../cloud-shell/overview.md)。 请确保在左上角下拉列表中或键入时，将 Cloud Shell 设置为 PowerShell `pwsh` 。
 
 1. 将以下代码片段复制并粘贴到 shell 中。
 
@@ -143,21 +143,27 @@ ms.locfileid: "88639795"
     }
     ```
 
-1. 运行函数 `Create-ImmersiveReaderResource` ，并根据需要提供参数。
+1. 运行该函数 `Create-ImmersiveReaderResource` ，并根据需要向下面的 "<PARAMETER_VALUES>" 占位符提供自己的值。
 
     ```azurepowershell-interactive
+    Create-ImmersiveReaderResource -SubscriptionName '<SUBSCRIPTION_NAME>' -ResourceName '<RESOURCE_NAME>' -ResourceSubdomain '<RESOURCE_SUBDOMAIN>' -ResourceSKU '<RESOURCE_SKU>' -ResourceLocation '<RESOURCE_LOCATION>' -ResourceGroupName '<RESOURCE_GROUP_NAME>' -ResourceGroupLocation '<RESOURCE_GROUP_LOCATION>' -AADAppDisplayName '<AAD_APP_DISPLAY_NAME>' -AADAppIdentifierUri '<AAD_APP_IDENTIFIER_URI>' -AADAppClientSecret '<AAD_APP_CLIENT_SECRET>' -AADAppClientSecretExpiration '<AAD_APP_CLIENT_SECRET_EXPIRATION>'
+    ```
+
+    完整的命令将如下所示。 在这里，我们将每个参数都置于自己的行上，以清楚地显示整个命令。 请勿按原样复制或使用此命令。 复制并将上面的命令与你自己的值一起使用。 此示例为上面的 "<PARAMETER_VALUES>" 提供了虚拟值。 你的名称将有所不同，因为你将为这些值提供你自己的名称。
+
+    ```
     Create-ImmersiveReaderResource
-      -SubscriptionName '<SUBSCRIPTION_NAME>' `
-      -ResourceName '<RESOURCE_NAME>' `
-      -ResourceSubdomain '<RESOURCE_SUBDOMAIN>' `
-      -ResourceSKU '<RESOURCE_SKU>' `
-      -ResourceLocation '<RESOURCE_LOCATION>' `
-      -ResourceGroupName '<RESOURCE_GROUP_NAME>' `
-      -ResourceGroupLocation '<RESOURCE_GROUP_LOCATION>' `
-      -AADAppDisplayName '<AAD_APP_DISPLAY_NAME>' `
-      -AADAppIdentifierUri '<AAD_APP_IDENTIFIER_URI>' `
-      -AADAppClientSecret '<AAD_APP_CLIENT_SECRET>'
-      -AADAppClientSecretExpiration '<AAD_APP_CLIENT_SECRET_Expiration>'
+        -SubscriptionName 'MyOrganizationSubscriptionName'
+        -ResourceName 'MyOrganizationImmersiveReader'
+        -ResourceSubdomain 'MyOrganizationImmersiveReader'
+        -ResourceSKU 'S0'
+        -ResourceLocation 'westus2'
+        -ResourceGroupName 'MyResourceGroupName'
+        -ResourceGroupLocation 'westus2'
+        -AADAppDisplayName 'MyOrganizationImmersiveReaderAADApp'
+        -AADAppIdentifierUri 'https://MyOrganizationImmersiveReaderAADApp'
+        -AADAppClientSecret 'SomeStrongPassword'
+        -AADAppClientSecretExpiration '2021-12-31'
     ```
 
     | 参数 | 注释 |
@@ -165,7 +171,7 @@ ms.locfileid: "88639795"
     | SubscriptionName |要用于沉浸式读者资源的 Azure 订阅的名称。 若要创建资源，您必须拥有订阅。 |
     | ResourceName |  必须为字母数字，并且可能包含 "-"，但前提是 "-" 不是第一个或最后一个字符。 长度不能超过63个字符。|
     | ResourceSubdomain |沉浸式读者资源需要自定义子域。 在调用沉浸式读卡器服务启动读取器时，SDK 将使用子域。 子域必须是全局唯一的。 子域必须为字母数字，并且可能包含 "-"，但前提是 "-" 不是第一个或最后一个字符。 长度不能超过63个字符。 如果该资源已存在，则此参数是可选的。 |
-    | ResourceSKU |选项： `S0` 。 请访问我们的 [认知服务定价页](https://azure.microsoft.com/pricing/details/cognitive-services/immersive-reader/) ，了解有关每个可用 SKU 的详细信息。 如果该资源已存在，则此参数是可选的。 |
+    | ResourceSKU |选项： `S0`)  (标准层) 或 `S1` (教育/非盈利组织。 请访问我们的 [认知服务定价页](https://azure.microsoft.com/pricing/details/cognitive-services/immersive-reader/) ，了解有关每个可用 SKU 的详细信息。 如果该资源已存在，则此参数是可选的。 |
     | ResourceLocation |选项： `eastus` 、 `eastus2` 、 `southcentralus` 、 `westus` 、 `westus2` 、 `australiaeast` 、 `southeastasia` 、 `centralindia` `japaneast` `northeurope` `uksouth` 、、、、 `westeurope` 。 如果该资源已存在，则此参数是可选的。 |
     | ResourceGroupName |资源是在订阅中的资源组中创建的。 提供现有资源组的名称。 如果资源组不存在，则将创建一个具有此名称的新资源组。 |
     | ResourceGroupLocation |如果资源组不存在，则需要提供要在其中创建组的位置。 若要查找位置列表，请运行 `az account list-locations` 。 使用 *名称* 属性 (在返回的结果中不包含空格) 。 如果资源组已存在，则此参数是可选的。 |
@@ -196,7 +202,3 @@ ms.locfileid: "88639795"
 * 查看 [iOS 教程](./tutorial-ios.md)，了解通过 Swift for iOS 使用沉浸式阅读器 SDK 可执行的其他操作
 * 查看 [Python 教程](./tutorial-python.md)，了解通过 Python 使用沉浸式阅读器 SDK 还可以做什么
 * 浏览[沉浸式阅读器 SDK ](https://github.com/microsoft/immersive-reader-sdk)和[沉浸式阅读器 SDK 参考](./reference.md)
-
-
-
-

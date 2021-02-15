@@ -1,20 +1,21 @@
 ---
-title: .NET 编程指南-Azure 事件中心（旧版） |Microsoft Docs
+title: .NET 编程指南 - Azure 事件中心（旧版）| Microsoft Docs
 description: 本文介绍如何使用 Azure .NET SDK 为 Azure 事件中心编写代码。
 ms.topic: article
 ms.date: 06/23/2020
-ms.openlocfilehash: 0186357ec7f0f8541acf33c524a57cdb8e8dc55c
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.custom: devx-track-csharp
+ms.openlocfilehash: a299813620ee90591d8c9491991237f75f2e9382
+ms.sourcegitcommit: a0c1d0d0906585f5fdb2aaabe6f202acf2e22cfc
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87074839"
+ms.lasthandoff: 01/21/2021
+ms.locfileid: "98623042"
 ---
 # <a name="net-programming-guide-for-azure-event-hubs-legacy-microsoftazureeventhubs-package"></a>Azure 事件中心的 .NET 编程指南（旧版 Microsoft.Azure.EventHubs 包）
 本文介绍使用 Azure 事件中心编写代码时的一些常见情况。 它假设你对事件中心已有初步的了解。 有关事件中心的概念概述，请参阅 [事件中心概述](./event-hubs-about.md)。
 
 > [!WARNING]
-> 本指南适用于旧 **Microsoft.Azure.EventHubs** 包。 建议[迁移](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/MigrationGuide.md)代码以使用最新 [Azure.Messaging.EventHubs](get-started-dotnet-standard-send-v2.md) 包。  
+> 本指南适用于旧 **Microsoft.Azure.EventHubs** 包。 建议[迁移](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/MigrationGuide.md)代码以使用最新 [Azure.Messaging.EventHubs](event-hubs-dotnet-standard-getstarted-send.md) 包。  
 
 
 ## <a name="event-publishers"></a>事件发布者
@@ -76,7 +77,7 @@ for (var i = 0; i < numMessagesToSend; i++)
 
 ### <a name="availability-considerations"></a>可用性注意事项
 
-可以选择使用分区键，应仔细考虑是否使用分区键。 如果在发布事件时未指定分区键，则会使用循环分配。 在许多情况下，如果事件排序较为重要，使用分区键将是一个不错的选择。 使用分区键时，这些分区需要单个节点上的可用性，并且可能会随时间推移发生故障；例如，在计算节点重启和修补时。 因此，如果设置了分区 ID，并且由于某种原因该分区变得不可用，则对该分区中的数据的访问尝试会失败。 如果高可用性是最重要的，请不要指定分区键；在这种情况下，将使用前述的轮循机制模型将事件发送到分区。 在这种情况下，需在可用性（无分区 ID）和一致性（将事件固定到分区 ID）之间做出明确选择。
+可以选择使用分区键，应仔细考虑是否使用分区键。 如果在发布事件时未指定分区键，事件中心会平衡分区之间的负载。 在许多情况下，如果事件排序较为重要，使用分区键将是一个不错的选择。 使用分区键时，这些分区需要单个节点上的可用性，并且可能会随时间推移发生故障；例如，在计算节点重启和修补时。 因此，如果设置了分区 ID，并且由于某种原因该分区变得不可用，则对该分区中的数据的访问尝试会失败。 如果高可用性最为重要，请不要指定分区键。 在这种情况下，使用内部负载平衡算法向分区发送事件。 在这种情况下，需在可用性（无分区 ID）和一致性（将事件固定到分区 ID）之间做出明确选择。
 
 另一个注意事项是处理事件处理中的延迟。 在某些情况下，丢弃数据并重试可能比尝试跟上处理要更好，后者可能会进而导致下游处理延迟。 例如，在拥有股票行情自动收报机的情况下，最好等待接收到完整的最新数据，但在实时聊天或 VOIP 的情况下，则更希望能快速获得数据，即使数据不完整。
 
@@ -96,7 +97,7 @@ for (var i = 0; i < numMessagesToSend; i++)
 
 ## <a name="send-asynchronously-and-send-at-scale"></a>异步发送和按比例发送
 
-请通过异步方式将事件发送到事件中心。 以异步方式发送可以增大客户端发送事件的速率。 [SendAsync](/dotnet/api/microsoft.azure.eventhubs.eventhubclient.sendasync) 返回一个 [Task](/dotnet/api/system.threading.tasks.task?view=netcore-3.1) 对象。 可以在客户端上使用 [RetryPolicy](/dotnet/api/microsoft.servicebus.retrypolicy) 类来控制客户端重试选项。
+请通过异步方式将事件发送到事件中心。 以异步方式发送可以增大客户端发送事件的速率。 [SendAsync](/dotnet/api/microsoft.azure.eventhubs.eventhubclient.sendasync) 返回一个 [Task](/dotnet/api/system.threading.tasks.task) 对象。 可以在客户端上使用 [RetryPolicy](/dotnet/api/microsoft.servicebus.retrypolicy) 类来控制客户端重试选项。
 
 ## <a name="event-consumers"></a>事件使用者
 [EventProcessorHost][] 类处理来自事件中心的数据。 在 .NET 平台上构建事件读取者时，应该使用此实现。 [EventProcessorHost][] 为事件处理器实现提供线程安全、多进程安全的运行时环境，该环境还能提供检查点和分区租用管理。
@@ -143,7 +144,6 @@ await eventProcessorHost.RegisterEventProcessorAsync<SimpleEventProcessor>();
 > [!NOTE]
 > 目前，只有 REST API 支持此功能（[发布者吊销](/rest/api/eventhub/revoke-publisher)）。
 
-有关发布者吊销以及如何以发布者身份向事件中心发送事件的详细信息，请参阅 [Event Hubs Large Scale Secure Publishing](https://code.msdn.microsoft.com/Service-Bus-Event-Hub-99ce67ab)（事件中心大规模安全发布）示例。
 
 ## <a name="next-steps"></a>后续步骤
 

@@ -13,12 +13,12 @@ ms.custom:
 - mqtt
 - 'Role: Cloud Development'
 - 'Role: System Architecture'
-ms.openlocfilehash: 7e59229f6664dc8966aa491e9d2ded1abbd5536f
-ms.sourcegitcommit: a76ff927bd57d2fcc122fa36f7cb21eb22154cfa
+ms.openlocfilehash: a58e141c6232db08b125b265e3d4ad74c784ba24
+ms.sourcegitcommit: dbe434f45f9d0f9d298076bf8c08672ceca416c6
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/28/2020
-ms.locfileid: "87323037"
+ms.lasthandoff: 10/17/2020
+ms.locfileid: "92152188"
 ---
 # <a name="reference---iot-hub-endpoints"></a>参考 - IoT 中心终结点
 
@@ -55,6 +55,8 @@ Azure IoT 中心属于多租户服务，向各种执行组件公开功能。 下
   * *检索并更新设备孪生的属性*。 设备使用此终结点访问其[设备孪生](iot-hub-devguide-device-twins.md)的属性。 不支持 HTTPS。
 
   * *接收直接方法请求*。 设备使用此终结点侦听[直接方法](iot-hub-devguide-direct-methods.md)的请求。 不支持 HTTPS。
+
+  [!INCLUDE [iot-hub-include-x509-ca-signed-support-note](../../includes/iot-hub-include-x509-ca-signed-support-note.md)]
 
 * **服务终结点**。 每个 IoT 中心公开一组终结点，供解决方案后端用于与设备通信。 除了一个例外，这些终结点只使用 [AMQP](https://www.amqp.org/) 协议以及基于 WebSockets 的 AMQP 协议进行公开。 直接方法调用终结点通过 HTTPS 协议进行公开。
   
@@ -93,7 +95,7 @@ IoT 中心当前支持将以下 Azure 服务作为附加终结点：
 
 在 IoT 解决方案中， *现场网关* 位于设备和 IoT 中心终结点之间。 它通常位于靠近设备的位置。 设备使用设备支持的协议，直接与现场网关通信。 现场网关使用 IoT 中心支持的协议连接到 IoT 中心终结点。 现场网关可能是专用硬件设备或运行自定义网关软件的低功率计算机。
 
-可使用 [Azure IoT Edge](/azure/iot-edge/) 实现现场网关。 IoT Edge 提供一些功能，例如从多台设备向同一 IoT 中心连接多路复用通信。
+可使用 [Azure IoT Edge](../iot-edge/index.yml) 实现现场网关。 IoT Edge 提供一些功能，例如从多台设备向同一 IoT 中心连接多路复用通信。
 
 ## <a name="next-steps"></a>后续步骤
 

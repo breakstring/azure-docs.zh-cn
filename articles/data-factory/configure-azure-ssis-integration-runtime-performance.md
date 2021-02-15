@@ -1,21 +1,17 @@
 ---
 title: 配置 Azure-SSIS 集成运行时的性能
 description: 了解如何配置高性能 Azure-SSIS Integration Runtime 的属性
-services: data-factory
 ms.date: 01/10/2018
 ms.topic: conceptual
 ms.service: data-factory
-ms.workload: data-services
 author: swinarko
 ms.author: sawinark
-ms.reviewer: ''
-manager: anandsub
-ms.openlocfilehash: 6aaa02c2e14cfc31a11da260da38705ba064ba79
-ms.sourcegitcommit: 3543d3b4f6c6f496d22ea5f97d8cd2700ac9a481
+ms.openlocfilehash: 5d275100124660b901504b7e7f71cf93518fd077
+ms.sourcegitcommit: d4734bc680ea221ea80fdea67859d6d32241aefc
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/20/2020
-ms.locfileid: "86523309"
+ms.lasthandoff: 02/14/2021
+ms.locfileid: "100364386"
 ---
 # <a name="configure-the-azure-ssis-integration-runtime-for-high-performance"></a>配置高性能 Azure-SSIS Integration Runtime
 
@@ -69,7 +65,7 @@ $SSISDBPricingTier = "[Basic|S0|S1|S2|S3|S4|S6|S7|S9|S12|P1|P2|P4|P6|P11|P15|…
 ```
 
 ## <a name="azuressislocation"></a>AzureSSISLocation
-AzureSSISLocation 是 Integration Runtime 辅助角色节点的位置。 该工作器节点始终连接到 Azure SQL 数据库中的 SSIS 目录数据库 (SSISDB)。 将**AzureSSISLocation**设置为与托管 SSISDB 的[逻辑 SQL server](../azure-sql/database/logical-servers.md)相同的位置，这使集成运行时能够尽可能高效地工作。
+AzureSSISLocation 是 Integration Runtime 辅助角色节点的位置。 该工作器节点始终连接到 Azure SQL 数据库中的 SSIS 目录数据库 (SSISDB)。 将“AzureSSISLocation”设置为与托管 SSISDB 的[逻辑 SQL Server ](../azure-sql/database/logical-servers.md)相同的位置，这可以使集成运行时尽可能高效运行。
 
 ## <a name="azuressisnodesize"></a>AzureSSISNodeSize
 数据工厂（包括 Azure-SSIS IR）支持以下选项：
@@ -104,7 +100,7 @@ AzureSSISLocation 是 Integration Runtime 辅助角色节点的位置。 该工�
 
 此数据代表单个辅助角色节点上的单个包执行。 此包从 Azure Blob 存储中加载 3 百万个包含名和姓列的记录，生成全名列并将全名超过 20 个字符的记录写到 Azure Blob 存储。
 
-Y 轴是在一小时内完成执行的包数。 请注意，这只是一个占用大量内存的包的测试结果。 如果要了解包的吞吐量，建议你自行执行测试。
+y-轴是一小时内执行完毕的包数。 请注意，这只是一个内存消耗包的测试结果。 若要了解包的吞吐量，建议你自行执行测试。
 
 ![SSIS Integration Runtime 包执行速度](media/configure-azure-ssis-integration-runtime-performance/ssisir-execution-speedV2.png)
 
@@ -112,7 +108,7 @@ Y 轴是在一小时内完成执行的包数。 请注意，这只是一个占�
 
 如果有大量包要运行且最关注整体吞吐量，则使用下表中的信息选择适合方案的虚拟机类型。
 
-Y 轴是在一小时内完成执行的包数。 请注意，这只是一个占用大量内存的包的测试结果。 如果要了解包的吞吐量，建议你自行执行测试。
+y-轴是一小时内执行完毕的包数。 请注意，这只是一个内存消耗包的测试结果。 若要了解包的吞吐量，建议你自行执行测试。
 
 ![SSIS Integration Runtime 最大整体吞吐量](media/configure-azure-ssis-integration-runtime-performance/ssisir-overall-throughputV2.png)
 
@@ -122,8 +118,7 @@ AzureSSISNodeNumber 调整 Integration Runtime 的可伸缩性。 Integration Ru
 
 ## <a name="azuressismaxparallelexecutionspernode"></a>AzureSSISMaxParallelExecutionsPerNode
 
-已经在使用强大的辅助角色节点运行包时，增加 AzureSSISMaxParallelExecutionsPerNode 可能增加 Integration Runtime 的整体吞吐量。 对于 Standard_D1_v2 节点，支持每个节点 1-4 个并行执行。 对于所有其他类型的节点，支持每个节点 1-max(2 x 核心数, 8) 个并行执行。 如果你希望 **AzureSSISMaxParallelExecutionsPerNode** 超出我们支持的最大值，你可以开具支持票证，我们可以为你增加最大值，然后你需要使用 Azure Powershell 更新 **AzureSSISMaxParallelExecutionsPerNode**。
-可以基于包的成本和辅助角色节点的以下配置估计合适的值。 有关详细信息，请参阅[常规用途虚拟机大小](../virtual-machines/windows/sizes-general.md)。
+已经在使用强大的辅助角色节点运行包时，增加 AzureSSISMaxParallelExecutionsPerNode 可能增加 Integration Runtime 的整体吞吐量。 如果要增加最大值，需要使用 Azure PowerShell 更新 AzureSSISMaxParallelExecutionsPerNode。 可以基于包的成本和辅助角色节点的以下配置估计合适的值。 有关详细信息，请参阅[常规用途虚拟机大小](../virtual-machines/sizes-general.md)。
 
 | 大小             | vCPU | 内存:GiB | 临时存储 (SSD) GiB | 最大临时存储吞吐量：IOPS/读取 MBps/写入 MBps | 最大的数据磁盘/吞吐量：IOPS | 最大 NIC 数/预期网络性能 (Mbps) |
 |------------------|------|-------------|------------------------|------------------------------------------------------------|-----------------------------------|------------------------------------------------|
@@ -154,7 +149,7 @@ AzureSSISNodeNumber 调整 Integration Runtime 的可伸缩性。 Integration Ru
 
 ## <a name="ssisdbpricingtier"></a>SSISDBPricingTier
 
-**SSISDBPricingTier**是 Azure SQL 数据库中的 SSIS 目录数据库（SSISDB）的定价层。 此设置影响 IR 实例中的最大辅助角色节点数、包执行排队速度以及执行日志加载速度。
+“SSISDBPricingTier”是 Azure SQL 数据库中 SSIS 目录数据库 (SSISDB) 的定价层。 此设置影响 IR 实例中的最大辅助角色节点数、包执行排队速度以及执行日志加载速度。
 
 -   如果不关注包执行排队和执行日志加载速度，可以选择最低的数据库定价层。 使用基本定价的 Azure SQL 数据库在 Integration Runtime 实例中支持 8 个辅助角色节点。
 
@@ -162,7 +157,7 @@ AzureSSISNodeNumber 调整 Integration Runtime 的可伸缩性。 Integration Ru
 
 -   如果日志记录级别设置为“详细”，则选择更强大的数据库，如 S3。 根据我们的非正式内部测试，S3 定价层可以支持具有 2 个节点、128 个并行计数和详细日志记录级别的 SSIS 包执行。
 
-还可以基于 Azure 门户上提供的[数据库事务单元](../sql-database/sql-database-what-is-a-dtu.md) (DTU) 使用情况信息调整数据库定价层。
+还可以基于 Azure 门户上提供的[数据库事务单元](../azure-sql/database/service-tiers-dtu.md) (DTU) 使用情况信息调整数据库定价层。
 
 ## <a name="design-for-high-performance"></a>高性能设计
 设计要在 Azure 上运行的 SSIS 包不同于设计本地执行的包。 不是将多个独立任务组合在同一包中，而是将它们分离到多个包中，从而提升在 Azure-SSIS IR 中执行的效率。 为每个包创建包执行，使它们不用等待彼此完成。 此方法受益于 Azure-SSIS Integration Runtime 的可伸缩性并提升整体吞吐量。

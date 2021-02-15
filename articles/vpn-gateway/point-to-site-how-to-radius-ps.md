@@ -1,18 +1,18 @@
 ---
 title: 使用点到站点和 RADIUS 身份验证将计算机连接到虚拟网络：PowerShell | Azure
-description: 使用 P2S 和 RADIUS 身份验证将 Windows 和 Mac OS X 客户端安全地连接到虚拟网络。
+description: 使用 P2S 和 RADIUS 身份验证将 Windows 和 OS X 客户端安全地连接到虚拟网络。
 services: vpn-gateway
 author: cherylmc
 ms.service: vpn-gateway
 ms.topic: how-to
-ms.date: 02/10/2020
+ms.date: 11/18/2020
 ms.author: cherylmc
-ms.openlocfilehash: 1bdaa2fd1e435e8bf7ff4b17c7f8a15d5bd249d5
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 9d962d3a4757b4c7b2d217f91aaf73d6ad4164d3
+ms.sourcegitcommit: cd9754373576d6767c06baccfd500ae88ea733e4
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "84987163"
+ms.lasthandoff: 11/20/2020
+ms.locfileid: "94964841"
 ---
 # <a name="configure-a-point-to-site-connection-to-a-vnet-using-radius-authentication-powershell"></a>使用 RADIUS 身份验证配置 VNet 的点到站点连接：PowerShell
 
@@ -24,10 +24,11 @@ P2S VPN 连接是从 Windows 和 Mac 设备启动的。 连接方客户端可以
 
 * RADIUS 服务器
 * VPN 网关本机证书身份验证
+* 仅限 Windows 10 (本机 Azure Active Directory 身份验证) 
 
-借助本文可以配置一个使用 RADIUS 服务器进行身份验证的 P2S 配置。 如果想要改用生成的证书和 VPN 网关本机证书身份验证进行身份验证，请参阅[使用 VPN 网关本机证书身份验证配置 VNet 的点到站点连接](vpn-gateway-howto-point-to-site-rm-ps.md)。
+借助本文可以配置一个使用 RADIUS 服务器进行身份验证的 P2S 配置。 如果要使用生成的证书和 VPN 网关本机证书身份验证进行身份验证，请参阅 [使用 VPN 网关本机证书身份验证配置与 VNet 的点到站点连接](vpn-gateway-howto-point-to-site-rm-ps.md) 或创建用于 Azure Active Directory 身份验证的 [P2S OpenVPN 协议连接的 Azure Active Directory 租户](openvpn-azure-ad-tenant.md) 。
 
-![连接关系图 - RADIUS](./media/point-to-site-how-to-radius-ps/p2sradius.png)
+![此图显示了使用 RADIUS 服务器进行身份验证的 P2S 配置。](./media/point-to-site-how-to-radius-ps/p2sradius.png)
 
 点到站点连接不需要 VPN 设备或面向公众的 IP 地址。 P2S 基于 SSTP（安全套接字隧道协议）、OpenVPN 或 IKEv2 创建 VPN 连接。
 
@@ -39,8 +40,8 @@ P2S VPN 连接是从 Windows 和 Mac 设备启动的。 连接方客户端可以
 
 P2S 连接有以下要求：
 
-* RouteBased VPN 网关。 
-* 用于处理用户身份验证的 RADIUS 服务器。 可将 RADIUS 服务器部署在本地或 Azure VNet 中。
+* RouteBased VPN 网关。 
+* 用于处理用户身份验证的 RADIUS 服务器。 可将 RADIUS 服务器部署在本地或 Azure VNet 中。 你还可以配置两个 RADIUS 服务器以实现高可用性。
 * 要连接到 VNet 的 Windows 设备的 VPN 客户端配置包。 VPN 客户端配置包提供 VPN 客户端通过 P2S 进行连接所需的设置。
 
 ## <a name="about-active-directory-ad-domain-authentication-for-p2s-vpns"></a><a name="aboutad"></a>关于 P2S VPN 的 Active Directory (AD) 域身份验证
@@ -64,7 +65,7 @@ RADIUS 服务器可以驻留在本地或 Azure VNet 中。 在身份验证期间
 
 ### <a name="working-with-azure-powershell"></a>使用 Azure PowerShell
 
-[!INCLUDE [powershell](../../includes/vpn-gateway-cloud-shell-powershell-about.md)]
+[!INCLUDE [PowerShell](../../includes/vpn-gateway-cloud-shell-powershell-about.md)]
 
 ### <a name="example-values"></a><a name="example"></a>示例值
 
@@ -147,11 +148,11 @@ RADIUS 服务器可以驻留在本地或 Azure VNet 中。 在身份验证期间
 
 在创建和配置虚拟网络网关之前，应该正确配置 RADIUS 服务器，以便能够进行身份验证。
 
-1. 如果未部署 RADIUS 服务器，请部署一个。 有关部署步骤，请参阅 RADIUS 供应商提供的设置指南。  
-2. 将 VPN 网关配置为 RADIUS 上的 RADIUS 客户端。 添加此 RADIUS 客户端时，请指定创建的虚拟网络 GatewaySubnet。 
+1. 如果未部署 RADIUS 服务器，请部署一个。 有关部署步骤，请参阅 RADIUS 供应商提供的设置指南。  
+2. 将 VPN 网关配置为 RADIUS 上的 RADIUS 客户端。 添加此 RADIUS 客户端时，请指定创建的虚拟网络 GatewaySubnet。 
 3. 设置 RADIUS 服务器后，获取 RADIUS 服务器的 IP 地址和共享机密，RADIUS 客户端将使用这些信息来与 RADIUS 服务器通信。 如果 RADIUS 服务器在 Azure VNet 中，请使用 RADIUS 服务器 VM 的 CA IP。
 
-[网络策略服务器 (NPS)](https://docs.microsoft.com/windows-server/networking/technologies/nps/nps-top) 一文提供了有关为 AD 域身份验证配置 Windows RADIUS 服务器 (NPS) 的指导。
+[网络策略服务器 (NPS)](/windows-server/networking/technologies/nps/nps-top) 一文提供了有关为 AD 域身份验证配置 Windows RADIUS 服务器 (NPS) 的指导。
 
 ## <a name="4-create-the-vpn-gateway"></a>4.<a name="creategw"></a>创建 VPN 网关
 
@@ -168,9 +169,9 @@ New-AzVirtualNetworkGateway -Name $GWName -ResourceGroupName $RG `
 
 ## <a name="5-add-the-radius-server-and-client-address-pool"></a>5.<a name="addradius"></a>添加 RADIUS 服务器和客户端地址池
  
-* 可按名称或 IP 地址指定 -RadiusServer。 如果指定名称并且服务器驻留在本地，VPN 网关可能无法解析名称。 如果出现这种情况，最好是指定服务器的 IP 地址。 
+* 可按名称或 IP 地址指定 -RadiusServer。 如果指定名称并且服务器驻留在本地，VPN 网关可能无法解析名称。 如果出现这种情况，最好是指定服务器的 IP 地址。 
 * -RadiusSecret 应该与 RADIUS 服务器上配置的值匹配。
-* -VpnClientAddressPool 是连接方 VPN 客户端在连接时要从中接收 IP 地址的范围。 使用专用 IP 地址范围时，该范围不得与要通过其进行连接的本地位置重叠，也不得与要连接到其中的 VNet 重叠。 请确保配置足够大的地址池。  
+* -VpnClientAddressPool 是连接方 VPN 客户端在连接时要从中接收 IP 地址的范围。  使用专用 IP 地址范围时，该范围不得与要通过其进行连接的本地位置重叠，也不得与要连接到其中的 VNet 重叠。 请确保配置足够大的地址池。  
 
 1. 为 RADIUS 机密创建安全字符串。
 
@@ -223,9 +224,20 @@ New-AzVirtualNetworkGateway -Name $GWName -ResourceGroupName $RG `
     -RadiusServerAddress "10.51.0.15" -RadiusServerSecret $Secure_Secret
     ```
 
+   若要指定 **两个** RADIUS 服务器，请使用以下语法。 根据需要修改 **-VpnClientProtocol** 值
+
+    ```azurepowershell-interactive
+    $radiusServer1 = New-AzRadiusServer -RadiusServerAddress 10.1.0.15 -RadiusServerSecret $radiuspd -RadiusServerScore 30
+    $radiusServer2 = New-AzRadiusServer -RadiusServerAddress 10.1.0.16 -RadiusServerSecret $radiuspd -RadiusServerScore 1
+
+    $radiusServers = @( $radiusServer1, $radiusServer2 )
+
+    Set-AzVirtualNetworkGateway -VirtualNetworkGateway $actual -VpnClientAddressPool 201.169.0.0/16 -VpnClientProtocol "IkeV2" -RadiusServerList $radiusServers
+    ```
+
 ## <a name="6-download-the-vpn-client-configuration-package-and-set-up-the-vpn-client"></a>6.<a name="vpnclient"></a>下载 VPN 客户端配置包并设置 VPN 客户端
 
-VPN 客户端配置可让设备通过 P2S 连接来与 VNet 建立连接。 若要生成 VPN 客户端配置包并设置 VPN 客户端，请参阅[为 RADIUS 身份验证创建 VPN 客户端配置](point-to-site-vpn-client-configuration-radius.md)。
+VPN 客户端配置可让设备通过 P2S 连接来与 VNet 建立连接。  若要生成 VPN 客户端配置包并设置 VPN 客户端，请参阅[为 RADIUS 身份验证创建 VPN 客户端配置](point-to-site-vpn-client-configuration-radius.md)。
 
 ## <a name="7-connect-to-azure"></a><a name="connect"></a>7.连接到 Azure
 
@@ -266,7 +278,11 @@ VPN 客户端配置可让设备通过 P2S 连接来与 VNet 建立连接。 若
 
 ## <a name="to-connect-to-a-virtual-machine"></a><a name="connectVM"></a>连接到虚拟机
 
-[!INCLUDE [Connect to a VM](../../includes/vpn-gateway-connect-vm-p2s-include.md)]
+[!INCLUDE [Connect to a VM](../../includes/vpn-gateway-connect-vm.md)]
+
+* 验证是否在为 VNet 指定 DNS 服务器 IP 地址之后，才生成 VPN 客户端配置包。 如果更新了 DNS 服务器 IP 地址，请生成并安装新的 VPN 客户端配置包。
+
+* 使用“ipconfig”检查分配给以太网适配器的 IPv4 地址，该适配器所在的计算机正是你要从其进行连接的计算机。 如果该 IP 地址位于要连接到的 VNet 的地址范围内，或者位于 VPNClientAddressPool 的地址范围内，则称为地址空间重叠。 当地址空间以这种方式重叠时，网络流量不会抵达 Azure，而是呆在本地网络中。
 
 ## <a name="faq"></a><a name="faq"></a>常见问题解答
 
@@ -276,4 +292,4 @@ VPN 客户端配置可让设备通过 P2S 连接来与 VNet 建立连接。 若
 
 ## <a name="next-steps"></a>后续步骤
 
-连接完成后，即可将虚拟机添加到虚拟网络。 有关详细信息，请参阅[虚拟机](https://docs.microsoft.com/azure/)。 若要详细了解网络和虚拟机，请参阅 [Azure 和 Linux VM 网络概述](../virtual-machines/linux/azure-vm-network-overview.md)。
+连接完成后，即可将虚拟机添加到虚拟网络。 有关详细信息，请参阅[虚拟机](../index.yml)。 若要详细了解网络和虚拟机，请参阅 [Azure 和 Linux VM 网络概述](../virtual-machines/network-overview.md)。

@@ -9,12 +9,12 @@ ms.subservice: windows
 ms.date: 03/27/2020
 ms.reviewer: mimckitt
 ms.custom: mimckitt, subject-armqs
-ms.openlocfilehash: a4cd39186eb55cb03bd97994baa1898e196fb3c2
-ms.sourcegitcommit: 124f7f699b6a43314e63af0101cd788db995d1cb
+ms.openlocfilehash: 03863171cb05c0557611fb8cd3c0ade667e7d79e
+ms.sourcegitcommit: eb6bef1274b9e6390c7a77ff69bf6a3b94e827fc
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/08/2020
-ms.locfileid: "86082805"
+ms.lasthandoff: 10/05/2020
+ms.locfileid: "88650071"
 ---
 # <a name="quickstart-create-a-windows-virtual-machine-scale-set-with-an-arm-template"></a>快速入门：使用 ARM 模板创建 Windows 虚拟机规模集
 
@@ -36,7 +36,7 @@ ARM 模板允许部署相关资源的组。 在单个模板中，可以创建虚
 
 本快速入门中使用的模板来自 [Azure 快速入门模板](https://azure.microsoft.com/resources/templates/201-vmss-windows-webapp-dsc-autoscale/)。
 
-:::code language="json" source="~/quickstart-templates/201-vmss-windows-webapp-dsc-autoscale/azuredeploy.json" range="1-397" highlight="236-325":::
+:::code language="json" source="~/quickstart-templates/201-vmss-windows-webapp-dsc-autoscale/azuredeploy.json":::
 
 这些模板中定义了这些资源：
 
@@ -48,9 +48,9 @@ ARM 模板允许部署相关资源的组。 在单个模板中，可以创建虚
 
 ### <a name="define-a-scale-set"></a>定义规模集
 
-突出显示的部分是规模集资源定义。 若要使用模板创建规模集，请定义相应的资源。 虚拟机规模集资源类型的核心部件包括：
+若要使用模板创建规模集，请定义相应的资源。 虚拟机规模集资源类型的核心部件包括：
 
-| properties                     | 属性说明                                  | 示例模板值                    |
+| 属性                     | 属性说明                                  | 示例模板值                    |
 |------------------------------|----------------------------------------------------------|-------------------------------------------|
 | type                         | 要创建的 Azure 资源类型                            | Microsoft.Compute/virtualMachineScaleSets |
 | name                         | 规模集名称                                       | myScaleSet                                |

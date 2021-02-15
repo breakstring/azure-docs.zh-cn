@@ -10,12 +10,12 @@ ms.devlang: na
 ms.topic: conceptual
 ms.date: 06/27/2018
 ms.author: twooley
-ms.openlocfilehash: 3d6f3a7a5fafc643b346d3df1306820114827049
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 0bd895b0c19293a199b2a9b135915b7dc45b9e5e
+ms.sourcegitcommit: 75041f1bce98b1d20cd93945a7b3bd875e6999d0
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "84193678"
+ms.lasthandoff: 01/22/2021
+ms.locfileid: "98702491"
 ---
 # <a name="using-azure-data-lake-storage-gen1-for-big-data-requirements"></a>使用 Azure Data Lake Storage Gen1 满足大数据要求
 
@@ -48,9 +48,9 @@ ms.locfileid: "84193678"
 
 可用工具如下：
 
-* [Azure 流分析](../stream-analytics/stream-analytics-data-lake-output.md)：可使用 Azure Data Lake Storage Gen1 输出将引入事件中心的事件写入 Azure Data Lake Storage Gen1。
+* [Azure 流分析](../stream-analytics/stream-analytics-define-outputs.md)：可使用 Azure Data Lake Storage Gen1 输出将引入事件中心的事件写入 Azure Data Lake Storage Gen1。
 * [Azure HDInsight Storm](../hdinsight/storm/apache-storm-write-data-lake-store.md)：可直接将数据从 Storm 群集写入 Data Lake Storage Gen1。
-* [EventProcessorHost](../event-hubs/event-hubs-dotnet-standard-getstarted-receive-eph.md)：可接收事件中心内的事件，然后使用 [Data Lake Storage Gen1 .NET SDK](data-lake-store-get-started-net-sdk.md) 将其写入 Data Lake Storage Gen1。
+* [EventProcessorHost](../event-hubs/event-hubs-dotnet-standard-getstarted-send.md)：可接收事件中心内的事件，然后使用 [Data Lake Storage Gen1 .NET SDK](data-lake-store-get-started-net-sdk.md) 将其写入 Data Lake Storage Gen1。
 
 ### <a name="relational-data"></a>关系数据
 也可从关系数据库中获得数据。 在一个时间段期间，关系数据库会收集大量数据，这些数据如果通过大数据管道处理，可提供重要见解。 可使用以下工具将此类数据移入 Data Lake Storage Gen1。
@@ -88,7 +88,7 @@ ms.locfileid: "84193678"
 对于上传兆兆字节范围内的数据集，使用上述方法可能有时速度慢且成本高。 这种情况下，可使用以下选项。
 
 * **使用 Azure ExpressRoute**。 Azure ExpressRoute 可允许在 Azure 数据中心与本地中的基础结构之间创建专有连接。 这对传输大量数据提供了可靠的选项。 有关详细信息，请参阅[ Azure ExpressRoute 文档](../expressroute/expressroute-introduction.md)。
-* **"脱机" 上传数据**。 如果由于任何原因而导致使用 Azure ExpressRoute 不可行，可使用 [Azure 导入/导出服务](../storage/common/storage-import-export-service.md)将包含数据的硬盘驱动器发送到 Azure 数据中心。 数据会首先上传到 Azure 存储 Blob。 然后可使用 [Azure 数据工厂](../data-factory/connector-azure-data-lake-store.md)或 [AdlCopy 工具](data-lake-store-copy-data-azure-storage-blob.md)将数据从 Azure 存储 Blob 复制到 Data Lake Storage Gen1。
+* **"脱机" 上传数据**。 如果由于任何原因而导致使用 Azure ExpressRoute 不可行，可使用 [Azure 导入/导出服务](../import-export/storage-import-export-service.md)将包含数据的硬盘驱动器发送到 Azure 数据中心。 数据会首先上传到 Azure 存储 Blob。 然后可使用 [Azure 数据工厂](../data-factory/connector-azure-data-lake-store.md)或 [AdlCopy 工具](data-lake-store-copy-data-azure-storage-blob.md)将数据从 Azure 存储 Blob 复制到 Data Lake Storage Gen1。
 
   > [!NOTE]
   > 使用此导入/导出服务时，发送到 Azure 数据中心的磁盘上的文件大小不可大于 195 GB。
@@ -130,5 +130,5 @@ ms.locfileid: "84193678"
 
 ![可视化 Data Lake Storage Gen1 中的数据](./media/data-lake-store-data-scenarios/visualize-data.png "可视化 Data Lake Storage Gen1 中的数据")
 
-* 首先通过使用 [Azure 数据工厂从 Data Lake Storage Gen1 将数据移动到 Azure SQL 数据仓库](../data-factory/copy-activity-overview.md)
-* 之后，可[集成 Power BI 和 Azure SQL 数据仓库](../synapse-analytics/sql-data-warehouse/sql-data-warehouse-get-started-visualize-with-power-bi.md)来创建数据的可视化表示形式。
+* 首先，可以使用 [Azure 数据工厂将数据从 Data Lake Storage Gen1 移到 Azure Synapse Analytics](../data-factory/copy-activity-overview.md)
+* 之后，你可以将 [Power BI 与 Azure Synapse Analytics 集成](/power-bi/connect-data/service-azure-sql-data-warehouse-with-direct-connect) ，以创建数据的直观表示形式。

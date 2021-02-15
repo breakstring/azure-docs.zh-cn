@@ -4,12 +4,12 @@ description: 本文介绍有关 Azure 备份监视警报和 Azure 备份报告�
 ms.reviewer: srinathv
 ms.topic: conceptual
 ms.date: 07/08/2019
-ms.openlocfilehash: 2112a439585e6b111614e728dbc4a1a5eb4ee3d2
-ms.sourcegitcommit: ac7ae29773faaa6b1f7836868565517cd48561b2
+ms.openlocfilehash: 4e2585009b531512e54ffa889a05ec50038dd619
+ms.sourcegitcommit: fc8ce6ff76e64486d5acd7be24faf819f0a7be1d
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/25/2020
-ms.locfileid: "88827165"
+ms.lasthandoff: 01/26/2021
+ms.locfileid: "98805865"
 ---
 # <a name="azure-backup-monitoring-alert---faq"></a>Azure 备份监视警报 - 常见问题解答
 
@@ -19,7 +19,7 @@ ms.locfileid: "88827165"
 
 ### <a name="how-do-i-check-if-reporting-data-has-started-flowing-into-a-log-analytics-la-workspace"></a>如何确定报告数据是否已开始流向 Log Analytics (LA) 工作区？
 
-导航到已配置的 LA 工作区，导航到“日志”菜单项，然后运行查询 CoreAzureBackup | 选择 1。 如果看到返回了记录，则表示数据已开始流入工作区。 初始数据推送可能需要长达 24 小时。
+导航到已配置的 LA 工作区。 导航到“日志”菜单项，然后运行查询 `CoreAzureBackup | take 1`。 如果看到返回了记录，则表示数据已开始流入工作区。 初始数据推送可能需要长达 24 小时。
 
 ### <a name="what-is-the-frequency-of-data-push-to-an-la-workspace"></a>向 LA 工作区推送数据的频率是怎样的？
 
@@ -38,7 +38,7 @@ ms.locfileid: "88827165"
 
 ### <a name="will-i-see-all-my-data-in-reports-after-i-configure-the-la-workspace"></a>配置 LA 工作区后，报告中是否会显示我的所有数据？
 
- 在你配置诊断设置后生成的所有数据都会推送到 LA 工作区，并会显示在报告中。 不会为报表推送正在进行的作业。 作业完成或失败后，会将其发送到报告。
+ 在你配置诊断设置后生成的所有数据都会推送到 LA 工作区，并会显示在报告中。 不会为报表推送正在进行的作业。 作业完成或失败后，会将其发送到报表。
 
 ### <a name="can-i-view-reports-across-vaults-and-subscriptions"></a>能否跨保管库和订阅查看报表？
 
@@ -60,7 +60,7 @@ Azure 备份失败后，会在 20 分钟内引发警报。
 
 ### <a name="is-there-a-case-where-an-email-wont-be-sent-if-notifications-are-configured"></a>是否存在配置了通知却不发送电子邮件的情况？
 
-是的。 在以下情况下，不发送通知：
+是的。 在以下情况下，不会发送通知：
 
 * 已将通知配置为每小时发送，并且在一小时内引发并解决了警报
 * 取消了作业
@@ -70,5 +70,5 @@ Azure 备份失败后，会在 20 分钟内引发警报。
 
 阅读其他常见问题：
 
-* 有关 Azure VM 备份的[常见问题](backup-azure-vm-backup-faq.md)。
+* 有关 Azure VM 备份的[常见问题](backup-azure-vm-backup-faq.yml)。
 * 有关 Azure 备份代理的[常见问题](backup-azure-file-folder-backup-faq.md)

@@ -5,11 +5,11 @@ ms.service: cognitive-services
 ms.topic: include
 ms.date: 03/20/2019
 ms.openlocfilehash: 41ac1478b1028a847fc0d5e7e70802375e910837
-ms.sourcegitcommit: 9ee0cbaf3a67f9c7442b79f5ae2e97a4dfc8227b
+ms.sourcegitcommit: a43a59e44c14d349d597c3d2fd2bc779989c71d7
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/27/2020
-ms.locfileid: "67173284"
+ms.lasthandoff: 11/25/2020
+ms.locfileid: "95999089"
 ---
 > [!NOTE]
 > 为了在使用异常检测器 API 时达到[最佳效果](../articles/cognitive-services/anomaly-detector/concepts/anomaly-detection-best-practices.md)，JSON 格式的时间序列数据应包括：

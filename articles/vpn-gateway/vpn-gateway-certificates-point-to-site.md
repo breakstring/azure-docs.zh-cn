@@ -1,19 +1,19 @@
 ---
 title: 为 P2S 生成和导出证书： PowerShell
 titleSuffix: Azure VPN Gateway
-description: 在 Windows 10 或 Windows Server 2016 上使用 PowerShell 创建自签名根证书、导出公钥和生成客户端证书。
+description: 在 Windows 10 或 Windows Server 2016 上使用 PowerShell 创建自签名根证书、导出公钥和生成 P2S 的客户端证书。
 services: vpn-gateway
 author: cherylmc
 ms.service: vpn-gateway
 ms.topic: how-to
-ms.date: 10/10/2019
+ms.date: 09/02/2020
 ms.author: cherylmc
-ms.openlocfilehash: f9792f52ae60039ff4891ea95688f961e73283af
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: c1c69b301199b054fe6b1ef42cfcf7878a7a161c
+ms.sourcegitcommit: 829d951d5c90442a38012daaf77e86046018e5b9
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "84983426"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "91306678"
 ---
 # <a name="generate-and-export-certificates-for-point-to-site-using-powershell"></a>使用 PowerShell 为点到站点连接生成和导出证书
 

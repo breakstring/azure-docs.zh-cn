@@ -1,7 +1,7 @@
 ---
 title: 迁移到 MSAL.NET
 titleSuffix: Microsoft identity platform
-description: 了解适用于 .NET 的 Microsoft 身份验证库 (MSAL.NET) 与适用于 .NET 的 Azure AD 身份验证库 (ADAL.NET) 之间的差异，以及如何迁移到 MSAL.NET。
+description: 了解适用于 .NET 的 Microsoft 身份验证库 (MSAL.NET) 和 .NET () ADAL.NET 的 Azure AD 身份验证库之间的差异，以及如何迁移到 MSAL.NET。
 services: active-directory
 author: jmprieur
 manager: CelesteDG
@@ -13,18 +13,18 @@ ms.date: 04/10/2019
 ms.author: jmprieur
 ms.reviewer: saeeda
 ms.custom: devx-track-csharp, aaddev
-ms.openlocfilehash: cdd93cf8751ce2e46f06020b1d18d42416f793d4
-ms.sourcegitcommit: c28fc1ec7d90f7e8b2e8775f5a250dd14a1622a6
+ms.openlocfilehash: 2b8577af2c8a6296ae6f4f090e8ff233e51ee6fb
+ms.sourcegitcommit: 2817d7e0ab8d9354338d860de878dd6024e93c66
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/13/2020
-ms.locfileid: "88166102"
+ms.lasthandoff: 02/05/2021
+ms.locfileid: "99583919"
 ---
 # <a name="migrating-applications-to-msalnet"></a>将应用程序迁移到 MSAL.NET
 
-适用于 .NET 的 Microsoft 身份验证库 (MSAL.NET) 与适用于 .NET 的 Azure AD 身份验证库 (ADAL.NET) 用于对 Azure AD 实体进行身份验证，以及从 Azure AD 请求令牌。 截止目前，大多数开发人员都是通过 Azure AD 身份验证库 (ADAL) 来请求令牌，使用面向开发人员的 Azure AD 平台 (v1.0) 来对 Azure AD 标识（工作和学校帐户）进行身份验证。 使用 MSAL：
+适用于 .net 的 Microsoft 身份验证库 (MSAL.NET) 和适用于 .NET 的 Azure AD 身份验证库 (ADAL.NET) 用于对 Azure AD 的实体进行身份验证和请求令牌。 截止目前，大多数开发人员都是通过 Azure AD 身份验证库 (ADAL) 来请求令牌，使用面向开发人员的 Azure AD 平台 (v1.0) 来对 Azure AD 标识（工作和学校帐户）进行身份验证。 使用 MSAL：
 
-- 你可以通过 Azure AD B2C) 来验证更广泛的一组 Microsoft 标识 (Azure AD 标识和 Microsoft 帐户，以及社交和本地帐户，因为它使用 Microsoft 标识平台终结点，
+- 你可以通过 Azure AD B2C) 来验证更广泛的一组 Microsoft 标识 (Azure AD 标识和 Microsoft 帐户，以及社交和本地帐户，因为它使用 Microsoft 标识平台。
 - 你的用户将获得最佳单一登录体验。
 - 应用程序可以启用增量许可，可以更轻松地为条件访问提供支持
 - 你将从创新中受益。
@@ -35,9 +35,9 @@ ms.locfileid: "88166102"
 
 ## <a name="differences-between-adal-and-msal-apps"></a>ADAL 与 MSAL 应用之间的差异
 
-在大多数情况下都可以使用 MSAL.NET 和 Microsoft 标识平台终结点，这是最新一代的 Microsoft 身份验证库。 使用 MSAL.NET 可以获取通过 Azure AD（工作和学校帐户）、Microsoft（个人）帐户 (MSA) 或 Azure AD B2C 登录到应用程序的用户的令牌。
+在大多数情况下，你想要使用 MSAL.NET 和 Microsoft 标识平台，这是最新一代的 Microsoft 身份验证库。 使用 MSAL.NET 可以获取通过 Azure AD（工作和学校帐户）、Microsoft（个人）帐户 (MSA) 或 Azure AD B2C 登录到应用程序的用户的令牌。
 
-如果你已熟悉面向开发人员的 Azure AD (v1.0) 终结点（和 ADAL.NET），请阅读[ Microsoft 标识平台 (v2.0) 终结点有何不同？](../azuread-dev/azure-ad-endpoint-comparison.md)
+如果你已熟悉 (v1.0) endpoint (和 ADAL.NET) 开发人员的 Azure AD，则可能需要阅读 [Microsoft 标识平台的不同之处？](../azuread-dev/azure-ad-endpoint-comparison.md)。
 
 但是，如果应用程序需要使用早期版本的 [Active Directory 联合身份验证服务 (ADFS)](/windows-server/identity/active-directory-federation-services) 将用户登录，则你仍然需要使用 ADAL.NET。 有关详细信息，请参阅 [ADFS 支持](https://aka.ms/msal-net-adfs-support)。
 
@@ -145,7 +145,7 @@ MSAL.NET 将令牌缓存用作密封类，并消除了扩展该类的功能。 �
 
 在 v1.0 中，如果你使用 `https://login.microsoftonline.com/common` 颁发机构，则会允许用户使用任何 AAD 帐户（适用于任何组织）登录。 请参阅 [ADAL.NET 中的颁发机构验证](https://github.com/AzureAD/azure-activedirectory-library-for-dotnet/wiki/AuthenticationContext:-the-connection-to-Azure-AD#authority-validation)
 
-如果你使用 v2.0 中的 `https://login.microsoftonline.com/common` 颁发机构，则会允许用户使用任何 AAD 组织或 Microsoft 个人帐户 (MSA) 登录。 在 MSAL.NET 中，如果你想要限制为使用任何 AAD 帐户登录（与在 ADAL.NET 中的行为相同），则需要使用 `https://login.microsoftonline.com/organizations`。 有关详细信息，请参阅[公共客户端应用程序](https://github.com/AzureAD/microsoft-authentication-library-for-dotnet/wiki/Client-Applications#publicclientapplication)中的 `authority` 参数。
+如果你使用 v2.0 中的 `https://login.microsoftonline.com/common` 颁发机构，则会允许用户使用任何 AAD 组织或 Microsoft 个人帐户 (MSA) 登录。 在 MSAL.NET 中，如果要将登录限制 (与 ADAL.NET) 相同的行为，请使用 `https://login.microsoftonline.com/organizations` 。 有关详细信息，请参阅[公共客户端应用程序](https://github.com/AzureAD/microsoft-authentication-library-for-dotnet/wiki/Client-Applications#publicclientapplication)中的 `authority` 参数。
 
 ## <a name="v10-and-v20-tokens"></a>v1.0 和 v2.0 令牌
 
@@ -176,13 +176,13 @@ var scopes = new [] {  ResourceId+"/user_impersonation"};
 若要使用 Microsoft Graph API (https://graph.microsoft.com/) 通过 MSAL.NET Azure Active Directory 进行读取和写入，需要按以下代码片段所示创建范围列表：
 
 ```csharp
-ResourceId = "https://graph.microsoft.com/";
-var scopes = new [] { ResourceId + "Directory.Read", ResourceID + "Directory.Write"}
+string ResourceId = "https://graph.microsoft.com/"; 
+string[] scopes = { ResourceId + "Directory.Read", ResourceId + "Directory.Write" }
 ```
 
 #### <a name="warning-should-you-have-one-or-two-slashes-in-the-scope-corresponding-to-a-v10-web-api"></a>警告：应在对应于 v1.0 Web API 的范围中使用一个或两个斜杠
 
-若要写入对应于 Azure 资源管理器 API (https://management.core.windows.net/) 的范围，需要请求以下范围（请注意有两个斜杠）
+如果要编写与 Azure 资源管理器 API (对应的作用域 https://management.core.windows.net/) ，请请求以下范围 (注意两个斜杠) 。
 
 ```csharp
 var scopes = new[] {"https://management.core.windows.net//user_impersonation"};
@@ -266,4 +266,4 @@ AuthenticationResult result = await appRt.AcquireTokenByRefreshToken(null, rt)
 
 ## <a name="next-steps"></a>后续步骤
 
-可以[ Microsoft 标识平台终结点中的范围、权限和许可](v2-permissions-and-consent.md)中找到有关范围的详细信息
+你可以在[Microsoft 标识平台的范围、权限和同意](v2-permissions-and-consent.md)中找到有关范围的详细信息

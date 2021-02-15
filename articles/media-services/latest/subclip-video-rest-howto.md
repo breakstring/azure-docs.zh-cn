@@ -1,24 +1,24 @@
 ---
-title: 使用 Azure 媒体服务 REST 进行编码时子剪辑视频
+title: 使用 Media Services REST 进行编码时子剪辑视频
 description: 本主题说明如何在使用 REST 通过 Azure 媒体服务进行编码时对视频进行子剪辑
 services: media-services
 documentationcenter: ''
-author: Juliako
+author: IngridAtMicrosoft
 manager: femila
 editor: ''
 ms.service: media-services
 ms.workload: media
 ms.tgt_pltfrm: na
 ms.devlang: ne
-ms.topic: article
+ms.topic: how-to
 ms.date: 06/10/2019
-ms.author: juliako
-ms.openlocfilehash: b112b3844ddb3758b79a086b624a227127e65ce2
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.author: inhenkel
+ms.openlocfilehash: 6c287e168289082b2bd717a2706dd011c7115691
+ms.sourcegitcommit: 4e70fd4028ff44a676f698229cb6a3d555439014
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87091872"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98955660"
 ---
 # <a name="subclip-a-video-when-encoding-with-media-services---rest"></a>使用媒体服务编码时对视频进行子剪辑 - REST
 
@@ -49,7 +49,7 @@ ms.locfileid: "87091872"
 1. 使用你的转换名称更新“transformName”环境变量的值。 
 1. 选择“正文”  选项卡，并使用输出资产名称更新“myOutputAsset”。
 
-    ```
+    ```json
     {
       "properties": {
         "description": "A Job with transform cb9599fb-03b3-40eb-a2ff-7ea909f53735 and single clip.",
@@ -58,8 +58,8 @@ ms.locfileid: "87091872"
           "@odata.type": "#Microsoft.Media.JobInputHttp",
           "baseUri": "https://nimbuscdn-nimbuspm.streaming.mediaservices.windows.net/2b533311-b215-4409-80af-529c3e853622/",
           "files": [
-                "Ignite-short.mp4"
-            ],
+            "Ignite-short.mp4"
+          ],
           "start": {
             "@odata.type": "#Microsoft.Media.AbsoluteClipTime",
             "time": "PT10S"
@@ -82,7 +82,7 @@ ms.locfileid: "87091872"
     ```
 1. 按“发送”。 
 
-    你会看到**响应**，其中包含有关已创建和提交的作业以及作业状态的信息。 
+    你会看到 **响应**，其中包含有关已创建和提交的作业以及作业状态的信息。 
 
 ## <a name="next-steps"></a>后续步骤
 

@@ -5,15 +5,15 @@ description: 了解如何使用 Azure PowerShell 在应用程序网关上配置�
 services: web-application-firewall
 author: winthrop28
 ms.service: web-application-firewall
-ms.date: 01/24/2020
+ms.date: 12/09/2020
 ms.author: victorh
-ms.topic: conceptual
-ms.openlocfilehash: 7e40370421214ebe026090007122a641a216c256
-ms.sourcegitcommit: 5cace04239f5efef4c1eed78144191a8b7d7fee8
+ms.topic: how-to
+ms.openlocfilehash: ef4337b187500695d9ef1c0b896d6ae8b5663ca6
+ms.sourcegitcommit: dea56e0dd919ad4250dde03c11d5406530c21c28
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/08/2020
-ms.locfileid: "86143941"
+ms.lasthandoff: 12/09/2020
+ms.locfileid: "96938845"
 ---
 # <a name="configure-per-site-waf-policies-using-azure-powershell"></a>使用 Azure PowerShell 配置每个站点的 WAF 策略
 
@@ -25,14 +25,13 @@ Web 应用程序防火墙 (WAF) 设置包含在 WAF 策略中，若要更改 WAF
 
 在本文中，学习如何：
 
-> [!div class="checklist"]
-> * 设置网络
-> * 创建 WAF 策略
-> * 创建启用 WAF 的应用程序网关
-> *  (预览中全局、按站点和按 URI 应用 WAF 策略) 
-> * 创建虚拟机规模集
-> * 创建存储帐户和配置诊断
-> * 测试应用程序网关
+* 设置网络
+* 创建 WAF 策略
+* 创建启用 WAF 的应用程序网关
+* 在全局范围、每个站点和每个 URI 上应用 WAF 策略 
+* 创建虚拟机规模集
+* 创建存储帐户和配置诊断
+* 测试应用程序网关
 
 ![Web 应用程序防火墙示例](../media/tutorial-restrict-web-traffic-powershell/scenario-waf.png)
 
@@ -145,23 +144,23 @@ $rule = New-AzApplicationGatewayFirewallCustomRule -Name globalAllow -Priority 5
 
 $variable1 = New-AzApplicationGatewayFirewallMatchVariable -VariableName RequestUri
 $condition1 = New-AzApplicationGatewayFirewallCondition -MatchVariable $variable1 -Operator Contains -MatchValue "globalBlock" 
-$rule1 = New-AzApplicationGatewayFirewallCustomRule -Name globalAllow -Priority 10 -RuleType MatchRule -MatchCondition $condition1 -Action Block
+$rule1 = New-AzApplicationGatewayFirewallCustomRule -Name globalBlock -Priority 10 -RuleType MatchRule -MatchCondition $condition1 -Action Block
 
 $variable2 = New-AzApplicationGatewayFirewallMatchVariable -VariableName RequestUri
 $condition2 = New-AzApplicationGatewayFirewallCondition -MatchVariable $variable2 -Operator Contains -MatchValue "siteAllow" 
-$rule2 = New-AzApplicationGatewayFirewallCustomRule -Name globalAllow -Priority 5 -RuleType MatchRule -MatchCondition $condition2 -Action Allow
+$rule2 = New-AzApplicationGatewayFirewallCustomRule -Name siteAllow -Priority 5 -RuleType MatchRule -MatchCondition $condition2 -Action Allow
 
 $variable3 = New-AzApplicationGatewayFirewallMatchVariable -VariableName RequestUri
 $condition3 = New-AzApplicationGatewayFirewallCondition -MatchVariable $variable3 -Operator Contains -MatchValue "siteBlock" 
-$rule3 = New-AzApplicationGatewayFirewallCustomRule -Name globalAllow -Priority 10 -RuleType MatchRule -MatchCondition $condition3 -Action Block
+$rule3 = New-AzApplicationGatewayFirewallCustomRule -Name siteBlock -Priority 10 -RuleType MatchRule -MatchCondition $condition3 -Action Block
 
 $variable4 = New-AzApplicationGatewayFirewallMatchVariable -VariableName RequestUri
 $condition4 = New-AzApplicationGatewayFirewallCondition -MatchVariable $variable4 -Operator Contains -MatchValue "URIAllow" 
-$rule4 = New-AzApplicationGatewayFirewallCustomRule -Name globalAllow -Priority 5 -RuleType MatchRule -MatchCondition $condition4 -Action Allow
+$rule4 = New-AzApplicationGatewayFirewallCustomRule -Name URIAllow -Priority 5 -RuleType MatchRule -MatchCondition $condition4 -Action Allow
 
 $variable5 = New-AzApplicationGatewayFirewallMatchVariable -VariableName RequestUri
 $condition5 = New-AzApplicationGatewayFirewallCondition -MatchVariable $variable5 -Operator Contains -MatchValue "URIBlock" 
-$rule5 = New-AzApplicationGatewayFirewallCustomRule -Name globalAllow -Priority 10 -RuleType MatchRule -MatchCondition $condition5 -Action Block
+$rule5 = New-AzApplicationGatewayFirewallCustomRule -Name URIBlock -Priority 10 -RuleType MatchRule -MatchCondition $condition5 -Action Block
 
 $policySettingGlobal = New-AzApplicationGatewayFirewallPolicySetting `
   -Mode Prevention `
@@ -250,7 +249,7 @@ $appgw = New-AzApplicationGateway `
   -FirewallPolicy $wafPolicyGlobal
 ```
 
-### <a name="apply-a-per-uri-policy-preview"></a> (预览中应用每 URI 策略) 
+### <a name="apply-a-per-uri-policy"></a>应用每 URI 策略
 
 若要应用每 URI 策略，只需创建一个新策略并将其应用于路径规则配置即可。 
 
@@ -290,12 +289,14 @@ Add-AzApplicationGatewayRequestRoutingRule -ApplicationGateway $AppGw `
   -Name "RequestRoutingRule" `
   -RuleType PathBasedRouting `
   -HttpListener $siteListener `
-  -UrlPathMapId $URLPathMap.Id
+  -UrlPathMap $URLPathMap
 ```
 
 ## <a name="create-a-virtual-machine-scale-set"></a>创建虚拟机规模集
 
 在此示例中，将创建虚拟机规模集，以便为应用程序网关的后端池提供服务器。 配置 IP 设置时将规模集分配给后端池。
+
+将和替换为你自己的值 `-AdminUsername` `-AdminPassword` 。
 
 ```azurepowershell-interactive
 $vnet = Get-AzVirtualNetwork `
@@ -307,12 +308,12 @@ $appgw = Get-AzApplicationGateway `
   -Name myAppGateway
 
 $backendPool = Get-AzApplicationGatewayBackendAddressPool `
-  -Name defaultPool `
+  -Name appGatewayBackendPool `
   -ApplicationGateway $appgw
 
 $ipConfig = New-AzVmssIpConfig `
   -Name myVmssIPConfig `
-  -SubnetId $vnet.Subnets[1].Id `
+  -SubnetId $vnet.Subnets[0].Id `
   -ApplicationGatewayBackendAddressPoolsId $backendPool.Id
 
 $vmssConfig = New-AzVmssConfig `
@@ -329,8 +330,8 @@ Set-AzVmssStorageProfile $vmssConfig `
   -OsDiskCreateOption FromImage
 
 Set-AzVmssOsProfile $vmssConfig `
-  -AdminUsername azureuser `
-  -AdminPassword "Azure123456!" `
+  -AdminUsername <username> `
+  -AdminPassword <password> `
   -ComputerNamePrefix myvmss
 
 Add-AzVmssNetworkInterfaceConfiguration `
@@ -398,7 +399,7 @@ $store = Get-AzStorageAccount `
 Set-AzDiagnosticSetting `
   -ResourceId $appgw.Id `
   -StorageAccountId $store.Id `
-  -Categories ApplicationGatewayAccessLog, ApplicationGatewayPerformanceLog, ApplicationGatewayFirewallLog `
+  -Category ApplicationGatewayAccessLog, ApplicationGatewayPerformanceLog, ApplicationGatewayFirewallLog `
   -Enabled $true `
   -RetentionEnabled $true `
   -RetentionInDays 30

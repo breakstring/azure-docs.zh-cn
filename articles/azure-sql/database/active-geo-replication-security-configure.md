@@ -6,26 +6,26 @@ ms.service: sql-database
 ms.subservice: high-availability
 ms.custom: sqldbrb=1
 ms.devlang: ''
-ms.topic: conceptual
+ms.topic: how-to
 author: anosov1960
 ms.author: sashan
-ms.reviewer: mathoma, carlrab
+ms.reviewer: mathoma, sstein
 ms.date: 12/18/2018
-ms.openlocfilehash: 3699191229a53735a62235cf8688cdfab9335339
-ms.sourcegitcommit: 845a55e6c391c79d2c1585ac1625ea7dc953ea89
+ms.openlocfilehash: 317b530fbaa34ca5689bb505126892e4eba06bd9
+ms.sourcegitcommit: 4cb89d880be26a2a4531fedcc59317471fe729cd
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/05/2020
-ms.locfileid: "85963642"
+ms.lasthandoff: 10/27/2020
+ms.locfileid: "92674791"
 ---
 # <a name="configure-and-manage-azure-sql-database-security-for-geo-restore-or-failover"></a>针对异地还原或故障转移配置和管理 Azure SQL 数据库的安全性
 [!INCLUDE[appliesto-sqldb](../includes/appliesto-sqldb.md)]
 
-本文介绍了配置和控制[活动异地复制](active-geo-replication-overview.md)和[自动故障转移组](auto-failover-group-overview.md)的身份验证要求。 它还介绍了设置用户对辅助数据库的访问权的步骤。 最后它还介绍了如何在使用[异地还原](recovery-using-backups.md#geo-restore)后启用对已恢复数据库的访问权限。 相关详细信息，请参阅[业务连续性概述](business-continuity-high-availability-disaster-recover-hadr-overview.md)。
+本文介绍了配置和控制[活动异地复制](active-geo-replication-overview.md)和[自动故障转移组](auto-failover-group-overview.md)的身份验证要求。 它还介绍了设置用户对辅助数据库的访问权的步骤。 最后它还介绍了如何在使用[异地还原](recovery-using-backups.md#geo-restore)后启用对已恢复数据库的访问权限。 有关恢复选项的详细信息，请参阅[业务连续性概述](business-continuity-high-availability-disaster-recover-hadr-overview.md)。
 
 ## <a name="disaster-recovery-with-contained-users"></a>使用包含的用户进行灾难恢复
 
-不同于必须映射到 master 数据库中登录名的传统用户，包含的用户完全由数据库自身管理。 这带来了两个好处。 在灾难恢复方案中，用户可以继续连接到新的主数据库或使用异地还原恢复的数据库，不需进行任何额外的配置，因为数据库会管理用户。 从登录的立场来看，此配置还有潜在的缩放性和性能优势。 有关详细信息，请参阅 [包含的数据库用户 - 使你的数据库可移植](https://msdn.microsoft.com/library/ff929188.aspx)。
+不同于必须映射到 master 数据库中登录名的传统用户，包含的用户完全由数据库自身管理。 这带来了两个好处。 在灾难恢复方案中，用户可以继续连接到新的主数据库或使用异地还原恢复的数据库，不需进行任何额外的配置，因为数据库会管理用户。 从登录的立场来看，此配置还有潜在的缩放性和性能优势。 有关详细信息，请参阅[包含的数据库用户 - 使数据库可移植](/sql/relational-databases/security/contained-database-users-making-your-database-portable)。
 
 主要的不足是，在规模较大的情况下，管理灾难恢复过程更具挑战性。 当有多个使用同一登录名的数据库时，在多个数据库中使用包含用户来维护凭据可能会抵消包含用户的好处。 例如，密码轮换策略要求在多个数据库中进行一致性的更改，而不是在 master 数据库中更改登录名的密码一次。 因此，如果多个数据库使用同一用户名和密码，则不建议使用包含用户。
 
@@ -34,7 +34,7 @@ ms.locfileid: "85963642"
 如果要使用登录名和用户（而不是包含用户），必须采取额外的步骤以确保相同的登录名存在于 master 数据库中。 以下部分概述了相关的步骤和其他注意事项。
 
   >[!NOTE]
-  > 还可以使用 Azure Active Directory (AAD) 登录来管理数据库。 有关详细信息，请参阅 [Azure SQL 登录和用户](https://docs.microsoft.com/azure/sql-database/sql-database-manage-logins)。
+  > 还可以使用 Azure Active Directory (AAD) 登录来管理数据库。 有关详细信息，请参阅 [Azure SQL 登录和用户](./logins-create-manage.md)。
 
 ### <a name="set-up-user-access-to-a-secondary-or-recovered-database"></a>设置对辅助数据库或已恢复数据库的用户访问权限
 
@@ -49,7 +49,7 @@ ms.locfileid: "85963642"
 
 在目标服务器上设置登录名涉及三个步骤，概述如下：
 
-#### <a name="1-determine-logins-with-access-to-the-primary-database"></a>1. 确定有权访问主数据库的登录名
+#### <a name="1-determine-logins-with-access-to-the-primary-database"></a>1.确定有权访问主数据库的登录名
 
 该过程的第一个步骤就是确定必须在目标服务器上复制哪些登录名。 可以使用一对 SELECT 语句来完成此操作，其中一个语句用于源服务器上的逻辑 master 数据库，另一个语句用于主数据库本身。
 
@@ -69,7 +69,7 @@ FROM [sys].[database_principals]
 WHERE [type_desc] = 'SQL_USER'
 ```
 
-#### <a name="2-find-the-sid-for-the-logins-identified-in-step-1"></a>2. 查找步骤1中确定的登录名的 SID
+#### <a name="2-find-the-sid-for-the-logins-identified-in-step-1"></a>2.查找步骤 1 中确定的登录名的 SID
 
 通过将前一部分中所述的查询的输出进行比较以及对 SID 进行匹配，可以将服务器登录名映射到数据库用户。 包含数据库用户以及匹配的 SID 的登录名有权以该数据库用户主体的身份访问该数据库。
 
@@ -82,9 +82,9 @@ WHERE [type_desc] = 'SQL_USER'
 ```
 
 > [!NOTE]
-> **INFORMATION_SCHEMA** 和 **sys** 用户具有 *NULL* SID，**guest** SID 为 **0x00**。 如果数据库创建者是服务器管理员而不是 **DbManager** 的成员，则 **dbo** SID 可能以 *0x01060000000001648000000000048454* 开头。
+> INFORMATION_SCHEMA 和 sys 用户具有 NULL SID，guest SID 为 0x00  。 如果数据库创建者是服务器管理员而不是 DbManager 的成员，则 dbo SID 可能以 0x01060000000001648000000000048454 开头。
 
-#### <a name="3-create-the-logins-on-the-target-server"></a>3. 在目标服务器上创建登录名
+#### <a name="3-create-the-logins-on-the-target-server"></a>3.在目标服务器上创建登录名
 
 最后一个步骤是转到一个或多个目标服务器，并使用相应的 SID 生成登录名。 基本语法如下。
 
@@ -106,7 +106,7 @@ SID = <desired login SID>
 ## <a name="next-steps"></a>后续步骤
 
 * 若要深入了解如何管理数据库访问和登录，请参阅 [SQL 数据库安全：管理数据库访问和登录安全](logins-create-manage.md)。
-* 要深入了解随附的数据库用户，请参阅[包含的数据库用户 - 使数据库可移植](https://msdn.microsoft.com/library/ff929188.aspx)。
+* 要深入了解随附的数据库用户，请参阅[包含的数据库用户 - 使数据库可移植](/sql/relational-databases/security/contained-database-users-making-your-database-portable)。
 * 若要了解活动异地复制，请参阅[活动异地复制](active-geo-replication-overview.md)。
 * 若要了解自动故障转移组，请参阅[自动故障转移组](auto-failover-group-overview.md)。
 * 若要了解如何使用异地还原，请参阅[异地还原](recovery-using-backups.md#geo-restore)

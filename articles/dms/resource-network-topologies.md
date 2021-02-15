@@ -10,14 +10,14 @@ ms.reviewer: craigg
 ms.service: dms
 ms.workload: data-services
 ms.custom: seo-lt-2019
-ms.topic: article
+ms.topic: reference
 ms.date: 01/08/2020
-ms.openlocfilehash: 69926671730e41845cd28df3108ec86b24a57075
-ms.sourcegitcommit: cee72954f4467096b01ba287d30074751bcb7ff4
+ms.openlocfilehash: ae036b7d893eb268ea55026054bf364dad0b610e
+ms.sourcegitcommit: cd9754373576d6767c06baccfd500ae88ea733e4
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/30/2020
-ms.locfileid: "87448525"
+ms.lasthandoff: 11/20/2020
+ms.locfileid: "94961543"
 ---
 # <a name="network-topologies-for-azure-sql-managed-instance-migrations-using-azure-database-migration-service"></a>使用 Azure 数据库迁移服务迁移 Azure SQL 托管实例的网络拓扑
 
@@ -32,22 +32,22 @@ ms.locfileid: "87448525"
 **要求**
 
 - 在此方案中，SQL 托管实例和 Azure 数据库迁移服务实例在同一 Microsoft Azure 虚拟网络中创建，但它们使用不同的子网。  
-- 本方案中使用的虚拟网络还使用 [ExpressRoute](https://docs.microsoft.com/azure/expressroute/expressroute-introduction) 或 [VPN](https://docs.microsoft.com/azure/vpn-gateway/vpn-gateway-about-vpngateways) 连接到本地网络。
+- 本方案中使用的虚拟网络还使用 [ExpressRoute](../expressroute/expressroute-introduction.md) 或 [VPN](../vpn-gateway/vpn-gateway-about-vpngateways.md) 连接到本地网络。
 
 ## <a name="sql-managed-instance-isolated-from-the-on-premises-network"></a>SQL 托管实例与本地网络隔离
 
 如果环境要求以下的一种或多种方案，则使用此网络拓扑：
 
 - SQL 托管实例与本地连接隔离，但 Azure 数据库迁移服务实例已连接到本地网络。
-- 如果 Azure 基于角色的访问控制（Azure RBAC）策略已准备就绪，并且你需要限制用户访问承载 SQL 托管实例的同一订阅。
+- 如果 Azure 基于角色的访问控制 (Azure RBAC) 策略已经到位，并且你需要限制用户访问托管 SQL 托管实例的同一订阅。
 - 用于 SQL 托管实例和用于 Azure 数据库迁移服务的虚拟网络位于不同的订阅中。
 
 ![托管实例的网络拓扑与本地网络分离](media/resource-network-topologies/mi-isolated-workload.png)
 
 **要求**
 
-- 对于此方案，Azure 数据库迁移服务使用的虚拟网络还必须使用（或 VPN）连接到本地网络 https://docs.microsoft.com/azure/expressroute/expressroute-introduction) 。 [VPN](https://docs.microsoft.com/azure/vpn-gateway/vpn-gateway-about-vpngateways)
-- 在用于 SQL 托管实例的虚拟网络和 Azure 数据库迁移服务之间设置 [VNet 网络对等互连](https://docs.microsoft.com/azure/virtual-network/virtual-network-peering-overview)。
+- 对于此方案，Azure 数据库迁移服务使用的虚拟网络还必须使用 (或 VPN 连接到本地网络 https://docs.microsoft.com/azure/expressroute/expressroute-introduction) 。 [VPN](../vpn-gateway/vpn-gateway-about-vpngateways.md)
+- 在用于 SQL 托管实例的虚拟网络和 Azure 数据库迁移服务之间设置 [VNet 网络对等互连](../virtual-network/virtual-network-peering-overview.md)。
 
 ## <a name="cloud-to-cloud-migrations-shared-virtual-network"></a>云到云的迁移：共享的虚拟网络
 
@@ -64,14 +64,14 @@ ms.locfileid: "87448525"
 如果环境要求以下的一种或多种方案，则使用此网络拓扑：
 
 - SQL 托管实例在隔离虚拟网络中进行预配。
-- 如果 Azure 基于角色的访问控制（Azure RBAC）策略已准备就绪，并且你需要将用户限制为访问承载 SQL 托管实例的同一订阅。
+- 如果 Azure 基于角色的访问控制 (Azure RBAC) 策略已经到位，并且你需要限制用户访问托管 SQL 托管实例的同一订阅。
 - 用于 SQL 托管实例和用于 Azure 数据库迁移服务的虚拟网络位于不同的订阅中。
 
 ![独立 VNet 的云到云迁移的网络拓扑](media/resource-network-topologies/cloud-to-cloud-isolated.png)
 
 **要求**
 
-- 在用于 SQL 托管实例的虚拟网络和 Azure 数据库迁移服务之间设置 [VNet 网络对等互连](https://docs.microsoft.com/azure/virtual-network/virtual-network-peering-overview)。
+- 在用于 SQL 托管实例的虚拟网络和 Azure 数据库迁移服务之间设置 [VNet 网络对等互连](../virtual-network/virtual-network-peering-overview.md)。
 
 ## <a name="inbound-security-rules"></a>入站安全规则
 
@@ -92,9 +92,9 @@ ms.locfileid: "87448525"
 
 ## <a name="see-also"></a>另请参阅
 
-- [将 SQL Server 迁移到 SQL 托管实例](https://docs.microsoft.com/azure/dms/tutorial-sql-server-to-managed-instance)
-- [使用 Azure 数据库迁移服务的先决条件概述](https://docs.microsoft.com/azure/dms/pre-reqs)
-- [使用 Azure 门户创建虚拟网络](https://docs.microsoft.com/azure/virtual-network/quick-create-portal)
+- [将 SQL Server 迁移到 SQL 托管实例](./tutorial-sql-server-to-managed-instance.md)
+- [使用 Azure 数据库迁移服务的先决条件概述](./pre-reqs.md)
+- [使用 Azure 门户创建虚拟网络](../virtual-network/quick-create-portal.md)
 
 ## <a name="next-steps"></a>后续步骤
 

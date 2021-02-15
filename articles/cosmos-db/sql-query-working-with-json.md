@@ -3,17 +3,19 @@ title: 使用 Azure Cosmos DB 中的 JSON
 description: 了解如何查询和访问嵌套的 JSON 属性并在 Azure Cosmos DB 中使用特殊字符
 author: timsander1
 ms.service: cosmos-db
+ms.subservice: cosmosdb-sql
 ms.topic: conceptual
-ms.date: 05/19/2020
+ms.date: 09/19/2020
 ms.author: tisande
-ms.openlocfilehash: a569b0122f9122b141b64ded21dbd9be1d766a41
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 9a9300db1adc3ff238c44887012400702690b0e8
+ms.sourcegitcommit: fa90cd55e341c8201e3789df4cd8bd6fe7c809a3
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "83699123"
+ms.lasthandoff: 11/04/2020
+ms.locfileid: "93337823"
 ---
 # <a name="working-with-json-in-azure-cosmos-db"></a>使用 Azure Cosmos DB 中的 JSON
+[!INCLUDE[appliesto-sql-api](includes/appliesto-sql-api.md)]
 
 在 Azure Cosmos DB 的 SQL (Core) API 中，项存储为 JSON。 类型系统和表达式仅限于处理 JSON 类型。 有关详细信息，请参阅 [JSON 规范](https://www.json.org/)。
 
@@ -138,6 +140,34 @@ WHERE EXISTS(
     WHERE n.checkingAccount < 0
 )
 ```
+
+## <a name="difference-between-null-and-undefined"></a>Null 和未定义之间的区别
+
+如果一个属性没有在项中定义，那么它的值为 `undefined`。 值为 `null` 的属性必须显式定义并分配 `null` 值。
+
+例如，假设有以下示例项：
+
+```json
+{
+  "id": "AndersenFamily",
+  "lastName": "Andersen",
+  "address": {
+      "state": "WA",
+      "county": "King",
+      "city": "Seattle"
+      },
+  "creationDate": null
+}
+```
+
+在该示例中，属性 `isRegistered` 的值为 `undefined`，因为它在项中已省略。 属性 `creationDate` 具有 `null` 值。
+
+Azure Cosmos DB 支持 `null` 和 `undefined` 属性的两个有用的类型检查系统函数：
+
+* [IS_NULL](sql-query-is-null.md) - 检查属性值是否为 `null`
+* [IS_DEFINED](sql-query-is-defined.md) - 检查是否已定义属性值
+
+你可以了解[ 支持的运算符](sql-query-operators.md)及其对 `null` 和 `undefined` 值的行为。
 
 ## <a name="reserved-keywords-and-special-characters-in-json"></a>JSON 中的保留关键字和特殊字符
 

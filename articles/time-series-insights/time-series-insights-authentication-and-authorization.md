@@ -10,18 +10,18 @@ ms.reviewer: v-mamcge, jasonh, kfile
 ms.devlang: csharp
 ms.workload: big-data
 ms.topic: conceptual
-ms.date: 08/12/2020
+ms.date: 10/02/2020
 ms.custom: seodec18, has-adal-ref
-ms.openlocfilehash: bbec605f25c2e74178bdb5c28d0a7995e4e265f1
-ms.sourcegitcommit: 56cbd6d97cb52e61ceb6d3894abe1977713354d9
+ms.openlocfilehash: d1bd3c5796658663b6111723829cbe620346002c
+ms.sourcegitcommit: 10d00006fec1f4b69289ce18fdd0452c3458eca5
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/20/2020
-ms.locfileid: "88690385"
+ms.lasthandoff: 11/21/2020
+ms.locfileid: "95016235"
 ---
 # <a name="authentication-and-authorization-for-azure-time-series-insights-api"></a>Azure 时序见解 API 的身份验证和授权
 
-本文档介绍如何使用新的 Azure Active Directory 边栏选项卡在 Azure Active Directory 中注册应用。 在 Azure Active Directory 中注册的应用使用户能够使用 Azure 时序见解 API 与 Azure 时序见解环境进行身份验证和授权。
+本文档介绍如何使用新的 Azure Active Directory 边栏选项卡在 Azure Active Directory 中注册应用。 在 Azure Active Directory 中注册的应用可让用户进行身份验证，并有权使用与 Azure 时序见解环境关联的 Azure 时序见解 API。
 
 ## <a name="service-principal"></a>服务主体
 
@@ -73,7 +73,7 @@ Azure Active Directory 应用注册流程涉及三个主要步骤。
 1. 通过选择“确定”来保存策略。
 
    > [!TIP]
-   > 对于高级数据访问选项，请阅读[授予数据访问权限](./time-series-insights-data-access.md)。
+   > 对于高级数据访问选项，请阅读[授予数据访问权限](./concepts-access-policies.md)。
 
 ### <a name="client-app-initialization"></a>客户端应用初始化
 
@@ -85,23 +85,23 @@ Azure Active Directory 应用注册流程涉及三个主要步骤。
 
    1. 在 C# 中，以下代码可以代表应用程序获取令牌。 有关如何从 Gen1 环境查询数据的完整示例，请参阅[使用 C# 查询数据](time-series-insights-query-data-csharp.md)。
 
-        请参阅 [Azure 时序见解](https://github.com/Azure-Samples/Azure-Time-Series-Insights/blob/master/gen1-sample/csharp-tsi-gen1-sample/Program.cs)] 存储库以访问 c # 代码。 
+        请参阅 [Azure 时序见解](https://github.com/Azure-Samples/Azure-Time-Series-Insights/blob/master/gen1-sample/csharp-tsi-gen1-sample/Program.cs)存储库以访问 C# 代码。
 
    1. 随后可在应用程序调用 Azure 时序见解 API 时，将令牌传入 `Authorization` 标头。
 
 > [!IMPORTANT]
-> 如果使用的是 [Active Directory 身份验证库 (ADAL)](https://docs.microsoft.com/azure/active-directory/azuread-dev/active-directory-authentication-libraries)，请阅读[迁移到 MSAL](https://docs.microsoft.com/azure/active-directory/develop/msal-net-migration)。
+> 如果使用的是 [Active Directory 身份验证库 (ADAL)](../active-directory/azuread-dev/active-directory-authentication-libraries.md)，请阅读[迁移到 MSAL](../active-directory/develop/msal-net-migration.md)。
 
 ## <a name="common-headers-and-parameters"></a>常用标头和参数
 
-本部分介绍用于对 Azure 时序见解 Gen1 和 Gen2 API 进行查询的常用 HTTP 请求标头和参数。 [Azure 时序见解 REST API 参考文档](https://docs.microsoft.com/rest/api/time-series-insights/)中更详细地介绍了特定于 API 的要求。
+本部分介绍用于对 Azure 时序见解 Gen1 和 Gen2 API 进行查询的常用 HTTP 请求标头和参数。 [Azure 时序见解 REST API 参考文档](/rest/api/time-series-insights/)中更详细地介绍了特定于 API 的要求。
 
 > [!TIP]
-> 阅读 [Azure REST API 参考](https://docs.microsoft.com/rest/api/azure/)，了解有关如何使用 REST API、发出 HTTP 请求和处理 HTTP 响应的详细信息。
+> 阅读 [Azure REST API 参考](/rest/api/azure/)，了解有关如何使用 REST API、发出 HTTP 请求和处理 HTTP 响应的详细信息。
 
 ### <a name="authentication"></a>身份验证
 
-若要对 [Azure 时序见解 REST API](https://docs.microsoft.com/rest/api/time-series-insights/) 执行经过身份验证的查询，必须使用所选的 REST 客户端（Postman、JavaScript、C#）将有效的 OAuth 2.0 持有者令牌传入[授权标头](/rest/api/apimanagement/2019-12-01/authorizationserver/createorupdate)。
+若要对 [Azure 时序见解 REST API](/rest/api/time-series-insights/) 执行经过身份验证的查询，必须使用所选的 REST 客户端（Postman、JavaScript、C#）将有效的 OAuth 2.0 持有者令牌传入[授权标头](/rest/api/apimanagement/2019-12-01/authorizationserver/createorupdate)。
 
 > [!TIP]
 > 阅读托管的 Azure 时序见解[客户端 SDK 示例可视化](https://tsiclientsample.azurewebsites.net/)，了解如何使用 [JavaScript 客户端 SDK](https://github.com/microsoft/tsiclient/blob/master/docs/API.md) 以及图表和图以编程方式通过 Azure 时序见解 API 进行身份验证。
@@ -117,7 +117,7 @@ Azure Active Directory 应用注册流程涉及三个主要步骤。
 > [!IMPORTANT]
 > 令牌必须严格颁发给 `https://api.timeseries.azure.com/` 资源（也称为令牌的“受众”）。
 
-> * 因此，[Postman](https://www.getpostman.com/) **AuthURL** 将为：`https://login.microsoftonline.com/microsoft.onmicrosoft.com/oauth2/authorize?scope=https://api.timeseries.azure.com/.default`
+> * 因此，[Postman](https://www.getpostman.com/) **AuthURL** 将为：`https://login.microsoftonline.com/microsoft.onmicrosoft.com/oauth2/authorize?scope=https://api.timeseries.azure.com//.default`
 > * `https://api.timeseries.azure.com/` 有效，但 `https://api.timeseries.azure.com` 无效。
 
 可选请求标头如下所述。
@@ -140,7 +140,7 @@ Azure Active Directory 应用注册流程涉及三个主要步骤。
 ### <a name="http-parameters"></a>HTTP 参数
 
 > [!TIP]
-> 如需查找有关必需和可选查询信息的详细信息，请参阅[参考文档](https://docs.microsoft.com/rest/api/time-series-insights/)。
+> 如需查找有关必需和可选查询信息的详细信息，请参阅[参考文档](/rest/api/time-series-insights/)。
 
 必需的 URL 查询字符串参数依赖于 API 版本。
 
@@ -157,7 +157,7 @@ Azure Active Directory 应用注册流程涉及三个主要步骤。
 
 | 可选查询参数 | 说明 | 版本 |
 | --- |  --- | --- |
-| `timeout=<timeout>` | 用于执行 HTTP 请求的服务器端超时。 仅适用于[获取环境事件](https://docs.microsoft.com/rest/api/time-series-insights/dataaccess(preview)/query/getavailability)和[获取环境聚合](https://docs.microsoft.com/rest/api/time-series-insights/gen1-query-api#get-environment-aggregates-api) API。 超时值应采用 ISO 8601 持续时间格式（例如 `"PT20S"`），并且应在 `1-30 s` 范围内。 默认值为 `30 s`。 | Gen1 |
+| `timeout=<timeout>` | 用于执行 HTTP 请求的服务器端超时。 仅适用于[获取环境事件](/rest/api/time-series-insights/dataaccess(preview)/query/getavailability)和[获取环境聚合](/rest/api/time-series-insights/gen1-query-api#get-environment-aggregates-api) API。 超时值应采用 ISO 8601 持续时间格式（例如 `"PT20S"`），并且应在 `1-30 s` 范围内。 默认值为 `30 s`。 | Gen1 |
 | `storeType=<storeType>` | 对于启用了 Warm 存储的 Gen2 环境，可以对 `WarmStore` 或 `ColdStore` 执行查询。 查询中的此参数定义应对哪个存储执行查询。 如果未定义，将对 Cold 存储区执行查询。 若要查询 Warm 存储，需要将 storeType 设置为 `WarmStore`。 如果未定义，将对 Cold 存储区执行查询。 | Gen2 |
 
 ## <a name="next-steps"></a>后续步骤
@@ -166,6 +166,6 @@ Azure Active Directory 应用注册流程涉及三个主要步骤。
 
 * 有关调用 Gen2 Azure 时序见解 API 示例代码的示例代码，请参阅[使用 C# 查询 Gen2 数据](./time-series-insights-update-query-data-csharp.md)。
 
-* 有关 API 参考信息，请阅读[查询 API 参考](https://docs.microsoft.com/rest/api/time-series-insights/gen1-query-api)文档。
+* 有关 API 参考信息，请阅读[查询 API 参考](/rest/api/time-series-insights/gen1-query-api)文档。
 
 * 了解如何[创建服务主体](../active-directory/develop/howto-create-service-principal-portal.md)。

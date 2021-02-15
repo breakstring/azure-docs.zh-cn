@@ -4,12 +4,12 @@ description: 本文介绍如何使用 Azure 自动化中的 Azure AD 作为向 A
 services: automation
 ms.date: 03/30/2020
 ms.topic: conceptual
-ms.openlocfilehash: c17c9cdc02c87037a39b8d6029bc4506afa8ad28
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.openlocfilehash: 336c0387ac9febcc517c2ce358d0b04c80d10678
+ms.sourcegitcommit: 1f1d29378424057338b246af1975643c2875e64d
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87064386"
+ms.lasthandoff: 02/05/2021
+ms.locfileid: "99576797"
 ---
 # <a name="use-azure-ad-to-authenticate-to-azure"></a>使用 Azure AD 向 Azure 进行身份验证
 
@@ -21,7 +21,7 @@ ms.locfileid: "87064386"
 
 * 用于 Graph 的 Azure Active Directory PowerShell（AzureRM 和 Az 模块）。 Azure 自动化随附了 AzureRM 模块及其最新的升级，Az 模块。 功能包括使用 Azure AD 用户 (OrgId) 基于凭据的身份验证向 Azure 进行非交互式身份验证。 请参阅 [Azure AD 2.0.2.76](https://www.powershellgallery.com/packages/AzureAD/2.0.2.76)。
 
-* 用于 Windows PowerShell 的 Microsoft Azure Active Directory（MSOnline 模块）。 此模块可启用与 Microsoft Online（包括 Office 365）的交互。
+* 用于 Windows PowerShell 的 Microsoft Azure Active Directory（MSOnline 模块）。 此模块启用与 Microsoft Online 的交互，包括 Microsoft 365。
 
 >[!NOTE]
 >PowerShell Core 不支持 MSOnline 模块。 若要使用模块 cmdlet，必须从 Windows PowerShell 运行这些 cmdlet。 建议使用较新的用于 Graph 的 Azure Active Directory PowerShell 模块，而不是使用 MSOnline 模块。 
@@ -39,18 +39,18 @@ ms.locfileid: "87064386"
 >[!NOTE]
 >若要使用这些模块，必须将 PowerShell 版本 5.1 或更高版本与 64 位版本 Windows 一起使用。 
 
-1. 安装 Windows Management Framework (WMF) 5.1。 请参阅[安装和配置 WMF 5.1](/powershell/scripting/wmf/setup/install-configure?view=powershell-7)。
+1. 安装 Windows Management Framework (WMF) 5.1。 请参阅[安装和配置 WMF 5.1](/powershell/scripting/wmf/setup/install-configure)。
 
-2. 请按照[使用 PowerShellGet 在 Windows 上安装 Azure PowerShell](/powershell/azure/azurerm/install-azurerm-ps?view=azurermps-6.13.0) 中的说明安装 AzureRM 和/或 Az。
+2. 请按照[使用 PowerShellGet 在 Windows 上安装 Azure PowerShell](/powershell/azure/azurerm/install-azurerm-ps) 中的说明安装 AzureRM 和/或 Az。
 
 ### <a name="install-the-msonline-module"></a>安装 MSOnline 模块
 
 >[!NOTE]
->若要安装 MSOnline 模块，你必须是 Office 365 管理员角色的成员。 请参阅[关于管理员角色](/microsoft-365/admin/add-users/about-admin-roles?view=o365-worldwide)。
+>若要安装 MSOnline 模块，你必须是管理员角色的成员。 请参阅[关于管理员角色](/microsoft-365/admin/add-users/about-admin-roles)。
 
 1. 请确保已在计算机上启用 Microsoft .NET Framework 3.5.x 功能。 计算机可能已安装较新版本，但可启用或禁用较旧版本的 .NET Framework 的后向兼容性。 
 
-2. 安装 64 位版本的 [Microsoft Online Services 登录助手](https://www.microsoft.com/download/details.aspx?id=41950)。
+2. 安装 64 位版本的 [Microsoft Online Services 登录助手](https://www.microsoft.com/Download/details.aspx?id=28177)。
 
 3. 以管理员身份运行 Windows PowerShell，创建提升的 Windows PowerShell 命令提示符。
 
@@ -62,7 +62,7 @@ ms.locfileid: "87064386"
 
 ### <a name="install-support-for-pscredential"></a>对 PSCredential 的安装支持
 
-Azure 自动化使用 [PSCredential](/dotnet/api/system.management.automation.pscredential?view=pscore-6.2.0) 类表示凭据资产。 脚本使用 `Get-AutomationPSCredential` cmdlet 检索 `PSCredential` 对象。 有关详细信息，请参阅 [Azure 自动化中的凭据资产](shared-resources/credentials.md)。
+Azure 自动化使用 [PSCredential](/dotnet/api/system.management.automation.pscredential) 类表示凭据资产。 脚本使用 `Get-AutomationPSCredential` cmdlet 检索 `PSCredential` 对象。 有关详细信息，请参阅 [Azure 自动化中的凭据资产](shared-resources/credentials.md)。
 
 ## <a name="assign-a-subscription-administrator"></a>分配订阅管理员
 
@@ -80,7 +80,7 @@ Azure 自动化使用 [PSCredential](/dotnet/api/system.management.automation.ps
 
 ## <a name="configure-azure-automation-to-manage-the-azure-subscription"></a>配置 Azure 自动化以管理 Azure 订阅
 
-若要使 Azure 自动化与 Azure AD 通信，必须检索与 Azure 和 Azure AD 之间的连接相关联的凭据。 这些凭据的示例包括租户 ID、订阅 ID 等。 有关 Azure 与 Azure AD 之间连接的详细信息，请参阅[将组织连接到 Azure Active Directory](/azure/devops/organizations/accounts/connect-organization-to-azure-ad?view=azure-devops)。
+若要使 Azure 自动化与 Azure AD 通信，必须检索与 Azure 和 Azure AD 之间的连接相关联的凭据。 这些凭据的示例包括租户 ID、订阅 ID 等。 有关 Azure 与 Azure AD 之间连接的详细信息，请参阅[将组织连接到 Azure Active Directory](/azure/devops/organizations/accounts/connect-organization-to-azure-ad)。
 
 ## <a name="create-a-credential-asset"></a>创建凭据资产
 
@@ -92,11 +92,11 @@ Azure 自动化使用 [PSCredential](/dotnet/api/system.management.automation.ps
 
 ### <a name="create-the-credential-asset-with-windows-powershell"></a>使用 Windows PowerShell 创建凭据资产
 
-若要在 Windows PowerShell 中准备新的凭据资产，脚本应首先使用分配的用户名和密码创建 `PSCredential` 对象。 然后，脚本使用此对象通过调用 [New-AzureAutomationCredential](/powershell/module/servicemanagement/azure.service/new-azureautomationcredential?view=azuresmps-4.0.0) cmdlet 来创建资产。 或者，脚本可以调用 [Get-Credential](/powershell/module/microsoft.powershell.security/get-credential?view=powershell-7) cmdlet 来提示用户键入名称和密码。 请参阅 [Azure 自动化中的凭据资产](shared-resources/credentials.md)。 
+若要在 Windows PowerShell 中准备新的凭据资产，脚本应首先使用分配的用户名和密码创建 `PSCredential` 对象。 然后，脚本使用此对象通过调用 [New-AzureAutomationCredential](/powershell/module/servicemanagement/azure.service/new-azureautomationcredential) cmdlet 来创建资产。 或者，脚本可以调用 [Get-Credential](/powershell/module/microsoft.powershell.security/get-credential) cmdlet 来提示用户键入名称和密码。 请参阅 [Azure 自动化中的凭据资产](shared-resources/credentials.md)。 
 
 ## <a name="manage-azure-resources-from-an-azure-automation-runbook"></a>通过 Azure 自动化 runbook 管理 Azure 资源
 
-可以使用凭据资产通过 Azure 自动化 runbook 管理 Azure 资源。 下面是一个示例 PowerShell runbook，它收集用于停止和启动 Azure 订阅中的虚拟机的凭据资产。 此 runbook 首先使用 `Get-AutomationPSCredential` 来检索用于向 Azure 进行身份验证的凭据。 然后，它会调用 [Connect-AzAccount](/powershell/module/az.accounts/connect-azaccount?view=azps-3.6.1) cmdlet，以使用凭据连接到 Azure。 此脚本使用 [Select-AzureSubscription](/powershell/module/servicemanagement/azure.service/select-azuresubscription?view=azuresmps-4.0.0) cmdlet 来选择要使用的订阅。 
+可以使用凭据资产通过 Azure 自动化 runbook 管理 Azure 资源。 下面是一个示例 PowerShell runbook，它收集用于停止和启动 Azure 订阅中的虚拟机的凭据资产。 此 runbook 首先使用 `Get-AutomationPSCredential` 来检索用于向 Azure 进行身份验证的凭据。 然后，它会调用 [Connect-AzAccount](/powershell/module/az.accounts/connect-azaccount) cmdlet，以使用凭据连接到 Azure。 此脚本使用 [Select-AzureSubscription](/powershell/module/servicemanagement/azure.service/select-azuresubscription) cmdlet 来选择要使用的订阅。 
 
 ```azurepowershell
 Workflow Stop-Start-AzureVM 

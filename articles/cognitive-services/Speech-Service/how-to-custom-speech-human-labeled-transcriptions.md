@@ -8,20 +8,28 @@ manager: nitinme
 ms.service: cognitive-services
 ms.subservice: speech-service
 ms.topic: conceptual
-ms.date: 09/06/2019
+ms.date: 02/12/2021
 ms.author: erhopf
-ms.openlocfilehash: 81b4ffc8f77673e52bb78f891e3de618b67e0d1b
-ms.sourcegitcommit: 58faa9fcbd62f3ac37ff0a65ab9357a01051a64f
+ms.openlocfilehash: db3d8f4424f59d8432221753af776a5b55859882
+ms.sourcegitcommit: d4734bc680ea221ea80fdea67859d6d32241aefc
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/29/2020
-ms.locfileid: "74806056"
+ms.lasthandoff: 02/14/2021
+ms.locfileid: "100388849"
 ---
 # <a name="how-to-create-human-labeled-transcriptions"></a>如何创建人为标记的听录
 
 若要提高特定情况下（尤其是在因删除或错误替代单词而导致问题的情况下）的识别准确度，需要对音频数据使用人为标记的听录。 什么是人为标记的听录？ 很简单，人为标记的听录是对音频文件进行的逐字/词听录。
 
-需要大的听录数据样本来提高识别准确性。建议提供 10 到 1,000 小时的听录数据。 在此页上，我们将查看旨在帮助你创建高质量听录的准则。 本指南按区域设置划分为“美国英语”、“中国大陆普通话”和“德语”三部分。
+若要改善识别，建议使用大量的脚本数据，建议提供10到20小时的脚本数据。 在此页上，我们将查看旨在帮助你创建高质量听录的准则。 本指南按区域设置划分为“美国英语”、“中国大陆普通话”和“德语”三部分。
+
+> [!NOTE]
+> 并非所有基本模型都支持音频文件的自定义。 如果基本模型不支持该模型，则训练将使用与使用相关文本相同的方式来使用转录的文本。 有关支持音频数据定型的基本模型的列表，请参阅 [语言支持](language-support.md#speech-to-text) 。
+
+> [!NOTE]
+> 如果更改了用于定型的基本模型，并在定型数据集中具有音频，请 *始终* 检查新选择的基本模型是否 [支持音频数据定型](language-support.md#speech-to-text)。 如果以前使用的基本模型不支持对音频数据进行定型，而定型数据集包含音频，则新基础模型的定型时间将会 **大幅** 增加，并且可能会轻松地从几个小时到几天及更长时间。 如果你的语音服务订阅 **不** 在 [具有专用硬件](custom-speech-overview.md#set-up-your-azure-account) 培训的区域中，则更是如此。
+>
+> 如果你面对上述段落中所述的问题，则可以通过减少数据集中的音频量或完全删除该数据并仅留下文本，来快速缩短定型时间。 如果你的语音服务订阅 **不** 在 [具有专用硬件](custom-speech-overview.md#set-up-your-azure-account) 培训的区域中，则强烈建议使用后一种方法。
 
 ## <a name="us-english-en-us"></a>美国英语 (en-US)
 
@@ -29,9 +37,9 @@ ms.locfileid: "74806056"
 
 以下是一些示例：
 
-| 要避免的字符 | Substitution | 注释 |
+| 要避免的字符 | 替换 | 说明 |
 | ------------------- | ------------ | ----- |
-| “Hello world” | "Hello world" | 左引号和右引号都已替换为相应的 ASCII 字符。 |
+| “Hello world” | “Hello world” | 左引号和右引号都已替换为相应的 ASCII 字符。 |
 | John’s day | John's day | 撇号已替换为相应的 ASCII 字符。 |
 | it was good—no, it was great! | it was good--no, it was great! | 长划线已替换为两个连字符。 |
 
@@ -44,12 +52,14 @@ ms.locfileid: "74806056"
 - 应按照发音听录非字母字符或混合字母数字字符。
 - 不应编辑可以作为字词发音的缩写（例如，“radar”、“laser”、“RAM”或“NATO”）。
 - 将发音的缩写写成单独的字母，每个字母用单个空格分开。
+- 如果使用音频，转录数字作为与音频 (匹配的单词（例如 "101"），则可能会被视为 "1 0 1" 或 "101" ) 。
+- 避免重复字符、单词或单词组超过三次，如 "是" 是 "是"。 语音服务可能会删除具有此重复的行。
 
 下面是应该对听录执行的规范化的一些示例：
 
 | 原始文本               | 规范化后的文本              |
 | --------------------------- | ------------------------------------- |
-| Dr.Bruce Banner            | Doctor Bruce Banner                   |
+| Bruce 横幅            | Doctor Bruce Banner                   |
 | James Bond, 007             | James Bond, double oh seven           |
 | Ke$ha                       | Kesha                                 |
 | How long is the 2x4         | How long is the two by four           |
@@ -84,7 +94,7 @@ ms.locfileid: "74806056"
 
 以下是一些示例：
 
-| 要避免的字符 | Substitution   | 注释 |
+| 要避免的字符 | 替换   | 说明 |
 | ------------------- | -------------- | ----- |
 | "你好" | "你好" | 左引号和右引号都已替换为相应的字符。 |
 | 需要什么帮助? | 需要什么帮助？| 问号已替换为相应的字符。 |
@@ -131,7 +141,7 @@ ms.locfileid: "74806056"
 文本规范化是指将字词转换为在训练模型时使用的一致格式。 某些规范化规则会自动应用到文本，但我们建议你在准备人为标记的听录数据时遵循以下准则：
 
 - 将小数点写为“,”，而不是“.”。
-- 将时间分隔符写为“:”，而不是“.”（例如：12:00 Uhr）。
+- 写入时间分隔符为 "："，而不是 "." (例如： 12:00 Uhr) 。
 - 不替换“ca.” 等缩写。 我们建议使用完整的口语形式。
 - 删除四个主要的数学运算符（+、-、\* 和 /）。 我们建议将其替换为文字形式：“plus”、“minus”、“mal”、“geteilt”。
 - 删除比较运算符（=、< 和 >）。 我们建议其替换为“gleich”、“kleiner als”和“grösser als”。
@@ -162,10 +172,14 @@ ms.locfileid: "74806056"
 | ¡Eine Frage!     | eine frage               |
 | wir, haben       | wir haben                |
 
+### <a name="text-normalization-for-japanese"></a>日语文本规范化
+
+在日语 (ja-jp) 中，每个句子的最大长度为90个字符。 带有较长句子的行将被丢弃。 若要添加较长的文本，请在 "介于" 之间插入句点。
+
 ## <a name="next-steps"></a>后续步骤
 
-- [准备和测试数据](how-to-custom-speech-test-data.md)
+- [准备和测试数据](./how-to-custom-speech-test-and-train.md)
 - [检查数据](how-to-custom-speech-inspect-data.md)
 - [评估数据](how-to-custom-speech-evaluate-data.md)
 - [训练模型](how-to-custom-speech-train-model.md)
-- [部署模型](how-to-custom-speech-deploy-model.md)
+- [部署模型](./how-to-custom-speech-train-model.md)

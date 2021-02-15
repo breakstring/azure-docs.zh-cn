@@ -1,21 +1,21 @@
 ---
 title: 创建多个资源实例
-description: 了解如何创建 Azure 资源管理器模板，以用于创建多个 Azure 资源实例。
+description: 了解如何创建 Azure 资源管理器模板（ARM 模板），以用于创建多个 Azure 资源实例。
 author: mumian
 ms.date: 04/23/2020
 ms.topic: tutorial
 ms.author: jgao
-ms.custom: devx-track-azurecli
-ms.openlocfilehash: 5e662380c57d20a2e372669dce1bb4c44e75b067
-ms.sourcegitcommit: 11e2521679415f05d3d2c4c49858940677c57900
+ms.custom: ''
+ms.openlocfilehash: e669e27547633639a88674ffee499fb1d84facdf
+ms.sourcegitcommit: d79513b2589a62c52bddd9c7bd0b4d6498805dbe
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/31/2020
-ms.locfileid: "87496315"
+ms.lasthandoff: 12/18/2020
+ms.locfileid: "97673947"
 ---
 # <a name="tutorial-create-multiple-resource-instances-with-arm-templates"></a>教程：使用 ARM 模板创建多个资源实例
 
-了解如何在 Azure 资源管理器 (ARM) 模板中进行迭代操作，以创建 Azure 资源的多个实例。 在本教程中，你将修改一个模板，以便创建三个存储帐户实例。
+了解如何在 Azure 资源管理器模板（ARM 模板）中进行迭代操作，以创建 Azure 资源的多个实例。 在本教程中，你将修改一个模板，以便创建三个存储帐户实例。
 
 ![“Azure 资源管理器创建多个实例”示意图](./media/template-tutorial-create-multiple-instances/resource-manager-template-create-multiple-instances-diagram.png)
 
@@ -28,25 +28,28 @@ ms.locfileid: "87496315"
 
 如果还没有 Azure 订阅，可以在开始前[创建一个免费帐户](https://azure.microsoft.com/free/)。
 
+有关介绍资源副本的 Microsoft Learn 模块，请参阅[使用高级 ARM 模板功能管理复杂云部署](/learn/modules/manage-deployments-advanced-arm-template-features/)。
+
 ## <a name="prerequisites"></a>先决条件
 
 若要完成本文，需要做好以下准备：
 
-* 包含资源管理器工具扩展的 Visual Studio Code。 请参阅[快速入门：使用 Visual Studio Code 创建 Azure 资源管理器模板](quickstart-create-templates-use-visual-studio-code.md)。
+* 包含资源管理器工具扩展的 Visual Studio Code。 请参阅[快速入门：使用 Visual Studio Code 创建 ARM 模板](quickstart-create-templates-use-visual-studio-code.md)。
 
 ## <a name="open-a-quickstart-template"></a>打开快速入门模板
 
 [Azure 快速入门模板](https://azure.microsoft.com/resources/templates/)是 ARM 模板的存储库。 无需从头开始创建模板，只需找到一个示例模板并对其自定义即可。 本快速入门中使用的模板称为[创建标准存储帐户](https://azure.microsoft.com/resources/templates/101-storage-account-create/)。 该模板定义 Azure 存储帐户资源。
 
-1. 在 Visual Studio Code 中，选择“文件”>“打开文件”。 
-2. 在“文件名”中粘贴以下 URL：
+1. 在 Visual Studio Code 中，选择“文件” > “打开文件”。 
+1. 在“文件名”中粘贴以下 URL：
 
     ```url
     https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/101-storage-account-create/azuredeploy.json
     ```
-3. 选择“打开”以打开该文件。
-4. 在模板中定义了一个“Microsoft.Storage/storageAccounts”资源。 将模板和[模板参考](/azure/templates/Microsoft.Storage/storageAccounts)进行比较。 在自定义模板之前，不妨对其进行一些基本的了解。
-5. 选择“文件”>“另存为”，将该文件作为 **azuredeploy.json** 保存到本地计算机。 
+
+1. 选择“打开”以打开该文件。
+1. 模板中定义了 `Microsoft.Storage/storageAccounts` 资源。 将模板和[模板参考](/azure/templates/Microsoft.Storage/storageAccounts)进行比较。 在自定义模板之前，不妨对其进行一些基本的了解。
+1. 选择“文件” > “另存为”，将该文件作为 _azuredeploy.json_ 保存到本地计算机。 
 
 ## <a name="edit-the-template"></a>编辑模板
 
@@ -56,10 +59,10 @@ ms.locfileid: "87496315"
 
 ![Azure 资源管理器创建多个实例](./media/template-tutorial-create-multiple-instances/resource-manager-template-create-multiple-instances.png)
 
-1. 向存储帐户资源定义中添加一个 `copy` 元素。 在 copy 元素中，为此循环指定迭代次数和变量。 计数值必须是不超过 800 的正整数。
-2. `copyIndex()` 函数返回循环中的当前迭代。 使用索引作为名称前缀。 `copyIndex()` 从零开始。 若要偏移索引值，可以在 copyIndex() 函数中传递一个值。 例如 *copyIndex(1)* 。
-3. 删除 **variables** 元素，因为它不再使用。
-4. 删除 **outputs** 元素。 不再需要它。
+1. 向存储帐户资源定义中添加一个 `copy` 元素。 在 `copy` 元素中，为此循环指定迭代次数和变量。 计数值必须是不超过 800 的正整数。
+2. `copyIndex()` 函数返回循环中的当前迭代。 使用索引作为名称前缀。 `copyIndex()` 从零开始。 若要偏移索引值，可以在 `copyIndex()` 函数中传递一个值。 例如，`copyIndex(1)`。
+3. 删除 `variables` 元素，因为不再使用它。
+4. 删除 `outputs` 元素。 不再需要它。
 
 已完成的模板如下所示：
 
@@ -109,17 +112,17 @@ ms.locfileid: "87496315"
 }
 ```
 
-有关创建多个实例的详细信息，请参阅[在 ARM 模板中部署资源或属性的多个实例](./copy-resources.md)
+有关创建多个实例的详细信息，请参阅 [ARM 模板中的资源迭代](./copy-resources.md)
 
 ## <a name="deploy-the-template"></a>部署模板
 
 1. 登录到 [Azure Cloud Shell](https://shell.azure.com)
 
-1. 通过在左上角选择“PowerShell”或“Bash”（适用于 CLI）来选择你喜欢使用的环境 。  进行切换时，需重启 shell。
+1. 通过在左上角选择“PowerShell”或“Bash”（适用于 CLI）来选择你喜欢使用的环境 。 进行切换时，需重启 shell。
 
     ![Azure 门户 - Cloud Shell - 上传文件](./media/template-tutorial-use-template-reference/azure-portal-cloud-shell-upload-file.png)
 
-1. 依次选择“上传/下载文件”、“上传”。  请参阅上面的屏幕截图。 选择在上一部分保存的文件。 上传文件后，可以使用 ls 命令和 cat 命令验证文件是否已成功上传。
+1. 依次选择“上传/下载文件”、“上传”。  请参阅上面的屏幕截图。 选择在上一部分保存的文件。 上传文件后，可以使用 `ls` 命令和 `cat` 命令验证是否已成功上传文件。
 
 1. 在 Cloud Shell 中运行以下命令。 选择用于显示 PowerShell 代码或 CLI 代码的选项卡。
 
@@ -148,9 +151,9 @@ ms.locfileid: "87496315"
 
     ---
 
-若要列出全部三个存储帐户，请省略 --name 参数：
+成功部署模板后，可以显示在指定的资源组中创建的三个存储帐户。 将存储帐户名称与模板中的名称定义进行比较。
 
-# <a name="azure-cli"></a>[Azure CLI](#tab/azure-cli)
+# <a name="cli"></a>[CLI](#tab/azure-cli)
 
 ```azurecli
 echo "Enter a project name that is used to generate resource group name:" &&
@@ -172,8 +175,6 @@ Write-Host "Press [ENTER] to continue ..."
 
 ---
 
-将存储帐户名称与模板中的名称定义进行比较。
-
 ## <a name="clean-up-resources"></a>清理资源
 
 不再需要 Azure 资源时，请通过删除资源组来清理部署的资源。
@@ -185,7 +186,7 @@ Write-Host "Press [ENTER] to continue ..."
 
 ## <a name="next-steps"></a>后续步骤
 
-在本教程中，你学习了如何创建多个存储帐户实例。  在下一教程中，我们将开发包含多个资源和多个资源类型的模板。 某些资源具有依赖的资源。
+在本教程中，你学习了如何创建多个存储帐户实例。 在下一教程中，我们将开发包含多个资源和多个资源类型的模板。 某些资源具有依赖的资源。
 
 > [!div class="nextstepaction"]
 > [创建所依赖的资源](./template-tutorial-create-templates-with-dependent-resources.md)

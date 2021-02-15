@@ -1,19 +1,16 @@
 ---
 title: 使用 HBase .NET SDK - Azure HDInsight
 description: 使用 HBase .NET SDK 创建和删除表，以及读取和写入数据。
-author: ashishthaps
-ms.author: ashishth
-ms.reviewer: jasonh
 ms.service: hdinsight
 ms.topic: how-to
-ms.custom: hdinsightactive
+ms.custom: hdinsightactive, devx-track-csharp
 ms.date: 12/02/2019
-ms.openlocfilehash: 9d03a201711488b1c0a3f4f2bab0981f83374a5d
-ms.sourcegitcommit: 124f7f699b6a43314e63af0101cd788db995d1cb
+ms.openlocfilehash: d1979e43adc76f4125097fc809ef137baee05f53
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/08/2020
-ms.locfileid: "86085576"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98939576"
 ---
 # <a name="use-the-net-sdk-for-apache-hbase"></a>使用 .NET SDK for Apache HBase
 
@@ -23,7 +20,7 @@ ms.locfileid: "86085576"
 
 ## <a name="install-the-sdk"></a>安装 SDK
 
-HBase .NET SDK 以 NuGet 包的形式提供，可以使用以下命令通过 Visual Studio **NuGet 包管理器控制台**进行安装：
+HBase .NET SDK 以 NuGet 包的形式提供，可以使用以下命令通过 Visual Studio **NuGet 包管理器控制台** 进行安装：
 
 ```console
 Install-Package Microsoft.HBase.Client
@@ -114,7 +111,7 @@ set.rows.Add(row);
 await client.StoreCellsAsync("RestSDKTable", set);
 ```
 
-HBase 实现了[Cloud BigTable](https://cloud.google.com/bigtable/)，因此数据格式如下图所示：
+HBase 可实现 [Cloud BigTable](https://cloud.google.com/bigtable/)，因此数据格式如下图所示：
 
 ![Apache HBase 示例数据输出](./media/apache-hbase-rest-sdk/hdinsight-table-roles.png)
 
@@ -190,4 +187,4 @@ finally
 ## <a name="next-steps"></a>后续步骤
 
 * [HDInsight 中的 Apache HBase 入门示例](apache-hbase-tutorial-get-started-linux.md)
-* 根据[使用 Apache HBase 分析实时 Twitter 观点](../hdinsight-hbase-analyze-twitter-sentiment.md)中的说明，生成端到端应用程序
+* 根据[使用 Apache HBase 分析实时 Twitter 观点](./apache-hbase-tutorial-get-started-linux.md)中的说明，生成端到端应用程序

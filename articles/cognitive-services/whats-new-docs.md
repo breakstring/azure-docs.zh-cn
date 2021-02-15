@@ -1,67 +1,66 @@
 ---
-title: 认知服务文档：2020年7月1日（年7月31日2020）的新增功能
-description: 2020年7月1日（年7月31日2020）认知服务文档的新增功能。
+title: 认知服务：文档中的新增功能
+description: 2021年1月1日（年1月31日2021）认知服务文档的新增功能。
 author: erhopf
 manager: nitinme
 ms.topic: conceptual
 ms.author: erhopf
 ms.service: cognitive-services
-ms.date: 08/03/2020
-ms.openlocfilehash: eda90a430d96d43d052a603f82832aef6c0facdb
-ms.sourcegitcommit: 1b2d1755b2bf85f97b27e8fbec2ffc2fcd345120
+ms.date: 02/08/2021
+ms.openlocfilehash: 92d75289fd4459db8c469a4cb562fe28e8aab779
+ms.sourcegitcommit: 7e117cfec95a7e61f4720db3c36c4fa35021846b
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/04/2020
-ms.locfileid: "87553353"
+ms.lasthandoff: 02/09/2021
+ms.locfileid: "99989013"
 ---
-# <a name="cognitive-services-docs-whats-new-for-july-1-2020---july-31-2020"></a>认知服务文档：2020年7月1日（年7月31日2020）的新增功能
+# <a name="cognitive-services-docs-whats-new-for-january-1-2021---january-31-2021"></a>认知服务文档：2021年1月1日新增功能-年1月 2021 31 日
 
-欢迎使用2020年7月1日至年7月 2020 31 日的认知服务文档中的新增功能。 本文列出了在此期间对文档进行的一些重大更改。
+欢迎使用2021年1月1日到年1月 2021 31 日的认知服务文档中的新增功能。 本文列出了 7 月份对文档进行的一些重大更改。
+
+## <a name="cognitive-services"></a>认知服务
+
+**更新的文章**
+
+- [规划和管理 Azure 认知服务的成本](plan-manage-costs.md)
+- [Azure 认知服务容器](cognitive-services-container-support.md)
 
 ## <a name="form-recognizer"></a>表单识别器
 
-### <a name="new-articles"></a>新文章
+**新文章**
 
-- [教程：使用 AI 生成器创建窗体处理应用](/azure/cognitive-services/form-recognizer/tutorial-ai-builder)
+- [教程：使用 Azure 数据工厂从数据中批量提取信息](/azure/cognitive-services/form-recognizer/tutorial-bulk-processing.md)
+
+**更新的文章**
+
+- [什么是表单识别器？](/azure/cognitive-services/form-recognizer/overview.md)
+
+## <a name="immersive-reader"></a>沉浸式阅读器
+
+**更新的文章**
+
+- [创建沉浸式读者资源并配置 Azure Active Directory 身份验证](/azure/cognitive-services/immersive-reader/how-to-create-immersive-reader.md)
 
 ## <a name="personalizer"></a>个性化体验创建服务
 
-### <a name="new-articles"></a>新文章
+**更新的文章**
 
-- [教程：在 .NET 聊天机器人中使用个性化体验创建服务](/azure/cognitive-services/personalizer/tutorial-use-personalizer-chat-bot)
-
-## <a name="qna-maker"></a>QnA Maker
-
-### <a name="new-articles"></a>新文章
-
-- [规划 QnA Maker 应用](/azure/cognitive-services/qnamaker/concepts/plan)
-
-## <a name="speech-service"></a>语音服务
-
-### <a name="new-articles"></a>新文章
-
-- [对静态数据的自定义命令加密](/azure/cognitive-services/speech-service/custom-commands-encryption-of-data-at-rest)
-- [自定义关键字基础知识](/azure/cognitive-services/speech-service/custom-keyword-basics)
-- [通过自定义语音使用自定义命令](/azure/cognitive-services/speech-service/how-to-custom-commands-use-custom-voice)
-- [用于语音容器的批处理工具包](/azure/cognitive-services/speech-service/speech-container-batch-processing)
+- [特征是指有关操作和上下文的信息](/azure/cognitive-services/personalizer/concepts-features.md)
 
 ## <a name="text-analytics"></a>文本分析
 
-### <a name="new-articles"></a>新文章
+**更新的文章**
 
-- [如何：将文本分析用于运行状况 (预览版) ](/azure/cognitive-services/text-analytics/how-tos/text-analytics-for-health)
+- [文本分析 API v3 语言支持](/azure/cognitive-services/text-analytics/language-support.md)
+- [迁移到文本分析 API 版本 3.x](/azure/cognitive-services/text-analytics/migration-guide.md)
+- [文本分析 API 中有哪些新功能？](/azure/cognitive-services/text-analytics/whats-new.md)
 
 ## <a name="community-contributors"></a>社区参与者
 
-在此期间，以下人员参与认知服务文档。 谢谢！ 了解如何通过以下 "[新增功能" 登录页](index.yml)中的 "获取内容" 下的链接进行参与。
+在此期间，以下人员参与认知服务文档。 谢谢！ 了解如何通过以下 " [新增功能" 登录页](index.yml)中的 "获取内容" 下的链接进行参与。
 
-- [milestonedev](https://github.com/milestonedev) -Justin 英里 (2) 
-- [felixvanleeuwen](https://github.com/felixvanleeuwen) (1) 
-- [LoicB](https://github.com/LoicB) -Loic Beylot (1) 
-- [nkgami](https://github.com/nkgami) -Hiroki Nakagami (1) 
-- [RussellJQA](https://github.com/RussellJQA) -Russell Johnson (1) 
-- [ryotokuro](https://github.com/ryotokuro) -Taiyue Tan (1) 
-- [smorcuend](https://github.com/smorcuend) -Sergio Morcuende (1) 
-- [swildermann](https://github.com/swildermann) -Sven Wildermann (1) 
+- [AnweshGangula](https://github.com/AnweshGangula) -Anwesh Gangula (1) 
+- [cdglasz](https://github.com/cdglasz) -Christopher Glasz (1) 
+- [huybuidac](https://github.com/huybuidac) -l Dac Huy (1) 
 
 [!INCLUDE [Service specific updates](./includes/service-specific-updates.md)]

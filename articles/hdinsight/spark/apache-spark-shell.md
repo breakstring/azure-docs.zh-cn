@@ -1,19 +1,16 @@
 ---
 title: 在 Azure HDInsight 中使用交互式 Spark Shell
 description: 交互式 Spark Shell 提供了一个读取执行打印进程，用于一次运行一个 Spark 命令并查看结果。
-author: hrasheed-msft
-ms.author: hrasheed
-ms.reviewer: jasonh
 ms.service: hdinsight
 ms.topic: how-to
 ms.custom: hdinsightactive
 ms.date: 02/10/2020
-ms.openlocfilehash: 84298c9073f00f0388a9bcb7405369d7c60bcce1
-ms.sourcegitcommit: 124f7f699b6a43314e63af0101cd788db995d1cb
+ms.openlocfilehash: 324852a967b5de015a9b1e9b465d4b4703e573cb
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/08/2020
-ms.locfileid: "86081173"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98929679"
 ---
 # <a name="run-apache-spark-from-the-spark-shell"></a>从 Spark Shell 运行 Apache Spark
 
@@ -27,7 +24,7 @@ ms.locfileid: "86081173"
     ssh sshuser@CLUSTERNAME-ssh.azurehdinsight.net
     ```
 
-1. Spark 为 Scala (spark-shell) 和 Python (pyspark) 提供 shell。 在 SSH 会话中，输入以下命令*之一*：
+1. Spark 为 Scala (spark-shell) 和 Python (pyspark) 提供 shell。 在 SSH 会话中，输入以下命令 *之一* ：
 
     ```bash
     spark-shell

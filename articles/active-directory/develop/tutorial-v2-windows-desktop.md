@@ -1,6 +1,7 @@
 ---
-title: Microsoft 标识平台 Windows 桌面入门
-description: 了解 Windows 桌面 .NET (XAML) 应用程序如何获取访问令牌并调用受 Microsoft 标识平台保护的 API。
+title: 教程：创建使用 Microsoft 标识平台进行身份验证的 Windows Presentation Foundation (WPF) 应用 | Azure
+titleSuffix: Microsoft identity platform
+description: 在本教程中，我们生成一个使用 Microsoft 标识平台将用户登录的 WPF 应用程序，并获取访问令牌以代表用户调用 Microsoft Graph API。
 services: active-directory
 author: jmprieur
 manager: CelesteDG
@@ -11,24 +12,32 @@ ms.workload: identity
 ms.date: 12/12/2019
 ms.author: jmprieur
 ms.custom: aaddev, identityplatformtop40
-ms.openlocfilehash: a865bab690c79288bdffcd7cebe424d1bb1969c0
-ms.sourcegitcommit: 58faa9fcbd62f3ac37ff0a65ab9357a01051a64f
+ms.openlocfilehash: d9db845bfa4a7c0c117220b8932b370eb230f6dc
+ms.sourcegitcommit: 126ee1e8e8f2cb5dc35465b23d23a4e3f747949c
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/28/2020
-ms.locfileid: "82181524"
+ms.lasthandoff: 02/10/2021
+ms.locfileid: "100102982"
 ---
-# <a name="call-the-microsoft-graph-api-from-a-windows-desktop-app"></a>从 Windows 桌面应用调用 Microsoft Graph API
+# <a name="tutorial-call-the-microsoft-graph-api-from-a-windows-desktop-app"></a>教程：从 Windows 桌面应用调用 Microsoft Graph API
 
-本指南演示了本机 Windows 桌面 .NET (XAML) 应用程序如何使用访问令牌来调用 Microsoft Graph API。 该应用还可以访问其他 API，这些 API 需要来自面向开发人员的 Microsoft 标识平台 v2.0 终结点的访问令牌。 此平台以前名为 Azure AD。
+在本教程中，将生成一个本机 Windows 桌面 .NET (XAML) 应用，用户可登录该应用并获取访问令牌来调用 Microsoft 图形 API。 
 
 完成本指南后，你的应用程序将能够调用使用个人帐户（包括 outlook.com、live.com 等）的受保护 API。 应用程序还将使用任何使用 Azure Active Directory 的公司或组织提供的工作和学校帐户。
 
-> [!NOTE]
-> 本指南需要 Visual Studio 2015 Update 3、Visual Studio 2017 或 Visual Studio 2019。 没有这些版本？ [免费下载 Visual Studio 2019](https://www.visualstudio.com/downloads/)。
+本教程的内容：
 
->[!NOTE]
-> 如果你不熟悉 Microsoft 标识平台，我们建议你从[从 Windows 桌面应用获取令牌并调用 Microsoft Graph API](quickstart-v2-windows-desktop.md) 开始。
+> [!div class="checklist"]
+> * 在 Visual Studio 中创建 Windows Presentation Foundation (WPF) 项目
+> * 安装适用于 .NET 的 Microsoft 身份验证库 (MSAL)
+> * 在 Azure 门户中注册应用程序
+> * 添加代码以支持用户登录和注销
+> * 添加代码以调用 Microsoft Graph API
+> * 测试应用程序
+
+## <a name="prerequisites"></a>先决条件
+
+* [Visual Studio 2019](https://visualstudio.microsoft.com/vs/)
 
 ## <a name="how-the-sample-app-generated-by-this-guide-works"></a>本指南生成的示例应用的工作原理
 
@@ -38,7 +47,7 @@ ms.locfileid: "82181524"
 
 ## <a name="handling-token-acquisition-for-accessing-protected-web-apis"></a>负责获得用于访问受保护 Web API 的令牌
 
-对用户进行身份验证后，示例应用程序会收到一个令牌，该令牌可用于查询受面向开发人员的 Microsoft 标识平台保护的 Microsoft Graph API 或 Web API。
+对用户进行身份验证后，示例应用程序会收到一个令牌，该令牌可用于查询受 Microsoft 标识平台保护的 Microsoft Graph API 或 Web API。
 
 API（如 Microsoft Graph）需要令牌以允许访问特定资源。 例如，需要使用令牌读取用户的配置文件、访问用户的日历或发送电子邮件。 应用程序可通过指定 API 作用域来使用 MSAL 请求访问令牌，从而访问这些资源。 然后对于针对受保护资源发出的每个调用，将此访问令牌添加到 HTTP 授权标头。
 
@@ -88,25 +97,24 @@ MSAL 负责管理缓存和刷新访问令牌，因此应用程序无需执行这
 ### <a name="option-1-express-mode"></a>选项 1：快速模式
 
 可以通过执行以下操作快速注册应用程序：
-1. 访问 [Azure 门户 - 应用程序注册](https://portal.azure.com/#blade/Microsoft_AAD_RegisteredApps/applicationsListBlade/quickStartType/WinDesktopQuickstartPage/sourceType/docs)。
+1. 转到 <a href="https://portal.azure.com/#blade/Microsoft_AAD_RegisteredApps/applicationsListBlade/quickStartType/WinDesktopQuickstartPage/sourceType/docs" target="_blank">Azure 门户 - 应用注册</a>快速入门体验。
 1. 输入应用程序的名称并选择“注册”。
 1. 遵照说明下载内容，并只需单击一下自动配置新应用程序。
 
 ### <a name="option-2-advanced-mode"></a>选项 2：高级模式
 
 若要注册应用程序并将应用程序注册信息添加到解决方案，请执行以下操作：
-1. 使用工作或学校帐户或个人 Microsoft 帐户登录到 [Azure 门户](https://portal.azure.com)。
-1. 如果你的帐户有权访问多个租户，请在右上角选择该帐户，并将门户会话设置为所需的 Azure AD 租户。
-1. 导航到面向开发人员的 Microsoft 标识平台的[应用注册](https://go.microsoft.com/fwlink/?linkid=2083908)页。
-1. 选择“新注册”。
-   - 在“名称”部分输入一个会显示给应用用户的有意义的应用程序名称，例如 `Win-App-calling-MsGraph`。
-   - 在“支持的帐户类型”部分，选择“任何组织目录中的帐户和个人 Microsoft 帐户(例如 Skype、Xbox、Outlook.com)”。 
-   - 选择“注册”以创建应用程序。
-1. 在应用的页面列表中，选择“身份验证”。
-   1. 在“重定向 URI”部分的重定向 URI 列表中：
-   1. 在“类型”列中选择“公共客户端/本机(移动和桌面)”。
-   1. 在“重定向 URI”列中输入 `https://login.microsoftonline.com/common/oauth2/nativeclient`
-1. 选择“注册”。
+1. 登录 <a href="https://portal.azure.com/" target="_blank">Azure 门户</a>。
+1. 如果有权访问多个租户，请使用顶部菜单中的“目录 + 订阅”筛选器:::image type="icon" source="./media/common/portal-directory-subscription-filter.png" border="false":::，选择要在其中注册应用程序的租户。
+1. 搜索并选择“Azure Active Directory”  。
+1. 在“管理”下，选择“应用注册” > “新建注册”  。
+1. 输入应用程序的名称（例如 `Win-App-calling-MsGraph`）。 应用的用户可能会看到此名称，你稍后可对其进行更改。
+1. 在“受支持的帐户类型”部分下，选择“任何组织目录(任何 Azure AD 目录 - 多租户)中的帐户和个人 Microsoft 帐户(例如，Skype、Xbox)” 。
+1. 选择“注册”  。
+1. 在“管理”下，选择“身份验证” > “添加平台”  。
+1. 选择“移动和桌面应用程序”。
+1. 在“重定向 URI”部分中，选择 https://login.microsoftonline.com/common/oauth2/nativeclient 。
+1. 选择“配置” 。
 1. 转到 Visual Studio，打开 App.xaml.cs 文件，然后将下面代码片段中的 `Enter_the_Application_Id_here` 替换为刚注册并复制的应用程序 ID。
 
     ```csharp
@@ -158,7 +166,7 @@ MSAL 负责管理缓存和刷新访问令牌，因此应用程序无需执行这
 
 本部分说明应用程序如何查询受保护的后端服务器，例如 Microsoft Graph。
 
-项目模板中应自动创建了 *MainWindow.xaml* 文件。 打开此文件，然后将应用程序的 *\<Grid>* 节点替换为以下代码：
+项目模板中应自动创建了 *MainWindow.xaml* 文件。 打开此文件，然后将应用程序的 \<Grid> 节点替换为以下代码：
 
 ```xml
 <Grid>
@@ -250,6 +258,7 @@ MSAL 负责管理缓存和刷新访问令牌，因此应用程序无需执行这
                 DisplayBasicTokenInfo(authResult);
                 this.SignOutButton.Visibility = Visibility.Visible;
             }
+        }
         }
     ```
 
@@ -367,3 +376,10 @@ private void DisplayBasicTokenInfo(AuthenticationResult authResult)
 除了用于调用 Microsoft Graph API 的访问令牌，MSAL 还可以在用户登录后获取 ID 令牌。 此令牌包含一小部分与用户相关的信息。 `DisplayBasicTokenInfo` 方法显示包含在令牌中的基本信息。 例如，它显示用户的显示名称和 ID，以及令牌到期日期和表示访问令牌本身的字符串。 多次选择“调用 Microsoft Graph API”按钮，便会发现后续请求使用了同一令牌。 而且还会注意到，在 MSAL 决定续订令牌时，到期日期也延长了。
 
 [!INCLUDE [5. Test and Validate](../../../includes/active-directory-develop-guidedsetup-windesktop-test.md)]
+
+## <a name="next-steps"></a>后续步骤
+
+在我们的多部分场景系列中，详细了解如何构建可调用受保护 Web API 的桌面应用：
+
+> [!div class="nextstepaction"]
+> [方案：用于调用 Web API 的 桌面应用](scenario-desktop-overview.md)

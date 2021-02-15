@@ -8,27 +8,29 @@ ms.devlang: dotnet
 ms.topic: quickstart
 ms.date: 05/28/2020
 ms.author: sngun
-ms.openlocfilehash: 2c9af8c0839b56d5512bb17776182b3515a7d544
-ms.sourcegitcommit: 23604d54077318f34062099ed1128d447989eea8
+ms.custom: devx-track-csharp
+ms.openlocfilehash: 513af71384fd1fa5d38ee3ec367a42892a662444
+ms.sourcegitcommit: 3bdeb546890a740384a8ef383cf915e84bd7e91e
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 06/20/2020
-ms.locfileid: "85115289"
+ms.lasthandoff: 10/30/2020
+ms.locfileid: "93096931"
 ---
 # <a name="quickstart-build-a-table-api-app-with-net-sdk-and-azure-cosmos-db"></a>快速入门：使用 .NET SDK 和 Azure Cosmos DB 生成表 API 应用 
+[!INCLUDE[appliesto-table-api](includes/appliesto-table-api.md)]
 
 > [!div class="op_single_selector"]
 > * [.NET](create-table-dotnet.md)
 > * [Java](create-table-java.md)
 > * [Node.js](create-table-nodejs.md)
-> * [Python](create-table-python.md)
+> * [Python](./table-storage-how-to-use-python.md)
 >  
 
 本快速入门介绍如何使用 .NET 和 Azure Cosmos DB [表 API](table-introduction.md)，通过克隆 GitHub 中的示例来生成应用。 此外，本快速入门还介绍了如何创建 Azure Cosmos DB 帐户，以及如何在基于 Web 的 Azure 门户中使用数据资源管理器创建表和实体。
 
 ## <a name="prerequisites"></a>先决条件
 
-如果尚未安装 Visual Studio 2019，可以下载并使用**免费**的 [Visual Studio 2019 Community Edition](https://www.visualstudio.com/downloads/)。 在安装 Visual Studio 的过程中，请确保启用“Azure 开发”。
+如果尚未安装 Visual Studio 2019，可以下载并使用 **免费** 的 [Visual Studio 2019 Community Edition](https://www.visualstudio.com/downloads/)。 在安装 Visual Studio 的过程中，请确保启用“Azure 开发”。
 
 [!INCLUDE [quickstarts-free-trial-note](../../includes/quickstarts-free-trial-note.md)]
 
@@ -67,7 +69,7 @@ ms.locfileid: "85115289"
    ```
 
 > [!TIP]
-> 有关类似代码的更详细演练，请参阅 [Cosmos DB 表 API 示例](table-storage-how-to-use-dotnet.md)一文。
+> 有关类似代码的更详细演练，请参阅 [Cosmos DB 表 API 示例](./tutorial-develop-table-dotnet.md)一文。
 
 ## <a name="open-the-sample-application-in-visual-studio"></a>在 Visual Studio 中打开示例应用程序
 
@@ -180,4 +182,3 @@ ms.locfileid: "85115289"
 
 > [!div class="nextstepaction"]
 > [将表数据导入表 API](table-import.md)
-

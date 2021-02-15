@@ -3,17 +3,17 @@ title: 配置 ExpressRoute 和 S2S VPN 共存连接：经典
 description: 本文指导配置可在经典部署模型中并存的 ExpressRoute 连接和站点到站点 VPN 连接。
 documentationcenter: na
 services: expressroute
-author: charwen
+author: duongau
 ms.service: expressroute
 ms.topic: how-to
 ms.date: 12/06/2019
-ms.author: charwen
-ms.openlocfilehash: 673c0e7af4be330f3d63d2fe6ed68c73142da5d2
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.author: duau
+ms.openlocfilehash: 70407d726b697dd6c4dfb6777cf6c445092d3b73
+ms.sourcegitcommit: 957c916118f87ea3d67a60e1d72a30f48bad0db6
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87084800"
+ms.lasthandoff: 10/19/2020
+ms.locfileid: "92206319"
 ---
 # <a name="configure-expressroute-and-site-to-site-coexisting-connections-classic"></a>配置 ExpressRoute 和站点到站点并存连接（经典）
 > [!div class="op_single_selector"]
@@ -53,7 +53,7 @@ ms.locfileid: "87084800"
 > 
 > 
 
-![共存](media/expressroute-howto-coexist-classic/scenario1.jpg)
+![显示一个站点到站点 VPN 连接作为 ExpressRoute 的备份的关系图。](media/expressroute-howto-coexist-classic/scenario1.jpg)
 
 ### <a name="configure-a-site-to-site-vpn-to-connect-to-sites-not-connected-through-expressroute"></a>配置站点到站点 VPN，以便连接到不通过 ExpressRoute 进行连接的站点
 可以对网络进行配置，使得部分站点通过站点到站点 VPN 直接连接到 Azure，部分站点通过 ExpressRoute 进行连接。 
@@ -85,7 +85,7 @@ ms.locfileid: "87084800"
 本过程指导创建 VNet，以及创建将共存的站点到站点连接和 ExpressRoute 连接。
 
 1. 需要安装 Azure PowerShell cmdlet 的最新版本。 有关安装 PowerShell cmdlet 的详细信息，请参阅 [如何安装和配置 Azure PowerShell](/powershell/azure/) 。 请注意，针对此配置使用的 cmdlet 可能与你熟悉的 cmdlet 稍有不同。 请务必使用说明内容中指定的 cmdlet。 
-2. 创建虚拟网络的架构。 有关配置架构的详细信息，请参阅 [Azure 虚拟网络配置架构](https://msdn.microsoft.com/library/azure/jj157100.aspx)。
+2. 创建虚拟网络的架构。 有关配置架构的详细信息，请参阅 [Azure 虚拟网络配置架构](/previous-versions/azure/reference/jj157100(v=azure.100))。
    
     在创建架构时，请确保使用以下值：
    
@@ -229,7 +229,7 @@ ms.locfileid: "87084800"
 4. 编辑网络配置文件架构，使网关子网为 /27 或更短的前缀（例如 /26 或 /25）。 请参阅以下示例。 
    
    > [!NOTE]
-   > 如果因为虚拟网络中没有剩余足够的 IP 地址而无法增加网关子网大小，则需增加 IP 地址空间。 有关配置架构的详细信息，请参阅 [Azure 虚拟网络配置架构](https://msdn.microsoft.com/library/azure/jj157100.aspx)。
+   > 如果因为虚拟网络中没有剩余足够的 IP 地址而无法增加网关子网大小，则需增加 IP 地址空间。 有关配置架构的详细信息，请参阅 [Azure 虚拟网络配置架构](/previous-versions/azure/reference/jj157100(v=azure.100))。
    > 
    > 
    
@@ -253,4 +253,3 @@ ms.locfileid: "87084800"
 
 ## <a name="next-steps"></a>后续步骤
 有关 ExpressRoute 的详细信息，请参阅 [ExpressRoute 常见问题](expressroute-faqs.md)
-

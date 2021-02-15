@@ -1,24 +1,24 @@
 ---
-title: 快速入门：使用 SQL 按需版本
-description: 本快速入门介绍如何使用 SQL 按需版本（预览版）轻松查询各种类型的文件。
+title: 快速入门：使用无服务器 SQL 池
+description: 本快速入门介绍如何使用无服务器 SQL 池轻松查询各种类型的文件。
 services: synapse-analytics
 author: azaricstefan
 ms.service: synapse-analytics
 ms.topic: quickstart
 ms.subservice: sql
 ms.date: 04/15/2020
-ms.author: v-stazar
+ms.author: stefanazaric
 ms.reviewer: jrasnick
-ms.openlocfilehash: fe07192b0077518cdd73092f53342c298034cfa8
-ms.sourcegitcommit: 0b2367b4a9171cac4a706ae9f516e108e25db30c
+ms.openlocfilehash: ffa9e7b5685f9a200f6a403045687626f67f66f4
+ms.sourcegitcommit: d59abc5bfad604909a107d05c5dc1b9a193214a8
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/11/2020
-ms.locfileid: "86274163"
+ms.lasthandoff: 01/14/2021
+ms.locfileid: "98218291"
 ---
-# <a name="quickstart-use-sql-on-demand"></a>快速入门：使用 SQL 按需版本
+# <a name="quickstart-use-serverless-sql-pool"></a>快速入门：使用无服务器 SQL 池
 
-Synapse SQL 按需版本（预览版）是一个无服务器查询服务，可用于针对 Azure 存储中放置的文件运行 SQL 查询。 本快速入门将介绍如何使用 SQL 按需版本查询各种类型的文件。 [OPENROWSET](sql/develop-openrowset.md) 中列出了支持的格式。
+Synapse 无服务器 SQL 池是一个无服务器查询服务，可用于针对 Azure 存储中放置的文件运行 SQL 查询。 本快速入门介绍如何使用无服务器 SQL 池查询各种类型的文件。 [OPENROWSET](sql/develop-openrowset.md) 中列出了支持的格式。
 
 本快速入门展示如何查询：CSV、Apache Parquet 和 JSON 文件。
 
@@ -26,7 +26,7 @@ Synapse SQL 按需版本（预览版）是一个无服务器查询服务，可�
 
 选择用于发出查询的 SQL 客户端：
 
-- [Azure Synapse Studio](quickstart-synapse-studio.md) 是一个 Web 工具，可用于浏览存储中的文件以及创建 SQL 查询。
+- [Azure Synapse Studio](./get-started-create-workspace.md) 是一个 Web 工具，可用于浏览存储中的文件以及创建 SQL 查询。
 - [Azure Data Studio](sql/get-started-azure-data-studio.md) 是一个客户端工具，可用于针对按需数据库运行 SQL 查询和笔记本。
 - [SQL Server Management Studio](sql/get-started-ssms.md) 是一个客户端工具，可用于针对按需数据库运行 SQL 查询。
 
@@ -34,8 +34,8 @@ Synapse SQL 按需版本（预览版）是一个无服务器查询服务，可�
 
 | 参数                                 | 说明                                                   |
 | ----------------------------------------- | ------------------------------------------------------------- |
-| SQL 按需版本服务终结点地址    | 用作服务器名称                                   |
-| SQL 按需版本服务终结点区域     | 用于确定要在示例中使用的存储 |
+| 无服务器 SQL 池服务终结点地址    | 用作服务器名称                                   |
+| 无服务器 SQL 池服务终结点区域     | 用于确定要在示例中使用的存储 |
 | 用于访问终结点的用户名和密码 | 用于访问终结点                               |
 | 用于创建视图的数据库         | 在示例中从其着手的数据库       |
 
@@ -44,7 +44,7 @@ Synapse SQL 按需版本（预览版）是一个无服务器查询服务，可�
 在使用示例之前，请执行以下操作：
 
 - 为视图创建数据库（若要使用视图）
-- 创建供 SQL 按需版本用来访问存储中的文件的凭据
+- 创建供无服务器 SQL 池用来访问存储中的文件的凭据
 
 ### <a name="create-database"></a>创建数据库
 
@@ -62,7 +62,7 @@ CREATE DATABASE mydbname
 
 ### <a name="create-data-source"></a>创建数据源
 
-若要使用 SQL 按需版本运行查询，请创建供 SQL 按需版本用来访问存储中的文件的数据源。
+若要使用无服务器 SQL 池运行查询，请创建供无服务器 SQL 池用来访问存储中的文件的数据源。
 执行以下代码片段，以创建此部分的示例中使用的数据源：
 
 ```sql
@@ -115,7 +115,7 @@ WHERE
 以下示例演示用于查询 Parquet 文件的自动架构推理功能。 该示例在不指定架构的情况下返回 2017 年 9 月的行数。
 
 > [!NOTE]
-> 读取 Parquet 文件时，不一定要在 `OPENROWSET WITH` 子句中指定列。 在这种情况下，SQL 按需版本会利用 Parquet 文件中的元数据，并按名称绑定列。
+> 读取 Parquet 文件时，不一定要在 `OPENROWSET WITH` 子句中指定列。 在这种情况下，无服务器 SQL 池会利用 Parquet 文件中的元数据，并按名称绑定列。
 
 ```sql
 SELECT COUNT_BIG(*)
@@ -153,7 +153,7 @@ FROM OPENROWSET
 
 ### <a name="query-json-files"></a>查询 JSON 文件
 
-以下查询展示了如何使用 [JSON_VALUE](/sql/t-sql/functions/json-value-transact-sql?toc=/azure/synapse-analytics/toc.json&bc=/azure/synapse-analytics/breadcrumb/toc.json&view=azure-sqldw-latest) 在标题为“Probabilistic and Statistical Methods in Cryptology, An Introduction by Selected articles”的书籍中检索标量值（标题、出版商）：
+以下查询展示了如何使用 [JSON_VALUE](/sql/t-sql/functions/json-value-transact-sql?toc=/azure/synapse-analytics/toc.json&bc=/azure/synapse-analytics/breadcrumb/toc.json&view=azure-sqldw-latest&preserve-view=true) 在标题为“Probabilistic and Statistical Methods in Cryptology, An Introduction by Selected articles”的书籍中检索标量值（标题、出版商）：
 
 ```sql
 SELECT

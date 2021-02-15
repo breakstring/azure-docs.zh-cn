@@ -7,12 +7,12 @@ ms.service: site-recovery
 ms.topic: conceptual
 ms.author: ramamill
 ms.date: 04/03/2020
-ms.openlocfilehash: 8ee6449f357a578b30809bb03723ac1556e4f459
-ms.sourcegitcommit: d39f2cd3e0b917b351046112ef1b8dc240a47a4f
+ms.openlocfilehash: 62c8240a4d2e50aa3b584f322baf7d2ee217c6d3
+ms.sourcegitcommit: 02b1179dff399c1aa3210b5b73bf805791d45ca2
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/25/2020
-ms.locfileid: "88816150"
+ms.lasthandoff: 01/12/2021
+ms.locfileid: "98127866"
 ---
 # <a name="troubleshoot-mobility-service-push-installation"></a>排查移动服务推送安装问题
 
@@ -34,7 +34,7 @@ ms.locfileid: "88816150"
 
 ## <a name="credentials-check-errorid-95107--95108"></a>凭据检查（ErrorID：95107 和 95108）
 
-验证在启用复制期间选择的用户帐户是否有效且准确。 Azure Site Recovery 需要具有**管理员特权**的 **root** 帐户或用户帐户来执行推送安装。 否则，系统会在源计算机上阻止推送安装。
+验证在启用复制期间选择的用户帐户是否有效且准确。 Azure Site Recovery 需要具有 **管理员特权** 的 **root** 帐户或用户帐户来执行推送安装。 否则，系统会在源计算机上阻止推送安装。
 
 对于 Windows（**错误 95107**），请验证用户是否能够使用本地帐户或域帐户在源计算机上进行管理访问。 如果使用的不是域帐户，则需在本地计算机上禁用远程用户访问控制。
 
@@ -106,7 +106,22 @@ ms.locfileid: "88816150"
 
 若要解决该错误：
 
+* 使用本地帐户或域帐户验证用户帐户是否具有源计算机的管理访问权限。 如果使用的不是域帐户，则需在本地计算机上禁用远程用户访问控制。
+  * 若要手动添加注册表项来禁用远程用户访问控制，请执行以下操作：
+    * `HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System`
+    * 添加一个新的 `DWORD`：`LocalAccountTokenFilterPolicy`
+    * 将值设置为 `1`
+  * 若要添加注册表项，请在命令提示符下运行以下命令：
+
+    `REG ADD HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System /v LocalAccountTokenFilterPolicy /t REG_DWORD /d 1`
+
 * 请确保你能够从配置服务器对源计算机执行 ping 操作。 如果在启用复制期间选择了横向扩展进程服务器，请确保能够从进程服务器对源计算机执行 ping 操作。
+
+* 请确保虚拟机上已启用 "文件和打印机共享" 服务。 查看 [此处](vmware-azure-troubleshoot-push-install.md#file-and-printer-sharing-services-check-errorid-95105--95106)的步骤。
+
+* 请确保虚拟机上已启用 WMI 服务。 查看 [此处](vmware-azure-troubleshoot-push-install.md#windows-management-instrumentation-wmi-configuration-check-error-code-95103)的步骤。
+
+* 确保可从进程服务器访问虚拟机上的网络共享文件夹。 查看 [此处](vmware-azure-troubleshoot-push-install.md#check-access-for-network-shared-folders-on-source-machine-errorid-9510595523)的步骤。
 
 * 从源服务器计算机的命令行中，使用 `Telnet` 在 HTTPS 端口 135 上对配置服务器或横向扩展进程服务器执行 ping 操作，如以下命令所示。 此命令检查是否存在任何网络连接问题或防火墙端口阻止问题。
 
@@ -130,25 +145,25 @@ ms.locfileid: "88816150"
 
 当源计算机所在的网络无法找到、可能已被删除或不再可用时，会发生此错误。 若要解决此错误，唯一的方法是确保网络存在。
 
-## <a name="check-access-for-network-shared-folders-on-source-machine-errorid-9510595523"></a>检查源计算机上的网络共享文件夹的访问权限 (ErrorID：95105、95523) 
+## <a name="check-access-for-network-shared-folders-on-source-machine-errorid-9510595523"></a>检查源计算机上网络共享文件夹的访问权限（ErrorID：95105,95523）
 
-验证虚拟机上的网络共享文件夹是否可从进程服务器 (PS) 使用指定的凭据进行远程访问。 确认访问： 
+验证虚拟计算机上的网络共享文件夹是否可使用特定凭据从进程服务器 (PS) 进行远程访问。 若要确认访问，请执行以下操作： 
 
 1. 登录到进程服务器计算机。
-2. 打开文件资源管理器。 在地址栏中，键入 `\\<SOURCE-MACHINE-IP>\C$` 并单击 "Enter"。
+2. 打开文件资源管理器。 在地址栏中，键入 `\\<SOURCE-MACHINE-IP>\C$`，然后按 Enter。
 
     ![在 PS 中打开文件夹](./media/vmware-azure-troubleshoot-push-install/open-folder-process-server.PNG)
 
-3. 文件资源管理器将提示输入凭据。 输入用户名和密码，然后单击 "确定"。 <br><br/>
+3. 文件资源管理器将提示输入凭据。 输入用户名和密码，然后单击“确定”。 <br><br/>
 
     ![提供凭据](./media/vmware-azure-troubleshoot-push-install/provide-credentials.PNG)
 
     >[!NOTE]
-    > 如果源计算机已加入域，则提供域名，并将用户名作为提供 `<domainName>\<username>` 。 如果源计算机在工作组中，则仅提供用户名。
+    > 如果源计算机已加入域，则按 `<domainName>\<username>` 格式提供域名和用户名。 如果源计算机位于工作组中，仅提供用户名。
 
-4. 如果连接成功，则会从进程服务器远程查看源计算机的文件夹。
+4. 如果成功连接，则可以从进程服务器远程查看源计算机的文件夹。
 
-    ![从源计算机显示的文件夹](./media/vmware-azure-troubleshoot-push-install/visible-folders-from-source.png)
+    ![源计算机上的可见文件夹](./media/vmware-azure-troubleshoot-push-install/visible-folders-from-source.png)
 
 如果连接不成功，请检查是否满足所有先决条件。
 
@@ -282,7 +297,7 @@ Site Recovery 移动服务有多个组件，其中一个称为筛选器驱动程
 
 ## <a name="low-system-resources"></a>系统资源不足
 
-此问题的可能的错误 Id 为95572和95573。 如果系统内存不足，并且无法为移动服务安装分配内存，则会出现此问题。 请确保已释放足够的内存，以便安装继续并成功完成。
+出现此问题时，可能看到的错误 ID 有 95572 和 95573。 如果系统内存不足，且无法为移动服务安装分配内存，则会出现此问题。 确保已释放足够的内存，让安装继续进行并成功完成。
 
 ## <a name="vss-installation-failures"></a>VSS 安装失败
 

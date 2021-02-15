@@ -1,20 +1,17 @@
 ---
-title: 了解如何使用 Apache Hadoop 沙盒，模拟器-Azure HDInsight
+title: 了解如何使用 Apache Hadoop 沙盒、模拟器 - Azure HDInsight
 description: '若要开始了解如何使用 Apache Hadoop 生态系统，可以在 Azure 虚拟机上设置 Hortonworks 提供的 Hadoop 沙盒。 '
 keywords: hadoop emulator,hadoop 沙盒
-ms.reviewer: jasonh
-author: hrasheed-msft
 ms.service: hdinsight
 ms.custom: hdinsightactive,hdiseo17may2017
 ms.topic: how-to
 ms.date: 05/29/2019
-ms.author: hrasheed
-ms.openlocfilehash: de2a8e6377ababadc7d42f873a816a01a8f3b77e
-ms.sourcegitcommit: 3541c9cae8a12bdf457f1383e3557eb85a9b3187
+ms.openlocfilehash: eb286adfd7267a78fcf80bcf5ad34f8f1cc9f493
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/09/2020
-ms.locfileid: "86207473"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98946612"
 ---
 # <a name="get-started-with-an-apache-hadoop-sandbox-an-emulator-on-a-virtual-machine"></a>开始使用 Apache Hadoop 沙盒，它是虚拟机上的模拟器
 
@@ -85,7 +82,7 @@ ms.locfileid: "86207473"
 
 ## <a name="next-steps"></a>后续步骤
 
-* [了解如何将 Visual Studio 与 Hortonworks 沙盒配合使用](../hdinsight-hadoop-emulator-visual-studio.md)
+* [了解如何将 Visual Studio 与 Hortonworks 沙盒配合使用](./apache-hadoop-visual-studio-tools-get-started.md)
 
 * [学习 Hortonworks 沙盒的重要知识](https://hortonworks.com/hadoop-tutorial/learning-the-ropes-of-the-hortonworks-sandbox/)
 

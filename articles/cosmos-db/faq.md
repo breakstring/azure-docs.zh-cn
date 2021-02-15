@@ -1,5 +1,5 @@
 ---
-title: 有关 Azure Cosmos DB 中不同 API 的常见问题解答
+title: 有关 Azure Cosmos DB 中不同 API 的常见问题
 description: 获取与 Azure Cosmos DB（一种全球分布式多模型数据库服务）相关的常见问题答案。 了解容量、性能级别和缩放。
 author: SnehaGunda
 ms.service: cosmos-db
@@ -7,14 +7,15 @@ ms.topic: conceptual
 ms.date: 09/01/2019
 ms.author: sngun
 ms.custom: seodec18
-ms.openlocfilehash: f6b2d081b0dc475e0950b12de31bab83cbe7da8b
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 81c959467c4bb3700120917cf150773fb18e866d
+ms.sourcegitcommit: dfc4e6b57b2cb87dbcce5562945678e76d3ac7b6
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "85213085"
+ms.lasthandoff: 12/12/2020
+ms.locfileid: "97359823"
 ---
 # <a name="frequently-asked-questions-about-different-apis-in-azure-cosmos-db"></a>有关 Azure Cosmos DB 中不同 API 的常见问题
+[!INCLUDE[appliesto-all-apis](includes/appliesto-all-apis.md)]
 
 ### <a name="what-are-the-typical-use-cases-for-azure-cosmos-db"></a>Azure Cosmos DB 的典型用例有哪些？
 
@@ -34,15 +35,15 @@ Azure Cosmos DB 有一个不受架构影响的索引编制引擎，能够自动�
 
 ### <a name="can-i-use-multiple-apis-to-access-my-data"></a>是否可以使用多个 API 来访问我的数据？
 
-Azure Cosmos DB 是 Microsoft 提供的全球分布式多模型数据库服务。 其中多模型意味着 Azure Cosmos DB 支持多个 API 和多个数据模型，不同的 API 将不同的数据格式用于存储和线路协议。 例如，SQL 使用 JSON，MongoDB 使用 BSON，表使用 EDM，Cassandra 使用 CQL，Gremlin 使用 JSON 格式。 因此，建议对给定帐户中的所有数据访问使用相同的 API。
+Azure Cosmos DB 是 Microsoft 提供的全球分布式多模型数据库服务。 如果多模型意味着 Azure Cosmos DB 支持多个 API 和多个数据模型，则不同的 API 将使用不同的数据格式来存储和连接协议。 例如，SQL 使用 JSON，MongoDB 使用 BSON，表使用 EDM，Cassandra 使用 CQL，Gremlin 使用 JSON 格式。 因此，建议对给定帐户中的所有数据访问使用相同的 API。
 
 除了可互操作的 Gremlin 和 SQL API，每个 API 都独立运行。
 
 ### <a name="is-azure-cosmos-db-hipaa-compliant"></a>Azure Cosmos DB 是否符合 HIPAA？
 
-是的，Azure Cosmos DB 符合 HIPAA。 HIPAA 针对可识别个人身份的健康信息的使用、泄露与保护制定了要求。 有关详细信息，请参阅 [Microsoft Trust Center](https://www.microsoft.com/en-us/TrustCenter/Compliance/HIPAA)（Microsoft 信任中心）。
+是的，Azure Cosmos DB 符合 HIPAA。 HIPAA 针对可识别个人身份的健康信息的使用、泄露与保护制定了要求。 有关详细信息，请参阅 [Microsoft Trust Center](/compliance/regulatory/offering-hipaa-hitech)（Microsoft 信任中心）。
 
-### <a name="what-are-the-storage-limits-of-azure-cosmos-db"></a>Azure Cosmos DB 的存储限制是什么？
+### <a name="what-are-the-storage-limits-of-azure-cosmos-db"></a>Azure Cosmos DB 的存储限制有哪些？
 
 对于容器可以存储在 Azure Cosmos DB 中的数据总量并没有任何限制。
 
@@ -56,7 +57,7 @@ Azure Cosmos DB 是 Microsoft 提供的全球分布式多模型数据库服务�
 
 ### <a name="how-much-does-azure-cosmos-db-cost"></a>Azure Cosmos DB 的费用如何？
 
-有关详细信息，请参阅 [Azure Cosmos DB 定价详细信息](https://azure.microsoft.com/pricing/details/cosmos-db/)页。 Azure Cosmos DB 使用费取决于预配的容器数、容器的联机小时数，以及每个容器的预配吞吐量。
+有关详细信息，请参阅 [Azure Cosmos DB 定价详细信息](https://azure.microsoft.com/pricing/details/cosmos-db/)页。 Azure Cosmos DB 使用费取决于预配的容器数目、容器的联机小时数，以及每个容器的预配吞吐量。
 
 ### <a name="is-a-free-account-available"></a>有免费的帐户吗？
 
@@ -70,7 +71,7 @@ Azure Cosmos DB 是 Microsoft 提供的全球分布式多模型数据库服务�
 
 若要询问技术问题，可以在下述两个问答论坛之一发帖：
 
-* [Microsoft Q&A 问题页](https://docs.microsoft.com/answers/topics/azure-cosmos-db.html)
+* [Microsoft Q&A 问题页](/answers/topics/azure-cosmos-db.html)
 * [Stack Overflow](https://stackoverflow.com/questions/tagged/azure-cosmosdb)。 Stack Overflow 适合编程问题。 请确保提问[切中主题](https://stackoverflow.com/help/on-topic)并[尽可能提供较多的详细信息，使问题清楚明了，便于回答](https://stackoverflow.com/help/how-to-ask)。
 
 若要请求新功能，请在 [Uservoice](https://feedback.azure.com/forums/263030-azure-cosmos-db) 上提交新的请求。
@@ -85,7 +86,7 @@ Azure Cosmos DB 是 Microsoft 提供的全球分布式多模型数据库服务�
 
 以下条件适用于“试用 Azure Cosmos DB”订阅：
 
-* 可以将帐户访问权限授予个人 Microsoft 帐户 (MSA)。 避免使用 Active Directory (AAD) 帐户或属于公司 AAD 租户的帐户，这些帐户可能存在限制，从而阻止访问授权。
+* 可以将帐户访问权限授予个人 Microsoft 帐户 (MSA)。 避免使用 Azure Active Directory (Azure AD) 帐户或属于公司 Azure AD 租户的帐户，它们可能会阻止访问权限。
 * 对于 SQL、Gremlin API 和表帐户，每个订阅一个[吞吐量预配容器](./set-throughput.md#set-throughput-on-a-container)。
 * 对于 MongoDB 帐户，每个订阅最多三个[吞吐量预配集合](./set-throughput.md#set-throughput-on-a-container)。
 * 每个订阅一个[吞吐量预配数据库](./set-throughput.md#set-throughput-on-a-database)。 吞吐量预配数据库可包含任意数量的容器。
@@ -102,7 +103,7 @@ Azure Cosmos DB 是 Microsoft 提供的全球分布式多模型数据库服务�
 
 可以在 Azure 门户中注册 Azure Cosmos DB。 首先，注册 Azure 订阅。 注册后，可将 Azure Cosmos DB 帐户添加到 Azure 订阅。
 
-### <a name="what-is-a-master-key"></a>什么是主密钥？
+### <a name="what-is-a-primary-key"></a>什么是主密钥？
 
 主密钥是用于访问帐户的所有资源的安全令牌。 拥有此密钥的人对数据库帐户中的所有资源具有读取和写入访问权。 分发主密钥时需谨慎。 [Azure 门户][azure-portal]的“密钥”边栏选项卡中提供主要主密钥和辅助主密钥。 有关密钥的详细信息，请参阅[查看、复制和重新生成访问密钥](manage-with-cli.md#list-account-keys)。
 
@@ -173,13 +174,13 @@ SQL API 支持的 SQL 查询语言是 SQL Server 支持的查询功能增强子�
 
 ### <a name="does-the-sql-api-support-sql-aggregation-functions"></a>SQL API 是否支持 SQL 聚合函数？
 
-SQL API 支持通过聚合函数 `COUNT`、`MIN`、`MAX`、`AVG` 和 `SUM` 通过 SQL 语法实现的任何规模的低延迟聚合。 有关详细信息，请参阅[聚合函数](sql-query-aggregates.md)。
+SQL API 支持通过聚合函数 `COUNT`、`MIN`、`MAX`、`AVG` 和 `SUM` 通过 SQL 语法实现的任何规模的低延迟聚合。 有关详细信息，请参阅[聚合函数](sql-query-aggregate-functions.md)。
 
 ### <a name="how-does-the-sql-api-provide-concurrency"></a>SQL API 如何提供并发性？
 
 SQL API 通过 HTTP 实体标记或 ETag 支持乐观并发控制 (OCC)。 每个 SQL API 资源都有一个 ETag。每次更新文档时，都会在服务器上设置此 ETag。 ETag 标头和当前值包含在所有响应消息中。 ETag 可与 If-Match 标头配合使用，让服务器决定是否应更新资源。 If-Match 值是用作检查依据的 ETag 值。 如果 ETag 值与服务器的 ETag 值匹配，就会更新资源。 如果 ETag 不再是最新状态，则服务器会拒绝该操作，并提供“HTTP 412 不满足前提条件”响应代码。 客户端接着必须重新提取资源，以获取该资源当前的 ETag 值。 此外，ETag 可以与 If-None-Match 标头配合使用，以确定是否需要重新提取资源。
 
-若要在 .NET 中使用乐观并发，可以使用 [AccessCondition](https://msdn.microsoft.com/library/azure/microsoft.azure.documents.client.accesscondition.aspx) 类。 如需 .NET 示例，请参阅 GitHub 上 DocumentManagement 示例中的 [Program.cs](https://github.com/Azure/azure-documentdb-dotnet/blob/master/samples/code-samples/DocumentManagement/Program.cs)。
+若要在 .NET 中使用乐观并发，可以使用 [AccessCondition](/dotnet/api/microsoft.azure.documents.client.accesscondition) 类。 如需 .NET 示例，请参阅 GitHub 上 DocumentManagement 示例中的 [Program.cs](https://github.com/Azure/azure-cosmos-dotnet-v2/blob/master/samples/code-samples/DocumentManagement/Program.cs)。
 
 ### <a name="how-do-i-perform-transactions-in-the-sql-api"></a>如何在 SQL API 中执行事务？
 
@@ -210,7 +211,7 @@ SQL API 通过 JavaScript 存储过程和触发器支持语言集成式事务。
 可以在容器级别以及其下的级别（例如文档级别、附件级别）使用 ResourceTokens 来创建权限。 这意味着，目前不允许在数据库或帐户级别创建权限。
 
 [azure-portal]: https://portal.azure.com
-[query]: sql-api-sql-query.md
+[query]: ./sql-query-getting-started.md
 
 ## <a name="next-steps"></a>后续步骤
 

@@ -8,17 +8,17 @@ ms.subservice: core
 ms.topic: reference
 author: likebupt
 ms.author: keli19
-ms.date: 10/10/2019
-ms.openlocfilehash: c009a98931240e92527035e51fdce3f1c92f5212
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.date: 10/10/2020
+ms.openlocfilehash: f4a7f5581703ae6932f3b40e62085fed76f5e6f2
+ms.sourcegitcommit: ba7fafe5b3f84b053ecbeeddfb0d3ff07e509e40
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "79477589"
+ms.lasthandoff: 10/12/2020
+ms.locfileid: "91945696"
 ---
 # <a name="filter-based-feature-selection"></a>基于筛选器的特征选择
 
-本文介绍如何使用 Azure 机器学习设计器（预览版）中的“基于筛选器的特征选择”模块。 此模块可帮助你识别输入数据集中具有最高预测能力的列。 
+本文介绍如何在 Azure 机器学习设计器中使用基于筛选器的功能选择模块。 此模块可帮助你识别输入数据集中具有最高预测能力的列。 
 
 概括而言，“特征选择”是指在指定了输出的情况下，将统计测试应用到输入的过程。** 目标是确定哪些列能够更准确地预测输出。 “基于筛选器的特征选择”模块提供多种特征选择算法供用户选择。 该模块包含“皮尔逊相关”和卡方值等相关性方法。 
 
@@ -90,8 +90,14 @@ ms.locfileid: "79477589"
 
     - 如果指定的结果列少于特征列，则会按评分的降序将特征排名。 只返回评分最高的特征。 
 
-7.  提交管道或选择“基于筛选器的特征选择”模块，然后选择“运行所选模块”。****
+7.  提交管道。
 
+> [!IMPORTANT]
+> 如果打算在推理中使用 **基于筛选器的功能选择** ，则需要使用 " [选择列" 转换](./select-columns-transform.md) 来存储功能选择的结果并 [应用转换](./apply-transformation.md) ，以将所选的功能应用到计分数据集。
+>
+> 请参阅以下屏幕截图来构建管道，以确保对评分过程的列选择相同。
+> [!div class="mx-imgBorder"]
+> ![示例管道](media/module/filter-based-feature-selection-score.png)
 
 ## <a name="results"></a>结果
 

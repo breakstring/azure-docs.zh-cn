@@ -1,18 +1,15 @@
 ---
 title: Azure HDInsight 中 Apache Ambari 的用法
 description: 介绍如何在 Azure HDInsight 中使用 Apache Ambari。
-author: hrasheed-msft
-ms.author: hrasheed
-ms.reviewer: jasonh
 ms.service: hdinsight
 ms.topic: conceptual
-ms.date: 02/05/2020
-ms.openlocfilehash: fe7d6d4e70bc55a6a91d3c1a1b910db4b5469fe6
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.date: 01/12/2021
+ms.openlocfilehash: 6233c42d7fbf8dc7821d26f77171c44485fb8d34
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "84197074"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98946929"
 ---
 # <a name="apache-ambari-usage-in-azure-hdinsight"></a>Azure HDInsight 中 Apache Ambari 的用法
 
@@ -56,7 +53,7 @@ ps -ef | grep failover
 
 ## <a name="ambari-database"></a>Ambari 数据库
 
-HDInsight 将在 SQL 数据库中创建一个数据库，该数据库的作用是充当 Ambari 服务器的数据库。 默认的[服务层级是 S0](../azure-sql/database/elastic-pool-scale.md)。
+HDInsight 幕后会在 SQL 数据库中创建数据库，用作 Ambari 服务器的数据库。 默认的[服务层级是 S0](../azure-sql/database/elastic-pool-scale.md)。
 
 对于在创建时其工作器节点数超过 16 个的任何群集，数据库服务层级为 S2。
 
@@ -66,15 +63,18 @@ HDInsight 将在 SQL 数据库中创建一个数据库，该数据库的作用�
 
 切勿手动修改任何群集节点上的任何配置文件，应该让 Ambari UI 完成此类作业。
 
+## <a name="property-values-in-esp-clusters"></a>ESP 群集中的属性值
+
+在 HDInsight 4.0 企业安全性套餐群集中，使用管道 `|` 而不是逗号作为可变分隔符。 下面显示了一个示例：
+
+```
+Property Key: hive.security.authorization.sqlstd.confwhitelist.append
+Property Value: environment|env|dl_data_dt
+```
+
 ## <a name="next-steps"></a>后续步骤
 
 * [使用 Apache Ambari Web UI 管理 HDInsight 群集](hdinsight-hadoop-manage-ambari.md)
 * [使用 Apache Ambari REST API 管理 HDInsight 群集](hdinsight-hadoop-manage-ambari-rest-api.md)
 
-如果你的问题未在本文中列出，或者无法解决问题，请访问以下渠道之一获取更多支持：
-
-* 通过 [Azure 社区支持](https://azure.microsoft.com/support/community/)获取 Azure 专家的解答。
-
-* 联系 [@AzureSupport](https://twitter.com/azuresupport)，这是用于改进客户体验的官方 Microsoft Azure 帐户。 它可以将 Azure 社区成员连接到适当的资源，为他们提供解答、支持和专家建议。
-
-* 如果需要更多帮助，可以从 [Azure 门户](https://portal.azure.com/?#blade/Microsoft_Azure_Support/HelpAndSupportBlade/)提交支持请求。 从菜单栏中选择“支持”****，或打开“帮助 + 支持”**** 中心。 有关更多详细信息，请参阅[如何创建 Azure 支持请求](https://docs.microsoft.com/azure/azure-supportability/how-to-create-azure-support-request)。 Microsoft Azure 订阅包含对订阅管理和计费支持的访问权限，并且通过 [Azure 支持计划](https://azure.microsoft.com/support/plans/)之一提供技术支持。
+[!INCLUDE [troubleshooting next steps](../../includes/hdinsight-troubleshooting-next-steps.md)]

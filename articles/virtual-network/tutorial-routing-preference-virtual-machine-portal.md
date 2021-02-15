@@ -10,14 +10,14 @@ ms.devlang: na
 ms.topic: how-to
 ms.tgt_pltfrm: na
 ms.workload: infrastructure-services
-ms.date: 05/18/2020
+ms.date: 12/02/2020
 ms.author: mnayak
-ms.openlocfilehash: af3d9e9fcf0dad6a5e51a3db87b63567d701970e
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: beb670106690645a80aa12b930e3a005efb4282a
+ms.sourcegitcommit: d59abc5bfad604909a107d05c5dc1b9a193214a8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "84687984"
+ms.lasthandoff: 01/14/2021
+ms.locfileid: "98221640"
 ---
 # <a name="configure-routing-preference-for-a-vm-using-the-azure-portal"></a>使用 Azure 门户为 VM 配置路由首选项
 
@@ -28,12 +28,6 @@ ms.locfileid: "84687984"
 > [!IMPORTANT]
 > 路由首选项目前为公共预览版。
 > 此预览版在提供时没有附带服务级别协议，不建议将其用于生产工作负荷。 某些功能可能不受支持或者受限。 有关详细信息，请参阅 [Microsoft Azure 预览版补充使用条款](https://azure.microsoft.com/support/legal/preview-supplemental-terms/)。
-
-## <a name="register-the-feature-for-your-subscription"></a>为订阅注册此功能
-路由首选项功能目前为预览版。 必须使用 Azure PowerShell 为订阅注册此功能，如下所示：
-```azurepowershell
-Register-AzProviderFeature -FeatureName AllowRoutingPreferenceFeature ProviderNamespace Microsoft.Network
-```
 
 ## <a name="sign-in-to-azure"></a>登录 Azure
 
@@ -69,10 +63,11 @@ Register-AzProviderFeature -FeatureName AllowRoutingPreferenceFeature ProviderNa
 9. 部署虚拟机以后，请在门户顶部的搜索框中输入 *myPublicIpAddress*。 当“myPublicIpAddress”出现在搜索结果中时，将其选中。
 10. 可以查看分配的公共 IP 地址，以及分配给 **myVM** 虚拟机的地址，如下图所示：
 
-    ![查看公共 IP 地址](./media/tutorial-routing-preference-virtual-machine-portal/pip-properties-new.png)
+    ![屏幕截图显示网络接口 mynic 的 NIC 公共 I P。](./media/tutorial-routing-preference-virtual-machine-portal/pip-properties-new.png)
 
 11. 选择“网络”，单击 nic“mynic”，然后选择公共 IP 地址，以确认路由首选项被指定为“Internet”。
-    ![查看公共 IP 地址](./media/tutorial-routing-preference-virtual-machine-portal/pip-routing-internet-new.png)
+
+    ![屏幕截图显示公共 I P 地址的 I P 地址和路由首选项。](./media/tutorial-routing-preference-virtual-machine-portal/pip-routing-internet-new.png)
 
 ## <a name="clean-up-resources"></a>清理资源
 
@@ -84,5 +79,5 @@ Register-AzProviderFeature -FeatureName AllowRoutingPreferenceFeature ProviderNa
 
 ## <a name="next-steps"></a>后续步骤
 - 详细了解[具有路由首选项的公共 IP](routing-preference-overview.md)。
-- 详细了解 Azure 中的[公共 IP 地址](virtual-network-ip-addresses-overview-arm.md#public-ip-addresses)。
+- 详细了解 Azure 中的[公共 IP 地址](./public-ip-addresses.md#public-ip-addresses)。
 - 详细了解所有[公共 IP 地址设置](virtual-network-public-ip-address.md#create-a-public-ip-address)。

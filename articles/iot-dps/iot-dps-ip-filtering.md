@@ -6,13 +6,13 @@ ms.author: wesmc
 ms.service: iot-dps
 services: iot-dps
 ms.topic: conceptual
-ms.date: 03/12/2020
-ms.openlocfilehash: 580c378df5fc3912aa540b5d85adf99bc42605e0
-ms.sourcegitcommit: 3543d3b4f6c6f496d22ea5f97d8cd2700ac9a481
+ms.date: 12/14/2020
+ms.openlocfilehash: e1b175a176255da465433b2db45cb3cb67d360d1
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/20/2020
-ms.locfileid: "86511936"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98934496"
 ---
 # <a name="use-azure-iot-dps-ip-connection-filters"></a>使用 Azure IoT DPS IP 连接筛选器
 
@@ -22,7 +22,7 @@ ms.locfileid: "86511936"
 
 在两个具体用例中，可以阻止从特定 IP 地址到 DPS 终结点的连接：
 
-* DPS 只能从指定范围的 IP 地址接收流量并拒绝任何其他流量。 例如，将 DPS 与 [Azure Express Route](https://azure.microsoft.com/documentation/articles/expressroute-faqs/#supported-services) 配合使用，以在 DPS 与设备之间创建专用连接。
+* DPS 只能从指定范围的 IP 地址接收流量并拒绝任何其他流量。 例如，将 DPS 与 [Azure Express Route](../expressroute/expressroute-faqs.md#supported-services) 配合使用，以在 DPS 与设备之间创建专用连接。
 
 * 需要拒绝来自 DPS 管理员已标识为可疑地址的 IP 地址的流量。
 
@@ -48,7 +48,7 @@ ms.locfileid: "86511936"
 
 ![在选择“添加 IP 筛选器规则”后](./media/iot-dps-ip-filtering/ip-filter-after-selecting-add.png)
 
-* 提供 IP 筛选器规则的**名称**。 此项必须是不区分大小写的唯一字母数字字符串，长度不超过 128 个字符。 只接受 ASCII 7 位字母数字字符以及以下字符：`{'-', ':', '/', '\', '.', '+', '%', '_', '#', '*', '?', '!', '(', ')', ',', '=', '@', ';', '''}`。
+* 提供 IP 筛选器规则的 **名称**。 此项必须是不区分大小写的唯一字母数字字符串，长度不超过 128 个字符。 只接受 ASCII 7 位字母数字字符以及以下字符：`{'-', ':', '/', '\', '.', '+', '%', '_', '#', '*', '?', '!', '(', ')', ',', '=', '@', ';', '''}`。
 
 * 提供单个 IPv4 地址或者以 CIDR 表示法提供一个 IP 地址块。 例如，在 CIDR 表示法中，192.168.100.0/22 表示从 192.168.100.0 到 192.168.103.255 的 1024 个 IPv4 地址。
 
@@ -58,7 +58,7 @@ ms.locfileid: "86511936"
 
 ![关于保存 IP 筛选规则的通知](./media/iot-dps-ip-filtering/ip-filter-save-new-rule.png)
 
-当存在的 IP 筛选规则达到最大数目 10 时，“添加”  选项被禁用。
+当存在的 IP 筛选规则达到最大数目 100 时，会禁用“添加”选项。
 
 若要编辑现有规则，请选择要更改的数据，进行更改，然后选择“保存”以保存所做的编辑。 
 
@@ -74,7 +74,7 @@ ms.locfileid: "86511936"
 
 ## <a name="update-ip-filter-rules-in-code"></a>在代码中更新 IP 筛选规则
 
-可以使用 Azure 资源提供程序的 REST 终结点检索和修改 DPS IP 筛选器。 请参阅 [createorupdate 方法](https://docs.microsoft.com/rest/api/iot-dps/iotdpsresource/createorupdate)`properties.ipFilterRules`。
+可以使用 Azure 资源提供程序的 REST 终结点检索和修改 DPS IP 筛选器。 请参阅 [createorupdate 方法](/rest/api/iot-dps/iotdpsresource/createorupdate)`properties.ipFilterRules`。
 
 Azure CLI 或 Azure PowerShell 当前不支持更新 DPS IP 筛选器规则，但可以通过 Azure 资源管理器模板来完成该更新操作。 请参阅 [Azure 资源管理器模板](../azure-resource-manager/templates/overview.md)，了解如何使用资源管理器模板。 以下模板示例显示了如何创建、编辑和删除 DPS IP 筛选器规则。
 
@@ -135,8 +135,8 @@ Azure CLI 或 Azure PowerShell 当前不支持更新 DPS IP 筛选器规则，�
 
 | 属性                | 说明 |
 | ------------------------ | ----------- |
-| **FilterName**           | 提供 IP 筛选器规则的名称。 此项必须是不区分大小写的唯一字母数字字符串，长度不超过 128 个字符。 仅接受 ASCII 7 位字母数字字符和 {'-', ':', '/', '\', '.', '+', '%', '_', '#', '*', '?', '!', '(', ')', ',', '=', '@', ';', '''}。 |
-| **操作**               | 接收的值为 **Accept** 或 **Reject** （充当 IP 筛选器规则的操作）。 |
+| **FilterName**           | 提供 IP 筛选器规则的名称。 此项必须是不区分大小写的唯一字母数字字符串，长度不超过 128 个字符。 仅接受 ASCII 7 位字母数字字符和  `{'-', ':', '/', '\', '.', '+', '%', '_', '#', '*', '?', '!', '(', ')', ',', '=', '@', ';', '''}` 。 |
+| **操作**               | 接收的值为 **Accept** 或  **Reject** （充当 IP 筛选器规则的操作）。 |
 | **ipMask**               | 提供单个 IPv4 地址或者以 CIDR 表示法提供一个 IP 地址块。 例如，在 CIDR 表示法中，192.168.100.0/22 表示从 192.168.100.0 到 192.168.103.255 的 1024 个 IPv4 地址。 |
 
 
@@ -258,5 +258,5 @@ IP 筛选器规则按顺序应用，与 IP 地址匹配的第一条规则决定�
 若要进一步探索管理 DPS，请参阅：
 
 * [了解 IoT DPS IP 地址](iot-dps-understand-ip-address.md)
-* [使用 Azure CLI 配置 DPS](how-to-manage-dps-with-cli.md)
+* [使用 Azure CLI 设置 DPS](quick-setup-auto-provision-cli.md)
 * [控制对 DPS 的访问](how-to-control-access.md)

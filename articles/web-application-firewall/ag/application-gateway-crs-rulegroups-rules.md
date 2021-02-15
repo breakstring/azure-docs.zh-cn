@@ -8,12 +8,12 @@ ms.service: web-application-firewall
 ms.date: 11/14/2019
 ms.author: victorh
 ms.topic: conceptual
-ms.openlocfilehash: 37e09612491d41887c5945920488569d3620bf0b
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: e2c88091072921f1ca674868e401c34d354418de
+ms.sourcegitcommit: 4d48a54d0a3f772c01171719a9b80ee9c41c0c5d
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "85052015"
+ms.lasthandoff: 01/24/2021
+ms.locfileid: "98746503"
 ---
 # <a name="web-application-firewall-crs-rule-groups-and-rules"></a>Web 应用程序防火墙 CRS 规则组和规则
 
@@ -33,7 +33,7 @@ WAF 可针对以下 Web 漏洞提供保护：
 - 其他常见攻击，例如命令注入、HTTP 请求走私、HTTP 响应拆分和远程文件包含
 - HTTP 协议违规
 - HTTP 协议异常，例如缺少主机用户代理和接受标头
-- 机器人、爬网程序和扫描程序
+- 自动程序、爬网程序和扫描程序
 - 常见应用程序错误配置（例如 Apache 和 IIS）
 
 ### <a name="owasp-crs-31"></a>OWASP CRS 3.1
@@ -41,9 +41,9 @@ WAF 可针对以下 Web 漏洞提供保护：
 CRS 3.1 包含下表中所示的 13 个规则组。 每个组包含多个可以禁用的规则。
 
 > [!NOTE]
-> CRS 3.1 仅适用于 WAF_v2 SKU。
+> CRS 3.1 仅在 WAF_v2 SKU 上可用。
 
-|规则组|描述|
+|规则组|说明|
 |---|---|
 |**[常规](#general-31)**|常规组|
 |**[REQUEST-911-METHOD-ENFORCEMENT](#crs911-31)**|锁定方法（PUT、PATCH）|
@@ -63,7 +63,7 @@ CRS 3.1 包含下表中所示的 13 个规则组。 每个组包含多个可以�
 
 CRS 3.0 包含下表中所示的 12 个规则组。 每个组包含多个可以禁用的规则。
 
-|规则组|描述|
+|规则组|说明|
 |---|---|
 |**[常规](#general-30)**|常规组|
 |**[REQUEST-911-METHOD-ENFORCEMENT](#crs911-30)**|锁定方法（PUT、PATCH）|
@@ -82,7 +82,7 @@ CRS 3.0 包含下表中所示的 12 个规则组。 每个组包含多个可以�
 
 CRS 2.2.9 包含下表中所示的 10 个规则组。 每个组包含多个可以禁用的规则。
 
-|规则组|描述|
+|规则组|说明|
 |---|---|
 |**[crs_20_protocol_violations](#crs20)**|防范协议违规（例如无效字符，或使用请求正文执行 GET）|
 |**[crs_21_protocol_anomalies](#crs21)**|防范错误的标头信息|
@@ -259,7 +259,7 @@ CRS 2.2.9 包含下表中所示的 10 个规则组。 每个组包含多个可�
 |941150|XSS 筛选器 - 类别 5 = 不允许的 HTML 属性|
 |941160|NoScript XSS InjectionChecker：HTML 注入|
 |941170|NoScript XSS InjectionChecker：属性注入|
-|941180|节点验证器方块列表关键字|
+|941180|Node-Validator 阻止列表关键字|
 |941190|使用样式表的 XSS|
 |941200|使用 VML 帧的 XSS|
 |941210|使用经过模糊处理的 Javascript 的 XSS|
@@ -487,7 +487,7 @@ CRS 2.2.9 包含下表中所示的 10 个规则组。 每个组包含多个可�
 |941130|XSS 筛选器 - 类别 3 = 属性向量|
 |941140|XSS 筛选器 - 类别 4 = Javascript URI 向量|
 |941150|XSS 筛选器 - 类别 5 = 不允许的 HTML 属性|
-|941180|节点验证器方块列表关键字|
+|941180|Node-Validator 阻止列表关键字|
 |941190|使用样式表的 XSS|
 |941200|使用 VML 帧的 XSS|
 |941210|使用经过模糊处理的 Javascript 的 XSS|

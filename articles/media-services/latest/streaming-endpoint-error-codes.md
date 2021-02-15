@@ -1,7 +1,7 @@
 ---
-title: Azure 媒体服务打包和来源错误 | Microsoft Docs
+title: Azure 媒体服务打包和源错误
 description: 本主题描述 Azure 媒体服务流式处理终结点（来源）服务可能会出现的错误。
-author: Juliako
+author: IngridAtMicrosoft
 manager: femila
 editor: ''
 services: media-services
@@ -10,17 +10,17 @@ ms.service: media-services
 ms.workload: media
 ms.tgt_pltfrm: na
 ms.devlang: na
-ms.topic: article
+ms.topic: error-reference
 ms.date: 05/07/2019
-ms.author: juliako
-ms.openlocfilehash: 1fc201cc1f3d4d26ca7b9e949d2917688e6fea8c
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.author: inhenkel
+ms.openlocfilehash: 994e5ae0647f350e0a64f35318bd5803f4ed79b2
+ms.sourcegitcommit: 100390fefd8f1c48173c51b71650c8ca1b26f711
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87091974"
+ms.lasthandoff: 01/27/2021
+ms.locfileid: "98894977"
 ---
-# <a name="streaming-endpoint-origin-errors"></a>流式处理终结点（来源）错误 
+# <a name="streaming-endpoint-origin-errors"></a>流式处理终结点（来源）错误
 
 本主题描述 Azure 媒体服务[流式处理终结点服务](streaming-endpoint-concept.md)可能会出现的错误。
 

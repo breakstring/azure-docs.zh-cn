@@ -11,12 +11,12 @@ ms.workload: identity
 ms.topic: tutorial
 ms.date: 01/17/2019
 ms.author: jeedes
-ms.openlocfilehash: d453cc5300dc658e4b33bb0591100deae5f34aef
-ms.sourcegitcommit: 023d10b4127f50f301995d44f2b4499cbcffb8fc
+ms.openlocfilehash: 284ec65955de60f41d7bb0f97bf608faba3d4b79
+ms.sourcegitcommit: d79513b2589a62c52bddd9c7bd0b4d6498805dbe
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/18/2020
-ms.locfileid: "88544734"
+ms.lasthandoff: 12/18/2020
+ms.locfileid: "97672575"
 ---
 # <a name="tutorial-azure-active-directory-integration-with-answerhub"></a>教程：Azure Active Directory 与 AnswerHub 集成
 
@@ -27,7 +27,7 @@ ms.locfileid: "88544734"
 * 可让用户使用其 Azure AD 帐户自动登录到 AnswerHub（单一登录）。
 * 可在一个中心位置（即 Azure 经典门户）管理帐户。
 
-若要了解有关 SaaS 应用程序与 Azure AD 集成的详细信息，请参阅[单一登录到 Azure Active Directory 中的应用程序](https://docs.microsoft.com/azure/active-directory/active-directory-appssoaccess-whatis)。
+若要了解有关 SaaS 应用程序与 Azure AD 集成的详细信息，请参阅[单一登录到 Azure Active Directory 中的应用程序](../manage-apps/what-is-single-sign-on.md)。
 如果还没有 Azure 订阅，可以在开始前[创建一个免费帐户](https://azure.microsoft.com/free/)。
 
 ## <a name="prerequisites"></a>必备条件
@@ -63,7 +63,7 @@ ms.locfileid: "88544734"
 
 4. 在搜索框中输入 AnswerHub  。 在结果列表中选择“AnswerHub”，然后选择“添加”   。
 
-     ![结果列表中的“AnswerHub”](common/search-new-app.png)
+    ![结果列表中的“AnswerHub”](common/search-new-app.png)
 
 ## <a name="set-up-and-test-azure-ad-single-sign-on"></a>设置和测试 Azure AD 单一登录
 
@@ -140,14 +140,14 @@ ms.locfileid: "88544734"
 
 4. 在“IDP 配置”选项卡上，完成以下步骤  ：
 
-    ![“用户和组”选项卡](./media/answerhub-tutorial/ic785172.png "SAML 设置")  
-  
+    ![屏幕截图显示 AnswerHub 页，其中“用户和组”选项卡处于选中状态。](./media/answerhub-tutorial/ic785172.png "SAML 设置")  
+
     a. 在“IDP 登录 URL”框中，粘贴从 Azure 门户复制的“登录 URL”   。
-  
+
     b. 在“IDP 注销 URL”框中，粘贴从 Azure 门户复制的“注销 URL”   。
 
     c. 在“IDP 名称标识符格式”框中，输入在 Azure 门户的“用户属性”部分中选定的“标识符”值    。
-  
+
     d. 选择“密钥和证书”  。
 
 5. 在“密钥和证书”部分中，完成以下步骤  ：
@@ -155,7 +155,7 @@ ms.locfileid: "88544734"
     ![密钥和证书部分](./media/answerhub-tutorial/ic785173.png "密钥和证书")  
 
     a. 在记事本中打开从 Azure 门户下载的 Base64 编码证书，复制其内容，然后粘贴到“IDP 公钥(x509 格式)”框中  。
-  
+
     b. 选择“保存”。 
 
 6. 在“IDP 配置”选项卡中，再次选择“保存”   。
@@ -179,7 +179,7 @@ ms.locfileid: "88544734"
     ![用户属性](common/user-properties.png)
 
     a. 在“姓名”  框中，输入 **BrittaSimon**。
-  
+
     b. 在“用户名”框中，输入“brittasimon\@<yourcompanydomain.extension>”。  
     例如，BrittaSimon@contoso.com 。
 
@@ -231,7 +231,7 @@ ms.locfileid: "88544734"
 
 4. 在左侧窗格的“管理用户”部分中，选择“创建或导入用户”，然后选择“用户和组”    。
 
-   ![“用户和组”选项卡](./media/answerhub-tutorial/ic785175.png "用户和组")
+    ![屏幕截图显示 AnswerHub 页，其中“用户和组”选项卡处于选中状态，并标注了“创建或导入用户”链接。](./media/answerhub-tutorial/ic785175.png "用户和组")
 
 5. 在相应的框中，输入要添加的有效 Azure AD 帐户的“电子邮件地址”、“用户名”和“密码”，然后选择“保存”     。
 
@@ -242,13 +242,12 @@ ms.locfileid: "88544734"
 
 在本部分中，使用访问面板测试 Azure AD 单一登录配置。
 
-在访问面板中选择“AnswerHub”磁贴时，应会自动登录到设置了 SSO 的 AnswerHub。 有关访问面板的详细信息，请参阅[访问面板简介](https://docs.microsoft.com/azure/active-directory/active-directory-saas-access-panel-introduction)。
+在访问面板中选择“AnswerHub”磁贴时，应会自动登录到设置了 SSO 的 AnswerHub。 有关访问面板的详细信息，请参阅[访问面板简介](../user-help/my-apps-portal-end-user-access.md)。
 
 ## <a name="additional-resources"></a>其他资源
 
-- [用于将 SaaS 应用程序与 Azure Active Directory 集成的教程](https://docs.microsoft.com/azure/active-directory/active-directory-saas-tutorial-list)
+- [用于将 SaaS 应用程序与 Azure Active Directory 集成的教程](./tutorial-list.md)
 
-- [Azure Active Directory 的应用程序访问与单一登录是什么？](https://docs.microsoft.com/azure/active-directory/active-directory-appssoaccess-whatis)
+- [Azure Active Directory 的应用程序访问与单一登录是什么？](../manage-apps/what-is-single-sign-on.md)
 
-- [什么是 Azure Active Directory 中的条件访问？](https://docs.microsoft.com/azure/active-directory/conditional-access/overview)
-
+- [什么是 Azure Active Directory 中的条件访问？](../conditional-access/overview.md)

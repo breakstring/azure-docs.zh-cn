@@ -14,12 +14,12 @@ ms.date: 01/07/2019
 ms.author: curtand
 ms.custom: pim
 ms.collection: M365-identity-device-management
-ms.openlocfilehash: b0a5a20498ccd0a133c6e02d366af690acf2665e
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 8481c562ecbab1f26e877e55a5a9454695ddf4c0
+ms.sourcegitcommit: 28c5fdc3828316f45f7c20fc4de4b2c05a1c5548
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "84742260"
+ms.lasthandoff: 10/22/2020
+ms.locfileid: "92370825"
 ---
 # <a name="view-audit-history-for-azure-ad-roles-in-privileged-identity-management"></a>在 Privileged Identity Management 中查看 Azure AD 角色的审核历史记录
 
@@ -29,10 +29,10 @@ ms.locfileid: "84742260"
 
 从 2019 年 11 月开始，Privileged Identity Management 的 Azure AD 角色部分将更新为与 Azure 资源角色的体验相匹配的新版本。 这将创建附加功能以及[对现有 API 的更改](azure-ad-roles-features.md#api-changes)。 在推出新版本时，本文中遵循的过程取决于当前拥有的 Privileged Identity Management 版本。 按照本部分中的步骤确定所拥有的 Privileged Identity Management 的版本。 了解 Privileged Identity Management 版本之后，可以选择本文中与该版本匹配的过程。
 
-1. 以具有[特权角色管理员](../users-groups-roles/directory-assign-admin-roles.md#privileged-role-administrator)角色的用户身份登录到 [Azure 门户](https://portal.azure.com/)。
+1. 以具有[特权角色管理员](../roles/permissions-reference.md#privileged-role-administrator)角色的用户身份登录到 [Azure 门户](https://portal.azure.com/)。
 1. 打开“Azure AD Privileged Identity Management”。  如果在概述页的顶部有横幅，请按照本文“新版本”选项卡中的说明进行操作  。 否则，请按照“先前版本”选项卡中的说明操作  。
 
-    [![Azure AD 角色新版本](media/pim-how-to-use-audit-log/directory-roles-audit-history.png "选择你的版本对应的选项卡")](media/pim-how-to-use-audit-log/directory-roles-audit-history.png)
+    [![显示 "Azure AD 角色-目录角色审核历史记录" 页的屏幕截图。](media/pim-how-to-use-audit-log/directory-roles-audit-history.png "选择你的版本对应的选项卡")](media/pim-how-to-use-audit-log/directory-roles-audit-history.png)
 
 # <a name="new-version"></a>[新版本](#tab/new)
 
@@ -74,7 +74,7 @@ ms.locfileid: "84742260"
 
 按以下步骤查看 Azure AD 角色的审核历史记录。
 
-1. 使用[特权角色管理员](../users-groups-roles/directory-assign-admin-roles.md#privileged-role-administrator)角色成员用户的身份登录到 [Azure 门户](https://portal.azure.com/)。
+1. 使用[特权角色管理员](../roles/permissions-reference.md#privileged-role-administrator)角色成员用户的身份登录到 [Azure 门户](https://portal.azure.com/)。
 
 1. 打开“Azure AD Privileged Identity Management”。 
 
@@ -123,11 +123,11 @@ ms.locfileid: "84742260"
     - 请在“状态原因”  列中查看审核事件的原因。
     - 在“将成员添加到角色请求已批准”事件的“发起人(参与者)”  列中查看审批者。
 
-    [![Azure AD 角色新版本](media/pim-how-to-use-audit-log/filter-audit-logs.png "筛选 PIM 服务的审核日志")](media/pim-how-to-use-audit-log/filter-audit-logs.png)
+    [![屏幕截图显示 "审核日志" 页，其中显示了 "已通过 (执行组件启动") 菜单，并选择了 "PIM"。](media/pim-how-to-use-audit-log/filter-audit-logs.png "筛选 PIM 服务的审核日志")](media/pim-how-to-use-audit-log/filter-audit-logs.png)
 
 1. 选择一个审核日志事件，以在“详细信息”窗格的“活动”选项卡上查看票证编号。
   
-    [![Azure AD 角色新版本](media/pim-how-to-use-audit-log/audit-event-ticket-number.png "检查审核事件的票证编号")](media/pim-how-to-use-audit-log/audit-event-ticket-number.png)
+    [![屏幕截图显示 "审核日志" 页，其中的票证号在 "详细信息" 窗格中突出显示。](media/pim-how-to-use-audit-log/audit-event-ticket-number.png "检查审核事件的票证编号")](media/pim-how-to-use-audit-log/audit-event-ticket-number.png)
 
 1. 可以在审核事件的“详细信息”窗格的“目标”选项卡上查看请求者（激活角色的人员）。 Azure AD 角色有两种目标类型：
 

@@ -7,12 +7,12 @@ ms.service: firewall
 ms.date: 08/29/2019
 ms.author: victorh
 ms.topic: how-to
-ms.openlocfilehash: 3087b01e849aaa4d1f3c2b6b4060cf202927f55f
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 4d611a6d575fbc94a555006882f77e5a31753164
+ms.sourcegitcommit: 8dd8d2caeb38236f79fe5bfc6909cb1a8b609f4a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "85602612"
+ms.lasthandoff: 01/08/2021
+ms.locfileid: "98051422"
 ---
 # <a name="deploy-and-configure-azure-firewall-using-azure-cli"></a>使用 Azure CLI 部署和配置 Azure 防火墙
 
@@ -25,7 +25,7 @@ ms.locfileid: "85602612"
 
 将网络流量路由到用作子网默认网关的防火墙时，网络流量受到配置的防火墙规则的控制。
 
-在本文中，你将创建一个包含三个子网的简化 VNet，以便于部署。 对于生产部署，我们建议使用[中心辐射模型](https://docs.microsoft.com/azure/architecture/reference-architectures/hybrid-networking/hub-spoke)。 防火墙位于其自身的 VNet 中。 工作负荷服务器在包含一个或多个子网的同一区域中的对等 VNet 内。
+在本文中，你将创建一个包含三个子网的简化 VNet，以便于部署。 对于生产部署，我们建议使用[中心辐射模型](/azure/architecture/reference-architectures/hybrid-networking/hub-spoke)。 防火墙位于其自身的 VNet 中。 工作负荷服务器在包含一个或多个子网的同一区域中的对等 VNet 内。
 
 * **AzureFirewallSubnet** - 防火墙在此子网中。
 * **Workload-SN** - 工作负荷服务器在此子网中。 此子网的网络流量通过防火墙。
@@ -35,32 +35,20 @@ ms.locfileid: "85602612"
 
 在本文中，学习如何：
 
-> [!div class="checklist"]
-> * 设置测试网络环境
-> * 部署防火墙
-> * 创建默认路由
-> * 配置一个应用程序规则以允许访问 www.google.com
-> * 配置网络规则，以允许访问外部 DNS 服务器
-> * 测试防火墙
+* 设置测试网络环境
+* 部署防火墙
+* 创建默认路由
+* 配置一个应用程序规则以允许访问 www.google.com
+* 配置网络规则，以允许访问外部 DNS 服务器
+* 测试防火墙
 
 如果你愿意，可以使用 [Azure 门户](tutorial-firewall-deploy-portal.md)或 [Azure PowerShell](deploy-ps.md) 完成此过程。
 
-如果没有 Azure 订阅，请在开始之前创建一个[免费帐户](https://azure.microsoft.com/free/?WT.mc_id=A261C142F)。
+[!INCLUDE [quickstarts-free-trial-note](../../includes/quickstarts-free-trial-note.md)]
 
-[!INCLUDE [cloud-shell-try-it.md](../../includes/cloud-shell-try-it.md)]
+[!INCLUDE [azure-cli-prepare-your-environment.md](../../includes/azure-cli-prepare-your-environment.md)]
 
-## <a name="prerequisites"></a>先决条件
-
-### <a name="azure-cli"></a>Azure CLI
-
-如果选择在本地安装并使用 CLI，请运行 Azure CLI 2.0.4 或更高版本。 若要查找版本，请运行**az--version**。 有关安装或升级的信息，请参阅[安装 Azure CLI]( /cli/azure/install-azure-cli)。
-
-安装 Azure 防火墙扩展：
-
-```azurecli-interactive
-az extension add -n azure-firewall
-```
-
+- 本文需要 Azure CLI 版本 2.0.4 或更高版本。 如果使用 Azure Cloud Shell，则最新版本已安装。
 
 ## <a name="set-up-the-network"></a>设置网络
 
@@ -79,7 +67,7 @@ az group create --name Test-FW-RG --location eastus
 此虚拟网络有三个子网。
 
 > [!NOTE]
-> AzureFirewallSubnet 子网的大小为 /26。 有关子网大小的详细信息，请参阅 [Azure 防火墙常见问题解答](firewall-faq.md#why-does-azure-firewall-need-a-26-subnet-size)。
+> AzureFirewallSubnet 子网的大小为 /26。 有关子网大小的详细信息，请参阅 [Azure 防火墙常见问题解答](firewall-faq.yml#why-does-azure-firewall-need-a--26-subnet-size)。
 
 ```azurecli-interactive
 az network vnet create \
@@ -293,7 +281,7 @@ az network firewall network-rule create \
 
 ## <a name="clean-up-resources"></a>清理资源
 
-你可以保留防火墙资源用于下一教程，如果不再需要，请删除**测试 FW-RG**资源组以删除所有与防火墙相关的资源：
+可以将防火墙资源保留到下一教程使用。不再需要时，请删除 **Test-FW-RG** 资源组，以删除与防火墙相关的所有资源：
 
 ```azurecli-interactive
 az group delete \
@@ -302,4 +290,4 @@ az group delete \
 
 ## <a name="next-steps"></a>后续步骤
 
-* [教程：监视 Azure 防火墙日志](./tutorial-diagnostics.md)
+* [教程：监视 Azure 防火墙日志](./firewall-diagnostics.md)

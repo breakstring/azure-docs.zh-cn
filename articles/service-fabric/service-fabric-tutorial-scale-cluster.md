@@ -3,13 +3,13 @@ title: 缩放 Azure 中的 Service Fabric 群集
 description: 本教程介绍如何横向扩展和缩小 Azure 中的 Service Fabric 群集，以及如何清理剩余资源。
 ms.topic: tutorial
 ms.date: 07/22/2019
-ms.custom: mvc
-ms.openlocfilehash: d9699103f5e13301cce408d2e54f0e15780e0a35
-ms.sourcegitcommit: 6fc156ceedd0fbbb2eec1e9f5e3c6d0915f65b8e
+ms.custom: mvc, devx-track-azurecli
+ms.openlocfilehash: cdc7ba8d6c83ae72ffb8f1afae3954b3a46dc6ec
+ms.sourcegitcommit: a055089dd6195fde2555b27a84ae052b668a18c7
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/21/2020
-ms.locfileid: "88716871"
+ms.lasthandoff: 01/26/2021
+ms.locfileid: "98787988"
 ---
 # <a name="tutorial-scale-a-service-fabric-cluster-in-azure"></a>教程：缩放 Azure 中的 Service Fabric 群集
 
@@ -94,7 +94,7 @@ New-AzResourceGroupDeployment -ResourceGroupName sfclustertutorialgroup -Templat
 ```
 或者运行以下 Azure CLI 命令：
 ```azurecli
-az group deployment create --resource-group sfclustertutorialgroup --template-file c:\temp\template.json --parameters c:\temp\parameters.json
+az deployment group create --resource-group sfclustertutorialgroup --template-file c:\temp\template.json --parameters c:\temp\parameters.json
 ```
 
 ## <a name="add-a-node-type-to-the-cluster"></a>向群集添加节点类型
@@ -800,7 +800,7 @@ New-AzResourceGroupDeployment -ResourceGroupName sfclustertutorialgroup -Templat
 ```
 或者运行以下 Azure CLI 命令：
 ```azurecli
-az group deployment create --resource-group sfclustertutorialgroup --template-file c:\temp\template.json --parameters c:\temp\parameters.json
+az deployment group create --resource-group sfclustertutorialgroup --template-file c:\temp\template.json --parameters c:\temp\parameters.json
 ```
 
 ## <a name="remove-a-node-type-from-the-cluster"></a>从群集中删除节点类型
@@ -809,7 +809,7 @@ az group deployment create --resource-group sfclustertutorialgroup --template-fi
 > [!WARNING]
 > 建议不要频繁使用 Remove-AzServiceFabricNodeType 从生产群集中删除节点类型。 这是一个非常危险的命令，因为它会删除节点类型后的虚拟机规模集资源。 
 
-若要删除节点类型，请运行 [Remove-AzServiceFabricNodeType](/powershell/module/az.servicefabric/remove-azservicefabricnodetype) cmdlet。  节点类型必须为银级或金级[持久性级别][durability]，此 cmdlet 会删除与节点类型关联的规模集，并需要一些时间来完成操作。  然后在每个要删除的节点上运行 [Remove-servicefabricnodestate](/powershell/module/servicefabric/remove-servicefabricnodestate?view=azureservicefabricps) cmdlet，这会删除节点状态并从群集删除节点。 如果节点上有服务，则首先将服务移出到另一个节点。 如果群集管理器找不到副本/服务的节点，则会延迟/阻止该操作。
+若要删除节点类型，请运行 [Remove-AzServiceFabricNodeType](/powershell/module/az.servicefabric/remove-azservicefabricnodetype) cmdlet。  节点类型必须为银级或金级[持久性级别][durability]，此 cmdlet 会删除与节点类型关联的规模集，并需要一些时间来完成操作。  然后在每个要删除的节点上运行 [Remove-servicefabricnodestate](/powershell/module/servicefabric/remove-servicefabricnodestate) cmdlet，这会删除节点状态并从群集删除节点。 如果节点上有服务，则首先将服务移出到另一个节点。 如果群集管理器找不到副本/服务的节点，则会延迟/阻止该操作。
 
 ```powershell
 $groupname = "sfclustertutorialgroup"
@@ -856,7 +856,7 @@ New-AzResourceGroupDeployment -ResourceGroupName sfclustertutorialgroup -Templat
 ```
 或者运行以下 Azure CLI 命令：
 ```azurecli
-az group deployment create --resource-group sfclustertutorialgroup --template-file c:\temp\template.json --parameters c:\temp\parameters.json
+az deployment group create --resource-group sfclustertutorialgroup --template-file c:\temp\template.json --parameters c:\temp\parameters.json
 ```
 
 ## <a name="next-steps"></a>后续步骤

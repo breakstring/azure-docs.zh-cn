@@ -1,19 +1,19 @@
 ---
 title: 快速入门：创建服务器 - Azure PowerShell - Azure Database for MySQL
 description: 本快速入门介绍如何使用 PowerShell 在 Azure 资源组中创建 Azure Database for MySQL 服务器。
-author: ajlam
-ms.author: andrela
+author: savjani
+ms.author: pariks
 ms.service: mysql
 ms.devlang: azurepowershell
 ms.topic: quickstart
 ms.date: 04/28/2020
 ms.custom: mvc, devx-track-azurepowershell
-ms.openlocfilehash: f32f6c4366aac1a39dbc1bc4af3b945e259b3280
-ms.sourcegitcommit: 8def3249f2c216d7b9d96b154eb096640221b6b9
+ms.openlocfilehash: d12d447acb3b6bf2b6f84e9768e9f063a9a36b03
+ms.sourcegitcommit: 6ab718e1be2767db2605eeebe974ee9e2c07022b
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/03/2020
-ms.locfileid: "87543531"
+ms.lasthandoff: 11/12/2020
+ms.locfileid: "94542297"
 ---
 # <a name="quickstart-create-an-azure-database-for-mysql-server-using-powershell"></a>快速入门：使用 PowerShell 创建 Azure Database for MySQL 服务器
 
@@ -45,7 +45,7 @@ Set-AzContext -SubscriptionId 00000000-0000-0000-0000-000000000000
 
 ## <a name="create-a-resource-group"></a>创建资源组
 
-使用 [New-AzResourceGroup](/powershell/module/az.resources/new-azresourcegroup) cmdlet 创建 [Azure 资源组](https://docs.microsoft.com/azure/azure-resource-manager/resource-group-overview)。 资源组是在其中以组的形式部署和管理 Azure 资源的逻辑容器。
+使用 [New-AzResourceGroup](/powershell/module/az.resources/new-azresourcegroup) cmdlet 创建 [Azure 资源组](../azure-resource-manager/management/overview.md)。 资源组是在其中以组的形式部署和管理 Azure 资源的逻辑容器。
 
 以下示例在“美国西部”区域中创建名为 myresourcegroup  的资源组。
 
@@ -201,7 +201,7 @@ mydemoserver.mysql.database.azure.com       myadmin
 
 1. 在“设置新连接”对话框的“参数”选项卡上，输入以下信息：
 
-   ![设置新连接](./media/quickstart-create-mysql-server-database-using-azure-powershell/setup-new-connection.png)
+   :::image type="content" source="./media/quickstart-create-mysql-server-database-using-azure-powershell/setup-new-connection.png" alt-text="设置新连接":::
 
     |    **设置**    |           建议的值           |                      **说明**                       |
     | ----------------- | --------------------------------------- | ---------------------------------------------------------- |
@@ -237,4 +237,4 @@ Remove-AzMySqlServer -Name mydemoserver -ResourceGroupName myresourcegroup
 ## <a name="next-steps"></a>后续步骤
 
 > [!div class="nextstepaction"]
-> [使用 PowerShell 生成连接字符串 - Azure Database for MySQL](connect-powershell.md)
+> [使用 PowerShell 设计 Azure Database for MySQL](tutorial-design-database-using-powershell.md)

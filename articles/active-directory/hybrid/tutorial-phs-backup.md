@@ -12,12 +12,12 @@ ms.date: 04/25/2019
 ms.subservice: hybrid
 ms.author: billmath
 ms.collection: M365-identity-device-management
-ms.openlocfilehash: 3e5ad7badfa44a006fd7e71d3b0e42ee95ac698d
-ms.sourcegitcommit: 0947111b263015136bca0e6ec5a8c570b3f700ff
+ms.openlocfilehash: 3d9f59906c566d80344891c0796a85b0a4972e68
+ms.sourcegitcommit: 32c521a2ef396d121e71ba682e098092ac673b30
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/24/2020
-ms.locfileid: "64919009"
+ms.lasthandoff: 09/25/2020
+ms.locfileid: "91313087"
 ---
 # <a name="tutorial--setting-up-phs-as-backup-for-ad-fs-in-azure-ad-connect"></a>教程：在 Azure AD Connect 中将 PHS 设置为 AD FS 的后备
 
@@ -33,7 +33,7 @@ ms.locfileid: "64919009"
 本教程以[教程：将单个 AD 林环境与云联合起来](tutorial-federation.md)为基础，在尝试本教程之前，必须完成此教程。  如果尚未完成，请在尝试本文档中的步骤之前完成该教程。
 
 >[!IMPORTANT]
->在切换到 PHS 之前，应创建 AD FS 环境的备份。  可使用 [AD FS 快速还原工具](https://docs.microsoft.com/windows-server/identity/ad-fs/operations/ad-fs-rapid-restore-tool#how-to-use-the-tool)完成此操作。
+>在切换到 PHS 之前，应创建 AD FS 环境的备份。  可使用 [AD FS 快速还原工具](/windows-server/identity/ad-fs/operations/ad-fs-rapid-restore-tool#how-to-use-the-tool)完成此操作。
 
 ## <a name="enable-phs-in-azure-ad-connect"></a>在 Azure AD Connect 中启用 PHS
 我们已经有一个使用联合身份验证的 Azure AD Connect 环境，那么第一步就是打开密码哈希同步，并允许 Azure AD Connect 同步哈希。
@@ -74,7 +74,7 @@ ms.locfileid: "64919009"
 
 1. 浏览到 [https://myapps.microsoft.com](https://myapps.microsoft.com)
 2. 使用在我们的新租户中创建的用户帐户登录。  需要使用以下格式登录：(user@domain.onmicrosoft.com)。 使用用户用于在本地登录的相同密码。</br>
-   ![验证](media/tutorial-password-hash-sync/verify1.png)</br>
+   ![测试登录时显示成功消息的屏幕截图。 ](media/tutorial-password-hash-sync/verify1.png)</br>
 
 ## <a name="switch-back-to-federation"></a>切换回联合身份验证
 现在，我们将展示如何切换回联合身份验证。  为此，请执行以下步骤：
@@ -91,7 +91,7 @@ ms.locfileid: "64919009"
 10. 配置完成后，单击“下一步”  。
 ![配置](media/tutorial-phs-backup/backup4.png)</br>
 11. 在“验证联合身份验证连接性”屏幕上，单击“验证”。    可能需要配置 DNS 记录（添加 A 和 AAAA 记录），然后此操作才能成功完成。
-![验证](media/tutorial-phs-backup/backup5.png)</br>
+![显示“验证联合身份验证连接”屏幕和“验证”按钮的屏幕截图。](media/tutorial-phs-backup/backup5.png)</br>
 12. 单击“退出”  。
 
 ## <a name="reset-the-ad-fs-and-azure-trust"></a>重置 AD FS 和 Azure 信任
@@ -106,7 +106,7 @@ ms.locfileid: "64919009"
 6.  在“连接到 AD FS”屏幕上，输入 contoso\管理员用户名和密码，然后单击“下一步”  。 
 7.  在“证书”屏幕上，单击“下一步”。  
 
-## <a name="test-signing-in-with-one-of-our-users"></a>使用我们的某位用户测试登录
+## <a name="test-signing-in-with-a-user"></a>使用用户测试登录
 
 1.  浏览到 [https://myapps.microsoft.com](https://myapps.microsoft.com)
 2. 使用在我们的新租户中创建的用户帐户登录。  需要使用以下格式登录：(user@domain.onmicrosoft.com)。 使用用户用于在本地登录的相同密码。

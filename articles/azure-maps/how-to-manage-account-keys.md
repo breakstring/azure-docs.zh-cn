@@ -4,22 +4,22 @@ description: 了解如何使用 Azure 门户管理 Azure Maps 帐户。 请参�
 author: anastasia-ms
 ms.author: v-stharr
 ms.date: 01/27/2020
-ms.topic: conceptual
+ms.topic: how-to
 ms.service: azure-maps
 services: azure-maps
 manager: timlt
-ms.openlocfilehash: 5717e48683234e55638393d232d931bc50cb59b1
-ms.sourcegitcommit: bfeae16fa5db56c1ec1fe75e0597d8194522b396
+ms.openlocfilehash: c618e8193bed1f35cbbe884d5725c4ecfb25dd75
+ms.sourcegitcommit: a43a59e44c14d349d597c3d2fd2bc779989c71d7
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/10/2020
-ms.locfileid: "88037314"
+ms.lasthandoff: 11/25/2020
+ms.locfileid: "96013082"
 ---
 # <a name="manage-your-azure-maps-account"></a>管理 Azure Maps 帐户
 
 可以通过 Azure 门户管理 Azure Maps 帐户。 获得帐户后，可以在你的网站或移动应用程序中实现 API。
 
-如果没有 Azure 订阅，请在开始之前创建一个[免费帐户](https://azure.microsoft.com/free/?WT.mc_id=A261C142F)。
+如果没有 Azure 订阅，请在开始之前先创建一个[免费帐户](https://azure.microsoft.com/free/?WT.mc_id=A261C142F)。
 
 ## <a name="create-a-new-account"></a>创建新帐户
 
@@ -27,7 +27,7 @@ ms.locfileid: "88037314"
 
 2. 在 Azure 门户的左上角，选择“创建资源”。
 
-3. 搜索并选择“Maps”****。 然后选择“创建”。
+3. 搜索并选择“Maps”。 然后选择“创建”  。
 
 4. 输入新帐户的信息。
 
@@ -35,7 +35,7 @@ ms.locfileid: "88037314"
 
 ## <a name="delete-an-account"></a>删除帐户
 
-可以通过 Azure 门户删除帐户。 导航到帐户概览页并选择“删除”。****
+可以通过 Azure 门户删除帐户。 导航到帐户概览页并选择“删除”。
 
 [![删除 Azure 门户中的 Azure Maps 帐户](./media/how-to-manage-account-keys/account-delete-portal.png)](./media/how-to-manage-account-keys/account-delete-portal.png#lightbox)
 

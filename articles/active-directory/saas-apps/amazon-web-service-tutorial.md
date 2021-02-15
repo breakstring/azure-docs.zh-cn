@@ -9,14 +9,14 @@ ms.service: active-directory
 ms.subservice: saas-app-tutorial
 ms.workload: identity
 ms.topic: tutorial
-ms.date: 07/14/2020
+ms.date: 12/08/2020
 ms.author: jeedes
-ms.openlocfilehash: 7377c6ea92ea53ca14525938e7522448afac541c
-ms.sourcegitcommit: 023d10b4127f50f301995d44f2b4499cbcffb8fc
+ms.openlocfilehash: 286dc20ba70c78f8248f611abd75e0acc303c068
+ms.sourcegitcommit: 78ecfbc831405e8d0f932c9aafcdf59589f81978
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/18/2020
-ms.locfileid: "88548346"
+ms.lasthandoff: 01/23/2021
+ms.locfileid: "98736182"
 ---
 # <a name="tutorial-azure-active-directory-single-sign-on-sso-integration-with-amazon-web-services-aws"></a>教程：Azure Active Directory 单一登录 (SSO) 与 Amazon Web Services (AWS) 集成
 
@@ -26,7 +26,8 @@ ms.locfileid: "88548346"
 * 让用户可以使用其 Azure AD 帐户自动登录到 Amazon Web Services (AWS)。
 * 在一个中心位置（Azure 门户）管理帐户。
 
-若要了解有关 SaaS 应用与 Azure AD 集成的详细信息，请参阅 [Azure Active Directory 的应用程序访问与单一登录是什么](https://docs.microsoft.com/azure/active-directory/active-directory-appssoaccess-whatis)。
+> [!Note]
+> Azure AD 不支持与 AWS SSO 的单一登录集成，后者与 AWS 是不同的产品。 尽管 AWS 在[这里](https://docs.aws.amazon.com/singlesignon/latest/userguide/azure-ad-idp.html)提到了这一点，但 Azure AD 建议客户改用 AWS IAM 集成，这样便可以在单个帐户上使用条件访问策略来实现更好的安全控制，并可以更好地治理这些应用程序。
 
 ![Azure AD 和 AWS 的关系示意图](./media/amazon-web-service-tutorial/tutorial_amazonwebservices_image.png)
 
@@ -61,7 +62,6 @@ ms.locfileid: "88548346"
 本教程在测试环境中配置并测试 Azure AD SSO。
 
 * Amazon Web Services (AWS) 支持 **SP 和 IDP** 发起的 SSO
-* 配置 Amazon Web Services (AWS) 后，就可以强制实施会话控制，从而实时保护组织的敏感数据免于外泄和渗透。 会话控制从条件访问扩展而来。 [了解如何通过 Microsoft Cloud App Security 强制实施会话控制](https://docs.microsoft.com/cloud-app-security/proxy-deployment-aad)
 
 > [!NOTE]
 > 此应用程序的标识符是一个固定字符串值，因此只能在一个租户中配置一个实例。
@@ -70,7 +70,7 @@ ms.locfileid: "88548346"
 
 要配置 Amazon Web Services (AWS) 与 Azure AD 的集成，需要从库将 Amazon Web Services (AWS) 添加到托管 SaaS 应用列表。
 
-1. 使用工作帐户、学校帐户或者个人 Microsoft 帐户登录到 [Azure 门户](https://portal.azure.com)。
+1. 使用工作帐户、学校帐户或者个人 Microsoft 帐户登录到 Azure 门户。
 1. 在 Azure 门户中，搜索并选择“Azure Active Directory”。
 1. 在 Azure Active Directory 概述菜单中，选择“企业应用程序” > “所有应用程序” 。
 1. 选择“新建应用程序”以添加应用程序。
@@ -81,7 +81,7 @@ ms.locfileid: "88548346"
 
 使用名为 **B.Simon** 的测试用户配置和测试 Amazon Web Services (AWS) 的 Azure AD SSO。 若要使 SSO 正常工作，需要在 Azure AD 用户与 Amazon Web Services (AWS) 中的相关用户之间建立链接关系。
 
-若要配置和测试 Amazon Web Services (AWS) 的 Azure AD SSO，需要完成以下构建基块：
+若要配置和测试 Amazon Web Services (AWS) 的 Azure AD SSO，请执行以下步骤：
 
 1. **[配置 Azure AD SSO](#configure-azure-ad-sso)** - 使用户能够使用此功能。
     1. **[创建 Azure AD 测试用户](#create-an-azure-ad-test-user)** - 使用 B. Simon 测试 Azure AD 单一登录。
@@ -95,7 +95,7 @@ ms.locfileid: "88548346"
 
 按照下列步骤在 Azure 门户中启用 Azure AD SSO。
 
-1. 在 [Azure 门户](https://portal.azure.com/)的“Amazon Web Services (AWS)”应用程序集成页上，找到“管理”部分并选择“单一登录”。  
+1. 在 Azure 门户的“Amazon Web Services (AWS)”应用程序集成页上，找到“管理”部分并选择“单一登录”  。
 1. 在“选择单一登录方法”页上选择“SAML” 。
 1. 在“使用 SAML 设置单一登录”页上，单击“基本 SAML 配置”的编辑/笔形图标以编辑设置 。
 
@@ -116,8 +116,11 @@ ms.locfileid: "88548346"
     | 名称  | 源属性  | 命名空间 |
     | --------------- | --------------- | --------------- |
     | RoleSessionName | user.userprincipalname | `https://aws.amazon.com/SAML/Attributes` |
-    | 角色            | user.assignedroles |  `https://aws.amazon.com/SAML/Attributes` |
-    | SessionDuration             | “提供介于 900 秒（15 分钟）到 43200 秒（12 小时）之间的值” |  `https://aws.amazon.com/SAML/Attributes` |
+    | 角色 | user.assignedroles |  `https://aws.amazon.com/SAML/Attributes` |
+    | SessionDuration | “提供介于 900 秒（15 分钟）到 43200 秒（12 小时）之间的值” |  `https://aws.amazon.com/SAML/Attributes` |
+
+    > [!NOTE]
+    > AWS 需要分配给应用程序的用户的角色。 请在 Azure AD 中设置这些角色，以便可为用户分配相应的角色。 若要了解如何在 Azure AD 中配置角色，请参阅[此文](../develop/howto-add-app-roles-in-azure-ad-apps.md#app-roles-ui--preview)
 
 1. 在“设置 SAML 单一登录”页的“SAML 签名证书”（步骤 3）对话框中，选择“添加证书”  。
 
@@ -152,20 +155,13 @@ ms.locfileid: "88548346"
 
 在本部分中，将通过向 B.Simon 授予对 Amazon Web Services (AWS) 的访问权限，使其能够使用 Azure 单一登录。
 
-1. 在 Azure 门户中，搜索并选择“Azure Active Directory”。
-1. 在 Azure Active Directory 概述菜单中，选择“企业应用程序” > “所有应用程序” 。
+1. 在 Azure 门户中，依次选择“企业应用程序”、“所有应用程序”。 
 1. 在应用程序列表中，选择“Amazon Web Services (AWS)”。
 1. 在应用的概述页中，找到“管理”部分，选择“用户和组” 。
-
-   ![“用户和组”链接](common/users-groups-blade.png)
-
 1. 选择“添加用户”，然后在“添加分配”对话框中选择“用户和组”。
-
-    ![“添加用户”链接](common/add-assign-user.png)
-
 1. 在“用户和组”对话框中，从“用户”列表中选择“B.Simon”，然后单击屏幕底部的“选择”按钮。
-1. 如果在 SAML 断言中需要任何角色值，请在“选择角色”对话框的列表中为用户选择合适的角色，然后单击屏幕底部的“选择”按钮。
-1. 在“添加分配”对话框中，单击“分配”按钮。 
+1. 如果你希望将某角色分配给用户，可以从“选择角色”下拉列表中选择该角色。 如果尚未为此应用设置任何角色，你将看到选择了“默认访问权限”角色。
+1. 在“添加分配”对话框中，单击“分配”按钮。
 
 ## <a name="configure-amazon-web-services-aws-sso"></a>配置 Amazon Web Services (AWS) SSO
 
@@ -191,7 +187,7 @@ ms.locfileid: "88548346"
 
     b. 在“提供者名称”中键入提供者名称（例如：*WAAD*）。
 
-    c. 若要上传从 Azure 门户下载的**元数据文件**，请选择“选择文件”。
+    c. 若要上传从 Azure 门户下载的 **元数据文件**，请选择“选择文件”。
 
     d. 选择“下一步”。
 
@@ -304,7 +300,7 @@ ms.locfileid: "88548346"
 
 18. 为此用户创建新策略。
 
-    ![“添加用户”的屏幕截图](./media/amazon-web-service-tutorial/adduser2.png)
+    ![显示可在其中为用户创建策略的“添加用户”页的屏幕截图。](./media/amazon-web-service-tutorial/adduser2.png)
 
     a. 选择“直接附加现有策略”。
 
@@ -322,7 +318,7 @@ ms.locfileid: "88548346"
 
 20. 下载用户的用户凭据。
 
-    ![“添加用户”的屏幕截图](./media/amazon-web-service-tutorial/adduser4.png)
+    ![显示具有获取用户凭据的“下载 csv 文件”按钮的“添加用户”页的屏幕截图。](./media/amazon-web-service-tutorial/adduser4.png)
 
     a. 复制用户的“访问密钥 ID”和“密码访问密钥”。
 
@@ -364,37 +360,44 @@ ms.locfileid: "88548346"
 
 ## <a name="test-sso"></a>测试 SSO
 
-在本部分中，使用访问面板测试 Azure AD 单一登录配置。
+在本部分，你将使用以下选项测试 Azure AD 单一登录配置。 
 
-单击访问面板中的 Amazon Web Services (AWS) 磁贴时，应会自动登录到为其设置了 SSO 的 Amazon Web Services (AWS)。 有关访问面板的详细信息，请参阅 [Introduction to the Access Panel](https://docs.microsoft.com/azure/active-directory/active-directory-saas-access-panel-introduction)（访问面板简介）。
+#### <a name="sp-initiated"></a>SP 启动的：
+
+* 在 Azure 门户中单击“测试此应用程序”。 这会重定向到 Amazon Web Services (AWS) 登录 URL，可以从那里启动登录流。  
+
+* 直接转到 Amazon Web Services (AWS) 登录 URL，并从那里启动登录流。
+
+#### <a name="idp-initiated"></a>IDP 启动的：
+
+* 在 Azure 门户中单击“测试此应用程序”后，你应该会自动登录到为其设置了 SSO 的 Amazon Web Services (AWS) 
+
+还可以使用 Microsoft 访问面板在任何模式下测试此应用程序。 在点击访问面板中的 Amazon Web Services (AWS) 磁贴时，如果是在 SP 模式下配置的，会重定向到应用程序登录页来启动登录流；如果是在 IDP 模式下配置的，则应会自动登录到为其设置了 SSO 的 Amazon Web Services (AWS)。 有关访问面板的详细信息，请参阅 [Introduction to the Access Panel](../user-help/my-apps-portal-end-user-access.md)（访问面板简介）。
+
 
 ## <a name="known-issues"></a>已知问题
 
  * 在“预配”部分，“映射”子部分会显示“正在加载...”消息，但从不显示属性映射。  目前支持的唯一预配工作流是将角色从 AWS 导入到 Azure AD 中，以便在用户或组分配过程中对其进行选择。 上述属性映射是预先确定的，不可配置。
 
- * “预配”部分只支持一次为一个 AWS 租户输入一组凭据。 所有导入的角色都写入到 AWS 租户的 Azure AD [`servicePrincipal` 对象](https://docs.microsoft.com/graph/api/resources/serviceprincipal?view=graph-rest-beta)的 `appRoles` 属性。
+ * “预配”部分只支持一次为一个 AWS 租户输入一组凭据。 所有导入的角色都写入到 AWS 租户的 Azure AD [`servicePrincipal` 对象](/graph/api/resources/serviceprincipal?view=graph-rest-beta)的 `appRoles` 属性。
 
    可将多个 AWS 租户（由 `servicePrincipals` 表示）从库添加到 Azure AD 进行预配。 但存在一个已知的问题：无法自动将所有导入的角色从用于预配的多个 AWS `servicePrincipals` 写入到用于 SSO 的单个 `servicePrincipal` 中。
 
-   若要解决此问题，可以使用 [Microsoft Graph API](https://docs.microsoft.com/graph/api/resources/serviceprincipal?view=graph-rest-beta) 来提取所有已导入每个 AWS `servicePrincipal`（已在其中配置预配）中的 `appRoles`。 然后，可将这些角色字符串添加到 AWS `servicePrincipal`（已在其中配置 SSO）。
+   若要解决此问题，可以使用 [Microsoft Graph API](/graph/api/resources/serviceprincipal?view=graph-rest-beta) 来提取所有已导入每个 AWS `servicePrincipal`（已在其中配置预配）中的 `appRoles`。 然后，可将这些角色字符串添加到 AWS `servicePrincipal`（已在其中配置 SSO）。
 
 * 角色必须满足以下要求才有资格从 AWS 导入 Azure AD：
 
   * 角色必须仅有一个在 AWS 中定义的 saml-provider
+  * 角色的 ARN（Amazon 资源名称）和关联的 saml-provider 的 ARN 的组合长度必须小于 240 个字符。
 
-## <a name="additional-resources"></a>其他资源
+## <a name="change-log"></a>更改日志
 
-- [有关如何将 SaaS 应用与 Azure Active Directory 集成的教程列表](https://docs.microsoft.com/azure/active-directory/active-directory-saas-tutorial-list)
+* 2020/01/12 - 角色长度限制从 119 个字符增加到 239 个字符。 
 
-- [Azure Active Directory 的应用程序访问与单一登录是什么？](https://docs.microsoft.com/azure/active-directory/active-directory-appssoaccess-whatis)
+## <a name="next-steps"></a>后续步骤
 
-- [什么是 Azure Active Directory 中的条件访问？](https://docs.microsoft.com/azure/active-directory/conditional-access/overview)
+配置 Amazon Web Services (AWS) 后，可强制实施会话控制，实时防止组织的敏感数据外泄和渗透。 会话控制扩展自条件访问。 [了解如何通过 Microsoft Cloud App Security 强制实施会话控制](/cloud-app-security/proxy-deployment-aad)
 
-- [通过 Azure AD 试用 Amazon Web Services (AWS)](https://aad.portal.azure.com/)
-
-- [Microsoft Cloud App Security 中的会话控制是什么？](https://docs.microsoft.com/cloud-app-security/proxy-intro-aad)
-
-- [如何通过高级可见性和控制保护 Amazon Web Services (AWS)](https://docs.microsoft.com/cloud-app-security/protect-aws)
 
 [11]: ./media/amazon-web-service-tutorial/ic795031.png
 [12]: ./media/amazon-web-service-tutorial/ic795032.png

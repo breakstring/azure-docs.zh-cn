@@ -10,12 +10,12 @@ metadata:
   author: vhorne
   ms.author: victorh
   ms.date: 08/30/2019
-  ms.openlocfilehash: aba20908401cba2c1b740570f62593b5afb92dc5
-  ms.sourcegitcommit: 253d4c7ab41e4eb11cd9995190cd5536fcec5a3c
+  ms.openlocfilehash: 05898a0e0cd0dc5d97edca483d89f45960c26071
+  ms.sourcegitcommit: 8dd8d2caeb38236f79fe5bfc6909cb1a8b609f4a
   ms.translationtype: HT
   ms.contentlocale: zh-CN
-  ms.lasthandoff: 03/25/2020
-  ms.locfileid: "70147319"
+  ms.lasthandoff: 01/08/2021
+  ms.locfileid: "98046298"
 landingContent:
 - title: 了解 Azure 防火墙
   linkLists:
@@ -28,12 +28,16 @@ landingContent:
     - text: Azure 防火墙规则处理逻辑
       url: rule-processing.md
     - text: 常见问题
-      url: firewall-faq.md
+      url: firewall-faq.yml
+  - linkListType: whats-new
+    links:
+    - text: 新增功能
+      url: https://azure.microsoft.com/updates/?category=networking&query=Firewall
 - title: 部署 Azure 防火墙
   linkLists:
   - linkListType: tutorial
     links:
-    - text: 使用 Azure 门户部署
+    - text: 使用 Azure 门户进行部署
       url: tutorial-firewall-deploy-portal.md
     - text: 在混合网络中部署
       url: tutorial-hybrid-portal.md

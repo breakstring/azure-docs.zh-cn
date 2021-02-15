@@ -1,6 +1,6 @@
 ---
 title: 概述 - 创建适用于 Azure 的 Linux 映像
-description: 概述如何将 Linux VM 映像引入到 Azure 或新建映像以在 Azure 中使用。
+description: 如何将 Linux VM 映像引入到 Azure 或新建映像以在 Azure 中使用。
 author: danielsollondon
 ms.service: virtual-machines-linux
 ms.subservice: imaging
@@ -9,12 +9,12 @@ ms.workload: infrastructure
 ms.date: 06/22/2020
 ms.author: danis
 ms.reviewer: cynthn
-ms.openlocfilehash: aa372d4e1b377ecdcbeb49b47f0f9a3a217ee7ad
-ms.sourcegitcommit: 3543d3b4f6c6f496d22ea5f97d8cd2700ac9a481
+ms.openlocfilehash: 223fdc215bc391bea5cad5d4cb9999b9d14ba570
+ms.sourcegitcommit: aaa65bd769eb2e234e42cfb07d7d459a2cc273ab
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/20/2020
-ms.locfileid: "86502174"
+ms.lasthandoff: 01/27/2021
+ms.locfileid: "98878776"
 ---
 # <a name="bringing-and-creating-linux-images-in-azure"></a>在 Azure 中引入和创建 Linux 映像
 
@@ -25,11 +25,11 @@ ms.locfileid: "86502174"
 ## <a name="difference-between-managed-disks-and-images"></a>托管磁盘和映像之间的差异
 
 
-Azure 支持将 VHD 引入到 Azure 平台，将其用作[托管磁盘](../windows/faq-for-disks.md#managed-disks)或用作映像的源。 
+Azure 支持将 VHD 引入到 Azure 平台，将其用作[托管磁盘](../faq-for-disks.md#managed-disks)或用作映像的源。 
 
 Azure 托管磁盘是单个的 VHD。 可以使用现有 VHD 和根据其创建托管磁盘，或者从头开始创建一个空托管磁盘。 可以通过将磁盘附加到 VM 来借助托管磁盘创建 VM，但一个 VM 只能使用一个 VHD。 OS 属性无法修改，Azure 只会尝试开启 VM 和启动磁盘。 
 
-Azure 映像可以由多个 OS 磁盘和数据磁盘组成。 使用托管映像创建 VM 时，该平台生成此映像的副本并使用它来创建 VM，因此，同一托管映像可以重复用于多个 VM。 Azure 还提供了高级映像管理功能，例如全局复制和通过[共享映像库](shared-image-galleries.md)进行版本控制。 
+Azure 映像可以由多个 OS 磁盘和数据磁盘组成。 使用托管映像创建 VM 时，该平台生成此映像的副本并使用它来创建 VM，因此，同一托管映像可以重复用于多个 VM。 Azure 还提供了高级映像管理功能，例如全局复制和通过[共享映像库](../shared-image-galleries.md)进行版本控制。 
 
 
 
@@ -46,7 +46,7 @@ Azure 提供了两种主要映像类型：通用映像和专用映像。 通用�
 
 ### <a name="generalized-images"></a>通用映像
 
-通用映像在首次启动时需要完成设置。 例如，在首次启动时，设置主机名、管理员用户和其他特定于 VM 的配置。 需要多次重用映像以及在创建期间传入参数时，此类映像非常有用。 如果通用映像包含 Azure 代理，则代理将处理参数，并向平台返回指示初始配置已完成的信号。 此过程称为“预配”。 
+通用映像在首次启动时需要完成设置。 例如，在首次启动时，设置主机名、管理员用户和其他特定于 VM 的配置。 需要多次重用映像以及在创建期间传入参数时，此类映像非常有用。 如果通用映像包含 Azure 代理，则代理将处理参数，并向平台返回指示初始配置已完成的信号。 此过程称为[预配](./provisioning.md)。 
 
 预配要求映像中包含配置程序。 以下两个配置程序可供使用：
 - [Azure Linux 代理](../extensions/agent-linux.md)
@@ -65,7 +65,7 @@ Azure 提供了两种主要映像类型：通用映像和专用映像。 通用�
 使用 Linux 映像时有两个选项可供选择：
 
 - 使用托管映像在开发和测试环境中创建简单的 VM。
-- 使用[共享映像库](shared-image-galleries.md)大规模创建和共享映像。
+- 使用[共享映像库](../shared-image-galleries.md)大规模创建和共享映像。
 
 
 ### <a name="managed-images"></a>托管映像
@@ -76,14 +76,14 @@ Azure 提供了两种主要映像类型：通用映像和专用映像。 通用�
 
 ### <a name="azure-shared-image-gallery-sig"></a>Azure 共享映像库 (SIG)
 
-[共享映像库](shared-image-galleries.md)推荐用于大规模创建、管理和共享映像。 共享映像库提供许多功能和特性，可帮助你围绕映像生成结构和组织：  
+[共享映像库](../shared-image-galleries.md)推荐用于大规模创建、管理和共享映像。 共享映像库提供许多功能和特性，可帮助你围绕映像生成结构和组织：  
 
 - 支持通用映像和专用映像。
 - 支持第 1 代映像和第 2 代映像。
 - 支持映像全局复制。
 - 对映像进行版本控制和分组，以便于管理。
 - 在支持可用性区域的区域中，支持具有区域冗余存储 (ZRS) 的高可用性映像。 ZRS 提高了针对区域性故障的恢复能力。
-- 使用 RBAC 在订阅之间，甚至在 Active Directory (AD) 租户之间共享。
+- 使用 Azure RBAC 在订阅之间，甚至在 Active Directory (AD) 租户之间共享。
 - 使用每个区域中的映像副本缩放部署。
 
 概括而言，创建的 SIG 包含：
@@ -94,7 +94,7 @@ Azure 提供了两种主要映像类型：通用映像和专用映像。 通用�
 
 ## <a name="hyper-v-generation"></a>Hyper-V 代系
 
-Azure 支持 Hyper-V 第 1 代 (Gen1) 和第 2 代 (Gen2)。Gen2 是最新一代的 Hyper-V，与 Gen1 相比提供了更多功能， 例如更大的内存、Intel Software Guard Extensions (Intel SGX) 和虚拟化持久性内存 (vPMEM)。 在本地运行的第 2 代 VM 具有 Azure 中尚不支持的一些特性。 有关详细信息，请参阅“特性和功能”部分。 有关详细信息，请参阅此[文章](../windows/generation-2.md)。 如果需要其他功能，请创建 Gen2 映像。
+Azure 支持 Hyper-V 第 1 代 (Gen1) 和第 2 代 (Gen2)。Gen2 是最新一代的 Hyper-V，与 Gen1 相比提供了更多功能， 例如更大的内存、Intel Software Guard Extensions (Intel SGX) 和虚拟化持久性内存 (vPMEM)。 在本地运行的第 2 代 VM 具有 Azure 中尚不支持的一些特性。 有关详细信息，请参阅“特性和功能”部分。 有关详细信息，请参阅此[文章](../generation-2.md)。 如果需要其他功能，请创建 Gen2 映像。
 
 如果仍需要创建自己的映像，请确保映像符合[映像先决条件](./create-upload-generic.md)，并将其上传到 Azure。 以下是分发特定要求：
 

@@ -1,20 +1,22 @@
 ---
 title: 正则表达式实体类型 - LUIS
 description: 正则表达式最适合用于原始话语文本。 不区分大小写，并忽略区域性变体。  完成字符级别而不是令牌级别的拼写检查更改后，会应用正则表达式匹配。
+ms.service: cognitive-services
+ms.subservice: language-understanding
 ms.topic: reference
 ms.date: 04/14/2020
-ms.openlocfilehash: 90260fca10fc087225f6b1286e9fa2dd6d17c836
-ms.sourcegitcommit: bb0afd0df5563cc53f76a642fd8fc709e366568b
+ms.openlocfilehash: 18e44ec43e1169aa054e6e5b4591ccd8611a7f4d
+ms.sourcegitcommit: 10d00006fec1f4b69289ce18fdd0452c3458eca5
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 05/19/2020
-ms.locfileid: "83585600"
+ms.lasthandoff: 11/21/2020
+ms.locfileid: "95025219"
 ---
 # <a name="regular-expression-entity"></a>正则表达式实体
 
 正则表达式实体基于所提供的正则表达式模式提取实体。
 
-正则表达式最适合用于原始话语文本。 不区分大小写，并忽略区域性变体。  完成字符级别而不是令牌级别的拼写检查更改后，会应用正则表达式匹配。 如果正则表达式过于复杂，例如使用了许多括号，则不能将表达式添加到模型。 使用部分但并非全部 [.NET Regex](https://docs.microsoft.com/dotnet/standard/base-types/regular-expressions) 库。
+正则表达式最适合用于原始话语文本。 不区分大小写，并忽略区域性变体。  完成字符级别而不是令牌级别的拼写检查更改后，会应用正则表达式匹配。 如果正则表达式过于复杂，例如使用了许多括号，则不能将表达式添加到模型。 使用部分但并非全部 [.NET Regex](/dotnet/standard/base-types/regular-expressions) 库。
 
 **在以下情况下，非常适合使用此实体：**
 
@@ -41,7 +43,7 @@ ms.locfileid: "83585600"
 
 如果将 `kb[0-9]{6}` 用作正则表达式实体定义，则下面的 JSON 响应就是一个示例话语，其中包含查询返回的正则表达式实体：
 
-`When was kb123456 published?`设置用户帐户 ：
+`When was kb123456 published?`：
 
 #### <a name="v2-prediction-endpoint-response"></a>[V2 预测终结点响应](#tab/V2)
 
@@ -99,7 +101,7 @@ ms.locfileid: "83585600"
 
 ## <a name="next-steps"></a>后续步骤
 
-了解有关实体的详细信息：
+详细了解实体：
 
 * [概念](luis-concept-entity-types.md)
-* [创建方法](luis-how-to-add-entities.md)
+* [如何创建](luis-how-to-add-entities.md)

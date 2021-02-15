@@ -1,24 +1,19 @@
 ---
 title: 使用 Azure 数据工厂从 Hive 复制数据
 description: 了解如何通过在 Azure 数据工厂管道中使用复制活动，将数据从 Hive 复制到支持的接收器数据存储。
-services: data-factory
-documentationcenter: ''
 author: linda33wj
-manager: shwang
-ms.reviewer: douglasl
 ms.service: data-factory
-ms.workload: data-services
 ms.topic: conceptual
-ms.date: 09/04/2019
+ms.date: 11/17/2020
 ms.author: jingwang
-ms.openlocfilehash: 587cdd54f09be2761026c25ccd80fb67d3eb6bb0
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 8f6e85d82c01663e404f7046f84706feb209ba5a
+ms.sourcegitcommit: d4734bc680ea221ea80fdea67859d6d32241aefc
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "84987046"
+ms.lasthandoff: 02/14/2021
+ms.locfileid: "100367021"
 ---
-# <a name="copy-data-from-hive-using-azure-data-factory"></a>使用 Azure 数据工厂从 Hive 复制数据 
+# <a name="copy-and-transform-data-from-hive-using-azure-data-factory"></a>使用 Azure 数据工厂从 Hive 复制和转换数据 
 [!INCLUDE[appliesto-adf-asa-md](includes/appliesto-adf-asa-md.md)]
 
 本文概述了如何使用 Azure 数据工厂中的复制活动从 Hive 复制数据。 它是基于概述复制活动总体的[复制活动概述](copy-activity-overview.md)一文。
@@ -53,9 +48,9 @@ Hive 链接的服务支持以下属性：
 | type | type 属性必须设置为：**Hive** | 是 |
 | host | Hive 服务器的 IP 地址或主机名；对于多台主机，将以“;”分隔（仅限启用了 serviceDiscoveryMode 时）。  | 是 |
 | port | Hive 服务器用来侦听客户端连接的 TCP 端口。 如果连接到 Azure HDInsights，请指定端口 443。 | 是 |
-| serverType | Hive 服务器的类型。 <br/>允许值包括：HiveServer1、HiveServer2、HiveThriftServer    | 否 |
-| thriftTransportProtocol | Thrift 层中要使用的传输协议。 <br/>允许值包括：二进制、SASL、HTTP    | 否 |
-| authenticationType | 用于访问 Hive 服务器的身份验证方法。 <br/>允许的值为： **Anonymous**、 **Username**、 **UsernameAndPassword**、 **WindowsAzureHDInsightService**。 目前不支持 Kerberos 身份验证。 | 是 |
+| serverType | Hive 服务器的类型。 <br/>允许值包括：HiveServer1、HiveServer2、HiveThriftServer | 否 |
+| thriftTransportProtocol | Thrift 层中要使用的传输协议。 <br/>允许值包括：二进制、SASL、HTTP | 否 |
+| authenticationType | 用于访问 Hive 服务器的身份验证方法。 <br/>允许值包括：Anonymous、Username、UsernameAndPassword、WindowsAzureHDInsightService   。 目前不支持 Kerberos 身份验证。 | 是 |
 | serviceDiscoveryMode | true 指示使用 ZooKeeper 服务，false 指示不使用。  | 否 |
 | zooKeeperNameSpace | ZooKeeper 上要将 Hive Server 2 节点添加到其下的命名空间。  | 否 |
 | useNativeQuery | 指定驱动程序是使用本机 HiveQL 查询，还是将其转换为 HiveQL 中的等效形式。  | 否 |
@@ -68,6 +63,7 @@ Hive 链接的服务支持以下属性：
 | allowHostNameCNMismatch | 指定通过 TLS 进行连接时是否要求 CA 颁发的 TLS/SSL 证书名称与服务器的主机名相匹配。 默认值为 false。  | 否 |
 | allowSelfSignedServerCert | 指定是否允许来自服务器的自签名证书。 默认值为 false。  | 否 |
 | connectVia | 用于连接到数据存储的[集成运行时](concepts-integration-runtime.md)。 在[先决条件](#prerequisites)部分了解更多信息。 如果未指定，则使用默认 Azure Integration Runtime。 |否 |
+| storageReference | 对映射数据流中用于暂存数据的存储帐户的链接服务的引用。 仅当在映射数据流中使用 Hive 链接服务时，才需要此项 | 否 |
 
 **示例：**
 
@@ -96,7 +92,7 @@ Hive 链接的服务支持以下属性：
 
 要从 Hive 复制数据，请将数据集的 type 属性设置为 **HiveObject**。 支持以下属性：
 
-| Property | 描述 | 必需 |
+| properties | 说明 | 必需 |
 |:--- |:--- |:--- |
 | type | 数据集的 type 属性必须设置为：**HiveObject** | 是 |
 | 架构 | 架构的名称。 |否（如果指定了活动源中的“query”）  |
@@ -126,12 +122,12 @@ Hive 链接的服务支持以下属性：
 
 ### <a name="hivesource-as-source"></a>HiveSource 作为源
 
-要从 Hive 复制数据，请将复制活动中的源类型设置为 **HiveSource**。 复制活动**source**部分支持以下属性：
+要从 Hive 复制数据，请将复制活动中的源类型设置为 **HiveSource**。 复制活动 **source** 部分支持以下属性：
 
-| properties | 描述 | 必需 |
+| properties | 说明 | 必需 |
 |:--- |:--- |:--- |
 | type | 复制活动 source 的 type 属性必须设置为：**HiveSource** | 是 |
-| 查询 | 使用自定义 SQL 查询读取数据。 例如：`"SELECT * FROM MyTable"`。 | 否（如果指定了数据集中的“tableName”） |
+| query | 使用自定义 SQL 查询读取数据。 例如：`"SELECT * FROM MyTable"`。 | 否（如果指定了数据集中的“tableName”） |
 
 **示例：**
 
@@ -164,6 +160,53 @@ Hive 链接的服务支持以下属性：
     }
 ]
 ```
+
+## <a name="mapping-data-flow-properties"></a>映射数据流属性
+
+支持将 hive 连接器用作映射数据流中的[内联数据集](data-flow-source.md#inline-datasets)源。 使用查询进行读取，或直接从 HDInsight 中的 Hive 表进行读取。 在转换为数据流的一部分之前，Hive 数据作为 parquet 文件暂存在存储帐户中。 
+
+### <a name="source-properties"></a>源属性
+
+下表列出了 hive 源支持的属性。 你可以在“源选项”选项卡中编辑这些属性。
+
+| 名称 | 说明 | 必需 | 允许的值 | 数据流脚本属性 |
+| ---- | ----------- | -------- | -------------- | ---------------- |
+| 存储 | 存储必须是 `hive` | 是 |  `hive` | store | 
+| 格式 | 是从表中还是从查询中读取 | 是 | `table` 或 `query` | format |
+| 架构名称 | 如果从表中读取，则为源表的架构 |  如果格式为 `table`，则此项是必需的 | 字符串 | schemaName |
+| 表名 | 如果从表中读取，则为表名 |   如果格式为 `table`，则此项是必需的 | 字符串 | tableName |
+| 查询 | 如果格式为 `query`，则为 Hive 链接服务上的源查询 | 如果格式为 `query`，则此项是必需的 | 字符串 | query |
+| 暂存 | 将始终暂存 Hive 表。 | 是 | `true` | staged |
+| 存储容器 | 从 Hive 中读取或写入到 Hive 之前用于暂存数据的存储容器。 Hive 群集必须有权访问此容器。 | 是 | 字符串 | storageContainer |
+| 临时数据库 | 在链接服务中指定的用户帐户有权访问的架构/数据库。 它用于在暂存过程中创建外部表，在之后将被删除 | 否 | `true` 或 `false` | stagingDatabaseName |
+| 预处理 SQL 脚本 | 在读取数据之前要在 Hive 表上运行的 SQL 代码 | 否 | 字符串 | preSQLs |
+
+#### <a name="source-example"></a>源示例
+
+下面是 Hive 源配置的示例：
+
+![Hive 源示例](media/data-flow/hive-source.png "[Hive 源示例")
+
+这些设置将转换为以下数据流脚本：
+
+```
+source(
+    allowSchemaDrift: true,
+    validateSchema: false,
+    ignoreNoFilesFound: false,
+    format: 'table',
+    store: 'hive',
+    schemaName: 'default',
+    tableName: 'hivesampletable',
+    staged: true,
+    storageContainer: 'khive',
+    storageFolderPath: '',
+    stagingDatabaseName: 'default') ~> hivesource
+```
+### <a name="known-limitations"></a>已知限制
+
+* 不支持将复杂类型（例如数组、映射、结构和联合）用于读取。 
+* Hive 连接器仅支持 4.0 或更高版本的 Azure HDInsight 中的 Hive 表 (Apache Hive 3.1.0)
 
 ## <a name="lookup-activity-properties"></a>Lookup 活动属性
 

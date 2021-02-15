@@ -3,20 +3,18 @@ title: 使用 Node.js 导入话语 - LUIS
 titleSuffix: Azure Cognitive Services
 description: 了解如何使用 LUIS Authoring API 以编程方式从 CSV 格式的预先存在数据生成 LUIS 应用。
 services: cognitive-services
-author: diberry
 manager: nitinme
-ms.custom: seodec18, devx-track-javascript
+ms.custom: seodec18, devx-track-js
 ms.service: cognitive-services
 ms.subservice: language-understanding
 ms.topic: how-to
 ms.date: 09/05/2019
-ms.author: diberry
-ms.openlocfilehash: 3df1ccadb69f02272c44a0ba574805c816151dc7
-ms.sourcegitcommit: 023d10b4127f50f301995d44f2b4499cbcffb8fc
+ms.openlocfilehash: 58eb92f4d0bc3de4671ca2ece14a178a876e4a6b
+ms.sourcegitcommit: 829d951d5c90442a38012daaf77e86046018e5b9
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/18/2020
-ms.locfileid: "88520934"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "91541029"
 ---
 # <a name="build-a-luis-app-programmatically-using-nodejs"></a>使用 Node.js 以编程方式生成 LUIS 应用
 

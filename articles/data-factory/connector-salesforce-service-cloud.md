@@ -1,24 +1,21 @@
 ---
 title: 从/向 Salesforce Service Cloud 复制数据
 description: 了解如何通过在数据工厂管道中使用复制活动，将数据从 Salesforce Service Cloud 复制到支持的接收器数据存储，或者从支持的源数据存储复制到 Salesforce Service Cloud。
-services: data-factory
 ms.author: jingwang
 author: linda33wj
-manager: shwang
-ms.reviewer: douglasl
 ms.service: data-factory
-ms.workload: data-services
 ms.topic: conceptual
 ms.custom: seo-lt-2019
-ms.date: 07/13/2020
-ms.openlocfilehash: d83dcc5c86f2dfed5f588738e7799dd708333da1
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.date: 02/02/2021
+ms.openlocfilehash: 4075552e2070eba653fba54c7db1d021016644c7
+ms.sourcegitcommit: d4734bc680ea221ea80fdea67859d6d32241aefc
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87076780"
+ms.lasthandoff: 02/14/2021
+ms.locfileid: "100369758"
 ---
 # <a name="copy-data-from-and-to-salesforce-service-cloud-by-using-azure-data-factory"></a>使用 Azure 数据工厂从/向 Salesforce Service Cloud 复制数据
+
 [!INCLUDE[appliesto-adf-asa-md](includes/appliesto-adf-asa-md.md)]
 
 本文概述如何使用 Azure 数据工厂中的复制活动从/向 Salesforce Service Cloud 复制数据。 本文基于总体概述复制活动的[复制活动概述](copy-activity-overview.md)一文。
@@ -37,7 +34,7 @@ ms.locfileid: "87076780"
 - Salesforce 开发人员版、专业版、企业版或不受限制版。
 - 从/向 Salesforce 生产、沙盒和自定义域复制数据。
 
-Salesforce 连接器在 Salesforce REST/Bulk API 之上构建。 默认情况下，连接器使用 [v45](https://developer.salesforce.com/docs/atlas.en-us.218.0.api_rest.meta/api_rest/dome_versions.htm) 从 Salesforce 复制数据，使用 [v40](https://developer.salesforce.com/docs/atlas.en-us.208.0.api_asynch.meta/api_asynch/asynch_api_intro.htm) 将数据复制到 Salesforce。 还可通过链接服务中的 [`apiVersion` 属性](#linked-service-properties)显式设置用于读取/写入数据的 API 版本。
+Salesforce 连接器在 Salesforce REST/Bulk API 之上构建。 默认情况下，从 Salesforce 复制数据时，连接器使用 [v45](https://developer.salesforce.com/docs/atlas.en-us.218.0.api_rest.meta/api_rest/dome_versions.htm) 并根据数据大小自动在 REST 和 Bulk API 之间进行选择 – 结果集较大时，使用 Bulk API 可获得更好的性能；在将数据写入 Salesforce 时，连接器使用 Bulk API [v40](https://developer.salesforce.com/docs/atlas.en-us.208.0.api_asynch.meta/api_asynch/asynch_api_intro.htm)。 还可通过链接服务中的 [`apiVersion` 属性](#linked-service-properties)显式设置用于读取/写入数据的 API 版本。
 
 ## <a name="prerequisites"></a>先决条件
 
@@ -70,10 +67,7 @@ Salesforce 链接服务支持以下属性。
 | password |指定用户帐户的密码。<br/><br/>将此字段标记为 SecureString 以安全地将其存储在数据工厂中或[引用存储在 Azure Key Vault 中的机密](store-credentials-in-key-vault.md)。 |是 |
 | securityToken |为用户帐户指定安全令牌。 <br/><br/>若要了解有关安全令牌的一般信息，请参阅 [Security and the API](https://developer.salesforce.com/docs/atlas.en-us.api.meta/api/sforce_api_concepts_security.htm)（安全性和 API）。 仅当将 Integration Runtime 的 IP 添加到 Salesforce 上的[受信任 IP 地址列表](https://developer.salesforce.com/docs/atlas.en-us.securityImplGuide.meta/securityImplGuide/security_networkaccess.htm)时，才能跳过安全令牌。 使用 Azure IR 时，请参阅 [Azure Integration Runtime IP 地址](azure-integration-runtime-ip-addresses.md)。<br/><br/>有关如何获取和重置安全令牌的说明，请参阅[获取安全令牌](https://help.salesforce.com/apex/HTViewHelpDoc?id=user_security_token.htm)。 将此字段标记为 SecureString 以安全地将其存储在数据工厂中或[引用存储在 Azure Key Vault 中的机密](store-credentials-in-key-vault.md)。 |否 |
 | apiVersion | 指定要使用的 Salesforce REST/Bulk API 版本，例如 `48.0`。 默认情况下，连接器使用 [v45](https://developer.salesforce.com/docs/atlas.en-us.218.0.api_rest.meta/api_rest/dome_versions.htm) 从 Salesforce 复制数据，使用 [v40](https://developer.salesforce.com/docs/atlas.en-us.208.0.api_asynch.meta/api_asynch/asynch_api_intro.htm) 将数据复制到 Salesforce。 | 否 |
-| connectVia | 用于连接到数据存储的[集成运行时](concepts-integration-runtime.md)。 如果未指定，则使用默认 Azure Integration Runtime。 | 对于源为“否”，对于接收器为“是”（如果源链接服务没有集成运行时） |
-
->[!IMPORTANT]
->将数据复制到 Salesforce Service Cloud 时，不能使用默认 Azure 集成运行时执行复制。 换而言之，如果源链接服务未指定集成运行时，请使用靠近 Salesforce Service Cloud 实例的位置显式[创建 Azure 集成运行时](create-azure-integration-runtime.md#create-azure-ir)。 按以下示例所示关联 Salesforce Service Cloud 链接服务。
+| connectVia | 用于连接到数据存储的[集成运行时](concepts-integration-runtime.md)。 如果未指定，则使用默认 Azure Integration Runtime。 | 否 |
 
 **示例：在数据工厂中存储凭据**
 
@@ -147,7 +141,7 @@ Salesforce 链接服务支持以下属性。
 | objectApiName | 要从中检索数据的 Salesforce 对象名称。 | 对于源为“No”，对于接收器为“Yes” |
 
 > [!IMPORTANT]
-> 任何自定义对象均需要 **API 名称**的“__c”部分。
+> 任何自定义对象均需要 **API 名称** 的“__c”部分。
 
 ![数据工厂 Salesforce 连接 API 名称](media/copy-data-from-salesforce/data-factory-salesforce-api-name.png)
 
@@ -190,7 +184,7 @@ Salesforce 链接服务支持以下属性。
 | readBehavior | 指示是查询现有记录，还是查询包括已删除记录在内的所有记录。 如果未指定，默认行为是前者。 <br>允许的值：**query**（默认值）、**queryAll**。  | 否 |
 
 > [!IMPORTANT]
-> 任何自定义对象均需要 **API 名称**的“__c”部分。
+> 任何自定义对象均需要 **API 名称** 的“__c”部分。
 
 ![数据工厂 Salesforce 连接 API 名称列表](media/copy-data-from-salesforce/data-factory-salesforce-api-name-2.png)
 
@@ -234,7 +228,7 @@ Salesforce 链接服务支持以下属性。
 |:--- |:--- |:--- |
 | type | 复制活动接收器的 type 属性必须设置为 **SalesforceServiceCloudSink**。 | 是 |
 | writeBehavior | 操作写入行为。<br/>允许的值为 **Insert** 和 **Upsert**。 | 否（默认值为 Insert） |
-| externalIdFieldName | 更新插入操作的外部的 ID 字段名称。 指定的字段必须在 Salesforce 服务云对象中定义为 "外部 ID 字段"。 它相应的输入数据中不能有 NULL 值。 | 对于“Upsert”是必需的 |
+| externalIdFieldName | 更新插入操作的外部的 ID 字段名称。 指定的字段必须在 Salesforce Service Cloud 对象中定义为“外部 ID 字段”。 它相应的输入数据中不能有 NULL 值。 | 对于“Upsert”是必需的 |
 | writeBatchSize | 每批中写入到 Salesforce Service Cloud 的数据行计数。 | 否（默认值为5,000） |
 | ignoreNullValues | 指示是否忽略 NULL 值从输入数据期间写入操作。<br/>允许的值为 **true** 和 **false**。<br>- **True**：执行更新插入或更新操作时，保持目标对象中的数据不变。 插入在执行插入操作时定义的默认值。<br/>- **False**：执行更新插入或更新操作时，将目标对象中的数据更新为 NULL。 执行插入操作时插入 NULL 值。 | 否（默认值为 false） |
 
@@ -285,13 +279,13 @@ Salesforce 链接服务支持以下属性。
 
 ### <a name="difference-between-soql-and-sql-query-syntax"></a>SOQL 与 SQL 查询语法之间的差异
 
-从 Salesforce Service Cloud 中复制数据时，可以使用 SOQL 查询或 SQL 查询。 请注意，这两者具有不同的语法和功能支持，不要混用。 建议使用 Salesforce 服务云本机支持的 SOQL 查询。 下表列出了主要差异：
+从 Salesforce Service Cloud 中复制数据时，可以使用 SOQL 查询或 SQL 查询。 请注意，这两者具有不同的语法和功能支持，不要混用。 建议使用 Salesforce Service Cloud 原本就支持的 SOQL 查询。 下表列出了主要差异：
 
 | 语法 | SOQL 模式 | SQL 模式 |
 |:--- |:--- |:--- |
 | 列选择 | 需要枚举要在查询中复制的字段，例如 `SELECT field1, filed2 FROM objectname` | 除了列选择之外，还支持 `SELECT *`。 |
 | 引号 | 字段/对象名称不能用引号引起来。 | 字段/对象名称可以用引号引起来，例如 `SELECT "id" FROM "Account"` |
-| 日期时间格式 |  请参考[此处的](https://developer.salesforce.com/docs/atlas.en-us.soql_sosl.meta/soql_sosl/sforce_api_calls_soql_select_dateformats.htm)详细信息和下一部分中的示例。 | 请参考[此处的](https://docs.microsoft.com/sql/odbc/reference/develop-app/date-time-and-timestamp-literals?view=sql-server-2017)详细信息和下一部分中的示例。 |
+| 日期时间格式 |  请参考[此处的](https://developer.salesforce.com/docs/atlas.en-us.soql_sosl.meta/soql_sosl/sforce_api_calls_soql_select_dateformats.htm)详细信息和下一部分中的示例。 | 请参考[此处的](/sql/odbc/reference/develop-app/date-time-and-timestamp-literals)详细信息和下一部分中的示例。 |
 | 布尔值 | 表示为 `False` 和 `True`，例如 `SELECT … WHERE IsDeleted=True`。 | 表示为 0 或 1，例如 `SELECT … WHERE IsDeleted=1`。 |
 | 列重命名 | 不支持。 | 支持，例如：`SELECT a AS b FROM …`。 |
 | 关系 | 支持，例如 `Account_vod__r.nvs_Country__c`。 | 不支持。 |
@@ -303,7 +297,7 @@ Salesforce 链接服务支持以下属性。
 * **SOQL 示例**：`SELECT Id, Name, BillingCity FROM Account WHERE LastModifiedDate >= @{formatDateTime(pipeline().parameters.StartTime,'yyyy-MM-ddTHH:mm:ssZ')} AND LastModifiedDate < @{formatDateTime(pipeline().parameters.EndTime,'yyyy-MM-ddTHH:mm:ssZ')}`
 * **SQL 示例**：`SELECT * FROM Account WHERE LastModifiedDate >= {ts'@{formatDateTime(pipeline().parameters.StartTime,'yyyy-MM-dd HH:mm:ss')}'} AND LastModifiedDate < {ts'@{formatDateTime(pipeline().parameters.EndTime,'yyyy-MM-dd HH:mm:ss')}'}`
 
-### <a name="error-of-malformed_query-truncated"></a>MALFORMED_QUERY 错误：已截断
+### <a name="error-of-malformed_query-truncated"></a>MALFORMED_QUERY:Truncated 错误
 
 如果遇到“MALFORMED_QUERY:Truncated”错误，通常是因为在数据中存在 JunctionIdList 类型列，而 Salesforce 在支持此类具有大量行的数据方面存在限制。 若要缓解这种情况，请尝试排除 JunctionIdList 列或限制要复制的行数（可以将其划分为多个复制活动运行）。
 

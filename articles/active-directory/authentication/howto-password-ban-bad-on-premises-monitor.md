@@ -6,23 +6,24 @@ ms.service: active-directory
 ms.subservice: authentication
 ms.topic: how-to
 ms.date: 11/21/2019
-ms.author: iainfou
-author: iainfoulds
+ms.author: justinha
+author: justinha
 manager: daveba
 ms.reviewer: jsimmons
 ms.collection: M365-identity-device-management
-ms.openlocfilehash: 841b12b27447c4d32d25b8eb0d5bcf51ff8e2932
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.custom: devx-track-azurepowershell
+ms.openlocfilehash: edc246a414401c4c1c0248787eda0381fcd63037
+ms.sourcegitcommit: ad83be10e9e910fd4853965661c5edc7bb7b1f7c
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "85550273"
+ms.lasthandoff: 12/06/2020
+ms.locfileid: "96741756"
 ---
 # <a name="monitor-and-review-logs-for-on-premises-azure-ad-password-protection-environments"></a>监视和查看本地 Azure AD 密码保护环境的日志
 
 部署 Azure AD 密码保护后，监视和报告是至关重要的任务。 本文详细介绍了各种监视技术，包括每项服务在哪里记录信息，以及如何报告 Azure AD 密码保护使用情况。
 
-监视和报告是通过事件日志消息或通过运行 PowerShell cmdlet 来完成的。 DC 代理和代理服务都记录事件日志消息。 下面所述的所有 PowerShell cmdlet 仅可用于代理服务器（请参阅 AzureADPasswordProtection PowerShell 模块）。 DC 代理软件不安装 PowerShell 模块。
+监视和报告是通过事件日志消息或通过运行 PowerShell cmdlet 来完成的。 DC 代理和代理服务都记录事件日志消息。 下面所述的所有 PowerShell cmdlet 仅可用于代理服务器 (参阅 AzureADPasswordProtection PowerShell module) 。 DC 代理软件不安装 PowerShell 模块。
 
 ## <a name="dc-agent-event-logging"></a>DC 代理事件日志记录
 
@@ -69,11 +70,15 @@ DC 代理管理日志是软件行为方式信息的主要来源。
 |失败（因客户密码策略所致）| 10016、30002| 10017、30003|
 |失败（因 Microsoft 密码策略所致）| 10016、30004| 10017、30005|
 |失败（因 Microsoft 密码策略和客户密码策略这两种策略所致）| 10016、30026| 10017、30027|
+|由于用户名)  (失败| 10016、30021| 10017、30022|
 |仅限审核通过（未通过客户密码策略验证）| 10024、30008| 10025、30007|
 |仅限审核通过（未通过 Microsoft 密码策略验证）| 10024、30010| 10025、30009|
 |仅审核通过（未通过 Microsoft 密码策略和客户密码策略这两种策略的验证）| 10024、30028| 10025、30029|
+|由于用户名) ，仅审核传递 (失败| 10016、30024| 10017、30023|
 
 上表中的“两种策略”情况是指，发现用户密码至少包含 Microsoft 禁止密码列表和客户禁止密码列表中的一个令牌。
+
+上面的表中引用 "用户名" 的情况指的是，用户的密码被发现为包含用户的帐户名和/或用户友好名称之一。 这两种情况都将导致在策略设置为 "强制" 时拒绝用户的密码，或者在策略处于审核模式时通过传递。
 
 一起记录的一对事件因具有相同的 CorrelationId 而显式关联。
 
@@ -233,7 +238,7 @@ HKLM\System\CurrentControlSet\Services\AzureADPasswordProtectionDCAgent\Paramete
 
 ## <a name="dc-agent-performance-monitoring"></a>DC 代理性能监视
 
-DC 代理服务软件安装名为“Azure AD 密码保护”的性能计数器对象。**** 目前提供以下性能计数器：
+DC 代理服务软件安装名为“Azure AD 密码保护”的性能计数器对象。 目前提供以下性能计数器：
 
 |性能计数器名称 | 描述|
 | --- | --- |

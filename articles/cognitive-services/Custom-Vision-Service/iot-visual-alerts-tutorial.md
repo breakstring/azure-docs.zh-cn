@@ -8,14 +8,14 @@ manager: nitinme
 ms.service: cognitive-services
 ms.subservice: custom-vision
 ms.topic: tutorial
-ms.date: 08/05/2020
+ms.date: 11/23/2020
 ms.author: pafarley
-ms.openlocfilehash: 5582056f1bae2dbeb69a7d05044f055ff1394bd5
-ms.sourcegitcommit: c293217e2d829b752771dab52b96529a5442a190
+ms.openlocfilehash: c6405e2fcddef9ae3228ede76dfa57f7542164c8
+ms.sourcegitcommit: 1bf144dc5d7c496c4abeb95fc2f473cfa0bbed43
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/15/2020
-ms.locfileid: "88244663"
+ms.lasthandoff: 11/24/2020
+ms.locfileid: "96020170"
 ---
 # <a name="tutorial-use-custom-vision-with-an-iot-device-to-report-visual-states"></a>教程：配合使用自定义视觉和 IoT 设备来报告视觉状态
 
@@ -41,7 +41,7 @@ ms.locfileid: "88244663"
 * 还需要在 Azure 上[创建 IoT 中心资源](https://ms.portal.azure.com/#create/Microsoft.IotHub)。
 * [Visual Studio 2015 或更高版本](https://www.visualstudio.com/downloads/)
 * （可选）运行 Windows 10 IoT 核心版 17763 或更高版本的 IoT 设备。 还可以直接在电脑上运行应用。
-   * 对于 Raspberry Pi 2 和 3，可以直接在 IoT 仪表板应用中设置 Windows 10。 对于其他设备（如 DrangonBoard），需要使用 [eMMC 方法](https://docs.microsoft.com/windows/iot-core/tutorials/quickstarter/devicesetup#flashing-with-emmc-for-dragonboard-410c-other-qualcomm-devices)对其进行刷写。 如需获取设置新设备的帮助，请参阅 Windows IoT 文档中的[设置设备](https://docs.microsoft.com/windows/iot-core/tutorials/quickstarter/devicesetup)。
+   * 对于 Raspberry Pi 2 和 3，可以直接在 IoT 仪表板应用中设置 Windows 10。 对于其他设备（如 DrangonBoard），需要使用 [eMMC 方法](/windows/iot-core/tutorials/quickstarter/devicesetup#flashing-with-emmc-for-dragonboard-410c-other-qualcomm-devices)对其进行刷写。 如需获取设置新设备的帮助，请参阅 Windows IoT 文档中的[设置设备](/windows/iot-core/tutorials/quickstarter/devicesetup)。
 
 ## <a name="about-the-visual-alerts-app"></a>关于视觉警报应用
 
@@ -52,7 +52,7 @@ IoT 视觉警报应用以连续循环的形式运行，并根据需要在四个�
 * **等待训练的模型**：在此状态下，应用每秒调用自定义视觉 API，以检查目标项目是否包含训练的迭代。 找到一个训练的迭代后，会将相应的 ONNX 模型下载到本地文件，并切换到“评分”状态  。
 * **评分**：在此状态下，应用根据本地 ONNX 模型使用 Windows ML 评估照相机中的单个帧。 屏幕上会显示生成的图像分类，并作为消息发送到 IoT 中心。 应用会休眠一秒钟，然后对新图像评分。
 
-## <a name="understand-the-code-structure"></a>了解代码结构
+## <a name="examine-the-code-structure"></a>检查代码结构
 
 以下文件处理应用的主要功能。
 
@@ -98,13 +98,13 @@ IoT 视觉警报应用以连续循环的形式运行，并根据需要在四个�
 
 ## <a name="train-the-custom-vision-model"></a>训练自定义视觉模型
 
-应用完成图像捕获后，会上传图像，然后切换到“等待训练的模型”状态  。 此时，需要前往[自定义视觉门户](https://www.customvision.ai/)，基于新的训练图像生成模型。 下面的动画展示了此过程。
+应用完成图像捕获后，会上传图像，然后切换到“等待训练的模型”状态  。 此时，需要前往[自定义视觉网站](https://www.customvision.ai/)，基于新的训练图像生成模型。 下面的动画展示了此过程。
 
 ![动画：标记多个香蕉图像](./media/iot-visual-alerts-tutorial/labeling.gif)
 
 在自己的方案中实现此过程：
 
-1. 登录[自定义视觉门户](http://customvision.ai)。
+1. 登录[自定义视觉网站](http://customvision.ai)。
 1. 查找目标项目，该项目现在应包含应用上传的所有训练图像。
 1. 对于需识别的每个视觉状态，请选择相应的图像并手动应用标记。
     * 例如，如果目标是区分空房间和有人的房间，建议将五个或以上有人的图像标记为新类“People”，将五个或以上没有人的图像标记为“Negative”   。 这可以帮助模型区分这两种状态。
@@ -142,5 +142,5 @@ IoT 视觉警报应用以连续循环的形式运行，并根据需要在四个�
 > [IoTVisualAlerts 示例 (GitHub)](https://github.com/Azure-Samples/Cognitive-Services-Vision-Solution-Templates/tree/master/IoTVisualAlerts)
 
 * 添加一个 IoT 中心方法，将应用直接切换到“等待训练的模型”状态  。 这样，就可以使用设备本身未捕获的图像来训练模型，然后根据命令将新模型推送到设备上。
-* 参照[可视化实时传感器数据](https://docs.microsoft.com/azure/iot-hub/iot-hub-live-data-visualization-in-power-bi)教程，创建 Power BI 仪表板，用于可视化由示例发送的 IoT 中心警报。
-* 参照 [IoT 远程监视](https://docs.microsoft.com/azure/iot-hub/iot-hub-monitoring-notifications-with-azure-logic-apps)教程，创建一个逻辑应用，用于在检测到视觉状态时响应 IoT 中心警报。
+* 参照[可视化实时传感器数据](../../iot-hub/iot-hub-live-data-visualization-in-power-bi.md)教程，创建 Power BI 仪表板，用于可视化由示例发送的 IoT 中心警报。
+* 参照 [IoT 远程监视](../../iot-hub/iot-hub-monitoring-notifications-with-azure-logic-apps.md)教程，创建一个逻辑应用，用于在检测到视觉状态时响应 IoT 中心警报。

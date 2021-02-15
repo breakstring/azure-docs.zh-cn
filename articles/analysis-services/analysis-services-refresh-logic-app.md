@@ -7,12 +7,12 @@ ms.topic: conceptual
 ms.date: 10/30/2019
 ms.author: chlound
 ms.custom: references_regions
-ms.openlocfilehash: 7412a28b53f3b17fb888e3877ecbe50a19c4a3d3
-ms.sourcegitcommit: 1b2d1755b2bf85f97b27e8fbec2ffc2fcd345120
+ms.openlocfilehash: 8a8d434fca7cab4432f38fc64093cf1fe060bd5f
+ms.sourcegitcommit: 2c586a0fbec6968205f3dc2af20e89e01f1b74b5
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/04/2020
-ms.locfileid: "87552231"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92019080"
 ---
 # <a name="refresh-with-logic-apps"></a>使用逻辑应用进行刷新
 
@@ -27,7 +27,7 @@ ms.locfileid: "87552231"
 ## <a name="design-the-logic-app"></a>设计逻辑应用
 
 > [!IMPORTANT]
-> 以下示例假设已禁用 Azure Analysis Services 防火墙。 如果启用了防火墙，则必须将请求发起程序的公共 IP 地址加入 Azure Analysis Services 防火墙的允许列表。 若要详细了解每个区域的 Azure 逻辑应用 IP 范围，请参阅 [Azure 逻辑应用的限制和配置信息](../logic-apps/logic-apps-limits-and-config.md#configuration)。
+> 以下示例假设已禁用 Azure Analysis Services 防火墙。 如果启用了防火墙，则必须将请求发起方的公共 IP 地址添加到 Azure Analysis Services 防火墙中的已批准列表。 若要详细了解每个区域的 Azure 逻辑应用 IP 范围，请参阅 [Azure 逻辑应用的限制和配置信息](../logic-apps/logic-apps-limits-and-config.md#configuration)。
 
 ### <a name="prerequisites"></a>必备条件
 
@@ -53,9 +53,9 @@ ms.locfileid: "87552231"
 
 2. 添加新步骤并搜索 **HTTP**。  
 
-   ![添加 HTTP 活动](./media/analysis-services-async-refresh-logic-app/9.png)
+   ![选择了 "HTTP" 磁贴的 "选择操作" 部分的屏幕截图。](./media/analysis-services-async-refresh-logic-app/9.png)
 
-   ![添加 HTTP 活动](./media/analysis-services-async-refresh-logic-app/10.png)
+   ![选择了 "HTTP-HTTP" 磁贴的 "HTTP" 窗口的屏幕截图。](./media/analysis-services-async-refresh-logic-app/10.png)
 
 3. 选择“HTTP”以添加此操作。 
 
@@ -98,15 +98,15 @@ ms.locfileid: "87552231"
 
 沿用上面的示例，请删除第一个活动，并将其替换为“计划”活动。 
 
-![计划活动](./media/analysis-services-async-refresh-logic-app/12.png)
+![显示 "逻辑应用" 页面并选择 "计划" 磁贴的屏幕截图。](./media/analysis-services-async-refresh-logic-app/12.png)
 
-![计划活动](./media/analysis-services-async-refresh-logic-app/13.png)
+![显示 "触发器" 页的屏幕截图。](./media/analysis-services-async-refresh-logic-app/13.png)
 
 本示例将使用“重复周期”。 
 
 添加活动后，配置“间隔”和“频率”，然后添加新参数并选择“在这些时间”。 
 
-![计划活动](./media/analysis-services-async-refresh-logic-app/16.png)
+![显示 "定期" 部分的屏幕截图，其中选择了 "当时时间" 参数。](./media/analysis-services-async-refresh-logic-app/16.png)
 
 选择所需的小时数。
 
@@ -117,4 +117,4 @@ ms.locfileid: "87552231"
 ## <a name="next-steps"></a>后续步骤
 
 [示例](analysis-services-samples.md)  
-[REST API](https://docs.microsoft.com/rest/api/analysisservices/servers)
+[REST API](/rest/api/analysisservices/servers)

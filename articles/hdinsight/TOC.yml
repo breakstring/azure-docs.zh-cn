@@ -8,6 +8,7 @@
         - name: 什么是 Azure HDInsight？
           href: ./hdinsight-overview.md
     - name: 教程
+      expanded: true
       items:
         - name: 创建 HDInsight 群集
           href: ./hdinsight-hadoop-provision-linux-clusters.md
@@ -63,8 +64,14 @@
           href: ./hdinsight-capacity-planning.md
         - name: 群集管理最佳做法
           href: ./cluster-management-best-practices.md
-        - name: 可用性和可靠性
-          href: ./hdinsight-high-availability-linux.md
+        - name: 业务连续性
+          items:
+            - name: 业务连续性概述
+              href: hdinsight-business-continuity.md
+            - name: 业务连续性体系结构
+              href: ./hdinsight-business-continuity-architecture.md
+            - name: 高可用性案例研究
+              href: ./hdinsight-high-availability-case-study.md
         - name: 了解托管标识
           href: ./hdinsight-managed-identities.md
         - name: 比较存储选项
@@ -101,10 +108,14 @@
           items:
             - name: 使用 Azure 存储
               href: hdinsight-hadoop-use-blob-storage.md
-            - name: 使用 Azure Data Lake Storage Gen2
+            - name: 使用 Data Lake Storage Gen2
               href: hdinsight-hadoop-use-data-lake-storage-gen2.md
-            - name: 使用 Azure Data Lake Storage Gen1
-              href: hdinsight-hadoop-use-data-lake-store.md
+            - name: 在门户中使用 Data Lake Storage Gen2
+              href: hdinsight-hadoop-use-data-lake-storage-gen2-portal.md
+            - name: 将 Data Lake Storage Gen2 与 Azure CLI 结合使用
+              href: hdinsight-hadoop-use-data-lake-storage-gen2-azure-cli.md
+            - name: 使用 Data Lake Storage Gen1
+              href: hdinsight-hadoop-use-data-lake-storage-gen1.md
         - name: 扩展群集
           items:
             - name: 安装 HDInsight 应用
@@ -126,7 +137,7 @@
                 - name: 安装自定义应用
                   href: hdinsight-apps-install-custom-applications.md
                 - name: 使用 REST 安装应用
-                  href: 'https://msdn.microsoft.com/library/mt706515.aspx'
+                  href: /rest/api/hdinsight/hdinsight-application
                 - name: 将 HDInsight 应用发布到 Azure 市场
                   href: hdinsight-apps-publish-applications.md
         - name: 安全
@@ -252,11 +263,11 @@
         - name: Azure PowerShell
           href: /powershell/module/az.hdinsight
         - name: 用于 .NET 的 SDK
-          href: 'https://docs.microsoft.com/dotnet/api/overview/azure/hdinsight?view=azure-dotnet'
+          href: /dotnet/api/overview/azure/hdinsight?view=azure-dotnet&preserve-view=true
         - name: 用于 Python 的 SDK
-          href: 'https://docs.microsoft.com/python/api/overview/azure/hdinsight?view=azure-python'
+          href: /python/api/overview/azure/hdinsight?view=azure-python&preserve-view=true
         - name: 用于 Java 的 SDK
-          href: 'https://docs.microsoft.com/java/api/overview/azure/hdinsight?view=azure-java-stable'
+          href: /java/api/overview/azure/hdinsight
         - name: 用于 Go 的 SDK
           href: ./hdinsight-go-sdk-overview.md
         - name: .NET (Apache HBase)
@@ -267,6 +278,8 @@
           href: /rest/api/hdinsightspark/
         - name: 资源管理器模板
           href: /azure/templates/microsoft.hdinsight/allversions
+        - name: Azure Policy 内置策略定义
+          href: ./policy-reference.md
     - name: 资源
       items:
         - name: 发行版本
@@ -290,7 +303,7 @@
         - name: 为 Apache Hadoop 服务启用堆转储
           href: ./hdinsight-hadoop-collect-debug-heap-dump-linux.md
         - name: 在 Microsoft Q&A 问题页面上获取帮助
-          href: 'https://docs.microsoft.com/answers/topics/azure-hdinsight.html'
+          href: /answers/topics/azure-hdinsight.html
         - name: 定价计算器
           href: 'https://azure.microsoft.com/pricing/calculator/'
         - name: 适用于 HDInsight 的 Windows 工具
@@ -330,7 +343,7 @@
           href: ./spark/spark-best-practices.md
         - name: 配置 Apache Spark 设置
           href: ./spark/apache-spark-settings.md
-        - name: 优化
+        - name: Optimization
           items:
             - name: 优化 Apache Spark 作业
               href: ./spark/apache-spark-perf.md
@@ -344,6 +357,8 @@
               href: ./spark/optimize-cluster-configuration.md
         - name: 迁移到 Spark 2.3 或 2.4
           href: ./spark/migrate-versions.md
+        - name: 将 .NET for Apache Spark 更新到 1.0
+          href: ./spark/spark-dotnet-version-update.md
     - name: 操作指南
       items:
         - name: 使用工具
@@ -392,24 +407,28 @@
                   href: ./spark/apache-spark-analyze-application-insight-logs.md
         - name: 管理
           items:
+            - name: 管理依赖项
+              items:
+                - name: 管理 Spark 应用程序依赖项
+                  href: ./spark/apache-spark-manage-dependencies.md
+                - name: 安全地管理 JAR 依赖项
+                  href: ./spark/safely-manage-jar-dependency.md
+                - name: 安全地管理 Python 环境
+                  href: ./spark/apache-spark-python-package-installation.md
             - name: 管理群集资源
               href: ./spark/apache-spark-resource-manager.md
             - name: 使用扩展历史记录服务器管理 Apache Spark 应用程序
               href: ./spark/apache-azure-spark-history-server.md
             - name: 使用 IO 缓存启用缓存
               href: ./spark/apache-spark-improve-performance-iocache.md
-            - name: 管理 Jar 依赖项
-              href: ./spark/manage-jar-dependency.md
             - name: 将笔记本与 Apache Spark 配合使用
               items:
-                - name: 使用本地 Jupyter 笔记本
+                - name: 使用本地 Jupyter Notebook
                   href: ./spark/apache-spark-jupyter-notebook-install-locally.md
-                - name: Jupyter 笔记本内核
+                - name: Jupyter Notebook 内核
                   href: ./spark/apache-spark-jupyter-notebook-kernels.md
                 - name: 通过单元 Magic 将外部包与 Jupyter 配合使用
                   href: ./spark/apache-spark-jupyter-notebook-use-external-packages.md
-                - name: 使用脚本操作在 Azure HDInsight 上安全管理 Python 环境
-                  href: ./spark/apache-spark-python-package-installation.md
                 - name: 使用 Apache Zeppelin 笔记本
                   href: ./spark/apache-spark-zeppelin-notebook.md
             - name: 与其他 Azure 服务配合使用
@@ -418,13 +437,11 @@
                   href: ./spark/apache-spark-use-with-data-lake-store.md
                 - name: 连接到 Azure SQL 数据库
                   href: ./spark/apache-spark-connect-to-sql-database.md
-                - name: 使用 Apache Spark 和 Cosmos DB 实现 lambda 体系结构
-                  href: ../cosmos-db/lambda-architecture.md
                 - name: 使用 AutoML 运行 Azure ML 工作负荷
                   href: ./spark/apache-spark-run-machine-learning-automl.md
         - name: 疑难解答
           items:
-            - name: 无法创建 Jupyter 笔记本
+            - name: 无法创建 Jupyter Notebook
               href: ./spark/troubleshoot-jupyter-notebook-convert.md
             - name: OutOfMemoryError 异常
               href: ./spark/apache-spark-troubleshoot-outofmemory.md
@@ -487,7 +504,7 @@
           items:
             - name: 将 MapReduce 与 Apache Hadoop 配合使用
               items:
-                - name: MapReduce 概述
+                - name: 使用 MapReduce
                   href: ./hadoop/hdinsight-use-mapreduce.md
                 - name: 使用 SSH
                   href: ./hadoop/apache-hadoop-use-mapreduce-ssh.md
@@ -632,6 +649,8 @@
               href: ./kafka/apache-kafka-auto-create-topics.md
             - name: 将 Apache Kafka 与 IoT 中心配合使用
               href: ./kafka/apache-kafka-connector-iot-hub.md
+            - name: Confluent 架构注册表
+              href: ./kafka/schema-registry.md
             - name: 创建流式处理管道
               items:
                 - name: Apache Spark、Apache Kafka 和 Azure Cosmos DB
@@ -673,6 +692,10 @@
       items:
         - name: 使用 HDInsight 中的 Apache HBase
           href: ./hbase/apache-hbase-tutorial-get-started-linux.md
+    - name: 概念
+      items:
+        - name: 优化顾问建议
+          href: ./hbase/apache-hbase-advisor.md
     - name: 操作指南
       items:
         - name: 开发
@@ -752,6 +775,8 @@
           href: ./interactive-query/gateway-best-practices.md
         - name: 调整指导原则大小
           href: ./interactive-query/sizing-guidelines.md
+        - name: Hive 复制
+          href: ./interactive-query/apache-hive-replication.md
     - name: 操作指南
       items:
         - name: 开发
@@ -828,6 +853,8 @@
               href: ./hdinsight-troubleshoot-hive.md
             - name: Apache Hive 日志占用头节点上的整个磁盘空间
               href: ./interactive-query/interactive-query-troubleshoot-hive-logs-diskspace-full-headnodes.md
+            - name: Hive 的安全选项
+              href: ./interactive-query/hdinsight-security-options-for-hive.md
 - name: ML Services
   items:
     - name: 概述
@@ -937,6 +964,8 @@
           href: ./domain-joined/apache-domain-joined-architecture.md
         - name: HDInsight 虚拟网络体系结构
           href: ./hdinsight-virtual-network-architecture.md
+        - name: 专用链接
+          href: ./hdinsight-private-link.md
         - name: 传输层安全性
           href: ./transport-layer-security.md
         - name: 为 HDInsight 计划 VNET
@@ -949,6 +978,8 @@
           href: ./disk-encryption.md
         - name: Ranger 和 Apache Ambari 中的 LDAP 同步
           href: ./domain-joined/ldap-sync.md
+        - name: 传输中的双重加密
+          href: ./domain-joined/encryption-in-transit.md
     - name: 操作指南
       items:
         - name: 使用 ID 代理进行凭据管理

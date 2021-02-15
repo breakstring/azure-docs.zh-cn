@@ -11,12 +11,12 @@ ms.topic: quickstart
 ms.custom: mvc
 ms.date: 03/24/2020
 ms.author: mbaldwin
-ms.openlocfilehash: ec1d02cefcdb443a74fab52496cd9428a852139f
-ms.sourcegitcommit: 1692e86772217fcd36d34914e4fb4868d145687b
+ms.openlocfilehash: e55c0832638105ad681f74cbeb6429a6704b7fb2
+ms.sourcegitcommit: 2aa52d30e7b733616d6d92633436e499fbe8b069
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 05/29/2020
-ms.locfileid: "84169961"
+ms.lasthandoff: 01/06/2021
+ms.locfileid: "97935132"
 ---
 # <a name="quickstart-set-and-retrieve-a-certificate-from-azure-key-vault-using-the-azure-portal"></a>快速入门：使用 Azure 门户在 Azure Key Vault 中设置和检索证书
 
@@ -35,8 +35,8 @@ Azure Key Vault 是一项云服务，它为机密提供了安全的存储。 可
 3. 从结果列表中选择“Key Vault”。
 4. 在“Key Vault”部分，选择“创建”。
 5. 在“创建密钥保管库”部分，提供以下信息：
-    - 名称：必须提供唯一的名称。 在本快速入门中，我们使用 Example-Vault。 
-    - 订阅：选择订阅。
+    - **Name**：必须提供唯一的名称。 在本快速入门中，我们使用 Example-Vault。 
+    - **订阅**：选择订阅。
     - 在“资源组”下选择“新建”，然后输入资源组名称。
     - 在“位置”下拉菜单中选择一个位置。
     - 让其他选项保留默认值。
@@ -45,7 +45,7 @@ Azure Key Vault 是一项云服务，它为机密提供了安全的存储。 可
 请记下下面列出的两个属性：
 
 * **保管库名称**：在示例中，此项为 Example-Vault。 将在其他步骤中使用此名称。
-* **保管库 URI**：在本示例中，此项为 https://example-vault.vault.azure.net/ 。 通过其 REST API 使用保管库的应用程序必须使用此 URI。
+* **保管库 URI**：在本示例中，此项为 `https://example-vault.vault.azure.net/` 。 通过其 REST API 使用保管库的应用程序必须使用此 URI。
 
 目前，只有你的 Azure 帐户有权对这个新保管库执行操作。
 
@@ -56,7 +56,7 @@ Azure Key Vault 是一项云服务，它为机密提供了安全的存储。 可
 若要向保管库中添加证书，只需再执行几个步骤即可。 在此示例中，我们添加可供应用程序使用的自签名证书。 此证书称为 ExampleCertificate。
 
 1. 在密钥保管库属性页中，选择“证书”。
-2. 单击“生成/导入”。
+2. 单击“生成/导入”  。
 3. 在“创建证书”屏幕上，选择以下值：
     - **证书创建方法**：生成。
     - **证书名称**：ExampleCertificate。
@@ -88,4 +88,4 @@ Azure Key Vault 是一项云服务，它为机密提供了安全的存储。 可
 
 - 阅读 [Azure Key Vault 概述](../general/overview.md)
 - 参阅 [Azure Key Vault 开发人员指南](../general/developers-guide.md)
-- 查看 [Azure Key Vault 最佳做法](../general/best-practices.md)
+- 请参阅 [Key Vault 安全性概述](../general/security-overview.md)

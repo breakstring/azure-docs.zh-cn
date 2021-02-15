@@ -13,24 +13,26 @@ ms.devlang: na
 ms.topic: article
 ms.date: 03/18/2019
 ms.author: juliako
-ms.custom: has-adal-ref
-ms.openlocfilehash: c1bf77881f672bf3bd2b2dccf91c30855c520052
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.custom: has-adal-ref, devx-track-csharp
+ms.openlocfilehash: 9de7505ffaab244713706984bdeb9ab395766321
+ms.sourcegitcommit: 77afc94755db65a3ec107640069067172f55da67
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87042898"
+ms.lasthandoff: 01/22/2021
+ms.locfileid: "98695732"
 ---
 # <a name="use-azure-ad-authentication-to-access-azure-media-services-api-with-net"></a>使用 Azure AD 身份验证可通过 .NET 访问 Azure 媒体服务 API
 
+[!INCLUDE [media services api v2 logo](./includes/v2-hr.md)]
+
 > [!NOTE]
-> 不会向媒体服务 v2 添加任何新特性或新功能。 <br/>查看最新版本：[媒体服务 v3](../latest/index.yml)。 另请参阅[从 v2 到 v3 的迁移指南](../latest/migrate-from-v2-to-v3.md)
+> 不会向媒体服务 v2 添加任何新特性或新功能。 <br/>查看最新版本：[媒体服务 v3](../latest/index.yml)。 另请参阅[从 v2 到 v3 的迁移指南](../latest/migrate-v-2-v-3-migration-introduction.md)
 
 从 windowsazure.mediaservices 4.0.0.4 开始，Azure 媒体服务支持基于 Azure Active Directory (Azure AD) 的身份验证。 本主题介绍了如何使用 Azure AD 身份验证通过 Microsoft .NET 访问 Azure 媒体服务 API。
 
 ## <a name="prerequisites"></a>必备条件
 
-- 一个 Azure 帐户。 有关详细信息，请参阅[Azure 免费试用](https://azure.microsoft.com/pricing/free-trial/)。
+- 一个 Azure 帐户。 有关详细信息，请参阅 [Azure 免费试用](https://azure.microsoft.com/pricing/free-trial/)。
 - 一个媒体服务帐户。 有关详细信息，请参阅[利用 Azure 门户创建 Azure 媒体服务帐户](media-services-portal-create-account.md)。
 - 最新的 [NuGet](https://www.nuget.org/packages/windowsazure.mediaservices) 程序包。
 - 熟悉主题[使用 Azure AD 身份验证访问 Azure 媒体服务 API 概述](media-services-use-aad-auth-to-access-ams-api.md)。
@@ -86,9 +88,9 @@ ms.locfileid: "87042898"
 - 媒体服务（本机）应用程序客户端 ID。
 - 媒体服务（本机）应用程序重定向 URI。
 
-这些参数的值可在 AzureEnvironments.AzureCloudEnvironment **** 中找到。 AzureEnvironments.AzureCloudEnvironment **** 常量是 .NET SDK 中的一个帮助程序，可以为公共 Azure 数据中心获取正确的环境变量设置。
+这些参数的值可在 AzureEnvironments.AzureCloudEnvironment 中找到。 AzureEnvironments.AzureCloudEnvironment 常量是 .NET SDK 中的一个帮助程序，可以为公共 Azure 数据中心获取正确的环境变量设置。
 
-它包含预定义的环境设置，从而仅允许访问公共数据中心中的媒体服务。 对于 sovereign 云或政府云区域，可以分别使用“AzureChinaCloudEnvironment”、“AzureUsGovernmentEnvironment”或“AzureGermanCloudEnvironment”************。
+它包含预定义的环境设置，从而仅允许访问公共数据中心中的媒体服务。 对于 sovereign 云或政府云区域，可以分别使用“AzureChinaCloudEnvironment”、“AzureUsGovernmentEnvironment”或“AzureGermanCloudEnvironment”。
 
 以下示例代码创建一个令牌：
 
@@ -151,8 +153,8 @@ namespace AzureADAuthSample
 
 ```csharp
 var tokenCredentials = new AzureAdTokenCredentials("{YOUR Azure AD TENANT DOMAIN HERE}",
-                            new AzureAdClientSymmetricKey("{YOUR CLIENT ID HERE}", "{YOUR CLIENT SECRET}"),
-                            AzureEnvironments.AzureCloudEnvironment);
+                        new AzureAdClientSymmetricKey("{YOUR CLIENT ID HERE}", "{YOUR CLIENT SECRET}"),
+                        AzureEnvironments.AzureCloudEnvironment);
 
 var tokenProvider = new AzureAdTokenProvider(tokenCredentials);
 ```
@@ -163,8 +165,8 @@ var tokenProvider = new AzureAdTokenProvider(tokenCredentials);
 
 ```csharp
 var tokenCredentials = new AzureAdTokenCredentials("{YOUR Azure AD TENANT DOMAIN HERE}",
-                            new AzureAdClientCertificate("{YOUR CLIENT ID HERE}", "{YOUR CLIENT CERTIFICATE THUMBPRINT}"),
-                            AzureEnvironments.AzureCloudEnvironment);
+                        new AzureAdClientCertificate("{YOUR CLIENT ID HERE}", "{YOUR CLIENT CERTIFICATE THUMBPRINT}"),
+                        AzureEnvironments.AzureCloudEnvironment);
 ```
 
 若要开始针对媒体服务编程，需要创建一个代表服务器上下文的 CloudMediaContext  实例。 此外，还需要将媒体 REST 服务的资源 URI  传递到 CloudMediaContext  构造函数。 你也可以从 Azure 门户获取媒体 REST 服务的资源 URI 值  。

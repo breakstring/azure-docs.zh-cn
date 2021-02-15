@@ -8,16 +8,19 @@ ms.author: dpalled
 manager: diviso
 ms.workload: big-data
 ms.topic: overview
-ms.date: 07/07/2020
+ms.date: 09/30/2020
 ms.custom: seodec18
-ms.openlocfilehash: 1ab17e2c24d106e1aec0b546a6efd05ac4c3e32f
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.openlocfilehash: cebe0e018b4483a9de1771fb3171effbbd5ca59c
+ms.sourcegitcommit: 10d00006fec1f4b69289ce18fdd0452c3458eca5
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87020519"
+ms.lasthandoff: 11/21/2020
+ms.locfileid: "95020055"
 ---
 # <a name="what-is-azure-time-series-insights-gen1"></a>什么是 Azure 时序见解 Gen1？
+
+> [!CAUTION]
+> 这是一篇 Gen1 文章。
 
 Azure 时序见解用于存储、可视化和查询大量时序数据（例如 IoT 设备所生成的数据）。 如果你想要在云中存储、管理、查询或可视化时序数据，则 Azure 时序见解可能会很适合你。
 
@@ -30,7 +33,7 @@ Azure 时序见解包含四个关键作业：
 - Azure 时序见解通过 Azure 时序见解资源管理器提供现成可用的可视化效果。
 - Azure 时序见解通过两种途径提供查询服务，一种是使用 Azure 时序见解资源管理器，另一种是使用可轻松集成的 API 将时序数据嵌入自定义应用程序中。
 
-如果构建供内部使用或供外部客户使用的应用程序，则可将 Azure 时序见解用作后端。 可以使用它来索引、存储和聚合时序数据。 若要在此之上构建自定义可视化效果和用户体验，请使用[客户端 SDK](https://github.com/microsoft/tsiclient/blob/master/docs/API.md)。 Azure 时序见解还配备了多个[查询 API](how-to-shape-query-json.md) 以启用这些自定义方案。
+如果构建供内部使用或供外部客户使用的应用程序，则可将 Azure 时序见解用作后端。 可以使用它来索引、存储和聚合时序数据。 若要在此之上构建自定义可视化效果和用户体验，请使用[客户端 SDK](https://github.com/microsoft/tsiclient/blob/master/docs/API.md)。 Azure 时序见解还配备了多个[查询 API](./concepts-json-flattening-escaping-rules.md) 以启用这些自定义方案。
 
 时序数据表示资产或过程是如何随时间变化的。 时序数据按时间戳进行索引，时间是用于组织此类数据的最有意义的轴。 时序数据通常按顺序到达，因此被视为插入，而不是数据库的更新。
 
@@ -59,7 +62,7 @@ Azure 时序见解会捕获每一个新事件并将其存储为一行，所做�
 
 - 获取从不同位置流式传输的时序数据的全局视图，进行多资产或多站点比较。
 
-   你可以将多个事件源连接到 Azure 时序见解环境。 这样就可以近实时地查看从多个不同位置一起流式传输进来的数据。 用户可以利用这种可见性与业务领导者共享数据。 用户还可以与领域专家更好地协作，而这些专家则可以使用其专业技能帮助用户解决问题、应用最佳做法和共享知识。
+   可以将多个事件源连接到 Azure 时序见解环境。 这样就可以近实时地查看从多个不同位置一起流式传输进来的数据。 用户可以利用这种可见性与业务领导者共享数据。 用户还可以与领域专家更好地协作，而这些专家则可以使用其专业技能帮助用户解决问题、应用最佳做法和共享知识。
 
 - 在 Azure 时序见解的基础上构建客户应用程序。
 

@@ -6,22 +6,22 @@ ms.service: sql-database
 ms.subservice: scenario
 ms.custom: sqldbrb=1
 ms.devlang: ''
-ms.topic: conceptual
+ms.topic: tutorial
 author: stevestein
 ms.author: sstein
 ms.reviewer: ''
 ms.date: 09/24/2018
-ms.openlocfilehash: 88f1e40101b807e82eaf69be6c167cd4aa2e2831
-ms.sourcegitcommit: 3543d3b4f6c6f496d22ea5f97d8cd2700ac9a481
-ms.translationtype: MT
+ms.openlocfilehash: eddb0c8339069025f0742e9bcbc371efbef094ee
+ms.sourcegitcommit: 400f473e8aa6301539179d4b320ffbe7dfae42fe
+ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/20/2020
-ms.locfileid: "86539187"
+ms.lasthandoff: 10/28/2020
+ms.locfileid: "92793324"
 ---
-# <a name="provision-and-catalog-new-tenants-in-a-saas-application-using-a-sharded-multi-tenant-azure-sql-database"></a>使用分片多租户 Azure SQL 数据库在 SaaS 应用程序中预配和编录新租户
+# <a name="provision-and-catalog-new-tenants-in-a-saas-application-using-a-sharded-multi-tenant-azure-sql-database"></a>在使用分片多租户 Azure SQL 数据库的 SaaS 应用程序中预配和编录新租户
 [!INCLUDE[appliesto-sqldb](../includes/appliesto-sqldb.md)]
 
-本文介绍如何在多租户分片数据库模型或模式中预配和编录新租户。**
+本文介绍如何在多租户分片数据库模型或模式中预配和编录新租户。 
 
 本文包括两个主要部分：
 
@@ -70,12 +70,12 @@ ms.locfileid: "86539187"
 
 ### <a name="elastic-database-client-library"></a>弹性数据库客户端库
 
-在 Wingtip 中，目录是在 *tenantcatalog* 数据库中实现的。 *tenantcatalog* 是使用[弹性数据库客户端库 (EDCL)](elastic-database-client-library.md) 的“分片管理”功能创建的。 该库允许应用程序创建、管理和使用存储在数据库中的分片映射。** 分片映射交叉引用租户密钥及其分片（即其分片数据库）。
+在 Wingtip 中，目录是在 *tenantcatalog* 数据库中实现的。 *tenantcatalog* 是使用 [弹性数据库客户端库 (EDCL)](elastic-database-client-library.md) 的“分片管理”功能创建的。 该库允许应用程序创建、管理和使用存储在数据库中的分片映射。  分片映射交叉引用租户密钥及其分片（即其分片数据库）。
 
 在租户预配过程中，可从应用程序或 PowerShell 脚本使用 EDCL 函数，在分片映射中创建条目。 以后，可以使用 EDCL 函数连接到正确的数据库。 EDCL 缓存连接信息以尽量减少目录数据库中的流量并提高连接速度。
 
 > [!IMPORTANT]
-> 切勿通过直接访问来编辑目录数据库中的数据！** 直接更新操作存在较高的数据损坏风险，因此不受支持。 请仅使用 EDCL API 编辑映射数据。
+> 切勿通过直接访问来编辑目录数据库中的数据！  直接更新操作存在较高的数据损坏风险，因此不受支持。 请仅使用 EDCL API 编辑映射数据。
 
 ## <a name="tenant-provisioning-pattern"></a>租户预配模式
 
@@ -109,7 +109,7 @@ ms.locfileid: "86539187"
 - 在与其他租户共享的现有数据库中预配租户。
 - 在租户自身的数据库中预配该租户。
 
-随后在目录分片映射中初始化和注册租户数据。 在示例应用中，为包含多个租户的数据库指定一个通用名称，例如 *tenants1* 或 *tenants2*。 为包含单个租户的数据库指定租户的名称。 示例中使用的特定命名约定不是模式的主要部分，因为使用目录可以将任何名称分配给数据库。
+随后在目录分片映射中初始化和注册租户数据。 在示例应用中，为包含多个租户的数据库指定一个通用名称，例如 *tenants1* 或 *tenants2* 。 为包含单个租户的数据库指定租户的名称。 示例中使用的特定命名约定不是模式的主要部分，因为使用目录可以将任何名称分配给数据库。
 
 <a name="goto_1_tutorial"></a>
 
@@ -127,15 +127,15 @@ ms.locfileid: "86539187"
 
 若要完成本教程，请确保已完成了以下先决条件：
 
-- Azure PowerShell 已安装。 有关详细信息，请参阅 [Azure PowerShell 入门](https://docs.microsoft.com/powershell/azure/get-started-azureps)
+- Azure PowerShell 已安装。 有关详细信息，请参阅 [Azure PowerShell 入门](/powershell/azure/get-started-azureps)
 
-- 已部署 Wingtip Tickets SaaS 多租户数据库应用。 若要在五分钟内进行部署，请参阅[部署和浏览 Wingtip 票证 SaaS 多租户数据库应用程序](../../sql-database/saas-multitenantdb-get-started-deploy.md)
+- 已部署 Wingtip Tickets SaaS 多租户数据库应用。 若要在五分钟内完成部署，请参阅[部署和浏览 Wingtip Tickets SaaS 多租户数据库应用程序](./saas-multitenantdb-get-started-deploy.md)。
 
 - 获取 Wingtip 脚本和源代码：
     - 在 [WingtipTicketsSaaS-MultitenantDB](https://github.com/microsoft/WingtipTicketsSaaS-MultiTenantDB) GitHub 存储库中提供了 Wingtip Tickets SaaS 多租户数据库脚本和应用程序源代码。
     - 有关下载和取消阻止 Wingtip 脚本的步骤，请参阅[常规指南](saas-tenancy-wingtip-app-guidance-tips.md)。
 
-## <a name="provision-a-tenant-into-a-database-shared-with-other-tenants"></a>在与其他租户共享的数据库中预配租户**
+## <a name="provision-a-tenant-into-a-database-shared-with-other-tenants"></a>在与其他租户共享的数据库中预配租户 
 
 本部分显示了 PowerShell 脚本执行的、用于预配的主要操作列表。 可以使用 PowerShell ISE 调试程序逐步执行该脚本，以查看代码中的操作。
 
@@ -143,52 +143,52 @@ ms.locfileid: "86539187"
 
 以下是单步执行的预配工作流的主要元素：
 
-- **计算新租户密钥**：哈希函数用于从租户名称创建租户密钥。
-- **检查租户密钥是否已存在**：检查目录，确保尚未注册密钥。
-- **初始化默认租户数据库中的租户**：更新租户数据库，以添加新租户信息。
-- **在目录中注册租户**：新租户密钥和现有 tenants1 数据库之间的映射将添加到目录中。
-- **将租户的名称添加到目录扩展表**：将地点名称添加到目录中的“租户”表。  此项添加内容说明如何扩展目录数据库来支持其他特定于应用程序的数据。
-- **打开新租户的“事件”页**：在浏览器中打开 *Bushwillow Blues* 事件页。
+- **计算新租户密钥** ：哈希函数用于从租户名称创建租户密钥。
+- **检查租户密钥是否已存在** ：检查目录，确保尚未注册密钥。
+- **初始化默认租户数据库中的租户** ：更新租户数据库，以添加新租户信息。
+- **在目录中注册租户** ：新租户密钥和现有 tenants1 数据库之间的映射将添加到目录中。
+- **将租户的名称添加到目录扩展表** ：将地点名称添加到目录中的“租户”表。  此项添加内容说明如何扩展目录数据库来支持其他特定于应用程序的数据。
+- **打开新租户的“事件”页** ：在浏览器中打开 *Bushwillow Blues* 事件页。
 
-   ![events](./media/saas-multitenantdb-provision-and-catalog/bushwillow.png)
+   ![显示新租户的“事件”页的屏幕截图。](./media/saas-multitenantdb-provision-and-catalog/bushwillow.png)
 
 #### <a name="debugger-steps"></a>调试程序步骤
 
 若要了解 Wingtip 应用如何在共享数据库中实现新租户预配，请添加断点并单步执行工作流：
 
-1. 在 *PowerShell ISE* 中，打开 ...\\Learning Modules\\ProvisionTenants\\*Demo-ProvisionTenants.ps1*，并设置以下参数：
-   - **$TenantName**  = **Bushwillow 蓝**，即新地点的名称。
-   - **$VenueType**  = **蓝色**，预定义的地点类型之一：蓝色、classicalmusic、dance、爵士乐、judo、motorracing、多用途、opera、rockmusic、足球（小写，不含空格）。
-   - **$DemoScenario**  = **1**，用于在具有其他租户的共享数据库中预配租户。
+1. 在 *PowerShell ISE* 中，打开 ...\\Learning Modules\\ProvisionTenants\\*Demo-ProvisionTenants.ps1* ，并设置以下参数：
+   - **$TenantName** = **Bushwillow Blues** ，即新地点的名称。
+   - **$VenueType** = **blues** （预定义的地点类型之一）：blues、classicalmusic、dance、jazz、judo、motorracing、multipurpose、opera、rockmusic、soccer（小写，不含空格）。
+   - **$DemoScenario** = **1** ，可在拥有其他租户的共享数据库中预配租户。
 
-2. 通过将游标置于 38 行（该行显示：*New-Tenant `*）的任意位置来添加断点，并按 **F9**。
+2. 通过将游标置于 38 行（该行显示： *New-Tenant `* ）的任意位置来添加断点，并按 **F9** 。
 
-   ![断点](./media/saas-multitenantdb-provision-and-catalog/breakpoint.png)
+   ![突出显示包含新租户的行的屏幕截图。](./media/saas-multitenantdb-provision-and-catalog/breakpoint.png)
 
 3. 按 **F5** 运行脚本。
 
-4. 脚本执行在断点处停止之后，按 F11 单步执行代码****。
+4. 脚本执行在断点处停止之后，按 F11 单步执行代码  。
 
-   ![debug](./media/saas-multitenantdb-provision-and-catalog/debug.png)
+   ![屏幕截图显示了 Windows PowerShell ISE，其中“调试”菜单已打开并选中了“单步执行”。](./media/saas-multitenantdb-provision-and-catalog/debug.png)
 
-5. 使用“调试”菜单选项（F10 和 F11）逐过程或单步执行调用的函数，跟踪脚本的执行************。
+5. 使用“调试”菜单选项（F10 和 F11）逐过程或单步执行调用的函数，跟踪脚本的执行  。
 
-有关调试 PowerShell 脚本的详细信息，请参阅[有关使用和调试 PowerShell 脚本的提示](https://docs.microsoft.com/powershell/scripting/components/ise/how-to-debug-scripts-in-windows-powershell-ise)。
+有关调试 PowerShell 脚本的详细信息，请参阅[有关使用和调试 PowerShell 脚本的提示](/powershell/scripting/components/ise/how-to-debug-scripts-in-windows-powershell-ise)。
 
-## <a name="provision-a-tenant-in-its-own-database"></a>在*自己*的数据库中预配租户
+## <a name="provision-a-tenant-in-its-own-database"></a>在租户自身的数据库中预配该租户
 
 #### <a name="major-actions-of-provisioning"></a>用于预配的主要操作
 
 以下是跟踪脚本时所要单步执行的工作流程的主要元素：
 
-- **计算新租户密钥**：哈希函数用于从租户名称创建租户密钥。
-- **检查租户密钥是否已存在**：检查目录，确保尚未注册密钥。
-- **创建新租户数据库**：通过使用资源管理器模板复制 *basetenantdb* 数据库来创建此数据库。  新数据库名称取决于租户名称。
-- **将数据库添加到目录**：新租户数据库在目录中注册为分片。
-- **初始化默认租户数据库中的租户**：更新租户数据库，以添加新租户信息。
-- **在目录中注册租户**：新租户密钥和*sequoiasoccer*数据库之间的映射将添加到目录中。
-- **将租户名称添加到目录**：将地点名称添加到目录的“租户”扩展表中。
-- **打开新租户的“事件”页**：在浏览器中打开 *Sequoia Soccer* 事件页。
+- **计算新租户密钥** ：哈希函数用于从租户名称创建租户密钥。
+- **检查租户密钥是否已存在** ：检查目录，确保尚未注册密钥。
+- **创建新租户数据库** ：通过使用资源管理器模板复制 *basetenantdb* 数据库来创建此数据库。  新数据库名称取决于租户名称。
+- **将数据库添加到目录** ：新租户数据库在目录中注册为分片。
+- **初始化默认租户数据库中的租户** ：更新租户数据库，以添加新租户信息。
+- **在目录中注册租户** ：新租户密钥和 sequoiasoccer 数据库之间的映射将添加到目录中。
+- **将租户名称添加到目录** ：将地点名称添加到目录的“租户”扩展表中。
+- **打开新租户的“事件”页** ：在浏览器中打开 *Sequoia Soccer* 事件页。
 
    ![events](./media/saas-multitenantdb-provision-and-catalog/sequoiasoccer.png)
 
@@ -197,38 +197,38 @@ ms.locfileid: "86539187"
 现在演练在租户自身的数据库中创建该租户的脚本过程：
 
 1. 在 ...\\Learning Modules\\ProvisionTenants\\*Demo-ProvisionTenants.ps1* 中设置以下参数：
-   - **$TenantName**  = **Sequoia**，新地点的名称。
-   - **$VenueType**  = **足球**，预定义的地点类型之一：蓝色、classicalmusic、dance、爵士乐、judo、motorracing、多用途、opera、rockmusic、足球（小写，无空格）。
-   - **$DemoScenario**  = **2**，用于将租户预配到其自己的数据库中。
+   - **$TenantName** = **Sequoia Soccer** ，即新地点的名称。
+   - **$VenueType** = **soccer** （预定义的地点类型之一）：blues、classicalmusic、dance、jazz、judo、motorracing、multipurpose、opera、rockmusic、soccer（小写，不含空格）。
+   - **$DemoScenario** = **2** ，用于将租户预配到其自身的数据库。
 
-2. 将光标置于第57行的任意位置* & &nbsp; $PSScriptRoot*，然后按**F9**，添加一个新断点。
+2. 通过将游标置于 57 行（该行显示：&&nbsp;$PSScriptRoot\New-TenantAndDatabase `）的任意位置来添加新断点，并按 F9。
 
    ![断点](./media/saas-multitenantdb-provision-and-catalog/breakpoint2.png)
 
 3. 按 **F5** 运行脚本。
 
-4. 脚本执行在断点处停止之后，按 **F11** 单步执行代码。  使用 F10 和 F11 逐过程或单步执行函数来跟踪执行********。
+4. 脚本执行在断点处停止之后，按 **F11** 单步执行代码。  使用 F10 和 F11 逐过程或单步执行函数来跟踪执行  。
 
 ## <a name="provision-a-batch-of-tenants"></a>预配一批租户
 
 本练习预配一批 17 个租户。 建议在开始其他 Wingtip Tickets 教程之前预配这批租户，以便可以使用更多数据库。
 
-1. 在 *PowerShell ISE* 中，打开 ...\\Learning Modules\\ProvisionTenants\\*Demo-ProvisionTenants.ps1*，并将 *$DemoScenario* 参数更改为 4：
-   - **$DemoScenario**  = **4**：将一批租户预配到共享数据库中。
+1. 在 *PowerShell ISE* 中，打开 ...\\Learning Modules\\ProvisionTenants\\*Demo-ProvisionTenants.ps1* ，并将 *$DemoScenario* 参数更改为 4：
+   - **$DemoScenario** = **4** ，可将一批租户预配到共享数据库中。
 
 2. 按 **F5** 运行脚本。
 
 ### <a name="verify-the-deployed-set-of-tenants"></a>验证部署的一组租户
 
-在此阶段，将混合的租户部署到共享数据库中，并将租户部署到各自的数据库中。 Azure 门户可用于检查创建的数据库。 在[Azure 门户](https://portal.azure.com)中，通过浏览到 SQL server 列表打开**tenants1- \<USER\> **服务器。  SQL 数据库**** 列表应包含共享的 tenants1 **** 数据库和各自数据库中的租户的数据库：
+在此阶段，将混合的租户部署到共享数据库中，并将租户部署到各自的数据库中。 Azure 门户可用于检查创建的数据库。 在 [Azure 门户](https://portal.azure.com)中，通过浏览到 SQL Server 列表来打开“tenants1-mt-\<USER\>”服务器。  SQL 数据库  列表应包含共享的 tenants1  数据库和各自数据库中的租户的数据库：
 
    ![数据库列表](./media/saas-multitenantdb-provision-and-catalog/Databases.png)
 
-虽然 Azure 门户显示了租户数据库，但是不允许查看共享数据库内的租户**。 可以在 Wingtip 的“事件中心”网页中查看租户的完整列表，也可以通过浏览目录查看。****
+虽然 Azure 门户显示了租户数据库，但是不允许查看共享数据库内的租户  。 可以在 Wingtip 的“事件中心”网页中查看租户的完整列表，也可以通过浏览目录查看。 
 
 #### <a name="using-wingtip-tickets-events-hub-page"></a>使用 Wingtip Tickets 事件中心页
 
-在浏览器中打开 "事件中心" 页（http： wingtip \<USER\> ）。trafficmanager.net）
+在浏览器中打开“事件中心”页 (http:events.wingtip-mt.\<USER\>.trafficmanager.net)
 
 #### <a name="using-catalog-database"></a>使用目录数据库
 
@@ -237,13 +237,13 @@ ms.locfileid: "86539187"
 - 租户名称存储在“租户”表中。
 - 数据库名称存储在“分片管理”表中。
 
-1. 在 SQL Server Management Studio （SSMS）中，连接到**目录-mt. \<USER\> . database.windows.net**的租户服务器，登录名 = **Developer**，密码 = **P \@ ssword1**
+1. 在 SQL Server Management Studio (SSMS) 中，使用登录名“developer”和密码“P\@ssword1”连接到位于 catalog-mt.\<USER\>.database.windows.net 的租户服务器
 
     ![“SSMS 连接”对话框](./media/saas-multitenantdb-provision-and-catalog/SSMSConnection.png)
 
 2. 在 SSMS 对象资源管理器中，浏览到 *tenantcatalog* 数据库中的视图。
 
-3. 右键单击“TenantsExtended”视图，然后选择“选中前 1000 行”******。 注意租户名称和不同租户的数据库之间的映射。
+3. 右键单击“TenantsExtended”视图，然后选择“选中前 1000 行”  。 注意租户名称和不同租户的数据库之间的映射。
 
     ![SSMS 中的“ExtendedTenants”视图](./media/saas-multitenantdb-provision-and-catalog/extendedtenantsview.png)
 
@@ -263,9 +263,9 @@ ms.locfileid: "86539187"
 
 ## <a name="additional-resources"></a>其他资源
 
-<!-- - Additional [tutorials that build upon the Wingtip SaaS application](../../sql-database/saas-dbpertenant-wingtip-app-overview.md#sql-database-wingtip-saas-tutorials)-->
+<!-- - Additional [tutorials that build upon the Wingtip SaaS application](./saas-dbpertenant-wingtip-app-overview.md#sql-database-wingtip-saas-tutorials)-->
 - [弹性数据库客户端库](elastic-database-client-library.md)
-- [如何在 Windows PowerShell ISE 中调试脚本](https://docs.microsoft.com/powershell/scripting/components/ise/how-to-debug-scripts-in-windows-powershell-ise)
+- [如何在 Windows PowerShell ISE 中调试脚本](/powershell/scripting/components/ise/how-to-debug-scripts-in-windows-powershell-ise)
 
 
 ## <a name="next-steps"></a>后续步骤
@@ -277,5 +277,4 @@ ms.locfileid: "86539187"
 > * 预配一批其他租户
 > * 逐步讲解预配租户以及将它们注册到目录的详细信息
 
-试着学习[性能监视教程](../../sql-database/saas-multitenantdb-performance-monitoring.md)。
-
+试着学习[性能监视教程](./saas-multitenantdb-performance-monitoring.md)。

@@ -2,24 +2,29 @@
 title: 使用 OpenVINO™ Model Server（由 Intel 提供的 AI 扩展）来分析实时视频
 description: 在本教程中，将使用由 Intel 提供的 AI 模型服务器来分析（模拟的） IP 相机中的实时视频源。
 ms.topic: tutorial
-ms.date: 07/24/2020
+ms.date: 09/08/2020
 titleSuffix: Azure
-ms.openlocfilehash: 2268300f711a939ed808d1f39bbde1653e8832c8
-ms.sourcegitcommit: 4913da04fd0f3cf7710ec08d0c1867b62c2effe7
+ms.openlocfilehash: db018c5c8d8f3990fd465f4d586ef4dc70980542
+ms.sourcegitcommit: 4e70fd4028ff44a676f698229cb6a3d555439014
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/14/2020
-ms.locfileid: "88212324"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98955710"
 ---
 # <a name="tutorial-analyze-live-video-by-using-openvino-model-server--ai-extension-from-intel"></a>教程：使用 OpenVINO™ Model Server（由 Intel 提供的 AI 扩展）来分析实时视频 
 
-本教程介绍如何使用 OpenVINO™ Model Server（由 Intel 提供的 AI 扩展）来分析（模拟）IP 相机中的实时视频源。 你将了解此推理服务器如何允许你访问用于检测物体（人、车辆或自行车）的模型以及用于车辆分类的模型。 实时视频源中的一部分帧会被发送到此推理服务器，并且结果会被发送到 IoT Edge 中心。 
+本教程介绍如何使用 OpenVINO™ Model Server（由 Intel 提供的 AI 扩展）来分析（模拟）IP 相机中的实时视频源。 你将了解此推理服务器如何允许你访问用于检测物体（人、车辆或自行车）的模型以及用于车辆分类的模型。 实时视频源中的一部分帧会被发送到此推理服务器，并且结果会被发送到 IoT Edge 中心。
 
-本教程将 Azure VM 用作 IoT Edge 设备，并使用模拟的实时视频流。 它基于用 C# 编写的示例代码，并以[检测运动并发出事件](detect-motion-emit-events-quickstart.md)快速入门为基础。 
+本教程将 Azure VM 用作 IoT Edge 设备，并使用模拟的实时视频流。 它基于用 C# 编写的示例代码，并以[检测运动并发出事件](detect-motion-emit-events-quickstart.md)快速入门为基础。
+
+> [!NOTE]
+> 本教程要求使用 x86-64 计算机作为你的 Edge 设备。
 
 ## <a name="prerequisites"></a>先决条件
 
 * 包含活动订阅的 Azure 帐户。 如果没有帐户，可[免费创建一个帐户](https://azure.microsoft.com/free/?WT.mc_id=A261C142F)。
+  > [!NOTE]
+  > 你将需要一个具有服务主体创建权限（所有者角色提供此权限）的 Azure 订阅。 如果你没有正确的权限，请联系帐户管理员，让其授予你适当的权限。 
 * 包含以下扩展的 [Visual Studio Code](https://code.visualstudio.com/)：
     * [Azure IoT Tools](https://marketplace.visualstudio.com/items?itemName=vsciot-vscode.azure-iot-tools)
     * [C#](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csharp)
@@ -30,30 +35,35 @@ ms.locfileid: "88212324"
 > 在安装 Azure IoT Tools 时，系统可能会提示安装 Docker。 可以忽略该提示。
 
 ## <a name="review-the-sample-video"></a>观看示例视频
+
 设置 Azure 资源时，会将停车场的短视频复制到 Azure 中用作 IoT Edge 设备的 Linux VM 上。 此快速入门使用视频文件来模拟实时流。
 
 打开一个应用程序，例如 [VLC 媒体播放器](https://www.videolan.org/vlc/)。 选择“Ctrl+N”，然后粘贴[视频](https://lvamedia.blob.core.windows.net/public/lots_015.mkv)的链接以开始播放。 可以看到停车场中车辆的视频片段，大多数是停着的，只有一辆在移动。
+
+> [!VIDEO https://www.microsoft.com/en-us/videoplayer/embed/RE4LUbN]
 
 在此快速入门中，你将使用 IoT Edge 上的实时视频分析和 OpenVINO™ Model Server（由 Intel 提供的 AI 扩展）来检测车辆等物体，或对它们进行分类。 将生成的推理事件发布到 IoT Edge 中心。
 
 ## <a name="overview"></a>概述
 
-![概述](./media/use-intel-openvino-tutorial/topology.png)
+> [!div class="mx-imgBorder"]
+> 概述
 
-此图显示本快速入门中信号的流动方式。 [Edge 模块](https://github.com/Azure/live-video-analytics/tree/master/utilities/rtspsim-live555)模拟托管实时流式处理协议 (RTSP) 服务器的 IP 相机。 [RTSP 源](media-graph-concept.md#rtsp-source)节点从该服务器拉取视频源，并将视频帧发送到[帧速率筛选器处理器](media-graph-concept.md#frame-rate-filter-processor)节点。 该处理器会限制到达 [HTTP 扩展处理器](media-graph-concept.md#http-extension-processor)节点的视频流的帧速率。 
+此图显示本快速入门中信号的流动方式。 [Edge 模块](https://github.com/Azure/live-video-analytics/tree/master/utilities/rtspsim-live555)模拟托管实时流式处理协议 (RTSP) 服务器的 IP 相机。 [RTSP 源](media-graph-concept.md#rtsp-source)节点从该服务器拉取视频源，并将视频帧发送到 [HTTP 扩展处理器](media-graph-concept.md#http-extension-processor)节点。 
 
-HTTP 扩展节点扮演代理的角色。 它将视频帧转换为指定的图像类型。 然后，它将图像通过 REST 转发到另一个 Edge 模块，该模块在 HTTP 终结点后运行 AI 模型。 在本例中，该 Edge 模块是 OpenVINO™ Model Server（由 Intel 提供的 AI 扩展）。 HTTP 扩展处理器节点收集检测结果并将事件发布到 [IoT 中心接收器](media-graph-concept.md#iot-hub-message-sink)节点。 然后该节点将这些事件发送到 [IoT Edge 中心](../../iot-edge/iot-edge-glossary.md#iot-edge-hub)。
+HTTP 扩展节点扮演代理的角色。 它对 `samplingOptions` 字段设置的传入视频帧采样，还会将视频帧转换为指定的图像类型。 然后，它将图像通过 REST 转发到另一个 Edge 模块，该模块在 HTTP 终结点后运行 AI 模型。 在本例中，该 Edge 模块是 OpenVINO™ Model Server（由 Intel 提供的 AI 扩展）。 HTTP 扩展处理器节点收集检测结果并将事件发布到 [IoT 中心接收器](media-graph-concept.md#iot-hub-message-sink)节点。 然后该节点将这些事件发送到 [IoT Edge 中心](../../iot-edge/iot-edge-glossary.md#iot-edge-hub)。
 
 在本教程中，将：
 
-1. 创建和部署媒体图，并进行修改 
+1. 创建和部署媒体图，并进行修改。
 1. 解释结果。
 1. 清理资源。
 
 ## <a name="about-openvino-model-server--ai-extension-from-intel"></a>关于 OpenVINO™ Model Server（由 Intel 提供的 AI 扩展）
+
 Intel® 分发版 [OpenVINO™ 工具套件](https://software.intel.com/content/www/us/en/develop/tools/openvino-toolkit.html)（开放式视觉推理和神经网络优化）是一个免费的软件包，可帮助开发人员和数据科学家提高计算机视觉工作负载、简化深度学习推理和部署，以及实现从边缘到云的跨 Intel® 平台的简单异类执行。 它包括配备了模型优化器和推理引擎的 Intel® 深度学习部署工具套件以及具有超过 40 个经过优化的预训练模型的 [Open Model Zoo](https://github.com/openvinotoolkit/open_model_zoo) 存储库。
 
-为了构建复杂、高性能的实时视频分析解决方案，IoT Edge 模块上的实时视频分析应与功能强大的推理引擎配合使用，以利用边缘的规模。 本教程会将推理请求发送到 [OpenVINO™ Model Server（由 Intel 提供的 AI 扩展）](https://aka.ms/lva-intel-ovms)，这是一种设计用于 IoT Edge 上的实时视频分析的 Edge 模块。 此推理服务器模块包含 OpenVINO™ Model Server (OVMS)，这是一种由 OpenVINO™ 工具套件提供支持的推理服务器，它针对计算机视觉工作负载进行了高度优化，并针对 Intel 体系结构进行了开发。 已将扩展添加到 OVMS，以便在推理服务器与 IoT Edge 模块上的实时视频分析之间轻松交换视频帧和推理结果，从而使你能够运行任何 OpenVINO 支持的模型（可通过修改[此处](https://github.com/openvinotoolkit/model_server/tree/master/extras/ams_wrapper)的代码来自定义推理服务器模块）。 可进一步选择 Intel 硬件提供的各种加速机制。 这些包括 CPU（Atom、Core、Xeon）、FPGA、VPU。
+为了构建复杂、高性能的实时视频分析解决方案，IoT Edge 模块上的实时视频分析应与功能强大的推理引擎配合使用，以利用边缘的规模。 本教程会将推理请求发送到 [OpenVINO™ Model Server（由 Intel 提供的 AI 扩展）](https://aka.ms/lva-intel-ovms)，这是一种设计用于 IoT Edge 上的实时视频分析的 Edge 模块。 此推理服务器模块包含 OpenVINO™ Model Server (OVMS)，这是一种由 OpenVINO™ 工具套件提供支持的推理服务器，它针对计算机视觉工作负载进行了高度优化，并针对 Intel® 体系结构进行了开发。 已将扩展添加到 OVMS，以便在推理服务器与 IoT Edge 模块上的实时视频分析之间轻松交换视频帧和推理结果，从而使你能够运行任何 OpenVINO™ 工具包支持的模型（可通过修改[代码](https://github.com/openvinotoolkit/model_server/tree/master/extras/ams_wrapper)来自定义推理服务器模块）。 可进一步选择 Intel® 硬件提供的各种加速机制。 这些包括 CPU（Atom、Core、Xeon）、FPGA、VPU。
 
 在此推理服务器的初始版本中，你可以访问以下[模型](https://github.com/openvinotoolkit/model_server/tree/master/extras/ams_models)：
 
@@ -78,11 +88,11 @@ Intel® 分发版 [OpenVINO™ 工具套件](https://software.intel.com/content/
 
 1. 转到 src/cloud-to-device-console-app 文件夹。 你可在此处看到 appsettings.json 文件和一些其他文件：
 
-    * c2d-console-app.csproj - Visual Studio Code 的项目文件。
-    * operations.json - 希望程序运行的操作的列表。
-    * Program.cs - 示例程序代码。 此代码：
+    * ***c2d-console-app.csproj** _ - Visual Studio Code 的项目文件。
+    _ ***operations.json** _ - 希望程序运行的操作的列表。
+    _ ***Program.cs** _ - 示例程序代码。 此代码：
 
-        * 加载应用设置。
+        _ 加载应用设置。
         * 调用 IoT Edge 模块上的实时视频分析公开的直接方法。 可以通过调用模块的[直接方法](direct-methods.md)来使用该模块分析实时视频流。
         * 暂停以检查“终端”窗口中程序的输出，并检查“输出”窗口中模块生成的事件 。
         * 调用直接方法以清理资源。
@@ -91,7 +101,7 @@ Intel® 分发版 [OpenVINO™ 工具套件](https://software.intel.com/content/
 1. 编辑 operations.json 文件：
     * 将链接更改为图拓扑：
 
-        `"topologyUrl" : "https://raw.githubusercontent.com/Azure/live-video-analytics/master/MediaGraph/topologies/httpExtensionOpenVINO/topology.json"`
+        `"topologyUrl" : "https://raw.githubusercontent.com/Azure/live-video-analytics/master/MediaGraph/topologies/httpExtensionOpenVINO/2.0/topology.json"`
 
     * 在 `GraphInstanceSet` 下，编辑图拓扑的名称，使其与上一个链接中的值匹配：
 
@@ -115,6 +125,12 @@ Intel® 分发版 [OpenVINO™ 工具套件](https://software.intel.com/content/
     
     ![设置 IoT 中心连接字符串](./media/quickstarts/set-iotconnection-string.png)
 
+> [!NOTE]
+> 系统可能会要求你提供 IoT 中心的内置终结点信息。 若要获取该信息，请在 Azure 门户中导航到 IoT 中心，并在左侧导航窗格中查找“内置终结点”选项。 单击此处，在“与事件中心兼容的终结点”部分下查找“与事件中心兼容的终结点” 。 复制并使用框中的文本。 终结点将如下所示：  
+    ```
+    Endpoint=sb://iothub-ns-xxx.servicebus.windows.net/;SharedAccessKeyName=iothubowner;SharedAccessKey=XXX;EntityPath=<IoT Hub name>
+    ```
+
 1. 右键单击 src/edge/config/deployment.openvino.amd64.json，然后选择“为单个设备创建部署”。 
 
     ![为单个设备创建部署](./media/use-intel-openvino-tutorial/deploy-manifest.png)
@@ -135,6 +151,15 @@ Intel® 分发版 [OpenVINO™ 工具套件](https://software.intel.com/content/
 ### <a name="run-the-sample-program-to-detect-vehicles"></a>运行示例程序以检测车辆
 如果在浏览器中打开本教程的[图形拓扑](https://raw.githubusercontent.com/Azure/live-video-analytics/master/MediaGraph/topologies/httpExtensionOpenVINO/topology.json)，你将看到 `inferencingUrl` 的值已经设置为 `http://openvino:4000/vehicleDetection`，这意味着在实时视频中检测到车辆后（若有），推理服务器将返回结果。
 
+1. 在 Visual Studio Code 中，打开“扩展”选项卡（或按 Ctrl+Shift+X），然后搜索“Azure IoT 中心”。
+1. 右键单击并选择“扩展设置”。
+
+    > [!div class="mx-imgBorder"]
+    > :::image type="content" source="./media/run-program/extensions-tab.png" alt-text="扩展设置":::
+1. 搜索并启用“显示详细消息”。
+
+    > [!div class="mx-imgBorder"]
+    > :::image type="content" source="./media/run-program/show-verbose-message.png" alt-text="显示详细消息":::
 1. 若要启动调试会话，请选择 F5 键。 你可在“终端”窗口中看到打印的消息。
 1. operations.json 代码首先调用直接方法 `GraphTopologyList` 和 `GraphInstanceList`。 如果你在完成先前的快速入门后清理了资源，则该过程将返回空列表，然后暂停。 若要继续，请选择 Enter 键。
 
@@ -145,7 +170,7 @@ Intel® 分发版 [OpenVINO™ 工具套件](https://software.intel.com/content/
 
          ```
          {
-           "@apiVersion": "1.0",
+           "@apiVersion": "2.0",
            "name": "Sample-Graph-1",
            "properties": {
              "topologyName": "InferencingWithOpenVINO",
@@ -188,7 +213,7 @@ Intel® 分发版 [OpenVINO™ 工具套件](https://software.intel.com/content/
 
 ### <a name="mediasessionestablished-event"></a>MediaSessionEstablished 事件
 
-对媒体图进行实例化后，RTSP 源节点尝试连接到在 rtspsim-live555 容器上运行的 RTSP 服务器。 如果连接成功，则打印以下事件。 事件类型为 `Microsoft.Media.MediaGraph.Diagnostics.MediaSessionEstablished`。
+对媒体图进行实例化后，RTSP 源节点尝试连接到在 rtspsim-live555 容器上运行的 RTSP 服务器。 如果连接成功，则打印以下事件。 事件类型为 Microsoft.Media.MediaGraph.Diagnostics.MediaSessionEstablished。
 
 ```
 [IoTHubMonitor] [9:42:18 AM] Message received from [lvaedgesample/lvaEdge]:
@@ -377,4 +402,4 @@ HTTP 扩展处理器节点从 OpenVINO™ Model Server（AI 扩展模块）接�
 查看高级用户面临的其他挑战：
 
 * 使用支持 RTSP 的 [IP 相机](https://en.wikipedia.org/wiki/IP_camera)，而不是使用 RTSP 模拟器。 可以在 [ONVIF 符合标准的产品](https://www.onvif.org/conformant-products/)页面上搜索支持 RTSP 的 IP 摄像机。 查找符合配置文件 G、S 或 T 的设备。
-* 使用 AMD64 或 X64 Linux 设备，而不是 Azure Linux VM。 此设备必须与 IP 相机位于同一网络中。 可以按照[在 Linux 上安装 Azure IoT Edge 运行时](../../iot-edge/how-to-install-iot-edge-linux.md)中的说明进行操作。 然后按照[将首个 IoT Edge 模块部署到虚拟 Linux 设备](../../iot-edge/quickstart-linux.md)中的说明，将设备注册到 Azure IoT 中心。
+* 使用 AMD64 或 X64 Linux 设备，而不是 Azure Linux VM。 此设备必须与 IP 相机位于同一网络中。 可以按照[在 Linux 上安装 Azure IoT Edge 运行时](../../iot-edge/how-to-install-iot-edge.md)中的说明进行操作。 然后按照[将首个 IoT Edge 模块部署到虚拟 Linux 设备](../../iot-edge/quickstart-linux.md)中的说明，将设备注册到 Azure IoT 中心。

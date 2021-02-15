@@ -1,19 +1,16 @@
 ---
 title: '教程：使用 Apache Kafka Streams API - Azure HDInsight '
 description: 教程 - 了解如何将 Apache Kafka Streams API 与 Kafka on HDInsight 配合使用。 此 API 允许在 Kafka 中的主题之间执行流处理。
-author: hrasheed-msft
-ms.author: hrasheed
-ms.reviewer: jasonh
 ms.service: hdinsight
 ms.topic: tutorial
 ms.custom: hdinsightactive
 ms.date: 03/20/2020
-ms.openlocfilehash: 0174c40a0fada0f78cc8d52f5c45b991c3851da0
-ms.sourcegitcommit: cec9676ec235ff798d2a5cad6ee45f98a421837b
+ms.openlocfilehash: 5a1548cdf1d05a1f9d42f5c64b7fdc18f514518e
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "85850564"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98939197"
 ---
 # <a name="tutorial-use-apache-kafka-streams-api-in-azure-hdinsight"></a>教程：在 Azure HDInsight 中使用 Apache Kafka Streams API
 
@@ -39,7 +36,7 @@ Kafka 流处理通常使用 Apache Spark 或 Apache Storm 完成。 Kafka 版本
 
 * 完成 [Apache Kafka 使用者和生成者 API](apache-kafka-producer-consumer-api.md) 文档中的步骤。 本文档中的步骤使用本教程中创建的示例应用程序和主题。
 
-* [Java Developer Kit (JDK) 版本 8](https://aka.ms/azure-jdks) 或等效工具，例如 OpenJDK。
+* [Java Developer Kit (JDK) 版本 8](/azure/developer/java/fundamentals/java-jdk-long-term-support) 或等效工具，例如 OpenJDK。
 
 * 根据 Apache 要求正确[安装](https://maven.apache.org/install.html)的 [Apache Maven](https://maven.apache.org/download.cgi)。  Maven 是 Java 项目的项目生成系统。
 

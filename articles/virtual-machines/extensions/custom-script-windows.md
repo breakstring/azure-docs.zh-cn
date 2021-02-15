@@ -2,20 +2,21 @@
 title: 适用于 Windows 的 Azure 自定义脚本扩展
 description: 使用自定义脚本扩展自动执行 Windows VM 配置任务
 services: virtual-machines-windows
-manager: carmonm
-author: bobbytreed
+manager: gwallace
+author: amjads1
 ms.service: virtual-machines-windows
+ms.subservice: extensions
 ms.topic: article
 ms.tgt_pltfrm: vm-windows
 ms.workload: infrastructure-services
-ms.date: 05/02/2019
-ms.author: robreed
-ms.openlocfilehash: 5ab8d45c12d7b2c408328e306b1a6961cbe5272a
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.date: 08/31/2020
+ms.author: amjads
+ms.openlocfilehash: d06be4efae895cfe6903be4451f892660ce689f3
+ms.sourcegitcommit: d4734bc680ea221ea80fdea67859d6d32241aefc
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87010931"
+ms.lasthandoff: 02/14/2021
+ms.locfileid: "100390124"
 ---
 # <a name="custom-script-extension-for-windows"></a>适用于 Windows 的自定义脚本扩展
 
@@ -31,6 +32,7 @@ ms.locfileid: "87010931"
 ### <a name="operating-system"></a>操作系统
 
 适用于 Windows 的自定义脚本扩展将在扩展支持的扩展 OS 上运行；
+
 ### <a name="windows"></a>Windows
 
 * Windows Server 2008 R2
@@ -48,7 +50,9 @@ ms.locfileid: "87010931"
 
 ### <a name="internet-connectivity"></a>Internet 连接
 
-如果需要从外部（例如 GitHub 或 Azure 存储）下载脚本，则需要打开其他防火墙和网络安全组端口。 例如，如果脚本位于 Azure 存储中，可以使用 Azure NSG 服务标记对[存储](../../virtual-network/security-overview.md#service-tags)进行访问。
+如果需要从外部（例如 GitHub 或 Azure 存储）下载脚本，则需要打开其他防火墙和网络安全组端口。 例如，如果脚本位于 Azure 存储中，可以使用 Azure NSG 服务标记对[存储](../../virtual-network/network-security-groups-overview.md#service-tags)进行访问。
+
+请注意，CustomScript 扩展无法跳过证书验证。 因此，如果使用自签名证书从安全位置进行下载， 则最终可能会出现“根据验证过程，远程证书无效”等错误。 请确保证书已正确安装在虚拟机上“受信任的根证书颁发机构”存储中。
 
 如果脚本位于本地服务器上，则可能仍需要打开其他防火墙和网络安全组端口。
 
@@ -60,13 +64,14 @@ ms.locfileid: "87010931"
 * 脚本可以运行 90 分钟，若运行时间超过 90 分钟，将导致扩展的预配失败。
 * 不要重启置于脚本内，此操作会导致所安装的其他扩展出现问题。 扩展不会在重启之后继续。
 * 如果你有可导致重启的脚本，则安装应用程序并运行该脚本，可使用 Windows 计划任务或 DSC、Chef 或 Puppet 扩展等工具来计划重启。
+* 建议不要运行会导致 VM 代理停止或更新的脚本。 这会使扩展处于“正在转换”状态，从而导致超时。
 * 扩展将只运行脚本一次，如果想要在每次启动时运行脚本，则需要使用扩展创建 Windows 计划任务。
 * 如果想要计划脚本何时运行，应使用扩展创建 Windows 计划任务。
 * 脚本运行时，Azure 门户或 CLI 中只会显示“正在转换”扩展状态。 如果希望更频繁地更新正在运行的脚本的状态，需要创建自己的解决方案。
-* 自定义脚本扩展本身不支持代理服务器，但可以在脚本中使用支持代理服务器的文件传输工具，如 Curl
+* 自定义脚本扩展不能以本机方式支持代理服务器，但你可以使用支持脚本中的代理服务器的文件传输工具，如 *WebRequest*
 * 请注意脚本或命令可能依赖的非默认目录位置，按逻辑对这种情况进行处理。
 * 自定义脚本扩展将在 LocalSystem 帐户下运行
-* 如果计划使用*storageAccountName*和*storageAccountKey*属性，则这些属性必须在*protectedSettings*中并置。
+* 如果你计划使用 storageAccountName 和 storageAccountKey 属性，这些属性必须并置在 protectedSettings 中  。
 
 ## <a name="extension-schema"></a>扩展架构
 
@@ -111,7 +116,7 @@ ms.locfileid: "87010931"
 ```
 
 > [!NOTE]
-> managedIdentity 属性**不能**与 storageAccountName 或 storageAccountKey 属性结合使用
+> managedIdentity 属性 **不能** 与 storageAccountName 或 storageAccountKey 属性结合使用
 
 > [!NOTE]
 > 在某个时间点，一个 VM 上只能安装一个扩展版本，在同一资源管理器模板中为同一 VM 指定两次自定义脚本将会失败。
@@ -196,11 +201,11 @@ CustomScript（版本 1.10 及更高版本）支持用于通过“fileUris”设
 > ```
 
 > [!NOTE]
-> managedIdentity 属性**不能**与 storageAccountName 或 storageAccountKey 属性结合使用
+> managedIdentity 属性 **不能** 与 storageAccountName 或 storageAccountKey 属性结合使用
 
 ## <a name="template-deployment"></a>模板部署
 
-可使用 Azure Resource Manager 模板部署 Azure VM 扩展。 可以在 Azure 资源管理器模板中使用上一部分中详细介绍的 JSON 架构，以便在部署过程中运行自定义脚本扩展。 以下示例显示如何使用自定义脚本扩展：
+可使用 Azure 资源管理器模板部署 Azure VM 扩展。 可以在 Azure 资源管理器模板中使用上一部分中详细介绍的 JSON 架构，以便在部署过程中运行自定义脚本扩展。 以下示例显示如何使用自定义脚本扩展：
 
 * [教程：使用 Azure 资源管理器模板部署虚拟机扩展](../../azure-resource-manager/templates/template-tutorial-deploy-vm-extensions.md)
 * [在 Windows 和 Azure SQL DB 上部署双层应用程序](https://github.com/Microsoft/dotnet-core-sample-templates/tree/master/dotnet-core-music-windows)
@@ -243,8 +248,8 @@ Set-AzVMExtension -ResourceGroupName <resourceGroupName> `
     -Publisher "Microsoft.Compute" `
     -ExtensionType "CustomScriptExtension" `
     -TypeHandlerVersion "1.10" `
-    -Settings $settings    `
-    -ProtectedSettings $protectedSettings `
+    -Settings $settings `
+    -ProtectedSettings $protectedSettings;
 ```
 
 ### <a name="running-scripts-from-a-local-share"></a>从本地共享运行脚本
@@ -283,7 +288,7 @@ The response content cannot be parsed because the Internet Explorer engine is no
 ```
 ## <a name="virtual-machine-scale-sets"></a>虚拟机规模集
 
-要在规模集上部署自定义脚本扩展，请参阅 [Add-AzVmssExtension](/powershell/module/az.compute/add-azvmssextension?view=azps-3.3.0)
+要在规模集上部署自定义脚本扩展，请参阅 [Add-AzVmssExtension](/powershell/module/az.compute/add-azvmssextension)
 
 ## <a name="classic-vms"></a>经典 VM
 

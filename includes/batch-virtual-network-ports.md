@@ -10,15 +10,15 @@ ms.service: batch
 ms.devlang: na
 ms.topic: include
 ms.tgt_pltfrm: na
-ms.date: 06/16/2020
+ms.date: 01/13/2021
 ms.author: jenhayes
 ms.custom: include file
-ms.openlocfilehash: 3e4bca058f554f60dfa5c237633d1fecf06dfea7
-ms.sourcegitcommit: 11e2521679415f05d3d2c4c49858940677c57900
+ms.openlocfilehash: 08e7463f4657b2ae5d6da1017c14226e97af7605
+ms.sourcegitcommit: 16887168729120399e6ffb6f53a92fde17889451
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/31/2020
-ms.locfileid: "87507365"
+ms.lasthandoff: 01/13/2021
+ms.locfileid: "98165733"
 ---
 ### <a name="general-requirements"></a>一般要求
 
@@ -29,6 +29,8 @@ ms.locfileid: "87507365"
 * 为池指定的子网必须提供足够的未分配 IP 地址来容纳面向该池的 VM 的数量；即，池的 `targetDedicatedNodes` 和 `targetLowPriorityNodes` 属性的总和。 如果子网没有足够的未分配 IP 地址，池将分配部分计算节点，并发生调整大小错误。
 
 * 需要通过为 VNet 提供服务的自定义 DNS 服务器解析 Azure 存储终结点。 具体而言，`<account>.table.core.windows.net`、`<account>.queue.core.windows.net` 和 `<account>.blob.core.windows.net` 形式的 URL 应当是可以解析的。
+
+* 可在同一 VNet 或同一子网中创建多个池（前提是它有足够的地址空间）。 单个池不能跨多个 VNet 或子网存在。
 
 其他 VNet 要求会有所不同，具体取决于 Batch 池是使用“虚拟机”配置还是使用“云服务”配置。 若要进行新的池部署（部署到 VNet 中），建议使用“虚拟机”配置。
 
@@ -69,7 +71,7 @@ ms.locfileid: "87507365"
 
 | 源 IP 地址 | 源服务标记 | 源端口 | 目标 | 目标端口 | 协议 | 操作 |
 | --- | --- | --- | --- | --- | --- | --- |
-| 空值 | `BatchNodeManagement` [服务标记](../articles/virtual-network/security-overview.md#service-tags)（如果使用区域变体，则在与 Batch 帐户相同的区域中） | * | Any | 29876-29877 | TCP | 允许 |
+| 空值 | `BatchNodeManagement` [服务标记](../articles/virtual-network/network-security-groups-overview.md#service-tags)（如果使用区域变体，则在与 Batch 帐户相同的区域中） | * | Any | 29876-29877 | TCP | 允许 |
 | 用户源 IP，用于远程访问 Linux 多实例任务的计算节点和/或计算节点子网（如果需要）。 | 空值 | * | Any | 3389 (Windows)、22 (Linux) | TCP | 允许 |
 
 > [!WARNING]
@@ -79,7 +81,7 @@ ms.locfileid: "87507365"
 
 | 源 | 源端口 | 目标 | 目标服务标记 | 目标端口 | 协议 | 操作 |
 | --- | --- | --- | --- | --- | --- | --- |
-| Any | * | [服务标记](../articles/virtual-network/security-overview.md#service-tags) | `Storage`（如果使用区域变体，则在与 Batch 帐户相同的区域中） | 443 | TCP | 允许 |
+| Any | * | [服务标记](../articles/virtual-network/network-security-groups-overview.md#service-tags) | `Storage`（如果使用区域变体，则在与 Batch 帐户相同的区域中） | 443 | TCP | 允许 |
 
 ### <a name="pools-in-the-cloud-services-configuration"></a>“云服务”配置中的池
 
@@ -110,4 +112,4 @@ Any <br /><br />虽然这需要有效地“全部允许”，但 Batch 服务会
 
 | 源 | 源端口 | 目标 | 目标端口 | 协议 | 操作 |
 | --- | --- | --- | --- | --- | --- |
-| 任意 | * | 任意 | 443  | Any | Allow |
+| 任意 | * | Any | 443  | 任意 | Allow |

@@ -4,7 +4,9 @@
   items:
     - name: 什么是 Azure NetApp 文件
       href: azure-netapp-files-introduction.md
-    - name: 了解存储层次结构
+    - name: 新增功能
+      href: whats-new.md
+    - name: Azure NetApp 文件的存储层次结构
       href: azure-netapp-files-understand-storage-hierarchy.md
 - name: 快速入门
   expanded: true
@@ -27,12 +29,24 @@
           href: azure-netapp-files-performance-metrics-volumes.md
         - name: Linux 性能基准
           href: performance-benchmarks-linux.md
+        - name: Azure NetApp 文件单卷上的 Oracle 数据库性能
+          href: performance-oracle-single-volumes.md
         - name: 有关 SMB 性能的常见问题解答
           href: azure-netapp-files-smb-performance.md
     - name: Azure NetApp 文件的成本模型
       href: azure-netapp-files-cost-model.md
     - name: Azure NetApp 文件网络规划指南
       href: azure-netapp-files-network-topologies.md
+    - name: Azure NetApp 文件快照的工作原理
+      href: snapshots-introduction.md
+    - name: 手动 QoS 容量池
+      href: manual-qos-capacity-pool-introduction.md
+    - name: 跨区域复制
+      items:
+        - name: 了解跨区域复制
+          href: cross-region-replication-introduction.md
+        - name: 跨区域复制的要求和注意事项
+          href: cross-region-replication-requirements-considerations.md
     - name: 解决方案
       items:
         - name: 使用 Azure NetApp 文件的解决方案体系结构
@@ -47,6 +61,10 @@
               href: solutions-windows-virtual-desktop.md
     - name: 有关 Azure NetApp 文件的常见问题解答
       href: azure-netapp-files-faqs.md
+    - name: 什么是 Azure 应用程序一致性快照工具
+      href: azacsnap-introduction.md
+    - name: 对量硬配额的更改是指
+      href: volume-hard-quota-guidelines.md
 - name: 操作指南
   items:
     - name: 注册 Azure NetApp 文件
@@ -55,6 +73,8 @@
       href: azure-netapp-files-create-netapp-account.md
     - name: 设置容量池
       href: azure-netapp-files-set-up-capacity-pool.md
+    - name: 管理手动 QoS 容量池
+      href: manage-manual-qos-capacity-pool.md
     - name: 将子网委派给 Azure NetApp 文件
       href: azure-netapp-files-delegate-subnet.md
     - name: 创建和管理 NFS 卷
@@ -81,22 +101,70 @@
       href: azure-netapp-files-resize-capacity-pools-or-volumes.md
     - name: 动态更改卷的服务级别
       href: dynamic-change-volume-service-level.md
+    - name: 管理跨区域复制
+      items:
+        - name: 创建卷复制
+          href: cross-region-replication-create-peering.md
+        - name: 显示复制关系的运行状况
+          href: cross-region-replication-display-health-status.md
+        - name: 管理灾难恢复
+          href: cross-region-replication-manage-disaster-recovery.md
+        - name: 删除卷复制或卷
+          href: cross-region-replication-delete.md
     - name: 开发
       items:
         - name: REST API
           href: azure-netapp-files-develop-with-rest-api.md
         - name: 通过 PowerShell 使用 REST API
           href: develop-rest-api-powershell.md
-        - name: Azure NetApp 文件 SDK 和 CLI 工具
+        - name: SDK、CLI 工具和 ARM 模板
           href: azure-netapp-files-sdk-cli.md
-        - name: 排查 Azure NetApp 文件资源提供程序错误
+    - name: 疑难解答
+      items:
+        - name: 容量池问题故障排除
+          href: troubleshoot-capacity-pools.md
+        - name: 跨区域复制故障排除
+          href: troubleshoot-cross-region-replication.md
+        - name: SMB 或双重协议卷故障排除
+          href: troubleshoot-dual-protocol-volumes.md
+        - name: 排查 NFSv4.1 Kerberos 卷问题
+          href: troubleshoot-nfsv41-kerberos-volumes.md
+        - name: 快照策略问题故障排除
+          href: troubleshoot-snapshot-policies.md
+        - name: 排查资源提供程序错误
           href: azure-netapp-files-troubleshoot-resource-provider-errors.md
 - name: 参考
   items:
     - name: REST
-      href: 'https://docs.microsoft.com/rest/api/netapp/'
+      href: /rest/api/netapp/
     - name: 资源管理器模板
       href: /azure/templates/microsoft.netapp/allversions
+    - name: Azure 应用程序一致性快照工具 (AzAcSnap)
+      items:
+        - name: AzAcSnap 入门
+          href: azacsnap-get-started.md
+        - name: 安装 AzAcSnap
+          href: azacsnap-installation.md
+        - name: 使用 AzAcSnap 进行灾难恢复
+          href: azacsnap-disaster-recovery.md
+        - name: 使用 AzAcSnap 的提示和技巧
+          href: azacsnap-tips.md
+        - name: AzAcSnap 故障排除
+          href: azacsnap-troubleshoot.md
+        - name: AzAcSnap 命令参考
+          items:
+            - name: 配置 AzAcSnap
+              href: azacsnap-cmd-ref-configure.md
+            - name: 测试 AzAcSnap
+              href: azacsnap-cmd-ref-test.md
+            - name: 使用 AzAcSnap 进行备份
+              href: azacsnap-cmd-ref-backup.md
+            - name: 使用 AzAcSnap 获取详细信息
+              href: azacsnap-cmd-ref-details.md
+            - name: 使用 AzAcSnap 进行删除
+              href: azacsnap-cmd-ref-delete.md
+            - name: 使用 AzAcSnap 进行还原
+              href: azacsnap-cmd-ref-restore.md
 - name: 资源
   items:
     - name: 定价

@@ -1,26 +1,27 @@
 ---
-title: 媒体服务实体的筛选、排序和分页
-titleSuffix: Azure Media Services
+title: 实体的筛选、排序和分页
 description: 了解如何对 Azure 媒体服务 v3 实体进行筛选、排序和分页。
 services: media-services
 documentationcenter: ''
-author: Juliako
+author: IngridAtMicrosoft
 manager: femila
 editor: ''
 ms.service: media-services
 ms.workload: ''
-ms.topic: article
-ms.date: 01/21/2020
-ms.author: juliako
-ms.custom: seodec18
-ms.openlocfilehash: a9f9463cd1cac49e36ea52cafaf4d07f4e709ca7
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
-ms.translationtype: MT
+ms.topic: overview
+ms.date: 08/31/2020
+ms.author: inhenkel
+ms.custom: seodec18, devx-track-csharp
+ms.openlocfilehash: 19febc833f087afdfecde3274a1044598d082521
+ms.sourcegitcommit: 4e70fd4028ff44a676f698229cb6a3d555439014
+ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87053260"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98955302"
 ---
 # <a name="filtering-ordering-and-paging-of-media-services-entities"></a>媒体服务实体的筛选、排序和分页
+
+[!INCLUDE [media services api v3 logo](./includes/v3-hr.md)]
 
 本主题讨论在列出 Azure 媒体服务 v3 实体时可以使用的 OData 查询选项和分页支持。
 
@@ -35,15 +36,15 @@ ms.locfileid: "87053260"
 
 相等性运算符：
 
-- `eq`：测试某个字段是否*等于*某个常量值。
-- `ne`：测试某个字段是否*不等于*某个常量值。
+- `eq`：测试某个字段是否 *等于* 某个常量值。
+- `ne`：测试某个字段是否 *不等于* 某个常量值。
 
 范围运算符：
 
-- `gt`：测试某个字段是否*大于*某个常量值。
-- `lt`：测试某个字段是否*小于*某个常量值。
+- `gt`：测试某个字段是否 *大于* 某个常量值。
+- `lt`：测试某个字段是否 *小于* 某个常量值。
 - `ge`：测试某个字段是否大于或等于  某个常数值。
-- `le`：测试某个字段是否*小于或等于*某个常量值。
+- `le`：测试某个字段是否 *小于或等于* 某个常量值。
 
 ## <a name="filter"></a>筛选器
 

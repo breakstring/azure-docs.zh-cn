@@ -3,16 +3,16 @@ title: 快速入门：使用 Azure Monitor Application Insights 监视 Node.js
 description: 提供有关快速设置 Node.js Web 应用以使用 Azure Monitor Application Insights 进行监视的说明
 ms.subservice: application-insights
 ms.topic: quickstart
-author: mrbullwinkle
-ms.author: mbullwin
+author: lgayhardt
+ms.author: lagayhar
 ms.date: 07/12/2019
-ms.custom: mvc, seo-javascript-september2019, seo-javascript-october2019, devx-track-javascript
-ms.openlocfilehash: 17e01894ac3d26720b1e74be9d0fd7fc193c463f
-ms.sourcegitcommit: 2ffa5bae1545c660d6f3b62f31c4efa69c1e957f
+ms.custom: mvc, seo-javascript-september2019, seo-javascript-october2019, devx-track-js
+ms.openlocfilehash: e5fc7c71c1ced4542f00fe862699442c6b43bc69
+ms.sourcegitcommit: f5b8410738bee1381407786fcb9d3d3ab838d813
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/11/2020
-ms.locfileid: "88077299"
+ms.lasthandoff: 01/14/2021
+ms.locfileid: "98210352"
 ---
 # <a name="quickstart-start-monitoring-your-nodejs-web-application-with-azure-application-insights"></a>快速入门：使用 Azure Application Insights 开始监视 Node.js Web 应用程序
 
@@ -50,7 +50,7 @@ ms.locfileid: "88077299"
 
 ## <a name="configure-appinsights-sdk"></a>配置 AppInsights SDK
 
-1. 选择“概述”，然后复制应用程序的**检测密钥**。 
+1. 选择“概述”，然后复制应用程序的 **检测密钥**。 
 
    ![查看 Application Insights 检测密钥](./media/nodejs-quick-start/azure-app-insights-instrumentation-key.png)
 
@@ -60,7 +60,7 @@ ms.locfileid: "88077299"
    npm install applicationinsights --save
    ```
 
-3. 编辑应用的第一个 .js  文件并将以下两行添加到脚本的最顶部。 如果使用的是 [Node.js 快速入门应用](../../app-service/quickstart-nodejs.md)，则将修改 index.js  文件。 将 `<instrumentation_key>` 替换为应用程序的检测密钥。 
+3. 编辑应用的第一个 .js  文件并将以下两行添加到脚本的最顶部。 如果使用的是 [Node.js 快速入门应用](../../app-service/quickstart-nodejs.md)，则将修改 index.js  文件。 将 `<instrumentation_key>` 替换为应用程序见解的检测密钥。 
 
    ```JavaScript
    const appInsights = require('applicationinsights');

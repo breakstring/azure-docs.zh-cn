@@ -1,25 +1,26 @@
 ---
-title: 快速入门：识别语音、意向和实体 - 语音服务
+title: 意向识别快速入门 - 语音服务
 titleSuffix: Azure Cognitive Services
-description: 在本快速入门中，我们将使用语音 SDK 以交互方式识别从麦克风捕获的音频数据中的语音。
+description: 在本快速入门中，你将使用意向识别以交互方式识别从麦克风捕获的音频数据中的意向。
 services: cognitive-services
 author: erhopf
 manager: nitinme
 ms.service: cognitive-services
 ms.subservice: speech-service
 ms.topic: quickstart
-ms.date: 06/25/2020
+ms.date: 09/02/2020
 ms.author: erhopf
-ms.custom: devx-track-javascript
+ms.custom: devx-track-js, devx-track-csharp, cog-serv-seo-aug-2020
 zone_pivot_groups: programming-languages-set-two-with-js
-ms.openlocfilehash: cd7e72f858bedb8df70a74dffcdf655500cf4709
-ms.sourcegitcommit: 42107c62f721da8550621a4651b3ef6c68704cd3
+keywords: 意向识别
+ms.openlocfilehash: 8380db20ca3c4896aa37222dd5db450c9843b5ab
+ms.sourcegitcommit: eb6bef1274b9e6390c7a77ff69bf6a3b94e827fc
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/29/2020
-ms.locfileid: "87406193"
+ms.lasthandoff: 10/05/2020
+ms.locfileid: "91283050"
 ---
-# <a name="quickstart-recognize-speech-intents-and-entities-with-language-understanding-luis"></a>快速入门：使用语言理解 (LUIS) 识别语音、意向和实体
+# <a name="get-started-with-intent-recognition"></a>意向识别入门
 
 ::: zone pivot="programming-language-csharp"
 [!INCLUDE [Header](../includes/quickstarts/intent-recognition/header.md)]

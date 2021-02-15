@@ -3,16 +3,17 @@ title: Azure Enterprise REST API
 description: 本文介绍可用于 Azure 企业注册的 REST API。
 author: bandersmsft
 ms.author: banders
-ms.date: 08/14/2020
+ms.date: 01/21/2021
 ms.topic: conceptual
 ms.service: cost-management-billing
+ms.subservice: enterprise
 ms.reviewer: boalcsva
-ms.openlocfilehash: 38662109b03caf63f72f2c1ad3132611ee91d1c3
-ms.sourcegitcommit: c293217e2d829b752771dab52b96529a5442a190
+ms.openlocfilehash: 1fdf64053a55eb33d80ed461c231e8c6dd84d63b
+ms.sourcegitcommit: b39cf769ce8e2eb7ea74cfdac6759a17a048b331
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/15/2020
-ms.locfileid: "88244085"
+ms.lasthandoff: 01/22/2021
+ms.locfileid: "98677725"
 ---
 # <a name="azure-enterprise-rest-apis"></a>Azure Enterprise REST API
 
@@ -24,15 +25,15 @@ Microsoft 企业 Azure 客户可以通过 REST API 获取使用情况和计费�
 
 ### <a name="available-apis"></a>可用 API
 
-**余额和摘要** - [余额和摘要 API](../../billing/billing-enterprise-api-balance-summary.md) 提供关于余额、新购买、Azure 市场服务费用、调整和超额费用信息的每月摘要。 有关详细信息，请参阅[适用于企业客户的报告 API - 余额和摘要](/rest/api/billing/enterprise/billing-enterprise-api-balance-summary)。
+**余额和摘要** - [余额和摘要 API](/rest/api/billing/enterprise/billing-enterprise-api-balance-summary) 提供关于余额、新购买、Azure 市场服务费用、调整和超额费用信息的每月摘要。 有关详细信息，请参阅[适用于企业客户的报告 API - 余额和摘要](/rest/api/billing/enterprise/billing-enterprise-api-balance-summary)。
 
-**使用情况详细信息** - [使用情况详细信息 API](../../billing/billing-enterprise-api-usage-detail.md) 提供消耗数量和注册估计费用的日常明细。 结果还包括有关实例、计量和部门信息。 可以按照计费周期或指定的开始日期和结束日期查询 API。 有关详细信息，请参阅[适用于企业客户的报告 API - 使用情况详细信息](/rest/api/billing/enterprise/billing-enterprise-api-usage-detail)。
+**使用情况详细信息** - [使用情况详细信息 API](/rest/api/billing/enterprise/billing-enterprise-api-usage-detail) 提供消耗数量和注册估计费用的日常明细。 结果还包括有关实例、计量和部门信息。 可以按照计费周期或指定的开始日期和结束日期查询 API。 有关详细信息，请参阅[适用于企业客户的报告 API - 使用情况详细信息](/rest/api/billing/enterprise/billing-enterprise-api-usage-detail)。
 
-**市场应用商店费用** - [市场应用商店费用 API](../../billing/billing-enterprise-api-marketplace-storecharge.md) 按指定计费周期的天或开始和结束日期返回基于使用情况的市场费用明细。 有关详细信息，请参阅[适用于企业客户的报告 API - 市场应用商店费用](/rest/api/billing/enterprise/billing-enterprise-api-marketplace-storecharge)。
+**市场应用商店费用** - [市场应用商店费用 API](/rest/api/billing/enterprise/billing-enterprise-api-marketplace-storecharge) 按指定计费周期的天或开始和结束日期返回基于使用情况的市场费用明细。 有关详细信息，请参阅[适用于企业客户的报告 API - 市场应用商店费用](/rest/api/billing/enterprise/billing-enterprise-api-marketplace-storecharge)。
 
 **价目表** - [价目表 API](/rest/api/billing/enterprise/billing-enterprise-api-pricesheet) 为注册和计费周期的每个计量提供适用的费率。 有关详细信息，请参阅[适用于企业客户的报告 API - 价目表](/rest/api/billing/enterprise/billing-enterprise-api-pricesheet)。
 
-**计费周期** - [计费周期 API](../../billing/billing-enterprise-api-billing-periods.md) 以倒序顺序为注册返回具有消耗数据的计费周期列表。 每个周期都有一个属性指向以下四个数据集的 API 路由：BalanceSummary、UsageDetails、Marketplace Charge 和 PriceSheet。 有关详细信息，请参阅[适用于企业客户的报告 API - 计费周期](/rest/api/billing/enterprise/billing-enterprise-api-billing-periods)。
+**计费周期** - [计费周期 API](/rest/api/billing/enterprise/billing-enterprise-api-billing-periods) 以倒序顺序为注册返回具有消耗数据的计费周期列表。 每个周期都有一个属性指向以下四个数据集的 API 路由：BalanceSummary、UsageDetails、Marketplace Charge 和 PriceSheet。 有关详细信息，请参阅[适用于企业客户的报告 API - 计费周期](/rest/api/billing/enterprise/billing-enterprise-api-billing-periods)。
 
 ### <a name="enable-api-data-access"></a>启用 API 数据访问
 
@@ -92,14 +93,6 @@ Microsoft 企业 Azure 客户可以通过 REST API 获取使用情况和计费�
 
 使用情况和计费数据文件将在当前计费月份每隔 24 小时更新。 但是，可能会出现长达 3 天的数据延迟。 例如，如果在星期一使用了服务，数据可能会直到星期四才出现在数据文件中。
 
-### <a name="test-enrollment-for-development"></a>用于开发的测试注册
-
-没有 Azure 企业注册并想要访问 API 的合作伙伴或开发人员可以使用测试注册。 注册名称为 _EnrollmentNumber 100_，可以查找并测试直到 2018 年 6 月的使用信息。 然后，可以使用以下密钥调用 API 并查看示例数据。
-
-```
-eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6ImpoeXA2UU9DWlZmY1pmdmhDVGR1OFdxeTJ5byJ9.eyJFbnJvbGxtZW50TnVtYmVyIjoiMTAwIiwiSWQiOiI1ZTc2ZmNiMy0xN2I4LTQ5ZDItYjdkOC0zMDU0YjUwOWY0MWYiLCJSZXBvcnRWaWV3IjoiU3lzdGVtIiwiUGFydG5lcklkIjoiIiwiRGVwYXJ0bWVudElkIjoiIiwiQWNjb3VudElkIjoiIiwiaXNzIjoiZWEubWljcm9zb2Z0YXp1cmUuY29tIiwiYXVkIjoiY2xpZW50LmVhLm1pY3Jvc29mdGF6dXJlLmNvbSIsImV4cCI6MTU4NjM5MDA2OSwibmJmIjoxNTcwNTc4ODY5fQ.lENR5pCBph6iZCVexUlN1b-j7StaILCyBewVHoILD-_fn8S2o2bHY1qUseGOkBwNlaFQfk2OZIo-jQYvnf3eP3UNrNVTCINT0APbc1RqgwSjZSxugVVHH9jnSzEjONkJaSKmi4tlidk6zkF1-uY-TPJkKxYN_9ar7BgLshF9JGXk7t8OZhxSCxDZc-smntu6ORFDl4gRZZVBKXhqOGjOAdYX5tPiGDF2Bxb68RSzh9Xyr5PXxKLx5yivZzUdo0-GFHo13V9w6a5VQM4R1w4_ro8jF8WAo3mpGZ_ovx_U5IY6zMNmi_AoA1mUyvTGotgcu94RragutoJRxAGHbNJZ0Q
-```
-
 ### <a name="azure-service-catalog"></a>Azure 服务目录
 
 所有 Azure 服务将以 CSV 格式发布到 Azure 存储博客中的某个目录。 如果需要为系统的所有 Azure 服务生成组织有序的目录，可以使用该目录。 当前目录位于 [https://azurecatalog.blob.core.windows.net/catalog/AzureCatalog.csv](https://azurecatalog.blob.core.windows.net/catalog/AzureCatalog.csv)。
@@ -121,28 +114,28 @@ eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6ImpoeXA2UU9DWlZmY1pmdmhDVGR1OFdxeTJ5
 | SubscriptionGuid | MOCPSubscriptionGuid | SubscriptionGuid |   |
 | 订阅名称 | SubscriptionName | SubscriptionName |   |
 | Date | Date | Date | 显示服务目录报告的运行日期。 格式是不带时间戳的日期字符串。 |
-| 月份 | 月份 | 月份 |   |
-| 日期 | 日期 | 日期 |   |
-| 年龄 | 年龄 | 年龄 |   |
-| Products | BillableItemName | Products |   |
-| 测定仪 ID | ResourceGUID | 计量 ID |   |
+| 月 | 月 | 月份 |   |
+| 日期 | 日 | 日 |   |
+| 年份 | 年份 | 年份 |   |
+| Product | BillableItemName | Product |   |
+| Meter ID | ResourceGUID | MeterId |   |
 | 测定仪类别 | 服务 | MeterCategory | 有助于查找服务。 与具有多个 ServiceType 的服务相关。 例如“虚拟机”。 |
-| 测定仪子类别 | ServiceType | MeterSubCategory | 提供服务的另一种详细级别。 例如“A1 VM (非 Windows)”。  |
-| 测定仪区域 | ServiceRegion | MeterRegion | 服务所需的第三种详细级别。 查找 ResourceGUID 的区域上下文时非常有用。 |
-| 测定仪名称 | ServiceResource | MeterName | 服务的名称。 |
-| 已耗用数量 | ResourceQtyConsumed | ConsumedQuantity |   |
+| Meter Sub-Category | ServiceType | MeterSubCategory | 提供服务的另一种详细级别。 例如“A1 VM (非 Windows)”。  |
+| Meter Region | ServiceRegion | MeterRegion | 服务所需的第三种详细级别。 查找 ResourceGUID 的区域上下文时非常有用。 |
+| Meter Name | ServiceResource | MeterName | 服务的名称。 |
+| Consumed Quantity | ResourceQtyConsumed | ConsumedQuantity |   |
 | ResourceRate | ResourceRate | ResourceRate |   |
 | ExtendedCost | ExtendedCost | ExtendedCost |   |
-| 资源位置 | ServiceSubRegion | ResourceLocation |   |
-| 已耗用的服务 | ServiceInfo | ConsumedService |   |
+| Resource Location | ServiceSubRegion | ResourceLocation |   |
+| Consumed Service | ServiceInfo | ConsumedService |   |
 | 实例 ID | 组件 | InstanceId |   |
 | ServiceInfo1 | ServiceInfo1 | ServiceInfo1 |   |
 | ServiceInfo2 | ServiceInfo2 | ServiceInfo2 |   |
 | AdditionalInfo | AdditionalInfo | AdditionalInfo |   |
 | Tags | Tags | Tags |   |
-| 应用商店服务标识符   | OrderNumber | StoreServiceIdentifier   |   |
-| 部门名称 | DepartmentName | DepartmentName |   |
-| 成本中心 | CostCenter | CostCenter |   |
+| Store Service Identifier   | OrderNumber | StoreServiceIdentifier   |   |
+| Department Name | DepartmentName | DepartmentName |   |
+| Cost Center | CostCenter | CostCenter |   |
 | 计量单位 | UnitOfMeasure | UnitOfMeasure | 示例值：小时、GB、事件、推送、单位、单位小时、MB、日单位 |
 | ResourceGroup | ResourceGroup | ResourceGroup |   |
 
@@ -156,14 +149,14 @@ eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6ImpoeXA2UU9DWlZmY1pmdmhDVGR1OFdxeTJ5
 | SubscriptionGuid | SubscriptionGuid | SubscriptionGuid |
 | 订阅名称 | SubscriptionName |  SubscriptionName |
 | Date | BillingCycle |  日期（仅限日期字符串。 不带时间戳）
-| 月份 | 月份 |  月份 |
-| 日期 | 日期 |  日期 |
-| 年龄 | 年龄 |  年龄 |
-| 测定仪 ID | MeterResourceId |  计量 ID |
+| 月 | 月 |  月份 |
+| 日期 | 日 |  日 |
+| 年份 | 年份 |  年份 |
+| Meter ID | MeterResourceId |  MeterId |
 | 发布者名称 | PublisherFriendlyName |  PublisherName |
 | 产品名称 | OfferFriendlyName |  OfferName |
 | 计划名称 | PlanFriendlyName |  PlanName |
-| 已耗用数量 | BilledQty |  ConsumedQuantity |
+| Consumed Quantity | BilledQty |  ConsumedQuantity |
 | ResourceRate | ResourceRate | ResourceRate |
 | ExtendedCost | ExtendedCost | ExtendedCost |
 | 计量单位 | UnitOfMeasure | UnitOfMeasure |
@@ -171,8 +164,8 @@ eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6ImpoeXA2UU9DWlZmY1pmdmhDVGR1OFdxeTJ5
 | 其他信息 | AdditionalInfo | AdditionalInfo |
 | Tags | Tags | Tags |
 | 订单编号 | OrderNumber | OrderNumber |
-| 部门名称 | DepartmentNames | DepartmentName |
-| 成本中心 | CostCenters |  CostCenter |
+| Department Name | DepartmentNames | DepartmentName |
+| Cost Center | CostCenters |  CostCenter |
 | 资源组 | ResourceGroup |  ResourceGroup |
 
 #### <a name="price-sheet"></a>价目表

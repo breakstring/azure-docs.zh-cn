@@ -1,6 +1,6 @@
 ---
-title: 将 Proofpoint on demand 目标攻击防护（点击）数据连接到 Azure Sentinel |Microsoft Docs
-description: 了解如何将 Proofpoint on demand 目标攻击防护（分流）数据连接到 Azure Sentinel。
+title: 连接 Proofpoint on demand 目标攻击防护 (将) 数据点击 Azure Sentinel |Microsoft Docs
+description: 了解如何连接 Proofpoint on demand 目标攻击防护 (将) 数据连接到 Azure Sentinel。
 services: sentinel
 documentationcenter: na
 author: yelevin
@@ -14,20 +14,20 @@ ms.tgt_pltfrm: na
 ms.workload: na
 ms.date: 07/17/2020
 ms.author: yelevin
-ms.openlocfilehash: df4292a40335e58c64b8ebc50ffb6ac1ceee8836
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.openlocfilehash: 86018bafaa42eac01e5dccf8da1d290b64e2475c
+ms.sourcegitcommit: 24f30b1e8bb797e1609b1c8300871d2391a59ac2
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87059896"
+ms.lasthandoff: 02/10/2021
+ms.locfileid: "100092972"
 ---
 # <a name="connect-your-proofpoint-tap-to-azure-sentinel-with-azure-function"></a>通过 Azure Function 将 Proofpoint on demand 点击连接到 Azure Sentinel
 
 > [!IMPORTANT]
 > Azure Sentinel 中的 Proofpoint on demand 点击数据连接器目前为公共预览版。
-> 此功能在提供时没有服务级别协议，不建议用于生产工作负荷。 某些功能可能不受支持或者受限。 有关详细信息，请参阅 [Microsoft Azure 预览版补充使用条款](https://azure.microsoft.com/support/legal/preview-supplemental-terms/)。
+> 此功能不附带服务级别协议，不建议将其用于生产工作负载。 某些功能可能不受支持或者受限。 有关详细信息，请参阅 [Microsoft Azure 预览版补充使用条款](https://azure.microsoft.com/support/legal/preview-supplemental-terms/)。
 
-Proofpoint on demand 目标攻击防护（点击）连接器可让你轻松地将[proofpoint on demand](https://www.proofpoint.com/us/products/advanced-threat-protection/targeted-attack-protection)安全解决方案日志与 Azure Sentinel 连接起来，查看仪表板，创建自定义警报，并改善调查。 Proofpoint on demand 分流和 Azure Sentinel 之间的集成利用 Azure Functions 来使用 REST API 请求日志数据。
+Proofpoint on demand 目标攻击防护 (点击) 连接器可让你轻松地将 [proofpoint on demand](https://www.proofpoint.com/us/products/advanced-threat-protection/targeted-attack-protection) 安全解决方案日志与 Azure Sentinel 连接起来，查看仪表板、创建自定义警报，并改善调查。 Proofpoint on demand 分流和 Azure Sentinel 之间的集成利用 Azure Functions 来使用 REST API 请求日志数据。
 
 > [!NOTE]
 > 数据将存储在运行 Azure Sentinel 的工作区的地理位置。
@@ -36,11 +36,11 @@ Proofpoint on demand 目标攻击防护（点击）连接器可让你轻松地�
 
 Azure Functions 可以直接从 Proofpoint on demand 中集成并请求事件和日志，并将其转发到 Azure Sentinel。
 
-1. 在 Azure Sentinel 门户中，单击 "**数据连接器**"，然后选择 " **proofpoint on demand** "。
+1. 在 Azure Sentinel 门户中，单击 " **数据连接器** "，然后选择 " **proofpoint on demand** "。
 
-1. 选择 "**打开连接器" 页面**。
+1. 选择 " **打开连接器" 页面**。
 
-1. 按照**PROOFPOINT ON DEMAND 点击**页面上的说明进行操作。
+1. 按照 **PROOFPOINT ON DEMAND 点击** 页面上的说明进行操作。
 
 ## <a name="find-your-data"></a>查找数据
 

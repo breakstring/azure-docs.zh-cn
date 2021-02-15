@@ -1,14 +1,14 @@
 ---
 title: 快速入门：第一个 PowerShell 查询
 description: 本快速入门介绍为 Azure PowerShell 启用 Resource Graph 模块并运行第一个查询的步骤。
-ms.date: 08/10/2020
+ms.date: 01/27/2021
 ms.topic: quickstart
-ms.openlocfilehash: 4cc7eb524060f2a797077f38321ae9ce6c9cf267
-ms.sourcegitcommit: 269da970ef8d6fab1e0a5c1a781e4e550ffd2c55
+ms.openlocfilehash: 131bed4fe60035682a317e186f11561bc005b298
+ms.sourcegitcommit: 436518116963bd7e81e0217e246c80a9808dc88c
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/10/2020
-ms.locfileid: "88056391"
+ms.lasthandoff: 01/27/2021
+ms.locfileid: "98917667"
 ---
 # <a name="quickstart-run-your-first-resource-graph-query-using-azure-powershell"></a>快速入门：使用 Azure PowerShell 运行首个 Resource Graph 查询
 

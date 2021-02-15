@@ -7,13 +7,13 @@ ms.assetid: de5d4285-9c7d-4735-a695-288264047375
 ms.topic: sample
 ms.date: 03/20/2017
 ms.author: msangapu
-ms.custom: mvc, seodec18
-ms.openlocfilehash: 771cdecd6248f0a4fd350dc3d18e1c05edbd5a46
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.custom: mvc, seodec18, devx-track-azurepowershell
+ms.openlocfilehash: 1b88e5928d276b58339cb0266505295808bc7a7c
+ms.sourcegitcommit: 32c521a2ef396d121e71ba682e098092ac673b30
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87033864"
+ms.lasthandoff: 09/25/2020
+ms.locfileid: "91335477"
 ---
 # <a name="scale-a-web-app-manually-using-powershell"></a>使用 PowerShell 手动缩放 Web 应用
 
@@ -43,6 +43,7 @@ Remove-AzResourceGroup -Name $ResourceGroupName -Force
 |---|---|
 | [New-AzResourceGroup](/powershell/module/az.resources/new-azresourcegroup) | 创建用于存储所有资源的资源组。 |
 | [New-AzAppServicePlan](/powershell/module/az.websites/new-azappserviceplan) | 创建应用服务计划。 |
+| [Set-AzAppServicePlan](/powershell/module/az.websites/set-azappserviceplan) | 修改应用服务计划的配置。 |
 | [New-AzWebApp](/powershell/module/az.websites/new-azwebapp) | 创建 Web 应用。 |
 | [Set-AzWebApp](/powershell/module/az.websites/set-azwebapp) | 修改 Web 应用的配置。 |
 

@@ -4,13 +4,13 @@ description: 了解如何使用 ZIP 文件（或者对于 Java 开发人员而�
 ms.topic: article
 ms.date: 08/12/2019
 ms.reviewer: sisirap
-ms.custom: seodec18
-ms.openlocfilehash: f547f60bf6c67b757f2e12f06f1e39100c3e76cb
-ms.sourcegitcommit: 2ffa5bae1545c660d6f3b62f31c4efa69c1e957f
+ms.custom: seodec18, devx-track-azurecli
+ms.openlocfilehash: 150f6b57f1dec0b6d925ef53b4a7001ae9f23607
+ms.sourcegitcommit: 273c04022b0145aeab68eb6695b99944ac923465
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/11/2020
-ms.locfileid: "88077146"
+ms.lasthandoff: 12/10/2020
+ms.locfileid: "97007902"
 ---
 # <a name="deploy-your-app-to-azure-app-service-with-a-zip-or-war-file"></a>使用 ZIP 或 WAR 文件将应用部署到 Azure 应用服务
 
@@ -26,25 +26,25 @@ ms.locfileid: "88077146"
 
 有关详细信息，请参阅 [Kudu 文档](https://github.com/projectkudu/kudu/wiki/Deploying-from-a-zip-file)。
 
-WAR 文件部署将[war](https://wikipedia.org/wiki/WAR_(file_format))文件部署到应用服务以运行 Java web 应用。 请参阅[部署 WAR 文件](#deploy-war-file)。
+WAR 文件部署将 [war](https://wikipedia.org/wiki/WAR_(file_format)) 文件部署到应用服务以运行 Java web 应用。 请参阅[部署 WAR 文件](#deploy-war-file)。
 
 > [!NOTE]
-> 使用时 `ZipDeploy` ，只有在其时间戳与已部署的时间戳不匹配时，才会复制文件。 使用缓存输出的生成过程生成 zip 可导致部署速度更快。 有关详细信息，请参阅[从 zip 文件或 Url 部署](https://github.com/projectkudu/kudu/wiki/Deploying-from-a-zip-file-or-url)。
+> 如果使用 `ZipDeploy`，则仅当文件时间戳与已部署的文件不匹配时，才会复制文件。 使用缓存输出的生成过程生成 zip 可以使部署速度更快。 有关详细信息，请参阅[从 zip 文件或 url 部署](https://github.com/projectkudu/kudu/wiki/Deploying-from-a-zip-file-or-url)。
 
 ## <a name="prerequisites"></a>先决条件
 
-若要完成本文中的步骤，请[创建一个应用服务应用](/azure/app-service/)，或者使用为其他教程创建的应用。
+若要完成本文中的步骤，请[创建一个应用服务应用](./index.yml)，或者使用为其他教程创建的应用。
 
 [!INCLUDE [quickstarts-free-trial-note](../../includes/quickstarts-free-trial-note.md)]
 
 [!INCLUDE [Create a project ZIP file](../../includes/app-service-web-deploy-zip-prepare.md)]
 
 [!INCLUDE [Deploy ZIP file](../../includes/app-service-web-deploy-zip.md)]
-上述终结点目前不适用于 Linux 应用服务。 请考虑改用 FTP 或[ZIP 部署 API](faq-app-service-linux.md#continuous-integration-and-deployment) 。
+上面的终结点目前不适用于 Linux 应用服务。 请考虑改用 FTP 或 [ZIP 部署 API](faq-app-service-linux.md#continuous-integration-and-deployment)。
 
 ## <a name="deploy-zip-file-with-azure-cli"></a>使用 Azure CLI 部署 ZIP 文件
 
-使用 [az webapp deployment source config-zip](/cli/azure/webapp/deployment/source?view=azure-cli-latest#az-webapp-deployment-source-config-zip) 命令将上传的 zip 文件部署到 Web 应用。  
+使用 [az webapp deployment source config-zip](/cli/azure/webapp/deployment/source#az-webapp-deployment-source-config-zip) 命令将上传的 zip 文件部署到 Web 应用。  
 
 下面的示例部署上传的 zip 文件。 使用 Azure CLI 的本地安装时，请为 `--src` 指定本地 zip 文件的路径。
 
@@ -54,7 +54,7 @@ az webapp deployment source config-zip --resource-group <group-name> --name <app
 
 此命令将 zip 文件中的文件和目录部署到默认的应用服务应用程序文件夹 (`\home\site\wwwroot`) 并重启应用。
 
-默认情况下，部署引擎假定 ZIP 文件已准备好按原样运行，并且不运行任何生成自动化。 若要启用与[Git 部署](deploy-local-git.md)相同的生成自动化，请 `SCM_DO_BUILD_DURING_DEPLOYMENT` 在[Cloud Shell](https://shell.azure.com)中运行以下命令，设置应用设置：
+默认情况下，部署引擎假定 ZIP 文件已准备好按原样运行，并且不运行任何生成自动化。 若要启用与 [Git 部署](deploy-local-git.md)相同的生成自动化，请 `SCM_DO_BUILD_DURING_DEPLOYMENT` 在 [Cloud Shell](https://shell.azure.com)中运行以下命令，设置应用设置：
 
 ```azurecli-interactive
 az webapp config appsettings set --resource-group <group-name> --name <app-name> --settings SCM_DO_BUILD_DURING_DEPLOYMENT=true
@@ -66,7 +66,7 @@ az webapp config appsettings set --resource-group <group-name> --name <app-name>
 
 ## <a name="deploy-war-file"></a>部署 WAR 文件
 
-若要将 WAR 文件部署到应用服务，请将 POST 请求发送到 `https://<app-name>.scm.azurewebsites.net/api/wardeploy` 。 POST 请求必须在消息正文中包含此 .war 文件。 应用的部署凭据是通过使用 HTTP BASIC 身份验证在请求中提供的。
+若要将 WAR 文件部署到应用服务，请将 POST 请求发送到 `https://<app-name>.scm.azurewebsites.net/api/wardeploy`。 POST 请求必须在消息正文中包含此 .war 文件。 应用的部署凭据是通过使用 HTTP BASIC 身份验证在请求中提供的。
 
 部署 WAR 文件时始终使用 `/api/wardeploy`。 此 API 将展开 WAR 文件并将其放在共享文件驱动器上。 使用其他部署 API 可能会导致行为不一致。 
 

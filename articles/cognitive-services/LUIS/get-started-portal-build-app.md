@@ -1,14 +1,16 @@
 ---
 title: 快速入门：在 LUIS 门户中创建新应用
 description: 本快速入门将创建应用的基本组成部分以及意向和实体，并在 LUIS 门户中使用示例言语进行测试。
+ms.service: cognitive-services
+ms.subservice: language-understanding
 ms.topic: quickstart
-ms.date: 05/19/2020
-ms.openlocfilehash: 7cf55a7891b7e06c18c80d9d359b19e54f0413a9
-ms.sourcegitcommit: 595cde417684e3672e36f09fd4691fb6aa739733
+ms.date: 11/30/2020
+ms.openlocfilehash: a5443dce9fc8bc028232f66f45b537a46858f35a
+ms.sourcegitcommit: 5e5a0abe60803704cf8afd407784a1c9469e545f
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 05/20/2020
-ms.locfileid: "83697270"
+ms.lasthandoff: 12/01/2020
+ms.locfileid: "96436668"
 ---
 # <a name="quickstart-create-a-new-app-in-the-luis-portal"></a>快速入门：在 LUIS 门户中创建新应用
 
@@ -18,21 +20,22 @@ ms.locfileid: "83697270"
 
 ## <a name="create-an-app"></a>创建应用
 
-1. 从上下文工具栏中选择“+ 新建用于对话的应用”，然后再次选择“+ 新建用于对话的应用” 。
+若要创建应用程序，请选择“+ 新建应用”。 
 
-    > [!div class="mx-imgBorder"]
-    > [![在 LUIS 门户中创建新应用的屏幕截图](./media/create-app-in-portal.png)](./media/create-app-in-portal.png#lightbox)
+在显示的窗口中，输入以下信息：
 
-1. 在弹出窗口中使用以下设置配置应用，然后选择“完成”。
+|名称  |说明  |
+|---------|---------|
+|名称     | 应用的名称， 例如“home automation”。 必需。        |
+|环境     | 应用能够理解和显示的语言。 必需。   |
+|说明 | 应用的说明。 可选。
+|预测资源 | 将接收查询的预测资源。 可选。 |
 
-   |设置名称| 值 | 目的|
-   |--|--|--|
-   |名称|`myEnglishApp`|唯一的 LUIS 应用名称<br>必填|
-   |环境|**英语**|用户的言语语言：**en-us**<br>必填|
-   |说明（可选）|`App made with LUIS Portal`|应用的说明<br>可选|
-   |预测资源（可选） |-  |请不要选择。 LUIS 免费提供一个初学者密钥用于创作和发出 1,000 个预测终结点请求。 |
+选择“完成”。
 
-   ![输入新应用设置的屏幕截图](./media/get-started-portal-build-app/create-new-app-settings.png)
+>[!NOTE]
+>创建应用程序后将无法更改区域性。
+
 
 ## <a name="create-intents"></a>创建意向
 
@@ -41,7 +44,7 @@ ms.locfileid: "83697270"
  1. 找工作和申请工作
  1. 查找工作申请表
 
-此应用的两个不同_意向_对应于以下意向：
+此应用的两个不同 _意向_ 对应于以下意向：
 
 |Intent|用户提供的文本示例<br>称为“言语”|
 |--|--|
@@ -50,7 +53,7 @@ ms.locfileid: "83697270"
 
 若要创建意向，请完成以下步骤：
 
-1. 创建应用后，会转到“生成”部分的“意向”页。  选择“创建”。
+1. 创建应用后，请确保你位于“生成”部分的“意向”页上 。 选择“创建”。
 
    [![选择“创建”以创建新意向的屏幕截图](./media/get-started-portal-build-app/create-new-intent-button.png)](./media/get-started-portal-build-app/create-new-intent-button.png#lightbox)
 
@@ -58,14 +61,9 @@ ms.locfileid: "83697270"
 
 ## <a name="add-an-example-utterance"></a>添加示例话语
 
-在创建意向后添加示例话语。 示例话语是用户在聊天机器人或其他客户端应用程序中输入的文本。 它们可将用户文本的意向映射到 LUIS 意向。
+在创建意向后添加示例话语。 示例话语是用户在聊天机器人或其他客户端应用程序中输入的文本。 它们可将用户文本的意向映射到 LUIS 意向。 就此示例应用程序的 `FindForm` 意向来说，示例话语将包含表格编号。 客户端应用程序需要该表格编号来履行用户的请求，因此必须将其包括在话语中。
 
-就此示例应用程序的 `FindForm` 意向来说，示例话语将包含表格编号。 客户端应用程序需要该表格编号来履行用户的请求，因此必须将其包括在话语中。
-
-> [!div class="mx-imgBorder"]
-> [![输入 FindForm 意向的示例言语的屏幕截图](./media/get-started-portal-build-app/add-example-utterance.png)](./media/get-started-portal-build-app/add-example-utterance.png#lightbox)
-
-将以下 15 个示例话语添加到 `FindForm` 意向。
+在 `FindForm` 的“意向”页上，请在“示例言语”下添加以下示例言语 ， 
 
 |#|示例陈述|
 |--|--|

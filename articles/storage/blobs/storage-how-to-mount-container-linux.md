@@ -1,19 +1,19 @@
 ---
 title: 如何将 Azure Blob 存储装载为 Linux 上的文件系统 | Microsoft Docs
 description: 了解如何在 Linux 上使用 blobfuse （一个虚拟文件系统驱动程序）装载 Azure Blob 存储容器。
-author: rishabpoh
+author: tamram
 ms.service: storage
 ms.subservice: blobs
 ms.topic: how-to
 ms.date: 2/1/2019
-ms.author: ripohane
-ms.reviewer: dineshm
-ms.openlocfilehash: 8dc7c16b83816d2b408cef7ade06767bfe2a4582
-ms.sourcegitcommit: 2ff0d073607bc746ffc638a84bb026d1705e543e
+ms.author: tamram
+ms.reviewer: twooley
+ms.openlocfilehash: 002e8650a5555b70caf09179e03ce1bad1acdef5
+ms.sourcegitcommit: 78ecfbc831405e8d0f932c9aafcdf59589f81978
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/06/2020
-ms.locfileid: "87826542"
+ms.lasthandoff: 01/23/2021
+ms.locfileid: "98737534"
 ---
 # <a name="how-to-mount-blob-storage-as-a-file-system-with-blobfuse"></a>如何使用 Blobfuse 将 Blob 存储装载为文件系统
 
@@ -23,31 +23,31 @@ ms.locfileid: "87826542"
 本指南介绍如何使用 Blobfuse，以及如何在 Linux 上装载 Blob 存储容器并访问数据。 若要详细了解 Blobfuse，请阅读 [Blobfuse 存储库](https://github.com/Azure/azure-storage-fuse)中的详细信息。
 
 > [!WARNING]
-> Blobfuse 不保证 100% 的 POSIX 符合性，因为它只是将请求转换成 [Blob REST API](https://docs.microsoft.com/rest/api/storageservices/blob-service-rest-api)。 例如，重命名操作在 POSIX 中是原子操作，但在 Blobfuse 中不是。
+> Blobfuse 不保证 100% 的 POSIX 符合性，因为它只是将请求转换成 [Blob REST API](/rest/api/storageservices/blob-service-rest-api)。 例如，重命名操作在 POSIX 中是原子操作，但在 Blobfuse 中不是。
 > 有关本机文件系统和 Blobfuse 之间差异的完整列表，请访问 [Blobfuse 源代码存储库](https://github.com/azure/azure-storage-fuse)。
 > 
 
 ## <a name="install-blobfuse-on-linux"></a>在 Linux 上安装 Blobfuse
-适用于 Ubuntu 和 RHEL 发行版的 Blobfuse 二进制文件在[适用于 Linux 的 Microsoft 软件存储库](https://docs.microsoft.com/windows-server/administration/Linux-Package-Repository-for-Microsoft-Software)中提供。 若要在这些发行版上安装 blobfuse，请从列表中配置其中一个存储库。 如果你的发行版没有可用的二进制文件，还可以按照 [Azure 存储安装步骤](https://github.com/Azure/azure-storage-fuse/wiki/1.-Installation#option-2---build-from-source)从源代码生成二进制文件。
+适用于适用于 Ubuntu、Debian、SUSE、CentoOS、Oracle Linux 和 RHEL 分发 [的适用于 Linux 的 Microsoft 软件存储库](/windows-server/administration/Linux-Package-Repository-for-Microsoft-Software) 中提供了 Blobfuse 二进制文件。 若要在这些发行版上安装 blobfuse，请从列表中配置其中一个存储库。 如果你的发行版没有可用的二进制文件，还可以按照 [Azure 存储安装步骤](https://github.com/Azure/azure-storage-fuse/wiki/1.-Installation#option-2---build-from-source)从源代码生成二进制文件。
 
-Blobfuse 支持在 Ubuntu 14.04、16.04 和18.04 上安装。 运行以下命令以确保你已部署了以下版本之一：
+Blobfuse 支持在 Ubuntu 版本上安装：16.04、18.04 和20.04、RHELversions：7.5、7.8、8.0、8.1、8.2、CentOS 版本：7.0、8.0、Debian 版本：9.0、10.0、SUSE 版本：15、OracleLinux 8.1。 运行以下命令以确保你已部署了以下版本之一：
 ```
 lsb_release -a
 ```
 
 ### <a name="configure-the-microsoft-package-repository"></a>配置 Microsoft 包存储库
-配置 [Microsoft 产品的 Linux 包存储库](https://docs.microsoft.com/windows-server/administration/Linux-Package-Repository-for-Microsoft-Software)。
+配置 [Microsoft 产品的 Linux 包存储库](/windows-server/administration/Linux-Package-Repository-for-Microsoft-Software)。
 
-例如，在 Enterprise Linux 6 发行版中：
+例如，在企业 Linux 8 分发上：
 ```bash
-sudo rpm -Uvh https://packages.microsoft.com/config/rhel/6/packages-microsoft-prod.rpm
+sudo rpm -Uvh https://packages.microsoft.com/config/rhel/8/packages-microsoft-prod.rpm
 ```
 
 类似地，将 URL 更改为 `.../rhel/7/...`，使之指向 Enterprise Linux 7 发行版。
 
-Ubuntu 14.04 发行版上的另一个示例：
+Ubuntu 20.04 分发上的另一个示例：
 ```bash
-wget https://packages.microsoft.com/config/ubuntu/14.04/packages-microsoft-prod.deb
+wget https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb
 sudo dpkg -i packages-microsoft-prod.deb
 sudo apt-get update
 ```
@@ -76,6 +76,7 @@ Blobfuse 要求文件系统中存在一个临时路径，用于缓冲和缓存�
 ### <a name="optional-use-a-ramdisk-for-the-temporary-path"></a>（可选）将 ramdisk 用于临时路径
 以下示例创建一个 16 GB 的 ramdisk，并创建一个用于 Blobfuse 的目录。 请根据需要选择大小。 此 ramdisk 允许 Blobfuse 打开多个文件，只要其大小总计不超过 16 GB 即可。 
 ```bash
+sudo mkdir /mnt/ramdisk
 sudo mount -t tmpfs -o size=16g tmpfs /mnt/ramdisk
 sudo mkdir /mnt/ramdisk/blobfusetmp
 sudo chown <youruser> /mnt/ramdisk/blobfusetmp
@@ -143,5 +144,4 @@ echo "hello world" > test/blob.txt
 ## <a name="next-steps"></a>后续步骤
 
 * [Blobfuse 主页](https://github.com/Azure/azure-storage-fuse#blobfuse)
-* [报告 Blobfuse 问题](https://github.com/Azure/azure-storage-fuse/issues) 
-
+* [报告 Blobfuse 问题](https://github.com/Azure/azure-storage-fuse/issues)

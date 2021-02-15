@@ -12,16 +12,19 @@ ms.custom:
 - amqp
 - 'Role: Cloud Development'
 - 'Role: IoT Device'
-ms.openlocfilehash: d7bf31f7b16fa987bb9c710835d1a3aff8214604
-ms.sourcegitcommit: 9c3cfbe2bee467d0e6966c2bfdeddbe039cad029
+- devx-track-csharp
+ms.openlocfilehash: a3e328418a0f111cd0b985310ea6dc497999772d
+ms.sourcegitcommit: d76108b476259fe3f5f20a91ed2c237c1577df14
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/24/2020
-ms.locfileid: "88783257"
+ms.lasthandoff: 10/29/2020
+ms.locfileid: "92909788"
 ---
 # <a name="set-up-x509-security-in-your-azure-iot-hub"></a>在 Azure IoT 中心设置 X.509 安全性
 
-本教程介绍使用 *X.509 证书身份验证*保护 Azure IoT 中心所要执行的步骤。 在演示过程中，我们将使用开源工具 OpenSSL 在 Windows 计算机本地创建证书。 我们建议仅将本教程用于测试目的。 对于生产环境，应该从*根证书颁发机构 (CA)* 购买证书。
+本教程介绍使用 *X.509 证书身份验证* 保护 Azure IoT 中心所要执行的步骤。 在演示过程中，我们将使用开源工具 OpenSSL 在 Windows 计算机本地创建证书。 我们建议仅将本教程用于测试目的。 对于生产环境，应从 *根证书颁发机构 (CA)* 购买证书。 此外，在生产环境中，请确保在设备证书或 CA 证书过期时，实施了一个策略来处理证书滚动更新。
+
+[!INCLUDE [iot-hub-include-x509-ca-signed-support-note](../../includes/iot-hub-include-x509-ca-signed-support-note.md)]
 
 ## <a name="prerequisites"></a>先决条件
 
@@ -37,7 +40,7 @@ IoT 中心基于 X.509 证书的安全性需从 [X.509 证书链](https://en.wik
 
 可以选择以下任一方法获取证书：
 
-* 从*根证书颁发机构 (CA)* 购买 X.509 证书。 建议在生产环境中使用此方法。
+* 从 *根证书颁发机构 (CA)* 购买 X.509 证书。 建议在生产环境中使用此方法。
 
 * 使用 [OpenSSL](https://www.openssl.org/) 等第三方工具创建自己的 X.509 证书。 此方法适用于测试和开发目的。 有关使用 PowerShell 或 Bash 生成测试 CA 证书的信息，请参阅[管理示例和教程的测试 CA 证书](https://github.com/Azure/azure-iot-sdk-c/blob/master/tools/CACertificates/CACertificateOverview.md)。 本教程的其余部分使用按照[管理示例和教程的测试 CA 证书](https://github.com/Azure/azure-iot-sdk-c/blob/master/tools/CACertificates/CACertificateOverview.md)中的说明生成的测试 CA 证书。
 
@@ -48,14 +51,14 @@ IoT 中心基于 X.509 证书的安全性需从 [X.509 证书链](https://en.wik
 
 ## <a name="register-x509-ca-certificates-to-your-iot-hub"></a>将 X.509 CA 证书注册到 IoT 中心
 
-这些步骤说明如何通过门户将新的证书颁发机构添加到 IoT 中心。
+这些步骤说明如何通过门户将新的证书颁发机构添加到 IoT 中心。 使用 x.509 证书 CA 身份验证时，请确保注册新证书，使其在证书滚动更新策略中过期。
 
 > [!NOTE]
-> 可注册到 IoT 中心的 x.509 CA 证书的最大数目为25。 有关详细信息，请参阅 [Azure IoT 中心配额和限制](iot-hub-devguide-quotas-throttling.md)。
+> 可注册到 IoT 中心的 X.509 CA 证书的最大数目为 25。 有关详细信息，请参阅 [Azure IoT 中心配额和限制](iot-hub-devguide-quotas-throttling.md)。
 
 1. 在 Azure 门户中，导航到你的 IoT 中心，并选择中心的“设置” > “证书”。 
 
-1. 选择“添加”以添加新证书。
+1. 选择“添加”以添加新证书。 
 
 1. 在“证书名称”中输入一个易记的显示名称，并从计算机中选择在上一部分创建的证书文件。
 
@@ -89,19 +92,19 @@ IoT 中心基于 X.509 证书的安全性需从 [X.509 证书链](https://en.wik
 
 ## <a name="authenticate-your-x509-device-with-the-x509-certificates"></a>使用 X.509 证书对 X.509 设备进行身份验证
 
-若要对 X.509 设备进行身份验证，首先需要使用 CA 证书为该设备签名。 叶设备的签名通常在已相应地启用了制造工具的制造车间完成。 当设备从一个制造商向另一个制造商发送时，每个制造商的签名操作都将作为链中的中间证书捕获。 结果是从 CA 证书到设备的叶证书的证书链。 [管理示例和教程的测试 CA 证书](https://github.com/Azure/azure-iot-sdk-c/blob/master/tools/CACertificates/CACertificateOverview.md)中的步骤 4 会生成设备证书。
+若要对 X.509 设备进行身份验证，首先需要使用 CA 证书为该设备签名。 叶设备的签名通常在已相应地启用了制造工具的制造车间完成。 随着设备从一家制造商转移到另一家制造商，每家制造商的签名操作都捕获为链中的中间证书。 结果是建立了从 CA 证书到设备叶证书的证书链。 [管理示例和教程的测试 CA 证书](https://github.com/Azure/azure-iot-sdk-c/blob/master/tools/CACertificates/CACertificateOverview.md)中的步骤 4 会生成设备证书。
 
 接下来，我们演示如何创建一个 C# 应用程序来模拟针对 IoT 中心注册的 X.509 设备。 我们会将模拟设备提供的温度和湿度值发送到中心。 本教程只创建设备应用程序。 至于如何创建 IoT 中心服务应用程序用于向此模拟设备发送的事件发送响应，是留给读者的练习。 C# 应用程序假定你已按照[管理示例和教程的测试 CA 证书](https://github.com/Azure/azure-iot-sdk-c/blob/master/tools/CACertificates/CACertificateOverview.md)中的步骤进行操作。
 
-1. 打开 Visual Studio，选择“创建新项目”，然后选择“控制台应用(.NET Framework)”项目模板。  选择“**下一步**”。
+1. 打开 Visual Studio，选择“创建新项目”，然后选择“控制台应用(.NET Framework)”项目模板。  选择“ **下一步** ”。
 
-1. 在“配置新项目”中，将项目命名为 *SimulateX509Device*，然后选择“创建”。 
+1. 在“配置新项目”中，将项目命名为 *SimulateX509Device* ，然后选择“创建”。 
 
    ![在 Visual Studio 中创建 X.509 设备项目](./media/iot-hub-security-x509-get-started/create-device-project-vs2019.png)
 
 1. 在解决方案资源管理器中，右键单击“SimulateX509Device”项目，然后选择“管理 NuGet 包”。 
 
-1. 在“NuGet 包管理器”中，选择“浏览”，然后搜索并选择“Microsoft.Azure.Devices.Client”。   选择“安装”。
+1. 在“NuGet 包管理器”中，选择“浏览”，然后搜索并选择“Microsoft.Azure.Devices.Client”。   选择“安装”  。
 
    ![在 Visual Studio 中添加设备 SDK NuGet 包](./media/iot-hub-security-x509-get-started/device-sdk-nuget.png)
 
@@ -150,7 +153,7 @@ IoT 中心基于 X.509 证书的安全性需从 [X.509 证书链](https://en.wik
     }
     ```
 
-1. 最后，将以下代码行添加到 **Main** 函数，并根据安装程序的要求替换占位符 _设备 id_、 _你的 iot 中心名称_和 _绝对路径到设备-pfx 文件_ 。
+1. 最后，将以下代码行添加到 **Main** 函数，并根据安装程序的要求替换占位符 _设备 id_ 、 _你的 iot 中心名称_ 和 _绝对路径到设备-pfx 文件_ 。
 
     ```csharp
     try
@@ -187,7 +190,7 @@ IoT 中心基于 X.509 证书的安全性需从 [X.509 证书链](https://en.wik
 
    1. 导航到包含你的解决方案的文件夹，然后导航到解决方案文件夹中的 *bin/Debug* 路径。
 
-   1. 在命令提示符下运行应用程序 **SimulateX509Device.exe**。
+   1. 在命令提示符下运行应用程序 **SimulateX509Device.exe** 。
 
    应会看到，设备已成功连接到中心并在发送事件。
 
@@ -205,4 +208,4 @@ IoT 中心基于 X.509 证书的安全性需从 [X.509 证书链](https://en.wik
 
 若要进一步探索 IoT 中心的功能，请参阅：
 
-* [使用 Azure IoT Edge 将 AI 部署到边缘设备](../iot-edge/tutorial-simulate-device-linux.md)
+* [使用 Azure IoT Edge 将 AI 部署到边缘设备](../iot-edge/quickstart-linux.md)

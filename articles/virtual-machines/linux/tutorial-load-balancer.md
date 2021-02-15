@@ -14,13 +14,13 @@ ms.tgt_pltfrm: vm-linux
 ms.workload: infrastructure
 ms.date: 11/13/2017
 ms.author: cynthn
-ms.custom: mvc, devx-track-javascript, devx-track-azurecli
-ms.openlocfilehash: 82f1a803935c69835906155cf0d522e74d3d2fd6
-ms.sourcegitcommit: 11e2521679415f05d3d2c4c49858940677c57900
+ms.custom: mvc, devx-track-js, devx-track-azurecli
+ms.openlocfilehash: 7846fc84adfbf34ad8db1dbe16a79cb5345e6021
+ms.sourcegitcommit: 829d951d5c90442a38012daaf77e86046018e5b9
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/31/2020
-ms.locfileid: "87502488"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "91336082"
 ---
 # <a name="tutorial-load-balance-linux-virtual-machines-in-azure-to-create-a-highly-available-application-with-the-azure-cli"></a>教程：在 Azure 中使用 Azure CLI 均衡 Linux 虚拟机负载以创建高可用性应用程序
 
@@ -322,7 +322,7 @@ az network nic ip-config address-pool add \
 > * 创建负载均衡器流量规则
 > * 使用 cloud-init 创建基本的 Node.js 应用
 > * 创建虚拟机并将其附加到负载均衡器
-> * 查看负载均衡器的实际运行情况
+> * 查看运行中的负载均衡器
 > * 在负载均衡器中添加和删除 VM
 
 请转到下一教程，详细了解 Azure 虚拟网络组件。

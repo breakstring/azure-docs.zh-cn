@@ -4,12 +4,12 @@ description: Application Insights 遥测上下文数据模型
 ms.topic: conceptual
 ms.date: 05/15/2017
 ms.reviewer: sergkanz
-ms.openlocfilehash: 25ff7d92da5ea0a6aba84aad1cfc98e5295e151e
-ms.sourcegitcommit: a76ff927bd57d2fcc122fa36f7cb21eb22154cfa
+ms.openlocfilehash: 76f3be510494a1f005b0080ee8f2390a3fbc3622
+ms.sourcegitcommit: 829d951d5c90442a38012daaf77e86046018e5b9
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/28/2020
-ms.locfileid: "87322663"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "91767835"
 ---
 # <a name="telemetry-context-application-insights-data-model"></a>遥测上下文：Application Insights 数据模型
 
@@ -85,7 +85,7 @@ ms.locfileid: "87322663"
 
 ## <a name="authenticated-user-id"></a>已经过身份验证的用户 ID
 
-已经过身份验证的用户 ID。与匿名用户 ID 相反，此字段表示具有友好名称的用户。 由于其 PII 信息，默认情况下，大多数 SDK 不收集它。
+已经过身份验证的用户 ID。与匿名用户 ID 相反，此字段表示具有友好名称的用户。 仅在默认情况下使用 ASP.NET Framework SDK 收集此值 [`AuthenticatedUserIdTelemetryInitializer`](https://github.com/microsoft/ApplicationInsights-dotnet/blob/develop/WEB/Src/Web/Web/AuthenticatedUserIdTelemetryInitializer.cs) 。  
 
 最大长度：1024
 
@@ -113,7 +113,7 @@ ms.locfileid: "87322663"
 
 ## <a name="internal-sdk-version"></a>内部：SDK 版本
 
-SDK 版本。 有关信息，请参阅[此文](https://github.com/microsoft/ApplicationInsights-Home/blob/master/EndpointSpecs/SDK-VERSIONS.md)。
+SDK 版本。 有关信息，请参阅[此文](https://github.com/MohanGsk/ApplicationInsights-Home/blob/master/EndpointSpecs/SDK-VERSIONS.md)。
 
 最大长度：64
 

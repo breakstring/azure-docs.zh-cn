@@ -11,22 +11,27 @@ ms.subservice: bing-web-search
 ms.topic: conceptual
 ms.date: 07/30/2019
 ms.author: scottwhi
-ms.openlocfilehash: a6d394fec6e7cf0a230f61ad05c236a1f84dad9d
-ms.sourcegitcommit: 58faa9fcbd62f3ac37ff0a65ab9357a01051a64f
+ms.openlocfilehash: 32c3279cacddf10e77e8d245ba525ab766efd6fd
+ms.sourcegitcommit: 9eda79ea41c60d58a4ceab63d424d6866b38b82d
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/29/2020
-ms.locfileid: "68854004"
+ms.lasthandoff: 11/30/2020
+ms.locfileid: "96351872"
 ---
 # <a name="using-decoration-markers-to-highlight-text"></a>使用修饰标记来突出显示文本
 
-必应支持命中突出显示，这会在某些答案的显示字符串中标记查询字词（或必应找到相关的其他字词）。 例如，网页结果的`name`、 `displayUrl`和`snippet`字段可能包含标记的查询字词。 
+> [!WARNING]
+> 必应搜索 API 将从认知服务迁移到必应搜索服务。 从 2020 年 10 月 30 日开始，必应搜索的任何新实例都需按照[此处](/bing/search-apis/bing-web-search/create-bing-search-service-resource)所述的过程进行预配。
+> 使用认知服务进行预配的必应搜索 API 将在未来三年或在企业协议结束前（以先发生者为准）得到支持。
+> 有关迁移说明，请参阅[必应搜索服务](/bing/search-apis/bing-web-search/create-bing-search-service-resource)。
 
-默认情况下，必应不在显示字符串中包括突出显示标记。 若要启用标记，请在`textDecorations`请求中包括查询参数，并将其`true`设置为。
+必应支持命中突出显示，这将标记查询词 (或必应在某些回答的显示字符串中找到相关) 的其他字词。 例如，网页结果的 `name` 、 `displayUrl` 和 `snippet` 字段可能包含标记的查询字词。 
+
+默认情况下，必应不在显示字符串中包括突出显示标记。 若要启用标记，请 `textDecorations` 在请求中包括查询参数，并将其设置为 `true` 。
 
 ## <a name="hit-highlighting-example"></a>命中突出显示示例
 
-下面的示例演示了的 web 结果`Sailing Dinghy`。 必应使用 E000 和 E001 Unicode 字符标记查询词的开头和结尾。
+下面的示例演示了的 web 结果 `Sailing Dinghy` 。 必应使用 E000 和 E001 Unicode 字符标记查询词的开头和结尾。
   
 ![命中词突出显示](./media/cognitive-services-bing-web-api/bing-hit-highlighting.png) 
 
@@ -34,24 +39,24 @@ ms.locfileid: "68854004"
 
 ## <a name="marker-formatting"></a>标记格式
 
-必应提供使用 Unicode 字符或 HTML 标记作为标记的选项。 若要指定要使用的标记，请包含[textFormat](https://docs.microsoft.com/rest/api/cognitiveservices-bingsearch/bing-web-api-v7-reference#textformat)查询参数： 
+必应提供使用 Unicode 字符或 HTML 标记作为标记的选项。 若要指定要使用的标记，请包含 [textFormat](/rest/api/cognitiveservices-bingsearch/bing-web-api-v7-reference#textformat) 查询参数： 
 
-| “值”             | 标记                       |
+| 值             | 记号笔                       |
 |-------------------|------------------------------|
-| `textFormat=Raw`  | Unicode 字符（默认值） |
+| `textFormat=Raw`  | Unicode 字符 (默认值)  |
 | `textFormat=HTML` | HTML 字符              |
 
 ## <a name="additional-text-decorations"></a>其他文本修饰
 
-必应返回几个不同的文本修饰。 例如， `Computation`答案可以在`log(2)` `expression`字段中包含查询词的下标标记。
+必应返回几个不同的文本修饰。 例如， `Computation` 答案可以 `log(2)` 在字段中包含查询词的下标标记 `expression` 。
 
 ![计算标记](./media/cognitive-services-bing-web-api/bing-markers-computation.png) 
 
-如果请求未指定修饰，则`expression`字段将包含。 `log10(2)` 
+如果请求未指定修饰，则 `expression` 字段将包含 `log10(2)` 。 
 
-如果`textDecorations`为`true`，必应在答案的显示字符串中包括以下标记。 如果没有等效的 HTML 标记，则表的单元格为空。
+如果 `textDecorations` 为 `true` ，必应在答案的显示字符串中包括以下标记。 如果没有等效的 HTML 标记，则表的单元格为空。
 
-|Unicode|HTML|说明
+|Unicode|HTML|描述
 |-|-|-
 |U+E000|\<b>|表示查询词的开头（命中词突出显示）
 |U+E001|\</b>|表示查询词的结尾

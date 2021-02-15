@@ -5,12 +5,12 @@ author: sideeksh
 manager: rochakm
 ms.topic: how-to
 ms.date: 04/06/2020
-ms.openlocfilehash: 9600f1cae61b59af5d026eb74f504658395a11ae
-ms.sourcegitcommit: 2ff0d073607bc746ffc638a84bb026d1705e543e
+ms.openlocfilehash: 24ffce1528aa5c82fec9666fa0cb7b8717107f54
+ms.sourcegitcommit: ad677fdb81f1a2a83ce72fa4f8a3a871f712599f
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/06/2020
-ms.locfileid: "87835878"
+ms.lasthandoff: 12/17/2020
+ms.locfileid: "97652256"
 ---
 # <a name="troubleshoot-azure-to-azure-vm-network-connectivity-issues"></a>排查 Azure 到 Azure VM 网络连接性问题
 
@@ -18,9 +18,9 @@ ms.locfileid: "87835878"
 
 要使 Site Recovery 复制正常运行，必须具有从 VM 到特定 URL 或 IP 范围的出站连接。 如果 VM 位于防火墙后或使用网络安全组 (NSG) 规则来控制出站连接，则可能会遇到以下问题之一。
 
-| **名称**                  | **商用**                               | **政府机关**                                 | **说明** |
+| **Name**                  | 商用                               | 政府                                 | **说明** |
 | ------------------------- | -------------------------------------------- | ---------------------------------------------- | ----------- |
-| 存储                   | `*.blob.core.windows.net`                  | `*.blob.core.usgovcloudapi.net`              | 必需，以便从 VM 将数据写入到源区域中的缓存存储帐户。 如果你知道 VM 的所有缓存存储帐户，则可以对特定存储帐户 URL 使用允许列表。 例如，使用 `cache1.blob.core.windows.net` 和 `cache2.blob.core.windows.net` 而不是 `*.blob.core.windows.net`。 |
+| 存储                   | `*.blob.core.windows.net`                  | `*.blob.core.usgovcloudapi.net` | 必需，以便从 VM 将数据写入到源区域中的缓存存储帐户。 如果你知道 VM 的所有缓存存储帐户，则可以对特定存储帐户 URL 使用允许列表。 例如，使用 `cache1.blob.core.windows.net` 和 `cache2.blob.core.windows.net` 而不是 `*.blob.core.windows.net`。 |
 | Azure Active Directory    | `login.microsoftonline.com`                | `login.microsoftonline.us`                   | 对于 Site Recovery 服务 URL 的授权和身份验证而言是必需的。 |
 | 复制               | `*.hypervrecoverymanager.windowsazure.com` | `*.hypervrecoverymanager.windowsazure.com`   | 必需，以便从 VM 进行 Site Recovery 服务通信。 如果防火墙代理支持 IP，则可以使用相应的“Site Recovery IP”。 |
 | 服务总线               | `*.servicebus.windows.net`                 | `*.servicebus.usgovcloudapi.net`             | 必需，以便从 VM 写入 Site Recovery 监视和诊断数据。 如果防火墙代理支持 IP，则可以使用相应的“Site Recovery 监视 IP”。 |
@@ -51,16 +51,16 @@ ms.locfileid: "87835878"
 ### <a name="issue-2-site-recovery-configuration-failed-151196"></a>问题 2：Site Recovery 配置失败 (151196)
 
 > [!NOTE]
-> 如果 VM 位于“标准”内部负载均衡器之后，则默认情况下，它将无法访问 Office 365 IP（如 `login.microsoftonline.com`）。 可以将其更改为“基本”内部负载均衡器类型，也可以按照[使用 Azure CLI 在标准负载均衡器中配置负载均衡和出站规则](../load-balancer/quickstart-load-balancer-standard-public-cli.md?tabs=option-1-create-load-balancer-standard#create-outbound-rule-configuration)一文中所述创建出站访问权限。
+> 如果 Vm 位于 **标准** 内部负载均衡器后面，则默认情况下，它无法访问 Microsoft 365 的 ip，如 `login.microsoftonline.com` 。 可以将其更改为“基本”内部负载均衡器类型，也可以按照[使用 Azure CLI 在标准负载均衡器中配置负载均衡和出站规则](../load-balancer/quickstart-load-balancer-standard-public-cli.md?tabs=option-1-create-load-balancer-standard#create-outbound-rule-configuration)一文中所述创建出站访问权限。
 
 #### <a name="possible-cause"></a>可能的原因
 
-无法建立到 Office 365 身份验证和标识 IP4 终结点的连接。
+无法建立到 Microsoft 365 身份验证和标识 IP4 终结点的连接。
 
 #### <a name="resolution"></a>解决方法
 
-- Azure Site Recovery 需要访问 Office 365 IP 范围才能进行身份验证。
-- 如果使用 Azure 网络安全组 (NSG) 规则/防火墙代理控制 VM 上的出站网络连接，请确保允许到 Office 365 IP 范围的通信。 创建一个基于 [Azure Active Directory (Azure AD) 服务标记](../virtual-network/security-overview.md#service-tags)的 NSG 规则，该规则允许访问与 Azure AD 对应的所有 IP 地址。
+- Azure Site Recovery 需要访问 Microsoft 365 IP 范围才能进行身份验证。
+- 如果使用 Azure 网络安全组 (NSG) 规则/防火墙代理来控制 VM 上的出站网络连接，请确保允许与 Microsoft 365 IP 范围通信。 创建一个基于 [Azure Active Directory (Azure AD) 服务标记](../virtual-network/network-security-groups-overview.md#service-tags)的 NSG 规则，该规则允许访问与 Azure AD 对应的所有 IP 地址。
 - 如果将来向 Azure AD 添加新地址，则需创建新的 NSG 规则。
 
 ### <a name="example-nsg-configuration"></a>NSG 配置示例
@@ -68,23 +68,20 @@ ms.locfileid: "87835878"
 此示例演示如何为要复制的 VM 配置 NSG 规则。
 
 - 如果使用 NSG 规则控制出站连接，请对所有必需的 IP 地址范围使用端口 443 的“允许 HTTPS 出站”规则。
-- 此示例假设 VM 源位置是 "**美国东部**"，目标位置是 "**美国中部**"。
+- 此示例假设 VM 源位置是 " **美国东部** "，目标位置是 " **美国中部**"。
 
 #### <a name="nsg-rules---east-us"></a>NSG 规则 - 美国东部
 
-1. 为 NSG 创建 HTTPS 出站安全规则，如以下屏幕截图所示。 此示例使用**目标服务标记**： _EastUS_和**目标端口范围**： _443_。
+1. 为 NSG 创建 HTTPS 出站安全规则，如以下屏幕截图所示。 此示例使用 **目标服务标记**： _EastUS_ 和 **目标端口范围**： _443_。
 
-     :::image type="content" source="./media/azure-to-azure-about-networking/storage-tag.png" alt-text="storage-tag":::
+     :::image type="content" source="./media/azure-to-azure-about-networking/storage-tag.png" alt-text="屏幕截图，其中显示了“为存储点美国东部安全规则的安全规则添加出站安全规则窗格”。":::
 
 1. 为 NSG 创建 HTTPS 出站安全规则，如以下屏幕截图所示。 此示例使用“目标服务标记”：“AzureActiveDirectory”和“目标端口范围”：“443”。
 
-     :::image type="content" source="./media/azure-to-azure-about-networking/aad-tag.png" alt-text="aad-tag":::
+     :::image type="content" source="./media/azure-to-azure-about-networking/aad-tag.png" alt-text="屏幕截图，其中显示了“为 Azure Active Directory 安全规则的安全规则 添加出站安全规则窗格”。":::
 
-1. 为与目标位置相对应的 Site Recovery IP 创建 HTTPS 端口 443 出站规则：
-
-   | 位置 | Site Recovery IP 地址 | Site Recovery 监视 IP 地址 |
-   | --- | --- | --- |
-   | 美国中部 | 40.69.144.231 | 52.165.34.144 |
+1. 与上述安全规则类似，为 NSG 上的 "CentralUS" 创建出站 HTTPS (443) 安全规则，该规则对应于目标位置。 这样就可以访问 Site Recovery 监视功能。
+1. 在 NSG 上为“AzureSiteRecovery”创建出站 HTTPS (443) 安全规则。 这样就可以在任何区域访问 Site Recovery 服务。
 
 #### <a name="nsg-rules---central-us"></a>NSG 规则 - 美国中部
 
@@ -100,11 +97,8 @@ ms.locfileid: "87835878"
    - **目标服务标记**：_AzureActiveDirectory_
    - **目标端口范围**：_443_
 
-1. 为与源位置相对应的 Site Recovery IP 创建 HTTPS 端口 443 出站规则：
-
-   | 位置 | Site Recovery IP 地址 | Site Recovery 监视 IP 地址 |
-   | --- | --- | --- |
-   | 美国东部 | 13.82.88.226 | 104.45.147.24 |
+1. 与上述安全规则类似，为 NSG 上的 "EastUS" 创建出站 HTTPS () 443 安全规则，该规则对应于源位置。 这样就可以访问 Site Recovery 监视功能。
+1. 在 NSG 上为“AzureSiteRecovery”创建出站 HTTPS (443) 安全规则。 这样就可以在任何区域访问 Site Recovery 服务。
 
 ### <a name="issue-3-site-recovery-configuration-failed-151197"></a>问题 3：Site Recovery 配置失败 (151197)
 
@@ -114,7 +108,7 @@ ms.locfileid: "87835878"
 
 #### <a name="resolution"></a>解决方法
 
-Azure Site Recovery 需要根据区域访问 [Site Recovery IP 范围](azure-to-azure-about-networking.md#outbound-connectivity-using-service-tags)。 请确保可以从 VM 访问所需的 IP 范围。
+如果使用 Azure 网络安全组 (NSG) 规则/防火墙代理来控制计算机上的出站网络连接，则需要允许多个服务标记。 [了解详细信息](azure-to-azure-about-networking.md#outbound-connectivity-using-service-tags)。
 
 ### <a name="issue-4-azure-to-azure-replication-failed-when-the-network-traffic-goes-through-on-premises-proxy-server-151072"></a>问题 4：当网络流量通过本地代理服务器时，Azure 到 Azure 的复制失败 (151072)
 

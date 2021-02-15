@@ -4,15 +4,15 @@ description: 本教程介绍如何在 Azure Analysis Services 中添加示例模
 author: minewiskan
 ms.service: azure-analysis-services
 ms.topic: tutorial
-ms.date: 05/19/2020
+ms.date: 08/31/2020
 ms.author: owend
 ms.reviewer: minewiskan
-ms.openlocfilehash: 88ed58ea1eea80b4b890c31260fc65153377eaaa
-ms.sourcegitcommit: 595cde417684e3672e36f09fd4691fb6aa739733
+ms.openlocfilehash: f882a40940a5c7202e9cf1f5c8b8927f008f4a39
+ms.sourcegitcommit: 2c586a0fbec6968205f3dc2af20e89e01f1b74b5
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 05/20/2020
-ms.locfileid: "83697519"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92013604"
 ---
 # <a name="tutorial-add-a-sample-model-from-the-portal"></a>教程：从门户添加示例模型
 
@@ -24,13 +24,13 @@ ms.locfileid: "83697519"
 
 如果还没有 Azure 订阅，可以在开始前[创建一个免费帐户](https://azure.microsoft.com/free/)。
 
-## <a name="before-you-begin"></a>开始之前
+## <a name="prerequisites"></a>先决条件
 
 要完成本教程，需要：
 
 - Azure Analysis Services 服务器。 若要了解更多信息，请参阅[创建服务器 - 门户](analysis-services-create-server.md)。
 - 服务器管理员权限
-- [SQL Server Management Studio](https://docs.microsoft.com/sql/ssms/download-sql-server-management-studio-ssms)
+- [SQL Server Management Studio](/sql/ssms/download-sql-server-management-studio-ssms)
 
 
 ## <a name="sign-in-to-the-azure-portal"></a>登录到 Azure 门户
@@ -45,7 +45,7 @@ ms.locfileid: "83697519"
 
 2. 在“新建模型” > “选择数据源”中，确认已选中“示例数据”，然后单击“添加”。   
 
-    ![选择“示例数据”](./media/analysis-services-create-sample-model/aas-create-sample-data.png)
+    ![选择“新建模型”](./media/analysis-services-create-sample-model/aas-create-sample-data.png)
 
 3. 在“概述”中，确认是否添加了 `adventureworks` 示例模型。
 
@@ -74,5 +74,3 @@ ms.locfileid: "83697519"
 
 > [!div class="nextstepaction"]
 > [教程：配置服务器管理员和用户角色](tutorials/analysis-services-tutorial-roles.md)
-
-

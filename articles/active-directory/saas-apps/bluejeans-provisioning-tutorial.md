@@ -8,140 +8,145 @@ manager: CelesteDG
 ms.service: active-directory
 ms.subservice: saas-app-tutorial
 ms.workload: identity
-ms.topic: article
+ms.topic: tutorial
 ms.date: 03/27/2019
 ms.author: jeedes
-ms.openlocfilehash: 0b90389f6ae88a073f3961cc2f0957d22e190fe0
-ms.sourcegitcommit: 023d10b4127f50f301995d44f2b4499cbcffb8fc
-ms.translationtype: MT
+ms.openlocfilehash: d029f033a3c452587dbeeadf69c46cc99f604031
+ms.sourcegitcommit: d1e56036f3ecb79bfbdb2d6a84e6932ee6a0830e
+ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/18/2020
-ms.locfileid: "88545448"
+ms.lasthandoff: 01/29/2021
+ms.locfileid: "99053803"
 ---
 # <a name="tutorial-configure-bluejeans-for-automatic-user-provisioning"></a>教程：为 BlueJeans 配置自动用户预配
 
-本教程的目的是演示要将 Azure AD 配置为自动将用户和/或组预配到 BlueJeans 以及取消其预配需在 BlueJeans 和 Azure Active Directory (Azure AD) 中执行的步骤。
+本教程介绍了在 BlueJeans 和 Azure Active Directory (Azure AD) 中配置自动用户预配需执行的步骤。 配置后，Azure AD 会使用 Azure AD 预配服务自动将用户预配到 [BlueJeans](https://www.bluejeans.com/pricing) 并自动取消预配。 有关此服务的功能、工作原理以及常见问题的重要详细信息，请参阅[使用 Azure Active Directory 自动将用户预配到 SaaS 应用程序和取消预配](../app-provisioning/user-provisioning.md)。 
 
-> [!NOTE]
-> 本教程介绍在 Azure AD 用户预配服务之上构建的连接器。 有关此服务的功能、工作原理以及常见问题的重要详细信息，请参阅[使用 Azure Active Directory 自动将用户预配到 SaaS 应用程序和取消预配](../app-provisioning/user-provisioning.md)。
+## <a name="capabilities-supported"></a>支持的功能
+> [!div class="checklist"]
+> * 在 BlueJeans 中创建用户
+> * 在用户不再有访问需求的情况下，在 BlueJeans 中删除用户
+> * 使用户属性在 Azure AD 和 BlueJeans 之间保持同步
+> * [单一登录](https://docs.microsoft.com/azure/active-directory/saas-apps/bluejeans-tutorial)到 BlueJeans（推荐）
 
 ## <a name="prerequisites"></a>先决条件
 
-本教程中所述的方案假定你已具备以下项：
+本教程中概述的方案假定你已具有以下先决条件：
 
-* Azure AD 租户
-* 启用了[我的公司](https://www.BlueJeans.com/pricing)计划或更佳计划的 BlueJeans 租户
-* BlueJeans 中具有管理员权限的用户帐户
+* [Azure AD 租户](../develop/quickstart-create-new-tenant.md)。
+* Azure AD 中[有权](../roles/permissions-reference.md)配置预配的用户帐户（例如应用管理员、云应用管理员、应用所有者或全局管理员）。 
+* 启用了[我的公司](https://www.bluejeans.com/pricing)计划或更佳计划的 BlueJeans 租户。
+* BlueJeans 中具有管理员权限的用户帐户。
+* BlueJeans Enterprise 中已启用 SCIM 预配。
 
 > [!NOTE]
 > Azure AD 预配集成依赖于可供 BlueJeans 团队在标准计划或更佳计划中使用的 [BlueJeans API](https://BlueJeans.github.io/developer)。
 
-## <a name="adding-bluejeans-from-the-gallery"></a>从库中添加 BlueJeans
+## <a name="step-1-plan-your-provisioning-deployment"></a>步骤 1。 计划预配部署
+1. 了解[预配服务的工作原理](../app-provisioning/user-provisioning.md)。
+2. 确定谁在[预配范围](../app-provisioning/define-conditional-rules-for-provisioning-user-accounts.md)内。
+3. 确定要[在 Azure AD 与 BlueJeans 之间映射](../app-provisioning/customize-application-attributes.md)的数据。
 
-在使用 Azure AD 为 BlueJeans 配置自动用户预配之前，需要从 Azure AD 应用程序库将 BlueJeans 添加到托管的 SaaS 应用程序列表。
+## <a name="step-2-configure-bluejeans-to-support-provisioning-with-azure-ad"></a>步骤 2。 配置 BlueJeans 以支持通过 Azure AD 进行预配
 
-若要从 Azure AD 应用程序库中添加 BlueJeans，请执行以下步骤：****
+1. 登录到 BlueJeans 管理控制台。 导航到“组设置”>“安全”。
+2. 选择“单一登录”和“立即配置” 。
 
-1. 在 **[Azure 门户](https://portal.azure.com)** 的左侧导航面板中，选择 " **Azure Active Directory**"。
+    ![now](./media/bluejeans-provisioning-tutorial/configure.png)
 
-    ![“Azure Active Directory”按钮](common/select-azuread.png)
+3. 在“预配和集成”窗口中，选择“通过 IDP 创建和管理用户帐户”，然后单击“生成令牌”  。
 
-2. 转到“企业应用程序”，并选择“所有应用程序”。 
+    ![generate](./media/bluejeans-provisioning-tutorial/token.png)
+    
+4. 复制并保存该令牌。 
+5. BlueJeans 租户 URL 是 `https://api.bluejeans.com/v2/scim`。 前一步骤中的“租户 URL”和“机密令牌”将输入到 Azure 门户中 BlueJeans 应用程序的“预配”选项卡中 。
 
-    ![“企业应用程序”边栏选项卡](common/enterprise-applications.png)
+## <a name="step-3-add-bluejeans-from-the-azure-ad-application-gallery"></a>步骤 3. 从 Azure AD 应用程序库添加 BlueJeans
 
-3. 若要添加新应用程序，请选择窗格顶部的 " **新建应用程序** " 按钮。
+从 Azure AD 应用程序库添加 BlueJeans，开始管理 BlueJeans 的预配。 如果以前为 BlueJeans 设置过 SSO，则可以使用同一应用程序。 不过，建议在最初测试集成时单独创建一个应用。 若要详细了解如何从库中添加应用，可以单击[此处](../manage-apps/add-application-portal.md)。
 
-    ![“新增应用程序”按钮](common/add-new-app.png)
+## <a name="step-4-define-who-will-be-in-scope-for-provisioning"></a>步骤 4. 定义谁在预配范围中 
 
-4. 在搜索框中，输入 " **BlueJeans**"，在结果面板中选择 " **BlueJeans** "，然后选择 " **添加** " 按钮添加该应用程序。
+使用 Azure AD 预配服务，可以根据对应用程序的分配和/或用户的属性来限定谁在预配范围内。 如果选择根据分配来限定要将谁预配到应用，可以使用以下[步骤](../manage-apps/assign-user-or-group-access-portal.md)将用户分配到应用程序。 如果选择仅根据用户的属性来限定要对谁进行预配，可以使用[此处](../app-provisioning/define-conditional-rules-for-provisioning-user-accounts.md)所述的范围筛选器。 
 
-    ![结果列表中的 BlueJeans](common/search-new-app.png)
+* 将用户分配到 BlueJeans 时，必须选择“默认访问”以外的角色。 具有“默认访问”角色的用户被排除在预配范围之外，并在预配日志中被标记为无有效资格。 如果应用上唯一可用的角色是“默认访问”角色，可以[更新应用清单](../develop/howto-add-app-roles-in-azure-ad-apps.md)来添加其他角色。 
 
-## <a name="assigning-users-to-bluejeans"></a>将用户分配到 BlueJeans
+* 先小部分测试。 在向所有用户推出之前，请先在少量用户中进行测试。 如果预配范围设置为分配的用户，则可以先尝试将一两个用户分配到应用。 当预配范围设置为所有用户时，可以指定[基于属性的范围筛选器](../app-provisioning/define-conditional-rules-for-provisioning-user-accounts.md)。 
 
-Azure Active Directory 使用称为“分配”的概念来确定哪些用户应收到对所选应用的访问权限。 在自动用户预配的上下文中，只同步已分配到 Azure AD 中的应用程序的用户和/或组。
+## <a name="step-5-configure-automatic-user-provisioning-to-bluejeans"></a>步骤 5。 对 BlueJeans 配置自动用户预配
 
-在配置和启用自动用户预配之前，应确定 Azure AD 中的哪些用户和/或组需要访问 BlueJeans。 确定后，可以按照此处的说明将这些用户和/或组分配到 BlueJeans：
-
-* [向企业应用分配用户或组](../manage-apps/assign-user-or-group-access-portal.md)
-
-### <a name="important-tips-for-assigning-users-to-bluejeans"></a>将用户分配到 BlueJeans 的重要提示
-
-* 建议将单个 Azure AD 用户分配到 BlueJeans 以测试自动用户预配配置。 其他用户和/或组可以稍后分配。
-
-* 如果将用户分配到 BlueJeans，必须在分配对话框中选择任何特定于应用程序的有效角色（如果有）。 具有“默认访问权限”角色的用户排除在预配之外。
-
-## <a name="configuring-automatic-user-provisioning-to-bluejeans"></a>配置 BlueJeans 的自动用户预配
-
-本部分介绍如何配置 Azure AD 预配服务以基于 Azure AD 中的用户和/或组分配在 BlueJeans 中创建、更新和禁用用户和/或组。
-
-> [!TIP]
-> 还可选择按照 [BlueJeans 单一登录教程](bluejeans-tutorial.md)中提供的说明为 BlueJeans 启用基于 SAML 的单一登录。 可以独立于自动用户预配配置单一登录，尽管这两个功能互相补充。
+本部分介绍了如何配置 Azure AD 预配服务以基于 Azure AD 中的用户分配在 TestApp 中创建、更新和禁用用户。
 
 ### <a name="to-configure-automatic-user-provisioning-for-bluejeans-in-azure-ad"></a>若要在 Azure AD 中为 BlueJeans 配置自动用户预配，请执行以下操作：
 
-1. 登录到 [Azure 门户](https://portal.azure.com) ，选择 " **企业应用程序**"，选择 " **所有应用程序**"，然后选择 " **BlueJeans**"。
+1. 登录 [Azure 门户](https://portal.azure.com)。 依次选择“企业应用”和“所有应用”。
 
     ![“企业应用程序”边栏选项卡](common/enterprise-applications.png)
 
-2. 在应用程序列表中选择“BlueJeans”****。
+2. 在应用程序列表中选择“BlueJeans”。
 
     ![应用程序列表中的 BlueJeans 链接](common/all-applications.png)
 
-3. 选择“预配”选项卡。
+3. 选择“预配”  选项卡。
 
-    ![BlueJeans 预配](./media/bluejeans-provisioning-tutorial/BluejeansProvisioningTab.png)
+    ![“管理”选项的屏幕截图，其中突出显示了“预配”选项。](common/provisioning.png)
 
 4. 将“预配模式”设置为“自动”。
 
-    ![BlueJeans 预配](./media/bluejeans-provisioning-tutorial/Bluejeans1.png)
+    ![“预配”选项卡“自动”](common/provisioning-automatic.png)
 
-5. 在“管理员凭据”部分下，输入 BlueJeans 帐户的“管理员用户名”和“管理员密码”************。 这些值的示例如下：
+5. 在“管理员凭据”部分下，输入在步骤 2 中检索到的 BlueJeans 租户 URL 和机密令牌。 单击“测试连接”，确保 Azure AD 可连接到 BlueJeans。 如果连接失败，请确保 BlueJeans 帐户具有管理员权限，然后重试。
 
-   * 在“管理员用户名”字段中，填入 BlueJeans 租户上管理员帐户的用户名****。 示例：admin@contoso.com。
+    ![标记](common/provisioning-testconnection-tenanturltoken.png)
 
-   * 在“管理员密码”**** 字段中，填入管理员用户名所对应的密码。
 
-6. 填入步骤 5 中所示的字段后，请单击“测试连接”**** 以确保 Azure AD 可以连接到 BlueJeans。 如果连接失败，请确保 BlueJeans 帐户具有管理员权限，然后重试。
+6. 在“通知电子邮件”字段中，输入应接收预配错误通知的个人的电子邮件地址，并选中复选框“发生故障时发送电子邮件通知” 。
 
-    ![BlueJeans 预配](./media/bluejeans-provisioning-tutorial/BluejeansTestConnection.png)
+    ![通知电子邮件](common/provisioning-notification-email.png)
 
-7. 在“通知电子邮件”字段中，输入应接收预配错误通知的个人或组的电子邮件地址，并选中复选框“发生故障时发送电子邮件通知”********。
+7. 选择“保存”。
 
-    ![BlueJeans 预配](./media/bluejeans-provisioning-tutorial/BluejeansNotificationEmail.png)
+8. 在“映射”部分下，选择“将 Azure Active Directory 用户同步到 BlueJeans”。
 
-8. 单击“保存” 。
+9. 在“属性映射”部分中，查看从 Azure AD 同步到 BlueJeans 的用户属性。 选为“匹配”属性的特性用于匹配 BlueJeans 中的用户帐户以执行更新操作。 如果选择更改[匹配目标属性](../app-provisioning/customize-application-attributes.md)，则需要确保 BlueJeans API 支持基于该属性筛选用户。 选择“保存”按钮以提交任何更改。
 
-9. 在“映射”部分下，选择“将 Azure Active Directory 用户同步到 BlueJeans”********。
+|Attribute|类型|支持筛选|
+|---|---|---|
+|userName|字符串|&check;|
+|活动|Boolean|
+|title|字符串|
+|emails[type eq "work"].value|字符串|
+|name.givenName|字符串|
+|name.familyName|字符串|
+|phoneNumbers[type eq "work"].value|字符串|
+|urn:ietf:params:scim:schemas:extension:enterprise:2.0:User:manager|字符串|
 
-    ![BlueJeans 预配](./media/bluejeans-provisioning-tutorial/BluejeansMapping.png)
+10. 若要配置范围筛选器，请参阅[范围筛选器教程](../app-provisioning/define-conditional-rules-for-provisioning-user-accounts.md)中提供的以下说明。
 
-10. 在“属性映射”**** 部分中，查看从 Azure AD 同步到 BlueJeans 的用户属性。 选为“匹配”**** 属性的特性用于匹配 BlueJeans 中的用户帐户以执行更新操作。 选择“保存”按钮以提交任何更改。
+11. 若要为 BlueJeans 启用 Azure AD 预配服务，请在“设置”部分中将“预配状态”更改为“启用”。
 
-    ![BlueJeans 预配](./media/bluejeans-provisioning-tutorial/BluejeansUserMappingAtrributes.png)
+    ![预配状态已打开](common/provisioning-toggle-on.png)
 
-11. 若要配置范围筛选器，请参阅[范围筛选器教程](../app-provisioning/define-conditional-rules-for-provisioning-user-accounts.md)中提供的以下说明。
+12. 通过在“设置”部分的“范围”中选择所需的值，定义要预配到 BlueJeans 的用户 。
 
-12. 若要为 BlueJeans 启用 Azure AD 预配服务，请在“设置”部分中将“预配状态”**** 更改为“启用”********。
+    ![预配范围](common/provisioning-scope.png)
 
-    ![BlueJeans 预配](./media/bluejeans-provisioning-tutorial/BluejeansProvisioningStatus.png)
+13. 已准备好预配时，单击“保存”  。
 
-13. 通过在“设置”**** 部分的“范围”**** 中选择所需的值，定义要预配到 BlueJeans 的用户和/或组。
+    ![保存预配配置](common/provisioning-configuration-save.png)
 
-    ![BlueJeans 预配](./media/bluejeans-provisioning-tutorial/UserGroupSelection.png)
+此操作会对“设置”部分的“范围”中定义的所有用户启动初始同步 。 初始同步执行的时间比后续同步长，只要 Azure AD 预配服务正在运行，大约每隔 40 分钟就会进行一次同步。 
 
-14. 已准备好预配时，单击“保存”。
+## <a name="step-6-monitor-your-deployment"></a>步骤 6. 监视部署
+配置预配后，请使用以下资源来监视部署：
 
-    ![BlueJeans 预配](./media/bluejeans-provisioning-tutorial/SaveProvisioning.png)
-
-此操作会对“设置”部分的“范围”中定义的所有用户和/或组启动初始同步********。 初始同步执行的时间比后续同步长，只要 Azure AD 预配服务正在运行，大约每隔 40 分钟就会进行一次同步。 可使用“同步详细信息”**** 部分监视进度并跟踪指向预配活动报告的链接，这些报告描述了 Azure AD 预配服务对 BlueJeans 执行的所有操作。
-
-若要详细了解如何读取 Azure AD 预配日志，请参阅[有关自动用户帐户预配的报告](../app-provisioning/check-status-user-account-provisioning.md)。
+1. 通过[预配日志](../reports-monitoring/concept-provisioning-logs.md)来确定哪些用户已预配成功或失败
+2. 检查[进度栏](https://docs.microsoft.com/azure/active-directory/app-provisioning/application-provisioning-when-will-provisioning-finish-specific-user)来查看预配周期的状态以及完成进度
+3. 如果怀疑预配配置处于非正常状态，则应用程序将进入隔离状态。 可在[此处](../app-provisioning/application-provisioning-quarantine-status.md)了解有关隔离状态的详细信息。  
 
 ## <a name="connector-limitations"></a>连接器限制
 
-* Bluejeans 不允许超过 30 个字符的用户名。
+* Bluejeans 禁止使用超过 30 个字符的 userName。
 
 ## <a name="additional-resources"></a>其他资源
 
@@ -151,9 +156,3 @@ Azure Active Directory 使用称为“分配”的概念来确定哪些用户应
 ## <a name="next-steps"></a>后续步骤
 
 * [了解如何查看日志并获取有关预配活动的报告](../app-provisioning/check-status-user-account-provisioning.md)
-
-<!--Image references-->
-
-[1]: ./media/bluejeans-provisioning-tutorial/tutorial_general_01.png
-[2]: ./media/bluejeans-tutorial/tutorial_general_02.png
-[3]: ./media/bluejeans-tutorial/tutorial_general_03.png

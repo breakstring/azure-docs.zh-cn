@@ -6,14 +6,14 @@ author: alkohli
 ms.service: databox
 ms.subservice: pod
 ms.topic: article
-ms.date: 07/10/2020
+ms.date: 01/05/2021
 ms.author: alkohli
-ms.openlocfilehash: 7d699fc47fa0a0cb57d103ff42ff17bdc0f3a82b
-ms.sourcegitcommit: 3541c9cae8a12bdf457f1383e3557eb85a9b3187
+ms.openlocfilehash: 97d8da86565db73aa9a3866f39f793aaf0905470
+ms.sourcegitcommit: 5e762a9d26e179d14eb19a28872fb673bf306fa7
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/09/2020
-ms.locfileid: "86202677"
+ms.lasthandoff: 01/05/2021
+ms.locfileid: "97900155"
 ---
 # <a name="azure-data-box-limits"></a>Azure Data Box 限制
 
@@ -28,6 +28,7 @@ ms.locfileid: "86202677"
 - Data Box 最多可存储导入和导出的500000000文件。
 - Data Box 在云中最多支持 512 个容器或共享。 用户共享中的顶层目录将成为云中的容器或 Azure 文件共享。 
 - 由于 ReFS 元数据空间消耗，Data Box 用量容量可能小于 80 TB。
+- Data Box 在 NFS 共享上一次最多支持10个客户端连接。
 
 ## <a name="azure-storage-limits"></a>Azure 存储限制
 
@@ -42,17 +43,17 @@ ms.locfileid: "86202677"
 
 [!INCLUDE [data-box-data-upload-caveats](../../includes/data-box-data-upload-caveats.md)]
 
-## <a name="for-export-order"></a>对于出口订单
+### <a name="for-export-order"></a>对于出口订单
 
 导出顺序 Data Box 注意事项包括：
 
-- Data Box 是一种基于 Windows 的设备，不支持区分大小写的文件名。 例如，Azure 中可能有两个不同的文件，其名称大小写不同。 不要使用 "数据" 框导出此类文件，因为这些文件将在设备上覆盖。
-- 如果输入文件中有重复的标记，或引用相同数据的标记，Data Box 导出可能会跳过或覆盖文件。 文件数量和显示在 Azure 门户上的数据大小可能与设备上存在的数据的实际大小不同。 
+- Data Box 是一种基于 Windows 的设备，不支持区分大小写的文件名。 例如，Azure 中可能有两个不同的文件，其名称大小写不同。 不要使用 Data Box 导出文件，因为文件将在设备上被覆盖。
+- 如果输入文件或标记中存在引用相同数据的重复标记，则 Data Box 导出可能会跳过或覆盖文件。 Azure 门户显示的文件数和数据大小可能不同于设备上数据的实际大小。 
 - Data Box 通过 SMB 将数据导出到基于 Windows 的系统，并受文件和文件夹的 SMB 限制的限制。 不会导出名称不受支持的文件和文件夹。
 - 从前缀到容器的映射均为1:1。
-- 文件名的最大大小为1024个字符，不会导出超过此长度的文件名。
-- *Xml*文件中的重复前缀 (会导出创建订单) 。 不会忽略重复的前缀。
-- 页 blob 和容器名称区分大小写，因此，如果大小写不匹配，将找不到 blob 和/或容器。
+- 文件名的最大大小为1024个字符。 超过此长度的文件名不会被导出。
+- *Xml* 文件中的重复前缀 (会导出创建订单) 。 不会忽略重复的前缀。
+- 页 blob 和容器名称区分大小写。 如果大小写不匹配，将找不到 blob 和/或容器。
  
 
 ## <a name="azure-storage-account-size-limits"></a>Azure 存储帐户大小限制

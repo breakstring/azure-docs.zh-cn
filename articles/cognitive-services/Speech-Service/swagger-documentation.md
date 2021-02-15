@@ -10,12 +10,12 @@ ms.subservice: speech-service
 ms.topic: reference
 ms.date: 07/05/2019
 ms.author: erhopf
-ms.openlocfilehash: fcc43caf895dadfaf832a47c3254f9b828bcb71a
-ms.sourcegitcommit: 58faa9fcbd62f3ac37ff0a65ab9357a01051a64f
+ms.openlocfilehash: 6bb50e427fa85a170c5ad23a63d67c01e898a17d
+ms.sourcegitcommit: 829d951d5c90442a38012daaf77e86046018e5b9
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/29/2020
-ms.locfileid: "77430799"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "91665678"
 ---
 # <a name="swagger-documentation"></a>Swagger 文档
 
@@ -26,25 +26,31 @@ ms.locfileid: "77430799"
 
 ## <a name="generating-code-from-the-swagger-specification"></a>从 Swagger 规范生成代码
 
-[Swagger 规范](https://cris.ai/swagger/ui/index)包含可快速测试各种路径的选项。 但有时需要为所有路径生成代码，从而创建可基于未来的解决方案的单个调用库。 让我们看看生成 Python 库的过程。
+[Swagger 规范](https://westus.dev.cognitive.microsoft.com/docs/services/speech-to-text-api-v3-0)包含可快速测试各种路径的选项。 但有时需要为所有路径生成代码，从而创建可基于未来的解决方案的单个调用库。 让我们看看生成 Python 库的过程。
 
 你需要将 Swagger 设置为与语音服务订阅相同的区域。 可在 Azure 门户中的语音服务资源下确认区域。 有关受支持区域的完整列表，请参阅[区域](regions.md)。
 
-1. 转到 https://editor.swagger.io
-2. 单击“文件”，然后单击“导入”  
-3. 输入 Swagger URL，包括语音服务订阅的区域 `https://<your-region>.cris.ai/docs/v2.0/swagger`
-4.  单击“生成客户端”，然后选择 Python
-5. 保存客户端库
+1. 在浏览器中，请参阅你所在地区的 Swagger 规范：  
+       `https://<your-region>.dev.cognitive.microsoft.com/docs/services/speech-to-text-api-v3-0`
+1. 在该页上，单击 " **API 定义**"，然后单击 " **Swagger**"。 复制显示的页的 URL。
+1. 在新的浏览器中，请参阅 https://editor.swagger.io
+1. 单击 " **文件**"，单击 " **导入 url**"，粘贴 Url，然后单击 **"确定"**。
+1. 单击 " **生成客户端** "，然后选择 " **python**"。 客户端库将在文件中下载到你的计算机 `.zip` 。
+1. 从下载内容中提取所有内容。 您可以使用 `tar -xf` 来提取所有内容。
+1. 将提取的模块安装到 Python 环境：  
+       `pip install path/to/package/python-client`
+1. 已安装的包的名称为 `swagger_client` 。 检查安装是否正常：  
+       `python -c "import swagger_client"`
 
 可以使用通过 [GitHub 上的语音服务示例](https://aka.ms/csspeech/samples)生成的 Python 库。
 
 ## <a name="reference-docs"></a>参考文档
 
-* [REST (Swagger)：批量听录和自定义](https://westus.cris.ai/swagger/ui/index)
+* [REST (Swagger) ：批处理脚本和自定义](https://westus.dev.cognitive.microsoft.com/docs/services/speech-to-text-api-v3-0)
 * [REST API：语音转文本](rest-speech-to-text.md)
 * [REST API：文本转语音](rest-text-to-speech.md)
 
 ## <a name="next-steps"></a>后续步骤
 
 * [GitHub 上的语音服务示例](https://aka.ms/csspeech/samples)。
-* [免费获取语音服务订阅密钥](get-started.md)
+* [免费获取语音服务订阅密钥](overview.md#try-the-speech-service-for-free)

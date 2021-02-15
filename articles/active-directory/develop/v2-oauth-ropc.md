@@ -13,23 +13,23 @@ ms.date: 05/18/2020
 ms.author: hirsin
 ms.reviewer: hirsin
 ms.custom: aaddev
-ms.openlocfilehash: 24d50635efb4d7fe18db9836311cf0a85dfcc734
-ms.sourcegitcommit: b8702065338fc1ed81bfed082650b5b58234a702
+ms.openlocfilehash: d0282e4f52db8557364cdabe197fa0da63204e42
+ms.sourcegitcommit: 5cdd0b378d6377b98af71ec8e886098a504f7c33
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/11/2020
-ms.locfileid: "88118614"
+ms.lasthandoff: 01/25/2021
+ms.locfileid: "98752640"
 ---
 # <a name="microsoft-identity-platform-and-oauth-20-resource-owner-password-credentials"></a>Microsoft 标识平台和 OAuth 2.0 资源所有者密码凭据
 
-Microsoft 标识平台支持 [OAuth 2.0 资源所有者密码凭据 (ROPC) 授权](https://tools.ietf.org/html/rfc6749#section-4.3)，后者允许应用程序通过直接处理用户的密码来登录用户。  本文介绍如何在应用程序中直接针对协议进行编程。  如果可能，建议你改用受支持的 Microsoft 身份验证库 (MSAL) 来[获取令牌并调用受保护的 Web API](authentication-flows-app-scenarios.md#scenarios-and-supported-authentication-flows)。  另请参阅[使用 MSAL 的示例应用](sample-v2-code.md)。
+Microsoft 标识平台支持 [OAuth 2.0 资源所有者密码凭据 (ROPC) grant](https://tools.ietf.org/html/rfc6749#section-4.3)，这允许应用程序通过直接处理密码来登录用户。  本文介绍如何在应用程序中直接针对协议进行编程。  如果可能，建议你改用受支持的 Microsoft 身份验证库 (MSAL) 来[获取令牌并调用受保护的 Web API](authentication-flows-app-scenarios.md#scenarios-and-supported-authentication-flows)。  另请参阅[使用 MSAL 的示例应用](sample-v2-code.md)。
 
 > [!WARNING]
 > Microsoft 建议不要使用 ROPC 流。 在大多数情况下，可以使用我们建议的更安全的替代方案。 此流需要应用程序中存在很高程度的信任，并且带有在其他流中不存在的风险。 仅当无法使用其他更安全的流时，才使用此流。
 
 > [!IMPORTANT]
 >
-> * Microsoft 标识平台终结点仅支持将 ROPC 用于 Azure AD 租户而非个人帐户。 这意味着，必须使用特定于租户的终结点 (`https://login.microsoftonline.com/{TenantId_or_Name}`) 或 `organizations` 终结点。
+> * Microsoft 标识平台仅支持 Azure AD 租户而不是个人帐户的 ROPC。 这意味着，必须使用特定于租户的终结点 (`https://login.microsoftonline.com/{TenantId_or_Name}`) 或 `organizations` 终结点。
 > * 受邀加入 Azure AD 租户的个人帐户不能使用 ROPC。
 > * 没有密码的帐户不能通过 ROPC 登录。 对于这种情况，建议改用适合应用的其他流。
 > * 如果用户需使用[多重身份验证 (MFA)](../authentication/concept-mfa-howitworks.md) 来登录应用程序，则系统会改为阻止用户。
@@ -66,11 +66,11 @@ client_id=6731de76-14a6-49ae-97bc-6eba6914391e
 
 | 参数 | 条件 | 说明 |
 | --- | --- | --- |
-| `tenant` | 必选 | 一个目录租户，用户需登录到其中。 此参数可采用 GUID 或友好名称格式。 此参数不能设置为 `common` 或 `consumers`，但可以设置为 `organizations`。 |
+| `tenant` | 必须 | 一个目录租户，用户需登录到其中。 此参数可采用 GUID 或友好名称格式。 此参数不能设置为 `common` 或 `consumers`，但可以设置为 `organizations`。 |
 | `client_id` | 必须 | [Azure 门户 - 应用注册](https://go.microsoft.com/fwlink/?linkid=2083908)页分配给你的应用的应用程序（客户端）ID。 |
 | `grant_type` | 必须 | 必须设置为 `password`。 |
 | `username` | 必须 | 用户的电子邮件地址。 |
-| `password` | 必选 | 用户的密码。 |
+| `password` | 必须 | 用户的密码。 |
 | `scope` | 建议 | 以空格分隔的[范围](v2-permissions-and-consent.md)或权限的列表，这是应用需要的。 在交互式流中，管理员或用户必须提前同意这些作用域。 |
 | `client_secret`| 有时必需 | 如果应用是公共客户端，则无法包括 `client_secret` 或 `client_assertion`。  如果应用是机密客户端，则它必须包括在内。 |
 | `client_assertion` | 有时必需 | 使用证书生成的不同形式的 `client_secret`。  有关更多详细信息，请参阅[证书凭据](active-directory-certificate-credentials.md)。 |
@@ -112,5 +112,4 @@ client_id=6731de76-14a6-49ae-97bc-6eba6914391e
 
 ## <a name="learn-more"></a>了解详细信息
 
-* 请通过[示例控制台应用程序](https://github.com/azure-samples/active-directory-dotnetcore-console-up-v2)自行试用 ROPC。
-* 若要确定是否应使用 v2.0 终结点，请阅读 [Microsoft 标识平台限制](../azuread-dev/azure-ad-endpoint-comparison.md)。
+有关使用 ROPC 的示例，请参阅 GitHub 上的 [.NET 核心控制台应用程序](https://github.com/azure-samples/active-directory-dotnetcore-console-up-v2)代码示例。

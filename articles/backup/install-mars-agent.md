@@ -1,18 +1,18 @@
 ---
-title: 安装 Microsoft Azure 恢复服务（MARS）代理
-description: 了解如何安装 Microsoft Azure 恢复服务（MARS）代理来备份 Windows 计算机。
+title: 安装 Microsoft Azure 恢复服务 (MARS) 代理
+description: 了解如何安装 Microsoft Azure 恢复服务 (MARS) 代理来备份 Windows 计算机。
 ms.topic: conceptual
 ms.date: 03/03/2020
-ms.openlocfilehash: 715153d445acbc372f8305ca39f5276bf8a39773
-ms.sourcegitcommit: 3d56d25d9cf9d3d42600db3e9364a5730e80fa4a
+ms.openlocfilehash: acf38fdf338fcdd0cd7902d4295f0f03310543a8
+ms.sourcegitcommit: 04297f0706b200af15d6d97bc6fc47788785950f
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/03/2020
-ms.locfileid: "87533472"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98986864"
 ---
 # <a name="install-the-azure-backup-mars-agent"></a>安装 Azure 备份 MARS 代理
 
-本文介绍如何安装 Microsoft Azure 恢复服务（MARS）代理。 MARS 也称为 Azure 备份代理。
+本文介绍如何将 Microsoft Azure 恢复服务 (MARS) 代理安装。 MARS 也称为 Azure 备份代理。
 
 ## <a name="about-the-mars-agent"></a>关于 MARS 代理
 
@@ -20,7 +20,7 @@ Azure 备份使用 MARS 代理备份本地计算机和 Azure VM 中的文件、�
 
 * 直接在本地 Windows 计算机上。 这些计算机可直接备份到 Azure 中的备份恢复服务保管库。
 * 在运行 Windows（与 Azure VM 备份扩展一起运行）的 Azure VM 上。 代理将备份 VM 上的特定文件和文件夹。
-* 在 Microsoft Azure 备份服务器（MABS）实例或 System Center Data Protection Manager （DPM）服务器上。 在此方案中，计算机和工作负荷将备份到 MABS 或 Data Protection Manager。 然后 MABS 或 Data Protection Manager 将通过 MARS 代理备份到 Azure 中的保管库。
+* 在 Microsoft Azure 备份 Server (MABS) 实例或 System Center Data Protection Manager (DPM) Server。 在此方案中，计算机和工作负荷将备份到 MABS 或 Data Protection Manager。 然后 MABS 或 Data Protection Manager 将通过 MARS 代理备份到 Azure 中的保管库。
 
 可备份的数据取决于代理的安装位置。
 
@@ -42,10 +42,10 @@ Azure 备份使用 MARS 代理备份本地计算机和 Azure VM 中的文件、�
 
 ## <a name="modify-storage-replication"></a>修复存储复制
 
-默认情况下，保管库使用[异地冗余存储 (GRS)](../storage/common/storage-redundancy.md)。
+默认情况下，保管库使用[异地冗余存储 (GRS)](../storage/common/storage-redundancy.md#geo-redundant-storage)。
 
 * 如果保管库是主要备份机制，建议使用 GRS。
-* 可以使用[本地冗余存储 (LRS)](../storage/common/storage-redundancy.md?toc=/azure/storage/blobs/toc.json) 来降低 Azure 存储成本。
+* 可以使用[本地冗余存储 (LRS)](../storage/common/storage-redundancy.md#locally-redundant-storage) 来降低 Azure 存储成本。
 
 若要修改存储复制类型，请执行以下操作：
 
@@ -88,6 +88,9 @@ Azure 备份使用 MARS 代理备份本地计算机和 Azure VM 中的文件、�
 * `.WindowsAzure.com`
 * `.microsoftonline.com`
 * `.windows.net`
+* IP 地址
+  * 20.190.128.0/18
+  * 40.126.0.0/18
 
 若要使用 Microsoft 对等互连，请选择以下服务、区域和相关社区值：
 
@@ -155,7 +158,7 @@ Azure 备份使用 MARS 代理备份本地计算机和 Azure VM 中的文件、�
 
     ![使用注册服务器向导添加保管库凭据](./media/backup-configure-vault/register1.png)
 
-1. 在“加密设置”页上，指定用于加密和解密计算机备份的通行短语。 有关允许的密码字符的详细信息，[请参阅此处](backup-azure-file-folder-backup-faq.md#what-characters-are-allowed-for-the-passphrase)。
+1. 在“加密设置”页上，指定用于加密和解密计算机备份的通行短语。 有关允许的通行短语字符的详细信息，请参阅[此处](backup-azure-file-folder-backup-faq.md#what-characters-are-allowed-for-the-passphrase)。
 
     * 将通行短语保存在安全位置。 还原备份时需要用到它。
     * 如果你丢失或忘记了该通行短语，Microsoft 将无法帮助你恢复备份数据。

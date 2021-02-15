@@ -1,18 +1,15 @@
 ---
-title: Azure HDInsight 中区域错误的容错域不足
+title: Azure HDInsight 的“区域中容错域不足”错误
 description: 由于 Azure HDInsight 的区域中容错域不足，群集创建失败
 ms.service: hdinsight
 ms.topic: troubleshooting
-author: hrasheed-msft
-ms.author: hrasheed
-ms.reviewer: jasonh
 ms.date: 08/09/2019
-ms.openlocfilehash: 8be7e05ac85ce0b1b10edf18d3885a07e016b9ae
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 3f7d866d1c9b8c8437bc0f84acca47e0b8631895
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "75895032"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98939047"
 ---
 # <a name="scenario-cluster-creation-failed-due-to-not-sufficient-fault-domains-in-region-in-azure-hdinsight"></a>方案：由于 Azure HDInsight 的`not sufficient fault domains in region`，群集创建失败
 
@@ -26,7 +23,7 @@ ms.locfileid: "75895032"
 
 容错域是 Azure 数据中心基础硬件的逻辑分组。 每个容错域共享公用电源和网络交换机。 在 HDInsight 群集中实现节点的虚拟机和托管磁盘跨这些容错域分布。 此体系结构可限制物理硬件故障造成的潜在影响。
 
-每个 Azure 区域都有特定数量的容错域。 有关域的列表及其包含的容错域的数量，请参阅有关[可用性集](../../virtual-machines/windows/manage-availability.md)的文档。
+每个 Azure 区域都有特定数量的容错域。 有关域的列表及其包含的容错域的数量，请参阅有关[可用性集](../../virtual-machines/manage-availability.md)的文档。
 
 在 HDInsight 中，需要在至少具有三个容错域的区域中预配 Kafka 群集。
 
@@ -42,4 +39,4 @@ ms.locfileid: "75895032"
 
 * 联系 [@AzureSupport](https://twitter.com/azuresupport)，这是用于改进客户体验的官方 Microsoft Azure 帐户。 它可以将 Azure 社区成员连接到适当的资源，为他们提供解答、支持和专家建议。
 
-* 如果需要更多帮助，可以从 [Azure 门户](https://portal.azure.com/?#blade/Microsoft_Azure_Support/HelpAndSupportBlade/)提交支持请求。 从菜单栏中选择“支持”****，或打开“帮助 + 支持”**** 中心。 有关更多详细信息，请参阅[如何创建 Azure 支持请求](https://docs.microsoft.com/azure/azure-portal/supportability/how-to-create-azure-support-request)。 Microsoft Azure 订阅包含对订阅管理和计费支持的访问权限，并且通过 [Azure 支持计划](https://azure.microsoft.com/support/plans/)之一提供技术支持。
+* 如果需要更多帮助，可以从 [Azure 门户](https://portal.azure.com/?#blade/Microsoft_Azure_Support/HelpAndSupportBlade/)提交支持请求。 从菜单栏中选择“支持”  ，或打开“帮助 + 支持”  中心。 有关更多详细信息，请参阅[如何创建 Azure 支持请求](../../azure-portal/supportability/how-to-create-azure-support-request.md)。 Microsoft Azure 订阅中带有对订阅管理和计费支持的访问权限，技术支持通过 [Azure 支持计划](https://azure.microsoft.com/support/plans/)之一提供。

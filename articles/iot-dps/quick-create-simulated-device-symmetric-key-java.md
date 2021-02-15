@@ -9,12 +9,12 @@ ms.service: iot-dps
 services: iot-dps
 manager: eliotgra
 ms.custom: mvc, devx-track-java
-ms.openlocfilehash: 8acc8b1e32304705b4221fe5570f7445720eafed
-ms.sourcegitcommit: a76ff927bd57d2fcc122fa36f7cb21eb22154cfa
+ms.openlocfilehash: a32811b439a569a8f8f82fcc046e0f4b89e47a38
+ms.sourcegitcommit: cd9754373576d6767c06baccfd500ae88ea733e4
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/28/2020
-ms.locfileid: "87307907"
+ms.lasthandoff: 11/20/2020
+ms.locfileid: "94966694"
 ---
 # <a name="quickstart-provision-a-simulated-device-to-iot-hub-with-symmetric-keys"></a>快速入门：使用对称密钥向 IoT 中心预配模拟设备
 
@@ -22,7 +22,7 @@ ms.locfileid: "87307907"
 
 虽然本文演示了使用单个注册进行预配，但你也可以使用注册组。 使用注册组时有一些不同之处。 例如，必须将派生的设备密钥与设备的唯一注册 ID 一起使用。 虽然对称密钥注册组不限于旧设备，但[如何使用对称密钥证明预配旧设备](how-to-legacy-device-symm-key.md)提供了注册组示例。 有关详细信息，请参阅[对称密钥证明的组注册](concepts-symmetric-key-attestation.md#group-enrollments)。
 
-如果你不熟悉自动预配过程，请查看[自动预配的概念](concepts-auto-provisioning.md)。 
+如果不熟悉自动预配过程，请查看[预配](about-iot-dps.md#provisioning-process)概述。 
 
 另外，在继续学习本快速入门之前，请确保已完成[通过 Azure 门户设置 IoT 中心设备预配服务](./quick-setup-auto-provision.md)中的步骤。 本快速入门需要你已创建设备预配服务实例。
 
@@ -34,7 +34,7 @@ ms.locfileid: "87307907"
 
 ## <a name="prerequisites"></a>先决条件
 
-* 确保已在计算机上安装 [Java SE 开发工具包 8](https://aka.ms/azure-jdks) 或更高版本。
+* 确保已在计算机上安装 [Java SE 开发工具包 8](/azure/developer/java/fundamentals/java-jdk-long-term-support) 或更高版本。
 
 * 下载并安装 [Maven](https://maven.apache.org/install.html)。
 
@@ -78,7 +78,7 @@ ms.locfileid: "87307907"
 
 4. 保存注册后，将生成“主要密钥”和“辅助密钥”，并将其添加到注册条目   。 对称密钥设备注册会在“单独注册”  选项卡的“注册 ID”  列下显示为“symm-key-java-device-007”  。 
 
-    打开注册并复制生成的“主要密钥”  的值。 稍后在更新设备的 Java 代码时，将使用此密钥值和**注册 ID**。
+    打开注册并复制生成的“主要密钥”  的值。 稍后在更新设备的 Java 代码时，将使用此密钥值和 **注册 ID**。
 
 
 

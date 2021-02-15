@@ -3,12 +3,13 @@ title: 使用 FabricClient 进行 Azure Service Fabric 部署
 description: 使用 FabricClient API 部署和删除 Service Fabric 中的应用程序。
 ms.topic: conceptual
 ms.date: 01/19/2018
-ms.openlocfilehash: 25b874d1be8ab50d8076ff8fe9423c8cc0187512
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.custom: devx-track-csharp
+ms.openlocfilehash: 343a37c983b1d64a4b1986913d9d6fd648a113fe
+ms.sourcegitcommit: a055089dd6195fde2555b27a84ae052b668a18c7
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "75376964"
+ms.lasthandoff: 01/26/2021
+ms.locfileid: "98785543"
 ---
 # <a name="deploy-and-remove-applications-using-fabricclient"></a>使用 FabricClient 部署和删除应用程序
 > [!div class="op_single_selector"]
@@ -46,7 +47,7 @@ FabricClient fabricClient = new FabricClient();
 ## <a name="upload-the-application-package"></a>上传应用程序包
 假设在 Visual Studio 中生成并打包名为 *MyApplication* 的应用程序。 默认情况下，ApplicationManifest.xml 中列出的应用程序类型名称为“MyApplicationType”。  应用程序包（其中包含必需的应用程序清单、服务清单以及代码/配置/数据包）位于 *C:\Users\&lt;username&gt;\Documents\Visual Studio 2019\Projects\MyApplication\MyApplication\pkg\Debug* 中。
 
-上传应用程序包会将其放在一个可由内部 Service Fabric 组件访问的位置。 Service Fabric 在注册应用程序包期间会对应用程序包进行验证。 但是，如果要在本地（即，在上传之前）验证应用程序包，请使用 [Test-ServiceFabricApplicationPackage](/powershell/module/servicefabric/test-servicefabricapplicationpackage?view=azureservicefabricps) cmdlet。
+上传应用程序包会将其放在一个可由内部 Service Fabric 组件访问的位置。 Service Fabric 在注册应用程序包期间会对应用程序包进行验证。 但是，如果要在本地（即，在上传之前）验证应用程序包，请使用 [Test-ServiceFabricApplicationPackage](/powershell/module/servicefabric/test-servicefabricapplicationpackage) cmdlet。
 
 [CopyApplicationPackage](/dotnet/api/system.fabric.fabricclient.applicationmanagementclient.copyapplicationpackage) API 可将应用程序包上传到群集映像存储。 
 
@@ -91,7 +92,7 @@ FabricClient fabricClient = new FabricClient();
 
 ## <a name="troubleshooting"></a>故障排除
 ### <a name="copy-servicefabricapplicationpackage-asks-for-an-imagestoreconnectionstring"></a>Copy-ServiceFabricApplicationPackage 请求 ImageStoreConnectionString
-Service Fabric SDK 环境应已默认设置正确。 若有需要，所有命令的 ImageStoreConnectionString 都应匹配 Service Fabric 群集正在使用的值。 可以在使用 [Get-ServiceFabricClusterManifest](/powershell/module/servicefabric/get-servicefabricclustermanifest?view=azureservicefabricps) 和 Get-ImageStoreConnectionStringFromClusterManifest 命令检索到的群集清单中找到 ImageStoreConnectionString：
+Service Fabric SDK 环境应已默认设置正确。 若有需要，所有命令的 ImageStoreConnectionString 都应匹配 Service Fabric 群集正在使用的值。 可以在使用 [Get-ServiceFabricClusterManifest](/powershell/module/servicefabric/get-servicefabricclustermanifest) 和 Get-ImageStoreConnectionStringFromClusterManifest 命令检索到的群集清单中找到 ImageStoreConnectionString：
 
 ```powershell
 PS C:\> Get-ImageStoreConnectionStringFromClusterManifest(Get-ServiceFabricClusterManifest)

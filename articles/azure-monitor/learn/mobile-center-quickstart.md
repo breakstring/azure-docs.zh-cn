@@ -3,17 +3,17 @@ title: 使用 Azure Monitor Application Insights 监视移动应用
 description: 提供有关快速安装移动应用以使用 Azure Monitor Application Insights 和 App Center 进行监视的说明
 ms.subservice: application-insights
 ms.topic: quickstart
-author: mrbullwinkle
-ms.author: mbullwin
+author: lgayhardt
+ms.author: lagayhar
 ms.date: 06/26/2019
 ms.reviewer: daviste
 ms.custom: mvc
-ms.openlocfilehash: 0539dcecbbbfe28817122e0f47e813182a9abd9d
-ms.sourcegitcommit: a76ff927bd57d2fcc122fa36f7cb21eb22154cfa
+ms.openlocfilehash: 34c35baf1bd958058bec6642434464711f5e79f6
+ms.sourcegitcommit: f5b8410738bee1381407786fcb9d3d3ab838d813
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/28/2020
-ms.locfileid: "87322136"
+ms.lasthandoff: 01/14/2021
+ms.locfileid: "98210301"
 ---
 # <a name="start-analyzing-your-mobile-app-with-app-center-and-application-insights"></a>开始使用 App Center 和 Application Insights 分析移动应用
 
@@ -124,7 +124,7 @@ Application Insights 可以查询、分段、筛选和分析来自应用的自�
    1. 通过单击文本编辑器中查询的任意位置，选择此查询。
    2. 然后，单击“运行”运行查询。 
 
-   详细了解有关 [Application Insights 分析](../log-query/log-query-overview.md)和 [Log Analytics 查询语言](https://aka.ms/LogAnalyticsLanguageReference)的信息。
+   详细了解有关 [Application Insights 分析](../log-query/log-query-overview.md)和 [Log Analytics 查询语言](/azure/data-explorer/kusto/query/)的信息。
 
 
 2. **分段和筛选自定义事件遥测。** 从 Application Insights“概述”页面上，选择目录中的“用户”。
@@ -168,4 +168,3 @@ Application Insights 可以查询、分段、筛选和分析来自应用的自�
 
 > [!div class="nextstepaction"]
 > [了解客户如何使用应用](../app/usage-overview.md)
-

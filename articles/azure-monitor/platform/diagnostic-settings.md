@@ -5,14 +5,14 @@ author: bwren
 ms.author: bwren
 services: azure-monitor
 ms.topic: conceptual
-ms.date: 04/27/2020
+ms.date: 02/08/2021
 ms.subservice: logs
-ms.openlocfilehash: 74e0a63da87a79cbd582cd6da5992251fc256504
-ms.sourcegitcommit: 1aef4235aec3fd326ded18df7fdb750883809ae8
+ms.openlocfilehash: 5e1a1c62cafd982d44be3e06b98fc8c30461021c
+ms.sourcegitcommit: 706e7d3eaa27f242312d3d8e3ff072d2ae685956
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/12/2020
-ms.locfileid: "88135430"
+ms.lasthandoff: 02/09/2021
+ms.locfileid: "99979974"
 ---
 # <a name="create-diagnostic-settings-to-send-platform-logs-and-metrics-to-different-destinations"></a>创建诊断设置以将平台日志和指标发送到不同的目标
 Azure 中的[平台日志](platform-logs-overview.md)（包括 Azure 活动日志和资源日志）提供 Azure 资源及其所依赖的 Azure 平台的详细诊断和审核信息。 默认情况下会收集[平台指标](data-platform-metrics.md)，它们通常存储在 Azure Monitor 指标数据库中。 本文详细介绍如何创建和配置诊断设置，以将平台指标和平台日志发送到不同的目标。
@@ -46,23 +46,25 @@ Azure 中的[平台日志](platform-logs-overview.md)（包括 Azure 活动日�
 | 目标 | 说明 |
 |:---|:---|
 | [Log Analytics 工作区](design-logs-deployment.md) | 将日志和指标发送到 Log Analytics 工作区可以使用强大的日志查询结合 Azure Monitor 收集的其他监视数据对其进行分析，并利用其他 Azure Monitor 功能，例如警报和可视化。 |
-| [事件中心](/azure/event-hubs/) | 向事件中心发送日志和指标可将数据流式传输到外部系统，例如第三方 SIEM 和其他日志分析解决方案。  |
-| [Azure 存储帐户](/azure/storage/blobs/) | 将日志和指标存档到 Azure 存储帐户有助于审核、静态分析或备份。 与 Azure Monitor 日志和 Log Analytics 工作区相比，Azure 存储成本较低，并且日志可以无限期保留。  |
+| [事件中心](../../event-hubs/index.yml) | 向事件中心发送日志和指标可将数据流式传输到外部系统，例如第三方 SIEM 和其他日志分析解决方案。  |
+| [Azure 存储帐户](../../storage/blobs/index.yml) | 将日志和指标存档到 Azure 存储帐户有助于审核、静态分析或备份。 与 Azure Monitor 日志和 Log Analytics 工作区相比，Azure 存储成本较低，并且日志可以无限期保留。  |
 
 
 ### <a name="destination-requirements"></a>目标要求
 
-在创建诊断设置之前，必须创建诊断设置的任何目标。 只要配置设置的用户具有对这两个订阅的相应 RBAC 访问权限，目标就不必与资源发送日志位于同一订阅中。 下表为每个目标提供了独特的要求，包括任何区域限制。
+在创建诊断设置之前，必须已创建诊断设置的任何目标。 只要配置设置的用户同时拥有两个订阅的相应 Azure RBAC 访问权限，目标就不必位于发送日志的资源所在的订阅中。 下表提供了每个目标的独特要求，包括任何区域限制。
 
 | 目标 | 要求 |
 |:---|:---|
-| Log Analytics 工作区 | 工作区不需要与所监视的资源位于同一区域。|
-| 事件中心 | 命名空间的共享访问策略定义流式处理机制具有的权限。 流式传输到事件中心需要“管理”、“发送”和“侦听”权限。 若要更新诊断设置，使之包括流式传输，则必须在事件中心授权规则中拥有 ListKey 权限。<br><br>如果资源是区域，事件中心命名空间必须与受监视的资源位于同一区域。 |
-| Azure 存储帐户 | 不应使用其中存储了其他非监视数据的现有存储帐户，以便更好地控制数据所需的访问权限。 不过，如果要将活动日志和资源日志一同存档，则可以选择使用该存储帐户在一个中心位置保留所有监视数据。<br><br>若要将数据发送到不可变存储，请按照[为 Blob 存储设置和管理不可变策略](../../storage/blobs/storage-blob-immutability-policies-manage.md)中所述为存储帐户设置不可变策略。 必须按照本文中的所有步骤操作，包括启用受保护的追加 blob 写入操作。<br><br>如果资源是区域，则存储帐户必须与受监视的资源位于同一区域。 |
+| Log Analytics 工作区 | 此工作区无需与要监视的资源在同一区域。|
+| 事件中心 | 命名空间的共享访问策略定义流式处理机制具有的权限。 流式传输到事件中心需要“管理”、“发送”和“侦听”权限。 若要更新诊断设置，使之包括流式传输，则必须在事件中心授权规则中拥有 ListKey 权限。<br><br>如果资源是区域性的，则事件中心命名空间需要与要监视的资源位于同一区域中。 |
+| Azure 存储帐户 | 不应使用其中存储了其他非监视数据的现有存储帐户，以便更好地控制数据所需的访问权限。 不过，如果要将活动日志和资源日志一同存档，则可以选择使用该存储帐户在一个中心位置保留所有监视数据。<br><br>若要将数据发送到不可变存储，请按照[为 Blob 存储设置和管理不可变策略](../../storage/blobs/storage-blob-immutability-policies-manage.md)中所述为存储帐户设置不可变策略。 必须按照本文中的所有步骤操作，包括启用受保护的追加 blob 写入操作。<br><br>如果资源是区域性的，则存储帐户需要与要监视的资源位于同一区域中。 |
 
 > [!NOTE]
 > Azure Data Lake Storage Gen2 帐户目前不支持作为诊断设置的目标，即使它们可能在 Azure 门户中被列为有效选项。
 
+> [!NOTE]
+> 启用虚拟网络后，Azure Monitor（诊断设置）无法访问事件中心资源。 你必须启用事件中心的“允许受信任的 Microsoft 服务绕过此防火墙”设置，以便授予 Azure Monitor（诊断设置）服务访问事件中心资源的权限。 
 
 
 ## <a name="create-in-azure-portal"></a>在 Azure 门户中创建
@@ -73,15 +75,15 @@ Azure 中的[平台日志](platform-logs-overview.md)（包括 Azure 活动日�
 
    - 对于单项资源，在资源菜单中的“监视器”下，单击“诊断设置”。 
 
-        ![诊断设置](media/diagnostic-settings/menu-resource.png)
+        ![Azure 门户中资源菜单的“监视”部分的屏幕截图，其中突出显示了“诊断设置”。](media/diagnostic-settings/menu-resource.png)
 
    - 对于一项或多项资源，在 Azure Monitor 菜单中，单击“设置”下的“诊断设置”，然后单击相应资源。 
 
-      ![诊断设置](media/diagnostic-settings/menu-monitor.png)
+        ![Azure Monitor 菜单中“设置”部分的屏幕截图，其中突出显示了“诊断设置”。](media/diagnostic-settings/menu-monitor.png)
 
    - 对于活动日志，在“Azure Monitor”菜单中，单击“活动日志”，然后单击“诊断设置”。   请确保禁用活动日志的任何旧配置。 有关详细信息，请参阅[禁用现有设置](./activity-log.md#legacy-collection-methods)。
 
-        ![诊断设置](media/diagnostic-settings/menu-activity-log.png)
+        ![Azure Monitor 菜单的屏幕截图，其中已选择“活动日志”，并且在“Monitor - 活动日志”菜单栏中突出显示了“诊断设置”。](media/diagnostic-settings/menu-activity-log.png)
 
 2. 如果选定的资源上不存在任何设置，系统会提示创建设置。 单击“添加诊断设置”。
 
@@ -97,7 +99,7 @@ Azure 中的[平台日志](platform-logs-overview.md)（包括 Azure 活动日�
 
 4. **类别详细信息(要路由的内容)** - 选中要发送到稍后指定的目标的每个数据类别对应的框。 每种 Azure 服务的类别列表各不相同。
 
-     - **所有指标** - 将资源的平台指标路由到 Azure 日志存储，但采用日志格式。 这些指标平常只发送到 Azure Monitor 指标时序数据库。 将它们发送到 Azure Monitor 日志存储（可通过 Log Analytics 进行搜索），以将它们集成到跨其他日志进行搜索的查询中。 此选项不一定适用于所有资源类型。 当受支持时，[Azure Monitor 支持的指标](metrics-supported.md)会列出为具体资源类型收集的具体指标。
+     - **所有指标** - 将资源的平台指标路由到 Azure 日志存储，但采用日志格式。 这些指标平常只发送到 Azure Monitor 指标时序数据库。 将它们发送到 Azure Monitor 日志存储（可通过 Log Analytics 进行搜索）有助于你将它们集成到跨其他日志进行搜索的查询中。 此选项不一定适用于所有资源类型。 当受支持时，[Azure Monitor 支持的指标](metrics-supported.md)会列出为具体资源类型收集的具体指标。
 
        > [!NOTE]
        > 请参阅本文前面部分介绍的将指标路由到 Azure Monitor 日志时的限制。  
@@ -137,7 +139,7 @@ Azure 中的[平台日志](platform-logs-overview.md)（包括 Azure 活动日�
 在 [Azure PowerShell](../samples/powershell-samples.md) 中使用 [Set-AzDiagnosticSetting](/powershell/module/az.monitor/set-azdiagnosticsetting) cmdlet 创建诊断设置。 有关参数说明，请参阅此 cmdlet 的文档。
 
 > [!IMPORTANT]
-> 不能将此方法用于 Azure 活动日志。 请改为利用[使用资源管理器模板在 Azure Monitor 中创建诊断设置](diagnostic-settings-template.md)，创建资源管理器模板并使用 PowerShell 进行部署。
+> 不能将此方法用于 Azure 活动日志。 请改为利用[使用资源管理器模板在 Azure Monitor 中创建诊断设置](../samples/resource-manager-diagnostic-settings.md)，创建资源管理器模板并使用 PowerShell 进行部署。
 
 以下示例 PowerShell cmdlet 使用所有三个目标创建诊断设置。
 
@@ -147,10 +149,10 @@ Set-AzDiagnosticSetting -Name KeyVault-Diagnostics -ResourceId /subscriptions/xx
 
 ## <a name="create-using-azure-cli"></a>使用 Azure CLI 创建
 
-在 [Azure CLI](/cli/azure/monitor?view=azure-cli-latest) 中使用 [az monitor diagnostic-settings create](/cli/azure/monitor/diagnostic-settings?view=azure-cli-latest#az-monitor-diagnostic-settings-create) 命令创建诊断设置。 有关参数说明，请参阅此命令的文档。
+在 [Azure CLI](/cli/azure/monitor) 中使用 [az monitor diagnostic-settings create](/cli/azure/monitor/diagnostic-settings#az-monitor-diagnostic-settings-create) 命令创建诊断设置。 有关参数说明，请参阅此命令的文档。
 
 > [!IMPORTANT]
-> 不能将此方法用于 Azure 活动日志。 请改为按[使用资源管理器模板在 Azure Monitor 中创建诊断设置](diagnostic-settings-template.md)中的说明操作，创建资源管理器模板并使用 CLI 进行部署。
+> 不能将此方法用于 Azure 活动日志。 请改为按[使用资源管理器模板在 Azure Monitor 中创建诊断设置](../samples/resource-manager-diagnostic-settings.md)中的说明操作，创建资源管理器模板并使用 CLI 进行部署。
 
 以下示例 CLI 命令使用所有三个目标创建诊断设置。
 
@@ -173,6 +175,24 @@ az monitor diagnostic-settings create  \
 
 ## <a name="create-using-azure-policy"></a>使用 Azure Policy 创建
 由于需要为每个 Azure 资源创建诊断设置，因此在创建每个资源时，可以使用 Azure Policy 来自动创建诊断设置。 有关详细信息，请参阅[使用 Azure Policy 大规模部署 Azure Monitor](../deploy-scale.md)。
+
+## <a name="metric-category-is-not-supported-error"></a>不支持指标类别错误
+部署诊断设置时，会收到以下错误消息：
+
+   不支持度量值类别 "*xxxx*"
+
+例如： 
+
+   "指标类别 ' ActionsFailed ' 不受支持"
+
+部署成功的位置。 
+
+当使用资源管理器模板、诊断设置 REST API、Azure CLI 或 Azure PowerShell 时，会出现此问题。 通过 Azure 门户创建的诊断设置不受影响，因为仅显示支持的类别名称。
+
+此问题是由基础 API 的最新更改引起的。 除 "AllMetrics" 之外的指标类别不受支持，并且绝不会有少量特定的 Azure 服务。 过去，部署诊断设置时，将忽略其他类别名称。 Azure Monitor 后端直接将这些类别重定向到 "AllMetrics"。  从2021年2月开始，更新后端以明确确认提供的指标类别是否准确。 此更改导致某些部署失败。
+
+如果收到此错误，请更新部署，将任何指标类别名称替换为 "AllMetrics" 以解决此问题。 如果部署之前添加了多个类别，则应该只保留一个具有 "AllMetrics" 引用的类别。 如果仍然遇到问题，请通过 Azure 门户联系 Azure 支持部门。 
+
 
 
 ## <a name="next-steps"></a>后续步骤

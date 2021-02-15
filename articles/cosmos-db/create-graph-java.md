@@ -1,22 +1,23 @@
 ---
 title: 在 Azure Cosmos DB 中使用 Java 生成图形数据库
 description: 演示一个可以用来连接到 Azure Cosmos DB 并使用 Gremlin 查询其中图形数据的 Java 代码示例。
-author: luisbosquez
+author: christopheranderson
 ms.service: cosmos-db
 ms.subservice: cosmosdb-graph
 ms.devlang: java
 ms.topic: quickstart
 ms.date: 03/26/2019
-ms.author: lbosq
+ms.author: chrande
 ms.custom: seo-java-july2019, seo-java-august2019, seo-java-september2019, devx-track-java
-ms.openlocfilehash: 05fc7a7a5bd7e045125cb303e1f5c29d550c58ef
-ms.sourcegitcommit: a76ff927bd57d2fcc122fa36f7cb21eb22154cfa
+ms.openlocfilehash: 5a793eb69b344e361679759e46db47c78885831e
+ms.sourcegitcommit: 6a902230296a78da21fbc68c365698709c579093
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/28/2020
-ms.locfileid: "87323666"
+ms.lasthandoff: 11/05/2020
+ms.locfileid: "93360949"
 ---
 # <a name="quickstart-build-a-graph-database-with-the-java-sdk-and-the-azure-cosmos-db-gremlin-api"></a>快速入门：使用 Java SDK 和 Azure Cosmos DB Gremlin API 构建图形数据库
+[!INCLUDE[appliesto-gremlin-api](includes/appliesto-gremlin-api.md)]
 
 > [!div class="op_single_selector"]
 > * [Gremlin console](create-graph-gremlin-console.md)（Gremlin 控制台）
@@ -169,7 +170,7 @@ ms.locfileid: "87323666"
 
 1. 在 Azure 门户中，在你的 Azure Cosmos DB 帐户中，选择“数据资源管理器”，展开“sample-graph”，再依次选择“图形”和“应用筛选器”。 
 
-   :::image type="content" source="./media/create-graph-java/azure-cosmosdb-data-explorer-expanded.png" alt-text="在 Azure 门户的数据资源管理器中创建新文档":::
+   :::image type="content" source="./media/create-graph-java/azure-cosmosdb-data-explorer-expanded.png" alt-text="屏幕截图显示了从 API 中选择了提供“应用筛选器”选项的“图形”。":::
 
 2. 在“结果”列表中，请注意添加到图形的新用户。 选择“ben”，请注意，该用户已连接到 robin。 可以通过拖放操作来移动顶点，也可以通过滚动鼠标滚轮进行缩放，并能用双箭头放大图形。 
 
@@ -177,9 +178,9 @@ ms.locfileid: "87323666"
 
 3. 接下来，添加几个新用户。 选择“新建顶点”，向图添加数据。
 
-   :::image type="content" source="./media/create-graph-java/azure-cosmosdb-data-explorer-new-vertex.png" alt-text="在 Azure 门户的数据资源管理器中创建新文档":::
+   :::image type="content" source="./media/create-graph-java/azure-cosmosdb-data-explorer-new-vertex.png" alt-text="屏幕截图显示了可以在其中输入值的“新建顶点”窗格。":::
 
-4. 在标签框中，输入 *person*。
+4. 在标签框中，输入 *person* 。
 
 5. 选择“添加属性”，以添加下列每个属性。 注意，可以在图形中为每个人创建唯一属性。 仅 id 键是必需的。
 

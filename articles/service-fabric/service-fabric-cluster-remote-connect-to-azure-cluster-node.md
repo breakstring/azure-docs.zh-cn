@@ -3,12 +3,12 @@ title: 远程连接 Azure Service Fabric 群集节点
 description: 了解如何远程连接到规模集实例（Service Fabric 群集节点）。
 ms.topic: conceptual
 ms.date: 03/23/2018
-ms.openlocfilehash: c7ca4f0d5dce1b19837a44d5c9749f3e1293c6b8
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 98d573af4fc2026134e75d4caf24a09e57e52c87
+ms.sourcegitcommit: a43a59e44c14d349d597c3d2fd2bc779989c71d7
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "75458312"
+ms.lasthandoff: 11/25/2020
+ms.locfileid: "96012538"
 ---
 # <a name="remote-connect-to-a-virtual-machine-scale-set-instance-or-a-cluster-node"></a>远程连接到虚拟机规模集实例或群集节点
 在 Azure 中运行的 Service Fabric 群集中，定义的每个群集节点类型都会[设置虚拟机单独规模](service-fabric-cluster-nodetypes.md)。  可以远程连接到特定规模集实例（群集节点）。  不同于单实例 VM，规模集实例本身没有虚拟 IP 地址。 可能很难找到可用来远程连接到特定实例的 IP 地址和端口。
@@ -21,11 +21,11 @@ ms.locfileid: "75458312"
     
     在 Azure 门户中的负载均衡器页上，选择“设置” > “入站 NAT 规则”： 
 
-    ![负载均衡器入站 NAT 规则](./media/service-fabric-cluster-remote-connect-to-azure-cluster-node/lb-window.png)
+    ![Azure 门户中的负载均衡器页的屏幕截图。 在左侧菜单的 "设置" 下，选择 "入站 NAT 规则"。](./media/service-fabric-cluster-remote-connect-to-azure-cluster-node/lb-window.png)
 
     以下屏幕截图显示名为 FrontEnd 的节点类型的入站 NAT 规则： 
 
-    ![负载均衡器入站 NAT 规则](./media/service-fabric-cluster-remote-connect-to-azure-cluster-node/nat-rules.png)
+    ![显示负载均衡器的入站 NAT 规则的屏幕截图。 列出每个规则的名称、IP 版本、目标、目标和服务。](./media/service-fabric-cluster-remote-connect-to-azure-cluster-node/nat-rules.png)
 
     对于每个节点，IP 地址显示在“DESTINATION”列中，“TARGET”列提供规模集实例，“SERVICE”列提供端口号    。 对于远程连接，从端口 3389 开始按升序将端口分配到每个节点。
 

@@ -15,14 +15,18 @@ ms.topic: conceptual
 ms.date: 03/18/2019
 ms.author: anilmur
 ms.reviewer: juliako
-ms.openlocfilehash: 22777b24c9456e9593a59f8dc91ed4e10b6f6f4e
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.custom: devx-track-csharp
+ms.openlocfilehash: be98ab20fb29ae50445494a3c5f1558fd43420a7
+ms.sourcegitcommit: 829d951d5c90442a38012daaf77e86046018e5b9
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87000731"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "89268686"
 ---
 # <a name="how-to-perform-live-streaming-using-azure-media-services-to-create-multi-bitrate-streams-with-net"></a>如何使用 Azure 媒体服务执行实时流式处理以通过 .NET 创建多比特率流
+
+[!INCLUDE [media services api v2 logo](./includes/v2-hr.md)]
+
 > [!div class="op_single_selector"]
 > * [门户](media-services-portal-creating-live-encoder-enabled-channel.md)
 > * [.NET](media-services-dotnet-creating-live-encoder-enabled-channel.md)
@@ -66,7 +70,7 @@ ms.locfileid: "87000731"
 11. 通过创建按需定位器发布与节目关联的资产。
 
     >[!NOTE]
-    >创建 AMS 帐户后，会将一个处于“已停止”状态的**默认**流式处理终结点添加到帐户。 要从中流式传输内容的流式处理终结点必须处于“正在运行”状态。 
+    >创建 AMS 帐户后，会将一个处于“已停止”状态的**默认**流式处理终结点添加到帐户。 要从中流式传输内容的流式处理终结点必须处于“正在运行”状态。  
 
 12. 准备好开始流式传输和存档后，启动节目。
 13. （可选）可以向实时编码器发信号，以启动广告。 将广告插入到输出流中。
@@ -82,7 +86,7 @@ ms.locfileid: "87000731"
 2. 获取频道引入（输入）终结点。 应将此终结点提供给可以发送单比特率实时流的编码器。
 3. 获取预览终结点。 此终结点用于预览流。
 4. 创建用于存储内容的资产。 还应配置资源传送策略，如此示例中所示。
-5. 创建节目并指定使用先前创建的资源。 启动该节目。 将使用长时间运行的 API。
+5. 创建节目并指定使用先前创建的资源。 启动程序。 将使用长时间运行的 API。
 6. 为资源创建定位器，以便发布内容，并可以将内容流式传输到客户端。
 7. 显示和隐藏清单。 启动和停止广告。 将使用长时间运行的 API。
 8. 清理频道及所有关联的资源。
@@ -98,7 +102,7 @@ ms.locfileid: "87000731"
 
 ## <a name="considerations"></a>注意事项
 * 目前，直播活动的最大建议持续时间为 8 小时。 如果需要较长时间运行某个频道，请联系 amshelp@microsoft.com。
-* 不同 AMS 策略的策略限制为 1,000,000 个（例如，对于定位器策略或 ContentKeyAuthorizationPolicy）。 如果始终使用相同的日期/访问权限，则应使用相同的策略 ID，例如，用于要长期就地保留的定位符的策略（非上传策略）。 有关详细信息，请参阅[此](media-services-dotnet-manage-entities.md#limit-access-policies)文章。
+* 不同 AMS 策略的策略限制为 1,000,000 个（例如，对于定位器策略或 ContentKeyAuthorizationPolicy）。 如果始终使用相同的日期/访问权限，则应使用相同的策略 ID，例如，用于要长期就地保留的定位符的策略（非上传策略）。 有关详细信息，请参阅[本文](media-services-dotnet-manage-entities.md#limit-access-policies)。
 
 ## <a name="download-sample"></a>下载示例
 
@@ -106,7 +110,7 @@ ms.locfileid: "87000731"
 
 ## <a name="set-up-for-development-with-media-services-sdk-for-net"></a>使用用于 .NET 的媒体服务 SDK 进行开发设置
 
-设置开发环境，并在 app.config 文件中填充连接信息，如[通过 .net 进行媒体服务开发](media-services-dotnet-how-to-use.md)中所述。 
+设置开发环境，并根据[使用 .NET 进行媒体服务开发](media-services-dotnet-how-to-use.md)中所述，在 app.config 文件中填充连接信息。 
 
 ## <a name="code-example"></a>代码示例
 

@@ -35,11 +35,6 @@
               href: container-registry-tutorial-deploy-app.md
             - name: 3 - 更新 Web 应用程序
               href: container-registry-tutorial-deploy-update.md
-    - name: 示例
-      items:
-        - name: Azure Policy 内置策略定义
-          displayName: 'samples, policies, definitions'
-          href: ./policy-samples.md
     - name: 概念
       expanded: false
       items:
@@ -62,8 +57,16 @@
           href: container-registry-image-tag-version.md
         - name: 异地复制
           href: container-registry-geo-replication.md
+        - name: 区域冗余
+          displayName: availability zone
+          href: zone-redundancy.md
         - name: 注册最佳做法
           href: container-registry-best-practices.md
+        - name: 多体系结构映像
+          href: push-multi-architecture-images.md
+          displayName: multi-architecture
+        - name: 管理公共映像
+          href: buffer-gate-public-content.md
     - name: 操作指南
       expanded: false
       items:
@@ -101,6 +104,8 @@
               href: container-registry-access-selected-networks.md
             - name: 使用服务终结点限制访问（预览版）
               href: container-registry-vnet.md
+            - name: 允许受信任的服务访问
+              href: allow-access-trusted-services.md
             - name: 使用客户管理的密钥加密
               href: container-registry-customer-managed-keys.md
             - name: 在防火墙后访问
@@ -123,12 +128,13 @@
                   href: ../aks/cluster-container-registry-integration.md?toc=/azure/container-registry/toc.json&bc=/azure/container-registry/breadcrumb/toc.json
                 - name: 使用存储库范围内的令牌进行身份验证（预览版）
                   href: container-registry-repository-scoped-permissions.md
-            - name: 基于角色的访问控制
+            - name: Azure 基于角色的访问控制
               href: container-registry-roles.md
+              displayName: 'permissions, authorization'
             - name: 内容信任
               href: container-registry-content-trust.md
             - name: 通过安全中心扫描映像
-              href: ../security-center/azure-container-registry-integration.md?toc=/azure/container-registry/toc.json&bc=/azure/container-registry/breadcrumb/toc.json
+              href: ../security-center/defender-for-container-registries-introduction.md?bc=%2fazure%2fcontainer-registry%2fbreadcrumb%2ftoc.json&toc=%2fazure%2fcontainer-registry%2ftoc.json
         - name: 注册表和其他 Azure 服务
           expanded: false
           items:
@@ -156,6 +162,7 @@
               href: container-registry-troubleshoot-performance.md
             - name: 检测常见问题
               href: container-registry-check-health.md
+              displayName: 'check, health'
             - name: 常见问题解答
               href: container-registry-faq.md
 - name: 任务
@@ -212,6 +219,10 @@
               href: container-registry-tasks-authentication-key-vault.md
         - name: 使用资源管理器模板快速运行任务
           href: container-registry-task-run-template.md
+        - name: 在专用代理池上运行任务（预览版）
+          href: tasks-agent-pools.md
+        - name: 使用和维护公共内容
+          href: tasks-consume-public-content.md
         - name: 使用 Buildpacks 生成映像（预览版）
           href: container-registry-tasks-pack-build.md
         - name: 查看任务日志
@@ -243,6 +254,9 @@
       href: ../event-grid/event-schema-container-registry.md?toc=/azure/container-registry/toc.json&bc=/azure/container-registry/breadcrumb/toc.json
     - name: 运行状况检查错误
       href: container-registry-health-error-reference.md
+    - name: Azure Policy 内置策略定义
+      displayName: 'samples, policies, definitions'
+      href: ./policy-reference.md
 - name: 资源
   expanded: false
   items:

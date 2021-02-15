@@ -5,13 +5,13 @@ author: justindavies
 ms.topic: conceptual
 ms.date: 03/05/2018
 ms.author: juda
-ms.custom: mvc
-ms.openlocfilehash: 95039573c607f516755f08f1ebad8b968416ec8b
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.custom: mvc, devx-track-azurecli
+ms.openlocfilehash: 319107127b79383fc3b49f0eeb856a0e6c5b09f8
+ms.sourcegitcommit: 8c7f47cc301ca07e7901d95b5fb81f08e6577550
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "80631469"
+ms.lasthandoff: 10/27/2020
+ms.locfileid: "92747761"
 ---
 # <a name="using-openfaas-on-aks"></a>在 AKS 上使用 OpenFaaS
 
@@ -91,7 +91,8 @@ alertmanager-config  1     20s
 NOTES:
 To verify that openfaas has started, run:
 
-  kubectl --namespace=openfaas get deployments -l "release=openfaas, app=openfaas"
+```console
+kubectl --namespace=openfaas get deployments -l "release=openfaas, app=openfaas"
 ```
 
 创建了一个用于访问 OpenFaaS 网关的公共 IP 地址。 若要检索此 IP 地址，请使用 [kubectl get service][kubectl-get] 命令。 将 IP 地址分配到服务可能需要一分钟时间。
@@ -133,7 +134,7 @@ echo -n $PASSWORD | ./faas-cli login -g $OPENFAAS_URL -u admin --password-stdin
 
 单击“部署新函数”并搜索 Figlet 。 选择 Figlet 函数，然后单击“部署”。
 
-![Figlet](media/container-service-serverless/figlet.png)
+![屏幕截图显示了“部署新函数”对话框，其中的搜索行中有文本“figlet”。](media/container-service-serverless/figlet.png)
 
 使用 curl 来调用该函数。 将下例中的 IP 地址替换为 OpenFaas 网关的 IP 地址。
 

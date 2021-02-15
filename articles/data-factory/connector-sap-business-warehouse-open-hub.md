@@ -1,31 +1,27 @@
 ---
 title: 通过 Open Hub 从 SAP Business Warehouse 中复制数据
 description: 了解如何在 Azure 数据工厂管道中使用复制活动，通过 Open Hub 将数据从 SAP Business Warehouse (BW) 复制到支持的接收器数据存储。
-services: data-factory
-documentationcenter: ''
 ms.author: jingwang
 author: linda33wj
-manager: shwang
-ms.reviewer: douglasl
 ms.service: data-factory
-ms.workload: data-services
 ms.topic: conceptual
 ms.custom: seo-lt-2019
-ms.date: 06/12/2020
-ms.openlocfilehash: 930c7e7881a00cd0cb1f4abc6b219c0fbdeebac5
-ms.sourcegitcommit: 3d56d25d9cf9d3d42600db3e9364a5730e80fa4a
+ms.date: 02/02/2020
+ms.openlocfilehash: b766ce248a3543ef3323e026d760e550a0e3dd75
+ms.sourcegitcommit: d4734bc680ea221ea80fdea67859d6d32241aefc
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/03/2020
-ms.locfileid: "87533404"
+ms.lasthandoff: 02/14/2021
+ms.locfileid: "100386673"
 ---
 # <a name="copy-data-from-sap-business-warehouse-via-open-hub-using-azure-data-factory"></a>使用 Azure 数据工厂通过 Open Hub 从 SAP Business Warehouse 复制数据
+
 [!INCLUDE[appliesto-adf-asa-md](includes/appliesto-adf-asa-md.md)]
 
 本文概述了如何使用 Azure 数据工厂中的复制活动，通过 Open Hub 从 SAP Business Warehouse (BW) 复制数据。 它是基于概述复制活动总体的[复制活动概述](copy-activity-overview.md)一文。
 
 >[!TIP]
->若要了解 ADF 全面支持 SAP 数据集成方案，请参阅[使用 Azure 数据工厂的 SAP 数据集成白皮书](https://github.com/Azure/Azure-DataFactory/blob/master/whitepaper/SAP%20Data%20Integration%20using%20Azure%20Data%20Factory.pdf)，并详细介绍每个 SAP 连接器的 comparsion 和指南。
+>若要了解 ADF 对 SAP 数据集成方案的总体支持，请参阅[关于使用 Azure 数据工厂进行 SAP 数据集成的白皮书](https://github.com/Azure/Azure-DataFactory/blob/master/whitepaper/SAP%20Data%20Integration%20using%20Azure%20Data%20Factory.pdf)，其中包含每个 SAP 连接器的详细介绍、比较和指导。
 
 ## <a name="supported-capabilities"></a>支持的功能
 
@@ -38,7 +34,7 @@ ms.locfileid: "87533404"
 
 具体而言，此 SAP Business Warehouse Open Hub 连接器支持：
 
-- SAP Business Warehouse **7.01 或更高版本（位于最新的 SAP 支持包堆栈中，该堆栈是 2015 年以后发布的）** 。 此连接器不支持 SAP BW4/HANA。
+- SAP Business Warehouse **7.01 或更高版本（位于最新的 SAP 支持包堆栈中，该堆栈是 2015 年以后发布的）** 。 此连接器不支持 SAP BW/4HANA。
 - 通过 Open Hub Destination 本地表复制数据，该表下方可能是 DSO、InfoCube、MultiProvider、DataSource 等。
 - 使用基本身份验证复制数据。
 - 连接到 SAP 应用程序服务器或 SAP 消息服务器。
@@ -59,7 +55,7 @@ ADF SAP BW Open Hub 连接器提供两种可选属性：`excludeLastRequest` 和
 - **excludeLastRequestId**：是否排除最后一个请求的记录。 默认值为 true。 
 - **baseRequestId**：增量加载的请求的 ID。 设置以后，只会检索 requestId 大于此属性的值的数据。 
 
-总之，从 SAP InfoProviders 提取到 Azure 数据工厂 (ADF) 的操作包含 2 个步骤： 
+总之，从 SAP InfoProviders 提取到 Azure 数据工厂 (ADF) 的操作包含两个步骤： 
 
 1. **SAP BW 数据传输过程 (DTP)** ：此步骤将数据从 SAP BW InfoProvider 复制到 SAP BW Open Hub 表 
 
@@ -90,7 +86,7 @@ ADF SAP BW Open Hub 连接器提供两种可选属性：`excludeLastRequest` 和
     - RFC 和 SAP BW 的授权。 
     - “执行”授权对象“S_SDSAUTH”的活动的权限。
 
-- 将 SAP Open Hub Destination 类型创建为“数据库表”（勾选“技术密钥”选项）。  另外还建议取消选中“从表中删除数据”，虽然这不是必需的操作。 利用 DTP（直接执行或集成到现有进程链中）将数据从所选源对象（例如多维数据集）移到 Open Hub Destination 表。
+- 将 SAP Open Hub Destination 类型创建为“数据库表”（勾选“技术密钥”选项）。  另外还建议取消选中“从表中删除数据”，虽然这不是必需的操作。 使用 DTP (直接执行或集成到现有进程链) ，以将数据从源对象 (如已选择 "打开中心目标" 表的多维数据集) 。
 
 ## <a name="getting-started"></a>入门
 
@@ -106,7 +102,7 @@ ADF SAP BW Open Hub 连接器提供两种可选属性：`excludeLastRequest` 和
 
 SAP Business Warehouse Open Hub 链接服务支持以下属性：
 
-| 属性 | 说明 | 必须 |
+| 属性 | 说明 | 必需 |
 |:--- |:--- |:--- |
 | type | type 属性必须设置为：**SapOpenHub** | 是 |
 | server | SAP BW 实例所驻留的服务器的名称。 | 是 |
@@ -152,7 +148,7 @@ SAP Business Warehouse Open Hub 链接服务支持以下属性：
 
 若要从/向 SAP BW Open Hub 复制数据，请将数据集的 type 属性设置为 **SapOpenHubTable**。 支持以下属性。
 
-| properties | 说明 | 必须 |
+| properties | 说明 | 必需 |
 |:--- |:--- |:--- |
 | type | type 属性必须设置为 **SapOpenHubTable**。  | 是 |
 | openHubDestinationName | 要从其复制数据的 Open Hub Destination 的名称。 | 是 |
@@ -186,11 +182,11 @@ SAP Business Warehouse Open Hub 链接服务支持以下属性：
 
 若要从 SAP BW Open Hub 复制数据，复制活动的 **source** 节支持以下属性：
 
-| 属性 | 说明 | 必须 |
+| 属性 | 说明 | 必需 |
 |:--- |:--- |:--- |
 | type | 复制活动源的 **type** 属性必须设置为 **SapOpenHubSource**。 | 是 |
 | excludeLastRequest | 是否排除最后一个请求的记录。 | 否（默认为 **true**） |
-| baseRequestId | 增量加载的请求的 ID。 设置以后，只会检索 requestId **大于**此属性的值的数据。  | 否 |
+| baseRequestId | 增量加载的请求的 ID。 设置以后，只会检索 requestId **大于** 此属性的值的数据。  | 否 |
 
 >[!TIP]
 >如果 Open Hub 表只包含通过单个请求 ID 生成的数据（例如，始终进行完全加载并覆盖表中的现有数据，或者只在测试时运行 DTP 一次），则请记住取消选中“excludeLastRequest”选项，以便复制数据。

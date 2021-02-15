@@ -3,18 +3,18 @@ title: Azure 备份的软删除
 description: 了解如何在 Azure 备份中使用安全功能，使备份更加安全。
 ms.topic: conceptual
 ms.date: 04/30/2020
-ms.openlocfilehash: d791b76698330cd14c56f01cf5da62c8a64bec29
-ms.sourcegitcommit: ac7ae29773faaa6b1f7836868565517cd48561b2
+ms.openlocfilehash: da473b1d886ec2fe95a7baae76b09aff38fb3cd7
+ms.sourcegitcommit: 30906a33111621bc7b9b245a9a2ab2e33310f33f
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/25/2020
-ms.locfileid: "88826967"
+ms.lasthandoff: 11/22/2020
+ms.locfileid: "95254015"
 ---
 # <a name="soft-delete-for-azure-backup"></a>Azure 备份的软删除
 
 对安全问题（例如恶意软件、勒索软件、入侵）的关注在逐渐上升。 这些安全问题可能会代价高昂（就金钱和数据来说）。 为了防范此类攻击，Azure 备份现提供可帮助保护备份数据（即使数据已删除）的安全功能。
 
-其中的一项功能是软删除。 在使用软删除的情况下，即使恶意行动者删除了备份（或用户意外删除了备份数据），备份数据也仍会保留 14 天，因此可以恢复该备份项，而不会丢失数据。 "软删除" 状态中的备份数据保留期额外的14天不会对客户产生任何费用。
+其中的一项功能是软删除。 在使用软删除的情况下，即使恶意行动者删除了备份（或用户意外删除了备份数据），备份数据也仍会保留 14 天，因此可以恢复该备份项，而不会丢失数据。 以“软删除”状态将备份数据额外保留 14 天不会向你收取任何费用。
 
 软删除保护适用于以下服务：
 
@@ -29,7 +29,7 @@ ms.locfileid: "88826967"
 
 软删除在新创建的保管库上默认启用，目的是防止意外或恶意删除备份数据。  建议不要禁用此功能。 唯一应该考虑禁用软删除的情况是，你打算将受保护的项移到新保管库，需要在删除后重新进行保护，因此等不及要求的 14 天（例如在测试环境中）。只有保管库所有者可以禁用此功能。 如果禁用此功能，将来删除任何受保护项将导致立即删除，而无法还原。 禁用此功能之前，以软删除状态存在的备份数据将在 14 天内保持软删除状态。 若要立即永久删除这些项，则需先取消删除，然后再次将其删除，这样就可以永久删除它们。
 
- 请记住，禁用软删除后，将为所有类型的工作负载（包括 SQL server 和 SAP HANA 工作负载）禁用该功能。 例如，一旦为某个订阅启用了 [SQL Server/SAP HANA 预览版](./soft-delete-sql-saphana-in-azure-vm.md#steps-to-enroll-in-preview) ，就不可能仅对 SQL Server 或 SAP HANA 数据库禁用软删除功能，同时使其为同一保管库中的虚拟机启用。 可以创建单独的保管库以进行精细控制。
+务必记住，禁用软删除后，将对所有类型的工作负载禁用该功能。 例如，不能仅对 SQL Server 或 SAP HANA DB 禁用软删除，而仍对同一保管库中的虚拟机启用软删除。 可以创建单独的保管库以进行精细控制。
 
 ### <a name="disabling-soft-delete-using-azure-portal"></a>使用 Azure 门户禁用软删除
 
@@ -46,7 +46,7 @@ ms.locfileid: "88826967"
 > [!IMPORTANT]
 > 使用 Azure PowerShell 进行软删除所需的 Az.RecoveryServices 版本最低为 2.2.0。 可使用 ```Install-Module -Name Az.RecoveryServices -Force``` 获取最新版本。
 
-若要禁用，请使用 [AzRecoveryServicesVaultBackupProperty](/powershell/module/az.recoveryservices/set-azrecoveryservicesbackupproperty) PowerShell cmdlet。
+若要禁用，请使用 [Set-AzRecoveryServicesVaultBackupProperty](/powershell/module/az.recoveryservices/set-azrecoveryservicesbackupproperty) PowerShell cmdlet。
 
 ```powershell
 Set-AzRecoveryServicesVaultProperty -VaultId $myVaultID -SoftDeleteFeatureState Disable
@@ -87,11 +87,11 @@ SoftDeleteFeatureState : Disabled
 
 5. 选择“删除备份数据”，永久删除备份数据。
 
-   ![选择“删除备份数据”](/azure/backup/media/backup-azure-manage-vms/delete-backup-buttom.png)
+   ![选择“删除备份数据”](./media/backup-azure-manage-vms/delete-backup-button.png)
 
 6. 键入备份项的名称以确认你要删除恢复点。
 
-   ![键入备份项的名称](/azure/backup/media/backup-azure-manage-vms/delete-backup-data1.png)
+   ![键入备份项的名称](./media/backup-azure-manage-vms/delete-backup-data.png)
 
 7. 若要删除项的备份数据，请选择“删除”。 一条通知消息将让你获悉备份数据已删除。
 
@@ -144,7 +144,7 @@ AppVM1           DeleteBackupData     Completed            12/5/2019 12:44:15 PM
 
 ### <a name="do-i-need-to-enable-the-soft-delete-feature-on-every-vault"></a>是否需要对每个保管库启用软删除功能？
 
-不会，它是内置的，并且默认情况下已为所有恢复服务保管库启用。
+否。此功能是内置的，为所有恢复服务保管库而设计，默认已启用。
 
 ### <a name="can-i-configure-the-number-of-days-for-which-my-data-will-be-retained-in-soft-deleted-state-after-the-delete-operation-is-complete"></a>是否可以配置在完成删除操作后，以软删除状态保留数据的天数？
 

@@ -1,22 +1,24 @@
 ---
 title: 慢查询日志 - Azure Database for MariaDB
 description: 介绍了 Azure Database for MariaDB 中提供的日志，以及用于启用不同日志记录级别的可用参数。
-author: ajlam
-ms.author: andrela
-ms.service: mariadb
+author: savjani
+ms.author: pariks
+ms.service: jroth
 ms.topic: conceptual
-ms.date: 4/13/2020
-ms.openlocfilehash: ffd4ab463080001dbab5b0ed9ece69c4b5f91382
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.date: 11/6/2020
+ms.openlocfilehash: 2d3c3c92cc4d0da38f18c7895f4f7f3f3385c653
+ms.sourcegitcommit: 52e3d220565c4059176742fcacc17e857c9cdd02
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "81272077"
+ms.lasthandoff: 01/21/2021
+ms.locfileid: "98664157"
 ---
 # <a name="slow-query-logs-in-azure-database-for-mariadb"></a>Azure Database for MariaDB 中的慢查询日志
 在 Azure Database for MariaDB 中，慢查询日志可供用户使用。 不支持访问事务日志。 可以使用慢查询日志来查明性能瓶颈以进行故障排除。
 
 有关慢查询日志的详细信息，请参阅[慢查询日志](https://mariadb.com/kb/en/library/slow-query-log-overview/)的 MariaDB 文档。
+
+在服务器上启用[查询存储](concepts-query-store.md)时，你可能会看到记录在慢查询日志中的类似“`CALL mysql.az_procedure_collect_wait_stats (900, 30);`”的查询。 此行为是预期的行为，因为查询存储功能会收集有关查询的统计信息。 
 
 ## <a name="configure-slow-query-logging"></a>配置慢查询日志记录
 默认情况下，慢查询日志被禁用。 若要启用它，请将 `slow_query_log` 设置为 ON。 可以使用 Azure 门户或 Azure CLI 启用此功能。 

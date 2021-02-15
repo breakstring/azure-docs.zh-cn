@@ -1,18 +1,18 @@
 ---
 title: 快速入门：创建 Azure DB for MySQL - ARM 模板
 description: 本快速入门介绍了如何使用 Azure 资源管理器模板创建集成了虚拟网络的 Azure Database for MySQL 服务器。
-author: mgblythe
+author: savjani
+ms.author: pariks
 ms.service: mysql
 ms.topic: quickstart
 ms.custom: subject-armqs
-ms.author: mblythe
 ms.date: 05/19/2020
-ms.openlocfilehash: ed908c4711812302fffac2e1ce59d2196426b74c
-ms.sourcegitcommit: faeabfc2fffc33be7de6e1e93271ae214099517f
+ms.openlocfilehash: 0e7fcf51d9c663ca4a289f54972f00ef037cb323
+ms.sourcegitcommit: 6ab718e1be2767db2605eeebe974ee9e2c07022b
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/13/2020
-ms.locfileid: "88185853"
+ms.lasthandoff: 11/12/2020
+ms.locfileid: "94542263"
 ---
 # <a name="quickstart-use-an-arm-template-to-create-an-azure-database-for-mysql-server"></a>快速入门：使用 ARM 模板创建 Azure Database for MySQL 服务器
 
@@ -22,7 +22,7 @@ Azure Database for MySQL 是一种托管服务，可用于在云中运行、管�
 
 如果你的环境满足先决条件，并且你熟悉如何使用 ARM 模板，请选择“部署到 Azure”按钮。 Azure 门户中会打开模板。
 
-[![部署到 Azure](../media/template-deployments/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3a%2f%2fraw.githubusercontent.com%2fAzure%2fazure-quickstart-templates%2fmaster%2f101-managed-mysql-with-vnet%2fazuredeploy.json)
+[:::image type="content" source="../media/template-deployments/deploy-to-azure.svg" alt-text="部署到 Azure":::](https://portal.azure.com/#create/Microsoft.Template/uri/https%3a%2f%2fraw.githubusercontent.com%2fAzure%2fazure-quickstart-templates%2fmaster%2f101-managed-mysql-with-vnet%2fazuredeploy.json)
 
 ## <a name="prerequisites"></a>先决条件
 
@@ -48,7 +48,7 @@ Azure Database for MySQL 是一种托管服务，可用于在云中运行、管�
 
 本快速入门中使用的模板来自 [Azure 快速启动模板](https://azure.microsoft.com/resources/templates/101-managed-mysql-with-vnet/)。
 
-:::code language="json" source="~/quickstart-templates/101-managed-mysql-with-vnet/azuredeploy.json" range="001-231" highlight="149,162,176,199,213":::
+:::code language="json" source="~/quickstart-templates/101-managed-mysql-with-vnet/azuredeploy.json":::
 
 该模板定义了五个 Azure 资源：
 
@@ -66,7 +66,7 @@ Azure Database for MySQL 是一种托管服务，可用于在云中运行、管�
 
 选择以下链接以在 Azure 门户中部署 Azure Database for MySQL 服务器模板：
 
-[![部署到 Azure](../media/template-deployments/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3a%2f%2fraw.githubusercontent.com%2fAzure%2fazure-quickstart-templates%2fmaster%2f101-managed-mysql-with-vnet%2fazuredeploy.json)
+[:::image type="content" source="../media/template-deployments/deploy-to-azure.svg" alt-text="部署到 Azure":::](https://portal.azure.com/#create/Microsoft.Template/uri/https%3a%2f%2fraw.githubusercontent.com%2fAzure%2fazure-quickstart-templates%2fmaster%2f101-managed-mysql-with-vnet%2fazuredeploy.json)
 
 在“部署具有 VNet 的 Azure Database for MySQL”页上：
 
@@ -76,7 +76,7 @@ Azure Database for MySQL 是一种托管服务，可用于在云中运行、管�
 
 3. 输入服务器名称、管理员登录名和管理员登录密码  。
 
-    ![“部署具有 VNet 的 Azure Database for MySQL”窗口，Azure 快速入门模板，Azure 门户](./media/quickstart-create-mysql-server-database-using-arm-template/deploy-azure-database-for-mysql-with-vnet.png)
+    :::image type="content" source="./media/quickstart-create-mysql-server-database-using-arm-template/deploy-azure-database-for-mysql-with-vnet.png" alt-text="“部署具有 VNet 的 Azure Database for MySQL”窗口，Azure 快速入门模板，Azure 门户":::
 
 4. 根据需要更改其他默认设置：
 

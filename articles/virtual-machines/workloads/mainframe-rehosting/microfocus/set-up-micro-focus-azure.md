@@ -1,6 +1,6 @@
 ---
 title: 在 Azure 上安装微聚焦企业服务器5.0 和企业开发人员 5.0 |Microsoft Docs
-description: 在 Azure 虚拟机 (Vm) 上使用微焦点开发和测试环境 Rehost IBM z/OS 大型机工作负荷。
+description: 本文介绍如何在 Microsoft Azure 上安装微聚焦企业服务器5.0 和企业开发人员5.0。
 services: virtual-machines-linux
 documentationcenter: ''
 author: maggsl
@@ -12,12 +12,12 @@ ms.date: 06/29/2020
 tags: ''
 keywords: ''
 ms.service: multiple
-ms.openlocfilehash: 59566fc051b1e84d8e271b3c9d061f2481dcc58f
-ms.sourcegitcommit: c293217e2d829b752771dab52b96529a5442a190
+ms.openlocfilehash: d9e5f9b531fc28caf8f3162a70318927d40bb923
+ms.sourcegitcommit: d60976768dec91724d94430fb6fc9498fdc1db37
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/15/2020
-ms.locfileid: "88245309"
+ms.lasthandoff: 12/02/2020
+ms.locfileid: "96483056"
 ---
 # <a name="install-micro-focus-enterprise-server-50-and-enterprise-developer-50-on-azure"></a>在 Azure 上安装微聚焦企业服务器5.0 和企业开发人员5。0
 
@@ -42,7 +42,7 @@ Azure 上的常见工作负载是开发和测试环境。 这种情况很常见�
     > [!Note]
     > 有几个选项可用于控制对 Vm 的访问：
     > -   最佳做法是设置 [Azure 堡垒](https://azure.microsoft.com/services/azure-bastion/)。
-    > -   [站点到站点虚拟专用网络 (VPN) ](../../../../vpn-gateway/vpn-gateway-tutorial-vpnconnection-powershell.md)隧道。
+    > -   [站点到站点虚拟专用网络 (VPN) ](../../../../vpn-gateway/vpn-gateway-create-site-to-site-rm-powershell.md)隧道。
     > -   Jumpbox VM。
 
 ## <a name="install-enterprise-server"></a>安装 Enterprise Server
@@ -61,7 +61,7 @@ Azure 上的常见工作负载是开发和测试环境。 这种情况很常见�
 
 5.  接受其余设置的默认值。 请记住为这些 Vm 的管理员创建的用户名和密码。
 
-6.  创建虚拟机后，在企业服务器计算机上打开适用于 HTTP 和**3389**的入站端口**9003、86**和**80** ，并为开发人员计算机上的**3389**打开 (RDP) 远程桌面协议。
+6.  创建虚拟机后，在企业服务器计算机上打开适用于 HTTP 和 **3389** 的入站端口 **9003、86** 和 **80** ，并为开发人员计算机上的 **3389** 打开 (RDP) 远程桌面协议。
 
 7.  若要登录到企业服务器虚拟机，请在 Azure 门户中选择 "ES2 v3 VM"。 请参阅 " **概述** " 部分，并选择 " **连接** " 以启动 RDP 会话。 使用为 VM 创建的凭据登录。
 
@@ -73,11 +73,11 @@ Azure 上的常见工作负载是开发和测试环境。 这种情况很常见�
 
 9.  双击该文件以开始安装。 在第一个窗口中，选择安装位置并接受最终用户许可协议。
 
-    ![微聚焦企业服务器安装屏幕](media/install-image-1.png)
+    ![屏幕截图显示 "微聚焦企业服务器" 对话框，您可以在该对话框中开始安装。](media/install-image-1.png)
 
     安装完成后，将显示以下消息：
 
-    ![微聚焦企业服务器安装屏幕](media/install-image-2.png)
+    ![屏幕截图显示 "微聚焦企业服务器" 对话框中的成功消息。](media/install-image-2.png)
 
  ### <a name="check-for-updates"></a>检查更新
 
@@ -87,9 +87,9 @@ Azure 上的常见工作负载是开发和测试环境。 这种情况很常见�
 
 1.  开始获得微 "许可管理"。
 
-2.  选择 " **开始**微" " \> **许可证管理器** \> **许可证管理**"，然后单击 " **安装** " 选项卡。选择要上传的许可证格式的类型：许可证文件或16个字符的许可代码。 例如，对于文件，在 " **许可证文件**" 中，浏览到 `mflic` 以前上传到 VM 的 * 文件，然后选择 " **安装许可证**"。
+2.  选择 " **开始** 微" " \> **许可证管理器** \> **许可证管理**"，然后单击 " **安装** " 选项卡。选择要上传的许可证格式的类型：许可证文件或16个字符的许可代码。 例如，对于文件，在 " **许可证文件**" 中，浏览到 `mflic` 以前上传到 VM 的 * 文件，然后选择 " **安装许可证**"。
 
-    !["微重点许可管理" 对话框](media/install-image-3.png)
+    ![屏幕截图显示 "微焦点许可证管理" 对话框，你可以在其中选择 "安装许可证"。](media/install-image-3.png)
 
 3.  验证企业服务器是否已加载。 尝试使用以下 URL 在浏览器中启动企业服务器管理站点： `http://localhost:86/` 。 将显示 "企业服务器管理" 页，如下所示。
 
@@ -123,7 +123,7 @@ Azure 上的常见工作负载是开发和测试环境。 这种情况很常见�
 
 部署企业开发人员时，在 Azure 上部署微侧重点开发和测试环境已完成！
 
-**后续步骤**
+后续步骤
 
 -   [设置 BankDemo 应用程序](./demo.md)
 

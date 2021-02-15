@@ -1,23 +1,18 @@
 ---
 title: 在 Azure 数据工厂中使用 Pig 活动转换数据
-description: 了解如何使用 Azure 数据工厂中的 Pig 活动在按需或自己的 HDInsight 群集上运行 Pig 脚本。
-services: data-factory
-documentationcenter: ''
-author: djpmsft
-ms.author: daperlov
-manager: jroth
+description: 了解如何使用 Azure 数据工厂 v1 中的 Pig 活动，在按需/自己的 HDInsight 群集上运行 Pig 脚本。
+author: dcstwh
+ms.author: weetok
 ms.reviewer: maghan
-ms.assetid: 5af07a1a-2087-455e-a67b-a79841b4ada5
 ms.service: data-factory
-ms.workload: data-services
 ms.topic: conceptual
 ms.date: 01/10/2018
-ms.openlocfilehash: 5b8e7201a6239ef1fe83fb89d4b361995e305bbf
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 2f59734b5452b5a06b49583954f8851e84e8f84d
+ms.sourcegitcommit: d4734bc680ea221ea80fdea67859d6d32241aefc
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "74703196"
+ms.lasthandoff: 02/14/2021
+ms.locfileid: "100387166"
 ---
 # <a name="transform-data-using-pig-activity-in-azure-data-factory"></a>在 Azure 数据工厂中使用 Pig 活动转换数据
 > [!div class="op_single_selector" title1="转换活动"]
@@ -26,8 +21,8 @@ ms.locfileid: "74703196"
 > * [MapReduce 活动](data-factory-map-reduce.md)
 > * [Hadoop 流式处理活动](data-factory-hadoop-streaming-activity.md)
 > * [Spark 活动](data-factory-spark.md)
-> * [机器学习批处理执行活动](data-factory-azure-ml-batch-execution-activity.md)
-> * [机器学习更新资源活动](data-factory-azure-ml-update-resource-activity.md)
+> * [Azure 机器学习工作室（经典）批处理执行活动](data-factory-azure-ml-batch-execution-activity.md)
+> * [Azure 机器学习工作室（经典）更新资源活动](data-factory-azure-ml-update-resource-activity.md)
 > * [存储过程活动](data-factory-stored-proc-activity.md)
 > * [Data Lake Analytics U-SQL 活动](data-factory-usql-activity.md)
 > * [.NET 自定义活动](data-factory-use-custom-activities.md)
@@ -36,7 +31,7 @@ ms.locfileid: "74703196"
 > 本文适用于数据工厂版本 1。 如果使用数据工厂服务的当前版本，请参阅[在数据工厂中使用 Pig 活动转换数据](../transform-data-using-hadoop-pig.md)。
 
 
-数据工厂[管道](data-factory-create-pipelines.md)中的 HDInsight Pig 活动会在[自己](data-factory-compute-linked-services.md#azure-hdinsight-linked-service)或基于 Windows/Linux 的[按需](data-factory-compute-linked-services.md#azure-hdinsight-on-demand-linked-service)HDInsight 群集上执行 Pig 查询。 本文基于[数据转换活动](data-factory-data-transformation-activities.md)一文，它概述了数据转换和受支持的转换活动。
+数据工厂 [管道](data-factory-create-pipelines.md) 中的 HDInsight Pig 活动会在 [自己](data-factory-compute-linked-services.md#azure-hdinsight-linked-service) 或基于 Windows/Linux 的 [按需](data-factory-compute-linked-services.md#azure-hdinsight-on-demand-linked-service) HDInsight 群集上执行 Pig 查询。 本文基于[数据转换活动](data-factory-data-transformation-activities.md)一文，它概述了数据转换和受支持的转换活动。
 
 > [!NOTE] 
 > 如果是刚开始接触 Azure 数据工厂，请仔细阅读 [Azure 数据工厂简介](data-factory-introduction.md)，并学习[教程：生成首个数据管道](data-factory-build-your-first-pipeline.md)，然后再阅读本文。 
@@ -82,7 +77,7 @@ ms.locfileid: "74703196"
 
 ## <a name="syntax-details"></a>语法详细信息
 
-| properties | 描述 | 必需 |
+| properties | 说明 | 必须 |
 | --- | --- | --- |
 | name |活动名称 |是 |
 | description |描述活动用途的文本 |否 |
@@ -121,10 +116,10 @@ Store PigSampleOut into 'wasb://adfwalkthrough@anandsub14.blob.core.windows.net/
 
 若要在数据工厂管道中执行此 Pig 脚本，请执行以下步骤：
 
-1. 创建链接服务以注册[自己的 HDInsight 计算群集](data-factory-compute-linked-services.md#azure-hdinsight-linked-service)或配置[按需 HDInsight 计算群集](data-factory-compute-linked-services.md#azure-hdinsight-on-demand-linked-service)。 让我们将此链接服务称为**HDInsightLinkedService**。
+1. 创建链接服务以注册[自己的 HDInsight 计算群集](data-factory-compute-linked-services.md#azure-hdinsight-linked-service)或配置[按需 HDInsight 计算群集](data-factory-compute-linked-services.md#azure-hdinsight-on-demand-linked-service)。 让我们将此链接服务称为 **HDInsightLinkedService**。
 2. 创建[链接服务](data-factory-azure-blob-connector.md)以配置托管数据的 Azure Blob 存储的连接。 将此链接服务称作 **StorageLinkedService**。
 3. 创建指向输入和输出数据的[数据集](data-factory-create-datasets.md)。 将输入数据集称作 **PigSampleIn**，输出数据集称作 **PigSampleOut**。
-4. 将文件中的 Pig 查询复制到步骤 #2 中配置的 Azure Blob 存储。 如果托管数据的 Azure 存储与托管查询文件的 Azure 存储不同，请创建单独的 Azure 存储链接服务。 请参考活动配置中的链接服务。 使用**scriptPath**指定 pig 脚本文件和**scriptLinkedService**的路径。 
+4. 将文件中的 Pig 查询复制到步骤 #2 中配置的 Azure Blob 存储。 如果托管数据的 Azure 存储与托管查询文件的 Azure 存储不同，请创建单独的 Azure 存储链接服务。 请参考活动配置中的链接服务。 使用 **scriptPath** 指定 pig 脚本文件和 **scriptLinkedService** 的路径。 
    
    > [!NOTE]
    > 还可以使用 **script** 属性在活动定义中提供 Pig 脚本内联。 但不建议使用此方法，因为这需转义脚本中的所有特殊字符，并且可能导致调试问题。 最佳做法是遵循步骤 #4。

@@ -1,14 +1,17 @@
 ---
 title: 在聊天机器人中使用个性化体验创建服务 - 个性化体验创建服务
 description: 自定义具有个性化体验创建服务循环的 C# .NET 聊天机器人，以根据操作（包含特征）和上下文特征向用户提供正确的内容。
+ms.service: cognitive-services
+ms.subservice: personalizer
 ms.topic: tutorial
 ms.date: 07/17/2020
-ms.openlocfilehash: 8e936b4017ad50434bc7d6b05b4217f82a9080e0
-ms.sourcegitcommit: 0e8a4671aa3f5a9a54231fea48bcfb432a1e528c
+ms.custom: devx-track-csharp
+ms.openlocfilehash: 7c4920eaa7a5619be37d38afd763e7be416d3124
+ms.sourcegitcommit: 04fb3a2b272d4bbc43de5b4dbceda9d4c9701310
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/24/2020
-ms.locfileid: "87131661"
+ms.lasthandoff: 11/12/2020
+ms.locfileid: "94565715"
 ---
 # <a name="tutorial-use-personalizer-in-net-chat-bot"></a>教程：在 .NET 聊天机器人中使用个性化体验创建服务
 
@@ -20,7 +23,7 @@ ms.locfileid: "87131661"
 > [!div class="checklist"]
 > * 设置 Azure 资源
 > * 配置并运行机器人
-> * 使用机器人模拟器与机器人进行交互
+> * 使用 Bot Framework Emulator 与机器人交互
 > * 了解机器人使用个性化体验创建服务的位置和方式
 
 
@@ -127,7 +130,7 @@ git clone https://github.com/Azure-Samples/cognitive-services-personalizer-sampl
 
 若要使用该聊天机器人，需要为个性化体验创建服务和语言理解 (LUIS) 创建 Azure 资源。
 
-* [创建 LUIS 资源](../luis/luis-how-to-azure-subscription.md#create-luis-resources-in-azure-portal)。 在创建步骤中选择“两者”，因为同时需要创作和预测资源。
+* [创建 LUIS 资源](../luis/luis-how-to-azure-subscription.md#create-luis-resources-in-the-azure-portal)。 在创建步骤中选择“两者”，因为同时需要创作和预测资源。
 * [创建个性化体验创建服务资源](how-to-create-resource.md)，然后从 Azure 门户复制密钥和终结点。 你将需要在 .NET 项目的 `appsettings.json` 文件中设置这些值。
 
 ### <a name="create-luis-app"></a>创建 LUIS 应用
@@ -173,7 +176,7 @@ git clone https://github.com/Azure-Samples/cognitive-services-personalizer-sampl
 
 ## <a name="set-up-the-bot-emulator"></a>设置机器人模拟器
 
-1. 打开机器人模拟器并选择“打开机器人”。
+1. 打开 Bot Framework Emulator，然后选择“打开机器人”。
 
     :::image type="content" source="media/tutorial-chat-bot/bot-emulator-startup.png" alt-text="机器人模拟器启动屏幕的屏幕截图。":::
 

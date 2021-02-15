@@ -1,25 +1,26 @@
 ---
-title: 在 Azure 中的 Linux Vm 上运行自定义脚本扩展
+title: 在 Azure 中的 Linux VM 上运行自定义脚本扩展
 description: 使用自定义脚本扩展 v2 自动化 Linux VM 配置任务
 services: virtual-machines-linux
 documentationcenter: ''
-author: mimckitt
+author: amjads1
 manager: gwallace
 editor: ''
 tags: azure-resource-manager
 ms.assetid: cf17ab2b-8d7e-4078-b6df-955c6d5071c2
 ms.service: virtual-machines-linux
+ms.subservice: extensions
 ms.topic: article
 ms.tgt_pltfrm: vm-linux
 ms.workload: infrastructure-services
 ms.date: 04/25/2018
-ms.author: mimckitt
-ms.openlocfilehash: 367116948034fd4bedbeec15e655a09b179865d6
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.author: amjads
+ms.openlocfilehash: 5ab312dc6da57279ce5cbd4d8efd7912b8a36503
+ms.sourcegitcommit: d4734bc680ea221ea80fdea67859d6d32241aefc
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87085718"
+ms.lasthandoff: 02/14/2021
+ms.locfileid: "100390107"
 ---
 # <a name="use-the-azure-custom-script-extension-version-2-with-linux-virtual-machines"></a>在 Linux 虚拟机上使用 Azure 自定义脚本扩展版本 2
 自定义脚本扩展版本 2 在 Azure 虚拟机上下载和运行脚本。 此扩展适用于部署后配置、软件安装或其他任何配置/管理任务。 可以从 Azure 存储或其他可访问的 Internet 位置下载脚本，或者将脚本提供给扩展运行时。 
@@ -45,7 +46,7 @@ ms.locfileid: "87085718"
 可使用扩展，利用 Azure Blob 存储凭据来访问 Azure Blob 存储。 或者，脚本位置可以是任何位置，只要 VM 可以路由到该终结点（如 GitHub、内部文件服务器等）即可。
 
 ### <a name="internet-connectivity"></a>Internet 连接
-如果需要从外部（例如 GitHub 或 Azure 存储）下载脚本，则需要打开其他防火墙/网络安全组端口。 例如，如果脚本位于 Azure 存储中，可以使用[存储](../../virtual-network/security-overview.md#service-tags)的 Azure NSG 服务标记来允许访问。
+如果需要从外部（例如 GitHub 或 Azure 存储）下载脚本，则需要打开其他防火墙/网络安全组端口。 例如，如果脚本位于 Azure 存储中，可以使用[存储](../../virtual-network/network-security-groups-overview.md#service-tags)的 Azure NSG 服务标记来允许访问。
 
 如果脚本位于本地服务器上，则可能仍需要打开其他防火墙/网络安全组端口。
 
@@ -55,9 +56,10 @@ ms.locfileid: "87085718"
 * 确保这些脚本在运行时不需要用户输入。
 * 脚本可以运行 90 分钟，若运行时间超过 90 分钟，将导致扩展的预配失败。
 * 请勿将 reboot 置于脚本中，这会导致正在安装的其他扩展出现问题，并且在重启后，该扩展将不会继续。 
+* 建议不要运行将导致 VM 代理停止或更新的脚本。 这可能会使扩展处于“正在转换”状态，导致超时。
 * 如果脚本会导致重启，则安装应用程序并运行脚本等。应该使用 Cron 作业或者使用 DSC 或 Chef、Puppet 扩展等工具来计划重启。
 * 该扩展只会运行一个脚本一次，如果想要在每次启动时运行一个脚本，则可以使用 [cloud-init 映像](../linux/using-cloud-init.md)和 [Scripts Per Boot](https://cloudinit.readthedocs.io/en/latest/topics/modules.html#scripts-per-boot) 模块。 或者，可以使用脚本创建 SystemD 服务单元。
-* 只能向 VM 应用一个扩展版本。 若要运行另一个自定义脚本，需要删除自定义脚本扩展，并使用更新的脚本再次重新应用该扩展。 
+* 只能向 VM 应用一个扩展版本。 若要运行另一个自定义脚本，可以使用新配置更新现有扩展。 或者，可以删除自定义脚本扩展，并再次将其重新应用于更新后的脚本。
 * 如果想要计划脚本何时运行，应使用扩展创建一个 Cron 作业。 
 * 脚本运行时，Azure 门户或 CLI 中只会显示“正在转换”扩展状态。 如果希望更频繁地更新正在运行的脚本的状态，需要创建自己的解决方案。
 * 自定义脚本扩展本身不支持代理服务器，但可以使用脚本中支持代理服务器的文件传输工具，如 Curl。 
@@ -107,7 +109,7 @@ ms.locfileid: "87085718"
 ```
 
 >[!NOTE]
-> managedIdentity 属性**不能**与 storageAccountName 或 storageAccountKey 属性结合使用
+> managedIdentity 属性 **不能** 与 storageAccountName 或 storageAccountKey 属性结合使用
 
 ### <a name="property-values"></a>属性值
 
@@ -127,11 +129,11 @@ ms.locfileid: "87085718"
 | managedIdentity（例如） | { } 或 { "clientId":"31b403aa-c364-4240-a7ff-d85fb6cd7232" } 或 { "objectId":"12dd289c-0583-46e5-b9b4-115d5c19ef4b" } | json 对象 |
 
 ### <a name="property-value-details"></a>属性值详细信息
-* `apiVersion`：可以使用[资源浏览器](https://resources.azure.com/)或从 Azure CLI 使用以下命令找到最新的 apiVersion`az provider list -o json`
+* `apiVersion`：可以使用 [资源浏览器](https://resources.azure.com/) 或从 Azure CLI 使用以下命令找到最新的 apiVersion `az provider list -o json`
 * `skipDos2Unix`：（可选，布尔值）跳过对基于脚本的文件 URL 或脚本进行的 dos2unix 转换。
 * `timestamp`（可选，32 位整数）仅当需要更改此字段的值来触发脚本的重新运行时，才使用此字段。  任何整数值都是可以接受的，前提是必须不同于以前的值。
-* `commandToExecute`：（在脚本未设置的情况下为**必需**，字符串）要执行的入口点脚本。 如果命令包含机密（例如密码），请改用此字段。
-* `script`：（在 commandToExecute 未设置的情况下为**必需**，字符串）base64 编码（可以选择执行 gzip 操作）的脚本，通过 /bin/sh 来执行。
+* `commandToExecute`：（在脚本未设置的情况下为 **必需**，字符串）要执行的入口点脚本。 如果命令包含机密（例如密码），请改用此字段。
+* `script`：（在 commandToExecute 未设置的情况下为 **必需**，字符串）base64 编码（可以选择执行 gzip 操作）的脚本，通过 /bin/sh 来执行。
 * `fileUris`：（可选，字符串数组）要下载的文件的 URL。
 * `storageAccountName`：（可选，字符串）存储帐户的名称。 如果指定存储凭据，所有 `fileUris` 都必须是 Azure Blob 的 URL。
 * `storageAccountKey`：（可选，字符串）存储帐户的访问密钥
@@ -172,7 +174,7 @@ ms.locfileid: "87085718"
 
 CustomScript 支持执行用户定义的脚本。 可将 commandToExecute 和 fileUris 组合到单个设置中的脚本设置。 可以直接将脚本编码为设置，不必设置一个需要从 Azure 存储或 GitHub 主题下载的文件。 可以使用脚本来替换 commandToExecute 和 fileUris。
 
-脚本**必须**进行 base64 编码。  可以**选择**对脚本执行 gzip 操作。 脚本设置可以用在公共设置或受保护的设置中。 脚本参数数据的最大大小为 256 KB。 如果脚本超出此大小，则不会执行该脚本。
+脚本 **必须** 进行 base64 编码。  可以 **选择** 对脚本执行 gzip 操作。 脚本设置可以用在公共设置或受保护的设置中。 脚本参数数据的最大大小为 256 KB。 如果脚本超出此大小，则不会执行该脚本。
 
 以保存到 /script.sh/ 文件的以下脚本为例。
 
@@ -249,7 +251,7 @@ CustomScript（2.1 版及更高版本）支持使用[托管标识](../../active-
 > ```
 
 > [!NOTE]
-> managedIdentity 属性**不能**与 storageAccountName 或 storageAccountKey 属性结合使用
+> managedIdentity 属性 **不能** 与 storageAccountName 或 storageAccountKey 属性结合使用
 
 ## <a name="template-deployment"></a>模板部署
 可使用 Azure Resource Manager 模板部署 Azure VM 扩展。 可以将上一部分详述的 JSON 架构用在 Azure Resource Manager 模板中，以便在 Azure Resource Manager 模板部署期间运行自定义脚本扩展。 若需包含自定义脚本扩展的示例模板，可访问 [GitHub](https://github.com/Microsoft/dotnet-core-sample-templates/tree/master/dotnet-core-music-linux)。

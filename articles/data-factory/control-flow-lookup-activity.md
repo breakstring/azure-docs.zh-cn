@@ -1,22 +1,17 @@
 ---
 title: Azure 数据工厂中的查找活动
 description: 了解如何使用查找活动从外部源查找值。 此输出可进一步由后续活动引用。
-services: data-factory
-documentationcenter: ''
 author: linda33wj
 ms.author: jingwang
-manager: shwang
-ms.reviewer: douglasl
 ms.service: data-factory
-ms.workload: data-services
 ms.topic: conceptual
-ms.date: 08/24/2020
-ms.openlocfilehash: 7a0b4e52d729c3f13d5ac425627970d67b87979e
-ms.sourcegitcommit: c5021f2095e25750eb34fd0b866adf5d81d56c3a
+ms.date: 10/14/2020
+ms.openlocfilehash: 5f46e2871aa0017f0a4b33df04a8ae9058c59e17
+ms.sourcegitcommit: d4734bc680ea221ea80fdea67859d6d32241aefc
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/25/2020
-ms.locfileid: "88795875"
+ms.lasthandoff: 02/14/2021
+ms.locfileid: "100385466"
 ---
 # <a name="lookup-activity-in-azure-data-factory"></a>Azure 数据工厂中的查找活动
 
@@ -29,7 +24,9 @@ ms.locfileid: "88795875"
 
 ## <a name="supported-capabilities"></a>支持的功能
 
-查找活动支持以下数据源。 查找活动可返回的最大行数是 5,000，最大大小为 2 MB。 目前，查找活动在超时前的最长持续时间为 1 小时。
+查找活动支持以下数据源。 
+
+查找活动最多可以返回 5000 行；如果结果集包含的记录超过此范围，将返回前 5000 行。 “查找”活动的输出最多支持 4 MB 左右。如果大小超过此限制，则活动会失败。 目前，查找活动在超时前的最长持续时间为 24 小时。
 
 [!INCLUDE [data-factory-v2-supported-data-stores](../../includes/data-factory-v2-supported-data-stores-for-lookup-activity.md)]
 
@@ -63,14 +60,14 @@ firstRowOnly | 指示仅返回第一行还是返回所有行。 | Boolean | 不�
 > [!NOTE]
 > 
 > * 不支持 **ByteArray** 类型的源列。
-> * 数据集定义不支持**结构**。 对于文本格式化文件，使用标头行提供列名。
+> * 数据集定义不支持 **结构**。 对于文本格式化文件，使用标头行提供列名。
 > * 如果查找源是 JSON 文件，则不支持用于重塑 JSON 对象的 `jsonPathDefinition` 设置。 将检索整个对象。
 
 ## <a name="use-the-lookup-activity-result"></a>使用查找活动结果
 
 查找结果会返回到活动运行结果的 `output` 节。
 
-* **当 `firstRowOnly` 设置为 `true`（默认值）时**，输出格式如以下代码所示。 查找结果位于固定的 `firstRow` 键下。 若要在后续活动中使用结果，请使用的模式  `@{activity('LookupActivity').output.firstRow.table` 。
+* **当 `firstRowOnly` 设置为 `true`（默认值）时**，输出格式如以下代码所示。 查找结果位于固定的 `firstRow` 键下。 若要在后续活动中使用该结果，请使用 `@{activity('LookupActivity').output.firstRow.table}` 模式。
 
     ```json
     {
@@ -105,7 +102,7 @@ firstRowOnly | 指示仅返回第一行还是返回所有行。 | Boolean | 不�
 
 ## <a name="example"></a>示例
 
-在此示例中，管道包含两个活动： **查找** 和 **复制**。 复制活动将数据从 Azure SQL 数据库实例中的 SQL 表复制到 Azure Blob 存储。 SQL 表的名称存储在 Blob 存储的 JSON 文件中。 查找活动在运行时查找表名。 使用此方法动态修改 JSON。 不需要重新部署管道或数据集。 
+在此示例中，管道包含两个活动：查找和复制 。 复制活动将 Azure SQL 数据库实例的 SQL 表中的数据复制到 Azure Blob 存储。 SQL 表的名称存储在 Blob 存储的 JSON 文件中。 查找活动在运行时查找表名。 使用此方法动态修改 JSON。 不需要重新部署管道或数据集。 
 
 本示例演示如何只查找第一行。 若要查找所有行并将结果与 ForEach 活动链接，请参阅[使用 Azure 数据工厂批量复制多个表](tutorial-bulk-copy.md)中的示例。
 
@@ -113,7 +110,7 @@ firstRowOnly | 指示仅返回第一行还是返回所有行。 | Boolean | 不�
 ### <a name="pipeline"></a>管道
 
 - 查找活动配置为使用 **LookupDataset**，该项引用 Azure Blob 存储中的一个位置。 查找活动在此位置从 JSON 文件读取 SQL 表名称。 
-- 复制活动使用查找活动的输出，该输出是 SQL 表的名称。 **SourceDataset** 中的 **tableName** 属性配置为使用查找活动的输出。 复制活动将数据从 SQL 表复制到 Azure Blob 存储中的一个位置。 该位置由 **SinkDataset** 属性指定。 
+- 复制活动使用查找活动的输出，即 SQL 表的名称。 **SourceDataset** 中的 **tableName** 属性配置为使用查找活动的输出。 复制活动将数据从 SQL 表复制到 Azure Blob 存储中的一个位置。 该位置由 **SinkDataset** 属性指定。 
 
 ```json
 {
@@ -242,7 +239,7 @@ firstRowOnly | 指示仅返回第一行还是返回所有行。 | Boolean | 不�
 
 ### <a name="lookup-dataset"></a>查找数据集
 
-**查找**数据集是**AzureBlobStorageLinkedService**类型指定的 Azure 存储查找文件夹中的文件**上的sourcetable.js** 。 
+查找数据集是指由 AzureBlobStorageLinkedService 类型指定的 Azure 存储查找文件夹中的 sourcetable.json 文件  。 
 
 ```json
 {
@@ -265,9 +262,9 @@ firstRowOnly | 指示仅返回第一行还是返回所有行。 | Boolean | 不�
 }
 ```
 
-### <a name="source-dataset-for-copy-activity"></a>复制活动的**源**数据集
+### <a name="source-dataset-for-copy-activity"></a>复制活动的 **源** 数据集
 
-**源**数据集使用查找活动的输出，即 SQL 表名称。 复制活动将数据从此 SQL 表复制到 Azure Blob 存储中的一个位置。 该位置由**接收器**数据集指定。 
+**源** 数据集使用查找活动的输出，即 SQL 表名称。 复制活动将数据从此 SQL 表复制到 Azure Blob 存储中的一个位置。 该位置由 **接收器** 数据集指定。 
 
 ```json
 {
@@ -302,9 +299,9 @@ firstRowOnly | 指示仅返回第一行还是返回所有行。 | Boolean | 不�
 }
 ```
 
-### <a name="sink-dataset-for-copy-activity"></a>复制活动的**接收器**数据集
+### <a name="sink-dataset-for-copy-activity"></a>复制活动的 **接收器** 数据集
 
-复制活动将数据从 SQL 表复制到 Azure 存储中 **csv** 文件夹下的 **filebylookup.csv** 文件。 该文件由 **AzureBlobStorageLinkedService** 属性指定。 
+复制活动将数据从 SQL 表复制到 Azure 存储中 **csv** 文件夹下的 **filebylookup.csv** 文件。 该文件由 AzureBlobStorageLinkedService 属性指定。 
 
 ```json
 {
@@ -344,7 +341,7 @@ firstRowOnly | 指示仅返回第一行还是返回所有行。 | Boolean | 不�
 
 ### <a name="sourcetablejson"></a>sourcetable.json
 
-对于文件 **sourcetable.js** ，可以使用以下两种格式。
+可将以下两种格式用于 sourcetable.json 文件。
 
 #### <a name="set-of-objects"></a>对象集
 

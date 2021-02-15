@@ -2,14 +2,14 @@
 author: tfitzmac
 ms.service: azure-resource-manager
 ms.topic: include
-ms.date: 02/24/2020
+ms.date: 09/01/2020
 ms.author: tomfitz
-ms.openlocfilehash: f0ab7c2efc499c43245680e56a7e5ca1b5261397
-ms.sourcegitcommit: 6fc156ceedd0fbbb2eec1e9f5e3c6d0915f65b8e
+ms.openlocfilehash: 543aa50d72de5a06a9a1c7ac88ac5ecae993bc9d
+ms.sourcegitcommit: 77afc94755db65a3ec107640069067172f55da67
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/21/2020
-ms.locfileid: "88748769"
+ms.lasthandoff: 01/22/2021
+ms.locfileid: "98697975"
 ---
 | 资源 | 限制 |
 | --- | --- |
@@ -22,7 +22,7 @@ ms.locfileid: "88748769"
 | 标记键长度 |512 |
 | 标记值长度 |256 |
 
-<sup>1</sup>从 2020 年 6 月开始，在你接近限制时，部署将自动从历史记录中删除。 从部署历史记录中删除条目不会影响已部署的资源。 有关详细信息，请参阅[从部署历史记录中自动删除](../articles/azure-resource-manager/templates/deployment-history-deletions.md)。
+<sup>1</sup>当数量接近限额时，将自动从历史记录中删除部署。 从部署历史记录中删除条目不会影响已部署的资源。 有关详细信息，请参阅[从部署历史记录中自动删除](../articles/azure-resource-manager/templates/deployment-history-deletions.md)。
 
 #### <a name="template-limits"></a>模板限制
 
@@ -37,4 +37,4 @@ ms.locfileid: "88748769"
 | 模板大小 |4 MB |
 | 参数文件大小 |64 KB |
 
-通过使用嵌套模板，可超出某些模板限制。 有关详细信息，请参阅[部署 Azure 资源时使用链接的模板](../articles/azure-resource-manager/templates/linked-templates.md)。 若要减少参数、变量或输出的数量，可以将几个值合并为一个对象。 有关详细信息，请参阅[对象即参数](../articles/azure-resource-manager/resource-manager-objects-as-parameters.md)。
+通过使用嵌套模板，可超出某些模板限制。 有关详细信息，请参阅[部署 Azure 资源时使用链接的模板](../articles/azure-resource-manager/templates/linked-templates.md)。 若要减少参数、变量或输出的数量，可以将几个值合并为一个对象。 有关详细信息，请参阅[对象即参数](/azure/architecture/guide/azure-resource-manager/advanced-templates/objects-as-parameters)。

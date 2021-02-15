@@ -6,22 +6,22 @@ ms.suite: integration
 ms.reviewer: klam, logicappspm
 ms.date: 10/03/2018
 ms.topic: article
-ms.openlocfilehash: 65f9ee8f67ac4efb6ab26fa0912d11d7be7c571d
-ms.sourcegitcommit: 3543d3b4f6c6f496d22ea5f97d8cd2700ac9a481
+ms.openlocfilehash: 95b5cc191ac6857bf8e1b09e70b22d928473fe03
+ms.sourcegitcommit: ce8eecb3e966c08ae368fafb69eaeb00e76da57e
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/20/2020
-ms.locfileid: "86520895"
+ms.lasthandoff: 10/21/2020
+ms.locfileid: "92314845"
 ---
 # <a name="run-actions-based-on-group-status-by-using-scopes-in-azure-logic-apps"></a>在 Azure 逻辑应用中使用作用域基于组状态运行操作
 
 若要仅在另一组操作成功或失败后运行操作，请在范围内对这些操作进行分组。 如果你希望将各个操作组织为逻辑组，评估该组的状态并执行基于作用域状态的操作，则此结构非常有用。 当某个作用域中的所有操作都完成运行后，该作用域也确定了其自己的状态。 例如，当希望实现[异常和错误处理](../logic-apps/logic-apps-exception-handling.md#scopes)时可以使用作用域。 
 
-若要检查作用域的状态，可以使用与用来确定逻辑应用运行状态（例如“已成功”、“已失败”、“已取消”，等等）的条件相同的条件。 默认情况下，当作用域的所有操作都成功时，作用域的状态将被标记为“已成功”。 但是，当作用域中有任何操作失败或被取消时，作用域的状态将被标记为“已失败”。 有关作用域的限制，请参阅[限制和配置](../logic-apps/logic-apps-limits-and-config.md)。 
+若要检查作用域的状态，可以使用与用来确定逻辑应用运行状态（例如 " **成功**"、"已 **失败**"、"已 **取消**" 等）的条件相同的条件。 默认情况下，当作用域的所有操作都成功时，作用域的状态将标记为 " **成功**"。 但是，当作用域中的任何操作失败或被取消时，作用域的状态将标记为 " **失败**"。 有关作用域的限制，请参阅[限制和配置](../logic-apps/logic-apps-limits-and-config.md)。 
 
-例如，下面是一个高级别逻辑应用，它使用作用域来运行特定操作并使用一个条件来检查作用域的状态。 如果作用域中有任何操作失败或意外终止，则作用域将被相应地标记为“已失败”或“已中止”，并且逻辑应用将发送一条“作用域已失败”消息。 如果作用域中的所有操作都成功，则逻辑应用会发送一条“作用域已成功”消息。
+例如，下面是一个高级别逻辑应用，它使用作用域来运行特定操作并使用一个条件来检查作用域的状态。 如果范围中的任何操作失败或意外结束，则该范围分别标记为 "已 **失败** " 或 "已 **中止** "，逻辑应用将发送 "scope Failed" 消息。 如果作用域中的所有操作都成功，则逻辑应用会发送一条“作用域已成功”消息。
 
-![设置“计划 - 定期”触发器](./media/logic-apps-control-flow-run-steps-group-scopes/scope-high-level.png)
+![关系图显示了逻辑应用范围流，其中包含 "作用域已失败" 和 "作用域已成功" 的示例。](./media/logic-apps-control-flow-run-steps-group-scopes/scope-high-level.png)
 
 ## <a name="prerequisites"></a>先决条件
 
@@ -31,7 +31,7 @@ ms.locfileid: "86520895"
 
 * 一个由逻辑应用支持的任何电子邮件提供程序提供的电子邮件帐户。 此示例使用的是 Outlook.com。 如果使用其他提供程序，则一般流程保持不变，但出现的 UI 会有所不同。
 
-* 一个必应地图密钥。 若要获取此密钥，请参阅<a href="https://msdn.microsoft.com/library/ff428642.aspx" target="_blank">Get a Bing Maps key</a>（获取必应地图密钥）。
+* 一个必应地图密钥。 若要获取此密钥，请参阅<a href="/bingmaps/getting-started/bing-maps-dev-center-help/getting-a-bing-maps-key" target="_blank">Get a Bing Maps key</a>（获取必应地图密钥）。
 
 * 有关[如何创建逻辑应用](../logic-apps/quickstart-create-first-logic-app-workflow.md)的基本知识
 
@@ -192,7 +192,7 @@ ms.locfileid: "86520895"
    
       `result('Scope')[0]['status']`
 
-      ![添加用以检查作用域状态的表达式](./media/logic-apps-control-flow-run-steps-group-scopes/check-scope-status.png)
+      ![显示结果表达式为突出显示的 "表达式" 框的屏幕截图。](./media/logic-apps-control-flow-run-steps-group-scopes/check-scope-status.png)
 
    1. 对于这两行，选择“等于”作为其运算符。 
    

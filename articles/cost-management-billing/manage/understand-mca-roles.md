@@ -3,15 +3,16 @@ title: Microsoft 客户协议的计费角色 - Azure
 description: 了解 Azure 中 Microsoft 客户协议中计费帐户的计费角色。
 author: amberbhargava
 ms.service: cost-management-billing
+ms.subservice: billing
 ms.topic: how-to
-ms.date: 07/24/2020
+ms.date: 12/17/2020
 ms.author: banders
-ms.openlocfilehash: 84cb68c4cae962fd985a02a72cc85c6b2cf1aa1d
-ms.sourcegitcommit: dccb85aed33d9251048024faf7ef23c94d695145
+ms.openlocfilehash: 511c0ecdef45a882bcc3a427d5ec602b3ebabc66
+ms.sourcegitcommit: d79513b2589a62c52bddd9c7bd0b4d6498805dbe
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/28/2020
-ms.locfileid: "87286574"
+ms.lasthandoff: 12/18/2020
+ms.locfileid: "97673825"
 ---
 # <a name="understand-microsoft-customer-agreement-administrative-roles-in-azure"></a>了解 Azure 中的 Microsoft 客户协议管理角色
 
@@ -31,7 +32,7 @@ ms.locfileid: "87286574"
 |计费配置文件所有者|管理计费配置文件的所有内容|
 |计费配置文件参与者|管理计费配置文件的所有内容，但权限除外|
 |计费配置文件读取者|查看计费配置文件中所有内容的只读视图|
-|发票管理者|查看和支付计费配置文件的发票|
+|发票管理者|在发票上查看计费对象信息|
 |发票科目所有者|管理发票科目中的所有内容|
 |发票科目参与者|管理发票科目的所有内容，但权限除外|
 |发票科目读取者|查看发票科目中所有内容的只读视图|

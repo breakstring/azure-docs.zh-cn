@@ -1,19 +1,16 @@
 ---
 title: 深入探讨 - 高级分析 - Azure HDInsight
 description: 了解高级分析如何在 Azure HDInsight 中使用算法来处理大数据。
-author: ashishthaps
-ms.author: ashishth
-ms.reviewer: jasonh
 ms.service: hdinsight
 ms.topic: how-to
 ms.custom: hdinsightactive
 ms.date: 01/01/2020
-ms.openlocfilehash: fa2909055259d7832942f9f47434963f7bbb2aa1
-ms.sourcegitcommit: 124f7f699b6a43314e63af0101cd788db995d1cb
+ms.openlocfilehash: 4b57eddafbf9a5615dc42e9a3c5a49c5f90781e2
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/08/2020
-ms.locfileid: "86079354"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98946658"
 ---
 # <a name="deep-dive---advanced-analytics"></a>深入探讨 - 高级分析
 
@@ -75,29 +72,29 @@ HDInsight 提供多个适用于高级分析工作流的机器学习选项：
 
 ### <a name="azure-machine-learning-and-apache-hive"></a>Azure 机器学习和 Apache Hive
 
-[Azure 机器学习 Studio （经典）](https://studio.azureml.net/)提供了用于模拟预测分析的工具，并提供了一项完全托管的服务，可用于将预测模型部署为随时可用的 web 服务。 Azure 机器学习提供可在云中创建完整预测分析解决方案的工具，用于快速创建、测试、操作和管理预测模型。 可以从大型算法库中进行选择、使用基于 Web 的工作室来构建模型，然后将模型轻松部署为 Web 服务。
+[Azure 机器学习 Studio (经典) ](https://studio.azureml.net/) 提供了用于模拟预测分析的工具，并提供了一种完全托管的服务，可用于将预测模型部署为随时可用的 web 服务。 Azure 机器学习提供可在云中创建完整预测分析解决方案的工具，用于快速创建、测试、操作和管理预测模型。 可以从大型算法库中进行选择、使用基于 Web 的工作室来构建模型，然后将模型轻松部署为 Web 服务。
 
 ### <a name="apache-spark-and-deep-learning"></a>Apache Spark 和深度学习
 
-[深度学习](https://www.microsoft.com/research/group/dltc/)是机器学习的一个分支，使用以人类大脑的生物学流程为灵感的*深度神经网络* (DNN)。 许多研究人员将深度学习视为有前景的人工智能方法。 深度学习的例子包括口译工具、图像识别系统和计算机推理。 为了帮助推进自身在深度学习方面的工作，Microsoft 开发了免费、易用的开源 [Microsoft 认知工具包](https://www.microsoft.com/en-us/cognitive-toolkit/)。 各种 Microsoft 产品、世界各地需要大规模部署深度学习的公司，以及对最新算法和技术感兴趣的学生都在广泛使用该工具包。
+[深度学习](https://www.microsoft.com/research/group/dltc/)是机器学习的一个分支，使用以人类大脑的生物学流程为灵感的 *深度神经网络* (DNN)。 许多研究人员将深度学习视为有前景的人工智能方法。 深度学习的例子包括口译工具、图像识别系统和计算机推理。 为了帮助推进自身在深度学习方面的工作，Microsoft 开发了免费、易用的开源 [Microsoft 认知工具包](https://www.microsoft.com/en-us/cognitive-toolkit/)。 各种 Microsoft 产品、世界各地需要大规模部署深度学习的公司，以及对最新算法和技术感兴趣的学生都在广泛使用该工具包。
 
 ## <a name="scenario---score-images-to-identify-patterns-in-urban-development"></a>方案 - 为图像评分以识别城市发展模式
 
 接下来我们探讨一个使用 HDInsight 的高级分析机器学习管道示例。
 
-在此方案中，你将了解如何在深度学习框架（Microsoft 的 Cognitive Toolkit （CNTK））中生成 Dnn，可以使用 HDInsight Spark 群集上的 PySpark 通过操作化对存储在 Azure Blob 存储帐户中的大型图像集合进行评分。 此方法适用于一般的 DNN 用例和航拍图像分类，并可用于识别最近的城市发展模式。  你将使用预先训练的图像分类模型。 此模型已基于 [CIFAR-10 数据集](https://www.cs.toronto.edu/~kriz/cifar.html)预先训练，并已应用到 10,000 个保留的图像。
+在此方案中，你将了解如何在深度学习框架（Microsoft 的 Cognitive Toolkit (CNTK) ）上生成 Dnn，可以通过 HDInsight Spark 群集上的 PySpark 操作化对存储在 Azure Blob 存储帐户中的大型图像集合进行评分。 此方法适用于一般的 DNN 用例和航拍图像分类，并可用于识别最近的城市发展模式。  你将使用预先训练的图像分类模型。 此模型已基于 [CIFAR-10 数据集](https://www.cs.toronto.edu/~kriz/cifar.html)预先训练，并已应用到 10,000 个保留的图像。
 
 此高级分析方案包括三个关键任务：
 
 1. 使用 Apache Spark 2.1.0 分发版创建 Azure HDInsight Hadoop 群集。
 2. 运行自定义脚本，在 Azure HDInsight Spark 群集的所有节点上安装 Microsoft 认知工具包。
-3. 将预先构建的 Jupyter Notebook 上传到 HDInsight Spark 群集，以使用 Spark Python API (PySpark) 将定型的 Microsoft 认知工具包深入学习模型应用到 Azure Blob 存储帐户中的文件。
+3. 将预建 Jupyter Notebook 上传到 HDInsight Spark 群集，以使用 Spark Python API (PySpark) 将训练有素的 Microsoft Cognitive Toolkit 深度学习模型应用于 Azure Blob 存储帐户中的文件。
 
 此示例使用 Alex Krizhevsky、Vinod Nair 及 Geoffrey Hinton 编译和分发的 CIFAR-10 图像集。 CIFAR-10 数据集包含 60,000 个分属 10 个互斥类的 32×32 彩色图像：
 
 ![机器学习示例图像](./media/apache-hadoop-deep-dive-advanced-analytics/machine-learning-images.png)
 
-有关数据集的详细信息，请参阅 Alex Krizhevsky 的[学习来自小图像的多层功能](https://www.cs.toronto.edu/~kriz/learning-features-2009-TR.pdf)。
+有关数据集的详细信息，请参阅 Alex Krizhevsky 的 [学习来自小图像的多层功能](https://www.cs.toronto.edu/~kriz/learning-features-2009-TR.pdf)。
 
 该数据集已分区成由 50,000 个图像组成的训练集，以及由 10,000 个图像组成的测试集。 第一个集用于遵循认知工具包 GitHub 存储库中的[此教程](https://github.com/Microsoft/CNTK/tree/master/Examples/Image/Classification/ResNet)，使用 Microsoft 认知工具包来训练一个深度达到 20 层的卷积残差网络 (ResNet) 模型。 剩余的 10,000 个图像用于测试模型的准确性。 分布式计算在此场合下发挥了作用：图像的前处理和评分任务是高度可并行化的任务。 借助手头保存的已训练模型：
 
@@ -112,7 +109,7 @@ HDInsight 提供多个适用于高级分析工作流的机器学习选项：
 
 ### <a name="try-it-out"></a>试试看！
 
-按照[本教程](../spark/apache-spark-microsoft-cognitive-toolkit.md)进行操作，实现此解决方案的端到端部署：设置 HDInsight Spark 群集，安装 Cognitive Toolkit，并运行评分 10000 cifar-10 映像的 Jupyter Notebook。
+按照 [本教程](../spark/apache-spark-microsoft-cognitive-toolkit.md) 进行操作，实现此解决方案的端到端部署：设置 HDInsight Spark 群集，安装 Cognitive Toolkit，并运行评分 10000 cifar-10 映像的 Jupyter Notebook。
 
 ## <a name="next-steps"></a>后续步骤
 

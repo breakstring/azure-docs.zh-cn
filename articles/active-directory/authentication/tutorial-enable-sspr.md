@@ -6,16 +6,16 @@ ms.service: active-directory
 ms.subservice: authentication
 ms.topic: tutorial
 ms.date: 07/13/2020
-ms.author: iainfou
-author: iainfoulds
+ms.author: justinha
+author: justinha
 ms.reviewer: rhicock
 ms.collection: M365-identity-device-management
-ms.openlocfilehash: a4cdeff5e08813140c45d0a30877c3789d1bc21b
-ms.sourcegitcommit: 6fc156ceedd0fbbb2eec1e9f5e3c6d0915f65b8e
+ms.openlocfilehash: 924ff6091e7eb6633d36f75fd6d53745139454d7
+ms.sourcegitcommit: ad83be10e9e910fd4853965661c5edc7bb7b1f7c
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/21/2020
-ms.locfileid: "88718843"
+ms.lasthandoff: 12/06/2020
+ms.locfileid: "96741059"
 ---
 # <a name="tutorial-enable-users-to-unlock-their-account-or-reset-passwords-using-azure-active-directory-self-service-password-reset"></a>教程：使用户能够使用 Azure Active Directory 自助式密码重置来解锁其帐户或重置密码
 
@@ -37,7 +37,8 @@ Azure Active Directory (Azure AD) 自助式密码重置 (SSPR) 使用户能够�
 
 需有以下资源和特权才能完成本教程：
 
-* 一个至少启用了 Azure AD Premium P1 或试用版许可证的有效 Azure AD 租户。
+* 一个至少启用了 Azure AD Free 或试用版许可证的有效 Azure AD 租户。 在免费层中，SSPR 仅适用于 Azure AD 中的云用户。
+    * 对于本系列中的后续教程，本地密码写回需要 Azure AD Premium P1 或试用版许可证。
     * 如果需要，[可免费创建一个](https://azure.microsoft.com/free/?WT.mc_id=A261C142F)。
 * 一个拥有“全局管理员”特权的帐户。
 * 你知道其密码的非管理员测试用户，例如 *testuser*。 在本教程中，你将使用此帐户来测试最终用户的 SSPR 体验。
@@ -115,7 +116,7 @@ Azure AD 可让你为“无”、“选定”或“所有”用户启用 SSPR。
 启用并配置 SSPR 后，使用在上一部分选择的组（例如 *Test-SSPR-Group*）中的用户测试 SSPR 过程。 以下示例使用了 *testuser* 帐户。 提供自己的用户帐户，该帐户属于在本教程的第一部分为其启用了 SSPR 的组。
 
 > [!NOTE]
-> 测试自助式密码重置时，请使用非管理员帐户。 始终为管理员启用自助式密码重置，且管理员需要使用两种身份验证方法来重置其密码。
+> 测试自助式密码重置时，请使用非管理员帐户。 默认情况下，为管理员启用了自助式密码重置，且管理员需要使用两种身份验证方法来重置其密码。 有关详细信息，请参阅[管理员重置策略差异](concept-sspr-policy.md#administrator-reset-policy-differences)。
 
 1. 若要查看手动注册过程，请以 InPrivate 或 incognito 模式打开新的浏览器窗口，并浏览到 [https://aka.ms/ssprsetup](https://aka.ms/ssprsetup)。 用户在下次登录时，应会定向到此注册门户。
 1. 使用非管理员测试用户（例如 *testuser*）登录，并注册身份验证方法的联系信息。
@@ -148,4 +149,4 @@ Azure AD 可让你为“无”、“选定”或“所有”用户启用 SSPR。
 > * 以用户身份测试 SSPR 过程
 
 > [!div class="nextstepaction"]
-> [启用 Azure 多重身份验证](./tutorial-enable-azure-mfa.md)
+> [启用 Azure AD 多重身份验证](./tutorial-enable-azure-mfa.md)

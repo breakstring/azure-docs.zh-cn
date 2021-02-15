@@ -8,14 +8,14 @@ ms.workload: big-data
 ms.service: time-series-insights
 services: time-series-insights
 ms.topic: tutorial
-ms.date: 07/27/2020
+ms.date: 01/19/2021
 ms.custom: seodec18
-ms.openlocfilehash: 83cf8ca47774713ca8dbfd493d7aa16bf65fb6b7
-ms.sourcegitcommit: dccb85aed33d9251048024faf7ef23c94d695145
+ms.openlocfilehash: 912dbf48254a8d68b9bf76db04734fd791a3edb9
+ms.sourcegitcommit: b39cf769ce8e2eb7ea74cfdac6759a17a048b331
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/28/2020
-ms.locfileid: "87286455"
+ms.lasthandoff: 01/22/2021
+ms.locfileid: "98677048"
 ---
 # <a name="tutorial-set-up-an-azure-time-series-insights-gen2-environment"></a>教程：设置 Azure 时序见解 Gen2 环境
 
@@ -38,7 +38,7 @@ ms.locfileid: "87286455"
 
 ## <a name="prerequisites"></a>先决条件
 
-* 必须至少具有 Azure 订阅的参与者角色。 有关详细信息，请阅读[使用基于角色的访问控制和 Azure 门户管理访问权限](../role-based-access-control/role-assignments-portal.md)。
+* 必须至少具有 Azure 订阅的参与者角色。 有关详细信息，请参阅[使用 Azure 门户添加或删除 Azure 角色分配](../role-based-access-control/role-assignments-portal.md)。
 
 ## <a name="create-a-device-simulation"></a>创建设备模拟
 
@@ -54,7 +54,7 @@ ms.locfileid: "87286455"
    ---|---
    **部署名称** | 此唯一值用于创建新资源组。 将会创建列出的 Azure 资源并将其分配到资源组。
    **Azure 订阅** | 指定在上一部分用于创建 Azure 时序见解 Gen2 环境的同一订阅。
-   **部署选项** | 选择“预配新的 IoT 中心”可创建特定于本教程的新 IoT 中心。
+   **部署选项** | 选择“预配新的 IoT 中心”  可创建特定于本教程的新 IoT 中心。
    **Azure 位置** | 指定在上一部分用于创建 Azure 时序见解 Gen2 环境的同一区域。
 
    完成后选择“创建”，以预配解决方案的 Azure 资源。 完成此过程可能最多需要 20 分钟的时间。
@@ -78,7 +78,7 @@ ms.locfileid: "87286455"
 
 1. 使用 Azure 订阅帐户登录到 [Azure 门户](https://portal.azure.com)。
 1. 选择左上角的“+ 创建资源”。
-1. 依次选择“物联网”类别、“时序见解” 。
+1. 依次选择“物联网”类别、“时序见解”   。
 
    [![选择时序见解环境资源。](media/v2-update-provision/tsi-create-new-environment.png)](media/v2-update-provision/tsi-create-new-environment.png#lightbox)
 
@@ -91,8 +91,8 @@ ms.locfileid: "87286455"
     | **资源组** | 为 Azure 时序见解 Gen2 环境资源选择现有的资源组或创建新的资源组。 资源组是 Azure 资源的容器。 最佳做法是使用与设备模拟器创建的其他 IoT 资源相同的资源组。 |
     | **位置** | 为 Azure 时序见解 Gen2 环境选择数据中心区域。 为了避免额外的延迟，最好是在设备模拟器创建的 IoT 中心所在的区域中创建 Azure 时序见解 Gen2 环境。 |
     | **层** |  选择 Gen2(L1)。 这是 Azure 时序见解 Gen2 产品的 SKU。 |
-    | **时序 ID 属性名称** | 输入属性名称，需包含唯一标识时序实例的值。 以后不能更改在“属性名称”框中作为时序 ID 输入的值。 在本教程中，请输入 ***iothub-connection-device-id***。若要详细了解包含复合时序 ID 的时序 ID，请阅读[选择时序 ID 的最佳做法](./time-series-insights-update-how-to-id.md)。 |
-    | **存储帐户名称** | 为新存储帐户输入全局唯一名称。|
+    | **时序 ID 属性名称** | 输入属性名称，需包含唯一标识时序实例的值。 以后不能更改在“属性名称”框中作为时序 ID 输入的值。 在本教程中，请输入 iothub-connection-device-id。 若要详细了解包含复合时序 ID 的时序 ID，请阅读[选择时序 ID 的最佳做法](./how-to-select-tsid.md)。 |
+    | 存储帐户名称* | 为新存储帐户输入全局唯一名称。|
     | **存储帐户类型** | 为新的存储帐户选择存储类型。 建议选择 StorageV2|
     | **存储帐户复制** | 为新的存储帐户选择存储类型。 根据你的位置选择，你可以选择 LRS、GRS 或 ZRS。 对于本教程，你可选择 LRS|
     | **分层命名空间** |选择 StorageV2 存储类型后，可以选择此选项。 默认禁用此项。 对于本教程，你可将其保留为默认禁用状态|
@@ -117,7 +117,7 @@ ms.locfileid: "87286455"
    | **IoT 中心名称** | 选择为设备模拟器创建的 IoT 中心名称。 |
    | **Iot 中心访问策略** | 选择“iothubowner”。 |
    | **IoT 中心使用者组** | 选择“新建”，输入唯一名称，然后选择“+ 添加” 。 在 Azure 时序见解 Gen2 中，使用者组必须是唯一值。 |
-   | **时间戳属性** | 此值用于标识传入遥测数据中的**时间戳**属性。 在本教程中，请将此框留空。 此模拟器使用 IoT 中心的传入时间戳，Azure 时序见解 Gen2 默认使用该时间戳。 |
+   | **时间戳属性** | 此值用于标识传入遥测数据中的 **时间戳** 属性。 在本教程中，请将此框留空。 此模拟器使用 IoT 中心的传入时间戳，Azure 时序见解 Gen2 默认使用该时间戳。 |
 
 1. 选择“查看 + 创建”。
 
@@ -143,21 +143,21 @@ ms.locfileid: "87286455"
 
    1. 验证凭据是否已列出：
 
-      如果未列出你的凭据，则必须通过选择“添加”并搜索自己的凭据来授予自己访问该环境的权限。 若要详细了解如何设置权限，请参阅[授予数据访问权限](./time-series-insights-data-access.md)。
+      如果未列出你的凭据，则必须通过选择“添加”并搜索自己的凭据来授予自己访问该环境的权限。 若要详细了解如何设置权限，请参阅[授予数据访问权限](./concepts-access-policies.md)。
 
 ## <a name="stream-data"></a>流式传输数据
 
 现已部署了 Azure 时序见解 Gen2 环境，请流式传输数据以进行分析。
 
-1. 返回到[解决方案加速器仪表板](https://www.azureiotsolutions.com/Accelerators#dashboard)。 根据需要，使用本教程所用的同一 Azure 帐户重新登录。 选择“设备解决方案”，然后选择“转到解决方案加速器”以启动部署的解决方案。
+1. 返回到[解决方案加速器仪表板](https://www.azureiotsolutions.com/Accelerators#dashboard)。 根据需要，使用本教程所用的同一 Azure 帐户重新登录。 选择“设备解决方案”，然后选择“转到解决方案加速器”  以启动部署的解决方案。
 
    [![解决方案加速器仪表板。](media/v2-update-provision/iot-solution-accelerator-ready.png)](media/v2-update-provision/iot-solution-accelerator-ready.png#lightbox)
 
-1. 设备模拟 Web 应用首先会提示你授予该 Web 应用程序“登录并读取你的个人资料”的权限。 此权限使得应用程序能够检索所需的用户个人资料信息来支持运行应用程序。
+1. 设备模拟 Web 应用首先会提示你授予该 Web 应用程序“登录并读取你的个人资料”  的权限。 此权限使得应用程序能够检索所需的用户个人资料信息来支持运行应用程序。
 
    [![设备模拟 Web 应用程序许可。](media/v2-update-provision/sawa-signin-consent.png)](media/v2-update-provision/sawa-signin-consent.png#lightbox)
 
-1. 选择“+ 新建模拟”。
+1. 选择“+ 新建模拟”  。
 
     1. 在“模拟设置”页加载后，输入所需的参数。
 
@@ -177,7 +177,7 @@ ms.locfileid: "87286455"
 
 ## <a name="analyze-data"></a>分析数据
 
-在此部分，使用 [Azure 时序见解 Gen2 资源管理器](./time-series-insights-update-explorer.md)对时序数据进行基本的分析。
+在此部分，使用 [Azure 时序见解 Gen2 资源管理器](./concepts-ux-panels.md)对时序数据进行基本的分析。
 
 1. 在 [Azure 门户](https://portal.azure.com/)中的资源页上选择相应的 URL，转到 Azure 时序见解 Gen2 资源管理器。
 
@@ -185,7 +185,7 @@ ms.locfileid: "87286455"
 
 1. 在 Azure 时序见解 Gen2 资源管理器中，将显示横跨屏幕顶部的一个栏。 这是可用性选取器。 确保至少选择了两个 2m，并在需要时通过选中选取器控点并将其向左和向右拖动来扩展期限。
 
-1. **时序实例**将显示在左侧。
+1. **时序实例** 将显示在左侧。
 
     [![无父级实例的列表。](media/v2-update-provision/tsi-explorer-unparented-instances.png)](media/v2-update-provision/tsi-explorer-unparented-instances.png#lightbox)
 

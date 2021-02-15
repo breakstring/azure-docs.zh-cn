@@ -1,23 +1,23 @@
 ---
 title: Azure 门户 - 使用专用链接限制对托管磁盘的导入/导出访问
-description: 使用 Azure 门户为托管磁盘启用专用链接（当前提供预览）。 允许在虚拟网络中安全地导出和导入磁盘。
+description: 使用 Azure 门户为托管磁盘启用专用链接。 允许在虚拟网络中安全地导出和导入磁盘。
 author: roygara
 ms.service: virtual-machines
 ms.topic: overview
-ms.date: 08/11/2020
+ms.date: 08/24/2020
 ms.author: rogarana
 ms.subservice: disks
 ms.custom: references_regions
-ms.openlocfilehash: 83f204a35e48962e525ad7d64c018eef301f9933
-ms.sourcegitcommit: 1aef4235aec3fd326ded18df7fdb750883809ae8
+ms.openlocfilehash: b80100216003e91fde54b5e555bafb755c942810
+ms.sourcegitcommit: b39cf769ce8e2eb7ea74cfdac6759a17a048b331
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/12/2020
-ms.locfileid: "88135838"
+ms.lasthandoff: 01/22/2021
+ms.locfileid: "98682913"
 ---
-# <a name="azure-portal---restrict-importexport-access-for-managed-disks-with-private-links"></a>Azure 门户 - 使用专用链接限制对托管磁盘的导入/导出访问
+# <a name="use-the-azure-portal-to-restrict-importexport-access-for-managed-disks-with-private-links"></a>使用 Azure 门户限制通过专用链接对托管磁盘的导入/导出访问
 
-对托管磁盘的专用链接支持当前提供预览，这项功能让你能够限制托管磁盘的导出和导入，使其仅发生在 Azure 虚拟网络中。 可以为未连接的托管磁盘和快照生成有时间限制的共享访问签名 (SAS) URI，用于将数据导出到其他区域以进行区域扩展、灾难恢复，以及读取数据以进行取证分析。 还可以使用 SAS URI 将 VHD 从本地直接上传到空磁盘。 虚拟网络上的客户端与托管磁盘之间的网络流量仅穿过虚拟网络以及 Microsoft 主干网络上的专用链接，因此不会对公共 Internet 公开。
+对托管磁盘的专用链接支持使你能够限制托管磁盘的导出和导入，使其仅发生在 Azure 虚拟网络中。 可以为未连接的托管磁盘和快照生成有时间限制的共享访问签名 (SAS) URI，用于将数据导出到其他区域以进行区域扩展、灾难恢复，以及读取数据以进行取证分析。 还可以使用 SAS URI 将 VHD 从本地直接上传到空磁盘。 虚拟网络上的客户端与托管磁盘之间的网络流量仅穿过虚拟网络以及 Microsoft 主干网络上的专用链接，因此不会对公共 Internet 公开。
 
 可以创建磁盘访问资源，并通过创建专用终结点将其链接到同一订阅中的虚拟网络。 必须将磁盘或快照与磁盘访问关联，才能通过专用链接导出和导入数据。 此外，还需要将磁盘或快照的 NetworkAccessPolicy 属性设置为 `AllowPrivate`。 
 
@@ -27,15 +27,6 @@ ms.locfileid: "88135838"
 
 [!INCLUDE [virtual-machines-disks-private-links-limitations](../../includes/virtual-machines-disks-private-links-limitations.md)]
 
-## <a name="regional-availability"></a>区域可用性
-
-[!INCLUDE [virtual-machines-disks-private-links-regions](../../includes/virtual-machines-disks-private-links-regions.md)]
-
-## <a name="prerequisites"></a>先决条件
-
-若要使用专用终结点来导出和导入托管磁盘，必须在订阅上启用该功能。 使用你的订阅 ID 向 mdprivatelinks@microsoft .com 发送电子邮件，以便为你的订阅启用该功能。
-
-需要记下磁盘所连接的 VM 的虚拟网络。 配置专用终结点时需要虚拟网络。
 
 ## <a name="create-a-disk-access-resource"></a>创建磁盘访问资源
 
@@ -100,5 +91,5 @@ ms.locfileid: "88135838"
 
 ## <a name="next-steps"></a>后续步骤
 
-- [专用链接常见问题解答](linux/faq-for-disks.md#private-links-for-securely-exporting-and-importing-managed-disks)
-- [使用 PowerShell 将托管快照作为 VHD 导出/复制到不同区域中的存储帐户](scripts/virtual-machines-windows-powershell-sample-copy-snapshot-to-storage-account.md)
+- [专用链接常见问题解答](./faq-for-disks.md#private-links-for-securely-exporting-and-importing-managed-disks)
+- [使用 PowerShell 将托管快照作为 VHD 导出/复制到不同区域中的存储帐户](/previous-versions/azure/virtual-machines/scripts/virtual-machines-powershell-sample-copy-snapshot-to-storage-account)

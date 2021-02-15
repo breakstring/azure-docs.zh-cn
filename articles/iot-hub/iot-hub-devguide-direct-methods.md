@@ -1,23 +1,23 @@
 ---
 title: 了解 Azure IoT 中心直接方法 | Microsoft Docs
 description: 开发人员指南 - 使用直接方法从服务应用调用设备上的代码。
-author: nberdy
+author: philmea
 ms.service: iot-hub
 services: iot-hub
 ms.topic: conceptual
 ms.date: 07/17/2018
-ms.author: rezas
+ms.author: philmea
 ms.custom:
 - amqp
 - mqtt
 - 'Role: Cloud Development'
 - 'Role: IoT Device'
-ms.openlocfilehash: 55472f16cefeca3b00bea79e71aee5d6588528d6
-ms.sourcegitcommit: a76ff927bd57d2fcc122fa36f7cb21eb22154cfa
+ms.openlocfilehash: b75e859fc1237bc88bee464cef423b7289810fa8
+ms.sourcegitcommit: dbe434f45f9d0f9d298076bf8c08672ceca416c6
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/28/2020
-ms.locfileid: "87323054"
+ms.lasthandoff: 10/17/2020
+ms.locfileid: "92147800"
 ---
 # <a name="understand-and-invoke-direct-methods-from-iot-hub"></a>了解和调用 IoT 中心的直接方法
 
@@ -55,7 +55,7 @@ ms.locfileid: "87323054"
 
 设备上的直接方法调用是 HTTPS 调用，它由以下项构成：
 
-* 特定于设备的请求 URI 以及 [API 版本](/rest/api/iothub/service/devicemethod/invokedevicemethod)：
+* 特定于设备的请求 URI 以及 [API 版本](/rest/api/iothub/service/devices/invokemethod)：
 
     ```http
     https://fully-qualified-iothubname.azure-devices.net/twins/{deviceId}/methods?api-version=2018-06-30

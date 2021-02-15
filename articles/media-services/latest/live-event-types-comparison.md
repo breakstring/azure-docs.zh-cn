@@ -1,26 +1,28 @@
 ---
-title: Azure 媒体服务 LiveEvent 类型 | Microsoft Docs
+title: Azure 媒体服务 LiveEvent 类型
 description: 在 Azure 媒体服务中，可以将直播活动设为“直通”  或“实时编码”  。 本文显示了比较直播活动类型的详细表格。
 services: media-services
 documentationcenter: ''
-author: Juliako
+author: IngridAtMicrosoft
 manager: femila
 editor: ''
 ms.service: media-services
 ms.workload: media
 ms.tgt_pltfrm: na
 ms.devlang: ne
-ms.topic: article
-ms.date: 06/13/2019
-ms.author: juliako
-ms.openlocfilehash: 793ddb8c99a4e21c176374f7cb3445d1a7d8fca0
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.topic: conceptual
+ms.date: 08/31/2020
+ms.author: inhenkel
+ms.openlocfilehash: 3126cbf4f9d87e9baa7267e309210b751a47069d
+ms.sourcegitcommit: 100390fefd8f1c48173c51b71650c8ca1b26f711
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87090053"
+ms.lasthandoff: 01/27/2021
+ms.locfileid: "98897792"
 ---
 # <a name="live-event-types-comparison"></a>实时事件类型比较
+
+[!INCLUDE [media services api v3 logo](./includes/v3-hr.md)]
 
 在 Azure 媒体服务中，可以将[直播活动](/rest/api/media/liveevents)设为“直通”  （本地实时编码器发送多比特率流）或“实时编码”  （本地实时编码器发送单比特率流）。 
 
@@ -74,7 +76,7 @@ ms.locfileid: "87090053"
 
 如果贡献源的分辨率为 720p 或更高，则 **Default720p** 预设会将源编码到以下 6 个层中。 在下表中，比特率以 kbps 为单位，MaxFPS 表示允许的最大帧速率（帧/秒），Profile 表示使用的 H.264 配置文件。
 
-| 比特率 | 宽度 | 高度 | MaxFPS | 配置文件 |
+| Bitrate | 宽度 | 高度 | MaxFPS | 配置文件 |
 | --- | --- | --- | --- | --- |
 | 3500 |1280 |720 |30 |高 |
 | 2200 |960 |540 |30 |高 |
@@ -84,14 +86,13 @@ ms.locfileid: "87090053"
 | 200 |340 |192 |30 |高 |
 
 > [!NOTE]
-> 如果需要自定义实时编码预设，请通过 Azure 门户开具支持票证。 你应当指定所需的分辨率和比特率的表。 请确认只有一个 720p 的图层，最多有 6 个图层。 此外，请务必指定你要请求 Standard 实时编码器的预设。
-> 比特率和分辨率的特定值今后可能会调整
+> 如果需要自定义实时编码预设，请通过 Azure 门户开具支持票证。 你应当指定所需的视频分辨率和比特率的表。 不支持自定义音频编码比特率。 请确认只有一个 720p 的图层，最多有 6 个图层。 此外，请务必指定你要请求预设。
 
 ### <a name="output-video-streams-for-default1080p"></a>Default1080p 的输出视频流
 
 如果贡献源的分辨率为 1080p，则 **Default1080p** 预设会将源编码到以下 6 个层中。
 
-| 比特率 | 宽度 | 高度 | MaxFPS | 配置文件 |
+| Bitrate | 宽度 | 高度 | MaxFPS | 配置文件 |
 | --- | --- | --- | --- | --- |
 | 5500 |1920 |1080 |30 |高 |
 | 3000 |1280 |720 |30 |高 |
@@ -101,8 +102,7 @@ ms.locfileid: "87090053"
 | 200 |320 |180 |30 |高 |
 
 > [!NOTE]
-> 如果需要自定义实时编码预设，请通过 Azure 门户开具支持票证。 你应当指定所需的分辨率和比特率的表。 请务必确认只有一个层的分辨率为 1080p，且最多有 6 个层。 此外，请务必指定你要请求 Premium1080p 实时编码器的预设。
-> 比特率和分辨率的特定值今后可能会调整。
+> 如果需要自定义实时编码预设，请通过 Azure 门户开具支持票证。 你应当指定所需的分辨率和比特率的表。 请确认只有一个层的分辨率为 1080p，且最多有 6 个层。 此外，请指定你要请求 Premium1080p 实时编码器的预设。 比特率和分辨率的特定值今后可能会调整。
 
 ### <a name="output-audio-stream-for-default720p-and-default1080p"></a>Default720p 和 Default1080p 的输出音频流
 

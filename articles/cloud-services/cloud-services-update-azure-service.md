@@ -1,27 +1,31 @@
 ---
-title: 如何更新云服务 | Microsoft Docs
+title: 如何 (经典) 中更新云服务 |Microsoft Docs
 description: 了解如何在 Azure 中更新云服务。 了解如何云服务上进行更新以确保可用性。
-services: cloud-services
-author: tgore03
-ms.service: cloud-services
 ms.topic: article
-ms.date: 04/19/2017
+ms.service: cloud-services
+ms.date: 10/14/2020
 ms.author: tagore
-ms.openlocfilehash: 731f4e8cc8a93f33d6887f44fc8d09585e92a75a
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+author: tanmaygore
+ms.reviewer: mimckitt
+ms.custom: ''
+ms.openlocfilehash: 5d85003ca7b4307c308914484502ae03269f66ac
+ms.sourcegitcommit: 6272bc01d8bdb833d43c56375bab1841a9c380a5
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "75360338"
+ms.lasthandoff: 01/23/2021
+ms.locfileid: "98741105"
 ---
-# <a name="how-to-update-a-cloud-service"></a>如何更新云服务
+# <a name="how-to-update-an-azure-cloud-service-classic"></a>如何更新 (经典) 的 Azure 云服务
+
+> [!IMPORTANT]
+> [Azure 云服务 (扩展支持) ](../cloud-services-extended-support/overview.md) 是适用于 Azure 云服务产品的新的基于 azure 资源管理器的部署模型。进行此更改后，基于 Azure Service Manager 的部署模型运行的 Azure 云服务已重命名为云服务 (经典) ，所有新部署应使用 [云服务 (扩展支持) ](../cloud-services-extended-support/overview.md)。
 
 三步操作进行云服务更新（包括其角色和来宾 OS）。 首先，必须上传新云服务或 OS 版本的二进制文件和配置文件。 其次，Azure 会根据新云服务版本的要求，保留云服务的计算资源和网络资源。 最后，Azure 执行滚动升级，以增量方式将租户更新到新版本或来宾 OS，同时保留可用性。 本文介绍最后一个步骤 - 滚动升级的详细信息。
 
 ## <a name="update-an-azure-service"></a>更新 Azure 服务
 Azure 将角色实例划分为称为升级域 (UD) 的逻辑组。 升级域 (UD) 是角色实例的逻辑集，将以组的方式进行更新。  Azure 每次更新一个 UD 的一个云服务，使其他 UD 中的实例能够继续处理流量。
 
-升级域的默认数量为 5 个。 可以通过在服务定义文件 (.csdef) 中包含 upgradeDomainCount 属性，指定不同数量的升级域。 有关 upgradeDomainCount 属性的详细信息，请参阅 [Azure 云服务定义架构（.csdef 文件）](https://docs.microsoft.com/azure/cloud-services/schema-csdef-file)。
+升级域的默认数量为 5 个。 可以通过在服务定义文件 (.csdef) 中包含 upgradeDomainCount 属性，指定不同数量的升级域。 有关 upgradeDomainCount 属性的详细信息，请参阅 [Azure 云服务定义架构（.csdef 文件）](./schema-csdef-file.md)。
 
 在为你的服务中的一个或多个角色执行就地更新时，Azure 会根据所属的升级域更新角色实例集。 Azure 更新给定升级域中的所有实例（停止这些实例，更新这些实例并将它们重新联机），并移到下一个域上。 通过仅停止在当前升级域中运行的实例，Azure 确保在执行更新时将对运行的服务造成的影响降到最低。 有关详细信息，请参阅本文后面的 [如何进行更新](#howanupgradeproceeds) 。
 
@@ -117,7 +121,7 @@ Azure 将角色实例划分为称为升级域 (UD) 的逻辑组。 升级域 (UD
 在 Azure 结构控制器接受初始更新请求后，Azure 允许用户对服务启动额外的操作，从而提高了在更新期间管理服务方面的灵活性。 只有当更新（配置更改）或升级在部署上处于“进行中”状态时，才能执行回滚  。 只要至少有一个服务实例尚未更新为新版本，就认为更新或升级处于进行中状态。 要测试是否允许回滚，请检查[获取部署](/previous-versions/azure/reference/ee460804(v=azure.100))和[获取云服务属性](/previous-versions/azure/reference/ee460806(v=azure.100))操作返回的 RollbackAllowed 标志值是否设置为 true。
 
 > [!NOTE]
-> 这仅对在**就地**更新或升级上调用 Rollback 有意义，因为 VIP 交换升级涉及将服务的一个完整运行实例替换为另一个实例。
+> 这仅对在 **就地** 更新或升级上调用 Rollback 有意义，因为 VIP 交换升级涉及将服务的一个完整运行实例替换为另一个实例。
 >
 >
 
@@ -134,7 +138,7 @@ Azure 将角色实例划分为称为升级域 (UD) 的逻辑组。 升级域 (UD
   1. Locked 元素用于检测何时可以在给定部署上调用变动操作。
   2. RollbackAllowed 元素用于检测何时可以在给定部署上调用[回滚更新或升级](/previous-versions/azure/reference/hh403977(v=azure.100))操作。
 
-  要执行回滚，不需要检查 Locked 和 RollbackAllowed 元素。 确认 RollbackAllowed 设置为 true 就足够了。 只有在使用设置为“x-ms-version:2011-10-01”或更高版本的请求标头调用这些方法时，才会返回这些元素。 有关版本控制标头的详细信息，请参阅 [服务管理版本控制](/previous-versions/azure/gg592580(v=azure.100))。
+  要执行回滚，不需要检查 Locked 和 RollbackAllowed 元素。 确认 RollbackAllowed 设置为 true 就足够了。 只有在使用设置为“x-ms-version:2011-10-01”或更高版本的请求标头调用这些方法时，才会返回这些元素。 有关版本控制标头的详细信息，请参阅[服务管理版本控制](/previous-versions/azure/gg592580(v=azure.100))。
 
 在某些情况下，不支持回滚更新或升级，这些情况包括：
 
@@ -142,9 +146,9 @@ Azure 将角色实例划分为称为升级域 (UD) 的逻辑组。 升级域 (UD
 * 配额限制 - 如果更新减少操作，可能没有足够的计算配额来完成回滚操作。 每个 Azure 订阅具有关联的配额，指定属于该订阅的所有托管服务可以使用的最大核心数。 如果执行给定更新的回退操作而导致订阅超过配额，则不会启用回退。
 * 争用情况 - 如果初始更新已完成，则无法进行回滚。
 
-回滚更新可能是非常有用的，其中的一个例子是，在手动模式下使用[升级部署](/previous-versions/azure/reference/ee460793(v=azure.100))操作来控制为你的 Azure 托管服务部署主要就地升级的速度。
+回滚更新可能是非常有用的，其中的一个例子是，在手动模式下使用“[升级部署](/previous-versions/azure/reference/ee460793(v=azure.100))”操作来控制为 Azure 托管服务部署主要就地升级的速度。
 
-在升级部署期间，你可以在手动模式下调用[升级部署](/previous-versions/azure/reference/ee460793(v=azure.100))并开始依次更新升级域。 在监视升级时，如果你在某些时候注意到检查的第一批升级域中的某些角色实例停止响应，则可以在部署上调用[回滚更新或升级](/previous-versions/azure/reference/hh403977(v=azure.100))操作，这会将尚未升级的实例保持不变，并将已升级的实例回滚到以前的服务包和配置。
+在升级部署期间，可以在手动模式下调用“[升级部署](/previous-versions/azure/reference/ee460793(v=azure.100))”并开始依次更新升级域。 在监视升级时，如果在某些时候注意到检查的第一批升级域中的某些角色实例停止响应，则可以在部署上调用“[回滚更新或升级](/previous-versions/azure/reference/hh403977(v=azure.100))”操作，这会将尚未升级的实例保持不变，并将已升级的实例回滚到以前的服务包和配置。
 
 <a name="multiplemutatingoperations"></a>
 
@@ -153,13 +157,13 @@ Azure 将角色实例划分为称为升级域 (UD) 的逻辑组。 升级域 (UD
 
 在 Azure 结构控制器收到更新或升级服务的初始请求后，可以启动后续的变动操作。 也就是说，不必等待初始操作完成，即可启动其他变动操作。
 
-在进行第一个更新的同时启动第二个更新操作会以类似回滚操作的方式执行。 如果第二个更新是在自动模式下执行的，将立即升级第一个升级域，这可能会导致多个升级域中的实例在同一时刻处于脱机状态。
+在进行第一个更新的同时启动第二个更新操作以类似回滚操作的方式执行。 如果第二个更新是在自动模式下执行的，将立即升级第一个升级域，这可能会导致多个升级域中的实例在同一时刻处于脱机状态。
 
-变动操作如下：[更改部署配置](/previous-versions/azure/reference/ee460809(v=azure.100))、[升级部署](/previous-versions/azure/reference/ee460793(v=azure.100))、[更新部署状态](/previous-versions/azure/reference/ee460808(v=azure.100))、[删除部署](/previous-versions/azure/reference/ee460815(v=azure.100))和[回滚更新或升级](/previous-versions/azure/reference/hh403977(v=azure.100))。
+变动操作如下：“[更改部署配置](/previous-versions/azure/reference/ee460809(v=azure.100))”、“[升级部署](/previous-versions/azure/reference/ee460793(v=azure.100))”、“[更新部署状态](/previous-versions/azure/reference/ee460808(v=azure.100))”、“[删除部署](/previous-versions/azure/reference/ee460815(v=azure.100))”和“[回滚更新或升级](/previous-versions/azure/reference/hh403977(v=azure.100))”。
 
-[获取部署](/previous-versions/azure/reference/ee460804(v=azure.100))和[获取云服务属性](/previous-versions/azure/reference/ee460806(v=azure.100))这两个操作返回 Locked 标志，可以通过检查该标志确定是否可以在给定部署上调用变动操作。
+“[获取部署](/previous-versions/azure/reference/ee460804(v=azure.100))”和“[获取云服务属性](/previous-versions/azure/reference/ee460806(v=azure.100))”这两个操作返回 Locked 标志，可以通过检查该标志，以确定是否可以在给定部署上调用变动操作。
 
-要调用返回 Locked 标志的这些方法版本，必须将请求标头设置为“x-ms-version:2011-10-01”或更高版本。 有关版本控制标头的详细信息，请参阅 [服务管理版本控制](/previous-versions/azure/gg592580(v=azure.100))。
+要调用返回 Locked 标志的这些方法版本，必须将请求标头设置为“x-ms-version: 2011-10-01”或更高版本。 有关版本控制标头的详细信息，请参阅[服务管理版本控制](/previous-versions/azure/gg592580(v=azure.100))。
 
 <a name="distributiondfroles"></a>
 
@@ -182,7 +186,4 @@ Azure 在设置的升级域数之间平均分配角色的实例，可以将升�
 ## <a name="next-steps"></a>后续步骤
 [如何管理云服务](cloud-services-how-to-manage-portal.md)  
 [如何监视云服务](cloud-services-how-to-monitor.md)  
-[如何配置云服务](cloud-services-how-to-configure-portal.md)  
-
-
-
+[如何配置云服务](cloud-services-how-to-configure-portal.md)

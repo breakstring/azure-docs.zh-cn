@@ -10,19 +10,20 @@ ms.subservice: speech-service
 ms.topic: include
 ms.date: 04/02/2020
 ms.author: erhopf
-ms.openlocfilehash: 709efa3fb4f85ab5d0c3d345fd9a5ceada274459
-ms.sourcegitcommit: 152c522bb5ad64e5c020b466b239cdac040b9377
+ms.custom: devx-track-csharp
+ms.openlocfilehash: f89bdbfd144fb327c1daae020a1e371c00045859
+ms.sourcegitcommit: d95cab0514dd0956c13b9d64d98fdae2bc3569a0
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/14/2020
-ms.locfileid: "88226274"
+ms.lasthandoff: 09/25/2020
+ms.locfileid: "91376468"
 ---
 ## <a name="prerequisites"></a>先决条件
 
 准备工作：
 
 > [!div class="checklist"]
-> * [创建一个 Azure 搜索资源](../../../../get-started.md)
+> * [创建一个 Azure 搜索资源](../../../../overview.md#try-the-speech-service-for-free)
 > * [设置开发环境并创建空项目](../../../../quickstarts/setup-platform.md?tabs=xamarin&pivots=programming-language-csharp)
 > * 请确保你有权访问麦克风，以便进行音频捕获
 

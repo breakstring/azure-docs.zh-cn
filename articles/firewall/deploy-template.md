@@ -1,19 +1,19 @@
 ---
 title: 快速入门：创建具有可用性区域的 Azure 防火墙 - 资源管理器模板
-description: 使用模板部署 Azure 防火墙。 该虚拟网络有一个包含三个子网的 VNet。 将部署两个 Windows Server 虚拟机；一个跳转盒和一个服务器。
+description: 本快速入门使用模板部署 Azure 防火墙。 该虚拟网络有一个包含三个子网的 VNet。 将部署两个 Windows Server 虚拟机；一个跳转盒和一个服务器。
 services: firewall
 author: vhorne
 ms.service: firewall
 ms.topic: quickstart
 ms.custom: subject-armqs
-ms.date: 04/30/2020
+ms.date: 08/28/2020
 ms.author: victorh
-ms.openlocfilehash: cec7ff020ce7e5894d4909263b5ab1aa2275caac
-ms.sourcegitcommit: dabd9eb9925308d3c2404c3957e5c921408089da
+ms.openlocfilehash: 478f3454a728871040cdbbf9f817394cffe6b82f
+ms.sourcegitcommit: 8e7316bd4c4991de62ea485adca30065e5b86c67
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/11/2020
-ms.locfileid: "86260622"
+ms.lasthandoff: 11/17/2020
+ms.locfileid: "94660247"
 ---
 # <a name="quickstart-deploy-azure-firewall-with-availability-zones---arm-template"></a>快速入门：部署具有可用性区域的 Azure 防火墙 - ARM 模板
 
@@ -43,7 +43,7 @@ ms.locfileid: "86260622"
 
 本快速入门中使用的模板来自 [Azure 快速启动模板](https://azure.microsoft.com/resources/templates/101-azurefirewall-with-zones-sandbox)。
 
-:::code language="json" source="~/quickstart-templates/101-azurefirewall-with-zones-sandbox/azuredeploy.json" range="001-444" highlight="369-442":::
+:::code language="json" source="~/quickstart-templates/101-azurefirewall-with-zones-sandbox/azuredeploy.json":::
 
 模板中定义了多个 Azure 资源：
 
@@ -93,4 +93,4 @@ Remove-AzResourceGroup -Name MyResourceGroup
 接下来，可以监视 Azure 防火墙日志。
 
 > [!div class="nextstepaction"]
-> [教程：监视 Azure 防火墙日志](tutorial-diagnostics.md)
+> [教程：监视 Azure 防火墙日志](./firewall-diagnostics.md)

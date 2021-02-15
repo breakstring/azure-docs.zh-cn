@@ -3,15 +3,15 @@ title: Application Insights 资源的资源管理器模板示例
 description: 用于在 Azure Monitor 中部署 Application Insights 资源的 Azure 资源管理器模板示例。
 ms.subservice: application-insights
 ms.topic: sample
-author: mrbullwinkle
-ms.author: mbullwin
+author: lgayhardt
+ms.author: lagayhar
 ms.date: 07/08/2020
-ms.openlocfilehash: d7a8a7b7fa75d7d9bb4dc45a3432370bac4cb4d6
-ms.sourcegitcommit: 3543d3b4f6c6f496d22ea5f97d8cd2700ac9a481
+ms.openlocfilehash: 88c657aa89476f3be21226544e64512bd433776c
+ms.sourcegitcommit: f5b8410738bee1381407786fcb9d3d3ab838d813
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/20/2020
-ms.locfileid: "86498638"
+ms.lasthandoff: 01/14/2021
+ms.locfileid: "98210267"
 ---
 # <a name="resource-manager-template-samples-for-creating-application-insights-resources"></a>用于创建 Application Insights 资源的资源管理器模板示例
 

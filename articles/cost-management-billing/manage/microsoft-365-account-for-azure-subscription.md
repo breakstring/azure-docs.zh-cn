@@ -5,19 +5,20 @@ author: JiangChen79
 ms.reviewer: adwise
 tags: billing,top-support-issue
 ms.service: cost-management-billing
+ms.subservice: billing
 ms.topic: conceptual
-ms.date: 06/15/2020
+ms.date: 08/20/2020
 ms.author: banders
-ms.openlocfilehash: a0fa0ea6500cad03e4c41c8139f0bd0d7e80d4e4
-ms.sourcegitcommit: f988fc0f13266cea6e86ce618f2b511ce69bbb96
+ms.openlocfilehash: 255fbe4036c83618dd0131b262d13709ab7f9c2f
+ms.sourcegitcommit: 33368ca1684106cb0e215e3280b828b54f7e73e8
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/31/2020
-ms.locfileid: "87461317"
+ms.lasthandoff: 10/16/2020
+ms.locfileid: "92131881"
 ---
 # <a name="sign-up-for-an-azure-subscription-with-your-microsoft-365-account"></a>使用 Microsoft 365 帐户注册 Azure 订阅
 
-如果具有 Microsoft 365 订阅，可以使用 Microsoft 365 帐户创建 Azure 订阅。 使用 Microsoft 365 用户名和密码登录到 [Azure 门户](https://portal.azure.com/)。 如果想要设置虚拟机或使用其他 Azure 服务，则必须注册 Azure 订阅。 可以与他人共享 Azure 订阅并[使用基于角色的访问控制来管理对 Azure 订阅和资源的访问](https://docs.microsoft.com/azure/role-based-access-control/role-assignments-portal)。
+如果具有 Microsoft 365 订阅，可以使用 Microsoft 365 帐户创建 Azure 订阅。 使用 Microsoft 365 用户名和密码登录到 [Azure 门户](https://portal.azure.com/)。 如果想要设置虚拟机或使用其他 Azure 服务，则必须注册 Azure 订阅。 可以与他人共享 Azure 订阅并[使用 Azure 基于角色的访问控制 (Azure RBAC) 来管理对 Azure 订阅和资源的访问](../../role-based-access-control/role-assignments-portal.md)。
 
 如果已具有 Microsoft 365 帐户和 Azure 订阅，请参阅[将 Microsoft 365 租户与 Azure 订阅关联](../../active-directory/fundamentals/active-directory-how-subscriptions-associated-directory.md)。
 
@@ -56,4 +57,4 @@ Microsoft 365 和 Azure 使用 Azure AD 服务管理用户和订阅。 Azure 目
 
 ## <a name="next-steps"></a>后续步骤
 
-- 请与他人共享 Azure 订阅并[使用基于角色的访问控制来管理对 Azure 订阅和资源的访问](https://docs.microsoft.com/azure/role-based-access-control/role-assignments-portal)。
+- 与他人共享 Azure 订阅并[使用 Azure 基于角色的访问控制 (Azure RBAC) 来管理对 Azure 订阅和资源的访问](../../role-based-access-control/role-assignments-portal.md)。

@@ -1,19 +1,24 @@
 ---
 title: 配置网关以路由请求
 description: 了解如何配置网关，以处理在 Service Fabric 网格上运行的应用程序的传入流量。
-author: dkkapur
+author: georgewallace
 ms.topic: conceptual
 ms.date: 11/28/2018
-ms.author: dekapur
+ms.author: gwallace
 ms.custom: mvc, devcenter
-ms.openlocfilehash: ec408403d4baa0f211c6bfe867a15c96513693cb
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 40bba03c35568c013e383c08f0a13f765c1cc8bd
+ms.sourcegitcommit: 59cfed657839f41c36ccdf7dc2bee4535c920dd4
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "75461955"
+ms.lasthandoff: 02/06/2021
+ms.locfileid: "99625848"
 ---
 # <a name="configure-a-gateway-resource-to-route-requests"></a>配置网关资源以路由请求
+
+> [!IMPORTANT]
+> Azure Service Fabric 网格的预览已停用。 不允许再通过 Service Fabric 的网格 API 来进行新的部署。 对现有部署的支持将持续到2021年4月28日。
+> 
+> 有关详细信息，请参阅 [Azure Service Fabric 网格预览停](https://azure.microsoft.com/updates/azure-service-fabric-mesh-preview-retirement/)用。
 
 网关资源用于将传入的流量路由到存储应用程序的网络。 配置以指定根据请求结构将请求定向到特定服务或终结点的规则。 有关网格中的网络和网关的详细信息，请参阅 [Service Fabric 网格中的网络简介](service-fabric-mesh-networks-and-gateways.md)。 
 

@@ -1,22 +1,17 @@
 ---
 title: 使用 Azure 数据工厂从/向 ODBC 数据存储复制数据
-description: 了解如何通过在 Azure 数据工厂管道中使用复制活动，将数据从和复制到 ODBC 数据存储。
-services: data-factory
-documentationcenter: ''
+description: 了解如何通过在 Azure 数据工厂管道中使用复制活动，从/向 ODBC 数据存储复制数据。
 author: linda33wj
-manager: shwang
-ms.reviewer: douglasl
 ms.service: data-factory
-ms.workload: data-services
 ms.topic: conceptual
 ms.date: 04/22/2020
 ms.author: jingwang
-ms.openlocfilehash: c92428666f0766f78475be16416027cdc6e71f20
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 9b73e10b0ed539879e9a32d3961b6375828cc153
+ms.sourcegitcommit: d4734bc680ea221ea80fdea67859d6d32241aefc
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "85506525"
+ms.lasthandoff: 02/14/2021
+ms.locfileid: "100389614"
 ---
 # <a name="copy-data-from-and-to-odbc-data-stores-using-azure-data-factory"></a>使用 Azure 数据工厂从/向 ODBC 数据存储复制数据
 > [!div class="op_single_selector" title1="选择所使用的数据工厂服务版本："]
@@ -35,7 +30,7 @@ ms.locfileid: "85506525"
 
 可将数据从 ODBC 源复制到任何受支持的接收器数据存储，或者从任何受支持的源数据存储复制到 ODBC 接收器。 有关复制活动支持作为源/接收器的数据存储列表，请参阅[支持的数据存储](copy-activity-overview.md#supported-data-stores-and-formats)表。
 
-具体而言，此 ODBC 连接器支持使用 **Basic** 或 **Anonymous** 身份验证从/向任何与 ODBC 兼容的数据存储**** 复制数据。 需要 **64 位 ODBC 驱动程序**。 对于 ODBC 接收器，ADF 支持 ODBC 版本 2.0 标准版。
+具体而言，此 ODBC 连接器支持使用 **Basic** 或 **Anonymous** 身份验证从/向任何与 ODBC 兼容的数据存储复制数据。 需要 **64 位 ODBC 驱动程序**。 对于 ODBC 接收器，ADF 支持 ODBC 版本 2.0 标准版。
 
 ## <a name="prerequisites"></a>先决条件
 
@@ -54,10 +49,10 @@ ms.locfileid: "85506525"
 
 ODBC 链接服务支持以下属性：
 
-| Property | 描述 | 必需 |
+| 属性 | 说明 | 必须 |
 |:--- |:--- |:--- |
 | type | type 属性必须设置为：**Odbc** | 是 |
-| connectionString | 不包括凭据部分的连接字符串。 可以使用类似 `"Driver={SQL Server};Server=Server.database.windows.net; Database=TestDatabase;"` 的模式指定连接字符串，也可以利用在 Integration Runtime 计算机上使用 `"DSN=<name of the DSN on IR machine>;"` 设置的系统 DSN（数据源名称）（仍需要相应地指定链接服务中的凭据部分）。<br>还可以将密码放在 Azure 密钥保管库中，并从连接字符串中拉取  `password`  配置。 有关更多详细信息，请参阅 [在 Azure 密钥保管库中存储凭据](store-credentials-in-key-vault.md) 。| 是 |
+| connectionString | 不包括凭据部分的连接字符串。 可以使用类似 `"Driver={SQL Server};Server=Server.database.windows.net; Database=TestDatabase;"` 的模式指定连接字符串，也可以利用在 Integration Runtime 计算机上使用 `"DSN=<name of the DSN on IR machine>;"` 设置的系统 DSN（数据源名称）（仍需要相应地指定链接服务中的凭据部分）。<br>还可以将密码放在 Azure 密钥保管库中，并从连接字符串中拉取 `password` 配置。 有关更多详细信息，请参阅[在 Azure Key Vault 中存储凭据](store-credentials-in-key-vault.md)。| 是 |
 | authenticationType | 用于连接 ODBC 数据存储的身份验证类型。<br/>允许值包括：**Basic** 和 **Anonymous**。 | 是 |
 | userName | 如果使用基本身份验证，请指定用户名。 | 否 |
 | password | 指定为 userName 指定的用户帐户的密码。 将此字段标记为 SecureString 以安全地将其存储在数据工厂中或[引用存储在 Azure Key Vault 中的机密](store-credentials-in-key-vault.md)。 | 否 |
@@ -117,7 +112,7 @@ ODBC 链接服务支持以下属性：
 
 若要从 ODBC 兼容的数据存储复制数据/将数据复制到 ODBC 兼容的数据存储，支持以下属性：
 
-| Property | 描述 | 必需 |
+| 属性 | 说明 | 必须 |
 |:--- |:--- |:--- |
 | type | 数据集的 type 属性必须设置为：**OdbcTable** | 是 |
 | tableName | ODBC 数据存储中表的名称。 | 源为否（如果指定了活动源中的“query”）；<br/>接收器为是 |
@@ -151,10 +146,10 @@ ODBC 链接服务支持以下属性：
 
 从 ODBC 兼容的数据存储复制数据时，复制活动的 **source** 节支持以下属性：
 
-| 属性 | 描述 | 必需 |
+| 属性 | 说明 | 必须 |
 |:--- |:--- |:--- |
 | type | 复制活动 source 的 type 属性必须设置为：**OdbcSource** | 是 |
-| 查询 | 使用自定义 SQL 查询读取数据。 例如：`"SELECT * FROM MyTable"`。 | 否（如果指定了数据集中的“tableName”） |
+| query | 使用自定义 SQL 查询读取数据。 例如：`"SELECT * FROM MyTable"`。 | 否（如果指定了数据集中的“tableName”） |
 
 **示例：**
 
@@ -192,17 +187,17 @@ ODBC 链接服务支持以下属性：
 
 ### <a name="odbc-as-sink"></a>ODBC 作为接收器
 
-要向与 ODBC 兼容的数据存储复制数据，请将复制活动中的接收器类型设置为“OdbcSink”****。 复制活动接收器部分中支持以下属性：
+要向与 ODBC 兼容的数据存储复制数据，请将复制活动中的接收器类型设置为“OdbcSink”。 复制活动接收器部分中支持以下属性：
 
-| properties | 描述 | 必需 |
+| properties | 说明 | 必须 |
 |:--- |:--- |:--- |
 | type | 复制活动接收器的 type 属性必须设置为：**OdbcSink** | 是 |
-| writeBatchTimeout |超时之前等待批插入操作完成时的等待时间。<br/>允许的值为：timespan。 示例：“00:30:00”（30 分钟）。 |否 |
+| writeBatchTimeout |超时之前等待批插入操作完成时的等待时间。<br/>允许的值为：timespan。 示例："00:30:00"（30 分钟）。 |否 |
 | writeBatchSize |缓冲区大小达到 writeBatchSize 时会数据插入 SQL 表。<br/>允许的值为：整数（行数）。 |否（默认值为 0 - 自动检测） |
 | preCopyScript |每次运行时，将数据写入到数据存储之前，指定复制活动要执行的 SQL 查询。 此属性可用于清理预先加载的数据。 |否 |
 
 > [!NOTE]
-> 对于“writeBatchSize”，如果未设置（自动检测），则复制活动首先检测驱动程序是否支持批处理操作，如果支持，则将其设置为 10000，否则或将其设置为 1。 如果显式设置 0 以外的值，则复制活动遵循值，如果驱动程序不支持批处理操作，则会在运行时失败。
+> 对于 "writeBatchSize"，如果未将其设置 (自动检测) ，则复制活动将首先检测驱动程序是否支持批处理操作，并将其设置为10000（如果它存在），或将其设置为1（如果未设置）。 如果显式设置了0以外的值，则复制活动会接受该值，如果驱动程序不支持批处理操作，则会在运行时失败。
 
 **示例：**
 
@@ -236,19 +231,19 @@ ODBC 链接服务支持以下属性：
 ]
 ```
 
-## <a name="lookup-activity-properties"></a>Lookup 活动属性
+## <a name="lookup-activity-properties"></a>查找活动属性
 
 若要了解有关属性的详细信息，请查看 [Lookup 活动](control-flow-lookup-activity.md)。
 
 ## <a name="troubleshoot-connectivity-issues"></a>解决连接问题
 
-若要解决连接问题，请使用“集成运行时配置管理器”**** 的“诊断”**** 选项卡。
+若要解决连接问题，请使用“集成运行时配置管理器”的“诊断”选项卡。
 
-1. 启动集成运行时配置管理器****。
-2. 切换到“诊断”**** 选项卡。
-3. 在“测试连接”部分下，选择数据存储的“类型”****（链接服务）。
-4. 指定用于连接数据存储的“连接字符串”****，选择“身份验证”**** 并输入“用户名”****、“密码”**** 和/或“凭据”****。
-5. 单击“测试连接”**** 以测试数据存储的连接。
+1. 启动集成运行时配置管理器。
+2. 切换到“诊断”选项卡。
+3. 在“测试连接”部分下，选择数据存储的“类型”（链接服务）。
+4. 指定用于连接数据存储的“连接字符串”，选择“身份验证”并输入“用户名”、“密码”和/或“凭据”。
+5. 单击“测试连接”以测试数据存储的连接。
 
 ## <a name="next-steps"></a>后续步骤
 有关 Azure 数据工厂中复制活动支持作为源和接收器的数据存储的列表，请参阅[支持的数据存储](copy-activity-overview.md#supported-data-stores-and-formats)。

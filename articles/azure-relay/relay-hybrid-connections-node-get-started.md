@@ -3,13 +3,13 @@ title: Azure 中继混合连接 - 节点中的 WebSocket
 description: 为 Azure 中继混合连接 Websocket 编写 Node.js 控制台应用程序
 ms.topic: conceptual
 ms.date: 06/23/2020
-ms.custom: devx-track-javascript
-ms.openlocfilehash: 8dc52c93d4b5cd6d50b66338350a41cf0e24daa0
-ms.sourcegitcommit: 5b8fb60a5ded05c5b7281094d18cf8ae15cb1d55
+ms.custom: devx-track-js
+ms.openlocfilehash: b362caa6570d4a8e212ff7adf4310a0c63e8b755
+ms.sourcegitcommit: 829d951d5c90442a38012daaf77e86046018e5b9
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/29/2020
-ms.locfileid: "87386293"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "91263702"
 ---
 # <a name="get-started-with-relay-hybrid-connections-websockets-in-nodejs"></a>开始在 Node.js 中使用中继混合连接 WebSocket
 
@@ -52,7 +52,7 @@ ms.locfileid: "87386293"
 2. 运行客户端应用程序：在 Node.js 命令提示符处键入 `node sender.js`，然后输入某些文本。
 3. 确保服务器应用程序控制台输出了客户端应用程序中输入的文本。
 
-    ![running-applications](./media/relay-hybrid-connections-node-get-started/running-applications.png)
+    ![控制台 windows 测试服务器和客户端应用程序。](./media/relay-hybrid-connections-node-get-started/running-applications.png)
 
 祝贺你，现已使用 Node.js 创建端到端混合连接应用程序！
 

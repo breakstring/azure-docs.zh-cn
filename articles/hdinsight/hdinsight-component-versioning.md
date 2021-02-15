@@ -1,19 +1,16 @@
 ---
 title: Apache Hadoop 组件和版本 - Azure HDInsight
 description: 了解 Azure HDInsight 中的 Apache Hadoop 组件和版本。
-author: hrasheed-msft
-ms.author: hrasheed
-ms.reviewer: jasonh
 ms.service: hdinsight
 ms.topic: conceptual
 ms.custom: hdinsightactive,hdiseo17may2017,seoapr2020
 ms.date: 08/13/2020
-ms.openlocfilehash: 5c3586e9ba405cb5a7338b8f7f22858a238b9271
-ms.sourcegitcommit: 6fc156ceedd0fbbb2eec1e9f5e3c6d0915f65b8e
+ms.openlocfilehash: d1f4c57986f356f267448ff43de23973534b8126
+ms.sourcegitcommit: 49ea056bbb5957b5443f035d28c1d8f84f5a407b
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/21/2020
-ms.locfileid: "88717245"
+ms.lasthandoff: 02/09/2021
+ms.locfileid: "100006660"
 ---
 # <a name="apache-components-and-versions-available-for-azure-hdinsight"></a>适用于 Azure HDInsight 的 Apache 组件和版本
 
@@ -32,7 +29,7 @@ Azure HDInsight 支持多个可随时部署的 Hadoop 群集版本。 从 2017 �
 |------------------------|---------------|-----------------------------|
 | Apache Hadoop 和 YARN | 3.1.1         | 2.7.3                       |
 | Apache Tez             | 0.9.1         | 0.7.0                       |
-| Apache Pig             | 0.16.0        | 0.16.0                      |
+| Apache Pig             | 0.16.1        | 0.16.0                      |
 | Apache Hive            | 3.1.0         | 1.2.1（在 ESP Interactive Query 上为 2.1.0） |
 | Apache Tez Hive2       | -             | 0.8.4                       |
 | Apache Ranger          | 1.1.0         | 0.7.0                       |
@@ -44,7 +41,7 @@ Azure HDInsight 支持多个可随时部署的 Hadoop 群集版本。 从 2017 �
 | Apache Mahout          | -             | 0.9.0+                      |
 | Apache Phoenix         | 5             | 4.7.0                       |
 | Apache Spark           | 2.4.4         | 2.3.2.                      |
-| Apache Livy            | 0.5           | 0.4。                        |
+| Apache Livy            | 0.5           | 0.4.                        |
 | Apache Kafka           | 2.1.1         | 1.1                         |
 | Apache Ambari          | 2.7.0         | 2.6.0                       |
 | Apache Zeppelin        | 0.8.0         | 0.7.3                       |
@@ -65,9 +62,9 @@ Azure HDInsight 支持多个可随时部署的 Hadoop 群集版本。 从 2017 �
 
 ### <a name="support-expiration-and-retirement-for-hdinsight-versions"></a>HDInsight 版本的支持到期和停用
 
-**支持到期**意味着 Microsoft 不再为特定的 HDInsight 版本提供支持， 并且不再可以通过 Azure 门户使用该版本创建群集。 仍可以使用 Azure CLI 或各种 SDK 创建这些版本。
+**支持到期** 意味着 Microsoft 不再为特定的 HDInsight 版本提供支持， 并且不再可以通过 Azure 门户使用该版本创建群集。 仍可以使用 Azure CLI 或各种 SDK 创建这些版本。
 
-**停用**意味着 HDInsight 版本的现有群集将继续按现样运行。 不能通过任何方式（包括 CLI 和 SDK）创建此版本的新群集。 其他控制平面功能（如手动缩放和自动缩放）在版本停用后也可能不起作用。 对已停用的版本不提供支持。
+**停用** 意味着 HDInsight 版本的现有群集将继续按现样运行。 不能通过任何方式（包括 CLI 和 SDK）创建此版本的新群集。 其他控制平面功能（如手动缩放和自动缩放）在版本停用后也可能不起作用。 对已停用的版本不提供支持。
 
 下表列出了 HDInsight 版本。 它还提供了支持到期日期和停用日期（如果已知这些日期）。
 
@@ -78,25 +75,25 @@ Azure HDInsight 支持多个可随时部署的 Hadoop 群集版本。 从 2017 �
 | HDInsight 版本 | VM OS | 发行日期 | 支持到期日期 | 停用日期 | 高可用性 |  在 Azure 门户中的可用性 |
 | --- | --- | --- | --- | --- | --- | --- |
 | HDInsight 4.0 |Ubuntu 16.0.4 LTS |2018 年 9 月 24 日 | | |是 |是 |
-| HDInsight 3.6 |Ubuntu 16.0.4 LTS |2017 年 4 月 4 日      | * 2021 年6月31日 |2021年6月31日 |是 |是 |
+| HDInsight 3.6 |Ubuntu 16.0.4 LTS |2017 年 4 月 4 日      | *2021 年 6 月 30 日 |2021 年 6 月 30 日 |是 |是 |
 
-* 我们正在扩展某些 HDInsight 3.6 群集类型的支持时间范围
+*我们将延长对特定 HDInsight 3.6 群集类型的支持时间范围
 
-| 群集类型                    | Framework 版本 | 当前支持到期        | 新的支持到期日期 |
+| 群集类型                    | 框架版本 | 当前支持到期日期        | 新的支持到期日期 |
 |---------------------------------|-------------------|-----------------------------------|-----------------------------|
-| HDInsight 3.6 Hadoop            | 2.7.3             | 12月31日，2020                      | 2021年6月30日               |
-| HDInsight 3.6 Spark             | 2.3               | 12月31日，2020                      | 2021年6月30日               |
-| HDInsight 3.6 Spark             | 2.2               | 2020年6月30日停用          |                             |
-| HDInsight 3.6 Spark             | 2.1               | 2020年6月30日停用          |                             |
-| HDInsight 3.6 Kafka             | 1.1               | 12月31日，2020                      | 2021年6月30日               |
-| HDInsight 3.6 Kafka             | 1.0               | 于2020年6月30日停用。         |                             |
-| HDInsight 3.6 HBase             | 1.1               | 12月31日，2020                      | 2021年6月30日               |
-| HDInsight 3.6 交互查询 | 2.1               | 12月31日，2020                      | 2021年6月30日               |
-| HDInsight 3.6 风暴             | 1.1               | 12月31日，2020                      | 2021年6月30日               |
-| HDInsight 3.6 ML 服务      | 9.3               | 12月31日，2020                      | 12月31日，2020                |
+| HDInsight 3.6 Hadoop            | 2.7.3             | 2020 年 12 月 31 日                      | 2021 年 6 月 30 日               |
+| HDInsight 3.6 Spark             | 2.3               | 2020 年 12 月 31 日                      | 2021 年 6 月 30 日               |
+| HDInsight 3.6 Spark             | 2.2               | 2020 年 6 月 30 日停用          |                             |
+| HDInsight 3.6 Spark             | 2.1               | 2020 年 6 月 30 日停用          |                             |
+| HDInsight 3.6 Kafka             | 1.1               | 2020 年 12 月 31 日                      | 2021 年 6 月 30 日               |
+| HDInsight 3.6 Kafka             | 1.0               | 2020 年 6 月 30 日停用。         |                             |
+| HDInsight 3.6 HBase             | 1.1               | 2020 年 12 月 31 日                      | 2021 年 6 月 30 日               |
+| HDInsight 3.6 Interactive Query | 2.1               | 2020 年 12 月 31 日                      | 2021 年 6 月 30 日               |
+| HDInsight 3.6 Storm             | 1.1               | 2020 年 12 月 31 日                      | 2021 年 6 月 30 日               |
+| HDInsight 3.6 ML 服务      | 9.3               | 2020 年 12 月 31 日                      | 2020 年 12 月 31 日                |
 
 > [!NOTE]
-> 对某个群集版本的支持到期后，无法通过 Azure 门户使用该版本。 在某些情况下，可以继续通过 Windows PowerShell [New-AzHDInsightCluster](https://docs.microsoft.com/powershell/module/az.hdinsight/new-azhdinsightcluster) 命令中的 **Version** 参数和 .NET SDK 使用群集版本，直到版本停用的那天为止。
+> 对某个群集版本的支持到期后，无法通过 Azure 门户使用该版本。 在某些情况下，可以继续通过 Windows PowerShell [New-AzHDInsightCluster](/powershell/module/az.hdinsight/new-azhdinsightcluster) 命令中的 **Version** 参数和 .NET SDK 使用群集版本，直到版本停用的那天为止。
 
 ### <a name="retired-versions"></a>已停用的版本
 
@@ -133,6 +130,8 @@ Azure HDInsight 支持多个可随时部署的 Hadoop 群集版本。 从 2017 �
 ## <a name="next-steps"></a>后续步骤
 
 - [为 HDInsight 上的 Apache Hadoop、Spark 和其他组件设置群集](hdinsight-hadoop-provision-linux-clusters.md)
-- [使用 Windows 电脑在 HDInsight 上的 Apache Hadoop 中工作](hdinsight-hadoop-windows-tools.md)
-- [与 Azure HDInsight 版本相关的 Hortonworks 发行说明](./hortonworks-release-notes.md)
 - [企业安全性套餐](./enterprise-security-package.md)
+- [与 Azure HDInsight 版本相关的 Hortonworks 发行说明](./hortonworks-release-notes.md)
+- [使用 Windows 电脑在 HDInsight 上的 Apache Hadoop 中工作](hdinsight-hadoop-windows-tools.md)
+
+

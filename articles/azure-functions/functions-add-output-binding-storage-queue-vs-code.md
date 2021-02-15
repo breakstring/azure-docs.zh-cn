@@ -3,20 +3,20 @@ title: 使用 Visual Studio Code 将 Azure Functions 连接到 Azure 存储
 description: 了解如何通过将输出绑定添加到 Visual Studio Code 项目将 Azure Functions 连接到 Azure 存储队列。
 ms.date: 02/07/2020
 ms.topic: quickstart
-ms.custom: devx-track-python, devx-track-javascript
+ms.custom: devx-track-python, devx-track-js
 zone_pivot_groups: programming-languages-set-functions
-ms.openlocfilehash: ee10adea181c187bd630b5d334e4768545f4f6c8
-ms.sourcegitcommit: 7fe8df79526a0067be4651ce6fa96fa9d4f21355
+ms.openlocfilehash: 96384d2c50e7d5b4b5b6e652d01c4a89cd519573
+ms.sourcegitcommit: 740698a63c485390ebdd5e58bc41929ec0e4ed2d
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/06/2020
-ms.locfileid: "87845368"
+ms.lasthandoff: 02/03/2021
+ms.locfileid: "99493360"
 ---
 # <a name="connect-azure-functions-to-azure-storage-using-visual-studio-code"></a>使用 Visual Studio Code 将 Azure Functions 连接到 Azure 存储
 
 [!INCLUDE [functions-add-storage-binding-intro](../../includes/functions-add-storage-binding-intro.md)]
 
-本文介绍如何使用 Visual Studio Code 将在[前一篇快速入门文章](functions-create-first-function-vs-code.md)中创建的函数连接到 Azure 存储。 添加到此函数的输出绑定会将 HTTP 请求中的数据写入到 Azure 队列存储队列中的消息。 
+本文介绍如何使用 Visual Studio Code 将 Azure 存储连接到在前一篇快速入门文章中创建的函数。 添加到此函数的输出绑定会将 HTTP 请求中的数据写入到 Azure 队列存储队列中的消息。 
 
 大多数绑定都需要一个存储的连接字符串，函数将使用该字符串来访问绑定的服务。 为便于操作，请使用连同函数应用一起创建的存储帐户。 与此帐户建立的连接已存储在名为 `AzureWebJobsStorage` 的应用设置中。  
 
@@ -32,13 +32,30 @@ ms.locfileid: "87845368"
 * 安装 [.NET Core CLI 工具](/dotnet/core/tools/?tabs=netcore2x)。
 ::: zone-end
 
-* 完成 [Visual Studio Code 快速入门第 1 部分](functions-create-first-function-vs-code.md)中的步骤。 
+::: zone pivot="programming-language-csharp"  
+* 完成 [Visual Studio Code 快速入门第 1 部分](create-first-function-vs-code-csharp.md)中的步骤。 
+::: zone-end  
+::: zone pivot="programming-language-javascript"  
+* 完成 [Visual Studio Code 快速入门第 1 部分](create-first-function-vs-code-node.md)中的步骤。 
+::: zone-end   
+::: zone pivot="programming-language-java"  
+* 完成 [Visual Studio Code 快速入门第 1 部分](create-first-function-vs-code-java.md)中的步骤。 
+::: zone-end   
+::: zone pivot="programming-language-typescript"  
+* 完成 [Visual Studio Code 快速入门第 1 部分](create-first-function-vs-code-typescript.md)中的步骤。 
+::: zone-end   
+::: zone pivot="programming-language-python"  
+* 完成 [Visual Studio Code 快速入门第 1 部分](create-first-function-vs-code-python.md)中的步骤。 
+::: zone-end   
+::: zone pivot="programming-language-powershell"  
+* 完成 [Visual Studio Code 快速入门第 1 部分](create-first-function-vs-code-powershell.md)中的步骤。 
+::: zone-end   
 
 本文假设你已从 Visual Studio Code 登录到 Azure 订阅。 你可以通过从命令面板运行 `Azure: Sign In` 进行登录。 
 
 ## <a name="download-the-function-app-settings"></a>下载函数应用设置
 
-在[前一篇快速入门文章](functions-create-first-function-vs-code.md)中，你已在 Azure 中创建了一个函数应用，并创建了所需的存储帐户。 此帐户的连接字符串安全存储在 Azure 中的应用设置内。 在本文中，你要将消息写入到同一帐户中的存储队列。 若要在本地运行函数时连接到该存储帐户，必须将应用设置下载到 local.settings.json 文件。 
+在[前一篇快速入门文章](./create-first-function-vs-code-csharp.md)中，你已在 Azure 中创建了一个函数应用，并创建了所需的存储帐户。 此帐户的连接字符串安全存储在 Azure 中的应用设置内。 在本文中，你要将消息写入到同一帐户中的存储队列。 若要在本地运行函数时连接到该存储帐户，必须将应用设置下载到 local.settings.json 文件。 
 
 1. 按 F1 键打开命令面板，然后搜索并运行命令 `Azure Functions: Download Remote Settings....`。 
 
@@ -79,7 +96,7 @@ dotnet add package Microsoft.Azure.WebJobs.Extensions.Storage
 
 在 Functions 中，每种类型的绑定都需要一个 `direction`、`type`，以及要在 function.json 文件中定义的唯一 `name`。 定义这些属性的方式取决于函数应用的语言。
 
-::: zone pivot="programming-language-javascript,programming-language-typescript,programming-language-python,programming-language-powershell,programming-language-java"
+::: zone pivot="programming-language-javascript,programming-language-typescript,programming-language-python,programming-language-powershell"
 
 [!INCLUDE [functions-add-output-binding-json](../../includes/functions-add-output-binding-json.md)]
 
@@ -131,31 +148,25 @@ dotnet add package Microsoft.Azure.WebJobs.Extensions.Storage
 
 [!INCLUDE [functions-add-storage-binding-java-code](../../includes/functions-add-storage-binding-java-code.md)]
 
+## <a name="update-the-tests"></a>更新测试
+
 [!INCLUDE [functions-add-output-binding-java-test](../../includes/functions-add-output-binding-java-test.md)]
 
 ::: zone-end  
 
-<!--- Local testing section --->
+## <a name="run-the-function-locally"></a>在本地运行函数
 
-::: zone pivot="programming-language-csharp,programming-language-javascript,programming-language-python"
+1. 与上一篇文章中所述，按 <kbd>F5</kbd> 启动函数应用项目和 Core Tools。 
 
-[!INCLUDE [functions-run-function-test-local-vs-code](../../includes/functions-run-function-test-local-vs-code.md)]
+1. 运行 Core Tools 后，转到“Azure:Functions”区域。 在“Functions”下，展开“本地项目” > “Functions”  。 右键单击 `HttpExample` 函数（在 Mac 按 Ctrl-单击），然后选择“立即执行函数...”。
 
-::: zone-end
+    :::image type="content" source="../../includes/media/functions-run-function-test-local-vs-code/execute-function-now.png" alt-text="立即在 Visual Studio Code 中执行函数":::
 
-::: zone pivot="programming-language-powershell"
+1. 在“输入请求正文”中，你将看到请求消息正文值 `{ "name": "Azure" }`。 按 Enter 将此请求消息发送给函数。  
+ 
+1. 返回响应后，按 <kbd>Ctrl + C</kbd> 停用 Core Tools。
 
-[!INCLUDE [functions-run-function-test-local-vs-code-ps](../../includes/functions-run-function-test-local-vs-code-ps.md)]
-
-::: zone-end
-
-首次使用输出绑定时，Functions 运行时会在存储帐户中创建名为 **outqueue** 的新队列。 将使用存储资源管理器来验证队列是否与新消息一起创建。
-
-::: zone pivot="programming-language-java"  
-
-[!INCLUDE [functions-add-output-binding-java-test](../../includes/functions-add-output-binding-java-test.md)]
-
-::: zone-end
+由于使用的是存储连接字符串，因此函数在本地运行时会连接到 Azure 存储帐户。 首次使用输出绑定时，Functions 运行时会在存储帐户中创建名为 **outqueue** 的新队列。 将使用存储资源管理器来验证队列是否与新消息一起创建。
 
 ### <a name="connect-storage-explorer-to-your-account"></a>将存储资源管理器连接到帐户
 
@@ -191,11 +202,7 @@ dotnet add package Microsoft.Azure.WebJobs.Extensions.Storage
 
 1. 选择你在第一篇文章中创建的函数应用。 由于你要将项目重新部署到同一个应用，因此请选择“部署”以关闭关于覆盖文件的警告。
 
-1. 部署完成后，可以再次使用 cURL 或浏览器测试重新部署的函数。 与前面一样，请将查询字符串 `&name=<yourname>` 追加到 URL，如以下示例所示：
-
-    ```bash
-    curl https://myfunctionapp.azurewebsites.net/api/httptrigger?code=cCr8sAxfBiow548FBDLS1....&name=<yourname>
-    ```
+1. 部署完成后，可再次使用“立即执行函数...”功能在 Azure 中触发该函数。
 
 1. 可以[查看存储队列中的消息](#examine-the-output-queue)，以再次确认输出绑定是否在队列中生成了新的消息。
 
@@ -205,33 +212,42 @@ dotnet add package Microsoft.Azure.WebJobs.Extensions.Storage
 
 已创建完成这些快速入门所需的资源。 这些资源可能需要付费，具体取决于[帐户状态](https://azure.microsoft.com/account/)和[服务定价](https://azure.microsoft.com/pricing/)。 如果不再需要这些资源，请参阅下面介绍的资源删除方法：
 
-[!INCLUDE [functions-cleanup-resources-vs-code.md](../../includes/functions-cleanup-resources-vs-code.md)]
+[!INCLUDE [functions-cleanup-resources-vs-code-inner.md](../../includes/functions-cleanup-resources-vs-code-inner.md)]
 
 ## <a name="next-steps"></a>后续步骤
 
 现已更新 HTTP 触发的函数，使其将数据写入存储队列。 现在，可以详细了解如何使用 Visual Studio Code 开发 Functions：
 
 + [使用 Visual Studio Code 开发 Azure Functions](functions-develop-vs-code.md)
+
++ [Azure Functions 触发器和绑定](functions-triggers-bindings.md)。
 ::: zone pivot="programming-language-csharp"  
 + [C# 中完整 Function 项目的示例](/samples/browse/?products=azure-functions&languages=csharp)。
+
 + [Azure Functions C# 开发人员参考](functions-dotnet-class-library.md)  
 ::: zone-end 
 ::: zone pivot="programming-language-javascript"  
 + [JavaScript 中完整函数项目的示例](/samples/browse/?products=azure-functions&languages=javascript)。
+
 + [Azure Functions JavaScript 开发人员指南](functions-reference-node.md)  
+::: zone-end  
+::: zone pivot="programming-language-java"  
++ [Java 中完整函数项目的示例](/samples/browse/?products=azure-functions&languages=java)。
+
++ [Azure Functions Java 开发人员指南](functions-reference-java.md)  
 ::: zone-end  
 ::: zone pivot="programming-language-typescript"  
 + [TypeScript 中完整函数项目的示例](/samples/browse/?products=azure-functions&languages=typescript)。
+
 + [Azure Functions TypeScript 开发人员指南](functions-reference-node.md#typescript)  
 ::: zone-end  
 ::: zone pivot="programming-language-python"  
 + [Python 中完整函数项目的示例](/samples/browse/?products=azure-functions&languages=python)。
+
 + [Azure Functions Python 开发人员指南](functions-reference-python.md)  
 ::: zone-end  
 ::: zone pivot="programming-language-powershell"  
 + [PowerShell 中完整函数项目的示例](/samples/browse/?products=azure-functions&languages=azurepowershell)。
+
 + [Azure Functions PowerShell 开发人员指南](functions-reference-powershell.md) 
 ::: zone-end
-+ [Azure Functions 触发器和绑定](functions-triggers-bindings.md)。
-+ [Functions 定价页](https://azure.microsoft.com/pricing/details/functions/)
-+ [估算消耗计划成本](functions-consumption-costs.md)一文。

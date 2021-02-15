@@ -3,28 +3,28 @@ title: Azure Functions JavaScript 开发者参考
 description: 了解如何使用 JavaScript 开发函数。
 ms.assetid: 45dedd78-3ff9-411f-bb4b-16d29a11384c
 ms.topic: conceptual
-ms.date: 07/17/2020
-ms.custom: devx-track-javascript
-ms.openlocfilehash: ff3e5431481cba0d2d806d60ba5d7a291d1b2b69
-ms.sourcegitcommit: 85eb6e79599a78573db2082fe6f3beee497ad316
+ms.date: 11/17/2020
+ms.custom: devx-track-js
+ms.openlocfilehash: 3e99b156d220b4c24a368886b1c0ca0813ffdc51
+ms.sourcegitcommit: b39cf769ce8e2eb7ea74cfdac6759a17a048b331
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/05/2020
-ms.locfileid: "87810110"
+ms.lasthandoff: 01/22/2021
+ms.locfileid: "98674127"
 ---
 # <a name="azure-functions-javascript-developer-guide"></a>Azure Functions JavaScript 开发人员指南
 
-本指南包含的详细信息可帮助你成功使用 JavaScript 开发 Azure Functions。
+本指南包含有助于成功使用 JavaScript 开发 Azure Functions 的详细信息。
 
-作为 Express.js、Node.js 或 JavaScript 开发人员，如果不熟悉 Azure Functions，请首先阅读以下文章之一：
+作为 Express.js、Node.js 或 JavaScript 开发人员，如果不熟悉 Azure Functions，请考虑先阅读以下文章之一：
 
 | 入门 | 概念| 指导式学习 |
 | -- | -- | -- | 
-| <ul><li>[使用 Visual Studio CodeNode.js 函数](./functions-create-first-function-vs-code.md?pivots=programming-language-javascript)</li><li>[在终端/命令提示符下Node.js 函数](./functions-create-first-azure-function-azure-cli.md?pivots=programming-language-javascript)</li></ul> | <ul><li>[开发人员指南](functions-reference.md)</li><li>[托管选项](functions-scale.md)</li><li>[TypeScript 函数](#typescript)</li><li>[性能 &nbsp; 注意事项](functions-best-practices.md)</li></ul> | <ul><li>[创建无服务器应用程序](/learn/paths/create-serverless-applications/)</li><li>[重构 Node.js 和 Express Api 到无服务器 Api](/learn/modules/shift-nodejs-express-apis-serverless/)</li></ul> |
+| <ul><li>[使用 Visual Studio Code 的 Node.js 函数](./create-first-function-vs-code-node.md)</li><li>[使用终端/命令提示符的 Node.js 函数](./create-first-function-cli-node.md)</li></ul> | <ul><li>[开发人员指南](functions-reference.md)</li><li>[托管选项](functions-scale.md)</li><li>[TypeScript 函数](#typescript)</li><li>[性能&nbsp;注意事项](functions-best-practices.md)</li></ul> | <ul><li>[创建无服务器应用程序](/learn/paths/create-serverless-applications/)</li><li>[将 Node.js 和 Express API 重构到无服务器 API](/learn/modules/shift-nodejs-express-apis-serverless/)</li></ul> |
 
 ## <a name="javascript-function-basics"></a>JavaScript 函数基础知识
 
-JavaScript ( # A0) 函数是在 `function`) [上的 function.js中配置](functions-triggers-bindings.md)触发 (触发器时执行的已导出。 传递给每个函数的第一个参数是 `context` 对象，该对象用于接收和发送绑定数据、日志记录以及与运行时通信。
+JavaScript (Node.js) 函数是导出的 `function`，它在触发时执行（[触发器在 function.json 中配置](functions-triggers-bindings.md)）。 传递给每个函数的第一个参数是 `context` 对象，该对象用于接收和发送绑定数据、日志记录以及与运行时通信。
 
 ## <a name="folder-structure"></a>文件夹结构
 
@@ -183,15 +183,38 @@ module.exports = async function (context, req) {
 `dataType` 的选项为 `binary`、`stream` 和 `string`。
 
 ## <a name="context-object"></a>上下文对象
-运行时使用 `context` 对象将数据传入和传出函数，并能与其进行通信。 上下文对象可用于从绑定读取和设置数据、写入日志，以及当导出的函数是同步函数时使用 `context.done` 回调。
 
-`context` 对象始终是传递给函数的第一个参数。 之所以需要包含此对象，是因为它包含 `context.done` 和 `context.log` 等重要方法。 可以按个人喜好为对象命名（例如 `ctx` 或 `c`）。
+运行时使用 `context` 对象将数据传入和传出函数和运行时。 `context` 对象用于从绑定读取和设置数据并用于写入日志，它始终是传递到函数的第一个参数。
+
+对于具有同步代码的函数，上下文对象包括在函数完成处理时调用的 `done` 回叫。 编写异步代码时，无需显式调用 `done`；`done` 回叫是隐式调用的。
 
 ```javascript
-// You must include a context, but other arguments are optional
-module.exports = function(ctx) {
-    // function logic goes here :)
-    ctx.done();
+module.exports = (context) => {
+
+    // function logic goes here
+
+    context.log("The function has executed.");
+
+    context.done();
+};
+```
+
+传递到函数的上下文公开了一个 `executionContext` 属性，该属性是一个具有以下属性的对象：
+
+| 属性名称  | 类型  | 说明 |
+|---------|---------|---------|
+| `invocationId` | String | 提供特定函数调用的唯一标识符。 |
+| `functionName` | String | 提供正在运行的函数的名称 |
+| `functionDirectory` | String | 提供函数应用目录。 |
+
+以下示例演示如何返回 `invocationId`。
+
+```javascript
+module.exports = (context, req) => {
+    context.res = {
+        body: context.executionContext.invocationId
+    };
+    context.done();
 };
 ```
 
@@ -267,49 +290,17 @@ context.done(null, { myOutput: { text: 'hello there, world', noNumber: true }});
 context.log(message)
 ```
 
-允许在默认跟踪级别向流式处理函数日志进行写入。 `context.log` 中还提供了其他的日志记录方法，用以允许在其他跟踪级别写入函数日志：
+利用该方法，可以在其他日志记录级别可用的情况下在默认跟踪级别写入到流式处理函数日志。 在下一部分中会详细说明跟踪日志记录。 
 
+## <a name="write-trace-output-to-logs"></a>将跟踪输出写入到日志
 
-| 方法                 | 说明                                |
-| ---------------------- | ------------------------------------------ |
-| **error(_message_)**   | 向错误级日志记录或更低级别进行写入。   |
-| **warn(_message_)**    | 向警告级日志记录或更低级别进行写入。 |
-| **info(_message_)**    | 向信息级日志记录或更低级别进行写入。    |
-| **verbose(_message_)** | 向详细级日志记录进行写入。           |
+在 Functions 中，可使用 `context.log` 方法将跟踪输出写入到日志和控制台。 在调用 `context.log()` 时，消息会在默认跟踪级别（即，信息跟踪级别）写入到日志。 Functions 与 Azure Application Insights 集成，从而能够更好地捕获函数应用日志。 Application Insights 是 Azure Monitor 的一部分，它提供了对应用程序遥测数据和跟踪输出都可以进行收集、视觉呈现和分析的工具。 若要了解详细信息，请参阅[监视 Azure Functions](functions-monitoring.md)。
 
-以下示例在警告跟踪级别向日志进行写入：
+下面的示例在信息跟踪级别写入日志，包括调用 ID：
 
 ```javascript
-context.log.warn("Something has happened."); 
+context.log("Something has happened. " + context.invocationId); 
 ```
-
-可以在 host.json 文件中[为日志记录配置跟踪级别阈值](#configure-the-trace-level-for-console-logging)。 有关写入日志的详细信息，请参阅下面的[写入跟踪输出](#writing-trace-output-to-the-console)。
-
-若要了解有关查看和查询函数日志的详细信息，请阅读[监视 Azure Functions](functions-monitoring.md)。
-
-## <a name="writing-trace-output-to-the-console"></a>将跟踪输出写入到控制台 
-
-在 Functions 中，可以使用 `context.log` 方法将跟踪输出写入到控制台。 在 Functions v2.x 中，使用 `console.log` 的跟踪输出在函数应用级别捕获。 这意味着 `console.log` 的输出不受限于特定的函数调用，因此不会显示在特定函数的日志中。 但是，它们将传播到 Application Insights。 在 Functions v1.x 中，不能使用 `console.log` 写入到控制台。
-
-调用 `context.log()` 时，消息会在默认跟踪级别（即_信息_跟踪级别）写入到控制台。 以下代码在信息跟踪级别向控制台进行写入：
-
-```javascript
-context.log({hello: 'world'});  
-```
-
-此代码等同于上述代码：
-
-```javascript
-context.log.info({hello: 'world'});  
-```
-
-此代码在错误级别向控制台进行写入：
-
-```javascript
-context.log.error("An error has occurred.");  
-```
-
-因为_错误_是最高跟踪级别，所以，只要启用了日志记录，此跟踪会在所有跟踪级别写入到输出中。
 
 所有 `context.log` 方法都支持 Node.js [util.format 方法](https://nodejs.org/api/util.html#util_util_format_format)支持的同一参数格式。 请考虑以下代码，它使用默认跟踪级别写入函数日志：
 
@@ -325,9 +316,39 @@ context.log('Node.js HTTP trigger function processed a request. RequestUri=%s', 
 context.log('Request Headers = ', JSON.stringify(req.headers));
 ```
 
-### <a name="configure-the-trace-level-for-console-logging"></a>为控制台日志记录配置跟踪级别
+> [!NOTE]  
+> 请勿使用 `console.log` 来写入跟踪输出。 因为 `console.log` 的输出是在函数应用级别捕获的，所以它不会绑定到特定的函数调用，并且不会显示在特定函数的日志中。 此外，Functions 运行时的 1.x 版本不支持使用 `console.log` 写入到控制台。
 
-Functions 1.x 允许定义向控制台进行写入时使用的阈值跟踪级别，这使得可以轻松控制从函数向控制台写入跟踪的方式。 若要针对写入到控制台的所有跟踪设置阈值，请在 host.json 文件中使用 `tracing.consoleLevel` 属性。 此设置应用于 Function App 中的所有函数。 以下示例设置跟踪阈值来启用详细日志记录：
+### <a name="trace-levels"></a>跟踪级别
+
+除了默认级别外，通过使用以下日志记录方法还可以在特定的跟踪级别写入函数日志。
+
+| 方法                 | 说明                                |
+| ---------------------- | ------------------------------------------ |
+| **error(_message_)**   | 将错误级别的事件写入到日志。   |
+| **warn(_message_)**    | 将警告级别的事件写入到日志。 |
+| **info(_message_)**    | 向信息级日志记录或更低级别进行写入。    |
+| **verbose(_message_)** | 向详细级日志记录进行写入。           |
+
+以下示例在警告跟踪级别（而不是信息级别）写入同一个日志：
+
+```javascript
+context.log.warn("Something has happened. " + context.invocationId); 
+```
+
+因为 _错误_ 是最高跟踪级别，所以，只要启用了日志记录，此跟踪会在所有跟踪级别写入到输出中。
+
+### <a name="configure-the-trace-level-for-logging"></a>配置跟踪级别以便进行日志记录
+
+利用 Functions，可以定义阈值跟踪级别以便写入到日志或控制台。 特定的阈值设置取决于 Functions 运行时的版本。
+
+# <a name="v2x"></a>[v2.x+](#tab/v2)
+
+若要为写入到日志的跟踪设置阈值，请在 host.json 文件中使用 `logging.logLevel` 属性。 利用此 JSON 对象，可以为函数应用中的所有函数定义默认阈值，另外还可以为单个函数定义特定阈值。 若要了解详细信息，请参阅[如何配置对 Azure Functions 的监视](configure-monitoring.md)。
+
+# <a name="v1x"></a>[v1.x](#tab/v1)
+
+若要为写入到日志和控制台的所有跟踪设置阈值，请在 host.json 文件中使用 `tracing.consoleLevel` 属性。 此设置应用于 Function App 中的所有函数。 以下示例设置跟踪阈值来启用详细日志记录：
 
 ```json
 {
@@ -337,7 +358,65 @@ Functions 1.x 允许定义向控制台进行写入时使用的阈值跟踪级别
 }  
 ```
 
-**consoleLevel** 的值对应于 `context.log` 方法的名称。 要为控制台禁用所有跟踪日志记录，请将 **consoleLevel** 设置为 _off_。 有关详细信息，请参阅 [host.json 参考](functions-host-json-v1.md)。
+**consoleLevel** 的值对应于 `context.log` 方法的名称。 要为控制台禁用所有跟踪日志记录，请将 **consoleLevel** 设置为 _off_。 有关详细信息，请参阅 [host.json v1.x 参考](functions-host-json-v1.md)。
+
+---
+
+### <a name="log-custom-telemetry"></a>记录自定义遥测数据
+
+默认情况下，Functions 将输出作为跟踪写入到 Application Insights。 为了加强控制，可以改用 [Application Insights Node.js SDK](https://github.com/microsoft/applicationinsights-node.js) 将自定义遥测数据发送到 Application Insights 实例。 
+
+# <a name="v2x"></a>[v2.x+](#tab/v2)
+
+```javascript
+const appInsights = require("applicationinsights");
+appInsights.setup();
+const client = appInsights.defaultClient;
+
+module.exports = function (context, req) {
+    context.log('JavaScript HTTP trigger function processed a request.');
+
+    // Use this with 'tagOverrides' to correlate custom telemetry to the parent function invocation.
+    var operationIdOverride = {"ai.operation.id":context.traceContext.traceparent};
+
+    client.trackEvent({name: "my custom event", tagOverrides:operationIdOverride, properties: {customProperty2: "custom property value"}});
+    client.trackException({exception: new Error("handled exceptions can be logged with this method"), tagOverrides:operationIdOverride});
+    client.trackMetric({name: "custom metric", value: 3, tagOverrides:operationIdOverride});
+    client.trackTrace({message: "trace message", tagOverrides:operationIdOverride});
+    client.trackDependency({target:"http://dbname", name:"select customers proc", data:"SELECT * FROM Customers", duration:231, resultCode:0, success: true, dependencyTypeName: "ZSQL", tagOverrides:operationIdOverride});
+    client.trackRequest({name:"GET /customers", url:"http://myserver/customers", duration:309, resultCode:200, success:true, tagOverrides:operationIdOverride});
+
+    context.done();
+};
+```
+
+# <a name="v1x"></a>[v1.x](#tab/v1)
+
+```javascript
+const appInsights = require("applicationinsights");
+appInsights.setup();
+const client = appInsights.defaultClient;
+
+module.exports = function (context, req) {
+    context.log('JavaScript HTTP trigger function processed a request.');
+
+    // Use this with 'tagOverrides' to correlate custom telemetry to the parent function invocation.
+    var operationIdOverride = {"ai.operation.id":context.operationId};
+
+    client.trackEvent({name: "my custom event", tagOverrides:operationIdOverride, properties: {customProperty2: "custom property value"}});
+    client.trackException({exception: new Error("handled exceptions can be logged with this method"), tagOverrides:operationIdOverride});
+    client.trackMetric({name: "custom metric", value: 3, tagOverrides:operationIdOverride});
+    client.trackTrace({message: "trace message", tagOverrides:operationIdOverride});
+    client.trackDependency({target:"http://dbname", name:"select customers proc", data:"SELECT * FROM Customers", duration:231, resultCode:0, success: true, dependencyTypeName: "ZSQL", tagOverrides:operationIdOverride});
+    client.trackRequest({name:"GET /customers", url:"http://myserver/customers", duration:309, resultCode:200, success:true, tagOverrides:operationIdOverride});
+
+    context.done();
+};
+```
+
+---
+
+`tagOverrides` 参数将 `operation_Id` 设置为函数的调用 ID。 通过此设置，可为给定的函数调用关联所有自动生成的遥测和自定义遥测。
 
 ## <a name="http-triggers-and-bindings"></a>HTTP 触发器和绑定
 
@@ -414,7 +493,7 @@ HTTP 和 webhook 触发器以及 HTTP 输出绑定使用请求和响应对象来
 
 ## <a name="scaling-and-concurrency"></a>缩放和并发
 
-默认情况下，Azure Functions 会自动监视应用程序上的负载，并按需为 Node.js 创建更多主机实例。 Functions 针对不同触发器类型使用内置（用户不可配置）阈值来确定何时添加实例，例如 QueueTrigger 的消息和队列大小。 有关详细信息，请参阅[消耗计划和高级计划的工作原理](functions-scale.md#how-the-consumption-and-premium-plans-work)。
+默认情况下，Azure Functions 会自动监视应用程序上的负载，并按需为 Node.js 创建更多主机实例。 Functions 针对不同触发器类型使用内置（用户不可配置）阈值来确定何时添加实例，例如 QueueTrigger 的消息和队列大小。 有关详细信息，请参阅[消耗计划和高级计划的工作原理](event-driven-scaling.md)。
 
 此缩放行为足以满足多个 Node.js 应用程序的需求。 对于占用大量 CPU 的应用程序，可使用多个语言工作进程进一步提高性能。
 
@@ -429,12 +508,20 @@ FUNCTIONS_WORKER_PROCESS_COUNT 适用于 Functions 在横向扩展应用程序�
 | Functions 版本 | Node 版本 (Windows) | Node 版本 (Linux) |
 |---|---| --- |
 | 1.x | 6.11.2（运行时锁定） | 不适用 |
-| 2.x  | ~8<br/>~10（建议）<br/>~12<sup>*</sup> | ~8（建议）<br/>~10  |
-| 3.x | ~10<br/>~12（建议）  | ~10<br/>~12（建议） |
+| 2.x  | `~8`<br/>`~10`（推荐）<br/>`~12` | `node|8`<br/>`node|10`（推荐）  |
+| 3.x | `~10`<br/>`~12`（推荐）<br/>`~14`（预览版）  | `node|10`<br/>`node|12`（推荐）<br/>`node|14`（预览版） |
 
-<sup>*</sup>Functions 运行时 2.x 版当前支持 Node ~12。 但是，为了获得最佳性能，我们建议将 Function 运行时 3.x 版与 Node ~12 一起使用。 
+可以通过从任何函数中记录 `process.version` 来查看运行时使用的当前版本。
 
-可以通过查看上述应用设置或打印任何函数的 `process.version` 来查看运行时正在使用的当前版本。 通过将 WEBSITE_NODE_DEFAULT_VERSION [应用设置](functions-how-to-use-azure-function-app-settings.md#settings)设为受支持的 LTS 版本（例如 `~10`）来针对 Azure 中的版本。
+### <a name="setting-the-node-version"></a>设置 Node 版本
+
+对于 Windows 函数应用，通过将 `WEBSITE_NODE_DEFAULT_VERSION` [应用设置](functions-how-to-use-azure-function-app-settings.md#settings)设为受支持的 LTS 版本（例如 `~12`）来针对 Azure 中的版本进行操作。
+
+对于 Linux function apps，请运行以下 Azure CLI 命令更新节点版本。
+
+```bash
+az functionapp config set --linux-fx-version "node|12" --name "<MY_APP_NAME>" --resource-group "<MY_RESOURCE_GROUP_NAME>"
+```
 
 ## <a name="dependency-management"></a>依赖项管理
 若要在 JavaScript 代码中使用社区库（如下面的示例所示），需要确保在 Azure 中的 Function App 上安装所有依赖项。
@@ -471,26 +558,47 @@ module.exports = function(context) {
 3. 转到 `D:\home\site\wwwroot`，然后将 package.json 文件拖到页面上半部分中的 **wwwroot** 文件夹上。  
     还可采用其他方式将文件上传到 Function App。 有关详细信息，请参阅[如何更新 Function App 文件](functions-reference.md#fileupdate)。 
 
-4. 上传 package.json 文件后，在 **Kudu 远程执行控制台**中运行 `npm install` 命令。  
+4. 上传 package.json 文件后，在 **Kudu 远程执行控制台** 中运行 `npm install` 命令。  
     此操作将下载 package.json 文件中指定的包并重新启动 Function App。
 
 ## <a name="environment-variables"></a>环境变量
 
-在 Functions 中，服务连接字符串等[应用设置](functions-app-settings.md)在执行过程中将公开为环境变量。 可以使用 `process.env` 访问这些设置，如此处 `context.log()` 的第二和第三个调用中所示，其中记录了 `AzureWebJobsStorage` 和 `WEBSITE_SITE_NAME` 环境变量：
+在本地环境和云环境中，向函数应用添加你自己的环境变量，如操作机密（连接字符串、密钥和终结点）或环境设置（例如分析变量）。 在函数代码中使用 `process.env` 访问这些设置。
+
+### <a name="in-local-development-environment"></a>在本地开发环境中
+
+在本地运行时，函数项目包括一个 [`local.settings.json` 文件](./functions-run-local.md)，你可以在其中将环境变量存储到 `Values` 对象中。 
+
+```json
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "",
+    "FUNCTIONS_WORKER_RUNTIME": "node",
+    "translatorTextEndPoint": "https://api.cognitive.microsofttranslator.com/",
+    "translatorTextKey": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "languageWorkers__node__arguments": "--prof"
+  }
+}
+```
+
+### <a name="in-azure-cloud-environment"></a>在 Azure 云环境中
+
+在 Azure 中运行时，函数应用允许你使用[应用程序设置](functions-app-settings.md)（例如服务连接字符串），并在执行期间将这些设置作为环境变量公开。 
+
+[!INCLUDE [Function app settings](../../includes/functions-app-settings.md)]
+
+### <a name="access-environment-variables-in-code"></a>在代码中访问环境变量
+
+使用 `process.env` 将应用程序设置作为环境变量访问，如此处对 `context.log()` 的第二次和第三次调用所示，其中记录了 `AzureWebJobsStorage` 和 `WEBSITE_SITE_NAME` 环境变量：
 
 ```javascript
 module.exports = async function (context, myTimer) {
-    var timeStamp = new Date().toISOString();
 
-    context.log('Node.js timer trigger function ran!', timeStamp);
     context.log("AzureWebJobsStorage: " + process.env["AzureWebJobsStorage"]);
     context.log("WEBSITE_SITE_NAME: " + process.env["WEBSITE_SITE_NAME"]);
 };
 ```
-
-[!INCLUDE [Function app settings](../../includes/functions-app-settings.md)]
-
-在本地运行时，可从 [local.settings.json](functions-run-local.md#local-settings-file) 项目文件读取应用设置。
 
 ## <a name="configure-function-entry-point"></a>配置函数入口点
 
@@ -572,7 +680,7 @@ module.exports = myObj;
 
 ## <a name="typescript"></a>TypeScript
 
-如果将目标限定为 2.x 版 Functions 运行时，可以在 [Azure Functions for Visual Studio Code](functions-create-first-function-vs-code.md) 和 [Azure Functions Core Tools](functions-run-local.md) 中使用支持 TypeScript 函数应用项目的模板创建函数应用。 该模板会生成 `package.json` 和 `tsconfig.json` 项目文件，以方便使用这些工具从 TypeScript 代码转译、运行和发布 JavaScript 函数。
+如果将目标限定为 2.x 版 Functions 运行时，可以在 [Azure Functions for Visual Studio Code](./create-first-function-cli-typescript.md) 和 [Azure Functions Core Tools](functions-run-local.md) 中使用支持 TypeScript 函数应用项目的模板创建函数应用。 该模板会生成 `package.json` 和 `tsconfig.json` 项目文件，以方便使用这些工具从 TypeScript 代码转译、运行和发布 JavaScript 函数。
 
 生成的 `.funcignore` 文件用于指示将项目发布到 Azure 时会排除哪些文件。  
 

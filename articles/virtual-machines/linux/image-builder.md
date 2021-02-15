@@ -8,16 +8,16 @@ ms.topic: how-to
 ms.service: virtual-machines-linux
 ms.subservice: imaging
 ms.reviewer: danis
-ms.openlocfilehash: d4715bd8b7a13a5ab53d254ac853ac324440b403
-ms.sourcegitcommit: 11e2521679415f05d3d2c4c49858940677c57900
+ms.openlocfilehash: 4714d9e089094e8990ac71d94107a20e0b7be776
+ms.sourcegitcommit: aaa65bd769eb2e234e42cfb07d7d459a2cc273ab
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/31/2020
-ms.locfileid: "87502607"
+ms.lasthandoff: 01/27/2021
+ms.locfileid: "98876303"
 ---
 # <a name="preview-create-a-linux-image-and-distribute-it-to-a-shared-image-gallery-by-using-azure-cli"></a>预览：使用 Azure CLI 创建 Linux 映像并将其分发给共享映像库
 
-本文介绍如何使用 Azure 映像生成器和 Azure CLI，在[共享映像库](../windows/shared-image-galleries.md)中创建映像版本，然后全局分发此映像。 还可以使用 [Azure PowerShell](../windows/image-builder-gallery.md).来实现此目的。
+本文介绍如何使用 Azure 映像生成器和 Azure CLI，在[共享映像库](../shared-image-galleries.md)中创建映像版本，然后全局分发此映像。 还可以使用 [Azure PowerShell](../windows/image-builder-gallery.md).来实现此目的。
 
 
 我们将使用一个示例 .json 模板来配置映像。 我们将使用的 .json 文件位于：[helloImageTemplateforSIG.json](https://github.com/danielsollondon/azvmimagebuilder/blob/master/quickquickstarts/1_Creating_a_Custom_Linux_Shared_Image_Gallery_Image/helloImageTemplateforSIG.json)。 
@@ -38,16 +38,16 @@ az feature register --namespace Microsoft.VirtualMachineImages --name VirtualMac
 检查功能注册的状态。
 
 ```azurecli-interactive
-az feature show --namespace Microsoft.VirtualMachineImages --name VirtualMachineTemplatePreview | grep state
+az feature show --namespace Microsoft.VirtualMachineImages --name VirtualMachineTemplatePreview -o json | grep state
 ```
 
 检查注册。
 
 ```azurecli-interactive
-az provider show -n Microsoft.VirtualMachineImages | grep registrationState
-az provider show -n Microsoft.KeyVault | grep registrationState
-az provider show -n Microsoft.Compute | grep registrationState
-az provider show -n Microsoft.Storage | grep registrationState
+az provider show -n Microsoft.VirtualMachineImages -o json | grep registrationState
+az provider show -n Microsoft.KeyVault -o json | grep registrationState
+az provider show -n Microsoft.Compute -o json | grep registrationState
+az provider show -n Microsoft.Storage -o json | grep registrationState
 ```
 
 如果未显示“已注册”，请运行以下命令：
@@ -80,7 +80,7 @@ imageDefName=myIbImageDef
 runOutputName=aibLinuxSIG
 ```
 
-为你的订阅 ID 创建变量。 可使用 `az account show | grep id` 获取。
+为你的订阅 ID 创建变量。 可使用 `az account show -o json | grep id` 获取。
 
 ```azurecli-interactive
 subscriptionID=<Subscription ID>
@@ -101,7 +101,7 @@ identityName=aibBuiUserId$(date +'%s')
 az identity create -g $sigResourceGroup -n $identityName
 
 # get identity id
-imgBuilderCliId=$(az identity show -g $sigResourceGroup -n $identityName | grep "clientId" | cut -c16- | tr -d '",')
+imgBuilderCliId=$(az identity show -g $sigResourceGroup -n $identityName -o json | grep "clientId" | cut -c16- | tr -d '",')
 
 # get the user identity URI, needed for the template
 imgBuilderId=/subscriptions/$subscriptionID/resourcegroups/$sigResourceGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/$identityName
@@ -298,4 +298,4 @@ az group delete -n $sigResourceGroup -y
 
 ## <a name="next-steps"></a>后续步骤
 
-详细了解 [Azure 共享映像库](shared-image-galleries.md)。
+详细了解 [Azure 共享映像库](../shared-image-galleries.md)。

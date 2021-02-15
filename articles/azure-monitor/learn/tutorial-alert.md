@@ -3,16 +3,16 @@ title: 从 Azure Application Insights 发送警报 | Microsoft Docs
 description: 本教程介绍如何使用 Azure Application Insights 发送警报以响应应用程序中的错误。
 ms.subservice: application-insights
 ms.topic: tutorial
-author: mrbullwinkle
-ms.author: mbullwin
+author: lgayhardt
+ms.author: lagayhar
 ms.date: 04/10/2019
 ms.custom: mvc
-ms.openlocfilehash: 706f3913e25eca6240c186e45709faf6c77620bf
-ms.sourcegitcommit: a76ff927bd57d2fcc122fa36f7cb21eb22154cfa
+ms.openlocfilehash: dbf2cbe08fa1ba1ab79446e9068b4fb1fce381b0
+ms.sourcegitcommit: f5b8410738bee1381407786fcb9d3d3ab838d813
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/28/2020
-ms.locfileid: "87324567"
+ms.lasthandoff: 01/14/2021
+ms.locfileid: "98210250"
 ---
 # <a name="monitor-and-alert-on-application-health-with-azure-application-insights"></a>使用 Azure Application Insights 监视和警报应用程序的运行状况
 
@@ -28,7 +28,7 @@ Azure Application Insights 可用于监视应用程序，并在其不可用、�
 
 完成本教程：
 
-创建 [Application Insights 资源](./dotnetcore-quick-start.md#enable-application-insights)。
+创建 [Application Insights 资源](../app/create-new-resource.md)。
 
 ## <a name="sign-in-to-azure"></a>登录 Azure
 

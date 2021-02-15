@@ -1,6 +1,6 @@
 ---
 title: 停用和删除 StorSimple 8000 系列设备 | Microsoft Docs
-description: 介绍了如何使用该服务通过先停用再删除 StorSimple 设备的方式来删除该设备。
+description: 了解如何停用和删除连接到 StorSimple 设备管理器服务的 StorSimple 设备。
 services: storsimple
 documentationcenter: ''
 author: alkohli
@@ -13,12 +13,12 @@ ms.tgt_pltfrm: na
 ms.workload: na
 ms.date: 07/23/2018
 ms.author: alkohli
-ms.openlocfilehash: 825a10bec7a9d415bdcf76e5b6f28f04060bb411
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 07d108306fdca9bfe8f793b61660550e43151d71
+ms.sourcegitcommit: a43a59e44c14d349d597c3d2fd2bc779989c71d7
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "85514033"
+ms.lasthandoff: 11/25/2020
+ms.locfileid: "96017179"
 ---
 # <a name="deactivate-and-delete-a-storsimple-device"></a>停用和删除 StorSimple 设备
 
@@ -41,7 +41,7 @@ ms.locfileid: "85514033"
 >
 > - 停用 StorSimple 物理设备或云设备之前，请停止或删除依赖于该设备的客户端与主机。
 >
-> - 如果在从设备中删除数据之前已经删除了与卷容器关联的存储帐户中的存储帐户或容器，则将收到错误，并且可能无法删除数据。 建议删除设备上的数据，然后删除其中的存储帐户。 但是，在这种情况下，你必须继续执行设备停用和删除操作，前提是已将数据从存储帐户中删除。
+> - 如果在从设备中删除数据之前，存储帐户 (s) 或与卷容器关联的存储帐户中的容器已被删除，则你将收到一个错误，并且可能无法删除数据。 建议删除设备上的数据，然后删除其中的存储帐户。 但是，在这种情况下，你必须继续执行设备停用和删除操作，前提是已将数据从存储帐户中删除。
 
 阅读本教程之后，能够：
 
@@ -58,21 +58,21 @@ ms.locfileid: "85514033"
 
 2. 通过以下操作停用设备：
 
-   1. 转到 StorSimple Device Manager 服务并单击“设备”。**** 在“设备”边栏选项卡中选择要停用的设备，单击右键，单击“停用”。********
+   1. 转到 StorSimple Device Manager 服务并单击“设备”。 在“设备”边栏选项卡中选择要停用的设备，单击右键，单击“停用”。
 
         ![停用 StorSimple 设备](./media/storsimple-8000-deactivate-and-delete-device/deactivate1.png)
-   2. 在“停用”边栏选项卡中，键入设备名称以确认，单击“停用”。******** 停用过程将开始并且需要花费几分钟时间才能完成。
+   2. 在“停用”边栏选项卡中，键入设备名称以确认，单击“停用”。 停用过程将开始并且需要花费几分钟时间才能完成。
 
-        ![停用 StorSimple 设备](./media/storsimple-8000-deactivate-and-delete-device/deactivate2.png)
+        ![停用 StorSimple 设备2](./media/storsimple-8000-deactivate-and-delete-device/deactivate2.png)
 
 3. 停用之后即可完全删除该设备。 删除设备会将其从连接到该服务的设备列表中删除。 之后，该服务不再能够管理已删除的设备。 通过以下步骤删除设备：
    
-   1. 转到 StorSimple Device Manager 服务并单击“设备”。**** 在“设备”边栏选项卡中选择要删除的已停用设备，单击右键，选择“删除”。********
+   1. 转到 StorSimple Device Manager 服务并单击“设备”。 在“设备”边栏选项卡中选择要删除的已停用设备，单击右键，选择“删除”。
 
-        ![停用 StorSimple 设备](./media/storsimple-8000-deactivate-and-delete-device/deactivate5.png)
-   2. 在“删除”边栏选项卡中，键入设备名称以确认，单击“删除”。******** 删除过程需要花费几分钟时间才能完成。
+        ![停用 StorSimple 设备3](./media/storsimple-8000-deactivate-and-delete-device/deactivate5.png)
+   2. 在“删除”边栏选项卡中，键入设备名称以确认，单击“删除”。 删除过程需要花费几分钟时间才能完成。
 
-        ![停用 StorSimple 设备](./media/storsimple-8000-deactivate-and-delete-device/deactivate6.png)
+        ![停用 StorSimple 设备4](./media/storsimple-8000-deactivate-and-delete-device/deactivate6.png)
    3. 成功完成删除后，系统会发出通知。 设备列表也会更新以反映删除后的结果。
 
 ## <a name="deactivate-and-retain-data"></a>停用和保留数据
@@ -83,21 +83,21 @@ ms.locfileid: "85514033"
 
 1. 停用设备。 设备的所有卷容器和快照都会保留。
    
-   1. 转到 StorSimple Device Manager 服务并单击“设备”。**** 在“设备”边栏选项卡中选择要停用的设备，单击右键，单击“停用”。********
+   1. 转到 StorSimple Device Manager 服务并单击“设备”。 在“设备”边栏选项卡中选择要停用的设备，单击右键，单击“停用”。
 
-         ![停用 StorSimple 设备](./media/storsimple-8000-deactivate-and-delete-device/deactivate1.png)
-   2. 在“停用”边栏选项卡中，键入设备名称以确认，单击“停用”。******** 停用过程将开始并且需要花费几分钟时间才能完成。
+         ![停用 StorSimple 设备5](./media/storsimple-8000-deactivate-and-delete-device/deactivate1.png)
+   2. 在“停用”边栏选项卡中，键入设备名称以确认，单击“停用”。 停用过程将开始并且需要花费几分钟时间才能完成。
 
-         ![停用 StorSimple 设备](./media/storsimple-8000-deactivate-and-delete-device/deactivate2.png)
+         ![停用 StorSimple 设备6](./media/storsimple-8000-deactivate-and-delete-device/deactivate2.png)
 2. 现在可以故障转移卷容器和关联的快照。 相关过程请参阅 [StorSimple 设备的故障转移和灾难恢复](storsimple-8000-device-failover-disaster-recovery.md)。
 3. 停用和故障转移之后即可完全删除该设备。 删除设备会将其从连接到该服务的设备列表中删除。 之后，该服务不再能够管理已删除的设备。 若要删除设备，请完成以下步骤：
    
-   1. 转到 StorSimple Device Manager 服务并单击“设备”。**** 在“设备”边栏选项卡中选择要删除的已停用设备，单击右键，选择“删除”。********
+   1. 转到 StorSimple Device Manager 服务并单击“设备”。 在“设备”边栏选项卡中选择要删除的已停用设备，单击右键，选择“删除”。
 
-       ![停用 StorSimple 设备](./media/storsimple-8000-deactivate-and-delete-device/deactivate5.png)
-   2. 在“删除”边栏选项卡中，键入设备名称以确认，单击“删除”。******** 删除过程需要花费几分钟时间才能完成。
+       ![停用 StorSimple 设备7](./media/storsimple-8000-deactivate-and-delete-device/deactivate5.png)
+   2. 在“删除”边栏选项卡中，键入设备名称以确认，单击“删除”。 删除过程需要花费几分钟时间才能完成。
 
-       ![停用 StorSimple 设备](./media/storsimple-8000-deactivate-and-delete-device/deactivate6.png)
+       ![停用 StorSimple 设备8](./media/storsimple-8000-deactivate-and-delete-device/deactivate6.png)
    3. 成功完成删除后，系统会发出通知。 设备列表也会更新以反映删除后的结果。
 
 ## <a name="deactivate-and-delete-a-cloud-appliance"></a>停用和删除云设备
@@ -114,7 +114,7 @@ ms.locfileid: "85514033"
 * 保留预配期间创建的托管服务和虚拟网络。 如果不使用这些实体，应该手动将其删除。
 * 保留为 StorSimple 云设备创建的云快照。
 
-停用云设备后，可以从设备列表中将其删除。 选择已停用的设备，单击右键，单击“删除”。**** 删除设备后，StorSimple 会发出通知，设备列表会更新。
+停用云设备后，可以从设备列表中将其删除。 选择已停用的设备，单击右键，单击“删除”。 删除设备后，StorSimple 会发出通知，设备列表会更新。
 
 ## <a name="next-steps"></a>后续步骤
 

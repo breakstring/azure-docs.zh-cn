@@ -3,13 +3,12 @@ title: 收集和分析资源日志
 description: 了解如何从 Azure 容器实例中的容器组将资源日志和事件数据发送到 Azure Monitor 日志
 ms.topic: article
 ms.date: 07/13/2020
-ms.author: danlep
-ms.openlocfilehash: efd71d181059ab395aeec4da364110a42d2cccd3
-ms.sourcegitcommit: 3543d3b4f6c6f496d22ea5f97d8cd2700ac9a481
+ms.openlocfilehash: b110ba46bdcf2741e5f16845f28fe8305bcee1a1
+ms.sourcegitcommit: dbe434f45f9d0f9d298076bf8c08672ceca416c6
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/20/2020
-ms.locfileid: "86524006"
+ms.lasthandoff: 10/17/2020
+ms.locfileid: "92148655"
 ---
 # <a name="container-group-and-instance-logging-with-azure-monitor-logs"></a>使用 Azure Monitor 日志进行容器组和实例日志记录
 
@@ -38,10 +37,10 @@ Azure 容器实例需要权限才能向 Log Analytics 工作区发送数据。 �
 若要获取 Log Analytics 工作区 ID 和主密钥，请执行以下操作：
 
 1. 在 Azure 门户中导航到 Log Analytics 工作区
-1. 在 "**设置**" 下，选择 "**代理管理**"
+1. 在“设置”下，选择“代理管理”
 1. 记下以下内容：
    * **工作区 ID**
-   * **主键**
+   * **主密钥**
 
 ## <a name="create-container-group"></a>创建容器组
 
@@ -170,7 +169,7 @@ ContainerInstanceLog_CL
 
 <!-- LINKS - External -->
 [fluentd]: https://hub.docker.com/r/fluent/fluentd/
-[query_lang]: https://aka.ms/LogAnalyticsLanguage
+[query_lang]: /azure/data-explorer/
 
 <!-- LINKS - Internal -->
 [az-container-create]: /cli/azure/container#az-container-create

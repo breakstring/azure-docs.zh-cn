@@ -1,18 +1,15 @@
 ---
 title: Azure HDInsight 中关于 Apache Hive 的网关深入探讨和最佳做法
 description: 了解如何根据最佳做法通过 Azure HDInsight 网关运行 Hive 查询
-author: hrasheed-msft
-ms.author: hrasheed
-ms.reviewer: jasonh
 ms.service: hdinsight
 ms.topic: conceptual
 ms.date: 04/01/2020
-ms.openlocfilehash: 924b1132efeb3ee4211593da190f5b7251029ae3
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 63484d882d8ccd387257c6f246c2048a09c77bc8
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "80586972"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98933104"
 ---
 # <a name="gateway-deep-dive-and-best-practices-for-apache-hive-in-azure-hdinsight"></a>Azure HDInsight 中关于 Apache Hive 的网关深入探讨和最佳做法
 
@@ -32,11 +29,11 @@ HDInsight 网关是 HDInsight 群集中唯一可通过 Internet 公开访问的�
 
 对于服务发现，网关的优势在于可以将群集中的每个组件作为网关网站 (`clustername.azurehdinsight.net/hive2`) 下不同的终结点进行访问，这不同于众多 `host:port` 配对。
 
-对于身份验证，网关允许用户使用 `username:password` 凭据对进行身份验证。 对于启用了 ESP 的群集，此凭据将是用户的域用户名和密码。 通过网关对 HDInsight 群集进行身份验证不需要客户端获取 kerberos 票证。 由于网关接受 `username:password` 凭据并代表用户获取用户的 Kerberos 票证，因此可以从任何客户端主机（包括与（ESP）群集加入不同的 AA DDS 域的客户端）进行安全连接。
+对于身份验证，网关允许用户使用 `username:password` 凭据对进行身份验证。 对于启用了 ESP 的群集，此凭据将用作用户的域用户名和密码。 通过网关向 HDInsight 群集验证身份时，客户端无需获取 kerberos 票证。 由于网关接受 `username:password` 凭据并代表用户获取用户的 Kerberos 票证，因此可以在任何客户端主机（包括与 ESP 群集加入不同 AA-DDS 域的客户端）与网关之间建立安全连接。
 
 ## <a name="best-practices"></a>最佳实践
 
-网关是一项单一服务（跨两个主机进行负载均衡），负责请求的转发和身份验证。 对于超过特定大小的 Hive 查询，网关可能会成为吞吐量瓶颈。 通过 ODBC 或 JDBC 在网关上执行超大型 SELECT 查询时，可能会发现查询性能降低****。 “超大型”表示查询包含的行或列中的数据超过 5 GB。 此查询可能包含一长列行和/或大量列。
+网关是一项单一服务（跨两个主机进行负载均衡），负责请求的转发和身份验证。 对于超过特定大小的 Hive 查询，网关可能会成为吞吐量瓶颈。 通过 ODBC 或 JDBC 在网关上执行超大型 SELECT 查询时，可能会发现查询性能降低。 “超大型”表示查询包含的行或列中的数据超过 5 GB。 此查询可能包含一长列行和/或大量列。
 
 网关因大量查询而导致性能下降的原因在于，数据必须从底层数据存储 (ADLS Gen2) 传输到以下位置：HDInsight Hive 服务器、网关，最后通过 JDBC 或 ODBC 驱动程序传输到客户端主机。
 
@@ -44,9 +41,9 @@ HDInsight 网关是 HDInsight 群集中唯一可通过 Internet 公开访问的�
 
 ![结果图](./media/gateway-best-practices/result-retrieval-diagram.png "结果图")
 
-Apache Hive 是基于与 HDFS 兼容的文件系统的关系抽象。 此抽象意味着 Hive 中的 SELECT 语句对应于文件系统上的 READ 操作**** ****。 READ 操作在报告给用户之前，会被转换为适当的架构****。 此过程的延迟随数据大小和到达最终用户所需的总跃点数的增大而增加。
+Apache Hive 是基于与 HDFS 兼容的文件系统的关系抽象。 此抽象意味着 Hive 中的 SELECT 语句对应于文件系统上的 READ 操作 。 READ 操作在报告给用户之前，会被转换为适当的架构。 此过程的延迟随数据大小和到达最终用户所需的总跃点数的增大而增加。
 
-执行大型数据的 CREATE 或 INSERT 语句时，可能会出现类似的行为，因为这些命令将与基础文件系统中的 WRITE 操作相对应**** **** ****。 请考虑将原始 ORC 等数据写入文件系统/数据湖，而不是使用 INSERT 或 LOAD 进行加载**** ****。
+执行大型数据的 CREATE 或 INSERT 语句时，可能会出现类似的行为，因为这些命令将与基础文件系统中的 WRITE 操作相对应  。 请考虑将原始 ORC 等数据写入文件系统/数据湖，而不是使用 INSERT 或 LOAD 进行加载 。
 
 在启用了 Enterprise 安全包的群集中，Apache Ranger 策略太过复杂可能会导致查询编译速度变慢，进而可能导致网关超时。 如果在 ESP 群集中发现网关超时，请考虑减少或合并 Ranger 策略数。
 
@@ -54,11 +51,11 @@ Apache Hive 是基于与 HDFS 兼容的文件系统的关系抽象。 此抽象�
 
 可在多个位置缓解和了解上述行为中的性能问题。 在 HDInsight 网关上遇到查询性能下降时，请使用以下清单：
 
-* 执行大型 SELECT 查询时，请使用 LIMIT 子句**** ****。 LIMIT 子句将减少报告给客户端主机的总行数****。 LIMIT 子句仅影响结果生成，不会更改查询计划****。 若要在查询计划中应用 LIMIT 子句，请使用配置 `hive.limit.optimize.enable`****。 可以使用参数形式 LIMIT x,y 组合 LIMIT 与偏移量**** ****。
+* 执行大型 SELECT 查询时，请使用 LIMIT 子句 。 LIMIT 子句将减少报告给客户端主机的总行数。 LIMIT 子句仅影响结果生成，不会更改查询计划。 若要在查询计划中应用 LIMIT 子句，请使用配置 `hive.limit.optimize.enable`。 可以使用参数形式 LIMIT x,y 组合 LIMIT 与偏移量 。
 
-* 运行 SELECT 查询而不是使用 SELECT \* 时，请为所需列命名**** ****。 选择的列越少，读取的数据量就越小。
+* 运行 "选择查询" 而不是使用 **select \** _ 时，**请** 命名感兴趣的列。 选择的列越少，读取的数据量就越小。
 
-* 尝试通过 Apache Beeline 运行所需查询。 如果通过 Apache Beeline 进行的结果检索耗时较长，则通过外部工具检索相同结果时也会出现延迟。
+请尝试通过 Apache Beeline 运行感兴趣的查询。 如果通过 Apache Beeline 进行的结果检索耗时较长，则通过外部工具检索相同结果时也会出现延迟。
 
 * 测试基本的 Hive 查询，确保可以与 HDInsight 网关建立连接。 尝试从两个或多个外部工具运行基本查询，确保不会有任何工具出现问题。
 
@@ -80,7 +77,7 @@ Apache Hive 是基于与 HDFS 兼容的文件系统的关系抽象。 此抽象�
 
 ## <a name="next-steps"></a>后续步骤
 
-* [HDInsight 上的 Apache Beeline](https://docs.microsoft.com/azure/hdinsight/hadoop/apache-hadoop-use-hive-beeline)
-* [HDInsight 网关超时故障排除步骤](https://docs.microsoft.com/azure/hdinsight/interactive-query/troubleshoot-gateway-timeout)
-* [HDInsight 的虚拟网络](https://docs.microsoft.com/azure/hdinsight/hdinsight-plan-virtual-network-deployment)
-* [通过 Express Route 使用 HDInsight](https://docs.microsoft.com/azure/hdinsight/connect-on-premises-network)
+* [HDInsight 上的 Apache Beeline](../hadoop/apache-hadoop-use-hive-beeline.md)
+* [HDInsight 网关超时故障排除步骤](./troubleshoot-gateway-timeout.md)
+* [HDInsight 的虚拟网络](../hdinsight-plan-virtual-network-deployment.md)
+* [通过 Express Route 使用 HDInsight](../connect-on-premises-network.md)

@@ -1,16 +1,15 @@
 ---
 title: 在 Azure Service Fabric 执行组件中实现功能
 description: 介绍如何以继承 StatefulService 时所使用的方式编写自己的可实现服务级功能的执行组件服务。
-author: vturecek
 ms.topic: conceptual
 ms.date: 03/19/2018
-ms.author: vturecek
-ms.openlocfilehash: b8bf54f9909125030e067bc483ca2fb7e3dc68a7
-ms.sourcegitcommit: dabd9eb9925308d3c2404c3957e5c921408089da
+ms.custom: devx-track-csharp
+ms.openlocfilehash: d39ec93e0ad03d6c860bae9d0790e860c95457a5
+ms.sourcegitcommit: 16c7fd8fe944ece07b6cf42a9c0e82b057900662
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/11/2020
-ms.locfileid: "86253348"
+ms.lasthandoff: 12/03/2020
+ms.locfileid: "96575561"
 ---
 # <a name="implement-service-level-features-in-your-actor-service"></a>在执行组件服务中实现服务级功能
 

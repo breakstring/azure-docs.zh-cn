@@ -3,17 +3,17 @@ title: 选择 Azure IaaS VM 的磁盘类型 - 托管磁盘
 description: 了解虚拟机的可用 Azure 磁盘类型，包括超级磁盘、高级 SSD、标准 SSD 和标准 HDD。
 author: roygara
 ms.author: rogarana
-ms.date: 06/03/2020
+ms.date: 09/30/2020
 ms.topic: conceptual
 ms.service: virtual-machines
 ms.subservice: disks
 ms.custom: references_regions
-ms.openlocfilehash: 53089fa42c536cbdc59865f80f63a77c76720e2c
-ms.sourcegitcommit: 62717591c3ab871365a783b7221851758f4ec9a4
+ms.openlocfilehash: 1a7e8e71e26af241d16095a5fa1e6a02a7e3d4c2
+ms.sourcegitcommit: d60976768dec91724d94430fb6fc9498fdc1db37
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/22/2020
-ms.locfileid: "88752014"
+ms.lasthandoff: 12/02/2020
+ms.locfileid: "96500761"
 ---
 # <a name="what-disk-types-are-available-in-azure"></a>Azure 有哪些可用的磁盘类型？
 
@@ -57,8 +57,10 @@ Azure 超级磁盘为 Azure IaaS VM 提供高吞吐量、高 IOPS 和一贯低�
 |64     |19,200         |2,000         |
 |128     |38,400         |2,000         |
 |256     |76,800         |2,000         |
-|512     |80,000         |2,000         |
+|512     |153600         |2,000         |
 |1,024 - 65,536（此范围内的大小以 1 TiB 为增量递增）     |160,000         |2,000         |
+
+超磁盘旨在提供上表99.99% 时间所述的子毫秒延迟和目标 IOPS 和吞吐量。
 
 ### <a name="ga-scope-and-limitations"></a>GA 范围和限制
 
@@ -71,7 +73,7 @@ Azure 超级磁盘为 Azure IaaS VM 提供高吞吐量、高 IOPS 和一贯低�
 
 Azure 高级 SSD 为运行输入/输出 (IO) 密集型工作负荷的虚拟机 (VM) 提供高性能、低延迟的磁盘支持。 若要利用高级存储磁盘的速度和性能优势，可将现有的 VM 磁盘迁移到高级 SSD。 高级 SSD 适用于任务关键型生产应用程序。 高级 SSD 只能用于与高级存储兼容的 VM 系列。
 
-若要详细了解适用于 Windows 或 Linux 的 Azure 中的单个 VM 类型和大小，包括与高级存储兼容的大小，请参阅 [Azure 中虚拟机的大小](sizes.md)。 若要详细了解 Azure 中适用于 Linux 的 VM 类型和大小，包括与高级存储兼容的大小，请参阅 [Azure 中虚拟机的大小](sizes.md)。 在这些文章中，需要检查每个 VM 大小的文章，以确定其是否与高级存储兼容。
+若要详细了解 Azure 中适用于 Windows 或 Linux 的各个 VM 类型和大小（包括哪些大小与高级存储兼容），请参阅 [Azure 中虚拟机的大小](sizes.md)。 在本文中，需要检查每个 VM 大小的文章，以确定其是否与高级存储兼容。
 
 ### <a name="disk-size"></a>磁盘大小
 [!INCLUDE [disk-storage-premium-ssd-sizes](../../includes/disk-storage-premium-ssd-sizes.md)]
@@ -80,9 +82,9 @@ Azure 高级 SSD 为运行输入/输出 (IO) 密集型工作负荷的虚拟机 (
 
 ## <a name="bursting"></a>突发
 
-比 P30 容量小的高级 SSD 现在提供磁盘突发，并可以将每个磁盘的 IOPS 突发为 3500，并将其带宽提高到 170 Mbps。 突发是自动进行的，根据额度系统运行。 当磁盘流量低于预配的性能目标时，信用会自动累计，而当流量超出目标值时，将自动消耗信用，直到达到最大突发限制。 最大突发限制定义了磁盘 IOPS 和宽带的上限，即使有可供使用的突发积分，也不能超过此上限。 磁盘突发能更好地容许 IO 模式出现不可预测的变化情况。 可以最大程度地利用磁盘突发来应对 OS 磁盘启动时和应用程序的流量高峰。    
+小于 P30 的高级 SSD 大小现在提供磁盘突发，并可以将每个磁盘的 IOPS 突发为3500，并将其带宽增大到 170 MB/秒。 突发是自动进行的，根据额度系统运行。 当磁盘流量低于预配的性能目标时，信用会自动累计，而当流量超出目标值时，将自动消耗信用，直到达到最大突发限制。 最大突发限制定义了磁盘 IOPS 和宽带的上限，即使有可供使用的突发积分，也不能超过此上限。 磁盘突发能更好地容许 IO 模式出现不可预测的变化情况。 可以最大程度地利用磁盘突发来应对 OS 磁盘启动时和应用程序的流量高峰。    
 
-默认在磁盘大小适用情况下的新磁盘部署上启用磁盘突发支持，无需用户执行任何操作。 对于大小适用的现有磁盘，可以使用以下两个选项中的任一选项启用突发：分离并重新附加磁盘，或停止并重新启动连接的 VM。 将磁盘附加到支持最大持续时间（峰值突发限制为 30 分钟）的虚拟机后，所有支持突发的磁盘大小最初会获得一个完整的突发积分桶。 若要详细了解突发在 Azure 磁盘上的工作原理，请参阅[高级 SSD 突发](linux/disk-bursting.md)。 
+默认在磁盘大小适用情况下的新磁盘部署上启用磁盘突发支持，无需用户执行任何操作。 对于大小适用的现有磁盘，可以使用以下两个选项中的任一选项启用突发：分离并重新附加磁盘，或停止并重新启动连接的 VM。 将磁盘附加到支持最大持续时间（峰值突发限制为 30 分钟）的虚拟机后，所有支持突发的磁盘大小最初会获得一个完整的突发积分桶。 若要详细了解突发在 Azure 磁盘上的工作原理，请参阅[高级 SSD 突发](./disk-bursting.md)。 
 
 ### <a name="transactions"></a>事务
 
@@ -130,7 +132,7 @@ Azure 标准 HDD 为运行不区分延迟的工作负荷提供可靠、低成本
 
 **出站数据传输**：[出站数据传输](https://azure.microsoft.com/pricing/details/bandwidth/)（Azure 数据中心送出的数据）会产生带宽使用费。
 
-**事务**：按标准托管磁盘上执行的事务数计费。 对于标准 SSD，每个小于或等于 256 KiB 吞吐量的 I/O 操作被视为单个 I/O 操作。 大于 256 KiB 吞吐量的 I/O 操作被视为大小为 256 KiB 的多个 I/O。 对于标准 HDD，每个 IO 操作会被视为单个事务，无论 I/O 大小如何。
+**事务**：会根据你对标准托管磁盘执行的事务数向你收费。 对于标准 SSD，每个小于或等于 256 KiB 吞吐量的 I/O 操作被视为单个 I/O 操作。 大于 256 KiB 吞吐量的 I/O 操作被视为大小为 256 KiB 的多个 I/O。 对于标准 HDD，每个 IO 操作会被视为单个事务，无论 I/O 大小如何。
 
 有关托管磁盘定价的详细信息（包括事务成本），请参阅[托管磁盘定价](https://azure.microsoft.com/pricing/details/managed-disks)。
 
@@ -149,4 +151,4 @@ Azure Vm 可以指示它们是否与超磁盘兼容。 与超级磁盘兼容的 
 
 ## <a name="next-steps"></a>后续步骤
 
-若要开始，请参阅 [托管磁盘定价](https://azure.microsoft.com/pricing/details/managed-disks/) 。
+请参阅[托管磁盘定价](https://azure.microsoft.com/pricing/details/managed-disks/)以开始使用。

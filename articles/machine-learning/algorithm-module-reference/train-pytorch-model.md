@@ -1,24 +1,24 @@
 ---
 title: 训练 PyTorch 模型
 titleSuffix: Azure Machine Learning
-description: 学习如何从头开始训练 pytorch 模型或对其进行优化。
+description: 使用 Azure 机器学习设计器中的 "定型 Pytorch 模型" 模块来从头开始定型模型，或对现有模型进行微调。
 services: machine-learning
 ms.service: machine-learning
 ms.subservice: core
 ms.topic: reference
 author: likebupt
 ms.author: keli19
-ms.date: 05/26/2020
-ms.openlocfilehash: af14d4770d032c23216b805045eb27fadded5954
-ms.sourcegitcommit: 1e6c13dc1917f85983772812a3c62c265150d1e7
+ms.date: 09/26/2020
+ms.openlocfilehash: 2d88069f33995bdbe9dd479afe9a4e72ab9939b6
+ms.sourcegitcommit: 7cc10b9c3c12c97a2903d01293e42e442f8ac751
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/09/2020
-ms.locfileid: "86170252"
+ms.lasthandoff: 11/06/2020
+ms.locfileid: "93420659"
 ---
 # <a name="train-pytorch-model"></a>训练 PyTorch 模型
 
-本文介绍了如何使用 Azure 机器学习设计器（预览版）中的“训练 Pytorch 模型”模块来训练 pytorch 模型（如 DenseNet）。 训练在你定义模型并设置其参数后进行，并且需要带标签的数据。 
+本文介绍了如何使用 Azure 机器学习设计器中的“训练 Pytorch 模型”模块来训练 pytorch 模型（例如 DenseNet）。 训练在你定义模型并设置其参数后进行，并且需要带标签的数据。 
 
 ## <a name="how-to-use-train-pytorch-model"></a>如何使用“训练 PyTorch 模型” 
 
@@ -27,7 +27,7 @@ ms.locfileid: "86170252"
 2. 将“训练 Pytorch 模型”模块添加到管道。 可以在“模型训练”类别下找到此模块。 展开“训练”，然后将“训练 Pytorch 模型”模块拖到你的管道中 。
 
    > [!NOTE]
-   > **训练 Pytorch**模块更好地针对大型数据集的**GPU**类型计算运行，否则管道将会失败。 通过设置“使用其他计算目标”，可以在特定模块的右窗格中为该模块选择计算。
+   > 对于大型数据集，“训练 Pytorch 模型”模块最好在“GPU”类型的计算上运行，否则管道会失败。 通过设置“使用其他计算目标”，可以在特定模块的右窗格中为该模块选择计算。
 
 3.  在左侧输入中，附加未训练的模型。 将训练数据集和验证数据集附加到“训练 Pytorch 模型”的中间和右侧输入。
 
@@ -49,7 +49,7 @@ ms.locfileid: "86170252"
 
 8.  对于“耐性”，请指定在验证损失不连续减少时提前停止训练的时期数。 默认为 3。
 
-9.  提交管道。 如果数据集较大，这将需要一段时间。
+9.  提交管道。 如果数据集的大小较大，将需要一段时间，并建议使用 GPU 计算。
 
 ## <a name="results"></a>结果
 

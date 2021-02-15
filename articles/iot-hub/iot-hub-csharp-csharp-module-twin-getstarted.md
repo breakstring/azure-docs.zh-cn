@@ -1,5 +1,5 @@
 ---
-title: 开始用 Azure IoT 中心模块标识 & 模块（.NET）
+title: '开始在 Azure IoT 中心模块标识 & 模块 ( .NET) '
 description: 了解如何使用用于 .NET 的 IoT SDK 创建模块标识和更新模块孪生。
 author: chrissie926
 ms.service: iot-hub
@@ -8,13 +8,13 @@ ms.devlang: csharp
 ms.topic: conceptual
 ms.date: 08/07/2019
 ms.author: menchi
-ms.custom: amqp
-ms.openlocfilehash: 919d1e37e6066c78e83d58be4fe4667ec67e45ad
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.custom: amqp, devx-track-csharp
+ms.openlocfilehash: daba400b9daadf464c4c125ad266745237e71367
+ms.sourcegitcommit: dbe434f45f9d0f9d298076bf8c08672ceca416c6
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "81733393"
+ms.lasthandoff: 10/17/2020
+ms.locfileid: "92142510"
 ---
 # <a name="get-started-with-iot-hub-module-identity-and-module-twin-net"></a>IoT 中心模块标识和模块孪生 (.NET) 入门
 
@@ -70,7 +70,7 @@ ms.locfileid: "81733393"
 
 1. 搜索并选择 **Microsoft.Azure.Devices.Client**，然后选择“安装”。 
 
-    ![安装 Azure IoT 中心 .NET 服务 SDK 当前版本](./media/iot-hub-csharp-csharp-module-twin-getstarted/install-client-sdk.png)
+    ![屏幕截图显示了 "Microsoft Azure. Client"，其中突出显示了 "安装" 按钮。](./media/iot-hub-csharp-csharp-module-twin-getstarted/install-client-sdk.png)
 
 1. 在 Program.cs 文件顶部添加以下 `using` 语句：
 
@@ -181,4 +181,4 @@ ms.locfileid: "81733393"
 
 * [设备管理入门](iot-hub-node-node-device-management-get-started.md)
 
-* [IoT Edge 入门](../iot-edge/tutorial-simulate-device-linux.md)
+* [IoT Edge 入门](../iot-edge/quickstart-linux.md)

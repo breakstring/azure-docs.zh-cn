@@ -1,17 +1,17 @@
 ---
 title: 使用转储和还原进行迁移 - Azure Database for MariaDB
 description: 本文介绍使用 mysqldump、MySQL Workbench 和 PHPMyAdmin 等工具在 Azure Database for MariaDB 中备份和还原数据库的两种常见方式。
-author: ajlam
-ms.author: andrela
-ms.service: mariadb
+author: savjani
+ms.author: pariks
+ms.service: jroth
 ms.topic: how-to
 ms.date: 2/27/2020
-ms.openlocfilehash: 674622e6210c3cceda5af3b53bf4ba1851f7179b
-ms.sourcegitcommit: d7008edadc9993df960817ad4c5521efa69ffa9f
+ms.openlocfilehash: 8f7cb0710c11e0db9628ad19e2ede7ff05a19f88
+ms.sourcegitcommit: 52e3d220565c4059176742fcacc17e857c9cdd02
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/08/2020
-ms.locfileid: "86118845"
+ms.lasthandoff: 01/21/2021
+ms.locfileid: "98664964"
 ---
 # <a name="migrate-your-mariadb-database-to-azure-database-for-mariadb-using-dump-and-restore"></a>使用转储和还原将 MariaDB 数据库迁移到 Azure Database for MariaDB
 本文介绍了在 Azure Database for MariaDB 中备份和还原数据库的两种常见方式

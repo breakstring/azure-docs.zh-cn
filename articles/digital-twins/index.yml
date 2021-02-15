@@ -1,8 +1,8 @@
 ### YamlMime:Landing
-title: Azure 数字孪生预览版文档
+title: Azure 数字孪生文档
 summary: 了解如何使用 Azure 数字孪生来创建资产、环境和业务系统的数字表示形式，以构建针对现实世界进行建模的下一代 IoT 解决方案。
 metadata:
-  title: Azure 数字孪生预览版文档 - 教程和 API 参考 | Microsoft Docs
+  title: Azure 数字孪生文档 - 教程和 API 参考 | Microsoft Docs
   description: 了解如何使用 Azure 数字孪生来连接人员、地点等，以及构建带有空间智能的 IoT 解决方案。
   ms.service: digital-twins
   ms.topic: landing-page
@@ -10,12 +10,12 @@ metadata:
   author: philmea
   ms.author: philmea
   ms.date: 02/12/2020
-  ms.openlocfilehash: e5c05e41ba209607649fbcffb8ee12d0dc66029e
-  ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+  ms.openlocfilehash: 29f3b0bf0a00c9e4e238e8bb514f80e7451d30a6
+  ms.sourcegitcommit: 49ea056bbb5957b5443f035d28c1d8f84f5a407b
   ms.translationtype: HT
   ms.contentlocale: zh-CN
-  ms.lasthandoff: 07/23/2020
-  ms.locfileid: "87079123"
+  ms.lasthandoff: 02/09/2021
+  ms.locfileid: "100007748"
 landingContent:
 - title: 关于 Azure 数字孪生
   linkLists:
@@ -23,7 +23,21 @@ landingContent:
     links:
     - text: Azure 数字孪生是什么？
       url: overview.md
-- title: 教程入门
+  - linkListType: concept
+    links:
+    - text: 自定义模式
+      url: concepts-models.md
+    - text: 数字孪生和孪生图
+      url: concepts-twins-graph.md
+    - text: 查询语言
+      url: concepts-query-language.md
+- title: 首先查看快速入门
+  linkLists:
+  - linkListType: quickstart
+    links:
+    - text: 浏览示例方案
+      url: quickstart-adt-explorer.md
+- title: 通过教程深入了解
   linkLists:
   - linkListType: tutorial
     links:
@@ -37,20 +51,6 @@ landingContent:
     links:
     - text: 连接端到端解决方案
       url: tutorial-end-to-end.md
-- title: 了解
-  linkLists:
-  - linkListType: concept
-    links:
-    - text: 自定义模式
-      url: concepts-models.md
-  - linkListType: concept
-    links:
-    - text: 数字孪生和孪生图
-      url: concepts-twins-graph.md
-  - linkListType: concept
-    links:
-    - text: 查询语言
-      url: concepts-query-language.md
 - title: 开发
   linkLists:
   - linkListType: how-to-guide
@@ -60,22 +60,68 @@ landingContent:
   - linkListType: how-to-guide
     links:
     - text: 设置实例和身份验证
-      url: how-to-set-up-instance-scripted.md
+      url: how-to-set-up-instance-portal.md
   - linkListType: how-to-guide
     links:
     - text: 编写应用身份验证码
       url: how-to-authenticate-client.md
-- title: API 参考
+- title: 发现 API
   linkLists:
+  - linkListType: reference
+    links:
+    - text: REST API
+      url: /rest/api/azure-digitaltwins/
   - linkListType: how-to-guide
     links:
     - text: 使用 Azure 数字孪生 API 和 SDK
       url: how-to-use-apis-sdks.md
   - linkListType: how-to-guide
     links:
+    - text: 通过 Postman 发出请求
+      url: how-to-use-postman.md
+  - linkListType: how-to-guide
+    links:
     - text: 使用 AutoRest 创建自定义 SDK
       url: how-to-create-custom-sdks.md
-  - linkListType: reference
+- title: 浏览代码示例
+  linkLists:
+  - linkListType: sample
     links:
-    - text: REST API
-      url: https://docs.microsoft.com/rest/api/azure-digitaltwins/
+    - text: 端到端示例
+      url: /samples/azure-samples/digital-twins-samples/digital-twins-samples/
+  - linkListType: sample
+    links:
+    - text: Azure 数字孪生资源管理器（示例）
+      url: /samples/azure-samples/digital-twins-explorer/digital-twins-explorer
+  - linkListType: sample
+    links:
+    - text: DTDL 验证器（示例）
+      url: /samples/azure-samples/dtdl-validator/dtdl-validator/
+  - linkListType: sample
+    links:
+    - text: DPS 和 IoT 中心集成示例
+      url: /samples/azure-samples/digital-twins-iothub-integration/adt-iothub-provision-sample/
+  - linkListType: sample
+    links:
+    - text: SignalR 集成示例
+      url: /samples/azure-samples/digitaltwins-signalr-webapp-sample/digital-twins-samples/
+  - linkListType: sample
+    links:
+    - text: 逻辑应用连接器的自定义 Swagger
+      url: /samples/azure-samples/digital-twins-custom-swaggers/azure-digital-twins-custom-swaggers/
+- title: 通过 Microsoft Learn 进行基于方案的学习
+  linkLists:
+  - linkListType: learn
+    links:
+    - text: 学习路径：使用 Azure 数字孪生进行开发
+      url: /learn/paths/develop-azure-digital-twins/
+  - linkListType: learn
+    links:
+    - text: Learn 模块：Azure 数字孪生简介
+      url: /learn/modules/develop-with-azure-digital-twins/introduction-to-azure-digital-twins/
+    - text: Learn 模块：为巧克力工厂生产线构建 Azure 数字孪生图
+      url: /learn/modules/develop-with-azure-digital-twins/build-azure-digital-twins-graph-for-chocolate-factory/
+    - text: Learn 模块：将数据引入到 Azure 数字孪生
+      url: /learn/modules/develop-with-azure-digital-twins/ingest-data-into-azure-digital-twins/
+    - text: Learn 模块：从 Azure 数字孪生输出到下游服务
+      url: /learn/modules/develop-with-azure-digital-twins/route-output-from-azure-digital-twins-to-downstream-services/

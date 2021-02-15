@@ -1,6 +1,6 @@
 ---
 title: 使用 .NET SDK 创建 Azure 数据工厂
-description: 创建一个 Azure 数据工厂，将数据从 Azure Blob 存储中的一个位置复制到另一位置。
+description: 使用 .NET SDK 创建 Azure 数据工厂和管道，以便将数据从 Azure Blob 存储中的一个位置复制到另一个位置。
 services: data-factory
 documentationcenter: ''
 author: linda33wj
@@ -11,14 +11,14 @@ ms.workload: data-services
 ms.tgt_pltfrm: ''
 ms.devlang: dotnet
 ms.topic: quickstart
-ms.date: 06/24/2019
+ms.date: 12/18/2020
 ms.author: jingwang
-ms.openlocfilehash: 0c2f840333f066afaa22883fb0f5d67072a5c822
-ms.sourcegitcommit: 374e47efb65f0ae510ad6c24a82e8abb5b57029e
+ms.openlocfilehash: c5e35fb8ab6a782ec79f10b1099f6781062c1d7c
+ms.sourcegitcommit: 66b0caafd915544f1c658c131eaf4695daba74c8
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 06/28/2020
-ms.locfileid: "85504859"
+ms.lasthandoff: 12/18/2020
+ms.locfileid: "97678868"
 ---
 # <a name="quickstart-create-a-data-factory-and-pipeline-using-net-sdk"></a>快速入门：使用 .NET SDK 创建数据工厂和管道
 
@@ -28,7 +28,7 @@ ms.locfileid: "85504859"
 
 [!INCLUDE[appliesto-adf-xxx-md](includes/appliesto-adf-xxx-md.md)]
 
-此快速入门介绍了如何使用 .NET SDK 创建一个 Azure 数据工厂。 在此数据工厂中创建的管道会将数据从 Azure Blob 存储中的一个文件夹**复制**到另一个文件夹。 有关如何使用 Azure 数据工厂**转换**数据的教程，请参阅[教程：使用 Spark 转换数据](tutorial-transform-data-spark-portal.md)。
+此快速入门介绍了如何使用 .NET SDK 创建一个 Azure 数据工厂。 在此数据工厂中创建的管道会将数据从 Azure Blob 存储中的一个文件夹 **复制** 到另一个文件夹。 有关如何使用 Azure 数据工厂 **转换** 数据的教程，请参阅 [教程：使用 Spark 转换数据](tutorial-transform-data-spark-portal.md)。
 
 > [!NOTE]
 > 本文不提供数据工厂服务的详细介绍。 有关 Azure 数据工厂服务的介绍，请参阅 [Azure 数据工厂简介](introduction.md)。
@@ -45,26 +45,26 @@ ms.locfileid: "85504859"
 
 ## <a name="create-an-application-in-azure-active-directory"></a>在 Azure Active Directory 中创建应用程序
 
-从“如何：  使用门户创建可访问资源的 Azure AD 应用程序和服务主体”中的各部分开始，按照说明执行以下任务：
+从“如何：使用门户创建可访问资源的 Azure AD 应用程序和服务主体”中的各部分开始，按照说明执行以下任务：
 
 1. 在[创建 Azure Active Directory 应用程序](../active-directory/develop/howto-create-service-principal-portal.md#register-an-application-with-azure-ad-and-create-a-service-principal)中，创建一个应用程序来表示正在本教程中创建的 .NET 应用程序。 对于登录 URL，可以提供虚拟 URL，如本文中所示 (`https://contoso.org/exampleapp`)。
-2. 在[获取用于登录的值](../active-directory/develop/howto-create-service-principal-portal.md#get-tenant-and-app-id-values-for-signing-in)中，获取应用程序 ID 和租户 ID，并记下这些值，稍后要在本教程中使用它们   。 
-3. 在[证书与机密](../active-directory/develop/howto-create-service-principal-portal.md#upload-a-certificate-or-create-a-secret-for-signing-in)中，获取身份验证密钥，并记此值，稍后要在本教程中使用它  。
-4. 在[将应用程序分配给角色](../active-directory/develop/howto-create-service-principal-portal.md#assign-a-role-to-the-application)中，在订阅级别将应用程序分配到“参与者”角色，让该应用程序可以在订阅中创建数据工厂  。
+2. 在[获取用于登录的值](../active-directory/develop/howto-create-service-principal-portal.md#get-tenant-and-app-id-values-for-signing-in)中，获取应用程序 ID 和租户 ID，并记下这些值，稍后要在本教程中使用它们 。 
+3. 在[证书与机密](../active-directory/develop/howto-create-service-principal-portal.md#authentication-two-options)中，获取身份验证密钥，并记此值，稍后要在本教程中使用它。
+4. 在[将应用程序分配给角色](../active-directory/develop/howto-create-service-principal-portal.md#assign-a-role-to-the-application)中，在订阅级别将应用程序分配到“参与者”角色，让该应用程序可以在订阅中创建数据工厂。
 
 ## <a name="create-a-visual-studio-project"></a>创建 Visual Studio 项目
 
 接下来，在 Visual Studio 中创建 C# 控制台应用程序：
 
 1. 启动 **Visual Studio**。
-2. 在“开始”窗口中，选择“创建新项目” > “控制台应用(.NET Framework)”   。 需要 .NET 4.5.2 或更高版本。
-3. 在“项目名称”中，输入 ADFv2QuickStart   。
-4. 选择“创建”  来创建项目。
+2. 在“开始”窗口中，选择“创建新项目” > “控制台应用(.NET Framework)” 。 需要 .NET 4.5.2 或更高版本。
+3. 在“项目名称”中，输入 ADFv2QuickStart 。
+4. 选择“创建”来创建项目。
 
 ## <a name="install-nuget-packages"></a>安装 NuGet 包
 
-1. 选择“工具”   > “NuGet 包管理器”   > “包管理器控制台”  。
-2. 在“包管理器控制台”窗格中，运行以下命令来安装包  。 有关详细信息，请参阅 [Microsoft.Azure.Management.DataFactory NuGet 包](https://www.nuget.org/packages/Microsoft.Azure.Management.DataFactory/)。
+1. 选择“工具” > “NuGet 包管理器” > “包管理器控制台”。
+2. 在“包管理器控制台”窗格中，运行以下命令来安装包。 有关详细信息，请参阅 [Microsoft.Azure.Management.DataFactory NuGet 包](https://www.nuget.org/packages/Microsoft.Azure.Management.DataFactory/)。
 
     ```powershell
     Install-Package Microsoft.Azure.Management.DataFactory
@@ -81,13 +81,14 @@ ms.locfileid: "85504859"
     using System.Collections.Generic;
     using System.Linq;
     using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Microsoft.Azure.Management.ResourceManager;
     using Microsoft.Azure.Management.DataFactory;
     using Microsoft.Azure.Management.DataFactory.Models;
     using Microsoft.IdentityModel.Clients.ActiveDirectory;
     ```
 
-2. 将以下代码添加到 **Main** 方法以设置变量。 将占位符替换为自己的值。 若要查看目前提供数据工厂的 Azure 区域的列表，请在以下页面上选择感兴趣的区域，然后展开“分析”  以找到“数据工厂”  ：[可用产品(按区域)](https://azure.microsoft.com/global-infrastructure/services/)。 数据工厂使用的数据存储（Azure 存储、Azure SQL 数据库等）和计算资源（HDInsight 等）可以位于其他区域中。
+2. 将以下代码添加到 **Main** 方法以设置变量。 将占位符替换为自己的值。 若要查看目前提供数据工厂的 Azure 区域的列表，请在以下页面上选择感兴趣的区域，然后展开“分析”以找到“数据工厂”：[可用产品(按区域)](https://azure.microsoft.com/global-infrastructure/services/)。 数据工厂使用的数据存储（Azure 存储、Azure SQL 数据库等）和计算资源（HDInsight 等）可以位于其他区域中。
 
    ```csharp
    // Set variables
@@ -130,7 +131,7 @@ ms.locfileid: "85504859"
 
 ## <a name="create-a-data-factory"></a>创建数据工厂
 
-向 **Main** 方法中添加用于创建**数据工厂**的以下代码。 
+向 **Main** 方法中添加用于创建 **数据工厂** 的以下代码。 
 
 ```csharp
 // Create a data factory
@@ -153,7 +154,7 @@ while (client.Factories.Get(resourceGroup, dataFactoryName).ProvisioningState ==
 
 ## <a name="create-a-linked-service"></a>创建链接服务
 
-在 **Main** 方法中添加用于创建 **Azure 存储链接服务**的以下代码。
+在 **Main** 方法中添加用于创建 **Azure 存储链接服务** 的以下代码。
 
 可在数据工厂中创建链接服务，将数据存储和计算服务链接到数据工厂。 在此快速入门中，只需创建一个 Azure 存储链接服务，用于复制源和接收器存储。在示例中，此服务名为“AzureStorageLinkedService”。
 
@@ -177,7 +178,7 @@ Console.WriteLine(SafeJsonConvert.SerializeObject(
 
 ## <a name="create-a-dataset"></a>创建数据集
 
-向 **Main** 方法中添加用于创建 **Azure blob 数据集**的以下代码。
+向 **Main** 方法中添加用于创建 **Azure blob 数据集** 的以下代码。
 
 定义一个数据集来表示要从源复制到接收器的数据。 在此示例中，此 Blob 数据集引用在上一步中创建的 Azure 存储链接服务。 此数据集采用一个参数，其值在使用此数据集的活动中设置。 该参数用来构造“folderPath”，该项指向数据的驻留/存储位置。
 
@@ -206,7 +207,7 @@ Console.WriteLine(
 
 ## <a name="create-a-pipeline"></a>创建管道
 
-向 **Main** 方法中添加用于创建**包含复制活动的管道**的以下代码。
+向 **Main** 方法中添加用于创建 **包含复制活动的管道** 的以下代码。
 
 在此示例中，此管道包含一个活动并采用两个参数：输入 Blob 路径和输出 Blob 路径。 这些参数的值是在触发/运行管道时设置的。 复制活动引用在上一步中创建的同一 blob 数据集作为输入和输出。 当该数据集用作输入数据集时，即指定了输入路径。 并且，当该数据集用作输出数据集时，即指定了输出路径。 
 
@@ -258,9 +259,9 @@ Console.WriteLine(SafeJsonConvert.SerializeObject(pipeline, client.Serialization
 
 ## <a name="create-a-pipeline-run"></a>创建管道运行
 
-在 **Main** 方法中添加用于**触发管道运行**的以下代码。
+在 **Main** 方法中添加用于 **触发管道运行** 的以下代码。
 
-此代码还设置 inputPath 和 outputPath 参数的值，这些值是使用源和接收器 Blob 路径的实际值在管道中指定的值   。
+此代码还设置 inputPath 和 outputPath 参数的值，这些值是使用源和接收器 Blob 路径的实际值在管道中指定的值 。
 
 ```csharp
 // Create a pipeline run
@@ -296,7 +297,7 @@ Console.WriteLine("Pipeline run ID: " + runResponse.RunId);
    }
    ```
 
-2. 在 Main 方法中添加以下代码用于检索复制活动运行详细信息，例如，读取/写入的数据大小  。
+2. 在 Main 方法中添加以下代码用于检索复制活动运行详细信息，例如，读取/写入的数据大小。
 
    ```csharp
    // Check the copy activity run details
@@ -318,7 +319,7 @@ Console.WriteLine("Pipeline run ID: " + runResponse.RunId);
 
 生成并启动应用程序，然后验证管道执行。
 
-控制台会输出数据工厂、链接服务、数据集、管道和管道运行的创建进度。 然后，检查管道运行状态。 请等待，直至看到包含数据读取/写入大小的复制活动运行详细信息。 然后，使用 [Microsoft Azure 存储资源管理器](https://azure.microsoft.com/features/storage-explorer/)等工具检查 Blob 是否已根据变量中的指定从“inputBlobPath”复制到“outputBlobPath”。
+控制台会输出数据工厂、链接服务、数据集、管道和管道运行的创建进度。 然后，检查管道运行状态。 请等待，直至看到包含数据读取/写入大小的复制活动运行详细信息。 然后，使用 [Azure 存储资源管理器](https://azure.microsoft.com/features/storage-explorer/)等工具检查 Blob 是否已根据变量中的指定从“inputBlobPath”复制到“outputBlobPath”。
 
 ### <a name="sample-output"></a>示例输出
 
@@ -430,10 +431,10 @@ Press any key to exit...
 
 ## <a name="verify-the-output"></a>验证输出
 
-该管道自动在 adftutorial Blob 容器中创建 output 文件夹  。 然后，将 emp.txt 文件从 input 文件夹复制到 output 文件夹  。 
+该管道自动在 adftutorial Blob 容器中创建 output 文件夹。 然后，将 emp.txt 文件从 input 文件夹复制到 output 文件夹。 
 
-1. 在 Azure 门户中，在你在以上[为 Blob 容器添加输入文件夹和文件](#add-an-input-folder-and-file-for-the-blob-container)部分中停留的 adftutorial 容器页上，选择“刷新”以查看输出文件夹   。 
-2. 在文件夹列表中，选择“output”  。
+1. 在 Azure 门户中，在你在以上[为 Blob 容器添加输入文件夹和文件](#add-an-input-folder-and-file-for-the-blob-container)部分中停留的 adftutorial 容器页上，选择“刷新”以查看输出文件夹 。 
+2. 在文件夹列表中，选择“output”。
 3. 确认 **emp.txt** 已复制到 output 文件夹。 
 
 ## <a name="clean-up-resources"></a>清理资源

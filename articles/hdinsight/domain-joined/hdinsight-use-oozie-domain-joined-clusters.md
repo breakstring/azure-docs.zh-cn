@@ -3,17 +3,16 @@ title: Apache Oozie 工作流和企业安全性 - Azure HDInsight
 description: 使用 Azure HDInsight 企业安全性套餐保护 Apache Oozie 工作流。 了解如何定义 Oozie 工作流，并提交 Oozie 作业。
 author: omidm1
 ms.author: omidm
-ms.reviewer: jasonh
 ms.service: hdinsight
 ms.topic: conceptual
 ms.custom: hdinsightactive,seodec18,seoapr2020
 ms.date: 05/14/2020
-ms.openlocfilehash: 36c04480c46cea904b072c659c5c2642a28e1f27
-ms.sourcegitcommit: fdec8e8bdbddcce5b7a0c4ffc6842154220c8b90
+ms.openlocfilehash: 559779e3979ab2ada2191f55cfc06ceb2470bd7d
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 05/19/2020
-ms.locfileid: "83647574"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98933481"
 ---
 # <a name="run-apache-oozie-in-azure-hdinsight-clusters-with-enterprise-security-package"></a>在具有企业安全性套餐的 Azure HDInsight 群集中运行 Apache Oozie
 
@@ -231,8 +230,8 @@ Oozie 工作流定义是用 Apache Hadoop 过程定义语言 (hPDL) 编写的。
    ```
 
    - 如果主群集存储是 Azure Data Lake Storage Gen1，则将 `adl://home` URI 用于 `nameNode` 属性。 如果使用的是 Azure Blob 存储，则更改为 `wasb://home`。 如果使用的是 Azure Data Lake Storage Gen2，则更改为 `abfs://home`。
-   - 将 `domainuser` 替换为你的域用户名。  
-   - 将 `ClusterShortName` 替换为群集的短名称。 例如，如果群集名称为 https:// [example link] sechadoopcontoso.azurehdisnight.net，`clustershortname` 为群集的前 6 个字符：sechad。  
+   - 将 `domainuser` 替换为你的域用户名。
+   - 将 `ClusterShortName` 替换为群集的短名称。 例如，如果群集名称为 https:// [example link] sechadoopcontoso.azurehdisnight.net，`clustershortname` 为群集的前 6 个字符：sechad。
    - 将 `jdbcurlvalue` 替换为 Hive 配置中的 JDBC URL。 例如，jdbc:hive2://headnodehost:10001/;transportMode=http。
    - 若要保存文件，请按 Ctrl+X，输入 `Y`，再按 **Enter**。
 
@@ -313,17 +312,17 @@ CoordAction ID: -
 
 Actions
 ------------------------------------------------------------------------------------------------
-ID                      Status  Ext ID          ExtStatus   ErrCode
+ID                        Status    Ext ID            ExtStatus                 ErrCode
 ------------------------------------------------------------------------------------------------
-0000015-180626011240801-oozie-oozi-W@:start:    OK  -           OK      -
+0000015-180626011240801-oozie-oozi-W@:start:    OK    -                         OK             -
 ------------------------------------------------------------------------------------------------
-0000015-180626011240801-oozie-oozi-W@mr-test    OK  job_1529975666160_0051  SUCCEEDED   -
+0000015-180626011240801-oozie-oozi-W@mr-test    OK    job_1529975666160_0051    SUCCEEDED      -
 ------------------------------------------------------------------------------------------------
-0000015-180626011240801-oozie-oozi-W@myHive2    OK  job_1529975666160_0053  SUCCEEDED   -
+0000015-180626011240801-oozie-oozi-W@myHive2    OK    job_1529975666160_0053    SUCCEEDED      -
 ------------------------------------------------------------------------------------------------
-0000015-180626011240801-oozie-oozi-W@myHive OK  job_1529975666160_0055  SUCCEEDED   -
+0000015-180626011240801-oozie-oozi-W@myHive    OK     job_1529975666160_0055    SUCCEEDED      -
 ------------------------------------------------------------------------------------------------
-0000015-180626011240801-oozie-oozi-W@end    OK  -           OK      -
+0000015-180626011240801-oozie-oozi-W@end       OK     -                         OK             -
 -----------------------------------------------------------------------------------------------
 ```
 

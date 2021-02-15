@@ -1,6 +1,6 @@
 ---
 title: 带有使用 Java 4.0 SDK 的 Azure Cosmos DB Cassandra API 的 Java 应用
-description: 本快速入门介绍如何配合 Azure 门户和 Java 使用 Azure Cosmos DB Cassandra API 创建配置文件应用程序
+description: 本快速入门介绍如何配合 Azure 门户和 Java 4.0 SDK 使用 Azure Cosmos DB Cassandra API 创建配置文件应用程序
 ms.service: cosmos-db
 author: TheovanKraay
 ms.author: thvankra
@@ -9,14 +9,15 @@ ms.devlang: java
 ms.topic: quickstart
 ms.date: 05/18/2020
 ms.custom: seo-java-august2019, seo-java-september2019, devx-track-java
-ms.openlocfilehash: 4411c2d3b540423c1086fe8b45bd343870a72f5b
-ms.sourcegitcommit: a76ff927bd57d2fcc122fa36f7cb21eb22154cfa
+ms.openlocfilehash: ee30af3f07c8b350393822f01833feec6e3b52e2
+ms.sourcegitcommit: 3bdeb546890a740384a8ef383cf915e84bd7e91e
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/28/2020
-ms.locfileid: "87319195"
+ms.lasthandoff: 10/30/2020
+ms.locfileid: "93099804"
 ---
-# <a name="quickstart-build-a-java-app-to-manage-azure-cosmos-db-cassandra-api-data-v4-driver"></a>快速入门：生成 Java 应用以管理 Azure Cosmos DB Cassandra API 数据（v4 驱动程序）
+# <a name="quickstart-build-a-java-app-to-manage-azure-cosmos-db-cassandra-api-data-v4-driver"></a>生成 Java 应用以管理 Azure Cosmos DB Cassandra API 数据（v4 驱动程序）
+[!INCLUDE[appliesto-cassandra-api](includes/appliesto-cassandra-api.md)]
 
 > [!div class="op_single_selector"]
 > * [.NET](create-cassandra-dotnet.md)

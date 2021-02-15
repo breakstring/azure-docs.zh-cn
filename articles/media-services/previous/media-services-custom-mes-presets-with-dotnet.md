@@ -14,14 +14,17 @@ ms.devlang: na
 ms.topic: article
 ms.date: 03/26/2019
 ms.author: juliako
-ms.openlocfilehash: 085a186ffd98220257ad912ede93f43d339707f2
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.custom: devx-track-csharp
+ms.openlocfilehash: 6c1c74f86a9cf0e4bcd73844222f256a715cbfe5
+ms.sourcegitcommit: 77afc94755db65a3ec107640069067172f55da67
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87052924"
+ms.lasthandoff: 01/22/2021
+ms.locfileid: "98695884"
 ---
-# <a name="customizing-media-encoder-standard-presets"></a>自定义 Media Encoder Standard 预设  
+# <a name="customizing-media-encoder-standard-presets"></a>自定义 Media Encoder Standard 预设
+
+[!INCLUDE [media services api v2 logo](./includes/v2-hr.md)]  
 
 ## <a name="overview"></a>概述
 
@@ -30,7 +33,7 @@ ms.locfileid: "87052924"
 本文介绍如何使用 [H264 多比特率 720p](media-services-mes-preset-H264-Multiple-Bitrate-720p.md) 预设并减少层数，从而自定义预设。 [自定义 Media Encoder Standard 预设](media-services-advanced-encoding-with-mes.md)这篇文章演示了可用于执行高级编码任务的自定义预设。
 
 > [!NOTE]
-> 本文中所述的自定义预设不能用于[媒体服务 V3](../latest/index.yml) 转换或 CLI 命令。 有关更多详细信息，请参阅[从 v2 到 v3 的迁移指南](../latest/migrate-from-v2-to-v3.md)。
+> 本文中所述的自定义预设不能用于[媒体服务 V3](../latest/index.yml) 转换或 CLI 命令。 有关更多详细信息，请参阅[从 v2 到 v3 的迁移指南](../latest/migrate-v-2-v-3-migration-introduction.md)。
 
 ## <a name="customizing-a-mes-preset"></a><a id="customizing_presets"></a>自定义 MES 预设
 
@@ -43,74 +46,74 @@ ms.locfileid: "87052924"
 打开 **CustomPreset_JSON.json** 文件，删除 **H264Layers** 中的前三层，使文件如下所示。
 
 ```json 
-    {  
-      "Version": 1.0,  
-      "Codecs": [  
-        {  
-          "KeyFrameInterval": "00:00:02",  
-          "H264Layers": [  
-            {  
-              "Profile": "Auto",  
-              "Level": "auto",  
-              "Bitrate": 1000,  
-              "MaxBitrate": 1000,  
-              "BufferWindow": "00:00:05",  
-              "Width": 640,  
-              "Height": 360,  
-              "BFrames": 3,  
-              "ReferenceFrames": 3,  
-              "AdaptiveBFrame": true,  
-              "Type": "H264Layer",  
-              "FrameRate": "0/1"  
-            },  
-            {  
-              "Profile": "Auto",  
-              "Level": "auto",  
-              "Bitrate": 650,  
-              "MaxBitrate": 650,  
-              "BufferWindow": "00:00:05",  
-              "Width": 640,  
-              "Height": 360,  
-              "BFrames": 3,  
-              "ReferenceFrames": 3,  
-              "AdaptiveBFrame": true,  
-              "Type": "H264Layer",  
-              "FrameRate": "0/1"  
-            },  
-            {  
-              "Profile": "Auto",  
-              "Level": "auto",  
-              "Bitrate": 400,  
-              "MaxBitrate": 400,  
-              "BufferWindow": "00:00:05",  
-              "Width": 320,  
-              "Height": 180,  
-              "BFrames": 3,  
-              "ReferenceFrames": 3,  
-              "AdaptiveBFrame": true,  
-              "Type": "H264Layer",  
-              "FrameRate": "0/1"  
-            }  
-          ],  
-          "Type": "H264Video"  
-        },  
-        {  
-          "Profile": "AACLC",  
-          "Channels": 2,  
-          "SamplingRate": 48000,  
-          "Bitrate": 128,  
-          "Type": "AACAudio"  
-        }  
-      ],  
-      "Outputs": [  
-        {  
-          "FileName": "{Basename}_{Width}x{Height}_{VideoBitrate}.mp4",  
-          "Format": {  
-            "Type": "MP4Format"  
+  {  
+    "Version": 1.0,  
+    "Codecs": [  
+      {  
+        "KeyFrameInterval": "00:00:02",  
+        "H264Layers": [  
+          {  
+            "Profile": "Auto",  
+            "Level": "auto",  
+            "Bitrate": 1000,  
+            "MaxBitrate": 1000,  
+            "BufferWindow": "00:00:05",  
+            "Width": 640,  
+            "Height": 360,  
+            "BFrames": 3,  
+            "ReferenceFrames": 3,  
+            "AdaptiveBFrame": true,  
+            "Type": "H264Layer",  
+            "FrameRate": "0/1"  
+          },  
+          {  
+            "Profile": "Auto",  
+            "Level": "auto",  
+            "Bitrate": 650,  
+            "MaxBitrate": 650,  
+            "BufferWindow": "00:00:05",  
+            "Width": 640,  
+            "Height": 360,  
+            "BFrames": 3,  
+            "ReferenceFrames": 3,  
+            "AdaptiveBFrame": true,  
+            "Type": "H264Layer",  
+            "FrameRate": "0/1"  
+          },  
+          {  
+            "Profile": "Auto",  
+            "Level": "auto",  
+            "Bitrate": 400,  
+            "MaxBitrate": 400,  
+            "BufferWindow": "00:00:05",  
+            "Width": 320,  
+            "Height": 180,  
+            "BFrames": 3,  
+            "ReferenceFrames": 3,  
+            "AdaptiveBFrame": true,  
+            "Type": "H264Layer",  
+            "FrameRate": "0/1"  
           }  
+        ],  
+        "Type": "H264Video"  
+      },  
+      {  
+        "Profile": "AACLC",  
+        "Channels": 2,  
+        "SamplingRate": 48000,  
+        "Bitrate": 128,  
+        "Type": "AACAudio"  
+      }  
+    ],  
+    "Outputs": [  
+      {  
+        "FileName": "{Basename}_{Width}x{Height}_{VideoBitrate}.mp4",  
+        "Format": {  
+          "Type": "MP4Format"  
         }  
-      ]  
-    }  
+      }  
+    ]  
+  }  
 ```
 
 ## <a name="encoding-with-media-services-net-sdk"></a><a id="encoding_with_dotnet"></a>使用媒体服务 .NET SDK 进行编码

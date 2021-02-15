@@ -2,15 +2,14 @@
 title: Azure Application Insights - 依赖项自动收集 | Microsoft Docs
 description: Application Insights 自动收集和可视化依赖项
 ms.topic: reference
-author: mrbullwinkle
-ms.author: mbullwin
+ms.custom: devx-track-dotnet
 ms.date: 05/06/2020
-ms.openlocfilehash: 2227facfcf469bc22034da0da504b390cc0deee1
-ms.sourcegitcommit: a76ff927bd57d2fcc122fa36f7cb21eb22154cfa
+ms.openlocfilehash: 8a4d79e52465e93fb4db2625217cb37a06917218
+ms.sourcegitcommit: 50802bffd56155f3b01bfb4ed009b70045131750
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/28/2020
-ms.locfileid: "87324176"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "91930860"
 ---
 # <a name="dependency-auto-collection"></a>依赖项自动收集
 

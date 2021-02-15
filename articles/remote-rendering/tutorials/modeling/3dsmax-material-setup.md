@@ -1,16 +1,16 @@
 ---
 title: 在 3ds Max 中设置 PBR 材料
 description: 说明如何在 3ds Max 中设置基于物理的渲染材料，并将其导出为 FBX 格式。
-author: muxanickms
-ms.author: misams
+author: FlorianBorn71
+ms.author: flborn
 ms.date: 06/16/2020
 ms.topic: tutorial
-ms.openlocfilehash: ac0f4ee8f06982126d2ae30bed01716b287e8993
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.openlocfilehash: 12407d6344c69c747230e9db6fa4d53b4520dc82
+ms.sourcegitcommit: a43a59e44c14d349d597c3d2fd2bc779989c71d7
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87078037"
+ms.lasthandoff: 11/25/2020
+ms.locfileid: "96020273"
 ---
 # <a name="tutorial-set-up-physically-based-rendering-materials-in-3ds-max"></a>教程：在 3ds Max 中设置基于物理的渲染材料
 
@@ -22,6 +22,10 @@ ms.locfileid: "87078037"
 > * 将具有高级照明的材料分配给场景中的对象。
 > * 处理对象和材料的实例化。
 > * 将场景导出为 FBX 格式并选择重要选项。
+
+> [!Note]
+> 本教程中所述的过程适用于 3ds Max 2019 和 3ds Max 2020。
+> 3ds Max 2021 导出凹凸贴图的方式发生了变化，这意味着如果使用该版本，转换服务将找不到法线贴图。
 
 在 3ds Max 中创建[基于物理的渲染 (PBR) 材料](../../overview/features/pbr-materials.md)是一项简单的任务。 它在许多方面与 Maya 等其他内容创建应用中的 PBR 设置类似。 本教程介绍如何为 Azure 远程渲染项目实现基本 PBR 着色器设置和 FBX 导出。
 

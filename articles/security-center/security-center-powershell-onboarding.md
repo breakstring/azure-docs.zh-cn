@@ -1,6 +1,6 @@
 ---
 title: 通过 PowerShell 加入 Azure 安全中心
-description: 本文档将指导你完成通过 PowerShell cmdlet 开始使用 Azure 安全中心的过程。
+description: 本文档将指导你完成通过 PowerShell cmdlet 启用 Azure 安全中心的过程。
 services: security-center
 documentationcenter: na
 author: memildin
@@ -8,17 +8,17 @@ manager: rkarlin
 ms.assetid: e400fcbf-f0a8-4e10-b571-5a0d0c3d0c67
 ms.service: security-center
 ms.devlang: na
-ms.topic: conceptual
+ms.topic: quickstart
 ms.tgt_pltfrm: na
 ms.workload: na
-ms.date: 10/02/2018
+ms.date: 01/24/2021
 ms.author: memildin
-ms.openlocfilehash: e6dfc0eb704b0b35ab4e181076d8f97fd3e8c9d7
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
-ms.translationtype: MT
+ms.openlocfilehash: 4979ff0010c1f959e8f8fc16f56da61971faf1e9
+ms.sourcegitcommit: 5cdd0b378d6377b98af71ec8e886098a504f7c33
+ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87080740"
+ms.lasthandoff: 01/25/2021
+ms.locfileid: "98757062"
 ---
 # <a name="automate-onboarding-of-azure-security-center-using-powershell"></a>使用 PowerShell 自动载入 Azure 安全中心
 
@@ -29,9 +29,9 @@ ms.locfileid: "87080740"
 
 本文提供了一个示例 PowerShell 脚本，可在你的环境中进行修改和使用，以跨订阅推出安全中心。 
 
-在此示例中，我们将使用 ID 为 "d07c0080-170c-4c24-861d-9c817742786c" 的订阅启用安全中心，并通过实施安全中心的标准层（提供高级威胁防护和检测功能）应用提供高级保护的推荐设置：
+在此示例中，通过启用 Azure Defender，提供高级威胁防护和检测功能，我们将对 ID 为 d07c0080-170c-4c24-861d-9c817742786c 的订阅启用安全中心，并应用提供高级别保护的建议设置：
 
-1. 设置[安全中心标准版保护级别](https://azure.microsoft.com/pricing/details/security-center/)。 
+1. 启用 [Azure Defender](azure-defender.md)。 
  
 2. 将 Log Analytics 工作区设置为 Log Analytics 代理将发送其在与订阅关联的 VM 上收集的数据位置，在此示例中，是现有用户定义的工作区 (myWorkspace)。
 
@@ -61,7 +61,7 @@ ms.locfileid: "87080740"
 
     ```Register-AzResourceProvider -ProviderNamespace 'Microsoft.Security'```
 
-1. 可选：设置订阅的覆盖范围级别（定价层）（如果未定义，则定价层设置为“免费”）：
+1. 可选：设置订阅的覆盖级别（启用/关闭 Azure Defender）。 如果未定义，Defender 将处于关闭状态：
 
     ```Set-AzContext -Subscription "d07c0080-170c-4c24-861d-9c817742786c"```
 
@@ -89,9 +89,9 @@ ms.locfileid: "87080740"
 
     ```Register-AzResourceProvider -ProviderNamespace 'Microsoft.PolicyInsights'```
 
-    ```$Policy = Get-AzPolicySetDefinition | where {$_.Properties.displayName -EQ 'Enable Monitoring in Azure Security Center'} New-AzPolicyAssignment -Name 'ASC Default <d07c0080-170c-4c24-861d-9c817742786c>' -DisplayName 'Security Center Default <subscription ID>' -PolicySetDefinition $Policy -Scope '/subscriptions/d07c0080-170c-4c24-861d-9c817742786c'```
+    ```$Policy = Get-AzPolicySetDefinition | where {$_.Properties.displayName -EQ 'Azure Security Benchmark'} New-AzPolicyAssignment -Name 'ASC Default <d07c0080-170c-4c24-861d-9c817742786c>' -DisplayName 'Security Center Default <subscription ID>' -PolicySetDefinition $Policy -Scope '/subscriptions/d07c0080-170c-4c24-861d-9c817742786c'```
 
-已成功将 Azure 安全中心与 PowerShell 载入。
+你已使用 PowerShell 成功加入 Azure 安全中心。
 
 现在可以将这些 PowerShell cmdlet 与自动化脚本结合使用，从而以编程方式循环访问订阅和资源。 这可节省时间并减少人为错误的可能性。 你可以使用此[示例脚本](https://github.com/Microsoft/Azure-Security-Center/blob/master/quickstarts/ASC-Samples.ps1)作为参考。
 
@@ -101,7 +101,7 @@ ms.locfileid: "87080740"
 ## <a name="see-also"></a>另请参阅
 若要详细了解如何通过 PowerShell 来自动开始使用安全中心，请参阅以下文章：
 
-* [Az. Security](https://docs.microsoft.com/powershell/module/az.security)
+* [Az.Security](/powershell/module/az.security)
 
 若要详细了解安全中心，请参阅以下文章：
 

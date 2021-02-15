@@ -3,25 +3,26 @@ title: 教程 - 创建和管理 Azure 预算
 description: 本教程介绍如何对所使用的 Azure 服务进行成本计划和核算。
 author: bandersmsft
 ms.author: banders
-ms.date: 07/15/2020
-ms.topic: conceptual
+ms.date: 01/27/2021
+ms.topic: tutorial
 ms.service: cost-management-billing
+ms.subservice: cost-management
 ms.reviewer: adwise
 ms.custom: seodec18
-ms.openlocfilehash: a48e4b594b82f6e910db26fc2319032fbef30b6b
-ms.sourcegitcommit: cee72954f4467096b01ba287d30074751bcb7ff4
+ms.openlocfilehash: 5659f3b2d020a97ed2460c55283bb41f2f7606cc
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/30/2020
-ms.locfileid: "87446003"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98943743"
 ---
 # <a name="tutorial-create-and-manage-azure-budgets"></a>教程：创建和管理 Azure 预算
 
 可以通过成本管理中的预算来计划并推动组织责任制。 可以通过预算对特定时期使用或订阅的 Azure 服务进行核算。 可以通过预算将他人的支出通知给本人，方便他们对成本进行前摄性管理，并且可以监视一段时间的支出情况。 超出所创建的预算阈值时，只会触发通知， 不会影响资源，也不会停止你对资源的使用。 可以使用预算来比较和跟踪支出，就像分析成本一样。
 
-成本和使用情况数据通常在 20 小时内可用，每 12-14 小时针对这些成本评估预算。 满足预算限额时，通常会在一小时评估范围内发送电子邮件通知。
+成本和使用数据通常在 8-24 小时内可用，每 24 小时对照这些成本评估一次预算。 请务必熟悉[成本和使用情况数据更新](./understand-cost-mgt-data.md#cost-and-usage-data-updates-and-retention)的具体细节。 满足预算限额时，通常会在一小时评估范围内发送电子邮件通知。
 
-在未来选择过期日期时，预算会在某个期间末（月末、季末或年末）自动重置为相同的预算金额。 由于预算是使用相同的预算金额重置的，因此如果未来时段的预算货币金额不同于现在，则需创建单独的预算。
+在未来选择过期日期时，预算会在某个期间末（月末、季末或年末）自动重置为相同的预算金额。 由于预算是使用相同的预算金额重置的，因此如果未来时段的预算货币金额不同于现在，则需创建单独的预算。 预算到期后，会被自动删除。
 
 本教程中的示例演示了如何针对 Azure 企业协议 (EA) 订阅创建和编辑预算。
 
@@ -71,7 +72,7 @@ ms.locfileid: "87446003"
 - 参与者和成本管理参与者 - 可以创建、修改或删除自己的预算。 可以修改其他人创建的预算的预算金额。
 - 读者和成本管理读者 - 可以查看他们有权访问的预算。
 
-若要详细了解如何分配对成本管理数据的权限，请参阅[分配对成本管理数据的访问权限](../../cost-management/assign-access-acm-data.md)。
+若要详细了解如何分配对成本管理数据的权限，请参阅[分配对成本管理数据的访问权限](./assign-access-acm-data.md)。
 
 ## <a name="sign-in-to-azure"></a>登录 Azure
 
@@ -91,7 +92,7 @@ ms.locfileid: "87446003"
 
 在“创建预算”窗口中，确保显示的范围正确。 选择想要添加的任何筛选器。 使用筛选器可以创建特定成本的预算，例如订阅中的资源组或虚拟机之类的服务。 可以在成本分析中使用的任何筛选器也可以应用于预算。
 
-确定范围和筛选器后，请键入预算名称。 然后，选择月、季或年作为预算重置期限。 此重置期限决定了按预算分析的时间范围。 在每个新期限开始时，按预算估算的成本从零开始。 创建季度预算时，其操作方式与每月预算相同。 不同之处在于，季度预算的预算金额是在该季度的三个月中平均分配的。 年度预算金额在日历年的所有 12 个月中平均分配。
+确定范围和筛选器后，请键入预算名称。 然后，选择月度、季度或年度预算重置周期。 此重置期限决定了按预算分析的时间范围。 在每个新期限开始时，按预算估算的成本从零开始。 创建季度预算时，其操作方式与每月预算相同。 不同之处在于，季度预算的预算金额是在该季度的三个月中平均分配的。 年度预算金额在日历年的所有 12 个月中平均分配。
 
 如果有即用即付、MSDN 或 Visual Studio 订阅，则发票计费周期可能与日历月不一致。 对于这些订阅类型和资源组，可以创建与发票周期或日历月一致的预算。 若要创建与发票周期相符的预算，请选择“计费月”、“计费季”或“计费年”作为重置期限。 若要创建与日历月相符的预算，请选择“每月”、“每季”或“每年”作为重置期限。
 
@@ -103,15 +104,15 @@ ms.locfileid: "87446003"
 
 配置预算金额后，选择“下一步”来配置预算警报。 预算需要至少一个成本阈值（预算百分比）和相应的电子邮件地址。 可以选择在单个预算中包括多达五个阈值和五个电子邮件地址。 满足预算限额时，通常会在一小时评估范围内发送电子邮件通知。
 
-如果要接收电子邮件，请将 azure-noreply@microsoft.com 添加到已批准的发件人列表，使电子邮件不会被发送到垃圾电子邮件文件夹。 有关通知的详细信息，请参阅[使用成本警报](../../cost-management/cost-mgt-alerts-monitor-usage-spending.md)。
+如果要接收电子邮件，请将 azure-noreply@microsoft.com 添加到已批准的发件人列表，使电子邮件不会被发送到垃圾电子邮件文件夹。 有关通知的详细信息，请参阅[使用成本警报](./cost-mgt-alerts-monitor-usage-spending.md)。
 
-在下面的示例中，达到预算的 90% 时，会生成电子邮件警报。 如果使用预算 API 创建预算，也可将角色分配给人员来接收警报。 不支持在 Azure 门户中向人员分配角色。 有关 Azure 预算 API 的详细信息，请参阅[预算 API](/rest/api/consumption/budgets)。
+在下面的示例中，达到预算的 90% 时，会生成电子邮件警报。 如果使用预算 API 创建预算，也可将角色分配给人员来接收警报。 不支持在 Azure 门户中向人员分配角色。 有关 Azure 预算 API 的详细信息，请参阅[预算 API](/rest/api/consumption/budgets)。 如果希望以其他语言发送电子邮件警报，请参阅[预算警报电子邮件支持的区域设置](manage-automation.md#supported-locales-for-budget-alert-emails)。
 
 警报限制支持所提供的预算限额的 0.01% 到 1000% 范围。
 
 ![显示警报条件的示例](./media/tutorial-acm-create-budgets/monthly-budget-alert.png)
 
-创建预算后，预算会显示在成本分析中。 开始[分析成本和支出](../../cost-management/quick-acm-cost-analysis.md)时，首先要执行的步骤之一是查看预算与对应的支出趋势。
+创建预算后，预算会显示在成本分析中。 开始[分析成本和支出](./quick-acm-cost-analysis.md)时，首先要执行的步骤之一是查看预算与对应的支出趋势。
 
 ![成本分析中显示的预算和支出示例](./media/tutorial-acm-create-budgets/cost-analysis.png)
 
@@ -189,9 +190,14 @@ $ActionGroupId = (Set-AzActionGroup -ResourceGroupName YourResourceGroup -Name T
 
 New-AzConsumptionBudget -Amount 100 -Name TestPSBudget -Category Cost -StartDate 2020-02-01 -TimeGrain Monthly -EndDate 2022-12-31 -ContactEmail test@test.com -NotificationKey Key1 -NotificationThreshold 0.8 -NotificationEnabled -ContactGroup $ActionGroupId
 ```
+
 ## <a name="create-a-budget-with-an-azure-resource-manager-template"></a>使用 Azure 资源管理器模板创建预算
 
 可以使用 Azure 资源管理器模板创建预算。 若要使用模板，请参阅[使用 Azure 资源管理器模板创建预算](quick-create-budget-template.md)。
+
+## <a name="clean-up-resources"></a>清理资源
+
+如果创建了预算而不再需要它，请查看其详细信息并将其删除。
 
 ## <a name="next-steps"></a>后续步骤
 

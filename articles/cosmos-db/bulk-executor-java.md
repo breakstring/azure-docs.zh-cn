@@ -6,18 +6,19 @@ ms.service: cosmos-db
 ms.subservice: cosmosdb-sql
 ms.devlang: java
 ms.topic: how-to
-ms.date: 06/05/2020
+ms.date: 08/26/2020
 ms.author: ramkris
 ms.reviewer: sngun
 ms.custom: devx-track-java
-ms.openlocfilehash: a45a47b36ca0e9c426c84bb4b9f87ee5bdeccb84
-ms.sourcegitcommit: a76ff927bd57d2fcc122fa36f7cb21eb22154cfa
+ms.openlocfilehash: 89d21e4464cb3c7578b68d68009065ab7848ed19
+ms.sourcegitcommit: 3bdeb546890a740384a8ef383cf915e84bd7e91e
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/28/2020
-ms.locfileid: "87309148"
+ms.lasthandoff: 10/30/2020
+ms.locfileid: "93092528"
 ---
 # <a name="use-bulk-executor-java-library-to-perform-bulk-operations-on-azure-cosmos-db-data"></a>使用 Bulk Executor Java 库针对 Azure Cosmos DB 数据执行批量操作
+[!INCLUDE[appliesto-sql-api](includes/appliesto-sql-api.md)]
 
 本教程说明了如何使用 Azure Cosmos DB 的批量执行程序 Java 库导入和更新 Azure Cosmos DB 文档。 若要了解 Bulk Executor 库及它如何帮助你利用大量吞吐量和存储，请参阅 [Bulk Executor 库概述](bulk-executor-overview.md)一文。 在本教程中，我们将构建一个可生成随机文档的 Java 应用程序，然后将文档批量导入 Azure Cosmos 容器。 导入后，我们将批量更新文档的某些属性。 
 
@@ -27,9 +28,9 @@ ms.locfileid: "87309148"
 
 * 如果没有 Azure 订阅，请在开始之前创建一个[免费帐户](https://azure.microsoft.com/free/?ref=microsoft.com&utm_source=microsoft.com&utm_medium=docs&utm_campaign=visualstudio)。  
 
-* 无需 Azure 订阅即可免费[试用 Azure Cosmos DB](https://azure.microsoft.com/try/cosmosdb/) 。 或者，可以通过 `https://localhost:8081` 终结点使用 [Azure Cosmos DB 模拟器](https://docs.microsoft.com/azure/cosmos-db/local-emulator)。 [对请求进行身份验证](local-emulator.md#authenticating-requests)中提供了主密钥。  
+* 无需 Azure 订阅即可免费 [试用 Azure Cosmos DB](https://azure.microsoft.com/try/cosmosdb/) 。 或者，可以通过 `https://localhost:8081` 终结点使用 [Azure Cosmos DB 模拟器](./local-emulator.md)。 [对请求进行身份验证](local-emulator.md#authenticate-requests)中提供了主密钥。  
 
-* [Java 开发工具包 (JDK) 1.7+](/java/azure/jdk/?view=azure-java-stable)  
+* [Java 开发工具包 (JDK) 1.7+](/java/azure/jdk/?view=azure-java-stable&preserve-view=true)  
   - 在 Ubuntu 上运行 `apt-get install default-jdk`，以便安装 JDK。  
 
   - 请确保设置 JAVA_HOME 环境变量，使之指向在其中安装了 JDK 的文件夹。
@@ -94,7 +95,7 @@ ms.locfileid: "87309148"
    ```java
    BulkImportResponse bulkImportResponse = bulkExecutor.importAll(documents, false, true, null);
    ```
-   批量导入 API 接受 JSON 序列化文档的集合并使用以下语法，有关更多详细信息，请参阅 [API 文档](https://docs.microsoft.com/java/api/com.microsoft.azure.documentdb.bulkexecutor)：
+   批量导入 API 接受 JSON 序列化文档的集合并使用以下语法，有关更多详细信息，请参阅 [API 文档](/java/api/com.microsoft.azure.documentdb.bulkexecutor)：
 
    ```java
    public BulkImportResponse importAll(
@@ -112,7 +113,7 @@ ms.locfileid: "87309148"
    |disableAutomaticIdGeneration     |   用于禁用自动生成 ID 的标志。 此值默认设置为 true。   |
    |maxConcurrencyPerPartitionRange    |  每个分区键范围的最大并发度。 默认值为 20。  |
 
-   **批量导入响应对象定义**批量导入 API 调用的结果包含以下 get 方法：
+   **批量导入响应对象定义** 批量导入 API 调用的结果包含以下 get 方法：
 
    |**参数**  |**说明**  |
    |---------|---------|
@@ -131,16 +132,16 @@ ms.locfileid: "87309148"
 6. 生成目标依赖关系后，可使用以下命令调用批量导入程序应用程序：  
 
    ```bash
-   java -Xmx12G -jar bulkexecutor-sample-1.0-SNAPSHOT-jar-with-dependencies.jar -serviceEndpoint *<Fill in your Azure Cosmos DB's endpoint>*  -masterKey *<Fill in your Azure Cosmos DB's master key>* -databaseId bulkImportDb -collectionId bulkImportColl -operation import -shouldCreateCollection -collectionThroughput 1000000 -partitionKey /profileid -maxConnectionPoolSize 6000 -numberOfDocumentsForEachCheckpoint 1000000 -numberOfCheckpoints 10
+   java -Xmx12G -jar bulkexecutor-sample-1.0-SNAPSHOT-jar-with-dependencies.jar -serviceEndpoint *<Fill in your Azure Cosmos DB's endpoint>*  -masterKey *<Fill in your Azure Cosmos DB's primary key>* -databaseId bulkImportDb -collectionId bulkImportColl -operation import -shouldCreateCollection -collectionThroughput 1000000 -partitionKey /profileid -maxConnectionPoolSize 6000 -numberOfDocumentsForEachCheckpoint 1000000 -numberOfCheckpoints 10
    ```
 
    批量导入程序会创建新的数据库和集合，并在 App.config 文件中指定数据库名称、集合名称与吞吐量值。 
 
 ## <a name="bulk-update-data-in-azure-cosmos-db"></a>在 Azure Cosmos DB 中批量更新数据
 
-可以使用 BulkUpdateAsync API 更新现有文档。 此示例将 Name 字段设置为新值，并从现有文档中删除 Description 字段。 有关完整的受支持字段更新操作集，请参阅 [API 文档](https://docs.microsoft.com/java/api/com.microsoft.azure.documentdb.bulkexecutor)。 
+可以使用 BulkUpdateAsync API 更新现有文档。 此示例将 Name 字段设置为新值，并从现有文档中删除 Description 字段。 有关完整的受支持字段更新操作集，请参阅 [API 文档](/java/api/com.microsoft.azure.documentdb.bulkexecutor)。 
 
-1. 定义更新项以及相应的字段更新操作。 此示例使用 SetUpdateOperation 更新 Name 字段，并使用 UnsetUpdateOperation 删除所有文档中的 Description 字段。 还可以执行其他操作，例如，根据特定的值递增文档字段、将特定的值推送到数组字段，或者从数组字段中删除特定的值。 若要了解批量更新 API 提供的不同方法，请参阅 [API 文档](https://docs.microsoft.com/java/api/com.microsoft.azure.documentdb.bulkexecutor)。  
+1. 定义更新项以及相应的字段更新操作。 此示例使用 SetUpdateOperation 更新 Name 字段，并使用 UnsetUpdateOperation 删除所有文档中的 Description 字段。 还可以执行其他操作，例如，根据特定的值递增文档字段、将特定的值推送到数组字段，或者从数组字段中删除特定的值。 若要了解批量更新 API 提供的不同方法，请参阅 [API 文档](/java/api/com.microsoft.azure.documentdb.bulkexecutor)。  
 
    ```java
    SetUpdateOperation<String> nameUpdate = new SetUpdateOperation<>("Name","UpdatedDocValue");
@@ -162,7 +163,7 @@ ms.locfileid: "87309148"
    BulkUpdateResponse bulkUpdateResponse = bulkExecutor.updateAll(updateItems, null)
    ```
 
-   批量更新 API 接受一系列可更新的项。 每个更新项指定要针对 ID 和分区键值标识的文档执行的字段更新操作列表。 有关更多详细信息，请参阅 [API 文档](https://docs.microsoft.com/java/api/com.microsoft.azure.documentdb.bulkexecutor)：
+   批量更新 API 接受一系列可更新的项。 每个更新项指定要针对 ID 和分区键值标识的文档执行的字段更新操作列表。 有关更多详细信息，请参阅 [API 文档](/java/api/com.microsoft.azure.documentdb.bulkexecutor)：
 
    ```java
    public BulkUpdateResponse updateAll(
@@ -176,14 +177,15 @@ ms.locfileid: "87309148"
    |---------|---------|
    |maxConcurrencyPerPartitionRange   |  每个分区键范围的最大并发度。 默认值为 20。  |
  
-   **批量导入响应对象定义**批量导入 API 调用的结果包含以下 get 方法：
+   **批量导入响应对象定义** 批量导入 API 调用的结果包含以下 get 方法：
 
    |**参数** |**说明**  |
    |---------|---------|
    |int getNumberOfDocumentsUpdated()  |   从提供给批量更新 API 调用的文档中成功更新的文档总数。      |
    |double getTotalRequestUnitsConsumed() |  批量更新 API 调用消耗的请求单位 (RU) 总数。       |
    |Duration getTotalTimeTaken()  |   批量更新 API 调用完成执行所花费的总时间。      |
-   |List\<Exception> getErrors()   |       如果分批提供给批量更新 API 调用的某些文档无法插入，则获取错误列表。      |
+   |List\<Exception> getErrors()   |       获取与更新操作相关的操作或网络问题列表。      |
+   |List\<BulkUpdateFailure> getFailedUpdates()   |       获取无法完成的更新列表以及导致失败的特定异常。|
 
 3. 准备好批量更新应用程序后，请使用“mvn clean package”命令从源代码生成命令行工具。 此命令在目标文件夹中生成一个 jar 文件：  
 
@@ -194,7 +196,7 @@ ms.locfileid: "87309148"
 4. 生成目标依赖关系后，可使用以下命令调用批量更新应用程序：
 
    ```bash
-   java -Xmx12G -jar bulkexecutor-sample-1.0-SNAPSHOT-jar-with-dependencies.jar -serviceEndpoint **<Fill in your Azure Cosmos DB's endpoint>* -masterKey **<Fill in your Azure Cosmos DB's master key>* -databaseId bulkUpdateDb -collectionId bulkUpdateColl -operation update -collectionThroughput 1000000 -partitionKey /profileid -maxConnectionPoolSize 6000 -numberOfDocumentsForEachCheckpoint 1000000 -numberOfCheckpoints 10
+   java -Xmx12G -jar bulkexecutor-sample-1.0-SNAPSHOT-jar-with-dependencies.jar -serviceEndpoint **<Fill in your Azure Cosmos DB's endpoint>* -masterKey **<Fill in your Azure Cosmos DB's primary key>* -databaseId bulkUpdateDb -collectionId bulkUpdateColl -operation update -collectionThroughput 1000000 -partitionKey /profileid -maxConnectionPoolSize 6000 -numberOfDocumentsForEachCheckpoint 1000000 -numberOfCheckpoints 10
    ```
 
 ## <a name="performance-tips"></a>性能提示 
@@ -214,5 +216,3 @@ ms.locfileid: "87309148"
     
 ## <a name="next-steps"></a>后续步骤
 * 若要了解 maven 包的详细信息以及 Bulk Executor Java 库的发行说明，请参阅 [Bulk Executor SDK 详细信息](sql-api-sdk-bulk-executor-java.md)。
-
-

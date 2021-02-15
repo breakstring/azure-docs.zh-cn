@@ -12,18 +12,18 @@ ms.tgt_pltfrm: na
 ms.workload: infrastructure-services
 ms.date: 08/07/2019
 ms.author: allensu
-ms.openlocfilehash: 2192531aec7800314c6748740262f8746da0c4fc
-ms.sourcegitcommit: 845a55e6c391c79d2c1585ac1625ea7dc953ea89
+ms.openlocfilehash: 5c2072d13cab9839a276c0437747d7075918e78a
+ms.sourcegitcommit: e2dc549424fb2c10fcbb92b499b960677d67a8dd
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/05/2020
-ms.locfileid: "85956366"
+ms.lasthandoff: 11/17/2020
+ms.locfileid: "94696874"
 ---
 # <a name="multiple-frontends-for-azure-load-balancer"></a>Azure 负载均衡器的多个前端
 
 使用 Azure 负载均衡器可对多个端口和/或多个 IP 地址上的服务进行负载均衡。 可以使用公共和内部负载均衡器定义来对一组 VM 之间的流量进行负载均衡。
 
-本文介绍此功能的基础知识、重要概念和约束。 如果只想要公开一个 IP 地址上的服务，可以查看[公共](load-balancer-get-started-internet-portal.md)或[内部](load-balancer-get-started-ilb-arm-portal.md)负载均衡器配置的简要说明。 添加多个前端是对单个前端配置的递增。 使用本文中的概念，随时可以扩展简化的配置。
+本文介绍此功能的基础知识、重要概念和约束。 如果只想要公开一个 IP 地址上的服务，可以查看[公共](./quickstart-load-balancer-standard-public-portal.md)或[内部](./quickstart-load-balancer-standard-internal-portal.md)负载均衡器配置的简要说明。 添加多个前端是对单个前端配置的递增。 使用本文中的概念，随时可以扩展简化的配置。
 
 定义 Azure 负载均衡器时，前端和后端池配置与规则相连接。 规则引用的运行状况探测用于确定如何将新流量发送到后端池中的节点。 前端（也称为 VIP）由负载均衡规则中的 IP 地址（公共或内部）、传输协议（UDP 或 TCP）和端口号组成的 3 元组定义。 后端池是引用负载均衡器后端池的虚拟机 IP 配置（NIC 资源的一部分）的集合。
 
@@ -64,8 +64,8 @@ DIP 是入站流量的目标。 在后端池中，每个 VM 公开 DIP 上唯一
 
 | 规则 | 映射前端 | 目标后端池 |
 | --- | --- | --- |
-| 1 |![绿色前端](./media/load-balancer-multivip-overview/load-balancer-rule-green.png) Frontend1:80 |![后端](./media/load-balancer-multivip-overview/load-balancer-rule-green.png) DIP1:80, ![后端](./media/load-balancer-multivip-overview/load-balancer-rule-green.png) DIP2:80 |
-| 2 |![VIP](./media/load-balancer-multivip-overview/load-balancer-rule-purple.png) Frontend2:80 |![后端](./media/load-balancer-multivip-overview/load-balancer-rule-purple.png) DIP1:81, ![后端](./media/load-balancer-multivip-overview/load-balancer-rule-purple.png) DIP2:81 |
+| 1 |![绿色前端](./media/load-balancer-multivip-overview/load-balancer-rule-green.png) Frontend1:80 |![绿色后端](./media/load-balancer-multivip-overview/load-balancer-rule-green.png) DIP1:80, ![绿色后端](./media/load-balancer-multivip-overview/load-balancer-rule-green.png) DIP2:80 |
+| 2 |![VIP](./media/load-balancer-multivip-overview/load-balancer-rule-purple.png) Frontend2:80 |![紫色后端](./media/load-balancer-multivip-overview/load-balancer-rule-purple.png) DIP1:81, ![紫色后端](./media/load-balancer-multivip-overview/load-balancer-rule-purple.png) DIP2:81 |
 
 现在，Azure 负载均衡器的完整映射如下：
 
@@ -143,8 +143,8 @@ netsh interface ipv4 set interface “interfacename” weakhostsend=enabled
 
 | 规则 | 前端 | 映射到后端池 |
 | --- | --- | --- |
-| 1 |![规则 (rule)](./media/load-balancer-multivip-overview/load-balancer-rule-green.png) Frontend1:80 |![后端](./media/load-balancer-multivip-overview/load-balancer-rule-green.png) Frontend1:80（在 VM1 和 VM2 中） |
-| 2 |![规则 (rule)](./media/load-balancer-multivip-overview/load-balancer-rule-purple.png) Frontend2:80 |![后端](./media/load-balancer-multivip-overview/load-balancer-rule-purple.png) Frontend2:80（在 VM1 和 VM2 中） |
+| 1 |![绿色规则](./media/load-balancer-multivip-overview/load-balancer-rule-green.png) Frontend1:80 |![绿色后端](./media/load-balancer-multivip-overview/load-balancer-rule-green.png) Frontend1:80（在 VM1 和 VM2 中） |
+| 2 |![紫色规则](./media/load-balancer-multivip-overview/load-balancer-rule-purple.png) Frontend2:80 |![紫色后端](./media/load-balancer-multivip-overview/load-balancer-rule-purple.png) Frontend2:80（在 VM1 和 VM2 中） |
 
 下表显示负载均衡器中的完整映射：
 
@@ -163,6 +163,7 @@ netsh interface ipv4 set interface “interfacename” weakhostsend=enabled
 
 * 只有 IaaS VM 支持多个前端配置。
 * 使用浮动 IP 规则时，应用程序必须对出站 SNAT 流使用主要 IP 配置。 如果应用程序绑定到来宾 OS 中环回接口上配置的前端 IP 地址，则无法使用 Azure 的出站 SNAT 来重写出站流，此时流处理会失败。  查看[出站方案](load-balancer-outbound-connections.md)。
+* 对于内部负载均衡方案，辅助 IP 配置当前不支持浮动 IP。
 * 公共 IP 地址会影响计费。 有关详细信息，请参阅 [IP 地址定价](https://azure.microsoft.com/pricing/details/ip-addresses/)
 * 订阅有所限制。 有关详细信息，请参阅[服务限制](../azure-resource-manager/management/azure-subscription-service-limits.md#networking-limits)。
 

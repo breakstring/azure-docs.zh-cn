@@ -5,18 +5,18 @@ services: active-directory
 ms.service: active-directory
 ms.subservice: devices
 ms.topic: tutorial
-ms.date: 03/06/2020
+ms.date: 01/26/2021
 ms.author: joflore
 author: MicrosoftGuyJFlo
 manager: daveba
 ms.reviewer: sandeo
 ms.collection: M365-identity-device-management
-ms.openlocfilehash: a4f30202b08328854296b45e0279fc51b25b0a7c
-ms.sourcegitcommit: 0b8320ae0d3455344ec8855b5c2d0ab3faa974a3
+ms.openlocfilehash: d3da63503c80652bc8737f2cb4894e25d8bc6fc0
+ms.sourcegitcommit: 100390fefd8f1c48173c51b71650c8ca1b26f711
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/30/2020
-ms.locfileid: "87428468"
+ms.lasthandoff: 01/27/2021
+ms.locfileid: "98893400"
 ---
 # <a name="tutorial-configure-hybrid-azure-active-directory-join-for-managed-domains"></a>教程：为托管域配置混合 Azure Active Directory 加入
 
@@ -73,9 +73,9 @@ ms.locfileid: "87428468"
 > [!WARNING]
 > 如果组织使用针对数据丢失防护或 Azure AD 租户限制等方案拦截 SSL 流量的代理服务器，请确保在 TLS 中断和检查中排除发往“https://device.login.microsoftonline.com”的流量。 未能排除“https://device.login.microsoftonline.com”可能会导致干扰客户端证书身份验证，从而导致设备注册和基于设备的条件访问出现问题。
 
-如果你的组织需要通过出站代理访问 Internet，你可使用[实施 Web 代理自动发现 (WPAD)](https://docs.microsoft.com/previous-versions/tn-archive/cc995261(v%3dtechnet.10))，使 Windows 10 计算机能够在 Azure AD 中进行设备注册。 若要解决在配置和管理 WPAD 时遇到问题，请参阅[排查自动检测的问题](/previous-versions/tn-archive/cc302643(v=technet.10))。 在 1709 更新之前的 Windows 10 设备中，只能使用 WPAD 来配置代理以使用混合 Azure AD 联接。 
+如果你的组织需要通过出站代理访问 Internet，你可使用[实施 Web 代理自动发现 (WPAD)](/previous-versions/tn-archive/cc995261(v=technet.10))，使 Windows 10 计算机能够在 Azure AD 中进行设备注册。 若要解决在配置和管理 WPAD 时遇到问题，请参阅[排查自动检测的问题](/previous-versions/tn-archive/cc302643(v=technet.10))。 在 1709 更新之前的 Windows 10 设备中，只能使用 WPAD 来配置代理以使用混合 Azure AD 联接。 
 
-从 Windows 10 1709 开始，如果不使用 WPAD，则可以在计算机上配置 WinHTTP 代理设置。 有关详细信息，请参阅 [GPO 部署的 WinHTTP 代理设置](https://blogs.technet.microsoft.com/netgeeks/2018/06/19/winhttp-proxy-settings-deployed-by-gpo/)。
+从 Windows 10 1709 开始，如果不使用 WPAD，则可以在计算机上配置 WinHTTP 代理设置。 有关详细信息，请参阅 [GPO 部署的 WinHTTP 代理设置](/archive/blogs/netgeeks/winhttp-proxy-settings-deployed-by-gpo)。
 
 > [!NOTE]
 > 如果使用 WinHTTP 设置在计算机上配置代理设置，则无法连接到所配置的代理的任何计算机将无法连接到 Internet。
@@ -90,23 +90,21 @@ ms.locfileid: "87428468"
 
 1. 启动 Azure AD Connect，然后选择“配置”。
 
-   ![欢迎使用](./media/hybrid-azuread-join-managed-domains/welcome-azure-ad-connect.png)
-
 1. 在“其他任务”中，依次选择“配置设备选项”、“下一步”。  
 
    ![其他任务](./media/hybrid-azuread-join-managed-domains/azure-ad-connect-additional-tasks.png)
 
 1. 在“概述”中选择“下一步”。 
 
-   ![概述](./media/hybrid-azuread-join-managed-domains/azure-ad-connect-overview.png)
-
 1. 在“连接到 Azure AD”中，输入 Azure AD 租户的全局管理员凭据。  
-
-   ![连接到 Azure AD](./media/hybrid-azuread-join-managed-domains/connect-to-azure-ad-username-password.png)
 
 1. 在“设备选项”中，依次选择“配置混合 Azure AD 加入”、“下一步”。  
 
    ![设备选项](./media/hybrid-azuread-join-managed-domains/azure-ad-connect-device-options.png)
+
+1. 在“设备操作系统”中选择 Active Directory 环境中设备使用的操作系统，然后选择“下一步”。 
+
+   ![设备操作系统](./media/hybrid-azuread-join-managed-domains/azure-ad-connect-device-operating-systems.png)
 
 1. 在“SCP 配置”中，对于你希望 Azure AD Connect 在其中配置 SCP 的每个林，请完成以下步骤，然后选择“下一步”。 
 
@@ -116,17 +114,9 @@ ms.locfileid: "87428468"
 
    ![SCP](./media/hybrid-azuread-join-managed-domains/azure-ad-connect-scp-configuration.png)
 
-1. 在“设备操作系统”中选择 Active Directory 环境中设备使用的操作系统，然后选择“下一步”。 
-
-   ![设备操作系统](./media/hybrid-azuread-join-managed-domains/azure-ad-connect-device-operating-systems.png)
-
 1. 在“已准备好配置”中选择“配置”。 
 
-   ![已准备好配置](./media/hybrid-azuread-join-managed-domains/azure-ad-connect-ready-to-configure.png)
-
 1. 在“配置完成”中选择“退出”。 
-
-   ![配置完成](./media/hybrid-azuread-join-managed-domains/azure-ad-connect-configuration-complete.png)
 
 ## <a name="enable-windows-down-level-devices"></a>启用 Windows 下层设备
 
@@ -174,17 +164,17 @@ ms.locfileid: "87428468"
 ### <a name="using-the-azure-portal"></a>使用 Azure 门户
 
 1. 使用[直接链接](https://portal.azure.com/#blade/Microsoft_AAD_IAM/DevicesMenuBlade/Devices)进入设备页面。
-2. 有关如何查找设备的信息，请参阅[如何使用 Azure 门户管理设备标识](https://docs.microsoft.com/azure/active-directory/devices/device-management-azure-portal#locate-devices)。
+2. 有关如何查找设备的信息，请参阅[如何使用 Azure 门户管理设备标识](./device-management-azure-portal.md)。
 3. 如果“已注册”列显示“挂起”，则表明混合 Azure AD 联接尚未完成。
 4. 如果“已注册”列包含日期/时间，则表明混合 Azure AD 联接已完成。
 
 ### <a name="using-powershell"></a>使用 PowerShell
 
-使用 **[Get-MsolDevice](/powershell/module/msonline/get-msoldevice)** 验证 Azure 租户中的设备注册状态。 [Azure Active Directory PowerShell 模块](/powershell/azure/active-directory/install-msonlinev1?view=azureadps-2.0)中包含此 cmdlet。
+使用 **[Get-MsolDevice](/powershell/module/msonline/get-msoldevice)** 验证 Azure 租户中的设备注册状态。 [Azure Active Directory PowerShell 模块](/powershell/azure/active-directory/install-msonlinev1)中包含此 cmdlet。
 
 使用 Get-MSolDevice cmdlet 检查服务详细信息时：
 
-- 必须存在其**设备 ID** 与 Windows 客户端上的 ID 相匹配的对象。
+- 必须存在其 **设备 ID** 与 Windows 客户端上的 ID 相匹配的对象。
 - **DeviceTrustType** 的值为 **Domain Joined**。 此设置相当于 Azure AD 门户中“设备”页上的“已加入混合 Azure AD”状态 。
 - 对于条件访问中使用的设备，**Enabled** 的值为 **True**，**DeviceTrustLevel** 的值为 **Managed**。
 
@@ -224,7 +214,7 @@ Get-MsolDevice -All -IncludeSystemManagedDevices | where {($_.DeviceTrustType -e
 
 如果在对已加入域的 Windows 设备完成混合 Azure AD 加入时遇到问题，请参阅：
 
-- [使用 dsregcmd 命令排查设备问题](https://docs.microsoft.com/azure/active-directory/devices/troubleshoot-device-dsregcmd)
+- [使用 dsregcmd 命令排查设备问题](./troubleshoot-device-dsregcmd.md)
 - [排查已加入混合 Azure Active Directory 的设备的问题](troubleshoot-hybrid-join-windows-current.md)
 - [排查已加入混合 Azure Active Directory 的下层设备问题](troubleshoot-hybrid-join-windows-legacy.md)
 

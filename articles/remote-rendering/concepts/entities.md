@@ -5,12 +5,13 @@ author: florianborn71
 ms.author: flborn
 ms.date: 02/03/2020
 ms.topic: conceptual
-ms.openlocfilehash: 5f6f7fc52a186117afcb92f6a2f80bf068e50ab9
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.custom: devx-track-csharp
+ms.openlocfilehash: 29952353b8c3452d95bcced163fafa81fe158f64
+ms.sourcegitcommit: f377ba5ebd431e8c3579445ff588da664b00b36b
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "84509196"
+ms.lasthandoff: 02/05/2021
+ms.locfileid: "99593395"
 ---
 # <a name="entities"></a>实体
 
@@ -20,9 +21,9 @@ ms.locfileid: "84509196"
 
 实体具有由位置、旋转和比例定义的转换。 实体本身没有任何可观测的功能。 而行为是通过附加到实体的组件添加的。 例如，附加 [CutPlaneComponent](../overview/features/cut-planes.md) 将在实体位置创建裁切平面。
 
-实体本身的最重要方面是层次结构和产生的分层转换。 例如，将多个实体作为子级附加到共享的父实体时，可以通过更改父实体的转换，同时移动、旋转和缩放所有这些实体。
+实体本身的最重要方面是层次结构和产生的分层转换。 例如，将多个实体作为子级附加到共享的父实体时，可以通过更改父实体的转换，同时移动、旋转和缩放所有这些实体。 此外，实体的 `enabled` 状态可用于关闭层次结构中完整子关系图的可见性和对光线转换的响应。
 
-实体由其父级唯一拥有，这意味着，当父级被 `Entity.Destroy()` 销毁时，其子级和所有连接的[组件](components.md)也会被销毁。 因此，从场景中删除模型（由 `AzureSession.Actions.LoadModelAsync()` 或其 SAS 变体 `AzureSession.Actions.LoadModelFromSASAsync()` 返回）可以通过在模型的根节点上调用 `Destroy` 来实现。
+实体由其父级唯一拥有，这意味着，当父级被 `Entity.Destroy()` 销毁时，其子级和所有连接的[组件](components.md)也会被销毁。 因此，从场景中删除模型（由 `RenderingSession.Connection.LoadModelAsync()` 或其 SAS 变体 `RenderingSession.Connection.LoadModelFromSasAsync()` 返回）可以通过在模型的根节点上调用 `Destroy` 来实现。
 
 当服务器加载内容或用户想要将对象添加到场景中时，会创建实体。 例如，如果用户想要添加裁切平面来可视化网格内部，则用户可以创建应存在平面的实体，然后将该裁切平面组件添加到其中。
 
@@ -31,22 +32,22 @@ ms.locfileid: "84509196"
 若要将新实体添加到场景中，例如，将其作为根对象传递以加载模型或向其附加组件，请使用以下代码：
 
 ```cs
-Entity CreateNewEntity(AzureSession session)
+Entity CreateNewEntity(RenderingSession session)
 {
-    Entity entity = session.Actions.CreateEntity();
+    Entity entity = session.Connection.CreateEntity();
     entity.Position = new LocalPosition(1, 2, 3);
     return entity;
 }
 ```
 
 ```cpp
-ApiHandle<Entity> CreateNewEntity(ApiHandle<AzureSession> session)
+ApiHandle<Entity> CreateNewEntity(ApiHandle<RenderingSession> session)
 {
     ApiHandle<Entity> entity(nullptr);
-    if (auto entityRes = session->Actions()->CreateEntity())
+    if (auto entityRes = session->Connection()->CreateEntity())
     {
         entity = entityRes.value();
-        entity->Position(Double3{ 1, 2, 3 });
+        entity->SetPosition(Double3{ 1, 2, 3 });
         return entity;
     }
     return entity;
@@ -72,7 +73,7 @@ CutPlaneComponent cutplane = entity.FindComponentOfType<CutPlaneComponent>();
 ApiHandle<CutPlaneComponent> cutplane = entity->FindComponentOfType(ObjectType::CutPlaneComponent)->as<CutPlaneComponent>();
 
 // or alternatively:
-ApiHandle<CutPlaneComponent> cutplane = *entity->FindComponentOfType<CutPlaneComponent>();
+ApiHandle<CutPlaneComponent> cutplane = entity->FindComponentOfType<CutPlaneComponent>();
 ```
 
 ### <a name="querying-transforms"></a>查询转换
@@ -90,10 +91,9 @@ Quaternion rotation = entity.Rotation;
 
 ```cpp
 // local space transform of the entity
-Double3 translation = *entity->Position();
-Quaternion rotation = *entity->Rotation();
+Double3 translation = entity->GetPosition();
+Quaternion rotation = entity->GetRotation();
 ```
-
 
 ### <a name="querying-spatial-bounds"></a>查询空间边界
 
@@ -106,36 +106,34 @@ Quaternion rotation = *entity->Rotation();
 元数据查询是对特定实体的异步调用。 查询仅返回单个实体的元数据，而不返回子图形的合并信息。
 
 ```cs
-MetadataQueryAsync metaDataQuery = entity.QueryMetaDataAsync();
-metaDataQuery.Completed += (MetadataQueryAsync query) =>
-{
-    if (query.IsRanToCompletion)
-    {
-        ObjectMetaData metaData = query.Result;
-        ObjectMetaDataEntry entry = metaData.GetMetadataByName("MyInt64Value");
-        System.Int64 intValue = entry.AsInt64;
-
-        // ...
-    }
-};
+Task<ObjectMetadata> metaDataQuery = entity.QueryMetadataAsync();
+ObjectMetadata metaData = await metaDataQuery;
+ObjectMetadataEntry entry = metaData.GetMetadataByName("MyInt64Value");
+System.Int64 intValue = entry.AsInt64;
+// ...
 ```
 
 ```cpp
-ApiHandle<MetadataQueryAsync> metaDataQuery = *entity->QueryMetaDataAsync();
-metaDataQuery->Completed([](const ApiHandle<MetadataQueryAsync>& query)
+entity->QueryMetadataAsync([](Status status, ApiHandle<ObjectMetadata> metaData) 
+{
+    if (status == Status::OK)
     {
-        if (query->IsRanToCompletion())
-        {
-            ApiHandle<ObjectMetaData> metaData = *query->Result();
-            ApiHandle<ObjectMetaDataEntry> entry = *metaData->GetMetadataByName("MyInt64Value");
-            int64_t intValue = *entry->AsInt64();
+        ApiHandle<ObjectMetadataEntry> entry = *metaData->GetMetadataByName("MyInt64Value");
+        int64_t intValue = *entry->GetAsInt64();
 
-            // ...
-        }
-    });
+        // ...
+    }
+});
 ```
 
 即使对象不包含任何元数据，查询也将成功。
+
+## <a name="api-documentation"></a>API 文档
+
+* [C # 实体类](/dotnet/api/microsoft.azure.remoterendering.entity)
+* [C # RenderingConnection CreateEntity ( # B1 ](/dotnet/api/microsoft.azure.remoterendering.renderingconnection.createentity)
+* [C + + 实体类](/cpp/api/remote-rendering/entity)
+* [C + + RenderingConnection：： CreateEntity ( # B1 ](/cpp/api/remote-rendering/renderingconnection#createentity)
 
 ## <a name="next-steps"></a>后续步骤
 

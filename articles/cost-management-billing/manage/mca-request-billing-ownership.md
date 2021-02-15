@@ -4,15 +4,16 @@ description: 了解如何从其他用户请求 Azure 订阅的计费所有权。
 author: amberbhargava
 tags: billing
 ms.service: cost-management-billing
+ms.subservice: billing
 ms.topic: how-to
-ms.date: 07/24/2020
+ms.date: 12/09/2020
 ms.author: banders
-ms.openlocfilehash: 44fb7a8a93569b2591150a99d39fcb3bac0134c0
-ms.sourcegitcommit: dccb85aed33d9251048024faf7ef23c94d695145
+ms.openlocfilehash: ca55773b2deb74ea0647ed33df4040065762f94a
+ms.sourcegitcommit: dea56e0dd919ad4250dde03c11d5406530c21c28
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/28/2020
-ms.locfileid: "87290776"
+ms.lasthandoff: 12/09/2020
+ms.locfileid: "96938471"
 ---
 # <a name="get-billing-ownership-of-azure-subscriptions-from-other-accounts"></a>从其他帐户获取 Azure 订阅的计费所有权
 
@@ -20,14 +21,22 @@ ms.locfileid: "87290776"
 
 本文适用于 Microsoft 客户协议的计费帐户。 [检查你是否有权访问 Microsoft 客户协议](#check-for-access)。
 
-只有**发票科目所有者**或**发票科目参与者**才能请求计费所有权。 有关详细信息，请参阅[发票科目角色任务](understand-mca-roles.md#invoice-section-roles-and-tasks)。
+只有 **发票科目所有者** 或 **发票科目参与者** 才能请求计费所有权。 有关详细信息，请参阅[发票科目角色任务](understand-mca-roles.md#invoice-section-roles-and-tasks)。
+
+你向其请求计费所有权的人员须具有以下角色之一：
+
+- 对于企业 Microsoft 客户协议，用户是计费所有者。
+- 对于企业协议，此用户必须是帐户所有者。
+- 对于 Microsoft 联机服务程序计费帐户，用户必须是帐户管理员。
+
+有关详细信息，请参阅[在 Azure 门户中查看计费帐户](view-all-accounts.md)。
 
 ## <a name="request-billing-ownership"></a>请求计费所有权
 
 1. 以 Microsoft 客户协议计费帐户的发票科目所有者或参与者身份登录到 [Azure 门户](https://portal.azure.com)。
 1. 搜索“成本管理 + 计费”。  
     ![显示如何在 Azure 门户中搜索“成本管理 + 计费”的屏幕截图](./media/mca-request-billing-ownership/billing-search-cost-management-billing.png)
-1. 在计费范围页中，选择用于订阅使用情况付款的计费帐户。 计费帐户的类型应为 **Microsoft 客户协议**。  
+1. 在计费范围页中，选择“计费范围”，然后选择用于支付订阅使用费用的计费帐户。 计费帐户的类型应为 **Microsoft 客户协议**。  
     [![显示“成本管理 + 计费”门户搜索的屏幕截图](./media/mca-request-billing-ownership/list-of-scopes.png)](./media/mca-request-billing-ownership/list-of-scopes.png#lightbox)
     > [!NOTE]
     > Azure 门户会记住你访问的最后一个计费范围，并在你下一次转到“成本管理 + 计费”页时显示该范围。 如果你早前访问过“成本管理 + 计费”，则看不到计费范围页。 如果是这样，请检查你是否处于[正确的范围](#check-for-access)。 否则，请[切换范围](view-all-accounts.md#switch-billing-scope-in-the-azure-portal)，选择 Microsoft 客户协议的计费帐户。
@@ -41,7 +50,7 @@ ms.locfileid: "87290776"
 1. 从列表中选择一个发票科目。 在你接管订阅的所有权后，系统会将其使用情况分配到计费对象信息的发票的此部分。
 1. 选择左下角的“转移请求”，然后选择“添加新请求”。   
     [![显示正在选择转移请求的屏幕截图](./media/mca-request-billing-ownership/mca-select-transfer-requests.png)](./media/mca-request-billing-ownership/mca-select-transfer-requests.png#lightbox)
-1. 输入要从其请求计费所有权的用户的电子邮件地址。 该用户必须是 Microsoft 在线服务计划计费帐户的帐户管理员，或企业协议中的帐户所有者。 有关详细信息，请参阅[在 Azure 门户中查看计费帐户](view-all-accounts.md)。 选择“发送转移请求”。  
+1. 输入要从其请求计费所有权的用户的电子邮件地址。 选择“发送转移请求”。  
     [![显示正在发送转移请求的屏幕截图](./media/mca-request-billing-ownership/mca-send-transfer-requests.png)](./media/mca-request-billing-ownership/mca-send-transfer-requests.png#lightbox)
 1. 用户将收到一封电子邮件，其中包含查看转让请求的说明。  
     ![显示查看转移请求电子邮件的屏幕截图](./media/mca-request-billing-ownership/mca-review-transfer-request-email.png)
@@ -61,12 +70,13 @@ ms.locfileid: "87290776"
 1. 在计费范围页中，选择已发送其转账请求的计费帐户。
 1. 在左侧选择“计费对象信息”。  
     [![屏幕截图显示正在选择计费对象信息](./media/mca-request-billing-ownership/mca-select-profiles.png)](./media/mca-request-billing-ownership/mca-select-profiles.png#lightbox)
-1. 选择已发送其转账请求的**计费对象信息**。
+1. 选择已发送其转账请求的 **计费对象信息**。
 1. 在左侧选择“发票科目”。  
     [![屏幕截图显示正在选择发票部分](./media/mca-request-billing-ownership/mca-select-invoice-sections.png)](./media/mca-request-billing-ownership/mca-select-invoice-sections.png#lightbox)   
 1. 从列表中选择已发送其转账请求的发票科目。
 1. 选择左下角的“转移请求”。 “转移请求”页将显示以下信息：  
     [![显示转移请求列表的屏幕截图](./media/mca-request-billing-ownership/mca-select-transfer-requests-for-status.png)](./media/mca-request-billing-ownership/mca-select-transfer-requests-for-status.png#lightbox)
+
    |列|定义|
    |---------|---------|
    |请求日期|发送转移请求的日期|
@@ -151,7 +161,7 @@ Azure 市场产品将连同各自的订阅一起转移。
 
 ### <a name="access-to-azure-services"></a>对 Azure 服务的访问权限
 
-在转换期间，使用 (Azure RBAC（基于角色的访问控制）)[../role-based-access-control/overview.md] 为现有用户、组或服务主体分配的访问权限不受影响。
+在转换期间，使用 [Azure 基于角色的访问控制 (Azure RBAC)](../../role-based-access-control/overview.md) 为现有用户、组或服务主体分配的访问权限不受影响。
 
 ### <a name="azure-support-plan"></a>Azure 支持计划
 

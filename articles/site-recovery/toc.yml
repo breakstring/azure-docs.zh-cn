@@ -48,6 +48,22 @@
           href: tutorial-dr-drill-azure.md
         - name: 故障转移到 Azure
           href: vmware-azure-tutorial-failover-failback.md
+    - name: Azure VMware 解决方案 - 灾难恢复到 Azure
+      items:
+        - name: 准备 Azure
+          href: avs-tutorial-prepare-azure.md
+        - name: 准备 Azure VMware 解决方案
+          href: avs-tutorial-prepare-avs.md
+        - name: 设置复制
+          href: avs-tutorial-replication.md
+        - name: 运行灾难恢复演练
+          href: avs-tutorial-dr-drill-azure.md
+        - name: 故障转移到 Azure
+          href: avs-tutorial-failover.md
+        - name: 重新保护 VM
+          href: avs-tutorial-reprotect.md
+        - name: 从 Azure 进行故障回复
+          href: avs-tutorial-failback.md
     - name: Hyper-V VM 灾难恢复到 Azure
       items:
         - name: 准备 Azure
@@ -160,6 +176,10 @@
           href: hyper-v-vmm-secondary-support-matrix.md
         - name: Hyper-V VM 到辅助站点的体系结构
           href: hyper-v-vmm-architecture.md
+    - name: 安全性
+      items:
+        - name: 安全基线
+          href: security-baseline.md
 - name: 操作方法指南
   items:
     - name: Azure 到 Azure 灾难恢复
@@ -458,6 +478,8 @@
       href: hyper-v-vmm-powershell-resource-manager.md
     - name: 将自动化 Runbook 添加到恢复计划
       href: site-recovery-runbook-automation.md
+    - name: ARM 模板
+      href: asr-arm-templates.md
 - name: 监视
   items:
     - name: 有关监视的常见问题
@@ -466,6 +488,8 @@
       href: site-recovery-monitor-and-troubleshoot.md
     - name: 使用 Azure Monitor 日志监视 Site Recovery
       href: monitor-log-analytics.md
+    - name: 监视虚拟机上的代码改动模式
+      href: monitoring-high-churn.md
     - name: 监视进程服务器
       href: vmware-physical-azure-monitor-process-server.md
 - name: 疑难解答

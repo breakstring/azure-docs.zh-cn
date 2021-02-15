@@ -1,14 +1,17 @@
 ---
 title: Azure Migrate 中的 Hyper-v 评估支持
 description: 了解 Azure Migrate Server 评估的 Hyper-v 评估支持
+author: rashi-ms
+ms.author: rajosh
+ms.manager: abhemraj
 ms.topic: conceptual
 ms.date: 06/14/2020
-ms.openlocfilehash: 3d55d71fc4e9551fa19afe8c3f37d31107e4d2e7
-ms.sourcegitcommit: 628be49d29421a638c8a479452d78ba1c9f7c8e4
+ms.openlocfilehash: 5b5c85b599f02cedc3bb1bda84c28ef2169c8e2d
+ms.sourcegitcommit: ea551dad8d870ddcc0fee4423026f51bf4532e19
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/20/2020
-ms.locfileid: "88641817"
+ms.lasthandoff: 12/07/2020
+ms.locfileid: "96754039"
 ---
 # <a name="support-matrix-for-hyper-v-assessment"></a>Hyper-v 评估的支持矩阵
 
@@ -46,7 +49,7 @@ ms.locfileid: "88641817"
 | :----------------------------- | :------------------- |
 | **操作系统** | 所有操作系统都可以进行迁移评估。  |
 | **Integration Services**       | [Hyper-v Integration Services](/virtualization/hyper-v-on-windows/reference/integration-services) 必须在你评估的 vm 上运行，才能捕获操作系统信息。 |
-
+| **存储** | 本地磁盘，DAS，JBOD，存储空间，CSV，SMB。 支持在其上存储 VHD/VHDX 的 Hyper-v 主机存储。 <br/> 支持 IDE 和 SCSI 虚拟控制器| 
 
 ## <a name="azure-migrate-appliance-requirements"></a>Azure Migrate 设备要求
 
@@ -63,7 +66,7 @@ Azure Migrate 使用 [Azure Migrate 设备](migrate-appliance.md)进行发现和
 **设备** | **Connection**
 --- | ---
 **设备** | TCP 端口 3389 上的入站连接，可便于通过远程桌面连接来连接到设备。<br/><br/> 端口 44368 上的入站连接，用于使用 URL ``` https://<appliance-ip-or-name>:44368 ``` 远程访问设备管理应用<br/><br/> 端口443上的出站连接 (HTTPS) ，以将发现和性能元数据发送到 Azure Migrate。
-**Hyper-v 主机/群集** | WinRM 端口5985上的入站连接 (HTTP) 使用通用信息模型 (CIM) 会话请求 Hyper-v Vm 的元数据和性能数据。
+**Hyper-v 主机/群集** | WinRM 端口5985上的入站连接 (HTTP) 或 5986 (HTTPS) ，使用通用信息模型 (CIM) 会话请求 Hyper-v Vm 的元数据和性能数据。
 
 ## <a name="agent-based-dependency-analysis-requirements"></a>基于代理的依赖关系分析要求
 
@@ -83,4 +86,4 @@ Azure Migrate 使用 [Azure Migrate 设备](migrate-appliance.md)进行发现和
 
 ## <a name="next-steps"></a>后续步骤
 
-[准备 Hyper-v VM 评估](tutorial-prepare-hyper-v.md)
+[准备 Hyper-v VM 评估](./tutorial-discover-hyper-v.md)

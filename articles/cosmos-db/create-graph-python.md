@@ -1,22 +1,23 @@
 ---
 title: 快速入门：将 Gremlin API 与 Python 配合使用 - Azure Cosmos DB
 description: 本快速入门介绍如何在 Azure 门户和 Python 中使用 Azure Cosmos DB Gremlin API 创建控制台应用程序
-author: luisbosquez
+author: christopheranderson
 ms.service: cosmos-db
 ms.subservice: cosmosdb-graph
 ms.devlang: python
 ms.topic: quickstart
 ms.date: 01/22/2019
-ms.author: lbosq
+ms.author: chrande
 ms.custom: devx-track-python
-ms.openlocfilehash: b927a0a64256283536a73002cc5915bcaddd2efc
-ms.sourcegitcommit: dea88d5e28bd4bbd55f5303d7d58785fad5a341d
+ms.openlocfilehash: 91b04b05b810b2b0fc221943a73e81c49f7119dc
+ms.sourcegitcommit: a43a59e44c14d349d597c3d2fd2bc779989c71d7
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/06/2020
-ms.locfileid: "87873137"
+ms.lasthandoff: 11/25/2020
+ms.locfileid: "95972406"
 ---
 # <a name="quickstart-create-a-graph-database-in-azure-cosmos-db-using-python-and-the-azure-portal"></a>快速入门：在 Azure Cosmos DB 中使用 Python 和 Azure 门户创建图形数据库
+[!INCLUDE[appliesto-gremlin-api](includes/appliesto-gremlin-api.md)]
 
 > [!div class="op_single_selector"]
 > * [Gremlin 控制台](create-graph-gremlin-console.md)
@@ -64,7 +65,7 @@ ms.locfileid: "87873137"
     cd "C:\git-samples"
     ```
 
-3. 运行下列命令以克隆示例存储库。 此命令在计算机上创建示例应用程序的副本。 
+3. 运行下列命令，克隆示例存储库。 此命令在计算机上创建示例应用程序的副本。 
 
     ```bash
     git clone https://github.com/Azure-Samples/azure-cosmos-db-graph-python-getting-started.git
@@ -172,7 +173,7 @@ ms.locfileid: "87873137"
 
 1. 在 Azure 门户中，在你的 Azure Cosmos DB 帐户中，选择“数据资源管理器”，展开“sample-graph”，再依次选择“图形”和“应用筛选器”。 
 
-   :::image type="content" source="./media/create-graph-python/azure-cosmosdb-data-explorer-expanded.png" alt-text="在 Azure 门户的数据资源管理器中创建新文档":::
+   :::image type="content" source="./media/create-graph-python/azure-cosmosdb-data-explorer-expanded.png" alt-text="屏幕截图显示了从 API 中选择了提供“应用筛选器”选项的“图形”。":::
 
 2. 在“结果”列表中，请注意，图中添加了三个新用户。 可以通过拖放操作来移动顶点，也可以通过滚动鼠标滚轮进行缩放，并能用双箭头放大图形。 
 
@@ -180,18 +181,18 @@ ms.locfileid: "87873137"
 
 3. 接下来，添加几个新用户。 选择“新建顶点”按钮，向图形中添加数据。
 
-   :::image type="content" source="./media/create-graph-python/azure-cosmosdb-data-explorer-new-vertex.png" alt-text="在 Azure 门户的数据资源管理器中创建新文档":::
+   :::image type="content" source="./media/create-graph-python/azure-cosmosdb-data-explorer-new-vertex.png" alt-text="屏幕截图显示了可以在其中输入值的“新建顶点”窗格。":::
 
 4. 输入标签“人员”。
 
 5. 选择“添加属性”，以添加下列每个属性。 注意，可以在图形中为每个人创建唯一属性。 仅 id 键是必需的。
 
-    key|值|说明
+    键|值|说明
     ----|----|----
     pk|/pk| 
     id|ashley|顶点的唯一标识符。 如果未指定 id，将为你生成一个。
-    gender|女| 
-    技术 | java | 
+    gender|female| 
+    tech | Java | 
 
     > [!NOTE]
     > 在本快速入门中创建未分区的集合。 但是，如果在创建集合过程中通过指定分区键创建了分区的集合，则需在每个新顶点中包括该分区键作为键。 
@@ -204,16 +205,16 @@ ms.locfileid: "87873137"
 
 9. 选择“添加属性”，以添加下列每个属性：
 
-    key|值|说明
+    键|值|说明
     ----|----|----
     pk|/pk| 
     id|rakesh|顶点的唯一标识符。 如果未指定 id，将为你生成一个。
-    gender|男| 
-    学校|MIT| 
+    gender|male| 
+    school|MIT| 
 
 10. 选择“确定”。 
 
-11. 选择“应用筛选器”按钮（默认为 `g.V()` 筛选器），在图形中显示所有值。 所有用户此时会显示在“结果”列表中。 
+11. 选择“应用筛选器”按钮（使用默认 `g.V()` 筛选器），显示图中的所有值。 所有用户此时会显示在“结果”列表中。 
 
     添加更多数据时，可以使用筛选器来限制结果。 默认情况下，数据资源管理器使用 `g.V()` 检索图形中的所有顶点。 可以更改为其他[图形查询](tutorial-query-graph.md)（如 `g.V().count()`），以 JSON 格式返回图形中所有 顶点的计数。 如果更改了筛选器，请将筛选器更改回 `g.V()`，并选择“应用筛选器”，再次显示所有结果。
 
@@ -241,7 +242,7 @@ ms.locfileid: "87873137"
 
 ## <a name="next-steps"></a>后续步骤
 
-在本快速入门中，你已了解了如何创建 Azure Cosmos DB 帐户，使用数据资源管理器创建图形，以及运行 Python 应用来向图形添加数据。 现在可以使用 Gremlin 构建更复杂的查询，实现功能强大的图形遍历逻辑。 
+在本快速入门中，你已了解了如何创建 Azure Cosmos DB 帐户，使用数据资源管理器创建图形，以及运行 Python 应用来向图形添加数据。 现可使用 Gremlin 构建更复杂的查询，实现功能强大的图形遍历逻辑。 
 
 > [!div class="nextstepaction"]
 > [使用 Gremlin 查询](tutorial-query-graph.md)

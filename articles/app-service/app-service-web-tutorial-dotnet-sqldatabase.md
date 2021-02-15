@@ -6,12 +6,12 @@ ms.devlang: csharp
 ms.topic: tutorial
 ms.date: 06/25/2018
 ms.custom: devx-track-csharp, mvc, devcenter, vs-azure, seodec18
-ms.openlocfilehash: fd7f860eb6e18edeb2096c12102e74c7446d050f
-ms.sourcegitcommit: 4913da04fd0f3cf7710ec08d0c1867b62c2effe7
+ms.openlocfilehash: a427fbc6fad1566ae10e11b61de981aded32e64a
+ms.sourcegitcommit: 090ea6e8811663941827d1104b4593e29774fa19
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/14/2020
-ms.locfileid: "88213762"
+ms.lasthandoff: 10/13/2020
+ms.locfileid: "92000238"
 ---
 # <a name="tutorial-deploy-an-aspnet-app-to-azure-with-azure-sql-database"></a>教程：使用 Azure SQL 数据库将 ASP.NET 应用部署到 Azure
 
@@ -65,20 +65,18 @@ ms.locfileid: "88213762"
 
 ![从解决方案资源管理器发布](./media/app-service-web-tutorial-dotnet-sqldatabase/solution-explorer-publish.png)
 
-确保已选择“Microsoft Azure 应用服务”，并单击“发布”。
+选择“Azure”作为目标，单击“下一步”，确保选中“Azure 应用服务(Windows)”，然后再次单击“下一步” 。
 
 ![从项目概述页发布](./media/app-service-web-tutorial-dotnet-sqldatabase/publish-to-app-service.png)
 
-发布将打开“创建应用服务”对话框，这有助于创建在 Azure 中运行 ASP.NET 应用所需的所有 Azure 资源。
-
 ### <a name="sign-in-to-azure"></a>登录 Azure
 
-在“创建应用服务”对话框中单击“添加帐户”，并登录到用户的 Azure 订阅。 如果已登录到 Microsoft 帐户，请确保该帐户包含 Azure 订阅。 如果已登录的 Microsoft 帐户不包含 Azure 订阅，请单击该帐户以添加正确的帐户。
+在“发布”对话框中，从帐户管理器下拉菜单中单击“添加帐户”，然后登录到你的 Azure 订阅 。 如果已登录到 Microsoft 帐户，请确保该帐户包含 Azure 订阅。 如果已登录的 Microsoft 帐户不包含 Azure 订阅，请单击该帐户以添加正确的帐户。
+
+![登录 Azure](./media/app-service-web-tutorial-dotnet-sqldatabase/sign-in-azure.png)
 
 > [!NOTE]
 > 如果已经登录，请先不要选择“创建”。
-
-![登录 Azure](./media/app-service-web-tutorial-dotnet-sqldatabase/sign-in-azure.png)
 
 ### <a name="configure-the-web-app-name"></a>配置 Web 应用名称
 
@@ -112,15 +110,20 @@ ms.locfileid: "88213762"
    |**位置**| 西欧 | [Azure 区域](https://azure.microsoft.com/regions/?ref=microsoft.com&utm_source=microsoft.com&utm_medium=docs&utm_campaign=visualstudio) |
    |**大小**| 免费 | [定价层](https://azure.microsoft.com/pricing/details/app-service/?ref=microsoft.com&utm_source=microsoft.com&utm_medium=docs&utm_campaign=visualstudio)|
 
+3. “发布”对话框显示已配置的资源。 单击“完成”。
+
+   ![已创建的资源](media/app-service-web-tutorial-dotnet-sqldatabase/app_svc_plan_done.png)
+
+
 ### <a name="create-a-server"></a>创建服务器
 
 在创建数据库时之前，需要[逻辑 SQL Server](../azure-sql/database/logical-servers.md)。 逻辑 SQL 服务器是一种逻辑构造，其中包含一组作为组管理的数据库。
 
-1. 单击“创建 SQL 数据库”。
+1. 在“连接的服务”下，单击 SQL Server 数据库旁边的“配置” 。
 
    ![创建 SQL 数据库](media/app-service-web-tutorial-dotnet-sqldatabase/web-app-name.png)
 
-2. 在“配置 SQL 数据库”对话框中，单击“SQL Server”旁的“新建”。
+2. 在“Azure SQL 数据库”对话框中，单击“数据库服务器”旁的“新建”  。
 
    此时会生成唯一的服务器名称。 此名称用作服务器 `<server_name>.database.windows.net` 的默认 URL 的一部分。 它在 Azure SQL 的所有服务器中必须是唯一的。 可以更改服务器名称，但就本教程来说，请保留生成的值。
 
@@ -128,28 +131,31 @@ ms.locfileid: "88213762"
 
    请记住此用户名和密码。 以后需要使用此用户名和密码来管理服务器。
 
+   ![创建服务器](media/app-service-web-tutorial-dotnet-sqldatabase/configure-sql-database-server.png)
+
    > [!IMPORTANT]
    > 虽然连接字符串中的密码已在 Visual Studio 和应用服务中受到屏蔽，但由于它实际上是保留在某个位置，因此增加了应用的受攻击面。 应用服务可以使用[托管服务标识](overview-managed-identity.md)，因此根本不需要将机密保留在代码或应用配置中，这样就消除了上述风险。 有关详细信息，请参阅[后续步骤](#next-steps)。
 
-   ![创建服务器](media/app-service-web-tutorial-dotnet-sqldatabase/configure-sql-database-server.png)
-
-4. 单击 **“确定”** 。 尚不要关闭“配置 SQL 数据库”对话框。
+4. 单击“确定”。 尚不要关闭“配置 SQL 数据库”对话框。
 
 ### <a name="create-a-database-in-azure-sql-database"></a>在 Azure SQL 数据库中创建数据库
 
-1. 在“配置 SQL 数据库”对话框中：
+1. 在“Azure SQL 数据库”对话框中：
 
    * 保留默认生成的数据库名称。
-   * 在“连接字符串名称”中，键入 *MyDbConnection*。 此名称必须与 *Models/MyDatabaseContext.cs* 中引用的连接字符串相匹配。
-   * 选择“确定”。
+   * 选择“创建”  。
 
     ![配置数据库](media/app-service-web-tutorial-dotnet-sqldatabase/configure-sql-database.png)
 
-2. “创建应用服务”对话框显示已配置的资源。 单击“创建”。
+2. 在“数据库连接字符串名称”中，键入 MyDbConnection。 此名称必须与 _Models/MyDatabaseContext.cs_ 中引用的连接字符串相匹配。
 
-   ![已创建的资源](media/app-service-web-tutorial-dotnet-sqldatabase/app_svc_plan_done.png)
+3. 输入你在[创建服务器](#create-a-server)步骤 3 中使用的管理员用户名和密码，分别作为数据库用户名和密码。
 
-向导在创建完 Azure 资源以后，会将 ASP.NET 应用发布到 Azure。 默认浏览器会使用已部署应用的 URL 启动。
+    ![配置数据库连接字符串](media/app-service-web-tutorial-dotnet-sqldatabase/configure-sql-database-connection.png)
+
+4. 选择“完成”。
+
+向导完成创建 Azure 资源的过程后，单击“发布”将 ASP.NET 应用部署到 Azure。 默认浏览器会使用已部署应用的 URL 启动。
 
 添加多个待办事项。
 
@@ -199,7 +205,7 @@ Visual Studio 成功为 SQL 数据库实例创建防火墙设置后，连接将�
 
 可以在 Visual Studio 中使用熟悉的工具，更新 Azure 中的数据库和应用。 此步骤中将使用实体框架中的 Code First 迁移对数据库架构进行更改，并将其发布至 Azure。
 
-有关使用 Entity Framework Code First 迁移的详细信息，请参阅[使用 MVC 5 的 Entity Framework 6 Code First 入门](https://docs.microsoft.com/aspnet/mvc/overview/getting-started/getting-started-with-ef-using-mvc/creating-an-entity-framework-data-model-for-an-asp-net-mvc-application)。
+有关使用 Entity Framework Code First 迁移的详细信息，请参阅[使用 MVC 5 的 Entity Framework 6 Code First 入门](/aspnet/mvc/overview/getting-started/getting-started-with-ef-using-mvc/creating-an-entity-framework-data-model-for-an-asp-net-mvc-application)。
 
 ### <a name="update-your-data-model"></a>更新数据模型
 
@@ -239,11 +245,11 @@ Update-Database
 
 ### <a name="use-the-new-property"></a>使用新属性
 
-为了使用 `Done` 属性，请对代码做一些更改。 简单起见，本教程中将仅更改 `Index` 和 `Create` 视图，以便在操作中查看属性。
+为了使用 `Done` 属性，请对代码做一些更改。 简单起见，本教程中将仅更改 `Index` 和 `Create` 视图，以便在操作过程中查看属性。
 
 打开 _Controllers\TodosController.cs_。
 
-在第 52 行找到 `Create()` 方法，并将 `Done` 添加到 `Bind` 特性中的属性列表。 完成后，`Create()` 方法签名如以下代码所示：
+在第 52 行找到 `Create()` 方法，并将 `Done` 添加到 `Bind` 特性中的属性列表。 完成后，`Create()` 方法签名应如下面的代码所示：
 
 ```csharp
 public ActionResult Create([Bind(Include = "Description,CreatedDate,Done")] Todo todo)
@@ -387,7 +393,7 @@ Application: 2017-04-06T23:30:54  PID[8132] Verbose     GET /Todos/Index
 
 你已登录到应用页。
 
-默认情况下，门户将显示“概览”页。 在此页中可以查看应用的运行状况。 在此处还可以执行基本的管理任务，例如浏览、停止、启动、重新启动和删除。 页面左侧的选项卡显示可以打开的不同配置页。
+默认情况下，门户将显示“概览”页。 在此页中可以查看应用的运行状况。 在此处还可以执行基本的管理任务，例如浏览、停止、启动、重新启动和删除。 该页左侧的选项卡显示可以打开的不同配置页。
 
 ![Azure 门户中的“应用服务”页](./media/app-service-web-tutorial-dotnet-sqldatabase/web-app-blade.png)
 
@@ -419,4 +425,4 @@ Application: 2017-04-06T23:30:54  PID[8132] Verbose     GET /Todos/Index
 希望优化并节省云支出？
 
 > [!div class="nextstepaction"]
-> [使用成本管理开始分析成本](https://docs.microsoft.com/azure/cost-management-billing/costs/quick-acm-cost-analysis?WT.mc_id=costmanagementcontent_docsacmhorizontal_-inproduct-learn)
+> [使用成本管理开始分析成本](../cost-management-billing/costs/quick-acm-cost-analysis.md?WT.mc_id=costmanagementcontent_docsacmhorizontal_-inproduct-learn)

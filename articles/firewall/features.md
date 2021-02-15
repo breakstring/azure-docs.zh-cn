@@ -5,24 +5,24 @@ services: firewall
 author: vhorne
 ms.service: firewall
 ms.topic: conceptual
-ms.date: 06/18/2020
+ms.date: 10/08/2020
 ms.author: victorh
-ms.openlocfilehash: eb7cf1899b24ed225941f0a02040206504e6486b
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 69eaf3ca60378afd810d712d85ea7ef732e41e3e
+ms.sourcegitcommit: a055089dd6195fde2555b27a84ae052b668a18c7
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "85095539"
+ms.lasthandoff: 01/26/2021
+ms.locfileid: "98788224"
 ---
 # <a name="azure-firewall-features"></a>Azure 防火墙功能
 
-[Azure 防火墙](overview.md)是一种托管的基于云的网络安全服务，可保护 Azure 虚拟网络资源。
+[Azure 防火墙](overview.md)是一种基于云的托管网络安全服务，可保护 Azure 虚拟网络资源。
 
 ![防火墙概述](media/overview/firewall-threat.png)
 
 Azure 防火墙包括以下功能：
 
-- [内置的高可用性](#built-in-high-availability)
+- [内置高可用性](#built-in-high-availability)
 - [可用性区域](#availability-zones)
 - [不受限制的云可伸缩性](#unrestricted-cloud-scalability)
 - [应用程序 FQDN 筛选规则](#application-fqdn-filtering-rules)
@@ -62,11 +62,11 @@ Azure 防火墙包括以下功能：
 
 ## <a name="application-fqdn-filtering-rules"></a>应用程序 FQDN 筛选规则
 
-可将出站 HTTP/S 流量或 Azure SQL 流量（预览版）限制到指定的一组完全限定的域名 (FQDN)（包括通配符）。 此功能不需要 TLS 终止。
+可将出站 HTTP/S 流量或 Azure SQL 流量限制到指定的一组完全限定的域名 (FQDN)（包括通配符）。 此功能不需要 TLS 终止。
 
 ## <a name="network-traffic-filtering-rules"></a>网络流量筛选规则
 
-可以根据源和目标 IP 地址、端口和协议，集中创建“允许”或“拒绝”网络筛选规则。** ** Azure 防火墙是完全有状态的，因此它能区分不同类型的连接的合法数据包。 将跨多个订阅和虚拟网络实施与记录规则。
+可以根据源和目标 IP 地址、端口和协议，集中创建“允许”或“拒绝”网络筛选规则。  Azure 防火墙是完全有状态的，因此它能区分不同类型的连接的合法数据包。 将跨多个订阅和虚拟网络实施与记录规则。
 
 ## <a name="fqdn-tags"></a>FQDN 标记
 
@@ -84,7 +84,7 @@ Azure 防火墙包括以下功能：
 
 所有出站虚拟网络流量 IP 地址将转换为 Azure 防火墙公共 IP（源网络地址转换）。 可以识别源自你的虚拟网络的流量，并允许将其发往远程 Internet 目标。 如果目标 IP 是符合 [IANA RFC 1918](https://tools.ietf.org/html/rfc1918) 的专用 IP 范围，Azure 防火墙不会执行 SNAT。 
 
-如果组织对专用网络使用公共 IP 地址范围，Azure 防火墙会通过 SNAT 将流量发送到 AzureFirewallSubnet 中的某个防火墙专用 IP 地址。 可以将 Azure 防火墙配置为**不** SNAT 公共 IP 地址范围。 有关详细信息，请参阅 [Azure 防火墙 SNAT 专用 IP 地址范围](snat-private-range.md)。
+如果组织对专用网络使用公共 IP 地址范围，Azure 防火墙会通过 SNAT 将流量发送到 AzureFirewallSubnet 中的某个防火墙专用 IP 地址。 可以将 Azure 防火墙配置为 **不** SNAT 公共 IP 地址范围。 有关详细信息，请参阅 [Azure 防火墙 SNAT 专用 IP 地址范围](snat-private-range.md)。
 
 ## <a name="inbound-dnat-support"></a>入站 DNAT 支持
 
@@ -101,11 +101,15 @@ Azure 防火墙包括以下功能：
 
 ## <a name="azure-monitor-logging"></a>Azure Monitor 日志记录
 
-所有事件与 Azure Monitor 集成，使你能够在存储帐户中存档日志、将事件流式传输到事件中心，或者将其发送到 Azure Monitor 日志。 有关详细信息，请参阅[教程：监视 Azure 防火墙日志和指标](tutorial-diagnostics.md)。
+所有事件与 Azure Monitor 集成，使你能够在存储帐户中存档日志、将事件流式传输到事件中心，或者将其发送到 Azure Monitor 日志。 有关 Azure Monitor 日志示例，请参阅 [Azure 防火墙的 Azure Monitor 日志](./firewall-workbook.md)。
+
+有关详细信息，请参阅[教程：监视 Azure 防火墙日志和指标](./firewall-diagnostics.md)。 
+
+Azure 防火墙工作簿为 Azure 防火墙数据分析提供了一个灵活的画布。 该画布可用于在 Azure 门户中创建丰富的视觉对象报表。 有关详细信息，请参阅[使用 Azure 防火墙工作簿监视日志](firewall-workbook.md)。
 
 ## <a name="forced-tunneling"></a>强制隧道
 
-你可以对 Azure 防火墙进行配置，使其将所有 Internet 绑定的流量路由到指定的下一跃点，而不是直接前往 Internet。 例如，你可能有本地边缘防火墙或其他网络虚拟设备 (NVA) 用来在将网络流量传递到 Internet 之前对其进行处理。 有关详细信息，请参阅 [Azure 防火墙强制隧道](forced-tunneling.md)。
+你可以对 Azure 防火墙进行配置，使其将所有 Internet 绑定的流量路由到指定的下一跃点，而不是直接前往 Internet。 例如，你可能有一个本地边缘防火墙或其他网络虚拟设备 (NVA)，用于对网络流量进行处理，然后再将其传递到 Internet。 有关详细信息，请参阅 [Azure 防火墙强制隧道](forced-tunneling.md)。
 
 ## <a name="certifications"></a>认证
 

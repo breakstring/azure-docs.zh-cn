@@ -1,24 +1,19 @@
 ---
 title: HC 系列 VM 概述-Azure 虚拟机 |Microsoft Docs
 description: 了解 Azure 中 HC 系列 VM 大小的预览支持。
-services: virtual-machines
-documentationcenter: ''
 author: vermagit
-manager: gwallace
-editor: ''
-tags: azure-resource-manager
 ms.service: virtual-machines
-ms.workload: infrastructure-services
+ms.subservice: workloads
 ms.topic: article
 ms.date: 08/19/2020
 ms.author: amverma
 ms.reviewer: cynthn
-ms.openlocfilehash: de6051e8880bbe3df42031a0d0d7b60abc27d2b0
-ms.sourcegitcommit: 56cbd6d97cb52e61ceb6d3894abe1977713354d9
+ms.openlocfilehash: b9fe978da9accd28ea0e538f458325f10c9c5d8d
+ms.sourcegitcommit: beacda0b2b4b3a415b16ac2f58ddfb03dd1a04cf
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/20/2020
-ms.locfileid: "88689793"
+ms.lasthandoff: 12/31/2020
+ms.locfileid: "97831884"
 ---
 # <a name="hc-series-virtual-machine-overview"></a>HC 系列虚拟机概述
 
@@ -48,7 +43,7 @@ Intel （r）白金、黄金和银 Cpu 还引入了一个片上的2D 网格网�
 | 内存                           | 8 GB/核心 (352 总)             |
 | 本地磁盘                       | 700 GB SSD                       |
 | Infiniband                       | 100 Gb EDR Mellanox ConnectX-5   |
-| Network (网络)                          | 50 gb 以太网 (40 Gb 可用) Azure 第二代 SmartNIC    |
+| 网络                          | 50 gb 以太网 (40 Gb 可用) Azure 第二代 SmartNIC    |
 
 ## <a name="software-specifications"></a>软件规范
 
@@ -63,6 +58,6 @@ Intel （r）白金、黄金和银 Cpu 还引入了一个片上的2D 网格网�
 
 ## <a name="next-steps"></a>后续步骤
 
-- 了解有关 [Intel 强 SP 体系结构](https://bit.ly/2RCYkiE)的详细信息。
+- 了解有关 [Intel 强 SP 体系结构](https://software.intel.com/content/www/us/en/develop/articles/intel-xeon-processor-scalable-family-technical-overview.html)的详细信息。
 - 在 [Azure 计算技术社区博客](https://techcommunity.microsoft.com/t5/azure-compute/bg-p/AzureCompute)上阅读最新公告以及一些 HPC 示例和结果。
 - 若要从体系结构角度更概略性地看待如何运行 HPC 工作负荷，请参阅 [Azure 上的高性能计算 (HPC)](/azure/architecture/topics/high-performance-computing/)。

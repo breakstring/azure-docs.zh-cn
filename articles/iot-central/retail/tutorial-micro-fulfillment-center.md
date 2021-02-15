@@ -5,14 +5,14 @@ author: avneet723
 ms.author: avneets
 ms.service: iot-central
 ms.subservice: iot-central-retail
-ms.topic: overview
+ms.topic: tutorial
 ms.date: 01/09/2020
-ms.openlocfilehash: 74deb4253a21445e21f7ef04f53f3bfe3f1fe0d0
-ms.sourcegitcommit: 25490467e43cbc3139a0df60125687e2b1c73c09
+ms.openlocfilehash: 938d5e96667db6de4a45134cbec2396d45bac9d6
+ms.sourcegitcommit: d1b0cf715a34dd9d89d3b72bb71815d5202d5b3a
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/09/2020
-ms.locfileid: "81001266"
+ms.lasthandoff: 02/08/2021
+ms.locfileid: "99832124"
 ---
 # <a name="tutorial-deploy-and-walk-through-a-micro-fulfillment-center-application-template"></a>教程：部署和演练微型配送中心应用程序模板
 
@@ -47,7 +47,7 @@ ms.locfileid: "81001266"
 
 1. 如果你有一个 Azure 订阅，请输入目录、Azure 订阅和区域。 如果你没有订阅，可以启用 7 天免费试用版并填写所需的联系信息。  
 
-    有关目录和订阅的详细信息，请参阅[创建应用程序](../preview/quick-deploy-iot-central.md)快速入门。
+    有关目录和订阅的详细信息，请参阅[创建应用程序](../core/quick-deploy-iot-central.md)快速入门。
 
 1. 选择“创建”  。
 
@@ -62,11 +62,11 @@ ms.locfileid: "81001266"
    * 查看楼面布置图，以及机器人载体在配送结构中的位置。
    * 触发命令，例如重置控制系统、更新载体的固件，以及重新配置网络。
 
-     ![Northwind Traders 微型配送中心仪表板的屏幕截图](./media/tutorial-micro-fulfillment-center-app/mfc-dashboard1.png)
+     ![Northwind Traders 微履行中心仪表板上半部分的屏幕截图。](./media/tutorial-micro-fulfillment-center-app/mfc-dashboard1.png)
    * 参阅可供操作员用来监视配送中心内的条件的仪表板示例。 
    * 监视配送中心内网关设备上运行的有效负载的运行状况。    
 
-     ![Northwind Traders 微型配送中心仪表板的屏幕截图](./media/tutorial-micro-fulfillment-center-app/mfc-dashboard2.png)
+     ![Northwind Traders 微履行中心仪表板下半部分的屏幕截图。](./media/tutorial-micro-fulfillment-center-app/mfc-dashboard2.png)
 
 ## <a name="device-template"></a>设备模板
 如果选择“设备模板”选项卡，将会看到模板中包含两种不同的设备类型： 
@@ -91,6 +91,8 @@ ms.locfileid: "81001266"
 ![微型配送中心“应用程序设置”页的屏幕截图](./media/tutorial-micro-fulfillment-center-app/delete.png)
 
 ## <a name="next-steps"></a>后续步骤
-* 详细了解[微型配送中心解决方案体系结构](./architecture-micro-fulfillment-center.md)。
-* 详细了解其他 [Azure IoT Central 零售模板](./overview-iot-central-retail.md)。
-* 阅读 [Azure IoT Central 概述](../preview/overview-iot-central.md)。
+
+了解有关以下方面的详细信息：
+
+> [!div class="nextstepaction"]
+> [微履行中心解决方案体系结构](./architecture-micro-fulfillment-center.md)

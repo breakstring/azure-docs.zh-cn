@@ -3,7 +3,7 @@ title: 在 Azure 门户中管理用户分配的托管标识 - Azure AD
 description: 分步说明如何创建、列出和删除用户分配的托管标识以及如何为其分配角色。
 services: active-directory
 documentationcenter: ''
-author: MarkusVi
+author: barclayn
 manager: daveba
 editor: ''
 ms.service: active-directory
@@ -12,21 +12,21 @@ ms.devlang: na
 ms.topic: how-to
 ms.tgt_pltfrm: na
 ms.workload: identity
-ms.date: 04/16/2018
-ms.author: markvi
+ms.date: 08/26/2020
+ms.author: barclayn
 ms.collection: M365-identity-device-management
-ms.openlocfilehash: 27144dcd4c7d7490aba3626264e1cb4b64fbb162
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.openlocfilehash: fd4cccdfc3a2cf8dd3827776028a7738ae769673
+ms.sourcegitcommit: 0aec60c088f1dcb0f89eaad5faf5f2c815e53bf8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87019193"
+ms.lasthandoff: 01/14/2021
+ms.locfileid: "98184824"
 ---
-# <a name="create-list-delete-or-assign-a-role-to-a-user-assigned-managed-identity-using-the-azure-portal"></a>使用 Azure 门户创建、列出和删除用户分配的托管标识以及为其分配角色
+# <a name="create-list-delete-or-assign-a-role-to-a-user-assigned-managed-identity-using-the-azure-portal"></a>使用 Azure 门户创建、列出、删除或分配用户分配的托管标识的角色
 
 Azure 资源的托管标识在 Azure Active Directory 中为 Azure 服务提供了一个托管标识。 此标识可用于向支持 Azure AD 身份验证的服务进行身份验证，这样就无需在代码中输入凭据了。 
 
-本文介绍如何使用 Azure 门户创建、列出和删除用户分配的托管标识以及如何为其分配角色。
+本文介绍如何使用 Azure 门户创建、列出、删除或分配用户分配的托管标识的角色。
 
 ## <a name="prerequisites"></a>先决条件
 
@@ -35,22 +35,22 @@ Azure 资源的托管标识在 Azure Active Directory 中为 Azure 服务提供�
 
 ## <a name="create-a-user-assigned-managed-identity"></a>创建用户分配的托管标识
 
-若要创建用户分配的托管标识，你的帐户需要[托管标识参与者](/azure/role-based-access-control/built-in-roles#managed-identity-contributor)角色分配。
+若要创建用户分配的托管标识，你的帐户需要[托管标识参与者](../../role-based-access-control/built-in-roles.md#managed-identity-contributor)角色分配。
 
 1. 使用与 Azure 订阅关联的帐户登录 [Azure 门户](https://portal.azure.com)，以创建用户分配的托管标识。
 2. 在搜索框中，键入托管标识，然后在“服务”下单击“托管标识” 。
 3. 单击“添加”，然后在“创建用户分配的托管标识”窗格下的以下字段中输入值 ：
-   - **资源名称**：这是用户分配的托管标识的名称，例如 UAI1。
-   - **订阅**：选择要在其下创建用户分配的托管标识的订阅
-   - **资源组**：新建一个包含用户分配的托管标识的资源组，或者选择“使用现有项”，在现有资源组中创建用户分配的托管标识。
-   - **位置**：选择要为其部署用户分配的托管标识的位置，例如 "**美国西部**"。
-4. 单击**创建**。
-
-![创建用户分配的托管标识](./media/how-to-manage-ua-identity-portal/create-user-assigned-managed-identity-portal.png)
+    - **订阅**：选择要在其下创建用户分配的托管标识的订阅。
+    - **资源组**：选择要在其中创建用户分配的托管标识的资源组，或单击“新建”来创建新资源组。
+    - **区域**：选择一个区域以部署用户分配的托管标识，例如 " **美国西部**"。
+    - **名称**：这是用户分配的托管标识的名称，例如 UAI1。
+    ![创建用户分配的托管标识](./media/how-to-manage-ua-identity-portal/create-user-assigned-managed-identity-portal.png)
+4. 单击“查看 + 创建”以查看更改。
+5. 单击“创建”。
 
 ## <a name="list-user-assigned-managed-identities"></a>列出用户分配的托管标识
 
-若要列出/读取用户分配的托管标识，你的帐户需要[托管标识操作员](/azure/role-based-access-control/built-in-roles#managed-identity-operator)或[托管标识参与者](/azure/role-based-access-control/built-in-roles#managed-identity-contributor)角色分配。
+若要列出/读取用户分配的托管标识，你的帐户需要[托管标识操作员](../../role-based-access-control/built-in-roles.md#managed-identity-operator)或[托管标识参与者](../../role-based-access-control/built-in-roles.md#managed-identity-contributor)角色分配。
 
 1. 使用与 Azure 订阅关联的帐户登录 [Azure 门户](https://portal.azure.com)，以列出用户分配的托管标识。
 2. 在搜索框中，键入托管标识，然后在“服务”下单击“托管标识”。
@@ -60,9 +60,9 @@ Azure 资源的托管标识在 Azure Active Directory 中为 Azure 服务提供�
 
 ## <a name="delete-a-user-assigned-managed-identity"></a>删除用户分配的托管标识
 
-若要删除用户分配的托管标识，你的帐户需要[托管标识参与者](/azure/role-based-access-control/built-in-roles#managed-identity-contributor)角色分配。
+若要删除用户分配的托管标识，你的帐户需要[托管标识参与者](../../role-based-access-control/built-in-roles.md#managed-identity-contributor)角色分配。
 
-删除用户分配的标识不会将其从 VM 或其他已分配给的资源中删除。  要从 VM 中删除用户分配的标识，请参阅[从 VM 中删除用户分配的托管标识](/azure/active-directory/managed-identities-azure-resources/qs-configure-portal-windows-vm#remove-a-user-assigned-managed-identity-from-a-vm)。
+删除用户分配的标识不会将其从 VM 或其他已分配给的资源中删除。  要从 VM 中删除用户分配的标识，请参阅[从 VM 中删除用户分配的托管标识](./qs-configure-portal-windows-vm.md#remove-a-user-assigned-managed-identity-from-a-vm)。
 
 1. 使用与 Azure 订阅关联的帐户登录 [Azure 门户](https://portal.azure.com)，以删除用户分配的托管标识。
 2. 选择用户分配的托管标识，然后单击“删除”。
@@ -72,7 +72,7 @@ Azure 资源的托管标识在 Azure Active Directory 中为 Azure 服务提供�
 
 ## <a name="assign-a-role-to-a-user-assigned-managed-identity"></a>为用户分配的托管标识分配角色 
 
-若要为用户分配的托管标识分配角色，你的帐户需要[用户访问管理员](/azure/role-based-access-control/built-in-roles#user-access-administrator)角色分配。
+若要为用户分配的托管标识分配角色，你的帐户需要[用户访问管理员](../../role-based-access-control/built-in-roles.md#user-access-administrator)角色分配。
 
 1. 使用与 Azure 订阅关联的帐户登录 [Azure 门户](https://portal.azure.com)，以列出用户分配的托管标识。
 2. 在搜索框中，键入托管标识，然后在“服务”下单击“托管标识”。
@@ -86,4 +86,4 @@ Azure 资源的托管标识在 Azure Active Directory 中为 Azure 服务提供�
    - **将访问权限分配到** - 要将用户分配的托管标识分配到的资源
    - **选择** - 要将访问权限分配到的成员
    
-   ![用户分配的托管标识 IAM](./media/how-to-manage-ua-identity-portal/assign-role-screenshot2.png)  
+   ![用户分配的托管标识 IAM](./media/how-to-manage-ua-identity-portal/assign-role-screenshot2.png)

@@ -1,19 +1,16 @@
 ---
 title: Apache Storm 示例 Java 拓扑 - Azure HDInsight
 description: 了解如何通过创建一个示例单词计数拓扑，来以 Java 语言创建 Apache Storm 拓扑。
-author: hrasheed-msft
-ms.author: hrasheed
-ms.reviewer: jasonh
 ms.service: hdinsight
 ms.topic: how-to
 ms.custom: H1Hack27Feb2017,hdinsightactive,hdiseo17may2017,seoapr2020,devx-track-java
 ms.date: 04/27/2020
-ms.openlocfilehash: b928ea8b0d05b9e1eac3c9429ec4c0ce8f88bb22
-ms.sourcegitcommit: a76ff927bd57d2fcc122fa36f7cb21eb22154cfa
+ms.openlocfilehash: 620a4e1627b25af22db68173f35924376e26f5f8
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/28/2020
-ms.locfileid: "87322867"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98929125"
 ---
 # <a name="create-an-apache-storm-topology-in-java"></a>以 Java 语言创建 Apache Storm 拓扑
 
@@ -26,7 +23,7 @@ ms.locfileid: "87322867"
 
 ## <a name="prerequisites"></a>先决条件
 
-* [Java 开发人员工具包 (JDK) 版本 8](https://aka.ms/azure-jdks)
+* [Java 开发人员工具包 (JDK) 版本 8](/azure/developer/java/fundamentals/java-jdk-long-term-support)
 
 * 根据 Apache 要求正确[安装](https://maven.apache.org/install.html)的 [Apache Maven](https://maven.apache.org/download.cgi)。  Maven 是 Java 项目的项目生成系统。
 
@@ -822,7 +819,7 @@ YAML 文件定义了要用于拓扑的组件以及它们之间的数据流。 �
 
 [Trident](https://storm.apache.org/releases/current/Trident-API-Overview.html) 是 Storm 提供的高级抽象。 它支持有状态处理。 Trident 的主要优点在于，它可以保证进入拓扑的每条消息只会处理一次。 如果不使用 Trident，则拓扑只能保证至少将消息处理一次。 两者还有其他方面的差异，例如，可以使用内置组件，而无需创建 Bolt。 可以使用低泛型组件（例如筛选、投影和函数）来取代 Bolt。
 
-可以使用 Maven 项目来创建 Trident 应用程序。 使用本文前面所述的相同基本步骤 - 只有代码不同。 Trident 也不能与 Flux 框架一起使用。
+可以使用 Maven 项目来创建 Trident 应用程序。 使用本文前面所述的相同基本步骤 - 只有代码不同。  (当前) 无法与 Flux 框架一起使用。
 
 有关 Trident 的详细信息，请参阅 [Trident API 概述](https://storm.apache.org/releases/current/Trident-API-Overview.html)。
 

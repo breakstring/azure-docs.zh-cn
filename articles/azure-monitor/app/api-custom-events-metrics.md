@@ -3,13 +3,13 @@ title: 用于处理自定义事件和指标的 Application Insights API | Micros
 description: 在设备、桌面应用、网页或服务中插入几行代码，即可跟踪使用情况和诊断问题。
 ms.topic: conceptual
 ms.date: 05/11/2020
-ms.custom: devx-track-javascript
-ms.openlocfilehash: 430ec96006ed8f564ea5bbd0a28beca858ebe1ab
-ms.sourcegitcommit: f353fe5acd9698aa31631f38dd32790d889b4dbb
+ms.custom: devx-track-js, devx-track-csharp
+ms.openlocfilehash: 72e79ff90422a6f055d5b883ba208555244687b3
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/29/2020
-ms.locfileid: "87366866"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98927822"
 ---
 # <a name="application-insights-api-for-custom-events-and-metrics"></a>用于处理自定义事件和指标的 Application Insights API
 
@@ -59,7 +59,7 @@ ms.locfileid: "87366866"
 
 对于 [ASP.NET Core](asp-net-core.md#how-can-i-track-telemetry-thats-not-automatically-collected) 应用和[用于 .NET/.NET Core 的非 HTTP/辅助角色](worker-service.md#how-can-i-track-telemetry-thats-not-automatically-collected)，建议从依赖关系注入容器获取 `TelemetryClient` 的实例，如各自的相关文档中所述。
 
-如果使用 AzureFunctions v2 + 或 Azure WebJobs v3 +-请遵循以下文档：https://docs.microsoft.com/azure/azure-functions/functions-monitoring#version-2x-and-higher
+如果使用 AzureFunctions v2 + 或 Azure WebJobs v3 +-请遵循以下文档： https://docs.microsoft.com/azure/azure-functions/functions-monitoring#version-2x-and-higher
 
 *C#*
 
@@ -146,7 +146,9 @@ telemetry.trackEvent({name: "WinGame"});
 
 ### <a name="custom-events-in-analytics"></a>Analytics 中的自定义事件
 
-[Application Insights Analytics](../log-query/log-query-overview.md) 的 `customEvents` 表格提供了遥测。 每行表示对应用中 `trackEvent(..)` 的调用。
+遥测数据在 `customEvents` [Application Insights 日志 "选项卡](../log-query/log-query-overview.md) 或 [使用体验](usage-overview.md)的表中可用。 事件可能来自 `trackEvent(..)` 或 [单击 "分析自动收集插件"](javascript-click-analytics-plugin.md)。
+
+ 
 
 如果正在进行[采样](./sampling.md)，那么 itemCount 属性将显示大于 1 的值。 例如，itemCount==10 表明对 trackEvent() 调用了 10 次，采样进程只传输其中一次。 若要获取自定义事件的正确计数，应使用 `customEvents | summarize sum(itemCount)` 之类的代码。
 
@@ -531,6 +533,9 @@ telemetry.trackTrace("Slow Database response", SeverityLevel.Warning, properties
 
 可使用 TrackDependency 调用跟踪响应时间以及调用外部代码片段的成功率。 结果会显示在门户上的依赖项图表中。 需要在进行依赖项调用的任何位置添加以下代码片段。
 
+> [!NOTE]
+> 对于 .NET 和 .NET Core，也可使用 `TelemetryClient.StartOperation`（扩展）方法，它会填充关联所需的 `DependencyTelemetry` 属性以及其他一些属性（例如开始时间和持续时间），因此你无需像下例那样创建自定义计时器。 有关详细信息，请查看本文[有关传出依赖项跟踪的部分](./custom-operations-tracking.md#outgoing-dependencies-tracking)。
+
 *C#*
 
 ```csharp
@@ -566,8 +571,8 @@ finally {
     Instant endTime = Instant.now();
     Duration delta = Duration.between(startTime, endTime);
     RemoteDependencyTelemetry dependencyTelemetry = new RemoteDependencyTelemetry("My Dependency", "myCall", delta, success);
-    RemoteDependencyTelemetry.setTimeStamp(startTime);
-    RemoteDependencyTelemetry.trackDependency(dependencyTelemetry);
+    dependencyTelemetry.setTimeStamp(startTime);
+    telemetry.trackDependency(dependencyTelemetry);
 }
 ```
 
@@ -698,11 +703,11 @@ appInsights.setAuthenticatedUserContext(validatedId, accountId);
 
 可以将属性和度量值附加到事件（以及指标、页面视图、异常和其他遥测数据）。
 
-*属性*是可以在使用情况报告中用来筛选遥测数据的字符串值。 例如，如果应用提供多种游戏，可以将游戏的名称附加到每个事件，了解哪些游戏更受欢迎。
+*属性* 是可以在使用情况报告中用来筛选遥测数据的字符串值。 例如，如果应用提供多种游戏，可以将游戏的名称附加到每个事件，了解哪些游戏更受欢迎。
 
 字符串长度限制为 8192。 （如果想要发送大型数据区块，请使用消息参数 TrackTrace。）
 
-*指标*是能够以图形方式呈现的数字值。 例如，可以查看玩家的分数是否逐渐增加。 可以根据连同事件一起发送的属性对图表进行分段，以便获取不同游戏的独立图形或堆积图。
+*指标* 是能够以图形方式呈现的数字值。 例如，可以查看玩家的分数是否逐渐增加。 可以根据连同事件一起发送的属性对图表进行分段，以便获取不同游戏的独立图形或堆积图。
 
 这些值应大于或等于 0，以便正确显示指标值。
 
@@ -825,7 +830,7 @@ requests
 * 从 customDimensions 或 customMeasurements JSON 中提取值的时候，会有动态类型，所以必须将其转换为 `tostring` 或 `todouble`。
 * 考虑到[采样](./sampling.md)的可能性，需要使用 `sum(itemCount)` 而非 `count()`。
 
-## <a name="timing-events"></a><a name="timed"></a>计时事件
+## <a name="timing-events"></a><a name="timed"></a> 计时事件
 
 有时，需要绘制图表来呈现执行某个操作花费了多少时间。 例如，你可能想要知道用户在游戏中考虑如何选择时花费了多少时间。 为此，可以使用度量参数。
 
@@ -883,7 +888,7 @@ gameTelemetry.Context.GlobalProperties["Game"] = currentGame.Name;
 gameTelemetry.TrackEvent("WinGame");
 ```
 
-*Visual Basic*
+Visual Basic
 
 ```vb
 Dim gameTelemetry = New TelemetryClient()
@@ -936,7 +941,7 @@ gameTelemetry.TrackEvent({name: "WinGame"});
 
 ## <a name="disabling-telemetry"></a>禁用遥测
 
-*动态停止和启动*收集与传输遥测数据：
+*动态停止和启动* 收集与传输遥测数据：
 
 *C#*
 
@@ -952,7 +957,7 @@ TelemetryConfiguration.Active.DisableTelemetry = true;
 telemetry.getConfiguration().setTrackingDisabled(true);
 ```
 
-若要*禁用选定的标准收集器*（例如性能计数器、HTTP 请求或依赖项），请删除或注释掉 [ApplicationInsights.config](./configuration-with-applicationinsights-config.md) 中的相关行。例如，如果想要发送自己的 TrackRequest 数据，则可以这样做。
+若要 *禁用选定的标准收集器*（例如性能计数器、HTTP 请求或依赖项），请删除或注释掉 [ApplicationInsights.config](./configuration-with-applicationinsights-config.md) 中的相关行。例如，如果想要发送自己的 TrackRequest 数据，则可以这样做。
 
 *Node.js*
 
@@ -960,7 +965,7 @@ telemetry.getConfiguration().setTrackingDisabled(true);
 telemetry.config.disableAppInsights = true;
 ```
 
-若要*禁用所选的标准收集器*（例如，性能计数器、HTTP 请求或依赖项），初始化时请将配置方法链接到 SDK 初始化代码：
+若要 *禁用所选的标准收集器*（例如，性能计数器、HTTP 请求或依赖项），初始化时请将配置方法链接到 SDK 初始化代码：
 
 ```javascript
 applicationInsights.setup()
@@ -1001,7 +1006,7 @@ applicationInsights.setup("ikey")
 applicationInsights.defaultClient.config.maxBatchSize = 0;
 ```
 
-## <a name="setting-the-instrumentation-key-for-selected-custom-telemetry"></a><a name="ikey"></a>设置所选自定义遥测的检测密钥
+## <a name="setting-the-instrumentation-key-for-selected-custom-telemetry"></a><a name="ikey"></a> 设置所选自定义遥测的检测密钥
 
 *C#*
 
@@ -1093,8 +1098,8 @@ telemetry.Context.Operation.Name = "MyOperationName";
 
 ## <a name="reference-docs"></a>参考文档
 
-* [ASP.NET 参考](/dotnet/api/overview/azure/insights?view=azure-dotnet)
-* [Java 参考](/java/api/overview/azure/appinsights?view=azure-java-stable/)
+* [ASP.NET 参考](/dotnet/api/overview/azure/insights)
+* [Java 参考](/java/api/overview/azure/appinsights)
 * [JavaScript 参考](https://github.com/Microsoft/ApplicationInsights-JS/blob/master/API-reference.md)
 
 ## <a name="sdk-code"></a>SDK 代码
@@ -1119,4 +1124,3 @@ telemetry.Context.Operation.Name = "MyOperationName";
 
 * [搜索事件和日志](./diagnostic-search.md)
 * [故障排除](../faq.md)
-

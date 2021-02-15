@@ -1,8 +1,7 @@
 ---
 title: Azure 媒体服务 v3 中的动态打包
-titleSuffix: Azure Media Services
 description: 本文概述了 Azure 媒体服务中的动态打包。
-author: IngridAtMicrosoft
+author: myoungerman
 manager: femila
 editor: ''
 services: media-services
@@ -11,24 +10,26 @@ ms.service: media-services
 ms.workload: media
 ms.tgt_pltfrm: na
 ms.devlang: na
-ms.topic: overview
-ms.date: 08/18/2020
+ms.topic: conceptual
+ms.date: 09/30/2020
 ms.author: inhenkel
-ms.openlocfilehash: 8a5d52f2705a04c290f1122335430c12db8d294c
-ms.sourcegitcommit: d661149f8db075800242bef070ea30f82448981e
+ms.openlocfilehash: ed2c5b4175745fa14864b2d360bcbf5e5237a495
+ms.sourcegitcommit: 100390fefd8f1c48173c51b71650c8ca1b26f711
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/19/2020
-ms.locfileid: "88604574"
+ms.lasthandoff: 01/27/2021
+ms.locfileid: "98897639"
 ---
 # <a name="dynamic-packaging-in-media-services-v3"></a>媒体服务 v3 中的动态打包
 
+[!INCLUDE [media services api v3 logo](./includes/v3-hr.md)]
+
 Microsoft Azure 媒体服务可用于对许多媒体源文件格式进行编码。 它通过不同的流式处理协议（无论是否提供内容保护）来提供它们，以覆盖所有主要设备（如 iOS 和 Android 设备）。 这些客户端可理解不同的协议。 例如，iOS 要求以 HTTP Live Streaming (HLS) 格式传送流，Android 设备支持 HLS 以及 MPEG DASH。
 
-在媒体服务中，[流式处理终结点](streaming-endpoint-concept.md)（源）表示动态（即时）打包和源服务，该服务可直接将你的实时和按需内容发送到客户端播放器应用。 它使用下一部分中所述的一种常见流式处理媒体协议。 动态打包是所有流式处理终结点（标准或高级）的标准功能。
+在媒体服务中，[流式处理终结点](streaming-endpoint-concept.md)（源）表示动态（即时）打包和源服务，该服务可直接将你的实时和按需内容发送到客户端播放器应用。 它使用下一部分中所述的一种常见流式处理媒体协议。 动态打包是所有流式处理终结点的标准功能。
 
 > [!NOTE]
-> 可以使用 [Azure 门户](https://portal.azure.com/)执行以下操作：管理 v3 [直播活动](live-events-outputs-concept.md)、查看 v3 [资产](assets-concept.md)、获取有关访问 API 的信息。 对于其他所有管理任务（例如，转换和作业），请使用 [REST API](/rest/api/media/)、[CLI](https://aka.ms/ams-v3-cli-ref) 或某个受支持的 [SDK](media-services-apis-overview.md#sdks)。
+> 可以使用 [Azure 门户](https://portal.azure.com/)执行以下操作：管理 v3 [直播活动](live-events-outputs-concept.md)、查看 v3 [资产](assets-concept.md)、获取有关访问 API 的信息。 对于其他所有管理任务（例如，转换和作业），请使用 [REST API](/rest/api/media/)、[CLI](/cli/azure/ams) 或某个受支持的 [SDK](media-services-apis-overview.md#sdks)。
 
 ## <a name="to-prepare-your-source-files-for-delivery"></a>准备源文件供传输
 
@@ -54,6 +55,9 @@ Azure 媒体服务动态打包仅支持 MP4 容器格式的视频和音频文件
 |HLS V4 |`https://amsv3account-usw22.streaming.media.azure.net/21b17732-0112-4d76-b526-763dcd843449/ignite.ism/manifest(format=m3u8-aapl)`||
 |HLS V3 |`https://amsv3account-usw22.streaming.media.azure.net/21b17732-0112-4d76-b526-763dcd843449/ignite.ism/manifest(format=m3u8-aapl-v3)`||
 |HLS CMAF| `https://amsv3account-usw22.streaming.media.azure.net/21b17732-0112-4d76-b526-763dcd843449/ignite.ism/manifest(format=m3u8-cmaf)`||
+
+> [!NOTE]
+> Apple 以前的准则建议低带宽网络的回退提供仅限音频的流。  目前，媒体服务编码器自动生成仅限音频的曲目。现在，Apple 准则表明不应包含仅限音频的曲目，特别是对于 Apple TV 发行版。  为了防止播放机默认设置为仅限音频的曲目，我们建议在 URL 中使用“audio-only=false”标记（这将在 HLS 中删除仅音频呈现形式），或使用 HLS-V3。 例如，`http://host/locator/asset.ism/manifest(format=m3u8-aapl,audio-only=false)`。
 
 ### <a name="mpeg-dash-protocol"></a>MPEG-DASH 协议
 
@@ -83,7 +87,7 @@ Azure 媒体服务动态打包仅支持 MP4 容器格式的视频和音频文件
 1. [上传一个输入文件](job-input-from-http-how-to.md)，例如 MP4、QuickTime/MOV 或其他受支持的文件格式。 此文件也称为夹层文件或源文件。 有关受支持格式的列表，请参阅[标准编码器支持的格式](media-encoder-standard-formats.md)。
 1. 将夹层文件[编码](#encode-to-adaptive-bitrate-mp4s)为 H.264/AAC MP4 自适应比特率集。
 
-    如果已经有编码文件，只是想要复制并流式传输文件，请使用：[CopyVideo](https://docs.microsoft.com/rest/api/media/transforms/createorupdate#copyvideo) 和 [CopyAudio](https://docs.microsoft.com/rest/api/media/transforms/createorupdate#copyaudio) API。 将创建一个带有流式处理清单（.ism 文件）的新 MP4 文件。
+    如果已经有编码文件，只是想要复制并流式传输文件，请使用：[CopyVideo](/rest/api/media/transforms/createorupdate#copyvideo) 和 [CopyAudio](/rest/api/media/transforms/createorupdate#copyaudio) API。 将创建一个带有流式处理清单（.ism 文件）的新 MP4 文件。
 1. 发布包含自适应比特率 MP4 集的输出资产。 通过创建[流式处理定位符](streaming-locators-concept.md)进行发布。
 1. 生成针对不同格式（HLS、MPEG-DASH 和平滑流式处理）的 URL。 流式处理终结点将负责为所有这些不同格式提供正确的清单和请求。
     
@@ -130,7 +134,7 @@ Azure 媒体服务动态打包仅支持 MP4 容器格式的视频和音频文件
 动态打包支持采用 MP4 容器文件格式，并包含使用 [H.264](https://en.m.wikipedia.org/wiki/H.264/MPEG-4_AVC)（MPEG-4 AVC 或 AVC1）或是 [H.265](https://en.m.wikipedia.org/wiki/High_Efficiency_Video_Coding)（HEVC、hev1 或 hvc1）进行编码的视频的视频文件。
 
 > [!NOTE]
-> 已使用动态打包测试了高达 4K 的分辨率和高达 60 帧/秒的帧速率。 [高级编码器](../previous/media-services-encode-asset.md#media-encoder-premium-workflow)支持通过旧版 v2 API 编码为 H.265。
+> 已使用动态打包测试了高达 4K 的分辨率和高达 60 帧/秒的帧速率。
 
 ## <a name="audio-codecs-supported-by-dynamic-packaging"></a>动态打包支持的音频编解码器
 

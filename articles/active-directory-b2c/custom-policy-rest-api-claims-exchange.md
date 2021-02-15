@@ -7,15 +7,15 @@ manager: celestedg
 ms.service: active-directory
 ms.workload: identity
 ms.topic: how-to
-ms.date: 05/18/2020
+ms.date: 10/15/2020
 ms.author: mimart
 ms.subservice: B2C
-ms.openlocfilehash: 997a6941e2ccc26dabe1a593fe938094099bc98d
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 84053df34ffda0d4686ad80a9e5f3af00ac53d72
+ms.sourcegitcommit: cd9754373576d6767c06baccfd500ae88ea733e4
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "85388980"
+ms.lasthandoff: 11/20/2020
+ms.locfileid: "94949473"
 ---
 # <a name="walkthrough-add-rest-api-claims-exchanges-to-custom-policies-in-azure-active-directory-b2c"></a>演练：在 Azure Active Directory B2C 中将 REST API 声明交换添加到自定义策略
 
@@ -41,7 +41,7 @@ Azure Active Directory B2C (Azure AD B2C) 可让标识开发人员在用户旅�
 ```json
 {
     "objectId": "User objectId",
-    "language": "Current UI language"
+    "lang": "Current UI language"
 }
 ```
 
@@ -53,7 +53,7 @@ REST API 验证数据后，就必须返回 HTTP 200 (Ok)，其中包含以下 JS
 }
 ```
 
-REST API 终结点的设置不在本文的讨论范围内。 我们已创建 [Azure Functions](https://docs.microsoft.com/azure/azure-functions/functions-reference) 示例。 可以在 [GitHub](https://github.com/azure-ad-b2c/rest-api/tree/master/source-code/azure-function) 中访问完整的 Azure 函数代码。
+REST API 终结点的设置不在本文的讨论范围内。 我们已创建 [Azure Functions](../azure-functions/functions-reference.md) 示例。 可以在 [GitHub](https://github.com/azure-ad-b2c/rest-api/tree/master/source-code/azure-function) 中访问完整的 Azure 函数代码。
 
 ## <a name="define-claims"></a>定义声明
 
@@ -75,7 +75,7 @@ REST API 终结点的设置不在本文的讨论范围内。 我们已创建 [Az
 </ClaimType>
 ```
 
-## <a name="configure-the-restful-api-technical-profile"></a>配置 RESTful API 技术配置文件 
+## <a name="add-the-restful-api-technical-profile"></a>添加 RESTful API 技术配置文件 
 
 [RESTful 技术配置文件](restful-technical-profile.md)支持与你自己的 RESTful 服务交互。 Azure AD B2C 在 `InputClaims` 集合中将数据发送到 RESTful 服务，在 `OutputClaims` 集合中接收返回的数据。 在 <em>`TrustFrameworkExtensions.xml`</em> 文件中查找 ClaimsProviders 元素，并按如下所示添加新的声明提供程序 ：
 
@@ -87,6 +87,7 @@ REST API 终结点的设置不在本文的讨论范围内。 我们已创建 [Az
       <DisplayName>Get user extended profile Azure Function web hook</DisplayName>
       <Protocol Name="Proprietary" Handler="Web.TPEngine.Providers.RestfulProvider, Web.TPEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
       <Metadata>
+        <!-- Set the ServiceUrl with your own REST API endpoint -->
         <Item Key="ServiceUrl">https://your-account.azurewebsites.net/api/GetProfile?code=your-code</Item>
         <Item Key="SendClaimsIn">Body</Item>
         <!-- Set AuthenticationType to Basic or ClientCertificate in production environments -->
@@ -107,9 +108,20 @@ REST API 终结点的设置不在本文的讨论范围内。 我们已创建 [Az
     </TechnicalProfile>
   </TechnicalProfiles>
 </ClaimsProvider>
-```
+``` 
 
 在本示例中，`userLanguage` 将在 JSON 有效负载中以 `lang` 的形式发送到 REST 服务。 `userLanguage` 声明的值包含当前用户语言 ID。 有关详细信息，请参阅[声明解析程序](claim-resolver-overview.md)。
+
+### <a name="configure-the-restful-api-technical-profile"></a>配置 RESTful API 技术配置文件 
+
+部署 REST API 后，请设置 `REST-ValidateProfile` 技术配置文件的元数据以反映你自己的 REST API，包括：
+
+- **ServiceUrl**。 设置 REST API 终结点的 URL。
+- **SendClaimsIn**。 指定如何将输入声明发送到 RESTful 声明提供程序。
+- **AuthenticationType**。 设置 RESTful 声明提供程序所执行的身份验证的类型。 
+- **AllowInsecureAuthInProduction**。 在生产环境中，请确保将此元数据设置为 `true`
+    
+有关更多配置，请参阅 [RESTful 技术配置文件元数据](restful-technical-profile.md#metadata) 。
 
 `AuthenticationType` 和 `AllowInsecureAuthInProduction` 上的注释指定了在移到生产环境时应进行的更改。 若要了解如何保护用于生产的 RESTful API，请参阅[保护 RESTful API](secure-rest-api.md)。
 

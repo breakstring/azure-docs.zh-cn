@@ -11,19 +11,19 @@ ms.workload: identity
 ms.topic: tutorial
 ms.date: 03/27/2019
 ms.author: jeedes
-ms.openlocfilehash: bea34b2a8b8827b709cc637c0a33132477419a83
-ms.sourcegitcommit: 023d10b4127f50f301995d44f2b4499cbcffb8fc
+ms.openlocfilehash: 1c63639321966cbb73f5c47524f408d17ba46c3a
+ms.sourcegitcommit: 2aa52d30e7b733616d6d92633436e499fbe8b069
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/18/2020
-ms.locfileid: "88545729"
+ms.lasthandoff: 01/06/2021
+ms.locfileid: "97936546"
 ---
 # <a name="tutorial-configure-zscaler-two-for-automatic-user-provisioning"></a>教程：为 Zscaler Two 配置自动用户预配
 
 本教程介绍如何将 Azure Active Directory (Azure AD) 配置为自动为 Zscaler Two 预配和取消预配用户和/或组。
 
 > [!NOTE]
-> 本教程介绍在 Azure AD 用户预配服务基础上构建的连接器。 有关此服务的功能、工作原理的重要详细信息以及常见问题解答，请参阅[使用 Azure Active Directory 为 SaaS 应用程序自动化用户预配和取消预配](../active-directory-saas-app-provisioning.md)。
+> 本教程介绍在 Azure AD 用户预配服务基础上构建的连接器。 有关此服务的功能、工作原理的重要详细信息以及常见问题解答，请参阅[使用 Azure Active Directory 为 SaaS 应用程序自动化用户预配和取消预配](../app-provisioning/user-provisioning.md)。
 
 ## <a name="prerequisites"></a>先决条件
 
@@ -60,7 +60,7 @@ ms.locfileid: "88545729"
 
 需要为 Azure AD 用户分配对所选应用的访问权限，然后用户才能使用这些应用。 在自动用户预配的上下文中，只同步已分配到 Azure AD 中的应用程序的用户或组。
 
-在配置和启用自动用户预配之前，应确定 Azure AD 中的哪些用户和/或组需要访问 Zscaler Two。 确定后，可遵照[将用户或组分配到企业应用](https://docs.microsoft.com/azure/active-directory/active-directory-coreapps-assign-user-azure-portal)中的说明，将这些用户和组分配到 Zscaler Two。
+在配置和启用自动用户预配之前，应确定 Azure AD 中的哪些用户和/或组需要访问 Zscaler Two。 确定后，可遵照[将用户或组分配到企业应用](../manage-apps/assign-user-or-group-access-portal.md)中的说明，将这些用户和组分配到 Zscaler Two。
 
 ### <a name="important-tips-for-assigning-users-to-zscaler-two"></a>有关将用户分配到 Zscaler Two 的重要提示
 
@@ -74,6 +74,9 @@ ms.locfileid: "88545729"
 
 > [!TIP]
 > 此外，还建议为 Zscaler Two 启用基于 SAML 的单一登录。 若要这样做，请遵照 [Zscaler Two 单一登录教程](zscaler-two-tutorial.md)中的说明操作。 可以独立于自动用户预配配置单一登录，但这两个功能是互补的。
+
+> [!NOTE]
+> 预配或取消预配用户和组时，我们建议定期重启预配，以确保正确更新组成员身份。 执行重启操作将强制我们的服务重新评估所有组并更新成员身份。 
 
 1. 登录到 [Azure 门户](https://portal.azure.com)，选择“企业应用程序” > “所有应用程序” > “Zscaler Two”    ：
 
@@ -119,7 +122,7 @@ ms.locfileid: "88545729"
 
 11. 在“属性映射”部分中，查看从 Azure AD 同步到 Zscaler Two 的用户属性  。 选为“匹配”属性的特性用于匹配 Zscaler Two 中的用户帐户以执行更新操作  。 选择“保存”，提交所有更改  。
 
-    ![属性映射](./media/zscaler-two-provisioning-tutorial/user-attribute-mappings.png)
+    ![显示了 7 个映射的“属性映射”部分的屏幕截图。](./media/zscaler-two-provisioning-tutorial/user-attribute-mappings.png)
 
 12. 在“映射”部分下，选择“将 Azure Active Directory 组同步到 ZscalerTwo”   ：
 
@@ -127,9 +130,9 @@ ms.locfileid: "88545729"
 
 13. 在“属性映射”部分中，查看从 Azure AD 同步到 Zscaler Two 的组属性  。 选为“匹配”属性的特性用于匹配 Zscaler Two 中的组以执行更新操作  。 选择“保存”，提交所有更改  。
 
-    ![属性映射](./media/zscaler-two-provisioning-tutorial/group-attribute-mappings.png)
+    ![显示了 3 个映射的“属性映射”部分的屏幕截图。](./media/zscaler-two-provisioning-tutorial/group-attribute-mappings.png)
 
-14. 若要配置范围筛选器，请参阅[范围筛选器教程](./../active-directory-saas-scoping-filters.md)中的说明。
+14. 若要配置范围筛选器，请参阅[范围筛选器教程](../app-provisioning/define-conditional-rules-for-provisioning-user-accounts.md)中的说明。
 
 15. 若要为 Zscaler Two 启用 Azure AD 预配服务，请在“设置”部分中将“预配状态”更改为“启用”    ：
 
@@ -145,7 +148,7 @@ ms.locfileid: "88545729"
 
 此操作会对“设置”部分的“范围”中定义的所有用户和组启动初始同步   。 初始同步花费的时间比后续同步长，只要 Azure AD 预配服务正在运行，大约每 40 分钟就会进行一次同步。 可在“同步详细信息”部分中监视进度  。 还可以单击预配活动报告的链接，其中描述了 Azure AD 预配服务对 Zscaler Two 执行的所有操作。
 
-有关如何读取 Azure AD 预配日志的信息，请参阅[有关自动用户帐户预配的报告](../active-directory-saas-provisioning-reporting.md)。
+有关如何读取 Azure AD 预配日志的信息，请参阅[有关自动用户帐户预配的报告](../app-provisioning/check-status-user-account-provisioning.md)。
 
 ## <a name="additional-resources"></a>其他资源
 
@@ -154,7 +157,7 @@ ms.locfileid: "88545729"
 
 ## <a name="next-steps"></a>后续步骤
 
-* [了解如何查看日志并获取有关预配活动的报告](../active-directory-saas-provisioning-reporting.md)
+* [了解如何查看日志并获取有关预配活动的报告](../app-provisioning/check-status-user-account-provisioning.md)
 
 <!--Image references-->
 [1]: ./media/zscaler-two-provisioning-tutorial/tutorial-general-01.png

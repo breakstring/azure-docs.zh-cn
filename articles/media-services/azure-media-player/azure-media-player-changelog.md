@@ -5,15 +5,29 @@ author: IngridAtMicrosoft
 ms.author: inhenkel
 ms.service: media-services
 ms.topic: overview
-ms.date: 07/27/2020
-ms.openlocfilehash: 9642f6d1090ef358cf86241640255c647dea52eb
-ms.sourcegitcommit: 0b8320ae0d3455344ec8855b5c2d0ab3faa974a3
+ms.date: 09/23/2020
+ms.openlocfilehash: 9d126f591da1bffebbfd29119c56927cfbb21dcd
+ms.sourcegitcommit: 28c5fdc3828316f45f7c20fc4de4b2c05a1c5548
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/30/2020
-ms.locfileid: "87432671"
+ms.lasthandoff: 10/22/2020
+ms.locfileid: "92370570"
 ---
-# <a name="changelog"></a>更改日志 #
+# <a name="changelog"></a>更改日志
+
+## <a name="236-official-update-september-21-2020"></a>2.3.6 版（正式更新，2020 年 9月 21 日）
+
+### <a name="features-236"></a>功能 2.3.6
+
+添加了对 azureHtml5JS 技术 (DASH) 的纯音频支持；支持实时听录的延迟开始；支持实时听录中的语言更改
+
+### <a name="bug-fixes-236"></a>Bug 修复 2.3.6
+
+在 Apple 设备上的 HLS 播放中使用“playsinline”时，单击“实时”按钮会导致视频重启。AMP 海报图像有时会导致异常。在播放 HLS FairPlay 时缺少音量按钮。[辅助功能] 使用键盘时未为按钮定义工具提示。[辅助功能] 进度条的亮度比小于1.3:1。[辅助功能] 键盘焦点有时不会返回到“视频质量”按钮。[辅助功能] 控件在“视频”屏幕上不可见，从而使讲述人无法找到它们
+
+### <a name="changes-236"></a>2\.3.6 版中的更改
+
+将有意义的 KeyDelivery 错误返回到调用应用程序
 
 ## <a name="235-official-update-june-1-2020"></a>2.3.5 版（正式更新，2020 年 6 月 1 日）
 
@@ -184,7 +198,7 @@ ms.locfileid: "87432671"
 
 ### <a name="changes"></a>更改 ###
 
-- [更改][实时字幕] 已将 CEA 字幕的 API 名称从 608 更改为 708。 有关详细信息，请参阅 [CEA708 字幕设置](/javascript/api/azuremediaplayer/amp.player.cea708captionssettings)-->
+- [更改][实时字幕] 已将 CEA 字幕的 API 名称从 608 更改为 708。 有关详细信息，请参阅 [CEA708 字幕设置](/javascript/api/azuremediaplayer/cea708captionssettings)-->
 
 ## <a name="220-official-release"></a>2.2.0（正式发行版） ##
 

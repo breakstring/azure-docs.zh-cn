@@ -1,17 +1,17 @@
 ---
 title: 教程 - 在 Azure Monitor 中创建指标图表
-description: 了解如何使用 Azure 指标资源管理器创建第一个指标图表。
+description: 了解如何使用 Azure 指标资源管理器创建指标图表。
 author: bwren
 ms.author: bwren
 ms.subservice: metrics
 ms.topic: tutorial
 ms.date: 03/09/2020
-ms.openlocfilehash: d8f72471dd3109bf584d18f032ec2f4d949a4993
-ms.sourcegitcommit: 58faa9fcbd62f3ac37ff0a65ab9357a01051a64f
+ms.openlocfilehash: 121de67ddb251e7431873c76e379eb223ceacd0d
+ms.sourcegitcommit: 25d1d5eb0329c14367621924e1da19af0a99acf1
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/29/2020
-ms.locfileid: "79082806"
+ms.lasthandoff: 01/16/2021
+ms.locfileid: "98250666"
 ---
 # <a name="tutorial-create-a-metrics-chart-in-azure-monitor"></a>教程：在 Azure Monitor 中创建指标图表
 指标资源管理器是 Azure 门户中 Azure Monitor 的一项功能，通过它可以根据指标值创建图表，直观地关联趋势，以及调查指标值中的高峰和凹陷。 使用指标资源管理器调查 Azure 资源的运行状况和利用率，或根据自定义指标绘制图表。 
@@ -40,7 +40,7 @@ ms.locfileid: "79082806"
 
 1. 从 Azure Monitor 菜单或从资源的菜单的“监视”部分选择“指标”    。
 
-1. 选择“范围”，即要查看其指标的资源  。 如果从资源的菜单中打开了指标资源管理器，则该范围已填充完毕。
+1. 选择“范围”，即要查看其指标的资源  。 如果从资源的菜单中打开了指标资源管理器，则该范围已填充完毕。 若要详细了解资源范围选取器的各项功能，请访问[本文](../platform/metrics-charts.md#resource-scope-picker)。
 
     ![选择范围](media/tutorial-metrics-explorer/scope-picker.png)
 
@@ -52,7 +52,7 @@ ms.locfileid: "79082806"
 
 4. （可选）更改指标聚合  。 这定义指标值将如何跨图的时间粒度进行聚合。 例如，如果时间粒度设置为 15 分钟，聚合设置为“求和”，则图中的每个点都将是每 15 分钟时间段内收集的所有值的总和。
 
-    ![图表](media/tutorial-metrics-explorer/chart.png)
+    ![显示标题为“contosoretailweb 的总流入量”的图表的屏幕截图。](media/tutorial-metrics-explorer/chart.png)
 
 5. 如果要查看在同一图表中绘制的多个指标，请使用“添加指标”按钮，并重复这些步骤  。 对于一个视图中的多个图表，选择“新建图表”按钮  。
 
@@ -70,20 +70,20 @@ ms.locfileid: "79082806"
 ## <a name="apply-dimension-filters-and-splitting"></a>应用维度筛选器和拆分
 请参阅以下有关高级功能的参考资料，使用这些功能可以对指标进行其他分析并确定数据中的可能的异常值。
 
-- 通过[筛选](../platform/metrics-charts.md#apply-filters-to-charts)可以选择要包含在图表中的维度值。 例如，在为“服务器响应时间”指标绘制图表时，你可能希望仅显示成功的请求  。 
+- 通过[筛选](../platform/metrics-charts.md#filters)可以选择要包含在图表中的维度值。 例如，在为“服务器响应时间”指标绘制图表时，你可能希望仅显示成功的请求  。 
 
-- [拆分](../platform/metrics-charts.md#apply-splitting-to-a-chart)可以控制图表是针对维度的每个值显示单独行，还是将值聚合为一行。 例如，你可能希望看到针对所有服务器实例中的平均响应时间的一行，或者可能希望看到针对每个服务器的单独的行。 
+- [拆分](../platform/metrics-charts.md#apply-splitting)可以控制图表是针对维度的每个值显示单独行，还是将值聚合为一行。 例如，你可能希望看到针对所有服务器实例中的平均响应时间的一行，或者可能希望看到针对每个服务器的单独的行。 
 
 请参阅应用了筛选和拆分的[图表示例](../platform/metric-chart-samples.md)。
 
 ## <a name="advanced-chart-settings"></a>高级图表设置
 
-可以自定义图表样式和标题并修改高级图表设置。 完成自定义后，将其固定到仪表板以保存工作。 你还可以配置指标警报。 请参阅 [Azure 指标资源管理器的高级功能](../platform/metrics-charts.md#lock-boundaries-of-chart-y-axis)，了解 Azure Monitor 指标资源管理器的这些功能和其他高级功能。
+可以自定义图表样式和标题并修改高级图表设置。 完成自定义后，将其固定到仪表板以保存工作。 你还可以配置指标警报。 请参阅 [Azure 指标资源管理器的高级功能](../platform/metrics-charts.md#locking the-range-of-the-y-axis)，了解 Azure Monitor 指标资源管理器的这些功能和其他高级功能。
 
 
 ## <a name="next-steps"></a>后续步骤
 现在，你已了解如何在 Azure Monitor 中使用指标，接下来了解如何使用指标来发送主动警报。
 
 > [!div class="nextstepaction"]
-> [使用 Azure Monitor 创建、查看和管理指标警报](../platform/alerts-metric.md)
+> [使用 Azure Monitor 创建、查看和管理指标警报](../platform/metrics-charts.md#alert-rules)
 

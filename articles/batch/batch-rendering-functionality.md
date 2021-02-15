@@ -3,14 +3,14 @@ title: 渲染功能
 description: 标准 Azure Batch 功能用于运行渲染工作负荷与应用。 Batch 包含用于支持渲染工作负荷的特定功能。
 author: mscurrell
 ms.author: markscu
-ms.date: 08/02/2018
+ms.date: 02/01/2021
 ms.topic: how-to
-ms.openlocfilehash: 6e34e0ef9035882a32ff46222686db4a948d7997
-ms.sourcegitcommit: 845a55e6c391c79d2c1585ac1625ea7dc953ea89
+ms.openlocfilehash: c748c51311a70cd3b4fc6d435e97a33d709467b9
+ms.sourcegitcommit: eb546f78c31dfa65937b3a1be134fb5f153447d6
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/05/2020
-ms.locfileid: "85957454"
+ms.lasthandoff: 02/02/2021
+ms.locfileid: "99429796"
 ---
 # <a name="azure-batch-rendering-capabilities"></a>Azure Batch 的渲染功能
 
@@ -18,13 +18,21 @@ ms.locfileid: "85957454"
 
 有关 Batch 概念的概述，包括池、作业和任务，请参阅[此文](./batch-service-workflow-features.md)。
 
-## <a name="batch-pools"></a>Batch 池
+## <a name="batch-pools-using-custom-vm-images-and-standard-application-licensing"></a>使用自定义 VM 映像和标准应用程序授权的批处理池
+
+与其他工作负荷和应用程序类型一样，可以使用所需的渲染应用程序和插件创建自定义 VM 映像。自定义 VM 映像位于 [共享映像库](../virtual-machines/shared-image-galleries.md) 中， [可用于创建批处理池](batch-sig-images.md)。
+
+任务命令行字符串将需要引用创建自定义 VM 映像时使用的应用程序和路径。
+
+大多数呈现应用程序都需要从许可证服务器获取的许可证。 如果存在现有的本地许可证服务器，则池和许可证服务器都需要位于同一 [虚拟网络](../virtual-network/virtual-networks-overview.md)中。 还可以在 Azure VM 上运行许可证服务器，将 Batch 池和许可证服务器 VM 置于同一虚拟网络中。
+
+## <a name="batch-pools-using-rendering-vm-images"></a>使用呈现 VM 映像的批处理池
 
 ### <a name="rendering-application-installation"></a>渲染应用程序安装
 
 如果只需使用预装的应用程序，则可以在池配置中指定 Azure 市场渲染 VM 映像。
 
-有一个 Windows 2016 映像和一个 CentOS 映像。  在 [Azure 市场](https://azuremarketplace.microsoft.com)中，可以通过搜索“batch 渲染”找到 VM 映像。
+有一个 Windows 映像和一个 CentOS 映像。  在 [Azure 市场](https://azuremarketplace.microsoft.com)中，可以通过搜索“batch 渲染”找到 VM 映像。
 
 有关示例池配置，请参阅 [Azure CLI 渲染教程](./tutorial-rendering-cli.md)。  Azure 门户和 Batch Explorer 提供了 GUI 工具用于在创建池时选择渲染 VM 映像。  如果使用 Batch API，请在创建池时，为 [ImageReference](/rest/api/batchservice/pool/add#imagereference) 指定以下属性值：
 
@@ -62,22 +70,19 @@ ms.locfileid: "85957454"
 
 |应用程序|应用程序可执行文件|环境变量|
 |---------|---------|---------|
-|Autodesk 3ds Max 2018|3dsmaxcmdio.exe|3DSMAX_2018_EXEC|
-|Autodesk 3ds Max 2019|3dsmaxcmdio.exe|3DSMAX_2019_EXEC|
-|Autodesk Maya 2017|render.exe|MAYA_2017_EXEC|
-|Autodesk Maya 2018|render.exe|MAYA_2018_EXEC|
-|Chaos Group V-Ray Standalone|vray.exe|VRAY_3.60.4_EXEC|
-Arnold 2017 命令行|kick.exe|ARNOLD_2017_EXEC|
-|Arnold 2018 命令行|kick.exe|ARNOLD_2018_EXEC|
+|Autodesk 3ds Max 2021|3dsmaxcmdio.exe|3DSMAX_2021_EXEC|
+|Autodesk Maya 2020|render.exe|MAYA_2020_EXEC|
+|Chaos Group V-Ray Standalone|vray.exe|VRAY_4 VRAY_4.10.03_EXEC|
+|Arnold 2020 命令行|kick.exe|ARNOLD_2020_EXEC|
 |Blender|blender.exe|BLENDER_2018_EXEC|
 
-### <a name="azure-vm-families"></a>Azure VM 系列
+## <a name="azure-vm-families"></a>Azure VM 系列
 
 与其他工作负荷一样，渲染应用程序的系统要求和性能要求根据作业与项目的不同而异。  Azure 中根据要求提供了多种不同的 VM 系列 - 最低成本、最高性价比、最佳性能，等等。
 有些渲染应用程序（例如 Arnold）基于 CPU，而有些（例如 V-Ray 和 Blender Cycles）则可以使用 CPU 和/或 GPU。
-有关可用 VM 系列和 VM 大小的说明，请参阅 [VM 类型和大小](../virtual-machines/windows/sizes.md)。
+有关可用 VM 系列和 VM 大小的说明，请参阅 [VM 类型和大小](../virtual-machines/sizes.md)。
 
-### <a name="low-priority-vms"></a>低优先级 VM
+## <a name="low-priority-vms"></a>低优先级 VM
 
 与其他工作负荷一样，可在 Batch 池中利用低优先级 VM 进行渲染。  低优先级 VM 的表现与普通的专用 VM 相同，但利用盈余的 Azure 容量，并可享受较大的折扣。  使用低优先级虚拟机的代价是这些虚拟机可能不可用，并将其分配，或在任何时间，具体取决于可用的容量可能会被抢占。 出于此原因，低优先级 VM 并不适合所有渲染作业。 例如，如果需要几个小时才能渲染图像，则这些图像的渲染可能会中断或重启，因为抢占 VM 是不可接受的。
 

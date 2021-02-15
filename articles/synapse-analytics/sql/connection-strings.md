@@ -1,26 +1,27 @@
 ---
-title: Synapse SQL（预览版）的连接字符串
-description: Synapse SQL（预览版）的连接字符串
+title: Synapse SQL 的连接字符串
+description: Synapse SQL 的连接字符串
 services: synapse-analytics
 author: azaricstefan
 ms.service: synapse-analytics
 ms.topic: overview
 ms.subservice: ''
 ms.date: 04/15/2020
-ms.author: v-stazar
+ms.author: stefanazaric
 ms.reviewer: jrasnick
-ms.openlocfilehash: 8c1f13449c8ee5152e4e5b48af87f41004e599dc
-ms.sourcegitcommit: b80aafd2c71d7366838811e92bd234ddbab507b6
+ms.custom: devx-track-csharp
+ms.openlocfilehash: 5ce411f3a2f3be162f9af16422d20b3e8b536fee
+ms.sourcegitcommit: aacbf77e4e40266e497b6073679642d97d110cda
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/16/2020
-ms.locfileid: "81420801"
+ms.lasthandoff: 01/12/2021
+ms.locfileid: "98120914"
 ---
-# <a name="connection-strings-for-synapse-sql-preview"></a>Synapse SQL（预览版）的连接字符串
+# <a name="connection-strings-for-synapse-sql"></a>Synapse SQL 的连接字符串
 
-可以使用几种不同的应用程序协议（例如 [ADO.NET](https://msdn.microsoft.com/library/e80y5yhx(v=vs.110).aspx)、[ODBC](https://msdn.microsoft.com/library/jj730314.aspx)、[PHP](https://msdn.microsoft.com/library/cc296172.aspx?f=255&MSPPError=-2147217396) 和 [JDBC](https://msdn.microsoft.com/library/mt484311(v=sql.110).aspx)）连接到 Synapse SQL（预览版）。 下面是每个协议的连接字符串的一些示例。 
+可以使用几种不同的应用程序协议（例如 [ADO.NET](/dotnet/framework/data/adonet/)、[ODBC](/sql/connect/odbc/windows/microsoft-odbc-driver-for-sql-server-on-windows)、[PHP](/sql/connect/php/overview-of-the-php-sql-driver?f=255&MSPPError=-2147217396) 和 [JDBC](/sql/connect/jdbc/microsoft-jdbc-driver-for-sql-server)）连接到 Synapse SQL。 下面是每个协议的连接字符串的一些示例。 
 
-可以使用 Azure 门户来生成连接字符串。  若要使用 Azure 门户生成连接字符串，请导航到数据库边栏选项卡，在“概要”  下单击“显示数据库连接字符串”  。
+可以使用 Azure 门户来生成连接字符串。  若要使用 Azure 门户生成连接字符串，请导航到数据库边栏选项卡，在“概要”下选择“显示数据库连接字符串”。
 
 ## <a name="sample-adonet-connection-string"></a>示例 ADO.NET 连接字符串
 
@@ -51,7 +52,7 @@ jdbc:sqlserver://yourserver.sql.azuresynapse.net:1433;database=yourdatabase;user
 
 ## <a name="recommendations"></a>建议
 
-若要执行 SQL 按需版本  查询，建议使用 [Azure Data Studio](get-started-azure-data-studio.md) 和 Azure Synapse Studio 这两种工具。
+若要执行无服务器 SQL 池查询，建议使用 [Azure Data Studio](get-started-azure-data-studio.md) 和 Azure Synapse Studio 这两个工具。
 
 ## <a name="next-steps"></a>后续步骤
 

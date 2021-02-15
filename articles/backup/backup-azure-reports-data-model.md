@@ -3,12 +3,12 @@ title: Azure 备份诊断事件的数据模型
 description: 此数据模型参考了将诊断事件发送到 Log Analytics (LA) 的资源特定模式。
 ms.topic: conceptual
 ms.date: 10/30/2019
-ms.openlocfilehash: 46d40694da4eb025afc11da0f14b28691bf13bb8
-ms.sourcegitcommit: 3543d3b4f6c6f496d22ea5f97d8cd2700ac9a481
+ms.openlocfilehash: 52c5c0694ed59aea20453ae7a2bd3209d76df433
+ms.sourcegitcommit: 2989396c328c70832dcadc8f435270522c113229
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/20/2020
-ms.locfileid: "86538864"
+ms.lasthandoff: 10/19/2020
+ms.locfileid: "92173980"
 ---
 # <a name="data-model-for-azure-backup-diagnostics-events"></a>Azure 备份诊断事件的数据模型
 
@@ -53,7 +53,7 @@ ms.locfileid: "86538864"
 | ProtectedContainerWorkloadType    | 文本          | 受保护的已备份容器的类型。 例如 IaaSVMContainer |
 | ProtectionGroupName               | 文本          | SC DPM 和 MABS 的保护组名称，其中的备份项受保护（如果适用） |
 | ResourceGroupName                 | 文本          | 所收集数据的资源（例如，恢复服务保管库）的资源组 |
-| schemaVersion                     | 文本          | 此字段表示架构的当前版本，值为 **V2** |
+| schemaVersion                     | 文本          | 此字段表示架构的当前版本。 值为“V2” |
 | SecondaryBackupProtectionState    | 文本          | 是否为备份项启用了辅助保护  |
 | 状态                             | 文本          | 备份项对象的状态。 例如 Active、Deleted |
 | StorageReplicationType            | 文本          | 保管库的存储复制类型。 例如 GeoRedundant |
@@ -136,7 +136,7 @@ ms.locfileid: "86538864"
 | ProtectedContainerUniqueId     | 文本          | 与作业关联的受保护服务器的唯一标识符 |
 | RecoveryJobDestination         | 文本          | 恢复作业的目标，数据将恢复到其中   |
 | RecoveryJobRPDateTime          | DateTime      | 要恢复的恢复点的创建日期和时间 |
-| RecoveryJobLocation            | 文本          | 要恢复的恢复点已还原到的位置 |
+| RecoveryJobLocation            | 文本          | 要恢复的恢复点的存储位置 |
 | RecoveryLocationType           | 文本          | 恢复位置的类型                                |
 | schemaVersion                  | 文本          | 架构的当前版本，例如 **V2**            |
 | 状态                          | 文本          | 作业对象的当前状态，例如 Active、Deleted |
@@ -165,12 +165,12 @@ ms.locfileid: "86538864"
 | DiffBackupTime                  | 时间           | Azure VM 备份中 SQL 差异备份的时间     |
 | LogBackupFrequency              | 十进制数 | SQL 日志备份的频率                            |
 | LogBackupRetentionDuration      | 十进制数 | Azure VM 备份中 SQL 日志备份的保留期 |
-| MonthlyRetentionDaysOfTheMonth  | 文本           | 配置每月保留时的当月周次。  例如，First、Last，等等。 |
+| MonthlyRetentionDaysOfTheMonth  | 文本           | 配置每月保留时的当月周次。  例如，First、Last |
 | MonthlyRetentionDaysOfTheWeek   | 文本           | 选择进行每月保留的日期（星期几）              |
 | MonthlyRetentionDuration        | 文本           | 所配置备份的总保留时间（按月算）    |
 | MonthlyRetentionFormat          | 文本           | 每月保留的配置类型。 例如基于日期的每日、基于周次的每周 |
 | MonthlyRetentionTimes           | 文本           | 配置每月保留时的日期和时间           |
-| MonthlyRetentionWeeksOfTheMonth | 文本           | 配置每月保留时的当月周次。   例如，First、Last，等等。 |
+| MonthlyRetentionWeeksOfTheMonth | 文本           | 配置每月保留时的当月周次。   例如，First、Last |
 | PolicyName                      | 文本           | 已定义的策略的名称                                   |
 | PolicyUniqueId                  | 文本           | 用于标识策略的唯一 ID                             |
 | PolicyTimeZone                  | 文本           | 在日志中指定策略时间字段时采用的时区 |
@@ -217,6 +217,29 @@ ms.locfileid: "86538864"
 | VaultUniqueId                  | 文本          | 用于标识与存储实体相关的保管库的唯一 ID |
 | VolumeFriendlyName             | 文本          | 存储卷的友好名称                          |
 | SourceSystem                   | 文本          | 当前数据的源系统 - Azure                    |
+
+## <a name="valid-operation-names-for-each-table"></a>每个表的有效操作名称
+
+上述表中的每条记录都有一个关联的 **操作名称**。 "操作名称" 描述 (的记录类型，还指示为该记录填充表中的哪些字段) 。 每个表 (类别) 支持一个或多个不同的操作名称。 下面汇总了上述每个表中支持的操作名称。
+
+| **表名称/类别**                   | **支持的操作名称** | **说明**              |
+| ------------------------------------------- | ------------------------------|----------------------------- |
+| CoreAzureBackup | BackupItem | 表示一条记录，其中包含给定备份项的所有详细信息，例如 ID、名称、类型等。 |
+| CoreAzureBackup | BackupItemAssociation | 表示备份项与其关联的受保护容器 (（如果适用) ）之间的映射。 |
+| CoreAzureBackup | BackupItemFrontEndSizeConsumption | 表示备份项与其前端大小之间的映射。 |
+| CoreAzureBackup | ProtectedContainer | 表示一条记录，其中包含给定受保护容器的所有详细信息，例如 ID、名称、类型等。 |
+| CoreAzureBackup | ProtectedContainerAssociation | 表示受保护容器与用于其备份的保管库之间的映射。 |
+| CoreAzureBackup | 保管库 | 表示一个记录，其中包含给定保管库的所有详细信息，例如。 ID、名称、标记、位置等。 |
+| CoreAzureBackup | RecoveryPoint | 表示一条记录，其中包含给定备份项的最早和最新恢复点。 |
+| AddonAzureBackupJobs | 作业 |  表示包含给定作业的所有详细信息的记录。 例如，作业操作、开始时间、状态等。 |
+| AddonAzureBackupAlerts | 警报 | 表示包含给定警报的所有详细信息的记录。 例如，警报创建时间、严重性、状态等。  |
+| AddonAzureBackupStorage | 存储 | 表示包含给定存储实体的所有详细信息的记录。 例如，存储名称、类型等。 |
+| AddonAzureBackupStorage | StorageAssociation | 表示备份项与备份项使用的总云存储之间的映射。 |
+| AddonAzureBackupProtectedInstance | ProtectedInstance | 表示包含每个容器或备份项的受保护实例计数的记录。 对于 Azure VM 备份，受保护的实例计数在备份项级别可用，对于其他工作负荷，在受保护的容器级别上提供。 |
+| AddonAzureBackupPolicy | 策略 |  表示包含备份和保留策略的所有详细信息的记录。 例如，ID、名称、保留设置等。 |
+| AddonAzureBackupPolicy | PolicyAssociation | 表示备份项和应用到备份策略的备份策略之间的映射。 |   
+
+通常，您需要在不同的表中执行联接，以及将不同的记录集作为同一个表的一部分 (按操作名称进行区分) 以获取分析所需的所有字段。 若要开始，请参阅 [示例查询](./backup-azure-monitoring-use-azuremonitor.md#sample-kusto-queries) 。 
 
 ## <a name="next-steps"></a>后续步骤
 

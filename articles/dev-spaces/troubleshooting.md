@@ -5,14 +5,16 @@ ms.date: 09/25/2019
 ms.topic: troubleshooting
 description: 了解如何排查和解决在启用和使用 Azure Dev Spaces 时遇到的常见问题
 keywords: 'Docker, Kubernetes, Azure, AKS, Azure Kubernetes 服务, 容器, Helm, 服务网格, 服务网格路由, kubectl, k8s '
-ms.openlocfilehash: e26f066294cb0a6a48c5a3299213206fe4226ad0
-ms.sourcegitcommit: 4913da04fd0f3cf7710ec08d0c1867b62c2effe7
+ms.openlocfilehash: bf8c4d2040445fa3417fce02fb4b66216b21f3b5
+ms.sourcegitcommit: 65db02799b1f685e7eaa7e0ecf38f03866c33ad1
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/14/2020
-ms.locfileid: "88210835"
+ms.lasthandoff: 12/03/2020
+ms.locfileid: "96548862"
 ---
 # <a name="azure-dev-spaces-troubleshooting"></a>Azure Dev Spaces 故障排除
+
+[!INCLUDE [Azure Dev Spaces deprecation](../../includes/dev-spaces-deprecation.md)]
 
 本指南介绍使用 Azure Dev Spaces 时可能会碰到的常见问题。
 
@@ -27,14 +29,6 @@ ms.locfileid: "88210835"
 在 CLI 中，可以通过使用 `--verbose` 切换在命令执行过程中输出更多信息。 还可以在 `%TEMP%\Azure Dev Spaces` 中浏览更详细的日志。 在 Mac 上，可以通过在终端窗口中运行 `echo $TMPDIR` 来找到 TEMP 目录。 在 Linux 计算机上，TEMP 目录通常为 `/tmp`。 此外，还请验证是否已在 [Azure CLI 配置文件](/cli/azure/azure-cli-configuration?view=azure-cli-latest#cli-configuration-values-and-environment-variables)中启用了日志记录。
 
 Azure Dev Spaces 在调试单个实例或 Pod 时也能发挥最佳效果。 `azds.yaml` 文件包含 replicaCount 设置，它指明了 Kubernetes 针对服务运行的 Pod 数。 如果你通过更改 replicaCount 将应用程序配置为针对给定服务运行多个 Pod，调试程序会附加到按字母顺序列出的第一个 Pod。 如果回收原始 Pod，调试程序会附加到其他 pod，这可能会导致意外行为发生。
-
-## <a name="common-issues-when-using-local-process-with-kubernetes"></a>将本地进程用于 Kubernetes 时的常见问题
-
-### <a name="fail-to-restore-original-configuration-of-deployment-on-cluster"></a>无法还原群集上的部署的原始配置
-
-将本地过程与 Kubernetes 一起使用时，如果使用 Kubernetes 客户端的本地进程崩溃或突然终止，则使用 Kubernetes 的本地进程的服务可能无法还原到其原始状态。
-
-若要解决此问题，请将服务重新部署到群集。
 
 ## <a name="common-issues-when-enabling-azure-dev-spaces"></a>启用 Azure Dev Spaces 时遇到的常见问题
 
@@ -265,7 +259,7 @@ Service cannot be started.
 
 ### <a name="network-traffic-is-not-forwarded-to-your-aks-cluster-when-connecting-your-development-machine"></a>连接开发计算机时，网络流量不转发到 AKS 群集
 
-在使用 [Azure Dev Spaces 将 AKS 群集连接到开发计算机](https://code.visualstudio.com/docs/containers/local-process-kubernetes)时，可能会遇到下面这样的问题：网络流量没有在开发计算机与 AKS 群集之间进行转发。
+在使用 [Azure Dev Spaces 将 AKS 群集连接到开发计算机](https://code.visualstudio.com/docs/containers/bridge-to-kubernetes)时，可能会遇到下面这样的问题：网络流量没有在开发计算机与 AKS 群集之间进行转发。
 
 将开发计算机连接到 AKS 群集时，Azure Dev Spaces 通过修改开发计算机的 `hosts` 文件，在 AKS 群集与开发计算机之间转发网络流量。 Azure Dev Spaces 在 `hosts` 中创建一个条目，其中包含要替换的 Kubernetes 服务的地址作为主机名。 此条目与端口转发结合使用，以在开发计算机与 AKS 群集之间定向网络流量。 如果开发计算机上的服务与要替换的 Kubernetes 服务的端口发生冲突，Azure Dev Spaces 就无法转发 Kubernetes 服务的网络流量。 例如，Windows BranchCache 服务通常绑定到 0.0.0.0:80，这会导致所有本地 IP 上的端口 80 发生冲突。
 
@@ -284,7 +278,7 @@ Service cannot be started.
 
 Azure Dev Spaces 在群集上运行的服务利用群集的托管标识与群集外的 Azure Dev Spaces 后端服务进行通信。 在 Pod 托管标识安装后，会在群集的节点上配置网络规则，以将托管标识凭据的所有调用重定向到[群集上安装的节点托管标识 (NMI) DaemonSet](https://github.com/Azure/aad-pod-identity#node-managed-identity)。 此 NMI DaemonSet 对调用 Pod 进行标识，并确保 Pod 已被正确标记来访问请求获取的托管标识。 Azure Dev Spaces 无法检测群集是否安装了 Pod 托管标识，也无法执行必要的配置来允许 Azure Dev Spaces 服务访问群集的托管标识。 由于尚未将 Azure Dev Spaces 服务配置为访问群集的托管标识，因此，NMI DaemonSet 将不允许它们获取托管标识的 Azure AD 令牌，并且无法与 Azure Dev Spaces 后端服务进行通信。
 
-若要修复此问题，请为 azds-injector-webhook 应用 [AzurePodIdentityException](https://github.com/Azure/aad-pod-identity/blob/master/docs/readmes/README.app-exception.md)，并更新由 Azure Dev Spaces 检测的 Pod 来访问托管标识。
+若要修复此问题，请为 azds-injector-webhook 应用 [AzurePodIdentityException](https://azure.github.io/aad-pod-identity/docs/configure/application_exception)，并更新由 Azure Dev Spaces 检测的 Pod 来访问托管标识。
 
 创建名为 webhookException.yaml 的文件，并复制以下 YAML 定义：
 
@@ -385,6 +379,17 @@ spec:
       [...]
 ```
 
+### <a name="error-cannot-get-connection-details-for-azure-dev-spaces-controller-abc-because-it-is-in-the-failed-state-something-wrong-might-have-happened-with-your-controller"></a>错误 "无法获取 Azure Dev Spaces 控制器" ABC "的连接详细信息，因为它处于" 失败 "状态。 控制器出现错误。 "
+
+若要解决此问题，请尝试从群集中删除 Azure Dev Spaces 控制器，然后重新安装：
+
+```bash
+azds remove -g <resource group name> -n <cluster name>
+azds controller create --name <cluster name> -g <resource group name> -tn <cluster name>
+```
+
+此外，在 Azure Dev Spaces 即将停用的情况下，请考虑 [迁移到 Kubernetes](migrate-to-bridge-to-kubernetes.md) ，从而提供更好的体验。
+
 ## <a name="common-issues-using-visual-studio-and-visual-studio-code-with-azure-dev-spaces"></a>结合使用 Visual Studio 和 Visual Studio Code 与 Azure Dev Spaces 时遇到的常见问题
 
 ### <a name="error-required-tools-and-configurations-are-missing"></a>错误“缺少必需的工具和配置”
@@ -465,7 +470,7 @@ az provider register --namespace Microsoft.DevSpaces
 
 ### <a name="new-pods-arent-starting"></a>新的 Pod 没有启动
 
-由于对群集中“群集管理员”角色的 RBAC 权限更改，Kubernetes 初始值设定项无法为新的 Pod 应用 PodSpec。 新的 Pod 还可能有无效的 PodSpec（例如，与 Pod 关联的服务帐户已不存在）。 若要查看由于初始值设定项问题而处于“挂起”状态的 Pod，请使用 `kubectl get pods` 命令：
+由于对群集中 *群集管理* 角色的 Kubernetes RBAC 权限更改，Kubernetes 初始值设定项不能将 PodSpec 应用于新的 pod。 新的 Pod 还可能有无效的 PodSpec（例如，与 Pod 关联的服务帐户已不存在）。 若要查看由于初始值设定项问题而处于“挂起”状态的 Pod，请使用 `kubectl get pods` 命令：
 
 ```bash
 kubectl get pods --all-namespaces --include-uninitialized
@@ -494,7 +499,7 @@ azds controller create --name <cluster name> -g <resource group name> -tn <clust
 
 在重新安装控制器后，重新部署你的 Pod。
 
-### <a name="incorrect-rbac-permissions-for-calling-dev-spaces-controller-and-apis"></a>用于调用 Dev Spaces 控制器和 API 的 RBAC 权限不正确
+### <a name="incorrect-azure-rbac-permissions-for-calling-dev-spaces-controller-and-apis"></a>用于调用开发共享空间控制器和 Api 的 Azure RBAC 权限不正确
 
 访问 Azure Dev Spaces 控制器的用户必须有权读取 AKS 群集上的管理员 kubeconfig。 例如，[内置的 Azure Kubernetes 服务群集管理员角色](../aks/control-kubeconfig-access.md#available-cluster-roles-permissions)中包含此权限。 访问 Azure Dev Spaces 控制器的用户还必须具有该控制器的 *参与者* 或 *所有者* Azure 角色。 若要详细了解如何更新用户对 AKS 群集的权限，请单击[此处](../aks/control-kubeconfig-access.md#assign-role-permissions-to-a-user-or-group)。
 

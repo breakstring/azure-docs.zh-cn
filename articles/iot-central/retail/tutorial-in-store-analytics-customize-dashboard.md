@@ -11,12 +11,12 @@ ms.custom:
 ms.author: timlt
 author: timlt
 ms.date: 11/12/2019
-ms.openlocfilehash: 47edaec54a2470e9b657b2f214be923439e1e8a2
-ms.sourcegitcommit: 25490467e43cbc3139a0df60125687e2b1c73c09
+ms.openlocfilehash: 74ce36652b1a00ac6813c62a17d44e2a5486645f
+ms.sourcegitcommit: d1b0cf715a34dd9d89d3b72bb71815d5202d5b3a
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/09/2020
-ms.locfileid: "80999587"
+ms.lasthandoff: 02/08/2021
+ms.locfileid: "99831701"
 ---
 # <a name="tutorial--customize-the-operator-dashboard-and-manage-devices-in-azure-iot-central"></a>教程：在 Azure IoT Central 中自定义操作员仪表板和管理设备
 
@@ -246,7 +246,12 @@ Azure IoT Central 应用程序仪表板由一个或多个磁贴组成。 磁贴�
 
 1. （可选）选择“重新启动”  磁贴，以在网关上运行重新启动命令。
 
+## <a name="clean-up-resources"></a>清理资源
+
+[!INCLUDE [iot-central-clean-up-resources](../../../includes/iot-central-clean-up-resources.md)]
+
 ## <a name="next-steps"></a>后续步骤
+
 在本教程中，你了解了如何执行以下操作：
 
 * 更改仪表板名称

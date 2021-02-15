@@ -14,12 +14,12 @@ ms.tgt_pltfrm: na
 ms.workload: infrastructure-services
 ms.date: 02/23/2017
 ms.author: subsarma
-ms.openlocfilehash: 9f5b535a341956e5675ba96ba9570bd3f2ff3443
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: ad91eb94aedcdd0e4e715162e3ae064a1d2fb1ea
+ms.sourcegitcommit: d59abc5bfad604909a107d05c5dc1b9a193214a8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "84710943"
+ms.lasthandoff: 01/14/2021
+ms.locfileid: "98220416"
 ---
 # <a name="use-dynamic-dns-to-register-hostnames-in-your-own-dns-server"></a>使用动态 DNS 在自己的 DNS 服务器中注册主机名
 
@@ -28,12 +28,12 @@ ms.locfileid: "84710943"
 将自定义 DNS 服务器作为 Azure VM 托管时，可将针对同一虚拟网络的主机名查询转发到 Azure 以解析主机名。 如果不希望使用此选项，可使用动态 DNS (DDNS) 在 DNS 服务器中注册 VM 主机名。 Azure 不具备直接在 DNS 服务器中创建记录所需的凭据，因此通常需要替代方案。 以下是一些常见的具有替代方案的情况：
 
 ## <a name="windows-clients"></a>Windows 客户端
-在启动时或其 IP 地址更改时，未加入域的 Windows 客户端会尝试不安全的 DDNS 更新。 DNS 名称为主机名加上的主 DNS 后缀。 Azure 保留主 DNS 后缀为空，但你可以通过[用户界面](https://technet.microsoft.com/library/cc794784.aspx)或 [PowerShell](/powershell/module/dnsclient/set-dnsclient) 在 VM 中对后缀进行设置。
+在启动时或其 IP 地址更改时，未加入域的 Windows 客户端会尝试不安全的 DDNS 更新。 DNS 名称为主机名加上的主 DNS 后缀。 Azure 保留主 DNS 后缀为空，但你可以通过[用户界面](/previous-versions/windows/it-pro/windows-server-2008-R2-and-2008/cc794784(v=ws.10))或 [PowerShell](/powershell/module/dnsclient/set-dnsclient) 在 VM 中对后缀进行设置。
 
-已加入域的 Windows 客户端通过使用安全的 DDNS 将其 IP 地址注册到域控制器。 域加入过程会在客户端上设置主 DNS 后缀并创建和维护信任关系。
+已加入域的 Windows 客户端通过使用安全的 DDNS 将其 IP 地址注册到域控制器。 域加入过程在客户端上设置主 DNS 后缀并创建和维护信任关系。
 
 ## <a name="linux-clients"></a>Linux 客户端
-Linux 客户端通常在启动时注册到 DNS 服务器，并假设 DHCP 服务器将执行此操作。 Azure 的 DHCP 服务器没有在 DNS 服务器中注册记录所需的凭据。 可以使用名为 `nsupdate` 的工具发送 DDNS 更新，该工具包含在绑定包中。 由于 DDNS 协议是标准化的，所以即使在 DNS 服务器上未使用绑定，也可以使用 `nsupdate`。
+Linux 客户端通常在启动时注册到 DNS 服务器，并假设 DHCP 服务器执行此操作。 Azure 的 DHCP 服务器没有在 DNS 服务器中注册记录所需的凭据。 可以使用名为 `nsupdate` 的工具发送 DDNS 更新，该工具包含在绑定包中。 由于 DDNS 协议是标准化的，所以即使在 DNS 服务器上未使用绑定，也可以使用 `nsupdate`。
 
 可以使用 DHCP 客户端提供的挂钩在 DNS 服务器中创建和维护主机名条目。 在 DHCP 周期中，客户端将执行 */etc/dhcp/dhclient-exit-hooks.d/* 中的脚本。 可以使用挂钩通过 `nsupdate` 来注册新的 IP 地址。 例如：
 

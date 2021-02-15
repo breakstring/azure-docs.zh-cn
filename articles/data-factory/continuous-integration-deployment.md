@@ -1,22 +1,18 @@
 ---
 title: Azure 数据工厂中的持续集成和交付
 description: 了解如何使用持续集成和交付将数据工厂管道从一个环境（开发、测试、生产）移到另一个环境。
-services: data-factory
-documentationcenter: ''
 ms.service: data-factory
-ms.workload: data-services
-author: djpmsft
-ms.author: daperlov
+author: dcstwh
+ms.author: weetok
 ms.reviewer: maghan
-manager: jroth
 ms.topic: conceptual
-ms.date: 04/30/2020
-ms.openlocfilehash: 4de682bd315eef100bdbf8dd24faa128c5b8c2a1
-ms.sourcegitcommit: d39f2cd3e0b917b351046112ef1b8dc240a47a4f
+ms.date: 12/17/2020
+ms.openlocfilehash: c0d3ba8d9bea9fade58ed4a65c6d3ae43ef6acb3
+ms.sourcegitcommit: d4734bc680ea221ea80fdea67859d6d32241aefc
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/25/2020
-ms.locfileid: "88815787"
+ms.lasthandoff: 02/14/2021
+ms.locfileid: "100383596"
 ---
 # <a name="continuous-integration-and-delivery-in-azure-data-factory"></a>Azure 数据工厂中的持续集成和交付
 
@@ -24,16 +20,12 @@ ms.locfileid: "88815787"
 
 ## <a name="overview"></a>概述
 
-持续集成是这样一种做法：自动尽早测试对代码库所做的每项更改。 在测试之后进行的持续交付可将更改推送到过渡或生产系统，而测试发生在持续集成期间。
+持续集成是这样一种做法：自动尽早测试对代码库所做的每项更改。  在测试之后进行的持续交付可将更改推送到过渡或生产系统，而测试发生在持续集成期间。
 
-在 Azure 数据工厂中，持续集成和交付 (CI/CD) 是指将数据工厂管道从一个环境（开发、测试、生产）移到另一个环境。 Azure 数据工厂利用 [Azure 资源管理器模板](https://docs.microsoft.com/azure/azure-resource-manager/templates/overview)存储各种 ADF 实体（管道、数据集、数据流等）的配置。 可通过两种建议的方式将数据工厂提升到另一个环境：
+在 Azure 数据工厂中，持续集成和交付 (CI/CD) 是指将数据工厂管道从一个环境（开发、测试、生产）移到另一个环境。 Azure 数据工厂利用 [Azure 资源管理器模板](../azure-resource-manager/templates/overview.md)存储各种 ADF 实体（管道、数据集、数据流等）的配置。 可通过两种建议的方式将数据工厂提升到另一个环境：
 
--    使用数据工厂与 [Azure Pipelines](https://docs.microsoft.com/azure/devops/pipelines/get-started/what-is-azure-pipelines?view=azure-devops) 的集成进行自动化部署
+-    使用数据工厂与 [Azure Pipelines](/azure/devops/pipelines/get-started/what-is-azure-pipelines) 的集成进行自动化部署
 -    使用数据工厂 UX 与 Azure 资源管理器的集成手动上传资源管理器模板。
-
-有关此功能的九分钟介绍及演示，请观看以下视频：
-
-> [!VIDEO https://channel9.msdn.com/Shows/Azure-Friday/Continuous-integration-and-deployment-using-Azure-Data-Factory/player]
 
 [!INCLUDE [updated-for-az](../../includes/updated-for-az.md)]
 
@@ -45,9 +37,9 @@ ms.locfileid: "88815787"
 
 1.  开发人员[创建功能分支](source-control.md#creating-feature-branches)以进行更改。 他们使用最近的更改来调试其管道运行。 若要详细了解如何调试管道运行，请参阅[使用 Azure 数据工厂进行迭代开发和调试](iterative-development-debugging.md)。
 
-1.  对所做的更改满意以后，开发人员可以创建一个拉取请求，将请求从其功能分支拉取到主分支或协作分支，让同行来评审他们的更改。
+1.  当开发人员对更改感到满意后，他们会创建一个从其功能分支到主分支或协作分支的拉取请求，以获取对等方所做的更改。
 
-1.  在拉取请求获得批准并已将更改合并到主分支后，更改将发布到开发工厂。
+1.  在拉取请求获得批准并将更改合并到主分支后，更改将发布到开发工厂。
 
 1.  当团队准备好将更改部署到测试或 UAT (用户验收测试) 工厂时，团队会转到其 Azure Pipelines 版本，并将所需版本的开发工厂部署到 UAT。 此部署作为 Azure Pipelines 任务的一部分发生，使用资源管理器模板参数来应用相应的配置。
 
@@ -66,11 +58,11 @@ ms.locfileid: "88815787"
 
 ### <a name="requirements"></a>要求
 
--   一个已链接到 Visual Studio Team Foundation Server 或 Azure Repos 并使用 [Azure 资源管理器服务终结点](https://docs.microsoft.com/azure/devops/pipelines/library/service-endpoints#sep-azure-resource-manager)的 Azure 订阅。
+-   链接到 Visual Studio 的 Azure 订阅 Team Foundation Server 或使用 [Azure 资源管理器服务终结点](/azure/devops/pipelines/library/service-endpoints#sep-azure-resource-manager)Azure Repos。
 
 -   一个配置了 Azure Repos Git 集成的数据工厂。
 
--   一个 [Azure Key Vault](https://azure.microsoft.com/services/key-vault/)，其中包含每个环境的机密。
+-   一个 [Azure 密钥保管库](https://azure.microsoft.com/services/key-vault/) ，其中包含每个环境的机密。
 
 ### <a name="set-up-an-azure-pipelines-release"></a>设置 Azure Pipelines 发布
 
@@ -119,7 +111,7 @@ ms.locfileid: "88815787"
 
 1.  保存发布管道。
 
-1. 若要触发发布，请选择“创建发布”。 若要自动创建发布，请参阅 [Azure DevOps 发布触发器](https://docs.microsoft.com/azure/devops/pipelines/release/triggers?view=azure-devops)
+1. 若要触发发布，请选择“创建发布”。 若要自动创建发布，请参阅 [Azure DevOps 发布触发器](/azure/devops/pipelines/release/triggers)
 
    ![选择“创建发布”](media/continuous-integration-deployment/continuous-integration-image10.png)
 
@@ -155,7 +147,7 @@ ms.locfileid: "88815787"
 
     参数文件也需位于 publish 分支中。
 
-1. 在上一部分所述的 Azure 资源管理器部署任务的前面添加一个 [Azure Key Vault 任务](https://docs.microsoft.com/azure/devops/pipelines/tasks/deploy/azure-key-vault)：
+1. 在上一部分所述的 Azure 资源管理器部署任务的前面添加一个 [Azure Key Vault 任务](/azure/devops/pipelines/tasks/deploy/azure-key-vault)：
 
     1.  在“任务”选项卡上创建一个新任务。 搜索并添加 **Azure Key Vault**。
 
@@ -212,13 +204,23 @@ ms.locfileid: "88815787"
 * 你使用自动化 CI/CD，想要在部署资源管理器期间更改某些属性，但这些属性在默认情况下不会参数化。
 * 工厂太大，包含的参数数目超过了允许的最大数目 (256)，以致默认的资源管理器模板无效。
 
-若要替代默认的参数化模板，请在 git 分支的根文件夹中创建名为 **arm-template-parameters-definition.json** 的文件。 必须使用这个具体的文件名。
+    若要处理自定义参数256限制，有3个选项：    
+  
+    * 使用自定义参数文件，并删除不需要参数化的属性（即，可以保留默认值并因此减少参数计数的属性）。
+    * 重构数据流中的逻辑以减少参数（例如，管道参数均具有相同的值），只需使用全局参数即可。
+    * 将一个数据工厂拆分为多个数据流。
 
-   ![自定义参数文件](media/continuous-integration-deployment/custom-parameters.png)
+若要重写默认参数化模板，请在 "源代码管理" 部分中转到管理中心，并选择 " **参数化模板** "。 选择 " **编辑模板** "，打开参数化模板代码编辑器。 
+
+![管理自定义参数](media/author-management-hub/management-hub-custom-parameters.png)
+
+创建自定义参数化模板将在 git 分支的根文件夹中创建一个名为 **arm-template-parameters-definition.js** 的文件。 必须使用这个具体的文件名。
+
+![自定义参数文件](media/continuous-integration-deployment/custom-parameters.png)
 
 从协作分支发布时，数据工厂将读取此文件，并使用其配置来生成参数化的属性。 如果找不到文件，则使用默认模板。
 
-导出资源管理器模板时，数据工厂将从当前正在处理的任何分支读取此文件，而不只是从协作分支读取。 可以在某个专用分支中创建或编辑文件，在此文件中，可以通过选择 UI 中的“导出 ARM 模板”来测试更改。 然后，可将该文件合并到协作分支。
+导出资源管理器模板时，数据工厂从你当前正在处理的分支读取此文件，而不是协作分支。 可以在某个专用分支中创建或编辑文件，在此文件中，可以通过选择 UI 中的“导出 ARM 模板”来测试更改。 然后，可将该文件合并到协作分支。
 
 > [!NOTE]
 > 自定义参数化模板不会更改 ARM 模板参数限制 256。 它允许选择和减少参数化属性的数目。
@@ -228,14 +230,14 @@ ms.locfileid: "88815787"
 下面是创建自定义参数文件 **arm-template-parameters-definition.json** 时要遵循的一些准则。 对于下述每个实体类型，该文件都包含一个节：触发器、管道、链接服务、数据集、集成运行时和数据流。
 
 * 输入相关实体类型下的属性路径。
-* 将属性名称设置为 `*` 表示要将其下的所有属性参数化（仅参数化到第一个级别，而不是递归性的参数化）。 还可为此配置提供例外情况。
-* 将属性值设置为字符串表示你希望参数化该属性。 使用格式 `<action>:<name>:<stype>`。
-   *  `<action>` 可以是以下字符之一：
-      * `=` 表示将当前值保留为参数的默认值。
-      * `-` 表示不保留参数的默认值。
-      * `|` 是 Azure Key Vault 中的机密的特例，用于连接字符串或密钥。
-   * `<name>` 是参数的名称。 如果为空，将采用属性的名称。 如果值以 `-` 字符开头，则会简写名称。 例如，`AzureStorage1_properties_typeProperties_connectionString` 将简写为 `AzureStorage1_connectionString`。
-   * `<stype>` 是参数的类型。 如果 `<stype>` 为空，则默认类型为 `string`。 支持的值：`string`、`bool`、`number`、`object` 和 `securestring`。
+* 将属性名称设置为，以指示要将 `*` 其下的所有属性参数化 (仅向下一级，而不是以递归方式) 。 还可为此配置提供例外情况。
+* 将属性值设置为字符串表示你希望参数化该属性。 使用格式 `<action>:<name>:<stype>`。
+   *  `<action>` 可以是下列字符之一：
+      * `=` 表示保留当前值作为参数的默认值。
+      * `-` 表示不要保留参数的默认值。
+      * `|` 是 Azure Key Vault 用于连接字符串或键的密码的特例。
+   * `<name>` 是参数的名称。 如果为空，将采用属性的名称。 如果值以 `-` 字符开头，则会简写名称。 例如，`AzureStorage1_properties_typeProperties_connectionString` 将简写为 `AzureStorage1_connectionString`。
+   * `<stype>` 参数的类型。 如果 `<stype>` 为空，则默认类型为 `string` 。 支持的值： `string` 、 `securestring` 、 `int` 、 `bool` 、 `object` `secureobject` 和 `array` 。
 * 在定义文件中指定数组表示模板中匹配的属性是一个数组。 数据工厂使用数组的集成运行时对象中指定的定义来循环访问该数组中的所有对象。 第二个对象（一个字符串）成为属性的名称，这用作每次遍历的参数的名称。
 * 定义不能特定于资源实例。 任何定义都将应用到该类型的所有资源。
 * 默认情况下，会参数化 Key Vault 机密等安全字符串，以及连接字符串、密钥和令牌等安全字符串。
@@ -250,7 +252,7 @@ ms.locfileid: "88815787"
         "properties": {
             "activities": [{
                 "typeProperties": {
-                    "waitTimeInSeconds": "-::number",
+                    "waitTimeInSeconds": "-::int",
                     "headers": "=::object"
                 }
             }]
@@ -268,7 +270,7 @@ ms.locfileid: "88815787"
             "typeProperties": {
                 "recurrence": {
                     "*": "=",
-                    "interval": "=:triggerSuffix:number",
+                    "interval": "=:triggerSuffix:int",
                     "frequency": "=:-freq"
                 },
                 "maxConcurrency": "="
@@ -317,7 +319,7 @@ ms.locfileid: "88815787"
 #### <a name="triggers"></a>触发器
 
 * 在 `typeProperties` 下，会参数化两个属性。 第一个属性是 `maxConcurrency`，该属性指定为具有默认值，类型为 `string`。 其默认参数名称为 `<entityName>_properties_typeProperties_maxConcurrency`。
-* 另外还会参数化 `recurrence` 属性。 该属性级别下的所有属性均指定为参数化为字符串，并具有默认值和参数名称。 `interval` 属性例外，它将参数化为类型 `number`。 参数名称带有 `<entityName>_properties_typeProperties_recurrence_triggerSuffix` 后缀。 同样，`freq` 属性是字符串，将参数化为字符串。 但是，将参数化 `freq` 属性且不提供默认值。 名称将会简写并带有后缀。 例如，`<entityName>_freq` 。
+* 另外还会参数化 `recurrence` 属性。 该属性级别下的所有属性均指定为参数化为字符串，并具有默认值和参数名称。 `interval` 属性例外，它将参数化为类型 `int`。 参数名称带有 `<entityName>_properties_typeProperties_recurrence_triggerSuffix` 后缀。 同样，`freq` 属性是字符串，将参数化为字符串。 但是，将参数化 `freq` 属性且不提供默认值。 名称将会简写并带有后缀。 例如，`<entityName>_freq` 。
 
 #### <a name="linkedservices"></a>LinkedServices
 
@@ -335,6 +337,16 @@ ms.locfileid: "88815787"
 
 ```json
 {
+    "Microsoft.DataFactory/factories": {
+        "properties": {
+            "globalParameters": {
+                "*": {
+                    "value": "="
+                }
+            }
+        },
+        "location": "="
+    },
     "Microsoft.DataFactory/factories/pipelines": {
     },
     "Microsoft.DataFactory/factories/dataflows": {
@@ -390,7 +402,6 @@ ms.locfileid: "88815787"
             "typeProperties": {
                 "scope": "="
             }
-
         }
     },
     "Microsoft.DataFactory/factories/linkedServices": {
@@ -427,7 +438,8 @@ ms.locfileid: "88815787"
                     "aadResourceId": "=",
                     "sasUri": "|:-sasUri:secureString",
                     "sasToken": "|",
-                    "connectionString": "|:-connectionString:secureString"
+                    "connectionString": "|:-connectionString:secureString",
+                    "hostKeyFingerprint": "="
                 }
             }
         },
@@ -450,7 +462,13 @@ ms.locfileid: "88815787"
                     "fileName": "="
                 }
             }
-        }}
+        }
+    },
+    "Microsoft.DataFactory/factories/managedVirtualNetworks/managedPrivateEndpoints": {
+        "properties": {
+            "*": "="
+        }
+    }
 }
 ```
 
@@ -460,6 +478,16 @@ ms.locfileid: "88815787"
 
 ```json
 {
+    "Microsoft.DataFactory/factories": {
+        "properties": {
+            "globalParameters": {
+                "*": {
+                    "value": "="
+                }
+            }
+        },
+        "location": "="
+    },
     "Microsoft.DataFactory/factories/pipelines": {
     },
     "Microsoft.DataFactory/factories/dataflows": {
@@ -533,7 +561,7 @@ ms.locfileid: "88815787"
                     "database": "=",
                     "serviceEndpoint": "=",
                     "batchUri": "=",
-            "poolName": "=",
+                    "poolName": "=",
                     "databaseName": "=",
                     "systemNumber": "=",
                     "server": "=",
@@ -577,7 +605,7 @@ ms.locfileid: "88815787"
 
 链接的资源管理器模板通常包括一个主模板，以及一组链接到主模板的子模板。 父模板名为 ArmTemplate_master.json，子模板按照 ArmTemplate_0.json、ArmTemplate_1.json ... 的模式命名。 
 
-若要使用链接的模板而不是完整的资源管理器模板，请将 CI/CD 任务更新为指向 ArmTemplate_master.json 而不是 ArmTemplateForFactory.json（完整资源管理器模板）。 资源管理器还要求将链接的模板上传到存储帐户，使 Azure 能够在部署期间访问这些模板。 有关详细信息，请参阅[使用 VSTS 部署链接的资源管理器模板](https://blogs.msdn.microsoft.com/najib/2018/04/22/deploying-linked-arm-templates-with-vsts/)。
+若要使用链接的模板而不是完整的资源管理器模板，请将 CI/CD 任务更新为指向 ArmTemplate_master.json 而不是 ArmTemplateForFactory.json（完整资源管理器模板）。 资源管理器还要求将链接的模板上传到存储帐户，使 Azure 能够在部署期间访问这些模板。 有关详细信息，请参阅[使用 VSTS 部署链接的资源管理器模板](/archive/blogs/najib/deploying-linked-arm-templates-with-vsts)。
 
 不要忘记在执行部署任务之前和之后在 CI/CD 管道中添加数据工厂脚本。
 
@@ -607,6 +635,18 @@ ms.locfileid: "88815787"
 
 10.   将此修补程序中的更改添加到开发分支，使以后的版本不会出现相同的 bug。
 
+请观看下面的视频，了解有关如何对环境进行热修复的深入视频教程。 
+
+> [!VIDEO https://www.microsoft.com/videoplayer/embed/RE4I7fi]
+
+## <a name="exposure-control-and-feature-flags"></a>公开控制和功能标志
+
+在团队中工作时，可以在某些情况下合并更改，但不希望在生产和 QA 等提升的环境中运行这些更改。 为了应对这种情况，ADF 团队建议 [使用功能标志的 DevOps 概念](/azure/devops/migrate/phase-features-with-feature-flags)。 在 ADF 中，可以组合 [global parameters](author-global-parameters.md) 和 [if condition 活动](control-flow-if-condition-activity.md) ，以根据这些环境标志隐藏逻辑集。
+
+若要了解如何设置功能标志，请参阅以下视频教程：
+
+> [!VIDEO https://www.microsoft.com/videoplayer/embed/RE4IxdW]
+
 ## <a name="best-practices-for-cicd"></a>CI/CD 最佳做法
 
 如果你使用数据工厂的 Git 集成，并且某个 CI/CD 管道会将更改从开发环境依次转移到测试和生产环境，则我们建议采用以下最佳做法：
@@ -617,7 +657,11 @@ ms.locfileid: "88815787"
 
 -   **集成运行时和共享**。 集成运行时不经常更改，在 CI/CD 的所有阶段中都是类似的。 因此，数据工厂预期在 CI/CD 的所有阶段使用相同的集成运行时名称和类型。 若要在所有阶段中共享集成运行时，请考虑使用三元工厂，这只是为了包含共享的集成运行时。 可以在所有环境中将此共享工厂用作链接的集成运行时类型。
 
+-   **托管专用终结点部署**。 如果某个专用终结点在工厂中已存在，并且你尝试部署的 ARM 模板包含具有相同名称但带有修改的属性的专用终结点，则部署将失败。 换句话说，你可以成功部署专用终结点，前提是该终结点具有工厂中已存在的相同属性。 如果环境之间的任何属性不同，可以通过参数化该属性并在部署过程中提供相应的值来重写它。
+
 -   **Key Vault**。 使用其连接信息存储在 Azure Key Vault 中的链接服务时，建议为不同的环境保留不同的密钥保管库。 此外，可为每个密钥保管库单独配置权限级别。 例如，你可能不希望团队成员有权访问生产机密。 如果采用此方法，我们建议在所有阶段中保留相同的机密名称。 如果保留相同的机密名称，则无需在 CI/CD 环境中参数化每个连接字符串，因为只需更改密钥保管库名称，而该名称是一个单独的参数。
+
+-  **资源命名** 由于 ARM 模板约束，如果资源包含名称中的空格，则可能会出现部署中的问题。 Azure 数据工厂团队建议使用 "_" 或 "-" 字符，而不是为资源使用空格。 例如，"Pipeline_1" 将是 "管道 1" 上的首选名称。
 
 ## <a name="unsupported-features"></a>不支持的功能
 
@@ -625,6 +669,8 @@ ms.locfileid: "88815787"
 
     - 数据工厂实体相互依赖。 例如，触发器依赖于管道，而管道又依赖于数据集和其他管道。 选择性发布资源子集可能会导致意外的行为和错误。
     - 如果需要进行选择性发布（这种情况很少见），请考虑使用修补程序。 有关详细信息，请参阅 [修补程序生产环境](#hotfix-production-environment)。
+
+- Azure 数据工厂团队不建议将 Azure RBAC 控件分配给数据工厂中 (管道、数据集等 ) 的单独实体。 例如，如果开发人员可以访问管道或数据集，则他们应该能够访问数据工厂中的所有管道或数据集。 如果你认为需要在数据工厂中实现许多 Azure 角色，请查看部署第二个数据工厂。
 
 -   无法从专用分支发布。
 

@@ -1,19 +1,16 @@
 ---
 title: Zeppelin 笔记本和 Apache Spark 群集 - Azure HDInsight
 description: 逐步说明如何在 Azure HDInsight 上的 Apache Spark 群集中使用 Zeppelin notebook。
-author: hrasheed-msft
-ms.author: hrasheed
-ms.reviewer: jasonh
 ms.service: hdinsight
 ms.topic: how-to
 ms.custom: hdinsightactive,seoapr2020
 ms.date: 04/23/2020
-ms.openlocfilehash: a692f4dd86d110f7f0a91a862a7b16ac28345de5
-ms.sourcegitcommit: 124f7f699b6a43314e63af0101cd788db995d1cb
+ms.openlocfilehash: ba58c007dc0bc3776f429366651cb79404b137b3
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/08/2020
-ms.locfileid: "86084522"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98928486"
 ---
 # <a name="use-apache-zeppelin-notebooks-with-apache-spark-cluster-on-azure-hdinsight"></a>在 Azure HDInsight 上的 Apache Spark 群集中使用 Apache Zeppelin 笔记本
 
@@ -26,7 +23,7 @@ HDInsight Spark 群集包括 [Apache Zeppelin](https://zeppelin.apache.org/) 笔
 
 ## <a name="launch-an-apache-zeppelin-notebook"></a>启动 Apache Zeppelin 笔记本
 
-1. 在 Spark 群集的“概述”中，从**群集仪表板**选择“Zeppelin 笔记本”。  输入群集的管理员凭据。  
+1. 在 Spark 群集的“概述”中，从 **群集仪表板** 选择“Zeppelin 笔记本”。  输入群集的管理员凭据。  
 
    > [!NOTE]  
    > 也可以在浏览器中打开以下 URL 来访问群集的 Zeppelin 笔记本。 将 **CLUSTERNAME** 替换为群集的名称：
@@ -115,7 +112,7 @@ HDInsight Spark 群集包括 [Apache Zeppelin](https://zeppelin.apache.org/) 笔
 
 HDInsight 上 Apache Spark 群集中的 Zeppelin 笔记本可以使用群集中未包含的、社区提供的外部包。 在 [Maven 存储库](https://search.maven.org/)中搜索可用包的完整列表。 也可以从其他源获取可用包的列表。 例如， [Spark 包](https://spark-packages.org/)中提供了社区贡献包的完整列表。
 
-本文将介绍如何在 Jupyter 笔记本中使用 [spark-csv](https://search.maven.org/#artifactdetails%7Ccom.databricks%7Cspark-csv_2.10%7C1.4.0%7Cjar) 包。
+在本文中，你将了解如何将 [spark csv](https://search.maven.org/#artifactdetails%7Ccom.databricks%7Cspark-csv_2.10%7C1.4.0%7Cjar) 包与 Jupyter Notebook 一起使用。
 
 1. 打开解释器设置。 选择右上角的登录用户名，然后选择“解释器”。
 
@@ -137,7 +134,7 @@ HDInsight 上 Apache Spark 群集中的 Zeppelin 笔记本可以使用群集中�
 
     b. 从存储库中收集 **GroupId**、**ArtifactId** 和 **Version** 的值。
 
-    ![将外部包与 Jupyter 笔记本配合使用](./media/apache-spark-zeppelin-notebook/use-external-packages-with-jupyter.png "将外部包与 Jupyter 笔记本配合使用")
+    ![在 Jupyter Notebook 中使用外部包](./media/apache-spark-zeppelin-notebook/use-external-packages-with-jupyter.png "在 Jupyter Notebook 中使用外部包")
 
     c. 串连这三个值并以冒号分隔 ( **:** )。
 
@@ -153,20 +150,20 @@ Zeppelin 笔记本保存在群集头节点。 因此，如果删除群集，笔�
 
 此操作可在下载位置将笔记本另存为 JSON 文件。
 
-## <a name="use-shiro-to-configure-access-to-zeppelin-interpreters-in-enterprise-security-package-esp-clusters"></a>用于 `Shiro` 配置对企业安全性套餐（ESP）群集中 Zeppelin 解释器的访问
+## <a name="use-shiro-to-configure-access-to-zeppelin-interpreters-in-enterprise-security-package-esp-clusters"></a>使用 `Shiro` 在企业安全性套餐 (ESP) 群集中配置 Zeppelin 解释器的访问权限
 
-如上所述， `%sh` HDInsight 4.0 中不支持解释器。 此外，由于 `%sh` 解释器使用 shell 命令引入了潜在的安全问题，例如 access keytabs，它也已从 HDInsight 3.6 ESP 群集中删除。 这意味着， `%sh` 在默认情况下，在单击 "**创建新备注**" 或解释器 UI 时，解释器不可用。
+如上所述，从 HDInsight 4.0 开始不再支持 `%sh` 解释器。 此外，由于 `%sh` 解释器会导致潜在的安全问题（例如，使用 shell 命令访问 keytabs），因此也从 HDInsight 3.6 ESP 群集中删除了该解释器。 这意味着，默认情况下，单击“创建新注释”时或位于解释器 UI 时，`%sh` 解析器不可用。
 
-特权域用户可以使用 `Shiro.ini` 文件来控制对解释器 UI 的访问。 只有这些用户可以创建新 `%sh` 的解释器并对每个新的解释器设置权限 `%sh` 。 若要使用文件控制访问 `shiro.ini` ，请使用以下步骤：
+特权域用户可以使用 `Shiro.ini` 文件来控制对解释器 UI 的访问。 只有这些用户可以创建新的 `%sh` 解释器并对每个新 `%sh` 解释器设置权限。 若要使用 `shiro.ini` 文件控制访问权限，请执行以下步骤：
 
-1. 使用现有的域组名称定义新的角色。 在下面的示例中， `adminGroupName` 是 AAD 中的一组特权用户。 不要在组名称中使用特殊字符或空格。 后面的字符将 `=` 授予此角色的权限。 `*`表示组具有完全权限。
+1. 使用现有域组名称定义新的角色。 在以下示例中，`adminGroupName` 是 AAD 中的一组特权用户。 请勿在组名称中使用特殊字符或空格。 `=` 后的字符用于为此角色提供权限。 `*` 表示组具有完全权限。
 
     ```
     [roles]
     adminGroupName = *
     ```
 
-2. 添加新的角色以访问 Zeppelin 解释器。 在下面的示例中，中的所有用户 `adminGroupName` 都有权访问 Zeppelin 解释器，并且可以创建新的解释器。 可以在中的方括号之间放置多个角色 `roles[]` ，用逗号分隔。 然后，具有必要权限的用户可以访问 Zeppelin 解释器。
+2. 添加新的角色以访问 Zeppelin 解释器。 在以下示例中，`adminGroupName` 中的所有用户都授予了 Zeppelin 解释器的访问权限，并且可以创建新的解释器。 你可以在 `roles[]` 中的括号之间放置多个角色，用逗号分隔。 然后，具有必要权限的用户可以访问 Zeppelin 解释器。
 
     ```
     [urls]
@@ -227,5 +224,5 @@ Zeppelin 笔记本中的第一个代码段会在群集中创建一个新的 Livy
 ## <a name="next-steps"></a>后续步骤
 
 * [概述：Azure HDInsight 上的 Apache Spark](apache-spark-overview.md)
-* [在 HDInsight 的 Apache Spark 群集中可用于 Jupyter Notebook 的内核](apache-spark-jupyter-notebook-kernels.md)
+* [适用于 HDInsight 的 Apache Spark 群集中的 Jupyter Notebook 可用的内核](apache-spark-jupyter-notebook-kernels.md)
 * [Install Jupyter on your computer and connect to an HDInsight Spark cluster（在计算机上安装 Jupyter 并连接到 HDInsight Spark 群集）](apache-spark-jupyter-notebook-install-locally.md)

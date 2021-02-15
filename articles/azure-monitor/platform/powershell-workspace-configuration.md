@@ -6,12 +6,12 @@ ms.topic: conceptual
 author: bwren
 ms.author: bwren
 ms.date: 05/26/2020
-ms.openlocfilehash: d0bbde0ee4fd0eaf7387abaf6d548dc563e5b715
-ms.sourcegitcommit: 3543d3b4f6c6f496d22ea5f97d8cd2700ac9a481
+ms.openlocfilehash: 34ece92e4603c0c74190003745d55be0aea5cdb0
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/20/2020
-ms.locfileid: "86515438"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98941758"
 ---
 # <a name="create-and-configure-a-log-analytics-workspace-in-azure-monitor-using-powershell"></a>使用 PowerShell 在 Azure Monitor 中创建和配置 Log Analytics 工作区
 本文提供两个代码示例，它们展示了如何在 Azure Monitor 中创建和配置 Log Analytics 工作区。  
@@ -193,11 +193,11 @@ New-AzOperationalInsightsCustomLogDataSource -ResourceGroupName $ResourceGroup -
 ```
 
 > [!NOTE]
-> 为自定义日志定义配置的 CustomLogRawJson 的格式可能很复杂。 使用 [Get-AzOperationalInsightsDataSource](/powershell/module/az.operationalinsights/get-azoperationalinsightsdatasource?view=azps-3.2.0) 检索现有自定义日志的配置。 Properties 属性是 CustomLogRawJson 参数的必需配置 。
+> 为自定义日志定义配置的 CustomLogRawJson 的格式可能很复杂。 使用 [Get-AzOperationalInsightsDataSource](/powershell/module/az.operationalinsights/get-azoperationalinsightsdatasource) 检索现有自定义日志的配置。 Properties 属性是 CustomLogRawJson 参数的必需配置 。
 
 在上面的示例中，regexDelimiter 定义为“\\n”表示换行符。 日志分隔符也可能是时间戳。  以下是支持的格式：
 
-| 格式 | `\\`对于标准正则表达式中的每个，Json regex 格式使用两个 `\` ，因此，如果正则表达式中的测试减少 `\\` 到`\` |
+| 格式 | Json 正则表达式格式使用两个 `\\` 表示标准正则表达式中的每个 `\`，因此，如果在正则表达式应用中测试，请将 `\\` 减少为 `\` |
 | --- | --- |
 | `YYYY-MM-DD HH:MM:SS` | `((\\d{2})|(\\d{4}))-([0-1]\\d)-(([0-3]\\d)|(\\d))\\s((\\d)|([0-1]\\d)|(2[0-4])):[0-5][0-9]:[0-5][0-9]` |
 | `M/D/YYYY HH:MM:SS AM/PM` | `(([0-1]\\d)|[0-9])/(([0-3]\\d)|(\\d))/((\\d{2})|(\\d{4}))\\s((\\d)|([0-1]\\d)|(2[0-4])):[0-5][0-9]:[0-5][0-9]\\s(AM|PM|am|pm)` |

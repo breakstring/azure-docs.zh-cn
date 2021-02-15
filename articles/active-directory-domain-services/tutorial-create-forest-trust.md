@@ -2,20 +2,20 @@
 title: 教程 - 在 Azure AD 域服务中创建林信任 | Microsoft Docs
 description: 了解如何在 Azure 门户中为 Azure AD 域服务创建到本地 AD DS 域的单向出站林
 services: active-directory-ds
-author: iainfoulds
+author: justinha
 manager: daveba
 ms.service: active-directory
 ms.subservice: domain-services
 ms.workload: identity
 ms.topic: tutorial
-ms.date: 07/06/2020
-ms.author: iainfou
-ms.openlocfilehash: 24928ec4117b321cfec7177fdad40f2a3ab7a1f4
-ms.sourcegitcommit: 5b6acff3d1d0603904929cc529ecbcfcde90d88b
+ms.date: 01/21/2021
+ms.author: justinha
+ms.openlocfilehash: e381c80dddc4484d541f5f81de6b5df712cff69b
+ms.sourcegitcommit: b39cf769ce8e2eb7ea74cfdac6759a17a048b331
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/21/2020
-ms.locfileid: "88722715"
+ms.lasthandoff: 01/22/2021
+ms.locfileid: "98673462"
 ---
 # <a name="tutorial-create-an-outbound-forest-trust-to-an-on-premises-domain-in-azure-active-directory-domain-services"></a>教程：在 Azure Active Directory 域服务中创建到本地域的出站林信任
 
@@ -61,7 +61,7 @@ ms.locfileid: "88722715"
 
 * 使用专用 IP 地址。 不要依赖 DHCP 进行动态 IP 地址分配。
 * 避免 IP 地址空间重叠，使虚拟网络对等互连和路由能够在 Azure 与本地之间成功通信。
-* Azure 虚拟网络需要通过一个网关子网来配置 [Azure 站点到站点 (S2S) VPN][vpn-gateway] 或 [ExpressRoute][expressroute] 连接
+* Azure 虚拟网络需要通过一个网关子网来配置 [Azure 站点到站点 (S2S) VPN][vpn-gateway] 或 [ExpressRoute][expressroute] 连接。
 * 使用足够的 IP 地址创建子网，以支持你的方案。
 * 确保 Azure AD DS 具有自己的子网，且不要与应用程序 VM 和服务共享此虚拟网络子网。
 * 对等互连的虚拟网络不是中转性的。
@@ -73,8 +73,8 @@ ms.locfileid: "88722715"
 
 若要从本地环境正确解析托管域，可能需要向现有 DNS 服务器添加转发器。 如果尚未将本地环境配置为与托管域通信，请从管理工作站为本地 AD DS 域完成以下步骤：
 
-1. 选择“开始”|“管理工具”|“DNS”
-1. 右键单击 DNS 服务器（例如“myAD01”），然后选择“属性”
+1. 选择“启动” > “管理工具” > “DNS”  。
+1. 右键单击 DNS 服务器（例如“myAD01”），然后选择“属性”。
 1. 选择“转发器”，然后选择“编辑”以添加更多转发器。 
 1. 添加托管域的 IP 地址，例如 10.0.2.4 和 10.0.2.5 。
 
@@ -84,15 +84,23 @@ ms.locfileid: "88722715"
 
 若要在本地 AD DS 域上配置入站信任，请在管理工作站中针对本地 AD DS 域完成以下步骤：
 
-1. 选择“开始”|“管理工具”|“Active Directory 域和信任”
-1. 右键单击域（例如“onprem.contoso.com”），然后选择“属性”
-1. 依次选择“信任”选项卡、“新建信任” 
-1. 在 Azure AD DS 域名中输入名称（例如“aaddscontoso.com”），然后选择“下一步”
+1. 选择“开始” > “管理工具” > “Active Directory 域和信任”  。
+1. 右键单击域（例如“onprem.contoso.com”），然后选择“属性”。
+1. 依次选择“信任”选项卡、“新建信任” 。
+1. 在 Azure AD DS 域名中输入名称（例如“aaddscontoso.com”），然后选择“下一步”。
 1. 选择创建“林信任”的选项，然后选择创建“单向: 传入”信任的选项。 
 1. 选择创建“仅限此域”的信任。 在下一步骤中，你将在 Azure 门户中为托管域创建信任。
 1. 选择使用“全林性身份验证”，然后输入并确认信任密码。 在下一部分中，也要在 Azure 门户中输入同一密码。
 1. 在接下来的几个窗口中使用默认选项完成每个步骤，然后选择选项“否，不要确认传出信任”。
-1. 选择“完成”
+1. 选择“完成”。
+
+如果环境不再需要林信任，请完成以下步骤以将其从本地域中删除：
+
+1. 选择“开始” > “管理工具” > “Active Directory 域和信任”  。
+1. 右键单击域（例如“onprem.contoso.com”），然后选择“属性”。
+1. 选择“信任”选项卡，然后选择“信任此域的域(内向信任)”，单击要删除的信任，然后单击“删除”  。
+1. 在“信任”选项卡的“受此域信任的域(外向信任)”，单击要删除的信任，然后单击“删除”。
+1. 单击“不，只从本地域删除信任”。
 
 ## <a name="create-outbound-forest-trust-in-azure-ad-ds"></a>在 Azure AD DS 中创建出站林信任
 
@@ -100,18 +108,24 @@ ms.locfileid: "88722715"
 
 若要在 Azure 门户中为托管域创建出站信任，请完成以下步骤：
 
-1. 在 Azure 门户中，搜索并选择“Azure AD 域服务”，然后选择你的托管域，例如 aaddscontoso.com
+1. 在 Azure 门户中，搜索并选择“Azure AD 域服务”，然后选择你的托管域，例如 aaddscontoso.com。
 1. 从托管域左侧的菜单中选择“信任”，然后选择“+ 添加”以添加信任 。
 
    > [!NOTE]
    > 如果看不到“信任”菜单选项，请在“属性”下检查“林类型”。  只有资源林才能创建信任。 如果林类型是“用户”，则无法创建信任。 目前没有任何办法可以更改托管域的林类型。 需要删除托管域，然后重新创建资源林形式的托管域。
 
-1. 输入用于标识信任的显示名称，然后输入本地受信任林的 DNS 名称，例如 onprem.contoso.com
-1. 提供在上一部分为本地 AD DS 域配置入站林信任时使用的同一信任密码。
-1. 为本地 AD DS 域提供至少两个 DNS 服务器，例如 10.1.1.4 和 10.1.1.5 
-1. 准备就绪后，保存出站林信任
+1. 输入用于标识信任的显示名称，然后输入本地受信任林的 DNS 名称，例如 onprem.contoso.com。
+1. 提供在上一部分用于为本地 AD DS 域配置入站林信任的同一信任密码。
+1. 为本地 AD DS 域提供至少两个 DNS 服务器，例如 10.1.1.4 和 10.1.1.5 。
+1. 准备就绪后，保存出站林信任。
 
     ![在 Azure 门户中创建出站林信任](./media/tutorial-create-forest-trust/portal-create-outbound-trust.png)
+
+如果环境不再需要林信任，请完成以下步骤以将其从 Azure AD DS 中删除：
+
+1. 在 Azure 门户中，搜索并选择“Azure AD 域服务”，然后选择你的托管域，例如 aaddscontoso.com。
+1. 从托管域左侧的菜单中选择“信任”，选择林信任，然后单击“删除” 。
+1. 提供用于配置林信任的同一信任密码，然后单击“确定”。
 
 ## <a name="validate-resource-authentication"></a>验证资源身份验证
 

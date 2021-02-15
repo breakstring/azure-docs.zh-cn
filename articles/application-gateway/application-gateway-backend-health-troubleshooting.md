@@ -7,12 +7,12 @@ ms.service: application-gateway
 ms.topic: troubleshooting
 ms.date: 06/09/2020
 ms.author: surmb
-ms.openlocfilehash: 531a7fd8547130b4897f3dad0900e1c27fb7fe9a
-ms.sourcegitcommit: 0e8a4671aa3f5a9a54231fea48bcfb432a1e528c
+ms.openlocfilehash: 95b74e5fc6c5d2c09ff04b3f14e920ae675ab6e1
+ms.sourcegitcommit: f377ba5ebd431e8c3579445ff588da664b00b36b
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/24/2020
-ms.locfileid: "87132035"
+ms.lasthandoff: 02/05/2021
+ms.locfileid: "99592749"
 ---
 <a name="troubleshoot-backend-health-issues-in-application-gateway"></a>排查应用程序网关中的后端运行状况问题
 ==================================================
@@ -24,7 +24,7 @@ ms.locfileid: "87132035"
 
 ### <a name="how-to-check-backend-health"></a>如何检查后端运行状况
 
-若要检查后端池的运行状况，可以使用 Azure 门户中的“后端运行状况”页。 或者，可以使用 [Azure PowerShell](https://docs.microsoft.com/powershell/module/az.network/get-azapplicationgatewaybackendhealth?view=azps-2.6.0)、[CLI](https://docs.microsoft.com/cli/azure/network/application-gateway?view=azure-cli-latest#az-network-application-gateway-show-backend-health) 或 [REST API](https://docs.microsoft.com/rest/api/application-gateway/applicationgateways/backendhealth)。
+若要检查后端池的运行状况，可以使用 Azure 门户中的“后端运行状况”页。 或者，可以使用 [Azure PowerShell](/powershell/module/az.network/get-azapplicationgatewaybackendhealth)、[CLI](/cli/azure/network/application-gateway#az-network-application-gateway-show-backend-health) 或 [REST API](/rest/api/application-gateway/applicationgateways/backendhealth)。
 
 所述任意方法检索到的状态可能为下列其中一项：
 
@@ -91,7 +91,7 @@ BackendAddressPoolsText : [
 
 **原因：** 应用程序网关将 HTTP(S) 探测请求发送到后端服务器后，它会根据配置的期限等待后端服务器的响应。 如果后端服务器在配置的期限（超时值）内未做出响应，则系统会将其标记为“不正常”，直到它再次在超时期限内开始响应。
 
-**解决方法：** 检查后端服务器或应用程序为何无法在配置的超时期限内做出响应，并检查应用程序依赖项。 例如，检查数据库是否存在可能触发响应延迟的任何问题。 如果你了解应用程序的行为，并且它应该只在超时值之后做出响应，请增大自定义探测设置中的超时值。 必须使用一个自定义探测来更改超时值。 有关如何配置自定义探测的信息，请[参阅文档页](https://docs.microsoft.com/azure/application-gateway/application-gateway-create-probe-portal)。
+**解决方法：** 检查后端服务器或应用程序为何无法在配置的超时期限内做出响应，并检查应用程序依赖项。 例如，检查数据库是否存在可能触发响应延迟的任何问题。 如果你了解应用程序的行为，并且它应该只在超时值之后做出响应，请增大自定义探测设置中的超时值。 必须使用一个自定义探测来更改超时值。 有关如何配置自定义探测的信息，请[参阅文档页](./application-gateway-create-probe-portal.md)。
 
 若要增大超时值，请执行以下步骤：
 
@@ -105,7 +105,7 @@ BackendAddressPoolsText : [
 
 #### <a name="dns-resolution-error"></a>DNS 解析错误
 
-**消息：** 应用程序网关无法为此后端创建探测。 如果未正确输入后端的 FQDN，则往往会发生这种情况。 
+**消息：** 应用程序网关无法为此后端创建探测。 如果未正确输入后端的 FQDN，则往往会发生这种情况。 
 
 **原因：** 如果后端池的类型为“IP 地址/FQDN”或“应用服务”，则应用程序网关将解析为通过域名系统 (DNS)（自定义或 Azure 默认）输入的 FQDN 的 IP 地址，并尝试连接到 HTTP 设置中指定的 TCP 端口上的服务器。 但如果显示此消息，则表示应用程序网关无法成功解析输入的 FQDN 的 IP 地址。
 
@@ -119,7 +119,7 @@ BackendAddressPoolsText : [
 
 1.  如果使用 Azure 默认 DNS，请与域名注册机构确认是否完成了正确的 A 记录或 CNAME 记录映射。
 
-1.  如果域是专用或内部域，请尝试从同一虚拟网络中的 VM 解析它。 如果能够解析，请重启应用程序网关，然后再次检查。 若要重启应用程序网关，需要使用相关链接资源中所述的 PowerShell 命令[停止](https://docs.microsoft.com/powershell/module/azurerm.network/stop-azurermapplicationgateway?view=azurermps-6.13.0)再[启动](https://docs.microsoft.com/powershell/module/azurerm.network/start-azurermapplicationgateway?view=azurermps-6.13.0)它。
+1.  如果域是专用或内部域，请尝试从同一虚拟网络中的 VM 解析它。 如果能够解析，请重启应用程序网关，然后再次检查。 若要重启应用程序网关，需要使用相关链接资源中所述的 PowerShell 命令[停止](/powershell/module/azurerm.network/stop-azurermapplicationgateway)再[启动](/powershell/module/azurerm.network/start-azurermapplicationgateway)它。
 
 #### <a name="tcp-connect-error"></a>TCP 连接错误
 
@@ -138,7 +138,7 @@ BackendAddressPoolsText : [
 
 1.  如果在本地计算机的端口上也无法进行连接，请进行以下检查：
 
-    a.  检查后端服务器的网络适配器和子网的网络安全组 (NSG) 设置，并检查是否允许与配置的端口建立入站连接。 如果不允许，请创建新规则来允许连接。 若要了解如何创建 NSG 规则，请[参阅文档页](https://docs.microsoft.com/azure/virtual-network/tutorial-filter-network-traffic#create-security-rules)。
+    a.  检查后端服务器的网络适配器和子网的网络安全组 (NSG) 设置，并检查是否允许与配置的端口建立入站连接。 如果不允许，请创建新规则来允许连接。 若要了解如何创建 NSG 规则，请[参阅文档页](../virtual-network/tutorial-filter-network-traffic.md#create-security-rules)。
 
     b.  检查应用程序网关子网的 NSG 设置是否允许出站公共和专用流量，以便可以建立连接。 查看步骤 3a 中提供的文档页来详细了解如何创建 NSG 规则。
     ```azurepowershell
@@ -185,7 +185,7 @@ BackendAddressPoolsText : [
 
 或者，如果你认为响应合法，并且你希望应用程序网关接受其他状态代码为“正常”，可以创建自定义探测。 如果后端网站需要身份验证，则此方法很有作用。 由于探测请求不携带任何用户凭据，因此它们将会失败，并且后端服务器将返回 HTTP 401 状态代码。
 
-若要创建自定义探测，请遵循[这些步骤](https://docs.microsoft.com/azure/application-gateway/application-gateway-create-probe-portal)。
+若要创建自定义探测，请遵循[这些步骤](./application-gateway-create-probe-portal.md)。
 
 #### <a name="http-response-body-mismatch"></a>HTTP 响应正文不匹配
 
@@ -201,7 +201,7 @@ BackendAddressPoolsText : [
 
 1.  如果不匹配，请更改探测配置，使其包含可接受的正确字符串值。
 
-详细了解[应用程序网关探测匹配](https://docs.microsoft.com/azure/application-gateway/application-gateway-probe-overview#probe-matching)。
+详细了解[应用程序网关探测匹配](./application-gateway-probe-overview.md#probe-matching)。
 
 >[!NOTE]
 > 对于与 TLS 相关的所有错误消息，若要详细了解 SNI 行为以及 v1 与 v2 SKU 之间的差异，请参阅 [TLS 概述](ssl-overview.md)页。
@@ -238,11 +238,11 @@ BackendAddressPoolsText : [
 
 或者，可以从客户端计算机导出根证书，方法是通过浏览器直接访问服务器（绕过应用程序网关），然后从浏览器导出根证书。
 
-有关在应用程序网关中提取和上传受信任的根证书的详细信息，请参阅[导出受信任的根证书（适用于 v2 SKU）](https://docs.microsoft.com/azure/application-gateway/certificates-for-backend-authentication#export-trusted-root-certificate-for-v2-sku)。
+有关在应用程序网关中提取和上传受信任的根证书的详细信息，请参阅[导出受信任的根证书（适用于 v2 SKU）](./certificates-for-backend-authentication.md#export-trusted-root-certificate-for-v2-sku)。
 
 #### <a name="trusted-root-certificate-mismatch"></a>受信任的根证书不匹配
 
-**消息：** 后端使用的服务器证书的根证书与添加到应用程序网关的受信任根证书不匹配。 请确保添加正确的根证书，以将后端列入允许列表
+**消息：** 后端使用的服务器证书的根证书与添加到应用程序网关的受信任根证书不匹配。 确保将正确的根证书添加到后端允许列表。
 
 **原因：** 带应用程序网关 v2 的端到端 SSL 必须验证后端服务器的证书，才能断定服务器是否正常运行。
 要信任某个 TLS/SSL 证书，后端服务器证书必须由应用程序网关受信任存储中包含的 CA 颁发。 如果证书不是由受信任的 CA 颁发的（例如，使用自签名证书），则用户应将证书颁发者的证书上传到应用程序网关。
@@ -253,7 +253,7 @@ BackendAddressPoolsText : [
 
 遵循上述方法中的步骤 1-11 将正确的受信任根证书上传到应用程序网关。
 
-有关在应用程序网关中提取和上传受信任的根证书的详细信息，请参阅[导出受信任的根证书（适用于 v2 SKU）](https://docs.microsoft.com/azure/application-gateway/certificates-for-backend-authentication#export-trusted-root-certificate-for-v2-sku)。
+有关在应用程序网关中提取和上传受信任的根证书的详细信息，请参阅[导出受信任的根证书（适用于 v2 SKU）](./certificates-for-backend-authentication.md#export-trusted-root-certificate-for-v2-sku)。
 > [!NOTE]
 > 如果后端服务器在 TLS 握手期间未交换完整的证书链（包括“根”->“中间”（如果适用）->“叶”），则也可能会出现此错误。 若要验证，可在任何客户端中使用 OpenSSL 命令，并使用应用程序网关探测中配置的设置连接到后端服务器。
 
@@ -371,7 +371,7 @@ OpenSSL> s_client -connect 10.0.0.4:443 -servername www.example.com -showcerts
 
     e.  在“入站规则”部分添加一个入站规则，以允许目标端口范围 65503-65534 (v1 SKU) 或 65200-65535 (v2 SKU)，并将“源”设置为“任何”或“Internet”。   
 
-    f.  选择“保存”，并验证是否可以查看正常的后端。 或者，可以通过 [PowerShell/CLI](https://docs.microsoft.com/azure/virtual-network/manage-network-security-group) 执行此操作。
+    f.  选择“保存”，并验证是否可以查看正常的后端。 或者，可以通过 [PowerShell/CLI](../virtual-network/manage-network-security-group.md) 执行此操作。
 
 1.  检查 UDR 是否包含下一跃点不是设置为“Internet”的默认路由 (0.0.0.0/0)：
     
@@ -398,4 +398,4 @@ OpenSSL> s_client -connect 10.0.0.4:443 -servername www.example.com -showcerts
 <a name="next-steps"></a>后续步骤
 ----------
 
-详细了解[应用程序网关诊断和日志记录](https://docs.microsoft.com/azure/application-gateway/application-gateway-diagnostics)。
+详细了解[应用程序网关诊断和日志记录](./application-gateway-diagnostics.md)。

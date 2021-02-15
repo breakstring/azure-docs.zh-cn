@@ -4,16 +4,16 @@ description: 本文介绍如何使用 REST API 管理 Azure VM 备份的备份�
 ms.topic: conceptual
 ms.date: 08/21/2018
 ms.assetid: e54750b4-4518-4262-8f23-ca2f0c7c0439
-ms.openlocfilehash: c4aa88399bfbdd7814864170d9861a7b7d14dc58
-ms.sourcegitcommit: afa1411c3fb2084cccc4262860aab4f0b5c994ef
+ms.openlocfilehash: a37808548ec58977b7d6af16c75b94b7b5efe446
+ms.sourcegitcommit: a43a59e44c14d349d597c3d2fd2bc779989c71d7
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/23/2020
-ms.locfileid: "88757245"
+ms.lasthandoff: 11/25/2020
+ms.locfileid: "96002930"
 ---
 # <a name="create-azure-recovery-services-vault-using-rest-api"></a>使用 REST API 创建 Azure 恢复服务保管库
 
-创建 [保管库 REST API](/rest/api/recoveryservices/vaults/createorupdate) 文档中概述了使用 REST API 创建 Azure 恢复服务保管库的步骤。 让我们使用本文档作为参考在“美国西部”区域中创建一个名为“testVault”的保管库。
+[创建保管库 REST API](/rest/api/recoveryservices/vaults/createorupdate) 文档中概述了使用 REST API 创建 Azure 恢复服务保管库的步骤。 让我们使用本文档作为参考，在 "美国西部" 中创建名为 "testVault" 的保管库。
 
 若要创建或更新 Azure 恢复服务保管库，请使用以下 *PUT* 操作。
 
@@ -23,7 +23,7 @@ PUT https://management.azure.com/subscriptions/{subscriptionId}/resourceGroups/{
 
 ## <a name="create-a-request"></a>创建请求
 
-若要创建 *PUT* 请求，必须使用 `{subscription-id}` 参数。 如果拥有多个订阅，请参阅[使用多个订阅](/cli/azure/manage-azure-subscriptions-azure-cli?view=azure-cli-latest)。 你将定义资源的 `{resourceGroupName}` 和 `{vaultName}` 以及 `api-version` 参数。 本文使用的是 `api-version=2016-06-01`。
+若要创建 *PUT* 请求，必须使用 `{subscription-id}` 参数。 如果拥有多个订阅，请参阅[使用多个订阅](/cli/azure/manage-azure-subscriptions-azure-cli)。 你将定义资源的 `{resourceGroupName}` 和 `{vaultName}` 以及 `api-version` 参数。 本文使用的是 `api-version=2016-06-01`。
 
 以下标头是必需的：
 

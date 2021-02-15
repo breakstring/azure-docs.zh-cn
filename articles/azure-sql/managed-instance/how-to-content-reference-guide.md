@@ -7,17 +7,17 @@ ms.service: sql-managed-instance
 ms.subservice: operations
 ms.custom: sqldbrb=1
 ms.devlang: ''
-ms.topic: conceptual
+ms.topic: guide
 author: jovanpop-msft
 ms.author: jovanpop
-ms.reviewer: sstein, carlr
+ms.reviewer: sstein
 ms.date: 04/16/2019
-ms.openlocfilehash: de8d1b7aba7763799228c831af61bf83a79937bb
-ms.sourcegitcommit: c28fc1ec7d90f7e8b2e8775f5a250dd14a1622a6
+ms.openlocfilehash: b7f2f060f32cf3bf92660a2e8b75a45b7ec76b82
+ms.sourcegitcommit: 400f473e8aa6301539179d4b320ffbe7dfae42fe
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/13/2020
-ms.locfileid: "88167940"
+ms.lasthandoff: 10/28/2020
+ms.locfileid: "92779758"
 ---
 # <a name="azure-sql-managed-instance-content-reference"></a>Azure SQL 托管实例内容参考信息
 [!INCLUDE[appliesto-sqlmi](../includes/appliesto-sqlmi.md)]
@@ -57,14 +57,14 @@ ms.locfileid: "88167940"
 - [配置内存中 OLTP](../in-memory-oltp-configure.md)
 - [配置 Azure 自动化](../database/automation-manage.md)
 - 可以使用[事务复制](replication-between-two-instances-configure-tutorial.md)在托管实例之间复制数据，或者将数据从 SQL Server 本地复制到 SQL 托管实例，反之亦然。
-- [配置威胁检测](threat-detection-configure.md)-[威胁检测](../database/threat-detection-overview.md)是一种内置的 Azure SQL 托管实例功能，可检测各种潜在攻击，例如 SQL 注入或从可疑位置访问。 
+- [配置威胁检测](threat-detection-configure.md) - [威胁检测](../database/threat-detection-overview.md) 是一种内置的 Azure SQL 托管实例功能，可检测各种潜在攻击，例如 SQL 注入或从可疑位置访问。 
 - 通过[创建警报](alerts-create.md)，你可以对 SQL 托管实例的监视指标（例如 CPU 使用率、存储空间消耗和 IOPS 等）设置警报。 
 
 ## <a name="monitoring-and-tuning"></a>监视和优化
 
 - [手动优化](../database/performance-guidance.md)
 - [使用 DMV 监视性能](../database/monitoring-with-dmvs.md)
-- [使用查询存储监视性能](https://docs.microsoft.com/sql/relational-databases/performance/best-practice-with-the-query-store#Insight)
+- [使用查询存储监视性能](/sql/relational-databases/performance/best-practice-with-the-query-store#Insight)
 - [使用智能见解排查性能问题](../database/intelligent-insights-troubleshoot-performance.md)
 - [使用智能见解诊断日志](../database/intelligent-insights-use-diagnostics-log.md)
 - [监视内存中 OLTP 空间](../in-memory-oltp-monitor-space.md)
@@ -77,11 +77,11 @@ ms.locfileid: "88167940"
 
 ### <a name="alerting"></a>警报
 
-- [为托管实例创建警报](alerts-create.md)
+- [对托管实例创建警报](alerts-create.md)
 
 ## <a name="operations"></a>操作
 
-- [SQL 托管实例上用户启动的手动故障转移](user-initiated-failover.md)
+- [用户在 SQL 托管实例上发起的手动故障转移](user-initiated-failover.md)
 
 ## <a name="develop-applications"></a>开发应用程序
 

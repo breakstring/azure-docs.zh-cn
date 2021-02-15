@@ -1,38 +1,42 @@
 ---
-title: Azure Stack 边缘限制 |Microsoft Docs
-description: 了解部署和操作 Azure Stack 边缘时的限制和建议大小，包括服务限制、设备限制和存储限制。
+title: Azure Stack Edge Pro 限制 |Microsoft Docs
+description: 了解部署和操作 Azure Stack Edge Pro 时的限制和建议大小，包括服务限制、设备限制和存储限制。
 services: databox
 author: alkohli
 ms.service: databox
 ms.subservice: edge
 ms.topic: article
-ms.date: 03/22/2019
+ms.date: 10/12/2020
 ms.author: alkohli
-ms.openlocfilehash: 8bbcf3f61121813b91cb951809992d10977a640c
-ms.sourcegitcommit: 4f1c7df04a03856a756856a75e033d90757bb635
+ms.openlocfilehash: f1bb5662b48765c08ec58d1f7fa9d341de4937bc
+ms.sourcegitcommit: 83610f637914f09d2a87b98ae7a6ae92122a02f1
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/07/2020
-ms.locfileid: "87922704"
+ms.lasthandoff: 10/13/2020
+ms.locfileid: "91992761"
 ---
-# <a name="azure-stack-edge-limits"></a>Azure Stack Edge 限制
+# <a name="azure-stack-edge-pro-limits"></a>Azure Stack Edge Pro 限制
 
-部署和操作 Microsoft Azure Stack Edge 解决方案时，请考虑这些限制。 
+部署和操作 Microsoft Azure Stack Edge Pro 解决方案时，请考虑这些限制。 
 
 ## <a name="azure-stack-edge-service-limits"></a>Azure Stack Edge 服务限制
 
 [!INCLUDE [data-box-edge-gateway-service-limits](../../includes/data-box-edge-gateway-service-limits.md)]
 
-## <a name="azure-stack-device-limits"></a>Azure Stack 设备限制
+## <a name="azure-stack-edge-device-limits"></a>Azure Stack 边缘设备限制
 
-下表描述了 Azure Stack Edge 设备的限制。 
+下表描述了 Azure Stack Edge Pro 设备的限制。 
+
+下表描述了 Azure Stack Edge 设备的限制。
 
 | 说明 | 值 |
 |---|---|
 |否。 设备的文件数 |1 亿 |
-|否。 设备的共享数 |24 |
 |否。 每个容器的共享数 |1 |
+|最大值 每个设备的共享终结点和 REST 终结点| 24 |
+|最大值 每台设备的分层存储帐户| 24|
 |写入到共享的最大文件大小| 5 TB |
+|每个设备的最大资源组数| 800 |
 
 ## <a name="azure-storage-limits"></a>Azure 存储限制
 
@@ -53,4 +57,4 @@ ms.locfileid: "87922704"
 
 ## <a name="next-steps"></a>后续步骤
 
-- [准备部署 Azure Stack Edge](azure-stack-edge-deploy-prep.md)
+- [准备部署 Azure Stack Edge Pro](azure-stack-edge-deploy-prep.md)

@@ -2,24 +2,25 @@
 title: 在池上装载虚拟文件系统
 description: 了解如何在 Batch 池上装载虚拟文件系统。
 ms.topic: how-to
+ms.custom: devx-track-csharp
 ms.date: 08/13/2019
-ms.openlocfilehash: 3f948f8441208f4a8741949e65afc8032f0a5080
-ms.sourcegitcommit: 5cace04239f5efef4c1eed78144191a8b7d7fee8
+ms.openlocfilehash: df03275fdeea88df1a2f2b6e2cda55021497cdf7
+ms.sourcegitcommit: 829d951d5c90442a38012daaf77e86046018e5b9
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/08/2020
-ms.locfileid: "86144415"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "89145478"
 ---
 # <a name="mount-a-virtual-file-system-on-a-batch-pool"></a>在 Batch 池上装载虚拟文件系统
 
 Azure Batch 现在支持在 Batch 池的 Windows 或 Linux 计算节点上装载云存储空间或外部文件系统。 计算节点加入池时，将装载虚拟文件系统并将其视为该节点上的本地驱动器。 可以装载文件系统，例如 Azure 文件存储、Azure Blob 存储、网络文件系统 (NFS)，包括 [Avere vFXT 缓存](../avere-vfxt/avere-vfxt-overview.md)或通用 Internet 文件系统 (CIFS)。
 
-在本文中，你将了解如何使用[适用于 .NET 的 Batch 管理库](/dotnet/api/overview/azure/batch?view=azure-dotnet)在计算节点池上装载虚拟文件系统。
+在本文中，你将了解如何使用[适用于 .NET 的 Batch 管理库](/dotnet/api/overview/azure/batch)在计算节点池上装载虚拟文件系统。
 
 > [!NOTE]
 > 2019-08-19 或之后创建的 Batch 池上支持装载虚拟文件系统。 2019-08-19 之前创建的 Batch 池不支持此功能。
 > 
-> 用于在计算节点上装载文件系统的 API 是 [Batch .NET](/dotnet/api/microsoft.azure.batch?view=azure-dotnet) 库的组成部分。
+> 用于在计算节点上装载文件系统的 API 是 [Batch .NET](/dotnet/api/microsoft.azure.batch) 库的组成部分。
 
 ## <a name="benefits-of-mounting-on-a-pool"></a>装载在池上的好处
 

@@ -7,13 +7,13 @@ ms.subservice: security
 ms.topic: conceptual
 ms.author: mbaldwin
 ms.date: 08/06/2019
-ms.custom: seodec18
-ms.openlocfilehash: b7d19d782e9cb29cfc917293f084b78830db89bc
-ms.sourcegitcommit: c5021f2095e25750eb34fd0b866adf5d81d56c3a
+ms.custom: seodec18, devx-track-azurecli
+ms.openlocfilehash: 3b6928b759d2349051dbb69258952f2f1ee10a31
+ms.sourcegitcommit: aaa65bd769eb2e234e42cfb07d7d459a2cc273ab
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/25/2020
-ms.locfileid: "88797609"
+ms.lasthandoff: 01/27/2021
+ms.locfileid: "98878132"
 ---
 # <a name="azure-disk-encryption-scenarios-on-linux-vms"></a>Linux VM 上的 Azure 磁盘加密方案
 
@@ -42,11 +42,11 @@ Azure 磁盘加密[与 Azure Key Vault 集成](disk-encryption-key-vault.md)，�
 
 ### <a name="azure-cli"></a>Azure CLI
 
-[Azure CLI 2.0](/cli/azure) 是用于管理 Azure 资源的命令行工具。 CLI 旨在提高数据查询灵活性、支持非阻塞进程形式的长时间操作，以及简化脚本编写。 可以按照[安装 Azure CLI](/cli/azure/install-azure-cli?view=azure-cli-latest) 中的步骤在本地安装它。
+[Azure CLI 2.0](/cli/azure) 是用于管理 Azure 资源的命令行工具。 CLI 旨在提高数据查询灵活性、支持非阻塞进程形式的长时间操作，以及简化脚本编写。 可以按照[安装 Azure CLI](/cli/azure/install-azure-cli) 中的步骤在本地安装它。
 
  
 
-若要[使用 Azure CLI 登录 Azure 帐户](/cli/azure/authenticate-azure-cli)，请使用 [az login](/cli/azure/reference-index?view=azure-cli-latest#az-login) 命令。
+若要[使用 Azure CLI 登录 Azure 帐户](/cli/azure/authenticate-azure-cli)，请使用 [az login](/cli/azure/reference-index#az_login) 命令。
 
 ```azurecli
 az login
@@ -72,13 +72,13 @@ az account set --subscription "<subscription name or ID>"
 
 如果已在本地安装 PowerShell，请确保使用最新版本的 Azure PowerShell SDK 来配置 Azure 磁盘加密。 下载最新版本的 [Azure PowerShell 版本](https://github.com/Azure/azure-powershell/releases)。
 
-若要[使用 Azure PowerShell 登录 Azure 帐户](/powershell/azure/authenticate-azureps?view=azps-2.5.0)，请使用 [Connect-AzAccount](/powershell/module/az.accounts/connect-azaccount?view=azps-2.5.0) cmdlet。
+若要[使用 Azure PowerShell 登录 Azure 帐户](/powershell/azure/authenticate-azureps)，请使用 [Connect-AzAccount](/powershell/module/az.accounts/connect-azaccount) cmdlet。
 
 ```powershell
 Connect-AzAccount
 ```
 
-如果有多个订阅并要指定一个，请先运行 [Get-AzSubscription](/powershell/module/Az.Accounts/Get-AzSubscription) cmdlet 列出订阅，再运行 [Set-AzContext](/powershell/module/az.accounts/set-azcontext?view=azps-2.5.0) cmdlet：
+如果有多个订阅并要指定一个，请先运行 [Get-AzSubscription](/powershell/module/Az.Accounts/Get-AzSubscription) cmdlet 列出订阅，再运行 [Set-AzContext](/powershell/module/az.accounts/set-azcontext) cmdlet：
 
 ```powershell
 Set-AzContext -Subscription -Subscription <SubscriptionId>
@@ -86,7 +86,7 @@ Set-AzContext -Subscription -Subscription <SubscriptionId>
 
 运行 [Get-AzContext](/powershell/module/Az.Accounts/Get-AzContext) cmdlet 将验证是否选择了正确的订阅。
 
-若要确认已安装 Azure 磁盘加密 cmdlet，请使用 [Get-command](/powershell/module/microsoft.powershell.core/get-command?view=powershell-6) cmdlet：
+若要确认已安装 Azure 磁盘加密 cmdlet，请使用 [Get-command](/powershell/module/microsoft.powershell.core/get-command) cmdlet：
      
 ```powershell
 Get-command *diskencryption*
@@ -104,9 +104,9 @@ Get-command *diskencryption*
 
 ### <a name="enable-encryption-on-an-existing-or-running-linux-vm-using-azure-cli"></a>使用 Azure CLI 在现有或正在运行的 Linux VM 上启用加密 
 
-可通过安装并使用 [Azure CLI](/cli/azure/?view=azure-cli-latest) 命令行工具在加密的 VHD 上启用磁盘加密。 可以在浏览器中结合 [Azure Cloud Shell](../../cloud-shell/overview.md) 使用这些 cmdlet，或者将它们安装在本地计算机上并在任何 PowerShell 会话中使用。 若要在 Azure 中现有或正在运行的 Linux VM 上启用加密，请使用以下 CLI 命令：
+可通过安装并使用 [Azure CLI](/cli/azure/) 命令行工具在加密的 VHD 上启用磁盘加密。 可以在浏览器中结合 [Azure Cloud Shell](../../cloud-shell/overview.md) 使用这些 cmdlet，或者将它们安装在本地计算机上并在任何 PowerShell 会话中使用。 若要在 Azure 中现有或正在运行的 Linux VM 上启用加密，请使用以下 CLI 命令：
 
-使用 [az vm encryption enable](/cli/azure/vm/encryption?view=azure-cli-latest#az-vm-encryption-show) 命令在 Azure 中运行的虚拟机上启用加密。
+使用 [az vm encryption enable](/cli/azure/vm/encryption#az_vm_encryption_show) 命令在 Azure 中运行的虚拟机上启用加密。
 
 - **加密正在运行的 VM：**
 
@@ -218,7 +218,7 @@ key-encryption-key 参数值的语法是 KEK 的完整 URI，其格式为： htt
  >如果在更新加密设置时设置此参数，可能会导致在实际加密之前重新启动。 在这种情况下，还需要从 fstab 文件中删除不想要格式化的磁盘。 同样，在启动加密操作之前，应将想要加密并格式化的分区添加到 fstab 文件。 
 
 ### <a name="encryptformatall-criteria"></a>EncryptFormatAll 条件
-该参数会遍历并加密满足以下**所有**条件的所有分区：
+该参数会遍历并加密满足以下 **所有** 条件的所有分区：
 - 不是根/OS/启动分区
 - 尚未加密
 - 不是 BEK 卷
@@ -283,7 +283,7 @@ Set-AzVMDiskEncryptionExtension -ResourceGroupName $VMRGName -VMName $vmName -Di
     echo "/dev/disk/azure/scsi1/lun0-part1 /mnt/mountpoint ext4 defaults,nofail 0 2" >> /etc/fstab
     ```
     
-1. 在运行 Azure PowerShell [Set-AzVMDiskEncryptionExtension](/powershell/module/az.compute/set-azvmdiskencryptionextension?view=azps-3.8.0) cmdlet 的同时使用 -EncryptFormatAll，以加密这些磁盘。
+1. 在运行 Azure PowerShell [Set-AzVMDiskEncryptionExtension](/powershell/module/az.compute/set-azvmdiskencryptionextension) cmdlet 的同时使用 -EncryptFormatAll，以加密这些磁盘。
 
     ```azurepowershell-interactive
     $KeyVault = Get-AzKeyVault -VaultName "MySecureVault" -ResourceGroupName "MySecureGroup"
@@ -408,13 +408,16 @@ Azure 磁盘加密不支持以下 Linux 方案、功能和技术：
 - 创建已加密 VM 的映像或快照，并使用它来部署其他 VM。
 - 内核故障转储 (kdump)。
 - Oracle ACFS（ASM 群集文件系统）。
-- Gen2 VM（请参阅：[Azure 对第 2 代 VM 的支持](generation-2.md#generation-1-vs-generation-2-capabilities)）。
+- Gen2 VM（请参阅：[Azure 对第 2 代 VM 的支持](../generation-2.md#generation-1-vs-generation-2-capabilities)）。
 - Lsv2 系列 Vm 的 NVMe 磁盘 (参阅： [Lsv2 系列](../lsv2-series.md)) 。
 - 具有“嵌套装入点”的 VM，即一个路径中有多个装入点（例如“/1stmountpoint/data/2stmountpoint”）。
 - 包含数据驱动器的 VM 装载在 OS 文件夹之上。
+- 一个 VM，其根 (OS 磁盘) 逻辑卷已使用数据磁盘进行扩展。
 - 具有写入加速器磁盘的 M 系列 VM。
-- 将 ADE 应用到具有使用 [客户管理的密钥](disk-encryption.md) 加密的磁盘的 VM (SSE + CMK) 。 将 SSE + CMK 应用到使用 ADE 加密的 VM 上的数据磁盘也是不受支持的方案。
-- 使用客户管理的密钥将使用 ADE 加密或 **曾经** 使用 ade 加密的 VM 迁移到 [服务器端加密](disk-encryption.md)。
+- 将 ADE 应用到一个 VM，此 VM 使用[服务器端加密和客户管理的密钥](../disk-encryption.md) (SSE + CMK) 加密磁盘。 将 SSE+CMK 应用于使用 ADE 加密的 VM 上的数据磁盘，这种方案也不受支持。
+- 将使用 ADE 加密的 VM，或者曾经使用 ADE 加密的 VM 迁移到[使用客户管理的密钥的服务器端加密](../disk-encryption.md)。
+- [无本地临时磁盘（具体而言即 Dv4、Dsv4、Ev4 和 Esv4）的 Azure VM 大小](../azure-vms-no-temp-disk.md)。
+- 加密故障转移群集中的 VM。
 
 ## <a name="next-steps"></a>后续步骤
 

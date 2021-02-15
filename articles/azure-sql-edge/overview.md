@@ -1,6 +1,6 @@
 ---
-title: 什么是 Azure SQL Edge（预览版）？
-description: 了解 Azure SQL Edge（预览版）
+title: 什么是 Azure SQL Edge？
+description: 了解 Azure SQL Edge
 keywords: SQL Edge 简介, 什么是 SQL Edge, SQL Edge 概述
 services: sql-edge
 ms.service: sql-edge
@@ -9,27 +9,31 @@ author: SQLSourabh
 ms.author: sourabha
 ms.reviewer: sstein
 ms.date: 05/19/2020
-ms.openlocfilehash: 2c96e4b7baa2c463c42db9440cadb3cb396fde1b
-ms.sourcegitcommit: 628be49d29421a638c8a479452d78ba1c9f7c8e4
+ms.openlocfilehash: a74e12a5e9bdd2dfdbc6ac07b66798e517f6f426
+ms.sourcegitcommit: 0ce1ccdb34ad60321a647c691b0cff3b9d7a39c8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/20/2020
-ms.locfileid: "88642463"
+ms.lasthandoff: 11/05/2020
+ms.locfileid: "93395064"
 ---
-# <a name="what-is-azure-sql-edge-preview"></a>什么是 Azure SQL Edge（预览版）？
+# <a name="what-is-azure-sql-edge"></a>什么是 Azure SQL Edge？
 
-Azure SQL Edge（预览版）是已针对 IoT 和 IoT Edge 部署进行了优化的关系数据库引擎。 它提供为 IoT 应用程序和解决方案创建高性能数据存储和处理层的功能。 Azure SQL Edge 提供了流式传输、处理和分析关系和非关系数据（如 JSON、图形和时序数据）的功能，这使其成为各种新式 IoT 应用程序的正确选择。
+Azure SQL Edge 是已针对 IoT 和 IoT Edge 部署进行了优化的关系数据库引擎。 它提供为 IoT 应用程序和解决方案创建高性能数据存储和处理层的功能。 Azure SQL Edge 提供了流式传输、处理和分析关系和非关系数据（如 JSON、图形和时序数据）的功能，这使其成为各种新式 IoT 应用程序的正确选择。
 
-Azure SQL Edge 是在 Microsoft SQL 数据库引擎 (/sql/sql-server/sql-server-technical-documentation？ toc =/azure/azure-sql-edge/) toc.js的最新版本的基础上构建的，它提供行业领先的性能、安全性和查询处理功能。 由于 Azure SQL Edge 建立在与 [SQL Server](/sql/sql-server/sql-server-technical-documentation?toc=/azure/azure-sql-edge/toc.json) 和 [Azure sql](https://docs.microsoft.com/azure/azure-sql/)相同的引擎上，因此它提供了相同的 t-sql 编程外围应用程序，使应用程序或解决方案的开发变得更简单、更快，同时使应用程序或解决方案在 IoT Edge 设备、数据中心和云之间更易于移植。
+Azure SQL Edge 基于最新版本的 [SQL Server 数据库引擎](/sql/sql-server/sql-server-technical-documentation)而构建，提供行业领先的性能、安全性和查询处理功能。 由于 Azure SQL Edge 建立在与 [SQL Server](/sql/sql-server/sql-server-technical-documentation) 和 [Azure SQL](../azure-sql/index.yml) 相同的引擎上，因此它提供相同的 Transact-SQL (T-SQL) 编程外围应用，使应用程序或解决方案的开发更简单且更快速，使应用程序在 IoT Edge 设备、数据中心和云之间的可移植性变得简单。
 
-> [!NOTE]
-> Azure SQL Edge 目前以预览版形式提供，因此不应在生产环境中使用。
+什么是第9频道上的 Azure SQL Edge 视频：
+> [!VIDEO https://channel9.msdn.com/Shows/Data-Exposed/What-is-Azure-SQL-Edge/player]
 
 ## <a name="deployment-models"></a>部署模型
 
-Azure SQL Edge 在 Azure 市场中提供，可以部署为 [Azure IoT Edge](../iot-edge/about-iot-edge.md) 模块。 有关详细信息，请参阅[部署 Azure SQL Edge](deploy-portal.md)。<br>
+Azure SQL Edge 支持两种部署模式。
+
+- 通过 Azure IoT Edge 进行的联网部署：Azure SQL Edge 在 Azure 市场中提供，可以部署为 [Azure IoT Edge](../iot-edge/about-iot-edge.md) 模块。 有关详细信息，请参阅[部署 Azure SQL Edge](deploy-portal.md)。<br>
 
 ![SQL Edge 概述关系图](media/overview/overview.png)
+
+- 离线部署：可以从 Docker 中心拉取 Azure SQL Edge 容器映像，并将其部署为独立的 Docker 容器或部署在 Kubernetes 群集上。 有关详细信息，请参阅[通过 Docker 部署 Azure SQL Edge](disconnected-deployment.md) 和[在 Kubernetes 中部署 Azure SQL Edge 容器](deploy-kubernetes.md)。
 
 ## <a name="editions-of-sql-edge"></a>SQL Edge 版本
 
@@ -42,7 +46,7 @@ SQL Edge 有两个不同的版本或软件计划。 这些版本具有相同的�
 
 ## <a name="pricing-and-availability"></a>定价和可用性
 
-Azure SQL Edge 目前处于预览状态。 有关定价和可用性的详细信息，请参阅 [Azure SQL Edge](https://azure.microsoft.com/services/sql-edge/)。
+Azure SQL Edge 现已正式发布。 有关特定区域中的定价和可用性的详细信息，请参阅 [Azure SQL Edge](https://azure.microsoft.com/services/sql-edge/)。
 
 > [!IMPORTANT]
 > 若要了解 Azure SQL Edge 与 SQL Server 的功能差异，以及不同 Azure SQL Edge 选项之间的区别，请参阅[Azure SQL Edge 支持的功能](features.md)。
@@ -67,7 +71,7 @@ Azure SQL Edge 使应用程序的开发和维护更加轻松、高效。 用户�
 - [SQL Server Management Studio](/sql/ssms/download-sql-server-management-studio-ssms/) - 一款免费、可下载的客户端应用程序，用于管理任何 SQL 基础结构（从 SQL Server 到 SQL 数据库，不一而足）。
 - [Visual Studio 中的 SQL Server Data Tools](/sql/ssdt/download-sql-server-data-tools-ssdt/) - 一个免费、可下载的客户端应用程序，用于开发 SQL Server 关系数据库、SQL 数据库、Integration Services 包、Analysis Services 数据模型和 Reporting Services 报表。
 - [Azure Data Studio](/sql/azure-data-studio/what-is/) - 一个免费、可下载的跨平台数据库工具，适用于在 Windows、macOS 和 Linux 上使用 Microsoft 系列本地和云数据平台的数据专业人员。
-- [Visual Studio Code](https://code.visualstudio.com/docs) - 一个免费、可下载的开放源代码代码编辑器，适用于 Windows、macOS 和 Linux。 它支持各种扩展，其中包括 [mssql 扩展](https://aka.ms/mssql-marketplace)（用于查询 Microsoft SQL Server、Azure SQL 数据库和 Azure SQL 数据仓库）。
+- [Visual Studio Code](https://code.visualstudio.com/docs) - 一个免费、可下载的开放源代码代码编辑器，适用于 Windows、macOS 和 Linux。 它支持各种扩展，其中包括 [mssql 扩展](https://aka.ms/mssql-marketplace)（用于查询 Microsoft SQL Server、Azure SQL 数据库和 Azure Synapse Analytics）。
 
 
 ## <a name="next-steps"></a>后续步骤

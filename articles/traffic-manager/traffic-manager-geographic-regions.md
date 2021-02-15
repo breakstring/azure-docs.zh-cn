@@ -3,7 +3,7 @@ title: 地理路由使用的国家/地区层次结构 - Azure 流量管理器
 description: 本文列出了 Azure 流量管理器地理路由类型使用的国家/地区层次结构
 services: traffic-manager
 documentationcenter: ''
-author: rohinkoul
+author: duongau
 manager: twooley
 ms.service: traffic-manager
 ms.devlang: na
@@ -11,17 +11,17 @@ ms.topic: article
 ms.tgt_pltfrm: na
 ms.workload: infrastructure-services
 ms.date: 03/22/2017
-ms.author: rohink
-ms.openlocfilehash: 19445c06ccf08d2d7916545ad495c56883616c7a
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.author: duau
+ms.openlocfilehash: 9d4b4ba6830fd573a545eb6308fe15a4781873c4
+ms.sourcegitcommit: 0aec60c088f1dcb0f89eaad5faf5f2c815e53bf8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "76938643"
+ms.lasthandoff: 01/14/2021
+ms.locfileid: "98184316"
 ---
 # <a name="countryregion-hierarchy-used-by-azure-traffic-manager-for-geographic-traffic-routing-method"></a>Azure 流量管理器将国家/地区层次结构用于地理流量路由方法
 
-本文列出了 Azure 流量管理器中**地理**流量路由方法使用的国家和地区。 还可以通过调用 [ Azure 流量管理器 REST API](https://docs.microsoft.com/rest/api/trafficmanager/) 以编程方式获取此信息。 
+本文列出了 Azure 流量管理器中 **地理** 流量路由方法使用的国家和地区。 还可以通过调用 [ Azure 流量管理器 REST API](/rest/api/trafficmanager/) 以编程方式获取此信息。 
 
 - WORLD(全球)
 

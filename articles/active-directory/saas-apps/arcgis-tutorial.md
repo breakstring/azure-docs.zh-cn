@@ -11,12 +11,12 @@ ms.workload: identity
 ms.topic: tutorial
 ms.date: 12/19/2018
 ms.author: jeedes
-ms.openlocfilehash: 28e15cb7e0b519932eeee3a6a6445449affe2f35
-ms.sourcegitcommit: 023d10b4127f50f301995d44f2b4499cbcffb8fc
+ms.openlocfilehash: b004394d3f0cc1c4d285c9eba9952a43e8cf65f2
+ms.sourcegitcommit: d79513b2589a62c52bddd9c7bd0b4d6498805dbe
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/18/2020
-ms.locfileid: "88551342"
+ms.lasthandoff: 12/18/2020
+ms.locfileid: "97674002"
 ---
 # <a name="tutorial-azure-active-directory-integration-with-arcgis-online"></a>教程：Azure Active Directory 与 ArcGIS Online 集成
 
@@ -27,7 +27,7 @@ ms.locfileid: "88551342"
 * 可以让用户使用其 Azure AD 帐户自动登录到 ArcGIS Online（单一登录）。
 * 可在中心位置（即 Azure 门户）管理帐户。
 
-如果要了解有关 SaaS 应用与 Azure AD 集成的更多详细信息，请参阅 [Azure Active Directory 的应用程序访问与单一登录是什么](https://docs.microsoft.com/azure/active-directory/active-directory-appssoaccess-whatis)。
+如果要了解有关 SaaS 应用与 Azure AD 集成的更多详细信息，请参阅 [Azure Active Directory 的应用程序访问与单一登录是什么](../manage-apps/what-is-single-sign-on.md)。
 如果还没有 Azure 订阅，可以在开始前[创建一个免费帐户](https://azure.microsoft.com/free/)。
 
 ## <a name="prerequisites"></a>必备条件
@@ -66,7 +66,7 @@ ms.locfileid: "88551342"
 
 4. 在搜索框中，键入“ArcGIS Online”，从结果面板中选择“ArcGIS Online”，再单击“添加”按钮，添加此应用程序。
 
-     ![结果列表中的 ArcGIS Online](common/search-new-app.png)
+    ![结果列表中的 ArcGIS Online](common/search-new-app.png)
 
 ## <a name="configure-and-test-azure-ad-single-sign-on"></a>配置和测试 Azure AD 单一登录
 
@@ -92,7 +92,7 @@ ms.locfileid: "88551342"
 
     ![配置单一登录链接](common/select-sso.png)
 
-2. 在**选择单一登录方法**对话框中，选择 **SAML/WS-Fed**模式以启用单一登录。
+2. 在 **选择单一登录方法** 对话框中，选择 **SAML/WS-Fed** 模式以启用单一登录。
 
     ![单一登录选择模式](common/select-saml-option.png)
 
@@ -166,7 +166,7 @@ ms.locfileid: "88551342"
     ![“用户”对话框](common/user-properties.png)
 
     a. 在“名称”字段中，输入 BrittaSimon。
-  
+
     b. 在“用户名”字段中，键入 brittasimon\@yourcompanydomain.extension  
     例如： BrittaSimon@contoso.com
 
@@ -210,24 +210,24 @@ ms.locfileid: "88551342"
 1. 登录“ArcGIS”租户。
 
 2. 单击“邀请成员”。
-   
+
     ![邀请成员](./media/arcgis-tutorial/ic784747.png "邀请成员")
 
 3. 选择“自动添加成员且无需发送电子邮件”，然后单击“下一步”。
-   
+
     ![自动添加成员](./media/arcgis-tutorial/ic784748.png "自动添加成员")
 
 4. 在“成员”对话框页上，执行以下步骤：
-   
-     ![添加和查看](./media/arcgis-tutorial/ic784749.png "添加和查看")
-    
+
+    ![添加和查看](./media/arcgis-tutorial/ic784749.png "添加和查看")
+
      a. 输入想要预配的有效 Azure AD 帐户的“电子邮件”、“名字”和“姓氏”  。
-  
+
      b. 单击“添加和查看”。
 5. 查看输入的数据，然后单击“添加成员”。
-   
+
     ![添加成员](./media/arcgis-tutorial/ic784750.png "添加成员")
-        
+
     > [!NOTE]
     > Azure Active Directory 帐户持有者将收到一封电子邮件，并且将单击其中的链接以在激活帐户前确认帐户。
 
@@ -235,13 +235,12 @@ ms.locfileid: "88551342"
 
 在本部分中，使用访问面板测试 Azure AD 单一登录配置。
 
-单击访问面板中的 ArcGIS Online 磁贴时，应会自动登录到为其设置了 SSO 的 ArcGIS Online。 有关访问面板的详细信息，请参阅 [Introduction to the Access Panel](https://docs.microsoft.com/azure/active-directory/active-directory-saas-access-panel-introduction)（访问面板简介）。
+单击访问面板中的 ArcGIS Online 磁贴时，应会自动登录到为其设置了 SSO 的 ArcGIS Online。 有关访问面板的详细信息，请参阅 [Introduction to the Access Panel](../user-help/my-apps-portal-end-user-access.md)（访问面板简介）。
 
 ## <a name="additional-resources"></a>其他资源
 
-- [有关如何将 SaaS 应用与 Azure Active Directory 集成的教程列表](https://docs.microsoft.com/azure/active-directory/active-directory-saas-tutorial-list)
+- [有关如何将 SaaS 应用与 Azure Active Directory 集成的教程列表](./tutorial-list.md)
 
-- [Azure Active Directory 的应用程序访问与单一登录是什么？](https://docs.microsoft.com/azure/active-directory/active-directory-appssoaccess-whatis)
+- [Azure Active Directory 的应用程序访问与单一登录是什么？](../manage-apps/what-is-single-sign-on.md)
 
-- [什么是 Azure Active Directory 中的条件访问？](https://docs.microsoft.com/azure/active-directory/conditional-access/overview)
-
+- [什么是 Azure Active Directory 中的条件访问？](../conditional-access/overview.md)

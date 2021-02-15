@@ -1,30 +1,22 @@
 ---
-title: 使用 Azure 数据工厂（预览版）从 Presto 复制数据
+title: 使用 Azure 数据工厂从 Presto 复制数据
 description: 了解如何通过在 Azure 数据工厂管道中使用复制活动，将数据从 Presto 复制到支持的接收器数据存储。
-services: data-factory
-documentationcenter: ''
 author: linda33wj
-manager: shwang
-ms.reviewer: douglasl
 ms.service: data-factory
-ms.workload: data-services
 ms.topic: conceptual
-ms.date: 09/04/2019
+ms.date: 12/18/2020
 ms.author: jingwang
-ms.openlocfilehash: 15f4133b03c1fe77548425500445937e86ed5a8e
-ms.sourcegitcommit: f353fe5acd9698aa31631f38dd32790d889b4dbb
+ms.openlocfilehash: 33e521d418c219be8eb85b79a0e07d999edb1b08
+ms.sourcegitcommit: d4734bc680ea221ea80fdea67859d6d32241aefc
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/29/2020
-ms.locfileid: "87372495"
+ms.lasthandoff: 02/14/2021
+ms.locfileid: "100374263"
 ---
-# <a name="copy-data-from-presto-using-azure-data-factory-preview"></a>使用 Azure 数据工厂（预览版）从 Presto 复制数据
+# <a name="copy-data-from-presto-using-azure-data-factory"></a>使用 Azure 数据工厂从 Presto 复制数据
 [!INCLUDE[appliesto-adf-asa-md](includes/appliesto-adf-asa-md.md)]
 
 本文概述了如何使用 Azure 数据工厂中的复制活动从 Presto 复制数据。 它是基于概述复制活动总体的[复制活动概述](copy-activity-overview.md)一文。
-
-> [!IMPORTANT]
-> 此连接器目前提供预览版。 欢迎试用并提供反馈。 若要在解决方案中使用预览版连接器的依赖项，请联系 [Azure 客户支持](https://azure.microsoft.com/support/)。
 
 ## <a name="supported-capabilities"></a>支持的功能
 
@@ -50,8 +42,8 @@ Presto 链接服务支持以下属性：
 | 属性 | 说明 | 必须 |
 |:--- |:--- |:--- |
 | type | type 属性必须设置为：Presto  | 是 |
-| host | Presto 服务器的 IP 地址或主机名。 （例如192.168.222.160）  | 是 |
-| serverVersion | Presto 服务器的版本。 （例如，0.148-t）  | 是 |
+| host | Presto 服务器的 IP 地址或主机名。 （例如 192.168.222.160）  | 是 |
+| serverVersion | Presto 服务器的版本。 （例如 0.148-t）  | 是 |
 | 目录 | 针对服务器的所有请求的目录上下文。  | 是 |
 | port | Presto 服务器用来侦听客户端连接的 TCP 端口。 默认值为 8080。  | 否 |
 | authenticationType | 用于连接到 Presto 服务器的身份验证机制。 <br/>允许值包括：匿名、LDAP   | 是 |
@@ -94,7 +86,7 @@ Presto 链接服务支持以下属性：
 
 要从 Presto 复制数据，请将数据集的 type 属性设置为“PrestoObject”  。 支持以下属性：
 
-| 属性 | 说明 | 必须 |
+| properties | 说明 | 必须 |
 |:--- |:--- |:--- |
 | type | 数据集的 type 属性必须设置为：PrestoObject  | 是 |
 | 架构 | 架构的名称。 |否（如果指定了活动源中的“query”）  |
@@ -124,12 +116,12 @@ Presto 链接服务支持以下属性：
 
 ### <a name="presto-as-source"></a>以 Presto 作为源
 
-要从 Presto 复制数据，请将复制活动中的源类型设置为“PrestoSource”  。 复制活动**source**部分支持以下属性：
+要从 Presto 复制数据，请将复制活动中的源类型设置为“PrestoSource”  。 复制活动 **source** 部分支持以下属性：
 
-| 属性 | 说明 | 必须 |
+| properties | 说明 | 必须 |
 |:--- |:--- |:--- |
 | type | 复制活动 source 的 type 属性必须设置为：PrestoSource  | 是 |
-| 查询 | 使用自定义 SQL 查询读取数据。 例如：`"SELECT * FROM MyTable"`。 | 否（如果指定了数据集中的“tableName”） |
+| query | 使用自定义 SQL 查询读取数据。 例如：`"SELECT * FROM MyTable"`。 | 否（如果指定了数据集中的“tableName”） |
 
 **示例：**
 
@@ -163,7 +155,7 @@ Presto 链接服务支持以下属性：
 ]
 ```
 
-## <a name="lookup-activity-properties"></a>Lookup 活动属性
+## <a name="lookup-activity-properties"></a>查找活动属性
 
 若要了解有关属性的详细信息，请查看 [Lookup 活动](control-flow-lookup-activity.md)。
 

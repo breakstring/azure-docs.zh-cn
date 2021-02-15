@@ -6,12 +6,12 @@ ms.service: data-lake-store
 ms.topic: conceptual
 ms.date: 02/21/2018
 ms.author: twooley
-ms.openlocfilehash: b124f828c4a6a019c45243528ed2d957e3f781f3
-ms.sourcegitcommit: 9ce0350a74a3d32f4a9459b414616ca1401b415a
+ms.openlocfilehash: 48136f8d9172c3674e849e24efca4ae5070f83ab
+ms.sourcegitcommit: ae6e7057a00d95ed7b828fc8846e3a6281859d40
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/13/2020
-ms.locfileid: "88191419"
+ms.lasthandoff: 10/16/2020
+ms.locfileid: "92109113"
 ---
 # <a name="high-availability-and-disaster-recovery-guidance-for-data-lake-storage-gen1"></a>Data Lake Storage Gen1 的高可用性和灾难恢复指南
 
@@ -21,8 +21,8 @@ Data Lake Storage Gen1 提供了本地冗余存储 (LRS) 。 因此，Data Lake 
 
 准备灾难恢复计划至关重要。 查看本文中的信息以及这些其他资源，帮助您创建自己的计划。
 
-* [Azure 应用程序的灾难恢复和高可用性](../resiliency/resiliency-disaster-recovery-high-availability-azure-applications.md)
-* [Azure 复原技术指南](../resiliency/resiliency-technical-guidance.md)
+* [Azure 应用程序的灾难恢复和高可用性](/azure/architecture/framework/resiliency/backup-and-recovery)
+* [Azure 复原技术指南](/azure/architecture/framework/resiliency/overview)
 
 ### <a name="best-practice-recommendations"></a>最佳做法建议
 
@@ -37,8 +37,6 @@ Data Lake Storage Gen1 提供了本地冗余存储 (LRS) 。 因此，Data Lake 
 若要防止意外删除，我们建议首先为 Data Lake Storage Gen1 帐户设置适当的访问策略。 这包括应用 [Azure 资源锁](../azure-resource-manager/management/lock-resources.md) 来锁定重要资源，以及使用可用 [Data Lake Storage Gen1 安全功能](data-lake-store-security-overview.md)应用帐户和文件级访问控制。 此外，我们建议在另一个 Data Lake Storage Gen1 帐户、文件夹或 Azure 订阅中，定期使用 [ADLCopy](data-lake-store-copy-data-azure-storage-blob.md)、[Azure PowerShell](data-lake-store-get-started-powershell.md) 或 [Azure 数据工厂](../data-factory/connector-azure-data-lake-store.md)创建关键数据的副本。 发生数据损坏或删除事件时，可以使用这些副本来恢复数据。 Azure 数据工厂是一个非常有用的服务，可以周期性地创建和部署数据移动管道。
 
 你还可以为 Data Lake Storage Gen1 帐户启用 [诊断日志记录](data-lake-store-diagnostic-logs.md) ，以收集数据访问审核跟踪。 审核跟踪提供有关可能已删除或更新文件的用户的信息。
-
-可以尝试使用 Data Lake Storage 第1代的 [DataLakeStore](https://docs.microsoft.com/powershell/module/az.datalakestore/) Azure PowerShell 模块来还原已删除的项。 具体而言，请参阅 [AzDataLakeStoreDeletedItem](https://docs.microsoft.com/powershell/module/az.datalakestore/restore-azdatalakestoredeleteditem) 命令。 尝试使用此命令之前，请务必查看 " [描述](https://docs.microsoft.com/powershell/module/az.datalakestore/restore-azdatalakestoredeleteditem#description) " 部分。
 
 ## <a name="next-steps"></a>后续步骤
 

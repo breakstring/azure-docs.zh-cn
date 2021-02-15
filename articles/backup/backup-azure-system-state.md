@@ -3,12 +3,12 @@ title: 将 Windows 系统状态备份到 Azure
 description: 了解如何将 Windows Server 计算机的系统状态备份到 Azure。
 ms.topic: conceptual
 ms.date: 05/23/2018
-ms.openlocfilehash: 8ce30b93ebaecec1e69c6c6a6f1064c6cdd3d0f6
-ms.sourcegitcommit: ac7ae29773faaa6b1f7836868565517cd48561b2
+ms.openlocfilehash: 1b3573d757d2f7b1ffec9ae718aa791488960f3b
+ms.sourcegitcommit: 829d951d5c90442a38012daaf77e86046018e5b9
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/25/2020
-ms.locfileid: "88824455"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "91332877"
 ---
 # <a name="back-up-windows-system-state-to-azure"></a>将 Windows 系统状态备份到 Azure
 
@@ -24,7 +24,7 @@ ms.locfileid: "88824455"
 
 在创建恢复服务保管库时，请确保存储冗余配置为所希望的方式。
 
-1. 从 " **恢复服务保管库** " 窗格中选择新的保管库。
+1. 在“恢复服务保管库”窗格中，选择新保管库。
 
     ![在恢复服务保管库列表中选择新保管库](./media/backup-try-azure-backup-in-10-mins/rs-vault-list.png)
 
@@ -38,9 +38,9 @@ ms.locfileid: "88824455"
     ![设置新保管库的存储配置](./media/backup-try-azure-backup-in-10-mins/set-storage-configuration.png)
 4. 为保管库选择合适的存储复制选项。
 
-    ![存储配置选择](./media/backup-try-azure-backup-in-10-mins/choose-storage-configuration.png)
+    ![存储配置选择](./media/backup-try-azure-backup-in-10-mins/choose-storage-configuration-for-vault.png)
 
-    默认情况下，保管库具有异地冗余存储。 如果使用 Azure 作为主要备份存储终结点，请继续使用“异地冗余”****。 如果不使用 Azure 作为主要备份存储终结点，则选择“本地冗余” ，以减少 Azure 存储成本。 请在此[存储冗余概述](../storage/common/storage-redundancy.md)中深入了解[异地冗余](../storage/common/storage-redundancy.md)和[本地冗余](../storage/common/storage-redundancy.md)存储选项。
+    默认情况下，保管库具有异地冗余存储。 如果使用 Azure 作为主要备份存储终结点，请继续使用“异地冗余”****。 如果不使用 Azure 作为主要备份存储终结点，则选择“本地冗余” ，以减少 Azure 存储成本。 在此[存储冗余概述](../storage/common/storage-redundancy.md)中了解有关[异地冗余](../storage/common/storage-redundancy.md#geo-redundant-storage)的[本地冗余](../storage/common/storage-redundancy.md#locally-redundant-storage)和[区域冗余](../storage/common/storage-redundancy.md#zone-redundant-storage)存储选项的详细信息。
 
 创建保管库之后，即可对其进行配置，以便备份 Windows 系统状态。
 
@@ -62,7 +62,7 @@ ms.locfileid: "88824455"
 
     ![配置文件和文件夹](./media/backup-azure-system-state/backup-goal-system-state.png)
 
-    单击 "确定" 后，会在 " **备份目标**" 旁边显示一个复选标记，并会打开 " **准备基础结构** " 窗格。
+    选择 **"确定"** 后，会在 " **备份目标**" 旁边显示一个复选标记，并会打开 " **准备基础结构** " 窗格。
 
     ![已配置备份目标，接下来准备基础结构](./media/backup-try-azure-backup-in-10-mins/backup-goal-configed.png)
 
@@ -80,7 +80,7 @@ ms.locfileid: "88824455"
 
     ![MARS 安装程序已完成](./media/backup-try-azure-backup-in-10-mins/mars-installer-complete.png)
 
-    此时还不需要安装代理。 下载保管库凭据之后，即可安装代理。
+    此时还不需要安装代理。 下载保管库凭据后，可以安装代理。
 
 6. 在 " **准备基础结构** " 窗格中，选择 " **下载**"。
 
@@ -90,7 +90,7 @@ ms.locfileid: "88824455"
 
     ![已下载保管库凭据](./media/backup-try-azure-backup-in-10-mins/vault-credentials-downloaded.png)
    > [!NOTE]
-   > 保管库凭据只能保存到打算使用代理的 Windows Server 的本地位置。
+   > 保管库凭据必须仅保存到要在其上使用代理的 Windows Server 的本地位置。
    >
 
 [!INCLUDE [backup-upgrade-mars-agent.md](../../includes/backup-upgrade-mars-agent.md)]
@@ -152,7 +152,7 @@ ms.locfileid: "88824455"
 
 5. 选择 " **系统状态** "，然后选择 **"确定"**。
 
-6. 选择“**下一页**”。
+6. 选择“下一步”。
 
 7. 在后续页中选择系统状态备份所需的备份频率和保留策略。
 

@@ -5,19 +5,20 @@ author: JiangChen79
 ms.reviewer: adwise
 tags: billing,top-support-issue
 ms.service: cost-management-billing
+ms.subservice: billing
 ms.topic: conceptual
-ms.date: 06/15/2020
+ms.date: 08/20/2020
 ms.author: banders
-ms.openlocfilehash: 050bd9c420ccecdb91a6c438782d9be1c6c23b88
-ms.sourcegitcommit: f988fc0f13266cea6e86ce618f2b511ce69bbb96
+ms.openlocfilehash: db9c8d18d975661edf4a120a2e82b073c884d2a9
+ms.sourcegitcommit: 28c5fdc3828316f45f7c20fc4de4b2c05a1c5548
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/31/2020
-ms.locfileid: "87461878"
+ms.lasthandoff: 10/22/2020
+ms.locfileid: "92369669"
 ---
 # <a name="sign-up-for-a-microsoft-365-subscription-with-your-azure-account"></a>使用 Azure 帐户注册 Microsoft 365 订阅
 
-如果你是 Azure 订阅者，则可以使用 Azure 帐户注册 Microsoft 365 订阅。 如果你是拥有 Azure 订阅的组织的成员，可在现有 Azure Active Directory (Azure AD) 中为用户创建 Microsoft 365 订阅。 使用帐户（必须在 Azure Active Directory 租户中具有全局管理员或计费管理员权限）注册 Microsoft 365。 有关详细信息，请参阅[在 Azure AD 中检查我的帐户权限](#RoleInAzureAD)和[在 Azure Active Directory 中分配管理员角色](../../active-directory/users-groups-roles/directory-assign-admin-roles.md)。
+如果你是 Azure 订阅者，则可以使用 Azure 帐户注册 Microsoft 365 订阅。 如果你是拥有 Azure 订阅的组织的成员，可在现有 Azure Active Directory (Azure AD) 中为用户创建 Microsoft 365 订阅。 使用帐户（必须在 Azure Active Directory 租户中具有全局管理员或计费管理员权限）注册 Microsoft 365。 有关详细信息，请参阅[在 Azure AD 中检查我的帐户权限](#RoleInAzureAD)和[在 Azure Active Directory 中分配管理员角色](../../active-directory/roles/permissions-reference.md)。
 
 如果已具有 Microsoft 365 帐户和 Azure 订阅，则可以[将 Microsoft 365 租户与 Azure 订阅关联](../../active-directory/fundamentals/active-directory-how-subscriptions-associated-directory.md)。
 

@@ -7,18 +7,19 @@ author: MashaMSFT
 tags: azure-resource-manager
 ms.assetid: aa5bf144-37a3-4781-892d-e0e300913d03
 ms.service: virtual-machines-sql
-ms.topic: article
+ms.subservice: management
+ms.topic: how-to
 ms.tgt_pltfrm: vm-windows-sql-server
 ms.workload: iaas-sql-server
 ms.date: 12/12/2017
 ms.author: mathoma
 ms.reviewer: jroth
-ms.openlocfilehash: aa0fdddbf31cadad55582f4d45c8e536ce74acd9
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 37cb8f5a2ff0916f53ae50f5750664204ab1ba75
+ms.sourcegitcommit: 78ecfbc831405e8d0f932c9aafcdf59589f81978
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "84667411"
+ms.lasthandoff: 01/23/2021
+ms.locfileid: "98737483"
 ---
 # <a name="connect-to-a-sql-server-virtual-machine-on-azure"></a>连接到 Azure 上的 SQL Server 虚拟机
 [!INCLUDE[appliesto-sqlvm](../../includes/appliesto-sqlvm.md)]
@@ -41,7 +42,7 @@ ms.locfileid: "84667411"
 
 | 选项 | 说明 |
 |---|---|
-| **公共** | 通过 Internet 连接到 SQL Server。 |
+| 公共 | 通过 Internet 连接到 SQL Server。 |
 | 专用 | 连接到同一虚拟网络中的 SQL Server。 |
 | 本地 | 在同一虚拟机上本地连接到 SQL Server。 | 
 
@@ -49,7 +50,7 @@ ms.locfileid: "84667411"
 
 ## <a name="connect-to-sql-server-over-the-internet"></a>通过 Internet 连接到 SQL Server
 
-如果要通过 Internet 连接到 SQL Server 数据库引擎，请在预配过程中，在门户中为“SQL 连接”类型选择“公共”。 门户将自动执行以下步骤：
+如果要通过 Internet 连接到 SQL Server 数据库引擎，请在预配过程中，在门户中为“SQL 连接”类型选择“公共”。 门户自动执行以下步骤：
 
 * 为 SQL Server 启用 TCP/IP 协议。
 * 配置防火墙规则以打开 SQL Server TCP 端口（默认值为 1433）。
@@ -81,9 +82,9 @@ Server=sqlvmlabel.eastus.cloudapp.azure.com,1500;Integrated Security=false;User 
 > [!IMPORTANT]
 > SQL Server Developer Edition 和 Express Edition 的虚拟机映像不会自动启用 TCP/IP 协议。 对于 Developer Edition 和 Express Edition，在创建 VM 后，必须使用 SQL Server 配置管理器[手动启用 TCP/IP 协议](#manualtcp) 。
 
-专用连接通常与[虚拟网络](../../../virtual-network/virtual-networks-overview.md)结合使用，从而支持多个方案。 可以连接同一虚拟网络中的 VM，即使这些 VM 位于不同的资源组中。 使用[站点到站点 VPN](../../../vpn-gateway/vpn-gateway-howto-site-to-site-resource-manager-portal.md)，可以创建连接 VM 与本地网络和计算机的混合体系结构。
+专用连接通常与[虚拟网络](../../../virtual-network/virtual-networks-overview.md)结合使用，从而支持多个方案。 可以连接同一虚拟网络中的 VM，即使这些 VM 位于不同的资源组中。 使用[站点到站点 VPN](../../../vpn-gateway/tutorial-site-to-site-portal.md)，可以创建连接 VM 与本地网络和计算机的混合体系结构。
 
-虚拟网络还可将 Azure VM 加入域。 这是对 SQL Server 使用 Windows 身份验证的唯一方式。 其他连接方案需要使用用户名和密码进行 SQL 身份验证。
+虚拟网络还允许将 Azure VM 加入域。 这是对 SQL Server 使用 Windows 身份验证的唯一方式。 其他连接方案需要使用用户名和密码进行 SQL 身份验证。
 
 假设已在虚拟网络中配置 DNS，则可在连接字符串中指定 SQL Server VM 计算机名来连接 SQL Server 实例。 以下示例还假定已配置 Windows 身份验证，并且用户已获得访问 SQL Server 实例的权限。
 
@@ -123,7 +124,7 @@ Server=mysqlvm;Integrated Security=true
 
 [!INCLUDE [Connect to SQL Server VM with remote desktop](../../../../includes/virtual-machines-sql-server-connection-tcp-protocol.md)]
 
-## <a name="connect-with-ssms"></a>与 SSMS 连接
+## <a name="connect-with-ssms"></a>使用 SSMS 进行连接
 
 以下步骤演示如何为 Azure VM 创建可选 DNS 标签，然后与 SQL Server Management Studio (SSMS) 进行连接。
 
@@ -138,9 +139,9 @@ Server=mysqlvm;Integrated Security=true
 | 要求 | 说明 |
 |---|---|
 | [启用 SQL Server 身份验证模式](/sql/database-engine/configure-windows/change-server-authentication-mode#use-ssms) | 除非已在虚拟网络上配置 Active Directory，否则需要进行 SQL Server 身份验证才能连接到远程 VM。 |
-| [创建 SQL 登录名](https://docs.microsoft.com/sql/relational-databases/security/authentication-access/create-a-login) | 如果使用的是 SQL 身份验证，则需要提供带有用户名和密码的 SQL 登录名，并且该登录名还有权访问目标数据库。 |
+| [创建 SQL 登录名](/sql/relational-databases/security/authentication-access/create-a-login) | 如果使用的是 SQL 身份验证，则需要提供带有用户名和密码的 SQL 登录名，并且该登录名还有权访问目标数据库。 |
 | [启用 TCP/IP 协议](#manualtcp) | SQL Server 必须允许通过 TCP 连接。 |
-| [启用 SQL Server 端口的防火墙规则](https://docs.microsoft.com/sql/database-engine/configure-windows/configure-a-windows-firewall-for-database-engine-access) | VM 上的防火墙必须允许 SQL Server 端口（默认为 1433）上的入站流量。 |
+| [启用 SQL Server 端口的防火墙规则](/sql/database-engine/configure-windows/configure-a-windows-firewall-for-database-engine-access) | VM 上的防火墙必须允许 SQL Server 端口（默认为 1433）上的入站流量。 |
 | [创建 TCP 1433 的网络安全组规则](../../../virtual-network/manage-network-security-group.md#create-a-security-rule) | 如果希望通过 Internet 连接，必须允许 VM 接收 SQL Server 端口（默认为 1433）上的流量。 本地和仅虚拟网路连接对此无要求。 这是在 Azure 门户中所要求的唯一步骤。 |
 
 > [!TIP]

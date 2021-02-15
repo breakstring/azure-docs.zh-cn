@@ -1,15 +1,15 @@
 ---
 title: Azure 快速入门 - 创建 Batch 帐户 - Azure 资源管理器模板
-description: 快速了解如何使用 Azure CLI 运行批处理作业。 从命令行或通过脚本创建和管理 Azure 资源。
+description: 本快速入门介绍如何使用 ARM 模板创建 Batch 帐户。
 ms.topic: quickstart
 ms.date: 08/17/2020
 ms.custom: subject-armqs
-ms.openlocfilehash: c59e8891678d9fc1af7c4fe78e4ee2d267ec99b4
-ms.sourcegitcommit: 54d8052c09e847a6565ec978f352769e8955aead
+ms.openlocfilehash: fc6f1537b32c8ced2cfc2bf09f16106f791001fc
+ms.sourcegitcommit: 6172a6ae13d7062a0a5e00ff411fd363b5c38597
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/18/2020
-ms.locfileid: "88511382"
+ms.lasthandoff: 12/11/2020
+ms.locfileid: "97106574"
 ---
 # <a name="quickstart-create-a-batch-account-by-using-arm-template"></a>快速入门：使用 ARM 模板创建批处理帐户
 
@@ -31,7 +31,7 @@ ms.locfileid: "88511382"
 
 本快速入门中使用的模板来自 [Azure 快速启动模板](https://azure.microsoft.com/resources/templates/101-batchaccount-with-storage/)。
 
-:::code language="json" source="~/quickstart-templates/101-batchaccount-with-storage/azuredeploy.json" range="1-80" highlight="36-69":::
+:::code language="json" source="~/quickstart-templates/101-batchaccount-with-storage/azuredeploy.json":::
 
 该模板中定义了两个 Azure 资源：
 

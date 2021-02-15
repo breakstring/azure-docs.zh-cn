@@ -1,9 +1,9 @@
 ---
 title: Azure 媒体服务概述 | Microsoft Docs
-description: Microsoft Azure 媒体服务是一个可扩展的基于云的平台，使开发人员能够生成可缩放的媒体管理和传送应用程序。 本文提供了 Azure 媒体服务的概述。
+description: Microsoft Azure 媒体服务是一个可扩展的基于云的平台，使开发人员能够生成可缩放的媒体管理和传送应用程序。 本文概述了 Azure 媒体服务。
 services: media-services
 documentationcenter: ''
-author: Juliako
+author: IngridAtMicrosoft
 manager: femila
 editor: ''
 ms.service: media-services
@@ -11,23 +11,25 @@ ms.workload: media
 ms.tgt_pltfrm: na
 ms.devlang: na
 ms.topic: conceptual
-ms.date: 04/19/2019
-ms.author: juliako
-ms.openlocfilehash: 78fa6b343a01e96c000b6c64a55d5fdf1f0284f2
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.date: 11/03/2020
+ms.author: inhenkel
+ms.openlocfilehash: 08a419f021e0315468cb6fa5917b30bb2977d958
+ms.sourcegitcommit: 77afc94755db65a3ec107640069067172f55da67
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87084647"
+ms.lasthandoff: 01/22/2021
+ms.locfileid: "98695503"
 ---
-# <a name="azure-media-services-overview"></a>Azure 媒体服务概述 
+# <a name="azure-media-services-overview"></a>Azure 媒体服务概述
+
+[!INCLUDE [media services api v2 logo](./includes/v2-hr.md)]
 
 > [!div class="op_single_selector" title1="选择所使用的媒体服务版本："]
 > * [第 3 版](../latest/media-services-overview.md)
 > * [第 2 版](media-services-overview.md)
 
 > [!NOTE]
-> 媒体服务 v2 中未添加新功能。 <br/>查看最新版本：[媒体服务 v3](../latest/index.yml)。 另请参阅[从 v2 到 v3 的迁移指南](../latest/migrate-from-v2-to-v3.md)
+> 媒体服务 v2 中未添加新功能。 <br/>查看最新版本：[媒体服务 v3](../latest/index.yml)。 另请参阅[从 v2 到 v3 的迁移指南](../latest/migrate-v-2-v-3-migration-introduction.md)
 
 Microsoft Azure 媒体服务 (AMS) 是一个可扩展的基于云的平台，使开发人员能够生成可缩放的媒体管理和传送应用程序。 媒体服务基于 REST API，使用这些 API 可以安全地上传、存储、编码和打包视频或音频内容，以供点播以及以实时传送视频流的形式传送到各种客户端（例如，电视、电脑和移动设备）。
 
@@ -40,7 +42,7 @@ Microsoft Azure 媒体服务 (AMS) 是一个可扩展的基于云的平台，使
 
 在将任何视频/图像上传到媒体服务之前，必须拥有该视频/图像的适当使用权限，包括根据法律的要求，获得视频/图像中的个人（如果有）授予的，在媒体服务和 Azure 中使用、处理和存储其数据的所有必要许可。 某些司法辖区可能会对收集、在线处理和存储某些类别的数据（例如生物识别数据）施加特殊的法律要求。 在根据特殊法律要求使用媒体服务和 Azure 处理与存储任何数据之前，必须确保符合可能适用于你的任何法律要求。
 
-若要了解媒体服务中的合规性、隐私性和安全性，请访问 Microsoft[信任中心](https://www.microsoft.com/trust-center/?rtc=1)。 有关 Microsoft 的隐私义务、数据处理和保留实践（包括如何删除数据），请查看 Microsoft[隐私声明](https://privacy.microsoft.com/PrivacyStatement)、[在线服务条款](https://www.microsoft.com/licensing/product-licensing/products?rtc=1)（"OST"）和[数据处理补充](https://www.microsoftvolumelicensing.com/DocumentSearch.aspx?Mode=3&DocumentTypeId=67)条款（"DPA"）。 使用媒体服务即表示你同意遵守 OST、DPA 和隐私声明。
+若要了解媒体服务中的合规性、隐私性和安全性，请访问 Microsoft [信任中心](https://www.microsoft.com/trust-center/?rtc=1)。 有关 Microsoft 的隐私义务、数据处理和保留实践（包括如何删除数据），请参阅 Microsoft [隐私声明](https://privacy.microsoft.com/PrivacyStatement)、 [在线服务条款](https://www.microsoft.com/licensing/product-licensing/products?rtc=1) ( "OST" ) 和 [数据处理补充](https://www.microsoftvolumelicensing.com/DocumentSearch.aspx?Mode=3&DocumentTypeId=67) ( "DPA" ) 。 使用媒体服务即表示你同意遵守 OST、DPA 和隐私声明。
  
 ## <a name="prerequisites"></a>先决条件
 
@@ -63,7 +65,7 @@ Microsoft Azure 媒体服务 (AMS) 是一个可扩展的基于云的平台，使
     
         * [NuGet 包](https://www.nuget.org/packages/windowsazure.mediaservices/)
         * [GitHub 源代码](https://github.com/Azure/azure-sdk-for-media-services)
-    * [适用于 Java 的 AZURE SDK](https://github.com/Azure/azure-sdk-for-java)，
+    * [Azure SDK for Java](https://github.com/Azure/azure-sdk-for-java)，
     * [Azure PHP SDK](https://github.com/Azure/azure-sdk-for-php)，
     * [适用于 Node.js 的 Azure 媒体服务](https://github.com/michelle-becker/node-ams-sdk/blob/master/lib/request.js) （这是 Node.js SDK 的非 Microsoft 版本。 它由社区维护，当前未包括所有的 AMS API）。
 * 现有工具：
@@ -76,7 +78,7 @@ Microsoft Azure 媒体服务 (AMS) 是一个可扩展的基于云的平台，使
 
 ## <a name="code-samples"></a>代码示例
 
-在****“Azure 代码示例”库中查找多个代码示例：[Azure 媒体服务代码示例](https://azure.microsoft.com/resources/samples/?service=media-services&sort=0)。
+在“Azure 代码示例”库中查找多个代码示例：[Azure 媒体服务代码示例](https://azure.microsoft.com/resources/samples/?service=media-services&sort=0)。
 
 ## <a name="concepts"></a>概念
 
@@ -84,13 +86,12 @@ Microsoft Azure 媒体服务 (AMS) 是一个可扩展的基于云的平台，使
 
 ## <a name="supported-scenarios-and-availability-of-media-services-across-data-centers"></a>支持的媒体服务功能跨数据中心方案和可用性
 
-有关详细信息，请参阅 [AMS 功能和服务的跨数据中心方案和可用性](scenarios-and-availability.md)。
+有关 Azure 常见方案的详细信息，请参阅 [AMS 方案](scenarios-and-availability.md)。
+有关区域可用性的信息，请参阅[媒体服务可用性](availability-regions-v-2.md)。
 
 ## <a name="service-level-agreement-sla"></a>服务级别协议 (SLA)
 
 有关详细信息，请参阅 [Microsoft Azure SLA](https://azure.microsoft.com/support/legal/sla/)。
-
-若要了解此功能在数据中心的可用性，请参阅[可用性](scenarios-and-availability.md#availability)部分。
 
 ## <a name="support"></a>支持
 

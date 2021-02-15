@@ -13,12 +13,12 @@ ms.author: ajburnle
 ms.reviewer: jeffsta
 ms.custom: it-pro, seodec18
 ms.collection: M365-identity-device-management
-ms.openlocfilehash: b6d8e6ed412a0e71e8c85827cfc8fc05cd744e3d
-ms.sourcegitcommit: fbb66a827e67440b9d05049decfb434257e56d2d
+ms.openlocfilehash: de529a8ffb0c72854904717c71dbc322c919f1a8
+ms.sourcegitcommit: a43a59e44c14d349d597c3d2fd2bc779989c71d7
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/05/2020
-ms.locfileid: "87797094"
+ms.lasthandoff: 11/25/2020
+ms.locfileid: "95996689"
 ---
 # <a name="add-or-delete-users-using-azure-active-directory"></a>使用 Azure Active Directory 添加或删除用户
 
@@ -44,7 +44,7 @@ ms.locfileid: "87797094"
 
    - **用户名**。 必需。 新用户的用户名。 例如，`mary@contoso.com`。
 
-     用户名的域部分必须使用初始默认域名（ * \<yourdomainname> onmicrosoft.com*）或自定义域名（例如*contoso.com*）。 若要详细了解如何创建自定义域名，请参阅[使用 Azure Active Directory 门户添加自定义域名](add-custom-domain.md)。
+     用户名的域部分必须使用初始默认域名（ *\<yourdomainname> onmicrosoft.com*）或自定义域名（例如 *contoso.com*）。 若要详细了解如何创建自定义域名，请参阅[使用 Azure Active Directory 门户添加自定义域名](add-custom-domain.md)。
 
    - **组**。 （可选）可以将用户添加到一个或多个现有组。 也可以在以后将用户添加到组中。 有关将用户添加到组的详细信息，请参阅[使用 Azure Active Directory 创建基本组并添加成员](active-directory-groups-create-azure-portal.md)。
 
@@ -60,7 +60,7 @@ ms.locfileid: "87797094"
 
 ## <a name="add-a-new-guest-user"></a>添加新的来宾用户
 
-你还可以通过从**新用户**页面中选择 "**邀请用户**"，邀请新的来宾用户与你的组织协作。 如果你的组织的外部协作设置已配置为允许你邀请来宾，则会向用户发送电子邮件邀请，以便开始协作。 有关邀请 B2B 协作用户的详细信息，请参阅[邀请 b2b 用户 Azure Active Directory](../b2b/add-users-administrator.md)
+还可以通过从“新用户”页中选择“邀请用户”来邀请新的来宾用户与你的组织进行协作。 如果组织的外部协作设置已配置为允许你邀请来宾，则会向用户发送电子邮件邀请，用户需要接受邀请才能开始协作。 有关邀请 B2B 协作用户的详细信息，请参阅[邀请 B2B 用户加入 Azure Active Directory](../external-identities/add-users-administrator.md)
 
 ## <a name="add-a-consumer-user"></a>添加使用者用户
 
@@ -103,6 +103,6 @@ ms.locfileid: "87797094"
 
 - [创建基本组并添加成员](active-directory-groups-create-azure-portal.md)
 
-- [使用动态组和用户](../users-groups-roles/groups-create-rule.md)
+- [使用动态组和用户](../enterprise-users/groups-create-rule.md)
 
-也可以执行其他用户管理任务，例如，[从另一个目录添加来宾用户](../b2b/what-is-b2b.md)或[还原已删除的用户](active-directory-users-restore.md)。 有关其他可用操作的详细信息，请参阅 [Azure Active Directory 用户管理和文档](../users-groups-roles/index.yml)。
+也可执行其他用户管理任务，例如[从其他目录添加来宾用户](../external-identities/what-is-b2b.md)或[还原已删除的用户](active-directory-users-restore.md)。 有关其他可用操作的详细信息，请参阅 [Azure Active Directory 用户管理和文档](../enterprise-users/index.yml)。

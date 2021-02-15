@@ -1,7 +1,7 @@
 ---
 title: 验证受范围和应用角色保护的 Web API | Azure
 titleSuffix: Microsoft identity platform
-description: 了解如何生成受保护的 Web API 和配置应用程序的代码。
+description: 验证 API 是否仅代表具有正确作用域的用户以及具有正确应用程序角色的守护程序应用程序调用。
 services: active-directory
 author: jmprieur
 manager: CelesteDG
@@ -12,12 +12,12 @@ ms.workload: identity
 ms.date: 07/15/2020
 ms.author: jmprieur
 ms.custom: aaddev
-ms.openlocfilehash: c3cf8bfd2810e9c26a6f65c50c1a22baeec892af
-ms.sourcegitcommit: b33c9ad17598d7e4d66fe11d511daa78b4b8b330
+ms.openlocfilehash: 6d737f107e7a9b1476fdf86ac0320931ea137671
+ms.sourcegitcommit: 6109f1d9f0acd8e5d1c1775bc9aa7c61ca076c45
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/25/2020
-ms.locfileid: "88855479"
+ms.lasthandoff: 11/10/2020
+ms.locfileid: "94442899"
 ---
 # <a name="protected-web-api-verify-scopes-and-app-roles"></a>受保护的 Web API：验证范围和应用角色
 
@@ -27,9 +27,9 @@ ms.locfileid: "88855479"
 - 具有适当应用程序角色的守护程序应用。
 
 > [!NOTE]
-> 本文中的代码片段是从 GitHub 上的以下代码示例中提取的：
+> 本文中的代码片段摘自 GitHub 上的以下代码示例：
 >
-> - [ASP.NET Core web API 增量教程](https://github.com/Azure-Samples/active-directory-dotnet-native-aspnetcore-v2/blob/master/1.%20Desktop%20app%20calls%20Web%20API/TodoListService/Controllers/TodoListController.cs)
+> - [ASP.NET Core Web API 增量教程](https://github.com/Azure-Samples/active-directory-dotnet-native-aspnetcore-v2/blob/master/1.%20Desktop%20app%20calls%20Web%20API/TodoListService/Controllers/TodoListController.cs)
 > - [ASP.NET Web API 示例](https://github.com/Azure-Samples/ms-identity-aspnet-webapi-onbehalfof/blob/master/TodoListService/Controllers/TodoListController.cs)
 
 若要保护 ASP.NET 或 ASP.NET Core Web API，必须在下列其中一项中添加 `[Authorize]` 属性：
@@ -56,7 +56,7 @@ ms.locfileid: "88855479"
 
 ### <a name="net-core"></a>.NET Core
 
-#### <a name="verify-the-scopes-on-each-controller-action"></a>验证每个控制器操作的作用域
+#### <a name="verify-the-scopes-on-each-controller-action"></a>验证每个控制器操作的范围
 
 ```csharp
 [Authorize]
@@ -86,9 +86,9 @@ public class TodoListController : Controller
 - 验证该声明的值是否包含 API 预期的作用域。
 
 
-#### <a name="verify-the-scopes-more-globally"></a>更全局地验证范围
+#### <a name="verify-the-scopes-more-globally"></a>更全面地验证范围
 
-为 web API 定义粒度范围并验证每个控制器操作中的作用域是推荐的方法。 不过，也可以使用 ASP.NET Core 验证应用程序或控制器级别的作用域。 有关详细信息，请参阅 ASP.NET 核心文档中的 [基于声明的授权](/aspnet/core/security/authorization/claims) 。
+建议的方法是为 Web API 定义粒度范围并验证每个控制器操作中的范围。 但是，也可以使用 ASP.NET Core 在应用程序或控制器级别验证范围。 有关详细信息，请参阅 ASP.NET 核心文档中的[基于声明的授权](/aspnet/core/security/authorization/claims) 。
 
 ### <a name="net-mvc"></a>.NET MVC
 
@@ -113,7 +113,7 @@ public class TodoListController : ApiController
     }
 ```
 
-此 `ValidateAppRole` 方法是在 [RolesRequiredHttpContextExtensions.cs](https://github.com/AzureAD/microsoft-identity-web/blob/d2ad0f5f830391a34175d48621a2c56011a45082/src/Microsoft.Identity.Web/Resource/RolesRequiredHttpContextExtensions.cs#L28)中的中定义的。
+`ValidateAppRole` 方法是在 [RolesRequiredHttpContextExtensions.cs](https://github.com/AzureAD/microsoft-identity-web/blob/d2ad0f5f830391a34175d48621a2c56011a45082/src/Microsoft.Identity.Web/Resource/RolesRequiredHttpContextExtensions.cs#L28) 中的 Microsoft.Identity.Web 定义的。
 
 ### <a name="aspnet-mvc"></a>ASP.NET MVC
 
@@ -152,5 +152,4 @@ bool isAppOnlyToken = oid == sub;
 
 ## <a name="next-steps"></a>后续步骤
 
-> [!div class="nextstepaction"]
-> [移到生产环境](scenario-protected-web-api-production.md)
+转到本方案中的下一篇文章， [转到 "生产](scenario-protected-web-api-production.md)"。

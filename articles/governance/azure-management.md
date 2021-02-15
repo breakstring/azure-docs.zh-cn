@@ -1,14 +1,14 @@
 ---
 title: Azure 管理概述 - Azure 治理
 description: Azure 应用程序和资源管理领域概述及 Azure 管理工具上内容的链接。
-ms.date: 07/06/2020
+ms.date: 09/09/2020
 ms.topic: overview
-ms.openlocfilehash: 81d655db706a7330fc541724d490a4885cc2fe8b
-ms.sourcegitcommit: e132633b9c3a53b3ead101ea2711570e60d67b83
+ms.openlocfilehash: 8ffb37cd1db5740ed022b52cd9687bb3db1632bb
+ms.sourcegitcommit: a2d8acc1b0bf4fba90bfed9241b299dc35753ee6
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/07/2020
-ms.locfileid: "86041908"
+ms.lasthandoff: 10/12/2020
+ms.locfileid: "91949490"
 ---
 # <a name="what-are-the-azure-management-areas"></a>什么是 Azure 管理区域？
 
@@ -18,7 +18,9 @@ Azure 中的监管是 Azure 管理的一个方面。 本文介绍了在 Azure �
 
 下图说明了维护任何应用程序或资源所需的不同管理方面。 可将这些不同的区域视为一个生命周期。 每个区域都需要在资源的整个生存期内保持连续。 此资源生命周期始于其初始部署，贯穿其持续操作，在其停用时结束。
 
-:::image type="content" source="../monitoring/media/management-overview/management-capabilities.png" alt-text="Azure 中的管理原则" border="false":::
+:::image type="complex" source="../monitoring/media/management-overview/management-capabilities.png" alt-text="“Azure 中的管理原则”示意图。" border="false":::
+   此图显示了在 Azure 中支持管理和治理的服务轮的“迁移”、“安全”、“保护”、“监视”、“配置”和“治理”元素。 “安全”有“安全管理”和“威胁防护”作为子项。 “保护”有“备份”和“灾难恢复”作为子项。 “监视”有“应用、基础结构和网络监视”以及“日志分析和诊断”作为子项。 “配置”有“配置”、“更新管理”、“自动化”和“脚本编写”作为子项。 “治理”有“策略管理”和“成本管理”作为子项。
+:::image-end:::
 
 没有一个 Azure 服务完全满足特定管理区域的要求。 但搭配多个服务就能实现这一点。 某些服务（如 Application Insight）可为 Web 应用程序提供有针对性的监视功能。 其他服务（例如 Azure Monitor 日志）可为其他服务存储管理数据。 可使用此功能分析由不同服务收集的不同类型的数据。
 
@@ -42,7 +44,7 @@ Azure 中的治理主要是通过两个服务实现的。 [Azure Policy ](./poli
 
 ## <a name="secure"></a>安全
 
-管理资源和数据的安全性。 安全计划涉及评估威胁、收集和分析数据以及应用程序和资源的符合性。 安全监视和威胁分析由 [Azure 安全中心](../security-center/security-center-intro.md)提供，该中心包括跨混合云工作负荷的统一安全管理和高级威胁防护。 请参阅 [Azure 安全性简介](../security/fundamentals/overview.md)的全面信息，以及有关保护 Azure 资源的指南。
+管理资源和数据的安全性。 安全计划涉及评估威胁、收集和分析数据以及应用程序和资源的符合性。 安全监视和威胁分析由 [Azure 安全中心](../security-center/security-center-introduction.md)提供，该中心包括跨混合云工作负荷的统一安全管理和高级威胁防护。 请参阅 [Azure 安全性简介](../security/fundamentals/overview.md)的全面信息，以及有关保护 Azure 资源的指南。
 
 ## <a name="protect"></a>保护
 

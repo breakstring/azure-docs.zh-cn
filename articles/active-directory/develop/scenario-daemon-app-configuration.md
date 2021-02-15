@@ -8,15 +8,15 @@ ms.service: active-directory
 ms.subservice: develop
 ms.topic: conceptual
 ms.workload: identity
-ms.date: 08/08/2020
+ms.date: 09/19/2020
 ms.author: jmprieur
 ms.custom: aaddev, devx-track-python
-ms.openlocfilehash: ad5c2ad76f9ab98a6ad284a0bb50f3a611dc9a00
-ms.sourcegitcommit: 4913da04fd0f3cf7710ec08d0c1867b62c2effe7
+ms.openlocfilehash: 8a01ee4e2b0d4e72c1b17cf56953675e735ead79
+ms.sourcegitcommit: 2817d7e0ab8d9354338d860de878dd6024e93c66
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/14/2020
-ms.locfileid: "88206039"
+ms.lasthandoff: 02/05/2021
+ms.locfileid: "99582884"
 ---
 # <a name="daemon-app-that-calls-web-apis---code-configuration"></a>调用 Web API 的守护程序应用 - 代码配置
 
@@ -34,11 +34,11 @@ ms.locfileid: "88206039"
 
 ## <a name="configure-the-authority"></a>配置颁发机构
 
-守护程序应用程序使用应用程序权限，而不是委托的权限。 因此，其支持的帐户类型不能是任何组织目录中的帐户，也不能是任何个人 Microsoft 帐户 (例如 Skype、Xbox、Outlook.com) 。 无租户管理员可以向 Microsoft 个人帐户的后台应用程序授予许可。 你需要选择“我的组织中的帐户”** 或“任何组织中的帐户”**。
+守护程序应用程序使用应用程序权限，而不是委托的权限。 因此，其支持的帐户类型不能是任何组织目录中的帐户，也不能是任何个人 Microsoft 帐户 (例如 Skype、Xbox、Outlook.com) 。 无租户管理员可以向 Microsoft 个人帐户的后台应用程序授予许可。 你需要选择“我的组织中的帐户”  或“任何组织中的帐户”  。
 
-因此，在应用程序配置中指定的颁发机构应该是租户的（指定租户 ID 或者与组织相关联的域名）。
+在应用程序配置中指定的颁发机构应该是租户的（指定租户 ID 或者与组织相关联的域名）。
 
-如果你是 ISV 并且希望提供多租户工具，则可以使用 `organizations`。 但请记住，你还需向客户说明如何授予管理员同意。 有关详细信息，请参阅[请求整个租户的许可](v2-permissions-and-consent.md#requesting-consent-for-an-entire-tenant)。 此外，目前 MSAL 中有一个限制：仅当客户端凭据是应用程序机密（而不是证书）时才允许使用 `organizations`。
+即使在需要提供多租户工具的情况下，也应在此流中使用租户 ID 或域名，而 **不是** `common` 或 `organizations`，因为该服务无法可靠推断出应使用哪个租户。
 
 ## <a name="configure-and-instantiate-the-application"></a>配置并实例化应用程序
 
@@ -51,16 +51,13 @@ ms.locfileid: "88206039"
 
 配置文件定义：
 
-- 颁发机构或者云实例和租户 ID。
+- 云实例和租户 ID，它们共同构成了“机构”。
 - 通过应用程序注册获得的客户端 ID。
 - 客户端机密或证书。
 
-> [!NOTE]
-> 本文的其余部分中的 .Net 代码段是[dotnetcore](https://github.com/Azure-Samples/active-directory-dotnetcore-daemon-v2)示例中的[配置](https://github.com/Azure-Samples/active-directory-dotnetcore-daemon-v2/blob/master/1-Call-MSGraph/daemon-console/AuthenticationConfig.cs)。
-
 # <a name="net"></a>[.NET](#tab/dotnet)
 
-[appsettings.json](https://github.com/Azure-Samples/active-directory-dotnetcore-daemon-v2/blob/master/1-Call-MSGraph/daemon-console/appsettings.json)，来自 [.NET Core 控制台守护程序](https://github.com/Azure-Samples/active-directory-dotnetcore-daemon-v2)示例。
+下面是关于在 [appsettings.json](https://github.com/Azure-Samples/active-directory-dotnetcore-daemon-v2/blob/master/1-Call-MSGraph/daemon-console/appsettings.json) 文件中定义配置的示例。 此示例摘自 GitHub 上的 [.NET Core 控制台守护程序](https://github.com/Azure-Samples/active-directory-dotnetcore-daemon-v2)代码示例。
 
 ```json
 {
@@ -114,7 +111,7 @@ ms.locfileid: "88206039"
 
 ### <a name="instantiate-the-msal-application"></a>实例化 MSAL 应用程序
 
-若要实例化 MSAL 应用程序，你需要添加、引用或导入 MSAL 包（取决于语言）。
+若要实例化 MSAL 应用程序，请根据语言)  (添加、引用或导入 MSAL 包。
 
 构造取决于你是使用客户端机密还是使用证书（还是使用已签名断言，这是一种高级方案）。
 
@@ -124,9 +121,9 @@ ms.locfileid: "88206039"
 
 # <a name="net"></a>[.NET](#tab/dotnet)
 
-向应用程序添加 [Microsoft.IdentityClient](https://www.nuget.org/packages/Microsoft.Identity.Client) NuGet 包。
+将 [Microsoft.Identity.Client](https://www.nuget.org/packages/Microsoft.Identity.Client) NuGet 包添加到应用程序，然后在代码中添加一个 `using` 指令以引用它。
+
 在 MSAL.NET 中，机密客户端应用程序通过 `IConfidentialClientApplication` 接口表示。
-在源代码中使用 MSAL.NET 命名空间。
 
 ```csharp
 using Microsoft.Identity.Client;
@@ -167,6 +164,23 @@ app = ConfidentialClientApplicationBuilder.Create(config.ClientId)
            .WithClientSecret(config.ClientSecret)
            .WithAuthority(new Uri(config.Authority))
            .Build();
+```
+
+`Authority` 是云实例和租户 ID 的串联，例如 `https://login.microsoftonline.com/contoso.onmicrosoft.com` 或 `https://login.microsoftonline.com/eb1ed152-0000-0000-0000-32401f3f9abd`。 在[配置文件](#configuration-file)部分显示的 appsettings.json 文件中，它们分别由 `Instance` 和 `Tenant` 值表示。
+
+在上一个代码片段的源代码示例中，`Authority` 是 [AuthenticationConfig](https://github.com/Azure-Samples/active-directory-dotnetcore-daemon-v2/blob/ffc4a9f5d9bdba5303e98a1af34232b434075ac7/1-Call-MSGraph/daemon-console/AuthenticationConfig.cs#L61-L70) 类的属性，其定义如下：
+
+```csharp
+/// <summary>
+/// URL of the authority
+/// </summary>
+public string Authority
+{
+    get
+    {
+        return String.Format(CultureInfo.InvariantCulture, Instance, Tenant);
+    }
+}
 ```
 
 # <a name="python"></a>[Python](#tab/python)
@@ -264,7 +278,7 @@ ConfidentialClientApplication cca =
 
 ---
 
-#### <a name="advanced-scenario-instantiate-the-confidential-client-application-with-client-assertions"></a>高级方案：实例化包含客户端断言的机密客户端应用程序
+#### <a name="advanced-scenario-instantiate-the-confidential-client-application-with-client-assertions"></a>高级方案：使用客户端断言实例化机密客户端应用程序
 
 # <a name="net"></a>[.NET](#tab/dotnet)
 
@@ -275,7 +289,7 @@ MSAL.NET 可以通过两种方法将签名的断言提供给机密客户端应�
 - `.WithClientAssertion()`
 - `.WithClientClaims()`
 
-使用 `WithClientAssertion` 时，需提供签名的 JWT。 [客户端断言](msal-net-client-assertions.md)详细介绍了这一高级方案。
+使用时 `WithClientAssertion` ，请提供已签名的 JWT。 [客户端断言](msal-net-client-assertions.md)详细介绍了这一高级方案。
 
 ```csharp
 string signedClientAssertion = ComputeAssertion();
@@ -338,17 +352,14 @@ ConfidentialClientApplication cca =
 
 # <a name="net"></a>[.NET](#tab/dotnet)
 
-> [!div class="nextstepaction"]
-> [守护程序应用 - 获取应用的令牌](./scenario-daemon-acquire-token.md?tabs=dotnet)
+转到此方案中的下一篇文章：[获取应用的令牌](./scenario-daemon-acquire-token.md?tabs=dotnet)。
 
 # <a name="python"></a>[Python](#tab/python)
 
-> [!div class="nextstepaction"]
-> [守护程序应用 - 获取应用的令牌](./scenario-daemon-acquire-token.md?tabs=python)
+转到此方案中的下一篇文章：[获取应用的令牌](./scenario-daemon-acquire-token.md?tabs=python)。
 
 # <a name="java"></a>[Java](#tab/java)
 
-> [!div class="nextstepaction"]
-> [守护程序应用 - 获取应用的令牌](./scenario-daemon-acquire-token.md?tabs=java)
+转到此方案中的下一篇文章：[获取应用的令牌](./scenario-daemon-acquire-token.md?tabs=java)。
 
 ---

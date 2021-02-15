@@ -1,5 +1,6 @@
 ---
-title: 配置用于用户登录的 Web 应用 - Microsoft 标识平台 | Azure
+title: 配置登录用户的 web 应用 |Microsoft
+titleSuffix: Microsoft identity platform
 description: 了解如何构建用于登录用户的 Web 应用（代码配置）
 services: active-directory
 author: jmprieur
@@ -11,12 +12,12 @@ ms.workload: identity
 ms.date: 07/14/2020
 ms.author: jmprieur
 ms.custom: aaddev, devx-track-python
-ms.openlocfilehash: 64b38d0e776a0e3dab155704dcc368cc738c278e
-ms.sourcegitcommit: b33c9ad17598d7e4d66fe11d511daa78b4b8b330
+ms.openlocfilehash: 54caea62feed6ae7c082a979901999a5dcb3bd71
+ms.sourcegitcommit: 2817d7e0ab8d9354338d860de878dd6024e93c66
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/25/2020
-ms.locfileid: "88855422"
+ms.lasthandoff: 02/05/2021
+ms.locfileid: "99582241"
 ---
 # <a name="web-app-that-signs-in-users-code-configuration"></a>可将用户登录的 Web 应用：代码配置
 
@@ -29,7 +30,7 @@ ms.locfileid: "88855422"
 
 | 平台 | 库 | 说明 |
 |----------|---------|-------------|
-| ![.NET](media/sample-v2-code/logo_NET.png) | [适用于 .NET 的标识模型扩展](https://github.com/AzureAD/azure-activedirectory-identitymodel-extensions-for-dotnet/wiki) | 在由 ASP.NET 和 ASP.NET Core 直接使用的情况下，适用于 .NET 的 Microsoft 标识模型扩展提议了一组在 .NET Framework 和 .NET Core 上运行的 DLL。 在 ASP.NET 或 ASP.NET Core Web 应用中，可以使用 **TokenValidationParameters** 类控制令牌验证（尤其适用于某些合作伙伴方案）。 在实践 [中，复杂性](https://aka.ms/ms-identity-web) 封装在 |
+| ![.NET](media/sample-v2-code/logo_NET.png) | [适用于 .NET 的标识模型扩展](https://github.com/AzureAD/azure-activedirectory-identitymodel-extensions-for-dotnet/wiki) | 在由 ASP.NET 和 ASP.NET Core 直接使用的情况下，适用于 .NET 的 Microsoft 标识模型扩展提议了一组在 .NET Framework 和 .NET Core 上运行的 DLL。 在 ASP.NET 或 ASP.NET Core Web 应用中，可以使用 **TokenValidationParameters** 类控制令牌验证（尤其适用于某些合作伙伴方案）。 实际上，复杂度封装在 [Microsoft.Identity.Web](https://aka.ms/ms-identity-web) 库中 |
 | ![Java](media/sample-v2-code/small_logo_java.png) | [MSAL Java](https://github.com/AzureAD/microsoft-authentication-library-for-java/wiki) | 支持 Java Web 应用程序 |
 | ![Python](media/sample-v2-code/small_logo_python.png) | [MSAL Python](https://github.com/AzureAD/microsoft-authentication-library-for-python/wiki) | 支持 Python Web 应用程序 |
 
@@ -63,13 +64,13 @@ ms.locfileid: "88855422"
 
 ## <a name="configuration-files"></a>配置文件
 
-使用 Microsoft 标识平台登录用户的 Web 应用程序是通过配置文件配置的。 需填充的设置为：
+使用 Microsoft 标识平台将用户登录的 Web 应用程序是通过配置文件配置的。 需要在配置中指定以下值：
 
 - 云实例 (`Instance`)（例如，如果需要在国家云中运行应用）
 - 租户 ID 中的受众 (`TenantId`)
 - 应用程序的客户端 ID (`ClientId`)，从 Azure 门户中复制
 
-有时，可以通过 `Authority`（`Instance` 与 `TenantId` 的串联）将应用程序参数化。
+你可能还会看到对的引用 `Authority` 。 `Authority`值是 `Instance` 和值的串联 `TenantId` 。
 
 # <a name="aspnet-core"></a>[ASP.NET Core](#tab/aspnetcore)
 
@@ -95,7 +96,7 @@ ms.locfileid: "88855422"
     // Client ID (application ID) obtained from the Azure portal
     "ClientId": "[Enter the Client Id]",
     "CallbackPath": "/signin-oidc",
-    "SignedOutCallbackPath ": "/signout-oidc"
+    "SignedOutCallbackPath": "/signout-oidc"
   }
 }
 ```
@@ -132,7 +133,7 @@ ms.locfileid: "88855422"
 }
 ```
 
-在 Azure 门户中，需要在应用程序的“身份验证”页中注册的回复 URI 需与这些 URL 相匹配。 对于上述两个配置文件，URL 为 `https://localhost:44321/signin-oidc`。 原因是 `applicationUrl` 为 `http://localhost:3110`，但指定的是 `sslPort` (44321)。 `CallbackPath` 是 `appsettings.json` 中定义的 `/signin-oidc`。
+在 Azure 门户中，在应用程序的 **身份验证** 页上注册的重定向 uri 需要与这些 url 匹配。 对于上述两个配置文件，URL 为 `https://localhost:44321/signin-oidc`。 原因是 `applicationUrl` 为 `http://localhost:3110`，但指定的是 `sslPort` (44321)。 `CallbackPath` 是 `appsettings.json` 中定义的 `/signin-oidc`。
 
 注销 URI 将采用相同方式设置为 `https://localhost:44321/signout-oidc`。
 
@@ -160,7 +161,7 @@ ms.locfileid: "88855422"
   </appSettings>
 ```
 
-在 Azure 门户中，需要在应用程序的“身份验证”页中注册的回复 URI 需与这些 URL 相匹配。 即，它们应是 `https://localhost:44326/`。
+在 Azure 门户中，在应用程序的 **身份验证** 页上注册的答复 uri 需要与这些 url 匹配。 即，它们应是 `https://localhost:44326/`。
 
 # <a name="java"></a>[Java](#tab/java)
 
@@ -174,7 +175,7 @@ aad.redirectUriSignin=http://localhost:8080/msal4jsample/secure/aad
 aad.redirectUriGraph=http://localhost:8080/msal4jsample/graph/me
 ```
 
-在 Azure 门户中，需要在应用程序的“身份验证”页中注册的回复 URI 需与应用程序定义的 `redirectUri` 实例相匹配。 即，它们应是 `http://localhost:8080/msal4jsample/secure/aad` 和 `http://localhost:8080/msal4jsample/graph/me`。
+在 Azure 门户中，你在你的应用程序的 **身份验证** 页上注册的答复 uri 需要与 `redirectUri` 应用程序定义的实例匹配。 即，它们应是 `http://localhost:8080/msal4jsample/secure/aad` 和 `http://localhost:8080/msal4jsample/graph/me`。
 
 # <a name="python"></a>[Python](#tab/python)
 
@@ -202,7 +203,7 @@ SESSION_TYPE = "filesystem"  # So the token cache will be stored in a server-sid
 
 ## <a name="initialization-code"></a>初始化代码
 
-初始化代码因平台而异。 对于 ASP.NET Core 和 ASP.NET，用户登录将委托给 OpenID Connect 中间件来完成。 ASP.NET 或 ASP.NET Core 模板可为 Azure Active Directory (Azure AD) v1.0 终结点生成 Web 应用程序。 只需进行一些配置就能使这些应用程序适应 Microsoft 标识平台 (v2.0) 终结点。 对于 Java，初始化由 Spring 在应用程序的配合下进行处理。
+初始化代码因平台而异。 对于 ASP.NET Core 和 ASP.NET，用户登录将委托给 OpenID Connect 中间件来完成。 ASP.NET 或 ASP.NET Core 模板可为 Azure Active Directory (Azure AD) v1.0 终结点生成 Web 应用程序。 需要进行一些配置才能适应 Microsoft 标识平台。 对于 Java，初始化由 Spring 在应用程序的配合下进行处理。
 
 # <a name="aspnet-core"></a>[ASP.NET Core](#tab/aspnetcore)
 
@@ -211,9 +212,9 @@ SESSION_TYPE = "filesystem"  # So the token cache will be stored in a server-sid
 若要使用 Microsoft 标识平台（前称为 Azure AD v2.0）添加身份验证，需要添加以下代码。 代码中的注释应该浅显易懂。
 
 > [!NOTE]
-> 如果要直接使用 Microsoft 标识平台的新 ASP.NET Core 模板开始使用 Microsoft 标识平台，则可以下载包含 .NET Core 3.1 和 .NET 5.0 项目模板的预览 NuGet 包。 然后，在安装后，可以直接实例化 ASP.NET Core web 应用程序 (MVC 或 Blazor) 。 有关详细信息，请参阅 [Microsoft web 应用项目模板](https://aka.ms/ms-id-web/webapp-project-templates) 。 这是最简单的方法，因为它将执行以下所有步骤。
+> 如果想直接从利用 Microsoft.Identity.Web 的 Microsoft 标识平台的新 ASP.NET Core 模板开始，则可下载一个包含 .NET Core 3.1 和 .NET 5.0 项目模板的 NuGet 预览包。 然后，在安装后，可以直接实例化 ASP.NET Core Web 应用程序（MVC 或 Blazor）。 有关详细信息，请参阅 [Microsoft.Identity.Web Web 应用项目模板](https://aka.ms/ms-id-web/webapp-project-templates)。 这是最简单的方法，因为它将执行以下所有步骤。
 >
-> 如果希望使用 Visual Studio 中的当前默认 ASP.NET Core web 项目或使用或来启动项目 `dotnet new mvc --auth SingleAuth` `dotnet new webapp --auth SingleAuth` ，则会看到如下所示的代码：
+> 如果你想使用 Visual Studio 中的当前默认 ASP.NET Core Web 项目来启动项目，或者使用 `dotnet new mvc --auth SingleAuth` 或 `dotnet new webapp --auth SingleAuth` 来启动项目，则会看到如下所示的代码：
 >
 >```c#
 >  services.AddAuthentication(AzureADDefaults.AuthenticationScheme)
@@ -223,7 +224,7 @@ SESSION_TYPE = "filesystem"  # So the token cache will be stored in a server-sid
 > 此代码使用用于创建 Azure AD v1.0 应用程序的旧版 Microsoft.AspNetCore.Authentication.AzureAD.UI NuGet 包。 本文介绍如何创建一个用于替换该代码的 Microsoft 标识平台 (Azure AD v2.0) 应用程序。
 >
 
-1. 将 [Microsoft.Identity.Web](https://www.nuget.org/packages/Microsoft.Identity.Web) 和 [Microsoft.Identity.Web.UI](https://www.nuget.org/packages/Microsoft.Identity.Web.UI) NuGet 包添加到项目。 如果存在 AspNetCore NuGet 包，请将其删除。
+1. 将 [Microsoft.Identity.Web](https://www.nuget.org/packages/Microsoft.Identity.Web) 和 [Microsoft.Identity.Web.UI](https://www.nuget.org/packages/Microsoft.Identity.Web.UI) NuGet 包添加到项目。 删除 Microsoft.AspNetCore.Authentication.AzureAD.UI NuGet 包（如果存在）。
 
 2. 更新 `ConfigureServices` 中的代码，使其使用 `AddMicrosoftIdentityWebAppAuthentication` 和 `AddMicrosoftIdentityUI` 方法。
 
@@ -262,7 +263,7 @@ SESSION_TYPE = "filesystem"  # So the token cache will be stored in a server-sid
 - `AddMicrosoftIdentityWebAppAuthentication` 扩展方法在 Microsoft.Identity.Web 中进行定义。 该方法：
   - 添加身份验证服务。
   - 配置用于读取配置文件的选项（此处来自“AzureAD”部分）
-  - 配置 OpenID Connect 选项，使颁发机构是 Microsoft 标识平台终结点。
+  - 配置 OpenID Connect 选项，使其成为 Microsoft 标识平台。
   - 验证令牌的颁发者。
   - 确保从 ID 令牌中的 `preferred_username` 声明映射与名称对应的声明。
 
@@ -272,10 +273,10 @@ SESSION_TYPE = "filesystem"  # So the token cache will be stored in a server-sid
 
 - `AddMicrosoftIdentityUI` 扩展方法在 Microsoft.Identity.Web.UI 中进行定义。 它提供了一个默认控制器来处理登录和注销。
 
-你可以在中找到有关如何使你能够创建 web 应用的更多详细信息。 <https://aka.ms/ms-id-web/webapp>
+有关如何使用 Microsoft.Identity.Web 创建 Web 应用的更多详细信息，可访问 <https://aka.ms/ms-id-web/webapp>
 
 > [!WARNING]
-> 目前，在使用 Azure AD 作为和外部登录提供程序时，Microsoft 不支持 **单个用户帐户** (存储用户帐户应用内) 。 有关详细信息，请参阅： [AzureAD/microsoft-标识-web # 133](https://github.com/AzureAD/microsoft-identity-web/issues/133)
+> 目前，使用 Azure AD 作为外部登录提供程序时，Microsoft.Identity.Web 不支持单个用户帐户（在应用内存储用户帐户）的方案。 有关详细信息，请参阅：[AzureAD/microsoft-identity-web#133](https://github.com/AzureAD/microsoft-identity-web/issues/133)
 
 # <a name="aspnet"></a>[ASP.NET](#tab/aspnet)
 
@@ -291,7 +292,7 @@ SESSION_TYPE = "filesystem"  # So the token cache will be stored in a server-sid
   app.UseOpenIdConnectAuthentication(
     new OpenIdConnectAuthenticationOptions
     {
-     // `Authority` represents the identity platform endpoint - https://login.microsoftonline.com/common/v2.0.
+     // Authority` represents the identity platform endpoint - https://login.microsoftonline.com/common/v2.0.
      // `Scope` describes the initial permissions that your app will need.
      //  See https://azure.microsoft.com/documentation/articles/active-directory-v2-scopes/.
      ClientId = clientId,
@@ -344,22 +345,18 @@ Session(app)
 
 # <a name="aspnet-core"></a>[ASP.NET Core](#tab/aspnetcore)
 
-> [!div class="nextstepaction"]
-> [登录和注销](./scenario-web-app-sign-user-sign-in.md?tabs=aspnetcore)
+转到此方案中的下一篇文章：[登录和注销](./scenario-web-app-sign-user-sign-in.md?tabs=aspnetcore)。
 
 # <a name="aspnet"></a>[ASP.NET](#tab/aspnet)
 
-> [!div class="nextstepaction"]
-> [登录和注销](./scenario-web-app-sign-user-sign-in.md?tabs=aspnet)
+转到此方案中的下一篇文章：[登录和注销](./scenario-web-app-sign-user-sign-in.md?tabs=aspnet)。
 
 # <a name="java"></a>[Java](#tab/java)
 
-> [!div class="nextstepaction"]
-> [登录和注销](./scenario-web-app-sign-user-sign-in.md?tabs=java)
+转到此方案中的下一篇文章：[登录和注销](./scenario-web-app-sign-user-sign-in.md?tabs=java)。
 
 # <a name="python"></a>[Python](#tab/python)
 
-> [!div class="nextstepaction"]
-> [登录和注销](./scenario-web-app-sign-user-sign-in.md?tabs=python)
+转到此方案中的下一篇文章：[登录和注销](./scenario-web-app-sign-user-sign-in.md?tabs=python)。
 
 ---

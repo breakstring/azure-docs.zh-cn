@@ -1,25 +1,26 @@
 ---
 title: 数据仓库排序规则类型
-description: Azure Synapse Analytics SQL 池支持的排序规则类型。
+description: Azure Synapse Analytics 中专用 SQL 池（以前称为 SQL DW）支持的排序规则类型。
 services: synapse-analytics
 author: antvgski
 manager: igorstan
 ms.service: synapse-analytics
+ms.subservice: sql
 ms.topic: conceptual
 ms.date: 12/04/2019
 ms.author: anvang
 ms.reviewer: jrasnick
 ms.custom: seo-lt-2019, azure-synapse
-ms.openlocfilehash: 202bbaf4ea53dd6ba285e79dfa9e6ce782c0903e
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 18720d99bc8cf0e237e25ea13f686970573d5704
+ms.sourcegitcommit: b39cf769ce8e2eb7ea74cfdac6759a17a048b331
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "80633091"
+ms.lasthandoff: 01/22/2021
+ms.locfileid: "98678434"
 ---
-# <a name="database-collation-support-for-azure-synapse-analytics-sql-pool"></a>Azure Synapse Analytics SQL 池的数据库排序规则支持
+# <a name="database-collation-support-for-dedicated-sql-pool-formerly-sql-dw-in-azure-synapse-analytics"></a>Azure Synapse Analytics 中对专用 SQL 池（以前称为 SQL DW）的数据库排序规则支持 
 
-新建 Azure Synapse SQL 池数据库时，可以从 Azure 门户更改默认数据库排序规则。 利用此功能，可以更轻松地使用 3800 个受支持的数据库排序规则之一创建新数据库。
+新建专用 SQL 池（以前称为 SQL DW）时，可以从 Azure 门户更改默认数据库排序规则。 利用此功能，可以更轻松地使用 3800 个受支持的数据库排序规则之一创建新数据库。
 
 排序规则为基于字符的数据类型提供区域设置、代码页、排序顺序和字符敏感度规则。 选择以后，需要排序规则信息的所有列和表达式会从数据库设置中继承所选排序规则。 可以重写默认继承，只需为基于字符的数据类型显式声明另一个排序规则即可。
 
@@ -110,4 +111,4 @@ ms.locfileid: "80633091"
 SELECT DATABASEPROPERTYEX(DB_NAME(), 'Collation') AS Collation;
 ```
 
-将“Collation”作为属性参数传递时，DatabasePropertyEx 函数将返回指定数据库的当前排序规则。 有关详细信息，请参阅 [DatabasePropertyEx](/sql/t-sql/functions/databasepropertyex-transact-sql?toc=/azure/synapse-analytics/sql-data-warehouse/toc.json&bc=/azure/synapse-analytics/sql-data-warehouse/breadcrumb/toc.json&view=azure-sqldw-latest)。
+将“Collation”作为属性参数传递时，DatabasePropertyEx 函数将返回指定数据库的当前排序规则。 有关详细信息，请参阅 [DatabasePropertyEx](/sql/t-sql/functions/databasepropertyex-transact-sql?toc=/azure/synapse-analytics/sql-data-warehouse/toc.json&bc=/azure/synapse-analytics/sql-data-warehouse/breadcrumb/toc.json&view=azure-sqldw-latest&preserve-view=true)。

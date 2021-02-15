@@ -6,12 +6,12 @@ ms.date: 04/04/2020
 ms.topic: include
 ms.author: trbye
 zone_pivot_groups: programming-languages-set-two
-ms.openlocfilehash: 7572e5c5621b514c375e44ca44ddfc4102f5d714
-ms.sourcegitcommit: dccb85aed33d9251048024faf7ef23c94d695145
+ms.openlocfilehash: 0cb27a8dc5685ce295c2ce30820734c4301e9dc6
+ms.sourcegitcommit: 48e5379c373f8bd98bc6de439482248cd07ae883
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/28/2020
-ms.locfileid: "87298782"
+ms.lasthandoff: 01/12/2021
+ms.locfileid: "98109496"
 ---
 ## <a name="prerequisites"></a>先决条件
 
@@ -41,14 +41,14 @@ ms.locfileid: "87298782"
 将此代码插入 `quickstart.py`。 请确保更新以下值：
 
 * 将 `"YourLanguageUnderstandingSubscriptionKey"` 替换为 LUIS 预测密钥。
-* 将 `"YourLanguageUnderstandingServiceRegion"` 替换为 LUIS 位置。 使用[区域](https://aka.ms/speech/sdkregion)中的“区域标识符”
+* 将 `"YourLanguageUnderstandingServiceRegion"` 替换为 LUIS 位置。 使用[区域](../../../../regions.md)中的“区域标识符”
 
 >[!TIP]
 > 如果需要帮助查找这些值，请参阅[创建 LUIS 应用以进行意向识别](#create-a-luis-app-for-intent-recognition)。
 
 [!code-python[](~/samples-cognitive-services-speech-sdk/quickstart/python/intent-recognition/quickstart.py?range=12)]
 
-此示例使用 LUIS 密钥和区域构造 `SpeechConfig` 对象。 有关可用方法的完整列表，请参阅 [SpeechConfig 类](https://docs.microsoft.com/python/api/azure-cognitiveservices-speech/azure.cognitiveservices.speech.speechconfig)。
+此示例使用 LUIS 密钥和区域构造 `SpeechConfig` 对象。 有关可用方法的完整列表，请参阅 [SpeechConfig 类](/python/api/azure-cognitiveservices-speech/azure.cognitiveservices.speech.speechconfig)。
 
 语音 SDK 将默认使用 en-us 作为语言进行识别。若要了解如何选择源语言，请参阅[指定语音转文本的源语言](../../../../how-to-specify-source-language.md)。
 
@@ -70,6 +70,13 @@ ms.locfileid: "87298782"
 [!code-python[](~/samples-cognitive-services-speech-sdk/quickstart/python/intent-recognition/quickstart.py?range=19-27)]
 
 此示例使用 `add_intents()` 函数添加显式定义的意向的列表。 如果要从模型中添加所有意向，请使用 `add_all_intents(model)` 并传递模型。
+
+> [!NOTE]
+> 语音 SDK 仅支持 LUIS v2.0 终结点。
+> 必须手动修改位于示例查询字段中的 v3.0 终结点 URL 才能使用 v2.0 URL 模式。
+> LUIS v2.0 终结点始终采用以下两种模式之一：
+> * `https://{AzureResourceName}.cognitiveservices.azure.com/luis/v2.0/apps/{app-id}?subscription-key={subkey}&verbose=true&q=`
+> * `https://{Region}.api.cognitive.microsoft.com/luis/v2.0/apps/{app-id}?subscription-key={subkey}&verbose=true&q=`
 
 ## <a name="recognize-an-intent"></a>识别意向
 

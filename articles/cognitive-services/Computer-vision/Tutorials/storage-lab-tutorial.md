@@ -8,18 +8,19 @@ manager: nitinme
 ms.service: cognitive-services
 ms.subservice: computer-vision
 ms.topic: tutorial
-ms.date: 08/05/2020
+ms.date: 11/23/2020
 ms.author: pafarley
-ms.openlocfilehash: f350aae32909de2b9be4384d921f7507a158f6ff
-ms.sourcegitcommit: c293217e2d829b752771dab52b96529a5442a190
+ms.custom: devx-track-csharp
+ms.openlocfilehash: b51234ff121071de27ec8c91425f4a769c8d833e
+ms.sourcegitcommit: 1bf144dc5d7c496c4abeb95fc2f473cfa0bbed43
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/15/2020
-ms.locfileid: "88243847"
+ms.lasthandoff: 11/24/2020
+ms.locfileid: "96008780"
 ---
 # <a name="tutorial-use-computer-vision-to-generate-image-metadata-in-azure-storage"></a>教程：使用计算机视觉在 Azure 存储中生成图像元数据
 
-本教程介绍如何将 Azure 计算机视觉服务集成到 Web 应用中，以便生成已上传图像的元数据。 这对于[数字资产管理 (DAM)](../Home.md#computer-vision-for-digital-asset-management) 方案非常有用，例如，如果公司希望为其所有图像快速生成描述性标题或可搜索的关键字。
+本教程介绍如何将 Azure 计算机视觉服务集成到 Web 应用中，以便生成已上传图像的元数据。 这对于[数字资产管理 (DAM)](../overview.md#computer-vision-for-digital-asset-management) 方案非常有用，例如，如果公司希望为其所有图像快速生成描述性标题或可搜索的关键字。
 
 GitHub 上的 [Azure 存储和认知服务实验室](https://github.com/Microsoft/computerscience/blob/master/Labs/Azure%20Services/Azure%20Storage/Azure%20Storage%20and%20Cognitive%20Services%20(MVC).md)提供了完整的应用指南，本教程主要介绍该实验室的练习 5。 你可能想要遵循每个步骤创建完整的应用程序，但如果你只想了解如何将计算机视觉集成到现有的 Web 应用，请参阅本文。
 
@@ -133,7 +134,7 @@ GitHub 上的 [Azure 存储和认知服务实验室](https://github.com/Microsof
 
 ![计算机生成的标题](../Images/thumbnail-with-tooltip.png)
 
-若要查看所有附加的元数据，请使用 Azure 存储资源管理器来查看用于图像的存储容器。 右键单击容器中的任意 Blob，然后选择“属性”。  在对话框中，会看到键值对的列表。 计算机生成的图像说明存储在“Caption”项中，搜索关键字存储在“Tag0”、“Tag1”之类的项中。 完成后，单击**取消**即可关闭对话框。
+若要查看所有附加的元数据，请使用 Azure 存储资源管理器来查看用于图像的存储容器。 右键单击容器中的任意 Blob，然后选择“属性”。  在对话框中，会看到键值对的列表。 计算机生成的图像说明存储在“Caption”项中，搜索关键字存储在“Tag0”、“Tag1”之类的项中。 完成后，单击 **取消** 即可关闭对话框。
 
 ![“图像属性”对话框窗口，其中列出了元数据标记](../Images/blob-metadata.png)
 

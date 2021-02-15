@@ -4,21 +4,21 @@ description: 了解 Azure Maps 服务模块。 请参阅如何加载和使用此
 author: rbrundritt
 ms.author: richbrun
 ms.date: 03/25/2019
-ms.topic: conceptual
+ms.topic: how-to
 ms.service: azure-maps
 services: azure-maps
 manager: cpendleton
-ms.custom: devx-track-javascript
-ms.openlocfilehash: 2f8d41c8248ab761c6d781263f3978937ad01e22
-ms.sourcegitcommit: 98854e3bd1ab04ce42816cae1892ed0caeedf461
+ms.custom: devx-track-js
+ms.openlocfilehash: 2e07b614e87ed5dad94cf9bc5994e78071187839
+ms.sourcegitcommit: a43a59e44c14d349d597c3d2fd2bc779989c71d7
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/07/2020
-ms.locfileid: "88004134"
+ms.lasthandoff: 11/25/2020
+ms.locfileid: "96008593"
 ---
 # <a name="use-the-azure-maps-services-module"></a>使用 Azure Maps 服务模块
 
-Azure Maps Web SDK 提供*服务模块*。 此模块是一个帮助程序库，使用 JavaScript 或 TypeScript 可以轻松地在 web 或 Node.js 应用程序中使用 Azure Maps REST 服务。
+Azure Maps Web SDK 提供 *服务模块*。 此模块是一个帮助程序库，使用 JavaScript 或 TypeScript 可以轻松地在 web 或 Node.js 应用程序中使用 Azure Maps REST 服务。
 
 ## <a name="use-the-services-module-in-a-webpage"></a>使用网页中的服务模块
 
@@ -30,9 +30,9 @@ Azure Maps Web SDK 提供*服务模块*。 此模块是一个帮助程序库，�
         <script src="https://atlas.microsoft.com/sdk/javascript/service/2/atlas-service.min.js"></script>
         ```
 
-    - 或者，通过使用[Azure Maps-rest](https://www.npmjs.com/package/azure-maps-rest) npm 包在本地加载 AZURE MAPS Web SDK 源代码的服务模块，然后将其托管在应用中。 此程序包还包括了 TypeScript 定义。 使用此命令：
+    - 或者，通过使用 [Azure Maps-rest](https://www.npmjs.com/package/azure-maps-rest) npm 包在本地加载 AZURE MAPS Web SDK 源代码的服务模块，然后将其托管在应用中。 此程序包还包括了 TypeScript 定义。 使用此命令：
     
-        > npm install azure-maps-rest****
+        > npm install azure-maps-rest
     
         然后，将脚本引用添加到该 `<head>` 文件的元素中：
 
@@ -123,7 +123,7 @@ Azure Maps Web SDK 提供*服务模块*。 此模块是一个帮助程序库，�
     }
     ```
 
-    有关详细信息，请参阅[Azure Maps 的身份验证](azure-maps-authentication.md)。
+    有关详细信息，请参阅 [Azure Maps 的身份验证](azure-maps-authentication.md)。
 
 1. 以下代码使用新创建的 Azure Maps 搜索服务 URL 客户端地理编码地址： "1 Microsoft 方法，Redmond，WA"。 此代码使用 `searchAddress` 函数，并将结果以表的形式显示在页面的正文中。
 
@@ -160,7 +160,7 @@ Azure Maps Web SDK 提供*服务模块*。 此模块是一个帮助程序库，�
 
 <br/>
 
-<iframe height="500" style="width: 100%;" scrolling="no" title="使用服务模块" src="//codepen.io/azuremaps/embed/zbXGMR/?height=500&theme-id=0&default-tab=js,result&editable=true" frameborder="no" allowtransparency="true" allowfullscreen="true">
+<iframe height="500" style="width: 100%;" scrolling="no" title="使用服务模块" src="//codepen.io/azuremaps/embed/zbXGMR/?height=500&theme-id=0&default-tab=js,result&editable=true" frameborder='no' loading="lazy" allowtransparency="true" allowfullscreen="true">
 请参阅 CodePen 上的 () ，<a href='https://codepen.io/azuremaps/pen/zbXGMR/'>使用 "服务</a>" Azure Maps 模块 <a href='https://codepen.io/azuremaps'>@azuremaps</a> <a href='https://codepen.io'>CodePen</a>。
 </iframe>
 
@@ -191,19 +191,19 @@ var searchURL = new atlas.service.SearchURL(pipeline, 'atlas.azure.us');
 详细了解本文中使用的类和方法：
 
 > [!div class="nextstepaction"]
-> [MapsURL](https://docs.microsoft.com/javascript/api/azure-maps-rest/atlas.service.mapsurl?view=azure-maps-typescript-latest)
+> [MapsURL](/javascript/api/azure-maps-rest/atlas.service.mapsurl)
 
 > [!div class="nextstepaction"]
-> [SearchURL](https://docs.microsoft.com/javascript/api/azure-maps-rest/atlas.service.searchurl?view=azure-maps-typescript-latest)
+> [SearchURL](/javascript/api/azure-maps-rest/atlas.service.searchurl)
 
 > [!div class="nextstepaction"]
-> [RouteURL](https://docs.microsoft.com/javascript/api/azure-maps-rest/atlas.service.routeurl?view=azure-maps-typescript-latest)
+> [RouteURL](/javascript/api/azure-maps-rest/atlas.service.routeurl)
 
 > [!div class="nextstepaction"]
-> [SubscriptionKeyCredential](https://docs.microsoft.com/javascript/api/azure-maps-rest/atlas.service.subscriptionkeycredential?view=azure-maps-typescript-latest)
+> [SubscriptionKeyCredential](/javascript/api/azure-maps-rest/atlas.service.subscriptionkeycredential)
 
 > [!div class="nextstepaction"]
-> [TokenCredential](https://docs.microsoft.com/javascript/api/azure-maps-rest/atlas.service.tokencredential?view=azure-maps-typescript-latest)
+> [TokenCredential](/javascript/api/azure-maps-rest/atlas.service.tokencredential)
 
 有关使用 "服务" 模块的更多代码示例，请参阅以下文章：
 

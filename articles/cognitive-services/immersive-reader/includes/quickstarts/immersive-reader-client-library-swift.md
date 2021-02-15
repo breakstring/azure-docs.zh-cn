@@ -3,27 +3,27 @@ title: 沉浸式阅读器 Swift 客户端库快速入门
 titleSuffix: Azure Cognitive Services
 description: 本快速入门将从头构建一个 iOS 应用，并添加沉浸式阅读器 API 功能。
 services: cognitive-services
-author: pasta
+author: nitinme
 manager: nitinme
 ms.service: cognitive-services
+ms.subservice: immersive-reader
 ms.topic: include
-ms.date: 05/20/2020
-ms.author: pasta
-ms.openlocfilehash: 212aa3613335fe60bab2fa3d4f632577418a7d41
-ms.sourcegitcommit: 023d10b4127f50f301995d44f2b4499cbcffb8fc
+ms.date: 09/14/2020
+ms.author: nitinme
+ms.openlocfilehash: 967a7d9a78b5edd0c4e5b60545520baef635b340
+ms.sourcegitcommit: eb6bef1274b9e6390c7a77ff69bf6a3b94e827fc
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/18/2020
-ms.locfileid: "88602214"
+ms.lasthandoff: 10/05/2020
+ms.locfileid: "91376310"
 ---
-[沉浸式阅读器](https://www.onenote.com/learningtools)是一款经过广泛设计的工具，它实现了可靠的技术以提高阅读理解能力。
+[沉浸式阅读器](https://www.onenote.com/learningtools)是一款经过广泛设计的工具，它实现了可靠的技术，旨在提高新的读者、语言学习者和有学习差异（如阅读障碍）的用户的阅读理解能力。 你可在应用程序中使用沉浸式阅读器来隔离文本，以改进焦点、显示常用词的图片、突出显示语音的各个部分、大声朗读所选文本、实时翻译字词和短语等等。
 
 在本快速入门中，你将从头开始构建一个 iOS 应用，并集成沉浸式阅读器。 本快速入门的完整工作示例可在[此处](https://github.com/microsoft/immersive-reader-sdk/tree/master/js/samples/ios)找到。
 
-如果没有 Azure 订阅，请在开始之前创建一个[免费帐户](https://azure.microsoft.com/free/cognitive-services/)。
-
 ## <a name="prerequisites"></a>先决条件
 
+* Azure 订阅 - [免费创建订阅](https://azure.microsoft.com/free/cognitive-services)
 * [Xcode](https://apps.apple.com/us/app/xcode/id497799835?mt=12)
 * 为 Azure Active Directory 身份验证配置的沉浸式阅读器资源。 按照[这些说明](../../how-to-create-immersive-reader.md)进行设置。 在配置示例项目属性时，将需要在此处创建的一些值。 将会话的输出保存到文本文件中，以供将来参考。
 
@@ -31,21 +31,21 @@ ms.locfileid: "88602214"
 
 在 Xcode 中创建新项目。
 
-![新建项目](../../media/ios/xcode-create-project.png)
+![新建项目 - Swift](../../media/ios/xcode-create-project.png)
 
 选择“单一视图应用”。
 
-![新建单一视图应用](../../media/ios/xcode-single-view-app.png)
+![新建单一视图应用 - Swift](../../media/ios/xcode-single-view-app.png)
 
 ## <a name="set-up-authentication"></a>设置身份验证
 
 在顶部菜单中，单击“产品”>“方案”>“编辑方案...”。
 
-![编辑方案](../../media/ios/quickstart-ios-edit-scheme.png)
+![编辑方案 - Swift](../../media/ios/quickstart-ios-edit-scheme.png)
 
 在“运行”视图中，单击“参数”选项卡。
 
-![编辑方案](../../media/ios/quickstart-ios-env-vars.png)
+![编辑方案环境变量 - Swift](../../media/ios/quickstart-ios-env-vars.png)
 
 在“环境变量”部分中，添加以下名称和值，并提供在创建沉浸式阅读器资源时给出的值。
 
@@ -557,19 +557,19 @@ function sendContentToReader(message) {
 
 通过选择模拟器或设备目标，在 Xcode 中设置存档方案。
 
-![存档方案](../../media/ios/xcode-archive-scheme.png)
+![存档方案 - Swift](../../media/ios/xcode-archive-scheme.png)
 
-![选择目标](../../media/ios/xcode-select-target.png)
+![选择目标 - Swift](../../media/ios/xcode-select-target.png)
 
 在 Xcode 中，按 **Ctrl+R** 或单击“播放”按钮以运行项目。 应用应在指定的模拟器或设备上启动。
 
 在应用中会看到：
 
-![示例应用](../../media/ios/sample-app-ipad.png)
+![示例应用 - Swift](../../media/ios/sample-app-ipad.png)
 
 单击“沉浸式阅读器”按钮时，将会看到沉浸式阅读器随应用上的内容一起启动。
 
-![沉浸式阅读器](../../media/ios/immersive-reader-ipad.png)
+![沉浸式阅读器 - Swift](../../media/ios/immersive-reader-ipad.png)
 
 ## <a name="next-steps"></a>后续步骤
 

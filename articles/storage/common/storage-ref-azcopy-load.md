@@ -1,7 +1,7 @@
 ---
-title: azcopy 负载 |Microsoft Docs
+title: Azcopy 加载 | Microsoft Docs
 titleSuffix: Azure Storage
-description: 本文提供 azcopy load 命令的参考信息。
+description: 本文提供有关 azcopy 加载命令的参考信息。
 author: normesta
 ms.service: storage
 ms.topic: reference
@@ -9,25 +9,25 @@ ms.date: 07/24/2020
 ms.author: normesta
 ms.subservice: common
 ms.reviewer: zezha-msft
-ms.openlocfilehash: beae92cc83f648cf48ab0ede7ea21e936e0cd6b9
-ms.sourcegitcommit: dccb85aed33d9251048024faf7ef23c94d695145
+ms.openlocfilehash: d3d15b7dd5a44245a6a501dc4a4a324e93f3a7a6
+ms.sourcegitcommit: aaa65bd769eb2e234e42cfb07d7d459a2cc273ab
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/28/2020
-ms.locfileid: "87294027"
+ms.lasthandoff: 01/27/2021
+ms.locfileid: "98879031"
 ---
-# <a name="azcopy-load"></a>azcopy 负载
+# <a name="azcopy-load"></a>azcopy load
 
 与以特定格式传输数据相关的子命令
 
 ## <a name="synopsis"></a>摘要
 
-与以特定格式传输数据相关的子命令，如 Microsoft 的 Avere Cloud FileSystem （CLFS）格式。
+与以特定格式传输数据相关的子命令，如 Microsoft 的 Avere Cloud FileSystem (CLFS) 格式。
 
 ## <a name="related-conceptual-articles"></a>相关概念性文章
 
 - [AzCopy 入门](storage-use-azcopy-v10.md)
-- [使用 AzCopy 和 Blob 存储传输数据](storage-use-azcopy-blobs.md)
+- [使用 AzCopy 和 Blob 存储传输数据](./storage-use-azcopy-v10.md#transfer-data)
 - [使用 AzCopy 和文件存储传输数据](storage-use-azcopy-files.md)
 - [对 AzCopy 进行配置、优化和故障排除](storage-use-azcopy-configure.md)
 
@@ -43,7 +43,7 @@ azcopy load clfs "/path/to/dir" "https://[account].blob.core.windows.net/[contai
 
 |选项|说明|
 |--|--|
-|-h、--help|显示 load 命令的帮助内容。|
+|-h、--help|显示加载命令的帮助内容。|
 
 ## <a name="options-inherited-from-parent-commands"></a>从父命令继承的选项
 

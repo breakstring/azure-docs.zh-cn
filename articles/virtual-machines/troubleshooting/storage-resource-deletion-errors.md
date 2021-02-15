@@ -1,6 +1,6 @@
 ---
 title: 排查 Azure 中 Linux VM 上的存储资源删除错误 | Microsoft Docs
-description: 在删除含有附加 VHD 的存储资源时如何进行故障排除。
+description: 了解在删除含有附加 VHD 的存储资源时如何排查 Linux VM 上出现的问题。
 keywords: ''
 services: virtual-machines
 author: genlin
@@ -11,12 +11,12 @@ ms.tgt_pltfrm: vm-linux
 ms.topic: troubleshooting
 ms.date: 11/01/2018
 ms.author: genli
-ms.openlocfilehash: 8f145dcf8d476009d81056b3f4f970460209a5bc
-ms.sourcegitcommit: 271601d3eeeb9422e36353d32d57bd6e331f4d7b
+ms.openlocfilehash: 8d727bc8bdc8f015504baa57f9596b3bacac9712
+ms.sourcegitcommit: a43a59e44c14d349d597c3d2fd2bc779989c71d7
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/20/2020
-ms.locfileid: "88649731"
+ms.lasthandoff: 11/25/2020
+ms.locfileid: "96022864"
 ---
 # <a name="troubleshoot-storage-resource-deletion-errors"></a>排查存储资源删除错误
 
@@ -95,7 +95,7 @@ Azure 阻止删除附加到 VM 的磁盘，以防发生损坏。 它还会阻止
 7. 选择“磁盘”窗格顶部的“编辑”。
 8. 单击要删除的数据磁盘的拆离图标  。
 
-     ![门户屏幕截图，其中打开了存储“blob 元数据”窗格](./media/troubleshoot-vhds/utd-vm-disks-edit.png)
+     ![门户的屏幕截图，其中打开了存储“Blob 元数据”窗格，并突出显示要删除的数据磁盘的拆离图标。](./media/troubleshoot-vhds/utd-vm-disks-edit.png)
 
 9. 选择“保存”。  此时该磁盘将与 VM 分离，并且 VHD 将不再租用。 可能需要几分钟才能释放租约。 若要验证租用是否已解除，请转到 blob 位置，再检查“blob 属性”  窗格中的“租用状态”  值是否为“已解锁”  或“可租用”  。
 

@@ -8,20 +8,24 @@ manager: femila
 ms.service: media-services
 ms.subservice: video-indexer
 ms.topic: article
-ms.date: 04/12/2020
+ms.date: 09/11/2020
 ms.author: juliako
-ms.openlocfilehash: e74acd3cdb0a0d2e0fbb37d022ff40e1f5798b18
-ms.sourcegitcommit: 493b27fbfd7917c3823a1e4c313d07331d1b732f
+ms.openlocfilehash: 06f5e19718445f44dd2302faf280f083cce0774f
+ms.sourcegitcommit: a055089dd6195fde2555b27a84ae052b668a18c7
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 05/21/2020
-ms.locfileid: "83744603"
+ms.lasthandoff: 01/26/2021
+ms.locfileid: "98783795"
 ---
 # <a name="what-is-azure-media-services-video-indexer"></a>什么是 Azure 媒体服务视频索引器？
+
+[!INCLUDE [regulation](./includes/regulation.md)]
 
 视频索引器 (VI) 是 Azure 媒体服务 AI 解决方案，也是 Azure 认知服务品牌的一部分。 使用视频索引器，可以基于多通道（语音、声乐、视觉对象）使用机器学习模型来提取深度见解（无需数据分析或编码技能）。 另外，你还可以自定义和训练模型。 该服务可实现深度搜索，降低运营成本，创造新的盈利机会，并在大型的视频存档方面创造新的用户体验（具有较低准入门槛）。
 
 若要开始使用视频索引器提取见解，你需要先创建帐户并上传视频。 将视频上传到视频索引器时，会通过运行不同的 AI 模型来分析视觉对象和音频。 当视频索引器分析视频时，由 AI 模型提取的见解。
+
+创建视频索引器帐户并将其连接到媒体服务时，媒体和元数据文件存储在与该媒体服务帐户关联的 Azure 存储帐户中。 有关详细信息，请参阅 [创建连接到 Azure 的视频索引器帐户](connect-to-azure.md)。
 
 下图是对视频索引器后台工作的阐释，并非技术说明。
 
@@ -72,12 +76,12 @@ ms.locfileid: "83744603"
 
 * **音频听录**：将语音转换为 12 种语言的文本并允许扩展。 支持的语言包括英语、西班牙语、法语、德语、意大利语、中文（普通话）、日语、阿拉伯语、俄语、葡萄牙语、印地语和韩语。
 * **自动语言检测**：自动识别主导性的讲述语言。 支持的语言包括英语、西班牙语、法语、德语、意大利语、中文（普通话）、日语、俄语和葡萄牙语。 如果无法准确识别语言，视频索引器会假定所讲语言为英语。 有关详细信息，请参阅[语言识别模型](language-identification-model.md)。
-* 多语言语音识别和转录（预览版）：自动识别音频中不同片段的话语。 它会发送要转录的媒体文件的每个片段，然后将转录合并成一个完成的转录。 有关详细信息，请参阅[自动识别和转录多语言内容](multi-language-identification-transcription.md)。
+* **多语言语音识别和脚本**：自动标识音频中不同段的口述语言。 它会发送要转录的媒体文件的每个片段，然后将转录合并成一个完成的转录。 有关详细信息，请参阅[自动识别和转录多语言内容](multi-language-identification-transcription.md)。
 * **隐藏式字幕**：以三种格式创建隐藏式字幕：VTT、TTML、SRT。
 * **双通道处理**：自动检测单独的脚本并合并到单个时间轴。
 * **噪声消减**：清理电话音频或有噪音的录制内容（基于 Skype 滤波器）。
 * **脚本自定义** (CRIS)：训练自定义语音转文本模型，以创建行业特定的脚本。 有关详细信息，请参阅[从视频索引器网站自定义语言模型](customize-language-model-with-website.md)和[使用视频索引器 API 自定义语言模型](customize-language-model-with-api.md)。
-* **说话人枚举**：映射和了解哪个说话人在何时说了哪些话。
+* **说话人枚举**：映射和了解哪个说话人在何时说了哪些话。 可以在单个音频文件中检测十六个扬声器。
 * **说话人统计信息**：提供说话人发言比率的统计数据。
 * **文本内容审核**：检测音频脚本中的显式文本。
 * **音效**：识别击掌、讲话和静音等音效。
@@ -111,6 +115,21 @@ ms.locfileid: "83744603"
     有关详细信息，请参阅 [将视觉小组件嵌入应用程序](video-indexer-embed-widgets.md)。
 
 如果使用的是网站，则见解会添加为元数据，并在门户中可见。 如果使用的是 API，则见解可用作 JSON 文件。
+
+## <a name="supported-browsers"></a>支持的浏览器
+
+以下列表显示了可用于视频索引器网站和嵌入小组件的应用的受支持的浏览器。 此列表还显示支持的最低浏览器版本：
+
+- Edge，版本：16
+- Firefox，版本：54
+- Chrome，版本：58
+- Safari，版本：11
+- Opera，版本：44
+- Opera Mobile，版本：59
+- Android 浏览器，版本：81
+- Samsung 浏览器，版本：7
+- 适用于 Android 的 Chrome，版本：87
+- 适用于 Android 的 Firefox，版本：83
 
 ## <a name="next-steps"></a>后续步骤
 

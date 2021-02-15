@@ -6,12 +6,12 @@ ms.service: virtual-machines-linux
 ms.topic: how-to
 ms.date: 01/25/2019
 ms.author: cynthn
-ms.openlocfilehash: 34f43d51bf0df488e04605f7f7c77e9c6dcfe9a4
-ms.sourcegitcommit: f353fe5acd9698aa31631f38dd32790d889b4dbb
+ms.openlocfilehash: 8954ad03bd5f539e9dcfbb4249f4e7cc1cf0bc7f
+ms.sourcegitcommit: b39cf769ce8e2eb7ea74cfdac6759a17a048b331
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/29/2020
-ms.locfileid: "87374076"
+ms.lasthandoff: 01/22/2021
+ms.locfileid: "98685117"
 ---
 # <a name="find-linux-vm-images-in-the-azure-marketplace-with-the-azure-cli"></a>使用 Azure CLI 在 Azure 市场中查找 Linux VM 映像
 
@@ -19,9 +19,49 @@ ms.locfileid: "87374076"
 
 还可以使用 [Azure 市场](https://azuremarketplace.microsoft.com/)店面、[Azure 门户](https://portal.azure.com)或 [Azure PowerShell](../windows/cli-ps-findimage.md) 浏览可用的映像和产品/服务。 
 
-请确保已安装最新版的 [Azure CLI](/cli/azure/install-azure-cli) 且已登录到 Azure 帐户 (`az login`)。
+请确保已登录到 Azure 帐户 (`az login`) 。
 
 [!INCLUDE [virtual-machines-common-image-terms](../../../includes/virtual-machines-common-image-terms.md)]
+
+[!INCLUDE [azure-cli-prepare-your-environment.md](../../../includes/azure-cli-prepare-your-environment.md)]
+
+## <a name="deploy-from-a-vhd-using-purchase-plan-parameters"></a>使用采购计划参数从 VHD 部署
+
+如果现有 VHD 是使用付费 Azure Marketplace 映像创建的，则在从该 VHD 创建新的 VM 时，可能需要提供购买计划信息。 
+
+如果仍具有原始 VM 或使用相同的 marketplace 映像创建的其他 VM，则可以使用 [az VM get-help](/cli/azure/vm#az_vm_get_instance_view)获取计划名称、发布者和产品信息。 此示例获取 myResourceGroup 资源组中名为 myVM 的 VM，然后显示购买计划信息 。
+
+```azurepowershell-interactive
+az vm get-instance-view -g myResourceGroup -n myVM --query plan
+```
+
+如果在删除原始 VM 之前未获得计划信息，则可提交[支持请求](https://ms.portal.azure.com/#create/Microsoft.Support)。 它们将需要 VM 名称、订阅 ID 和删除操作的时间戳。
+
+获得计划信息后，可以使用 `--attach-os-disk` 参数指定 VHD 来创建新的 VM。
+
+```azurecli-interactive
+az vm create \
+   --resource-group myResourceGroup \
+  --name myNewVM \
+  --nics myNic \
+  --size Standard_DS1_v2 --os-type Linux \
+  --attach-os-disk myVHD \
+  --plan-name planName \
+  --plan-publisher planPublisher \
+  --plan-product planProduct 
+```
+
+## <a name="deploy-a-new-vm-using-purchase-plan-parameters"></a>使用采购计划参数部署新的 VM
+
+如果你已经有映像的相关信息，可以使用命令来部署它 `az vm create` 。 在此示例中，我们将使用由 Bitnami 映像认证的 RabbitMQ 部署 VM：
+
+```azurecli
+az group create --name myResourceGroupVM --location westus
+
+az vm create --resource-group myResourceGroupVM --name myVM --image bitnami:rabbitmq:rabbitmq:latest --plan-name rabbitmq --plan-product rabbitmq --plan-publisher bitnami
+```
+
+如果收到有关接受映像条款的消息，请参阅本文后面的[接受条款](#accept-the-terms)部分。
 
 ## <a name="list-popular-images"></a>列出常用映像
 
@@ -33,7 +73,7 @@ az vm image list --output table
 
 输出包括映像 URN（Urn 列中的值）  。 使用其中一个常用市场映像创建 VM 时，可选择指定 *UrnAlias*（一种简短格式，如 *UbuntuLTS*）。
 
-```
+```output
 You are viewing an offline list of images, use --all to retrieve an up-to-date list
 Offer          Publisher               Sku                 Urn                                                             UrnAlias             Version
 -------------  ----------------------  ------------------  --------------------------------------------------------------  -------------------  ---------
@@ -60,7 +100,7 @@ az vm image list --offer Debian --all --output table
 
 部分输出： 
 
-```
+```output
 Offer              Publisher    Sku                  Urn                                                    Version
 -----------------  -----------  -------------------  -----------------------------------------------------  --------------
 Debian             credativ     7                    credativ:Debian:7:7.0.201602010                        7.0.201602010
@@ -110,7 +150,7 @@ az vm image list --location westeurope --offer Deb --publisher credativ --sku 8 
 
 部分输出：
 
-```
+```output
 Offer    Publisher    Sku                Urn                                              Version
 -------  -----------  -----------------  -----------------------------------------------  -------------
 Debian   credativ     8                  credativ:Debian:8:8.0.201602010                  8.0.201602010
@@ -158,7 +198,7 @@ az vm image list-publishers --location westus --output table
 
 部分输出：
 
-```
+```output
 Location    Name
 ----------  ----------------------------------------------------
 westus      128technology
@@ -194,7 +234,7 @@ az vm image list-offers --location westus --publisher Canonical --output table
 
 输出：
 
-```
+```output
 Location    Name
 ----------  -------------------------
 westus      Ubuntu15.04Snappy
@@ -203,7 +243,7 @@ westus      UbunturollingSnappy
 westus      UbuntuServer
 westus      Ubuntu_Core
 ```
-你将看到在美国西部区域中，Canonical 在 Azure 上发布 UbuntuServer ** 产品。 但是，有哪些 SKU 呢？ 要获取这些值，请运行 `azure vm image list-skus`，并对找到的位置、发布者和产品/服务进行设置：
+你将看到在美国西部区域中，Canonical 在 Azure 上发布 UbuntuServer 产品。 但是，有哪些 SKU 呢？ 要获取这些值，请运行 `azure vm image list-skus`，并对找到的位置、发布者和产品/服务进行设置：
 
 ```azurecli
 az vm image list-skus --location westus --publisher Canonical --offer UbuntuServer --output table
@@ -211,7 +251,7 @@ az vm image list-skus --location westus --publisher Canonical --offer UbuntuServ
 
 输出：
 
-```
+```output
 Location    Name
 ----------  -----------------
 westus      12.04.3-LTS
@@ -242,7 +282,7 @@ az vm image list --location westus --publisher Canonical --offer UbuntuServer --
 
 部分输出：
 
-```
+```output
 Offer         Publisher    Sku        Urn                                               Version
 ------------  -----------  ---------  ------------------------------------------------  ---------------
 UbuntuServer  Canonical    18.04-LTS  Canonical:UbuntuServer:18.04-LTS:18.04.201804262  18.04.201804262
@@ -286,7 +326,7 @@ az vm image show --location westus --urn Canonical:UbuntuServer:18.04-LTS:latest
 
 输出：
 
-```
+```output
 {
   "dataDiskImages": [],
   "id": "/Subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/Providers/Microsoft.Compute/Locations/westus/Publishers/Canonical/ArtifactTypes/VMImage/Offers/UbuntuServer/Skus/18.04-LTS/Versions/18.04.201901220",
@@ -300,14 +340,14 @@ az vm image show --location westus --urn Canonical:UbuntuServer:18.04-LTS:latest
 }
 ```
 
-对 Bitnami 映像认证的 RabbitMQ 运行类似的命令显示以下 `plan` 属性：`name`、`product` 和 `publisher`。 （某些映像还具有 `promotion code` 属性。）若要部署此映像，请参阅以下部分以接受条款并启用编程部署。
+对 Bitnami 映像认证的 RabbitMQ 运行类似的命令显示以下 `plan` 属性：`name`、`product` 和 `publisher`。  (一些映像还具有 `promotion code` 属性。 ) 若要部署此映像，请参阅以下部分以接受条款并启用编程部署。
 
 ```azurecli
 az vm image show --location westus --urn bitnami:rabbitmq:rabbitmq:latest
 ```
 输出：
 
-```
+```output
 {
   "dataDiskImages": [],
   "id": "/Subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/Providers/Microsoft.Compute/Locations/westus/Publishers/bitnami/ArtifactTypes/VMImage/Offers/rabbitmq/Skus/rabbitmq/Versions/3.7.1901151016",
@@ -325,7 +365,7 @@ az vm image show --location westus --urn bitnami:rabbitmq:rabbitmq:latest
 }
 ```
 
-### <a name="accept-the-terms"></a>接受条款
+## <a name="accept-the-terms"></a>接受条款
 
 若要查看并接受许可条款，请使用 [az vm image accept-terms](/cli/azure/vm/image?) 命令。 接受条款时，将在订阅中启用编程部署。 对于映像的每个订阅，只需接受条款一次。 例如：
 
@@ -335,7 +375,7 @@ az vm image accept-terms --urn bitnami:rabbitmq:rabbitmq:latest
 
 输出包括指向许可条款的 `licenseTextLink`，并指示 `accepted` 的值为 `true`：
 
-```
+```output
 {
   "accepted": true,
   "additionalProperties": {},
@@ -350,16 +390,6 @@ az vm image accept-terms --urn bitnami:rabbitmq:rabbitmq:latest
   "signature": "XXXXXXLAZIK7ZL2YRV5JYQXONPV76NQJW3FKMKDZYCRGXZYVDGX6BVY45JO3BXVMNA2COBOEYG2NO76ONORU7ITTRHGZDYNJNXXXXXX",
   "type": "Microsoft.MarketplaceOrdering/offertypes"
 }
-```
-
-### <a name="deploy-using-purchase-plan-parameters"></a>使用购买计划参数进行部署
-
-接受映像的条款后，便可以在订阅中部署 VM。 若要使用 `az vm create` 命令部署映像，除了提供映像的 URN 外还需提供购买计划参数。 例如，若要使用 Bitnami 映像认证的 RabbitMQ 部署 VM，请运行以下命令：
-
-```azurecli
-az group create --name myResourceGroupVM --location westus
-
-az vm create --resource-group myResourceGroupVM --name myVM --image bitnami:rabbitmq:rabbitmq:latest --plan-name rabbitmq --plan-product rabbitmq --plan-publisher bitnami
 ```
 
 ## <a name="next-steps"></a>后续步骤

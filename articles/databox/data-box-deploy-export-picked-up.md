@@ -6,16 +6,16 @@ author: alkohli
 ms.service: databox
 ms.subservice: pod
 ms.topic: tutorial
-ms.date: 07/21/2020
+ms.date: 02/03/2021
 ms.author: alkohli
-ms.openlocfilehash: 04e4394e6a439c923558ef90e13c14c0adaa4020
-ms.sourcegitcommit: a2a7746c858eec0f7e93b50a1758a6278504977e
+ms.openlocfilehash: 6c2eed9aac614b0765582d5cf373caf50323ef7a
+ms.sourcegitcommit: 44188608edfdff861cc7e8f611694dec79b9ac7d
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/12/2020
-ms.locfileid: "88142105"
+ms.lasthandoff: 02/04/2021
+ms.locfileid: "99537351"
 ---
-# <a name="tutorial-return-azure-data-box-preview"></a>教程：退回 Azure Data Box（预览版）
+# <a name="tutorial-return-azure-data-box"></a>教程：退回 Azure Data Box
 
 本教程介绍如何退回 Azure Data Box，并且在 Azure 数据中心收到设备后，数据就会被删除。
 
@@ -27,8 +27,6 @@ ms.locfileid: "88142105"
 > * 准备交付
 > * 将 Data Box 寄送到 Microsoft
 > * 从 Data Box 中擦除数据
-
-[!INCLUDE [Data Box feature is in preview](../../includes/data-box-feature-is-preview-info.md)]
 
 ## <a name="prerequisites"></a>先决条件
 
@@ -56,9 +54,9 @@ ms.locfileid: "88142105"
 3. 确保发货标签显示在电子墨水显示屏上，并与承运人安排好取件。 如果该标签损坏或丢失，或者未显示在电子墨水显示屏上，请联系 Microsoft 支持部门。 在支持部门建议的情况下，可以在 Azure 门户中转到“概览”>“下载发货标签”。 下载发货标签，将其贴在设备上。 
 4. 如果要寄回设备，请安排 UPS 提货。 安排提货：
 
-    - 给本地 UPS 打电话（特定于国家/地区的免费电话号码）。
-    - 在通话中，引用反向装运跟踪号码，如电子墨水显示屏或打印的标签中所示。
-    - 如果未引用跟踪号码，UPS 将要求你在提货时支付额外费用。
+   - 给本地 UPS 打电话（特定于国家/地区的免费电话号码）。
+   - 在通话中，引用反向装运跟踪号码，如电子墨水显示屏或打印的标签中所示。 如果未引用跟踪号码，UPS 将在取件时要求支付额外费用。
+   - 如果在安排取件时出现任何问题，或者需要支付额外费用，请联系 Azure Data Box 运营人员。 将电子邮件发送到 [adbops@microsoft.com](mailto:adbops@microsoft.com)。
 
     也可以在最近的卸货位置放置 Data Box，而不是安排提货。
 4. 承运人提取 Data Box 并进行扫描后，门户中的订单状态将更新为“已提货”。 此外还会显示一个跟踪 ID。
@@ -174,9 +172,27 @@ ms.locfileid: "88142105"
 
 如果遇到任何问题，请向 Data Box Operations Asia [adbo@microsoft.com](mailto:adbo@microsoft.com) 发送电子邮件，在主题标头中提供作业名称和遇到的问题。
 
+## <a name="united-arab-emirates"></a>[阿拉伯联合酋长国](#tab/in-uae)
+
+1. 保留寄送设备所用的原始包装盒供退回寄送时使用。
+2. 确保数据已复制到设备，并且“准备交付”步骤已成功完成。
+3. 记下设备本地 Web UI 的“准备交付”页面上的参考编号。
+4. 关闭设备电源并拔下电缆。 将设备随附的电源线卷好并安全地放在设备后面。
+6. 在原始包装盒中打包设备以退回寄送。
+7. 请向 [Azure Data Box 运营中心](mailto:adbops@microsoft.com)发送电子邮件以获取一个 ID，该 ID 将用于在数据中心返回包时对其进行识别。
+8. 在打印出来的发货标签上写下此 ID，然后填写寄信人地址，确保清晰可见。  
+9. 通过转到 [DHL Express UAE](https://mydhl.express.dhl/ae/en/home.html#/schedulePickupTab) > “计划取件”，在线预订取件。
+   - 从运单号码字段的设备本地 Web UI 的“准备交付”页中输入参考编号。
+   - 预约时间为上午 9:00 至下午 2:00，每周六天（不包括周五和公共节假日）。
+   - 取件请求应至少在客户关门时间之前 90 分钟提出。
+10. 如果遇到有关 DHL 预订工具的任何问题，可以使用以下任一种方法与 DHL 联系：
+    - 致电 04-2924545。
+    - 请向 [ecom.ae@dhl.com](mailto:ecom.ae@dhl.com) 发送电子邮件，说明问题的详细信息，并将运单号放入主题行。
+    - 致电 DHL 客户支持 600 567567。
+
 ## <a name="self-managed"></a>[自托管](#tab/in-selfmanaged)
 
-如果在日本、新加坡、韩国、印度、南非和西欧使用 Data Box，并在创建订单时选择了自托管寄送选项，请按以下说明操作。
+如果在日本、新加坡、韩国、印度、南非、英国、欧洲西部或澳大利亚使用 Data Box，并在创建订单时选择了自托管寄送选项，请按以下说明操作。
 
 1. 成功完成此步骤后，请记下 Data Box 本地 Web UI 的“准备交付”页上显示的授权代码。
 2. 关闭设备电源并拔下电缆。 将设备随附的电源线卷好并安全地放在设备后面。
@@ -194,7 +210,7 @@ ms.locfileid: "88142105"
 ---
 
 ## <a name="erasure-of-data-from-data-box"></a>从 Data Box 中擦除数据
- 
+
 设备到达 Azure 数据中心后，Data Box 将根据 [NIST SP 800-88 修订版 1 准则](https://csrc.nist.gov/News/2014/Released-SP-800-88-Revision-1,-Guidelines-for-Medi)擦除其磁盘上的数据。
 
 ## <a name="next-steps"></a>后续步骤
@@ -211,5 +227,3 @@ ms.locfileid: "88142105"
 
 > [!div class="nextstepaction"]
 > [通过 Azure 门户管理 Data Box](./data-box-portal-admin.md)
-
-

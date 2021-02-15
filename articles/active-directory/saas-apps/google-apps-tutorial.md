@@ -9,14 +9,14 @@ ms.service: active-directory
 ms.subservice: saas-app-tutorial
 ms.workload: identity
 ms.topic: tutorial
-ms.date: 05/06/2020
+ms.date: 01/11/2021
 ms.author: jeedes
-ms.openlocfilehash: 5ff34b967e2ba42c01c904b8854ecfa04c394e17
-ms.sourcegitcommit: 023d10b4127f50f301995d44f2b4499cbcffb8fc
+ms.openlocfilehash: a846899ba8f9b9e7c0d2e54744f5e5044ca7a2d6
+ms.sourcegitcommit: 78ecfbc831405e8d0f932c9aafcdf59589f81978
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/18/2020
-ms.locfileid: "88551510"
+ms.lasthandoff: 01/23/2021
+ms.locfileid: "98732027"
 ---
 # <a name="tutorial-azure-active-directory-single-sign-on-sso-integration-with-google-cloud-g-suite-connector"></a>教程：Azure Active Directory 单一登录 (SSO) 与 Google Cloud (G Suite) Connector 的集成
 
@@ -25,8 +25,6 @@ ms.locfileid: "88551510"
 * 在 Azure AD 中控制谁有权访问 Google Cloud (G Suite) Connector。
 * 让用户使用其 Azure AD 帐户自动登录到 Google Cloud (G Suite) Connector。
 * 在一个中心位置（Azure 门户）管理帐户。
-
-若要了解有关 SaaS 应用与 Azure AD 集成的详细信息，请参阅 [Azure Active Directory 的应用程序访问与单一登录是什么](https://docs.microsoft.com/azure/active-directory/manage-apps/what-is-single-sign-on)。
 
 ## <a name="prerequisites"></a>先决条件
 
@@ -64,7 +62,7 @@ ms.locfileid: "88551510"
 
 5. **问：如果用户通过 Windows 登录，他们是否会自动进行 Google Cloud (G Suite) Connector 身份验证而不会收到输入密码的提示？**
 
-    A:有两种用于启用此方案的选项。 第一种，用户可通过 [Azure Active Directory Join](../device-management-introduction.md) 登录到 Windows 10 设备。 或者，用户可以登录到通过域加入的方式加入到一个本地 Active Directory（已通加 [Active Directory 联合身份验证服务 (AD FS)](../hybrid/plan-connect-user-signin.md) 部署启用 Azure AD 单一登录）的 Windows 设备。 两种选项都要求执行以下教程中的步骤，才能在 Azure AD 与 Google Cloud (G Suite) Connector 之间启用单一登录。
+    A:有两种用于启用此方案的选项。 第一种，用户可通过 [Azure Active Directory Join](../devices/overview.md) 登录到 Windows 10 设备。 或者，用户可以登录到通过域加入的方式加入到一个本地 Active Directory（已通加 [Active Directory 联合身份验证服务 (AD FS)](../hybrid/plan-connect-user-signin.md) 部署启用 Azure AD 单一登录）的 Windows 设备。 两种选项都要求执行以下教程中的步骤，才能在 Azure AD 与 Google Cloud (G Suite) Connector 之间启用单一登录。
 
 6. **问：当我收到"无效的电子邮件"错误消息时，该怎么办？**
 
@@ -72,9 +70,9 @@ ms.locfileid: "88551510"
 
     对于任何拥有有效的 Exchange 许可证的用户，电子邮件属性会自动填充。 如果用户未启用电子邮件，则将收到此错误，因为应用程序需要获取此属性才能提供访问权限。
 
-    你可以使用管理员帐户访问 portal.office.com，接着单击“管理中心”、“帐单”、“订阅”，选择你的 Office 365 订阅，然后单击“分配给用户”，选择要检查其订阅的用户，然后在右侧窗格中单击“编辑许可证”。
+    可以使用管理员帐户访问 portal.office.com，接着单击“管理中心”、“帐单”、“订阅”，选择你的 Microsoft 365 订阅，然后单击“分配给用户”，选择要检查其订阅的用户，然后在右侧窗格中单击“编辑许可证”。
 
-    分配 O365 许可证后，可能需要几分钟的时间才能应用。 之后，user.mail 属性将自动填充，此问题应会得到解决。
+    分配 Microsoft 365 许可证后，它可能需要几分钟的时间才能应用。 之后，user.mail 属性将自动填充，此问题应会得到解决。
 
 ## <a name="scenario-description"></a>方案描述
 
@@ -82,14 +80,13 @@ ms.locfileid: "88551510"
 
 * Google Cloud (G Suite) Connector 支持 **SP** 发起的 SSO
 
-* Google Cloud (G Suite) Connector 支持[**自动**用户预配](https://docs.microsoft.com/azure/active-directory/saas-apps/google-apps-provisioning-tutorial)
-* 配置 Google Cloud (G Suite) Connector 后，可以强制实施会话控制，从而实时保护组织的敏感数据免于外泄和渗透。 会话控制从条件访问扩展而来。 [了解如何通过 Microsoft Cloud App Security 强制实施会话控制](https://docs.microsoft.com/cloud-app-security/proxy-deployment-aad)
+* Google Cloud (G Suite) Connector 支持 [**自动** 用户预配](./g-suite-provisioning-tutorial.md)
 
 ## <a name="adding-google-cloud-g-suite-connector-from-the-gallery"></a>从库中添加 Google Cloud (G Suite) Connector
 
 若要配置 Google Cloud (G Suite) Connector 与 Azure AD 的集成，需要从库中将 Google Cloud (G Suite) Connector 添加到托管 SaaS 应用列表。
 
-1. 使用工作或学校帐户或个人 Microsoft 帐户登录到 [Azure 门户](https://portal.azure.com)。
+1. 使用工作或学校帐户或个人 Microsoft 帐户登录到 Azure 门户。
 1. 在左侧导航窗格中，选择“Azure Active Directory”服务  。
 1. 导航到“企业应用程序”，选择“所有应用程序”   。
 1. 若要添加新的应用程序，请选择“新建应用程序”  。
@@ -100,7 +97,7 @@ ms.locfileid: "88551510"
 
 使用名为 **B.Simon** 的测试用户配置并测试 Google Cloud (G Suite) Connector 的 Azure AD SSO。 若要正常使用 SSO，需要在 Azure AD 用户与 Google Cloud (G Suite) Connector 中的相关用户之间建立链接关系。
 
-若要配置并测试 Google Cloud (G Suite) Connector 的 Azure AD SSO，请完成以下构建基块：
+若要配置并测试 Google Cloud (G Suite) Connector 的 Azure AD SSO，请执行以下步骤：
 
 1. **[配置 Azure AD SSO](#configure-azure-ad-sso)** - 使用户能够使用此功能。
     1. **[创建 Azure AD 测试用户](#create-an-azure-ad-test-user)** - 使用 B. Simon 测试 Azure AD 单一登录。
@@ -113,9 +110,9 @@ ms.locfileid: "88551510"
 
 按照下列步骤在 Azure 门户中启用 Azure AD SSO。
 
-1. 在 [Azure 门户](https://portal.azure.com/)中的“Google Cloud (G Suite) Connector”应用程序集成页上，找到“管理”部分并选择“单一登录”。   
-1. 在“选择单一登录方法”页上选择“SAML”   。
-1. 在“使用 SAML 设置单一登录”页上，单击“基本 SAML 配置”的编辑/笔形图标以编辑设置   。
+1. 在 Azure 门户中的“Google Cloud (G Suite) Connector”应用程序集成页上，找到“管理”部分并选择“单一登录”  。
+1. 在“选择单一登录方法”页上选择“SAML” 。
+1. 在“设置 SAML 单一登录”页面上，单击“基本 SAML 配置”旁边的铅笔图标以编辑设置 。
 
    ![编辑基本 SAML 配置](common/edit-urls.png)
 
@@ -135,8 +132,8 @@ ms.locfileid: "88551510"
     c. 在“回复 URL”  文本框中，使用以下模式键入 URL： 
 
     ```http
-    https://www.google.com
-    https://www.google.com/a/<yourdomain.com>
+    https://www.google.com/acs
+    https://www.google.com/a/<yourdomain.com>/acs
     ```
 
 1. 在“基本 SAML 配置”  部分中，如果想要为 **Google Cloud Platform** 进行配置，请执行以下步骤：
@@ -152,11 +149,11 @@ ms.locfileid: "88551510"
     https://google.com/a/<yourdomain.com>
     ```
     
-    c. 在“回复 URL”  文本框中，使用以下模式键入 URL： 
+    c. 在 **“回复 URL”** 文本框中，使用以下模式键入 URL： 
     
     ```http
-    https://www.google.com
-    https://www.google.com/a/<yourdomain.com>
+    https://www.google.com/acs
+    https://www.google.com/a/<yourdomain.com>/acs
     ```
 
     > [!NOTE]
@@ -179,13 +176,13 @@ ms.locfileid: "88551510"
 
 在本部分，我们将在 Azure 门户中创建名为 B.Simon 的测试用户。
 
-1. 在 Azure 门户的左侧窗格中，依次选择“Azure Active Directory”、“用户”和“所有用户”    。
-1. 选择屏幕顶部的“新建用户”  。
-1. 在“用户”属性中执行以下步骤  ：
-   1. 在“名称”  字段中，输入 `B.Simon`。  
-   1. 在“用户名”字段中输入 username@companydomain.extension  。 例如，`B.Simon@contoso.com` 。
-   1. 选中“显示密码”复选框，然后记下“密码”框中显示的值。  
-   1. 单击“创建”。 
+1. 在 Azure 门户的左侧窗格中，依次选择“Azure Active Directory”、“用户”和“所有用户”  。
+1. 选择屏幕顶部的“新建用户”。
+1. 在“用户”属性中执行以下步骤：
+   1. 在“名称”字段中，输入 `B.Simon`。  
+   1. 在“用户名”字段中输入 username@companydomain.extension。 例如，`B.Simon@contoso.com`。
+   1. 选中“显示密码”复选框，然后记下“密码”框中显示的值。
+   1. 单击“创建”。
 
 ### <a name="assign-the-azure-ad-test-user"></a>分配 Azure AD 测试用户
 
@@ -194,15 +191,9 @@ ms.locfileid: "88551510"
 1. 在 Azure 门户中，依次选择“企业应用程序”、“所有应用程序”。  
 1. 在应用程序列表中选择“Google Cloud (G Suite) Connector”。 
 1. 在应用的概述页中，找到“管理”部分，选择“用户和组”   。
-
-   ![“用户和组”链接](common/users-groups-blade.png)
-
-1. 选择“添加用户”，然后在“添加分配”对话框中选择“用户和组”。   
-
-    ![“添加用户”链接](common/add-assign-user.png)
-
-1. 在“用户和组”对话框中，从“用户”列表中选择“B.Simon”，然后单击屏幕底部的“选择”按钮。   
-1. 如果在 SAML 断言中需要任何角色值，请在“选择角色”对话框的列表中为用户选择合适的角色，然后单击屏幕底部的“选择”按钮。  
+1. 选择“添加用户”，然后在“添加分配”对话框中选择“用户和组”。
+1. 在“用户和组”对话框中，从“用户”列表中选择“B.Simon”，然后单击屏幕底部的“选择”按钮。
+1. 如果你希望将某角色分配给用户，可以从“选择角色”下拉列表中选择该角色。 如果尚未为此应用设置任何角色，你将看到选择了“默认访问权限”角色。
 1. 在“添加分配”对话框中，单击“分配”按钮。  
 
 ## <a name="configure-google-cloud-g-suite-connector-sso"></a>配置 Google Cloud (G Suite) Connector SSO
@@ -225,21 +216,24 @@ ms.locfileid: "88551510"
 
     b. 在 Google Cloud (G Suite) Connector 中的“登录页 URL”字段内，粘贴从 Azure 门户复制的“登录 URL”值。  
 
-    c. 在 Google Cloud (G Suite) Connector 中的“注销页 URL”字段内，粘贴从 Azure 门户复制的“注销 URL”值。  
+    c. 在 Google Cloud (G Suite) Connector 中的“注销页 URL”字段内，粘贴从 Azure 门户复制的“登录 URL”值 。
 
-    d. 在 Google Cloud (G Suite) Connector 中的“更改密码 URL”字段内，粘贴从 Azure 门户复制的“更改密码 URL”值。  
+    > [!NOTE]
+    > Google Cloud (G Suite) 基于 SAML 注销协议。 因此在“注销页 URL”字段中，我们需要使用 SAML 注销 URL（即登录 URL）作为相同字段的值。
 
-    e. 在 Google Cloud (G Suite) Connector 中，对于“验证证书”，请上传从 Azure 门户下载的证书。 
+    d. 在 Google Cloud (G Suite) Connector 中，对于“验证证书”，请上传从 Azure 门户下载的证书。    
 
-    f. 按照 Azure AD 中的上述“基本 SAML 配置”部分提供的说明，勾选/取消选中“使用特定于域的颁发者”选项。  
+    e. 按照 Azure AD 中的上述“基本 SAML 配置”部分提供的说明，勾选/取消选中“使用特定于域的颁发者”选项。  
 
-    g. 单击 **“保存更改”** 。
+    f. 在 Google Cloud (G Suite) Connector 中的“更改密码 URL”字段内，粘贴从 Azure 门户复制的“更改密码 URL”值。 
+
+    g. 单击“ **保存**”。
 
 ### <a name="create-google-cloud-g-suite-connector-test-user"></a>创建 Google Cloud (G Suite) Connector 测试用户
 
-本部分的目标是[在 Google Cloud (G Suite) Connector 中创建名为 B.Simon 的用户](https://support.google.com/a/answer/33310?hl=en)。 在 Google Cloud (G Suite) Connector 中手动创建用户后，该用户现在可以使用其 Office 365 登录凭据登录。
+本部分的目标是[在 Google Cloud (G Suite) Connector 中创建名为 B.Simon 的用户](https://support.google.com/a/answer/33310?hl=en)。 在 Google Cloud (G Suite) Connector 中手动创建用户后，该用户现在可以使用其 Microsoft 365 登录凭据登录。
 
-Google Cloud (G Suite) Connector 还支持自动用户预配。 若要配置自动用户预配，必须先[为自动用户预配配置 Google Cloud (G Suite) Connector](https://docs.microsoft.com/azure/active-directory/saas-apps/google-apps-provisioning-tutorial)。
+Google Cloud (G Suite) Connector 还支持自动用户预配。 若要配置自动用户预配，必须先[为自动用户预配配置 Google Cloud (G Suite) Connector](./g-suite-provisioning-tutorial.md)。
 
 > [!NOTE]
 > 如果在测试单一登录之前尚未在 Azure AD 中启用预配，请确保 Google Cloud (G Suite) Connector 中已存在用户。
@@ -249,25 +243,18 @@ Google Cloud (G Suite) Connector 还支持自动用户预配。 若要配置自�
 
 ## <a name="test-sso"></a>测试 SSO 
 
-在本部分中，使用访问面板测试 Azure AD 单一登录配置。
+在本部分，你将使用以下选项测试 Azure AD 单一登录配置。 
 
-在访问面板中单击“Google Cloud (G Suite) Connector”磁贴时，应会自动登录到设置了 SSO 的 Google Cloud (G Suite) Connector。 有关访问面板的详细信息，请参阅 [Introduction to the Access Panel](https://docs.microsoft.com/azure/active-directory/active-directory-saas-access-panel-introduction)（访问面板简介）。
+* 在 Azure 门户中单击“测试此应用程序”。 这会重定向到 Google Cloud (G Suite) Connector 登录 URL，可在其中启动登录流。 
 
-## <a name="additional-resources"></a>其他资源
+* 直接转到 Google Cloud (G Suite) Connector 登录 URL，从此处启动登录流。
 
-- [有关如何将 SaaS 应用与 Azure Active Directory 集成的教程列表](https://docs.microsoft.com/azure/active-directory/active-directory-saas-tutorial-list)
+* 你可使用 Microsoft 的“我的应用”。 在“我的应用”中单击 Google Cloud (G Suite) Connector 磁贴时，这将重定向到 Google Cloud (G Suite) Connector 登录 URL。 有关“我的应用”的详细信息，请参阅[“我的应用”简介](../user-help/my-apps-portal-end-user-access.md)。
 
-- [什么是使用 Azure Active Directory 的应用程序访问和单一登录](https://docs.microsoft.com/azure/active-directory/manage-apps/what-is-single-sign-on)。
 
-- [什么是 Azure Active Directory 中的条件访问？](https://docs.microsoft.com/azure/active-directory/conditional-access/overview)
+## <a name="next-steps"></a>后续步骤
 
-- [配置用户预配](https://docs.microsoft.com/azure/active-directory/saas-apps/google-apps-provisioning-tutorial)
-
-- [在 Azure AD 中试用 Google Cloud (G Suite) Connector](https://aad.portal.azure.com/)
-
-- [Microsoft Cloud App Security 中的会话控制是什么？](https://docs.microsoft.com/cloud-app-security/proxy-intro-aad)
-
-- [如何使用高级可见性和控制保护 Google Cloud (G Suite) Connector](https://docs.microsoft.com/cloud-app-security/protect-gsuite)
+配置 Google Cloud (G Suite) Connector 后，可以强制实施会话控制，从而实时保护组织的敏感数据免于外泄和渗透。 会话控制扩展自条件访问。 [了解如何通过 Microsoft Cloud App Security 强制实施会话控制](/cloud-app-security/proxy-deployment-aad)。
 
 <!--Image references-->
 

@@ -1,6 +1,6 @@
 ---
 title: 教程 - 在 Azure IoT Central 中创建视频分析 IoT Edge 实例 (Linux VM)
-description: 本教程演示如何创建视频分析 IoT Edge 实例，以便与视频分析 - 对象和运动检测应用程序模板一起使用。
+description: 本教程介绍如何在 Linux VM 上创建视频分析 IoT Edge 实例，以便与视频分析 - 对象和运动检测应用程序模板一起使用。
 services: iot-central
 ms.service: iot-central
 ms.subservice: iot-central-retail
@@ -8,12 +8,12 @@ ms.topic: tutorial
 ms.author: nandab
 author: KishorIoT
 ms.date: 07/31/2020
-ms.openlocfilehash: 69e5b757036a2d68fa779e3fc232cc42a034e33c
-ms.sourcegitcommit: bfeae16fa5db56c1ec1fe75e0597d8194522b396
+ms.openlocfilehash: 10ddbf3dde62380eb79af685ad41b22e4552cea1
+ms.sourcegitcommit: d1b0cf715a34dd9d89d3b72bb71815d5202d5b3a
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/10/2020
-ms.locfileid: "88037859"
+ms.lasthandoff: 02/08/2021
+ms.locfileid: "99832617"
 ---
 # <a name="tutorial-create-an-iot-edge-instance-for-video-analytics-linux-vm"></a>教程：创建用于视频分析的 IoT Edge 实例 (Linux VM)
 
@@ -34,7 +34,7 @@ Azure IoT Edge 是一项完全托管的服务，可通过部署和运行以下�
 
 ## <a name="prerequisites"></a>先决条件
 
-在开始之前，应该先完成上一教程 - [在 Azure IoT Central 中创建视频分析应用程序](./tutorial-video-analytics-create-app.md)。
+在开始之前，应该先完成上一教程 - [在 Azure IoT Central 中创建视频分析应用程序](./tutorial-video-analytics-create-app-yolo-v3.md)或[在 Azure IoT Central 中创建视频分析 (OpenVINO&trade;)](tutorial-video-analytics-create-app-openvino.md)。
 
 还需要一个 Azure 订阅。 如果没有 Azure 订阅，则可在 [Azure 注册页](https://aka.ms/createazuresubscription)上免费创建一个。
 
@@ -51,15 +51,15 @@ Azure IoT Edge 是一项完全托管的服务，可通过部署和运行以下�
 | 订阅 | 选择 Azure 订阅。 |
 | 资源组 | *lva-rg* - 在上一教程中创建的资源组。 |
 | 区域       | *美国东部* |
-| DNS 标签前缀 | 为 VM 选择唯一 DNS 前缀。 |
+| DNS 标签前缀 | 为 VM 选择唯一 DNS 前缀。 必须全部是字母字符，不含数字或特殊字符。 |
 | 管理员用户名 | *AzureUser* |
 | 管理员密码 | 输入密码。 记下 scratchpad.txt 文件中的密码，以便后续使用。 |
 | 作用域 ID | 在上一教程中添加网关设备时在 scratchpad.txt 文件中记下的作用域 ID。 |
-| 设备 ID | *lva-gateway-001* - 在上一教程中创建的网关设备。 |
+| 设备 ID | gateway-001 - 在上一教程中创建的网关设备。 |
 | 设备密钥 | 在上一教程中添加网关设备时在 scratchpad.txt 文件中记下的设备主密钥。 |
 | IoT Central 应用主机 | 在上一教程的 scratchpad.txt 文件中记下的应用程序 URL。 例如：traders.azureiotcentral.com。 |
-| IoT Central 应用 API 令牌 | 在上一教程中记下的运算符 API 令牌。 |
-| IoT Central 设备预配密钥 | 在上一教程的 scratchpad.txt 文件中记下的主要组共享访问签名令牌。 |
+| IoT Central 应用 API 令牌 | 在上一教程的 scratchpad.txt 文件中记下的运算符 API 令牌。 |
+| IoT Central 设备预配密钥 | 在上一教程的 scratchpad.txt 文件中记下的 SAS-IoT-Devices 组主密钥。 |
 | VM 大小 | *Standard_DS1_v2* |
 | Ubuntu OS 版本 | *18.04-LTS* |
 | 位置 | *[resourceGroup().location]* |
@@ -94,7 +94,7 @@ sudo iotedge list
 
 部署创建了一个自定义 IoT Edge 环境，其中包含实时视频分析所需的模块。 部署更新了默认的 config.yaml，以确保 IoT 设备预配服务所使用的 IoT Edge 运行时连接到 IoT Central。 部署还在 /data/storage 文件夹中创建了一个名为 state.json 的文件，用于为模块提供其他配置数据 。 有关详细信息，请参阅[创建用于视频分析的 IoT Edge 实例 (Intel NUC)](./tutorial-video-analytics-iot-edge-nuc.md) 教程。
 
-若要对 IoT Edge 设备进行故障排除，请参阅[对 IoT Edge 设备进行故障排除](https://docs.microsoft.com/azure/iot-edge/troubleshoot)
+若要对 IoT Edge 设备进行故障排除，请参阅[对 IoT Edge 设备进行故障排除](../../iot-edge/troubleshoot.md)
 
 ## <a name="use-the-rtsp-simulator"></a>使用 RTSP 模拟器
 
@@ -118,6 +118,14 @@ sudo docker ps
 ```
 
 该列表包括一个名为 live555 的容器。
+
+## <a name="clean-up-resources"></a>清理资源
+
+如果应用程序使用完毕，可以删除创建的所有资源，如下所示：
+
+1. 在 IoT Central 应用程序中，请导航至“管理”部分中的“你的应用程序”页面 。 然后选择“删除”。
+1. 在 Azure 门户中，删除“lva-rg”资源组。
+1. 在本地计算机上，停止“amp-viewer”Docker 容器。
 
 ## <a name="next-steps"></a>后续步骤
 

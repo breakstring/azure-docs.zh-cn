@@ -1,15 +1,18 @@
 ---
 title: 发现、评估 Amazon Web Services (AWS) EC2 VM 并将其迁移到 Azure
 description: 本文介绍如何使用 Azure Migrate 将 AWS VM 迁移到 Azure。
+author: deseelam
+ms.author: deseelam
+ms.manager: bsiva
 ms.topic: tutorial
 ms.date: 08/19/2020
 ms.custom: MVC
-ms.openlocfilehash: 9e26268010e4287d1f98e99389ffeddf3e4747ce
-ms.sourcegitcommit: cd0a1ae644b95dbd3aac4be295eb4ef811be9aaa
+ms.openlocfilehash: 430ece58bd3dc1651ac391ba0e29515085ee507b
+ms.sourcegitcommit: aaa65bd769eb2e234e42cfb07d7d459a2cc273ab
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/19/2020
-ms.locfileid: "88611426"
+ms.lasthandoff: 01/27/2021
+ms.locfileid: "98878183"
 ---
 # <a name="discover-assess-and-migrate-amazon-web-services-aws-vms-to-azure"></a>发现、评估 Amazon Web Services (AWS) VM 并将其迁移到 Azure
 
@@ -20,6 +23,7 @@ ms.locfileid: "88611426"
 
 在本教程中，您将学习如何执行以下操作：
 > [!div class="checklist"]
+>
 > * 验证迁移的先决条件。
 > * 让 Azure 资源准备好使用 Azure Migrate：服务器迁移。 设置要与 Azure Migrate 配合使用的 Azure 帐户和资源的权限。
 > * 让 AWS EC2 实例做好迁移准备。
@@ -39,15 +43,20 @@ ms.locfileid: "88611426"
 
 按如下述设置评估：
 
-1. 按照[教程](./tutorial-prepare-physical.md)设置 Azure 并准备 AWS VM 进行评估。 请注意：
+1. 按照[教程](./tutorial-discover-physical.md)设置 Azure 并准备 AWS VM 进行评估。 请注意：
 
     - Azure Migrate 在发现 AWS 实例时使用密码验证。 AWS 实例默认不支持密码验证。 需要先启用密码验证，才能发现实例。
-        - 对于 Windows 计算机，请允许 WinRM 端口 5986 (HTTPS) 和 5985 (HTTP)。 这将允许 WMI 调用。 如果设置 
+        - 对于 Windows 计算机，请允许 WinRM 端口 5985 (HTTP)。 这将允许 WMI 调用。
         - 对于 Linux 计算机：
             1. 登录到每台 Linux 计算机。
             2. Open the sshd_config file : vi /etc/ssh/sshd_config
             3. 在文件中，定位到 PasswordAuthentication 行，然后将值改为“yes”。 
             4. 保存文件并将其关闭。 重启 ssh 服务。
+    - 如果使用根用户来发现 Linux VM，请确保 VM 上允许根登录。
+        1. 登录到每台 Linux 计算机
+        2. Open the sshd_config file : vi /etc/ssh/sshd_config
+        3. 在文件中，定位到 PermitRootLogin 行，然后将值改为“yes” 。
+        4. 保存文件并将其关闭。 重启 ssh 服务。
 
 2. 然后，按照此[教程](./tutorial-assess-physical.md)设置 Azure Migrate 项目和设备，以发现和评估 AWS VM。
 
@@ -57,7 +66,7 @@ ms.locfileid: "88611426"
 
 ## <a name="prerequisites"></a>先决条件 
 
-- 确保要迁移的 AWS VM 正在运行受支持的操作系统版本。 出于迁移目的，AWS VM 将被视为物理计算机。 请查看[受支持的操作系统](../site-recovery/vmware-physical-azure-support-matrix.md#replicated-machines)，了解物理服务器迁移工作流。 建议执行测试迁移（测试故障转移），验证 VM 是否按预期运行，然后再继续实际的迁移。
+- 确保要迁移的 AWS VM 正在运行受支持的操作系统版本。 出于迁移目的，AWS VM 将被视为物理计算机。 请参阅[受支持的操作系统和内核版本](../site-recovery/vmware-physical-azure-support-matrix.md#replicated-machines)，了解物理服务器迁移工作流。 可以使用标准命令（如 hostnamectl 或 uname -a）检查 Linux VM 的 OS 和内核版本 。  建议执行测试迁移（测试故障转移），验证 VM 是否按预期运行，然后再继续实际的迁移。
 - 要迁移到 Azure，请确保 AWS VM 符合[支持的配置](./migrate-support-matrix-physical-migration.md#physical-server-requirements)。
 - 验证复制到 Azure 的 AWS VM 是否符合 [Azure VM 要求](./migrate-support-matrix-physical-migration.md#azure-vm-requirements)。
 - 在将 VM 迁移到 Azure 之前，需要在 VM 上进行一些更改。
@@ -71,7 +80,7 @@ ms.locfileid: "88611426"
 
 **任务** | **详细信息**
 --- | ---
-**创建 Azure Migrate 项目** | Azure 帐户需要“参与者”或“所有者”权限才能创建项目。
+**创建 Azure Migrate 项目** | Azure 帐户需要“参与者”或“所有者”权限才能[创建新项目](./create-manage-projects.md)。
 **验证 Azure 帐户的权限** | Azure 帐户需要有权创建 VM 并将数据写入 Azure 托管磁盘。
 
 ### <a name="assign-permissions-to-create-project"></a>分配创建项目的权限
@@ -119,30 +128,6 @@ ms.locfileid: "88611426"
 
 - 复制设备使用 MySQL。 查看在设备上安装 MySQL 的[选项](migrate-replication-appliance.md#mysql-installation)。
 - 查看复制设备访问[公有云](migrate-replication-appliance.md#url-access)和[政府云](migrate-replication-appliance.md#azure-government-url-access)时所需的 Azure URL。
-
-## <a name="add-the-server-migration-tool"></a>添加服务器迁移工具
-
-设置一个 Azure Migrate 项目，并将服务器迁移工具添加到其中。
-
-1. 在 Azure 门户中选择“所有服务”，然后搜索 **Azure Migrate**。
-2. 在“服务”下选择“Azure Migrate”。 
-3. 在“概述”中，单击“评估和迁移服务器”。 
-4. 在“发现、评估和迁移服务器”下，单击“评估和迁移服务器”。 
-
-    ![发现和评估服务器](./media/tutorial-migrate-physical-virtual-machines/assess-migrate.png)
-
-5. 在“发现、评估和迁移服务器”中，单击“添加工具”。 
-6. 在“迁移项目”中选择你的 Azure 订阅，并创建一个资源组（如果没有）。
-7. 在“项目详细信息”中，指定项目名称以及要在其中创建项目的地理位置，然后单击“下一步”。  查看[公有云](migrate-support-matrix.md#supported-geographies-public-cloud)和[政府云](migrate-support-matrix.md#supported-geographies-azure-government)支持的地理位置。
-    - 项目地理位置仅用于存储从 AWS 计算机中收集的元数据。
-    - 运行迁移时，可以选择任一目标区域。
-
-    ![创建 Azure Migrate 项目](./media/tutorial-migrate-physical-virtual-machines/migrate-project.png)
-
-8. 在“选择评估工具”中，选择“暂时跳过添加评估工具” > “下一步”。  
-9. 在“选择迁移工具”中，选择“Azure Migrate: 服务器迁移” > “下一步”。
-10. 在“检查 + 添加工具”中检查设置，然后单击“添加工具”。 
-11. 添加工具后，它会显示在 Azure Migrate 项目的“服务器” > “迁移工具”中。 
 
 ## <a name="set-up-the-replication-appliance"></a>设置复制设备
 
@@ -252,7 +237,7 @@ ms.locfileid: "88611426"
 4. 在“进程服务器”中，选择复制设备的名称。 
 5. 在“来宾凭据”中，请选择以前在[复制安装程序设置](#download-the-replication-appliance-installer)过程中创建的虚拟帐户，以手动安装出行服务（不支持推送安装）。 然后单击“下一页:虚拟机”。   
  
-    ![复制 VM](./media/tutorial-migrate-physical-virtual-machines/source-settings.png)
+    ![复制设置](./media/tutorial-migrate-physical-virtual-machines/source-settings.png)
 6. 在“虚拟机”中的“从评估中导入迁移设置?”内，保留默认设置“否，我将手动指定迁移设置”。  
 7. 检查要迁移的每个 VM。 然后单击“下一页:目标设置”。
 
@@ -260,27 +245,42 @@ ms.locfileid: "88611426"
 
 8. 在“目标设置”中，选择订阅以及要迁移到的目标区域，并指定迁移之后 Azure VM 所在的资源组。
 9. 在“虚拟网络”中，选择迁移之后 Azure VM 要加入到的 Azure VNet/子网。
-10. 在“Azure 混合权益”中：
-    - 如果你不想要应用 Azure 混合权益，请选择“否”。 然后单击“下一步”  。
-    - 如果你的 Windows Server 计算机享有有效软件保障或 Windows Server 订阅的权益，并且你想要将此权益应用到所要迁移的计算机，请选择“是”。 然后单击“下一步”  。
+10. 在“可用性选项”中，选择：
+    -  可用性区域，将迁移的计算机固定到区域中的特定可用性区域。 使用此选项可跨可用性区域分配形成多节点应用程序层的服务器。 如果选择此选项，则需要在“计算”选项卡中指定用于每个选定计算机的可用性区域。仅当为迁移选择的目标区域支持可用性区域时，此选项才可用
+    -  可用性集，将迁移的计算机放入可用性集。 若要使用此选项，所选的目标资源组必须具有一个或多个可用性集。
+    - 如果不需要为迁移的计算机使用其中任何可用性配置，则选择“无需基础结构冗余”选项。
+    
+11. 在“磁盘加密类型”中，选择以下类型：
+    - 使用平台管理的密钥进行静态加密
+    - 使用客户管理的密钥进行静态加密
+    - 通过平台管理的密钥和客户管理的密钥进行双重加密
 
-    ![目标设置](./media/tutorial-migrate-physical-virtual-machines/target-settings.png)
+   > [!NOTE]
+   > 若要使用 CMK 复制 VM，需要在目标资源组下[创建磁盘加密集](../virtual-machines/disks-enable-customer-managed-keys-portal.md#set-up-your-disk-encryption-set)。 磁盘加密集对象将托管磁盘映射到包含 CMK 的密钥保管库，以用于 SSE。
+  
+12. 在“Azure 混合权益”中：
 
-11. 在“计算”中，查看 VM 名称、大小、OS 磁盘类型和可用性集。 VM 必须符合 [Azure 要求](migrate-support-matrix-physical-migration.md#azure-vm-requirements)。
+    - 如果你不想要应用 Azure 混合权益，请选择“否”。 然后单击“下一步”。
+    - 如果你的 Windows Server 计算机享有有效软件保障或 Windows Server 订阅的权益，并且你想要将此权益应用到所要迁移的计算机，请选择“是”。 然后单击“下一步”。
 
-    - **VM 大小**：默认情况下，Azure Migrate 服务器迁移会根据 Azure 订阅中最接近的匹配项选择大小。 或者，请在“Azure VM 大小”中的手动选择一个大小。
-    - **OS 磁盘**：为 VM 指定 OS（启动）磁盘。 OS 磁盘是包含操作系统引导加载程序和安装程序的磁盘。 
-    - **可用性集**：如果迁移后 VM 应位于某个 Azure 可用性集中，请指定该集。 该集必须位于为迁移指定的目标资源组中。
+    ![目标设置](./media/tutorial-migrate-vmware/target-settings.png)
 
-    ![计算设置](./media/tutorial-migrate-physical-virtual-machines/compute-settings.png)
+13. 在“计算”中，查看 VM 名称、大小、OS 磁盘类型和可用性配置（如果在上一步中选定）。 VM 必须符合 [Azure 要求](migrate-support-matrix-physical-migration.md#azure-vm-requirements)。
 
-12. 在“磁盘”中，指定是否要将 VM 磁盘复制到 Azure，并选择 Azure 中的磁盘类型（标准 SSD/HDD 或高级托管磁盘）。 然后单击“下一步”  。
+    - **VM 大小**：如果你正在使用评估建议，则 VM 大小下拉列表会显示建议大小。 否则，Azure Migrate 会根据 Azure 订阅中最接近的匹配项选择大小。 或者，请在“Azure VM 大小”中的手动选择一个大小。
+    - **OS 磁盘**：为 VM 指定 OS（启动）磁盘。 OS 磁盘是包含操作系统引导加载程序和安装程序的磁盘。
+    - **可用性区域**：指定要使用的可用性区域。
+    - **可用性集**：指定要使用的可用性集。
+
+![计算设置](./media/tutorial-migrate-physical-virtual-machines/compute-settings.png)
+
+14. 在“磁盘”中，指定是否要将 VM 磁盘复制到 Azure，并选择 Azure 中的磁盘类型（标准 SSD/HDD 或高级托管磁盘）。 然后单击“下一步”。
     - 可以从复制中排除磁盘。
     - 如果排除了磁盘，迁移后，这些磁盘将不会出现在 Azure VM 中。 
 
     ![磁盘设置](./media/tutorial-migrate-physical-virtual-machines/disks.png)
 
-13. 在“检查并开始复制”中检查设置，然后单击“复制”启动服务器的初始复制。 
+15. 在“检查并开始复制”中检查设置，然后单击“复制”启动服务器的初始复制。 
 
 > [!NOTE]
 > 在复制开始之前，随时可以在“管理” > “复制计算机”中更新复制设置。 开始复制后无法更改设置。
@@ -359,7 +359,7 @@ ms.locfileid: "88611426"
     - 使用 Site Recovery 将 Azure VM 复制到次要区域以保证工作负荷运行且持续可用。 [了解详细信息](../site-recovery/azure-to-azure-tutorial-enable-replication.md)。
 - 为提高安全性，请执行以下操作：
     - 使用 [Azure 安全中心 - 适时管理](../security-center/security-center-just-in-time.md)锁定和限制入站流量访问。
-    - 使用[网络安全组](../virtual-network/security-overview.md)限制流入管理终结点的网络流量。
+    - 使用[网络安全组](../virtual-network/network-security-groups-overview.md)限制流入管理终结点的网络流量。
     - 部署[Azure 磁盘加密](../security/fundamentals/azure-disk-encryption-vms-vmss.md)以帮助保护磁盘，并保护数据以防被盗和未经授权的访问。
     - 详细了解[保护 IaaS 资源的安全](https://azure.microsoft.com/services/virtual-machines/secure-well-managed-iaas/)，并访问[Azure 安全中心](https://azure.microsoft.com/services/security-center/)。
 - 为了便于监视和管理，请执行以下操作：
@@ -379,13 +379,25 @@ ms.locfileid: "88611426"
 **答：** 目前，我们不支持为此工作流导入评估。 临时解决方法是，导出评估，然后在“启用复制”步骤期间手动选择 VM 建议。
   
 **问题：** 我在尝试发现我的 AWS VM 时收到“未能提取 BIOS GUID”错误   
-**答：** 请查看 AWS VM 支持的操作系统。  
+**答：** 始终使用根登录进行身份验证，而不是使用任何伪用户。 另外，请查看 AWS VM 支持的操作系统。  
 
-**问题：** 我的复制状态为“未进行”    
+**问题：** 我的复制状态为“未进行”   
 **答：** 请检查复制设备是否满足要求。 确保已在复制设备 TCP 端口 9443 和 HTTPS 443 上启用了所需端口以进行数据传输。 确保没有复制设备的陈旧重复版本连接到同一项目。   
 
 **问题：** 我无法使用 Azure Migrate 发现 AWS 实例，原因是远程 Windows 管理服务出现 HTTP 状态代码 504    
-**答：** 请确保满足 Azure 迁移设备要求和 URL 访问需求。 确保没有代理设置阻止设备注册。   
+**答：** 请确保满足 Azure 迁移设备要求和 URL 访问需求。 确保没有代理设置阻止设备注册。
+
+**问题：** 在将 AWS VM 迁移到 Azure 之前是否需要进行任何更改？   
+**答：** 可能需要进行以下更改，然后才能将 EC2 VM 迁移到 Azure：
+
+- 如果使用 cloud-init 进行 VM 预配，可以先在 VM 上禁用 cloud-init，再将其复制到 Azure。 由 cloud-init 在 VM 上执行的预配步骤可能是特定于 AWS 的，将在迁移到 Azure 后失效。 
+- 如果 VM 是 PV VM（半虚拟化）而不是 HVM VM，由于半虚拟化 VM 在 AWS 中使用自定义启动顺序，你可能无法在 Azure 上按原样运行它。 在迁移到 Azure 之前，可以通过卸载 PV 驱动程序来克服此挑战。  
+- 始终建议在最终迁移之前运行测试迁移。  
+
+
+**问题：** 是否可以迁移运行 Amazon Linux 操作系统的 AWS VM？  
+**答：** 由于只有 AWS 支持 Amazon Linux OS，因此无法按原样迁移运行 Amazon Linux 的 VM。
+若要迁移在 Amazon Linux 上运行的工作负载，可以在 Azure 中启动 CentOS/RHEL VM，并使用相关的工作负载迁移方法迁移在 AWS Linux 计算机上运行的工作负载。 例如，根据工作负载，通过特定于工作负载的工具来帮助迁移（例如使用数据库工具迁移数据库，或者使用部署工具迁移 Web 服务器）。
 
 ## <a name="next-steps"></a>后续步骤
 

@@ -3,28 +3,28 @@ title: 沉浸式阅读器 C# 客户端库快速入门
 titleSuffix: Azure Cognitive Services
 description: 在本快速入门中，你将从头开始构建一个 Web 应用，并添加沉浸式阅读器 API 功能。
 services: cognitive-services
-author: pasta
+author: nitinme
 manager: nitinme
 ms.service: cognitive-services
+ms.subservice: immersive-reader
 ms.topic: include
-ms.date: 05/20/2020
-ms.author: pasta
-ms.custom: devx-track-javascript
-ms.openlocfilehash: fdcffeda1c57cdb043c51c8a3640006be8ae7418
-ms.sourcegitcommit: 023d10b4127f50f301995d44f2b4499cbcffb8fc
+ms.date: 09/14/2020
+ms.author: nitinme
+ms.custom: devx-track-js, devx-track-csharp
+ms.openlocfilehash: 080b9dac8dad099f2901f2b820da58501310471b
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/18/2020
-ms.locfileid: "88602237"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98948630"
 ---
-[沉浸式阅读器](https://www.onenote.com/learningtools)是一款经过广泛设计的工具，它实现了可靠的技术以提高阅读理解能力。
+[沉浸式阅读器](https://www.onenote.com/learningtools)是一款经过广泛设计的工具，它实现了可靠的技术，旨在提高新的读者、语言学习者和有学习差异（如阅读障碍）的用户的阅读理解能力。 你可在应用程序中使用沉浸式阅读器来隔离文本，以改进焦点、显示常用词的图片、突出显示语音的各个部分、大声朗读所选文本、实时翻译字词和短语等等。
 
-在本快速入门中，你将从头开始构建一个 Web 应用，并使用沉浸式阅读器客户端库集成沉浸式阅读器。 本快速入门的完整工作示例可在[此处](https://github.com/microsoft/immersive-reader-sdk/tree/master/js/samples/quickstart-csharp)找到。
-
-如果没有 Azure 订阅，请在开始之前创建一个[免费帐户](https://azure.microsoft.com/free/cognitive-services/)。
+在本快速入门中，你将从头开始构建一个 Web 应用，并使用沉浸式阅读器客户端库集成沉浸式阅读器。 [GitHub](https://github.com/microsoft/immersive-reader-sdk/tree/master/js/samples/quickstart-csharp) 提供了此快速入门的完整工作示例。
 
 ## <a name="prerequisites"></a>先决条件
 
+* Azure 订阅 - [免费创建订阅](https://azure.microsoft.com/free/cognitive-services)
 * [Visual Studio 2019](https://visualstudio.microsoft.com/downloads)
 * 为 Azure Active Directory 身份验证配置的沉浸式阅读器资源。 按照[这些说明](../../how-to-create-immersive-reader.md)进行设置。 在配置示例项目属性时，将需要在此处创建的一些值。 将会话的输出保存到文本文件中，以供将来参考。
 
@@ -32,17 +32,17 @@ ms.locfileid: "88602237"
 
 在 Visual Studio 中使用具有内置“模型-视图-控制器”的 ASP.NET Core Web 应用程序模板和 ASP.NET Core 2.1 创建一个新项目。 将该项目命名为“QuickstartSampleWebApp”。
 
-![新建项目](../../media/quickstart-csharp/1-createproject.png)
+![新建项目 - C#](../../media/quickstart-csharp/1-createproject.png)
 
-![配置新项目](../../media/quickstart-csharp/2-configureproject.png)
+![配置新项目 - C#](../../media/quickstart-csharp/2-configureproject.png)
 
-![新建 ASP.NET Core Web 应用程序](../../media/quickstart-csharp/3-createmvc.png)
+![新建 ASP.NET Core Web 应用程序 - C#](../../media/quickstart-csharp/3-createmvc.png)
 
 ## <a name="set-up-authentication"></a>设置身份验证
 
 ### <a name="configure-authentication-values"></a>配置身份验证值
 
-右键单击_解决方案资源管理器_中的项目，然后选择“管理用户机密”。 这将打开一个名为 _secrets.json_ 的文件。 此文件未签入到源代码管理中。 在[此处](https://docs.microsoft.com/aspnet/core/security/app-secrets?view=aspnetcore-3.1&tabs=windows)了解更多信息。 将 _secrets.json_ 的内容替换为以下内容，并提供在创建沉浸式阅读器资源时给出的值。
+右键单击 _解决方案资源管理器_ 中的项目，然后选择“管理用户机密”。 这将打开一个名为 _secrets.json_ 的文件。 此文件未签入到源代码管理中。 在[此处](/aspnet/core/security/app-secrets?tabs=windows)了解更多信息。 将 _secrets.json_ 的内容替换为以下内容，并提供在创建沉浸式阅读器资源时给出的值。
 
 ```json
 {
@@ -53,7 +53,7 @@ ms.locfileid: "88602237"
 }
 ```
 
-### <a name="add-the-microsoftidentitymodelclientsactivedirectory-nuget-package"></a>添加 Microsoft.IdentityModel.Clients.ActiveDirectory NuGet 包
+### <a name="install-active-directory-nuget-package"></a>安装 Active Directory NuGet 包
 
 以下代码使用 **Microsoft.IdentityModel.Clients.ActiveDirectory** NuGet 包中的对象，因此将需要在项目中添加对该包的引用。
 
@@ -216,9 +216,9 @@ public async Task<JsonResult> GetTokenAndSubdomain()
 
 请注意，所有文本都有一个 **lang** 属性，该属性描述了文本的语言。 此属性可帮助沉浸式阅读器提供相关的语言和语法功能。
 
-## <a name="add-javascript-to-handle-launching-the-immersive-reader"></a>添加 JavaScript 以处理启动沉浸式阅读器
+## <a name="add-javascript-to-handle-launching-immersive-reader"></a>添加 JavaScript 以处理启动沉浸式阅读器
 
-沉浸式阅读器库提供了启动沉浸式阅读器和呈现沉浸式阅读器按钮等功能。 在[此处](https://docs.microsoft.com/azure/cognitive-services/immersive-reader/reference)了解更多信息。
+沉浸式阅读器库提供了启动沉浸式阅读器和呈现沉浸式阅读器按钮等功能。 在[此处](../../reference.md)了解更多信息。
 
 在 _Views\Home\Index.cshtml_ 的底部，添加以下代码：
 
@@ -296,18 +296,14 @@ public async Task<JsonResult> GetTokenAndSubdomain()
 
 在浏览器中，应该看到：
 
-![示例应用](../../media/quickstart-csharp/4-buildapp.png)
+![示例应用 - C#](../../media/quickstart-csharp/4-buildapp.png)
 
 ## <a name="launch-the-immersive-reader"></a>启动沉浸式阅读器
 
 单击“沉浸式阅读器”按钮时，将会看到沉浸式阅读器随页面上的内容一起启动。
 
-![沉浸式阅读器](../../media/quickstart-csharp/5-viewimmersivereader.png)
+![沉浸式阅读器 - C#](../../media/quickstart-csharp/5-viewimmersivereader.png)
 
 ## <a name="next-steps"></a>后续步骤
 
-* 查看 [Node.js 快速入门](../../tutorial-nodejs.md)，了解通过 Node.js 使用沉浸式阅读器客户端库还可以做什么
-* 查看 [Android 教程](../../tutorial-android.md)，了解通过 Java 或 Kotlin for Android 使用沉浸式阅读器 SDK 可执行的其他操作
-* 查看 [iOS 教程](../../tutorial-ios.md)，了解通过 Swift for iOS 使用沉浸式阅读器 SDK 可执行的其他操作
-* 查看 [Python 教程](../../tutorial-python.md)，了解通过 Python 使用沉浸式阅读器客户端库还可以做什么
 * 浏览[沉浸式阅读器 SDK ](https://github.com/microsoft/immersive-reader-sdk)和[沉浸式阅读器 SDK 参考](../../reference.md)

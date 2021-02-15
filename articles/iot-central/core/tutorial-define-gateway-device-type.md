@@ -1,5 +1,5 @@
 ---
-title: 在 Azure IoT Central 中定义新的网关设备类型 | Microsoft Docs
+title: 教程 - 在 Azure IoT Central 中定义新的网关设备类型 | Microsoft Docs
 description: 本教程向构建人员介绍如何在 Azure IoT Central 应用程序中定义新的 IoT 网关设备类型。
 author: rangv
 ms.author: rangv
@@ -9,14 +9,14 @@ ms.service: iot-central
 services: iot-central
 ms.custom: mvc
 manager: peterpr
-ms.openlocfilehash: 2411eab50cc921a09ba55780b3c6620744a78f3f
-ms.sourcegitcommit: 31e9f369e5ff4dd4dda6cf05edf71046b33164d3
+ms.openlocfilehash: e42e1791693342592e391a14422b1441c9cbbd31
+ms.sourcegitcommit: d1b0cf715a34dd9d89d3b72bb71815d5202d5b3a
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/22/2020
-ms.locfileid: "81758128"
+ms.lasthandoff: 02/08/2021
+ms.locfileid: "99832379"
 ---
-# <a name="define-a-new-iot-gateway-device-type-in-your-azure-iot-central-application"></a>在 Azure IoT Central 应用程序中定义新的 IoT 网关设备类型
+# <a name="tutorial---define-a-new-iot-gateway-device-type-in-your-azure-iot-central-application"></a>教程 - 在 Azure IoT Central 应用程序中定义新的 IoT 网关设备类型
 
 本文适用于解决方案构建者和设备开发人员。 
 
@@ -31,6 +31,9 @@ ms.locfileid: "81758128"
 * 发送自身的遥测数据，例如温度。
 * 响应操作员做出的可写属性更新。 例如，操作员可能会更改遥测数据的发送间隔。
 * 响应命令，例如重新启动设备。
+
+> [!div class="checklist"]
+> 创建下游设备模板创建网关设备模板发布设备模板创建模拟设备
 
 ## <a name="prerequisites"></a>先决条件
 
@@ -107,7 +110,7 @@ ms.locfileid: "81758128"
 
     | 显示名称      | 语义类型 | 架构 |
     | ----------------- | ------------- | ------ |
-    | 最后维修日期 | 无          | 日期   |
+    | 最后维修日期 | 无          | Date   |
     | 客户名称     | 无          | 字符串 |
 
 2. 选择“保存”。 
@@ -139,7 +142,7 @@ ms.locfileid: "81758128"
 
 3. 在“发布设备模板”对话框中，选择“发布”   。
 
-发布设备模板后，它将显示在“设备”页上，操作员可以看到它。  在发布的设备模板中，除非创建新的版本，否则无法编辑设备功能模型。 但是，可以在发布的设备模板中更新云属性、自定义项和视图。 这些更新不会导致创建新版本。 进行任何更改后，选择“发布”将这些更改推送给操作员。 
+发布设备模板后，它将显示在“设备”页上，操作员可以看到它。  在发布的设备模板中，除非创建新的版本，否则无法编辑设备模型。 但是，可以在发布的设备模板中更新云属性、自定义项和视图。 这些更新不会导致创建新版本。 进行任何更改后，选择“发布”将这些更改推送给操作员。 
 
 ## <a name="create-the-simulated-devices"></a>创建模拟设备
 
@@ -195,6 +198,10 @@ ms.locfileid: "81758128"
 
 选择网关设备模板和网关设备实例，然后选择“联接”  。
 
+## <a name="clean-up-resources"></a>清理资源
+
+[!INCLUDE [iot-central-clean-up-resources](../../../includes/iot-central-clean-up-resources.md)]
+
 ## <a name="next-steps"></a>后续步骤
 
 在本教程中，你了解了如何执行以下操作：
@@ -205,9 +212,6 @@ ms.locfileid: "81758128"
 * 定义设备遥测的可视化效果。
 * 添加关系。
 * 发布设备模板。
-
-> [!NOTE]
-> 在 IoT Central 中建模的网关设备目前不支持基于 VS Code 的代码生成。
 
 接下来，设备开发人员可以了解如何：
 

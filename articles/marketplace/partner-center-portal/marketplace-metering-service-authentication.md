@@ -7,12 +7,12 @@ ms.topic: conceptual
 ms.date: 05/21/2020
 author: mingshen-ms
 ms.author: mingshen
-ms.openlocfilehash: 42a76a2cf583a57ae5b38fe051ee48d16d705dd2
-ms.sourcegitcommit: a76ff927bd57d2fcc122fa36f7cb21eb22154cfa
+ms.openlocfilehash: b418a9cae6f6d58dbe82babcfe6fe1e1a5027d43
+ms.sourcegitcommit: ad677fdb81f1a2a83ce72fa4f8a3a871f712599f
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/28/2020
-ms.locfileid: "87319960"
+ms.lasthandoff: 12/17/2020
+ms.locfileid: "97657067"
 ---
 # <a name="marketplace-metering-service-authentication-strategies"></a>市场计量服务身份验证策略
 
@@ -29,7 +29,7 @@ ms.locfileid: "87319960"
 
 使用预定义的固定 Azure AD 应用程序 ID 提交自定义计量器进行身份验证。
 
-对于 SaaS 服务，这是唯一可用的选项。 如[注册 saas 应用程序](./pc-saas-registration.md)中所述，发布任何 saas 产品/服务是必需的。
+对于 SaaS 服务，这是唯一可用的选项。 如 [注册 saas 应用程序](./pc-saas-registration.md)中所述，发布任何 saas 产品/服务是必需的。
 
 对于采用托管应用程序计划的 Azure 应用程序，在以下情况下应考虑使用此策略：
 
@@ -68,10 +68,10 @@ ms.locfileid: "87319960"
 
 |  **属性名称**  |  **必需**  |  **说明**          |
 |  ------------------ |--------------- | ------------------------  |
-|  `Grant_type`       |   True         | 授权类型。 改用 `client_credentials` |
+|  `Grant_type`       |   True         | 授权类型。 请使用 `client_credentials`。 |
 |  `Client_id`        |   True         | 与 Azure AD 应用关联的客户端/应用标识符。|
 |  `client_secret`    |   True         | 与 Azure AD 应用相关联的机密。  |
-|  `Resource`         |   True         | 为其请求令牌的目标资源。 改用 `20e940b3-4c77-4b0b-9a53-9e16a1b010a7` |
+|  `Resource`         |   True         | 为其请求令牌的目标资源。 请使用 `20e940b3-4c77-4b0b-9a53-9e16a1b010a7`。 |
 | | | |
 
 #### <a name="response"></a>*响应*
@@ -106,7 +106,7 @@ ms.locfileid: "87319960"
 >[!Note]
 >发布者应确保发出使用情况的资源被锁定，以免使用情况数据遭到篡改。
 
-托管应用程序可以包含从虚拟机到 Azure Functions 在内的各种类型的资源。  有关如何使用不同服务的托管标识进行身份验证的详细信息，请参阅[如何使用 Azure 资源的托管标识](../../active-directory/managed-identities-azure-resources/overview.md#how-can-i-use-managed-identities-for-azure-resources)）。
+托管应用程序可以包含从虚拟机到 Azure Functions 在内的各种类型的资源。  有关如何使用不同服务的托管标识进行身份验证的详细信息，请参阅 [如何使用 Azure 资源的托管标识](../../active-directory/managed-identities-azure-resources/overview.md#how-can-i-use-managed-identities-for-azure-resources)) 。
 
 例如，按照以下步骤使用 Windows VM 进行身份验证：
 
@@ -115,7 +115,7 @@ ms.locfileid: "87319960"
     * [CLI](../../active-directory/managed-identities-azure-resources/qs-configure-cli-windows-vm.md)
     * [PowerShell](../../active-directory/managed-identities-azure-resources/qs-configure-powershell-windows-vm.md)
     * [Azure 资源管理器模板](../../active-directory/managed-identities-azure-resources/qs-configure-template-windows-vm.md)
-    * [REST](../../active-directory/managed-identities-azure-resources/qs-configure-rest-vm.md#system-assigned-managed-identity)）
+    * [REST](../../active-directory/managed-identities-azure-resources/qs-configure-rest-vm.md#system-assigned-managed-identity)) 
     * [Azure SDK](../../active-directory/managed-identities-azure-resources/qs-configure-sdk-windows-vm.md)
 
 1. 使用系统标识获取市场计量服务应用程序 ID (`20e940b3-4c77-4b0b-9a53-9e16a1b010a7`) 的访问令牌，通过 RDP 连接到 VM，打开 PowerShell 控制台，并运行以下命令
@@ -134,7 +134,7 @@ ms.locfileid: "87319960"
     ```powershell
     # Get subscription and resource group
     $metadata = curl -H @{'Metadata'='true'} http://169.254.169.254/metadata/instance?api-version=2019-06-01 | select -ExpandProperty Content | ConvertFrom-Json 
-    
+
     # Make sure the system identity has at least reader permission on the resource group
     $managementUrl = "https://management.azure.com/subscriptions/" + $metadata.compute.subscriptionId + "/resourceGroups/" + $metadata.compute.resourceGroupName + "?api-version=2019-10-01"
     $resourceGroupInfo = curl -Headers $Headers $managementUrl | select -ExpandProperty Content | ConvertFrom-Json
@@ -145,7 +145,7 @@ ms.locfileid: "87319960"
 
     ```powershell
     # Get resourceUsageId from the managed app
-    $managedAppUrl = "https://management.azure.com" + $managedappId + "\?api-version=2019-07-01"
+    $managedAppUrl = "https://management.azure.com/subscriptions/" + $metadata.compute.subscriptionId + "/resourceGroups/" + $metadata.compute.resourceGroupName + "/providers/Microsoft.Solutions/applications/" + $managedappId + "\?api-version=2019-07-01"
     $ManagedApp = curl $managedAppUrl -H $Headers | Select-Object -Expand Content | ConvertFrom-Json
     # Use this resource ID to emit usage 
     $resourceUsageId = $ManagedApp.properties.billingDetails.resourceUsageId
@@ -155,5 +155,5 @@ ms.locfileid: "87319960"
 
 ## <a name="next-steps"></a>后续步骤
 
-* [创建 Azure 应用程序产品/服务](./create-new-azure-apps-offer.md)
-* [创建事务 SaaS 产品/服务](./offer-creation-checklist.md)
+* [创建 Azure 应用程序产品/服务](../create-new-azure-apps-offer.md)
+* [规划 SaaS 产品/服务](../plan-saas-offer.md)

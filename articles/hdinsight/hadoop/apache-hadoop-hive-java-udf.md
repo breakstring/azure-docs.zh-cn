@@ -1,19 +1,16 @@
 ---
-title: Apache Hive Azure HDInsight 的 Java 用户定义函数（UDF）
+title: Java 用户定义函数 (UDF) 与 Apache Hive Azure HDInsight
 description: 了解如何创建可用于 Apache Hive 的基于 Java 的用户定义函数 (UDF)。 此 UDF 示例将表中的文本字符串转换为小写。
-author: hrasheed-msft
-ms.author: hrasheed
-ms.reviewer: jasonh
 ms.service: hdinsight
 ms.topic: how-to
 ms.custom: hdinsightactive,hdiseo17may2017, devx-track-java
 ms.date: 11/20/2019
-ms.openlocfilehash: 15a86fd191eefc5882150fb276228d18efd6ff5d
-ms.sourcegitcommit: a76ff927bd57d2fcc122fa36f7cb21eb22154cfa
+ms.openlocfilehash: bf9c2ea544c6b510a0507b6b020f0eae0b101dc7
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/28/2020
-ms.locfileid: "87323785"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98946557"
 ---
 # <a name="use-a-java-udf-with-apache-hive-in-hdinsight"></a>将 Java UDF 与 HDInsight 中的 Apache Hive 配合使用
 
@@ -22,7 +19,7 @@ ms.locfileid: "87323785"
 ## <a name="prerequisites"></a>必备条件
 
 * HDInsight 上的 Hadoop 群集。 请参阅 [Linux 上的 HDInsight 入门](./apache-hadoop-linux-tutorial-get-started.md)。
-* [Java 开发人员工具包 (JDK) 版本 8](https://aka.ms/azure-jdks)
+* [Java 开发人员工具包 (JDK) 版本 8](/azure/developer/java/fundamentals/java-jdk-long-term-support)
 * 根据 Apache 要求正确[安装](https://maven.apache.org/install.html)的 [Apache Maven](https://maven.apache.org/download.cgi)。  Maven 是 Java 项目的项目生成系统。
 * 群集主存储的 [URI 方案](../hdinsight-hadoop-linux-information.md#URI-and-scheme)。 对于 Azure 存储，此值为 wasb://；对于Azure Data Lake Storage Gen2，此值为 abfs://；对于 Azure Data Lake Storage Gen1，此值为 adl://。 如果为 Azure 存储启用安全传输，则 URI 将为 `wasbs://`。  另请参阅[安全传输](../../storage/common/storage-require-secure-transfer.md)。
 
@@ -251,7 +248,7 @@ cd C:\HDI
     +---------------+---------------+--+
     ```
 
-## <a name="troubleshooting"></a>疑难解答
+## <a name="troubleshooting"></a>故障排除
 
 运行 hive 作业时，可能会遇到类似于以下文本的错误：
 

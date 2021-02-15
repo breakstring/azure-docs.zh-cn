@@ -1,15 +1,16 @@
 ---
 title: V3 API 中的预测终结点更改
 description: 查询预测终结点 V3 API 已更改。 请使用本指南了解如何迁移到终结点 API 版本 3。
+ms.service: cognitive-services
+ms.subservice: language-understanding
 ms.topic: how-to
 ms.date: 06/30/2020
-ms.author: diberry
-ms.openlocfilehash: d3d8f4d77793390484c64b03393fb528dfa643b7
-ms.sourcegitcommit: 32592ba24c93aa9249f9bd1193ff157235f66d7e
+ms.openlocfilehash: 59dfa439f6428f2db972a8f848887e1a74bc2622
+ms.sourcegitcommit: a0c1d0d0906585f5fdb2aaabe6f202acf2e22cfc
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/01/2020
-ms.locfileid: "85610874"
+ms.lasthandoff: 01/21/2021
+ms.locfileid: "98624297"
 ---
 # <a name="prediction-endpoint-changes-for-v3"></a>V3 的预测终结点更改
 
@@ -59,15 +60,12 @@ V3 在从预览版过渡到正式版的过程中进行了以下更改：
 
 ### <a name="bing-spell-check"></a>必应拼写检查
 
-V3 预测终结点不支持此 API-继续使用 V2 API 预测终结点进行拼写更正。 如果在使用 V3 API 时需要拼写更正，请让客户端应用程序调用[必应拼写检查](https://docs.microsoft.com/azure/cognitive-services/bing-spell-check/overview)api，并将文本发送到 LUIS api 之前，将文本更改为正确的拼写。
+V3 预测终结点不支持此 API-继续使用 V2 API 预测终结点进行拼写更正。 如果在使用 V3 API 时需要拼写更正，请让客户端应用程序调用 [必应拼写检查](../bing-spell-check/overview.md) api，并将文本发送到 LUIS api 之前，将文本更改为正确的拼写。
 
 ## <a name="bot-framework-and-azure-bot-service-client-applications"></a>Bot Framework 和 Azure 机器人服务客户端应用程序
 
 请继续使用 V2 API 预测终结点，直到 Bot Framework V4.7 发布。
 
-## <a name="v2-api-deprecation"></a>弃用 V2 API
-
-在 2020 年 6 月 8 日发布 V3 预览版后至少 9 个月内不会弃用 V2 预测 API。
 
 ## <a name="endpoint-url-changes"></a>终结点 URL 更改
 
@@ -211,7 +209,7 @@ const associatedMetadata = entities.$instance.my_list_entity[item];
 |--|--|--|
 |`Yellow Bird Lane`|`Location`|`Destination`|
 
-在 V2 中，实体由实体名称以及用作对象属性的角色进行标识：__
+在 V2 中，实体由实体名称以及用作对象属性的角色进行标识：
 
 ```JSON
 "entities":[
@@ -226,7 +224,7 @@ const associatedMetadata = entities.$instance.my_list_entity[item];
 ]
 ```
 
-在 V3 中，如果预测针对角色，则实体由实体角色引用：__
+在 V3 中，如果预测针对角色，则实体由实体角色引用：
 
 ```JSON
 "entities":{
@@ -267,9 +265,6 @@ const associatedMetadata = entities.$instance.my_list_entity[item];
 
 了解关于如何在预测运行时扩展应用的[概念](schema-change-prediction-runtime.md)。
 
-## <a name="deprecation"></a>弃用
-
-在 V3 预览后至少 9 个月内不会弃用 V2 API。
 
 ## <a name="next-steps"></a>后续步骤
 

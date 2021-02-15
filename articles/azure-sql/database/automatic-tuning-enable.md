@@ -6,29 +6,29 @@ ms.service: sql-db-mi
 ms.subservice: performance
 ms.custom: sqldbrb=1
 ms.devlang: ''
-ms.topic: conceptual
+ms.topic: how-to
 author: danimir
 ms.author: danil
-ms.reviewer: jrasnik, carlrab
+ms.reviewer: wiassaf, sstein
 ms.date: 12/03/2019
-ms.openlocfilehash: 94ffe2852380d238e9829a8ab0cc69ebe82b74fe
-ms.sourcegitcommit: f353fe5acd9698aa31631f38dd32790d889b4dbb
+ms.openlocfilehash: 35e2a73b0cfae104cee417e7d4a159e7fd169a17
+ms.sourcegitcommit: d60976768dec91724d94430fb6fc9498fdc1db37
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/29/2020
-ms.locfileid: "87373498"
+ms.lasthandoff: 12/02/2020
+ms.locfileid: "96500897"
 ---
 # <a name="enable-automatic-tuning-in-the-azure-portal-to-monitor-queries-and-improve-workload-performance"></a>在 Azure 门户中启用自动优化以监视查询并提高工作负载性能
 [!INCLUDE[appliesto-sqldb-sqlmi](../includes/appliesto-sqldb-sqlmi.md)]
 
 
-Azure SQL 数据库是自动托管的数据服务，可持续监视查询并识别可为改善工作负载性能执行的操作。 可以查看建议并手动应用这些建议，或者让 Azure SQL 数据库自动应用纠正措施 - 这称为**自动优化模式**。
+Azure SQL 数据库是自动托管的数据服务，可持续监视查询并识别可为改善工作负载性能执行的操作。 可以查看建议并手动应用这些建议，或者让 Azure SQL 数据库自动应用纠正措施 - 这称为 **自动优化模式**。
 
 可通过以下方法在服务器或数据库级别启用自动优化：
 
 - [Azure 门户](automatic-tuning-enable.md#azure-portal)
 - [REST API](automatic-tuning-enable.md#rest-api) 调用
-- [T-SQL](/sql/t-sql/statements/alter-database-transact-sql-set-options?view=azuresqldb-current) 命令
+- [T-SQL](/sql/t-sql/statements/alter-database-transact-sql-set-options?view=azuresqldb-current&preserve-view=true) 命令
 
 > [!NOTE]
 > 对于 Azure SQL 托管实例，支持的选项 FORCE_LAST_GOOD_PLAN 只能通过 [T-SQL](https://azure.microsoft.com/blog/automatic-tuning-introduces-automatic-plan-correction-and-t-sql-management) 进行配置。 本文中所述的基于 Azure 门户的配置和自动索引优化选项不适用于 Azure SQL 托管实例。
@@ -51,7 +51,7 @@ Azure SQL 数据库是自动托管的数据服务，可持续监视查询并识�
 
 若要在 Azure SQL 数据库中的[服务器](logical-servers.md)上启用自动优化，请在 Azure 门户中导航到该服务器，然后在菜单中选择“自动优化”。
 
-![服务器](./media/automatic-tuning-enable/server.png)
+![屏幕截图显示了 Azure 门户中的“自动优化”，你可以在其中对服务器应用选项。](./media/automatic-tuning-enable/server.png)
 
 > [!NOTE]
 > 请注意，此时 DROP_INDEX 选项与使用分区切换和索引提示的应用程序不兼容，并且不应在这些情况下打开。 高级和业务关键服务层不支持删除未使用的索引。
@@ -77,7 +77,7 @@ Azure SQL 数据库支持为每个数据库单独指定自动优化配置。 在
 
 可以为每个数据库单独配置各自的自动优化设置。 可以手动配置单个自动优化选项，或指定选项从服务器继承其设置。
 
-![数据库](./media/automatic-tuning-enable/database.png)
+![屏幕截图显示了 Azure 门户中的“自动优化”，你可以在其中对单一数据库应用选项。](./media/automatic-tuning-enable/database.png)
 
 请注意，此时 DROP_INDEX 选项与使用分区切换和索引提示的应用程序不兼容，并且不应在这些情况下启用。
 
@@ -109,7 +109,7 @@ ALTER DATABASE current SET AUTOMATIC_TUNING (FORCE_LAST_GOOD_PLAN = ON, CREATE_I
 > 对于[活动异地复制](auto-failover-group-overview.md)，只需在主数据库上配置自动优化。 自动应用的优化操作（例如索引创建或删除）将自动复制到只读辅助数据库。 尝试在只读辅助数据库上通过 T-SQL 启用自动优化将导致失败，因为不支持在只读辅助数据库上使用不同的优化配置。
 >
 
-了解有关用于配置自动优化的 T-SQL 选项的详细信息，请参阅 [ALTER DATABASE SET 选项 (Transact-SQL)](/sql/t-sql/statements/alter-database-transact-sql-set-options?view=azuresqldb-current)。
+了解有关用于配置自动优化的 T-SQL 选项的详细信息，请参阅 [ALTER DATABASE SET 选项 (Transact-SQL)](/sql/t-sql/statements/alter-database-transact-sql-set-options?view=azuresqldb-current&preserve-view=true)。
 
 ## <a name="disabled-by-the-system"></a>已被系统禁用
 
@@ -117,13 +117,13 @@ ALTER DATABASE current SET AUTOMATIC_TUNING (FORCE_LAST_GOOD_PLAN = ON, CREATE_I
 
 ## <a name="permissions"></a>权限
 
-由于自动优化是一项 Azure 功能，使用它时，需要使用 Azure 的内置角色。 若要使用 Azure 门户中的功能，仅使用 SQL 身份验证还不够。
+由于自动调整是 Azure 功能，因此若要使用它，需使用 Azure 的内置角色。 若要使用 Azure 门户中的功能，仅使用 SQL 身份验证还不够。
 
 若要使用自动优化，必须为用户授予权限，最低必需权限是 Azure 的内置 [SQL 数据库参与者](../../role-based-access-control/built-in-roles.md#sql-db-contributor)角色。 也可考虑使用特权较高的角色，例如 SQL Server 参与者、SQL 托管实例参与者、参与者和所有者。
 
 ## <a name="configure-automatic-tuning-e-mail-notifications"></a>配置自动优化电子邮件通知
 
-请参阅[自动优化电子邮件通知](automatic-tuning-email-notifications-configure.md)指南。
+请参阅 [自动优化电子邮件通知](automatic-tuning-email-notifications-configure.md) 指南。
 
 ## <a name="next-steps"></a>后续步骤
 

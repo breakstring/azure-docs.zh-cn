@@ -1,18 +1,17 @@
 ---
 title: 通过 Azure Migrate 评估用于迁移到 Azure 的大量物理服务器 |Microsoft Docs
 description: 介绍如何使用 Azure Migrate 服务评估大量物理服务器以迁移到 Azure。
-author: rayne-wiselman
-manager: carmonm
-ms.service: azure-migrate
-ms.topic: conceptual
+author: rashi-ms
+ms.author: rajosh
+ms.manager: abhemraj
+ms.topic: how-to
 ms.date: 01/19/2020
-ms.author: hamusa
-ms.openlocfilehash: b84a7b88f700e2ba8e9fbe29099dfcbce8dbf3b7
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 45954a42613fb1716e3b66305c0485a3966b8e37
+ms.sourcegitcommit: ea551dad8d870ddcc0fee4423026f51bf4532e19
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "85081072"
+ms.lasthandoff: 12/07/2020
+ms.locfileid: "96753682"
 ---
 # <a name="assess-large-numbers-of-physical-servers-for-migration-to-azure"></a>评估大量物理服务器以迁移到 Azure
 
@@ -30,7 +29,7 @@ ms.locfileid: "85081072"
 
 
 > [!NOTE]
-> 如果要在评估规模之前尝试使用概念证明来评估一些服务器，请遵循我们的[系列教程](tutorial-prepare-physical.md)。
+> 如果要在评估规模之前尝试使用概念证明来评估一些服务器，请遵循我们的 [系列教程](./tutorial-discover-physical.md)。
 
 ## <a name="plan-for-assessment"></a>规划评估
 
@@ -44,7 +43,7 @@ ms.locfileid: "85081072"
  
 使用此表中汇总的限制进行规划。
 
-**规划** | **限制**
+规划 | **限制**
 --- | --- 
 **Azure Migrate 项目** | 在项目中评估最多35000服务器。
 **Azure Migrate 设备** | 设备最多可以发现1000服务器。<br/> 设备只能与单个 Azure Migrate 项目相关联。<br/> 可以将任意数量的设备与单个 Azure Migrate 项目相关联。 <br/><br/> 
@@ -60,27 +59,27 @@ ms.locfileid: "85081072"
 
 为服务器评估准备 Azure 和物理服务器。 
 
-1. 验证[物理服务器支持的要求和限制](migrate-support-matrix-physical.md)。
+1. 验证 [物理服务器支持的要求和限制](migrate-support-matrix-physical.md)。
 2. 设置你的 Azure 帐户的权限以与 Azure Migrate 进行交互。
 3. 准备物理服务器。
 
-按照[本教程](tutorial-prepare-physical.md)中的说明配置这些设置。
+按照 [本教程](./tutorial-discover-physical.md) 中的说明配置这些设置。
 
-## <a name="create-a-project"></a>创建项目
+## <a name="create-a-project"></a>创建一个项目
 
 按照规划要求，执行以下操作：
 
 1. 创建 Azure Migrate 项目。
 2. 将 Azure Migrate 服务器评估工具添加到项目。
 
-[了解详细信息](how-to-add-tool-first-time.md)
+[了解详细信息](./create-manage-projects.md)
 
 ## <a name="create-and-review-an-assessment"></a>创建和查看评估
 
 1. 为物理服务器创建评估。
 1. 查看评估以准备迁移规划。
 
-[了解](tutorial-assess-physical.md)有关创建和查看评估的详细信息。
+[了解](tutorial-assess-physical.md) 有关创建和查看评估的详细信息。
     
 
 ## <a name="next-steps"></a>后续步骤
@@ -93,4 +92,4 @@ ms.locfileid: "85081072"
 > * 创建 Azure Migrate 项目并运行评估。
 > * 查看评估以准备迁移。
 
-现在，[了解如何](concepts-assessment-calculation.md)计算评估，以及如何[修改评估](how-to-modify-assessment.md)。
+现在， [了解如何](concepts-assessment-calculation.md) 计算评估，以及如何 [修改评估](how-to-modify-assessment.md)。

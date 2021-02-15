@@ -1,16 +1,16 @@
 ---
-author: IEvangelist
+author: trevorbye
 ms.service: cognitive-services
 ms.topic: include
 ms.date: 04/03/2020
 ms.author: trbye
-ms.custom: devx-track-javascript
-ms.openlocfilehash: 520cbeab2e6edc707299119ca4073668245a57c0
-ms.sourcegitcommit: 42107c62f721da8550621a4651b3ef6c68704cd3
+ms.custom: devx-track-js
+ms.openlocfilehash: bbd7091eb2139801956d77ec8b3ca821c935ac64
+ms.sourcegitcommit: 48e5379c373f8bd98bc6de439482248cd07ae883
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/29/2020
-ms.locfileid: "87406192"
+ms.lasthandoff: 01/12/2021
+ms.locfileid: "98109488"
 ---
 ## <a name="start-with-some-boilerplate-code"></a>从一些样本代码入手
 
@@ -187,6 +187,14 @@ ms.locfileid: "87406192"
           recognizer.addAllIntents(lm);
         }
 ```
+
+> [!NOTE]
+> 语音 SDK 仅支持 LUIS v2.0 终结点。
+> 必须手动修改位于示例查询字段中的 v3.0 终结点 URL 才能使用 v2.0 URL 模式。
+> LUIS v2.0 终结点始终采用以下两种模式之一：
+> * `https://{AzureResourceName}.cognitiveservices.azure.com/luis/v2.0/apps/{app-id}?subscription-key={subkey}&verbose=true&q=`
+> * `https://{Region}.api.cognitive.microsoft.com/luis/v2.0/apps/{app-id}?subscription-key={subkey}&verbose=true&q=`
+
 ## <a name="recognize-an-intent"></a>识别意向
 
 在 `IntentRecognizer` 对象中，我们将调用 `recognizeOnceAsync()` 方法。 此方法是告知语音服务你要发送单个需识别的短语，在确定该短语后会停止识别语音。

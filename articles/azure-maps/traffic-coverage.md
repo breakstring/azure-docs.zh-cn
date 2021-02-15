@@ -8,16 +8,16 @@ ms.topic: conceptual
 ms.service: azure-maps
 services: azure-maps
 manager: timlt
-ms.openlocfilehash: 51fdbda755b98b47b700f57bf990b5c5356854a9
-ms.sourcegitcommit: bfeae16fa5db56c1ec1fe75e0597d8194522b396
+ms.openlocfilehash: 11aa0eb07ed9cb3a1a785b3155b832f8b447708f
+ms.sourcegitcommit: 4064234b1b4be79c411ef677569f29ae73e78731
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/10/2020
-ms.locfileid: "88037603"
+ms.lasthandoff: 10/28/2020
+ms.locfileid: "92896865"
 ---
 # <a name="azure-maps-traffic-coverage"></a>Azure Maps 交通覆盖区域
 
-Azure Maps 以交通**流**和**事件**的形式提供丰富的交通信息。 此数据可以在地图上直观显示，或生成在实际驾驶条件下作为因素考虑的更智能路线。
+Azure Maps 以交通 **流** 和 **事件** 的形式提供丰富的交通信息。 此数据可以在地图上直观显示，或生成在实际驾驶条件下作为因素考虑的更智能路线。
 
 但对于所有国家或地区，地图没有相同级别的信息和准确性。 下表提供了可从每个国家或地区请求的通信信息类型的相关信息： 
 
@@ -135,4 +135,4 @@ Azure Maps 以交通**流**和**事件**的形式提供丰富的交通信息。 
 
 ## <a name="next-steps"></a>后续步骤
 
-有关 Azure Maps 交通数据的详细信息，请参阅[交通](https://docs.microsoft.com/rest/api/maps/traffic)参考页面。
+有关 Azure Maps 交通数据的详细信息，请参阅[交通](/rest/api/maps/traffic)参考页面。

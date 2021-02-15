@@ -6,12 +6,12 @@ ms.suite: integration
 ms.reviewer: klam, logicappspm
 ms.topic: article
 ms.date: 10/10/2018
-ms.openlocfilehash: 9dafb702117a7e171ff88b3c77d7b8b79503636f
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.openlocfilehash: 3514ce966e1de9af1741de6b966964aca2599610
+ms.sourcegitcommit: 829d951d5c90442a38012daaf77e86046018e5b9
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87066456"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "91269227"
 ---
 # <a name="create-or-join-parallel-branches-for-workflow-actions-in-azure-logic-apps"></a>创建或联接 Azure 逻辑应用中的工作流的并行分支
 
@@ -47,7 +47,7 @@ ms.locfileid: "87066456"
 
 1. 在搜索框中，查找并选择所需的操作。
 
-   ![查找并选择所需的操作](media/logic-apps-control-flow-branches/find-select-parallel-action.png)
+   ![显示逻辑应用设计器中的 "选择操作" 窗口的屏幕截图。](media/logic-apps-control-flow-branches/find-select-parallel-action.png)
 
    现在，所选操作将在并行分支中显示，例如：
 
@@ -59,7 +59,7 @@ ms.locfileid: "87066456"
 
 1. 在搜索框中，查找并选择所需的操作。
 
-   ![查找并选择顺序操作](media/logic-apps-control-flow-branches/find-select-sequential-action.png)
+   ![屏幕截图，显示逻辑应用设计器中的 "选择操作" 窗口和搜索框。](media/logic-apps-control-flow-branches/find-select-sequential-action.png)
 
    现在，所选操作将在当前分支中显示，例如：
 

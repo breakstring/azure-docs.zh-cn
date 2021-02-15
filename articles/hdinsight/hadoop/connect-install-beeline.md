@@ -1,19 +1,16 @@
 ---
 title: 连接到或安装 Apache Beeline - Azure HDInsight
 description: 了解如何连接到 Apache Beeline 客户端以通过 HDInsight 上的 Hadoop 运行 Hive 查询。 Beeline 是用于通过 JDBC 操作 HiveServer2 的实用工具。
-author: hrasheed-msft
-ms.author: hrasheed
-ms.reviewer: jasonh
 ms.service: hdinsight
 ms.topic: how-to
-ms.custom: contperfq1
+ms.custom: contperf-fy21q1
 ms.date: 05/27/2020
-ms.openlocfilehash: 5495e6c6392ba2e824a0a70717bd19747db9b754
-ms.sourcegitcommit: afa1411c3fb2084cccc4262860aab4f0b5c994ef
+ms.openlocfilehash: ab5dedf6718dad4f16fde59d905e2e59be5c495f
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/23/2020
-ms.locfileid: "88754950"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98944465"
 ---
 # <a name="connect-to-apache-beeline-on-hdinsight-or-install-it-locally"></a>连接到 HDInsight 上的 Apache Beeline 或将其安装在本地
 
@@ -104,7 +101,7 @@ beeline -u 'jdbc:hive2://clustername-int.azurehdinsight.net:443/;ssl=true;transp
 
 ## <a name="install-beeline-client"></a>安装 Beeline 客户端
 
-虽然头节点上包含 Beeline，但建议将其安装在本地。  本地计算机的安装步骤基于[适用于 Linux 的 Windows 子系统](https://docs.microsoft.com/windows/wsl/install-win10)。
+虽然头节点上包含 Beeline，但建议将其安装在本地。  本地计算机的安装步骤基于[适用于 Linux 的 Windows 子系统](/windows/wsl/install-win10)。
 
 1. 更新包列表。 在 bash shell 中输入以下命令：
 
@@ -144,7 +141,7 @@ beeline -u 'jdbc:hive2://clustername-int.azurehdinsight.net:443/;ssl=true;transp
     tar -xvzf apache-hive-1.2.1-bin.tar.gz
     ```
 
-1. 进一步修改 bashrc 文件。 你需要确定存档解压缩到的路径。 如果使用[适用于 Linux 的 Windows 子系统](https://docs.microsoft.com/windows/wsl/install-win10)，并严格按步骤操作，则路径为 `/mnt/c/Users/user/`，其中 `user` 是你的用户名。
+1. 进一步修改 bashrc 文件。 你需要确定存档解压缩到的路径。 如果使用[适用于 Linux 的 Windows 子系统](/windows/wsl/install-win10)，并严格按步骤操作，则路径为 `/mnt/c/Users/user/`，其中 `user` 是你的用户名。
 
     1. 打开文件 `nano ~/.bashrc`
 

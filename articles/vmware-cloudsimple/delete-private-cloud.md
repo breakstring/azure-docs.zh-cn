@@ -1,19 +1,19 @@
 ---
 title: 通过 CloudSimple 私有云删除 Azure VMware 解决方案
 description: 了解如何删除 CloudSimple 私有云。 删除私有云时，所有群集都将被删除。
-author: sharaths-cs
-ms.author: b-shsury
+author: Ajayan1008
+ms.author: v-hborys
 ms.date: 08/06/2019
 ms.topic: article
 ms.service: azure-vmware-cloudsimple
 ms.reviewer: cynthn
 manager: dikamath
-ms.openlocfilehash: 11fda35f5b236a4930b3d90eb7e3a62ea60207cf
-ms.sourcegitcommit: a2a7746c858eec0f7e93b50a1758a6278504977e
+ms.openlocfilehash: 7db967955dc86db39db4dcb2b3a2baf8906efb20
+ms.sourcegitcommit: d7d5f0da1dda786bda0260cf43bd4716e5bda08b
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/12/2020
-ms.locfileid: "88142224"
+ms.lasthandoff: 01/05/2021
+ms.locfileid: "97896254"
 ---
 # <a name="delete-a-cloudsimple-private-cloud"></a>删除 CloudSimple 私有云
 
@@ -39,15 +39,15 @@ CloudSimple 提供了删除私有云的灵活性。  私有云由一个或多个
 
 1. [访问 CloudSimple 门户](access-cloudsimple-portal.md)。
 
-2. 打开 "**资源**" 页。
+2. 打开 " **资源** " 页。
 
 3. 单击要删除的私有云
 
-4. 在 "摘要" 页上，单击 "**删除**"。
+4. 在 "摘要" 页上，单击 " **删除**"。
 
     ![删除私有云](media/delete-private-cloud.png)
 
-5. 在 "确认" 页上，输入私有云的名称，然后单击 "**删除**"。 
+5. 在 "确认" 页上，输入私有云的名称，然后单击 " **删除**"。 
 
     ![删除私有云-确认](media/delete-private-cloud-confirm.png)
 

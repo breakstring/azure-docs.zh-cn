@@ -10,15 +10,20 @@ ms.subservice: bing-web-search
 ms.topic: tutorial
 ms.date: 03/05/2020
 ms.author: aahi
-ms.custom: devx-track-javascript
-ms.openlocfilehash: 6d958cd2fa95cd3c3747afc80b47c17f55e4248a
-ms.sourcegitcommit: 42107c62f721da8550621a4651b3ef6c68704cd3
+ms.custom: devx-track-js
+ms.openlocfilehash: ff54d605fd81fa640314d99359f1aabacf7a469e
+ms.sourcegitcommit: 9eda79ea41c60d58a4ceab63d424d6866b38b82d
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/29/2020
-ms.locfileid: "87405528"
+ms.lasthandoff: 11/30/2020
+ms.locfileid: "96350375"
 ---
 # <a name="tutorial-create-a-single-page-app-using-the-bing-web-search-api"></a>教程：使用必应 Web 搜索 API 创建单页应用
+
+> [!WARNING]
+> 必应搜索 API 将从认知服务迁移到必应搜索服务。 从 2020 年 10 月 30 日开始，必应搜索的任何新实例都需按照[此处](/bing/search-apis/bing-web-search/create-bing-search-service-resource)所述的过程进行预配。
+> 使用认知服务进行预配的必应搜索 API 将在未来三年或在企业协议结束前（以先发生者为准）得到支持。
+> 有关迁移说明，请参阅[必应搜索服务](/bing/search-apis/bing-web-search/create-bing-search-service-resource)。
 
 此单页应用展示了如何从必应 Web 搜索 API 中检索、分析和显示搜索结果。 此教程使用 HTML 和 CSS 样板文件，并重点介绍 JavaScript 代码。 [GitHub](https://github.com/Azure-Samples/cognitive-services-REST-api-samples/tree/master/Tutorials/Bing-Web-Search) 上提供有 HTML、CSS 和 JS 文件，并随附快速入门说明。
 
@@ -31,7 +36,7 @@ ms.locfileid: "87405528"
 > * 管理订阅密钥
 > * 处理错误
 
-要使用此应用，需具备带必应搜索 API 的 [Azure 认知服务帐户](https://docs.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account)。
+要使用此应用，需具备带必应搜索 API 的 [Azure 认知服务帐户](../cognitive-services-apis-create-account.md)。
 
 ## <a name="prerequisites"></a>先决条件
 
@@ -81,7 +86,7 @@ npm install
 
 ## <a name="query-options"></a>查询选项
 
-HTML 表单包含用于映射到[必应 Web 搜索 API v7](https://docs.microsoft.com/rest/api/cognitiveservices-bingsearch/bing-web-api-v7-reference#query-parameters) 中的查询参数的选项。 下表分类介绍了用户可如何使用示例应用筛选搜索结果：
+HTML 表单包含用于映射到[必应 Web 搜索 API v7](/rest/api/cognitiveservices-bingsearch/bing-web-api-v7-reference#query-parameters) 中的查询参数的选项。 下表分类介绍了用户可如何使用示例应用筛选搜索结果：
 
 | 参数 | 说明 |
 |-----------|-------------|
@@ -94,7 +99,7 @@ HTML 表单包含用于映射到[必应 Web 搜索 API v7](https://docs.microsof
 | `offset` | 隐藏的字段。 请求中第一个搜索结果的偏移量，它用于进行分页。 通过每个新的请求将其重置为 `0`。 |
 
 > [!NOTE]
-> 必应 Web 搜索 API 提供了额外的查询参数，可帮助优化搜索结果。 本示例仅使用其中一些参数。 有关可用参数的完整列表，请参阅[必应 Web 搜索 API v7 参考](https://docs.microsoft.com/rest/api/cognitiveservices-bingsearch/bing-web-api-v7-reference#query-parameters)。
+> 必应 Web 搜索 API 提供了额外的查询参数，可帮助优化搜索结果。 本示例仅使用其中一些参数。 有关可用参数的完整列表，请参阅[必应 Web 搜索 API v7 参考](/rest/api/cognitiveservices-bingsearch/bing-web-api-v7-reference#query-parameters)。
 
 `bingSearchOptions()` 会转换这些选项，使其与必应搜索 API 所要求的格式相一致。
 
@@ -298,7 +303,7 @@ function handleBingResponse() {
 
 ## <a name="display-search-results"></a>显示搜索结果
 
-对于必应 Web 搜索 API 返回的结果，存在[使用和显示要求](useanddisplayrequirements.md)。 由于响应可能包含各种结果类型，因此除了通过顶级 `WebPages` 结合集合进行循环访问，还需其他操作。 相反，该示例应用使用 `RankingResponse` 按规范对结果进行排序。
+对于必应 Web 搜索 API 返回的结果，存在[使用和显示要求](./use-display-requirements.md)。 由于响应可能包含各种结果类型，因此除了通过顶级 `WebPages` 结合集合进行循环访问，还需其他操作。 相反，该示例应用使用 `RankingResponse` 按规范对结果进行排序。
 
 > [!NOTE]
 > 如果只希望具有一个结果类型，请使用 `responseFilter` 查询参数，或考虑使用某个其他必应搜索终结点，例如必应图像搜索。
@@ -443,7 +448,7 @@ searchItemRenderers = {
 > [!NOTE]
 > 在生产型 Web 应用程序中，无论如何都应在服务器端执行请求。 否则，必应搜索 API 订阅密钥必须包含在网页中，该网页可供查看来源的任何人使用。 收费取决于 API 订阅密钥下的所有使用量（即使请求是由未经授权的用户发出的，也是如此），因此请确保不要公开你的密钥。
 
-进行开发时，可通过 CORS 代理发出请求。 此类代理的响应具有 `Access-Control-Expose-Headers` 标头，它将响应头列入允许列表，让响应头可供 JavaScript 访问。
+进行开发时，可通过 CORS 代理发出请求。 此类代理的响应具有 `Access-Control-Expose-Headers` 标头，它筛选响应头并使其可供 JavaScript 使用。
 
 轻松操作即可安装 CORS 代理，它使示例应用能够访问客户端 ID 标头。 运行以下命令：
 

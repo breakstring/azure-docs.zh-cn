@@ -14,24 +14,26 @@ ms.devlang: na
 ms.topic: conceptual
 ms.date: 03/19/2019
 ms.author: juliako
-ms.openlocfilehash: 62754c455ec6aad4a3990bf4af749dcdcd425e55
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.openlocfilehash: 0cc3e26895f6bd11ba4f2e5f0b04e4dd36a4fcab
+ms.sourcegitcommit: 77afc94755db65a3ec107640069067172f55da67
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87060220"
+ms.lasthandoff: 01/22/2021
+ms.locfileid: "98695283"
 ---
 # <a name="get-started-with-delivering-content-on-demand-by-using-the-azure-portal"></a>使用 Azure 门户按需传送内容入门
 
+[!INCLUDE [media services api v2 logo](./includes/v2-hr.md)]
+
 > [!NOTE]
-> 不会向媒体服务 v2 添加任何新特性或新功能。 <br/>查看最新版本：[媒体服务 v3](../latest/index.yml)。 另请参阅[从 v2 到 v3 的迁移指南](../latest/migrate-from-v2-to-v3.md)
+> 不会向媒体服务 v2 添加任何新特性或新功能。 <br/>查看最新版本：[媒体服务 v3](../latest/index.yml)。 另请参阅[从 v2 到 v3 的迁移指南](../latest/migrate-v-2-v-3-migration-introduction.md)
 
 本教程介绍了在 Azure 门户中使用 Azure 媒体服务应用程序实施基本的视频点播内容传送服务的步骤。
 
 ## <a name="prerequisites"></a>必备条件
 以下项目是完成本教程所需具备的条件：
 
-* 一个 Azure 帐户。 有关详细信息，请参阅[Azure 免费试用](https://azure.microsoft.com/pricing/free-trial/)。 
+* 一个 Azure 帐户。 有关详细信息，请参阅 [Azure 免费试用](https://azure.microsoft.com/pricing/free-trial/)。 
 * 一个媒体服务帐户。 若要创建媒体服务帐户，请参阅[如何创建媒体服务帐户](media-services-portal-create-account.md)。
 
 本教程包括以下任务：
@@ -125,7 +127,7 @@ ms.locfileid: "87060220"
 > 
 > 
 
-可以使用 [REST API](/rest/api/media/operations/locator#update_a_locator) 或 [.NET API](https://go.microsoft.com/fwlink/?LinkID=533259) 来更新定位符的过期日期。 
+可以使用 [REST API](/rest/api/media/operations/locator#update_a_locator) 或 [.NET API](/dotnet/api/microsoft.windowsazure.mediaservices.client.ilocator) 来更新定位符的过期日期。 
 
 > [!NOTE]
 > 更新共享访问签名定位符的过期日期时，URL 会发生变化。

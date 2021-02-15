@@ -5,16 +5,16 @@ keywords: ''
 author: kgremban
 manager: philmea
 ms.author: kgremban
-ms.date: 06/22/2020
+ms.date: 01/20/2021
 ms.topic: conceptual
 ms.service: iot-edge
 services: iot-edge
-ms.openlocfilehash: ee00425da89391e5228f2d48b49ca85426066f1e
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.openlocfilehash: 0adcbf49ff2128fdbe623121838058c5ed89dce2
+ms.sourcegitcommit: d4734bc680ea221ea80fdea67859d6d32241aefc
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "85299001"
+ms.lasthandoff: 02/14/2021
+ms.locfileid: "100378020"
 ---
 # <a name="update-the-iot-edge-security-daemon-and-runtime"></a>更新 IoT Edge 安全守护程序和运行时
 
@@ -30,17 +30,11 @@ IoT Edge 安全守护程序是一个本机组件，需要使用 IoT Edge 设备�
 
 使用命令 `iotedge version` 检查设备上运行的安全守护程序的版本。
 
-### <a name="linux-devices"></a>Linux 设备
+# <a name="linux"></a>[Linux](#tab/linux)
 
 在 Linux x64 设备上，请使用 apt-get 或相应的包管理器将安全守护程序更新到最新版本。
 
 从 Microsoft 获取最新的存储库配置：
-
-* **Ubuntu Server 16.04**：
-
-   ```bash
-   curl https://packages.microsoft.com/config/ubuntu/16.04/multiarch/prod.list > ./microsoft-prod.list
-   ```
 
 * **Ubuntu Server 18.04**：
 
@@ -48,7 +42,7 @@ IoT Edge 安全守护程序是一个本机组件，需要使用 IoT Edge 设备�
    curl https://packages.microsoft.com/config/ubuntu/18.04/multiarch/prod.list > ./microsoft-prod.list
    ```
 
-* **Raspbian Stretch**：
+* **Raspberry Pi OS Stretch**：
 
    ```bash
    curl https://packages.microsoft.com/config/debian/stretch/multiarch/prod.list > ./microsoft-prod.list
@@ -73,51 +67,43 @@ IoT Edge 安全守护程序是一个本机组件，需要使用 IoT Edge 设备�
    sudo apt-get update
    ```
 
-查看 IoT Edge 的可用版本。
+查看哪些 IoT Edge 版本可用。
 
    ```bash
    apt list -a iotedge
    ```
 
-如果要更新到最新版本的安全守护程序，请使用以下命令，该命令还会将**libiothsm 标准**更新到最新版本：
+如果要更新到最新版本的安全守护程序，请使用以下命令，该命令还会将 **libiothsm-std** 更新到最新版本：
 
    ```bash
    sudo apt-get install iotedge
    ```
 
-如果要更新到安全守护程序的特定版本，请从 apt 列表输出中指定版本。 每当更新**iotedge**时，它会自动尝试将**libiothsm 标准**包更新到其最新版本，这可能会导致依赖项冲突。 如果你不打算使用最新版本，请确保将两个包用于同一版本。 例如，以下命令将安装特定版本的1.0.9 版本：
+如果要更新到特定版本的安全守护程序，请从 apt 列表输出中指定该版本。 每当更新 **iotedge** 时，它都会自动尝试将 **libiothsm-std** 包更新到其最新版本，这可能会导致依赖项冲突。 如果不打算使用最新版本，请确保两个包都是针对同一版本。 例如，以下命令安装 1.0.9 发行版的特定版本：
 
    ```bash
    sudo apt-get install iotedge=1.0.9-1 libiothsm-std=1.0.9-1
    ```
 
-如果你想要安装的版本无法通过 apt 获取，你可以使用卷来面向[IoT Edge 版本](https://github.com/Azure/azure-iotedge/releases)存储库中的任何版本。 对于要安装的任何版本，请找到设备的相应**libiothsm**和**iotedge**文件。 右键单击每个文件对应的链接，并复制链接地址。 使用链接地址安装这些组件的特定版本：
+如果要安装的版本无法通过 apt-get 获取，则可使用 curl 将 [IoT Edge 发行版](https://github.com/Azure/azure-iotedge/releases)存储库中的任何版本作为目标。 不管要安装哪个版本，请找到设备的相应 **libiothsm-std** 和 **iotedge** 文件。 右键单击每个文件对应的链接，并复制链接地址。 使用链接地址安装这些组件的特定版本：
 
 ```bash
 curl -L <libiothsm-std link> -o libiothsm-std.deb && sudo dpkg -i ./libiothsm-std.deb
 curl -L <iotedge link> -o iotedge.deb && sudo dpkg -i ./iotedge.deb
 ```
 
-### <a name="windows-devices"></a>Windows 设备
+# <a name="windows"></a>[Windows](#tab/windows)
 
-在 Windows 设备上，请使用 PowerShell 脚本更新安全守护程序。 脚本会自动提取最新版本的安全守护程序。
+<!-- 1.1 -->
+::: moniker range="iotedge-2018-06"
 
-```powershell
-. {Invoke-WebRequest -useb aka.ms/iotedge-win} | Invoke-Expression; Update-IoTEdge -ContainerOs <Windows or Linux>
-```
+借助 IoT Edge for Linux on Windows，IoT Edge 可以在 Windows 设备上托管的 Linux 虚拟机中运行。 此虚拟机已预安装 IoT Edge，并通过 Microsoft 更新进行管理，以使组件保持最新。 目前没有可用的更新。
 
-运行 Update-IoTEdge 命令会从设备中删除并更新安全守护程序以及两个运行时容器映像。 config.yaml 文件以及 Moby 容器引擎中的数据会保留在设备上（如果使用 Windows 容器）。 保留配置信息意味着，在更新过程中，不需再次为设备提供连接字符串或设备预配服务信息。
+::: moniker-end
 
-若要更新到安全守护程序的特定版本，请在 [IoT Edge 版本](https://github.com/Azure/azure-iotedge/releases)中查找目标版本。 在该版本中，下载 **Microsoft-Azure-IoTEdge.cab** 文件。 然后，使用 `-OfflineInstallationPath` 参数指向本地文件位置。 例如：
+借助适用于 Windows 的 IoT Edge，IoT Edge 可直接在 Windows 设备上运行。 有关使用 PowerShell 脚本的更新说明，请参阅[安装和管理适用于 Windows 的 Azure IoT Edge](how-to-install-iot-edge-windows-on-windows.md)。
 
-```powershell
-. {Invoke-WebRequest -useb aka.ms/iotedge-win} | Invoke-Expression; Update-IoTEdge -ContainerOs <Windows or Linux> -OfflineInstallationPath <absolute path to directory>
-```
-
->[!NOTE]
->`-OfflineInstallationPath` 参数将在提供的目录中查找名为 **Microsoft-Azure-IoTEdge.cab** 的文件。 从 IoT Edge 版本 1.0.9-rc4 开始，可以使用两个 .cab 文件，一个用于 AMD64 设备，另一个用于 ARM32。 下载适用于设备的正确文件，然后重命名该文件以删除体系结构后缀。
-
-有关更新选项的详细信息，请使用命令 `Get-Help Update-IoTEdge -full`，或参考[所有安装参数](how-to-install-iot-edge-windows.md#all-installation-parameters)。
+---
 
 ## <a name="update-the-runtime-containers"></a>更新运行时容器
 
@@ -160,7 +146,7 @@ IoT Edge 服务将提取最新版本的运行时映像，并自动在设备上�
 
    ![配置运行时设置](./media/how-to-update-iot-edge/configure-runtime.png)
 
-1. 在”运行时设置”中，将“Edge 中心”的“映像”值更新为所需的版本    。 暂时不要选择“保存”  。
+1. 在”运行时设置”中，将“Edge 中心”的“映像”值更新为所需的版本    。 暂时不要选择“保存”。
 
    ![更新 Edge 中心的映像版本](./media/how-to-update-iot-edge/runtime-settings-edgehub.png)
 
@@ -172,54 +158,22 @@ IoT Edge 服务将提取最新版本的运行时映像，并自动在设备上�
 
 1. 选择“查看 + 创建”，检查部署，然后选择“创建”   。
 
-## <a name="update-offline-or-to-a-specific-version"></a>脱机更新或更新到特定版本
-
-若要脱机更新设备，或者更新到特定版本的 IoT Edge 而不是最新版本，则可使用 `-OfflineInstallationPath` 参数执行该操作。
-
-用于更新 IoT Edge 设备的两个组件：
-
-* 一个 PowerShell 脚本，其中包含安装说明
-* Microsoft Azure IoT Edge cab，其中包含 IoT Edge 安全守护程序 (iotedged)、Moby 容器引擎和 Moby CLI
-
-1. 有关最新的 IoT Edge 安装文件以及旧版本，请参阅 [Azure IoT Edge 版本](https://github.com/Azure/azure-iotedge/releases)。
-
-2. 找到要安装的版本，然后从发行说明的“资产”部分将以下文件下载到 IoT 设备上：
-
-   * IoTEdgeSecurityDaemon.ps1
-   * 1\.0.9 或更高版本中的 Microsoft-Azure-IoTEdge-amd64.cab，或者 1.0.8 或更低版本中的 Microsoft-Azure-IoTEdge.cab。
-
-   从 1.0.9 开始，也可以使用 Microsoft-Azure-IotEdge-arm32.cab（仅用于测试目的）。 Windows ARM32 设备目前不支持 IoT Edge。
-
-   请务必使用与所用 .cab 文件版本相同的 PowerShell 脚本，因为功能会进行更改以支持每个版本中的特性。
-
-3. 如果下载的 .cab 文件在其上有体系结构后缀，则只需将该文件重命名为“Microsoft-Azure-IoTEdge.cab”即可  。
-
-4. 若要使用脱机组件进行更新，请[使用点获取 PowerShell 脚本本地副本的来源](https://docs.microsoft.com/powershell/module/microsoft.powershell.core/about/about_scripts?view=powershell-7#script-scope-and-dot-sourcing)。 然后，使用 `-OfflineInstallationPath` 参数作为 `Update-IoTEdge` 命令的一部分，并提供文件目录的绝对路径。 例如，
-
-   ```powershell
-   . <path>\IoTEdgeSecurityDaemon.ps1
-   Update-IoTEdge -OfflineInstallationPath <path>
-   ```
-
 ## <a name="update-to-a-release-candidate-version"></a>更新到候选发布版本
 
 Azure IoT Edge 定期发布新版 IoT Edge 服务。 在发布每个稳定版本之前，会有一个或多个候选发布 (RC) 版本。 RC 版本包括发布版的所有计划内功能，但仍需进行测试和验证。 若要提前测试某项新功能，可以安装 RC 版本，然后通过 GitHub 提供反馈。
 
-候选发布版本遵循相同的版本编号约定，但会在末尾追加 **-rc** 和一个增量数字。 可以在与稳定版本相同的 [Azure IoT Edge 版本](https://github.com/Azure/azure-iotedge/releases)列表中查看候选发布版本。 例如，查找**1.0.9-rc5**和**1.0.9-rc6**，在**1.0.9**之前提供两个候选发布版本。 还可以看到 RC 版本带有**预发行版**标签。
+候选发布版本遵循相同的版本编号约定，但会在末尾追加 **-rc** 和一个增量数字。 可以在与稳定版本相同的 [Azure IoT Edge 版本](https://github.com/Azure/azure-iotedge/releases)列表中查看候选发布版本。 例如，可以找到 **1.0.9-rc5** 和 **1.0.9-rc6** 这两个在 **1.0.9** 之前发布的候选发布版本。 还可以看到 RC 版本带有 **预发行版** 标签。
 
-IoT Edge 代理和中心模块包含根据相同约定标记的 RC 版本。 例如， **mcr.microsoft.com/azureiotedge-hub:1.0.9-rc6**。
+IoT Edge 代理和中心模块包含根据相同约定标记的 RC 版本。 例如 **mcr.microsoft.com/azureiotedge-hub:1.0.9-rc6**。
 
 充当预览版的候选发布版本不会包括在常规安装程序所针对的最新版本中。 需要手动将要测试的 RC 版资产设为目标。 大多数情况下，安装或更新到 RC 版本的过程与将目标设为任何其他特定版本的 IoT Edge 相同。
 
 使用本文中的部分了解如何将 IoT Edge 设备更新到特定版本的安全守护程序或运行时模块。
 
-如果在新计算机上安装 IoT Edge，请使用以下链接了解如何根据设备操作系统安装特定的版本：
-
-* [Linux](how-to-install-iot-edge-linux.md#install-runtime-using-release-assets)
-* [Windows](how-to-install-iot-edge-windows.md#offline-or-specific-version-installation)
+如果要安装 IoT Edge 而不是升级现有安装，请使用[脱机或特定版本安装](how-to-install-iot-edge.md#offline-or-specific-version-installation-optional)中的步骤。
 
 ## <a name="next-steps"></a>后续步骤
 
 查看最新的 [Azure IoT Edge 版本](https://github.com/Azure/azure-iotedge/releases)。
 
-在[物联网博客](https://azure.microsoft.com/blog/topics/internet-of-things/)中随时了解最新的更新和公告
+持续关注[物联网博客](https://azure.microsoft.com/blog/topics/internet-of-things/)中的最新更新和通告

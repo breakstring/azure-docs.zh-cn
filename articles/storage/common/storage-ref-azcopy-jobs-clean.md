@@ -8,12 +8,12 @@ ms.date: 07/24/2020
 ms.author: normesta
 ms.subservice: common
 ms.reviewer: zezha-msft
-ms.openlocfilehash: f3e9d70ced0d2974a66717436c28c5b6914f6745
-ms.sourcegitcommit: dccb85aed33d9251048024faf7ef23c94d695145
+ms.openlocfilehash: 4a2c717601747e15556608559450b35bb934410b
+ms.sourcegitcommit: aaa65bd769eb2e234e42cfb07d7d459a2cc273ab
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/28/2020
-ms.locfileid: "87287134"
+ms.lasthandoff: 01/27/2021
+ms.locfileid: "98879099"
 ---
 # <a name="azcopy-jobs-clean"></a>azcopy jobs clean
 
@@ -26,7 +26,7 @@ azcopy jobs clean [flags]
 ## <a name="related-conceptual-articles"></a>相关概念性文章
 
 - [AzCopy 入门](storage-use-azcopy-v10.md)
-- [使用 AzCopy 和 Blob 存储传输数据](storage-use-azcopy-blobs.md)
+- [使用 AzCopy 和 Blob 存储传输数据](./storage-use-azcopy-v10.md#transfer-data)
 - [使用 AzCopy 和文件存储传输数据](storage-use-azcopy-files.md)
 - [对 AzCopy 进行配置、优化和故障排除](storage-use-azcopy-configure.md)
 
@@ -38,13 +38,13 @@ azcopy jobs clean [flags]
 
 ## <a name="options"></a>选项
 
-**--帮助**               清理帮助。
+--help - clean 命令的帮助。
 
-**--with-status** string 仅删除具有此状态的作业，可用值为： `Canceled` 、 `Completed` 、 `Failed` 、 `InProgress` 、 `All` （默认值 `All` ）
+--with-status - 字符串。仅删除具有此状态的作业，可用值：`Canceled`、`Completed`、`Failed`、`InProgress`、`All`（默认值 `All`）
 
 ## <a name="options-inherited-from-parent-commands"></a>从父命令继承的选项
 
-**--cap-mbps float**     以兆位/秒为单位限制传输速率。 瞬间吞吐量可能与上限略有不同。 如果此选项设置为零，或者省略，则吞吐量不受限制。
+--cap-mbps float - 限制传输速率（以兆位/秒为单位）。 瞬间吞吐量可能与上限略有不同。 如果此选项设置为零，或者省略，则吞吐量不受限制。
 
 **--output-type** 字符串   命令输出的格式。 选项包括：text、json。 默认值为“text”。 （默认值为“text”）
 

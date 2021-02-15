@@ -5,19 +5,19 @@ services: active-directory
 ms.service: active-directory
 ms.subservice: identity-protection
 ms.topic: overview
-ms.date: 08/15/2020
+ms.date: 01/05/2021
 ms.author: joflore
 author: MicrosoftGuyJFlo
 manager: daveba
 ms.reviewer: sahandle
-ms.custom: contperfq1
+ms.custom: contperf-fy21q1
 ms.collection: M365-identity-device-management
-ms.openlocfilehash: 39c9522362ca6710fae5dee5d831e63cc36a3950
-ms.sourcegitcommit: 54d8052c09e847a6565ec978f352769e8955aead
+ms.openlocfilehash: 6e274d35fde6a3d55c05bcb5a9f22e75a37aa3c6
+ms.sourcegitcommit: 19ffdad48bc4caca8f93c3b067d1cf29234fef47
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/18/2020
-ms.locfileid: "88509104"
+ms.lasthandoff: 01/06/2021
+ms.locfileid: "97955393"
 ---
 # <a name="what-is-identity-protection"></a>什么是“标识保护”？
 
@@ -49,16 +49,20 @@ Microsoft 标识安全和保护团队的负责人 Alex Weinert 在他[于 2018 �
 
 | 风险检测类型 | 说明 |
 | --- | --- |
-| 异常位置登录 | 从异常位置（基于用户最近的登录）进行登录。 |
 | 匿名 IP 地址 | 从匿名 IP 地址登录（例如：Tor 浏览器，匿名程序 VPN）。 |
+| 异常位置登录 | 从异常位置（基于用户最近的登录）进行登录。 |
+| 受恶意软件感染的 IP 地址 | 从受恶意软件感染的 IP 地址进行登录。 |
 | 不熟悉的登录属性 | 使用给定用户最近未曾出现过的属性进行登录。 |
-| 受恶意软件感染的 IP 地址 | 从受恶意软件感染的 IP 地址进行登录 |
-| 凭据泄漏 | 此风险检测指示用户的有效凭据已泄漏 |
-| Azure AD 威胁智能 | Microsoft 的内部和外部威胁智能源已识别出已知的攻击模式 |
+| 凭据泄漏 | 指示用户的有效凭据已泄露。 |
+| 密码喷射 | 指示正在使用常见密码以统一的暴力攻击方式攻击多个用户名。 |
+| Azure AD 威胁智能 | Microsoft 的内部和外部威胁智能源已识别出已知的攻击模式。 |
+| 新国家/地区 | 此检测由 [Microsoft Cloud App Security (MCAS)](/cloud-app-security/anomaly-detection-policy#activity-from-infrequent-country) 发现。 |
+| 来自匿名 IP 地址的活动 | 此检测由 [Microsoft Cloud App Security (MCAS)](/cloud-app-security/anomaly-detection-policy#activity-from-anonymous-ip-addresses) 发现。 |
+| 可疑收件箱转发 | 此检测由 [Microsoft Cloud App Security (MCAS)](/cloud-app-security/anomaly-detection-policy#suspicious-inbox-forwarding) 发现。 |
 
 要详细了解这些风险以及如何/何时计算，请参阅[什么是风险](concept-identity-protection-risks.md)一文。
 
-风险信号可能会触发修正措施，例如要求用户执行以下操作：执行 Azure 多重身份验证、使用自助式密码重置来重置其密码或阻止操作直到管理员执行操作。
+风险信号可能会触发修正措施，例如要求用户执行以下操作：执行 Azure AD 多重身份验证、使用自助式密码重置来重置其密码，或进行阻止直到管理员执行操作。
 
 ## <a name="risk-investigation"></a>风险调查
 
@@ -95,23 +99,25 @@ Microsoft 标识安全和保护团队的负责人 Alex Weinert 在他[于 2018 �
 
 目前，安全操作员角色无法访问风险登录报告。
 
-条件访问管理员还可以创建将登录风险作为条件考虑进去的策略。有关详细信息，请参阅[条件访问：条件](../conditional-access/concept-conditional-access-conditions.md#sign-in-risk)一文。
+条件访问管理员还可以创建将登录风险作为条件考虑在内的策略。 有关详细信息，请参阅[条件访问：条件](../conditional-access/concept-conditional-access-conditions.md#sign-in-risk)一文。
 
 ## <a name="license-requirements"></a>许可要求
 
 [!INCLUDE [Active Directory P2 license](../../../includes/active-directory-p2-license.md)]
 
-| 功能 | 详细信息 | Azure AD Premium P2 | Azure AD Premium P1 | Azure AD Free/Office 365 应用 |
+| 功能 | 详细信息  | Azure AD Free/Microsoft 365 应用版 | Azure AD Premium P1|Azure AD Premium P2 |
 | --- | --- | --- | --- | --- |
-| 风险策略 | 用户风险策略（通过标识保护实现） | 是 | 否 | 否 |
-| 风险策略 | 登录风险策略（通过标识保护或条件访问实现） | 是 | 否 | 否 |
-| 安全报表 | 概述 | 是 | 否 | 否 |
-| 安全报表 | 有风险用户 | 完全访问权限 | 有限信息 | 有限信息 |
-| 安全报表 | 有风险的登录 | 完全访问权限 | 有限信息 | 有限信息 |
-| 安全报表 | 风险检测 | 完全访问权限 | 有限信息 | 否 |
-| 通知 | 检测到用户存在风险的警报 | 是 | 否 | 否 |
-| 通知 | 每周摘要 | 是 | 否 | 否 |
-| | MFA 注册策略 | 是 | 否 | 否 |
+| 风险策略 | 用户风险策略（通过标识保护实现）  | 否 | 否 |是 | 
+| 风险策略 | 登录风险策略（通过标识保护或条件访问实现）  | 否 |  否 |是 |
+| 安全报表 | 概述 |  否 | 否 |是 |
+| 安全报表 | 有风险用户  | 有限信息。 仅显示中等风险和高风险用户。 无详细信息抽屉或风险历史记录。 | 有限信息。 仅显示中等风险和高风险用户。 无详细信息抽屉或风险历史记录。 | 完全访问权限|
+| 安全报表 | 有风险的登录  | 有限信息。 未显示任何风险详细信息或风险级别。 | 有限信息。 未显示任何风险详细信息或风险级别。 | 完全访问权限|
+| 安全报表 | 风险检测   | 否 | 有限信息。 无详细信息抽屉。| 完全访问权限|
+| 通知 | 检测到用户存在风险的警报  | 否 | 否 |是 |
+| 通知 | 每周摘要| 否 | 否 | 是 | 
+| | MFA 注册策略 | 否 | 否 | 是 |
+
+有关这些丰富报表的详细信息，请参阅[操作说明：调查风险](howto-identity-protection-investigate-risk.md#navigating-the-reports)一文。
 
 ## <a name="next-steps"></a>后续步骤
 

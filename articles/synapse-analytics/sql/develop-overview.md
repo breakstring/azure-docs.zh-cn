@@ -6,26 +6,26 @@ author: filippopovic
 manager: craigg
 ms.service: synapse-analytics
 ms.topic: conceptual
-ms.subservice: ''
+ms.subservice: sql
 ms.date: 04/15/2020
 ms.author: fipopovi
 ms.reviewer: jrasnick
-ms.openlocfilehash: 85b0137f8d89def2f38ffe82199950c9158888d0
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.openlocfilehash: d47b4847a12b63532e44a8a1a47101dd065f811b
+ms.sourcegitcommit: 6a350f39e2f04500ecb7235f5d88682eb4910ae8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87070041"
+ms.lasthandoff: 12/01/2020
+ms.locfileid: "96446594"
 ---
 # <a name="design-decisions-and-coding-techniques-for-synapse-sql-features-in-azure-synapse-analytics"></a>Azure Synapse Analytics 中 Synapse SQL 功能的设计决策和编码方法
-在本文中，你将找到 Synapse SQL 的 SQL 池和 SQL 点播（预览版）功能的资源列表。 建议的文章分为两部分：关键设计决策和开发和编码技术。
+在本文中，你将找到 Synapse SQL 的专用 SQL 池和无服务器 SQL 池函数的资源列表。 建议的文章分为两部分：关键设计决策和开发和编码技术。
 
-这些文章旨在帮助您为 Synapse 分析中的 Synapse SQL 组件开发最佳的技术方法。
+本文的目的是帮助你为 Azure Synapse Analytics 中的 Synapse SQL 组件开发最佳的技术方法。
 
 ## <a name="key-design-decisions"></a>关键设计决策
 下面的文章重点介绍了 Synapse SQL 开发的概念和设计决策：
 
-| 项目 | SQL 池 | SQL 按需版本 |
+| 项目 | 专用 SQL 池 | 无服务器 SQL 池 |
 | ------- | -------- | ------------- |
 | [连接](connect-overview.md)                    | 是 | 是 |
 | [资源类和并发](../sql-data-warehouse/resource-classes-for-workload-management.md?toc=/azure/synapse-analytics/toc.json&bc=/azure/synapse-analytics/breadcrumb/toc.json) | 是    | 否 |
@@ -44,17 +44,17 @@ ms.locfileid: "87070041"
 
 下面是一些重要的文章，这些文章强调了用于开发的特定编码方法、提示和建议：
 
-| 项目 | SQL 池 | SQL 按需版本 |
+| 项目 | 专用 SQL 池 | 无服务器 SQL 池 |
 | ------- | -------- | ------------- |
 | [存储过程](develop-stored-procedures.md)  | 是                | 否                      |
 | [标签](develop-label.md)                           | 是                | 否                      |
-| [视图](develop-views.md)                             | 是                | 是                     |
+| [Views](develop-views.md)                             | 是                | 是                     |
 | [临时表](develop-tables-temporary.md)       | 是                | 是                     |
 | [动态 SQL](develop-dynamic-sql.md)                 | 是                | 是                     |
-| [循环](develop-loops.md)                         | 是                | 是                     |
+| [Hal](develop-loops.md)                         | 是                | 是                     |
 | [Group by 选项](develop-group-by-options.md)       | 是                | 否                      |
 | [变量赋值](develop-variable-assignment.md) | 是                | 是                     |
 
 ## <a name="next-steps"></a>后续步骤
-有关更多参考信息，请参阅[SQL Pool t-sql 语句](../sql-data-warehouse/sql-data-warehouse-reference-tsql-statements.md?toc=/azure/synapse-analytics/toc.json&bc=/azure/synapse-analytics/breadcrumb/toc.json)。
+有关更多参考信息，请参阅 [SQL Pool t-sql 语句](../sql-data-warehouse/sql-data-warehouse-reference-tsql-statements.md?toc=/azure/synapse-analytics/toc.json&bc=/azure/synapse-analytics/breadcrumb/toc.json)。
 

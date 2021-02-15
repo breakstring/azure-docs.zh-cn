@@ -4,12 +4,12 @@ ms.service: data-factory
 ms.topic: include
 ms.date: 11/09/2018
 ms.author: jingwang
-ms.openlocfilehash: 24bb7a1fcb1569922fb34034fb3c0d003cdd7061
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
-ms.translationtype: MT
+ms.openlocfilehash: 9447cec55c53861ca57d5416a91ffefd35fdd20b
+ms.sourcegitcommit: 829d951d5c90442a38012daaf77e86046018e5b9
+ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "67173417"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "91571855"
 ---
 ## <a name="repeatability-during-copy"></a>复制期间的可重复性
 从其他数据存储中的数据复制到 Azure SQL/SQL Server 时，需要记住可重复性，以免发生意外的结果。 
@@ -74,9 +74,9 @@ ID    Product        Quantity    ModifiedDate
 
 ### <a name="mechanism-2"></a>机制 2
 > [!IMPORTANT]
-> Azure SQL 数据仓库目前不支持 sliceIdentifierColumnName。 
+> Azure Synapse Analytics 目前不支持 sliceIdentifierColumnName。 
 
-实现可重复性的另一种机制是在目标表中使用专用列 (**sliceIdentifierColumnName**)。 Azure 数据工厂使用此列来确保源与目标保持同步。 如果可以灵活更改或定义目标 SQL 表架构，则很适合使用这种方法。 
+实现可重复性的另一种机制是在目标表中使用专用列 ( **sliceIdentifierColumnName** )。 Azure 数据工厂使用此列来确保源与目标保持同步。 如果可以灵活更改或定义目标 SQL 表架构，则很适合使用这种方法。 
 
 出于可重复性的目的，Azure 数据工厂将使用此列，在此过程中，Azure 数据工厂不会对表做出任何架构更改。 如何使用此方法：
 

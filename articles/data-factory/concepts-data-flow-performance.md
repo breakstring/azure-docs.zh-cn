@@ -6,13 +6,13 @@ ms.topic: conceptual
 ms.author: makromer
 ms.service: data-factory
 ms.custom: seo-lt-2019
-ms.date: 08/12/2020
-ms.openlocfilehash: cf91dd0b7f16bf0dcd3d84da1b942b2353ec5bd0
-ms.sourcegitcommit: 4913da04fd0f3cf7710ec08d0c1867b62c2effe7
+ms.date: 01/29/2021
+ms.openlocfilehash: 01c448165e6d1f4d6103c61387298f2d9eb40254
+ms.sourcegitcommit: 8c8c71a38b6ab2e8622698d4df60cb8a77aa9685
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/14/2020
-ms.locfileid: "88212033"
+ms.lasthandoff: 02/01/2021
+ms.locfileid: "99222927"
 ---
 # <a name="mapping-data-flows-performance-and-tuning-guide"></a>映射数据流性能和优化指南
 
@@ -53,7 +53,7 @@ ms.locfileid: "88212033"
 
 " **优化** " 选项卡包含配置 Spark 群集的分区方案的设置。 此选项卡存在于每个数据流转换中，并指定是否要在转换完成 **后** 对数据进行重新分区。 通过调整分区，可以控制跨计算节点和数据区域优化的数据分布，同时对整体数据流性能产生正面和负面影响。
 
-![优化](media/data-flow/optimize.png "优化")
+![屏幕截图显示 "优化" 选项卡，其中包括分区选项、分区类型和分区数。](media/data-flow/optimize.png)
 
 默认情况下，选择 " *使用当前分区* "，将指示 Azure 数据工厂保留转换的当前输出分区。 由于重新分区数据耗费时间，因此在大多数情况下，建议 *使用当前分区* 。 可能需要对数据进行重新分区的情况包括：聚合和联接，这些聚合和联接明显地倾斜数据或在 SQL 数据库上使用源分区。
 
@@ -80,12 +80,18 @@ Azure 数据工厂生成列哈希，以生成统一分区，使具有相似值�
 
 生成一个表达式，该表达式为分区数据列中的值提供固定范围。 若要避免分区歪斜，应在使用此选项之前对数据有充分的了解。 为表达式输入的值将用作分区函数的一部分。 可以设置物理分区数目。
 
-### <a name="key"></a>密钥
+### <a name="key"></a>键
 
 如果您对数据的基数有充分了解，键分区可能是一个不错的策略。 键分区为列中的每个唯一值创建分区。 不能设置分区数，因为该数字基于数据中的唯一值。
 
 > [!TIP]
 > 手动设置分区方案会 reshuffles 数据，并可以抵消 Spark 优化器的优势。 最佳做法是，除非需要，否则不要手动设置分区。
+
+## <a name="logging-level"></a>日志记录级别
+
+如果你不要求每个管道执行的数据流活动完全记录所有详细遥测日志，则可以选择将日志记录级别设置为 "基本" 或 "无"。 如果在 "详细" 模式下执行数据流 (默认值) ，则在数据转换过程中，请求 ADF 以完全记录每个分区级别的活动。 这可能是一种代价高昂的操作，因此，仅在进行故障排除时启用详细操作可以提高总体数据流和管道性能。 "基本" 模式将仅记录转换持续时间，而 "无" 将仅提供持续时间的摘要。
+
+![日志记录级别](media/data-flow/logging.png "设置日志记录级别")
 
 ## <a name="optimizing-the-azure-integration-runtime"></a><a name="ir"></a> 优化 Azure Integration Runtime
 
@@ -109,7 +115,7 @@ Azure 数据工厂生成列哈希，以生成统一分区，使具有相似值�
 
 默认群集大小为四个驱动程序节点和四个辅助角色节点。  处理更多数据时，建议使用较大的群集。 下面是可能的大小调整选项：
 
-| 辅助角色核心 | 驱动程序核心 | 核心总数 | 备注 |
+| 辅助角色核心 | 驱动程序核心 | 核心总数 | 说明 |
 | ------------ | ------------ | ----------- | ----- |
 | 4 | 4 | 8 | 不可用于计算优化 |
 | 8 | 8 | 16 | |
@@ -126,7 +132,7 @@ Azure 数据工厂生成列哈希，以生成统一分区，使具有相似值�
 
 ### <a name="time-to-live"></a>生存时间
 
-默认情况下，每个数据流活动会根据 IR 配置来旋转新群集。 群集启动时间花了几分钟的时间，数据处理直到完成后才会开始。 如果管道包含多个 **顺序** 数据流，则可以启用 (TTL) 值的生存时间。 指定生存时间值会使群集在一段时间内的执行完成后保持活动状态。 如果新作业在 TTL 时间内使用 IR 开始，则会重复使用现有群集并启动时间，而不是以秒为单位。 第二个作业完成后，该群集将再次保持处于活动状态的 TTL 时间。
+默认情况下，每个数据流活动会根据 IR 配置来旋转新群集。 群集启动时间花了几分钟的时间，数据处理直到完成后才会开始。 如果管道包含多个 **顺序** 数据流，则可以启用 (TTL) 值的生存时间。 指定生存时间值会使群集在一段时间内的执行完成后保持活动状态。 如果新作业在 TTL 时间内使用 IR 开始，则会重复使用现有群集，并且启动时间将大大减少。 第二个作业完成后，该群集将再次保持处于活动状态的 TTL 时间。
 
 一次只能在一个群集上运行一个作业。 如果有可用的群集，但两个数据流开始，则仅有一个使用活动群集。 第二个作业将启动其自身的独立群集。
 
@@ -155,7 +161,7 @@ Azure SQL 数据库具有一个名为 "源" 分区的唯一分区选项。 启�
 
 #### <a name="isolation-level"></a>隔离级别
 
-Azure SQL 源系统上的读取隔离级别对性能有影响。 选择 "未提交读" 将提供最快的性能，并防止任何数据库锁。 若要了解有关 SQL 隔离级别的详细信息，请参阅 [了解隔离级别](https://docs.microsoft.com/sql/connect/jdbc/understanding-isolation-levels?view=sql-server-ver15)。
+Azure SQL 源系统上的读取隔离级别对性能有影响。 选择 "未提交读" 将提供最快的性能，并防止任何数据库锁。 若要了解有关 SQL 隔离级别的详细信息，请参阅 [了解隔离级别](/sql/connect/jdbc/understanding-isolation-levels)。
 
 #### <a name="read-using-query"></a>使用查询进行读取
 
@@ -163,7 +169,7 @@ Azure SQL 源系统上的读取隔离级别对性能有影响。 选择 "未提�
 
 ### <a name="azure-synapse-analytics-sources"></a>Azure Synapse Analytics 源
 
-使用 Azure Synapse Analytics 时，源选项中存在称为 " **启用过渡** " 的设置。 这允许 ADF 使用 [PolyBase](https://docs.microsoft.com/sql/relational-databases/polybase/polybase-guide?view=sql-server-ver15)从 Synapse 读取，这大大提高了读取性能。 启用 PolyBase 需要在数据流活动设置中指定一个 Azure Blob 存储或 Azure Data Lake Storage gen2 暂存位置。
+使用 Azure Synapse Analytics 时，源选项中存在称为 " **启用过渡** " 的设置。 这允许 ADF 使用从 Synapse 读取 ```Staging``` ，从而大大提高读取性能。 启用 ```Staging``` 需要在数据流活动设置中指定一个 Azure Blob 存储或 Azure Data Lake Storage gen2 暂存位置。
 
 ![启用暂存](media/data-flow/enable-staging.png "启用暂存")
 
@@ -173,7 +179,7 @@ Azure SQL 源系统上的读取隔离级别对性能有影响。 选择 "未提�
 
 如果对一组文件运行相同的数据流，则建议从文件夹读取，使用通配符路径或从文件列表读取。 单个数据流活动运行可在批处理中处理所有文件。 有关如何设置这些设置的详细信息，请参阅 [Azure Blob 存储](connector-azure-blob-storage.md#source-transformation)等连接器文档。
 
-如果可能，请避免使用 For-每个活动对一组文件运行数据流。 这将导致每个迭代都启动其自己的 Spark 群集，这通常不是必需的，并且可能会消耗大量资源。 
+如果可能，请避免使用 For-Each 活动对一组文件运行数据流。 这将导致每个迭代都启动其自己的 Spark 群集，这通常不是必需的，并且可能会消耗大量资源。 
 
 ## <a name="optimizing-sinks"></a>优化接收器
 
@@ -182,6 +188,10 @@ Azure SQL 源系统上的读取隔离级别对性能有影响。 选择 "未提�
 ### <a name="azure-sql-database-sinks"></a>Azure SQL 数据库接收器
 
 使用 Azure SQL 数据库时，默认分区在大多数情况下都适用。 你的接收器可能有太多分区，你的 SQL 数据库无法处理。 如果正在运行，请减少 SQL 数据库接收器输出的分区数。
+
+#### <a name="impact-of-error-row-handling-to-performance"></a>错误行处理对性能的影响
+
+如果在接收器转换中启用错误行处理 ( "出错时继续" ) ，ADF 会在将兼容行写入目标表之前执行额外步骤。 这一额外步骤将有一个小性能损失，此步骤可能会在此步骤中添加了5% 的范围内，如果将该选项设置为，并且将不兼容的行设置为日志文件，则还会添加额外的小性能命中。
 
 #### <a name="disabling-indexes-using-a-sql-script"></a>使用 SQL 脚本禁用索引
 
@@ -198,7 +208,7 @@ Azure SQL 源系统上的读取隔离级别对性能有影响。 选择 "未提�
 ![禁用索引](media/data-flow/disable-indexes-sql.png "禁用索引")
 
 > [!WARNING]
-> 禁用索引时，数据流实际上会控制数据库并使查询在此时不可能成功。 因此，在晚间，会触发许多 ETL 作业，以避免此冲突。 有关详细信息，请参阅 [禁用索引的约束](https://docs.microsoft.com/sql/relational-databases/indexes/disable-indexes-and-constraints?view=sql-server-ver15)
+> 禁用索引时，数据流实际上会控制数据库并使查询在此时不可能成功。 因此，在晚间，会触发许多 ETL 作业，以避免此冲突。 有关详细信息，请参阅 [禁用索引的约束](/sql/relational-databases/indexes/disable-indexes-and-constraints)
 
 #### <a name="scaling-up-your-database"></a>扩展数据库
 
@@ -206,9 +216,9 @@ Azure SQL 源系统上的读取隔离级别对性能有影响。 选择 "未提�
 
 ### <a name="azure-synapse-analytics-sinks"></a>Azure Synapse 分析接收器
 
-写入 Azure Synapse Analytics 时，请确保将 " **启用过渡** " 设置为 "true"。 这使得 ADF 可以使用 [PolyBase](https://docs.microsoft.com/sql/relational-databases/polybase/polybase-guide) 进行编写，这会有效地批量加载数据。 使用 PolyBase 时，需要引用 Azure Data Lake Storage gen2 或 Azure Blob 存储帐户来暂存数据。
+写入 Azure Synapse Analytics 时，请确保将 " **启用过渡** " 设置为 "true"。 这使得 ADF 可以使用可有效地批量加载数据的 [SQL Copy 命令](/sql/t-sql/statements/copy-into-transact-sql) 进行写入。 使用暂存时，需要引用 Azure Data Lake Storage gen2 或 Azure Blob 存储帐户来暂存数据。
 
-除 PolyBase 以外，相同的最佳做法也适用于 azure SQL 数据库的 Azure Synapse 分析。
+除了过渡外，相同的最佳做法也适用于 azure SQL 数据库的 Azure Synapse 分析。
 
 ### <a name="file-based-sinks"></a>基于文件的接收器 
 
@@ -234,12 +244,11 @@ Azure SQL 源系统上的读取隔离级别对性能有影响。 选择 "未提�
 
 写入 CosmosDB 时，在数据流执行期间更改吞吐量和批大小可以提高性能。 这些更改仅在数据流活动运行期间生效，并将在结束后返回到原始集合设置。 
 
-**批大小：** 计算数据的粗略行大小，并确保行大小 * 批大小小于2000000。 如果小于 200 万，增大批大小可获得更好的吞吐量
+**批大小：** 通常，从默认的批大小开始便已足够。 若要进一步优化此值，请计算数据的对象大小，并确保对象大小 * 批大小小于2MB。 如果是这样，则可以增加批大小以获得更好的吞吐量。
 
 **吞吐量：** 在此处设置较高的吞吐量设置，以允许文档更快写入 CosmosDB。 请记住，基于高吞吐量设置的 RU 开销较高。
 
 **写入吞吐量预算：** 使用小于每分钟的总 ru 数的值。 如果具有大量 Spark 分区的数据流，则设置预算吞吐量会允许对这些分区进行更多的均衡。
-
 
 ## <a name="optimizing-transformations"></a>优化转换
 
@@ -247,7 +256,7 @@ Azure SQL 源系统上的读取隔离级别对性能有影响。 选择 "未提�
 
 #### <a name="broadcasting"></a>广播
 
-在联接、查找和存在转换中，如果一个或两个数据流非常小，足以适应工作节点内存，则可以通过启用 **广播**来优化性能。 广播是指将小型数据帧发送到群集中的所有节点。 这使 Spark 引擎能够在不重新组织大流中的数据的情况下执行联接。 默认情况下，Spark 引擎将自动决定是否广播联接的一方。 如果你熟悉传入的数据，并知道一个流将明显小于另一个，则可以选择 " **固定** 广播"。 固定广播强制 Spark 广播选定流。 
+在联接、查找和存在转换中，如果一个或两个数据流非常小，足以适应工作节点内存，则可以通过启用 **广播** 来优化性能。 广播是指将小型数据帧发送到群集中的所有节点。 这使 Spark 引擎能够在不重新组织大流中的数据的情况下执行联接。 默认情况下，Spark 引擎将自动决定是否广播联接的一方。 如果你熟悉传入的数据，并知道一个流将明显小于另一个，则可以选择 " **固定** 广播"。 固定广播强制 Spark 广播选定流。 
 
 如果广播数据的大小对于 Spark 节点而言太大，则可能会出现内存不足错误。 若要避免内存不足错误，请使用 **内存优化** 群集。 如果在数据流执行期间遇到广播超时，可以关闭广播优化。 但是，这会导致数据流执行速度变慢。
 
@@ -260,6 +269,10 @@ Azure SQL 源系统上的读取隔离级别对性能有影响。 选择 "未提�
 #### <a name="sorting-before-joins"></a>联接前排序
 
 与 SSIS 等工具中的合并联接不同，联接转换不是强制性的合并联接操作。 联接键在转换前无需排序。 在映射数据流时，Azure 数据工厂团队不建议使用排序转换。
+
+### <a name="window-transformation-performance"></a>窗口转换性能
+
+[窗口转换](data-flow-window.md)在转换设置中选择作为子句一部分的列中按值对数据进行分区 ```over()``` 。 Windows 转换中公开了许多非常流行的聚合和分析函数。 但是，如果用例是出于排名或行号目的为整个数据集生成一个窗口 ```rank()``` ```rowNumber()``` ，则建议改为使用 [排名转换](data-flow-rank.md) 和 [代理键转换](data-flow-surrogate-key.md)。 这些转换将使用这些函数更好地执行完整数据集操作。
 
 ### <a name="repartitioning-skewed-data"></a>对歪斜数据重新分区
 
@@ -296,6 +309,14 @@ Azure SQL 源系统上的读取隔离级别对性能有影响。 选择 "未提�
 ### <a name="overloading-a-single-data-flow"></a>重载单一数据流
 
 如果将所有逻辑都置于单个数据流中，则 ADF 会对单个 Spark 实例执行整个作业。 虽然这看起来可能会降低成本，但它会将不同的逻辑流组合在一起，并且很难监视和调试。 如果一个组件发生故障，则该作业的所有其他部分也会失败。 Azure 数据工厂团队建议通过独立的业务逻辑流来组织数据流。 如果数据流太大，则将其拆分为多个分隔组件会使监视和调试变得更加容易。 虽然数据流中的转换数没有硬性限制，但如果有太多的限制，则会使该工作复杂化。
+
+### <a name="execute-sinks-in-parallel"></a>并行执行接收器
+
+数据流接收器的默认行为是按顺序执行每个接收器，并以串行方式执行该操作，并在接收器中遇到错误时使数据流失败。 此外，所有接收器都默认为同一组，除非你进入数据流属性并为接收器设置不同的优先级。
+
+数据流允许您通过 UI 设计器中的 "数据流属性" 选项卡将接收器组合到组中。 您既可以使用相同的组号来设置接收器的执行顺序，也可以将接收器组合在一起。 为了帮助管理组，你可以要求 ADF 在同一组中运行接收器以并行运行。
+
+在 "接收器属性" 部分下的 "管道执行数据流" 活动中，可以选择启用并行接收器加载。 启用 "并行运行" 时，将指示数据流以相同的时间（而不是以顺序方式）将数据流写入连接的接收器。 为了利用 parallel 选项，接收器必须组合在一起，并通过新的分支或有条件拆分方式连接到同一个流。
 
 ## <a name="next-steps"></a>后续步骤
 

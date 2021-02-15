@@ -1,20 +1,20 @@
 ---
 title: 部署模板 - IntelliJ IDEA
-description: 了解如何使用 IntelliJ IDEA 创建第一个 Azure 资源管理器模板，以及如何部署该模板。
+description: 了解如何使用 IntelliJ 创意创建第一个 Azure 资源管理器模板 (ARM 模板) ，以及如何对其进行部署。
 ms.devlang: java
 ms.date: 08/01/2019
 ms.topic: conceptual
 ms.custom: devx-track-java
-ms.openlocfilehash: 4039a70bf90bc8f4b7932dbf40d8369e9773abf3
-ms.sourcegitcommit: a76ff927bd57d2fcc122fa36f7cb21eb22154cfa
+ms.openlocfilehash: f0e007fe8930b30cee1c95159d7e964e3792449f
+ms.sourcegitcommit: 80c1056113a9d65b6db69c06ca79fa531b9e3a00
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/28/2020
-ms.locfileid: "87321813"
+ms.lasthandoff: 12/09/2020
+ms.locfileid: "96905955"
 ---
-# <a name="create-and-deploy-arm-templates-by-using-the-intellij-idea"></a>使用 IntelliJ 方法创建和部署 ARM 模板
+# <a name="create-and-deploy-arm-templates-by-using-the-intellij-idea"></a>使用 IntelliJ IDEA 创建和部署 ARM 模板
 
-了解如何使用 IntelliJ 创意将 Azure 资源管理器（ARM）模板部署到 Azure，以及如何直接从 IDE 中编辑和更新模板。 ARM 模板为 JSON 文件，用于定义针对解决方案进行部署时所需的资源。 若要了解与部署和管理 Azure 解决方案关联的概念，请参阅[模板部署概述](overview.md)。
+了解如何使用 IntelliJ 创意将 Azure 资源管理器模板 (ARM 模板) 部署到 Azure，以及如何直接从 IDE 中编辑和更新模板。 ARM 模板为 JSON 文件，用于定义针对解决方案进行部署时所需的资源。 若要了解与部署和管理 Azure 解决方案相关联的概念，请参阅 [模板部署概述](overview.md)。
 
 ![资源管理器模板门户关系图](./media/quickstart-create-templates-use-the-portal/azure-resource-manager-export-deploy-template-portal.png)
 
@@ -40,11 +40,11 @@ ms.locfileid: "87321813"
 
     ![资源管理器模板 - 右键单击以创建部署](./media/create-templates-use-intellij/resource-manager-create-deployment-right-click.png)
 
-1. 配置“部署名称”、“订阅”、“资源组”和“区域”。     此处，我们要将模板部署到新资源组 `testRG`。 然后，选择 `azuredeploy.json` 作为**资源模板**的路径，并选择下载的 `azuredeploy.parameters.json` 作为**资源参数**。
+1. 配置“部署名称”、“订阅”、“资源组”和“区域”。     此处，我们要将模板部署到新资源组 `testRG`。 然后，选择 `azuredeploy.json` 作为 **资源模板** 的路径，并选择下载的 `azuredeploy.parameters.json` 作为 **资源参数**。
 
     ![资源管理器模板 - 选择用于创建部署的文件](./media/create-templates-use-intellij/resource-manager-create-deployment-select-files.png)
 
-1. 单击“确定”后，将启动部署。 在部署完成之前，可以在底部的 IntelliJ IDEA **状态栏**中查看进度。
+1. 单击“确定”后，将启动部署。 在部署完成之前，可以在底部的 IntelliJ IDEA **状态栏** 中查看进度。
 
     ![资源管理器模板部署状态](./media/create-templates-use-intellij/resource-manager-create-deployment-status.png)
 
@@ -60,19 +60,19 @@ ms.locfileid: "87321813"
 
 ## <a name="edit-and-update-an-existing-deployment"></a>编辑和更新现有部署
 
-1. 从右键单击菜单或前面所示的“显示属性”视图中选择“编辑部署”。  此时会打开另一个选项卡视图，其中显示了 Azure 上的部署的模板和参数文件。 若要将这些文件保存到本地，可以单击“导出模板文件”或“导出参数文件”。********
+1. 从右键单击菜单或前面所示的“显示属性”视图中选择“编辑部署”。  此时会打开另一个选项卡视图，其中显示了 Azure 上的部署的模板和参数文件。 若要将这些文件保存到本地文件，可以单击 " **导出模板文件**  " 或 " **导出参数文件**"。
 
     ![资源管理器模板 - 编辑部署](./media/create-templates-use-intellij/resource-manager-edit-deployment.png)
 
 1. 可在此页上编辑这两个文件，并将更改部署到 Azure。 此处，我们将参数文件中 **storageAccountType** 的值从 `Standard_LRS` 更改为 `Standard_GRS`。 然后，单击底部的“更新部署”并确认更新。 
 
-    ![资源管理器模板 - 编辑部署](./media/create-templates-use-intellij/resource-manager-edit-deployment-update.png)
+    ![屏幕截图显示了“资源管理器”模板，其中显示了“更新部署”提示。](./media/create-templates-use-intellij/resource-manager-edit-deployment-update.png)
 
 1. 完成更新部署后，可在门户中检查创建的存储帐户是否已更改为 `Standard_GRS`。
 
 ## <a name="clean-up-resources"></a>清理资源
 
-1. 不再需要 Azure 资源时，请通过删除资源组来清理部署的资源。 可在 Azure 门户或 Azure CLI 中执行此操作。 在 IntelliJ IDEA 的 Azure 资源管理器中，右键单击创建的**资源组**并选择“删除”。
+1. 不再需要 Azure 资源时，请通过删除资源组来清理部署的资源。 可在 Azure 门户或 Azure CLI 中执行此操作。 在 IntelliJ IDEA 的 Azure 资源管理器中，右键单击创建的 **资源组** 并选择“删除”。
 
     ![从 IntelliJ IDEA 的 Azure 资源管理器中删除资源组](./media/create-templates-use-intellij/delete-resource-group.png)
 

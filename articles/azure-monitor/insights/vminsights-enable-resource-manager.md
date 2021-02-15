@@ -6,12 +6,12 @@ ms.topic: conceptual
 author: bwren
 ms.author: bwren
 ms.date: 07/27/2020
-ms.openlocfilehash: 89a9a1b762e02237a8ee08dca5d6eedefabaafbb
-ms.sourcegitcommit: a76ff927bd57d2fcc122fa36f7cb21eb22154cfa
+ms.openlocfilehash: cee7072f9bc844fb1f89168de3547dc726472b67
+ms.sourcegitcommit: b6267bc931ef1a4bd33d67ba76895e14b9d0c661
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/28/2020
-ms.locfileid: "87328131"
+ms.lasthandoff: 12/19/2020
+ms.locfileid: "97695913"
 ---
 # <a name="enable-azure-monitor-for-vms-using-resource-manager-templates"></a>使用资源管理器模板启用用于 VM 的 Azure Monitor
 本文介绍如何使用资源管理器模板为虚拟机或虚拟机规模集启用用于 VM 的 Azure Monitor。 此过程可用于以下操作：
@@ -23,7 +23,7 @@ ms.locfileid: "87328131"
 ## <a name="prerequisites"></a>先决条件
 
 - [创建并配置 Log Analytics 工作区](vminsights-configure-workspace.md)。 
-- 请参阅[支持的操作系统](vminsights-enable-overview.md#supported-operating-systems)，以确保正在启用的虚拟机或虚拟机规模集的操作系统受支持。 
+- 请参阅 [支持的操作系统](vminsights-enable-overview.md#supported-operating-systems) ，以确保正在启用的虚拟机或虚拟机规模集的操作系统受支持。 
 
 ## <a name="resource-manager-templates"></a>资源管理器模板
 
@@ -44,10 +44,10 @@ Azure 资源管理器模板在存档文件 (.zip) 中提供，该文件可以从
 - **ConfigureWorkspace** 模板可将 Log Analytics 工作区配置为支持用于 VM 的 Azure Monitor，只需启用相关解决方案以及 Linux 和 Windows 操作系统性能计数器集合即可。
 
 >[!NOTE]
->如果虚拟机规模集已经存在，且升级策略已设置为“手动”，**** 则不需在运行 **ExistingVmssOnboarding** Azure 资源管理器模板后默认为实例启用用于 VM 的 Azure Monitor。 必须手动升级实例。
+>如果虚拟机规模集已经存在，且升级策略已设置为“手动”，则不需在运行 **ExistingVmssOnboarding** Azure 资源管理器模板后默认为实例启用用于 VM 的 Azure Monitor。 必须手动升级实例。
 
 ## <a name="deploy-templates"></a>部署模板
-可以使用[适用于资源管理器模板的任何部署方法](../../azure-resource-manager/templates/deploy-powershell.md)（包括以下使用 POWERSHELL 和 CLI 的示例）部署模板。
+可以使用 [适用于资源管理器模板的任何部署方法](../../azure-resource-manager/templates/deploy-powershell.md) （包括以下使用 POWERSHELL 和 CLI 的示例）部署模板。
 
 ```powershell
 New-AzResourceGroupDeployment -Name OnboardCluster -ResourceGroupName <ResourceGroupName> -TemplateFile <Template.json> -TemplateParameterFile <Parameters.json>
@@ -55,7 +55,7 @@ New-AzResourceGroupDeployment -Name OnboardCluster -ResourceGroupName <ResourceG
 
 
 ```azurecli
-az group deployment create --resource-group <ResourceGroupName> --template-file <Template.json> --parameters <Parameters.json>
+az deployment group create --resource-group <ResourceGroupName> --template-file <Template.json> --parameters <Parameters.json>
 ```
 
 
@@ -66,4 +66,4 @@ az group deployment create --resource-group <ResourceGroupName> --template-file 
 
 - 若要查看已发现的应用程序依赖项，请参阅[查看用于 VM 的 Azure Monitor 映射](vminsights-maps.md)。
 
-- 若要确定虚拟机的性能瓶颈和总体利用率，请参阅[查看 AZURE Vm 性能](vminsights-performance.md)。
+- 若要确定虚拟机的性能瓶颈和总体利用率，请参阅 [查看 AZURE Vm 性能](vminsights-performance.md)。

@@ -1,21 +1,17 @@
 ---
 title: 视觉对象创作
 description: 了解如何在 Azure 数据工厂中使用视觉对象创作
-services: data-factory
 ms.service: data-factory
-ms.workload: data-services
 ms.topic: conceptual
-author: djpmsft
-ms.author: daperlov
-ms.reviewer: ''
-manager: anandsub
-ms.date: 05/15/2020
-ms.openlocfilehash: ac51fd63adcc0328ff67f5fbe13dbfdb768f4bfe
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+author: dcstwh
+ms.author: weetok
+ms.date: 09/08/2020
+ms.openlocfilehash: 704360ac37e016de9efe2248181f7db358f5a7cf
+ms.sourcegitcommit: d4734bc680ea221ea80fdea67859d6d32241aefc
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "84343101"
+ms.lasthandoff: 02/14/2021
+ms.locfileid: "100371475"
 ---
 # <a name="visual-authoring-in-azure-data-factory"></a>Azure 数据工厂中的视觉对象创作
 
@@ -27,7 +23,7 @@ Azure 数据工厂用户界面体验 (UX) 允许你以可视方式创作和部�
 
 ## <a name="authoring-canvas"></a>创作画布
 
-若要打开**创作画布**，请单击铅笔图标。 
+若要打开 **创作画布**，请单击铅笔图标。 
 
 ![创作画布](media/author-visually/authoring-canvas.png)
 
@@ -39,9 +35,17 @@ Azure 数据工厂用户界面体验 (UX) 允许你以可视方式创作和部�
 
 对于管道、数据集和数据流等顶层资源，可以在画布右侧的“属性”窗格中编辑顶层属性。 “属性”窗格包含“名称”、“说明”、“注释”和其他顶层属性等属性。 管道活动和数据流转换等子资源使用画布底部的面板进行编辑。 
 
-![创作画布](media/author-visually/properties-pane.png)
+![属性窗格](media/author-visually/properties-pane.png)
 
 默认情况下，“属性”窗格只在创建资源时打开。 若要编辑它，请单击画布右上角的“属性”窗格图标。
+
+### <a name="related-resources"></a>相关资源
+
+在“属性”窗格中，可以通过选择“相关”选项卡查看依赖于所选资源的资源。此处将列出引用当前资源的任何资源。
+
+![相关资源](media/author-visually/related-resources.png)
+
+例如，在上图中，一个管道和两个数据流使用当前选定的数据集。
 
 ## <a name="management-hub"></a>管理中心
 
@@ -57,7 +61,7 @@ Azure 数据工厂用户界面体验 (UX) 允许你以可视方式创作和部�
 
 ![添加动态内容](media/author-visually/dynamic-content-1.png)
 
-这将打开**数据工厂表达式生成器**，你可以从支持的系统变量、活动输出、函数和用户指定的变量或参数构建表达式。 
+这将打开 **数据工厂表达式生成器**，你可以从支持的系统变量、活动输出、函数和用户指定的变量或参数构建表达式。 
 
 ![表达式生成器](media/author-visually/dynamic-content-2.png)
 

@@ -3,12 +3,12 @@ title: Azure 事件中心 - 处理 Apache Kafka 事件
 description: 教程：本文介绍如何使用 Azure 流分析处理通过事件中心引入的 Kafka 事件
 ms.topic: tutorial
 ms.date: 06/23/2020
-ms.openlocfilehash: 6dfca5b476dff1ee3367b5365c15869c8cff819b
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.openlocfilehash: 328537eebd05391fc4c8138395a9c10f0a5d072f
+ms.sourcegitcommit: ce8eecb3e966c08ae368fafb69eaeb00e76da57e
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87074919"
+ms.lasthandoff: 10/21/2020
+ms.locfileid: "92319379"
 ---
 # <a name="tutorial-process-apache-kafka-for-event-hubs-events-using-stream-analytics"></a>教程：使用 Stream analytics 处理用于事件中心的 Apache Kafka 事件 
 本文介绍如何将数据流式传输到事件中心，并使用 Azure 流分析对其进行处理。 其中包括以下步骤： 
@@ -25,7 +25,7 @@ ms.locfileid: "87074919"
 若要完成本快速入门，请确保符合以下先决条件：
 
 * Azure 订阅。 如果还没有该订阅，可以在开始前创建一个[免费帐户](https://azure.microsoft.com/free/?ref=microsoft.com&utm_source=microsoft.com&utm_medium=docs&utm_campaign=visualstudio)。
-* [Java 开发工具包 (JDK) 1.7+](https://aka.ms/azure-jdks)。
+* [Java 开发工具包 (JDK) 1.7+](/azure/developer/java/fundamentals/java-jdk-long-term-support)。
 * [下载](https://maven.apache.org/download.cgi)并[安装](https://maven.apache.org/install.html) Maven 二进制存档。
 * [Git](https://www.git-scm.com/)
 * **Azure 存储帐户**。 如果没有帐户，[先创建一个帐户](../storage/common/storage-account-create.md)，然后再继续进行操作。 本演练中的流分析作业将输出数据存储在 Azure Blob 存储中。 
@@ -136,7 +136,7 @@ ms.locfileid: "87074919"
 3. 将 `[YourInputAlias]` 替换为之前创建的输入别名。 
 4. 在工具栏上选择“保存”。 
 
-    ![查询](./media/event-hubs-kafka-stream-analytics/query.png)
+    ![屏幕捕获显示了查询窗口，其中包含输入和输出变量的值。](./media/event-hubs-kafka-stream-analytics/query.png)
 
 
 ### <a name="run-the-stream-analytics-job"></a>运行流分析作业
@@ -171,4 +171,4 @@ ms.locfileid: "87074919"
 
 
 ## <a name="next-steps"></a>后续步骤
-本文介绍了如何在不更改协议客户端或运行自己的群集的情况下，将事件流式传输到事件中心。 若要详细了解用于 Apache Kafka 的事件中心，请参阅[适用于 Azure 事件中心的 Apache Kafka 开发人员指南](apache-kafka-developer-guide.md)。 
+本文介绍了如何在不更改协议客户端或运行自己的群集的情况下，将事件流式传输到事件中心。 若要详细了解用于 Apache Kafka 的事件中心，请参阅[适用于 Azure 事件中心的 Apache Kafka 开发人员指南](apache-kafka-developer-guide.md)。

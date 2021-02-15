@@ -9,12 +9,12 @@ ms.service: iot-dps
 services: iot-dps
 ms.devlang: java
 ms.custom: mvc, devx-track-java
-ms.openlocfilehash: 43ae9bd0e844a23adabf52e7fbb4b8cd077d23bd
-ms.sourcegitcommit: a76ff927bd57d2fcc122fa36f7cb21eb22154cfa
+ms.openlocfilehash: 4cfbfe3e3e3ba620d8292767012c9bb866d8a878
+ms.sourcegitcommit: cd9754373576d6767c06baccfd500ae88ea733e4
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/28/2020
-ms.locfileid: "87326709"
+ms.lasthandoff: 11/20/2020
+ms.locfileid: "94968088"
 ---
 # <a name="tutorial-create-and-provision-a-simulated-x509-device-using-java-device-and-service-sdk-and-group-enrollments-for-iot-hub-device-provisioning-service"></a>教程：使用适用于 IoT 中心设备预配服务的 Java 设备和服务 SDK 与组登记来创建和预配模拟的 X.509 设备
 
@@ -23,9 +23,9 @@ ms.locfileid: "87326709"
 在继续操作之前，请确保完成[通过 Azure 门户设置 IoT 中心设备预配服务](./quick-setup-auto-provision.md)中的步骤。
 
 
-## <a name="prepare-the-environment"></a>准备环境 
+## <a name="prerequisites"></a>先决条件
 
-1. 确保已在计算机上安装 [Java SE 开发工具包 8](https://aka.ms/azure-jdks)。
+1. 确保已在计算机上安装 [Java SE 开发工具包 8](/azure/developer/java/fundamentals/java-jdk-long-term-support)。
 
 1. 下载并安装 [Maven](https://maven.apache.org/install.html)。
 
@@ -260,4 +260,4 @@ ms.locfileid: "87326709"
 本教程介绍了如何在 Windows 计算机上创建模拟 X.509 设备，以及如何使用 Azure IoT 中心设备预配服务和登记组将其预配到 IoT 中心。 若要了解有关 X.509 设备的详细信息，请继续阅读设备概念。 
 
 > [!div class="nextstepaction"]
-> [IoT 中心设备预配服务设备概念](concepts-device.md)
+> [IoT 中心设备预配服务概念](concepts-service.md)

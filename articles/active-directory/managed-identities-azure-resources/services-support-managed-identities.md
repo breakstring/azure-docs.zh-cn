@@ -2,21 +2,21 @@
 title: 支持托管标识的 Azure 服务 - Azure AD
 description: 支持 Azure 资源托管标识和 Azure AD 身份验证的服务列表
 services: active-directory
-author: MarkusVi
-ms.author: markvi
-ms.date: 07/09/2020
+author: barclayn
+ms.author: barclayn
+ms.date: 01/28/2021
 ms.topic: conceptual
 ms.service: active-directory
 ms.subservice: msi
-manager: markvi
+manager: daveba
 ms.collection: M365-identity-device-management
 ms.custom: references_regions
-ms.openlocfilehash: 13521017076c609c2fadb4362d5cccdf12d94098
-ms.sourcegitcommit: dea88d5e28bd4bbd55f5303d7d58785fad5a341d
+ms.openlocfilehash: b8e75b86d2cfd778aec44ea163a1bafda5ff6fba
+ms.sourcegitcommit: d4734bc680ea221ea80fdea67859d6d32241aefc
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/06/2020
-ms.locfileid: "87873579"
+ms.lasthandoff: 02/14/2021
+ms.locfileid: "100373668"
 ---
 # <a name="services-that-support-managed-identities-for-azure-resources"></a>支持 Azure 资源托管标识的服务
 
@@ -39,8 +39,18 @@ Azure 资源的托管标识在 Azure Active Directory 中为 Azure 服务提供�
 
 请参阅以下列表来配置 Azure API 管理的托管标识（在可用的区域中）：
 
-- [Azure Resource Manager 模板](/azure/api-management/api-management-howto-use-managed-service-identity)
+- [Azure Resource Manager 模板](../../api-management/api-management-howto-use-managed-service-identity.md)
 
+### <a name="azure-app-configuration"></a>Azure 应用配置
+
+| 托管标识类型 | 所有正式发布版<br>全球 Azure 区域 | Azure Government | Azure 德国 | Azure 中国世纪互联 |
+| --- | :-: | :-: | :-: | :-: |
+| 系统分配 | ![可用][check] | ![可用][check] | 不可用 | ![可用][check] |
+| 用户分配 | ![可用][check] | ![可用][check]  | 不可用  | ![可用][check] |
+
+请参阅以下列表来配置 Azure 应用配置的托管标识（在可用的区域中）：
+
+- [Azure CLI](../../azure-app-configuration/overview-managed-identity.md)
 
 ### <a name="azure-app-service"></a>Azure 应用服务
 
@@ -51,19 +61,29 @@ Azure 资源的托管标识在 Azure Active Directory 中为 Azure 服务提供�
 
 请参阅以下列表来配置 Azure 应用服务的托管标识（在可用的区域中）：
 
-- [Azure 门户](/azure/app-service/overview-managed-identity#using-the-azure-portal)
-- [Azure CLI](/azure/app-service/overview-managed-identity#using-the-azure-cli)
-- [Azure PowerShell](/azure/app-service/overview-managed-identity#using-azure-powershell)
-- [Azure Resource Manager 模板](/azure/app-service/overview-managed-identity#using-an-azure-resource-manager-template)
+- [Azure 门户](../../app-service/overview-managed-identity.md#using-the-azure-portal)
+- [Azure CLI](../../app-service/overview-managed-identity.md#using-the-azure-cli)
+- [Azure PowerShell](../../app-service/overview-managed-identity.md#using-azure-powershell)
+- [Azure Resource Manager 模板](../../app-service/overview-managed-identity.md#using-an-azure-resource-manager-template)
 
 ### <a name="azure-arc-enabled-kubernetes"></a>已启用 Azure Arc 的 Kubernetes
 
 | 托管标识类型 | 所有正式发布版<br>全球 Azure 区域 | Azure Government | Azure 德国 | Azure 中国世纪互联 |
 | --- | :-: | :-: | :-: | :-: |
-| 系统分配 | 预览 | 不可用 | 不可用 | 不可用 | 
+| 系统分配 | 预览 | 不可用 | 不可用 | 不可用 |
 | 用户分配 | 不可用 | 不可用 | 不可用 | 不可用 |
 
-启用 Azure Arc 的 Kubernetes 目前[支持系统分配的标识](https://docs.microsoft.com/azure/azure-arc/kubernetes/connect-cluster#azure-arc-agents-for-kubernetes)。 所有启用了 Azure Arc 的 Kubernetes 代理使用托管服务标识证书来与 Azure 通信。
+启用 Azure Arc 的 Kubernetes 目前 [支持系统分配的标识](../../azure-arc/kubernetes/connect-cluster.md#azure-arc-agents-for-kubernetes)。 所有启用了 Azure Arc 的 Kubernetes 代理使用托管服务标识证书来与 Azure 通信。
+
+### <a name="azure-automanage"></a>Azure 自动管理
+
+| 托管标识类型 | 所有正式发布版<br>全球 Azure 区域 | Azure Government | Azure 德国 | Azure 中国世纪互联 |
+| --- | :-: | :-: | :-: | :-: |
+| 系统分配 | 预览 | 不可用 | 不可用 | 不可用 |
+| 用户分配 | 不可用 | 不可用 | 不可用 | 不可用 |
+
+如果已将订阅移到新租户，请参阅以下文档来重新配置托管标识：
+* [修复损坏的 Automanage 帐户](../../automanage/repair-automanage-account.md)
 
 ### <a name="azure-blueprints"></a>Azure 蓝图
 
@@ -91,6 +111,14 @@ Azure 资源的托管标识在 Azure Active Directory 中为 Azure 服务提供�
 | --- | :-: | :-: | :-: | :-: |
 | 系统分配 | ![可用][check] | ![可用][check] | 不可用 | ![可用][check] |
 | 用户分配 | 不可用 | 不可用 | 不可用 | 不可用 |
+
+
+### <a name="azure-communication-services"></a>Azure 通信服务
+
+托管标识类型 | 所有正式发布版<br>全球 Azure 区域 | Azure Government | Azure 德国 | Azure 中国世纪互联 |
+| --- | :-: | :-: | :-: | :-: |
+| 系统分配 | ![可用][check] | 不可用 | 不可用 | 不可用 |
+| 用户分配 | ![可用][check] | 不可用 | 不可用 | 不可用 |
 
 
 ### <a name="azure-container-instances"></a>Azure 容器实例
@@ -139,22 +167,30 @@ Azure 资源的托管标识在 Azure Active Directory 中为 Azure 服务提供�
 - [REST](~/articles/data-factory/data-factory-service-identity.md#generate-managed-identity-using-rest-api)
 - [SDK](~/articles/data-factory/data-factory-service-identity.md#generate-managed-identity-using-sdk)
 
+### <a name="azure-digital-twins"></a>Azure 数字孪生
 
+托管标识类型 | 所有正式发布版<br>全球 Azure 区域 | Azure Government | Azure 德国 | Azure 中国世纪互联 |
+| --- | :-: | :-: | :-: | :-: |
+| 系统分配 | ![可用][check] | 不可用 | 不可用 | 不可用 |
+| 用户分配 | 不可用 | 不可用 | 不可用 | 不可用 |
 
-### <a name="azure-event-grid"></a>Azure 事件网格 
+请参阅以下列表，在可用) 的区域中为 Azure 数字孪生 (配置托管标识：
+
+- [Azure 门户](~/articles/digital-twins/how-to-enable-managed-identities.md)
+
+### <a name="azure-event-grid"></a>Azure 事件网格
 
 托管标识类型 |所有正式发布版<br>全球 Azure 区域 | Azure Government | Azure 德国 | Azure 中国世纪互联 |
 | --- | :-: | :-: | :-: | :-: |
 | 系统分配 | 预览 | 预览 | 不可用 | 预览 |
 | 用户分配 | 不可用 | 不可用  | 不可用  | 不可用 |
 
+### <a name="azure-firewall-policy"></a>Azure 防火墙策略
 
-
-
-
-
-
-
+托管标识类型 |所有正式发布版<br>全球 Azure 区域 | Azure Government | Azure 德国 | Azure 中国世纪互联 |
+| --- | :-: | :-: | :-: | :-: |
+| 系统分配 | 不可用 | 不可用 | 不可用 | 不可用 |
+| 用户分配 | 预览 | 不可用  | 不可用  | 不可用 |
 
 ### <a name="azure-functions"></a>Azure Functions
 
@@ -165,10 +201,10 @@ Azure 资源的托管标识在 Azure Active Directory 中为 Azure 服务提供�
 
 请参阅以下列表来配置 Azure Functions 的托管标识（在可用的区域中）：
 
-- [Azure 门户](/azure/app-service/overview-managed-identity#using-the-azure-portal)
-- [Azure CLI](/azure/app-service/overview-managed-identity#using-the-azure-cli)
-- [Azure PowerShell](/azure/app-service/overview-managed-identity#using-azure-powershell)
-- [Azure Resource Manager 模板](/azure/app-service/overview-managed-identity#using-an-azure-resource-manager-template)
+- [Azure 门户](../../app-service/overview-managed-identity.md#using-the-azure-portal)
+- [Azure CLI](../../app-service/overview-managed-identity.md#using-the-azure-cli)
+- [Azure PowerShell](../../app-service/overview-managed-identity.md#using-azure-powershell)
+- [Azure Resource Manager 模板](../../app-service/overview-managed-identity.md#using-an-azure-resource-manager-template)
 
 ### <a name="azure-iot-hub"></a>Azure IoT 中心
 
@@ -177,7 +213,7 @@ Azure 资源的托管标识在 Azure Active Directory 中为 Azure 服务提供�
 | 系统分配 | ![可用][check] | ![可用][check] | 不可用 | ![可用][check] |
 | 用户分配 | 不可用 | 不可用 | 不可用 | 不可用 |
 
-请参阅以下列表来配置 Azure 数据工厂 V2 的托管标识（在可用的区域中）：
+请参阅以下列表，在可用) 的区域中配置适用于 Azure IoT 中心 (的托管标识：
 
 - [Azure 门户](../../iot-hub/virtual-network-support.md#turn-on-managed-identity-for-iot-hub)
 
@@ -192,11 +228,11 @@ Azure 资源的托管标识在 Azure Active Directory 中为 Azure 服务提供�
 
 | 托管标识类型 | 所有正式发布版<br>全球 Azure 区域 | Azure Government | Azure 德国 | Azure 中国世纪互联 |
 | --- | :-: | :-: | :-: | :-: |
-| 系统分配 | ![可用][check] | ![可用][check] | 不可用 | ![可用][check] | 
-| 用户分配 | ![可用][check] | ![可用][check] | 不可用 | ![可用][check] |
+| 系统分配 | ![可用][check] | ![可用][check] | 不可用 | 不可用 |
+| 用户分配 | 预览 | 不可用 | 不可用 | 不可用 |
 
 
-有关详细信息，请参阅[在 Azure Kubernetes 服务中使用托管标识](https://docs.microsoft.com/azure/aks/use-managed-identity)。
+有关详细信息，请参阅[在 Azure Kubernetes 服务中使用托管标识](../../aks/use-managed-identity.md)。
 
 
 ### <a name="azure-logic-apps"></a>Azure 逻辑应用
@@ -209,9 +245,17 @@ Azure 资源的托管标识在 Azure Active Directory 中为 Azure 服务提供�
 
 请参阅以下列表来配置 Azure 逻辑应用的托管标识（在可用的区域中）：
 
-- [Azure 门户](/azure/logic-apps/create-managed-service-identity#enable-system-assigned-identity-in-azure-portal)
-- [Azure Resource Manager 模板](https://docs.microsoft.com/azure/logic-apps/logic-apps-azure-resource-manager-templates-overview)
+- [Azure 门户](../../logic-apps/create-managed-service-identity.md#enable-system-assigned-identity-in-azure-portal)
+- [Azure Resource Manager 模板](../../logic-apps/logic-apps-azure-resource-manager-templates-overview.md)
 
+### <a name="azure-machine-learning"></a>Azure 机器学习
+
+托管标识类型 | 所有正式发布版<br>全球 Azure 区域 | Azure Government | Azure 德国 | Azure 中国世纪互联 |
+| --- | :-: | :-: | :-: | :-: |
+| 系统分配 | 预览 | 不可用 | 不可用 | 不可用 |
+| 用户分配 | 预览 | 不可用 | 不可用 | 不可用 |
+
+有关详细信息，请参阅[将托管标识与 Azure 机器学习配合使用](../../machine-learning/how-to-use-managed-identities.md)。
 
 ### <a name="azure-policy"></a>Azure Policy
 
@@ -224,14 +268,14 @@ Azure 资源的托管标识在 Azure Active Directory 中为 Azure 服务提供�
 
 - [Azure 门户](../../governance/policy/tutorials/create-and-manage.md#assign-a-policy)
 - [PowerShell](../../governance/policy/how-to/remediate-resources.md#create-managed-identity-with-powershell)
-- [Azure CLI](https://docs.microsoft.com/cli/azure/policy/assignment?view=azure-cli-latest#az-policy-assignment-create)
-- [Azure Resource Manager 模板](https://docs.microsoft.com/azure/templates/microsoft.authorization/policyassignments)
-- [REST](https://docs.microsoft.com/rest/api/resources/policyassignments/create)
+- [Azure CLI](/cli/azure/policy/assignment#az-policy-assignment-create)
+- [Azure Resource Manager 模板](/azure/templates/microsoft.authorization/policyassignments)
+- [REST](/rest/api/resources/policyassignments/create)
 
 
 ### <a name="azure-service-fabric"></a>Azure Service Fabric
 
-所有区域都提供[Service Fabric 应用程序的托管标识](https://docs.microsoft.com/azure/service-fabric/concepts-managed-identity)。
+[Service Fabric 应用程序的托管标识](../../service-fabric/concepts-managed-identity.md)在所有区域中均可用。
 
 托管标识类型 | 所有正式发布版<br>全球 Azure 区域 | Azure Government | Azure 德国 | Azure 中国世纪互联 |
 | --- | :-: | :-: | :-: | :-: |
@@ -246,19 +290,25 @@ Azure 资源的托管标识在 Azure Active Directory 中为 Azure 服务提供�
 
 | 托管标识类型 | 所有正式发布版<br>全球 Azure 区域 | Azure Government | Azure 德国 | Azure 中国世纪互联 |
 | --- | :-: | :-: | :-: | :-: |
-| 系统分配 | ![可用][check] | 不可用 | 不可用 | 不可用 | 
+| 系统分配 | ![可用][check] | 不可用 | 不可用 | ![可用][check] |
 | 用户分配 | 不可用 | 不可用 | 不可用 | 不可用 |
 
 
-有关详细信息，请参阅[如何为 Azure 弹簧 Cloud 应用程序启用系统分配的托管标识](~/articles/spring-cloud/spring-cloud-howto-enable-system-assigned-managed-identity.md)。
+有关详细信息，请参阅[如何为 Azure Spring Cloud 应用程序启用系统分配的托管标识](~/articles/spring-cloud/spring-cloud-howto-enable-system-assigned-managed-identity.md)。
 
+### <a name="azure-stack-edge"></a>Azure Stack Edge
+
+托管标识类型 | 所有正式发布版<br>全球 Azure 区域 | Azure Government | Azure 德国 | Azure 中国世纪互联 |
+| --- | --- | --- | --- | --- |
+| 系统分配 | 在提供 Azure Stack Edge 服务的区域中可用 | 不可用 | 不可用 | 不可用 |
+| 用户分配 | 不可用 | 不可用 | 不可用 | 不可用 |
 
 ### <a name="azure-virtual-machine-scale-sets"></a>Azure 虚拟机规模集
 
 |托管标识类型 | 所有正式发布版<br>全球 Azure 区域 | Azure Government | Azure 德国 | Azure 中国世纪互联 |
 | --- | :-: | :-: | :-: | :-: |
-| 系统分配 | ![可用][check] | 预览 | 预览 | 预览 |
-| 用户分配 | ![可用][check] | 预览 | 预览 | 预览 |
+| 系统分配 | ![可用][check] | ![可用][check] | ![可用][check] | ![可用][check] |
+| 用户分配 | ![可用][check] | ![可用][check] | ![可用][check] | ![可用][check] |
 
 请参阅以下列表来配置 Azure 虚拟机规模集的托管标识（在可用的区域中）：
 
@@ -274,8 +324,8 @@ Azure 资源的托管标识在 Azure Active Directory 中为 Azure 服务提供�
 
 | 托管标识类型 | 所有正式发布版<br>全球 Azure 区域 | Azure Government | Azure 德国 | Azure 中国世纪互联 |
 | --- | :-: | :-: | :-: | :-: |
-| 系统分配 | ![可用][check] | ![可用][check] | 预览 | 预览 | 
-| 用户分配 | ![可用][check] | ![可用][check] | 预览 | 预览 |
+| 系统分配 | ![可用][check] | ![可用][check] | ![可用][check] | ![可用][check] |
+| 用户分配 | ![可用][check] | ![可用][check] | ![可用][check] | ![可用][check] |
 
 请参阅以下列表来配置 Azure 虚拟机的托管标识（在可用的区域中）：
 
@@ -284,16 +334,17 @@ Azure 资源的托管标识在 Azure Active Directory 中为 Azure 服务提供�
 - [Azure CLI](qs-configure-cli-windows-vm.md)
 - [Azure Resource Manager 模板](qs-configure-template-windows-vm.md)
 - [REST](qs-configure-rest-vm.md)
+- [Azure SDK](qs-configure-sdk-windows-vm.md)
 
 
 ### <a name="azure-vm-image-builder"></a>Azure VM 映像生成器
 
 | 托管标识类型 | 所有正式发布版<br>全球 Azure 区域 | Azure Government | Azure 德国 | Azure 中国世纪互联 |
 | --- | :-: | :-: | :-: | :-: |
-| 系统分配 | 不可用 | 不可用 | 不可用 | 不可用 | 
-| 用户分配 | [在支持的区域中可用](https://docs.microsoft.com/azure/virtual-machines/windows/image-builder-overview#regions) | 不可用 | 不可用 | 不可用 |
+| 系统分配 | 不可用 | 不可用 | 不可用 | 不可用 |
+| 用户分配 | [在支持的区域中可用](../../virtual-machines/image-builder-overview.md#regions) | 不可用 | 不可用 | 不可用 |
 
-若要了解如何在可用) 的区域中为 Azure VM 映像生成器 (配置托管标识，请参阅[映像生成器概述](https://docs.microsoft.com/azure/virtual-machines/windows/image-builder-overview#permissions)。
+若要了解如何在可用) 的区域中为 Azure VM 映像生成器 (配置托管标识，请参阅 [映像生成器概述](../../virtual-machines/image-builder-overview.md#permissions)。
 ### <a name="azure-signalr-service"></a>Azure SignalR 服务
 
 托管标识类型 | 所有正式发布版<br>全球 Azure 区域 | Azure Government | Azure 德国 | Azure 中国世纪互联 |
@@ -301,9 +352,20 @@ Azure 资源的托管标识在 Azure Active Directory 中为 Azure 服务提供�
 | 系统分配 | 预览 | 预览 | 不可用 | 预览 |
 | 用户分配 | 预览 | 预览 | 不可用 | 预览 |
 
-请参阅以下列表，在可用) 的区域中为 Azure SignalR 服务 (配置托管标识：
+请参阅以下列表来配置 Azure SignalR 服务的托管标识（在可用的区域中）：
 
 - [Azure Resource Manager 模板](../../azure-signalr/howto-use-managed-identity.md)
+
+### <a name="azure-resource-mover"></a>Azure 资源移动器
+
+托管标识类型 | 所有正式发布版<br>全球 Azure 区域 | Azure Government | Azure 德国 | Azure 中国世纪互联 |
+| --- | :-: | :-: | :-: | :-: |
+| 系统分配 | 在 Azure 资源移动器服务可用的区域中提供 | 不可用 | 不可用 | 不可用 |
+| 用户分配 | 不可用 | 不可用 | 不可用 | 不可用 |
+
+请参阅以下文档，使用 Azure 资源移动器：
+
+- [Azure 资源移动器](../../resource-mover/overview.md)
 
 ## <a name="azure-services-that-support-azure-ad-authentication"></a>支持 Azure AD 身份验证的 Azure 服务
 
@@ -352,6 +414,15 @@ Azure 资源的托管标识在 Azure Active Directory 中为 Azure 服务提供�
 | Azure 德国 | `https://database.cloudapi.de/` | ![可用][check] |
 | Azure 中国世纪互联 | `https://database.chinacloudapi.cn/` | ![可用][check] |
 
+### <a name="azure-data-explorer"></a>Azure 数据资源管理器
+
+| 云 | 资源 ID | 状态 |
+|--------|------------|:-:|
+| Azure 全球 | `https://<account>.<region>.kusto.windows.net` | ![可用][check] |
+| Azure Government | `https://<account>.<region>.kusto.usgovcloudapi.net` | ![可用][check] |
+| Azure 德国 | `https://<account>.<region>.kusto.cloudapi.de` | ![可用][check] |
+| Azure 中国世纪互联 | `https://<account>.<region>.kusto.chinacloudapi.cn` | ![可用][check] |
+
 ### <a name="azure-event-hubs"></a>Azure 事件中心
 
 | 云 | 资源 ID | 状态 |
@@ -397,7 +468,7 @@ Azure 资源的托管标识在 Azure Active Directory 中为 Azure 服务提供�
 | Azure 中国世纪互联 | `https://*.asazure.chinacloudapi.cn` | ![可用][check] |
 
 > [!Note]
-> Microsoft Power BI 还[支持托管标识](https://docs.microsoft.com/azure/stream-analytics/powerbi-output-managed-identity)。
+> Microsoft Power BI 还[支持托管标识](../../stream-analytics/powerbi-output-managed-identity.md)。
 
 
 [check]: media/services-support-managed-identities/check.png "可用"

@@ -9,13 +9,13 @@ manager: diviso
 ms.topic: quickstart
 ms.workload: big-data
 ms.custom: mvc seodec18
-ms.date: 07/07/2020
-ms.openlocfilehash: 135fbe914a1bf99f1cc32bd9291658f60282aa0e
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.date: 01/11/2021
+ms.openlocfilehash: cb5bac06ab6eeaa00e72ba6068328a972b8ac37b
+ms.sourcegitcommit: aacbf77e4e40266e497b6073679642d97d110cda
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87100717"
+ms.lasthandoff: 01/12/2021
+ms.locfileid: "98119305"
 ---
 # <a name="quickstart-explore-the-azure-time-series-insights-gen2-demo-environment"></a>快速入门：浏览 Azure 时序见解 Gen2 演示环境
 
@@ -38,12 +38,27 @@ Azure 时序见解 Gen2 资源管理器演示历史数据和根本原因分析�
 
 ## <a name="work-with-historical-data"></a>处理历史数据
 
-1. 在“Contoso 发电厂 1”中查看风力涡轮机“W7” 。  
+1. 选择“Contoso 风电场层次结构”。
+
+   [![Contoso 风电场层次结构](media/quickstart-explore/quick-start-contoso-1.png)](media/quickstart-explore/quick-start-contoso-1.png#lightbox)
+
+1. 在“Contoso 发电厂 1”中查看风力涡轮机“W7” 。
+
+   [![Contoso 发电厂 1 中的 W7](media/quickstart-explore/quick-start-contoso-2.png)](media/quickstart-explore/quick-start-contoso-2.png#lightbox)
 
    1. 将视图范围更改为“1/1/17 20:00:00.00 to 3/10/17 20:00:00.00 (UTC)”。
+
+      [![范围视图](media/quickstart-explore/range-setting-1.png)](media/quickstart-explore/range-setting-1.png#lightbox)
+
+      [![范围视图设置](media/quickstart-explore/range-setting-2.png)](media/quickstart-explore/range-setting-2.png#lightbox)
+
+   1. 使用放大 (+) 和缩小 (-) 并移动滑动条来调整范围视图 。
+
+      [![调整范围视图](media/quickstart-explore/view-range-setting.png)](media/quickstart-explore/view-range-setting.png#lightbox)
+
    1. 若要选择传感器，请选择“Contoso 发电厂 1” > “W7” > “发电机系统” > “GeneratorSpeed”。    然后，查看显示的值。
 
-      [![Contoso 发电厂 1 中的 W7](media/v2-update-quickstart/quick-start-generator-speed.png)](media/v2-update-quickstart/quick-start-generator-speed.png#lightbox)
+      [![发电机速度](media/quickstart-explore/quick-start-generator-speed-1.png)](media/quickstart-explore/quick-start-generator-speed-1.png#lightbox)
 
 1. 最近，Contoso 公司发现风力涡轮机 W7 起火。 起火原因的观点各不相同。 在 Azure 时序见解 Gen2 中，将显示在火灾期间激活的火灾警报传感器。
 
@@ -100,7 +115,7 @@ Azure 时序见解 Gen2 资源管理器演示历史数据和根本原因分析�
 
       [![将时间跨度扩大为 60 天](media/v2-update-quickstart/quick-start-expand-interval-range.png)](media/v2-update-quickstart/quick-start-expand-interval-range.png#lightbox)
 
-1. 可以添加其他传感器数据点来提供更好的上下文。 查看的传感器越多，对问题的认识就更全面。 让我们放置一个标记，以显示实际值。 
+1. 可以添加其他传感器数据点来提供更好的上下文。 查看的传感器越多，对问题的认识就更全面。 让我们放置一个标记，以显示实际值。
 
     1. 选择“发电机系统”，然后选择三个传感器： **GridVoltagePhase1**、**GridVoltagePhase2** 和 **GridVoltagePhase3**。
     1. 在可见区域的最后一个数据点放一个标记。
@@ -127,9 +142,9 @@ Azure 时序见解 Gen2 资源管理器演示历史数据和根本原因分析�
 已准备好创建自己的 Azure 时序见解 Gen2 环境。 若要开始，请执行以下操作：
 
 > [!div class="nextstepaction"]
-> [规划 Azure 时序见解 Gen2 环境](time-series-insights-update-plan.md)
+> [规划 Azure 时序见解 Gen2 环境](./how-to-plan-your-environment.md)
 
 了解如何使用演示及其功能：
 
 > [!div class="nextstepaction"]
-> [Azure 时序见解 Gen2 资源管理器](time-series-insights-update-explorer.md)
+> [Azure 时序见解 Gen2 资源管理器](./concepts-ux-panels.md)

@@ -1,19 +1,20 @@
 ---
 title: 快速入门：在应用程序网关上创建 Azure WAF v2 - Azure 资源管理器模板
 titleSuffix: Azure Application Gateway
-description: 了解如何使用 Azure 资源管理器模板（ARM 模板）在 Azure 应用程序网关上创建 Web 应用程序防火墙 v2。
+description: 了解如何使用 Azure 资源管理器快速启动模板（ARM 模板）在 Azure 应用程序网关上创建 Web 应用程序防火墙 v2。
 services: web-application-firewall
 author: vhorne
 ms.service: web-application-firewall
 ms.topic: quickstart
-ms.date: 04/02/2020
+ms.date: 09/16/2020
 ms.author: victorh
-ms.openlocfilehash: 081bab0cd930d90ca0d359461e4a41b15ba4911b
-ms.sourcegitcommit: 3d79f737ff34708b48dd2ae45100e2516af9ed78
+ms.custom: subject-armqs
+ms.openlocfilehash: 4c5d5c4cafee9402e2afd7ddc047fd3b68e84540
+ms.sourcegitcommit: 30505c01d43ef71dac08138a960903c2b53f2499
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/23/2020
-ms.locfileid: "87075510"
+ms.lasthandoff: 10/15/2020
+ms.locfileid: "92091315"
 ---
 # <a name="quickstart-create-an-azure-waf-v2-on-application-gateway-using-an-arm-template"></a>快速入门：使用 ARM 模板在应用程序网关上创建 Azure WAF v2
 
@@ -37,7 +38,7 @@ ms.locfileid: "87075510"
 
 本快速入门中使用的模板来自 [Azure 快速启动模板](https://azure.microsoft.com/resources/templates/ag-docs-wafv2/)。
 
-:::code language="json" source="~/quickstart-templates/ag-docs-wafv2/azuredeploy.json" range="001-404" highlight="314-358":::
+:::code language="json" source="~/quickstart-templates/ag-docs-wafv2/azuredeploy.json":::
 
 模板中定义了多个 Azure 资源：
 

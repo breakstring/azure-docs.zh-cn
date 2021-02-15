@@ -1,5 +1,5 @@
 ---
-title: 连接端到端解决方案
+title: 教程：连接端到端解决方案
 titleSuffix: Azure Digital Twins
 description: 扩建由设备数据驱动的端到端 Azure 数字孪生解决方案的教程。
 author: baanders
@@ -7,26 +7,27 @@ ms.author: baanders
 ms.date: 4/15/2020
 ms.topic: tutorial
 ms.service: digital-twins
-ms.openlocfilehash: 0407046dcafb0dcc1872d5083669e09b378a75cd
-ms.sourcegitcommit: 2ff0d073607bc746ffc638a84bb026d1705e543e
+ms.openlocfilehash: 5ef06f2db487a3e6d897e26758da840f37c3ecaf
+ms.sourcegitcommit: 1f1d29378424057338b246af1975643c2875e64d
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/06/2020
-ms.locfileid: "87827301"
+ms.lasthandoff: 02/05/2021
+ms.locfileid: "99575799"
 ---
-# <a name="build-out-an-end-to-end-solution"></a>扩建端到端解决方案
+# <a name="tutorial-build-out-an-end-to-end-solution"></a>教程：扩建端到端解决方案
 
 若要设置由环境中的实时数据驱动的完整端到端解决方案，可以将 Azure 数字孪生实例连接到其他 Azure 服务，以管理设备和数据。
 
 在本教程中，你将...
-* 设置 Azure 数字孪生实例
-* 了解示例建筑方案，并实例化预先编写的组件
-* 使用 [Azure Functions](../azure-functions/functions-overview.md) 应用将模拟的遥测从 [IoT 中心](../iot-hub/about-iot-hub.md)设备路由到数字孪生属性
-* 通过使用 Azure Functions、终结点和路由处理数字孪生通知，通过孪生图传播更改
+> [!div class="checklist"]
+> * 设置 Azure 数字孪生实例
+> * 了解示例建筑方案，并实例化预先编写的组件
+> * 使用 [Azure Functions](../azure-functions/functions-overview.md) 应用将模拟的遥测从 [IoT 中心](../iot-hub/about-iot-hub.md)设备路由到数字孪生属性
+> * 通过使用 Azure Functions、终结点和路由处理数字孪生通知，通过孪生图传播更改
 
 [!INCLUDE [Azure Digital Twins tutorial: sample prerequisites](../../includes/digital-twins-tutorial-sample-prereqs.md)]
 
-[!INCLUDE [cloud-shell-try-it.md](../../includes/cloud-shell-try-it.md)]
+[!INCLUDE [azure-cli-prepare-your-environment.md](../../includes/azure-cli-prepare-your-environment-h3.md)]
 
 ### <a name="set-up-cloud-shell-session"></a>设置 Cloud Shell 会话
 [!INCLUDE [Cloud Shell for Azure Digital Twins](../../includes/digital-twins-cloud-shell.md)]
@@ -47,12 +48,10 @@ ms.locfileid: "87827301"
 
 下面是建筑方案 AdtSampleApp 示例应用实现的组件：
 * 设备身份验证 
-* [.NET (C#) SDK](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core) 用法示例（参见 CommandLoop.cs）
+* [.NET (C#) SDK](/dotnet/api/overview/azure/digitaltwins/client?view=azure-dotnet&preserve-view=true) 用法示例（参见 CommandLoop.cs）
 * 调用 Azure 数字孪生 API 的控制台接口
 * SampleClientApp - Azure 数字孪生解决方案示例
 * SampleFunctionsApp - Azure Functions 应用，可将 Azure 数字孪生图更新为来自 IoT 中心和 Azure 数字孪生事件的遥测结果
-
-示例项目还包含交互式授权组件。 每次启动项目时，浏览器窗口都会随即打开，提示你使用 Azure 帐户登录。
 
 ### <a name="instantiate-the-pre-created-twin-graph"></a>实例化预先创建的孪生图
 
@@ -85,6 +84,13 @@ SetupBuildingScenario
 Query
 ```
 
+>[!TIP]
+> 此简化方法作为 AdtE2ESample 项目的一部分提供。 在此示例代码的上下文外，你可以随时使用[查询 API](/rest/api/digital-twins/dataplane/query) 或 [CLI 命令](how-to-use-cli.md)查询实例中的所有孪生体。
+>
+> 下面是完整的查询正文，用于获取实例中的所有数字孪生体：
+> 
+> :::code language="sql" source="~/digital-twins-docs-samples/queries/queries.sql" id="GetAllTwins":::
+
 此后，就可以停止运行该项目。 不过，请在 Visual Studio 中使解决方案保持打开状态，因为本教程还将继续使用它。
 
 ## <a name="set-up-the-sample-function-app"></a>设置示例函数应用
@@ -95,7 +101,7 @@ Query
 
 在本部分中，你将发布预先编写的函数应用，并确保该函数应用可通过向其分配 Azure Active Directory (Azure AD) 标识来访问 Azure 数字孪生。 完成这些步骤后，本教程的其余部分即可使用函数应用中的函数。 
 
-返回到打开 AdtE2ESample 项目的 Visual Studio 窗口中，该函数应用位于 SampleFunctionsApp 项目文件中__ __。 你可以在“解决方案资源管理器”窗格中进行查看。
+返回到打开 AdtE2ESample 项目的 Visual Studio 窗口中，该函数应用位于 SampleFunctionsApp 项目文件中 。 你可以在“解决方案资源管理器”窗格中进行查看。
 
 ### <a name="update-dependencies"></a>更新依赖项
 
@@ -111,59 +117,23 @@ Query
 
 ### <a name="publish-the-app"></a>发布应用
 
-返回到打开 AdtE2ESample 项目的 Visual Studio 窗口中，从“解决方案资源管理器”窗格中，右键选择 SampleFunctionsApp 项目文件，然后点击“发布” 。
+返回到打开 AdtE2ESample 项目的 Visual Studio 窗口中，在“解决方案资源管理器”窗格中查找 SampleFunctionsApp 项目 。
 
-:::image type="content" source="media/tutorial-end-to-end/publish-azure-function-1.png" alt-text="Visual Studio：发布项目":::
-
-在接下来的“发布”页中，保留选择的默认 Azure 目标，然后点击“下一步”。 
-
-对于特定目标，请选择“Azure 函数应用(Windows)”，然后点击“下一步”。
-
-:::image type="content" source="media/tutorial-end-to-end/publish-azure-function-2.png" alt-text="在 Visual Studio 中发布 Azure 函数：特定目标":::
-
-在“Functions 实例”页上，选择你的订阅。 这应该会使订阅中资源组填入方框。
-
-选择实例的资源组，然后点击“+ 创建新的 Azure 函数…”。
-
-:::image type="content" source="media/tutorial-end-to-end/publish-azure-function-3.png" alt-text="在 Visual Studio 中发布 Azure 函数：Functions 实例（在函数应用之前）":::
-
-在“函数应用(Windows) - 新建”窗口中，按如下所示填写字段：
-* “名称”是 Azure 将用于托管 Azure Functions 应用的消耗计划的名称。 这也将成为保存实际函数的函数应用的名称。 你可以选择自己的唯一值，也可以保留默认建议。
-* 确保“订阅”与要使用的订阅匹配 
-* 确保“资源组”是你想要使用的资源组
-* 将“计划类型”保留为“消耗”
-* 在“位置”中，选择符合资源组位置的位置
-* 使用“新建…”链接创建新的 Azure 存储资源。 设置与资源组相匹配的位置，使用其他默认值，然后点击“确定”。
-
-:::image type="content" source="media/tutorial-end-to-end/publish-azure-function-4.png" alt-text="在 Visual Studio 中发布 Azure 函数：函数应用(Windows) - 新建":::
-
-然后选择“创建”。
-
-这会使你返回到“Functions 实例”页，此时新函数应用会显示在资源组下。 点击“完成”。
-
-:::image type="content" source="media/tutorial-end-to-end/publish-azure-function-5.png" alt-text="在 Visual Studio 中发布 Azure 函数：Functions 实例（在函数应用之后）":::
-
-在 Visual Studio 主窗口重新打开的“发布”窗格中，检查所有信息是否都正确无误，然后选择“发布”。
-
-:::image type="content" source="media/tutorial-end-to-end/publish-azure-function-6.png" alt-text="在 Visual Studio 中发布 Azure 函数：发布":::
-
-> [!NOTE]
-> 如果看到如下所示的弹出窗口：:::image type="content" source="media/tutorial-end-to-end/publish-azure-function-7.png" alt-text="在 Visual Studio 中发布 Azure 函数：发布凭据" border="false":::
-> 依次选择“尝试从 Azure 检索凭据”和“保存” 。
->
-> 若看到“升级 Azure 上的 Functions 版本”或“你的 Functions 运行时版本与在 Azure 中运行的版本不匹配”警告 ：
->
-> 请按照提示升级到最新的 Azure Functions 运行时版本。 若使用旧版本的 Visual Studio 而不是本教程开头的“先决条件”部分中推荐的版本，则可能出现此问题。
+[!INCLUDE [digital-twins-publish-azure-function.md](../../includes/digital-twins-publish-azure-function.md)]
 
 ### <a name="assign-permissions-to-the-function-app"></a>向函数应用分配权限
 
-为了使函数应用能够访问 Azure 数字孪生，下一步是配置应用设置，为应用分配系统管理的 Azure AD 标识，并为此标识授予 Azure 数字孪生实例的“Azure 数字孪生所有者(预览版)”角色。 要对实例执行许多数据平面活动的任何用户或函数都需要此角色。 关于安全性和角色分配，可以在[概念：Azure 数字孪生解决方案的安全性](concepts-security.md)中了解详细信息。
+为了使函数应用能够访问 Azure 数字孪生，下一步是配置应用设置，为应用分配系统管理的 Azure AD 标识，并为此标识授予 Azure 数字孪生实例的“Azure 数字孪生数据所有者”角色。 要对实例执行许多数据平面活动的任何用户或函数都需要此角色。 关于安全性和角色分配，可以在[概念：Azure 数字孪生解决方案的安全性](concepts-security.md)中了解详细信息。
 
-在 Azure Cloud Shell 中，使用以下命令设置一个应用程序设置，供函数应用用来引用 Azure 数字孪生实例。
+[!INCLUDE [digital-twins-role-rename-note.md](../../includes/digital-twins-role-rename-note.md)]
+
+在 Azure Cloud Shell 中，使用以下命令设置一个应用程序设置，供函数应用用来引用 Azure 数字孪生实例。 在占位符中填写资源详细信息（请记住，Azure 数字孪生实例 URL 是其主机名，以 https:// 开头）。
 
 ```azurecli-interactive
 az functionapp config appsettings set -g <your-resource-group> -n <your-App-Service-(function-app)-name> --settings "ADT_SERVICE_URL=<your-Azure-Digital-Twins-instance-URL>"
 ```
+
+输出是 Azure 函数的设置列表，其中现在应包含一个名为 ADT_SERVICE_URL 的条目。
 
 使用以下命令创建系统管理的标识。 记下输出中的 principalId 字段。
 
@@ -171,10 +141,10 @@ az functionapp config appsettings set -g <your-resource-group> -n <your-App-Serv
 az functionapp identity assign -g <your-resource-group> -n <your-App-Service-(function-app)-name>
 ```
 
-在以下命令的输出中，使用 principalId 值将函数应用的标识分配给 Azure 数字孪生实例的“Azure 数字孪生所有者(预览版)”角色 ：
+在以下命令的输出中，使用 principalId 值将函数应用的标识分配给 Azure 数字孪生实例的“Azure 数字孪生数据所有者”角色 ：
 
-```azurecli
-az dt role-assignment create --dt-name <your-Azure-Digital-Twins-instance> --assignee "<principal-ID>" --role "Azure Digital Twins Owner (Preview)"
+```azurecli-interactive
+az dt role-assignment create --dt-name <your-Azure-Digital-Twins-instance> --assignee "<principal-ID>" --role "Azure Digital Twins Data Owner"
 ```
 
 此命令的结果是已创建的角色分配的输出信息。 函数应用现在有权访问 Azure 数字孪生实例。
@@ -253,14 +223,14 @@ az iot hub device-identity create --device-id thermostat67 --hub-name <your-IoT-
 
 首先，使用以下命令获取 IoT 中心连接字符串：
 
-```azurecli
-az iot hub show-connection-string -n <your-IoT-hub-name>
+```azurecli-interactive
+az iot hub connection-string show -n <your-IoT-hub-name>
 ```
 
 然后，使用此命令获取设备连接字符串：
 
-```azurecli
-az iot hub device-identity show-connection-string --device-id thermostat67 --hub-name <your-IoT-hub-name>
+```azurecli-interactive
+az iot hub device-identity connection-string show --device-id thermostat67 --hub-name <your-IoT-hub-name>
 ```
 
 将这些值插入本地项目中的设备模拟器代码中，以将模拟器连接到此 IoT 中心和 IoT 中心设备。
@@ -273,8 +243,8 @@ az iot hub device-identity show-connection-string --device-id thermostat67 --hub
 在这个新 Visual Studio 窗口的“解决方案资源管理器”窗格中，选择“DeviceSimulator/AzureIoTHub.cs”，在编辑窗口中将其打开。 将以下连接字符串值更改为前面收集的值：
 
 ```csharp
-connectionString = <Iot-hub-connection-string>
-deviceConnectionString = <device-connection-string>
+iotHubConnectionString = <your-hub-connection-string>
+deviceConnectionString = <your-device-connection-string>
 ```
 
 保存文件。
@@ -316,7 +286,7 @@ ObserveProperties thermostat67 Temperature
 :::image type="content" source="media/tutorial-end-to-end/building-scenario-c.png" alt-text="完整建筑方案图的摘录，其中突出显示了箭头 C（Azure 数字孪生后的元素：事件网格和第二个 Azure 函数）":::
 
 下面是设置此数据流需要完成的操作：
-1. 创建一个将实例连接到事件网格的 Azure 数字孪生终结点
+1. 在 Azure 数字孪生中创建一个将实例连接到事件网格的事件网格终结点
 2. 在 Azure 数字孪生中设置路由，将孪生属性更改事件发送到终结点
 3. 部署在终结点上（通过[事件网格](../event-grid/overview.md)）侦听的 Azure Functions 应用，并相应地更新其他孪生
 4. 运行模拟设备并查询 Azure 数字孪生，以查看实时结果
@@ -335,15 +305,15 @@ az eventgrid topic create -g <your-resource-group> --name <name-for-your-event-g
 
 > [!TIP]
 > 要输出可传递到 Azure CLI 命令中的 Azure 区域名称的列表，请运行以下命令：
-> ```azurecli
+> ```azurecli-interactive
 > az account list-locations -o table
 > ```
 
 此命令的输出是已创建的事件网格主题的相关信息。
 
-接下来，创建一个指向事件网格主题的 Azure 数字孪生终结点。 使用下面的命令，根据需要填写占位符字段：
+接下来，在 Azure 数字孪生中创建事件网格终结点，该终结点将实例连接到事件网格主题。 使用下面的命令，根据需要填写占位符字段：
 
-```azurecli
+```azurecli-interactive
 az dt endpoint create eventgrid --dt-name <your-Azure-Digital-Twins-instance> --eventgrid-resource-group <your-resource-group> --eventgrid-topic <your-event-grid-topic> --endpoint-name <name-for-your-Azure-Digital-Twins-endpoint>
 ```
 
@@ -351,7 +321,7 @@ az dt endpoint create eventgrid --dt-name <your-Azure-Digital-Twins-instance> --
 
 你也可以执行以下命令在 Azure 数字孪生实例中查询此终结点，从而验证是否成功创建终结点：
 
-```azurecli
+```azurecli-interactive
 az dt endpoint show --dt-name <your-Azure-Digital-Twins-instance> --endpoint-name <your-Azure-Digital-Twins-endpoint> 
 ```
 
@@ -359,13 +329,13 @@ az dt endpoint show --dt-name <your-Azure-Digital-Twins-instance> --endpoint-nam
 
 :::image type="content" source="media/tutorial-end-to-end/output-endpoints.png" alt-text="终结点的查询结果，其中显示 provisioningState 为 Succeeded":::
 
-保存提供给事件网格主题和 Azure 数字孪生终结点的名称。 稍后你将用到它们。
+保存提供给事件网格主题和 Azure 数字孪生中事件网格终结点的名称。 稍后你将用到它们。
 
 ### <a name="set-up-route"></a>设置路由
 
-接下来，创建 Azure 数字孪生路由，将事件发送到刚刚创建的 Azure 数字孪生终结点。
+接下来，创建 Azure 数字孪生路由，将事件发送到刚刚创建的事件网格终结点。
 
-```azurecli
+```azurecli-interactive
 az dt route create --dt-name <your-Azure-Digital-Twins-instance> --endpoint-name <your-Azure-Digital-Twins-endpoint> --route-name <name-for-your-Azure-Digital-Twins-route>
 ```
 
@@ -431,31 +401,21 @@ ObserveProperties thermostat67 Temperature room21 Temperature
 
 ## <a name="clean-up-resources"></a>清理资源
 
-如果不再需要本教程中创建的资源，请按照以下步骤将其删除。 
+完成本教程后，可选择想要删除的资源，这具体取决于你接下来要执行哪些操作。
 
-利用 Azure Cloud Shell，你可以使用 [az group delete](https://docs.microsoft.com/cli/azure/group?view=azure-cli-latest#az-group-delete) 命令删除资源组中的所有 Azure 资源。 这会删除资源组；Azure 数字孪生实例；IoT 中心和中心设备注册；事件网格主题和关联的订阅；以及两个 Azure Functions 应用，包括存储等关联资源。
+[!INCLUDE [digital-twins-cleanup-basic.md](../../includes/digital-twins-cleanup-basic.md)]
 
-> [!IMPORTANT]
-> 删除资源组的操作不可逆。 资源组以及包含在其中的所有资源将被永久删除。 请确保不会意外删除错误的资源组或资源。 
+* 如果要继续使用本文中设置的 Azure 数字孪生实例，但想要清除其部分或全部模型、孪生和关系，可在 [Azure Cloud Shell](https://shell.azure.com) 窗口中使用 CLI 命令 [az dt](/cli/azure/ext/azure-iot/dt?view=azure-cli-latest&preserve-view=true) 来删除要移除的元素。
 
-```azurecli-interactive
-az group delete --name <your-resource-group>
-```
+    此选项不会删除在本教程中创建的任何其他 Azure 资源（IoT 中心、Azure Functions 应用等）。 可以使用适用于每种资源类型的 [dt 命令](/cli/azure/reference-index?view=azure-cli-latest&preserve-view=true)分别删除这些资源。
 
-接下来，使用以下命令删除为客户端应用创建的 Azure AD 应用注册：
-
-```azurecli
-az ad app delete --id <your-application-ID>
-```
-
-最后，删除从本地计算机下载的项目示例文件夹。
+你可能还需要从本地计算机中删除项目文件夹。
 
 ## <a name="next-steps"></a>后续步骤
 
 在本教程中，你创建了一个端到端方案，它显示了由实时设备数据驱动的 Azure 数字孪生。
 
 接下来，请开始查看概念文档，详细了解本教程中所用的元素：
-* [*概念：自定义模型*](concepts-models.md)
 
-或者，你也可以先查看操作方法文章，更深入的了解本教程中的过程：
-* [*操作说明：使用 Azure 数字孪生 CLI*](how-to-use-cli.md)
+> [!div class="nextstepaction"]
+> [*概念：自定义模型*](concepts-models.md)

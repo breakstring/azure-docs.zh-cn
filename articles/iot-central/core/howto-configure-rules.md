@@ -3,17 +3,17 @@ title: 在 Azure IoT Central 中配置规则和操作 | Microsoft Docs
 description: 本操作指南文章演示，作为构建者，如何在 Azure IoT Central 应用程序中配置基于遥测的规则和操作。
 author: vavilla
 ms.author: vavilla
-ms.date: 11/27/2019
+ms.date: 12/23/2020
 ms.topic: how-to
 ms.service: iot-central
 services: iot-central
 manager: philmea
-ms.openlocfilehash: c4d0639831d2f6f60a719637c5158fba5caf6f43
-ms.sourcegitcommit: fdec8e8bdbddcce5b7a0c4ffc6842154220c8b90
+ms.openlocfilehash: 378a1dbcfbc89cdf9b24dc2490db583f1135b9a2
+ms.sourcegitcommit: ab829133ee7f024f9364cd731e9b14edbe96b496
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 05/19/2020
-ms.locfileid: "83659352"
+ms.lasthandoff: 12/28/2020
+ms.locfileid: "97796782"
 ---
 # <a name="configure-rules"></a>配置规则
 
@@ -33,7 +33,7 @@ IoT Central 中的规则充当可自定义的响应工具，针对已连接设�
 
 在下面的屏幕截图中，条件检查何时温度大于 70&deg; F 且湿度小于 10。 当这两个语句都为 true 时，规则的结果为 true，并触发操作。
 
-![条件](media/howto-configure-rules/conditions.png)
+![屏幕截图显示了一个冰箱监视器，其中包含为温度和湿度指定的条件。](media/howto-configure-rules/conditions.png)
 
 ### <a name="use-a-cloud-property-in-a-value-field"></a>在值字段中使用云属性
 

@@ -9,12 +9,12 @@ ms.topic: article
 ms.date: 10/31/2018
 ms.author: genli
 ms.custom: seodec18, devx-track-python
-ms.openlocfilehash: 89c317e6623a868fd75b09274c726720e726e470
-ms.sourcegitcommit: 7fe8df79526a0067be4651ce6fa96fa9d4f21355
+ms.openlocfilehash: 36dfbf0fda060a8f273fee64098d6234b575088c
+ms.sourcegitcommit: beacda0b2b4b3a415b16ac2f58ddfb03dd1a04cf
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/06/2020
-ms.locfileid: "87848632"
+ms.lasthandoff: 12/31/2020
+ms.locfileid: "97831833"
 ---
 # <a name="open-source-technologies-faqs-for-web-apps-in-azure"></a>针对 Azure 中 Web 应用的开源技术常见问题的解答
 
@@ -43,7 +43,7 @@ ms.locfileid: "87848632"
     ```
 12. 在 Azure 门户中的 Web 应用菜单中，重启 Web 应用。
 
-有关详细信息，请参阅[启用 WordPress 错误日志](https://blogs.msdn.microsoft.com/azureossds/2015/10/09/logging-php-errors-in-wordpress-2/)。
+有关详细信息，请参阅[启用 WordPress 错误日志](/archive/blogs/azureossds/logging-php-errors-in-wordpress-2)。
 
 ## <a name="how-do-i-log-python-application-errors-in-apps-that-are-hosted-in-app-service"></a>如何在应用服务中承载的应用中记录 Python 应用程序错误？
 [!INCLUDE [web-sites-python-troubleshooting-wsgi-error-log](../../includes/web-sites-python-troubleshooting-wsgi-error-log.md)]
@@ -80,7 +80,7 @@ ms.locfileid: "87848632"
 
 ## <a name="i-see-the-message-error-establishing-a-database-connection-in-my-wordpress-app-thats-hosted-in-app-service-how-do-i-troubleshoot-this"></a>我在应用服务中承载的我的 WordPress 应用中看到消息“建立数据库连接时出错”。 如何解决此问题？
 
-如果在 Azure WordPress 应用中看到此错误，则若要启用 php_errors.log 和 debug.log，请完成[启用 WordPress 错误日志](https://blogs.msdn.microsoft.com/azureossds/2015/10/09/logging-php-errors-in-wordpress-2/)中详细介绍的步骤。
+如果在 Azure WordPress 应用中看到此错误，则若要启用 php_errors.log 和 debug.log，请完成[启用 WordPress 错误日志](/archive/blogs/azureossds/logging-php-errors-in-wordpress-2)中详细介绍的步骤。
 
 启用日志后，重现错误，然后检查日志以了解是否耗尽连接：
 ```
@@ -97,11 +97,11 @@ ms.locfileid: "87848632"
 
 ## <a name="how-do-i-install-native-python-modules-in-an-app-service-web-app-or-api-app"></a>如何在应用服务 Web 应用或 API 应用中安装本机 Python 模块？
 
-某些包可能并不通过使用 pip 在 Azure 中安装。 该包可能在 Python 包索引上不可用，或可能需要编译器（编译器在运行应用服务中 Web 应用的计算机上不可用）。 有关在应用服务 Web 应用和 API 应用中安装本机模块的信息，请参阅[在应用服务中安装 Python 模块](https://blogs.msdn.microsoft.com/azureossds/2015/06/29/install-native-python-modules-on-azure-web-apps-api-apps/)。
+某些包可能并不通过使用 pip 在 Azure 中安装。 该包可能在 Python 包索引上不可用，或可能需要编译器（编译器在运行应用服务中 Web 应用的计算机上不可用）。 有关在应用服务 Web 应用和 API 应用中安装本机模块的信息，请参阅[在应用服务中安装 Python 模块](/archive/blogs/azureossds/install-native-python-modules-on-azure-web-apps-api-apps)。
 
 ## <a name="how-do-i-deploy-a-django-app-to-app-service-by-using-git-and-the-new-version-of-python"></a>如何通过使用 Git 和新版 Python 将 Django 应用部署到应用服务？
 
-有关安装 Django 的信息，请参阅[将 Django 应用部署到应用服务](https://blogs.msdn.microsoft.com/azureossds/2016/08/25/deploying-django-app-to-azure-app-services-using-git-and-new-version-of-python/)。
+有关安装 Django 的信息，请参阅[将 Django 应用部署到应用服务](/archive/blogs/azureossds/deploying-django-app-to-azure-app-services-using-git-and-new-version-of-python)。
 
 ## <a name="where-are-the-tomcat-log-files-located"></a>Tomcat 日志文件位于何处？
 
@@ -169,9 +169,9 @@ The process cannot access the file because it is being used by another process.
 
 ## <a name="where-do-i-find-the-log-files-for-jetty"></a>在哪里可以找到 Jetty 的日志文件？
 
-对于市场和自定义部署，日志文件位于 D:\home\site\wwwroot\bin\jetty-distribution-9.1.2.v20140210\logs 文件夹中。 请注意，文件夹位置取决于所使用的 Jetty 版本。 例如，以下提供的路径用于 Jetty 9.1.2。 查找 jetty_*YYYY_MM_DD*.stderrout.log。
+对于市场和自定义部署，日志文件位于 D:\home\site\wwwroot\bin\jetty-distribution-9.1.2.v20140210\logs 文件夹中。 请注意，文件夹位置取决于所使用的 Jetty 版本。 例如，以下提供的路径用于 Jetty 9.1.2。 查找 jetty_ *YYYY_MM_DD*.stderrout.log。
 
-对于门户应用设置部署，日志文件位于 D:\home\LogFiles。 查找 jetty_*YYYY_MM_DD*.stderrout.log
+对于门户应用设置部署，日志文件位于 D:\home\LogFiles。 查找 jetty_ *YYYY_MM_DD*.stderrout.log
 
 ## <a name="can-i-send-email-from-my-azure-web-app"></a>是否可从 Azure web 应用发送电子邮件？
 
@@ -181,28 +181,28 @@ The process cannot access the file because it is being used by another process.
 
 如果已在最近迁移到 Azure，WordPress 可能会重定向到旧的域 URL。 这是由 MySQL 数据库中的设置所致。
 
-WordPress Buddy+ 是可用于在数据库中直接更新重定向 URL 的 Azure 站点扩展。 有关使用 WordPress Buddy+ 的详细信息，请参阅 [WordPress 工具及使用 WordPress Buddy+ 进行 MySQL 迁移](https://sharepointforum.org/threads/wordpress-tools-and-mysql-migration-with-wordpress-buddy.82929/)。
+WordPress Buddy+ 是可用于在数据库中直接更新重定向 URL 的 Azure 站点扩展。 有关使用 WordPress Buddy+ 的详细信息，请参阅 [WordPress 工具及使用 WordPress Buddy+ 进行 MySQL 迁移](https://www.electrongeek.com/blog/2016/12/21/wordpress-buddy-site-extension-for-app-service-on-windows)。
 
-或者，如果希望使用 SQL 查询或 PHPMyAdmin 手动更新重定向 URL，请参阅 [WordPress：重定向到错误 URL](https://blogs.msdn.microsoft.com/azureossds/2016/07/12/wordpress-redirecting-to-wrong-url/)。
+或者，如果希望使用 SQL 查询或 PHPMyAdmin 手动更新重定向 URL，请参阅 [WordPress：重定向到错误 URL](/archive/blogs/azureossds/wordpress-redirecting-to-wrong-url)。
 
 ## <a name="how-do-i-change-my-wordpress-sign-in-password"></a>如何更改我的 WordPress 登录密码？
 
-如果忘记了 WordPress 登录密码，可以使用 WordPress Buddy+ 进行更新。 若要重置密码，请安装 WordPress Buddy+ Azure 站点扩展，然后完成 [WordPress 工具及使用 WordPress Buddy+ 进行 MySQL 迁移](https://sharepointforum.org/threads/wordpress-tools-and-mysql-migration-with-wordpress-buddy.82929/)中所述的步骤。
+如果忘记了 WordPress 登录密码，可以使用 WordPress Buddy+ 进行更新。 若要重置密码，请安装 WordPress Buddy+ Azure 站点扩展，然后完成 [WordPress 工具及使用 WordPress Buddy+ 进行 MySQL 迁移](https://www.electrongeek.com/blog/2016/12/21/wordpress-buddy-site-extension-for-app-service-on-windows)中所述的步骤。
 
 ## <a name="i-cant-sign-in-to-wordpress-how-do-i-resolve-this"></a>我无法登录到 WordPress。 如何解决此问题？
 
-如果发现最近安装插件后被锁在 WordPress 外，可能插件有误。 WordPress Buddy+ 是 Azure 站点扩展，可帮助禁用 WordPress 中的插件。 有关详细信息，请参阅 [WordPress 工具及使用 WordPress Buddy+ 进行 MySQL 迁移](https://sharepointforum.org/threads/wordpress-tools-and-mysql-migration-with-wordpress-buddy.82929/)。
+如果发现最近安装插件后被锁在 WordPress 外，可能插件有误。 WordPress Buddy+ 是 Azure 站点扩展，可帮助禁用 WordPress 中的插件。 有关详细信息，请参阅 [WordPress 工具及使用 WordPress Buddy+ 进行 MySQL 迁移](https://www.electrongeek.com/blog/2016/12/21/wordpress-buddy-site-extension-for-app-service-on-windows)。
 
 ## <a name="how-do-i-migrate-my-wordpress-database"></a>如何迁移我的 WordPress 数据库？
 
 有多种方法可用于迁移连接到 WordPress 网站的 MySQL 数据库：
 
-* 开发人员：使用[命令提示符或 PHPMyAdmin](https://blogs.msdn.microsoft.com/azureossds/2016/03/02/migrating-data-between-mysql-databases-using-kudu-console-azure-app-service/)
-* 非开发人员：使用 [WordPress Buddy+](https://sharepointforum.org/threads/wordpress-tools-and-mysql-migration-with-wordpress-buddy.82929/)
+* 开发人员：使用[命令提示符或 PHPMyAdmin](/archive/blogs/azureossds/migrating-data-between-mysql-databases-using-kudu-console-azure-app-service)
+* 非开发人员：使用 [WordPress Buddy+](https://www.electrongeek.com/blog/2016/12/21/wordpress-buddy-site-extension-for-app-service-on-windows)
 
 ## <a name="how-do-i-help-make-wordpress-more-secure"></a>我如何提供帮助，可让 WordPress 更加安全？
 
-若要了解有关 WordPress 的安全性最佳做法，请参阅 [Azure 中的 WordPress 安全性最佳做法](https://blogs.msdn.microsoft.com/azureossds/2016/12/26/best-practices-for-wordpress-security-on-azure/)。
+若要了解有关 WordPress 的安全性最佳做法，请参阅 [Azure 中的 WordPress 安全性最佳做法](/archive/blogs/azureossds/best-practices-for-wordpress-security-on-azure)。
 
 ## <a name="i-am-trying-to-use-phpmyadmin-and-i-see-the-message-access-denied-how-do-i-resolve-this"></a>我在尝试使用 PHPMyAdmin，但看到消息“拒绝访问”。 如何解决此问题？
 

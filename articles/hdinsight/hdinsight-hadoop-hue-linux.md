@@ -1,19 +1,16 @@
 ---
 title: 在基于 HDInsight Linux 的群集上将 Hue 与 Hadoop 配合使用 - Azure
 description: 了解如何在 HDInsight 群集上安装 Hue，并使用隧道将请求路由至 Hue。 使用 Hue 浏览存储和运行 Hive 或 Pig。
-author: hrasheed-msft
-ms.author: hrasheed
-ms.reviewer: jasonh
 ms.service: hdinsight
 ms.topic: how-to
 ms.custom: hdinsightactive,hdiseo17may2017
 ms.date: 03/31/2020
-ms.openlocfilehash: ef30672e250e598688d1b81fd33fe0a995e78c7d
-ms.sourcegitcommit: 124f7f699b6a43314e63af0101cd788db995d1cb
+ms.openlocfilehash: 8d4663aac6af4abb8d9855d2f972965e997d9c92
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/08/2020
-ms.locfileid: "86087718"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98945676"
 ---
 # <a name="install-and-use-hue-on-hdinsight-hadoop-clusters"></a>在 HDInsight Hadoop 群集上安装并使用 Hue
 
@@ -33,7 +30,7 @@ Hue 是一组 Web 应用程序，用来与 Apache Hadoop 群集交互。 可以�
 > [!WARNING]  
 > 完全支持通过 HDInsight 群集提供的组件，Microsoft 支持部门将帮助你找出并解决与这些组件相关的问题。
 >
-> 自定义组件可获得合理范围的支持，以帮助你进一步排查问题。 这可能导致问题解决，或要求参与可用的开放源代码技术渠道，在该处可找到该技术的深入专业知识。 例如，有许多可以使用的社区站点，例如：[关于 HDInsight 的 Microsoft Q&A 问题页](https://docs.microsoft.com/answers/topics/azure-hdinsight.html)、[https://stackoverflow.com](https://stackoverflow.com)。 此外，Apache 项目在 [https://apache.org](https://apache.org) 上提供了项目站点，例如：[Hadoop](https://hadoop.apache.org/)。
+> 自定义组件可获得合理范围的支持，以帮助你进一步排查问题。 这可能导致问题解决，或要求参与可用的开放源代码技术渠道，在该处可找到该技术的深入专业知识。 例如，有许多可以使用的社区站点，例如：[关于 HDInsight 的 Microsoft Q&A 问题页](/answers/topics/azure-hdinsight.html)、[https://stackoverflow.com](https://stackoverflow.com)。 此外，Apache 项目在 [https://apache.org](https://apache.org) 上提供了项目站点，例如：[Hadoop](https://hadoop.apache.org/)。
 
 ## <a name="install-hue-using-script-actions"></a>使用脚本操作安装 Hue
 
@@ -129,4 +126,4 @@ Hue 是一组 Web 应用程序，用来与 Apache Hadoop 群集交互。 可以�
 
 ## <a name="next-steps"></a>后续步骤
 
-[在 HDInsight 群集上安装 R](hdinsight-hadoop-r-scripts-linux.md)。 使用群集自定义在 HDInsight Hadoop 群集上安装 R。 R 是一种用于统计计算的开放源代码语言和环境。 它提供了数百个内置统计函数及其自己的编程语言，可结合各方面的函数编程和面向对象的编程。 它还提供了各种图形功能。
+[在 HDInsight 群集上安装 R](./r-server/r-server-overview.md)。 使用群集自定义在 HDInsight Hadoop 群集上安装 R。 R 是一种用于统计计算的开放源代码语言和环境。 它提供了数百个内置统计函数及其自己的编程语言，可结合各方面的函数编程和面向对象的编程。 它还提供了各种图形功能。

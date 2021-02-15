@@ -1,6 +1,6 @@
 ---
-title: 控制 SQL 按需版本（预览版）对存储帐户的访问
-description: 介绍 SQL 按需版本（预览版）如何访问 Azure 存储，以及如何在 Azure Synapse Analytics 中控制 SQL 按需版本对存储的访问。
+title: 控制无服务器 SQL 池对存储帐户的访问
+description: 介绍无服务器 SQL 池如何访问 Azure 存储，以及如何在 Azure Synapse Analytics 中控制无服务器 SQL 池对存储的访问。
 services: synapse-analytics
 author: filippopovic
 ms.service: synapse-analytics
@@ -8,32 +8,32 @@ ms.topic: overview
 ms.subservice: sql
 ms.date: 06/11/2020
 ms.author: fipopovi
-ms.reviewer: jrasnick, carlrab
-ms.openlocfilehash: fd4cc4cfa7b7be9085ac404cab7fc7447b6d66a7
-ms.sourcegitcommit: 25bb515efe62bfb8a8377293b56c3163f46122bf
+ms.reviewer: jrasnick
+ms.openlocfilehash: c9a5be358c40c3411115d8c2ee3f9471c68771b8
+ms.sourcegitcommit: 1f1d29378424057338b246af1975643c2875e64d
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/07/2020
-ms.locfileid: "87987131"
+ms.lasthandoff: 02/05/2021
+ms.locfileid: "99576204"
 ---
-# <a name="control-storage-account-access-for-sql-on-demand-preview"></a>控制 SQL 按需版本（预览版）对存储帐户的访问
+# <a name="control-storage-account-access-for-serverless-sql-pool-in-azure-synapse-analytics"></a>在 Azure Synapse Analytics 中控制无服务器 SQL 池对存储帐户的访问
 
-SQL 按需版本查询直接从 Azure 存储中读取文件。 对 Azure 存储中文件的访问权限是在以下两个级别控制的：
+无服务器 SQL 池查询直接从 Azure 存储中读取文件。 对 Azure 存储中文件的访问权限是在以下两个级别控制的：
 - **存储级别** - 用户应具有访问基础存储文件的权限。 你的存储管理员应当允许 Azure AD 主体读取/写入文件，或者生成将用来访问存储的 SAS 密钥。
-- **SQL 服务级别** - 用户应当具有从[外部表](develop-tables-external-tables.md)中读取数据的 `SELECT` 权限或者具有执行 `OPENROWSET` 的 `ADMINISTER BULK ADMIN` 权限，还应当有权使用将用来访问存储的凭据。
+- **SQL 服务级别** - 用户应已被授予使用 [外部表](develop-tables-external-tables.md)读取数据或执行 `OPENROWSET` 函数的权限。 在此部分中详细了解[所需权限](develop-storage-files-overview.md#permissions)。
 
 本文介绍可用的凭据类型，以及为 SQL 和 Azure AD 用户进行的凭据查找是如何执行的。
 
 ## <a name="supported-storage-authorization-types"></a>支持的存储授权类型
 
-如果文件不是公开可用的，则已登录到 SQL 按需版本资源的用户必须获得访问和查询 Azure 存储中的文件的授权。 可以使用三种授权类型来访问非公共存储 - [用户标识](?tabs=user-identity)、[共享访问签名](?tabs=shared-access-signature)和[托管标识](?tabs=managed-identity)。
+如果文件不是公开可用的，则登录到无服务器 SQL 池的用户必须获得访问和查询 Azure 存储中文件的授权。 可以使用三种授权类型来访问非公共存储 - [用户标识](?tabs=user-identity)、[共享访问签名](?tabs=shared-access-signature)和[托管标识](?tabs=managed-identity)。
 
 > [!NOTE]
-> **Azure AD 直通**是创建工作区时的默认行为。
+> **Azure AD 直通** 是创建工作区时的默认行为。
 
 ### <a name="user-identity"></a>[用户标识](#tab/user-identity)
 
-用户标识（也称为“Azure AD 直通”）是一种授权类型。使用这种授权时，按需登录 SQL 的 Azure AD 用户的标识将用于授予数据访问权限。 在访问数据之前，Azure 存储管理员必须向 Azure AD 用户授予权限。 如下表中所示，SQL 用户类型不支持此授权类型。
+用户标识（也称为“Azure AD 直通”）是一种授权类型。使用这种授权时，登录到无服务器 SQL 池的 Azure AD 用户的标识将用于授予数据访问权限。 在访问数据之前，Azure 存储管理员必须向 Azure AD 用户授予权限。 如下表中所示，SQL 用户类型不支持此授权类型。
 
 > [!IMPORTANT]
 > 需要具有存储 Blob 数据所有者/参与者/读取者角色才能使用自己的标识来访问数据。
@@ -49,21 +49,21 @@ SQL 按需版本查询直接从 Azure 存储中读取文件。 对 Azure 存储�
 可以导航到“Azure 门户”->“存储帐户”->“共享访问签名”->“配置权限”->“生成 SAS 和连接字符串”来获取 SAS 令牌。
 
 > [!IMPORTANT]
-> 生成某个 SAS 令牌时，其开头会包含问号（“?”）。 若要在 SQL 按需版本中使用该令牌，必须在创建凭据时删除问号（“?”）。 例如：
+> 生成某个 SAS 令牌时，其开头会包含问号（“?”）。 若要在无服务器 SQL 池中使用该令牌，必须在创建凭据时删除问号（“?”）。 例如：
 >
 > SAS 令牌：?sv=2018-03-28&ss=bfqt&srt=sco&sp=rwdlacup&se=2019-04-18T20:42:12Z&st=2019-04-18T12:42:12Z&spr=https&sig=lQHczNvrk1KoYLCpFdSsMANd0ef9BrIPBNJ3VYEIq78%3D
 
-你需要创建数据库范围或服务器范围的凭据来启用通过 SAS 令牌进行的访问。
+若要允许使用 SAS 令牌进行访问，需要创建数据库范围或服务器范围的凭据 
 
 ### <a name="managed-identity"></a>[托管标识](#tab/managed-identity)
 
-托管标识也称为 MSI。 它是 Azure Active Directory (Azure AD) 的一项功能，为 SQL 按需版本提供 Azure 服务。 此外，它还会在 Azure AD 中部署一个自动托管的标识。 此标识可用于对有关访问 Azure 存储中的数据的请求授权。
+托管标识也称为 MSI。 它是 Azure Active Directory (Azure AD) 的一项功能，为无服务器 SQL 池提供 Azure 服务。 此外，它还会在 Azure AD 中部署一个自动托管的标识。 此标识可用于对有关访问 Azure 存储中的数据的请求授权。
 
 在访问数据之前，Azure 存储管理员必须向管理标识授予访问数据的权限。 向托管标识授予权限的方式与向任何其他 Azure AD 用户授予权限的方式相同。
 
 ### <a name="anonymous-access"></a>[匿名访问](#tab/public-access)
 
-你可以访问[允许匿名访问](/azure/storage/blobs/storage-manage-access-to-resources)的 Azure 存储帐户中放置的公开可用文件。
+你可以访问[允许匿名访问](../../storage/blobs/anonymous-read-access-configure.md)的 Azure 存储帐户中放置的公开可用文件。
 
 ---
 
@@ -83,19 +83,96 @@ SQL 按需版本查询直接从 Azure 存储中读取文件。 对 Azure 存储�
 
 | 授权类型  | Blob 存储   | ADLS Gen1        | ADLS Gen2     |
 | ------------------- | ------------   | --------------   | -----------   |
-| SAS    | 支持\*      | 不支持   | 支持\*     |
+| [SAS](?tabs=shared-access-signature#supported-storage-authorization-types)    | 支持\*      | 不支持   | 支持\*     |
 | [托管标识](?tabs=managed-identity#supported-storage-authorization-types) | 支持      | 支持        | 支持     |
 | [用户标识](?tabs=user-identity#supported-storage-authorization-types)    | 支持\*      | 支持\*        | 支持\*     |
 
 \* SAS 令牌和 Azure AD 标识可用于访问不受防火墙保护的存储。
 
-> [!IMPORTANT]
-> 访问受防火墙保护的存储时，仅可使用托管标识。 需要[允许受信任的 Microsoft 服务设置](../../storage/common/storage-network-security.md#trusted-microsoft-services)并明确[将 Azure 角色](../../storage/common/storage-auth-aad.md#assign-azure-roles-for-access-rights)分配给该资源实例的[系统分配的托管标识](../../active-directory/managed-identities-azure-resources/overview.md)。 在这种情况下，实例的访问范围对应于分配给托管标识的 Azure 角色。
->
+
+### <a name="querying-firewall-protected-storage"></a>查询受防火墙保护的存储
+
+访问受防火墙保护的存储时，可使用用户标识或托管标识。 
+
+> [!NOTE]
+> 存储上的防火墙功能现为公共预览版，它在所有公共云区域中都可用。 
+
+#### <a name="user-identity"></a>用户标识
+
+若要通过用户标识访问受防火墙保护的存储，可以使用 PowerShell 模块 Az.Storage。
+#### <a name="configuration-via-powershell"></a>通过 PowerShell 进行配置
+
+按照以下步骤配置存储帐户防火墙，并为 Synapse 工作区添加例外。
+
+1. 打开 PowerShell 或[安装 PowerShell](/powershell/scripting/install/installing-powershell-core-on-windows?preserve-view=true&view=powershell-7.1)
+2. 安装 Az.Storage 3.0.1 模块和 Az.Synapse 0.7.0： 
+    ```powershell
+    Install-Module -Name Az.Storage -RequiredVersion 3.0.1-preview -AllowPrerelease
+    Install-Module -Name Az.Synapse -RequiredVersion 0.7.0
+    ```
+    > [!IMPORTANT]
+    > 确保使用 3.0.1 版。 可以通过运行以下命令来检查 Az.Storage 版本：  
+    > ```powershell 
+    > Get-Module -ListAvailable -Name  Az.Storage | select Version
+    > ```
+    > 
+
+3. 连接到 Azure 租户： 
+    ```powershell
+    Connect-AzAccount
+    ```
+4. 在 PowerShell 中定义变量： 
+    - 资源组名称 - 可以在 Azure 门户中的“Synapse 工作区概述”中找到此内容。
+    - 帐户名称 - 受防火墙规则保护的存储帐户的名称。
+    - 租户 ID - 可在 Azure 门户中的“租户中的 Azure Active Directory 信息”中找到此内容。
+    - 工作区名称 - Synapse 工作区的名称。
+
+    ```powershell
+        $resourceGroupName = "<resource group name>"
+        $accountName = "<storage account name>"
+        $tenantId = "<tenant id>"
+        $workspaceName = "<synapse workspace name>"
+        
+        $workspace = Get-AzSynapseWorkspace -Name $workspaceName
+        $resourceId = $workspace.Id
+        $index = $resourceId.IndexOf("/resourceGroups/", 0)
+        # Replace G with g - /resourceGroups/ to /resourcegroups/
+        $resourceId = $resourceId.Substring(0,$index) + "/resourcegroups/" + $resourceId.Substring($index + "/resourceGroups/".Length)
+        $resourceId
+    ```
+    > [!IMPORTANT]
+    > 确保资源 ID 在 resourceId 变量的输出中与此模板匹配。
+    >
+    > 以小写形式书写“resourcegroups”很重要。
+    > 一个资源 id 的示例： 
+    > ```
+    > /subscriptions/{subscription-id}/resourcegroups/{resource-group}/providers/Microsoft.Synapse/workspaces/{name-of-workspace}
+    > ```
+    > 
+5. 添加存储网络规则： 
+    ```powershell
+        Add-AzStorageAccountNetworkRule -ResourceGroupName $resourceGroupName -Name $accountName -TenantId $tenantId -ResourceId $resourceId
+    ```
+6. 验证是否已在存储帐户中应用规则： 
+    ```powershell
+        $rule = Get-AzStorageAccountNetworkRuleSet -ResourceGroupName $resourceGroupName -Name $accountName
+        $rule.ResourceAccessRules | ForEach-Object { 
+            if ($_.ResourceId -cmatch "\/subscriptions\/(\w\-*)+\/resourcegroups\/(.)+") { 
+                Write-Host "Storage account network rule is successfully configured." -ForegroundColor Green
+                $rule.ResourceAccessRules
+            } else {
+                Write-Host "Storage account network rule is not configured correctly. Remove this rule and follow the steps in detail." -ForegroundColor Red
+                $rule.ResourceAccessRules
+            }
+        }
+    ```
+
+#### <a name="managed-identity"></a>托管标识
+需要[允许受信任的 Microsoft 服务设置](../../storage/common/storage-network-security.md#trusted-microsoft-services)并明确[将 Azure 角色](../../storage/common/storage-auth-aad.md#assign-azure-roles-for-access-rights)分配给该资源实例的[系统分配的托管标识](../../active-directory/managed-identities-azure-resources/overview.md)。 在这种情况下，实例的访问范围对应于分配给托管标识的 Azure 角色。
 
 ## <a name="credentials"></a>凭据
 
-若要查询 Azure 存储中的文件，SQL 按需版本终结点需要一个包含身份验证信息的凭据。 使用两种类型的凭据：
+若要查询 Azure 存储中的文件，无服务器 SQL 池终结点需要一个包含身份验证信息的凭据。 使用两种类型的凭据：
 - 服务器级凭据用于通过 `OPENROWSET` 函数执行的即席查询。 凭据名称必须与存储 URL 匹配。
 - 数据库范围的凭据用于外部表。 外部表使用应当用来访问存储的凭据来引用 `DATA SOURCE`。
 
@@ -119,7 +196,7 @@ GRANT REFERENCES ON CREDENTIAL::[storage_credential] TO [specific_user];
 
 ## <a name="server-scoped-credential"></a>服务器范围的凭据
 
-当 SQL 登录名在未指定 `DATA_SOURCE` 的情况下调用 `OPENROWSET` 函数来读取某个存储帐户上的文件时，将使用服务器范围的凭据。 服务器范围的凭据的名称必须与 Azure 存储的 URL 匹配。 可通过运行 [CREATE CREDENTIAL](/sql/t-sql/statements/create-credential-transact-sql?toc=/azure/synapse-analytics/toc.json&bc=/azure/synapse-analytics/breadcrumb/toc.json&view=azure-sqldw-latest) 来添加凭据。 需要提供 CREDENTIAL NAME 参数。 该参数必须匹配存储中数据的一部分路径或完整路径（参阅下文）。
+当 SQL 登录名在未指定 `DATA_SOURCE` 的情况下调用 `OPENROWSET` 函数来读取某个存储帐户上的文件时，将使用服务器范围的凭据。 服务器范围的凭据的名称必须与 Azure 存储的 URL 匹配。 可通过运行 [CREATE CREDENTIAL](/sql/t-sql/statements/create-credential-transact-sql?toc=/azure/synapse-analytics/toc.json&bc=/azure/synapse-analytics/breadcrumb/toc.json&view=azure-sqldw-latest&preserve-view=true) 来添加凭据。 需要提供 CREDENTIAL NAME 参数。 该参数必须匹配存储中数据的一部分路径或完整路径（参阅下文）。
 
 > [!NOTE]
 > 不支持参数 `FOR CRYPTOGRAPHIC PROVIDER`。
@@ -170,7 +247,7 @@ WITH IDENTITY='Managed Identity'
 
 ## <a name="database-scoped-credential"></a>数据库范围的凭据
 
-当任何主体在使用 `DATA_SOURCE` 的情况下调用 `OPENROWSET` 函数时，或在不访问公共文件的[外部表](develop-tables-external-tables.md)中选择数据时，将使用数据库范围的凭据。 数据库范围的凭据不需要匹配存储帐户的名称，因为它将在定义存储位置的 DATA SOURCE 中显式使用。
+当任何主体在使用 `DATA_SOURCE` 的情况下调用 `OPENROWSET` 函数时，或在不访问公共文件的[外部表](develop-tables-external-tables.md)中选择数据时，将使用数据库范围的凭据。 数据库范围的凭据不需要匹配存储帐户的名称。 它将在定义存储位置的数据源中显式使用。
 
 数据库范围的凭据允许使用以下身份验证类型来访问 Azure 存储：
 
@@ -268,7 +345,7 @@ WITH ( LOCATION = 'parquet/user-data/*.parquet',
 SELECT TOP 10 * FROM dbo.userPublicData;
 GO
 SELECT TOP 10 * FROM OPENROWSET(BULK 'parquet/user-data/*.parquet',
-                                DATA_SOURCE = [mysample],
+                                DATA_SOURCE = 'mysample',
                                 FORMAT='PARQUET') as rows;
 GO
 ```
@@ -314,7 +391,7 @@ WITH ( LOCATION = 'parquet/user-data/*.parquet',
 ```sql
 SELECT TOP 10 * FROM dbo.userdata;
 GO
-SELECT TOP 10 * FROM OPENROWSET(BULK 'parquet/user-data/*.parquet', DATA_SOURCE = [mysample], FORMAT='PARQUET') as rows;
+SELECT TOP 10 * FROM OPENROWSET(BULK 'parquet/user-data/*.parquet', DATA_SOURCE = 'mysample', FORMAT='PARQUET') as rows;
 GO
 ```
 

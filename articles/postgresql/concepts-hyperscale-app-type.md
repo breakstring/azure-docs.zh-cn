@@ -7,12 +7,12 @@ ms.service: postgresql
 ms.subservice: hyperscale-citus
 ms.topic: conceptual
 ms.date: 07/17/2020
-ms.openlocfilehash: 0daed8e9bba247ae3d4e320e4a02cc2b1b26dbec
-ms.sourcegitcommit: 1aef4235aec3fd326ded18df7fdb750883809ae8
+ms.openlocfilehash: 92333857177d33307d6997bfcbdf79787d3ab127
+ms.sourcegitcommit: 829d951d5c90442a38012daaf77e86046018e5b9
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/12/2020
-ms.locfileid: "88136761"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "90895949"
 ---
 # <a name="determining-application-type"></a>确定应用程序类型
 
@@ -22,7 +22,7 @@ ms.locfileid: "88136761"
 
 ## <a name="at-a-glance"></a>概览
 
-| 多租户应用程序                                 | 实时应用程序                                |
+| 多租户应用程序                                 | Real-Time 应用程序                                |
 |-----------------------------------------------------------|-------------------------------------------------------|
 | 有时，架构中有数十个或数百个表          | 少量表                                |
 | 一次与一个租户 (公司/存储) 相关的查询 | 具有聚合的相对简单的分析查询 |

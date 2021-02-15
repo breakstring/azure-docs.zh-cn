@@ -5,14 +5,14 @@ author: KishorIoT
 ms.author: nandab
 ms.service: iot-central
 ms.subservice: iot-central-retail
-ms.topic: overview
+ms.topic: conceptual
 ms.date: 10/20/2019
-ms.openlocfilehash: b73d065b43aff5f9793e642a102ff8bb2a7be036
-ms.sourcegitcommit: 25490467e43cbc3139a0df60125687e2b1c73c09
+ms.openlocfilehash: f5f1a9a51c4aa68c11f1843424186a727be94621
+ms.sourcegitcommit: d1b0cf715a34dd9d89d3b72bb71815d5202d5b3a
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/09/2020
-ms.locfileid: "81001136"
+ms.lasthandoff: 02/08/2021
+ms.locfileid: "99834300"
 ---
 # <a name="architecture-of-iot-central-digital-distribution-center-application-template"></a>IoT Central 的数字分发中心应用程序模板体系结构
 
@@ -26,7 +26,7 @@ ms.locfileid: "81001136"
 1. 一组将遥测数据发送到网关设备的 IoT 传感器
 2. 将遥测和聚合见解发送到 IoT Central 的网关设备
 3. 数据被路由到所需的 Azure 服务以进行操作
-4. 可以使用 Azure 服务（如 ASA 或 Azure Functions）重新设置数据流的格式，并将其发送到所需的存储帐户 
+4. 可以使用 Azure 服务（如 ASA 或 Azure Functions）重新设置数据流的格式，并将其发送到所需的存储帐户
 5. 处理后的数据将存储在热存储中以便进行近实时操作，或者存储在冷存储中以用于执行更多基于 ML 或批处理分析的见解增强功能。 
 6. 可使用逻辑应用为最终用户商业应用程序中的各种业务工作流提供支持
 

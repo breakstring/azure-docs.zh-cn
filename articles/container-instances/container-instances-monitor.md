@@ -2,13 +2,13 @@
 title: 监视容器实例
 description: 如何监视 Azure 容器实例中的容器消耗的计算资源，例如 CPU 和内存。
 ms.topic: article
-ms.date: 04/24/2019
-ms.openlocfilehash: e8d41e419abe43530186e256ac6253e2d4783f9b
-ms.sourcegitcommit: 877491bd46921c11dd478bd25fc718ceee2dcc08
+ms.date: 12/17/2020
+ms.openlocfilehash: 83a8a5ab2c8c49f4044564c2d899685914103b0b
+ms.sourcegitcommit: 67b44a02af0c8d615b35ec5e57a29d21419d7668
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2020
-ms.locfileid: "82116361"
+ms.lasthandoff: 01/06/2021
+ms.locfileid: "97916062"
 ---
 # <a name="monitor-container-resources-in-azure-container-instances"></a>监视 Azure 容器实例中的容器资源
 
@@ -27,24 +27,24 @@ ms.locfileid: "82116361"
 
 Azure Monitor 提供下述 [Azure 容器实例指标][supported-metrics]。 这些指标适用于容器组和单独的容器。 默认情况下，指标聚合为平均值。
 
-* **CPU 使用率** - 以**毫核心**为单位进行度量。 一个毫核心是一个 CPU 核心的 1/1000，因此 500 毫核心表示 0.5 CPU 核心的使用量。
-
-* 内存使用量 - 以字节为单位。****
-
-* 每秒接收的网络字节数和每秒传输的网络字节数。**** **** 
+- **Millicores** 中测量的 **CPU 使用率**。 
+  - 一个毫核心是一个 CPU 核心的 1/1000，因此 500 毫核心表示 0.5 CPU 核心的使用量。
+- **内存使用量** （字节）
+- 每秒 **接收的网络字节数**
+- 每秒 **传输的网络字节数** 
 
 ## <a name="get-metrics---azure-portal"></a>获取指标 - Azure 门户
 
-创建容器组时，Azure Monitor 数据在 Azure 门户中可用。 若要查看容器组的指标，请转到容器组的“概览”页。**** 在这里可以看到为每个可用指标预先创建的图表。
+创建容器组时，Azure Monitor 数据在 Azure 门户中可用。 若要查看容器组的指标，请转到容器组的“概览”页。 在这里可以看到为每个可用指标预先创建的图表。
 
 ![双图表][dual-chart]
 
-在包含多个容器的容器组中，使用[维度][monitor-dimension]按容器显示指标。 若要创建包含个体容器指标的图表，请执行以下步骤：
+在包含多个容器的容器组中，使用 [维度][monitor-dimension] 按容器显示度量值。 若要创建包含个体容器指标的图表，请执行以下步骤：
 
-1. 在“概览”页中选择一个指标图表，例如“CPU”。**** **** 
-1. 选择“应用拆分”按钮，然后选择“容器名称”****。****
+1. 在“概览”页中选择一个指标图表，例如“CPU”。  
+1. 选择“应用拆分”按钮，然后选择“容器名称”。
 
-![维度][dimension]
+![屏幕捕获显示了一个容器实例的指标，其中选择了“应用拆分”和“容器名称”。][dimension]
 
 ## <a name="get-metrics---azure-cli"></a>获取指标 - Azure CLI
 
@@ -64,21 +64,14 @@ az monitor metrics list --resource $CONTAINER_GROUP --metric CPUUsage --output t
 ```output
 Timestamp            Name       Average
 -------------------  ---------  ---------
-2019-04-23 22:59:00  CPU Usage
-2019-04-23 23:00:00  CPU Usage
-2019-04-23 23:01:00  CPU Usage  0.0
-2019-04-23 23:02:00  CPU Usage  0.0
-2019-04-23 23:03:00  CPU Usage  0.5
-2019-04-23 23:04:00  CPU Usage  0.5
-2019-04-23 23:05:00  CPU Usage  0.5
-2019-04-23 23:06:00  CPU Usage  1.0
-2019-04-23 23:07:00  CPU Usage  0.5
-2019-04-23 23:08:00  CPU Usage  0.5
-2019-04-23 23:09:00  CPU Usage  1.0
-2019-04-23 23:10:00  CPU Usage  0.5
+2020-12-17 23:34:00  CPU Usage
+. . .
+2020-12-18 00:25:00  CPU Usage
+2020-12-18 00:26:00  CPU Usage  0.4
+2020-12-18 00:27:00  CPU Usage  0.0
 ```
 
-更改命令中 `--metric` 参数的值即可获取其他[支持的指标][supported-metrics]。 例如，使用以下命令获取**内存**使用率指标。 
+更改命令中 `--metric` 参数的值即可获取其他[支持的指标][supported-metrics]。 例如，使用以下命令获取 **内存** 使用率指标。 
 
 ```azurecli
 az monitor metrics list --resource $CONTAINER_GROUP --metric MemoryUsage --output table

@@ -1,19 +1,16 @@
 ---
 title: 使用 Python 组件的 Apache Storm - Azure HDInsight
 description: 了解如何在 Azure HDInsight 中创建使用 Python 组件的 Apache Storm 拓扑
-author: hrasheed-msft
-ms.author: hrasheed
-ms.reviewer: jasonh
 ms.service: hdinsight
 ms.topic: how-to
 ms.custom: hdinsightactive,hdiseo17may2017, devx-track-python
 ms.date: 12/16/2019
-ms.openlocfilehash: 1f062a8f358ac311b53e657fb5714583458bd9b5
-ms.sourcegitcommit: dea88d5e28bd4bbd55f5303d7d58785fad5a341d
+ms.openlocfilehash: e28d21ed71cf5f485165c639a8bd519b3a2736e1
+ms.sourcegitcommit: 2f9f306fa5224595fa5f8ec6af498a0df4de08a8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/06/2020
-ms.locfileid: "87872576"
+ms.lasthandoff: 01/28/2021
+ms.locfileid: "98928993"
 ---
 # <a name="develop-apache-storm-topologies-using-python-on-hdinsight"></a>在 HDInsight 上使用 Python 开发 Apache Storm 拓扑
 
@@ -24,13 +21,13 @@ ms.locfileid: "87872576"
 
 ## <a name="prerequisites"></a>先决条件
 
-* HDInsight 上的 Apache Storm 群集。 请参阅[使用 Azure 门户创建 Apache Hadoop 群集](../hdinsight-hadoop-create-linux-clusters-portal.md)，并选择 **Storm** 作为**群集类型**。
+* HDInsight 上的 Apache Storm 群集。 请参阅 [使用 Azure 门户创建 Apache Hadoop 群集](../hdinsight-hadoop-create-linux-clusters-portal.md)，并选择 **Storm** 作为 **群集类型**。
 
 * 本地 Storm 开发环境（可选）。 仅当想要在本地运行拓扑时，才需要本地 Storm 环境。 有关详细信息，请参阅[设置开发环境](https://storm.apache.org/releases/current/Setting-up-development-environment.html)。
 
 * [Python 2.7 或更高版本](https://www.python.org/downloads/)。
 
-* [Java 开发人员工具包 (JDK) 版本 8](https://aka.ms/azure-jdks)。
+* [Java 开发人员工具包 (JDK) 版本 8](/azure/developer/java/fundamentals/java-jdk-long-term-support)。
 
 * 根据 Apache 要求正确[安装](https://maven.apache.org/install.html)的 [Apache Maven](https://maven.apache.org/download.cgi)。  Maven 是 Java 项目的项目生成系统。
 

@@ -9,18 +9,20 @@ ms.topic: how-to
 ms.date: 08/02/2020
 ms.author: tamram
 ms.reviewer: fryu
-ms.openlocfilehash: 6f2e7403d85f9132c9a5a0b76cf057834e7cc499
-ms.sourcegitcommit: 3d56d25d9cf9d3d42600db3e9364a5730e80fa4a
+ms.subservice: blobs
+ms.custom: devx-track-csharp
+ms.openlocfilehash: 2437c5b3272163b3931d7417c84e761c591aec85
+ms.sourcegitcommit: 829d951d5c90442a38012daaf77e86046018e5b9
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/03/2020
-ms.locfileid: "87534951"
+ms.lasthandoff: 10/09/2020
+ms.locfileid: "90088810"
 ---
 # <a name="access-public-containers-and-blobs-anonymously-with-net"></a>使用 .NET 以匿名方式访问公共容器和 blob
 
 Azure 存储支持容器和 blob 的可选公共读取访问权限。 客户端可以使用 Azure 存储客户端库以匿名方式访问公共容器和 blob，还可以使用支持数据访问 Azure 存储的其他工具和实用程序。
 
-本文介绍如何从 .NET 访问公共容器或 blob。 有关在容器上配置匿名读取访问权限的信息，请参阅[配置容器和 blob 的匿名公共读取访问权限](anonymous-read-access-configure.md)。 有关阻止对存储帐户进行匿名访问的详细信息，请参阅[阻止对容器和 blob 的匿名公共读取访问](anonymous-read-access-prevent.md)。
+本文介绍如何从 .NET 访问公共容器或 blob。 有关在容器上配置匿名读取访问权限的信息，请参阅 [配置容器和 blob 的匿名公共读取访问权限](anonymous-read-access-configure.md)。 有关阻止对存储帐户进行匿名访问的详细信息，请参阅 [阻止对容器和 blob 的匿名公共读取访问](anonymous-read-access-prevent.md)。
 
 如果某个客户端需要以匿名方式访问容器和 Blob，该客户端则可以使用不需要凭据的构造函数。 以下示例演示如何通过多种不同的方法以匿名方式引用容器和 Blob。
 

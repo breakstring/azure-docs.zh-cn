@@ -1,14 +1,14 @@
 ---
 title: 还原 Azure VM 上的 SAP HANA 数据库
-description: 本文介绍如何还原在 Azure 虚拟机上运行的 SAP HANA 数据库。
+description: 本文介绍如何还原在 Azure 虚拟机上运行的 SAP HANA 数据库。 你还可以使用跨区域还原将数据库还原到次要区域。
 ms.topic: conceptual
 ms.date: 11/7/2019
-ms.openlocfilehash: 41ee95fc65ed7bdf79388089e27c6d6249132bfd
-ms.sourcegitcommit: e2b36c60a53904ecf3b99b3f1d36be00fbde24fb
+ms.openlocfilehash: c502b7741acd343baefe5e2bf8b95cfc02e46688
+ms.sourcegitcommit: a43a59e44c14d349d597c3d2fd2bc779989c71d7
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/24/2020
-ms.locfileid: "88763280"
+ms.lasthandoff: 11/25/2020
+ms.locfileid: "96021667"
 ---
 # <a name="restore-sap-hana-databases-on-azure-vms"></a>还原 Azure VM 上的 SAP HANA 数据库
 
@@ -28,29 +28,29 @@ Azure 备份可以还原在 Azure VM 上运行的 SAP HANA 数据库，如下所
 
 在还原数据库之前，请注意以下事项：
 
-* 只能将数据库还原到同一区域中的 SAP HANA 实例
+* 只能将数据库还原到同一区域中的 SAP HANA 实例。
 
-* 目标实例必须注册到与源相同的保管库
+* 目标实例必须注册到与源相同的保管库。
 
 * Azure 备份不能识别同一 VM 上两个不同的 SAP HANA 实例。 因此，无法将数据从同一 VM 上的一个实例还原到另一个实例。
 
-* 若要确保目标 SAP HANA 实例已准备好进行还原，请检查其**备份就绪情况**状态：
+* 若要确保目标 SAP HANA 实例已准备好进行还原，请检查其 **备份就绪情况** 状态：
 
-  1. 打开在其中注册目标 SAP HANA 实例的保管库
+  1. 打开在其中注册目标 SAP HANA 实例的保管库。
 
-  1. 在保管库仪表板上，在“开始使用”  下选择“备份” 
+  1. 在保管库仪表板上，在“开始使用”下选择“备份”。
 
       ![保管库仪表板中的备份](media/sap-hana-db-restore/getting-started-backup.png)
 
-  1. 在“备份”  中，在“你希望备份什么?”  下选择“Azure VM 中的 SAP HANA” 
+  1. 在“备份”中，在“你希望备份什么?”下选择“Azure VM 中的 SAP HANA”。
 
       ![选择“Azure VM 中的 SAP HANA”](media/sap-hana-db-restore/sap-hana-backup.png)
 
-  1. 在“发现 VM 中的 DB”下，单击“查看详细信息” 
+  1. 在“发现 VM 中的 DB”下，选择“查看详细信息” 。
 
       ![查看详细信息](media/sap-hana-db-restore/view-details.png)
 
-  1. 查看目标 VM 的**备份就绪情况**
+  1. 查看目标 VM 的备份就绪情况。
 
       ![受保护的服务器](media/sap-hana-db-restore/protected-servers.png)
 
@@ -61,7 +61,7 @@ Azure 备份可以还原在 Azure VM 上运行的 SAP HANA 数据库，如下所
 若要进行还原，需要以下权限：
 
 * 在其中执行还原的保管库中的“备份操作员”权限。
-* 对已备份的源 VM 的**参与者（写入）** 访问权限。
+* 对已备份的源 VM 的 **参与者（写入）** 访问权限。
 * 对目标 VM 的参与者（写入）访问权限：
   * 若要还原到同一 VM，则此项将是源 VM。
   * 若要还原到备用位置，则此项将是新的目标 VM。
@@ -105,7 +105,7 @@ Azure 备份可以还原在 Azure VM 上运行的 SAP HANA 数据库，如下所
     ![还原到备用位置](media/sap-hana-db-restore/restore-alternate-location.png)
 
 1. 选择要将数据库还原到其中的 SAP HANA 主机名和实例。
-1. 通过查看目标 SAP HANA 实例的**备份就绪情况**状态，检查其是否已准备好进行还原。 有关更多详细信息，请参阅[先决条件部分](#prerequisites)。
+1. 通过查看目标 SAP HANA 实例的 **备份就绪情况** 状态，检查其是否已准备好进行还原。 有关更多详细信息，请参阅[先决条件部分](#prerequisites)。
 1. 在“还原数据库名称”框中，输入目标数据库的名称。
 
     > [!NOTE]
@@ -249,6 +249,51 @@ Azure 备份可以还原在 Azure VM 上运行的 SAP HANA 数据库，如下所
 
     > [!NOTE]
     > 在多数据库容器 (MDC) 还原中，在将系统数据库还原到目标实例之后，需要再次运行预注册脚本。 只有这样，随后的租户数据库还原才会成功。 若要了解详细信息，请参阅 [故障排除– MDC 还原](backup-azure-sap-hana-database-troubleshoot.md#multiple-container-database-mdc-restore)。
+
+## <a name="cross-region-restore"></a>跨区域还原
+
+作为还原选项之一，跨区域还原 (CRR) 使你可以还原托管在辅助区域中的 Azure Vm 上的 SAP HANA 数据库，这是一个 Azure 配对区域。
+
+若要在预览版期间加入此功能，请阅读[“准备阶段”部分](./backup-create-rs-vault.md#set-cross-region-restore)。
+
+若要查看是否启用了 CRR，请按照[配置跨区域还原](backup-create-rs-vault.md#configure-cross-region-restore)中的说明进行操作
+
+### <a name="view-backup-items-in-secondary-region"></a>查看次要区域中的备份项
+
+如果启用了 CRR，则可以查看次要区域中的备份项。
+
+1. 从门户中转到 "**恢复服务保管库**  >  **备份项**"。
+1. 选择 **次要区域** ，查看次要区域中的项目。
+
+>[!NOTE]
+>只有支持 CRR 功能的备份管理类型才会显示在列表中。 目前，只允许将辅助区域数据还原到次要区域。
+
+![辅助区域中的备份项](./media/sap-hana-db-restore/backup-items-secondary-region.png)
+
+![辅助区域中的数据库](./media/sap-hana-db-restore/databases-secondary-region.png)
+
+### <a name="restore-in-secondary-region"></a>在次要区域中进行还原
+
+次要区域还原用户体验将类似于主要区域还原用户体验。 在 "还原配置" 窗格中配置详细信息以配置还原时，系统将提示您仅提供辅助区域参数。
+
+![在何处以及如何还原](./media/sap-hana-db-restore/restore-secondary-region.png)
+
+>[!NOTE]
+>次要区域中的虚拟网络需要单独分配，并且不能用于该资源组中的任何其他 Vm。
+
+![“正在触发还原”通知](./media/backup-azure-arm-restore-vms/restorenotifications.png)
+
+>[!NOTE]
+>
+>* 触发还原并在数据传输阶段中，无法取消还原作业。
+>* 在次要区域中恢复所需的 Azure 角色与主要区域中的角色相同。
+
+### <a name="monitoring-secondary-region-restore-jobs"></a>监视次要区域还原作业
+
+1. 在门户中，转到“恢复服务保管库” > “备份作业” 
+1. 选择 **次要区域** ，查看次要区域中的项目。
+
+    ![筛选的备份作业](./media/sap-hana-db-restore/backup-jobs-secondary-region.png)
 
 ## <a name="next-steps"></a>后续步骤
 

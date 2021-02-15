@@ -4,15 +4,15 @@ description: 了解适用于 Microsoft AppSource 和 Azure 市场产品/服务�
 ms.service: marketplace
 ms.subservice: partnercenter-marketplace-publisher
 ms.topic: conceptual
-author: keferna
-ms.author: keferna
+author: trkeya
+ms.author: trkeya
 ms.date: 07/06/2020
-ms.openlocfilehash: 19e3e356765099b83f7248a024b55c491a61b110
-ms.sourcegitcommit: d39f2cd3e0b917b351046112ef1b8dc240a47a4f
+ms.openlocfilehash: 3ea6a0035a9f9354be5c14699936c6a07dea1150
+ms.sourcegitcommit: b4880683d23f5c91e9901eac22ea31f50a0f116f
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/25/2020
-ms.locfileid: "88816263"
+ms.lasthandoff: 11/11/2020
+ms.locfileid: "94492083"
 ---
 # <a name="offer-listing-best-practices"></a>套餐列出最佳做法
 
@@ -48,11 +48,11 @@ ms.locfileid: "88816263"
 
 ### <a name="categories"></a>类别
 
-Microsoft AppSource 和 Azure Marketplace 是两个不同的在线商店，它们可满足独特的客户需求。 Azure Marketplace 面向 IT 专业人员和开发人员在 Azure 上构建解决方案。  Microsoft AppSource 面向查找企业和/或行业 SaaS 应用程序的业务用户、Dynamics 365 外接程序、Microsoft 365 加载项和 Power Platform 应用。
+Microsoft AppSource 和 Azure Marketplace 是提供不同解决方案类型的在线商店。 Azure Marketplace 提供了在或 Azure 上构建的 IT 解决方案。  Microsoft AppSource 提供业务解决方案，如行业 SaaS 应用程序、Dynamics 365 外接程序、Microsoft 365 加载项和 Power Platform 应用。
 
-类别和子类别基于目标受众映射到每个在线商店。 你的产品/服务将发布到 Microsoft AppSource 或 Azure Marketplace，具体取决于产品/服务的产品/服务和类别/子类别选择的产品/服务类型。 
+类别和子类别基于解决方案类型映射到每个在线商店。 你的产品/服务将发布到 Microsoft AppSource 或 Azure Marketplace，具体取决于产品/服务的产品/服务和类别/子类别选择的产品/服务类型。 
 
-选择最适合你的产品/服务和目标受众的类别和子类别。 可以选择：
+选择最适合你的解决方案类型的类别和子类别。 可以选择：
 
 * 最多包含两个类别，其中包括一个主类别和一个辅助类别 (可选) 。
 * 每个主节点和/或辅助类别最多包含两个子类别。 如果未选择任何子类别，你的产品/服务仍将仅在所选类别上可发现。
@@ -61,7 +61,8 @@ Microsoft AppSource 和 Azure Marketplace 是两个不同的在线商店，它�
 
 #### <a name="important-saas-offers-and-microsoft-365-add-ins"></a>重要说明： SaaS 提供和 Microsoft 365 外接程序
 
-请参阅 " [产品/服务类型](https://docs.microsoft.com/azure/marketplace/partner-center-portal/commercial-marketplace-overview) " 中的指南，了解有关使用情况的详细信息。 对于 SaaS 产品/服务，产品/服务的交易功能以及类别选择将确定发布产品/服务的在线商店：
+请参阅 [商业应用商店中的约束力](marketplace-commercial-transaction-capabilities-and-considerations.md) ，了解有关该服务如何影响应用商店客户查看和购买产品/服务的具体详细信息。 对于 SaaS 产品/服务，产品/服务的交易功能以及类别选择将确定发布产品/服务的在线商店。
+
 
 | SaaS 套餐    | SaaS 套餐   | SaaS 套餐  | SaaS 套餐   | SaaS 套餐   | SaaS 套餐   | SaaS 套餐    | 适用的在线商店| 适用的在线商店 |
 |:-------------:|:---:|:--------:|:---------:|:--:|:--:|:---:|:---------------------:|:-------------:|
@@ -129,8 +130,8 @@ Microsoft AppSource 和 Azure Marketplace 是两个不同的在线商店，它�
 ## <a name="link-to-your-offer-page-from-your-website"></a>从网站链接到套餐页
 
 当你从网站上的 AppSource 或 Azure Marketplace 徽章链接到商业 Marketplace 中的列表时，你可以通过在 URL 末尾包含以下查询参数来支持强分析和报告：
-* **src**：包括路由到 AppSource 的流量的来源（例如网站、LinkedIn 或 Facebook）。
-* **mktcmpid**：市场营销活动 ID，可以包含字母、数字、下划线和连字符的任意组合，最多 16 个字符（例如 blogpost_12）。
+* **src** ：包括路由到 AppSource 的流量的来源（例如网站、LinkedIn 或 Facebook）。
+* **mktcmpid** ：市场营销活动 ID，可以包含字母、数字、下划线和连字符的任意组合，最多 16 个字符（例如 blogpost_12）。
 
 以下示例 URL 包含前面所述的两个查询参数：`https://appsource.microsoft.com/product/dynamics-365/mscrm.04931187-431c-415d-8777-f7f482ba8095?src=website&mktcmpid=blogpost_12`
 

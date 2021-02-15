@@ -3,7 +3,7 @@ title: SAP SuccessFactors 属性参考
 description: 了解 SuccessFactors-HR 驱动的预配支持 SuccessFactors 中的哪些属性
 services: active-directory
 author: cmmdesai
-manager: celestedg
+manager: daveba
 ms.service: active-directory
 ms.subservice: app-provisioning
 ms.topic: reference
@@ -11,12 +11,12 @@ ms.workload: identity
 ms.date: 08/05/2020
 ms.author: chmutali
 ms.reviewer: celested
-ms.openlocfilehash: ef2da377c7720cfb7b431d1ce0fed56656a2b8c7
-ms.sourcegitcommit: 85eb6e79599a78573db2082fe6f3beee497ad316
+ms.openlocfilehash: 0d1a25f67d3550e79b2339ee060d37acaea0c1c4
+ms.sourcegitcommit: d49bd223e44ade094264b4c58f7192a57729bada
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/05/2020
-ms.locfileid: "87808501"
+ms.lasthandoff: 02/02/2021
+ms.locfileid: "99255536"
 ---
 # <a name="sap-successfactors-attribute-reference"></a>SAP SuccessFactors 属性参考
 
@@ -32,9 +32,9 @@ ms.locfileid: "87808501"
 - [SuccessFactors Active Directory 用户预配](../saas-apps/sap-successfactors-inbound-provisioning-tutorial.md)
 - [SuccessFactors Azure AD 用户预配](../saas-apps/sap-successfactors-inbound-provisioning-cloud-only-tutorial.md)
 
-有关其他属性，请参阅[SAP SuccessFactors 集成参考](./sap-successfactors-integration-reference.md#retrieving-additional-attributes)，扩展架构。 
+有关其他属性，请参阅 [SAP SuccessFactors 集成参考](./sap-successfactors-integration-reference.md#retrieving-additional-attributes) ，扩展架构。 
 
-| \# | SuccessFactors 实体                  | SuccessFactors 特性     | 操作类型 |
+| \# | SuccessFactors 实体                  | SuccessFactors 属性     | 操作类型 |
 |----|----------------------------------------|------------------------------|----------------|
 | 1  | PerPerson                              | personIdExternal             | 读取           |
 | 2  | PerPerson                              | personId                     | 读取           |
@@ -120,7 +120,7 @@ ms.locfileid: "87808501"
 
 下表提供了上面列出的 SuccessFactors 特性与 AD/Azure AD 特性之间的默认属性映射。 在 Azure AD 预配应用 "映射" 边栏选项卡中，可以修改此默认映射，使其包含上述列表中的属性。 
 
-| \# | SuccessFactors 实体                  | SuccessFactors 特性 | 默认 AD/Azure AD 属性映射   | 处理注释                                                                            |
+| \# | SuccessFactors 实体                  | SuccessFactors 属性 | 默认 AD/Azure AD 属性映射   | 处理注释                                                                            |
 |----|----------------------------------------|--------------------------|-----------------------------------------|----------------------------------------------------------------------------------------------|
 | 1  | PerPerson                              | personIdExternal         | employeeId                              | 用作匹配属性                                                                   |
 | 2  | PerPerson                              | perPersonUuid            | \[未映射 \- 为源锚点\] | 初始同步期间，预配服务会将 personUuid 链接到现有 objectGuid\。  |

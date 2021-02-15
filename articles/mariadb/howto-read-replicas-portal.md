@@ -1,17 +1,17 @@
 ---
 title: 管理只读副本 - Azure 门户 - Azure Database for MariaDB
 description: 本文介绍如何使用门户在 Azure Database for MariaDB 中设置和管理只读副本
-author: ajlam
-ms.author: andrela
-ms.service: mariadb
+author: savjani
+ms.author: pariks
+ms.service: jroth
 ms.topic: how-to
 ms.date: 6/10/2020
-ms.openlocfilehash: fc435194975c0b043e74a47632d6e38f12d04c2a
-ms.sourcegitcommit: d7008edadc9993df960817ad4c5521efa69ffa9f
+ms.openlocfilehash: fa2afdccf9c8bd6ec7f5808674e6eec968838d10
+ms.sourcegitcommit: 52e3d220565c4059176742fcacc17e857c9cdd02
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/08/2020
-ms.locfileid: "86121191"
+ms.lasthandoff: 01/21/2021
+ms.locfileid: "98664998"
 ---
 # <a name="how-to-create-and-manage-read-replicas-in-azure-database-for-mariadb-using-the-azure-portal"></a>如何使用 Azure 门户在 Azure Database for MariaDB 中创建和管理只读副本
 
@@ -19,15 +19,15 @@ ms.locfileid: "86121191"
 
 ## <a name="prerequisites"></a>先决条件
 
-- 将用作主服务器的 [Azure Database for MariaDB 服务器](quickstart-create-mariadb-server-database-using-azure-portal.md)。
+- 将用作源服务器的 [Azure Database for MariaDB 服务器](quickstart-create-mariadb-server-database-using-azure-portal.md)。
 
 > [!IMPORTANT]
-> 只读副本功能仅适用于“常规用途”或“内存优化”定价层中的 Azure Database for MariaDB 服务器。 请确保主服务器位于其中一个定价层中。
+> 只读副本功能仅适用于“常规用途”或“内存优化”定价层中的 Azure Database for MariaDB 服务器。 请确保源服务器位于其中一个定价层中。
 
 ## <a name="create-a-read-replica"></a>创建只读副本
 
 > [!IMPORTANT]
-> 如果为没有现有副本的主服务器创建副本，主服务器将首先重启以便为复制准备自身。 请考虑这一点并在非高峰期执行这些操作。
+> 如果为没有现有副本的源服务器创建副本，源服务器将首先重启，以便为复制做好准备。 请考虑这一点并在非高峰期执行这些操作。
 
 可以使用以下步骤创建只读副本服务器：
 
@@ -45,14 +45,14 @@ ms.locfileid: "86121191"
 
     ![Azure Database for MariaDB - 副本名称](./media/howto-read-replica-portal/replica-name.png)
 
-6. 选择副本服务器的位置。 默认位置与主服务器的位置相同。
+6. 选择副本服务器的位置。 默认位置与源服务器的位置相同。
 
     ![Azure Database for MariaDB - 副本位置](./media/howto-read-replica-portal/replica-location.png)
 
 7. 选择“确定”以确认创建该副本。
 
 > [!NOTE]
-> 只读副本使用与主服务器相同的服务器配置创建。 副本服务器配置在创建后可以更改。 建议副本服务器的配置应保持在与主服务器相同或更大的值，以确保副本能够跟上主服务器。
+> 只读副本使用与主服务器相同的服务器配置创建。 副本服务器配置在创建后可以更改。 建议副本服务器的配置应保持在与源服务器相同或更大的值，以确保副本能够与主服务器保持同步。
 
 一旦创建副本服务器，可以从“复制”边栏选项卡中进行查看。
 
@@ -61,11 +61,11 @@ ms.locfileid: "86121191"
 ## <a name="stop-replication-to-a-replica-server"></a>停止复制到副本服务器
 
 > [!IMPORTANT]
-> 停止复制到服务器操作不可逆。 一旦主服务器和副本服务器之间的复制停止，无法撤消。 然后，副本服务器将成为独立服务器，并且现在支持读取和写入。 此服务器不能再次成为副本服务器。
+> 停止复制到服务器操作不可逆。 一旦源服务器和副本服务器之间的复制停止，将无法撤消它。 然后，副本服务器将成为独立服务器，并且现在支持读取和写入。 此服务器不能再次成为副本服务器。
 
-若要从 Azure 门户停止主服务器和副本服务器之间的复制，请使用以下步骤：
+若要从 Azure 门户停止源服务器和副本服务器之间的复制，请使用以下步骤：
 
-1. 在 Azure 门户中，选择主 Azure Database for MariaDB 服务器。 
+1. 在 Azure 门户中，选择源 Azure Database for MariaDB 服务器。 
 
 2. 从菜单中的“设置”下，选择“复制”。
 
@@ -85,7 +85,7 @@ ms.locfileid: "86121191"
 
 若要从 Azure 门户删除只读副本服务器，请使用以下步骤：
 
-1. 在 Azure 门户中，选择主 Azure Database for MariaDB 服务器。
+1. 在 Azure 门户中，选择源 Azure Database for MariaDB 服务器。
 
 2. 从菜单中的“设置”下，选择“复制”。
 
@@ -101,22 +101,22 @@ ms.locfileid: "86121191"
 
    ![Azure Database for MariaDB - 删除副本确认](./media/howto-read-replica-portal/delete-replica-confirm.png)
 
-## <a name="delete-a-master-server"></a>删除主服务器
+## <a name="delete-a-source-server"></a>删除源服务器
 
 > [!IMPORTANT]
-> 删除主服务器会停止复制到所有副本服务器，并删除主服务器本身。 副本服务器成为现在支持读取和写入的独立服务器。
+> 删除源服务器会停止复制到所有副本服务器，并删除源服务器本身。 副本服务器成为现在支持读取和写入的独立服务器。
 
-若要从 Azure 门户删除主服务器，请使用以下步骤：
+若要从 Azure 门户删除源服务器，请使用以下步骤：
 
-1. 在 Azure 门户中，选择主 Azure Database for MariaDB 服务器。
+1. 在 Azure 门户中，选择源 Azure Database for MariaDB 服务器。
 
 2. 从“概览”中，选择“删除”。
 
    ![Azure Database for MariaDB - 删除主服务器](./media/howto-read-replica-portal/delete-master-overview.png)
 
-3. 键入主服务器的名称，然后单击“删除”以确认删除主服务器。  
+3. 键入源服务器的名称，然后单击“删除”以确认删除源服务器。  
 
-   ![Azure Database for MariaDB - 删除主服务器](./media/howto-read-replica-portal/delete-master-confirm.png)
+   ![Azure Database for MariaDB - 删除主服务器确认](./media/howto-read-replica-portal/delete-master-confirm.png)
 
 ## <a name="monitor-replication"></a>监视复制
 
@@ -134,7 +134,7 @@ ms.locfileid: "86121191"
 
 5. 查看所选时间范围的复制延迟时间。 下图显示了大型工作负荷的过去 30 分钟。
 
-   ![选择时间范围](./media/howto-read-replica-portal/monitor-replication-lag-time-range-thirty-mins.png)
+   ![选择时间范围“30 分钟”](./media/howto-read-replica-portal/monitor-replication-lag-time-range-thirty-mins.png)
 
 ## <a name="next-steps"></a>后续步骤
 

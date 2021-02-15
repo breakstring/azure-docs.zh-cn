@@ -1,22 +1,18 @@
 ---
 title: 以编程方式监视 Azure 数据工厂
 description: 了解如何使用不同的软件开发工具包 (SDK) 监视数据工厂中的管道。
-services: data-factory
-documentationcenter: ''
 ms.service: data-factory
-ms.workload: data-services
 ms.topic: conceptual
 ms.date: 01/16/2018
-author: djpmsft
-ms.author: daperlov
-manager: anandsub
+author: dcstwh
+ms.author: weetok
 ms.custom: devx-track-python
-ms.openlocfilehash: 8c13e0e3f1cb8809a126b11409becd2211864c32
-ms.sourcegitcommit: dea88d5e28bd4bbd55f5303d7d58785fad5a341d
+ms.openlocfilehash: 038da033c2bdf78a0a2547cc713944bc11bf093d
+ms.sourcegitcommit: d4734bc680ea221ea80fdea67859d6d32241aefc
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/06/2020
-ms.locfileid: "87876540"
+ms.lasthandoff: 02/14/2021
+ms.locfileid: "100379890"
 ---
 # <a name="programmatically-monitor-an-azure-data-factory"></a>以编程方式监视 Azure 数据工厂
 
@@ -28,12 +24,23 @@ ms.locfileid: "87876540"
 
 ## <a name="data-range"></a>数据范围
 
-数据工厂仅将管道运行数据存储 45 天。 以编程方式查询有关数据工厂管道运行的数据时 - 比如使用 PowerShell 命令 `Get-AzDataFactoryV2PipelineRun` 来查询，对于可选的 `LastUpdatedAfter` 和 `LastUpdatedBefore` 参数，无最大日期限制。 但是，如果查询过去一年（举例）的数据，查询不会返回错误，而仅返回最近 45 天的管道运行数据。
+数据工厂仅将管道运行数据存储 45 天。 以编程方式查询有关数据工厂管道运行的数据时 - 比如使用 PowerShell 命令 `Get-AzDataFactoryV2PipelineRun` 来查询，对于可选的 `LastUpdatedAfter` 和 `LastUpdatedBefore` 参数，无最大日期限制。 但是，如果您查询过去一年的数据，则不会收到错误，但只有管道运行过去45天的数据。
 
-如果要保留管道运行数据超过 45 天，可使用 [Azure Monitor](monitor-using-azure-monitor.md) 设置自己的诊断日志记录。
+如果希望将管道运行数据保持超过45天，请设置自己的诊断日志记录，并 [Azure Monitor](monitor-using-azure-monitor.md)。
+
+## <a name="pipeline-run-information"></a>管道运行信息
+
+有关管道运行属性，请参阅 [PIPELINERUN API 参考](https://docs.microsoft.com/rest/api/datafactory/pipelineruns/get#pipelinerun)。 管道运行在其生命周期中具有不同状态，下面列出了可能的运行状态值：
+
+* 已排队
+* 正在进行
+* 已成功
+* 失败
+* 正在取消
+* 已取消
 
 ## <a name="net"></a>.NET
-有关使用 .NET SDK 创建和监视管道的完整演练，请参阅[使用 .NET 创建数据工厂和管道](quickstart-create-data-factory-dot-net.md)。
+有关使用 .NET SDK 创建和监视管道的完整演练，请参阅 [使用 .Net 创建数据工厂和管道](quickstart-create-data-factory-dot-net.md)。
 
 1. 添加以下代码以持续检查管道运行状态，直到它完成数据复制为止。
 
@@ -45,7 +52,7 @@ ms.locfileid: "87876540"
     {
         pipelineRun = client.PipelineRuns.Get(resourceGroup, dataFactoryName, runResponse.RunId);
         Console.WriteLine("Status: " + pipelineRun.Status);
-        if (pipelineRun.Status == "InProgress")
+        if (pipelineRun.Status == "InProgress" || pipelineRun.Status == "Queued")
             System.Threading.Thread.Sleep(15000);
         else
             break;
@@ -68,10 +75,10 @@ ms.locfileid: "87876540"
     Console.ReadKey();
     ```
 
-有关 .NET SDK 的完整文档，请参阅[数据工厂 .NET SDK 参考](/dotnet/api/microsoft.azure.management.datafactory?view=azure-dotnet)。
+有关 .NET SDK 的完整文档，请参阅[数据工厂 .NET SDK 参考](/dotnet/api/microsoft.azure.management.datafactory)。
 
 ## <a name="python"></a>Python
-有关使用 Python SDK 创建和监视管道的完整演练，请参阅[使用 Python 创建数据工厂和管道](quickstart-create-data-factory-python.md)。
+有关使用 Python SDK 创建和监视管道的完整演练，请参阅 [使用 Python 创建数据工厂和管道](quickstart-create-data-factory-python.md)。
 
 要监视管道的运行，请添加以下代码：
 
@@ -86,10 +93,10 @@ activity_runs_paged = list(adf_client.activity_runs.list_by_pipeline_run(
 print_activity_run_details(activity_runs_paged[0])
 ```
 
-有关 Python SDK 的完整文档，请参阅[数据工厂 Python SDK 参考](/python/api/overview/azure/datafactory?view=azure-python)。
+有关 Python SDK 的完整文档，请参阅[数据工厂 Python SDK 参考](/python/api/overview/azure/datafactory)。
 
 ## <a name="rest-api"></a>REST API
-有关使用 REST API 创建和监视管道的完整演练，请参阅[使用 REST API 创建数据工厂和管道](quickstart-create-data-factory-rest-api.md)。
+有关使用 REST API 创建和监视管道的完整演练，请参阅 [使用 REST API 创建数据工厂和管道](quickstart-create-data-factory-rest-api.md)。
  
 1. 运行以下脚本来持续检查管道运行状态，直到它完成数据复制为止。
 
@@ -99,7 +106,7 @@ print_activity_run_details(activity_runs_paged[0])
         $response = Invoke-RestMethod -Method GET -Uri $request -Header $authHeader
         Write-Host  "Pipeline run status: " $response.Status -foregroundcolor "Yellow"
 
-        if ($response.Status -eq "InProgress") {
+        if ( ($response.Status -eq "InProgress") -or ($response.Status -eq "Queued") ) {
             Start-Sleep -Seconds 15
         }
         else {
@@ -119,7 +126,7 @@ print_activity_run_details(activity_runs_paged[0])
 有关 REST API 的完整文档，请参阅[数据工厂 REST API 参考](/rest/api/datafactory/)。
 
 ## <a name="powershell"></a>PowerShell
-有关使用 PowerShell 创建和监视管道的完整演练，请参阅[使用 PowerShell 创建数据工厂和管道](quickstart-create-data-factory-powershell.md)。
+有关使用 PowerShell 创建和监视管道的完整演练，请参阅 [使用 Powershell 创建数据工厂和管道](quickstart-create-data-factory-powershell.md)。
 
 1. 运行以下脚本来持续检查管道运行状态，直到它完成数据复制为止。
 
@@ -128,12 +135,12 @@ print_activity_run_details(activity_runs_paged[0])
         $run = Get-AzDataFactoryV2PipelineRun -ResourceGroupName $resourceGroupName -DataFactoryName $DataFactoryName -PipelineRunId $runId
 
         if ($run) {
-            if ($run.Status -ne 'InProgress') {
-                Write-Host "Pipeline run finished. The status is: " $run.Status -foregroundcolor "Yellow"
+            if ( ($run.Status -ne "InProgress") -and ($run.Status -ne "Queued") ) {
+                Write-Output ("Pipeline run finished. The status is: " +  $run.Status)
                 $run
                 break
             }
-            Write-Host  "Pipeline is running...status: InProgress" -foregroundcolor "Yellow"
+            Write-Output ("Pipeline is running...status: " + $run.Status)
         }
 
         Start-Sleep -Seconds 30

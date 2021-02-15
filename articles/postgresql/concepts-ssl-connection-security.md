@@ -1,23 +1,30 @@
 ---
 title: SSL/TLS - Azure Database for PostgreSQL - 单一服务器
 description: 有关如何为 Azure Database for PostgreSQL（单一服务器）配置 TLS 连接的说明和信息。
-author: rachel-msft
-ms.author: raagyema
+author: niklarin
+ms.author: nlarin
 ms.service: postgresql
 ms.topic: conceptual
 ms.date: 07/08/2020
-ms.openlocfilehash: 615e8c80d194bb37feac1c09af22d2aa5d4aa3fc
-ms.sourcegitcommit: 5cace04239f5efef4c1eed78144191a8b7d7fee8
+ms.openlocfilehash: c98ee8f747975d4237c2906be2060eddbc7b9990
+ms.sourcegitcommit: a43a59e44c14d349d597c3d2fd2bc779989c71d7
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/08/2020
-ms.locfileid: "86142711"
+ms.lasthandoff: 11/25/2020
+ms.locfileid: "96000940"
 ---
 # <a name="configure-tls-connectivity-in-azure-database-for-postgresql---single-server"></a>在 Azure Database for PostgreSQL（单一服务器）中配置 TLS 连接
 
 Azure Database for PostgreSQL 倾向于使用传输层安全性 (TLS)（以前成为安全套接字层 (SSL)）将客户端应用程序连接到 PostgreSQL 服务。 通过在数据库服务器与客户端应用程序之间强制实施 TLS 连接，可以加密服务器与应用程序之间的数据流，这有助于防止“中间人”攻击。
 
 默认情况下，PostgreSQL 数据库服务配置为需要 TLS 连接。 如果客户端应用程序不支持 TLS 连接，则可以选择禁用 TLS。
+
+>[!NOTE]
+> 根据客户的反馈，我们已在2021年2月15日到 (02/15/2021) 扩展了现有巴尔的摩根 CA 的根证书弃用。
+
+> [!IMPORTANT] 
+> SSL 根证书设置为 2021 年 2 月 15 日 (2021/02/15) 到期。 请更新应用程序以使用[新证书](https://cacerts.digicert.com/DigiCertGlobalRootG2.crt.pem)。 若要了解详细信息，请参阅[计划的证书更新](concepts-certificate-rotation.md)
+
 
 ## <a name="enforcing-tls-connections"></a>强制实施 TLS 连接
 
@@ -27,13 +34,13 @@ Azure Database for PostgreSQL 倾向于使用传输层安全性 (TLS)（以前�
 
 ## <a name="configure-enforcement-of-tls"></a>配置强制实施 TLS
 
-（可选）可以禁用强制实施 TLS 连接。 Microsoft Azure 建议始终启用“强制实施 SSL 连接”**** 设置，以增强安全性。
+（可选）可以禁用强制实施 TLS 连接。 Microsoft Azure 建议始终启用“强制实施 SSL 连接”设置，以增强安全性。
 
 ### <a name="using-the-azure-portal"></a>使用 Azure 门户
 
 访问 Azure Database for PostgreSQL 服务器，并单击“连接安全性”。 使用切换按钮来启用或禁用“强制实施 SSL 连接”设置。 然后单击“保存” 。
 
-![连接安全性 - 禁用强制实施 TLS/SSL](./media/concepts-ssl-connection-security/1-disable-ssl.png)
+:::image type="content" source="./media/concepts-ssl-connection-security/1-disable-ssl.png" alt-text="连接安全性 - 禁用强制实施 TLS/SSL":::
 
 可以通过在“概述”页中查看“SSL 强制实施状态”指示器来确认设置。
 
@@ -51,9 +58,9 @@ az postgres server update --resource-group myresourcegroup --name mydemoserver -
 
 ## <a name="applications-that-require-certificate-verification-for-tls-connectivity"></a>需要证书验证才可启用 TLS 连接性的应用程序
 
-在某些情况下，应用程序需要从受信任的证书颁发机构生成的本地证书文件 (CA) 证书文件安全地进行连接。 要连接到 Azure Database for PostgreSQL 服务器的证书位于上 https://www.digicert.com/CACerts/BaltimoreCyberTrustRoot.crt.pem 。 下载证书文件并将其保存到首选位置。 
+在某些情况下，应用程序需要具备从受信任的证书颁发机构 (CA) 证书文件生成的本地证书文件才能实现安全连接。 用于连接到 Azure Database for PostgreSQL 的证书位于 https://www.digicert.com/CACerts/BaltimoreCyberTrustRoot.crt.pem 。 下载证书文件并将其保存到首选位置。 
 
-请参阅以下链接，了解主权云中服务器的证书： [Azure 政府](https://www.digicert.com/CACerts/BaltimoreCyberTrustRoot.crt.pem)版、 [azure 中国](https://dl.cacerts.digicert.com/DigiCertGlobalRootCA.crt.pem)版和[azure 德国](https://www.d-trust.net/cgi-bin/D-TRUST_Root_Class_3_CA_2_2009.crt)版。
+请参阅以下链接，了解主权云中服务器的证书： [Azure 政府](https://www.digicert.com/CACerts/BaltimoreCyberTrustRoot.crt.pem)版、 [azure 中国](https://dl.cacerts.digicert.com/DigiCertGlobalRootCA.crt.pem)版和 [azure 德国](https://www.d-trust.net/cgi-bin/D-TRUST_Root_Class_3_CA_2_2009.crt)版。
 
 ### <a name="connect-using-psql"></a>使用 psql 进行连接
 
@@ -87,11 +94,22 @@ Azure Database for PostgreSQL 单一服务器提供了为客户端连接强制�
 例如，将此最低 TLS 设置版本设置为 TLS 1.0 意味着服务器将允许使用 TLS 1.0、1.1 和 1.2 + 的客户端进行连接。 也可将此选项设置为 1.2，这意味着仅允许那些使用 TLS 1.2+ 的客户端进行连接，将拒绝使用 TLS 1.0 和 TLS 1.1 进行的所有连接。
 
 > [!Note] 
-> 默认情况下，Azure Database for PostgreSQL 不会强制) 设置 (最低 TLS 版本 `TLSEnforcementDisabled` 。
+> 默认情况下，Azure Database for PostgreSQL 不强制执行最低 TLS 版本要求（设置为 `TLSEnforcementDisabled`）。
 >
-> 强制执行最低 TLS 版本后，你将无法在以后禁用最小版本强制。
+> 一旦强制实施最低 TLS 版本要求后，以后将无法禁用最低版本强制实施。
 
 若要了解如何为 Azure Database for PostgreSQL 单一服务器指定 TLS 设置，请参阅[如何配置 TLS 设置](howto-tls-configurations.md)。
+
+## <a name="cipher-support-by-azure-database-for-postgresql-single-server"></a>Azure Database for PostgreSQL 单一服务器的密码支持
+
+作为 SSL/TLS 通信的一部分，将对密码套件进行验证，并且仅允许支持密码套件与数据库服务器通信。 密码套件验证在[网关层](concepts-connectivity-architecture.md#connectivity-architecture)中控制，而不是在节点本身上显式控制。 如果密码套件与下面列出的某个套件不匹配，系统会拒绝传入的客户端连接。
+
+### <a name="cipher-suite-supported"></a>支持的密码套件
+
+*   TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+*   TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+*   TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384
+*   TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256
 
 ## <a name="next-steps"></a>后续步骤
 
